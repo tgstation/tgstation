@@ -899,6 +899,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
 		/obj/item/melee/baton,
+		/obj/item/storage/belt/secsword, // DOPPLER EDIT ADDITION
 	)
 	variants = list(
 		"security" = list(

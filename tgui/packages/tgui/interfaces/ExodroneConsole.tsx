@@ -18,12 +18,12 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { formatTime } from 'tgui-core/format';
 import { capitalize } from 'tgui-core/string';
 
 import { resolveAsset } from '../assets';
 import nt_logo from '../assets/bg-nanotrasen.svg';
 import { useBackend } from '../backend';
-import { formatTime } from '../format';
 import { Window } from '../layouts';
 
 type ExplorationEventData = {

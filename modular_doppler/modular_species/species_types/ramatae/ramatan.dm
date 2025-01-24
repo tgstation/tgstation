@@ -35,6 +35,7 @@
 	)
 	payday_modifier = 1.0
 	mutanttongue = /obj/item/organ/tongue/ramatan
+	mutanteyes = /obj/item/organ/eyes/ramatan
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	death_sound = 'modular_doppler/modular_species/species_types/ramatae/sounds/scugdeath.ogg'
 	species_language_holder = /datum/language_holder/ramatan

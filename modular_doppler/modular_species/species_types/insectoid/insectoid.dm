@@ -31,6 +31,7 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/insectoid,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/insectoid,
 	)
+	mutanteyes = /obj/item/organ/eyes/bug
 	mutanttongue = /obj/item/organ/tongue/bug
 	mutantstomach = /obj/item/organ/stomach/roach
 	mutantliver = /obj/item/organ/liver/roach

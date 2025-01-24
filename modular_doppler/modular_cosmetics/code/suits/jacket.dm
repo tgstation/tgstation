@@ -293,3 +293,45 @@
 	cold_protection = CHEST|GROIN|ARMS
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/suit/hooded/crop_cold_hoodie
+	name = "cropped cold shoulder hoodie"
+	desc = "Ringspun sweatshirt fleece has been hemmed raw at elbow height and left to roll upon itself, and \
+	the patternmaker took the time to ensure the cutout shoulders lay just so."
+	icon_state = "crop_cold_hoodie"
+	greyscale_config = /datum/greyscale_config/crop_cold_hoodie
+	greyscale_config_worn = /datum/greyscale_config/crop_cold_hoodie/worn
+	greyscale_colors = "#4fc5c9"
+	hoodtype = /obj/item/clothing/head/hooded/crop_cold_hoodie_hood
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/head/hooded/crop_cold_hoodie_hood
+	name = "cropped cold shoulder hood"
+	desc = "A fleece hood with jersey lining. It's surprisingly warm in spite of the garment that it is \
+	attached to."
+	icon_state = "crop_cold_hoodie_hood"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEEARS|HIDEHAIR
+	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	greyscale_config = /datum/greyscale_config/crop_cold_hoodie_hood
+	greyscale_config_worn = /datum/greyscale_config/crop_cold_hoodie_hood/worn
+	greyscale_colors = "#4fc5c9"
+
+/obj/item/clothing/suit/hooded/crop_cold_hoodie/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/hoodie_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	var/list/new_hoodie_colors = hoodie_colors.Copy(1)
+	hood.set_greyscale(new_hoodie_colors)
+	hood.update_slot_icon()
+
+/obj/item/clothing/suit/hooded/crop_cold_hoodie/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	var/list/hoodie_colors = (SSgreyscale.ParseColorString(greyscale_colors))
+	var/list/new_hoodie_colors = hoodie_colors.Copy(1)
+	hood.set_greyscale(new_hoodie_colors)

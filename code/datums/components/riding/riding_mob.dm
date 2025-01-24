@@ -293,10 +293,37 @@
 
 /datum/component/riding/creature/human/get_offsets(pass_index)
 	var/mob/living/carbon/human/H = parent
+	/* DOPPLER EDIT ADDITION BEGIN - Oversized
 	if(H.buckle_lying)
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
+	*/
+	if(H.buckle_lying)
+		return HAS_TRAIT(H, TRAIT_OVERSIZED) ? list(
+				TEXT_NORTH = list(0, 18),
+				TEXT_SOUTH = list(0, 18),
+				TEXT_EAST = list(0, 18),
+				TEXT_WEST = list(0, 18),
+			) : list(
+				TEXT_NORTH = list(0, 6),
+				TEXT_SOUTH = list(0, 6),
+				TEXT_EAST = list(0, 6),
+				TEXT_WEST = list(0, 6),
+			)
+
+	return HAS_TRAIT(H, TRAIT_OVERSIZED) ? list(
+			TEXT_NORTH = list(0, 18),
+			TEXT_SOUTH = list(0, 18),
+			TEXT_EAST = list(-12, 18),
+			TEXT_WEST = list(12, 18),
+		) : list(
+			TEXT_NORTH = list(0, 6),
+			TEXT_SOUTH = list(0, 6),
+			TEXT_EAST = list(-6, 4),
+			TEXT_WEST = list(6, 4)
+		)
+	// DOPPLER EDIT END
 
 /datum/component/riding/creature/human/force_dismount(mob/living/dismounted_rider, throw_range = 8, throw_speed = 3, gentle = FALSE)
 	var/atom/movable/AM = parent

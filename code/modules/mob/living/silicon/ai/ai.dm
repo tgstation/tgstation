@@ -1,103 +1,6 @@
-#define CALL_BOT_COOLDOWN 900
-
-/mob/living/silicon/ai
-	name = "AI"
-	real_name = "AI"
-	icon = 'icons/mob/silicon/ai.dmi'
-	icon_state = "ai"
-	move_resist = MOVE_FORCE_OVERPOWERING
-	density = TRUE
-	status_flags = CANSTUN|CANPUSH
-	combat_mode = TRUE //so we always get pushed instead of trying to swap
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
-	hud_type = /datum/hud/ai
-	silicon_huds = list(DATA_HUD_MEDICAL_BASIC, DATA_HUD_SECURITY_BASIC, DATA_HUD_DIAGNOSTIC, DATA_HUD_BOT_PATH)
-	mob_size = MOB_SIZE_LARGE
-	radio = /obj/item/radio/headset/silicon/ai
-	can_buckle_to = FALSE
-	var/battery = 200 //emergency power if the AI's APC is off
-	var/list/network = list(CAMERANET_NETWORK_SS13)
-	var/obj/machinery/camera/current
-	var/list/connected_robots = list()
-	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
-	var/requires_power = POWER_REQ_ALL
-	var/can_be_carded = TRUE
-	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
-	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
-	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
-	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
-	///Used as a fake multitoool in tcomms machinery
-	var/obj/item/multitool/aiMulti
-	///Weakref to the bot the ai's commanding right now
-	var/datum/weakref/bot_ref
-	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
-
-	//MALFUNCTION
-	var/datum/module_picker/malf_picker
-	var/list/datum/ai_module/current_modules = list()
-	var/can_dominate_mechs = FALSE
-	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
-	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
-	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	/// List of hacked APCs
-	var/list/hacked_apcs = list()
-	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
-
-	var/obj/machinery/power/apc/malfhack
-	var/explosive = FALSE //does the AI explode when it dies?
-
-	var/camera_light_on = FALSE
-	var/list/obj/machinery/camera/lit_cameras = list()
-
-	///The internal tool used to track players visible through cameras.
-	var/datum/trackable/ai_tracking_tool
-
-	var/last_tablet_note_seen = null
-	var/can_shunt = TRUE
-	var/last_announcement = "" // For AI VOX, if enabled
-	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/waypoint_mode = FALSE //Waypoint mode is for selecting a turf via clicking.
-	var/call_bot_cooldown = 0 //time of next call bot command
-	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
-	var/nuking = FALSE
-	var/obj/machinery/doomsday_device/doomsday_device
-
-	var/mob/eye/camera/ai/eyeobj
-	var/sprint = 10
-	var/last_moved = 0
-	var/acceleration = TRUE
-
-	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
-	var/mob/living/silicon/robot/deployed_shell = null //For shell control
-	var/datum/action/innate/deploy_shell/deploy_action = new
-	var/datum/action/innate/deploy_last_shell/redeploy_action = new
-	var/datum/action/innate/choose_modules/modules_action
-	var/chnotify = 0
-
-	var/multicam_on = FALSE
-	var/atom/movable/screen/movable/pic_in_pic/ai/master_multicam
-	var/list/multicam_screens = list()
-	var/list/all_eyes = list()
-	var/max_multicams = 6
-	var/display_icon_override
-
-	var/list/cam_hotkeys = new/list(9)
-	var/atom/cam_prev
-
-	var/datum/robot_control/robot_control
-	/// Station alert datum for showing alerts UI
-	var/datum/station_alert/alert_control
-	///remember AI's last location
-	var/atom/lastloc
-	interaction_range = INFINITY
-
-	var/atom/movable/screen/ai/modpc/interfaceButton
-	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
-	var/posibrain_inside = TRUE
-	///whether its cover is opened, so you can wirecut it for deconstruction
-	var/opened = FALSE
-	///whether AI is anchored or not, used for checks
-	var/is_anchored = TRUE
+#define HOLOGRAM_CHOICE_CHARACTER "Existing Character"
+#define CHARACTER_TYPE_SELF "My Character"
+#define CHARACTER_TYPE_CREWMEMBER "Station Member"
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -604,9 +507,7 @@
 		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
 	else
 		var/mob/living/simple_animal/bot/simple_bot = bot
-		call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 		summon_success = simple_bot.call_bot(src, waypoint)
-		call_bot_cooldown = 0
 
 	var/chat_message = summon_success ? "Sending command to bot..." : "Interface error. Unit is already in use."
 	to_chat(src, span_notice("[chat_message]"))
@@ -619,12 +520,12 @@
 	if (length(cameras))
 		var/obj/machinery/camera/cam = cameras[1]
 		if (cam.can_use())
-			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
+			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A href=byond://?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
 		else
 			var/first_run = FALSE
 			var/dat2 = ""
 			for (var/obj/machinery/camera/camera as anything in cameras)
-				dat2 += "[(!first_run) ? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
+				dat2 += "[(!first_run) ? "" : " | "]<A href=byond://?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
 				first_run = TRUE
 			queueAlarm("--- [alarm_type] alarm detected in [home_name]! ([dat2])", alarm_type)
 	else
@@ -688,94 +589,68 @@
 
 	if(incapacitated)
 		return
-	var/input
-	switch(tgui_input_list(usr, "Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?", "Customize", list("Custom Character","Unique","Animal")))
-		if("Custom Character")
-			switch(tgui_alert(usr,"Would you like to base it off of your current character loadout, or a member on station?", "Customize", list("My Character","Station Member")))
-				if("Station Member")
-					var/list/personnel_list = list()
 
-					for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
-						personnel_list["[record.name]: [record.rank]"] = record.character_appearance//Pull names, rank, and image.
+	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
+	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
+	if(!choice)
+		return
 
-					if(!length(personnel_list))
-						tgui_alert(usr,"No suitable records found. Aborting.")
-						return
-					input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
-					if(isnull(input))
-						return
-					if(isnull(personnel_list[input]))
-						return
-					var/mutable_appearance/character_icon = personnel_list[input]
-					if(character_icon)
-						character_icon.setDir(SOUTH)
-						hologram_appearance = character_icon
+	if(choice == HOLOGRAM_CHOICE_CHARACTER)
+		var/character_type = tgui_alert(usr,
+			"Would you like to base it off of your current character loadout, or a crewmember on the manifest?", "Customize",
+			list(CHARACTER_TYPE_CREWMEMBER, CHARACTER_TYPE_SELF)
+		)
+		switch(character_type)
+			if(CHARACTER_TYPE_CREWMEMBER)
+				var/list/personnel_list = list()
 
-				if("My Character")
-					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
-						if("Yes")
-							var/mob/living/carbon/human/dummy/ai_dummy = new
-							var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-							if(dummy_appearance)
-								qdel(ai_dummy)
-								hologram_appearance = dummy_appearance
-						if("No")
-							return FALSE
+				for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
+					personnel_list["[record.name]: [record.rank]"] = record.character_appearance//Pull names, rank, and image.
+				if(!length(personnel_list))
+					tgui_alert(usr,"No suitable records found. Aborting.")
+					return
 
-		if("Animal")
-			var/list/icon_list = list(
-			"bear" = 'icons/mob/simple/animal.dmi',
-			"carp" = 'icons/mob/simple/carp.dmi',
-			"chicken" = 'icons/mob/simple/animal.dmi',
-			"corgi" = 'icons/mob/simple/pets.dmi',
-			"cow" = 'icons/mob/simple/cows.dmi',
-			"crab" = 'icons/mob/simple/animal.dmi',
-			"fox" = 'icons/mob/simple/pets.dmi',
-			"goat" = 'icons/mob/simple/animal.dmi',
-			"cat" = 'icons/mob/simple/pets.dmi',
-			"cat2" = 'icons/mob/simple/pets.dmi',
-			"poly" = 'icons/mob/simple/animal.dmi',
-			"pug" = 'icons/mob/simple/pets.dmi',
-			"spider" = 'icons/mob/simple/arachnoid.dmi'
-			)
+				var/input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
+				if(isnull(input))
+					return
+				if(isnull(personnel_list[input]))
+					return
+				var/mutable_appearance/character_icon = personnel_list[input]
+				if(character_icon)
+					character_icon.setDir(SOUTH)
+					hologram_appearance = character_icon
 
-			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
-			if(isnull(input))
-				return
-			if(isnull(icon_list[input]))
-				return
-			var/working_state = ""
-			switch(input)
-				if("poly")
-					working_state = "parrot_fly"
-				if("chicken")
-					working_state = "chicken_brown"
-				if("spider")
-					working_state = "guard"
-				else
-					working_state = input
-			hologram_appearance = mutable_appearance(icon_list[input], working_state)
-		else
-			var/list/icon_list = list(
-				"default" = 'icons/mob/silicon/ai.dmi',
-				"floating face" = 'icons/mob/silicon/ai.dmi',
-				"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
-				"horror" = 'icons/mob/silicon/ai.dmi',
-				"clock" = 'icons/mob/silicon/ai.dmi'
+			if(CHARACTER_TYPE_SELF)
+				var/confirmation = tgui_alert(usr,
+					"WARNING: Your AI hologram will take the appearance of your currently selected character \
+					([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). \
+					Are you sure you want to proceed?", "Customize",
+					list("Yes","No")
 				)
-
-			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
-			if(isnull(input))
-				return
-			if(isnull(icon_list[input]))
-				return
-			var/working_state = ""
-			switch(input)
-				if("xeno queen")
-					working_state = "alienq"
+				if(confirmation == "Yes")
+					var/mob/living/carbon/human/dummy/ai_dummy = new()
+					var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+					qdel(ai_dummy)
+					if(dummy_appearance)
+						hologram_appearance = dummy_appearance
+					return TRUE
 				else
-					working_state = input
-			hologram_appearance = mutable_appearance(icon_list[input], working_state)
+					return FALSE
+	else
+		var/list/options = GLOB.ai_hologram_category_options[choice]
+		var/option = tgui_input_list(usr, "Select a hologram", "Hologram", options)
+		if(!option)
+			return
+
+		var/icon = GLOB.ai_hologram_icons[option]
+		if(!icon)
+			CRASH("hologram icon for [option] does not exist in global icon list")
+
+		var/icon_state = GLOB.ai_hologram_icon_state[option]
+		if(!istext(icon_state)) //Possible that the icon_state can be "", which is valid
+			CRASH("hologram icon_state for [option] does not exist in global icon_state list")
+
+		hologram_appearance = mutable_appearance(icon, icon_state)
 	return
 
 /datum/action/innate/core_return
@@ -919,7 +794,7 @@
 	var/list/stored_name = list(null)
 	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
 	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
-	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
 	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
@@ -1026,7 +901,7 @@
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null
-	malfhacking = 0
+	malfhacking = FALSE
 	clear_alert(ALERT_HACKING_APC)
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
@@ -1203,4 +1078,6 @@
 		return ai_voicechanger.say_name
 	return
 
-#undef CALL_BOT_COOLDOWN
+#undef HOLOGRAM_CHOICE_CHARACTER
+#undef CHARACTER_TYPE_SELF
+#undef CHARACTER_TYPE_CREWMEMBER

@@ -33,7 +33,7 @@
 
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
 
-	wound_flags = (ACCEPTS_GAUZE|MANGLES_EXTERIOR|SPLINT_OVERLAY|CAN_BE_GRASPED)
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_EXTERIOR|MANGLES_INTERIOR|SPLINT_OVERLAY|CAN_BE_GRASPED)
 	treatable_by = list(/obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
 	treatable_tools = list(TOOL_WELDER, TOOL_CROWBAR)

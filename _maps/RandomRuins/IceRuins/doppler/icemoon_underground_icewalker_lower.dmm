@@ -18,6 +18,8 @@
 /obj/item/seeds/potato/sweet,
 /obj/item/seeds/onion,
 /obj/item/seeds/onion/red,
+/obj/item/seeds/eggplant,
+/obj/item/seeds/chili,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)

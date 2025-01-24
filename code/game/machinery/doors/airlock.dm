@@ -181,6 +181,8 @@
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
+
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
@@ -1224,8 +1226,9 @@
 		prying_so_hard = FALSE
 		return
 
+	prying_so_hard = FALSE
+
 	if(check_electrified && shock(user, 100))
-		prying_so_hard = FALSE
 		return
 
 	open(BYPASS_DOOR_CHECKS)
@@ -1352,7 +1355,7 @@
 	if(air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	var/unpassable_delay = animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE)
@@ -1360,7 +1363,7 @@
 	if(!air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	var/opaque_delay = animation_segment_delay(AIRLOCK_CLOSING_OPAQUE) - unpassable_delay

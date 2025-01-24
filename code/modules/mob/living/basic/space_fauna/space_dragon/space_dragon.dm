@@ -46,6 +46,7 @@
 	death_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	initial_language_holder = /datum/language_holder/carp/dragon
 	can_buckle_to = FALSE
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
@@ -74,7 +75,7 @@
 	AddElement(/datum/element/content_barfer)
 	AddElement(/datum/element/wall_tearer, tear_time = 4 SECONDS, reinforced_multiplier = 3, do_after_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
 	AddElement(/datum/element/door_pryer, pry_time = 4 SECONDS, interaction_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
-	AddComponent(/datum/component/seethrough_mob)
+	AddComponent(/datum/component/seethrough_mob, keep_color = TRUE)
 	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/dragon(src))
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))

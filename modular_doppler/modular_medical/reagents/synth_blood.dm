@@ -6,7 +6,6 @@
     taste_description = "thick water"
     taste_mult = 1
     color = "#A9FBFB"
-    reagent_state = LIQUID
     chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/synth_blood
@@ -41,7 +40,6 @@
     description = "A highly corrosive solution of hydrogen and fluorine."
     taste_description = "acid"
     taste_mult = 10
-    reagent_state = LIQUID
     ph = 1.0
     creation_purity = REAGENT_STANDARD_PURITY
     purity = REAGENT_STANDARD_PURITY

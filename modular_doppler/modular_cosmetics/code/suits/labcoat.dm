@@ -18,3 +18,15 @@
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/labcoat.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi'
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/medical
+	name = "medical labcoat"
+	desc = "A suit that protects against minor chemical spills. This one is greener than you'd typically expect."
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/labcoat.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi'
+	icon_state = "labcoat_med"
+
+/obj/item/clothing/suit/toggle/labcoat/medical/unbuttoned
+	name = "unbuttoned medical labcoat"
+	desc = "Someone has taken to the task of cutting the top few buttons off this labcoat. It's particularly slutty in just the way you'd expect."
+	icon_state = "labcoat_opentop"

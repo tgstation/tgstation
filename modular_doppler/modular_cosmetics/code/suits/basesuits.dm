@@ -1,24 +1,39 @@
 /obj/item/clothing/suit/bio_suit
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/head/bio.dmi',
+	supported_bodyshapes = list(
+		BODYSHAPE_HUMANOID,
+		BODYSHAPE_DIGITIGRADE
+		)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/suits/bio.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/bio_digi.dmi')
 
 /obj/item/clothing/suit/wizrobe
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	supported_bodyshapes = list(
+		BODYSHAPE_HUMANOID,
+		BODYSHAPE_DIGITIGRADE
+		)
 	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/suits/wizard.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/wizard_digi.dmi')
 
-
+/obj/item/clothing/suit/hooded/wintercoat/medical
+	supported_bodyshapes = null
+	bodyshape_icon_files = null
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/wintercoat.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/wintercoat.dmi'
 
 /obj/item/clothing/suit/toggle/labcoat
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi',
-		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat_digi.dmi')
+	supported_bodyshapes = list(
+		BODYSHAPE_HUMANOID,
+		BODYSHAPE_DIGITIGRADE
+		)
+	bodyshape_icon_files = list(
+		BODYSHAPE_HUMANOID_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat_digi.dmi'
+		)
 
-//God damnit TG you *fuckwits*, why didn't you subtype these properly
+//mfw they aren't subtyped properly
 /obj/item/clothing/suit/toggle/labcoat/genetics
 	greyscale_config_worn_bodyshapes = list(BODYSHAPE_HUMANOID_T = /datum/greyscale_config/labcoat/worn,
 		BODYSHAPE_DIGITIGRADE_T = /datum/greyscale_config/labcoat/worn/digi)
@@ -40,14 +55,18 @@
 /obj/item/clothing/suit/toggle/labcoat/interdyne
 	greyscale_config_worn_bodyshapes = list(BODYSHAPE_HUMANOID_T = /datum/greyscale_config/labcoat/worn,
 		BODYSHAPE_DIGITIGRADE_T = /datum/greyscale_config/labcoat/worn/digi)
-
-
+/obj/item/clothing/suit/toggle/labcoat/cmo
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/labcoat.dmi'
 
 /// SPACESUITS
 /obj/item/clothing/head/helmet/space
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_SNOUTED)
 	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/head/spacehelm.dmi',
 		BODYSHAPE_SNOUTED_T = 'modular_doppler/modular_cosmetics/icons/mob/head/spacehelm_muzzled.dmi')
+
+/obj/item/clothing/head/helmet/space/plasmaman
+	supported_bodyshapes = null
+	bodyshape_icon_files = null
 
 /obj/item/clothing/suit/space
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION

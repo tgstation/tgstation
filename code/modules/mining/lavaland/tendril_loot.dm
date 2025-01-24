@@ -324,8 +324,7 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
-	var/area/current_area = current_location.loc
-	if(!linked || (current_area.area_flags & NOTELEPORT))
+	if(!linked || !check_teleport_valid(src, current_location))
 		to_chat(user, span_warning("[src] fizzles uselessly."))
 		return
 	if(teleporting)
@@ -534,7 +533,6 @@
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
-	reagent_state = LIQUID
 	color = "#976230"
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)

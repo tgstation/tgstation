@@ -3,9 +3,9 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 /// Handles procs and timers for the lost crew bodies
 /datum/lost_crew_manager
-	/// How many credits we reward the medical budget on a succesful revive
+	/// How many credits we reward the medical budget on a successful revive
 	var/credits_on_succes = /datum/supply_pack/medical/lost_crew::cost + CARGO_CRATE_VALUE * 2
-	/// How long after succesful revival we check to see if theyre still alive, and give rewards
+	/// How long after successful revival we check to see if theyre still alive, and give rewards
 	var/succes_check_time = 3 MINUTES
 	/// How much the revived crew start with on their cards
 	var/starting_funds = 100
@@ -72,11 +72,11 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	hersens.AddComponent(
 		/datum/component/ghostrole_on_revive, \
 		/* refuse_revival_if_failed = */ TRUE, \
-		/*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
+		/*on_revival = */ CALLBACK(src, PROC_REF(on_successful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
 	)
 
 /// Set a timer for awarding succes and drop some awesome deathlore
-/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
+/datum/lost_crew_manager/proc/on_successful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
 	var/mob/living/carbon/human/owner = brain.owner
 
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) //for tracking mostly
@@ -128,10 +128,37 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	/// The mind needed to unlock the box
 	var/datum/mind/mind
 
-/obj/item/storage/lockbox/mind/attack_self(mob/user, modifiers)
-	. = ..()
+/obj/item/storage/lockbox/mind/attack_hand(mob/user, list/modifiers)
+	if (!(src in user.held_items))
+		return ..()
+	if(atom_storage.locked && can_unlock(user, silent = TRUE))
+		toggle_locked(user)
+		return
+	return ..()
 
-	if(user.mind == mind)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-		balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
-		update_appearance()
+/obj/item/storage/lockbox/mind/attack_self(mob/user, modifiers)
+	if (atom_storage.locked && can_unlock(user))
+		toggle_locked(user)
+		return
+	return ..()
+
+/obj/item/storage/lockbox/mind/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if (user.mind == mind)
+		return TRUE
+	if (!silent)
+		balloon_alert(user, "access denied!")
+	return FALSE
+
+/obj/item/storage/lockbox/mind/toggle_locked(mob/living/user)
+	if(!atom_storage.locked)
+		return
+
+	atom_storage.locked = STORAGE_NOT_LOCKED
+	balloon_alert(user, "unlocked")
+	update_appearance()
+
+/obj/item/storage/lockbox/mind/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(broken || user.mind != mind)
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Use in-hand to unlock"
+	return CONTEXTUAL_SCREENTIP_SET

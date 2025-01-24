@@ -145,8 +145,7 @@ $department_map: (
           color: black;
 
           > * {
-            height: calc(100% + 0.2em);
-            padding-bottom: 0.2em;
+            height: 100%;
           }
 
           &:first-child {

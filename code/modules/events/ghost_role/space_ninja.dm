@@ -4,7 +4,7 @@
 	max_occurrences = 1
 	weight = 10
 	earliest_start = 20 MINUTES
-	min_players = 20
+	min_players = 35
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "A space ninja infiltrates the station."

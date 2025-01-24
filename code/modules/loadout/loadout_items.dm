@@ -262,6 +262,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		equipped_item.desc = item_details[INFO_DESCRIBED]
 		ADD_TRAIT(equipped_item, TRAIT_WAS_RENAMED, "Loadout")
 		equipped_item.on_loadout_custom_described()
+		equipped_item.AddElement(/datum/element/examined_when_worn)
 	// DOPPLER EDIT ADDITION END
 
 	if(can_be_reskinned && item_details?[INFO_RESKIN])

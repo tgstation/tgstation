@@ -1,8 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { capitalize, createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -15,7 +11,11 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { capitalize, createSearch } from 'tgui-core/string';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -118,8 +118,8 @@ const ShoppingTab = (props) => {
         <Section fill scrollable>
           <Stack vertical mt={-2}>
             <Divider />
-            {goods.map((item, key) => (
-              <Stack.Item key={key}>
+            {goods.map((item) => (
+              <Stack.Item key={item.ref}>
                 <Stack>
                   <span
                     style={{
@@ -138,8 +138,8 @@ const ShoppingTab = (props) => {
                       />
                     </Stack.Item>
                   )}
-                  <Stack.Item>{capitalize(item.name)}</Stack.Item>
-                  <Stack.Item grow color="label" fontSize="10px">
+                  <Stack.Item grow>{capitalize(item.name)}</Stack.Item>
+                  <Stack.Item color="label" fontSize="10px">
                     <Button
                       mt={-1}
                       color="transparent"

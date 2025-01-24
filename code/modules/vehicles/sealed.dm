@@ -1,5 +1,6 @@
 /obj/vehicle/sealed
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 	interaction_flags_mouse_drop = NEED_HANDS
 
 	var/enter_delay = 2 SECONDS

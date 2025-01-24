@@ -106,8 +106,6 @@
 			qdel(surgery)
 			break
 
-	for(var/obj/item/embedded in embedded_objects)
-		embedded.forceMove(src) // It'll self remove via signal reaction, just need to move it
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		phantom_owner.clear_mood_event("embedded")
@@ -413,4 +411,8 @@
 			new_organ.Insert(src)
 
 		update_body_parts()
+		// DOPPLER ADDITION START
+		dna.species.remove_body_markings(src)
+		dna.species.add_body_markings(src)
+		// DOPPLER ADDITION END
 		return TRUE

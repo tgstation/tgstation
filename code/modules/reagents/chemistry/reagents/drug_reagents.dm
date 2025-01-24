@@ -65,7 +65,6 @@
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
-	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	taste_description = "smoke"
 	trippy = FALSE
@@ -102,13 +101,11 @@
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage."
-	reagent_state = LIQUID
 	color = "#0064B4"
 	overdose_threshold = 20
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/opioids = 18) //7.2 per 2 seconds
-
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -137,7 +134,6 @@
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
-	reagent_state = LIQUID
 	color = "#78C8FA" //best case scenario is the "default", gets muddled depending on purity
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -204,7 +200,6 @@
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
-	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	taste_description = "salt" // because they're bathsalts?
@@ -256,7 +251,6 @@
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
 	description = "Amps you up, gets you going, and rapidly restores stamina damage. Side effects include breathlessness and toxicity."
-	reagent_state = LIQUID
 	color = "#78FFF0"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 8)
@@ -279,7 +273,6 @@
 /datum/reagent/drug/happiness
 	name = "Happiness"
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
-	reagent_state = LIQUID
 	color = "#EE35FF"
 	overdose_threshold = 20
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -323,7 +316,6 @@
 /datum/reagent/drug/pumpup
 	name = "Pump-Up"
 	description = "Take on the world! A fast acting, hard hitting drug that pushes the limit on what you can handle."
-	reagent_state = LIQUID
 	color = "#e38e44"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 30
@@ -388,7 +380,6 @@
 /datum/reagent/drug/maint/powder
 	name = "Maintenance Powder"
 	description = "An unknown powder that you most likely gotten from an assistant, a bored chemist... or cooked yourself. It is a refined form of tar that enhances your mental ability, making you learn stuff a lot faster."
-	reagent_state = SOLID
 	color = "#ffffff"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
@@ -416,7 +407,6 @@
 /datum/reagent/drug/maint/sludge
 	name = "Maintenance Sludge"
 	description = "An unknown sludge that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Half refined, it fills your body with itself, making it more resistant to wounds, but causes toxins to accumulate."
-	reagent_state = LIQUID
 	color = "#203d2c"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 25
@@ -446,7 +436,6 @@
 /datum/reagent/drug/maint/tar
 	name = "Maintenance Tar"
 	description = "An unknown tar that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Raw tar, straight from the floor. It can help you with escaping bad situations at the cost of liver damage."
-	reagent_state = LIQUID
 	color = COLOR_BLACK
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -552,7 +541,6 @@
 /datum/reagent/drug/blastoff
 	name = "bLaStOoF"
 	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
-	reagent_state = LIQUID
 	color = "#9015a9"
 	taste_description = "holodisk cleaner"
 	ph = 5
@@ -678,7 +666,6 @@
 /datum/reagent/drug/saturnx
 	name = "Saturn-X"
 	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
-	reagent_state = SOLID
 	taste_description = "metallic bitterness"
 	color = "#638b9b"
 	overdose_threshold = 25
@@ -708,6 +695,7 @@
 	var/list/col_filter_empty = list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 
 	game_plane_master_controller.add_filter("saturnx_filter", 10, color_matrix_filter(col_filter_twothird, FILTER_COLOR_HCY))
+	game_plane_master_controller.add_filter("saturnx_blur", 1, list("type" = "radial_blur", "size" = 0))
 
 	for(var/filter in game_plane_master_controller.get_filters("saturnx_filter"))
 		animate(filter, loop = -1, color = col_filter_full, time = 4 SECONDS, easing = CIRCULAR_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
@@ -718,11 +706,9 @@
 		animate(color = col_filter_half, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 		animate(color = col_filter_twothird, time = 12 SECONDS, easing = LINEAR_EASING)
 
-	game_plane_master_controller.add_filter("saturnx_blur", 1, list("type" = "radial_blur", "size" = 0))
-
 	for(var/filter in game_plane_master_controller.get_filters("saturnx_blur"))
-		animate(filter, loop = -1, size = 0.04, time = 2 SECONDS, easing = ELASTIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
-		animate(size = 0, time = 6 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+		animate(filter, loop = -1, size = 0.02, time = 2 SECONDS, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+		animate(size = 0, time = 6 SECONDS, easing = SINE_EASING)
 
 ///This proc turns the living mob passed as the arg "invisible_man"s invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man, requires_liver = TRUE)
@@ -779,7 +765,6 @@
 /datum/reagent/drug/kronkaine
 	name = "Kronkaine"
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
-	reagent_state = SOLID
 	color = "#FAFAFA"
 	taste_description = "numbing bitterness"
 	ph = 8

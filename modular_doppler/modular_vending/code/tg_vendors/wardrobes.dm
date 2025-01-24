@@ -1,11 +1,21 @@
 /obj/machinery/vending/wardrobe/medi_wardrobe
 	products_doppler = list(
-		/obj/item/clothing/under/misc/doppler_uniform/medical = 5,
 		/obj/item/radio/headset/headset_med = 3,
 		/obj/item/clothing/gloves/latex/nitrile = 2,
 		/obj/item/clothing/suit/toggle/labcoat/hospitalgown = 5,
 		/obj/item/storage/belt/med_bandolier = 2,
 		/obj/item/clothing/suit/jacket/doppler/departmental_jacket/med = 2,
+		/obj/item/clothing/suit/toggle/labcoat/medical = 6,
+		/obj/item/clothing/shoes/medical = 6,
+		/obj/item/clothing/under/rank/medical/scrubs/skirt = 6,
+		/obj/item/clothing/under/rank/medical/scrubs/skirt/green = 6,
+		/obj/item/clothing/under/rank/medical/scrubs/skirt/purple = 6,
+	)
+	excluded_products = list(
+		/obj/item/clothing/shoes/sneakers/blue = 4,
+	)
+	contraband_doppler = list(
+		/obj/item/clothing/suit/toggle/labcoat/medical/unbuttoned = 6,
 	)
 
 /obj/machinery/vending/wardrobe/jani_wardrobe

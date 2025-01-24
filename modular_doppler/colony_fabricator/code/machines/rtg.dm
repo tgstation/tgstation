@@ -6,7 +6,7 @@
 		application."
 	icon = 'modular_doppler/colony_fabricator/icons/machines.dmi'
 	circuit = null
-	power_gen = 7.5 KILO WATTS
+	power_gen = 1 KILO WATTS
 	/// What we turn into when we are repacked
 	var/repacked_type = /obj/item/flatpacked_machine/rtg
 
@@ -18,8 +18,6 @@
 	if(!mapload)
 		flick("rtg_deploy", src)
 
-// Item for creating the arc furnace or carrying it around
-
 // formerly NO_DECONSTRUCTION
 /obj/machinery/power/rtg/portable/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	return NONE
@@ -29,6 +27,8 @@
 
 /obj/machinery/power/rtg/portable/default_pry_open(obj/item/crowbar, close_after_pry, open_density, closed_density)
 	return NONE
+
+// Item for creating the rtg or carrying it around
 
 /obj/item/flatpacked_machine/rtg
 	name = "flat-packed radioisotope thermoelectric generator"
