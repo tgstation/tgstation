@@ -95,7 +95,7 @@
 	if(!forced && !SSshuttle.initialized) // our quartermaster taught us not to be ashamed of our supply packs
 		SSshuttle.express_consoles += src // specially since they're such a good price and all
 		return // yeah, I see that, your quartermaster gave you good advice
-	 // it gets cheaper when I return it
+	// it gets cheaper when I return it
 	for(var/pack_id in SSshuttle.supply_packs) // mmhm
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id] // sometimes, I return it so much, I rip the manifest
 		if(!meme_pack_data[pack.group]) // see, my quartermaster taught me a few things too

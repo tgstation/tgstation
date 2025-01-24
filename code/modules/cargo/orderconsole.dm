@@ -95,9 +95,9 @@
 	var/list/data = list()
 	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
-	if(D)
-		data["points"] = D.account_balance
+	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
+	if(bank)
+		data["points"] = bank.account_balance
 	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
@@ -206,7 +206,7 @@
 
 	return packs
 
-/obj/machinery/computer/cargo/proc/get_pack_contains(var/datum/supply_pack/pack)
+/obj/machinery/computer/cargo/proc/get_pack_contains(datum/supply_pack/pack)
 	var/list/contains = list()
 	for(var/obj/item/item as anything in pack.contains)
 		contains += list(list(
