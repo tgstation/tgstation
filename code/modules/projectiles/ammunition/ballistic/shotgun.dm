@@ -51,7 +51,7 @@
 	icon_state = "ishell2"
 	projectile_type = /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	pellets = 6
-	variance = 10
+	variance = 15
 	randomspread = TRUE
 
 /obj/item/ammo_casing/shotgun/stunslug
@@ -87,7 +87,7 @@
 	icon_state = "gshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot
 	pellets = 6
-	variance = 10
+	variance = 15
 	randomspread = TRUE
 
 /obj/item/ammo_casing/shotgun/buckshot/old
@@ -118,7 +118,7 @@
 	icon_state = "rshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6
-	variance = 10
+	variance = 15
 	randomspread = TRUE
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
@@ -148,7 +148,7 @@
 	icon_state = "ionshell"
 	projectile_type = /obj/projectile/ion/weak
 	pellets = 4
-	variance = 10
+	variance = 15
 	randomspread = TRUE
 
 /obj/item/ammo_casing/shotgun/scatterlaser
@@ -157,7 +157,7 @@
 	icon_state = "lshell"
 	projectile_type = /obj/projectile/beam/scatter
 	pellets = 6
-	variance = 10
+	variance = 15
 	randomspread = TRUE
 
 /obj/item/ammo_casing/shotgun/scatterlaser/emp_act(severity)
