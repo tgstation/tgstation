@@ -219,7 +219,7 @@ GLOBAL_LIST_INIT(allowed_money, typecacheof(list(
 /// Inits GLOB.plant_traits
 /proc/init_plant_traits()
 	var/traits = list()
-	for(var/trait_path in subtypesof(/datum/plant_gene/trait))
+	for(var/trait_path in subtypesof(/datum/plant_gene))
 		traits += new trait_path
 	sort_list(traits, GLOBAL_PROC_REF(cmp_typepaths_asc))
 	return traits

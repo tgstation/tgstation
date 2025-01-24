@@ -1,3 +1,5 @@
+#define IDEAL_GRILLING_TEMPERATURE 200 + T0C
+
 /datum/component/grillable
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // So you can change grill results with various cookstuffs
 	///Result atom type of grilling this object
@@ -14,6 +16,12 @@
 	var/who_placed_us
 	/// Reagents that should be added to the result
 	var/list/added_reagents
+	/// Open turf we were last placed on, to check temperature
+	var/turf/open/listening_turf
+	/// Are we grilling right now?
+	var/is_grilling = FALSE
+	/// What's our current air temperature?
+	var/current_temperature = 0
 
 /datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite, list/added_reagents)
 	. = ..()
@@ -32,14 +40,20 @@
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_OFF, PROC_REF(on_grill_turned_off))
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(on_grill))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_location_changed))
+	on_location_changed(parent)
 
 /datum/component/grillable/UnregisterFromParent()
+	if (listening_turf)
+		UnregisterSignal(listening_turf, COMSIG_TURF_EXPOSE)
+
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_GRILL_TURNED_ON,
 		COMSIG_ITEM_GRILL_TURNED_OFF,
 		COMSIG_ITEM_GRILL_PROCESS,
 		COMSIG_ITEM_GRILL_PLACED,
+		COMSIG_MOVABLE_MOVED
 	))
 
 // Inherit the new values passed to the component
@@ -55,6 +69,32 @@
 	if(use_large_steam_sprite)
 		src.use_large_steam_sprite = use_large_steam_sprite
 
+/datum/component/grillable/Destroy(force)
+	. = ..()
+	STOP_PROCESSING(SSmachines, src)
+	listening_turf = null
+
+/// Signal proc for [COMSIG_MOVABLE_MOVED], our location has changed and we should register for temperature information
+/datum/component/grillable/proc/on_location_changed(atom/source)
+	SIGNAL_HANDLER
+
+	if (is_grilling)
+		on_grill_turned_off(source)
+		STOP_PROCESSING(SSmachines, src)
+
+	if (listening_turf)
+		UnregisterSignal(listening_turf, COMSIG_TURF_EXPOSE)
+
+	if (isnull(source))
+		return
+
+	var/turf/open/current_turf = source.loc
+	if (!isopenturf(current_turf))
+		return
+	listening_turf = current_turf
+	RegisterSignal(current_turf, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_atmos_changed))
+	on_turf_atmos_changed(current_turf, current_turf.air, current_turf.air?.temperature || 0)
+
 /// Signal proc for [COMSIG_ITEM_GRILL_PLACED], item is placed on the grill.
 /datum/component/grillable/proc/on_grill_placed(datum/source, mob/griller)
 	SIGNAL_HANDLER
@@ -62,12 +102,11 @@
 	if(griller && griller.mind)
 		who_placed_us = REF(griller.mind)
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-
 /// Signal proc for [COMSIG_ITEM_GRILL_TURNED_ON], starts the grilling process.
 /datum/component/grillable/proc/on_grill_turned_on(datum/source)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_grilled_item_overlay))
 
+	is_grilling = TRUE
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance()
 
@@ -75,6 +114,7 @@
 /datum/component/grillable/proc/on_grill_turned_off(datum/source)
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 
+	is_grilling = FALSE
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance()
 
@@ -138,15 +178,37 @@
 	else
 		examine_list += span_danger("[parent] should probably not be put on the grill.")
 
-///Ran when an object moves from the grill
-/datum/component/grillable/proc/on_moved(atom/source, atom/OldLoc, Dir, Forced)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	source.update_appearance()
-
 /datum/component/grillable/proc/add_grilled_item_overlay(datum/source, list/overlays)
 	SIGNAL_HANDLER
 
 	overlays += mutable_appearance('icons/effects/steam.dmi', "[use_large_steam_sprite ? "steam_triple" : "steam_single"]", ABOVE_OBJ_LAYER)
+
+/// Signal proc for [COMSIG_TURF_EXPOSE], atmosphere might be hot enough for grilling.
+/datum/component/grillable/proc/on_turf_atmos_changed(turf/open/source, datum/gas_mixture/air, exposed_temperature)
+	SIGNAL_HANDLER
+
+	if (!is_grilling)
+		if (exposed_temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			return
+		on_grill_turned_on(source)
+		START_PROCESSING(SSmachines, src)
+		current_temperature = exposed_temperature
+	else
+		if (exposed_temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			current_temperature = exposed_temperature
+			return
+		on_grill_turned_off(source)
+		STOP_PROCESSING(SSmachines, src)
+
+// Grill while exposed to hot air
+/datum/component/grillable/process(seconds_per_tick)
+	var/atom/atom_parent = parent
+
+	// Grill faster as we approach 200 degrees celsius
+	var/check_temperature = clamp(current_temperature, FIRE_MINIMUM_TEMPERATURE_TO_EXIST, IDEAL_GRILLING_TEMPERATURE)
+	var/temp_scale = (check_temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST) / (IDEAL_GRILLING_TEMPERATURE - FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	var/speed_modifier = LERP(0.5, 1, temp_scale)
+
+	on_grill(parent, atom_parent.loc, seconds_per_tick * speed_modifier)
+
+#undef IDEAL_GRILLING_TEMPERATURE
