@@ -63,9 +63,9 @@
 		/datum/reagent/consumable/coffee,
 	)
 
-/obj/item/reagent_containers/cup/bottle/alchemist_basic/Initialize(mapload)
-	list_reagents = list(pick(possible_reagents) = 50)
-	. = ..()
+/obj/item/reagent_containers/cup/bottle/alchemist_basic/add_initial_reagents()
+	var/our_reagent = pick(possible_reagents)
+	reagents.add_reagent(our_reagent, 50)
 
 /obj/item/reagent_containers/cup/bottle/alchemist_random
 	name = "skull-labeled bottle"
@@ -96,9 +96,13 @@
 	)
 
 /obj/item/reagent_containers/cup/bottle/alchemist_random/Initialize(mapload)
-	list_reagents = list(get_random_reagent_id() = rand(20, 50))
 	. = ..()
 	name = pick(possible_names)
+
+/obj/item/reagent_containers/cup/bottle/alchemist_random/add_initial_reagents()
+	var/our_reagent = get_random_reagent_id()
+	var/our_amount = rand(20, 50)
+	reagents.add_reagent(our_reagent, our_amount)
 
 /obj/item/storage/box/alchemist_basic_chems
 	name = "box of alchemical bases"
