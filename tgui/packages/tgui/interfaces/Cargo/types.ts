@@ -43,8 +43,8 @@ export type Supply = {
 
 type SupplyItem = {
   name: string;
-  icon: string;
-  icon_state: string;
+  icon: string | null;
+  icon_state: string | null;
   amount: number;
 };
 
