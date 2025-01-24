@@ -104,10 +104,13 @@
 		during the Spinward Hunting and Shooting policy hearings, this import \
 		is heavily taxed, despite being 'legal'. I hope the price tag is worth it."
 	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ARMORY
+	access_view = ACCESS_ARMORY
 	contains = list(
 		/obj/item/storage/box/lethalshot = 3,
 	)
 	crate_name = "shotgun shell crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
