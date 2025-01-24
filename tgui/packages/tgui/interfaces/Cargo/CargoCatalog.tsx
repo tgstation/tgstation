@@ -209,8 +209,8 @@ function CatalogList(props: CatalogListProps) {
           <ImageButton
             key={pack.id}
             fluid
-            dmIcon={pack.crate_icon}
-            dmIconState={pack.crate_icon_state}
+            dmIcon={pack.first_item_icon}
+            dmIconState={pack.first_item_icon_state}
             imageSize={32}
             color={color}
             disabled={(amount_by_name[pack.name] || 0) >= max_order}

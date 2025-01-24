@@ -190,14 +190,14 @@
 		if(pack.contraband && !contraband)
 			continue
 
-		var/obj/structure/closet/crate/crate = pack.crate_type
+		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
 		packs += list(list(
 			"name" = pack.name,
 			"cost" = pack.get_cost() * get_discount(),
 			"id" = pack_id,
 			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"crate_icon" = crate?.icon,
-			"crate_icon_state" = crate?.icon_state,
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = pack.goody,
 			"access" = pack.access,
 			"contraband" = pack.contraband,

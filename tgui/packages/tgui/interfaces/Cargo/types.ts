@@ -31,8 +31,8 @@ export type Supply = {
   access: BooleanLike;
   cost: number;
   desc: string;
-  crate_icon: string | null;
-  crate_icon_state: string | null;
+  first_item_icon: string | null;
+  first_item_icon_state: string | null;
   goody: BooleanLike;
   id: string;
   name: string;
