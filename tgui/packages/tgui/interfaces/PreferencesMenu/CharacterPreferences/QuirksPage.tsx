@@ -488,7 +488,7 @@ export function QuirksPage(props) {
               Current Quirks
             </Box>
           </Stack.Item>
-          &nbsp;
+          &nbsp; {/* Filler to better align the menu*/}
           <Stack.Item grow width="100%">
             <QuirkList
               selected
