@@ -1,0 +1,4 @@
+author: "Gaxeer"
+delete-after: True
+changes:
+  - refactor: "replace bubble sort with timsort for cameralist, move global procs to `cameranet` datum"
