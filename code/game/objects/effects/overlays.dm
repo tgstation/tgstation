@@ -69,3 +69,4 @@
 	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = RESET_TRANSFORM | LONG_GLIDE | PIXEL_SCALE | TILE_BOUND

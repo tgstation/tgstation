@@ -775,7 +775,6 @@
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 
-	threat_reduction = 5
 	dynamic_threat_id = "GMM Econ Spotlight"
 
 #undef GLOW_NEBULA
