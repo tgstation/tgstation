@@ -309,11 +309,17 @@ function CatalogPackInfo(props: CatalogContentsProps) {
                   fluid
                   dmIcon={item.icon}
                   dmIconState={item.icon_state}
+                  buttonsAlt={
+                    !!item.amount && (
+                      <Stack.Item backgroundColor={'rgba(255, 255, 255, 0.1'}>
+                        x{item.amount}
+                      </Stack.Item>
+                    )
+                  }
                   imageSize={32}
                 >
                   <Stack fill>
                     <Stack.Item textAlign="left">{item.name}</Stack.Item>
-                    {!!item.amount && <Stack.Item>x{item.amount}</Stack.Item>}
                   </Stack>
                 </ImageButton>
               ))
