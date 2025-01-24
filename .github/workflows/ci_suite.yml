@@ -197,14 +197,9 @@ jobs:
     name: Integration Tests
     needs: collect_data
 
-    strategy:
-      fail-fast: false
-      matrix:
-        map: ${{ fromJSON(needs.collect_data.outputs.maps).paths }}
-
-    uses: ./.github/workflows/run_integration_tests.yml
+    uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
-      map: ${{ matrix.map }}
+      maps: ${{ needs.collect_data.outputs.maps }}
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   run_alternate_tests:

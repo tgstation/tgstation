@@ -19,6 +19,7 @@ on:
 
 jobs:
   run_integration_tests:
+    name: Run Integration Tests (${{ inputs.map }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:
