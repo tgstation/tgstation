@@ -86,7 +86,7 @@
 	bare_wound_bonus = 5
 	speed = 1.1
 	wound_falloff_tile = -0.5 //We would very much like this to cause wounds despite the low damage, so the drop off is relatively slow
-	sharpness = SHARP_POINTY
+	sharpness = SHARP_EDGED
 
 /**
  * A slightly weaker version of the buckshot, available from the blackmarket.
