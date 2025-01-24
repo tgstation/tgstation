@@ -105,7 +105,7 @@
 		is heavily taxed, despite being 'legal'. I hope the price tag is worth it."
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
-		/obj/effect/spawner/random/armory/buckshot,
+		/obj/item/storage/box/lethalshot = 3,
 	)
 	crate_name = "shotgun shell crate"
 
