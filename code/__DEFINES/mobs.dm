@@ -329,6 +329,9 @@
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
 
+//How many slimes can be on the same tile before it can no longer reproduce.
+#define SLIME_OVERCROWD_AMOUNT 2
+
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 3 //Min friendship to order it to follow
 #define SLIME_FRIENDSHIP_STOPEAT 5 //Min friendship to order it to stop eating someone

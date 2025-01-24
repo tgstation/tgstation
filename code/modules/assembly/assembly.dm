@@ -23,7 +23,7 @@
 	var/secured = TRUE
 	var/list/attached_overlays = null
 	var/obj/item/assembly_holder/holder = null
-	var/attachable = FALSE // can this be attached to wires
+	var/assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT // how does the assembly behave with respect to what it's connected to
 	var/datum/wires/connected = null
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
@@ -126,7 +126,7 @@
 			balloon_alert(user, "can't attach another of that!")
 			return
 		if(new_assembly.secured || secured)
-			balloon_alert(user, "both devices not attachable!")
+			balloon_alert(user, "both devices not assembly_behavior!")
 			return
 
 		holder = new /obj/item/assembly_holder(drop_location())

@@ -245,7 +245,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
-	affected_mob.reagents?.chem_temp += heating
+	var/datum/reagents/mob_reagents = affected_mob.reagents
+	if(mob_reagents)
+		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating)
 	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if(!ishuman(affected_mob))
 		return
@@ -908,7 +910,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/rezadone
 	name = "Inreziniver"
-	description = "Makes the user horribly afraid of all things related to carps."
+	description = "Makes the user horribly afraid of all things related to fish."
 	color = "#c92eb4"
 	ph = 13.9
 	metabolization_rate = 0.05 * REM
@@ -916,8 +918,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/rezadone/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/carps, TRAUMA_RESILIENCE_ABSOLUTE)
+	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/fish, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/inverse/rezadone/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/carps, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/fish, resilience = TRAUMA_RESILIENCE_ABSOLUTE)

@@ -1008,7 +1008,7 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "tv" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/mob/living/simple_animal/hostile/zombie,
+/mob/living/basic/zombie,
 /turf/open/indestructible/white{
 	icon_state = "showroomfloor"
 	},

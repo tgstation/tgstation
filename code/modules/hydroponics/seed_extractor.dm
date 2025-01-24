@@ -203,7 +203,10 @@
 				"name" = reagent.name,
 				"rate" = reagent.rate
 			))
-		seed_data["volume_mod"] = (locate(/datum/plant_gene/trait/maxchem) in to_add.genes) ? 2 : 1
+		var/datum/plant_gene/trait/maxchem/volume_trait = locate(/datum/plant_gene/trait/maxchem) in to_add.genes
+		var/datum/plant_gene/trait/modified_volume/volume_unit_trait = locate(/datum/plant_gene/trait/modified_volume) in to_add.genes
+		seed_data["volume_mod"] = volume_trait ? volume_trait.rate : 1
+		seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capcity : PLANT_REAGENT_VOLUME
 		seed_data["mutatelist"] = list()
 		for(var/obj/item/seeds/mutant as anything in to_add.mutatelist)
 			seed_data["mutatelist"] += initial(mutant.plantname)
@@ -265,11 +268,10 @@
 	var/list/data = list()
 	data["cycle_seconds"] = HYDROTRAY_CYCLE_DELAY / 10
 	data["trait_db"] = list()
-	for(var/trait_path in subtypesof(/datum/plant_gene/trait))
-		var/datum/plant_gene/trait/trait = new trait_path
+	for(var/datum/plant_gene/trait as anything in GLOB.plant_traits)
 		var/trait_data = list(list(
 			"path" = trait.type,
-			"name" = trait.name,
+			"name" = trait.get_name(),
 			"icon" = trait.icon,
 			"description" = trait.description
 		))
