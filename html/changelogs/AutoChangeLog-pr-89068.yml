@@ -1,5 +1,0 @@
-author: "Exester509"
-delete-after: True
-changes:
-  - bugfix: "The Stargazer, a cosmic heretic's ascension, can be properly commanded once more."
-  - code_imp: "Basic mob pets can now target objects, or objects and walls by using two new targeting strategies."

@@ -1,4 +1,0 @@
-author: "StrangeWeirdKitten"
-delete-after: True
-changes:
-  - bugfix: "Fixes uncapped xenobio slime multiplication which can easily result in hundreds of slimes."
