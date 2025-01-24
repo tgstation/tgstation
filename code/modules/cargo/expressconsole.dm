@@ -1,3 +1,4 @@
+#define EXPRESS_EMAG_DISCOUNT 0.72
 #define BEACON_PRINT_COOLDOWN 10 SECONDS
 
 /obj/machinery/computer/cargo/express
@@ -136,6 +137,9 @@
 	data["supplies"] = meme_pack_data
 	return data
 
+/obj/machinery/computer/cargo/express/get_discount()
+	return (obj_flags & EMAGGED) ? EXPRESS_EMAG_DISCOUNT : 1
+
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -240,4 +244,5 @@
 			update_appearance()
 			return TRUE
 
+#undef EXPRESS_EMAG_DISCOUNT
 #undef BEACON_PRINT_COOLDOWN

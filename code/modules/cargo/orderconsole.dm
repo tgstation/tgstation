@@ -1,5 +1,3 @@
-#define EXPRESS_EMAG_DISCOUNT 0.72
-
 /obj/machinery/computer/cargo
 	name = "supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
@@ -195,7 +193,7 @@
 		var/obj/structure/closet/crate/crate = pack.crate_type
 		packs += list(list(
 			"name" = pack.name,
-			"cost" = pack.get_cost() * (express ? get_discount() : 1),
+			"cost" = pack.get_cost() * get_discount(),
 			"id" = pack_id,
 			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
 			"crate_icon" = crate?.icon,
@@ -221,7 +219,7 @@
 	return contains
 
 /obj/machinery/computer/cargo/proc/get_discount()
-	return (obj_flags & EMAGGED) ? EXPRESS_EMAG_DISCOUNT : 1
+	return 1
 
 /**
  * adds an supply pack to the checkout cart
@@ -491,5 +489,3 @@
 
 	var/datum/signal/status_signal = new(list("command" = command))
 	frequency.post_signal(src, status_signal)
-
-#undef EXPRESS_EMAG_DISCOUNT
