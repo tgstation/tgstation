@@ -184,7 +184,7 @@
 		if(express && (pack.hidden || pack.special))
 			continue
 
-		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only)
+		if(!express && ((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only))
 			continue
 
 		if(pack.contraband && !contraband)

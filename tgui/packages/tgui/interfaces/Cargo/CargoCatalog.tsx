@@ -189,9 +189,9 @@ function CatalogList(props: CatalogListProps) {
         let color = '';
         const digits = Math.floor(Math.log10(pack.cost) + 1);
         if (self_paid) {
-          color = 'orange';
-        } else if (digits >= 5 && digits <= 6) {
           color = 'yellow';
+        } else if (digits >= 5 && digits <= 6) {
+          color = 'orange';
         } else if (digits > 6) {
           color = 'bad';
         }
