@@ -220,9 +220,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "be" = (
-/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "bj" = (
