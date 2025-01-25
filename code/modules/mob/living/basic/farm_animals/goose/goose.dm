@@ -90,7 +90,7 @@
 	/// Cooldown to make sure we can't spam chat with notifications that we are full
 	COOLDOWN_DECLARE(eat_fail_feedback_cooldown)
 	/// An action we use to throw up
-	var/datum/action/cooldown/mob_cooldown/vomit_action
+	var/datum/action/cooldown/mob_cooldown/goose_vomit/vomit_action
 
 /mob/living/basic/goose/vomit/Initialize(mapload)
 	. = ..()

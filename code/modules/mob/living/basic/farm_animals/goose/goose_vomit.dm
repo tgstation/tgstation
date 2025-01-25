@@ -10,17 +10,17 @@
 	/// Extra time to spend chundering
 	var/extra_duration = 0 SECONDS
 
-/datum/action/cooldown/mob_cooldown/Grant(mob/granted_to)
+/datum/action/cooldown/mob_cooldown/goose_vomit/Grant(mob/granted_to)
 	. = ..()
 	if(!owner)
 		return
 	RegisterSignals(owner, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED), PROC_REF(update_status_on_signal))
 
-/datum/action/cooldown/mob_cooldown/Remove(mob/removed_from)
+/datum/action/cooldown/mob_cooldown/goose_vomit/Remove(mob/removed_from)
 	UnregisterSignal(owner, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/IsAvailable(feedback)
+/datum/action/cooldown/mob_cooldown/goose_vomit/IsAvailable(feedback)
 	. = ..()
 	if (!.)
 		return FALSE
@@ -34,7 +34,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/goose_vomit/Activate(atom/target)
 	StartCooldown(INFINITY)
 	if (istype(owner, /mob/living/basic/goose))
 		owner.icon_state = "vomit"
@@ -45,7 +45,7 @@
 		start_vomiting()
 
 /// Start the performance
-/datum/action/cooldown/mob_cooldown/proc/start_vomiting()
+/datum/action/cooldown/mob_cooldown/goose_vomit/proc/start_vomiting()
 	var/mob/living/living_owner = owner
 	living_owner.apply_status_effect(/datum/status_effect/goose_vomit, extra_duration)
 	extra_duration = 0
@@ -84,7 +84,7 @@
 		flick("vomit_end", owner)
 		goose_mob.icon_state = goose_mob.icon_living
 
-	var/datum/action/cooldown/mob_cooldown/vomit_action = locate() in owner.actions
+	var/datum/action/cooldown/mob_cooldown/goose_vomit/vomit_action = locate() in owner.actions
 	vomit_action?.StartCooldown(0 SECONDS)
 
 /// Don't keep vomiting from beyond the grave
