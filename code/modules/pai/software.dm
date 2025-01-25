@@ -141,7 +141,6 @@
 		choice.name = screen_option.name
 		choice.image = image(icon = screen_option.icon, icon_state = screen_option.icon_state)
 		possible_choices[screen_option] += choice
-	to_chat(world, "Possible choices len: [possible_choices.len]")
 	var/atom/anchor = get_atom_on_turf(src)
 	var/new_image = show_radial_menu(src, anchor, possible_choices, custom_check = CALLBACK(src, PROC_REF(check_menu), anchor), radius = 40, require_near = TRUE)
 	if(isnull(new_image))
