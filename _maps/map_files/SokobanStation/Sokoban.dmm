@@ -1128,6 +1128,7 @@
 /area/station/service/janitor)
 "eW" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/telecomms/server/presets/command,
 /turf/open/floor/circuit/green,
 /area/station/engineering/gravity_generator)
 "eX" = (
@@ -11648,6 +11649,7 @@
 /turf/open/space/basic,
 /area/space)
 "ZL" = (
+/obj/machinery/telecomms/server/presets/security,
 /turf/open/floor/circuit/green,
 /area/station/engineering/gravity_generator)
 "ZM" = (
