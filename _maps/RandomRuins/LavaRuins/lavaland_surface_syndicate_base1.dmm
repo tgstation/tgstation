@@ -667,6 +667,9 @@
 /area/ruin/syndicate_lava_base/chemistry)
 "fx" = (
 /obj/structure/sign/warning/secure_area,
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/cargo)
 "fA" = (
@@ -1866,6 +1869,9 @@
 /area/ruin/syndicate_lava_base/arrivals)
 "oF" = (
 /obj/structure/sign/warning/secure_area,
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/arrivals)
 "oH" = (
