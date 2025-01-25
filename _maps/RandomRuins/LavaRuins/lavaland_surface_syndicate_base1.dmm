@@ -2169,6 +2169,10 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
+"sB" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/cargo)
 "sH" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Monkey Pen"
@@ -3322,8 +3326,8 @@
 /obj/structure/table/wood,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/machinery/airalarm/directional/north,
-/obj/item/crowbar/red,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Jr" = (
@@ -3654,6 +3658,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
+"Oj" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/arrivals)
 "Oq" = (
 /obj/effect/spawner/random/vending/colavend{
 	hacked = 1
@@ -4133,8 +4141,8 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/machinery/airalarm/directional/north,
-/obj/item/crowbar/red,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Vb" = (
@@ -4512,7 +4520,7 @@
 /obj/structure/table/wood,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
-/obj/item/crowbar/red,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Zw" = (
@@ -5331,7 +5339,7 @@ Vb
 mT
 mT
 mT
-oF
+Oj
 ab
 ab
 ab
@@ -6654,7 +6662,7 @@ ab
 ab
 ab
 ab
-fx
+sB
 gh
 fx
 si
