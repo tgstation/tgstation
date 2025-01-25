@@ -44,13 +44,13 @@
 	var/frNum = ++forensicPrintCount
 
 	report_paper.name = "FR-[frNum] 'Forensic Record'"
-	var/report_text = "<H1>Forensic Record - (FR-[frNum])</H1><HR>"
+	var/list/report_text = list("<H1>Forensic Record - (FR-[frNum])</H1><HR>")
 
 	for(var/list/log in log_data)
 		report_text += "<H2>[capitalize(log["scan_target"])] scan at [log["scan_time"]]</H2><DL>"
 
 		if(!log[DETSCAN_CATEGORY_FIBER] && !log[DETSCAN_CATEGORY_BLOOD] && !log[DETSCAN_CATEGORY_FINGERS] && !log[DETSCAN_CATEGORY_DRINK] && !log[DETSCAN_CATEGORY_ACCESS])
-			report_text += "No forensic traces found.<BR>"
+			report_text += "No forensic traces found.<HR>"
 			continue
 
 		if(log[DETSCAN_CATEGORY_FIBER])
@@ -88,7 +88,7 @@
 
 	report_text += "<H1>Notes:</H1><BR>"
 
-	report_paper.add_raw_text(report_text)
+	report_paper.add_raw_text(report_text.Join())
 	report_paper.update_appearance()
 
 	if(ismob(loc))
