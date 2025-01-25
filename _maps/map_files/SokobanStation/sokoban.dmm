@@ -4946,6 +4946,9 @@
 	id = "AI";
 	pixel_x = -22
 	},
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "vi" = (
@@ -5079,6 +5082,9 @@
 /area/station/engineering/atmos)
 "vE" = (
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "vH" = (
