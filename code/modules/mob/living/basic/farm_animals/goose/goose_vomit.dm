@@ -5,8 +5,10 @@
 	button_icon_state = "vomit"
 	button_icon = 'icons/mob/simple/animal.dmi'
 	cooldown_time = INFINITY // We reset the cooldown when we are done throwing up
+	text_cooldown = FALSE
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
+	click_to_activate = FALSE
 	/// Extra time to spend chundering
 	var/extra_duration = 0 SECONDS
 
