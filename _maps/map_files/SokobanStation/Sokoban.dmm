@@ -1276,10 +1276,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"fD" = (
-/obj/machinery/air_sensor/engine_chamber,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "fG" = (
 /obj/structure/window/spawner/directional/north,
 /obj/structure/curtain/cloth/fancy,
@@ -7330,11 +7326,8 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
-/obj/effect/mapping_helpers/airalarm/link{
-	chamber_id = "engine"
-	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
+/area/station/engineering/supermatter)
 "GN" = (
 /obj/machinery/vending/hydronutrients,
 /obj/effect/turf_decal/box/white,
@@ -111274,7 +111267,7 @@ pT
 mK
 Ek
 id
-fD
+HG
 Ze
 HG
 tS
