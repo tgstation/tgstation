@@ -5522,6 +5522,7 @@
 #include "code\modules\pai\say.dm"
 #include "code\modules\pai\shell.dm"
 #include "code\modules\pai\software.dm"
+#include "code\modules\pai\datums\screen_icon.dm"
 #include "code\modules\paperwork\carbonpaper.dm"
 #include "code\modules\paperwork\clipboard.dm"
 #include "code\modules\paperwork\contract.dm"
