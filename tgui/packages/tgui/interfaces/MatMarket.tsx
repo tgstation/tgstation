@@ -86,7 +86,7 @@ export const MatMarket = (props) => {
               an 20% market fee. To prevent market manipulation, all registered
               traders can buy a total of 10 full stacks of materials at a time.
               <br /> <br />
-              All new purchases will include the cost of the shipped crate,
+              All new purchases will include the cost of the shipped crate ({CARGO_CRATE_VALUE}),
               which may be recycled afterwards.
             </Collapsible>
           </NoticeBox>
@@ -173,7 +173,7 @@ export const MatMarket = (props) => {
                         material.price * multiplier ||
                       material.requested + 1 > material.quantity
                     }
-                    tooltip={material.price * 1}
+                    tooltip={Math.round(material.price * 1 * multiplier)}
                     onClick={() =>
                       act('buy', {
                         quantity: 1,
@@ -191,7 +191,7 @@ export const MatMarket = (props) => {
                         material.price * 5 * multiplier ||
                       material.requested + 5 > material.quantity
                     }
-                    tooltip={material.price * 5}
+                    tooltip={Math.round(material.price * 5 * multiplier)}
                     onClick={() =>
                       act('buy', {
                         quantity: 5,
@@ -209,7 +209,7 @@ export const MatMarket = (props) => {
                         material.price * 10 * multiplier ||
                       material.requested + 10 > material.quantity
                     }
-                    tooltip={material.price * 10}
+                    tooltip={Math.round(material.price * 10 * multiplier)}
                     onClick={() =>
                       act('buy', {
                         quantity: 10,
@@ -227,7 +227,7 @@ export const MatMarket = (props) => {
                         material.price * 25 * multiplier ||
                       material.requested + 25 > material.quantity
                     }
-                    tooltip={material.price * 25}
+                    tooltip={Math.round(material.price * 25 * multiplier)}
                     onClick={() =>
                       act('buy', {
                         quantity: 25,
@@ -245,7 +245,7 @@ export const MatMarket = (props) => {
                         material.price * 50 * multiplier ||
                       material.requested + 50 > material.quantity
                     }
-                    tooltip={material.price * 50}
+                    tooltip={Math.round(material.price * 50 * multiplier)}
                     onClick={() =>
                       act('buy', {
                         quantity: 50,
