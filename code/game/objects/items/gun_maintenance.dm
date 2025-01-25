@@ -32,11 +32,11 @@
 	var/obj/item/gun/gun_to_fix = interacting_with
 
 	var/gun_is_damaged = gun_to_fix.get_integrity() < gun_to_fix.max_integrity ? TRUE : FALSE
-	var/charges_to_use
+	var/use_charge = FALSE
 
 	if(gun_is_damaged)
 		gun_to_fix.repair_damage(gun_to_fix.max_integrity)
-		charges_to_use ++
+		use_charge = TRUE
 
 	if(istype(gun_to_fix, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/ballistic_gun_to_fix = gun_to_fix
@@ -50,18 +50,25 @@
 				rifle_to_fix.jammed = FALSE
 				rifle_to_fix.unjam_chance = initial(rifle_to_fix.unjam_chance)
 				rifle_to_fix.jamming_chance = initial(rifle_to_fix.jamming_chance)
-		charges_to_use ++
+		use_charge = TRUE
 
-	if(!charges_to_use)
+	if(!use_charge)
 		balloon_alert(user, "no need for repair!")
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "maintenance complete")
-	use_the_kit(charges_to_use)
+	use_the_kit()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gun_maintenance_supplies/proc/use_the_kit(charges_to_use)
-	uses = clamp(uses - charges_to_use, 0, max_uses)
+/obj/item/gun_maintenance_supplies/proc/use_the_kit()
+	uses --
 	if(!uses)
 		qdel(src)
 
+/obj/item/gun_maintenance_supplies/makeshift
+	name = "makeshift gun maintenance kit"
+	desc = "A toolbox containing enough supplies to juryrig repairs on firearms. Can be applied to firearms to maintain them. \
+		The tools are a little basic, and the materials low-quality, but it gets the job done."
+	icon_state = "maint_kit_makeshift"
+	inhand_icon_state "toolbox_blue"
+	uses = 1
