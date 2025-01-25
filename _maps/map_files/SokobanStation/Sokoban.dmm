@@ -880,6 +880,7 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 8
 	},
+/obj/effect/landmark/navigate_destination/chapel,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
 "eb" = (
@@ -1869,6 +1870,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination/incinerator,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "ig" = (
@@ -3204,6 +3206,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/det,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "oD" = (
@@ -4055,12 +4058,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination/hydro,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/landmark/navigate_destination/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "rV" = (
@@ -4341,6 +4346,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "ta" = (
 /obj/machinery/vending/tool,
+/obj/effect/landmark/navigate_destination/tools,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "tc" = (
@@ -4583,6 +4589,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/landmark/navigate_destination/bar,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "tJ" = (
@@ -5030,6 +5037,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/bridge,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vL" = (
@@ -6032,6 +6040,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/landmark/navigate_destination/med,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "Ad" = (
@@ -6311,6 +6320,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
+/obj/effect/landmark/navigate_destination/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Bn" = (
@@ -6513,6 +6523,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/lawyer,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "Ck" = (
@@ -6600,6 +6611,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/cable,
 /obj/effect/turf_decal/caution,
+/obj/effect/landmark/navigate_destination/atmos,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "CR" = (
@@ -7469,6 +7481,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/landmark/navigate_destination/aiupload,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "Hx" = (
@@ -7944,6 +7957,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination/vault,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "Jr" = (
@@ -8433,6 +8447,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/effect/landmark/navigate_destination/cargo,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "LD" = (
@@ -9459,6 +9474,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination/research,
 /turf/open/floor/carpet/purple,
 /area/station/science/lab)
 "PH" = (
@@ -9853,6 +9869,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/sec,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "Rt" = (
@@ -10159,6 +10176,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "SP" = (
@@ -10856,6 +10874,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/janitor,
 /turf/open/floor/plating,
 /area/station/service/janitor)
 "VY" = (
