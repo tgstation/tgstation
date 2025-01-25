@@ -135,8 +135,7 @@
  */
 /mob/living/silicon/pai/proc/change_image()
 	var/list/possible_choices = list()
-	for(var/path in subtypesof(/datum/pai_screen_image))
-		var/datum/pai_screen_image/screen_option = path
+	for(var/datum/pai_screen_image/screen_option as anything in subtypesof(/datum/pai_screen_image))
 		var/datum/radial_menu_choice/choice = new
 		choice.name = screen_option.name
 		choice.image = image(icon = screen_option.icon, icon_state = screen_option.icon_state)
