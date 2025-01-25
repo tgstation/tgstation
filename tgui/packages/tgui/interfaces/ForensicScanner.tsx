@@ -72,9 +72,9 @@ export const ForensicScanner = (props) => {
                         ))}
                       </LabeledList.Item>
                     )}
-                    {log.Prints && Object.keys(log.Prints).length > 0 && (
+                    {log.Prints && Object.values(log.Prints).length > 0 && (
                       <LabeledList.Item label="Fingerprints">
-                        {Object.keys(log.Prints).map((print) => (
+                        {Object.values(log.Prints).map((print) => (
                           <Box
                             key={print}
                             py={0.5}
