@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "Cargo can order lethal shotgun shells from the Imports tab, at a premium."
-  - balance: "The black market source for buckshot can get normal types of buckshot, but some of it can be a bit dodgy."
-  - balance: "Buckshot is now more wound focused over damage. Slugs are now more armor penetration focused over damage."
-  - balance: "The bulldog shotgun remains otherwise unchanged damage wise, but does gain the above extra bonuses."

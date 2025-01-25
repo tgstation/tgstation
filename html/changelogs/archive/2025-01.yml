@@ -663,3 +663,29 @@
   mc-oofert:
   - rscadd: outpost 31, the icebox ruin. Also its associated mobs, and megafauna,
       and loot. Im not spoiling anything, find it yourself.
+2025-01-25:
+  Absolucy:
+  - balance: Simultaneously having traits that both make you easier and harder to
+      wound will now act like you have neither, resulting in you taking the normal
+      amount of wound damage.
+  EEASAS:
+  - map: modularizes the comms agent ruin on icebox
+  Gaxeer:
+  - refactor: replace bubble sort with timsort for cameralist, move global procs to
+      `cameranet` datum
+  KingkumaArt:
+  - qol: Ethereals can now live off wine again.
+  jlsnow301:
+  - bugfix: TGUI Say window has been tweaked slightly to look and run cleanly.
+  - bugfix: The character preferences menu has been greatly refactored, hopefully
+      opening faster.
+  necromanceranne:
+  - rscadd: Cargo can order lethal shotgun shells from the Imports tab, at a premium.
+  - balance: The black market source for buckshot can get normal types of buckshot,
+      but some of it can be a bit dodgy.
+  - balance: Buckshot is now more wound focused over damage. Slugs are now more armor
+      penetration focused over damage.
+  - balance: The bulldog shotgun remains otherwise unchanged damage wise, but does
+      gain the above extra bonuses.
+  valzargaming:
+  - bugfix: Typo in path for cavesound3.ogg
