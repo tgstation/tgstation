@@ -448,7 +448,7 @@
 		/datum/reagent/medicine/c2/syriniver = -2)
 
 	virus_suspectibility = 0.5
-	resulting_atom = /mob/living/simple_animal/hostile/vatbeast
+	resulting_atom = /mob/living/basic/vatbeast
 
 /datum/micro_organism/cell_line/vat_beast/succeed_growing(obj/machinery/vatgrower/vat)
 	. = ..()

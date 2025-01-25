@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "You can now ctrl-click IDs to set your Honorific, which will change your display name to reflect your TITLE as a WORKING MAN on SPACE STATION 13."

@@ -323,8 +323,14 @@
 
 /atom/movable/screen/button_palette/proc/disable_landing()
 	// If we have no elements in the palette, hide your ugly self please
-	if (!length(our_hud.palette_actions?.actions))
+	if (!length(our_hud.palette_actions?.actions) && !length(our_hud.floating_actions))
 		invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/button_palette/proc/update_state()
+	if (length(our_hud.floating_actions))
+		activate_landing()
+	else
+		disable_landing()
 
 /atom/movable/screen/button_palette/MouseEntered(location, control, params)
 	. = ..()
