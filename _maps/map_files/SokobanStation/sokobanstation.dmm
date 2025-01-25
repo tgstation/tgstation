@@ -448,8 +448,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cd" = (
-/obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/engine/hull,
 /area/space/nearstation)
 "ci" = (
 /obj/structure/window/spawner/directional/west,
@@ -1932,7 +1931,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "iv" = (
-/turf/open/openspace,
+/turf/open/floor/engine/hull,
 /area/station/command/heads_quarters/rd)
 "ix" = (
 /obj/machinery/door/airlock/silver{
@@ -2597,7 +2596,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/engine/hull,
 /area/space/nearstation)
 "lO" = (
 /obj/machinery/door/airlock/external{
@@ -3942,7 +3941,7 @@
 /area/station/science/robotics/lab)
 "rv" = (
 /obj/machinery/camera/autoname/directional/west,
-/turf/open/openspace,
+/turf/open/floor/engine/hull,
 /area/station/command/heads_quarters/rd)
 "rw" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -6177,10 +6176,10 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "Ax" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 5
+/obj/structure/railing{
+	dir = 8
 	},
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/engine/hull,
 /area/space/nearstation)
 "Ay" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
@@ -7523,7 +7522,7 @@
 "Hr" = (
 /obj/machinery/status_display/ai/directional/west,
 /obj/machinery/light/small/directional/west,
-/turf/open/openspace,
+/turf/open/floor/engine/hull,
 /area/station/command/heads_quarters/rd)
 "Hs" = (
 /obj/structure/closet/secure_closet/miner,
@@ -9135,12 +9134,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"NZ" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 10
-	},
-/turf/open/misc/asteroid/airless,
-/area/space/nearstation)
 "Oc" = (
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9481,7 +9474,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/north,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/engine/hull,
 /area/space/nearstation)
 "Pt" = (
 /obj/structure/cable,
@@ -10093,10 +10086,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
-/turf/open/misc/asteroid/airless,
-/area/space/nearstation)
-"Sj" = (
-/turf/closed/wall/rock/porous,
+/turf/open/floor/engine/hull,
 /area/space/nearstation)
 "Sp" = (
 /obj/structure/table,
@@ -177490,7 +177480,7 @@ rQ
 HU
 kx
 iv
-Lu
+cd
 Lu
 Lu
 Lu
@@ -177744,10 +177734,10 @@ to
 WT
 Lu
 Lu
-Lu
-Lu
-Lu
-Lu
+cd
+cd
+cd
+cd
 Lu
 Lu
 xE
@@ -178001,10 +177991,10 @@ je
 Zv
 Xj
 Xj
-Lu
-Lu
-Lu
-Lu
+cd
+cd
+cd
+cd
 Lu
 Lu
 mK
@@ -178258,10 +178248,10 @@ LK
 MO
 Wn
 Xj
-Lu
-Lu
-Lu
-Lu
+cd
+cd
+cd
+cd
 Lu
 xE
 mK
@@ -178515,10 +178505,10 @@ VE
 Pi
 tg
 Xj
-Lu
-Lu
-Lu
-Lu
+cd
+cd
+cd
+cd
 Lu
 xE
 mK
@@ -178772,10 +178762,10 @@ Ji
 Ji
 IZ
 RO
-Lu
-Lu
-Lu
-Lu
+cd
+cd
+cd
+cd
 xE
 mK
 mK
@@ -179025,14 +179015,14 @@ qH
 zU
 ew
 zU
-zU
-zU
-zU
-zU
-NZ
-Lu
-Lu
-xE
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
 xE
 mK
 mK
@@ -179271,10 +179261,10 @@ xE
 xE
 xE
 xE
-xE
-xE
-xE
-xE
+cd
+cd
+cd
+cd
 xE
 Lu
 Lu
@@ -179282,14 +179272,14 @@ kt
 xE
 xE
 xE
-xE
-xE
-xE
-xE
 cd
-Lu
-Lu
-xE
+cd
+cd
+cd
+cd
+cd
+cd
+cd
 mK
 mK
 mK
@@ -179528,25 +179518,25 @@ xE
 xE
 xE
 xE
-xE
-xE
-xE
-xE
-xE
-Lu
-Lu
-kt
-xE
-xE
-xE
-xE
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
 xE
 xE
 xE
 cd
-Lu
-Lu
-mK
+cd
+cd
+cd
+cd
+cd
+cd
+AY
 mK
 mK
 mK
@@ -179785,24 +179775,24 @@ xE
 xE
 xE
 xE
-xE
-xE
-xE
-xE
-xE
-Lu
-Lu
-kt
-xE
-xE
-xE
-xE
-xE
-xE
-xE
 cd
-Sj
-xE
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
 mK
 mK
 mK
@@ -180042,20 +180032,20 @@ xE
 xE
 xE
 xE
-xE
-xE
-xE
-xE
-mK
-xE
-Lu
-Ax
-lN
-lN
-lN
-lN
-lN
-lN
+cd
+cd
+cd
+cd
+AY
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
+cd
 lN
 Si
 Sz
@@ -180299,20 +180289,20 @@ xE
 xE
 xE
 xE
-xE
-mK
-mK
-mK
-mK
-mK
-Lu
-Lu
-Sj
+cd
+AY
+AY
+AY
+AY
+AY
+cd
+cd
+cd
 Ps
-NV
-NV
-NV
-NV
+Ax
+Ax
+Ax
+Ax
 NV
 NV
 Ok
@@ -180552,11 +180542,11 @@ mK
 mK
 mK
 mK
-mK
-mK
-mK
-mK
-mK
+AY
+AY
+AY
+AY
+AY
 mK
 mK
 mK
