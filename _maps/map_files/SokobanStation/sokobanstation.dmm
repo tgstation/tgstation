@@ -8516,10 +8516,6 @@
 "Lu" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/space/nearstation)
-"Lv" = (
-/obj/structure/lattice/catwalk,
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "Lw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -102970,7 +102966,7 @@ mK
 Mu
 St
 Sq
-Lv
+St
 Mu
 mK
 mK
@@ -103225,9 +103221,9 @@ mK
 mK
 mK
 Db
-Lv
+St
 VB
-Lv
+St
 Db
 mK
 mK

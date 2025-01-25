@@ -2,7 +2,7 @@
 	"version": 1,
 	"map_name": "Sokoban Station",
 	"map_path": "map_files/SokobanStation",
-	"map_file": "sokoban.dmm",
+	"map_file": "sokobanstation.dmm",
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
