@@ -47,7 +47,7 @@
 	var/report_text = "<H1>Forensic Record - (FR-[frNum])</H1><HR>"
 
 	for(var/list/log in log_data)
-		report_text += "<H2>[capitalize(log["scan_target"])] [log["scan_target"]] scan at [log["scan_time"]]</H2><DL>"
+		report_text += "<H2>[capitalize(log["scan_target"])] scan at [log["scan_time"]]</H2><DL>"
 
 		if(log[DETSCAN_CATEGORY_FIBER])
 			report_text += "<DT><B>[DETSCAN_CATEGORY_FIBER]</B></DT><DD>"
