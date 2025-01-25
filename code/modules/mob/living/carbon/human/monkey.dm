@@ -18,12 +18,6 @@
 	SSmobs.cubemonkeys -= src
 	return ..()
 
-/mob/living/carbon/human/species/monkey/proc/make_angry()
-	if(!isnull(ai_controller))
-		QDEL_NULL(ai_controller)
-
-	new /datum/ai_controller/monkey/angry(src)
-
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
