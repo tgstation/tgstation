@@ -70,5 +70,6 @@
 	desc = "A toolbox containing enough supplies to juryrig repairs on firearms. Can be applied to firearms to maintain them. \
 		The tools are a little basic, and the materials low-quality, but it gets the job done."
 	icon_state = "maint_kit_makeshift"
-	inhand_icon_state "toolbox_blue"
+	inhand_icon_state = "toolbox_blue"
 	uses = 1
+	max_uses = 1
