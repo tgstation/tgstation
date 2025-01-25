@@ -138,6 +138,7 @@
 
 	if(prob(30))
 		new /obj/item/flatpacked_machine/damage_lathe(src)
+		new /obj/item/flatpacked_machine/rtg(src)
 
 /obj/structure/closet/firecloset/full/PopulateContents()
 	new /obj/item/storage/bag/breach_bag(src)

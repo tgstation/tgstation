@@ -21,6 +21,23 @@
 	var/life_support_timer
 	/// Are we taking damage?
 	var/life_support_failed = FALSE
+	/// Alternate icon files for each modular skin
+	var/list/modular_icon_files = list(
+		"colonist" = 'modular_doppler/kahraman_equipment/icons/modsuits/mod.dmi',
+		"moonlight" = 'modular_doppler/special_modsuits/icons/mod.dmi',
+		"orbiter" = 'modular_doppler/special_modsuits/icons/mod.dmi',
+	)
+	/// Alternate icon files for each modular worn skin
+	var/list/modular_worn_files = list(
+		"colonist" = 'modular_doppler/kahraman_equipment/icons/modsuits/mod_worn.dmi',
+		"moonlight" = 'modular_doppler/special_modsuits/icons/mod_worn.dmi',
+		"orbiter" = 'modular_doppler/special_modsuits/icons/mod_worn.dmi',
+	)
+	/// Alternative icon files for each modular skin with a digi variant
+	var/list/modular_worn_digi_files = list(
+		"moonlight" = 'modular_doppler/special_modsuits/icons/mod_worn_digi.dmi',
+		"orbiter" = 'modular_doppler/special_modsuits/icons/mod_worn_digi.dmi',
+	)
 
 /datum/quirk/equipping/entombed/process(seconds_per_tick)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -103,6 +120,19 @@
 	for(var/obj/item/part as anything in modsuit.get_parts())
 		part.name = "[modsuit.theme.name] [initial(part.name)]"
 		part.desc = "[initial(part.desc)] [modsuit.theme.desc]"
+		for(var/potential_skin as anything in modular_icon_files)
+			if(modsuit.skin == potential_skin)
+				part.icon = modular_icon_files[modsuit.skin]
+				if(length(part.bodyshape_icon_files))
+					part.bodyshape_icon_files[BODYSHAPE_HUMANOID_T] = modular_worn_files[modsuit.skin]
+					if(modsuit.skin in modular_worn_digi_files)
+						if(istype(part, /obj/item/clothing/head/mod))
+							part.bodyshape_icon_files[BODYSHAPE_SNOUTED_T] = modular_worn_digi_files[modsuit.skin]
+						else
+							part.bodyshape_icon_files[BODYSHAPE_DIGITIGRADE_T] = modular_worn_digi_files[modsuit.skin]
+				part.worn_icon = modular_worn_files[modsuit.skin]
+				modsuit.icon = modular_icon_files[modsuit.skin]
+				modsuit.worn_icon = modular_worn_files[modsuit.skin]
 	install_racial_features()
 
 	//transfer as many items across from our dropped backslot as we can. do this last incase something breaks
@@ -177,6 +207,9 @@
 		"Prototype",
 		"Security",
 		"Elite",
+		"Colonist",
+		"Orbiter",
+		"Moonlight",
 	)
 
 /datum/preference/choiced/entombed_skin/create_default_value()

@@ -81,8 +81,9 @@
 
 		var/full_examine = compile_examined_text(short_desc, extended_desc, headshot_url, ooc_notes)
 
-		to_chat(viewer, examine_block(span_info(full_examine)))
+		to_chat(viewer, boxed_message(span_info(full_examine)))
 		return
+
 	else if (href_list["species_info"])
 		// return a blurb detailing their species
 		var/mob/viewer = usr
@@ -92,7 +93,7 @@
 
 		var/full_examine = compile_species_info_text(species_name, species_desc, FALSE)
 
-		to_chat(viewer, examine_block(span_info(full_examine)))
+		to_chat(viewer, boxed_message(span_info(full_examine)))
 		return
 
 /*
@@ -125,8 +126,9 @@
 
 		var/full_examine = compile_examined_text(short_desc, extended_desc, headshot_url, ooc_notes)
 
-		to_chat(viewer, examine_block(span_info(full_examine)))
+		to_chat(viewer, boxed_message(span_info(full_examine)))
 		return
+
 	else if (href_list["species_info"])
 		var/mob/viewer = usr
 
@@ -135,7 +137,7 @@
 
 		var/full_examine = compile_species_info_text(model_name, model_desc, TRUE)
 
-		to_chat(viewer, examine_block(span_info(full_examine)))
+		to_chat(viewer, boxed_message(span_info(full_examine)))
 		return
 
 /*
@@ -168,7 +170,7 @@
 
 		var/full_examine = compile_examined_text(short_desc, extended_desc, headshot_url, ooc_notes)
 
-		to_chat(viewer, examine_block(span_info(full_examine)))
+		to_chat(viewer, boxed_message(span_info(full_examine)))
 		return
 	else if (href_list["species_info"])
 		var/mob/viewer = usr
@@ -178,5 +180,5 @@
 
 		var/full_examine = compile_species_info_text(model_name, model_desc, TRUE)
 
-		to_chat(viewer, examine_block(span_info(full_examine)))
+		to_chat(viewer, boxed_message(span_info(full_examine)))
 		return

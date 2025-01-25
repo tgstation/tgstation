@@ -428,7 +428,7 @@
 	set_lockcharge(FALSE)
 	to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
 	if(connected_ai)
-		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] succesfully overriden the lockdown system")]<br>")
+		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] successfully overriden the lockdown system")]<br>")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
@@ -584,13 +584,13 @@
 		return
 	switch(notifytype)
 		if(AI_NOTIFICATION_NEW_BORG) //New Cyborg
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_NEW_MODEL) //New Model
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.")]<br>")
 		if(AI_NOTIFICATION_CYBORG_RENAMED) //New Name
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].")]<br>")
 		if(AI_NOTIFICATION_AI_SHELL) //New Shell
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_CYBORG_DISCONNECTED) //Tampering with the wires
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
 

@@ -31,7 +31,7 @@
 	if(istype(normal_eyes))
 		normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
 
-/datum/quirk/photophobia/proc/check_eyes(obj/item/organ/eyes/sensitive_eyes)
+/datum/quirk/photophobia/proc/check_eyes(datum/source, obj/item/organ/eyes/sensitive_eyes)
 	SIGNAL_HANDLER
 	if(!istype(sensitive_eyes))
 		return
@@ -43,7 +43,7 @@
 	target_eyes.flash_protect = max(target_eyes.flash_protect - severity, FLASH_PROTECTION_HYPER_SENSITIVE) // DOPPLER EDIT CHANGE - ORIGINAL: target_eyes.flash_protect = max(target_eyes.flash_protect - 1, FLASH_PROTECTION_HYPER_SENSITIVE)
 	target_eyes.refresh() // DOPPLER EDIT ADDITION
 
-/datum/quirk/photophobia/proc/restore_eyes(obj/item/organ/eyes/normal_eyes)
+/datum/quirk/photophobia/proc/restore_eyes(datum/source, obj/item/organ/eyes/normal_eyes)
 	SIGNAL_HANDLER
 	if(!istype(normal_eyes))
 		return

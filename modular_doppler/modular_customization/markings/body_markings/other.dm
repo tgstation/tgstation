@@ -221,3 +221,18 @@
 	name = "Undereye"
 	icon_state = "undereye"
 	body_zones = HEAD
+
+/datum/sprite_accessory/body_marking/other/shard_thigh
+	name = "Shard Alpha Thigh Plate"
+	icon_state = "shard_thigh"
+	body_zones = LEG_RIGHT | LEG_LEFT
+
+/datum/sprite_accessory/body_marking/other/shard_calf
+	name = "Shard Alpha Calf Plate"
+	icon_state = "shard_calves"
+	body_zones = LEG_RIGHT | LEG_LEFT
+
+/datum/sprite_accessory/body_marking/other/shard_claw
+	name = "Shard Alpha Claws"
+	icon_state = "shard_claw"
+	body_zones = LEG_RIGHT | LEG_LEFT

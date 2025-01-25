@@ -1,0 +1,16 @@
+{
+	"athletas_bodysuit": [
+		{
+			"type": "icon_state",
+			"icon_state": "athletas_bodysuit",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "athletas_bodysuit_stripe",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

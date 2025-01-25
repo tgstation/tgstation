@@ -150,7 +150,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='warningplain'><b><u>Keybinding Conflict</u></b></span>\n\
-					<span class='warningplain'><b>There are new <a href='?src=[REF(src)];open_keybindings=1'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</b></span>")
+					<span class='warningplain'><b>There are new <a href='byond://?src=[REF(src)];open_keybindings=1'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</b></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, span_danger("[conflicted.category]: [conflicted.full_name] needs updating"))
@@ -319,6 +319,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			language = _text2path(language)
 		save_languages[language] = value
 	languages = save_languages
+	alt_job_titles = save_data?["alt_job_titles"]
 	/// DOPPLER SHIFT ADDITION END
 
 	//try to fix any outdated data if necessary
@@ -381,6 +382,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Quirks
 	save_data["all_quirks"] = all_quirks
 	save_data["languages"] = languages /// DOPPLER SHIFT ADDITION - we might want to migrate this
+	save_data["alt_job_titles"] = alt_job_titles /// DOPPLER SHIFT ADDITION: alt job titles
 
 	return TRUE
 

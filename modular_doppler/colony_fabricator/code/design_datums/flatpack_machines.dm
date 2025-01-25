@@ -62,8 +62,8 @@
 	id = "flatpack_solar_panel"
 	build_type = COLONY_FABRICATOR
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT / 2,
 	)
 	build_path = /obj/item/flatpacked_machine/solar
 	category = list(
@@ -115,7 +115,7 @@
 	id = "flatpack_station_battery"
 	build_type = COLONY_FABRICATOR
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
@@ -132,7 +132,7 @@
 	id = "flatpack_station_battery_large"
 	build_type = COLONY_FABRICATOR
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
 	)
@@ -173,10 +173,10 @@
 	id = "flatpack_rtg"
 	build_type = COLONY_FABRICATOR
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15,
-		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT / 2,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT / 2,
 	)
 	build_path = /obj/item/flatpacked_machine/rtg
 	category = list(

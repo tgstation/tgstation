@@ -356,7 +356,7 @@
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
 	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
 	COOLDOWN_START(src, weeping_hallucinations, 10 SECONDS)
-	..()
+	return ..()
 
 //This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
 /datum/brain_trauma/severe/flesh_desire
@@ -373,7 +373,7 @@
 	// Allows them to eat faster, mainly for flavor
 	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
 	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	..()
+	return ..()
 
 /datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
 	// Causes them to need to eat at 10x the normal rate

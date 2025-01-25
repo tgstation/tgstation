@@ -155,6 +155,7 @@
 #include "emoting.dm"
 #include "emp_flashlight.dm"
 #include "ensure_subtree_operational_datum.dm"
+#include "ethereal_revival.dm"
 #include "explosion_action.dm"
 #include "fish_unit_tests.dm"
 #include "focus_only_tests.dm"

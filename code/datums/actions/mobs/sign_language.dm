@@ -26,9 +26,9 @@
 
 	// DOPPLER EDIT CHANGE START - speech only mute
 
-	RegisterSignals(grant_to, list(SIGNAL_REMOVETRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_SPEECH_ONLY_MUTE)), PROC_REF(on_unmuted))
-	RegisterSignals(grant_to, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_ADDTRAIT(TRAIT_SPEECH_ONLY_MUTE)), PROC_REF(on_muted))
-	
+	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
+	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_MUTE), PROC_REF(on_muted))
+
 	if(HAS_TRAIT(grant_to, TRAIT_MUTE) || HAS_TRAIT(grant_to, TRAIT_SPEECH_ONLY_MUTE))
 		// Convenience. Mute Carbons can only speak with sign language.
 		if(!active)
@@ -95,7 +95,6 @@
 /datum/action/innate/sign_language/proc/on_muted()
 	SIGNAL_HANDLER
 
-	//RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted)) // DOPPLER EDIT REMOVAL - speech only mute
 	hide_action()
 	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
 	if (!HAS_TRAIT(owner, TRAIT_SIGN_LANG))

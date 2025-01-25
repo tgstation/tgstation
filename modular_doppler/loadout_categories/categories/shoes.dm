@@ -23,6 +23,10 @@
 	else
 		outfit.shoes = item_path
 
+/datum/loadout_item/shoes/medical
+	name = "Medical Shoes"
+	item_path = /obj/item/clothing/shoes/medical
+
 /datum/loadout_item/shoes/sneakers
 	name = "Sneakers"
 	item_path = /obj/item/clothing/shoes/sneakers
@@ -134,3 +138,7 @@
 /datum/loadout_item/shoes/wraps/skates
 	name = "Roller Skates"
 	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
+
+/datum/loadout_item/shoes/rollerblades
+	name = "Inline Skates"
+	item_path = /obj/item/clothing/shoes/rollerblades

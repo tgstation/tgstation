@@ -1,0 +1,1905 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ar" = (
+/obj/structure/railing/eva_handhold/directional/south,
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"bp" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/cable,
+/obj/machinery/power/micro_reactor,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"bN" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/mining_hub)
+"bX" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/hatch,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"bY" = (
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"cl" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"cm" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin/carbon,
+/obj/item/pen/fourcolor,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"cq" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"cu" = (
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"cv" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/light/red/dim/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"cL" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/table/reinforced,
+/obj/item/toy/cards/deck,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"dw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"dW" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/suit_storage_unit/industrial/personal_shuttle,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"ed" = (
+/obj/machinery/button/door/personal_shuttle_bay_one/directional/north,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"eo" = (
+/obj/machinery/button/door/personal_shuttle_bay_three/directional/south,
+/obj/effect/turf_decal/box/white/corners,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"es" = (
+/obj/structure/sign/poster/contraband/mothic_rations/directional/north,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"ew" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"eL" = (
+/obj/structure/secure_safe/directional/west,
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/structure/curtain/bounty,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"fm" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"go" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/secure_safe/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"gy" = (
+/obj/item/storage/toolbox/emergency,
+/obj/item/binoculars,
+/obj/item/trench_tool,
+/obj/effect/turf_decal/bot_white,
+/obj/item/radio/intercom/directional/east,
+/obj/structure/rack,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"gG" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"gK" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"hh" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"hk" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"hJ" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/mining_hub)
+"il" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"in" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"ip" = (
+/obj/structure/secure_safe/directional/west,
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/structure/curtain/bounty,
+/obj/effect/turf_decal/bot_white,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"iN" = (
+/obj/machinery/button/door/personal_shuttle_bay_one/directional/north,
+/obj/item/storage/toolbox/mechanical,
+/obj/structure/rack,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"je" = (
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"ju" = (
+/obj/structure/sink/kitchen/directional/south,
+/obj/effect/turf_decal/bot_red,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/freezer,
+/area/shuttle/personally_bought/mining_hub)
+"jB" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/east,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"jC" = (
+/obj/structure/marker_beacon/bronze,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"jN" = (
+/obj/structure/bed/pod,
+/obj/structure/curtain,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"jT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/personally_bought/mining_hub)
+"ka" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"kd" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/dark/anticorner/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/crate/science,
+/obj/item/circuitboard/machine/mechfab,
+/obj/item/flatpacked_machine/ore_silo,
+/obj/item/circuitboard/machine/circuit_imprinter/department/science,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"ko" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/red/dim/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"ky" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/obj/structure/cable,
+/obj/structure/railing/eva_handhold/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/mining_hub)
+"kA" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/machinery/light/red/dim/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"kK" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"kO" = (
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"lf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"lk" = (
+/obj/machinery/vending/cola/black,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"lw" = (
+/obj/structure/table/reinforced,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/microwave/frontier_printed,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"lR" = (
+/obj/machinery/modular_computer/preset/engineering,
+/obj/effect/turf_decal/bot_white,
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"mb" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"mh" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"mY" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/mining,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"na" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"nd" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"nD" = (
+/obj/structure/sink/kitchen/directional/east,
+/obj/machinery/shower/directional/north,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"nJ" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/vending/deforest_medvend,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"og" = (
+/obj/machinery/button/door/personal_shuttle_windows/directional/north,
+/obj/structure/table/reinforced,
+/obj/machinery/biogenerator/foodricator,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"oA" = (
+/obj/effect/turf_decal/box/white/corners,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"oT" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/preopen/personal_bay_two,
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"pd" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"pe" = (
+/obj/machinery/button/door/personal_shuttle_bay_three/directional/south,
+/obj/effect/turf_decal/box/white/corners,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"pq" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"py" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/personally_bought/mining_hub)
+"pH" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"pW" = (
+/obj/structure/closet/crate/cardboard/mothic,
+/obj/item/storage/box/mothic_rations,
+/obj/item/storage/box/mothic_rations,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"ql" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"qp" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"qE" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/micro_reactor,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"rf" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/digital_clock/directional/west,
+/obj/item/storage/toolbox/emergency,
+/obj/item/binoculars,
+/obj/item/trench_tool,
+/obj/structure/rack,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"rq" = (
+/obj/machinery/light/red/dim/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/personally_bought/mining_hub)
+"sn" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/vehicle/sealed/mecha/ripley,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"sv" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"sI" = (
+/obj/structure/fake_stairs/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"tC" = (
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"tF" = (
+/obj/effect/turf_decal/bot_white,
+/obj/item/storage/medkit/robotic_repair/preemo/stocked,
+/obj/item/storage/box/bodybags,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/storage/pill_bottle/painkiller,
+/obj/structure/rack,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"tO" = (
+/turf/open/floor/iron/white/small,
+/area/shuttle/personally_bought/mining_hub)
+"tU" = (
+/obj/structure/table/reinforced,
+/obj/item/cutting_board,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"uf" = (
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"ug" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/mining_hub)
+"ul" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/button/door/personal_shuttle_windows/directional/north,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"uw" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/mining_hub)
+"uQ" = (
+/obj/structure/cable,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"uT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/personally_bought/mining_hub)
+"wb" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/light/red/dim/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"wt" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/medical,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"wI" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"wU" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/small,
+/area/shuttle/personally_bought/mining_hub)
+"xh" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light/cold/directional/east,
+/obj/machinery/light_switch/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"xs" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"xN" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"xW" = (
+/turf/template_noop,
+/area/template_noop)
+"yx" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_red,
+/obj/structure/sign/calendar/directional/east,
+/turf/open/floor/iron/freezer,
+/area/shuttle/personally_bought/mining_hub)
+"yK" = (
+/obj/structure/curtain/bounty,
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"yN" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"za" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/grunge,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"zo" = (
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/light/warm/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"zw" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"zC" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"zH" = (
+/obj/structure/tank_dispenser,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"zJ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"zV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/meter/layer4,
+/obj/machinery/light/cold/directional/east,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Ae" = (
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/personally_bought/mining_hub)
+"Ar" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/command,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Ax" = (
+/obj/machinery/button/door/personal_shuttle_bay_two/directional/south,
+/obj/structure/rack,
+/obj/item/multitool,
+/obj/item/crowbar/large/emergency,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"AD" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/preopen/personal_bay_one,
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"AT" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"AW" = (
+/obj/structure/cable,
+/obj/machinery/button/door/personal_shuttle_bay_three/directional/south,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Bb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Bh" = (
+/obj/structure/table/reinforced,
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Bu" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/command,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"BA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"BE" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"BR" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"BZ" = (
+/obj/structure/cable,
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"CM" = (
+/obj/structure/secure_safe/directional/east,
+/obj/structure/bed/pod,
+/obj/structure/curtain/bounty,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"DD" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"DE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"DJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"DU" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Eg" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/cards/deck,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Er" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/personally_bought/mining_hub)
+"ED" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/suit_storage_unit/industrial/personal_shuttle,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"EO" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/personally_bought/mining_hub)
+"EQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white/small,
+/area/shuttle/personally_bought/mining_hub)
+"Fs" = (
+/obj/structure/chair/plastic,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Fu" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"FM" = (
+/obj/structure/fake_stairs/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"FY" = (
+/obj/machinery/light/cold/directional/west,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"Gp" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"Gs" = (
+/obj/structure/railing/eva_handhold/directional/north,
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"GD" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/docking_port/mobile/personally_bought,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Hk" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/closet/crate/secure/plasma,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Hq" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"HK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"HS" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/warm/directional/west,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Ir" = (
+/obj/machinery/shower/directional/south,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Iu" = (
+/obj/structure/closet/crate/cargo,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/cold/directional/north,
+/obj/machinery/light_switch/directional/north,
+/obj/item/circuitboard/machine/techfab,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"IF" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"IH" = (
+/obj/structure/fake_stairs/directional/north,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"JI" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"JU" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Kh" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_red,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer,
+/area/shuttle/personally_bought/mining_hub)
+"KK" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"KV" = (
+/obj/machinery/button/door/personal_shuttle_bay_two/directional/south,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Ln" = (
+/obj/machinery/button/door/personal_shuttle_windows/directional/north,
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Lo" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white/small,
+/area/shuttle/personally_bought/mining_hub)
+"Lw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"LX" = (
+/obj/effect/turf_decal/bot_white,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/extinguisher,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/rack,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Ma" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Mf" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/structure/fireaxecabinet/mechremoval/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Mi" = (
+/obj/machinery/mech_bay_recharge_port,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Mo" = (
+/obj/structure/cable,
+/obj/machinery/light_switch/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Mw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"MV" = (
+/obj/structure/railing/eva_handhold/directional/south,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"Nc" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/dark/half/contrasted,
+/obj/machinery/light/cold/directional/west,
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Nu" = (
+/obj/machinery/light/warm/directional/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"NN" = (
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/mining_hub)
+"Od" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Oi" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Ol" = (
+/obj/effect/turf_decal/bot_white,
+/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked,
+/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Ov" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"OF" = (
+/obj/machinery/computer/shuttle/personally_bought{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"OO" = (
+/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/light/cold/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white/small,
+/area/shuttle/personally_bought/mining_hub)
+"OZ" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/obj/machinery/light/warm/directional/west,
+/obj/structure/cable,
+/obj/machinery/digital_clock/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Px" = (
+/obj/machinery/button/door/personal_shuttle_windows/directional/east,
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"PD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"PH" = (
+/obj/effect/turf_decal/bot_white,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"PT" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/machinery/digital_clock/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"PZ" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/preopen/personal_bay_three,
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Qf" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/components/tank/air/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"QB" = (
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/personally_bought/mining_hub)
+"QJ" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"QY" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/mining_hub)
+"Ra" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/dark/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/cold/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"Rf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/personally_bought/mining_hub)
+"Rg" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"Sc" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"SU" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Ts" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Tw" = (
+/obj/structure/secure_safe/directional/east,
+/obj/structure/bed/pod,
+/obj/structure/curtain/bounty,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/warm/directional/east,
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"TE" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"TM" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/red/dim/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Ur" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/mining_hub)
+"UC" = (
+/obj/machinery/button/door/personal_shuttle_windows/directional/south,
+/obj/effect/turf_decal/bot_white,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"UK" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/atmos,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Wy" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/personally_bought/mining_hub)
+"WC" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"WO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/meter/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Xj" = (
+/obj/machinery/computer/exoscanner_control{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/cold/directional/west,
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"XI" = (
+/obj/structure/bed/pod,
+/obj/structure/curtain/bounty,
+/obj/structure/secure_safe/directional/east,
+/obj/machinery/digital_clock/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"XY" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/mining_hub)
+"Yd" = (
+/obj/effect/turf_decal/bot_white,
+/obj/item/mining_scanner,
+/obj/structure/rack,
+/obj/item/pickaxe/drill/jackhammer,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Yu" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Yv" = (
+/obj/machinery/rnd/production/colony_lathe,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"YB" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/cold/directional/west,
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"YG" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/command,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"YW" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/personally_bought/mining_hub)
+"Zk" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/grunge,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"Zl" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/personally_bought/mining_hub)
+"Zu" = (
+/obj/structure/table/reinforced,
+/obj/structure/closet/mini_fridge,
+/obj/item/food/colonial_course/blins,
+/obj/item/reagent_containers/cup/soda_cans/melon_soda,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+"ZH" = (
+/obj/structure/railing/eva_handhold/directional/north,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/personally_bought/mining_hub)
+"ZL" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/frontier_appliance,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/mining_hub)
+
+(1,1,1) = {"
+xW
+xW
+xW
+zC
+DD
+mb
+DD
+DD
+DD
+DD
+mb
+DD
+hh
+xW
+xW
+xW
+"}
+(2,1,1) = {"
+uw
+DD
+il
+sv
+Gp
+mb
+Gp
+Gp
+Gp
+Gp
+mb
+Gp
+xs
+cq
+DD
+Ur
+"}
+(3,1,1) = {"
+mb
+Gp
+Ov
+mb
+mb
+mb
+Hk
+hJ
+Er
+bp
+mb
+mb
+mb
+QY
+Gp
+mb
+"}
+(4,1,1) = {"
+mb
+kO
+WO
+BA
+DE
+UK
+DE
+Bb
+Er
+qE
+AT
+Rg
+FY
+ql
+Fu
+mb
+"}
+(5,1,1) = {"
+AT
+Qf
+Qf
+zV
+gG
+AT
+Iu
+Bb
+hk
+Yu
+bN
+ql
+ql
+ql
+eo
+MV
+"}
+(6,1,1) = {"
+Gs
+AT
+AT
+AT
+AT
+AT
+Yv
+Bb
+uQ
+BZ
+bN
+XY
+oA
+tC
+tC
+PZ
+"}
+(7,1,1) = {"
+ug
+cm
+Xj
+BE
+AT
+AT
+AT
+Bb
+AW
+AT
+AT
+AT
+QJ
+dw
+Oi
+PZ
+"}
+(8,1,1) = {"
+ZH
+Ln
+pd
+ka
+YG
+Ae
+YG
+DJ
+DJ
+mY
+rq
+mY
+Lw
+Lw
+Mw
+PZ
+"}
+(9,1,1) = {"
+ug
+lf
+KK
+gy
+bN
+kA
+AT
+bN
+za
+AT
+AT
+AT
+ew
+jB
+pe
+MV
+"}
+(10,1,1) = {"
+ky
+je
+Ts
+AT
+AT
+AT
+AT
+Ma
+uT
+wb
+AT
+AT
+AT
+AT
+AT
+wI
+"}
+(11,1,1) = {"
+Zl
+ug
+AT
+AT
+Mi
+SU
+AT
+AT
+Zk
+AT
+AT
+Yd
+ED
+AT
+QB
+xW
+"}
+(12,1,1) = {"
+xW
+xW
+AT
+iN
+sn
+dw
+Nc
+zH
+DJ
+yN
+YB
+tC
+KV
+AT
+xW
+xW
+"}
+(13,1,1) = {"
+xW
+xW
+AD
+JU
+Od
+pH
+kd
+LX
+DJ
+cL
+na
+JU
+JU
+oT
+xW
+xW
+"}
+(14,1,1) = {"
+xW
+xW
+AD
+NN
+NN
+Wy
+FM
+uf
+DJ
+IH
+in
+NN
+NN
+oT
+xW
+xW
+"}
+(15,1,1) = {"
+xW
+xW
+AD
+Sc
+Sc
+gK
+FM
+DE
+DJ
+sI
+DU
+xN
+Sc
+oT
+xW
+xW
+"}
+(16,1,1) = {"
+xW
+xW
+AT
+ed
+tC
+ew
+Ra
+ka
+Mf
+xh
+PD
+TE
+Ax
+AT
+xW
+xW
+"}
+(17,1,1) = {"
+xW
+YW
+AT
+ED
+Yd
+AT
+AT
+za
+AT
+AT
+Hq
+zw
+Yu
+AT
+YW
+xW
+"}
+(18,1,1) = {"
+pq
+AT
+AT
+AT
+AT
+AT
+dW
+uT
+TM
+AT
+AT
+AT
+AT
+AT
+AT
+wI
+"}
+(19,1,1) = {"
+ZH
+Ir
+AT
+ip
+eL
+AT
+bN
+Zk
+bN
+AT
+PT
+HS
+cl
+AT
+ko
+ar
+"}
+(20,1,1) = {"
+AT
+ju
+bX
+Bb
+Bb
+bX
+DJ
+DJ
+DJ
+DJ
+Fs
+Eg
+Bb
+qp
+Rf
+GD
+"}
+(21,1,1) = {"
+ZH
+Kh
+AT
+Tw
+CM
+AT
+JI
+mh
+zJ
+Px
+DJ
+ka
+ka
+bN
+BR
+MV
+"}
+(22,1,1) = {"
+cu
+AT
+AT
+AT
+AT
+AT
+Mo
+AT
+AT
+AT
+Bu
+AT
+wt
+AT
+AT
+AT
+"}
+(23,1,1) = {"
+ZH
+Bh
+OZ
+ka
+yK
+DJ
+Nu
+lk
+AT
+cv
+jT
+AT
+wU
+nJ
+nd
+MV
+"}
+(24,1,1) = {"
+ug
+WC
+ka
+pW
+AT
+IF
+AT
+AT
+AT
+bN
+Ar
+AT
+OO
+EQ
+Lo
+ug
+"}
+(25,1,1) = {"
+ZH
+og
+kK
+ZL
+AT
+zo
+nD
+AT
+rf
+fm
+go
+AT
+jN
+tO
+UC
+MV
+"}
+(26,1,1) = {"
+Zl
+AT
+es
+tU
+AT
+XI
+yx
+AT
+lR
+HK
+bY
+AT
+Ol
+tF
+AT
+EO
+"}
+(27,1,1) = {"
+xW
+AT
+lw
+Zu
+AT
+AT
+AT
+cu
+PH
+ul
+OF
+AT
+AT
+AT
+cu
+xW
+"}
+(28,1,1) = {"
+xW
+cu
+AT
+AT
+YW
+xW
+xW
+xW
+YW
+ug
+ug
+YW
+xW
+jC
+py
+xW
+"}

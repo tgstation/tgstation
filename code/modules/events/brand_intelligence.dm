@@ -5,7 +5,7 @@
 	category = EVENT_CATEGORY_AI
 	description = "Vending machines will attack people until the Patient Zero is disabled."
 	min_players = 10
-	max_occurrences = 1
+	max_occurrences = 0
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
 	admin_setup = list(/datum/event_admin_setup/listed_options/brand_intelligence)

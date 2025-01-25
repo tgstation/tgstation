@@ -1,9 +1,9 @@
 import { sortBy } from 'common/collections';
-import { classes } from 'common/react';
 import { PropsWithChildren, ReactNode } from 'react';
+import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
 import {
   createSetPreference,
   Job,
@@ -175,7 +175,7 @@ const PriorityButtons = (props: {
 };
 
 const JobRow = (props: { className?: string; job: Job; name: string }) => {
-  const { data } = useBackend<PreferencesMenuData>();
+  const { data, act } = useBackend<PreferencesMenuData>();
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name;
@@ -186,6 +186,12 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   const experienceNeeded =
     data.job_required_experience && data.job_required_experience[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
+
+  // DOPPLER EDIT ADDITION
+  const alt_title_selected = data.job_alt_titles[name]
+    ? data.job_alt_titles[name]
+    : name;
+  // NOVA EDIT END
 
   let rightSide: ReactNode;
 
@@ -237,7 +243,22 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
               paddingLeft: '0.3em',
             }}
           >
-            {name}
+            {
+              // DOPPLER EDIT CHANGE START - ORIGINAL: {name}
+              !job.alt_titles ? (
+                name
+              ) : (
+                <Dropdown
+                  width="100%"
+                  options={job.alt_titles}
+                  selected={alt_title_selected}
+                  onSelected={(value) =>
+                    act('set_job_title', { job: name, new_title: value })
+                  }
+                />
+              )
+              // DOPPLER EDIT CHANGE END
+            }
           </Stack.Item>
         </Tooltip>
 

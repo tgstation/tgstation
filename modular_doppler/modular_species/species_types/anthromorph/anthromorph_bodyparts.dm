@@ -1,6 +1,6 @@
 /obj/item/bodypart/head/anthromorph
 	icon_greyscale = 'modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi'
-	eyes_icon = 'modular_doppler/modular_species/species_types/anthromorph/icons/eyes.dmi'
+//	eyes_icon = 'modular_doppler/modular_species/species_types/anthromorph/icons/eyes.dmi' to be restored when blinking for 2px eyes is implemented
 	limb_id = SPECIES_ANTHROMORPH
 	is_dimorphic = FALSE
 

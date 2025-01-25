@@ -373,6 +373,8 @@ ROUNDSTART_RACES insectoid
 ROUNDSTART_RACES genemod
 ROUNDSTART_RACES primitive_genemod
 ROUNDSTART_RACES hemophage
+ROUNDSTART_RACES slimehybrid
+
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal

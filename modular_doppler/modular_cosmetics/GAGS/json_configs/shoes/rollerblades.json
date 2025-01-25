@@ -1,0 +1,28 @@
+{
+	"rollerblades": [
+		{
+			"type": "icon_state",
+			"icon_state": "rollerblade_boots",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "rollerblade_buckles",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "rollerblade_wheels",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "rollerblade_axle",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

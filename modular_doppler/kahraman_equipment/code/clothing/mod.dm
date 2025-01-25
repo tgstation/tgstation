@@ -10,7 +10,6 @@
 		environment that other equipment just can't quite handle. Often, these suits are able to protect their users \
 		from not only electricity, but also radiation, biological hazards, other people, so on. This suit will not, \
 		however, protect you from yourself."
-
 	default_skin = "colonist"
 	armor_type = /datum/armor/colonist_hazard
 	resistance_flags = FIRE_PROOF
@@ -99,6 +98,8 @@
 /obj/item/mod/control/pre_equipped/frontier_colonist/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
+	for(var/obj/item/part as anything in get_parts())
+		part.supported_bodyshapes = null
 
 // Plate compression module that cannot be removed
 

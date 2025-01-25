@@ -310,6 +310,11 @@
 		to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[helper] shakes you to get you up!"))
 	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
+		// DOPPLER EDIT ADDITION BEGIN - Oversized
+		if(HAS_TRAIT(src, TRAIT_OVERSIZED) && !HAS_TRAIT(helper, TRAIT_OVERSIZED))
+			visible_message(span_warning("[helper] tries to pat [src] on the head, but can't reach!"))
+			return
+		// DOPPLER EDIT ADDITION END
 		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
@@ -422,21 +427,21 @@
 		return
 
 	var/embeds = FALSE
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/LB = X
-		for(var/obj/item/I in LB.embedded_objects)
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/weapon as anything in limb.embedded_objects)
 			if(!embeds)
 				embeds = TRUE
 				// this way, we only visibly try to examine ourselves if we have something embedded, otherwise we'll still hug ourselves :)
 				visible_message(span_notice("[src] examines [p_them()]self."), \
-					span_notice("You check yourself for shrapnel."))
-			if(I.is_embed_harmless())
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+					span_notice("You check yourself for shrapnel."), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
+			var/harmless = weapon.get_embed().is_harmless()
+			var/stuck_wordage = harmless ? "stuck to" : "embedded in"
+			var/embed_text = "\t <a href='byond://?src=[REF(src)];embedded_object=[REF(weapon)];embedded_limb=[REF(limb)]'> There is [icon2html(weapon, src)] \a [weapon] [stuck_wordage] your [limb.plaintext_zone]!</a>"
+			if (harmless)
+				to_chat(src, span_italics(span_notice(embed_text)))
 			else
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
-
+				to_chat(src, span_boldwarning(embed_text))
 	return embeds
-
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -668,7 +673,8 @@
 	if (HAS_TRAIT(src, TRAIT_GENELESS))
 		return FALSE
 
-	if (run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [scramble_source]!") >= 100)
+	if (run_armor_check(attack_flag = BIO, silent = TRUE) >= 100)
+		to_chat(src, span_warning("Your armor shields you from [scramble_source]!"))
 		return FALSE
 
 	if (!length(GLOB.bioscrambler_valid_organs) || !length(GLOB.bioscrambler_valid_parts))

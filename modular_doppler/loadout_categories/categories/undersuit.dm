@@ -321,6 +321,10 @@
 	name = "Tactical Turtleneck"
 	item_path = /obj/item/clothing/under/syndicate
 
+/datum/loadout_item/undersuit/athletas_bodysuit
+	name = "ATHLETAS bodysuit"
+	item_path = /obj/item/clothing/under/athletas_bodysuit
+
 // Man in suit gif
 
 /datum/loadout_item/undersuit/detective_suit

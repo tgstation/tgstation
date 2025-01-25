@@ -33,3 +33,7 @@
 	greyscale_config_worn = /datum/greyscale_config/maid_headband/worn
 	greyscale_colors = "#edf9ff"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/head/hooded/winterhood
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/hoods.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/hoods.dmi'
