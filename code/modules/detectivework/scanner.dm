@@ -49,6 +49,10 @@
 	for(var/list/log in log_data)
 		report_text += "<H2>[capitalize(log["scan_target"])] scan at [log["scan_time"]]</H2><DL>"
 
+		if(!log[DETSCAN_CATEGORY_FIBER] && !log[DETSCAN_CATEGORY_BLOOD] && !log[DETSCAN_CATEGORY_FINGERS] && !log[DETSCAN_CATEGORY_DRINK] && !log[DETSCAN_CATEGORY_ACCESS])
+			report_text += "No forensic traces found.<BR>"
+			continue
+
 		if(log[DETSCAN_CATEGORY_FIBER])
 			report_text += "<DT><B>[DETSCAN_CATEGORY_FIBER]</B></DT><DD>"
 			for(var/fibers in log[DETSCAN_CATEGORY_FIBER])
