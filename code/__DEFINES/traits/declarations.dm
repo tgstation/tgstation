@@ -1130,6 +1130,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_BRIGHT_DAY "station_trait_bright_day"
 #define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
 #define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
+#define STATION_TRAIT_ECONOMY_ALERTS "station_trait_economy_alerts"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_FORESTED "station_trait_forested"
@@ -1148,8 +1149,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
-#define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
-#define STATION_TRAIT_ECONOMY_ALERTS "station_trait_economy_alerts"
 #define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 
 ///Deathmatch traits
@@ -1413,6 +1412,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to atoms currently affected by projectile dampeners
 #define TRAIT_GOT_DAMPENED "got_dampened"
 
+/// humans with this trait will have their health visible to AIs without suit
+#define HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT "hmsensorsvisiblewithoutsuit"
 /// Apply to movables to say "hey, this movable is technically flat on the floor, so it'd be mopped up by a mop"
 #define TRAIT_MOPABLE "mopable"
 
@@ -1424,5 +1425,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mob doesn't get closed eyelids overlay when it gets knocked out cold or dies
 #define TRAIT_NO_EYELIDS "no_eyelids"
+
+/// Trait applied when the wire bundle component is added to an [/obj/item/integrated_circuit]
+#define TRAIT_COMPONENT_WIRE_BUNDLE "component_wire_bundle"
 
 // END TRAIT DEFINES

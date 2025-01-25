@@ -3705,7 +3705,7 @@
 	anchored = 1;
 	dir = 8
 	},
-/obj/item/circuitboard/computer/stationalert,
+/obj/item/circuitboard/computer/station_alert,
 /obj/effect/turf_decal/bot/right,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -7183,7 +7183,7 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "bKo" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/south,
@@ -8831,7 +8831,7 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "cfx" = (
 /obj/structure/cable,
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -19775,7 +19775,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "eSU" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert/station_only,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/gas_mask/directional/north,
 /obj/machinery/light/small/directional/north,
@@ -38494,7 +38494,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "jAY" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot/left,
@@ -45376,7 +45376,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -56646,7 +56646,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "oiO" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -76871,7 +76871,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -88571,7 +88571,7 @@
 /area/station/commons/dorms)
 "wgF" = (
 /obj/structure/cable,
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/machinery/status_display/ai/directional/south,
@@ -88891,7 +88891,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "wkT" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert/station_only,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -90657,7 +90657,7 @@
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
 "wEX" = (
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -94421,7 +94421,7 @@
 	c_tag = "Engineering - Power Monitoring";
 	name = "engineering camera"
 	},
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 1
 	},
 /obj/structure/cable,

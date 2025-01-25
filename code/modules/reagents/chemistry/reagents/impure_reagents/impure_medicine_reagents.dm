@@ -245,7 +245,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
-	affected_mob.reagents?.chem_temp += heating
+	var/datum/reagents/mob_reagents = affected_mob.reagents
+	if(mob_reagents)
+		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating)
 	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if(!ishuman(affected_mob))
 		return
@@ -624,16 +626,44 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	if(!(SPT_PROB(creation_purity*10, seconds_per_tick)))
 		return
-	var/traumalist = subtypesof(/datum/brain_trauma)
-	var/list/forbiddentraumas = list(
-		/datum/brain_trauma/severe/split_personality,  // Split personality uses a ghost, I don't want to use a ghost for a temp thing
-		/datum/brain_trauma/special/obsessed, // Obsessed sets the affected_mob as an antag - I presume this will lead to problems, so we'll remove it
-		/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
-		/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
-	)
-	traumalist -= forbiddentraumas
-	var/obj/item/organ/brain/brain = affected_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/static/list/traumalist
+	if (!traumalist)
+		traumalist = subtypesof(/datum/brain_trauma)
+
+		// Don't add these to the list because they're abstract category types
+		var/list/abstracttraumas = list(
+			/datum/brain_trauma/magic,
+			/datum/brain_trauma/mild,
+			/datum/brain_trauma/severe,
+			/datum/brain_trauma/special,
+		)
+
+		// Don't give out these traumas or any of their descendants
+		var/list/forbiddentraumas = list(
+			/datum/brain_trauma/severe/split_personality, // Uses a ghost, I don't want to use a ghost for a temp thing
+			/datum/brain_trauma/special/imaginary_friend, // Same as above
+			/datum/brain_trauma/special/obsessed, // Obsessed sets the affected_mob as an antag - I presume this will lead to problems, so we'll remove it
+			/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neruwhine purges and then turn into "nothing" on the med reading upon a second application
+			/datum/brain_trauma/severe/hypnotic_stupor, // These apply the above blacklisted trauma
+			/datum/brain_trauma/severe/hypnotic_trigger,
+			/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
+		)
+
+		// Do give out these traumas but not any of their subtypes, usually because the trauma replaces itself with a subtype
+		var/list/forbiddensubtypes = list(
+			/datum/brain_trauma/mild/phobia,
+			/datum/brain_trauma/severe/paralysis,
+			/datum/brain_trauma/special/psychotic_brawling,
+		)
+
+		traumalist -= abstracttraumas
+		for (var/type as anything in forbiddentraumas)
+			traumalist -= typesof(type)
+		for (var/type as anything in forbiddensubtypes)
+			traumalist -= subtypesof(type)
+
 	traumalist = shuffle(traumalist)
+	var/obj/item/organ/brain/brain = affected_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
 			temp_trauma = trauma
@@ -880,7 +910,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/rezadone
 	name = "Inreziniver"
-	description = "Makes the user horribly afraid of all things related to carps."
+	description = "Makes the user horribly afraid of all things related to fish."
 	color = "#c92eb4"
 	ph = 13.9
 	metabolization_rate = 0.05 * REM
@@ -888,8 +918,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/rezadone/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/carps, TRAUMA_RESILIENCE_ABSOLUTE)
+	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/fish, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/inverse/rezadone/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/carps, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/fish, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
