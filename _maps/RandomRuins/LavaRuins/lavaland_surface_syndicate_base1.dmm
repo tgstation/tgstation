@@ -3329,6 +3329,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/glasses/welding,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Jr" = (
@@ -4144,6 +4145,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/glasses/welding,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Vb" = (
@@ -4522,6 +4524,7 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/glasses/welding,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Zw" = (
