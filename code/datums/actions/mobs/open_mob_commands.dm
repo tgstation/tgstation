@@ -23,4 +23,4 @@
 	if(our_mob_resolved)
 		var/datum/component/obeys_commands/command_component = our_mob_resolved.GetComponent(/datum/component/obeys_commands)
 		if(command_component)
-			command_component.display_menu(our_mob_resolved, owner)
+			command_component.display_menu(owner)

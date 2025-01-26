@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Head IDs now keep the large pointer effect when slotted into a PDA or displayed as the front ID in a wallet"
