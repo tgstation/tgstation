@@ -444,6 +444,8 @@
 			if(z_move_flags & ZMOVE_FEEDBACK)
 				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
 			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CAN_Z_MOVE, start, destination) & COMPONENT_CANT_Z_MOVE)
+		return FALSE
 	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || (movement_type & (FLYING|FLOATING)) || !has_gravity(start)))
 		return FALSE
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
@@ -1211,8 +1213,7 @@
  */
 /atom/movable/proc/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_turf, new_turf, same_z_layer) & PREVENT_VISUAL_UPDATE)
-		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_turf, new_turf, same_z_layer)
 
 	// If our turfs are on different z "layers", recalc our planes
 	if(!same_z_layer && !QDELETED(src))
