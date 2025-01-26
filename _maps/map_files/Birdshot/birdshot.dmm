@@ -3897,14 +3897,14 @@
 /turf/open/floor/iron/white/small,
 /area/station/security/warden)
 "bvP" = (
-/obj/machinery/door/airlock{
-	name = "Kitchen"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
+/obj/machinery/door/airlock{
+	name = "Maintenance"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "bwz" = (
