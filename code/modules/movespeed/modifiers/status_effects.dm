@@ -45,6 +45,9 @@
 /datum/movespeed_modifier/status_effect/midas_blight
 	id = MOVESPEED_ID_MIDAS_BLIGHT
 
+/datum/movespeed_modifier/status_effect/spooked
+	multiplicative_slowdown = 0.25
+
 /datum/movespeed_modifier/status_effect/midas_blight/soft
 	multiplicative_slowdown = 0.25
 

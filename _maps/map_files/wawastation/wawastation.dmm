@@ -840,7 +840,7 @@
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "gib3-old"
 	},
-/mob/living/simple_animal/hostile/mimic,
+/mob/living/basic/mimic/crate,
 /turf/open/floor/iron/white,
 /area/station/maintenance/aft/upper)
 "anu" = (
