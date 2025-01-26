@@ -689,3 +689,11 @@
       gain the above extra bonuses.
   valzargaming:
   - bugfix: Typo in path for cavesound3.ogg
+2025-01-26:
+  Profakos:
+  - bugfix: IEDs can now also be crafted using pipes you have ripped up from the ground.
+  SmArtKar:
+  - bugfix: Head IDs now keep the large pointer effect when slotted into a PDA or
+      displayed as the front ID in a wallet
+  StrangeWeirdKitten:
+  - qol: Quirk menu now has a search bar
