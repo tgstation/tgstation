@@ -6607,6 +6607,7 @@
 #include "modular_doppler\announcer\code\default_announcer.dm"
 #include "modular_doppler\announcer\code\security_level_datums.dm"
 #include "modular_doppler\announcer\code\shuttle_area.dm"
+#include "modular_doppler\autoimplanter\code\implanter.dm"
 #include "modular_doppler\automapper\code\area_spawn_entries.dm"
 #include "modular_doppler\automapper\code\area_spawn_subsystem.dm"
 #include "modular_doppler\automapper\code\automap_template.dm"
