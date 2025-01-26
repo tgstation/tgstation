@@ -117,6 +117,7 @@
 /obj/item/detective_scanner/proc/safe_scan(mob/user, atom/atom_to_scan)
 	set waitfor = FALSE
 	if(scanner_busy)
+		balloon_alert(user, "scanner busy!")
 		return
 	if(!scan(user, atom_to_scan)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
@@ -234,7 +235,16 @@
 	switch(action)
 		if("clear")
 			clear_logs(ui.user)
-			return
+		if("delete")
+			var/reversed_index = params["index"] // Reversing because UI displays new logs at the top
+			var/index = LAZYLEN(log_data) - reversed_index
+			if(!log_data[index])
+				return
+			if(scanner_busy)
+				balloon_alert(ui.user, "scanner busy!")
+				return
+			log_data.Cut(index, index + 1)
+			balloon_alert(ui.user, "log deleted")
 		if("print")
 			if(!LAZYLEN(log_data))
 				balloon_alert(ui.user, "no logs!")
@@ -243,6 +253,7 @@
 				balloon_alert(ui.user, "scanner busy!")
 				return
 			scanner_busy = TRUE
+			playsound(src, 'sound/machines/printer.ogg', 50)
 			balloon_alert(ui.user, "printing report...")
 			addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 3 SECONDS)
 
@@ -252,9 +263,6 @@
 		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
-		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "deleting logs...")
-	if(!do_after(user, 3 SECONDS, target = src))
 		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "logs cleared")
 	log_data = list()

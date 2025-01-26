@@ -53,10 +53,17 @@ export const ForensicScanner = (props) => {
               </>
             }
           >
-            {log_data.reverse().map((log) => (
+            {log_data.reverse().map((log, index) => (
               <Section
-                key={log.scan_time}
+                key={index}
                 title={`${capitalizeFirst(log.scan_target)} scan at ${log.scan_time}`}
+                buttons={
+                  <Button
+                    icon="trash"
+                    color="transparent"
+                    onClick={() => act('delete', { index: index })}
+                  />
+                }
               >
                 {!log.Prints && !log.Fibers && !log.Blood && !log.Reagents ? (
                   <Box opacity={0.5}>No forensic traces found.</Box>
