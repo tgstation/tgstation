@@ -235,9 +235,9 @@
 	switch(action)
 		if("clear")
 			clear_logs(ui.user)
+			ui.send_update()
 		if("delete")
-			var/reversed_index = params["index"] // Reversing because UI displays new logs at the top
-			var/index = LAZYLEN(log_data) - reversed_index
+			var/index = params["index"] + 1
 			if(!log_data[index])
 				return
 			if(scanner_busy)
@@ -245,6 +245,7 @@
 				return
 			log_data.Cut(index, index + 1)
 			balloon_alert(ui.user, "log deleted")
+			ui.send_update()
 		if("print")
 			if(!LAZYLEN(log_data))
 				balloon_alert(ui.user, "no logs!")

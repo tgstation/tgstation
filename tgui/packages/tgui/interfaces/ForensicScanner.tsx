@@ -53,87 +53,90 @@ export const ForensicScanner = (props) => {
               </>
             }
           >
-            {log_data.reverse().map((log, index) => (
-              <Section
-                key={index}
-                title={`${capitalizeFirst(log.scan_target)} scan at ${log.scan_time}`}
-                buttons={
-                  <Button
-                    icon="trash"
-                    color="transparent"
-                    onClick={() => act('delete', { index: index })}
-                  />
-                }
-              >
-                {!log.Prints && !log.Fibers && !log.Blood && !log.Reagents ? (
-                  <Box opacity={0.5}>No forensic traces found.</Box>
-                ) : (
-                  <LabeledList>
-                    {log.Fibers && Object.keys(log.Fibers).length > 0 && (
-                      <LabeledList.Item label="Fibers">
-                        {Object.keys(log.Fibers).map((fibers) => (
-                          <Box key={fibers} py={0.5}>
-                            <Icon name="shirt" mr={1} color="green" />
-                            {fibers}
-                          </Box>
-                        ))}
-                      </LabeledList.Item>
-                    )}
-                    {log.Prints && Object.values(log.Prints).length > 0 && (
-                      <LabeledList.Item label="Fingerprints">
-                        {Object.values(log.Prints).map((print) => (
-                          <Box
-                            key={print}
-                            py={0.5}
-                            style={{ textTransform: 'uppercase' }}
-                          >
-                            <Icon name="fingerprint" mr={1} color="yellow" />
-                            {print}
-                          </Box>
-                        ))}
-                      </LabeledList.Item>
-                    )}
-                    {log.Blood && Object.keys(log.Blood).length > 0 && (
-                      <LabeledList.Item label="Blood DNA, Type">
-                        {Object.keys(log.Blood).map((dna) => (
-                          <Box
-                            key={dna}
-                            py={0.5}
-                            style={{ textTransform: 'uppercase' }}
-                          >
-                            <Icon name="droplet" mr={1} color="red" />
-                            {`${dna}, ${log.Blood[dna]}`}
-                          </Box>
-                        ))}
-                      </LabeledList.Item>
-                    )}
-                    {log.Reagents && Object.keys(log.Reagents)?.length > 0 && (
-                      <LabeledList.Item label="Reagents">
-                        <LabeledList>
-                          {Object.keys(log.Reagents).map((reagent) => (
-                            <LabeledList.Item key={reagent} label={reagent}>
-                              {`${log.Reagents[reagent]} u.`}
-                            </LabeledList.Item>
+            {log_data
+              .map((log, index) => (
+                <Section
+                  key={index}
+                  title={`${capitalizeFirst(log.scan_target)} scan at ${log.scan_time}`}
+                  buttons={
+                    <Button
+                      icon="trash"
+                      color="transparent"
+                      onClick={() => act('delete', { index: index })}
+                    />
+                  }
+                >
+                  {!log.Prints && !log.Fibers && !log.Blood && !log.Reagents ? (
+                    <Box opacity={0.5}>No forensic traces found.</Box>
+                  ) : (
+                    <LabeledList>
+                      {log.Fibers && Object.keys(log.Fibers).length > 0 && (
+                        <LabeledList.Item label="Fibers">
+                          {Object.keys(log.Fibers).map((fibers) => (
+                            <Box key={fibers} py={0.5}>
+                              <Icon name="shirt" mr={1} color="green" />
+                              {fibers}
+                            </Box>
                           ))}
-                        </LabeledList>
-                      </LabeledList.Item>
-                    )}
-                    {log['ID Access'] &&
-                      Object.keys(log['ID Access'])?.length > 0 && (
-                        <LabeledList.Item label="ID Access">
-                          <LabeledList>
-                            {Object.keys(log['ID Access']).map((region) => (
-                              <LabeledList.Item key={region} label={region}>
-                                {log['ID Access'][region]}
-                              </LabeledList.Item>
-                            ))}
-                          </LabeledList>
                         </LabeledList.Item>
                       )}
-                  </LabeledList>
-                )}
-              </Section>
-            ))}
+                      {log.Prints && Object.values(log.Prints).length > 0 && (
+                        <LabeledList.Item label="Fingerprints">
+                          {Object.values(log.Prints).map((print) => (
+                            <Box
+                              key={print}
+                              py={0.5}
+                              style={{ textTransform: 'uppercase' }}
+                            >
+                              <Icon name="fingerprint" mr={1} color="yellow" />
+                              {print}
+                            </Box>
+                          ))}
+                        </LabeledList.Item>
+                      )}
+                      {log.Blood && Object.keys(log.Blood).length > 0 && (
+                        <LabeledList.Item label="Blood DNA, Type">
+                          {Object.keys(log.Blood).map((dna) => (
+                            <Box
+                              key={dna}
+                              py={0.5}
+                              style={{ textTransform: 'uppercase' }}
+                            >
+                              <Icon name="droplet" mr={1} color="red" />
+                              {`${dna}, ${log.Blood[dna]}`}
+                            </Box>
+                          ))}
+                        </LabeledList.Item>
+                      )}
+                      {log.Reagents &&
+                        Object.keys(log.Reagents)?.length > 0 && (
+                          <LabeledList.Item label="Reagents">
+                            <LabeledList>
+                              {Object.keys(log.Reagents).map((reagent) => (
+                                <LabeledList.Item key={reagent} label={reagent}>
+                                  {`${log.Reagents[reagent]} u.`}
+                                </LabeledList.Item>
+                              ))}
+                            </LabeledList>
+                          </LabeledList.Item>
+                        )}
+                      {log['ID Access'] &&
+                        Object.keys(log['ID Access'])?.length > 0 && (
+                          <LabeledList.Item label="ID Access">
+                            <LabeledList>
+                              {Object.keys(log['ID Access']).map((region) => (
+                                <LabeledList.Item key={region} label={region}>
+                                  {log['ID Access'][region]}
+                                </LabeledList.Item>
+                              ))}
+                            </LabeledList>
+                          </LabeledList.Item>
+                        )}
+                    </LabeledList>
+                  )}
+                </Section>
+              ))
+              .reverse()}
           </Section>
         )}
       </Window.Content>
