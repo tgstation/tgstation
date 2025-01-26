@@ -26,12 +26,10 @@
 //several flags for the Necropolis curse status effect
 ///makes the edges of the target's screen obscured
 #define CURSE_BLINDING (1<<0)
-///spawns creatures that attack the target only
-#define CURSE_SPAWNING (1<<1)
 ///causes gradual damage
-#define CURSE_WASTING (1<<2)
+#define CURSE_WASTING (1<<1)
 ///hands reach out from the sides of the screen, doing damage and stunning if they hit the target
-#define CURSE_GRASPING (1<<3)
+#define CURSE_GRASPING (1<<2)
 
 //Incapacitated status effect flags
 /// If the mob is normal incapacitated. Should never need this, just avoids issues if we ever overexpand this
