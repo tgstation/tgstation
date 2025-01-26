@@ -888,3 +888,11 @@
 	icon_state = "shakiri_rogers"
 	name = "glass of shakiri rogers"
 	desc = "A take on the classic Roy Rogers, with shakiri instead of grenadine. Sweet and refreshing."
+
+/datum/reagent/consumable/ethanol/null_strength_lemon_grapefruit
+	name = "NULL STRENGTH Lemon-Grapefruit Fruit Cooler"
+	description = "Flash frozen pressed juice mixed with shochu spirits. Very light and drinkable."
+	color = "#d6b679"
+	quality = DRINK_GOOD
+	boozepwr = 30
+	taste_description = "light fruit essence and alcohol"
