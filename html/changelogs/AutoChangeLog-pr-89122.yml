@@ -1,8 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - refactor: "Wires and assemblies have been refactored to have directionality to them. This mostly makes it so that assemblies can only be attached to wires it would make sense for them to be attached to."
-  - qol: "Pressure plates can now also accept igniters, condensers, flashes, assembly shells, and door controllers."
-  - rscadd: "Undertile circuit shells. They only work when placed under floor tiles, but support USB cables and use APC power instead of cell power."
-  - rscadd: "Wallmounted circuit shells. Large shells that support USB cables and use APC power instead of cell power."
-  - rscadd: "Wire bundle component. Adds a number of wires to the circuit proportional to the capacity of the shell, allowing you to use assemblies in circuit logic."

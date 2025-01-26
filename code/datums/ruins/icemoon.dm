@@ -64,7 +64,7 @@
 /datum/map_template/ruin/icemoon/Lodge
 	name = "Ice-Ruin Hunters Lodge"
 	id = "lodge"
-	description = "An old hunting hunting lodge. I wonder if anyone is still home?"
+	description = "An old hunting lodge. I wonder if anyone is still home?"
 	suffix = "icemoon_surface_lodge.dmm"
 
 /datum/map_template/ruin/icemoon/frozen_phonebooth
@@ -189,6 +189,12 @@
 	id = "syndie_lab"
 	description = "A small laboratory and living space for Syndicate agents."
 	suffix = "icemoon_underground_syndielab.dmm"
+
+/datum/map_template/ruin/icemoon/underground/o31
+	name = "Ice-Ruin Outpost 31"
+	id = "o31"
+	description = "Suspiciously dead silent. May or may not contain megafauna"
+	suffix = "icemoon_underground_outpost31.dmm"
 
 //TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility

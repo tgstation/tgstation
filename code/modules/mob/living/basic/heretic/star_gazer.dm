@@ -79,7 +79,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/attack_closed_turfs,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/attack_everything,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
