@@ -64,13 +64,15 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 			INVOKE_ASYNC(human_in_range, TYPE_PROC_REF(/mob, put_in_hands), new_blade)
 			human_in_range.mind?.add_antag_datum(/datum/antagonist/heretic_arena_participant)
 		human_in_range.apply_status_effect(/datum/status_effect/arena_tracker)
-		RegisterSignal(human_in_range, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(mob_change_z))
+		RegisterSignal(human_in_range, COMSIG_CAN_Z_MOVE, PROC_REF(on_try_z_move))
+		RegisterSignal(human_in_range, COMSIG_LADDER_TRAVEL, PROC_REF(on_try_ladder))
+		RegisterSignal(human_in_range, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_pre_move))
 
 /datum/proximity_monitor/advanced/heretic_arena/Destroy()
 	for(var/mob/living/carbon/human/mob in contained_mobs)
 		mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
 		mob.remove_status_effect(/datum/status_effect/arena_tracker)
-		UnregisterSignal(mob, COMSIG_MOVABLE_Z_CHANGED)
+		UnregisterSignal(mob, list(COMSIG_CAN_Z_MOVE, COMSIG_LADDER_TRAVEL, COMSIG_MOVABLE_PRE_MOVE))
 		if(mob.mind?.has_antag_datum(/datum/antagonist/heretic_arena_participant))
 			mob.mind.remove_antag_datum(/datum/antagonist/heretic_arena_participant)
 	for(var/turf/to_restore in border_walls)
@@ -95,16 +97,34 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		arena_caster = null
 		qdel(host)
 
-/// If a mob tries to change Z level while the arena is active, we teleport them back to the center of the arena
-/datum/proximity_monitor/advanced/heretic_arena/proc/mob_change_z(datum/source, old_turf, new_turf, same_z_layer)
+/// Prevents using ladders while the arena is active
+/datum/proximity_monitor/advanced/heretic_arena/proc/on_try_ladder(mob/climber)
 	SIGNAL_HANDLER
-	if(!same_z_layer)
-		do_teleport(source, host, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
-	if(isliving(source))
-		var/mob/living/leaver = source
-		leaver.adjustBruteLoss(10) // Trying to cheese via z levels leads to eventual death
-		leaver.balloon_alert(leaver, "can't escape!")
-	return PREVENT_VISUAL_UPDATE
+	apply_punishment(climber)
+	return LADDER_TRAVEL_BLOCK
+
+/// If we try to enter a space turf that has a mirage, we will instead teleport to the center
+/datum/proximity_monitor/advanced/heretic_arena/proc/on_pre_move(atom/movable/mover, atom/newloc)
+	if(locate(/atom/movable/mirage_holder) in newloc.contents)
+		apply_punishment(mover)
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/// If a mob tries to change Z level while the arena is active, we teleport them back to the center of the arena
+/datum/proximity_monitor/advanced/heretic_arena/proc/on_try_z_move(atom/movable/source, turf/start, turf/destination)
+	SIGNAL_HANDLER
+	if(start.z == destination.z)
+		return
+	apply_punishment(source)
+	return COMPONENT_CANT_Z_MOVE
+
+/// Teleports our mob back to the center of the arena and hurts them a little bit
+/datum/proximity_monitor/advanced/heretic_arena/proc/apply_punishment(mob/leaver)
+	// If our leaver is trying to leave the Z-level, we yoink em back to the middle and cause em some damage to discourage their escape
+	do_teleport(leaver, host, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
+	if(isliving(leaver))
+		var/mob/living/to_hurt = leaver
+		to_hurt.adjustBruteLoss(10)
+		to_hurt.balloon_alert(to_hurt, "can't escape!")
 
 /datum/proximity_monitor/advanced/heretic_arena/proc/set_caster(atom/caster)
 	arena_caster = caster
@@ -172,6 +192,8 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	var/mob/living/our_attacker = last_attacker.resolve()
 	if(!our_attacker || !isliving(our_attacker)) // Safety check in case they somehow enter crit with *nobody* attacking them
 		return
+	if(our_attacker == owner)
+		return // We don't allow people to crit themselves as a valid way to escape
 	var/datum/status_effect/arena_tracker/their_tracker = our_attacker.has_status_effect(/datum/status_effect/arena_tracker)
 	if(!their_tracker)
 		return // Somebody killed us who isn't an arena participant
