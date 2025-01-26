@@ -128,6 +128,7 @@
 
 	if(!isnull(new_skin))
 		skin = new_skin
+		update_appearance()
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
@@ -249,7 +250,7 @@
 	medical_mode_flags &= ~MEDBOT_DECLARE_CRIT
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
-	flick("medibot_spark", src)
+	flick("medbot_spark", src)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
@@ -369,14 +370,12 @@
 /mob/living/basic/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
-	skin = "bezerk"
 	damage_type_healer = HEAL_ALL_DAMAGE
 	heal_amount = 10
 
 /mob/living/basic/bot/medbot/derelict
 	name = "\improper Old Medibot"
 	desc = "Looks like it hasn't been modified since the late 2080s."
-	skin = "bezerk"
 	damage_type_healer = HEAL_ALL_DAMAGE
 	medical_mode_flags = MEDBOT_SPEAK_MODE
 	heal_threshold = 0
@@ -385,7 +384,6 @@
 /mob/living/basic/bot/medbot/nukie
 	name = "Oppenheimer"
 	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
-	skin = "bezerk"
 	health = 40
 	maxHealth = 40
 	req_one_access = list(ACCESS_SYNDICATE)
