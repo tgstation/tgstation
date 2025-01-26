@@ -158,12 +158,28 @@
 		registered_account.bank_cards -= src
 	if (my_store)
 		QDEL_NULL(my_store)
+	if (isitem(loc))
+		UnregisterSignal(loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	return ..()
+
+/obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	if (isitem(old_loc))
+		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+		if (ismob(old_loc.loc))
+			UnregisterSignal(old_loc.loc, COMSIG_MOVABLE_POINTED)
+	. = ..()
+	if (isitem(loc))
+		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
+		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
 
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_ID)
+	if (slot == ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+
+/obj/item/card/id/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
+	return ..()
 
 /obj/item/card/id/proc/return_message_name_part(datum/source, list/stored_name, mob/living/carbon/carbon_human)
 	SIGNAL_HANDLER
@@ -179,23 +195,35 @@
 	return_string += end_string
 	stored_name[NAME_PART_INDEX] = return_string
 
+/obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	if (slot == ITEM_SLOT_ID)
+		RegisterSignal(equipper, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+
+/obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
+	SIGNAL_HANDLER
+	UnregisterSignal(dropper, COMSIG_MOVABLE_POINTED)
+
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
-	if((!big_pointer && !pointer_color) || HAS_TRAIT(user, TRAIT_UNKNOWN))
+	if ((!big_pointer && !pointer_color) || HAS_TRAIT(user, TRAIT_UNKNOWN))
 		return
-	if(point.icon_state != /obj/effect/temp_visual/point::icon_state) //it differs from the original icon_state already.
+	if (point.icon_state != /obj/effect/temp_visual/point::icon_state) //it differs from the original icon_state already.
 		return
-	if(big_pointer)
+	if (loc != user)
+		if (!isitem(loc))
+			return
+		var/obj/item/as_item = loc
+		if (as_item.GetID() != src)
+			return
+	if (big_pointer)
 		point.icon_state = "arrow_large"
-	if(pointer_color)
+	if (pointer_color)
 		point.icon_state = "[point.icon_state]_white"
 		point.color = pointer_color
 		var/mutable_appearance/highlight = mutable_appearance(point.icon, "[point.icon_state]_highlights", appearance_flags = RESET_COLOR)
 		point.add_overlay(highlight)
-
-/obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
-	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
@@ -1130,6 +1158,16 @@
 	update_icon()
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/card/id/advanced/on_loc_equipped(datum/source, mob/equipper, slot)
+	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		update_intern_status(source, equipper, slot)
+
+/obj/item/card/id/advanced/on_loc_dropped(datum/source, mob/dropper)
+	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		remove_intern_status(source, dropper)
+
 /obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
@@ -1164,25 +1202,6 @@
 
 	is_intern = FALSE
 	update_label()
-
-/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-
-	//Old loc
-	if(istype(old_loc, /obj/item/storage/wallet))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	if(istype(old_loc, /obj/item/modular_computer))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	//New loc
-	if(istype(loc, /obj/item/storage/wallet))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
-
-	if(istype(loc, /obj/item/modular_computer))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
