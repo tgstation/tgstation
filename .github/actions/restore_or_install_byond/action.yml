@@ -1,0 +1,51 @@
+# This is a reusable workflow to restore BYOND from a cache, or to install it otherwise.
+name: Restore or Install BYOND
+description: Attempts to restore a specified BYOND version from cache; if it can't, it installs it.
+
+inputs:
+  major:
+    description: "The major BYOND version to install. Defaults to the BYOND_MAJOR specified in `dependencies.sh`."
+    required: false
+    type: string
+  minor:
+    description: "The minor BYOND version to install. Defaults to the BYOND_MINOR specified in `dependencies.sh`."
+    required: false
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: Configure BYOND version from inputs
+      if: ${{ inputs.major }}
+      shell: bash
+      run: |
+        echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
+        echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
+    - name: Configure BYOND version from dependencies.sh
+      if: ${{ !inputs.major }}
+      shell: bash
+      run: |
+        source dependencies.sh
+        echo "BYOND_MAJOR=$BYOND_MAJOR" >> $GITHUB_ENV
+        echo "BYOND_MINOR=$BYOND_MINOR" >> $GITHUB_ENV
+
+    # The use of `actions/cache/restore` and `actions/cache/save` here is deliberate, as we want to
+    # save the BYOND install to a cache as early as possible. If we used just `actions/cache`, it
+    # would only attempt to save the cache at the end of a job. This ensures that if a workflow run
+    # is cancelled, we already have a cache to restore from.
+    - name: Restore BYOND cache
+      id: restore_byond_cache
+      uses: actions/cache/restore@v4
+      with:
+        path: ~/BYOND
+        key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+    - name: Install BYOND
+      if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
+      shell: bash
+      run: bash tools/ci/install_byond.sh
+    - name: Save BYOND cache
+      if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
+      uses: actions/cache/save@v4
+      with:
+        path: ~/BYOND
+        key: ${{ steps.restore_byond_cache.outputs.cache-primary-key }}

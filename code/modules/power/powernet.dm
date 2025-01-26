@@ -35,6 +35,7 @@
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the cable exists
 /datum/powernet/proc/remove_cable(obj/structure/cable/C)
+	SEND_SIGNAL(C, COMSIG_CABLE_REMOVED_FROM_POWERNET)
 	cables -= C
 	C.powernet = null
 	if(is_empty())//the powernet is now empty...
@@ -50,6 +51,7 @@
 			C.powernet.remove_cable(C) //..remove it
 	C.powernet = src
 	cables +=C
+	SEND_SIGNAL(C, COMSIG_CABLE_ADDED_TO_POWERNET)
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
@@ -90,3 +92,7 @@
 
 /datum/powernet/proc/get_electrocute_damage()
 	return ELECTROCUTE_DAMAGE(energy_to_power(avail)) // Assuming 1 second of contact.
+
+// Mostly just a wrapper for sending the COMSIG_POWERNET_CIRCUIT_TRANSMISSION signal, but could be retooled in the future to give it other uses
+/datum/powernet/proc/data_transmission(list/data, encryption_key, datum/weakref/port)
+	SEND_SIGNAL(src, COMSIG_POWERNET_CIRCUIT_TRANSMISSION, list("data" = data, "enc_key" = encryption_key, "port" = port))

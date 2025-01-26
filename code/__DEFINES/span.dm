@@ -1,3 +1,6 @@
+// Just a generic span with class
+#define span_class(class, str) ("<span class='[class]'>" + str + "</span>")
+
 // Sorted alphabetically
 #define span_abductor(str) ("<span class='abductor'>" + str + "</span>")
 #define span_admin(str) ("<span class='admin'>" + str + "</span>")

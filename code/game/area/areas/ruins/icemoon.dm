@@ -94,3 +94,40 @@
 	name = "\improper Syndicate Lab"
 	ambience_index = AMBIENCE_DANGER
 	sound_environment = SOUND_ENVIRONMENT_CAVE
+
+/area/ruin/outpost31
+	name = "\improper Outpost 31"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	mood_bonus = -10
+	mood_message = "Something very bad happened here..."
+
+/area/ruin/outpost31/medical
+	name = "\improper Outpost 31 Medical"
+
+/area/ruin/outpost31/kitchendiningroom
+	name = "\improper Outpost 31 Kitchen-Dining Room"
+
+/area/ruin/outpost31/kennel
+	name = "\improper Outpost 31 Kennel"
+
+/area/ruin/outpost31/radiomap
+	name = "\improper Outpost 31 Radio-Map Room"
+
+/area/ruin/outpost31/lab
+	name = "\improper Outpost 31 Lab"
+	area_flags = NOTELEPORT //megafauna arena
+	requires_power = FALSE
+
+/area/ruin/outpost31/lootroom
+	name = "\improper Outpost 31 Secondary Storage"
+	area_flags = NOTELEPORT //megafauna loot room
+	requires_power = FALSE
+
+/area/ruin/outpost31/recroom
+	name = "\improper Outpost 31 Rec Room"
+
+/area/ruin/outpost31/crewquarters
+	name = "\improper Outpost 31 Sleeping Quarters"
+
+/area/ruin/outpost31/commander_room
+	name = "\improper Outpost 31 Station Commander Office"

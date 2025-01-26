@@ -266,7 +266,7 @@
 	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
 
-	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_removed_amount
 
 /**
  * Removes all reagents either proportionally(amount is the direct volume to remove)
@@ -344,30 +344,41 @@
 	if(!ispath(source_reagent_typepath))
 		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
 		return FALSE
+	if(!ispath(target_reagent_typepath))
+		stack_trace("invalid reagent path passed to convert reagent [target_reagent_typepath]")
+		return FALSE
 
-	var/reagent_amount = 0
-	var/reagent_purity = 0
-	var/reagent_ph = 0
-	if(include_source_subtypes)
-		reagent_ph = ph
-		var/weighted_purity
-		var/list/reagent_type_list = typecacheof(source_reagent_typepath)
-		for(var/datum/reagent/reagent as anything in reagent_list)
-			if(is_type_in_typecache(reagent, reagent_type_list))
-				weighted_purity += reagent.volume * reagent.purity
-				reagent_amount += reagent.volume
-				remove_reagent(reagent.type, reagent.volume * multiplier)
-		reagent_purity = weighted_purity / reagent_amount
-	else
-		var/datum/reagent/source_reagent = has_reagent(source_reagent_typepath)
-		if(istype(source_reagent))
-			reagent_amount = source_reagent.volume
-			reagent_purity = source_reagent.purity
-			reagent_ph = source_reagent.ph
-			remove_reagent(source_reagent_typepath, reagent_amount)
+	var/weighted_volume = 0
+	var/weighted_purity = 0
+	var/weighted_ph = 0
+	var/reagent_volume = 0
 
-	if(reagent_amount > 0)
-		add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		//check for specific type or subtypes
+		if(!include_source_subtypes)
+			if(cached_reagent.type != source_reagent_typepath)
+				continue
+		else if(!istype(cached_reagent, source_reagent_typepath))
+			continue
+
+		//compute average of everything
+		reagent_volume = cached_reagent.volume
+		weighted_purity += cached_reagent.purity * reagent_volume
+		weighted_ph += cached_reagent.ph * reagent_volume
+		weighted_volume += reagent_volume
+
+		//zero the volume out so it gets removed
+		cached_reagent.volume = 0
+
+		//if we reached here means we have found our specific reagent type so break
+		if(!include_source_subtypes)
+			break
+
+	//add the new target reagent with the averaged values from the source reagents
+	if(weighted_volume > 0)
+		update_total()
+		add_reagent(target_reagent_typepath, weighted_volume * multiplier, reagtemp = chem_temp, added_purity = (weighted_purity / weighted_volume), override_base_ph = TRUE, added_ph = (weighted_ph / weighted_volume))
 
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
