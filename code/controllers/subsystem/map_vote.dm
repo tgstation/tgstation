@@ -171,5 +171,5 @@ SUBSYSTEM_DEF(map_vote)
 		var/datum/map_config/map = config.maplist[map_id]
 		data += "[map.map_name] - [map_vote_cache[map_id]]"
 	var/tally_msg = span_tooltip("Tallies are reset after a map is successfully voted for. \
-		Otherwise, they are carried over and added to from next vote on the next round.", "Current Tallies")
+		Otherwise, they are carried over and added onto from the next vote on the next round.", "Current Tallies")
 	tally_printout = boxed_message("[tally_msg]<br><hr>[data.Join("<br>")]")
