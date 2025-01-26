@@ -41,16 +41,6 @@
 	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
 	return ..()
 
-///A negative trait that reduces the amount of products available from vending machines throughout the station.
-/datum/station_trait/vending_shortage
-	name = "Vending products shortage"
-	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 3
-	show_in_report = TRUE
-	can_revert = FALSE //Because it touches every maploaded vending machine on the station.
-	report_message = "We haven't had the time to take care of the station's vending machines. Some may be tilted, and some products may be unavailable."
-	trait_to_give = STATION_TRAIT_VENDING_SHORTAGE
-
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -691,7 +681,7 @@
 
 ///Send a care package because it is not going well
 /datum/station_trait/nebula/hostile/radiation/proc/send_care_package()
-	new /obj/effect/pod_landingzone (get_safe_random_station_turf(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/emergency/radiation ())
+	new /obj/effect/pod_landingzone (get_safe_random_station_turf_equal_weight(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/emergency/radiation ())
 
 /datum/station_trait/nebula/hostile/radiation/send_instructions()
 	var/obj/machinery/nebula_shielding/shielder = /obj/machinery/nebula_shielding/radiation

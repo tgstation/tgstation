@@ -5,8 +5,7 @@
  */
 
 import { useState } from 'react';
-
-import { Button, Flex, Section } from '../components';
+import { Button, Flex, Section } from 'tgui-core/components';
 
 export const meta = {
   title: 'Flex & Sections',

@@ -249,7 +249,3 @@
 	for(var/zero in 1 to how_many_zeros)
 		zeros += "0"
 	return "[zeros][number]"
-
-/// 180s an angle
-/proc/reverse_angle(angle)
-	return (angle + 180) % 360

@@ -37,7 +37,7 @@
 /// The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.
 #define CALIBER_A223 "a223"
 /// The caliber used by bolt action rifles.
-#define CALIBER_STRILKA310 ".310_strilka"
+#define CALIBER_STRILKA310 ".310 strilka"
 /// The caliber used by shotguns.
 #define CALIBER_SHOTGUN "shotgun"
 /// The caliber used by grenade launchers.
@@ -49,7 +49,7 @@
 /// The caliber used by most energy guns.
 #define CALIBER_ENERGY "energy"
 /// The acliber used by foam force and donksoft toy guns.
-#define CALIBER_FOAM "foam_force"
+#define CALIBER_FOAM "foam force"
 /// The caliber used by the bow and arrow.
 #define CALIBER_ARROW "arrow"
 /// The caliber used by the harpoon gun.
@@ -62,6 +62,8 @@
 #define CALIBER_TENTACLE "tentacle"
 /// The caliber used by pipeguns and pipe pistols
 #define CALIBER_JUNK "junk"
+/// The caliber used by the (gatfruit) peashooter
+#define CALIBER_PEA "pea"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2

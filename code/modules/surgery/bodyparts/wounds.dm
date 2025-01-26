@@ -57,18 +57,20 @@
 		return
 
 	// note that these are fed into an exponent, so these are magnified
-	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
+	var/easily_wounded = HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED)
+	var/hardly_wounded = HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED)
+	if(easily_wounded && !hardly_wounded)
 		damage *= 1.5
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 
-	if(HAS_TRAIT(owner,TRAIT_HARDLY_WOUNDED))
+	if(hardly_wounded && !easily_wounded)
 		damage *= 0.85
 
-	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
+	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		damage *= 1.1
 
-	if(HAS_TRAIT(owner, TRAIT_EASYBLEED) && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
+	if(HAS_TRAIT(owner, TRAIT_EASYBLEED) && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
 		damage *= 1.5
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))

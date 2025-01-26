@@ -16,6 +16,7 @@
 	light_range = 8
 	light_color = LIGHT_COLOR_LAVA
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	move_resist = INFINITY
 	var/open = FALSE
 	var/changing_openness = FALSE
 	var/locked = FALSE

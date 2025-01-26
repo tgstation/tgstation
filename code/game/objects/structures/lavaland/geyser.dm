@@ -106,11 +106,12 @@
 
 /obj/structure/geyser/random
 	point_value = 500
-	true_name = "strange geyser"
-	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
+	var/datum/reagent/Random_Reagent = reagent_id
+	true_name = "[initial(Random_Reagent.name)] geyser"
+	discovery_message = "It's a [initial(Random_Reagent.name)] geyser! How does any of this even work?" //it doesnt
 
 	return ..()
 
@@ -121,6 +122,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
+	icon_angle = 90
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT

@@ -25,6 +25,39 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	is_starting_knowledge = TRUE
 
+// Heretics can enhance their fishing rods to fish better - fishing content.
+// Lasts until successfully fishing something up.
+/datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	..()
+	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+
+/datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
+	SIGNAL_HANDLER
+
+	// Not a grasp, we dont want this to activate with say star or mending touch.
+	if(!istype(touch_spell, action_to_add))
+		return NONE
+
+	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
+	if(!istype(held_rod, /obj/item/fishing_rod) || HAS_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED))
+		return NONE
+
+	INVOKE_ASYNC(cast_on, TYPE_PROC_REF(/atom/movable, say), message = "R'CH T'H F'SH!", forced = "fishing rod infusion invocation")
+	playsound(cast_on, /datum/action/cooldown/spell/touch/mansus_grasp::sound, 15)
+	cast_on.visible_message(span_notice("[cast_on] snaps [cast_on.p_their()] fingers next to [held_rod], covering it in a burst of purple flames!"))
+
+	ADD_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED, REF(held_rod))
+	held_rod.difficulty_modifier -= 20
+	RegisterSignal(held_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(unfuse))
+	held_rod.add_filter("mansus_infusion", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
+	return COMPONENT_CAST_HANDLESS
+
+/datum/heretic_knowledge/spell/basic/proc/unfuse(obj/item/fishing_rod/item, reward, mob/user)
+	if(reward == FISHING_INFLUENCE || prob(35))
+		item.remove_filter("mansus_infusion")
+		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
+		item.difficulty_modifier += 20
+
 /**
  * The Living Heart heretic knowledge.
  *
@@ -272,7 +305,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// A golem or an android doesn't have skin!
 	var/exterior_text = "skin"
 	// If carbon, it's the limb. If not, it's the body.
-	var/ripped_thing = body
+	var/atom/movable/ripped_thing = body
 
 	// We will check if it's a carbon's body.
 	// If it is, we will damage a random bodypart, and check that bodypart for its body type, to select between 'skin' or 'exterior'.
@@ -280,14 +313,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		var/mob/living/carbon/carbody = body
 		var/obj/item/bodypart/bodypart = pick(carbody.bodyparts)
 		ripped_thing = bodypart
-		bodypart.receive_damage(25, sharpness = SHARP_EDGED)
+
+		carbody.apply_damage(25, BRUTE, bodypart, sharpness = SHARP_EDGED)
 		if(!(bodypart.bodytype & BODYTYPE_ORGANIC))
 			exterior_text = "exterior"
 	else
+		body.apply_damage(25, BRUTE, sharpness = SHARP_EDGED)
 		// If it is not a carbon mob, we will just check biotypes and damage it directly.
 		if(body.mob_biotypes & (MOB_MINERAL|MOB_ROBOTIC))
 			exterior_text = "exterior"
-			body.apply_damage(25, BRUTE)
 
 	// Procure book for flavor text. This is why we call parent at the end.
 	var/obj/item/book/le_book = locate() in selected_atoms

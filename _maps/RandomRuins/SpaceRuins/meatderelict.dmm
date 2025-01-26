@@ -484,7 +484,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 6
 	},
-/obj/item/surgery_tray/full/deployed,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "kh" = (
@@ -728,8 +728,8 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/item/ammo_casing/a357/spent,
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "oQ" = (
@@ -887,7 +887,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "rl" = (
@@ -1008,7 +1008,7 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "tv" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/mob/living/simple_animal/hostile/zombie,
+/mob/living/basic/zombie,
 /turf/open/indestructible/white{
 	icon_state = "showroomfloor"
 	},
@@ -1561,9 +1561,9 @@
 /turf/open/indestructible/plating,
 /area/ruin/space/has_grav/powered/biooutpost)
 "DC" = (
-/obj/item/ammo_casing/a357/spent,
-/obj/item/ammo_casing/a357/spent,
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
+/obj/item/ammo_casing/c357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "DJ" = (

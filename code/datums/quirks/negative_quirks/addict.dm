@@ -4,6 +4,7 @@
 	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
 	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
 	abstract_parent_type = /datum/quirk/item_quirk/addict
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
 	var/where_drug //! Where the drug spawned
@@ -86,7 +87,6 @@
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
 	drug_flavour_text = "Better hope you don't run out..."
 
@@ -148,12 +148,7 @@
 	var/obj/item/organ/lungs/smoker_lungs = null
 	var/obj/item/organ/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(old_lungs && IS_ORGANIC_ORGAN(old_lungs))
-		if(isplasmaman(carbon_holder))
-			smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker
-		else if(isethereal(carbon_holder))
-			smoker_lungs = /obj/item/organ/lungs/ethereal/ethereal_smoker
-		else
-			smoker_lungs = /obj/item/organ/lungs/smoker_lungs
+		smoker_lungs = carbon_holder.dna.species.smoker_lungs
 	if(!isnull(smoker_lungs))
 		smoker_lungs = new smoker_lungs
 		smoker_lungs.Insert(carbon_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)

@@ -19,12 +19,11 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	return ..()
-
-/datum/status_effect/incapacitating/on_apply()
+	. = ..()
+	if(!.)
+		return
 	if(needs_update_stat || issilicon(owner))
 		owner.update_stat()
-	return TRUE
 
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
@@ -348,19 +347,33 @@
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
-	var/mutable_appearance/marked_underlay
+	/// The bubble that is added to the mob as a visual
+	var/obj/effect/abstract/crusher_mark/marked_underlay
+	/// If the projectile that applies this was boosted, the mark will also be boosted
 	var/boosted = FALSE
+	/// How long before the mark is ready to be detonated. Used for both the visual overlay and to determine when it's ready
+	var/ready_delay = 0.8 SECONDS
+	/// Tracks world.time when the mark was applied
+	var/mark_applied
 
 /datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
 	. = ..()
 	boosted = was_boosted
+	mark_applied = world.time
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', boosted ? "shield" : "shield2")
+		marked_underlay = new()
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
-		owner.underlays += marked_underlay
+
+		var/list/new_color = list(
+			0, 1, 0,
+			0, 1, 0,
+			0, 1, 0
+		)
+		owner.vis_contents += marked_underlay
+		animate(marked_underlay, color = new_color, time = ready_delay, loop = 1)
 		return TRUE
 	return FALSE
 
@@ -369,6 +382,20 @@
 		owner.underlays -= marked_underlay
 	QDEL_NULL(marked_underlay)
 	return ..()
+
+// Object used to apply a underlay to the mob that gets this status applied
+/obj/effect/abstract/crusher_mark
+	name = "Crusher mark underlay"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield"
+	appearance_flags = TILE_BOUND|LONG_GLIDE|RESET_COLOR
+	vis_flags = VIS_UNDERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	color = list(
+		1, 0, 0,
+		1, 0, 0,
+		1, 0, 0
+	)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -434,26 +461,32 @@
 /datum/status_effect/neck_slice/get_examine_text()
 	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
+/// Applies a curse with various possible effects
 /mob/living/proc/apply_necropolis_curse(set_curse)
-	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
+	var/datum/status_effect/necropolis_curse/curse = has_status_effect(/datum/status_effect/necropolis_curse)
 	if(!set_curse)
-		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
-	if(QDELETED(C))
+		set_curse = pick(CURSE_BLINDING, CURSE_WASTING, CURSE_GRASPING)
+	if(QDELETED(curse))
 		apply_status_effect(/datum/status_effect/necropolis_curse, set_curse)
 	else
-		C.apply_curse(set_curse)
-		C.duration += 3000 //time added by additional curses
-	return C
+		curse.apply_curse(set_curse)
+		curse.duration += 5 MINUTES //time added by additional curses
+	return curse
 
+/// A curse that does up to three nasty things to you
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
 	duration = 10 MINUTES //you're cursed for 10 minutes have fun
 	tick_interval = 5 SECONDS
 	alert_type = null
+	/// Which nasty things are we doing? [CURSE_BLINDING / CURSE_WASTING / CURSE_GRASPING]]
 	var/curse_flags = NONE
-	var/effect_last_activation = 0
-	var/effect_cooldown = 100
-	var/obj/effect/temp_visual/curse/wasting_effect = new
+	/// When should we next throw hands?
+	var/effect_next_activation = 0
+	/// How long between throwing hands?
+	var/effect_cooldown = 10 SECONDS
+	/// Visuals for the wasting effect
+	var/obj/effect/temp_visual/curse/wasting_effect
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
@@ -473,6 +506,8 @@
 	curse_flags |= set_curse
 	if(curse_flags & CURSE_BLINDING)
 		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1)
+	if(curse_flags & CURSE_WASTING && !wasting_effect)
+		wasting_effect = new
 
 /datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
 	if(remove_curse & CURSE_BLINDING)
@@ -482,6 +517,7 @@
 /datum/status_effect/necropolis_curse/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		return
+
 	if(curse_flags & CURSE_WASTING)
 		wasting_effect.forceMove(owner.loc)
 		wasting_effect.setDir(owner.dir)
@@ -490,31 +526,12 @@
 		animate(wasting_effect, alpha = 0, time = 32)
 		playsound(owner, 'sound/effects/curse/curse5.ogg', 20, TRUE, -1)
 		owner.adjustFireLoss(0.75)
-	if(effect_last_activation <= world.time)
-		effect_last_activation = world.time + effect_cooldown
-		if(curse_flags & CURSE_SPAWNING)
-			var/turf/spawn_turf
-			var/sanity = 10
-			while(!spawn_turf && sanity)
-				spawn_turf = locate(owner.x + pick(rand(10, 15), rand(-10, -15)), owner.y + pick(rand(10, 15), rand(-10, -15)), owner.z)
-				sanity--
-			if(spawn_turf)
-				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
-				C.set_target = owner
-				C.GiveTarget()
-		if(curse_flags & CURSE_GRASPING)
-			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
-			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
-			if(spawn_turf)
-				grasp(spawn_turf)
 
-/datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
-	set waitfor = FALSE
-	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg', 80, TRUE, -1)
-	var/obj/projectile/curse_hand/C = new (spawn_turf)
-	C.aim_projectile(owner, spawn_turf)
-	C.fire()
+	if(curse_flags & CURSE_GRASPING)
+		if(effect_next_activation > world.time)
+			return
+		effect_next_activation = world.time + effect_cooldown
+		fire_curse_hand(owner, range = 5, projectile_type = /obj/projectile/curse_hand) // This one stuns people
 
 /obj/effect/temp_visual/curse
 	icon_state = "curse"
@@ -705,7 +722,7 @@
 
 /datum/status_effect/go_away
 	id = "go_away"
-	duration = 100
+	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/go_away
@@ -720,6 +737,17 @@
 	owner.AdjustStun(1, ignore_canstun = TRUE)
 	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
+
+/datum/status_effect/go_away/deletes_mob
+	id = "go_away_deletes_mob"
+	duration = INFINITY
+
+/datum/status_effect/go_away/deluxe/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
+
+/datum/status_effect/go_away/deluxe/proc/wipe_bozo()
+	qdel(owner)
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"
@@ -838,8 +866,7 @@
 
 /datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
-	var/need_mob_update
-	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * damage_per_ant) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	victim.apply_damage(max(0.1, round((ants_remaining * damage_per_ant), 0.1)) * seconds_between_ticks, BRUTE, spread_damage = TRUE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
@@ -850,26 +877,21 @@
 		if(prob(50)) // Most of the damage is done through random chance. When tested yielded an average 100 brute with 200u ants.
 			switch(rand(1,50))
 				if (1 to 8) //16% Chance
-					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
 					to_chat(victim, span_danger("You scratch at the ants on your scalp!."))
-					need_mob_update += hed.receive_damage(brute = 0.4 * seconds_between_ticks, burn = 0, updating_health = FALSE)
+					owner.apply_damage(0.4 * seconds_between_ticks, BRUTE, BODY_ZONE_HEAD)
 				if (9 to 29) //40% chance
-					var/obj/item/bodypart/arm = victim.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
 					to_chat(victim, span_danger("You scratch at the ants on your arms!"))
-					need_mob_update += arm.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
+					owner.apply_damage(1.2 * seconds_between_ticks, BRUTE, pick(GLOB.arm_zones))
 				if (30 to 49) //38% chance
-					var/obj/item/bodypart/leg = victim.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
 					to_chat(victim, span_danger("You scratch at the ants on your leg!"))
-					need_mob_update += leg.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
+					owner.apply_damage(1.2 * seconds_between_ticks, BRUTE, pick(GLOB.leg_zones))
 				if(50) // 2% chance
 					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
 					victim.set_eye_blur_if_lower(6 SECONDS)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
-	if(need_mob_update)
-		victim.updatehealth()
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
-		victim.remove_status_effect(type) //If this person has no more ants on them or are dead, they are no longer affected.
+		qdel(src) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"

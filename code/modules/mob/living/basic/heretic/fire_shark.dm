@@ -21,6 +21,8 @@
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
+	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles
+	initial_language_holder = /datum/language_holder/carp/hear_common
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
@@ -32,3 +34,6 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/basic/heretic_summon/fire_shark/wild
+	faction = list(FACTION_HOSTILE)
