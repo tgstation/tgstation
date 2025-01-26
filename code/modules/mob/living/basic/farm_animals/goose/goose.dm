@@ -58,14 +58,14 @@
 	if (ai_controller?.blackboard[BB_GOOSE_PANICKED])
 		return COMSIG_MOB_CANCEL_EAT
 	if (potential_food.has_material_type(/datum/material/plastic) || IsEdible(potential_food))
-		return // Geese only eat FOOD or PLASTIC
+		return NONE// Geese only eat FOOD or PLASTIC
 	return COMSIG_MOB_CANCEL_EAT
 
 /// Called when we've eaten something
 /mob/living/basic/goose/proc/on_gobbled(atom/source, obj/item/food, mob/feeder)
 	SIGNAL_HANDLER
 	if (!food.has_material_type(/datum/material/plastic))
-		return
+		return NONE
 
 	visible_message(span_boldwarning("[src] is choking on \the [food]!"))
 	food.forceMove(src)
@@ -129,7 +129,7 @@
 
 	. = ..()
 	if (. == COMSIG_MOB_TERMINATE_EAT)
-		return // It's plastic, if it's not plastic we already filtered it for edible
+		return NONE// It's plastic, if it's not plastic we already filtered it for edible
 
 	// This also increases my vomit chance, but we atomised this field to the inside of a component and I need to read it
 	var/datum/component/edible/edible = food.GetComponent(/datum/component/edible)

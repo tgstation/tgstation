@@ -56,7 +56,6 @@
 /datum/status_effect/goose_vomit
 	id = "goose_vomit"
 	alert_type = null
-	duration = INFINITY
 	tick_interval = 1 SECONDS
 	/// How long do we vomit for?
 	var/vomit_duration = 2.5 SECONDS
