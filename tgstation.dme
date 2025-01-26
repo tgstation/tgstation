@@ -6639,6 +6639,7 @@
 #include "modular_doppler\colony_fabricator\code\appliances\wall_cell_charger.dm"
 #include "modular_doppler\colony_fabricator\code\appliances\wind_turbine.dm"
 #include "modular_doppler\colony_fabricator\code\appliances\kitchen_appliances\griddle.dm"
+#include "modular_doppler\colony_fabricator\code\appliances\kitchen_appliances\kitchenaid.dm"
 #include "modular_doppler\colony_fabricator\code\appliances\kitchen_appliances\macrowave.dm"
 #include "modular_doppler\colony_fabricator\code\appliances\kitchen_appliances\range.dm"
 #include "modular_doppler\colony_fabricator\code\construction\doors.dm"
