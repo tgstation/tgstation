@@ -7239,6 +7239,7 @@
 #include "modular_doppler\modular_weapons\company_and_or_faction_based\carwo_defense_systems\gunsets.dm"
 #include "modular_doppler\modular_weapons\manufacturer_examine\code\gun_company_additions.dm"
 #include "modular_doppler\modular_weapons\manufacturer_examine\code\manufacturer_element.dm"
+#include "modular_doppler\ntnrc_for_all\code\ai_chat.dm"
 #include "modular_doppler\ntnrc_for_all\code\common_chat.dm"
 #include "modular_doppler\ntnrc_for_all\code\ntnrc_client_edits.dm"
 #include "modular_doppler\ntnrc_for_all\code\pda_prefs_edits.dm"
