@@ -552,6 +552,21 @@
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
 			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction, damage_source = damage_source, wound_clothing = wound_clothing)
 
+		// DOPPER EDIT ADDITION START - ORGAN DAMAGE ON MANGLED EXTERIOR
+		if(mangled_state & BODYPART_MANGLED_EXTERIOR)
+			var/list/organs_to_damage = list()
+			for(var/obj/item/organ/internal_organ in contents)
+				if(!istype(internal_organ))
+					continue
+				if(internal_organ.organ_flags & ORGAN_EXTERNAL)
+					continue
+				organs_to_damage += internal_organ
+			if(length(organs_to_damage))
+				var/obj/item/organ/victim_organ = pick(organs_to_damage)
+				if(victim_organ)
+					victim_organ.apply_organ_damage(wounding_dmg * 0.75)
+		// DOPPLER EDIT END
+
 	for(var/datum/wound/iter_wound as anything in wounds)
 		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus, damage_source)
 
