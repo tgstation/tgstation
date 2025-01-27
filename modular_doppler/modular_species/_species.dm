@@ -131,6 +131,9 @@
 			ADD_TRAIT(target, TRAIT_CATLIKE_GRACE, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_HATED_BY_DOGS, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_WATER_HATER, SPECIES_TRAIT)
+		if(CARP)
+			target.faction += FACTION_CARP
+			ADD_TRAIT(target, TRAIT_FREE_HYPERSPACE_MOVEMENT, SPECIES_TRAIT)
 		if(DEER)
 			target.AddElement(/datum/element/cliff_walking)
 		if(FISH)
