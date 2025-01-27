@@ -6,6 +6,7 @@
 #define BUG "bug"
 #define BUNNY "bunny"
 #define CAT "cat"
+#define CARP "carp"
 #define CYBERNETIC "cybernetic"
 #define DEER "deer"
 #define DOG "dog"
@@ -16,6 +17,7 @@
 #define LIZARD "lizard"
 #define MONKEY "monkey"
 #define MOUSE "mouse"
+#define ROACH "roach"
 
 ///	This list gets read by the dropdown pref when a player chooses what type of sprite accessory to access
 GLOBAL_LIST_INIT(mutant_variations, list(
@@ -41,6 +43,7 @@ GLOBAL_LIST_INIT(genemod_variations, list(
 	BUG,
 	BUNNY,
 	CAT,
+	CARP,
 	DEER,
 	DOG,
 	FISH,
@@ -49,5 +52,6 @@ GLOBAL_LIST_INIT(genemod_variations, list(
 	LIZARD,
 	MONKEY,
 	MOUSE,
+	ROACH,
 	NO_VARIATION,
 ))
