@@ -1,0 +1,5 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - bugfix: "fixed a case that could make untoggling fullscreen make your window small"
+  - code_imp: "Cleaned up some fullscreen and status bar toggle code to function better"
