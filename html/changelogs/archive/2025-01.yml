@@ -689,3 +689,33 @@
       gain the above extra bonuses.
   valzargaming:
   - bugfix: Typo in path for cavesound3.ogg
+2025-01-26:
+  Profakos:
+  - bugfix: IEDs can now also be crafted using pipes you have ripped up from the ground.
+  SmArtKar:
+  - bugfix: Head IDs now keep the large pointer effect when slotted into a PDA or
+      displayed as the front ID in a wallet
+  StrangeWeirdKitten:
+  - qol: Quirk menu now has a search bar
+2025-01-27:
+  Absolucy:
+  - refactor: Refactored how quirks handle starting/stopping processing.
+  - bugfix: Certain status effects, such as stuns and attempting to extinguish fires
+      via stop, drop & roll, shouldn't last much longer than intended while the server
+      is under load.
+  Aniantan:
+  - spellcheck: Fixed two typos in banded snake's description
+  ArcaneMusic:
+  - rscadd: You can now purchase pet mice as a cargo goodie.
+  - qol: Pet carriers now have contextual screentips.
+  - bugfix: The biopod pet carrier now doesn't randomly turn invisible.
+  AyIong:
+  - bugfix: You can rename supply pod beacon with a any writing tool.
+  Melbert:
+  - bugfix: Regen meshes stop when they've done all they can again
+  MichiRecRoom:
+  - refactor: Datumized pAI card screen images
+  OrionTheFox:
+  - rscadd: Added Directional Firelock Frames, making the tile-edge firelocks properly
+      repairable/deconstructable.
+  - bugfix: fixed firelock construction not properly updating icons

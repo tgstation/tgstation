@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - bugfix: "Premium and contraband products in vending machines, now really has no discount"

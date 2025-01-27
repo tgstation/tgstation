@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - rscadd: "TRAIT_NOSOFTCRIT now blocks falling into a regenerative coma."
