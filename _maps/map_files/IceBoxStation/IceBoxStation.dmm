@@ -38588,7 +38588,7 @@
 /area/mine/laborcamp)
 "kYF" = (
 /obj/structure/light_construct/directional/west,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "kYI" = (

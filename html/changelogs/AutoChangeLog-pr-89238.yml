@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "changes made in quirks menu will now reflect properly upon tabbing away and then back again to the quirks tab, without having to close the entire preferences menu"

@@ -1,0 +1,5 @@
+author: "Kashargul"
+delete-after: True
+changes:
+  - bugfix: "list input scrolls into view again when using the array keys for navigation"
+  - bugfix: "Using letter keys while focussing the list focusses the search bar again"
