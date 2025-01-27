@@ -66,7 +66,7 @@ function check_title_for_labels(title) {
 }
 
 function check_diff_line_for_element(diff, element) {
-	const tag_re = new RegExp(`diff --git a/${element}/`);
+	const tag_re = new RegExp(`^diff --git a/${element}/`);
 	return tag_re.test(diff);
 }
 
