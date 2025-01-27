@@ -1193,9 +1193,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fullscreen = !fullscreen
 
 	if (fullscreen)
-		// ATTN!! ONCE 515.1631 IS REQUIRED REPLACE WITH winset(src, "mainwindow", "menu=;is-fullscreen=true") (and remember to replace the other call of course)
-		// this means no double maximise calls to make sure window fits, and supresses titlebar, can-resize and is-maximized here making those redundant
-		// both implementations are functionally "windowed borderless"
+#if (MIN_COMPILER_VERSION > 515 || MIN_COMPILER_BUILD > 1630)
+	#warn ATTN!! ONCE 515.1631 IS REQUIRED REPLACE WITH winset(src, "mainwindow", "menu=;is-fullscreen=true"). This means no double maximise calls to make sure window fits, and supresses titlebar, can-resize and is-maximized here making those redundant both implementations are functionally "windowed borderless"
+#endif
 		winset(src, "mainwindow", "on-size=;titlebar=false;can-resize=false;menu=;is-maximized=false")
 		winset(src, "mainwindow", "is-maximized=true")
 	else
