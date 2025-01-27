@@ -27,6 +27,16 @@
 	)
 	crate_name = "frontier kitchen crate"
 
+/datum/supply_pack/service/kitchenmage
+	name = "'KitchenMage' Culinary Acquisition Helper"
+	desc = "'KitchenMage', even YOUR kitchen deserves the magic of our patented dispensing system!"
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/obj/machinery/chem_dispenser/kitchenaid_stand,
+	)
+	crate_name = "heavy kitchen machinery crate"
+	crate_type = /obj/structure/closet/crate/radiation
+
 // Engineering
 
 /datum/supply_pack/engineering/colony_starter

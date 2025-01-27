@@ -58,7 +58,7 @@
 "lZ" = (
 /obj/machinery/light/floor,
 /obj/effect/decal/cleanable/robot_debris/limb,
-/obj/item/trash/empty_side_pack/yangyu{
+/obj/item/trash/empty_side_pack/marsian{
 	pixel_x = -6;
 	pixel_y = -6
 	},

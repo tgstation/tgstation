@@ -77,3 +77,9 @@
 	icon_state = "chocolatepudding"
 	name = "glass of beer batter"
 	desc = "Used in cooking, pure cholesterol, Scottish people eat it."
+
+/datum/reagent/consumable/yogurt_soda
+	name = "Yogurt Soda"
+	description = "A refreshing beverage of carbonated yogurt drink"
+	color = "#dddada"
+	taste_description = "bubbly sweet yogurt."

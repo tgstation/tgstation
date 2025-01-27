@@ -690,10 +690,10 @@
 		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
 		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
 		/obj/machinery/vending/imported/nt = "NT Sustenance Supplier", //DOPPLER ADDITION
-		/obj/machinery/vending/imported/yangyu = "Fudobenda", //DOPPLER ADDITION
 		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange", //DOPPLER ADDITION
 		/obj/machinery/vending/imported/tiziran = "Tiziran Imported Delicacies", //DOPPLER ADDITION
 		/obj/machinery/vending/deforest_medvend = "DeForest Med-Vend", //DOPPLER ADDITION
+		/obj/machinery/vending/imported/marsian = "Marsian MEGA-Vend" //DOPPLER ADDITION
 	)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
