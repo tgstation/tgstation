@@ -76,8 +76,6 @@
 	var/obj/item/organ/eyes = text2path("/obj/item/organ/eyes/[animal_trait]")
 	if(eyes)
 		mutanteyes = eyes.type
-	else
-		switch(animal_trait)
 
 	// lungs
 	var/obj/item/organ/lungs = text2path("/obj/item/organ/lungs/[animal_trait]")
