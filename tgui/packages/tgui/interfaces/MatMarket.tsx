@@ -86,8 +86,8 @@ export const MatMarket = (props) => {
               an 20% market fee. To prevent market manipulation, all registered
               traders can buy a total of 10 full stacks of materials at a time.
               <br /> <br />
-              All new purchases will include the cost of the shipped crate ({CARGO_CRATE_VALUE}),
-              which may be recycled afterwards.
+              All new purchases will include the cost of the shipped crate (
+              {CARGO_CRATE_VALUE}), which may be recycled afterwards.
             </Collapsible>
           </NoticeBox>
           <Section>
@@ -155,8 +155,8 @@ export const MatMarket = (props) => {
                         material.trend === 'up'
                           ? 'green'
                           : material.trend === 'down'
-                            ? 'red'
-                            : 'white'
+                          ? 'red'
+                          : 'white'
                       }
                     >
                       <b>{toTitleCase(material.name)}</b> is trending{' '}
@@ -261,7 +261,7 @@ export const MatMarket = (props) => {
                 )}
               </Stack>
             </Section>
-          ),
+          )
         )}
       </Window.Content>
     </Window>
