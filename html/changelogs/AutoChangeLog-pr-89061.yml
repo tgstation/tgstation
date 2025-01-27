@@ -1,5 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - rscadd: "Added Directional Firelock Frames, making the tile-edge firelocks properly repairable/deconstructable."
-  - bugfix: "fixed firelock construction not properly updating icons"
