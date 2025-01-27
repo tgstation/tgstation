@@ -37,6 +37,10 @@
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	update_buckle_vars(dir)
 	register_context()
+	//2% chance
+	if(prob(2))
+		name = "Boris"
+		desc = "Really bed."
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
