@@ -306,4 +306,4 @@
 	comp.parent.RemoveElement(/datum/element/slow_target_click_cd_attack, get_cd_penalty(comp))
 
 /datum/fantasy_affix/windseeker/proc/get_cd_penalty(datum/component/fantasy/comp)
-	return min(floor(sqrt(comp.quality) * 0.1, 0.1), 0.4) // this gives you a small number, like 0.2 seconds
+	return min(round(sqrt(comp.quality) * 0.1, 0.1), 0.4) // this gives you a small number, like 0.2 seconds

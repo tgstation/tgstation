@@ -177,10 +177,10 @@
 	comp.parent.RemoveElement(/datum/element/chain_lightning_attack, get_damage(comp), get_range(comp), get_limit(comp))
 
 /datum/fantasy_affix/thunderfury/proc/get_damage(datum/component/fantasy/comp)
-	return min(floor(comp.quality, 2), 20)
+	return min(round(comp.quality, 2), 20)
 
 /datum/fantasy_affix/thunderfury/proc/get_range(datum/component/fantasy/comp)
-	return min(floor(sqrt(comp.quality), 1), 3)
+	return min(round(sqrt(comp.quality), 1), 3)
 
 /datum/fantasy_affix/thunderfury/proc/get_limit(datum/component/fantasy/comp)
-	return min(floor(sqrt(comp.quality), 1), 3)
+	return min(round(sqrt(comp.quality), 1), 3)
