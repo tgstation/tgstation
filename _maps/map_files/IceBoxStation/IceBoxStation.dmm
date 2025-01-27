@@ -74549,6 +74549,7 @@
 /obj/machinery/processor{
 	pixel_y = 6
 	},
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "vjJ" = (

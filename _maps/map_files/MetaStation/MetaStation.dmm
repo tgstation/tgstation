@@ -2179,6 +2179,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "aNQ" = (

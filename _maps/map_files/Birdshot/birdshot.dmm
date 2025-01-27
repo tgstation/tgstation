@@ -37001,6 +37001,7 @@
 /obj/effect/turf_decal/siding/end{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "moj" = (
