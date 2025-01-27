@@ -30,7 +30,6 @@
 		/datum/preference/numeric/volume/sound_combatmode = savefile.get_entry("sound_combatmode"),
 		/datum/preference/numeric/volume/sound_endofround = savefile.get_entry("sound_endofround"),
 		/datum/preference/numeric/volume/sound_instruments = savefile.get_entry("sound_instruments"),
-		/datum/preference/numeric/volume/sound_tts_volume = savefile.get_entry("sound_tts_volume"),
 		/datum/preference/numeric/volume/sound_jukebox = savefile.get_entry("sound_jukebox"),
 	)
 	for(var/entry as anything in entries)
