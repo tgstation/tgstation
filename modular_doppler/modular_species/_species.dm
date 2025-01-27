@@ -123,7 +123,7 @@
 	switch(animal_trait)
 		if(BIRD)
 			target.AddComponent(/datum/component/pinata, candy = list(/obj/item/feather))
-		if(BUG || ROACH)
+		if(BUG)
 			inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 			ADD_TRAIT(target, TRAIT_WEB_WEAVER, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_WEB_SURFER, SPECIES_TRAIT)
@@ -141,6 +141,8 @@
 			target.add_quirk(/datum/quirk/item_quirk/breather/water_breather) // this trait necessitates you get this 'item_quirk'
 		if(FROG)
 			ADD_TRAIT(target, TRAIT_WATER_ADAPTATION, SPECIES_TRAIT)
+		if(ROACH)
+			inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 
 /// spec_revival logic
 /datum/species/proc/spec_revival(mob/living/carbon/human/target)
