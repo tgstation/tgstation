@@ -387,7 +387,7 @@
 
 /obj/item/reagent_containers/condiment/chocolate
 	name = "chocolate sprinkle pack"
-	desc= "The amount of sugar thats already there wasn't enough for you?"
+	desc= "The amount of sugar that's already there wasn't enough for you?"
 	icon_state = "condi_chocolate"
 	list_reagents = list(/datum/reagent/consumable/choccyshake = 10)
 

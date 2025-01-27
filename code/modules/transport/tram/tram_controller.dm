@@ -1152,7 +1152,7 @@
 /// Controller that sits in the telecoms room
 /obj/machinery/transport/tram_controller/tcomms
 	name = "tram central controller"
-	desc = "This semi-conductor is half of the brains controlling the tram and its auxillary equipment."
+	desc = "This semiconductor is half of the brains controlling the tram and its auxiliary equipment."
 	icon_state = "home-controller"
 	base_icon_state = "home"
 	density = TRUE

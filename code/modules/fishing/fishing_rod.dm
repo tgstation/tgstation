@@ -758,7 +758,7 @@
 
 /obj/item/fishing_rod/telescopic/master
 	name = "master fishing rod"
-	desc = "The mythical rod of a lost fisher king. Said to be imbued with un-paralleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
+	desc = "The mythical rod of a lost fisher king. Said to be imbued with unparalleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
 	difficulty_modifier = -10
 	ui_description = "A mythical telescopic fishing rod that makes fishing quite easier."
 	wiki_description = null

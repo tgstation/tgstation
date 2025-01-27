@@ -449,7 +449,7 @@
 			return TRUE
 
 		if("pick_reaction")
-			var/mode = tgui_alert(usr, "Play all or an specific reaction?","Select Reaction", list("All", "Specific"))
+			var/mode = tgui_alert(usr, "Play all or a specific reaction?","Select Reaction", list("All", "Specific"))
 			if(mode == "All")
 				reactions_to_test.Cut()
 				for(var/reaction as anything in all_reaction_list)
