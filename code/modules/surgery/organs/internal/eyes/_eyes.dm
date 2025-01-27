@@ -295,8 +295,10 @@
 		var/list/color_left = rgb2num(eye_color_left, COLORSPACE_HSL)
 		var/list/color_right = rgb2num(eye_color_right, COLORSPACE_HSL)
 		// Ugly as sin? Indeed it is! But otherwise eyeballs turn out to be super dark, and this way even lighter colors are mostly preserved
-		color_left[3] /= sqrt(color_left[3] * 0.01)
-		color_right[3] /= sqrt(color_right[3] * 0.01)
+		if (color_left[3])
+			color_left[3] /= sqrt(color_left[3] * 0.01)
+		if (color_right[3])
+			color_right[3] /= sqrt(color_right[3] * 0.01)
 		left_iris.color = rgb(color_left[1], color_left[2], color_left[3], space = COLORSPACE_HSL)
 		right_iris.color = rgb(color_right[1], color_right[2], color_right[3], space = COLORSPACE_HSL)
 		. += left_iris
@@ -311,18 +313,14 @@
 	apply_scarring_effects()
 
 /obj/item/organ/eyes/proc/apply_scarring_effects()
-	if (!owner)
+	if(!owner)
 		return
-	var/datum/status_effect/grouped/nearsighted/nearsightedness = owner.is_nearsighted()
 	// Even if eyes have enough health, our owner still becomes nearsighted
-	if (scarring & RIGHT_EYE_SCAR)
-		owner.become_nearsighted(TRAIT_RIGHT_EYE_SCAR)
-	if (scarring & LEFT_EYE_SCAR)
-		owner.become_nearsighted(TRAIT_LEFT_EYE_SCAR)
-	if (isnull(nearsightedness)) // We aren't nearsighted from any other source
-		nearsightedness = owner.is_nearsighted()
-		nearsightedness.set_nearsighted_severity(1)
-	if ((scarring & RIGHT_EYE_SCAR) && (scarring & LEFT_EYE_SCAR))
+	if(scarring & RIGHT_EYE_SCAR)
+		owner.assign_nearsightedness(TRAIT_RIGHT_EYE_SCAR, 1, FALSE)
+	if(scarring & LEFT_EYE_SCAR)
+		owner.assign_nearsightedness(TRAIT_LEFT_EYE_SCAR, 1, FALSE)
+	if((scarring & RIGHT_EYE_SCAR) && (scarring & LEFT_EYE_SCAR))
 		owner.become_blind(EYE_SCARRING_TRAIT)
 	owner.update_body()
 
@@ -368,10 +366,6 @@
 			damaged = FALSE
 			// clear nearsightedness from damage
 			owner.cure_nearsighted(EYE_DAMAGE)
-			// if we're still nearsighted, reset its severity
-			// this is kinda icky, ideally we'd track severity to source but that's way more complex
-			var/datum/status_effect/grouped/nearsighted/nearsightedness = owner.is_nearsighted()
-			nearsightedness?.set_nearsighted_severity(1)
 			// and cure blindness from damage
 			owner.cure_blind(EYE_DAMAGE)
 		return
@@ -386,10 +380,8 @@
 
 	else
 		// become nearsighted from damage
-		owner.become_nearsighted(EYE_DAMAGE)
-		// update the severity of our nearsightedness based on our eye damage
-		var/datum/status_effect/grouped/nearsighted/nearsightedness = owner.is_nearsighted()
-		nearsightedness.set_nearsighted_severity(damage > high_threshold ? 3 : 2)
+		var/severity = damage > high_threshold ? 3 : 2
+		owner.assign_nearsightedness(EYE_DAMAGE, severity, TRUE)
 
 	damaged = TRUE
 

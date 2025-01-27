@@ -354,3 +354,9 @@
 	desc = "A single bottle of Interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease."
 	cost = PAYCHECK_CREW * 6.5
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)
+
+/datum/supply_pack/goody/pet_mouse
+	name = "Pet Mouse"
+	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
+	cost = PAYCHECK_CREW * 1.5
+	contains = list(/obj/item/pet_carrier/small/mouse)

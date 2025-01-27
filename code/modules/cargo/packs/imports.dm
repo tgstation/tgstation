@@ -97,6 +97,21 @@
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
+/datum/supply_pack/imports/shells
+	name = "Lethal Shotgun Shell Box Crate"
+	desc = "Contains three boxes of buckshot shotgun shells. \
+		Due to Nanotrasen's failure to secure exclusive manufacturing rights \
+		during the Spinward Hunting and Shooting policy hearings, this import \
+		is heavily taxed, despite being 'legal'. I hope the price tag is worth it."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ARMORY
+	access_view = ACCESS_ARMORY
+	contains = list(
+		/obj/item/storage/box/lethalshot = 3,
+	)
+	crate_name = "shotgun shell crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
 	desc = "(*!&@#OKAY, OPERATIVE, WE SEE HOW MUCH MONEY YOU'RE FLAUNTING. FINE. HAVE THIS, AND GOOD LUCK PUTTING IT TOGETHER!#@*$"

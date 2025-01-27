@@ -38,6 +38,9 @@
 #define TRINARY 3
 #define QUATERNARY 4
 
+// The volume per direction of atmos pipes.
+#define UNARY_PIPE_VOLUME 35
+
 //TANKS
 /// The volume of the standard handheld gas tanks on the station.
 #define TANK_STANDARD_VOLUME 70

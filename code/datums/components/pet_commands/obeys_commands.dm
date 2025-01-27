@@ -19,7 +19,7 @@
 	var/radial_relative_to_user
 
 /// The available_commands parameter should be passed as a list of typepaths
-/datum/component/obeys_commands/Initialize(list/command_typepaths = list(), list/radial_menu_offset = list(0, 0), radial_relative_to_user = FALSE)
+/datum/component/obeys_commands/Initialize(list/command_typepaths = list(), list/radial_menu_offset = list(0, 0), radial_menu_lifetime = 7 SECONDS, radial_relative_to_user = FALSE)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -30,6 +30,7 @@
 		CRASH("Initialised obedience component with no commands.")
 	src.radial_menu_offset = radial_menu_offset
 	src.radial_relative_to_user = radial_relative_to_user
+	src.radial_menu_lifetime = radial_menu_lifetime
 	for (var/command_path in command_typepaths)
 		var/datum/pet_command/new_command = new command_path(parent)
 		available_commands[new_command.command_name] = new_command

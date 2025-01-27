@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "[Icebox] Reworked Tech Storage"
-  - rscadd: "[Icebox] Reworked Public Mining"

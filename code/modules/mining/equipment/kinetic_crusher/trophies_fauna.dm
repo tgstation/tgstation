@@ -8,19 +8,23 @@
 	desc = "A wing ripped from a watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "watcher_wing"
 	denied_type = /obj/item/crusher_trophy/watcher_wing
+	trophy_id = TROPHY_WATCHER
 	bonus_value = 5
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
 
 /obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
-	if(ishostile(target))
-		var/mob/living/simple_animal/hostile/H = target
-		if(H.ranged) //briefly delay ranged attacks
-			if(H.ranged_cooldown >= world.time)
-				H.ranged_cooldown += bonus_value
-			else
-				H.ranged_cooldown = bonus_value + world.time
+	. = ..()
+	if(!ishostile(target))
+		return
+	var/mob/living/simple_animal/hostile/hostile_animal = target
+	if(!hostile_animal.ranged)
+		return
+	if(hostile_animal.ranged_cooldown >= world.time) //briefly delay ranged attacks
+		hostile_animal.ranged_cooldown += bonus_value
+	else
+		hostile_animal.ranged_cooldown = bonus_value + world.time
 
 //magmawing watcher
 /obj/item/crusher_trophy/blaster_tubes/magma_wing
@@ -75,6 +79,7 @@
 	icon_state = "goliath_tentacle"
 	denied_type = /obj/item/crusher_trophy/goliath_tentacle
 	bonus_value = 2
+	trophy_id = TROPHY_GOLIATH_TENTACLE
 	/// Your missing health is multiplied by this value to find the bonus damage
 	var/missing_health_ratio = 0.1
 	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
@@ -88,6 +93,7 @@
 	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
 
 /obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	var/missing_health = user.maxHealth - user.health
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
@@ -100,12 +106,14 @@
 	icon_state = "lobster_claw"
 	desc = "A lobster claw."
 	denied_type = /obj/item/crusher_trophy/lobster_claw
+	trophy_id = TROPHY_LOBSTER_CLAW
 	bonus_value = 1
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly rebuke the target for [bonus_value] seconds"
 
 /obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	target.apply_status_effect(/datum/status_effect/rebuked, bonus_value SECONDS)
 
 // Brimdemon - makes a funny sound, the most essential trophy out of all
@@ -114,6 +122,7 @@
 	icon_state = "brimdemon_fang"
 	desc = "A fang from a brimdemon's corpse."
 	denied_type = /obj/item/crusher_trophy/brimdemon_fang
+	trophy_id = TROPHY_BRIMDEMON_FANG
 	/// Cartoon punching vfx
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
@@ -121,6 +130,7 @@
 	return "mark detonation to create visual and audiosensory effects at the target"
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
 	playsound(target, 'sound/mobs/non-humanoids/brimdemon/brimdemon_crush.ogg', 100)
 
@@ -155,6 +165,7 @@
 	return "mark detonation launches projectiles in cardinal directions on a 10 second cooldown. Also gives you an AOE when mining minerals"
 
 /obj/item/crusher_trophy/bileworm_spewlet/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	//ability itself handles cooldowns.
 	ability.InterceptClickOn(user, null, target)
 
@@ -180,6 +191,7 @@
 	desc = "A stone cold cube dropped from an ice demon."
 	icon_state = "ice_demon_cube"
 	denied_type = /obj/item/crusher_trophy/ice_demon_cube
+	trophy_id = TROPHY_ICE_DEMON
 	///how many will we summon?
 	var/summon_amount = 2
 	///cooldown to summon demons upon the target
@@ -189,6 +201,7 @@
 	return "mark detonation to unleash demonic ice clones upon the target"
 
 /obj/item/crusher_trophy/ice_demon_cube/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	if(isnull(target) || !COOLDOWN_FINISHED(src, summon_cooldown))
 		return
 	for(var/i in 1 to summon_amount)
@@ -214,12 +227,14 @@
 	name = "wolf ear"
 	desc = "It's a wolf ear."
 	icon_state = "wolf_ear"
+	trophy_id = TROPHY_WOLF_EAR
 	denied_type = /obj/item/crusher_trophy/wolf_ear
 
 /obj/item/crusher_trophy/wolf_ear/effect_desc()
 	return "mark detonation to gain a slight speed boost temporarily"
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
 
 // Polar bear
@@ -227,12 +242,14 @@
 	name = "polar bear paw"
 	desc = "It's a polar bear paw."
 	icon_state = "bear_paw"
+	trophy_id = TROPHY_BEAR_PAW
 	denied_type = /obj/item/crusher_trophy/bear_paw
 
 /obj/item/crusher_trophy/bear_paw/effect_desc()
 	return "mark detonation to attack twice if you are below half your life"
 
 /obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	if(user.health / user.maxHealth > 0.5)
 		return
 	var/obj/item/I = user.get_active_held_item()
