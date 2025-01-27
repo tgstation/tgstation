@@ -28,7 +28,7 @@
 		if(DOG)
 			return icon('icons/mob/simple/pets.dmi', "corgi", WEST)
 		if(FISH)
-			return icon('icons/obj/aquarium/fish.dmi', "guppy")
+			return icon('icons/obj/toys/plushes.dmi', "blahaj")
 		if(FOX)
 			return icon('icons/mob/simple/pets.dmi', "fox", WEST)
 		if(FROG)
