@@ -1432,7 +1432,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			vend_ready = TRUE
 			return
 
-		if(!proceed_payment(card_used, living_user, item_record, price_to_use))
+		if(!proceed_payment(card_used, living_user, item_record, price_to_use, params["discountless"]))
 			vend_ready = TRUE
 			return
 
@@ -1494,13 +1494,14 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * mob_paying - the mob that is trying to purchase the item.
  * product_to_vend - the product record of the item we're trying to vend.
  * price_to_use - price of the item we're trying to vend.
+ * discountless - whether or not to apply discounts
  */
-/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, discountless)
 	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
 		speak("You do not possess an ID to purchase [product_to_vend.name].")
 		return FALSE
 	var/datum/bank_account/account = paying_id_card.registered_account
-	if(account.account_job && account.account_job.paycheck_department == payment_department)
+	if(account.account_job && account.account_job.paycheck_department == payment_department && !discountless)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
