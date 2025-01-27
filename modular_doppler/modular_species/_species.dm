@@ -123,7 +123,7 @@
 	switch(animal_trait)
 		if(BIRD)
 			target.AddComponent(/datum/component/pinata, candy = list(/obj/item/feather))
-		if(BUG)
+		if(BUG || ROACH)
 			inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 			ADD_TRAIT(target, TRAIT_WEB_WEAVER, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_WEB_SURFER, SPECIES_TRAIT)
