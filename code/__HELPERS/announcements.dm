@@ -50,8 +50,9 @@
 	if(islist(players))
 		for(var/mob/target in players)
 			to_chat(target, finalized_announcement)
-			if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-				SEND_SOUND(target, sound(sound_override))
+			var/pref_volume = target.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_announcements)
+			if(play_sound && pref_volume > 0)
+				SEND_SOUND(target, sound(sound_override, volume = pref_volume))
 	else
 		to_chat(world, finalized_announcement)
 
@@ -59,8 +60,9 @@
 			return
 
 		for(var/mob/player in GLOB.player_list)
-			if(player.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-				SEND_SOUND(player, sound(sound_override))
+			var/pref_volume = player.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_announcements)
+			if(pref_volume > 0)
+				SEND_SOUND(player, sound(sound_override, volume = pref_volume))
 
 /**
  * Inserts a span styled message into an alert box div

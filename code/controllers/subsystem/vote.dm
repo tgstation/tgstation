@@ -242,9 +242,9 @@ SUBSYSTEM_DEF(vote)
 
 		new_voter.player_details.player_actions += voting_action
 		generated_actions += voting_action
-
-		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
-			SEND_SOUND(new_voter, sound(current_vote.vote_sound))
+		var/pref_volume = new_voter.prefs.read_preference(/datum/preference/numeric/volume/sound_announcements)
+		if(current_vote.vote_sound && pref_volume > 0)
+			SEND_SOUND(new_voter, sound(current_vote.vote_sound, volume = pref_volume))
 
 	return TRUE
 

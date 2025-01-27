@@ -202,9 +202,9 @@
 		to_chat(target, announcement)
 		if(!should_play_sound || (should_play_sound_callback && !should_play_sound_callback.Invoke(target)))
 			continue
-
-		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			SEND_SOUND(target, sound(sound_to_play))
+		var/pref_volume = target.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_announcements)
+		if(pref_volume > 0)
+			SEND_SOUND(target, sound(sound_to_play, volume = pref_volume))
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT
