@@ -296,6 +296,7 @@
 	name = "of the Windseeker"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
+	weight = 3
 
 /datum/fantasy_affix/windseeker/apply(datum/component/fantasy/comp, newName)
 	comp.parent.AddElement(/datum/element/slow_target_click_cd_attack, get_cd_penalty(comp))

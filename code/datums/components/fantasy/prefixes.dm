@@ -167,6 +167,7 @@
 	name = "Thunderfury"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD
+	weight = 3
 
 /datum/fantasy_affix/thunderfury/apply(datum/component/fantasy/comp, newName)
 	comp.parent.AddElement(/datum/element/chain_lightning_attack, get_damage(comp), get_range(comp), get_limit(comp))
