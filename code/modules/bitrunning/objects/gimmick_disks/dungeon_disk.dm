@@ -71,33 +71,33 @@
 	name = "skull-labeled bottle"
 	desc = "A small bottle. You don't remember what you put in it."
 
-	/// List of random names this may have
-	var/static/list/possible_names = list(
-		"unlabeled bottle",
-		"skull-labeled bottle", // Labels
-		"heart-labeled bottle",
-		"explosion-labeled bottle",
-		"fish-labeled bottle",
-		"smiley-labeled bottle",
-		"frown-labeled bottle",
-		"interrobang-labeled bottle",
-		"plus-labeled bottle",
-		"d20-labeled bottle",
-		"unreadably-labeled bottle",
-		"black-labeled bottle",
-		"empty-labeled bottle",
-		"age-yellowed bottle", // Qualities
-		"blood-tinged bottle",
-		"ash-marred bottle",
-		"claw-scratched bottle",
-		"marker-marked bottle",
-		"cracked bottle",
-		"ominous bottle", // Abstract
+	/// List of random adjectives this bottle may have
+	var/static/list/possible_adjectives = list(
+		"unlabeled",
+		"skull-labeled", // Labels
+		"heart-labeled",
+		"explosion-labeled",
+		"fish-labeled",
+		"smiley-labeled",
+		"frown-labeled",
+		"interrobang-labeled",
+		"plus-labeled",
+		"d20-labeled",
+		"unreadably-labeled",
+		"black-labeled",
+		"empty-labeled",
+		"age-yellowed", // Qualities
+		"blood-tinged",
+		"ash-marred",
+		"claw-scratched",
+		"marker-marked",
+		"cracked",
+		"ominous", // Abstract
 	)
 
 /obj/item/reagent_containers/cup/bottle/alchemist_random/Initialize(mapload)
 	. = ..()
-	name = pick(possible_names)
+	name = "[pick(possible_adjectives)] bottle"
 
 /obj/item/reagent_containers/cup/bottle/alchemist_random/add_initial_reagents()
 	var/our_reagent = get_random_reagent_id()
