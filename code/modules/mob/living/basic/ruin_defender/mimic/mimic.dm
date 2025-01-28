@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	if(!destroy_original)
 		original.forceMove(src)
-	copied = WEAKREF(original)
+	copied_ref = WEAKREF(original)
 	CopyObjectVisuals(original)
 	if (overlay_googly_eyes)
 		add_overlay(googly_eyes)
