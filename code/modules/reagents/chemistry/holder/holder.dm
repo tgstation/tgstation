@@ -165,6 +165,9 @@
 				handle_reactions()
 			return amount
 
+	if(!is_reacting && amount < CHEMICAL_VOLUME_ROUNDING)
+		return 0
+
 	//otherwise make a new one
 	var/datum/reagent/new_reagent = new reagent_type(data)
 	cached_reagents += new_reagent
@@ -299,7 +302,7 @@
 	update_total()
 	handle_reactions()
 
-	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
+	return round(total_removed_amount, CHEMICAL_QUANTISATION_LEVEL)
 
 /**
  * Removes an specific reagent from this holder
@@ -525,7 +528,7 @@
 		target_holder.handle_reactions()
 		src.handle_reactions()
 
-	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_transfered_amount
 
 /**
  * Copies the reagents to the target object

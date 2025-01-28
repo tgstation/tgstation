@@ -527,7 +527,7 @@
 			balloon_alert(user, "container full!")
 			return TRUE
 
-		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user)
+		var/transfer_amount = round(reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 
