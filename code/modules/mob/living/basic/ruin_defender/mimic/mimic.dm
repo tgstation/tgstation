@@ -290,6 +290,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/atom/movable/copied = copied_ref?.resolve()
 	if(!copied_ref)
 		copied_ref = null
+		return
 	if(QDELETED(src) || gone != copied)
 		return
 	death()
