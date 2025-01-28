@@ -697,3 +697,49 @@
       displayed as the front ID in a wallet
   StrangeWeirdKitten:
   - qol: Quirk menu now has a search bar
+2025-01-27:
+  Absolucy:
+  - refactor: Refactored how quirks handle starting/stopping processing.
+  - bugfix: Certain status effects, such as stuns and attempting to extinguish fires
+      via stop, drop & roll, shouldn't last much longer than intended while the server
+      is under load.
+  Aniantan:
+  - spellcheck: Fixed two typos in banded snake's description
+  ArcaneMusic:
+  - rscadd: You can now purchase pet mice as a cargo goodie.
+  - qol: Pet carriers now have contextual screentips.
+  - bugfix: The biopod pet carrier now doesn't randomly turn invisible.
+  AyIong:
+  - bugfix: You can rename supply pod beacon with a any writing tool.
+  Melbert:
+  - bugfix: Regen meshes stop when they've done all they can again
+  MichiRecRoom:
+  - refactor: Datumized pAI card screen images
+  OrionTheFox:
+  - rscadd: Added Directional Firelock Frames, making the tile-edge firelocks properly
+      repairable/deconstructable.
+  - bugfix: fixed firelock construction not properly updating icons
+2025-01-28:
+  AyIong:
+  - bugfix: Premium and contraband products in vending machines, now really has no
+      discount
+  Jacquerel:
+  - refactor: Geese have been moved to the basic mob subsystem, please report any
+      unusual behaviour.
+  - bugfix: You can once again teleport dangerously with the hand teleporter
+  Kashargul:
+  - bugfix: list input scrolls into view again when using the array keys for navigation
+  - bugfix: Using letter keys while focussing the list focusses the search bar again
+  Maximal08:
+  - rscadd: TRAIT_NOSOFTCRIT now blocks falling into a regenerative coma.
+  TiviPlus:
+  - bugfix: fixed a case that could make untoggling fullscreen make your window small
+  - code_imp: Cleaned up some fullscreen and status bar toggle code to function better
+  dj-34:
+  - bugfix: Fixed shuttle parallax when a mob is standing still.
+  grungussuss:
+  - sound: headsets now have sounds
+  vinylspiders:
+  - bugfix: changes made in quirks menu will now reflect properly upon tabbing away
+      and then back again to the quirks tab, without having to close the entire preferences
+      menu

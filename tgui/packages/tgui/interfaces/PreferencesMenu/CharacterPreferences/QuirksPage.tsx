@@ -313,7 +313,11 @@ export function QuirksPage(props) {
     data.character_preferences.non_contextual.random_body !==
       RandomSetting.Disabled || randomToggleEnabled;
 
-  const [selectedQuirks, setSelectedQuirks] = useState(data.selected_quirks);
+  const selectedQuirks = data.selected_quirks;
+  function setSelectedQuirks(selected_quirks) {
+    data.selected_quirks = selected_quirks;
+  }
+
   const [searchQuery, setSearchQuery] = useState('');
   const server_data = useServerPrefs();
   if (!server_data) return;

@@ -39018,7 +39018,7 @@
 "nMj" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/broken_floor,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "nMk" = (

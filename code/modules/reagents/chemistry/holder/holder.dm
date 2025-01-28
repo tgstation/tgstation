@@ -104,9 +104,6 @@
 		stack_trace("non finite amount passed to add reagent [amount] [reagent_type]")
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent_type, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
-		return FALSE
-
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent_type]
 	if(!glob_reagent)
 		stack_trace("[my_atom] attempted to add a reagent called '[reagent_type]' which doesn't exist. ([usr])")
@@ -164,7 +161,6 @@
 				else
 					set_temperature(reagtemp)
 
-			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
 			if(!no_react && !is_reacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return amount
@@ -193,7 +189,6 @@
 		else
 			set_temperature(reagtemp)
 
-	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
 	if(!no_react)
 		handle_reactions()
 	return amount
@@ -236,7 +231,6 @@
 	var/total_removed_amount = 0
 	var/remove_amount = 0
 	var/list/cached_reagents = reagent_list
-	var/list/removed_reagents = list()
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		//check for specific type or subtypes
 		if(!include_subtypes)
@@ -249,8 +243,6 @@
 		remove_amount = min(cached_reagent.volume, amount)
 		cached_reagent.volume -= remove_amount
 
-		//record the changes
-		removed_reagents[cached_reagent] = remove_amount
 		total_removed_amount += remove_amount
 
 		//if we reached here means we have found our specific reagent type so break
@@ -261,10 +253,6 @@
 	update_total()
 	if(!safety)
 		handle_reactions()
-
-	//inform others about our reagents being removed
-	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
-		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
 
 	return total_removed_amount
 
@@ -290,17 +278,25 @@
 		stack_trace("illegal percentage value passed to remove all reagents [amount]")
 		return FALSE
 
+	if(!relative)
+		amount = min(amount, total_volume)
 	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
+	var/remove_amount
 	var/total_removed_amount = 0
 	var/part = amount
 	if(!relative)
 		part /= total_volume
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		total_removed_amount += remove_reagent(reagent.type, reagent.volume * part)
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		//reduce the volume
+		remove_amount = cached_reagent.volume * part
+		cached_reagent.volume -= remove_amount
+
+		total_removed_amount += remove_amount
+	update_total()
 	handle_reactions()
 
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
@@ -388,8 +384,6 @@
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		reagent.volume = 0
 	update_total()
-
-	SEND_SIGNAL(src, COMSIG_REAGENTS_CLEAR_REAGENTS)
 
 /**
  * Transfer some stuff from this holder to a target object
@@ -686,10 +680,11 @@
 	else
 		ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
-	//now send the signals after the volume & ph has been computed
-	for(var/datum/reagent/deleted_reagent as anything in deleted_reagents)
-		SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, deleted_reagent)
-		qdel(deleted_reagent)
+	//clear out deleted reagents
+	QDEL_LIST(deleted_reagents)
+
+	//inform hooks about reagent changes
+	SEND_SIGNAL(src, COMSIG_REAGENTS_HOLDER_UPDATED)
 
 /**
  * Shallow copies (deep copy of viruses) data from the provided reagent into our copy of that reagent
