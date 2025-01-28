@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/overlay_googly_eyes = TRUE
 	/// do we take damage when we are not sentient and have no target
 	var/idledamage = TRUE
-	/// copied object ref
+	/// copied object weakref
 	var/datum/weakref/copied_ref
 
 /mob/living/basic/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = FALSE, no_googlies = FALSE)
