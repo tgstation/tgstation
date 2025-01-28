@@ -67,18 +67,20 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		RegisterSignal(human_in_range, COMSIG_CAN_Z_MOVE, PROC_REF(on_try_z_move))
 		RegisterSignal(human_in_range, COMSIG_LADDER_TRAVEL, PROC_REF(on_try_ladder))
 		RegisterSignal(human_in_range, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_pre_move))
+		RegisterSignal(human_in_range, COMSIG_MOVABLE_POST_TELEPORT, PROC_REF(on_teleport))
 
 /datum/proximity_monitor/advanced/heretic_arena/Destroy()
 	for(var/mob/living/carbon/human/mob in contained_mobs)
 		mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
 		mob.remove_status_effect(/datum/status_effect/arena_tracker)
-		UnregisterSignal(mob, list(COMSIG_CAN_Z_MOVE, COMSIG_LADDER_TRAVEL, COMSIG_MOVABLE_PRE_MOVE))
+		UnregisterSignal(mob, list(COMSIG_CAN_Z_MOVE, COMSIG_LADDER_TRAVEL, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_POST_TELEPORT))
 		if(mob.mind?.has_antag_datum(/datum/antagonist/heretic_arena_participant))
 			mob.mind.remove_antag_datum(/datum/antagonist/heretic_arena_participant)
 	for(var/turf/to_restore in border_walls)
 		to_restore.ChangeTurf(border_walls[to_restore])
 	for(var/obj/to_refund as anything in welfare_blades)
 		qdel(to_refund)
+	arena_caster = null
 	return ..()
 
 /datum/proximity_monitor/advanced/heretic_arena/setup_edge_turf(turf/target)
@@ -88,43 +90,53 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	border_walls += target
 	border_walls[target] += old_turf
 
+/datum/proximity_monitor/advanced/heretic_arena/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
+	if(!isliving(movable))
+		return
+	var/mob/living/living_mob = movable
+	var/datum/status_effect/heretic_arena_punishment/punishment = living_mob.has_status_effect(/datum/status_effect/heretic_arena_punishment)
+	if(!punishment)
+		return
+	punishment.has_returned = TRUE // If our participant comes back before the status expires we won't punish em
+
 /datum/proximity_monitor/advanced/heretic_arena/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
-	if(isliving(movable))
-		var/mob/living/living_mob = movable
-		addtimer(CALLBACK(living_mob, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/arena_tracker), 10 SECONDS)
-		living_mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
-	if(movable == arena_caster)
-		arena_caster = null
-		qdel(host)
+	if(!isliving(movable))
+		return
+	var/mob/living/living_mob = movable
+	addtimer(CALLBACK(living_mob, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/arena_tracker), 10 SECONDS)
+	living_mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
 
 /// Prevents using ladders while the arena is active
 /datum/proximity_monitor/advanced/heretic_arena/proc/on_try_ladder(mob/climber)
 	SIGNAL_HANDLER
-	apply_punishment(climber)
-	return LADDER_TRAVEL_BLOCK
+	if(isliving(climber))
+		var/mob/living/living_climber = climber
+		living_climber.apply_status_effect(/datum/status_effect/heretic_arena_punishment, WEAKREF(host))
+		return LADDER_TRAVEL_BLOCK
 
 /// If we try to enter a space turf that has a mirage, we will instead teleport to the center
 /datum/proximity_monitor/advanced/heretic_arena/proc/on_pre_move(atom/movable/mover, atom/newloc)
 	if(locate(/atom/movable/mirage_holder) in newloc.contents)
-		apply_punishment(mover)
+		if(!isliving(mover))
+			return
+		var/mob/living/living_mover = mover
+		living_mover.apply_status_effect(/datum/status_effect/heretic_arena_punishment, WEAKREF(host))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// If a mob tries to change Z level while the arena is active, we teleport them back to the center of the arena
 /datum/proximity_monitor/advanced/heretic_arena/proc/on_try_z_move(atom/movable/source, turf/start, turf/destination)
 	SIGNAL_HANDLER
-	if(start.z == destination.z)
+	if(start.z == destination.z || !isliving(source))
 		return
-	apply_punishment(source)
+	var/mob/living/living_mob = source
+	living_mob.apply_status_effect(/datum/status_effect/heretic_arena_punishment, WEAKREF(host))
 	return COMPONENT_CANT_Z_MOVE
 
-/// Teleports our mob back to the center of the arena and hurts them a little bit
-/datum/proximity_monitor/advanced/heretic_arena/proc/apply_punishment(mob/leaver)
-	// If our leaver is trying to leave the Z-level, we yoink em back to the middle and cause em some damage to discourage their escape
-	do_teleport(leaver, host, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
-	if(isliving(leaver))
-		var/mob/living/to_hurt = leaver
-		to_hurt.adjustBruteLoss(10)
-		to_hurt.balloon_alert(to_hurt, "can't escape!")
+/// If a mob teleports away, we bring em back
+/datum/proximity_monitor/advanced/heretic_arena/proc/on_teleport(atom/teleportee, atom/destination, channel)
+	if(isliving(teleportee))
+		var/mob/living/living_teleportee = teleportee
+		living_teleportee.apply_status_effect(/datum/status_effect/heretic_arena_punishment, WEAKREF(host))
 
 /datum/proximity_monitor/advanced/heretic_arena/proc/set_caster(atom/caster)
 	arena_caster = caster
@@ -152,6 +164,32 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		var/atom/target = get_edge_target_turf(living_mob, get_dir(src, get_step_away(living_mob, src)))
 		living_mob.throw_at(target, 4, 5)
 		to_chat(living_mob, span_userdanger("The wall repels you with tremendous force!"))
+
+/// Called when you crit somebody to update your crown
+/datum/status_effect/arena_tracker/proc/on_crit_somebody()
+	owner.cut_overlay(crown_overlay)
+	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
+	crown_overlay.pixel_y = 24
+	owner.add_overlay(crown_overlay)
+	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
+
+	// The mansus celebrates your efforts
+	if(IS_HERETIC(owner))
+		owner.heal_overall_damage(60, 60, 60)
+		owner.adjustToxLoss(-60, forced = TRUE) // Slime heretics everywhere...
+		owner.adjustOxyLoss(-60)
+		if(iscarbon(owner))
+			var/mob/living/carbon/carbon_owner = owner
+			for(var/datum/wound/wound as anything in carbon_owner.all_wounds)
+				wound.remove_wound()
+
+	if(arena_victor) // No need to spam if we've already killed at least 1 person
+		return
+	if(IS_HERETIC(owner))
+		to_chat(owner, span_big(span_hypnophrase("The mansus is pleased with your performance, you may leave now.")))
+	else
+		to_chat(owner, span_big(span_hypnophrase("You have done well, you may leave now.")))
+	arena_victor = TRUE
 
 /**
  * Status applied to every mob in the heretic arena.
@@ -239,31 +277,41 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		if(ismob(attacking_projectile.firer))
 			last_attacker = WEAKREF(attacking_projectile.firer)
 
-/// Called when you crit somebody to update your crown
-/datum/status_effect/arena_tracker/proc/on_crit_somebody()
-	owner.cut_overlay(crown_overlay)
-	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
-	crown_overlay.pixel_y = 24
-	owner.add_overlay(crown_overlay)
-	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
+/**
+ * Status effect that gets applied to whoever leaves the heretic arena while they are still unworthy
+ * Failure to re-enter the combat zone will cause the mansus to forcibly return the victim to the combat area while damaging them
+ */
 
-	// The mansus celebrates your efforts
-	if(IS_HERETIC(owner))
-		owner.heal_overall_damage(60, 60, 60)
-		owner.adjustToxLoss(-60, forced = TRUE) // Slime heretics everywhere...
-		owner.adjustOxyLoss(-60)
-		if(iscarbon(owner))
-			var/mob/living/carbon/carbon_owner = owner
-			for(var/datum/wound/wound as anything in carbon_owner.all_wounds)
-				wound.remove_wound()
+/datum/status_effect/heretic_arena_punishment
+	id = "heretic_arena_punishment"
+	duration = 3 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	/// Simple binary, if FALSE, will pull the victim back
+	var/has_returned = FALSE
+	/// Where to teleport to when the effect expires
+	var/datum/weakref/our_destination
 
-	if(arena_victor) // No need to spam if we've already killed at least 1 person
-		return
-	if(IS_HERETIC(owner))
-		to_chat(owner, span_big(span_hypnophrase("The mansus is pleased with your performance, you may leave now.")))
+/datum/status_effect/heretic_arena_punishment/on_creation(mob/living/new_owner, atom/destination)
+	our_destination = destination
+	return ..()
+
+/datum/status_effect/heretic_arena_punishment/before_remove()
+	var/obj/effect/abstract/heretic_arena/teleport_target = our_destination.resolve()
+	if(has_returned || !teleport_target)
+		return ..()
+
+	// The arena creator doesnt get pulled back, the arena simply collapses behind them
+	if(owner == teleport_target.arena.arena_caster)
+		qdel(teleport_target)
 	else
-		to_chat(owner, span_big(span_hypnophrase("You have done well, you may leave now.")))
-	arena_victor = TRUE
+		do_teleport(owner, teleport_target, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
+		if(isliving(owner))
+			var/mob/living/to_hurt = owner
+			to_hurt.adjustBruteLoss(30)
+			to_hurt.balloon_alert(to_hurt, "can't escape!")
+
+	return ..()
 
 /datum/antagonist/heretic_arena_participant
 	name = "Arena Participant"

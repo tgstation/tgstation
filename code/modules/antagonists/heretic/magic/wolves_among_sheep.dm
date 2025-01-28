@@ -94,7 +94,7 @@
 
 /// Sets up the proximity monitor which handles things that are within the area and leave once they get someone to crit
 /datum/action/cooldown/spell/wolves_among_sheep/proc/create_arena(turf/target)
-	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOVABLE_POST_TELEPORT), PROC_REF(on_caster_crit))
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)), PROC_REF(on_caster_crit))
 
 	// This is where most of the funcionality of the spell is
 	ongoing_arena = new /obj/effect/abstract/heretic_arena(target, max_range, 60 SECONDS, owner)
@@ -115,7 +115,7 @@
 
 /// Undoes our changes
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_effects()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOVABLE_POST_TELEPORT))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)))
 	for(var/iterator in 1 to greatest_dist)
 		var/backwards_iterator = greatest_dist - iterator + 1 //We go backwards
 		if(!to_transform["[backwards_iterator]"])
