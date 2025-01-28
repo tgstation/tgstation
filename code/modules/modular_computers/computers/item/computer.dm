@@ -1046,7 +1046,7 @@
 		if(SEC_LEVEL_BLUE)
 			return ALERT_COLOR_BLUE
 
-	return "#0000000"
+	return COLOR_BLACK
 
 
 /**
