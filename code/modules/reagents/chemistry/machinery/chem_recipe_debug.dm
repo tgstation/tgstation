@@ -72,7 +72,7 @@
 
 	create_reagents(MAXIMUM_HOLDER_VOLUME)
 	target_reagents = reagents
-	RegisterSignal(reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_recipe_debug, on_reaction_step))
+	RegisterSignal(reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 	register_context()
 
 	if(isnull(all_reaction_list))
@@ -529,7 +529,7 @@
 				required_container = new test_reaction.required_container(src)
 				required_container.create_reagents(MAXIMUM_HOLDER_VOLUME)
 				target_reagents = required_container.reagents
-				RegisterSignal(target_reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_recipe_debug, on_reaction_step))
+				RegisterSignal(target_reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 
 			//append everything required
 			var/list/reagent_list = list()
