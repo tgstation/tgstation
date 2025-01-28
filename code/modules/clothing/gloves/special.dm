@@ -236,6 +236,7 @@
 	name = "athletics fishing gloves"
 	icon = /obj/item/clothing/gloves/fishing::icon
 	icon_state = /obj/item/clothing/gloves/fishing::icon_state
+	frame_state = "frame_athletic"
 	line = null
 	bait = null
 	ui_description = "A pair of gloves to fish without a fishing rod while training your athletics."
