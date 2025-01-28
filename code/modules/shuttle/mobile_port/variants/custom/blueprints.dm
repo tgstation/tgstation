@@ -1020,6 +1020,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 
 	shuttle.turf_count += length(turfs)
 	shuttle.underlying_areas_by_turf += underlying_areas
+	SEND_SIGNAL(shuttle, COMSIG_SHUTTLE_EXPANDED, turfs)
 	if(bounds_need_recalculation)
 		QDEL_NULL(shuttle.assigned_transit)
 		shuttle.calculate_docking_port_information()

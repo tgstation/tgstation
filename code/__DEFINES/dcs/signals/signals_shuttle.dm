@@ -7,5 +7,5 @@
 	/// Return this when the shuttle move should be blocked.
 	#define BLOCK_SHUTTLE_MOVE (1<<0)
 
-//from base of /obj/docking_port/mobile/proc/add_turf() : (turf/new_turf)
-#define COMSIG_SHUTTLE_TURF_ADDED "shuttle_turf_added"
+//from base of /proc/expand_shuttle() : (list/turfs)
+#define COMSIG_SHUTTLE_EXPANDED "shuttle_expanded"

@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 	if(shuttleId) //We normally should only be connecting newly-created consoles to shuttles, but just in case...
 		var/obj/docking_port/mobile/old_shuttle = SSshuttle.getShuttle(shuttleId)
 		if(old_shuttle)
-			UnregisterSignal(old_shuttle, COMSIG_SHUTTLE_TURF_ADDED)
+			UnregisterSignal(old_shuttle, COMSIG_SHUTTLE_EXPANDED)
 	var/obj/docking_port/mobile/custom/custom_port = port
 	if(istype(custom_port))
 		if(custom_port.navigation_console?.resolve())
@@ -89,12 +89,53 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 	name = "[port.name] navigation computer"
 	if(istype(custom_port))
 		custom_port.navigation_console = WEAKREF(src)
-	RegisterSignal(port, COMSIG_SHUTTLE_TURF_ADDED, PROC_REF(on_shuttle_turf_added))
+	RegisterSignal(port, COMSIG_SHUTTLE_EXPANDED, PROC_REF(on_shuttle_expanded))
 	recalculate_eye_view(port)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/on_shuttle_turf_added(obj/docking_port/mobile/source)
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/on_shuttle_expanded(obj/docking_port/mobile/source, list/turfs)
 	SIGNAL_HANDLER
 	recalculate_eye_view(source)
+	if(my_port)
+		var/here_x = source.x
+		var/here_y = source.y
+		var/there_x = my_port.x
+		var/there_y = my_port.y
+		var/target_z = my_port.z
+		var/rotation = angle2dir_cardinal(dir2angle(my_port.dir) - dir2angle(source.dir))
+		var/docked = my_port.get_docked() == source
+		for(var/turf/turf as anything in turfs)
+			var/turf/checked_turf
+			if(docked)
+				checked_turf = turf
+			else
+				var/offset_x = turf.x - here_x
+				var/offset_y = turf.y - here_y
+				var/target_x = there_x
+				var/target_y = there_y
+				switch(rotation)
+					if(NORTH)
+						target_x += offset_x
+						target_y += offset_y
+					if(SOUTH)
+						target_x -= offset_x
+						target_y -= offset_y
+					if(EAST)
+						target_x -= offset_y
+						target_y += offset_x
+					if(WEST)
+						target_x += offset_y
+						target_y -= offset_x
+				checked_turf = locate(target_x, target_y, target_z)
+			if(checkLandingTurf(checked_turf) != SHUTTLE_DOCKER_LANDING_CLEAR)
+				if(docked)
+					my_port.unregister()
+					my_port.delete_after = TRUE
+					my_port.shuttle_id = null
+					my_port.name = "Old [my_port.name]"
+					my_port = null
+				else
+					QDEL_NULL(my_port)
+				break
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/recalculate_eye_view(obj/docking_port/mobile/shuttle)
 	var/bigger_shuttle_dimension = max(shuttle.width, shuttle.height)
@@ -116,7 +157,7 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/checkLandingTurf(turf/T, list/overlappers)
 	. = ..()
 	var/area/area = get_area(T)
-	if(!is_type_in_list(area, GLOB.custom_shuttle_station_area_whitelist), && is_type_in_list(area, GLOB.the_station_areas))
+	if(!is_type_in_list(area, GLOB.custom_shuttle_station_area_whitelist) && is_type_in_list(area, GLOB.the_station_areas))
 		return SHUTTLE_DOCKER_BLOCKED
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/attack_hand(mob/user)
