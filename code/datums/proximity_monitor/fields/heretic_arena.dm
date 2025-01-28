@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	addtimer(CALLBACK(living_mob, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/arena_tracker), 10 SECONDS)
 	living_mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
 	if(living_mob == arena_caster)
-		QDEL_IN(src, 3 SECONDS)
+		QDEL_IN(host, 3 SECONDS)
 
 /// Prevents using ladders while the arena is active
 /datum/proximity_monitor/advanced/heretic_arena/proc/on_try_ladder(mob/climber)
