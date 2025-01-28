@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed evidence bag not reverting to tiny size after dumping its contents out"

@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "adding/transferring reagent amounts less than 0.01 now won't return false results"
+  - code_imp: "removed excessive rounding of reagent volumes thus slightly improving performance"
