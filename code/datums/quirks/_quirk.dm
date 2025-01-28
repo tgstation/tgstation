@@ -33,7 +33,7 @@
 	/// The base weight for the each quirk's mail goodies list to be selected is 5
 	/// then the item selected is determined by pick(selected_quirk.mail_goodies)
 	var/list/mail_goodies
-	/// max process stat below which this quirk can process (if it has QUIRK_PROCESSES) and above which it stops.
+	/// max stat below which this quirk can process (if it has QUIRK_PROCESSES) and above which it stops.
 	/// If null, then it will process regardless of stat.
 	var/maximum_process_stat = HARD_CRIT
 	/// A list of additional signals to register with update_process()
