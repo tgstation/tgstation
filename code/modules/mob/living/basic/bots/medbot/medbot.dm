@@ -174,14 +174,13 @@
 	if(!(medical_mode_flags & MEDBOT_STATIONARY_MODE))
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_wheels")
 
-	if(bot_mode_flags & BOT_MODE_ON)
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated")
+		. += emissive_appearance(icon, "[base_icon_state]_overlay_incapacitated", src, alpha = src.alpha)
+	else if(bot_mode_flags & BOT_MODE_ON)
 		var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]")
 		. += emissive_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]", src, alpha = src.alpha)
-
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated") // TODO
-
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()
