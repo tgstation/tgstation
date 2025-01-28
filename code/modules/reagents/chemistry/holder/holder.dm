@@ -302,7 +302,7 @@
 	update_total()
 	handle_reactions()
 
-	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
+	return round(total_removed_amount, CHEMICAL_QUANTISATION_LEVEL)
 
 /**
  * Removes an specific reagent from this holder
