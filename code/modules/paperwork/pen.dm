@@ -488,7 +488,7 @@
 
 /obj/item/pen/destroyer
 	name = "Fine Tipped Pen"
-	desc = "A pen with an infinitly sharpened tip. Capable of striking the weakest point of a strucutre or robot and annihilating it instantly. Good at putting holes in people too."
+	desc = "A pen with an infinitely-sharpened tip. Capable of striking the weakest point of a strucutre or robot and annihilating it instantly. Good at putting holes in people too."
 	force = 5
 	wound_bonus = 100
 	demolition_mod = 9000

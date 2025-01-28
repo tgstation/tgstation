@@ -82,7 +82,7 @@
 
 /datum/supply_pack/goody/disabler_single
 	name = "Disabler Single-Pack"
-	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in a energy holster, just in case you happen to have an extra disabler."
+	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in an energy holster, just in case you happen to have an extra disabler."
 	cost = PAYCHECK_COMMAND * 3
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/storage/belt/holster/energy/disabler)
@@ -242,7 +242,7 @@
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing Toolbox"
-	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separetely."
+	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separately."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
 

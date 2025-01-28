@@ -65,7 +65,7 @@
 		. += span_warning("Needs to be [EXAMINE_HINT("anchored")] to start operations.")
 		. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
 
-	. += span_notice("An [EXAMINE_HINT("plunger")] can be used to flush out reagents.")
+	. += span_notice("A [EXAMINE_HINT("plunger")] can be used to flush out reagents.")
 
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)

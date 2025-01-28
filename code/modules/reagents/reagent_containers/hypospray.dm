@@ -279,7 +279,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	name = "luxury medipen"
-	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard environments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"
@@ -344,7 +344,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/mutadone
 	name = "mutadone autoinjector"
-	desc = "An mutadone medipen to assist in curing genetic errors in one single injector."
+	desc = "A mutadone medipen to assist in curing genetic errors in one single injector."
 	icon_state = "penacid"
 	inhand_icon_state = "penacid"
 	base_icon_state = "penacid"

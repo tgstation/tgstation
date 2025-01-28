@@ -272,7 +272,7 @@
 
 /datum/reagent/drug/happiness
 	name = "Happiness"
-	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
+	description = "Fills you with ecstatic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	color = "#EE35FF"
 	overdose_threshold = 20
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -540,7 +540,7 @@
 
 /datum/reagent/drug/blastoff
 	name = "bLaStOoF"
-	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
+	description = "A drug for the hardcore party crowd said to enhance one's abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discotheque incident are seared into their brains."
 	color = "#9015a9"
 	taste_description = "holodisk cleaner"
 	ph = 5

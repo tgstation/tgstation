@@ -248,7 +248,7 @@
 
 	beaker = tool
 	balloon_alert(user, "beaker inserted")
-	user.log_message("added an [tool] to cryo containing [pretty_string_from_reagent_list(tool.reagents.reagent_list)].", LOG_GAME)
+	user.log_message("added \a [tool] to cryo containing [pretty_string_from_reagent_list(tool.reagents.reagent_list)].", LOG_GAME)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)

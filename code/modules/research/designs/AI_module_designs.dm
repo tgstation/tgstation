@@ -358,7 +358,7 @@
 
 /datum/design/board/antimov_module
 	name = "Antimov Module"
-	desc = "Allows for the construction of a Antimov AI Core Module."
+	desc = "Allows for the construction of an Antimov AI Core Module."
 	id = "antimov_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/antimov

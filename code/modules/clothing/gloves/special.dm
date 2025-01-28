@@ -145,7 +145,7 @@
 
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
-	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
 	inhand_icon_state = "greyscale_gloves"
 	icon_state = "clockwork_gauntlets"
 	greyscale_colors = "#db6f05"
