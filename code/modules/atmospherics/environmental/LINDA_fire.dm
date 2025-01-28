@@ -349,10 +349,10 @@
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src
 	var/turf/open/T = loc
-	if(istype(T) && T.active_hotspot == src)
-		if(our_hot_group)
-			our_hot_group.remove_from_group(src)
+	if(our_hot_group)
+		our_hot_group.remove_from_group(src)
 		our_hot_group = null
+	if(istype(T) && T.active_hotspot == src)
 		T.set_active_hotspot(null)
 	return ..()
 
@@ -401,8 +401,9 @@
 /datum/hot_group/proc/remove_from_group(obj/effect/hotspot/target)
 	spot_list -= target
 	var/turf/open/target_turf = target.loc
-	x_coord -= target_turf.x
-	y_coord -= target_turf.y
+	if(target_turf)
+		x_coord -= target_turf.x
+		y_coord -= target_turf.y
 	if(!length(spot_list))
 		qdel(src)
 		return
