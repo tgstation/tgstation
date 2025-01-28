@@ -293,6 +293,8 @@
 		/datum/job/shaft_miner = /obj/item/organ/monster_core/rush_gland,
 		/datum/job/station_engineer = /obj/item/organ/cyberimp/arm/toolset,
 		/datum/job/warden = /obj/item/organ/cyberimp/eyes/hud/security,
+		// DOPPLER EDIT BEGIN
+		/datum/job/bridge_assistant = /obj/item/organ/cyberimp/arm/paperwork,
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
