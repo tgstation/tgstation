@@ -195,13 +195,12 @@
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_appearance()
-	var/pref_volume = client?.prefs.read_preference(/datum/preference/numeric/volume/sound_combatmode)
-	if(silent || !pref_volume)
+	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
 		return
 	if(combat_mode)
-		SEND_SOUND(src, sound('sound/misc/ui_togglecombat.ogg', volume = 25 * (pref_volume/100))) //Sound from interbay!
+		SEND_SOUND(src, sound('sound/misc/ui_togglecombat.ogg', volume = 25)) //Sound from interbay!
 	else
-		SEND_SOUND(src, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25* (pref_volume/100))) //Slightly modified version of the above
+		SEND_SOUND(src, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25)) //Slightly modified version of the above
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!isitem(AM))

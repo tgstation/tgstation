@@ -217,7 +217,7 @@
 
 	RegisterSignal(new_listener, COMSIG_MOVABLE_MOVED, PROC_REF(listener_moved))
 	RegisterSignals(new_listener, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deaf))
-	var/pref_volume = new_listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_jukebox)
+	var/pref_volume = new_listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
 	if(HAS_TRAIT(new_listener, TRAIT_DEAF) || !pref_volume)
 		listeners[new_listener] |= SOUND_MUTE
 
@@ -280,7 +280,7 @@
 
 	if((reason & MUTE_DEAF) && HAS_TRAIT(listener, TRAIT_DEAF))
 		return FALSE
-	var/pref_volume = listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_jukebox)
+	var/pref_volume = listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
 	if((reason & MUTE_PREF) && !pref_volume)
 		return FALSE
 

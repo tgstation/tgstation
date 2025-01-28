@@ -24,15 +24,16 @@
 	var/list/entries = list(
 		/datum/preference/numeric/volume/sound_ai_vox = savefile.get_entry("sound_ai_vox"),
 		/datum/preference/numeric/volume/sound_midi = savefile.get_entry("sound_midi"),
-		/datum/preference/numeric/volume/sound_elevator = savefile.get_entry("sound_elevator"),
-		/datum/preference/numeric/volume/sound_breathing = savefile.get_entry("sound_breathing"),
-		/datum/preference/numeric/volume/sound_announcements = savefile.get_entry("sound_announcements"),
-		/datum/preference/numeric/volume/sound_combatmode = savefile.get_entry("sound_combatmode"),
-		/datum/preference/numeric/volume/sound_endofround = savefile.get_entry("sound_endofround"),
 		/datum/preference/numeric/volume/sound_instruments = savefile.get_entry("sound_instruments"),
-		/datum/preference/numeric/volume/sound_jukebox = savefile.get_entry("sound_jukebox"),
+		/datum/preference/numeric/volume/sound_ambience_volume = savefile.get_entry("sound_ambience_volume"),
+		/datum/preference/numeric/volume/sound_ship_ambience_volume = savefile.get_entry("sound_ship_ambience_volume"),
+		/datum/preference/numeric/volume/sound_lobby_volume = savefile.get_entry("sound_lobby_volume"),
+		/datum/preference/numeric/volume/sound_radio_noise = savefile.get_entry("sound_radio_noise"),
+
 	)
 	for(var/entry as anything in entries)
 		var/pref_data = entries[entry]
-		write_preference(GLOB.preference_entries[entry], pref_data*100)
+		if(pref_data <= 1)
+			pref_data *= 100
+		write_preference(GLOB.preference_entries[entry], min(pref_data, 100))
 	return

@@ -1,4 +1,10 @@
-import { Feature, FeatureChoiced, FeatureSliderInput } from '../base';
+import {
+  CheckboxInput,
+  Feature,
+  FeatureChoiced,
+  FeatureSliderInput,
+  FeatureToggle,
+} from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
 export const sound_ambience_volume: Feature<number> = {
@@ -8,32 +14,25 @@ export const sound_ambience_volume: Feature<number> = {
   component: FeatureSliderInput,
 };
 
-export const sound_breathing: Feature<number> = {
-  name: 'Breathing sounds volume',
+export const sound_breathing: FeatureToggle = {
+  name: 'Enable breathing sounds',
   category: 'SOUND',
-  description: 'Volume of the breathing sounds when using internals.',
-  component: FeatureSliderInput,
+  description: 'When enabled, hear breathing sounds when using internals.',
+  component: CheckboxInput,
 };
 
-export const sound_announcements: Feature<number> = {
-  name: 'Announcement sounds volume',
+export const sound_announcements: FeatureToggle = {
+  name: 'Enable announcement sounds',
   category: 'SOUND',
-  description: 'Volume of the sounds for command reports, notices, etc.',
-  component: FeatureSliderInput,
+  description: 'When enabled, hear sounds for command reports, notices, etc.',
+  component: CheckboxInput,
 };
 
-export const sound_combatmode: Feature<number> = {
-  name: 'Combat mode sound volume',
+export const sound_combatmode: FeatureToggle = {
+  name: 'Enable combat mode sound',
   category: 'SOUND',
-  description: 'Volume of the sounds when toggling combat mode.',
-  component: FeatureSliderInput,
-};
-
-export const sound_endofround: Feature<number> = {
-  name: 'End of round sounds volume',
-  category: 'SOUND',
-  description: 'Volume of the sound when the server is rebooting.',
-  component: FeatureSliderInput,
+  description: 'When enabled, hear sounds when toggling combat mode.',
+  component: CheckboxInput,
 };
 
 export const sound_instruments: Feature<number> = {
@@ -60,13 +59,6 @@ export const sound_tts_volume: Feature<number> = {
   component: FeatureSliderInput,
 };
 
-export const sound_jukebox: Feature<number> = {
-  name: 'Jukebox music volume',
-  category: 'SOUND',
-  description: 'Volume of jukeboxes, dance machines, etc.',
-  component: FeatureSliderInput,
-};
-
 export const sound_lobby_volume: Feature<number> = {
   name: 'Lobby music volume',
   category: 'SOUND',
@@ -84,12 +76,6 @@ export const sound_ship_ambience_volume: Feature<number> = {
   name: 'Ship ambience volume',
   category: 'SOUND',
   description: `Ship ambience refers to the low ambient buzz that plays on loop.`,
-  component: FeatureSliderInput,
-};
-
-export const sound_elevator: Feature<number> = {
-  name: 'Elevator music volume',
-  category: 'SOUND',
   component: FeatureSliderInput,
 };
 

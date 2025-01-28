@@ -732,7 +732,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!round_end_sound)
 		round_end_sound = choose_round_end_song()
 	for(var/mob/M in GLOB.player_list)
-		var/pref_volume = M.client.prefs.read_preference(/datum/preference/numeric/volume/sound_endofround)
+		var/pref_volume = M.client.prefs.read_preference(/datum/preference/numeric/volume/sound_midi)
 		if(pref_volume > 0)
 			SEND_SOUND(M.client, sound(round_end_sound, volume = pref_volume))
 

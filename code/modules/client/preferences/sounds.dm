@@ -1,11 +1,10 @@
 /datum/preference/numeric/volume
 	abstract_type = /datum/preference/numeric/volume
 	minimum = 0
-	maximum = 200
+	maximum = 100
 
-/// default value is max/2 because 100 1x modifier, while 200 is 2x
 /datum/preference/numeric/volume/create_default_value()
-	return maximum/2
+	return maximum
 
 /// Controls ambience volume
 /datum/preference/numeric/volume/sound_ambience_volume
@@ -16,27 +15,21 @@
 /datum/preference/numeric/volume/sound_ambience_volume/apply_to_client(client/client, value)
 	client.update_ambience_pref(value)
 
-/datum/preference/numeric/volume/sound_breathing
+/datum/preference/toggle/sound_breathing
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_breathing"
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing announcement sounds
-/datum/preference/numeric/volume/sound_announcements
+/datum/preference/toggle/sound_announcements
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_announcements"
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing the combat mode sound
-/datum/preference/numeric/volume/sound_combatmode
+/datum/preference/toggle/sound_combatmode
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_combatmode"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/// Controls hearing round end sounds
-/datum/preference/numeric/volume/sound_endofround
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_endofround"
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing instruments
@@ -44,6 +37,10 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_instruments"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/numeric/volume/sound_instruments/apply_to_client_updated(client/client, value)
+	if (!value)
+		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
 
 /datum/preference/choiced/sound_tts
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -77,16 +74,6 @@
 	if(sound_to_send)
 		SEND_SOUND(client.mob, sound_to_send)
 
-/// Controls hearing dance machines
-/datum/preference/numeric/volume/sound_jukebox
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_jukebox"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/numeric/volume/sound_jukebox/apply_to_client_updated(client/client, value)
-	if (!value)
-		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
-
 /// Controls hearing lobby music
 /datum/preference/numeric/volume/sound_lobby_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -113,12 +100,6 @@
 
 /datum/preference/numeric/volume/sound_ship_ambience_volume/apply_to_client_updated(client/client, value)
 	client.mob.refresh_looping_ambience()
-
-/// Controls hearing elevator music
-/datum/preference/numeric/volume/sound_elevator
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_elevator"
-	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls radio noise volume
 /datum/preference/numeric/volume/sound_radio_noise

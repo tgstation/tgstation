@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 
 	if (entered in tracked_mobs)
 		return
-	var/pref_volume = entered.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_elevator)
+	var/pref_volume = entered.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_ambience_volume)
 	if (pref_volume > 0)
 		var/datum/looping_sound/soundloop = new soundloop_type(_parent = entered, _direct = TRUE, start_immediately = enabled)
 		soundloop.volume *= pref_volume/100
