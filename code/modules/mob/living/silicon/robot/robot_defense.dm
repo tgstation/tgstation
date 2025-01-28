@@ -4,187 +4,202 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
-/mob/living/silicon/robot/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
-		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/stack/cable_coil/coil = W
-		if (getFireLoss() > 0 || getToxLoss() > 0)
-			if(src == user)
-				to_chat(user, span_notice("You start fixing yourself..."))
-				if(!do_after(user, 5 SECONDS, target = src))
-					return
-			if (coil.use(1))
-				adjustFireLoss(-30)
-				user.visible_message(span_notice("[user] fixes some of the burnt wires on [src]."), span_notice("You fix some of the burnt wires on [src]."))
-			else
-				to_chat(user, span_warning("You need more cable to repair [src]!"))
-		else
-			to_chat(user, span_warning("The wires seem fine, there's no need to fix them."))
-		return
-
-	if(istype(W, /obj/item/stock_parts/power_store/cell) && opened) // trying to put a cell inside
+/mob/living/silicon/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_wire_tool(tool, check_secured = TRUE))
 		if(wiresexposed)
-			to_chat(user, span_warning("Close the cover first!"))
-		else if(cell)
-			to_chat(user, span_warning("There is a power cell already installed!"))
-		else
-			if(!user.transferItemToLoc(W, src))
-				return
-			cell = W
-			to_chat(user, span_notice("You insert the power cell."))
+			wires.interact(user)
+			return ITEM_INTERACT_SUCCESS
+		if(user.combat_mode)
+			return ITEM_INTERACT_SKIP_TO_ATTACK
+
+		balloon_alert(user, "expose the wires first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/stack/cable_coil) && wiresexposed)
+		var/obj/item/stack/cable_coil/coil = tool
+		if (getFireLoss() <= 0)
+			balloon_alert(user, "wires are fine!")
+			return ITEM_INTERACT_BLOCKING
+		if(src == user)
+			balloon_alert(user, "repairing self...")
+			if(!do_after(user, 5 SECONDS, target = src))
+				return ITEM_INTERACT_BLOCKING
+		if (!coil.use(1))
+			balloon_alert(user, "not enough cable!")
+			return ITEM_INTERACT_BLOCKING
+		adjustFireLoss(-30)
+		balloon_alert(user, "wires repaired")
+		user.visible_message(
+			span_notice("[user] fixes some of the burnt wires on [src]."),
+			span_notice("You fix some of the burnt wires on [src]."),
+		)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/power_store/cell) && opened) // trying to put a cell inside
+		if(wiresexposed)
+			balloon_alert(user, "unexpose the wires first!")
+			return ITEM_INTERACT_BLOCKING
+		if(cell)
+			balloon_alert(user, "already has a cell!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		cell = tool
+		balloon_alert(user, "cell inserted")
 		update_icons()
 		diag_hud_set_borgcell()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(is_wire_tool(W))
-		if (wiresexposed)
-			wires.interact(user)
-		else
-			to_chat(user, span_warning("You can't reach the wiring!"))
-		return
-
-	if((W.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if((tool.slot_flags & ITEM_SLOT_HEAD) \
+		&& hat_offset != INFINITY \
+		&& !user.combat_mode \
+		&& !is_type_in_typecache(tool, GLOB.blacklisted_borg_hats))
 		if(user == src)
-			to_chat(user,  span_notice("You can't seem to manage to place [W] on your head by yourself!") )
-			return
+			balloon_alert(user, "can't place on self!")
+			return ITEM_INTERACT_BLOCKING
 		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
-			to_chat(user, span_warning("You can't seem to remove [src]'s existing headwear!"))
-			return
-		to_chat(user, span_notice("You begin to place [W] on [src]'s head..."))
-		to_chat(src, span_notice("[user] is placing [W] on your head..."))
-		if(do_after(user, 3 SECONDS, target = src))
-			if (user.temporarilyRemoveItemFromInventory(W, TRUE))
-				place_on_head(W)
-		return
+			balloon_alert(user, "can't remove existing headwear!")
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "placing on head...")
+		user.visible_message(
+			span_notice("[user] begins to place [tool] on [src]'s head..."),
+			span_notice("You begin to place [tool] on [src]'s head..."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+		if(!do_after(user, 3 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
+			balloon_alert(user, "can't remove existing headwear!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "headwear placed")
+		place_on_head(tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(W, /obj/item/defibrillator) && !user.combat_mode)
+	if(istype(tool, /obj/item/defibrillator) && !user.combat_mode)
 		if(!opened)
-			to_chat(user, span_warning("You must access the cyborg's internals!"))
-			return
+			balloon_alert(user, "chassis cover is closed!")
+			return ITEM_INTERACT_BLOCKING
 		if(!istype(model, /obj/item/robot_model/medical))
-			to_chat(user, span_warning("[src] does not have correct mounting points for a defibrillator!"))
-			return
+			balloon_alert(user, "wrong cyborg model!")
+			return ITEM_INTERACT_BLOCKING
 		if(stat == DEAD)
-			to_chat(user, span_warning("This defibrillator unit will not function on a deceased cyborg!"))
-			return
-		var/obj/item/defibrillator/D = W
-		if(!(D.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
-			to_chat(user, span_warning("This defibrillator unit doesn't seem to fit correctly!"))
-			return
-		if(D.cell)
-			to_chat(user, span_warning("You cannot connect the defibrillator to the cyborg power supply with the defibrillator's cell in the way!"))
-			return
-		if(locate(/obj/item/borg/upgrade/defib) in src || locate(/obj/item/borg/upgrade/defib/backpack) in src)
-			to_chat(user, span_warning("[src] already has a defibrillator!"))
-			return
-		var/obj/item/borg/upgrade/defib/backpack/B = new(null, D)
-		apply_upgrade(B, user)
-		return
+			balloon_alert(user, "it's dead!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/defibrillator/tool = W
+		if(!(tool.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
+			balloon_alert(user, "doesn't fit!")
+			return ITEM_INTERACT_BLOCKING
+		if(tool.cell)
+			balloon_alert(user, "remove [tool]'s cell first!")
+			return ITEM_INTERACT_BLOCKING
+		if(locate(/obj/item/borg/upgrade/defib) in src)
+			balloon_alert(user, "already has a defibrillator!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/borg/upgrade/defib/backpack/defib_upgrade = new(null, D)
+		if(apply_upgrade(defib_upgrade, user))
+			balloon_alert(user, "defibrillator installed")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(W, /obj/item/ai_module))
-		var/obj/item/ai_module/MOD = W
+	if(istype(tool, /obj/item/ai_module) && opened)
 		if(!opened)
-			to_chat(user, span_warning("You need access to the robot's insides to do that!"))
-			return
+			balloon_alert(user, "chassis cover is closed!")
+			return ITEM_INTERACT_BLOCKING
 		if(wiresexposed)
-			to_chat(user, span_warning("You need to close the wire panel to do that!"))
-			return
+			balloon_alert(user, "close the wire cover first!")
+			return ITEM_INTERACT_BLOCKING
 		if(!cell)
-			to_chat(user, span_warning("You need to install a power cell to do that!"))
-			return
-		if(shell) //AI shells always have the laws of the AI
-			to_chat(user, span_warning("[src] is controlled remotely! You cannot upload new laws this way!"))
-			return
+			balloon_alert(user, "install a power cell first!")
+			return ITEM_INTERACT_BLOCKING
+		if(shell)
+			balloon_alert(user, "can't upload laws to a shell!")
+			return ITEM_INTERACT_BLOCKING
 		if(connected_ai && lawupdate)
-			to_chat(user, span_warning("[src] is receiving laws remotely from a synced AI!"))
-			return
+			balloon_alert(user, "linked to an ai!")
+			return ITEM_INTERACT_BLOCKING
 		if(emagged)
-			to_chat(user, span_warning("The law interface glitches out!"))
+			balloon_alert(user, "law interface glitched!")
 			emote("buzz")
-			return
-		if(!mind) //A player mind is required for law procs to run antag checks.
-			to_chat(user, span_warning("[src] is entirely unresponsive!"))
-			return
-		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
-		return
+			return ITEM_INTERACT_BLOCKING
+		if(!mind)
+			balloon_alert(user, "it's unresponsive!")
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(W, /obj/item/encryptionkey) && opened)
-		if(radio)//sanityyyyyy
-			radio.attackby(W,user)//GTFO, you have your own procs
-		else
-			to_chat(user, span_warning("Unable to locate a radio!"))
-		return
+		balloon_alert(user, "laws uploaded")
+		var/obj/item/ai_module/new_laws = tool
+		new_laws.install(laws, user)
+		return ITEM_INTERACT_SUCCESS
 
-	if (W.GetID()) // trying to unlock the interface with an ID card
+	if(istype(tool, /obj/item/encryptionkey) && opened)
+		if(radio)
+			return radio.item_interaction(user, tool)
+
+		balloon_alert(user, "no radio found!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.GetId())
 		if(opened)
-			to_chat(user, span_warning("You must close the cover to swipe an ID card!"))
-		else
-			if(allowed(user))
-				locked = !locked
-				to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
-				update_icons()
-				if(emagged)
-					to_chat(user, span_notice("The cover interface glitches out for a split second."))
-					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
-				else
-					logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
-			else
-				to_chat(user, span_danger("Access denied."))
-		return
+			balloon_alert(user, "close the chassis cover first!")
+			return ITEM_INTERACT_BLOCKING
+		if(!allowed(user))
+			balloon_alert(user, "access denied!")
+			return ITEM_INTERACT_BLOCKING
+		locked = !locked
+		update_icons()
+		balloon_alert(user, "chassis cover lock [emagged ? "glitches" : "toggled"]")
+		logevent("[emagged ? "ChÃ¥vÃis" : "Chassis"] cover lock has been [locked ? "engaged" : "released"]")
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(W, /obj/item/borg/upgrade))
-		var/obj/item/borg/upgrade/U = W
+	if(istype(tool, /obj/item/borg/upgrade))
 		if(!opened)
-			to_chat(user, span_warning("You must access the cyborg's internals!"))
-			return
-		if(!src.model && U.require_model)
-			to_chat(user, span_warning("The cyborg must choose a model before it can be upgraded!"))
-			return
-		if(U.locked)
-			to_chat(user, span_warning("The upgrade is locked and cannot be used yet!"))
-			return
-		if(!user.canUnEquip(U))
-			to_chat(user, span_warning("The upgrade is stuck to you and you can't seem to let go of it!"))
-			return
-		apply_upgrade(U, user)
-		return
+			balloon_alert(user, "chassis cover is closed!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/borg/upgrade/upgrade = tool
+		if(!model && upgrade.require_model)
+			balloon_alert(user, "choose a model first!")
+			return ITEM_INTERACT_BLOCKING
+		if(upgrade.locked)
+			balloon_alert(user, "upgrade locked!")
+			return ITEM_INTERACT_BLOCKING
+		if(user.apply_upgrade(upgrade, user))
+			balloon_alert(user, "upgrade installed")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(W, /obj/item/toner))
+	if(istype(tool, /obj/item/toner))
 		if(toner >= tonermax)
-			to_chat(user, span_warning("The toner level of [src] is at its highest level possible!"))
-			return
-		if(!user.temporarilyRemoveItemFromInventory(W))
-			return
+			balloon_alert(user, "toner full!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		toner = tonermax
-		qdel(W)
-		to_chat(user, span_notice("You fill the toner level of [src] to its max capacity."))
-		return
+		qdel(tool)
+		balloon_alert(user, "toner filled")
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(W, /obj/item/flashlight))
+	if(istype(tool, /obj/item/flashlight))
 		if(!opened)
-			to_chat(user, span_warning("You need to open the panel to repair the headlamp!"))
-			return
+			balloon_alert(user, "open the chassis cover first!")
+			return ITEM_INTERACT_BLOCKING
 		if(lamp_functional)
-			to_chat(user, span_warning("The headlamp is already functional!"))
-			return
-		if(!user.temporarilyRemoveItemFromInventory(W))
-			to_chat(user, span_warning("[W] seems to be stuck to your hand. You'll have to find a different light."))
-			return
+			balloon_alert(user, "headlamp already functional!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		lamp_functional = TRUE
-		qdel(W)
-		to_chat(user, span_notice("You replace the headlamp bulbs."))
-		return
+		qdel(tool)
+		balloon_alert(user, "headlamp repaired")
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(W, /obj/item/computer_disk)) //Allows borgs to install new programs with human help
+	if(istype(tool, /obj/item/computer_disk))
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_disk/floppy = W
-		floppy.forceMove(modularInterface)
-		modularInterface.inserted_disk = floppy
-		return
+		return modularInterface.computer_disk_act(user, tool)
 
-	return ..()
+	return NONE
 
 #define LOW_DAMAGE_UPPER_BOUND 1/3
 #define MODERATE_DAMAGE_UPPER_BOUND 2/3

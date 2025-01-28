@@ -126,7 +126,7 @@
 			balloon_alert(user, "can't attach another of that!")
 			return
 		if(new_assembly.secured || secured)
-			balloon_alert(user, "both devices not assembly_behavior!")
+			balloon_alert(user, "both devices not attachable!")
 			return
 
 		holder = new /obj/item/assembly_holder(drop_location())
