@@ -35,7 +35,7 @@
 	var/list/mail_goodies
 	/// max process stat below which this quirk can process (if it has QUIRK_PROCESSES) and above which it stops.
 	/// If null, then it will process regardless of stat.
-	var/maximum_process_stat = null
+	var/maximum_process_stat = HARD_CRIT
 	/// A list of additional signals to register with update_process()
 	var/list/process_update_signals
 	/// A list of traits that should stop this quirk from processing.
