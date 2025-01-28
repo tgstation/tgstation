@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/ai_module) && opened)
+	if(istype(tool, /obj/item/ai_module))
 		if(!opened)
 			balloon_alert(user, "chassis cover is closed!")
 			return ITEM_INTERACT_BLOCKING
