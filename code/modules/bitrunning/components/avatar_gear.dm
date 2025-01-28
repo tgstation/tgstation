@@ -57,12 +57,11 @@
 	if(tracked_human == to_track)
 		return
 
-	if(tracked_human && (tracked_human != to_track))
+	if(tracked_human)
 		UnregisterSignal(tracked_human, COMSIG_BITRUNNER_STOCKING_GEAR)
 	tracked_human_ref = WEAKREF(to_track)
 	RegisterSignal(to_track, COMSIG_BITRUNNER_STOCKING_GEAR, PROC_REF(load_onto_avatar))
 
 /datum/component/loads_avatar_gear/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
 	SIGNAL_HANDLER
-	if(load_callback)
-		return load_callback.Invoke(neo, avatar, external_load_flags)
+	return load_callback?.Invoke(neo, avatar, external_load_flags)
