@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 /mob/living/basic/mimic/copy/Exited(atom/movable/gone, direction) // if our object gets deleted it calls Exited
 	. = ..()
 	var/atom/movable/copied = copied_ref?.resolve()
-	if(!copied_ref)
+	if(!copied)
 		copied_ref = null
 		return
 	if(QDELETED(src) || gone != copied)
