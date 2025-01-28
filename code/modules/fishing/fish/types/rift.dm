@@ -63,7 +63,8 @@
 /obj/item/fish/starfish/chrystarfish/set_status(new_status, silent)
 	. = ..()
 	if(new_status == FISH_DEAD)
-		new fillet_type(get_turf(src))
+		if(fillet_type)
+			new fillet_type(get_turf(src))
 		playsound(src, SFX_SHATTER, 50)
 		qdel(src)
 
