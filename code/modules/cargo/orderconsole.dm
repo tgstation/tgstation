@@ -173,6 +173,11 @@
 
 	return data
 
+/**
+ * returns a list of supply packs for a certain group
+ * * group - the group of packs to return
+ * * express - if this is an express console
+ */
 /obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
 	var/list/packs = list()
 	for(var/pack_id in SSshuttle.supply_packs)
@@ -206,6 +211,10 @@
 
 	return packs
 
+/**
+ * returns a list of the contents of a supply pack
+ * * pack - the pack to get the contents of
+ */
 /obj/machinery/computer/cargo/proc/get_pack_contains(datum/supply_pack/pack)
 	var/list/contains = list()
 	for(var/obj/item/item as anything in pack.contains)
@@ -218,6 +227,10 @@
 
 	return contains
 
+/**
+ * returns the discount multiplier applied to all supply packs,
+ * the discount is calculated as follows: pack_cost * get_discount()
+ */
 /obj/machinery/computer/cargo/proc/get_discount()
 	return 1
 
