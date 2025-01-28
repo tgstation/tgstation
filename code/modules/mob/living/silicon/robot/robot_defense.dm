@@ -87,17 +87,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(stat == DEAD)
 			balloon_alert(user, "it's dead!")
 			return ITEM_INTERACT_BLOCKING
-		var/obj/item/defibrillator/tool = W
-		if(!(tool.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
+		var/obj/item/defibrillator/defib = tool
+		if(!(defib.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
 			balloon_alert(user, "doesn't fit!")
 			return ITEM_INTERACT_BLOCKING
-		if(tool.cell)
+		if(defib.get_cell())
 			balloon_alert(user, "remove [tool]'s cell first!")
 			return ITEM_INTERACT_BLOCKING
 		if(locate(/obj/item/borg/upgrade/defib) in src)
 			balloon_alert(user, "already has a defibrillator!")
 			return ITEM_INTERACT_BLOCKING
-		var/obj/item/borg/upgrade/defib/backpack/defib_upgrade = new(null, D)
+		var/obj/item/borg/upgrade/defib/backpack/defib_upgrade = new(null, defib)
 		if(apply_upgrade(defib_upgrade, user))
 			balloon_alert(user, "defibrillator installed")
 			return ITEM_INTERACT_SUCCESS
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			balloon_alert(user, "chassis cover is closed!")
 			return ITEM_INTERACT_BLOCKING
 		if(wiresexposed)
-			balloon_alert(user, "close the wire cover first!")
+			balloon_alert(user, "unexpose the wires first!")
 			return ITEM_INTERACT_BLOCKING
 		if(!cell)
 			balloon_alert(user, "install a power cell first!")
@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "no radio found!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(tool.GetId())
+	if(tool.GetID())
 		if(opened)
 			balloon_alert(user, "close the chassis cover first!")
 			return ITEM_INTERACT_BLOCKING
@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(upgrade.locked)
 			balloon_alert(user, "upgrade locked!")
 			return ITEM_INTERACT_BLOCKING
-		if(user.apply_upgrade(upgrade, user))
+		if(apply_upgrade(upgrade, user))
 			balloon_alert(user, "upgrade installed")
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
