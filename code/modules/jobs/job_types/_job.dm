@@ -230,17 +230,8 @@
 /datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(!human)
 		return
-	var/obj/machinery/announcement_system/system
-	var/list/available_machines = list()
-	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
-		if(announce.newhead_toggle)
-			available_machines += announce
-			break
-	if(!length(available_machines))
-		return
-	system = pick(available_machines)
 	//timer because these should come after the captain announcement
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(system, TYPE_PROC_REF(/obj/machinery/announcement_system, announce), AUTO_ANNOUNCE_NEWHEAD, human.real_name, human.job, channels), 1))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(aac_config_announce), /datum/aac_config_entry/newhead, list("%PERSON" = human.real_name, "%RANK" = human.job), channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/player)

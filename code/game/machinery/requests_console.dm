@@ -171,17 +171,13 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/radio_freq
 			switch(params["emergency"])
 				if(REQ_EMERGENCY_SECURITY) //Security
-					radio_freq = FREQ_SECURITY
+					aac_config_announce(/datum/aac_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
 				if(REQ_EMERGENCY_ENGINEERING) //Engineering
-					radio_freq = FREQ_ENGINEERING
+					aac_config_announce(/datum/aac_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
 				if(REQ_EMERGENCY_MEDICAL) //Medical
-					radio_freq = FREQ_MEDICAL
-			if(radio_freq)
-				emergency = params["emergency"]
-				radio.set_frequency(radio_freq)
-				radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
-				update_appearance()
-				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
+					aac_config_announce(/datum/aac_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+			update_appearance()
+			addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
 		if("send_announcement")
 			if(!COOLDOWN_FINISHED(src, announcement_cooldown))
@@ -411,6 +407,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	icon_state = "req_comp_off"
 	result_path = /obj/machinery/requests_console/auto_name
 	pixel_shift = 30
+
+/datum/aac_config_entry/rc_emergency
+	name = "RC Emergency Announcement"
+	announcement_lines_map = list(
+		"Security" = "Security emergency in %LOCATION!!!",
+		"Engineering" = "Engineering emergency in %LOCATION!!!",
+		"Medical" = "Medical emergency in %LOCATION!!!",
+	)
+	vars_and_tooltips_map = list(
+		"%LOCATION" = "will be replaced with the department name",
+	)
+
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING

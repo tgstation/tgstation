@@ -127,13 +127,4 @@
 			channels_to_use = list(RADIO_CHANNEL_COMMON)
 	if(!length(channels_to_use) || starting_node)
 		return
-	var/obj/machinery/announcement_system/system
-	var/list/available_machines = list()
-	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
-		if(announce.announce_research_node)
-			available_machines += announce
-			break
-	if(!length(available_machines))
-		return
-	system = pick(available_machines)
-	system.announce(AUTO_ANNOUNCE_NODE, display_name, channels = channels_to_use)
+	aac_config_announce(/datum/aac_config_entry/researched_node, list("%NODE" = display_name), channels_to_use)
