@@ -57,7 +57,7 @@
 	if(!(punched_mob in guilty))
 		check_visible_guilt(punched_mob)
 
-	if(honorbound.combat_mode && !is_honorable(honorbound, punched_mob) || !is_honorable && modifiers[RIGHT_CLICK])
+	if((honorbound.combat_mode || modifiers[RIGHT_CLICK]) && !is_honorable(honorbound, punched_mob))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Signal to see if the trauma allows us to attack a target with a weapon

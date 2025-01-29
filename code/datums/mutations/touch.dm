@@ -120,7 +120,6 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	antimagic_flags = NONE
-	item_flags = ABSTRACT | HAND_ITEM
 
 	hand_path = /obj/item/melee/touch_attack/lay_on_hands
 	draw_message = span_notice("You ready your hand to transfer injuries to yourself.")
@@ -420,3 +419,4 @@
 	icon_state = "greyscale"
 	color = COLOR_VERY_PALE_LIME_GREEN
 	inhand_icon_state = "greyscale"
+	item_flags = ABSTRACT | HAND_ITEM
