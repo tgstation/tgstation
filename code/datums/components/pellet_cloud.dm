@@ -108,9 +108,9 @@
 
 	// things like mouth executions and gunpoints can multiply the damage and wounds of projectiles, so this makes sure those effects are applied to each pellet instead of just one
 	var/original_damage = shell.loaded_projectile.damage
-	var/original_wb = shell.loaded_projectile.wound_bonus
-	var/original_bwb = shell.loaded_projectile.bare_wound_bonus
-	var/original_if = shell.loaded_projectile.ignored_factions
+	var/original_wounds_bonus = shell.loaded_projectile.wound_bonus
+	var/original_bare_wounds_bonus = shell.loaded_projectile.bare_wound_bonus
+	var/original_ignored_faction = shell.loaded_projectile.ignored_factions
 
 	for(var/i in 1 to num_pellets)
 		shell.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
