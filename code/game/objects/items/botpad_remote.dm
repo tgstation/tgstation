@@ -43,7 +43,7 @@
 		connected_botpad.connected_remote = src
 		connected_botpad.id = id
 		multitool.set_buffer(null)
-		to_chat(user, span_notice("You connect the controller to the pad with data from the [multitool.name]'s buffer."))
+		to_chat(user, span_notice("You connect the controller to the pad with data from \the [multitool]'s buffer."))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/botpad_remote/proc/try_launch(mob/living/user)

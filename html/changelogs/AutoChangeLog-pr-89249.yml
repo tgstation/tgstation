@@ -1,0 +1,5 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - bugfix: "fixed timestamps being timezone sensitive"
+  - admin: "due to this bug some logs may have been timestamped incorrectly"

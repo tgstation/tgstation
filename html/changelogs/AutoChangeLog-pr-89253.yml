@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Being on fire or wet should no longer last much longer than intended while the server is under load."
