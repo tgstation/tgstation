@@ -19,7 +19,7 @@
 	datum/callback/on_began_forecast,
 )
 	. = ..()
-	if (!isliving(parent))
+	if (!isbasicmob(parent) && !ishostile(parent))
 		return ELEMENT_INCOMPATIBLE
 
 	if(display_telegraph_overlay)
