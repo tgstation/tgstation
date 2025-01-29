@@ -15,7 +15,10 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "expose the wires first!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/stack/cable_coil) && wiresexposed)
+	if(istype(tool, /obj/item/stack/cable_coil))
+		if(!wiresexposed)
+			balloon_alert(user, "expose the wires first!")
+			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/cable_coil/coil = tool
 		if (getFireLoss() <= 0)
 			balloon_alert(user, "wires are fine!")
@@ -28,11 +31,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			balloon_alert(user, "not enough cable!")
 			return ITEM_INTERACT_BLOCKING
 		adjustFireLoss(-30)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		balloon_alert(user, "wires repaired")
 		user.visible_message(
 			span_notice("[user] fixes some of the burnt wires on [src]."),
 			span_notice("You fix some of the burnt wires on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
+		user.changeNext_move(CLICK_CD_MELEE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell) && opened) // trying to put a cell inside
@@ -269,7 +275,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!cell)
 			return
 		cell.add_fingerprint(user)
-		to_chat(user, span_notice("You remove \the [cell]."))
+		balloon_alert(user, "cell removed")
 		user.put_in_active_hand(cell)
 		update_icons()
 		diag_hud_set_borgcell()
@@ -289,68 +295,82 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode && user != src)
-		return FALSE
-	. = TRUE
+		return NONE
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!getBruteLoss())
-		to_chat(user, span_warning("[src] is already in good condition!"))
-		return
+		balloon_alert(user, "no dents to fix!")
+		return ITEM_INTERACT_BLOCKING
 	if (!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED)) //The welder has 1u of fuel consumed by its afterattack, so we don't need to worry about taking any away.
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(src == user)
-		to_chat(user, span_notice("You start fixing yourself..."))
-		if(!tool.use_tool(src, user, 50))
-			return
+		balloon_alert(user, "repairing self...")
+		if(!tool.use_tool(src, user, delay = 5 SECONDS, amount = 1, volume = 50))
+			return ITEM_INTERACT_BLOCKING
+	else
+		if(!tool.use_tool(src, user, delay = 0 SECONDS, amount = 1, volume = 50))
+			return ITEM_INTERACT_BLOCKING
 
 	adjustBruteLoss(-30)
 	add_fingerprint(user)
-	visible_message(span_notice("[user] fixes some of the dents on [src]."))
+	balloon_alert(user, "dents fixed")
+	user.visible_message(
+		span_notice("[user] fixes some of the dents on [src]."),
+		span_notice("You fix some of the dents on [src]."),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/robot/crowbar_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if(opened)
-		to_chat(user, span_notice("You close the cover."))
+		balloon_alert(user, "chassis cover closed")
 		opened = FALSE
 		update_icons()
 	else
 		if(locked)
-			to_chat(user, span_warning("The cover is locked and cannot be opened!"))
+			balloon_alert(user, "chassis cover locked!")
 		else
-			to_chat(user, span_notice("You open the cover."))
+			balloon_alert(user, "chassis cover opened")
 			opened = TRUE
 			update_icons()
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/robot/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!opened)
-		return FALSE
-	. = TRUE
+		return NONE
 	if(!cell) // haxing
 		wiresexposed = !wiresexposed
-		to_chat(user, span_notice("The wires have been [wiresexposed ? "exposed" : "unexposed"]."))
+		balloon_alert(user, "wires [wiresexposed ? "exposed" : "unexposed"]")
 	else // radio
 		if(shell)
-			to_chat(user, span_warning("You cannot seem to open the radio compartment!")) //Prevent AI radio key theft
+			balloon_alert(user, "can't access radio!") // Prevent AI radio key theft
 		else if(radio)
 			radio.screwdriver_act(user, tool) // Push it to the radio to let it handle everything
 		else
 			to_chat(user, span_warning("Unable to locate a radio!"))
+			balloon_alert(user, "no radio found!")
 	update_icons()
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/robot/wrench_act(mob/living/user, obj/item/tool)
 	if(!(opened && !cell))	// Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
-		return FALSE
-	. = TRUE
+		return NONE
 	if(!lockcharge)
 		to_chat(user, span_warning("[src]'s bolts spark! Maybe you should lock them down first!"))
 		spark_system.start()
-		return
-	to_chat(user, span_notice("You start to unfasten [src]'s securing bolts..."))
-	if(tool.use_tool(src, user, 5 SECONDS, volume = 50) && !cell)
-		user.visible_message(span_notice("[user] deconstructs [src]!"), span_notice("You unfasten the securing bolts, and [src] falls to pieces!"))
-		cyborg_deconstruct()
-		return
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "deconstructing...")
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50) && !cell)
+		return ITEM_INTERACT_BLOCKING
+	loc.balloon_alert(user, "deconstructed")
+	user.visible_message(
+		span_notice("[user] deconstructs [src]!"),
+		span_notice("You unfasten the securing bolts, and [src] falls to pieces!"),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	cyborg_deconstruct()
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
