@@ -13,7 +13,7 @@ import { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type AACConfigEntry = {
+type AASConfigEntry = {
   name: string;
   entryRef: string;
   enabled: BooleanLike;
@@ -24,7 +24,7 @@ type AACConfigEntry = {
 };
 
 type Data = {
-  config_entries: AACConfigEntry[];
+  config_entries: AASConfigEntry[];
 };
 
 export const AutomatedAnnouncement = (props) => {
@@ -33,7 +33,7 @@ export const AutomatedAnnouncement = (props) => {
 
   const [search, setSearch] = useState('');
 
-  const isEntryMatch = (entry: AACConfigEntry, search: string) => {
+  const isEntryMatch = (entry: AASConfigEntry, search: string) => {
     if (!search) return true;
     const { name, announcementLinesMap = [], varsAndTooltipsMap = [] } = entry;
     switch (true) {

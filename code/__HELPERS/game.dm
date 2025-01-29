@@ -241,7 +241,7 @@
 
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
-	aac_config_announce(/datum/aac_config_entry/arrival, list("%PERSON" = character.real_name,"%RANK" = rank), list())
+	aas_config_announce(/datum/aas_config_entry/arrival, list("%PERSON" = character.real_name,"%RANK" = rank), list())
 
 ///Check if the turf pressure allows specialized equipment to work
 /proc/lavaland_equipment_pressure_check(turf/turf_to_check)

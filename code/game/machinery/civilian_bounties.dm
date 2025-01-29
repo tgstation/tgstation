@@ -324,17 +324,17 @@
 /obj/item/bounty_cube/process(seconds_per_tick)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
 	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
-		//set up our fallback message, in case of AAC being broken it will be sent to card holders
+		//set up our fallback message, in case of AAS being broken it will be sent to card holders
 		var/nag_message = "[src] is unsent in [get_area(src)]."
 
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
-		var/obj/machinery/announcement_system/aac = get_announcement_system(/datum/aac_config_entry/bounty_cube_unsent)
-		if (aac)
-			nag_message = aac.compile_config_message(/datum/aac_config_entry/bounty_cube_unsent, list("%LOCATION" = get_area(src), "%COST" = bounty_value), "Regular Message")
+		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent)
+		if (aas)
+			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("%LOCATION" = get_area(src), "%COST" = bounty_value), "Regular Message")
 			if (speed_bonus)
-				aac.announce(/datum/aac_config_entry/bounty_cube_unsent, list("%LOCATION" = get_area(src), "%COST" = bounty_value, "%BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
+				aas.announce(/datum/aas_config_entry/bounty_cube_unsent, list("%LOCATION" = get_area(src), "%COST" = bounty_value, "%BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
 			else
-				aac.broadcast("[nag_message]", list(RADIO_CHANNEL_SUPPLY))
+				aas.broadcast("[nag_message]", list(RADIO_CHANNEL_SUPPLY))
 		speed_bonus = 0
 
 		//alert the holder
@@ -359,7 +359,7 @@
 	AddComponent(/datum/component/gps, "[src]")
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
-	aac_config_announce(/datum/aac_config_entry/bounty_cube_created, list(
+	aas_config_announce(/datum/aas_config_entry/bounty_cube_created, list(
 		"%LOCATION" = get_area(src),
 		"%PERSON" = bounty_holder,
 		"%RANK" = bounty_holder_job,
@@ -411,7 +411,7 @@
 			qdel(src)
 	uses--
 
-/datum/aac_config_entry/bounty_cube_created
+/datum/aas_config_entry/bounty_cube_created
 	name = "New Bounty Cube Announcement"
 	announcement_lines_map = list(
 		"Message" = "A %COST cr bounty cube has been created in %LOCATION by %PERSON (%RANK). Speedy delivery bonus lost in %BONUSTIME.")
@@ -423,7 +423,7 @@
 		"%COST" = "with the cost of the cube.",
 	)
 
-/datum/aac_config_entry/bounty_cube_unsent
+/datum/aas_config_entry/bounty_cube_unsent
 	name = "Unsent Bounty Cube Announcement"
 	announcement_lines_map = list(
 		"Regular Message" = "The %COST cr bounty cube is unsent in %LOCATION.",

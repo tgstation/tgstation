@@ -81,12 +81,12 @@
 		return // No change
 	var/atom/movable/speaker = parent
 	var/msg = get_warning_message()
-	var/obj/machinery/announcement_system/aac = get_announcement_system(/datum/aac_config_entry/weather)
-	// Active AAC will override default announcement lines
-	if (aac)
-		msg = aac.compile_config_message(/datum/aac_config_entry/weather, list(), !is_weather_dangerous ? 4 : warning_level + 1)
+	var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/weather)
+	// Active AAS will override default announcement lines
+	if (aas)
+		msg = aas.compile_config_message(/datum/aas_config_entry/weather, list(), !is_weather_dangerous ? 4 : warning_level + 1)
 		// Stop toggling on radios for it, please!
-		aac.broadcast(msg, list(RADIO_CHANNEL_SUPPLY))
+		aas.broadcast(msg, list(RADIO_CHANNEL_SUPPLY))
 	// Still say it, because you can be not on our level
 	speaker.say(msg)
 	speaker.update_appearance(UPDATE_ICON)
@@ -178,7 +178,7 @@
 	.=..()
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
-/datum/aac_config_entry/weather
+/datum/aas_config_entry/weather
 	name = "Weather Announcement"
 	general_tooltip = "Allows the radio to announce incoming weather."
 	announcement_lines_map = list(

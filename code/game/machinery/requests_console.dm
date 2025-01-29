@@ -168,14 +168,13 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("set_emergency")
 			if(emergency)
 				return
-			var/radio_freq
 			switch(params["emergency"])
 				if(REQ_EMERGENCY_SECURITY) //Security
-					aac_config_announce(/datum/aac_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
 				if(REQ_EMERGENCY_ENGINEERING) //Engineering
-					aac_config_announce(/datum/aac_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
 				if(REQ_EMERGENCY_MEDICAL) //Medical
-					aac_config_announce(/datum/aac_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("%LOCATION" = department), list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
 			update_appearance()
 			addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
@@ -408,7 +407,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	result_path = /obj/machinery/requests_console/auto_name
 	pixel_shift = 30
 
-/datum/aac_config_entry/rc_emergency
+/datum/aas_config_entry/rc_emergency
 	name = "RC Emergency Announcement"
 	announcement_lines_map = list(
 		"Security" = "Security emergency in %LOCATION!!!",

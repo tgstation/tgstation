@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
 	///All possible announcements and their local configurations
-	var/list/datum/aac_config_entry/config_entries = list()
+	var/list/datum/aas_config_entry/config_entries = list()
 
 	///The headset that we use for broadcasting
 	var/obj/item/radio/headset/radio
@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = ..()
 	GLOB.announcement_systems += src
 	radio = new /obj/item/radio/headset/silicon/ai(src)
-	config_entries = init_subtypes(/datum/aac_config_entry, list())
+	config_entries = init_subtypes(/datum/aas_config_entry, list())
 	update_appearance()
 
 /obj/machinery/announcement_system/randomize_language_if_on_station()
@@ -42,10 +42,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/update_overlays()
 	. = ..()
-	if((locate(/datum/aac_config_entry/arrival) in config_entries)?.enabled)
+	if((locate(/datum/aas_config_entry/arrival) in config_entries)?.enabled)
 		. += greenlight
 
-	if((locate(/datum/aac_config_entry/newhead) in config_entries)?.enabled)
+	if((locate(/datum/aas_config_entry/newhead) in config_entries)?.enabled)
 		. += pinklight
 
 	if(machine_stat & BROKEN)
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/ui_data()
 	var/list/configs = list()
-	for(var/datum/aac_config_entry/config in config_entries)
+	for(var/datum/aas_config_entry/config in config_entries)
 		configs += list(list(
 			name = config.name,
 			entryRef = REF(config),
@@ -116,14 +116,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 
 	add_fingerprint(usr)
-	var/datum/aac_config_entry/config = locate(param["entryRef"]) in config_entries
+	var/datum/aas_config_entry/config = locate(param["entryRef"]) in config_entries
 	if(!config || !config.modifiable)
 		return
 
 	switch(action)
 		if("Toggle")
 			config.enabled = !config.enabled
-			if (config.type in list(/datum/aac_config_entry/arrival, /datum/aac_config_entry/newhead))
+			if (config.type in list(/datum/aas_config_entry/arrival, /datum/aas_config_entry/newhead))
 				update_appearance()
 		if("Text")
 			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(!atom_break()) // if badmins flag this unbreakable or its already broken
 		return
 
-	for (var/datum/aac_config_entry/config in config_entries)
+	for (var/datum/aas_config_entry/config in config_entries)
 		config.act_up()
 
 /obj/machinery/announcement_system/emp_act(severity)
@@ -162,40 +162,42 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	balloon_alert(user, "announcement strings corrupted")
 	return TRUE
 
-
-/obj/machinery/announcement_system/proc/announce(aac_config_entry_type, list/variables_map, list/channels, announcement_line)
-	var/msg = compile_config_message(aac_config_entry_type, variables_map, announcement_line)
+/// Announces configs entry message with the provided variables. Channels and announcement_line are optional.
+/obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line)
+	var/msg = compile_config_message(aas_config_entry_type, variables_map, announcement_line)
 	if (msg)
 		broadcast(msg, channels)
 
-/obj/machinery/announcement_system/proc/compile_config_message(aac_config_entry_type, list/variables_map, announcement_line)
-	var/datum/aac_config_entry/config = locate(aac_config_entry_type) in config_entries
+/// Compiles the announcement message with the provided variables. Announcement line is optional.
+/obj/machinery/announcement_system/proc/compile_config_message(aas_config_entry_type, list/variables_map, announcement_line)
+	var/datum/aas_config_entry/config = locate(aas_config_entry_type) in config_entries
 	if (!config)
 		return
 	return config.compile_announce(variables_map, announcement_line)
 
 /// Returns a random announcement system that is operational and has the specified config entry. Config entry is optional.
-/proc/get_announcement_system(aac_config_entry_type)
+/proc/get_announcement_system(aas_config_entry_type)
 	if (!GLOB.announcement_systems.len)
 		return null
-	var/list/intact_aacs = list()
+	var/list/intact_aass = list()
 	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
 		if(!QDELETED(announce) && announce.is_operational)
-			if(aac_config_entry_type)
-				var/datum/aac_config_entry/entry = locate(aac_config_entry_type) in announce.config_entries
+			if(aas_config_entry_type)
+				var/datum/aas_config_entry/entry = locate(aas_config_entry_type) in announce.config_entries
 				if(!entry || !entry.enabled)
 					continue
-			intact_aacs += announce
-	return intact_aacs.len ? pick(intact_aacs) : null
+			intact_aass += announce
+	return intact_aass.len ? pick(intact_aass) : null
 
-/proc/aac_config_announce(aac_config_entry, list/variables_map, list/channels, announcement_line)
-	var/obj/machinery/announcement_system/announcer = get_announcement_system(aac_config_entry)
+/// Announces the provided message with the provided variables and config entry type. Channels and announcement_line are optional.
+/proc/aas_config_announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line)
+	var/obj/machinery/announcement_system/announcer = get_announcement_system(aas_config_entry_type)
 	if (!announcer)
 		return
-	announcer.announce(aac_config_entry, variables_map, channels, announcement_line)
+	announcer.announce(aas_config_entry_type, variables_map, channels, announcement_line)
 
-/datum/aac_config_entry
-	var/name = "AAC configurable entry"
+/datum/aas_config_entry
+	var/name = "AAS configurable entry"
 	// Should we broadcast this announcement?
 	var/enabled = TRUE
 	// The announcement message. Key will be displayed in the UI.
@@ -208,7 +210,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/modifiable = TRUE
 
 /// Compiles the announcement message with the provided variables. Announcement line is optional.
-/datum/aac_config_entry/proc/compile_announce(list/variables_map, announcement_line)
+/datum/aas_config_entry/proc/compile_announce(list/variables_map, announcement_line)
 	var/announcement_message = announcement_lines_map[announcement_lines_map[1]]
 	// In case of key
 	if (announcement_line && (announcement_line in announcement_lines_map))
@@ -221,7 +223,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return announcement_message
 
 /// Called when the announcement system is broken or EMPed.
-/datum/aac_config_entry/proc/act_up()
+/datum/aas_config_entry/proc/act_up()
 	SHOULD_CALL_PARENT(TRUE)
 
 	// Please do not mess with entries, that players can't fix.
@@ -233,7 +235,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	Global config entries for the announcement system.
 */
 
-/datum/aac_config_entry/arrival
+/datum/aas_config_entry/arrival
 	name = "Arrival Announcement"
 	announcement_lines_map = list(
 		"Message" = "%PERSON has signed up as %RANK")
@@ -242,7 +244,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		"%RANK" = "with their job."
 	)
 
-/datum/aac_config_entry/arrival/act_up()
+/datum/aas_config_entry/arrival/act_up()
 	. = ..()
 	if (.)
 		return
@@ -251,7 +253,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		"CRITICAL ERROR 99.",
 		"ERR)#: DA#AB@#E NOT F(*ND!")
 
-/datum/aac_config_entry/newhead
+/datum/aas_config_entry/newhead
 	name = "Departmental Head Announcement"
 	announcement_lines_map = list(
 		"Message" = "%PERSON, %RANK, is the department head.")
@@ -260,7 +262,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		"%RANK" = "with their job."
 	)
 
-/datum/aac_config_entry/newhead/act_up()
+/datum/aas_config_entry/newhead/act_up()
 	. = ..()
 	if (.)
 		return
@@ -269,7 +271,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		"ER)#R - B*@ TEXT F*O(ND!",
 		"AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
-/datum/aac_config_entry/researched_node
+/datum/aas_config_entry/researched_node
 	name = "Research Node Announcement"
 	announcement_lines_map = list(
 		"Message" = "The %NODE techweb node has been researched")
@@ -277,25 +279,25 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		"%NODE" = "will be replaced with the researched node."
 	)
 
-/datum/aac_config_entry/researched_node/act_up()
+/datum/aas_config_entry/researched_node/act_up()
 	. = ..()
 	if (.)
 		return
 
 	announcement_lines_map["Message"] = pick(
-		replacetext(/datum/aac_config_entry/researched_node::announcement_lines_map["Message"], "%NODE", /datum/techweb_node/mech_clown::display_name),
+		replacetext(/datum/aas_config_entry/researched_node::announcement_lines_map["Message"], "%NODE", /datum/techweb_node/mech_clown::display_name),
 		"R/NT1M3 A= ANNOUN-*#nt_SY!?EM.dm, LI%£ 86: N=0DE NULL!",
 		"BEPIS BEPIS BEPIS",
 		"ERR)#R - B*@ TEXT F*O(ND!")
 
-/datum/aac_config_entry/arrivals_broken
+/datum/aas_config_entry/arrivals_broken
 	name = "Arrivals Shuttle Malfunction Announcement"
 	announcement_lines_map = list(
 		"Message" = "The arrivals shuttle has been damaged. Docking for repairs...")
 	general_tooltip = "Broadcasted, when arrivals shuttle docks for repairs. No replacable variables provided."
 	modifiable = FALSE
 
-/datum/aac_config_entry/announce_officer
+/datum/aas_config_entry/announce_officer
 	name = "Security Officer Arrival Announcement"
 	announcement_lines_map = list(
 		"Message" = "Officer %OFFICER has been assigned to %DEPARTMENT.")
