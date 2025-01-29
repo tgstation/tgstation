@@ -111,12 +111,12 @@
 	. = ..()
 	switch(engine_state)
 		if(ENGINE_UNWRENCHED)
-			to_chat(user, span_warning("The [src.name] needs to be wrenched to the floor!"))
+			to_chat(user, span_warning("\The [src] needs to be wrenched to the floor!"))
 		if(ENGINE_WRENCHED)
 			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5), heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
 
-			user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
+			user.visible_message(span_notice("[user.name] starts to weld \the [src] to the floor."), \
 				span_notice("You start to weld \the [src] to the floor..."), \
 				span_hear("You hear welding."))
 
@@ -129,7 +129,7 @@
 			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5), heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
 
-			user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
+			user.visible_message(span_notice("[user.name] starts to cut \the [src] free from the floor."), \
 				span_notice("You start to cut \the [src] free from the floor..."), \
 				span_hear("You hear welding."))
 

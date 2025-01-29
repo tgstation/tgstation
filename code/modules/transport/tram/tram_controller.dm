@@ -200,7 +200,7 @@
 	SIGNAL_HANDLER
 
 	travel_remaining = 0
-	bumped_atom.visible_message(span_userdanger("The [bumped_atom.name] crashes into the field violently!"))
+	bumped_atom.visible_message(span_userdanger("\The [bumped_atom] crashes into the field violently!"))
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules)
 		transport_module.set_travelling(FALSE)
 		for(var/explosive_target in transport_module.transport_contents)

@@ -70,7 +70,7 @@
 
 /obj/item/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		to_chat(user, span_warning("The [name] is unsecured!"))
+		to_chat(user, span_warning("\The [src] is unsecured!"))
 		return FALSE
 	return TRUE
 

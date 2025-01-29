@@ -257,7 +257,7 @@
 	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
 	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
-	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+	payload.adminlog = "\The [src] that [key_name(user)] had primed detonated!"
 	user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///

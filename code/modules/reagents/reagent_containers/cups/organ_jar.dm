@@ -58,7 +58,7 @@
 	balloon_alert(user, "inserted [tool]")
 	held_organ = tool
 	name = "[tool.name] in a jar"
-	desc = "A jar with the [tool.name] inside it."
+	desc = "A jar with \the [tool] inside it."
 	check_organ_freeze()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
