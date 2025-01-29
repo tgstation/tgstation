@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "The wiki books for users on 516 no longer opens the page on an external website on your browser."
