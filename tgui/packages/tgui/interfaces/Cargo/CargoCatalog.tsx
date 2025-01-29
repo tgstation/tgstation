@@ -297,8 +297,8 @@ function CatalogPackInfo(props: CatalogContentsProps) {
         </Stack.Item>
         <Stack.Item m={0} grow>
           <Section fill scrollable>
-            {(contains?.length ?? 0) ? (
-              contains?.map((item) => (
+            {contains && contains.length > 0 ? (
+              contains.map((item) => (
                 <ImageButton
                   key={item.name}
                   fluid
