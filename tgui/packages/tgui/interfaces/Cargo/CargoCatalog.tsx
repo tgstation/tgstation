@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { Dispatch, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import {
   BlockQuote,
   Button,
@@ -175,7 +175,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
 
 type CatalogListProps = {
   packs: SupplyCategory['packs'];
-  openContents: Dispatch<string>;
+  openContents: Dispatch<SetStateAction<string>>;
 };
 
 function CatalogList(props: CatalogListProps) {
@@ -273,7 +273,7 @@ function CatalogList(props: CatalogListProps) {
 
 type CatalogContentsProps = {
   name: string;
-  closeContents: Dispatch<string>;
+  closeContents: Dispatch<SetStateAction<string>>;
   packs: SupplyCategory['packs'];
 };
 
@@ -288,7 +288,7 @@ function CatalogPackInfo(props: CatalogContentsProps) {
         <Stack.Item>
           <Section
             fill
-            title={`${name}`}
+            title={name}
             buttons={
               <Button
                 icon={'close'}
