@@ -24,6 +24,10 @@
 
 	/// Angle of the icon, used for piercing and slashing attack animations, clockwise from *east-facing* sprites
 	var/icon_angle = 0
+	///icon file for an alternate attack icon
+	var/attack_icon
+	///icon state for an alternate attack icon
+	var/attack_icon_state
 
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
@@ -1566,7 +1570,7 @@
 	if (isnull(used_item))
 		return
 
-	var/image/attack_image = image(icon = used_item)
+	var/image/attack_image = isnull(used_item.attack_icon) ? image(icon = used_item) : image(icon = used_item.attack_icon, icon_state = used_item.attack_icon_state)
 	attack_image.plane = attacked_atom.plane + 1
 	// Scale the icon.
 	attack_image.transform *= 0.5
