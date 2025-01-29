@@ -755,16 +755,4 @@
 	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
 	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
-/// We're pulling a Jim Kramer with this one boys
-/datum/station_trait/gmm_spotlight
-	name = "GMM Economic Spotlight"
-	report_message = "This shift, the Galactic Mineral Market is doing a showcase on your crew's affulence! Every paycheck, the station newscasters will alert the crew who has the most credits."
-	trait_type = STATION_TRAIT_NEGATIVE
-	trait_to_give = STATION_TRAIT_ECONOMY_ALERTS
-	weight = 1
-	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
-
-	dynamic_threat_id = "GMM Econ Spotlight"
-
 #undef GLOW_NEBULA
