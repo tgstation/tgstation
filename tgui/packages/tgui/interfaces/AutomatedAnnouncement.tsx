@@ -85,7 +85,6 @@ export const AutomatedAnnouncement = (props) => {
                   <Section
                     key={entry.entryRef}
                     title={entry.name}
-                    disabled={!entry.modifiable}
                     buttons={
                       <Button
                         icon={entry.enabled ? 'power-off' : 'times'}
@@ -131,11 +130,6 @@ export const AutomatedAnnouncement = (props) => {
                               fluid
                               value={announcementLine}
                               disabled={!entry.modifiable}
-                              tooltip={
-                                !entry.modifiable
-                                  ? 'Editing disabled by CentCom!'
-                                  : undefined
-                              }
                               onChange={(e, value) =>
                                 act('Text', {
                                   entryRef: entry.entryRef,

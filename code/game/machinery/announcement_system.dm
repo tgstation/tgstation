@@ -42,10 +42,12 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/update_overlays()
 	. = ..()
-	if((locate(/datum/aas_config_entry/arrival) in config_entries)?.enabled)
+	var/datum/aas_config_entry/entry = locate(/datum/aas_config_entry/arrival) in config_entries
+	if(entry && entry.enabled)
 		. += greenlight
 
-	if((locate(/datum/aas_config_entry/newhead) in config_entries)?.enabled)
+	entry = locate(/datum/aas_config_entry/newhead) in config_entries
+	if(entry && entry.enabled)
 		. += pinklight
 
 	if(machine_stat & BROKEN)
@@ -164,14 +166,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// Announces configs entry message with the provided variables. Channels and announcement_line are optional.
 /obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line)
-	var/msg = compile_config_message(aas_config_entry_type, variables_map, announcement_line)
+	var/msg = compile_config_message(aas_config_entry_type, variables_map, announcement_line, TRUE)
 	if (msg)
 		broadcast(msg, channels)
 
 /// Compiles the announcement message with the provided variables. Announcement line is optional.
-/obj/machinery/announcement_system/proc/compile_config_message(aas_config_entry_type, list/variables_map, announcement_line)
+/obj/machinery/announcement_system/proc/compile_config_message(aas_config_entry_type, list/variables_map, announcement_line, fail_if_disabled=FALSE)
 	var/datum/aas_config_entry/config = locate(aas_config_entry_type) in config_entries
-	if (!config)
+	if (!config || (fail_if_disabled && !config.enabled))
 		return
 	return config.compile_announce(variables_map, announcement_line)
 
