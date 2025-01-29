@@ -58,7 +58,7 @@
 
 	if(viewing_hud.mymob?.client?.byond_version > 515)
 		relay_loc = "1,1"
-		rebuild_hud()
+		rebuild_plane_masters()
 
 /// Well, refresh our group, mostly useful for plane specific updates
 /datum/plane_master_group/proc/refresh_hud()
