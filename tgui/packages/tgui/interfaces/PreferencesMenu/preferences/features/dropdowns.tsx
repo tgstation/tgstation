@@ -117,7 +117,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     }
   }, [serverData]);
 
-  const displayText = serverData?.display_names?.[value] || value;
+  const displayText = serverData?.display_names?.[value] || String(value);
 
   return (
     <Dropdown
