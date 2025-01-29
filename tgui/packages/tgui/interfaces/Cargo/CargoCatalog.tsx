@@ -128,7 +128,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
           }}
         />
       </Stack.Item>
-      <Stack.Item grow p={1} m={-1} mt={1} overflowY={'auto'}>
+      <Stack.Item grow p={1} m={-1} mt={1} overflowY="auto">
         <Tabs vertical>
           <Tabs.Tab
             key="search_results"
@@ -147,7 +147,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
                 setSearchText('');
               }}
             >
-              <Stack justify={'space-between'}>
+              <Stack justify="space-between">
                 <span>{supply.name}</span>
                 <span> {supply.packs.length}</span>
               </Stack>
@@ -162,8 +162,8 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
             color={self_paid ? 'caution' : 'transparent'}
             icon={self_paid ? 'check-square-o' : 'square-o'}
             onClick={() => act('toggleprivate')}
-            tooltip={'Use your own funds to purchase items.'}
-            tooltipPosition={'top'}
+            tooltip="Use your own funds to purchase items."
+            tooltipPosition="top"
           >
             Buy Privately
           </Button>
@@ -243,13 +243,8 @@ function CatalogList(props: CatalogListProps) {
                   </Stack>
                 </Stack.Item>
               )}
-              <Stack.Item align={'center'} width={5.5} mt={-0.75} mb={-0.75}>
-                <Stack
-                  vertical
-                  color={'gold'}
-                  lineHeight={0.75}
-                  fontSize={0.85}
-                >
+              <Stack.Item align="center" width={5.5} mt={-0.75} mb={-0.75}>
+                <Stack vertical color="gold" lineHeight={0.75} fontSize={0.85}>
                   <Stack.Item
                     opacity={privateBuy && 0.75}
                     style={{ textDecoration: privateBuy && 'red line-through' }}
@@ -283,7 +278,7 @@ function CatalogPackInfo(props: CatalogContentsProps) {
   const contains = pack?.contains;
 
   return (
-    <Modal p={1} width={'50vw'} height={'50vh'}>
+    <Modal p={1} width="50vw" height="50vh">
       <Stack fill vertical>
         <Stack.Item>
           <Section
@@ -291,8 +286,8 @@ function CatalogPackInfo(props: CatalogContentsProps) {
             title={name}
             buttons={
               <Button
-                icon={'close'}
-                color={'bad'}
+                icon="close"
+                color="bad"
                 onClick={() => closeContents('')}
               />
             }
@@ -311,7 +306,7 @@ function CatalogPackInfo(props: CatalogContentsProps) {
                   dmIconState={item.icon_state}
                   buttonsAlt={
                     !!item.amount && (
-                      <Stack.Item backgroundColor={'rgba(255, 255, 255, 0.1'}>
+                      <Stack.Item backgroundColor="rgba(255, 255, 255, 0.1">
                         x{item.amount}
                       </Stack.Item>
                     )
@@ -324,15 +319,11 @@ function CatalogPackInfo(props: CatalogContentsProps) {
                 </ImageButton>
               ))
             ) : (
-              <Stack fill vertical align={'center'} justify={'center'}>
+              <Stack fill vertical align="center" justify="center">
                 <Stack.Item>
-                  <Icon
-                    name={'triangle-exclamation'}
-                    size={6}
-                    color={'orange'}
-                  />
+                  <Icon name="triangle-exclamation" size={6} color="orange" />
                 </Stack.Item>
-                <Stack.Item mt={2} color={'label'} textAlign={'center'}>
+                <Stack.Item mt={2} color="label" textAlign="center">
                   {`We can't find information about even the approximate contents
                   of this order.`}
                 </Stack.Item>
