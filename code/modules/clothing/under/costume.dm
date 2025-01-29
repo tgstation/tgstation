@@ -176,7 +176,7 @@
 
 /obj/item/clothing/under/costume/sailor
 	name = "sailor suit"
-	desc = "Skipper's in the wardroom drinkin gin'."
+	desc = "Skipper's in the wardroom drinkin' gin."
 	icon_state = "sailor"
 	inhand_icon_state = "b_suit"
 	can_adjust = FALSE
@@ -309,8 +309,8 @@
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/costume/buttondown/slacks
-	name = "buttondown shirt with slacks"
-	desc = "A fancy buttondown shirt with slacks."
+	name = "button-down shirt with slacks"
+	desc = "A fancy button-down shirt with slacks."
 	icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
 	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks/worn
@@ -321,8 +321,8 @@
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
 /obj/item/clothing/under/costume/buttondown/shorts
-	name = "buttondown shirt with shorts"
-	desc = "A fancy buttondown shirt with shorts."
+	name = "button-down shirt with shorts"
+	desc = "A fancy button-down shirt with shorts."
 	icon_state = "buttondown_shorts"
 	greyscale_config = /datum/greyscale_config/buttondown_shorts
 	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts/worn
@@ -330,8 +330,8 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/costume/buttondown/skirt
-	name = "buttondown shirt with skirt"
-	desc = "A fancy buttondown shirt with skirt."
+	name = "button-down shirt with skirt"
+	desc = "A fancy button-down shirt with skirt."
 	icon_state = "buttondown_skirt"
 	greyscale_config = /datum/greyscale_config/buttondown_skirt
 	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
@@ -441,7 +441,7 @@
 
 /obj/item/clothing/under/costume/traditional
 	name = "traditional suit"
-	desc = "A full, vibrantly coloured suit. Likely with traditional purposes. Maybe the colours represent a familly, clan, or rank, who knows."
+	desc = "A full, vibrantly coloured suit. Likely with traditional purposes. Maybe the colours represent a family, clan, or rank, who knows."
 	icon_state = "tradition"
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
@@ -468,16 +468,16 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
 
 /obj/item/clothing/under/costume/gamberson
-	name = "re-enactor's Gamberson"
-	desc = "A colorful set of clothes made to look like a medieval gamberson."
+	name = "re-enactor's gambeson"
+	desc = "A colorful set of clothes made to look like a medieval gambeson."
 	icon_state = "gamberson"
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/gamberson/military
-	name = "swordsman's Gamberson"
-	desc = "A padded medieval gamberson. Has enough woolen layers to dull a strike from any small weapon."
+	name = "swordsman's gambeson"
+	desc = "A padded medieval gambeson. Has enough woolen layers to dull a strike from any small weapon."
 	armor_type = /datum/armor/clothing_under/rank_security
 	has_sensor = NO_SENSORS
 

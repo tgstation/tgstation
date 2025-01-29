@@ -41,7 +41,7 @@
 		return FALSE
 
 	if(is_mining_level(what_turf.z))
-		// Always assume Lavaland / mining level is a planet. (Astroid mining crying right now)
+		// Always assume Lavaland / mining level is a planet. (Asteroid mining crying right now)
 		return TRUE
 
 	if(is_station_level(what_turf.z))

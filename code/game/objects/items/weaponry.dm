@@ -1359,7 +1359,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	animate(src, duration*0.5, color = slash_color, transform = scaled_transform, alpha = 255)
 
 /obj/item/highfrequencyblade/wizard
-	desc = "A blade that was mastercrafted by a legendary blacksmith. Its' enchantments let it slash through anything."
+	desc = "A blade that was mastercrafted by a legendary blacksmith. Its enchantments let it slash through anything."
 	force = 8
 	throwforce = 20
 	wound_bonus = 20

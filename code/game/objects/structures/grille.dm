@@ -372,7 +372,7 @@
 	if(dramatically_disappearing)
 		return
 
-	//dissapear in 1 second
+	//disappear in 1 second
 	dramatically_disappearing = TRUE
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
 

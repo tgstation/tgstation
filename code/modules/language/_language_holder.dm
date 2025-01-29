@@ -57,7 +57,7 @@ Key procs
 /datum/language_holder/New(atom/new_owner)
 	if(new_owner)
 		if(QDELETED(new_owner))
-			CRASH("Langauge holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
+			CRASH("Language holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
 		if(!ismovable(new_owner))
 			CRASH("Language holder being added to a non-movable thing, this is invalid (was: [new_owner] / [new_owner.type])")
 

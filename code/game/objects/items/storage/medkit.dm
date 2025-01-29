@@ -693,7 +693,7 @@
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
-	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
+	desc = "An advanced box with a cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
 	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "organbox"
 	base_icon_state = "organbox"

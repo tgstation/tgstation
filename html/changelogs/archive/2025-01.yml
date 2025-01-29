@@ -743,3 +743,25 @@
   - bugfix: changes made in quirks menu will now reflect properly upon tabbing away
       and then back again to the quirks tab, without having to close the entire preferences
       menu
+2025-01-29:
+  MX0739:
+  - bugfix: Fixed Justice mech's dash ability
+  Melbert:
+  - qol: '"Who" and "Adminwho" are typed as "Info" and not "OOC" (so they no longer
+      go to "OOC" tabs)'
+  - qol: '"Tip of the Round" and "Show Server Revision" are also typed as "Info",
+      rather than "OOC" and untyped respectively'
+  SmArtKar:
+  - bugfix: Fixed evidence bag not reverting to tiny size after dumping its contents
+      out
+  SyncIt21:
+  - bugfix: hydrophonics circuit component actually sets output level when reagents
+      are changed in the tray
+  - refactor: refactors how code listens for reagent changes. Report bugs on github
+  - bugfix: adding/transferring reagent amounts less than 0.01 now won't return false
+      results
+  - code_imp: removed excessive rounding of reagent volumes thus slightly improving
+      performance
+  vinylspiders:
+  - bugfix: due to a number of complaints of fish explosions, chrystarfish will no
+      longer be chosen as the random starting fish for the  fish mount.

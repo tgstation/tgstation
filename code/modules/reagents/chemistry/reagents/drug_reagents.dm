@@ -272,7 +272,7 @@
 
 /datum/reagent/drug/happiness
 	name = "Happiness"
-	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
+	description = "Fills you with ecstatic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	color = "#EE35FF"
 	overdose_threshold = 20
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -540,7 +540,7 @@
 
 /datum/reagent/drug/blastoff
 	name = "bLaStOoF"
-	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
+	description = "A drug for the hardcore party crowd said to enhance one's abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discotheque incident are seared into their brains."
 	color = "#9015a9"
 	taste_description = "holodisk cleaner"
 	ph = 5
@@ -780,17 +780,10 @@
 	if(!istype(holder?.my_atom, /obj/item/food))
 		return
 	ADD_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
-	RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
-	RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
 
-/datum/reagent/drug/kronkaine/proc/on_reagents_clear(datum/reagents/reagents)
-	SIGNAL_HANDLER
+/datum/reagent/drug/kronkaine/Destroy()
 	REMOVE_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
-
-/datum/reagent/drug/kronkaine/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
-	SIGNAL_HANDLER
-	if(deleted_reagent == src)
-		REMOVE_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
+	return ..()
 
 /datum/reagent/drug/kronkaine/on_mob_metabolize(mob/living/kronkaine_fiend)
 	. = ..()

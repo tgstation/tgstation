@@ -281,7 +281,7 @@
 //The order of the item list for this implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
 /obj/item/organ/cyberimp/arm/paperwork
 	name = "integrated paperwork implant"
-	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necesarry for paperwork handy"
+	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necessary for paperwork handy"
 	icon_state = "toolkit_engineering"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(

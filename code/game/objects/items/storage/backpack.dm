@@ -38,7 +38,7 @@
 
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
-	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
+	desc = "What is currently a just an unwieldy block of metal with a slot ready to accept a bluespace anomaly core."
 	icon = 'icons/obj/storage/backpack.dmi'
 	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
 	icon_state = "bag_of_holding-inert"
