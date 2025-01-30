@@ -349,6 +349,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	// Wash up.
 	wash_atom(loc)
+	for(var/atom/movable/movable_content as anything in loc)
+		wash_atom(movable_content) // Wash the items on the turf (=expose them to the shower reagent)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)
