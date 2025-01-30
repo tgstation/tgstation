@@ -1,8 +1,7 @@
 /// Gives someone the stable voided trauma and then self destructs
-/obj/item/cosmic_skull
+/obj/item/clothing/head/helmet/skull/cosmic
 	name = "cosmic skull"
 	desc = "You can see and feel the surrounding space pulsing through it..."
-
 	icon = 'icons/obj/weapons/voidwalker_items.dmi'
 	icon_state = "cosmic_skull_charged"
 
@@ -14,7 +13,7 @@
 	/// How many uses does it have left?
 	var/uses = 1
 
-/obj/item/cosmic_skull/attack_self(mob/user, modifiers)
+/obj/item/clothing/head/helmet/skull/cosmic/attack_self(mob/user, modifiers)
 	. = ..()
 
 	if(!uses || !ishuman(user))
@@ -38,6 +37,6 @@
 	playsound(get_turf(user), 'sound/effects/curse/curse5.ogg', 60)
 
 	uses--
-	if(uses <= 0 )
+	if(uses <= 0)
 		icon_state = drained_icon_state
 		light_on = FALSE
