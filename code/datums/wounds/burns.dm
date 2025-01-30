@@ -225,9 +225,9 @@
 
 /// Checks if the wound is in a state that ointment or flesh will help
 /datum/wound/burn/flesh/proc/can_be_ointmented_or_meshed()
-	if(infestation > 0 || sanitization < infestation)
+	if(infestation > 0 && sanitization < infestation)
 		return TRUE
-	if(flesh_damage > 0 || flesh_healing <= flesh_damage)
+	if(flesh_damage > 0 && flesh_healing <= flesh_damage)
 		return TRUE
 	return FALSE
 

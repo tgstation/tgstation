@@ -24,7 +24,7 @@
 
 /datum/market_item/misc/cap_gun
 	name = "Cap Gun"
-	desc = "Prank your friends with this harmless gun! Harmlessness guranteed."
+	desc = "Prank your friends with this harmless gun! Harmlessness guaranteed."
 	item = /obj/item/toy/gun
 
 	price_min = CARGO_CRATE_VALUE * 0.25
@@ -44,7 +44,7 @@
 
 /datum/market_item/misc/donk_recycler
 	name = "MOD Riot Foam Dart Recycler Module"
-	desc = "If you love toy guns, hate cleaning and got a MODsuit, this module is a must have."
+	desc = "If you love toy guns, hate cleaning and got a MODsuit, this module is a must-have."
 	item = /obj/item/mod/module/recycler/donk
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 4.5
@@ -136,7 +136,7 @@
 
 /datum/market_item/misc/jawed_hook
 	name = "Jawed Fishing Hook"
-	desc = "The thing ya use if y'are strugglin' with fishes. Just rememeber to whoop yer rod before it's too late, 'cause this thing's gonna hurt them like an Arkansas toothpick."
+	desc = "The thing ya use if y'are strugglin' with fishes. Just remember to whoop yer rod before it's too late, 'cause this thing's gonna hurt them like an Arkansas toothpick."
 	item = /obj/item/fishing_hook/jaws
 	price_min = CARGO_CRATE_VALUE * 0.75
 	price_max = CARGO_CRATE_VALUE * 2

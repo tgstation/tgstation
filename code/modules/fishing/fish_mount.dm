@@ -74,11 +74,11 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fish_mount/proc/add_first_fish()
-	var/obj/item/fish/fish_path = pick(subtypesof(/obj/item/fish) - typesof(/obj/item/fish/holo))
+	var/obj/item/fish/fish_path = pick(subtypesof(/obj/item/fish) - list(typesof(/obj/item/fish/holo) + list(/obj/item/fish/starfish/chrystarfish))) // chrystarfish immediately shatters when placed
 	if(fish_path.fish_id_redirect_path)
 		fish_path = fish_path.fish_id_redirect_path
 	var/fluff_name = pick("John Trasen III", "a nameless intern", "Pun Pun", AQUARIUM_COMPANY, "Unknown", "Central Command")
-	add_fish(new fish_path(src), from_persistence = TRUE, catcher = fluff_name)
+	add_fish(new fish_path(loc), from_persistence = TRUE, catcher = fluff_name)
 	mounted_fish.randomize_size_and_weight()
 	mounted_fish.set_status(FISH_DEAD)
 	SSpersistence.save_trophy_fish(src)
@@ -108,6 +108,11 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, from_persistence = FALSE, catcher)
+	if(QDELETED(src)) // don't ever try to add a fish to one of these that's already been deleted - and get rid of the one that was created
+		qdel(fish)
+		return
+	if(QDELETED(fish)) // no adding deleted fishies either
+		return
 	if(mounted_fish)
 		mounted_fish.forceMove(loc)
 	fish.forceMove(src)

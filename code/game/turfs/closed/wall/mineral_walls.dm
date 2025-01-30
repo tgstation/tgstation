@@ -301,7 +301,7 @@
 
 /turf/closed/wall/mineral/titanium/survival
 	name = "pod wall"
-	desc = "An easily-compressable wall used for temporary shelter."
+	desc = "An easily-compressible wall used for temporary shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival_pod_walls-0"
 	base_icon_state = "survival_pod_walls"

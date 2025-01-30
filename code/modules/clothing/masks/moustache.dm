@@ -9,7 +9,7 @@
 
 /obj/item/clothing/mask/fakemoustache/italian
 	name = "italian moustache"
-	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
+	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistible urge to gesticulate wildly."
 
 /obj/item/clothing/mask/fakemoustache/italian/Initialize(mapload)
 	. = ..()

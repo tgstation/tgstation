@@ -1174,7 +1174,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"cult_apoc",TRUE), duration)
 				images += C
 		else
-			to_chat(M, span_cult_large("An Apocalypse Rune was invoked in the [place.name], it is no longer available as a summoning site!"))
+			to_chat(M, span_cult_large("An Apocalypse Rune was invoked in \the [place], it is no longer available as a summoning site!"))
 			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
 	if(intensity >= 285) // Based on the prior formula, this means the cult makes up <15% of current players

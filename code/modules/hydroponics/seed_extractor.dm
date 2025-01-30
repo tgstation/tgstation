@@ -174,7 +174,7 @@
  * needed to go to the ui handler
  *
  * to_add - what seed are we adding?
- * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means its just laying on the turf so force move it in
+ * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means it's just laying on the turf so force move it in
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
 	var/seed_id = generate_seed_hash(to_add)
@@ -268,10 +268,10 @@
 	var/list/data = list()
 	data["cycle_seconds"] = HYDROTRAY_CYCLE_DELAY / 10
 	data["trait_db"] = list()
-	for(var/datum/plant_gene/trait/trait as anything in GLOB.plant_traits)
+	for(var/datum/plant_gene/trait as anything in GLOB.plant_traits)
 		var/trait_data = list(list(
 			"path" = trait.type,
-			"name" = trait.name,
+			"name" = trait.get_name(),
 			"icon" = trait.icon,
 			"description" = trait.description
 		))
