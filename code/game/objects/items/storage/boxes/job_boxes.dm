@@ -22,7 +22,7 @@
 	atom_storage.max_slots += 2
 	atom_storage.max_total_storage += 4
 	name = "large [name]"
-	icon_state = "[icon_state]_large"
+	transform = transform.Scale(1.25, 1)
 
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
@@ -130,6 +130,7 @@
 	name = "invisible box"
 	desc = "Unfortunately not large enough to trap the mime."
 	foldable_result = null
+	icon_state = "box"
 	inhand_icon_state = null
 	alpha = 0
 
