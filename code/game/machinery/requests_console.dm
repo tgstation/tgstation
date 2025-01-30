@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	if(new_message.radio_freq)
 		var/authentication
-		var/announcement_line = "Unauthorized"
+		var/announcement_line = "Unauthenticated"
 		if (new_message.message_verified_by)
 			authentication = new_message.message_verified_by
 			announcement_line = "Verified with ID"
@@ -355,7 +355,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		aas_config_announce(/datum/aas_config_entry/rc_new_message, list(
 			"%AUTHENTICATION" = authentication,
 			"%SENDER" = new_message.sender_department,
-			"%RECIEVER" = department,
+			"%RECEIVER" = department,
 			"%MESSAGE" = new_message.content
 			), list(GLOB.reverseradiochannels["[new_message.radio_freq]"]), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
 
@@ -429,14 +429,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	name = "RC New Message Announcement"
 	// Yes, players can't use html tags, however they can use speech mods like | or +, but sh-sh-sh, don't tell them!
 	announcement_lines_map = list(
-		"Unauthorized" = "Message from %SENDER to %RECIEVER: <i>%MESSAGE</i>",
-		"Verified with ID" = "Message from %SENDER to %RECIEVER, Verified by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
-		"Stamped with stamp" = "Message from %SENDER to %RECIEVER, Stamped by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+		"Unauthenticated" = "Message from %SENDER to %RECEIVER: <i>%MESSAGE</i>",
+		"Verified with ID" = "Message from %SENDER to %RECEIVER, Verified by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+		"Stamped with stamp" = "Message from %SENDER to %RECEIVER, Stamped by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
 	)
 	vars_and_tooltips_map = list(
 		"%AUTHENTICATION" = "will be replaced with ID or stamp, if present",
 		"%SENDER" = "with the sender department ",
-		"%RECIEVER" = "with the reciever department",
+		"%RECEIVER" = "with the receiver department",
 		"%MESSAGE" = "with the message content",
 	)
 
