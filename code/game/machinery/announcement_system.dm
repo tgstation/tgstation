@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return
 
 /obj/machinery/announcement_system/update_icon_state()
-	icon_state = "[base_icon_state]_[is_operational ? "On" : "Off"][panel_open ? "_Open" : null]"
+	icon_state = "[base_icon_state]_[is_operational && !(machine_stat & EMPED) ? "On" : "Off"][panel_open ? "_Open" : null]"
 	return ..()
 
 /obj/machinery/announcement_system/update_overlays()
@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(entry && entry.enabled)
 		. += pinklight
 
-	if(machine_stat & BROKEN)
+	if(machine_stat & EMPED)
 		. += errorlight
 
 /obj/machinery/announcement_system/Destroy()
@@ -62,8 +62,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return ..()
 
 /obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
-	var/current_icon_state = "[base_icon_state]_[is_operational ? "On" : "Off"][panel_open ? "_Open" : null]"
-	if(default_deconstruction_screwdriver(user, current_icon_state, current_icon_state, tool))
+	var/icon_state_assemble = "[base_icon_state]_[is_operational && !(machine_stat & EMPED) ? "On" : "Off"]"
+	if(default_deconstruction_screwdriver(user, "[icon_state_assemble]_Open", icon_state_assemble, tool))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -73,24 +73,25 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
-	if(!panel_open || !(machine_stat & BROKEN))
+	if(!panel_open || !(machine_stat & EMPED))
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You reset [src]'s firmware."))
-	set_machine_stat(machine_stat & ~BROKEN)
+	set_machine_stat(machine_stat & ~EMPED)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /// Does funny breakage stuff
 /obj/machinery/announcement_system/proc/act_up()
-	if(!atom_break()) // if badmins flag this unbreakable or its already broken
+	if (machine_stat & EMPED)
 		return
-
+	set_machine_stat(machine_stat | EMPED)
+	update_appearance()
 	for (var/datum/aas_config_entry/config in config_entries)
 		config.act_up()
 
 /obj/machinery/announcement_system/emp_act(severity)
 	. = ..()
-	if(!(machine_stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (NOPOWER|EMPED|BROKEN)) && !(. & EMP_PROTECT_SELF))
 		act_up()
 
 /obj/machinery/announcement_system/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -127,7 +128,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
-	if(machine_stat & BROKEN)
+	if(machine_stat & EMPED)
 		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
 		playsound(src.loc, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		return
@@ -149,13 +150,15 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				usr.log_message("updated [param["lineKey"]] line in the [config.name] to: [new_message]", LOG_GAME)
 
 /obj/machinery/announcement_system/can_interact(mob/user)
-	// How you can see, that it's malfunctioning if it's unpowered?
-	if (machine_stat & BROKEN && !(machine_stat & NOPOWER))
+	. = ..()
+	if (!.)
+		return
+
+	if (machine_stat & EMPED)
 		to_chat(user, span_warning("[src]'s firmware appears to be malfunctioning!"))
 		if (!isAI(user))	// Deus Ex Machina goes without multitool in his default complectation.
-			to_chat(user, span_notice("However, you can reset it with [EXAMINE_HINT("multitool")], while its [EXAMINE_HINT("panel is open")]!"))
+			to_chat(user, span_warning("However, you can reset it with [EXAMINE_HINT("multitool")], while its [EXAMINE_HINT("panel is open")]!"))
 		return FALSE
-	. = ..()
 
 /// If AAS can't broadcast message, it shouldn't be picked by randomizer.
 /obj/machinery/announcement_system/proc/has_supported_channels(list/channels)
@@ -194,8 +197,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return null
 	var/list/intact_aass = list()
 	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
-		// We ignore is_operational, because we can be BROKEN via emag or EMP, but we still want to be picked.
-		if(!QDELETED(announce) && !(announce.machine_stat & NOPOWER) && announce.has_supported_channels(channels))
+		if(!QDELETED(announce) && announce.is_operational && announce.has_supported_channels(channels))
 			if(aas_config_entry_type)
 				var/datum/aas_config_entry/entry = locate(aas_config_entry_type) in announce.config_entries
 				if(!entry || !entry.enabled)
@@ -236,7 +238,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		announcement_message = replacetext_char(announcement_message, variable, variables_map[variable] || "\[NO DATA\]")
 	return announcement_message
 
-/// Called when the announcement system is broken or EMPed.
+/// Called when the announcement system is emagged or EMPed.
 /datum/aas_config_entry/proc/act_up()
 	SHOULD_CALL_PARENT(TRUE)
 
