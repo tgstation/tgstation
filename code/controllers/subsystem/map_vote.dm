@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(map_vote)
 	last_message_at = world.time
 
 	var/list/messages = args.Copy()
-	to_chat(world, span_purple(boxed_message("Map Vote<br><hr>[messages.Join("<br>")]")))
+	to_chat(world, span_purple(boxed_message("Map Vote<br><hr>[jointext(messages, "<br>")]")))
 
 /datum/controller/subsystem/map_vote/proc/finalize_map_vote(datum/vote/map_vote/map_vote)
 	if(already_voted)
@@ -173,4 +173,4 @@ SUBSYSTEM_DEF(map_vote)
 	var/tally_msg = span_tooltip("A map's tallies are reset after it wins a vote. \
 		Otherwise, they are carried over and added onto from the next vote on the next round, \
 		until it eventually wins and is reset.", "Current Tallies")
-	tally_printout = boxed_message("[tally_msg]<br><hr>[data.Join("<br>")]")
+	tally_printout = boxed_message("[tally_msg]<br><hr>[jointext(data, "<br>")]")
