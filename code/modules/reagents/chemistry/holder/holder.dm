@@ -623,16 +623,10 @@
 
 		//multiply within reasonable boundaries
 		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
-		final_volume = reagent.volume + reagent_change
 		if(change > 0)
-			var/available =  maximum_volume - new_total
-			if(final_volume >= available)
-				reagent_change = available
-				reagent.volume += available
-			else
-				reagent.volume = final_volume
+			reagent_change = add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, no_react = TRUE)
 		else
-			reagent.volume = final_volume
+			reagent.volume += reagent_change
 		new_total = round(new_total + reagent_change, CHEMICAL_VOLUME_ROUNDING)
 		if(new_total <= 0 || new_total >= maximum_volume)
 			break
