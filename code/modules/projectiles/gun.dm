@@ -310,8 +310,6 @@
 	return ..()
 
 /obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
-	if(SEND_SIGNAL(user, COMSIG_MOB_TRYING_TO_FIRE_GUN, src, target, params) & COMPONENT_CANCEL_FIRING_GUN)
-		return
 	return fire_gun(target, user, user.Adjacent(target), params)
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
@@ -319,6 +317,10 @@
 		return
 	if(firing_burst)
 		return
+
+	if(SEND_SIGNAL(user, COMSIG_MOB_TRYING_TO_FIRE_GUN, src, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
+		return
+
 	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person

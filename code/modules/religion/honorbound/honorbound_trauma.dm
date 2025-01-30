@@ -80,14 +80,14 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Signal to see if we're targeting a mob that is guilty or not.
-/datum/brain_trauma/special/honorbound/proc/fire_gun_honor(mob/living/honorbound, obj/item/gun/the_gun_in_question, atom/target, params)
+/datum/brain_trauma/special/honorbound/proc/fire_gun_honor(mob/living/honorbound, obj/item/gun/the_gun_in_question, atom/target, flag, params)
 	SIGNAL_HANDLER
 
 	if(istype(the_gun_in_question, /obj/item/gun/magic))
 		return
 
 	if(!isliving(target)) //No shooting an innocent you weren't aiming at to get around this. Aim true or go home, honor-dork
-		return COMPONENT_CANCEL_FIRING_GUN
+		return COMPONENT_CANCEL_GUN_FIRE
 
 	var/mob/living/shot_mob = target
 
@@ -95,7 +95,7 @@
 		check_visible_guilt(shot_mob)
 
 	if(!is_honorable(honorbound, shot_mob))
-		return COMPONENT_CANCEL_FIRING_GUN
+		return COMPONENT_CANCEL_GUN_FIRE
 
 /// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
 /datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
