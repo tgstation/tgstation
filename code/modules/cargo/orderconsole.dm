@@ -95,9 +95,9 @@
 	var/list/data = list()
 	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
-	if(D)
-		data["points"] = D.account_balance
+	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
+	if(bank)
+		data["points"] = bank.account_balance
 	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
@@ -162,25 +162,77 @@
 	var/list/data = list()
 	data["max_order"] = CARGO_MAX_ORDER
 	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!data["supplies"][P.group])
-			data["supplies"][P.group] = list(
-				"name" = P.group,
-				"packs" = list()
+
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(!data["supplies"][pack.group])
+			data["supplies"][pack.group] = list(
+				"name" = pack.group,
+				"packs" = get_packs_data(pack.group),
 			)
-		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only)
-			continue
-		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.get_cost(),
-			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"goody" = P.goody,
-			"access" = P.access,
-			"contraband" = P.contraband,
-		))
+
 	return data
+
+/**
+ * returns a list of supply packs for a certain group
+ * * group - the group of packs to return
+ * * express - if this is an express console
+ */
+/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
+	var/list/packs = list()
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(pack.group != group)
+			continue
+
+		// Express console packs check
+		if(express && (pack.hidden || pack.special))
+			continue
+
+		if(!express && ((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only))
+			continue
+
+		if(pack.contraband && !contraband)
+			continue
+
+		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
+		packs += list(list(
+			"name" = pack.name,
+			"cost" = pack.get_cost() * get_discount(),
+			"id" = pack_id,
+			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
+			"goody" = pack.goody,
+			"access" = pack.access,
+			"contraband" = pack.contraband,
+			"contains" = get_pack_contains(pack),
+		))
+
+	return packs
+
+/**
+ * returns a list of the contents of a supply pack
+ * * pack - the pack to get the contents of
+ */
+/obj/machinery/computer/cargo/proc/get_pack_contains(datum/supply_pack/pack)
+	var/list/contains = list()
+	for(var/obj/item/item as anything in pack.contains)
+		contains += list(list(
+			"name" = item.name,
+			"icon" = item.greyscale_config ? null : item.icon,
+			"icon_state" = item.greyscale_config ? null : item.icon_state,
+			"amount" = pack.contains[item]
+		))
+
+	return contains
+
+/**
+ * returns the discount multiplier applied to all supply packs,
+ * the discount is calculated as follows: pack_cost * get_discount()
+ */
+/obj/machinery/computer/cargo/proc/get_discount()
+	return 1
 
 /**
  * adds an supply pack to the checkout cart
