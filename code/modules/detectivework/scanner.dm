@@ -115,7 +115,7 @@
 
 
 	user.visible_message(
-		span_notice("\The [user] points the [src.name] at \the [scanned_atom] and performs a forensic scan."),
+		span_notice("\The [user] points \the [src] at \the [scanned_atom] and performs a forensic scan."),
 		ignored_mobs = user
 	)
 	to_chat(user, span_notice("You scan \the [scanned_atom]. The scanner is now analysing the results..."))

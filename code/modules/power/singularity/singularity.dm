@@ -454,7 +454,7 @@
 		if(istype(stunned_human.glasses, /obj/item/clothing/glasses/meson))
 			var/obj/item/clothing/glasses/meson/check_meson = stunned_human.glasses
 			if(check_meson.vision_flags & SEE_TURFS)
-				to_chat(stunned_human, span_notice("You look directly into the [name], good thing you had your protective eyewear on!"))
+				to_chat(stunned_human, span_notice("You look directly into \the [src], good thing you had your protective eyewear on!"))
 				continue
 
 		apply_stun(stunned_mob)
@@ -462,8 +462,8 @@
 /obj/singularity/proc/apply_stun(mob/living/carbon/stunned_mob)
 	stunned_mob.apply_effect(60, EFFECT_STUN)
 	stunned_mob.visible_message(
-		span_danger("[stunned_mob] stares blankly at the [name]!"),
-		span_userdanger("You look directly into the [name] and feel weak.")
+		span_danger("[stunned_mob] stares blankly at \the [src]!"),
+		span_userdanger("You look directly into \the [src] and feel weak.")
 	)
 
 /obj/singularity/proc/emp_area()

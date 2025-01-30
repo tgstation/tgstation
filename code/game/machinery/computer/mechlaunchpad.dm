@@ -105,12 +105,12 @@
 			remove_pad(buffered_pad)
 		connect_launchpad(buffered_pad)
 		multitool.set_buffer(null)
-		to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
+		to_chat(user, span_notice("You connect the console to the pad with data from \the [multitool]'s buffer."))
 		return ITEM_INTERACT_SUCCESS
 
 	add_pad(buffered_pad)
 	multitool.set_buffer(null)
-	to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
+	to_chat(user, span_notice("You upload the data from \the [multitool]'s buffer."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/mechpad/proc/add_pad(obj/machinery/mechpad/pad)
