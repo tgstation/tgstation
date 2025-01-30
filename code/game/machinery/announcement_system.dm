@@ -21,6 +21,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	///The headset that we use for broadcasting
 	var/obj/item/radio/headset/radio
+	///AIs headset support all stations channels, but it may require an override for away site or syndie AASs.
+	var/radio_type = /obj/item/radio/headset/silicon/ai
 
 	var/greenlight = "Light_Green"
 	var/pinklight = "Light_Pink"
@@ -29,7 +31,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
 	GLOB.announcement_systems += src
-	radio = new /obj/item/radio/headset/silicon/ai(src)
+	radio = new radio_type(src)
 	config_entries = init_subtypes(/datum/aas_config_entry, list())
 	update_appearance()
 
@@ -78,13 +80,22 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	update_appearance()
 
 /// Sends a message to the appropriate channels.
-/obj/machinery/announcement_system/proc/broadcast(message, list/channels)
+/obj/machinery/announcement_system/proc/broadcast(message, list/channels, command_span = FALSE)
 	use_energy(active_power_usage)
 	if(channels.len == 0)
-		radio.talk_into(src, message, null)
+		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel)
+			radio.talk_into(src, message, channel, command_span ? list(speech_span, SPAN_COMMAND) : null)
+
+/// If AAS can't broadcast message, it shouldn't be picked by randomizer.
+/obj/machinery/announcement_system/proc/has_supported_channels(list/channels)
+	if (!channels || !channels.len)
+		return TRUE
+	for(var/channel in channels)
+		if(radio.channels[channel])
+			return TRUE
+	return FALSE
 
 /obj/machinery/announcement_system/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -165,10 +176,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return TRUE
 
 /// Announces configs entry message with the provided variables. Channels and announcement_line are optional.
-/obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line)
+/obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line, command_span)
 	var/msg = compile_config_message(aas_config_entry_type, variables_map, announcement_line, TRUE)
 	if (msg)
-		broadcast(msg, channels)
+		broadcast(msg, channels, command_span)
 
 /// Compiles the announcement message with the provided variables. Announcement line is optional.
 /obj/machinery/announcement_system/proc/compile_config_message(aas_config_entry_type, list/variables_map, announcement_line, fail_if_disabled=FALSE)
@@ -177,13 +188,13 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	return config.compile_announce(variables_map, announcement_line)
 
-/// Returns a random announcement system that is operational and has the specified config entry. Config entry is optional.
-/proc/get_announcement_system(aas_config_entry_type)
+/// Returns a random announcement system that is operational and has the specified config entry and radio supports any channel in list. Config entry and channels are optional.
+/proc/get_announcement_system(aas_config_entry_type, list/channels)
 	if (!GLOB.announcement_systems.len)
 		return null
 	var/list/intact_aass = list()
 	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
-		if(!QDELETED(announce) && announce.is_operational)
+		if(!QDELETED(announce) && announce.is_operational && announce.has_supported_channels(channels))
 			if(aas_config_entry_type)
 				var/datum/aas_config_entry/entry = locate(aas_config_entry_type) in announce.config_entries
 				if(!entry || !entry.enabled)
@@ -192,11 +203,11 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return intact_aass.len ? pick(intact_aass) : null
 
 /// Announces the provided message with the provided variables and config entry type. Channels and announcement_line are optional.
-/proc/aas_config_announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line)
-	var/obj/machinery/announcement_system/announcer = get_announcement_system(aas_config_entry_type)
+/proc/aas_config_announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line, command_span)
+	var/obj/machinery/announcement_system/announcer = get_announcement_system(aas_config_entry_type, channels)
 	if (!announcer)
 		return
-	announcer.announce(aas_config_entry_type, variables_map, channels, announcement_line)
+	announcer.announce(aas_config_entry_type, variables_map, channels, announcement_line, command_span)
 
 /datum/aas_config_entry
 	var/name = "AAS configurable entry"
