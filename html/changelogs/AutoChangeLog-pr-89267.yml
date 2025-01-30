@@ -1,8 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Fishing minigame should be smoother now"
-  - bugfix: "Fixed infinitely stacking examine lines on advanced fishing rods"
-  - image: "Resprited fishing UI"
-  - image: "Blue doughballs now have their own fishing rod overlay"
-  - image: "Resprited mansus rift fishing portal overlay"

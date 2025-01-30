@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Adds a new random lawset where anything that can speak counts as human."
