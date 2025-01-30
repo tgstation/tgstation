@@ -596,25 +596,25 @@
  * Arguments
  *
  * * multiplier - the amount to multiply each reagent by
- * * reagent_path - specific target reagent to multiply
+ * * datum/reagent/target_id - multiply only this reagent in this holder leaving others untouched
  */
-/datum/reagents/proc/multiply(multiplier = 1, datum/reagent/reagent_path)
+/datum/reagents/proc/multiply(multiplier = 1, datum/reagent/target_id)
 	if(!total_volume || multiplier == 1)
 		return
 
-	if(!isnull(reagent_path) && !ispath(reagent_path))
-		stack_trace("Bad reagent path [reagent_path] passed to multiply_reagents")
+	if(!isnull(target_id) && !ispath(target_id))
+		stack_trace("Bad reagent path [target_id] passed to multiply_reagents")
 		return
 
 	var/change = (multiplier - 1) //Get the % change
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(!isnull(reagent_path) && reagent.type != reagent_path)
+		if(!isnull(target_id) && reagent.type != target_id)
 			continue
 
 		reagent.volume += reagent.volume * change
 
-		if(!isnull(reagent_path))
+		if(!isnull(target_id))
 			break
 
 	update_total()
