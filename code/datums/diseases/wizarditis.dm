@@ -99,7 +99,7 @@
 
 				var/datum/action/cooldown/spell/picked = pick(random_spells)
 				picked.Activate(affected_mob)
-				affected_mob.sneeze()
+				affected_mob.emote("sneeze")
 				return
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)

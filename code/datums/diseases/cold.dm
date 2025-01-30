@@ -6,7 +6,7 @@
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	agent = "XY-rhinovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 0.1
+	spreading_modifier = 0.5
 	spread_text = "Airborne"
 	severity = DISEASE_SEVERITY_NONTHREAT
 	required_organ = ORGAN_SLOT_LUNGS
@@ -20,7 +20,7 @@
 	switch(stage)
 		if(2)
 			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.infectious_sneeze(src, TRUE)
+				affected_mob.emote("sneeze")
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))
@@ -33,7 +33,7 @@
 				return FALSE
 		if(3)
 			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.infectious_sneeze(src, TRUE)
+				affected_mob.emote("sneeze")
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))
