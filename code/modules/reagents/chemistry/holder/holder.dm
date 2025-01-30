@@ -589,7 +589,7 @@
 		target_holder.update_total()
 		target_holder.handle_reactions()
 
-	return total_transfered_amount
+	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Multiplies the reagents inside this holder by a specific amount
