@@ -551,12 +551,12 @@
 /datum/status_effect/gonbola_pacify/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), REF(src))
-	owner.add_mood_event(type, /datum/mood_event/gondola)
+	owner.add_mood_event(REF(src), /datum/mood_event/gondola)
 	to_chat(owner, span_notice("You suddenly feel at peace and feel no need to make any sudden or rash actions..."))
 
 /datum/status_effect/gonbola_pacify/on_remove()
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), REF(src))
-	owner.clear_mood_event(type)
+	owner.clear_mood_event(REF(src))
 	return ..()
 
 /datum/status_effect/trance
