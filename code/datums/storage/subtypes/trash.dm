@@ -6,6 +6,6 @@
 		span_notice("You start digging around in [parent] to try and pull something out."),
 	)
 	if(!do_after(removing, 1.5 SECONDS, parent))
-		return null
+		return FALSE
 
 	return ..()
