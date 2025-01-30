@@ -249,7 +249,8 @@
 	medical_mode_flags &= ~MEDBOT_DECLARE_CRIT
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
-	flick("medbot_spark", src)
+	var/mutable_appearance/spark = mutable_appearance(icon, "[base_icon_state]_spark")
+	flick_overlay_view(spark, 1 SECONDS)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
