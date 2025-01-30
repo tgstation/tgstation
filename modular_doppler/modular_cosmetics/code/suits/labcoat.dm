@@ -7,7 +7,7 @@
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/labcoat.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi'
 	toggle_noun = "drapes"
-	body_parts_covered = NONE //Allows surgeries despite wearing it; hiding genitals is handled in /datum/sprite_accessory/genital/is_hidden() (Only place it'd work sadly)
+	body_parts_covered = NONE
 	armor_type = /datum/armor/none
 	equip_delay_other = 8
 

@@ -6,7 +6,7 @@ import {
 import { FeatureDropdownInput } from '../dropdowns';
 
 export const feature_wings: FeatureChoiced = {
-  name: 'Ears',
+  name: 'Wings',
   component: (
     props: FeatureValueProps<string, string, FeatureChoicedServerData>,
   ) => {
