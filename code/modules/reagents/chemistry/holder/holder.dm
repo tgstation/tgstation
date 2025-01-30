@@ -509,7 +509,8 @@
 		transfer_amount = data["T"]
 		if(methods)
 			reagent.on_transfer(target_atom, methods, transfer_amount)
-		remove_reagent(reagent.type, transfer_amount)
+		reagent.volume -= transfer_amount
+		update_total()
 		transfer_log += "[reagent.type] ([transfer_amount]u, [reagent.purity] purity)"
 
 	//combat log
@@ -603,17 +604,34 @@
 	if(multiplier == 1 || !total_volume)
 		return
 
+	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
+	if(multiplier < 0)
+		return
+
 	if(!isnull(target_id) && !ispath(target_id))
 		stack_trace("Bad reagent path [target_id] passed to multiply_reagents")
 		return
 
 	var/change = (multiplier - 1) //Get the % change
+	var/reagent_change
+	var/new_total = total_volume
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(!isnull(target_id) && reagent.type != target_id)
 			continue
 
-		reagent.volume += reagent.volume * change
+		//multiply within reasonable boundaries
+		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
+		var/final_volume = reagent.volume + reagent_change
+		var/reagent_max =  maximum_volume - (new_total - reagent.volume) //excluding this reagent we find how much space can be taken up
+		if(final_volume >= reagent_max)
+			reagent_change = reagent_max - reagent.volume
+			reagent.volume = reagent_max
+		else
+			reagent.volume = final_volume
+		new_total = round(new_total + reagent_change, CHEMICAL_VOLUME_ROUNDING)
+		if(new_total <= 0 || new_total >= maximum_volume)
+			break
 
 		if(!isnull(target_id))
 			break

@@ -105,7 +105,8 @@
 	for(var/list/data as anything in reagents_to_remove)
 		var/datum/reagent/reagent = data["R"]
 		transfer_amount = data["T"]
-		remove_reagent(reagent.type, transfer_amount)
+		reagent.volume -= transfer_amount
+	update_total()
 
 	//handle reactions
 	target_holder.handle_reactions()
@@ -259,7 +260,8 @@
 	for(var/list/data as anything in reagents_to_remove)
 		var/datum/reagent/reagent = data["R"]
 		transfer_amount = data["T"]
-		remove_reagent(reagent.type, transfer_amount)
+		reagent.volume -= transfer_amount
+	update_total()
 
 	//handle reactions
 	target_holder.handle_reactions()
