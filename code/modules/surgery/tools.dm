@@ -331,6 +331,8 @@
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = SFX_CLOTH_PICKUP
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
