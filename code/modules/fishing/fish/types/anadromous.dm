@@ -39,8 +39,8 @@
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "pike"
 	inhand_icon_state = "pike"
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	stable_population = 4
 	sprite_width = 10
 	sprite_height = 3
