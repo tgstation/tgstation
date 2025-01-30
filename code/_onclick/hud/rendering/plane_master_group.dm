@@ -51,14 +51,14 @@
 	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
 #endif
 
-	if(viewing_hud.mymob?.client?.byond_version > 515)
-		relay_loc = "1,1"
-		rebuild_plane_masters()
-
 	set_hud(viewing_hud)
 	our_hud.master_groups[key] = src
 	show_hud()
 	build_planes_offset(our_hud, active_offset)
+
+	if(viewing_hud.mymob?.client?.byond_version > 515)
+		relay_loc = "1,1"
+		rebuild_plane_masters()
 
 /// Well, refresh our group, mostly useful for plane specific updates
 /datum/plane_master_group/proc/refresh_hud()
@@ -70,6 +70,7 @@
 	hide_hud()
 	rebuild_plane_masters()
 	show_hud()
+	our_hud.update_parallax_pref()
 	build_planes_offset(our_hud, active_offset)
 
 /// Regenerate our plane masters, this is useful if we don't have a mob but still want to rebuild. Such in the case of changing the screen_loc of relays
