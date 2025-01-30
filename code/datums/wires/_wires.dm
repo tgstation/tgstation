@@ -1,13 +1,25 @@
 #define MAXIMUM_EMP_WIRES 3
 
-/proc/is_wire_tool(obj/item/I)
-	if(!I)
-		return
-
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
+/**
+ * Is the passed item a tool that would interact with wires?
+ *
+ * Arguments:
+ * * tool - The item to check.
+ * * check_secured - If TRUE, and the item ends up being an assembly,
+ * we will only return TRUE if the assembly is not secured.
+ * "Secured" is used to indicate an assembly that may have a use outside of wire interactions,
+ * so we don't want to falsely identify it as a wire tool in some contexts.
+ */
+/proc/is_wire_tool(obj/item/tool, check_secured = FALSE)
+	if(!istype(tool))
+		return FALSE
+	if(tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(isassembly(I))
-		return TRUE
+	if(isassembly(tool))
+		var/obj/item/assembly/assembly = tool
+		if(!check_secured || !assembly.secured)
+			return TRUE
+	return FALSE
 
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
