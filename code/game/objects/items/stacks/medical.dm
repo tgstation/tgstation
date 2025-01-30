@@ -35,7 +35,11 @@
 	/// Verb used when applying this object to someone
 	var/apply_verb = "treating"
 	/// Whether this item can be used on dead bodies
-	var/works_on_dead = FALSE
+	var/works_on_dead = FALSE'
+	/// The sound this makes when starting healing with this item
+	var/heal_begin_sound = null
+	/// The sound this makes when healed successfully with this item
+	var/heal_end_sound = null
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -455,6 +459,8 @@
 			span_green("You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
+		if(heal_end_sound)
+			playsound(src, heal_end_sound, 30, )
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
