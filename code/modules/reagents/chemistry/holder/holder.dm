@@ -614,6 +614,7 @@
 
 	var/change = (multiplier - 1) //Get the % change
 	var/reagent_change
+	var/final_volume
 	var/new_total = total_volume
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -622,11 +623,14 @@
 
 		//multiply within reasonable boundaries
 		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
-		var/final_volume = reagent.volume + reagent_change
-		var/reagent_max =  maximum_volume - (new_total - reagent.volume) //excluding this reagent we find how much space can be taken up
-		if(final_volume >= reagent_max)
-			reagent_change = reagent_max - reagent.volume
-			reagent.volume = reagent_max
+		final_volume = reagent.volume + reagent_change
+		if(change > 0)
+			var/available =  maximum_volume - new_total
+			if(final_volume >= available)
+				reagent_change = available
+				reagent.volume += available
+			else
+				reagent.volume = final_volume
 		else
 			reagent.volume = final_volume
 		new_total = round(new_total + reagent_change, CHEMICAL_VOLUME_ROUNDING)
