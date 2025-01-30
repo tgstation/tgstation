@@ -629,7 +629,8 @@
 		if(!isnull(target_id))
 			break
 
-	update_total()
+	if(change < 0)
+		update_total()
 	handle_reactions()
 
 /// Updates [/datum/reagents/var/total_volume]
