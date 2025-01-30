@@ -183,6 +183,12 @@
 		power_throw--
 	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 		power_throw++
+	//DOPPLER EDIT ADDITION
+	if(HAS_TRAIT(src, TRAIT_OVERSIZED))
+		power_throw++
+	if(HAS_TRAIT(thrown_thing, TRAIT_OVERSIZED))
+		power_throw--
+	//DOPPLER EDIT END
 	if(neckgrab_throw)
 		power_throw++
 	if(HAS_TRAIT(src, TRAIT_TOSS_GUN_HARD) && isgun(thrown_thing))

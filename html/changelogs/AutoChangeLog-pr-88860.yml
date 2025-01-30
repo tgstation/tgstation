@@ -1,0 +1,7 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Added two new fish to heretic rift fishing."
+  - rscadd: "You can now fish up arms, heads, and other items lost to heretic rifts!"
+  - admin: "objectify() now works with instances of objects. Mark a player, then an object, and use those marks to call that global proc and you can turn people into pre-existing items."
+  - rscadd: "Psychic resistance now prevents the instadeath from trying to telekinetically grasp at a opened rift."

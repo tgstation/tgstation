@@ -5,7 +5,7 @@
 	name = "Change Places!"
 	weight = 2
 	typepath = /datum/round_event/wizard/shuffleloc
-	max_occurrences = 5
+	max_occurrences = 0
 	earliest_start = 0 MINUTES
 	description = "Shuffles everyone around on the station."
 	min_wizard_trigger_potency = 0
@@ -44,7 +44,7 @@
 	name = "Change Faces!"
 	weight = 4
 	typepath = /datum/round_event/wizard/shufflenames
-	max_occurrences = 5
+	max_occurrences = 0
 	earliest_start = 0 MINUTES
 	description = "Shuffles the names of everyone around the station."
 
@@ -79,7 +79,7 @@
 	name = "Change Minds!"
 	weight = 1
 	typepath = /datum/round_event/wizard/shuffleminds
-	max_occurrences = 3
+	max_occurrences = 0
 	earliest_start = 0 MINUTES
 	description = "Shuffles the minds of everyone around the station, except for the wizard."
 

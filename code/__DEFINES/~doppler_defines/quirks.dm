@@ -4,3 +4,5 @@
 #define DOPPLER_NIGHT_VISION_POWER_MAX 9
 /// percentage of the NIGHT_VISION_POWER_MAX increase that is applied for eyes with low innate flash protection (photophobia quirk/moth eyes). At 0.75, this raises NV to 22.5 at hypersensitive flash_protect.
 #define DOPPLER_NIGHT_VISION_SENSITIVITY_MULT 0.75
+#define BLOOD_VOLUME_OVERSIZED 1120
+#define PULL_OVERSIZED_SLOWDOWN 2

@@ -111,6 +111,7 @@
 	var/modsuit_desc = client_source?.prefs.read_preference(/datum/preference/text/entombed_mod_desc)
 	if (modsuit_desc)
 		modsuit.desc = modsuit_desc
+		modsuit.AddElement(/datum/element/examined_when_worn)
 
 	var/modsuit_skin_prefix = client_source?.prefs.read_preference(/datum/preference/text/entombed_mod_prefix)
 	if (modsuit_skin_prefix)

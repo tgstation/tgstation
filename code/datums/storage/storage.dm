@@ -856,15 +856,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(ishuman(user))
 		var/mob/living/carbon/human/hum = user
-		if(hum.l_store == parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), parent)
-			hum.l_store = null
+		if(hum.l_store == parent || hum.r_store == parent)
 			return
-		if(hum.r_store == parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), parent)
-			hum.r_store = null
-			return
-
 	if(parent.loc == user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN

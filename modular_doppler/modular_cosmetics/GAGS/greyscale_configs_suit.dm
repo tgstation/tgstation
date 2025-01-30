@@ -89,6 +89,40 @@
 /datum/greyscale_config/crop_cold_hoodie_hood/worn
 	name = "Cropped Cold Shoulder Hood (Worn)"
 
+/datum/greyscale_config/big_hoodie
+	name = "Big Hoodie"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/suit/jacket.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/big_hoodie.json'
+
+/datum/greyscale_config/big_hoodie/worn
+	name = "Big Hoodie (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/suit/jacket.dmi'
+
+/datum/greyscale_config/big_hoodie_hood
+	name = "Big Hoodie Hood"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/suit/jacket.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/big_hoodie_hood.json'
+
+/datum/greyscale_config/big_hoodie_hood/worn
+	name = "Big Hoodie Hood (Worn)"
+
+/datum/greyscale_config/twee_hoodie
+	name = "Twee Hoodie"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/suit/jacket.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/twee_hoodie.json'
+
+/datum/greyscale_config/twee_hoodie/worn
+	name = "Twee Hoodie (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/suit/jacket.dmi'
+
+/datum/greyscale_config/twee_hoodie_hood
+	name = "Twee Hoodie Hood"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/suit/jacket.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/twee_hoodie_hood.json'
+
+/datum/greyscale_config/twee_hoodie_hood/worn
+	name = "Twee Hoodie Hood (Worn)"
+
 // Apron
 
 /datum/greyscale_config/apron

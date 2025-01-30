@@ -69,7 +69,7 @@
 	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/rollerblades))
 		balloon_alert(user, "must be worn!")
 		return
-	user.balloon_alert("buckling rollerblades...")
+	balloon_alert(user, "buckling rollerblades...")
 	if(do_after(user, 2 SECONDS, src))
 		wheels.forceMove(get_turf(user))
 		wheels.buckle_mob(user)
