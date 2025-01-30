@@ -608,18 +608,17 @@
 
 	var/change = (multiplier - 1) //Get the % change
 	var/list/cached_reagents = reagent_list
+	var/volume_change
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(!isnull(reagent_path) && reagent.type != reagent_path)
 			continue
 
-		if(change > 0)
-			add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, no_react = TRUE)
-		else
-			remove_reagent(reagent.type, abs(reagent.volume * change), safety = TRUE) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
+		reagent.volume += reagent.volume * change
 
 		if(!isnull(reagent_path))
 			break
 
+	update_total()
 	handle_reactions()
 
 /// Updates [/datum/reagents/var/total_volume]
