@@ -340,7 +340,7 @@
 
 /obj/item/pneumatic_cannon/burger
 	name = "Burger Blaster"
-	desc = "Load cream pie for optimal results."
+	desc = "I wonder what's for dinner?"
 	force = 10
 	icon_state = "piecannon"
 	gasPerThrow = 0
@@ -351,7 +351,7 @@
 	maxWeightClass = 150 //50 pies. :^)
 	needs_air = FALSE
 	clumsyCheck = FALSE
-	selfcharge = TRUE
+	selfcharge = FALSE
 	charge_type = /obj/item/food/burger
 	var/static/list/burger_typecache = typecacheof(/obj/item/food/burger)
 
