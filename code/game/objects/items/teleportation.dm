@@ -234,7 +234,7 @@
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue
-			if(!check_teleport_valid(src, teleport_location))
+			if(!check_teleport_valid(src, dangerous_turf))
 				continue
 			dangerous_turfs += dangerous_turf
 

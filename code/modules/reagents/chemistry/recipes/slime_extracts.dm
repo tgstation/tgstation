@@ -431,7 +431,7 @@
 
 /datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/obj/item/stack/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
-	BC.visible_message(span_notice("The [BC.name] appears out of thin air!"))
+	BC.visible_message(span_notice("\The [BC] appears out of thin air!"))
 	..()
 
 /datum/chemical_reaction/slime/slimeradio

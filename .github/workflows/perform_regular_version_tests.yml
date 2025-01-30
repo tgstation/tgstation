@@ -1,0 +1,23 @@
+name: Run Regular BYOND Version Tests
+on:
+  workflow_call:
+    inputs:
+      maps:
+        required: true
+        type: string
+      max_required_byond_client:
+        required: true
+        type: string
+
+jobs:
+  run:
+    uses: ./.github/workflows/run_integration_tests.yml
+
+    strategy:
+      fail-fast: false
+      matrix:
+        map: ${{ fromJSON(inputs.maps).paths }}
+
+    with:
+      map: ${{ matrix.map }}
+      max_required_byond_client: ${{ inputs.max_required_byond_client }}

@@ -459,12 +459,13 @@
  * * charger - occupant inside mech.
  * * target - occupant inside mech.
  */
-/datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack(mob/living/charger, turf/target)
+/datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack(mob/living/charger, atom/target)
 	var/turf/start_charge_here = get_turf(charger)
-	var/charge_range = min(get_dist_euclidean(start_charge_here, target), max_charge_range)
-	var/turf/but_we_gonna_here = get_ranged_target_turf(start_charge_here, get_dir(start_charge_here, target), floor(charge_range))
+	var/turf/target_pos = get_turf(target)
 	var/turf/here_we_go = start_charge_here
-	for(var/turf/line_turf in get_line(get_step(start_charge_here, get_dir(start_charge_here, target)), but_we_gonna_here))
+	for(var/turf/line_turf in get_line(start_charge_here, target_pos))
+		if(floor(get_dist_euclidean(start_charge_here, line_turf)) > max_charge_range)
+			break
 		if(get_turf(charger) == get_turf(line_turf))
 			continue
 		if(isclosedturf(line_turf))

@@ -113,7 +113,7 @@
 
 ///Alerts our owner that the organ is ready to do its thing again
 /obj/item/organ/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
-	balloon_alert(organ_owner, "your heart strenghtens")
+	balloon_alert(organ_owner, "your heart strengthtens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 
 ///Returns the mob we are implanted in so that the electricity effect doesn't runtime

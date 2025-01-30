@@ -1,7 +1,7 @@
 /**
  * The absolute base class for everything
  *
- * A datum instantiated has no physical world prescence, use an atom if you want something
+ * A datum instantiated has no physical world presence, use an atom if you want something
  * that actually lives in the world
  *
  * Be very mindful about adding variables to this class, they are inherited by every single

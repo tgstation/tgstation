@@ -105,7 +105,7 @@
 		qdel(GetComponent(/datum/component/ghost_direct_control))
 
 /mob/living/basic/blob_minion/spore/minion/death_burst()
-	return // This behaviour is superceded by the overmind's intervention
+	return // This behaviour is superseded by the overmind's intervention
 
 
 /// Weakened spore spawned by distributed neurons, can't zombify people and makes a teeny explosion

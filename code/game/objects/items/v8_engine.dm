@@ -5,7 +5,7 @@
 
 /obj/item/v8_engine
 	name = "ancient engine"
-	desc = "An extremely well perserved, massive V8 engine from the early 2000s. It seems to be missing the rest of the vehicle. There's a tiny label on the side."
+	desc = "An extremely well-preserved, massive V8 engine from the early 2000s. It seems to be missing the rest of the vehicle. There's a tiny label on the side."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "v8_engine"
 	w_class = WEIGHT_CLASS_HUGE

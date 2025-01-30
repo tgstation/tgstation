@@ -128,10 +128,37 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	/// The mind needed to unlock the box
 	var/datum/mind/mind
 
-/obj/item/storage/lockbox/mind/attack_self(mob/user, modifiers)
-	. = ..()
+/obj/item/storage/lockbox/mind/attack_hand(mob/user, list/modifiers)
+	if (!(src in user.held_items))
+		return ..()
+	if(atom_storage.locked && can_unlock(user, silent = TRUE))
+		toggle_locked(user)
+		return
+	return ..()
 
-	if(user.mind == mind)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-		balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
-		update_appearance()
+/obj/item/storage/lockbox/mind/attack_self(mob/user, modifiers)
+	if (atom_storage.locked && can_unlock(user))
+		toggle_locked(user)
+		return
+	return ..()
+
+/obj/item/storage/lockbox/mind/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if (user.mind == mind)
+		return TRUE
+	if (!silent)
+		balloon_alert(user, "access denied!")
+	return FALSE
+
+/obj/item/storage/lockbox/mind/toggle_locked(mob/living/user)
+	if(!atom_storage.locked)
+		return
+
+	atom_storage.locked = STORAGE_NOT_LOCKED
+	balloon_alert(user, "unlocked")
+	update_appearance()
+
+/obj/item/storage/lockbox/mind/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(broken || user.mind != mind)
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Use in-hand to unlock"
+	return CONTEXTUAL_SCREENTIP_SET

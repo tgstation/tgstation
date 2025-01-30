@@ -378,7 +378,7 @@
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5
-	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
+	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma && !(HAS_TRAIT(M,TRAIT_NOSOFTCRIT)))
 		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, PROC_REF(coma), M), 6 SECONDS)

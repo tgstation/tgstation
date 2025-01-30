@@ -29,7 +29,7 @@
 
 /atom/movable/screen/alert/status_effect/slimeskin
 	name = "Adamantine Slimeskin"
-	desc = "You are covered in a thick, non-neutonian gel."
+	desc = "You are covered in a thick, non-Newtonian gel."
 	icon_state = "slime_stoneskin"
 
 /datum/status_effect/slimeskin
@@ -438,7 +438,7 @@
 //////////////////STABILIZED EXTRACTS//////////////////
 ///////////////////////////////////////////////////////
 
-/datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its' own.
+/datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its own.
 	id = "stabilizedbase"
 	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null

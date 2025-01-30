@@ -660,6 +660,8 @@
 	. = ..()
 	var/obj/projectile/ink_spit/ink_spit =  new (target)
 	ink_spit.on_hit(target)
+	if(!QDELETED(ink_spit)) // in case it somehow remains around
+		qdel(ink_spit)
 
 // Based on energy gun characteristics
 /obj/projectile/kiss/syndie

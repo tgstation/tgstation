@@ -1,7 +1,7 @@
 //Ingredients and Simple Dishes
 /obj/item/food/kimchi
 	name = "kimchi"
-	desc = "A classic Korean dish in the Martian style- shredded cabbage with chilli peppers, konbu, bonito, and a mix of spices."
+	desc = "A classic Korean dish in the Martian style: shredded cabbage with chilli peppers, konbu, bonito, and a mix of spices."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "kimchi"
 	food_reagents = list(
