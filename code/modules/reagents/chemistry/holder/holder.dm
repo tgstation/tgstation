@@ -595,11 +595,12 @@
  * Multiplies reagents inside this holder by a specific amount
  * Arguments
  *
- * * multiplier - the amount to multiply each reagent by
+ * * multiplier - the amount to multiply each reagent, its a percentile value where < 1 will reduce the volume and
+ * * > 1 will increase the volume. Final multiplier applied to the reagent volume is (1 - multiplier)
  * * datum/reagent/target_id - multiply only this reagent in this holder leaving others untouched
  */
 /datum/reagents/proc/multiply(multiplier = 1, datum/reagent/target_id)
-	if(!total_volume || multiplier == 1)
+	if(multiplier == 1 || !total_volume)
 		return
 
 	if(!isnull(target_id) && !ispath(target_id))
