@@ -62,40 +62,44 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return ..()
 
 /obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
-	tool.play_tool_sound(src)
-	toggle_panel_open()
-	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
-	update_appearance()
-	return TRUE
+	var/current_icon_state = "[base_icon_state]_[is_operational ? "On" : "Off"][panel_open ? "_Open" : null]"
+	if(default_deconstruction_screwdriver(user, current_icon_state, current_icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/announcement_system/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
 	if(default_deconstruction_crowbar(tool))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
 	if(!panel_open || !(machine_stat & BROKEN))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You reset [src]'s firmware."))
 	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
-/// Sends a message to the appropriate channels.
-/obj/machinery/announcement_system/proc/broadcast(message, list/channels, command_span = FALSE)
-	use_energy(active_power_usage)
-	if(channels.len == 0)
-		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
-	else
-		for(var/channel in channels)
-			radio.talk_into(src, message, channel, command_span ? list(speech_span, SPAN_COMMAND) : null)
+/// Does funny breakage stuff
+/obj/machinery/announcement_system/proc/act_up()
+	if(!atom_break()) // if badmins flag this unbreakable or its already broken
+		return
 
-/// If AAS can't broadcast message, it shouldn't be picked by randomizer.
-/obj/machinery/announcement_system/proc/has_supported_channels(list/channels)
-	if (!channels || !channels.len)
-		return TRUE
-	for(var/channel in channels)
-		if(radio.channels[channel])
-			return TRUE
-	return FALSE
+	for (var/datum/aas_config_entry/config in config_entries)
+		config.act_up()
+
+/obj/machinery/announcement_system/emp_act(severity)
+	. = ..()
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
+		act_up()
+
+/obj/machinery/announcement_system/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	act_up()
+	balloon_alert(user, "announcement strings corrupted")
+	return TRUE
 
 /obj/machinery/announcement_system/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -144,42 +148,23 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				config.announcement_lines_map[param["lineKey"]] = new_message
 				usr.log_message("updated [param["lineKey"]] line in the [config.name] to: [new_message]", LOG_GAME)
 
-/obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
-	. = attack_ai(user)
-
-/obj/machinery/announcement_system/attack_ai(mob/user)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
-	if(machine_stat & BROKEN)
+/obj/machinery/announcement_system/can_interact(mob/user)
+	// How you can see, that it's malfunctioning if it's unpowered?
+	if (machine_stat & BROKEN && !(machine_stat & NOPOWER))
 		to_chat(user, span_warning("[src]'s firmware appears to be malfunctioning!"))
-		return
-	interact(user)
-
-/obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	if(!atom_break()) // if badmins flag this unbreakable or its already broken
-		return
-
-	for (var/datum/aas_config_entry/config in config_entries)
-		config.act_up()
-
-/obj/machinery/announcement_system/emp_act(severity)
-	. = ..()
-	if(!(machine_stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
-		act_up()
-
-/obj/machinery/announcement_system/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(obj_flags & EMAGGED)
+		if (!isAI(user))	// Deus Ex Machina goes without multitool in his default complectation.
+			to_chat(user, span_notice("However, you can reset it with [EXAMINE_HINT("multitool")], while its [EXAMINE_HINT("panel is open")]!"))
 		return FALSE
-	obj_flags |= EMAGGED
-	act_up()
-	balloon_alert(user, "announcement strings corrupted")
-	return TRUE
+	. = ..()
 
-/// Announces configs entry message with the provided variables. Channels and announcement_line are optional.
-/obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line, command_span)
-	var/msg = compile_config_message(aas_config_entry_type, variables_map, announcement_line, TRUE)
-	if (msg)
-		broadcast(msg, channels, command_span)
+/// If AAS can't broadcast message, it shouldn't be picked by randomizer.
+/obj/machinery/announcement_system/proc/has_supported_channels(list/channels)
+	if (!channels || !channels.len)
+		return TRUE
+	for(var/channel in channels)
+		if(radio.channels[channel] || radio == RADIO_CHANNEL_COMMON)
+			return TRUE
+	return FALSE
 
 /// Compiles the announcement message with the provided variables. Announcement line is optional.
 /obj/machinery/announcement_system/proc/compile_config_message(aas_config_entry_type, list/variables_map, announcement_line, fail_if_disabled=FALSE)
@@ -188,13 +173,29 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	return config.compile_announce(variables_map, announcement_line)
 
+/// Sends a message to the appropriate channels.
+/obj/machinery/announcement_system/proc/broadcast(message, list/channels, command_span = FALSE)
+	use_energy(active_power_usage)
+	if(channels.len == 0)
+		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
+	else
+		for(var/channel in channels)
+			radio.talk_into(src, message, channel, command_span ? list(speech_span, SPAN_COMMAND) : null)
+
+/// Announces configs entry message with the provided variables. Channels and announcement_line are optional.
+/obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line, command_span)
+	var/msg = compile_config_message(aas_config_entry_type, variables_map, announcement_line, TRUE)
+	if (msg)
+		broadcast(msg, channels, command_span)
+
 /// Returns a random announcement system that is operational and has the specified config entry and radio supports any channel in list. Config entry and channels are optional.
 /proc/get_announcement_system(aas_config_entry_type, list/channels)
 	if (!GLOB.announcement_systems.len)
 		return null
 	var/list/intact_aass = list()
 	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
-		if(!QDELETED(announce) && announce.is_operational && announce.has_supported_channels(channels))
+		// We ignore is_operational, because we can be BROKEN via emag or EMP, but we still want to be picked.
+		if(!QDELETED(announce) && !(announce.machine_stat & NOPOWER) && announce.has_supported_channels(channels))
 			if(aas_config_entry_type)
 				var/datum/aas_config_entry/entry = locate(aas_config_entry_type) in announce.config_entries
 				if(!entry || !entry.enabled)
