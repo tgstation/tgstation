@@ -162,10 +162,11 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// If AAS can't broadcast message, it shouldn't be picked by randomizer.
 /obj/machinery/announcement_system/proc/has_supported_channels(list/channels)
-	if (!channels || !channels.len)
-		return TRUE
+	if (!channels || !channels.len || (RADIO_CHANNEL_COMMON in channels))
+		// Okay, I am not proud of this, but I don't want CentCom or Syndie AASs to broadcast on Common.
+		return src.type == /obj/machinery/announcement_system
 	for(var/channel in channels)
-		if(radio.channels[channel] || radio == RADIO_CHANNEL_COMMON)
+		if(radio.channels[channel])
 			return TRUE
 	return FALSE
 
@@ -182,6 +183,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
 	else
+		// For some reasons, radio can't recognize RADIO_CHANNEL_COMMON in channels, so we need to handle it separately.
+		if (RADIO_CHANNEL_COMMON in channels)
+			radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
+			channels -= RADIO_CHANNEL_COMMON
 		for(var/channel in channels)
 			radio.talk_into(src, message, channel, command_span ? list(speech_span, SPAN_COMMAND) : null)
 
