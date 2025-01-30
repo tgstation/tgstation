@@ -5,3 +5,4 @@
 #define COMSIG_KB_CLIENT_WHISPER_DOWN "keybinding_client_whisper_down"
 #define COMSIG_KB_CLIENT_DO_DOWN "keybinding_client_do_down"
 #define COMSIG_KB_CLIENT_DO_LONGER_DOWN "keybinding_client_do_longer_down"
+#define COMSIG_KB_CLIENT_IRC_DOWN "keybinding_client_irc_down"

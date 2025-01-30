@@ -56,6 +56,8 @@
 			return TRUE
 		if(DO_CHANNEL)
 			client.mob.do_verb(entry)
+		if(IRC_CHANNEL)
+			client.mob.irc_verb(entry)
 		// DOPPLER EDIT ADDITION END
 	return FALSE
 
