@@ -806,7 +806,7 @@
 				'sound/items/gauze/bandage_begin3.ogg',
 				'sound/items/gauze/bandage_begin4.ogg',
 			)
-		if(SFX_BANDAGE_BEGIN)
+		if(SFX_BANDAGE_END)
 			soundin = pick(
 				'sound/items/gauze/bandage_end1.ogg',
 				'sound/items/gauze/bandage_end2.ogg',

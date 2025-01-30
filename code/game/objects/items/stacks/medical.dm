@@ -463,7 +463,7 @@
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		if(heal_end_sound)
-			playsound(src, heal_end_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+			playsound(patient, heal_end_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
