@@ -43,8 +43,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/message_verified_by = ""
 	/// If a message is stamped, this will contain the stamp name
 	var/message_stamped_by = ""
-	/// Reference to the internal radio
-	var/obj/item/radio/radio
 	///If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/emergency
 	/// If ore redemption machines will send an update when it receives new ores.
@@ -124,13 +122,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	GLOB.req_console_all += src
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
-
-	radio = new /obj/item/radio(src)
-	radio.set_listening(FALSE)
 	find_and_hang_on_wall()
 
 /obj/machinery/requests_console/Destroy()
-	QDEL_NULL(radio)
 	QDEL_LIST(messages)
 	GLOB.req_console_all -= src
 	return ..()
@@ -238,6 +232,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 ///Sends the message from the request console
 /obj/machinery/requests_console/proc/send_message(recipient, message, priority, request_type)
 	var/radio_freq
+	// They all naming them wrong, all the time... I'll probably rewrite this later in separate PR.
+	// Automatically from areas or via mapping helpers. (ther is no "Cargobay Request Console" in any map)
 	switch(ckey(recipient))
 		if("bridge")
 			radio_freq = FREQ_COMMAND
@@ -342,15 +338,26 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	SStgui.update_uis(src)
 
-	var/alert = new_message.get_alert()
-
 	if(!silent)
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
-		say(alert)
+		say(new_message.get_alert())
 
 	if(new_message.radio_freq)
-		radio.set_frequency(new_message.radio_freq)
-		radio.talk_into(src, "[alert]: <i>[new_message.content]</i>", new_message.radio_freq)
+		var/authentication
+		var/announcement_line = "Unauthorized"
+		if (new_message.message_verified_by)
+			authentication = new_message.message_verified_by
+			announcement_line = "Verified with ID"
+		else if (new_message.message_stamped_by)
+			authentication = new_message.message_stamped_by
+			announcement_line = "Stamped with stamp"
+
+		aas_config_announce(/datum/aas_config_entry/rc_new_message, list(
+			"%AUTHENTICATION" = authentication,
+			"%SENDER" = new_message.sender_department,
+			"%RECIEVER" = department,
+			"%MESSAGE" = new_message.content
+			), list(GLOB.reverseradiochannels["[new_message.radio_freq]"]), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
@@ -418,6 +425,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 		"%LOCATION" = "will be replaced with the department name",
 	)
 
+/datum/aas_config_entry/rc_new_message
+	name = "RC New Message Announcement"
+	// Yes, players can't use html tags, however they can use speech mods like | or +, but sh-sh-sh, don't tell them!
+	announcement_lines_map = list(
+		"Unauthorized" = "Message from %SENDER to %RECIEVER: <i>%MESSAGE</i>",
+		"Verified with ID" = "Message from %SENDER to %RECIEVER, Verified by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+		"Stamped with stamp" = "Message from %SENDER to %RECIEVER, Stamped by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+	)
+	vars_and_tooltips_map = list(
+		"%AUTHENTICATION" = "will be replaced with ID or stamp, if present",
+		"%SENDER" = "with the sender department ",
+		"%RECIEVER" = "with the reciever department",
+		"%MESSAGE" = "with the message content",
+	)
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING
