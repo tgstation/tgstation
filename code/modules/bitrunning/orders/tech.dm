@@ -31,6 +31,16 @@
 	purchase_path = /obj/item/bitrunning_disk/ability/tier3
 	desc = "This disk contains a program that lets you shapeshift into a lesser ashdrake, or a polar bear."
 
+/datum/orderable_item/bitrunning_tech/gimmick_sports
+	cost_per_order = 750
+	purchase_path = /obj/item/bitrunning_disk/gimmick/sports
+	desc = "This disk contains a program that lets you equip a sports-themed gimmick loadout."
+
+/datum/orderable_item/bitrunning_tech/gimmick_dungeon_crawling
+	cost_per_order = 1250
+	purchase_path = /obj/item/bitrunning_disk/gimmick/dungeon
+	desc = "This disk contains a program that lets you equip a dungeon crawling-themed gimmick loadout."
+
 /datum/orderable_item/bitrunning_tech/flip_skillchip
 	purchase_path = /obj/item/skillchip/matrix_taunt
 	cost_per_order = 1500
