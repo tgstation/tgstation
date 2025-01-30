@@ -76,7 +76,7 @@
 	if(!(attacked_mob in guilty))
 		check_visible_guilt(attacked_mob)
 
-	if((weapon?.item_flags & NEEDS_PERMIT || honorbound.combat_mode || weapon?.force > 0) && !is_honorable(honorbound, attacked_mob))
+	if(((weapon?.item_flags & NEEDS_PERMIT) || honorbound.combat_mode || weapon?.force > 0) && !is_honorable(honorbound, attacked_mob))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Signal to see if we're targeting a mob that is guilty or not.
@@ -211,7 +211,7 @@
 			owner.add_mood_event("honorbound", /datum/mood_event/banished) //add mood event after we already cleared our events
 			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		else
-			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [SCHOOL_UNSET ? "strange" : school] magic!"))
+			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school == SCHOOL_UNSET ? "strange" : school] magic!"))
 			lightningbolt(user)
 			owner.add_mood_event("honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
