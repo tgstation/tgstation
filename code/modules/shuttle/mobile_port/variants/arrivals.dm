@@ -78,7 +78,7 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		aas_config_announce(/datum/aas_config_entry/arrivals_broken, list(), list())
+		aas_config_announce(/datum/aas_config_entry/arrivals_broken, list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE

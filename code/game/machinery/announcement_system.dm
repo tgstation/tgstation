@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /// Sends a message to the appropriate channels.
 /obj/machinery/announcement_system/proc/broadcast(message, list/channels, command_span = FALSE)
 	use_energy(active_power_usage)
-	if(channels.len == 0)
+	if(!channels || channels.len == 0)
 		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
 	else
 		// For some reasons, radio can't recognize RADIO_CHANNEL_COMMON in channels, so we need to handle it separately.
