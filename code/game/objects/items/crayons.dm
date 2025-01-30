@@ -793,6 +793,7 @@
 	var/static/list/direct_color_types = typecacheof(list(
 		/obj/item/paper, // Uses color for TGUI backgrounds, doesn't look very good either
 		/obj/item/fish, // Used for aquarium sprites
+		/obj/structure/window, // Does not play nice with window tint
 	))
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)

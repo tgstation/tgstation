@@ -341,7 +341,7 @@
 	var/list/our_planes = group.plane_masters
 
 	switch(action)
-		if("refresh")
+		if("rebuild")
 			group.rebuild_hud()
 		if("reset_mob")
 			set_target(null)

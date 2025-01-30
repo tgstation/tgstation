@@ -108,8 +108,9 @@
 
 	// things like mouth executions and gunpoints can multiply the damage and wounds of projectiles, so this makes sure those effects are applied to each pellet instead of just one
 	var/original_damage = shell.loaded_projectile.damage
-	var/original_wb = shell.loaded_projectile.wound_bonus
-	var/original_bwb = shell.loaded_projectile.bare_wound_bonus
+	var/original_wounds_bonus = shell.loaded_projectile.wound_bonus
+	var/original_bare_wounds_bonus = shell.loaded_projectile.bare_wound_bonus
+	var/original_ignored_faction = shell.loaded_projectile.ignored_factions
 
 	for(var/i in 1 to num_pellets)
 		shell.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
@@ -122,8 +123,9 @@
 		RegisterSignal(shell.loaded_projectile, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
 		RegisterSignals(shell.loaded_projectile, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
 		shell.loaded_projectile.damage = original_damage
-		shell.loaded_projectile.wound_bonus = original_wb
-		shell.loaded_projectile.bare_wound_bonus = original_bwb
+		shell.loaded_projectile.wound_bonus = original_wounds_bonus
+		shell.loaded_projectile.bare_wound_bonus = original_bare_wounds_bonus
+		shell.loaded_projectile.ignored_factions = original_ignored_faction
 		pellets += shell.loaded_projectile
 		var/turf/current_loc = get_turf(fired_from)
 		if (!istype(target_loc) || !istype(current_loc) || !(shell.loaded_projectile))

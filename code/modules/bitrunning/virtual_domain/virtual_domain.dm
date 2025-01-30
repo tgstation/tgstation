@@ -37,10 +37,8 @@
 	 * Player customization
 	 */
 
-	/// If this domain blocks the use of items from disks, for whatever reason
-	var/forbids_disk_items = FALSE
-	/// If this domain blocks the use of spells from disks, for whatever reason
-	var/forbids_disk_spells = FALSE
+	/// Any restrictions this domain has on what external sources can load in
+	var/external_load_flags = NONE
 	/// Any outfit that you wish to force on avatars. Overrides preferences
 	var/datum/outfit/forced_outfit
 
