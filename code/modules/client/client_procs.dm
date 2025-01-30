@@ -1192,15 +1192,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	fullscreen = !fullscreen
 
-	if (fullscreen)
-#if (MIN_COMPILER_VERSION > 515 || MIN_COMPILER_BUILD > 1630)
-	#warn ATTN!! ONCE 515.1631 IS REQUIRED REPLACE WITH winset(src, "mainwindow", "menu=;is-fullscreen=true"). This means no double maximise calls to make sure window fits, and supresses titlebar, can-resize and is-maximized here making those redundant both implementations are functionally "windowed borderless"
-#endif
-		winset(src, "mainwindow", "on-size=;titlebar=false;can-resize=false;menu=;is-maximized=false")
-		winset(src, "mainwindow", "is-maximized=true")
-	else
-		winset(src, "mainwindow", "menu=menu;titlebar=true;can-resize=true;is-maximized=true;on-size=attempt_auto_fit_viewport")
-
+	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
 /client/verb/toggle_status_bar()
