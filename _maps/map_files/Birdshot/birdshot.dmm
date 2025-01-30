@@ -26116,7 +26116,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "iPU" = (
-/mob/living/simple_animal/hostile/mimic/crate,
+/mob/living/basic/mimic/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "iPW" = (

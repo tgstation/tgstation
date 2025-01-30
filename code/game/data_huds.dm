@@ -22,15 +22,17 @@
 
 /datum/atom_hud/data/human/medical/basic
 
-/datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
-	if(!istype(H))
+/datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/human)
+	if(!istype(human))
 		return FALSE
-	var/obj/item/clothing/under/U = H.w_uniform
-	if(!istype(U))
+	if(HAS_TRAIT(human, HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT))
+		return TRUE
+	var/obj/item/clothing/under/undersuit = human.w_uniform
+	if(!istype(undersuit))
 		return FALSE
-	if(U.has_sensor < HAS_SENSORS)
+	if(undersuit.has_sensor < HAS_SENSORS)
 		return FALSE
-	if(U.sensor_mode <= SENSOR_VITALS)
+	if(undersuit.sensor_mode <= SENSOR_VITALS)
 		return FALSE
 	return TRUE
 

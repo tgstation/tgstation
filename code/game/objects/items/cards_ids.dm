@@ -32,6 +32,8 @@
 
 	/// Cached icon that has been built for this card. Intended to be displayed in chat. Cardboards IDs and actual IDs use it.
 	var/icon/cached_flat_icon
+	///What is our honorific name/title combo to be displayed?
+	var/honorific_title
 
 /obj/item/card/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -111,6 +113,11 @@
 	var/big_pointer = FALSE
 	///If set, the arrow will have a different color.
 	var/pointer_color
+	/// Will this ID card use the first or last name as the name displayed with the honorific?
+	var/honorific_position = HONORIFIC_POSITION_NONE
+	/// What is our selected honorific?
+	var/chosen_honorific
+
 
 /datum/armor/card_id
 	fire = 100
@@ -142,6 +149,7 @@
 	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, PROC_REF(update_in_wallet))
+	RegisterSignal(src, COMSIG_ID_GET_HONORIFIC, PROC_REF(return_message_name_part))
 	if(prob(1))
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
@@ -156,6 +164,20 @@
 	. = ..()
 	if(slot == ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+
+/obj/item/card/id/proc/return_message_name_part(datum/source, list/stored_name, mob/living/carbon/carbon_human)
+	SIGNAL_HANDLER
+	var/voice_name = carbon_human.GetVoice()
+	var/end_string = ""
+	var/return_string = ""
+	if(carbon_human.name != voice_name)
+		end_string += " (as [registered_name])"
+	if(trim && honorific_position != HONORIFIC_POSITION_NONE && (carbon_human.name == voice_name)) //The voice and name are the same, so we display the title.
+		return_string += honorific_title
+	else
+		return_string += voice_name //Name on the ID ain't the same as the speaker, so we display their real name with no title.
+	return_string += end_string
+	stored_name[NAME_PART_INDEX] = return_string
 
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
@@ -478,6 +500,8 @@
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
 	else if(registered_account.account_balance > 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
+	if(trim && length(trim.honorifics))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle honorific"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
@@ -786,7 +810,7 @@
 	for(var/mob/living/carbon/human/viewing_mob in viewers(user, 2))
 		if(viewing_mob.stat || viewing_mob == user)
 			continue
-		viewing_mob.say("Is something wrong? [user.first_name()]... you're sweating.", forced = "psycho")
+		viewing_mob.say("Is something wrong? [first_name(user.name)]... you're sweating.", forced = "psycho")
 		break
 
 /obj/item/card/id/examine_more(mob/user)
@@ -845,7 +869,15 @@
 
 /// Updates the name based on the card's vars and state.
 /obj/item/card/id/proc/update_label()
-	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
+	var/name_string
+	if(registered_name)
+		if(trim && (honorific_position & ~HONORIFIC_POSITION_NONE))
+			name_string = "[update_honorific()]'s ID Card"
+		else
+			name_string = "[registered_name]'s ID Card"
+	else
+		name_string = initial(name)
+
 	var/assignment_string
 
 	if(is_intern)
@@ -857,6 +889,24 @@
 		assignment_string = assignment
 
 	name = "[name_string] ([assignment_string])"
+
+/// Re-generates the honorific title. Returns the compiled honorific_title value
+/obj/item/card/id/proc/update_honorific()
+	var/is_mononym = is_mononym(registered_name)
+	switch(honorific_position)
+		if(HONORIFIC_POSITION_FIRST)
+			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
+		if(HONORIFIC_POSITION_LAST)
+			honorific_title = "[chosen_honorific] [last_name(registered_name)]"
+		if(HONORIFIC_POSITION_FIRST_FULL)
+			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
+			if(!is_mononym)
+				honorific_title += " [last_name(registered_name)]"
+		if(HONORIFIC_POSITION_LAST_FULL)
+			if(!is_mononym)
+				honorific_title += "[first_name(registered_name)] "
+			honorific_title += "[last_name(registered_name)][chosen_honorific]"
+	return honorific_title
 
 /// Returns the trim assignment name.
 /obj/item/card/id/proc/get_trim_assignment()
@@ -870,6 +920,55 @@
 	if(iscash(interacting_with))
 		return insert_money(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	return NONE
+
+/obj/item/card/id/item_ctrl_click(mob/user)
+	if(!in_contents_of(user) || user.incapacitated) //Check if the ID is in the ID slot, so it can be changed from there too.
+		return
+
+	if(!trim)
+		balloon_alert(user, "card has no trim!")
+		return
+
+	if(!length(trim.honorifics))
+		balloon_alert(user, "card has no honorific to use!")
+		return
+
+	var/list/choices = list()
+	var/list/readable_names = HONORIFIC_POSITION_BITFIELDS()
+	for(var/i in readable_names) //Filter out the options you don't have on your ID.
+		if(trim.honorific_positions & readable_names[i]) //If the positions list has the same bit value as the readable list.
+			choices += i
+
+	var/chosen_position = tgui_input_list(user, "What position do you want your honorific in?", "Flair!", choices)
+	if(user.incapacitated || !in_contents_of(user))
+		return
+	var/honorific_position_to_use = readable_names[chosen_position]
+
+	honorific_position = initial(honorific_position) //In case you want to force an honorific on an ID, set a default that won't always be NONE.
+	honorific_title = null //We reset this regardless so that we don't stack titles on accident.
+
+	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
+		balloon_alert(user, "honorific disabled")
+	else
+		var/new_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
+		if(!new_honorific || user.incapacitated || !in_contents_of(user))
+			return
+		chosen_honorific = new_honorific
+		switch(honorific_position_to_use)
+			if(HONORIFIC_POSITION_FIRST)
+				honorific_position = HONORIFIC_POSITION_FIRST
+				balloon_alert(user, "honorific set: display first name")
+			if(HONORIFIC_POSITION_LAST)
+				honorific_position = HONORIFIC_POSITION_LAST
+				balloon_alert(user, "honorific set: display last name")
+			if(HONORIFIC_POSITION_FIRST_FULL)
+				honorific_position = HONORIFIC_POSITION_FIRST_FULL
+				balloon_alert(user, "honorific set: start of full name")
+			if(HONORIFIC_POSITION_LAST_FULL)
+				honorific_position = HONORIFIC_POSITION_LAST_FULL
+				balloon_alert(user, "honorific set: end of full name")
+
+	update_label()
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
