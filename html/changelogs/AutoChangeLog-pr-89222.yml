@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Springlock MODule now only activates when you have at least a single sealed piece"
-  - bugfix: "Springlock MODule no longer damages bodyparts not covered by your MODsuit"
