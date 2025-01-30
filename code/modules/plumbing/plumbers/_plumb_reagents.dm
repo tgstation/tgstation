@@ -110,7 +110,7 @@
 
 	//handle reactions
 	target_holder.handle_reactions()
-	src.handle_reactions()
+	handle_reactions()
 
 	return total_transfered_amount
 
@@ -265,6 +265,6 @@
 
 	//handle reactions
 	target_holder.handle_reactions()
-	src.handle_reactions()
+	handle_reactions()
 
 	return total_transfered_amount
