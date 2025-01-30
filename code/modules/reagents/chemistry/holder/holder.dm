@@ -608,7 +608,6 @@
 
 	var/change = (multiplier - 1) //Get the % change
 	var/list/cached_reagents = reagent_list
-	var/volume_change
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(!isnull(reagent_path) && reagent.type != reagent_path)
 			continue
