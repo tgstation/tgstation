@@ -614,8 +614,6 @@
 
 	var/change = (multiplier - 1) //Get the % change
 	var/reagent_change
-	var/final_volume
-	var/new_total = total_volume
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(!isnull(target_id) && reagent.type != target_id)
@@ -624,12 +622,9 @@
 		//multiply within reasonable boundaries
 		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
 		if(change > 0)
-			reagent_change = add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, no_react = TRUE)
+			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, no_react = TRUE)
 		else
 			reagent.volume += reagent_change
-		new_total = round(new_total + reagent_change, CHEMICAL_VOLUME_ROUNDING)
-		if(new_total <= 0 || new_total >= maximum_volume)
-			break
 
 		if(!isnull(target_id))
 			break
