@@ -54,8 +54,8 @@ export const ForensicScanner = (props) => {
             }
           >
             {log_data
-              .map((log_item, index) => (
-                <ForensicLog key={index} log_item={log_item} index={index} />
+              .map((log, index) => (
+                <ForensicLog key={index} log={log} index={index} />
               ))
               .reverse()}
           </Section>
@@ -65,9 +65,8 @@ export const ForensicScanner = (props) => {
   );
 };
 
-const ForensicLog = ({ log_item, index }) => {
+const ForensicLog = ({ log, index }: { log: LogData; index: number }) => {
   const { act } = useBackend<ForensicScannerData>();
-  const log: LogData = log_item;
   return (
     <Section
       key={index}
