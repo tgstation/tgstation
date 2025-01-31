@@ -12,7 +12,7 @@
 	/// Are we currently active? We don't NEED to track it, but it's a lot easier and faster if we do
 	var/is_active = FALSE
 	/// Whether or not to hook into COMSIG_LIVING_LIFE and use /proc/on_life()
-	var/proces_on_life = FALSE
+	var/process_on_life = FALSE
 
 /datum/bodypart_effect/New(mob/living/carbon/carbon, obj/item/bodypart/bodypart)
 	add_bodypart(carbon, bodypart)
