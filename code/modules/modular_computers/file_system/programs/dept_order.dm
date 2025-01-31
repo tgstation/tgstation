@@ -229,6 +229,7 @@
 		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, PROC_REF(finalize_department_order))
 	if(!alert_silenced && alert_able)
 		aas_config_announce(/datum/aas_config_entry/department_orders, list("ORDER" = pack.name, "PERSON" = name), list(radio_channel), "Order Placed")
+		aas_config_announce(/datum/aas_config_entry/department_orders_cargo, list("DEPARTMENT" = linked_department.department_name), list(RADIO_CHANNEL_SUPPLY))
 	computer.physical.say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 
@@ -258,7 +259,7 @@
 	return FALSE
 
 /datum/aas_config_entry/department_orders
-	name = "Department Order Announcement"
+	name = "Departmental Order Announcement"
 	announcement_lines_map = list(
 		"Order Placed" = "A department order has been placed by %PERSON for %ORDER.",
 		"Cooldown Reset" = "Department order cooldown has expired! A new order may now be placed!",
@@ -268,3 +269,11 @@
 		"PERSON" = "with the orderer's name",
 	)
 
+/datum/aas_config_entry/department_orders_cargo
+	nane = "Cargo Alert: New Departmental Order"
+	announcement_lines_map = list(
+		"Message" = "New departmental order placed for %DEPARTMENT"
+	)
+	vars_and_tooltips_map = list(
+		"DEPARTMENT" = "will be replaced with orderer's department."
+	)
