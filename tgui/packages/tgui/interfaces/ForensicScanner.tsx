@@ -70,13 +70,12 @@ const ForensicLog = ({ log_item, index }) => {
   const log: LogData = log_item;
   return (
     <Section
-      key={index}
       title={`${capitalizeFirst(log.scan_target)} scan at ${log.scan_time}`}
       buttons={
         <Button
           icon="trash"
           color="transparent"
-          onClick={() => act('delete', { index: index })}
+          onClick={() => act('delete', { index })}
         />
       }
     >
