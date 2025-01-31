@@ -69,13 +69,12 @@ const ForensicLog = ({ log, index }: { log: LogData; index: number }) => {
   const { act } = useBackend<ForensicScannerData>();
   return (
     <Section
-      key={index}
       title={`${capitalizeFirst(log.scan_target)} scan at ${log.scan_time}`}
       buttons={
         <Button
           icon="trash"
           color="transparent"
-          onClick={() => act('delete', { index: index })}
+          onClick={() => act('delete', { index })}
         />
       }
     >
