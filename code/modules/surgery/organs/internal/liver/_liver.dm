@@ -277,6 +277,7 @@
 	name = "pod peroxisome"
 	desc = "A small plant-like organ found in podpeople responsible for filtering toxins while aiding in photosynthesis."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_GREEN
 
 /obj/item/organ/liver/pod/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()

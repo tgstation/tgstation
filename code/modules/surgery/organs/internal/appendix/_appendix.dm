@@ -96,6 +96,7 @@
 	name = "pod thingy"
 	desc = "Strangest salad you've ever seen."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_GREEN
 
 /obj/item/organ/appendix/pod/Initialize(mapload)
 	. = ..()

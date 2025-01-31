@@ -84,10 +84,10 @@
 		return list()
 
 	var/list/possible_organs = list(
-		/obj/item/bodypart/arm/left/pod = 1,
-		/obj/item/bodypart/arm/right/pod = 1,
-		/obj/item/bodypart/leg/left/pod = 1,
-		/obj/item/bodypart/leg/right/pod = 1,
+		/obj/item/bodypart/arm/left/pod = 3,
+		/obj/item/bodypart/arm/right/pod = 3,
+		/obj/item/bodypart/leg/left/pod = 3,
+		/obj/item/bodypart/leg/right/pod = 3,
 		/obj/item/food/meat/slab/human/mutant/plant = 3,
 		/obj/item/organ/appendix/pod = 1,
 		/obj/item/organ/brain/pod = 1,
@@ -111,8 +111,6 @@
 			var/obj/item/bodypart/bodypart_spawned = spawned
 			bodypart_spawned.species_color = COLOR_GREEN
 			bodypart_spawned.update_icon_dropped()
-		else
-			spawned.add_atom_colour(COLOR_GREEN, FIXED_COLOUR_PRIORITY)
 		qdel(spawned.GetComponent(/datum/component/decomposition))
 		qdel(spawned.GetComponent(/datum/component/germ_sensitive))
 		created += spawned

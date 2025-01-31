@@ -1040,6 +1040,7 @@
 	name = "pod vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_GREEN
 
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
