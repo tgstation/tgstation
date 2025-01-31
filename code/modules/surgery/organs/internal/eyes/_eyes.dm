@@ -1038,6 +1038,3 @@
 	name = "pod eyes"
 	desc = "Strangest salad you've ever seen."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
-	eye_color_left = COLOR_GREEN //these are overwritten when belonging to a species, but if seperately spawned are green
-	eye_color_right = COLOR_GREEN
-	color = COLOR_GREEN

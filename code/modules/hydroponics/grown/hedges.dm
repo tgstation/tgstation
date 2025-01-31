@@ -63,8 +63,8 @@
 /obj/item/seeds/organ_tree
 	name = "organ tree seed pack"
 	desc = "These seeds grow into an organ tree."
-	icon_state = "seed-shrub" // todo
-	species = "shrub" // todo
+	icon_state = "seed-organ"
+	species = "organ"
 	plantname = "Organ Tree"
 	product = null // handled snowflake
 	lifespan = 10 // organs rot fast
@@ -84,10 +84,10 @@
 		return list()
 
 	var/list/possible_organs = list(
-		/obj/item/bodypart/arm/left/pod = 3,
-		/obj/item/bodypart/arm/right/pod = 3,
-		/obj/item/bodypart/leg/left/pod = 3,
-		/obj/item/bodypart/leg/right/pod = 3,
+		/obj/item/bodypart/arm/left/pod = 2,
+		/obj/item/bodypart/arm/right/pod = 2,
+		/obj/item/bodypart/leg/left/pod = 2,
+		/obj/item/bodypart/leg/right/pod = 2,
 		/obj/item/food/meat/slab/human/mutant/plant = 3,
 		/obj/item/organ/appendix/pod = 1,
 		/obj/item/organ/brain/pod = 1,
@@ -104,8 +104,8 @@
 	var/atom/drop_at = user.Adjacent(loc) ? user.drop_location() : drop_location()
 	for(var/i in 1 to yield)
 		var/organ = pick_weight(possible_organs)
-		if(prob(66)) // 66% chance to reduce the chance to get whatever we just got, usually to 0 (so we won't get a dupe)
-			possible_organs[organ] -= 1
+		if(prob(66)) // 66% chance to reduce the chance to 0 so we get less duplicates
+			possible_organs[organ] = 0
 		var/obj/item/spawned = new organ(drop_at)
 		if(isbodypart(spawned))
 			var/obj/item/bodypart/bodypart_spawned = spawned

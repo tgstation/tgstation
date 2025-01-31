@@ -74,6 +74,7 @@
 		/obj/item/seeds/rainbow_bunch,
 		/obj/item/seeds/seedling,
 		/obj/item/seeds/shrub,
+		/obj/item/seeds/organ_tree,
 		/obj/item/seeds/random = 2,
 	)
 	crate_name = "exotic seeds crate"
