@@ -603,7 +603,7 @@
 		return
 
 	multiplier = round(min(multiplier, maximum_volume / total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(multiplier <= 0)
+	if(multiplier < 0 || multiplier == 1)
 		return
 
 	if(!isnull(target_id) && !ispath(target_id))
