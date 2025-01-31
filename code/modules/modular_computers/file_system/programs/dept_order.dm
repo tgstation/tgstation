@@ -272,7 +272,7 @@
 /datum/aas_config_entry/department_orders_cargo
 	name = "Cargo Alert: New Departmental Order"
 	announcement_lines_map = list(
-		"Message" = "New %DEPARTMENT departmental order placed"
+		"Message" = "New %DEPARTMENT departmental order has been placed"
 	)
 	vars_and_tooltips_map = list(
 		"DEPARTMENT" = "will be replaced with orderer's department."

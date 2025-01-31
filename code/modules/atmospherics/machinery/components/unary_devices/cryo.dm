@@ -666,10 +666,10 @@
 /datum/aas_config_entry/medical_cryo_announcements
 	name = "Medical Alert: Cryogenics Reports"
 	announcement_lines_map = list(
-		"Autoejecting" = " Auto ejecting patient now.",
-		"Deceased" = "Cryogenics report: Patient is deceased.%AUTOEJECTING",
-		"Fully Recovered" = "Cryogenics report: Patient fully restored.%AUTOEJECTING",
-		"Insufficient Gas" = "Cryogenics report: Insufficient cryogenic gas, shutting down.%AUTOEJECTING",
+		"Autoejecting" = "Auto ejecting patient now.",
+		"Deceased" = "Cryogenics report: Patient is deceased. %AUTOEJECTING",
+		"Fully Recovered" = "Cryogenics report: Patient fully restored. %AUTOEJECTING",
+		"Insufficient Gas" = "Cryogenics report: Insufficient cryogenic gas, shutting down. %AUTOEJECTING",
 		"Wound Treatment" = "Cryogenics report: Patient vitals fully recovered, continuing automated wound treatment."
 	)
 	vars_and_tooltips_map = list(
@@ -679,7 +679,7 @@
 /datum/aas_config_entry/medical_cryo_announcements/compile_announce(list/variables_map, announcement_line)
 	variables_map["AUTOEJECTING"] = variables_map["EJECTING"] ? announcement_lines_map["Autoejecting"] : ""
 	. = ..()
-	. = replacetext_char(., "\[NO DATA\]", "")
+	. = trim(replacetext_char(., "\[NO DATA\]", ""))
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
