@@ -325,4 +325,36 @@
 	. = ..()
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
+/obj/item/organ/stomach/pod
+	name = "pod chloroplast"
+	desc = "A green plant-like organ that functions similarly to a human stomach. \
+		This larger one is found in podpeople and powers their photosynthesis."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+
+/obj/item/organ/stomach/pod/on_life(seconds_per_tick, times_fired)
+	if(organ_flags & ORGAN_FAILING)
+		return ..()
+	if(isnull(owner) || !(owner.mob_biotypes & MOB_PLANT))
+		return ..()
+
+	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+	if(isturf(owner.loc)) //else, there's considered to be no light
+		var/turf/turf_loc = owner.loc
+		light_amount = min(1, turf_loc.get_lumcount()) - 0.5
+		owner.adjust_nutrition(5 * light_amount * seconds_per_tick)
+		if(light_amount > 0.2) //if there's enough light, heal
+			var/need_mob_update = FALSE
+			need_mob_update += owner.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			need_mob_update += owner.adjustToxLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
+			need_mob_update += owner.adjustOxyLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
+			if(need_mob_update)
+				owner.updatehealth()
+
+	if(owner.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
+		owner.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
+
+	if(owner.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		owner.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+	return ..()
+
 #undef STOMACH_METABOLISM_CONSTANT
