@@ -7,8 +7,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
-	force = 12
-	throwforce = 12
+	force = 13
+	throwforce = 13
 	throw_speed = 2
 	throw_range = 7
 	demolition_mod = 1.25
@@ -198,13 +198,15 @@
 	has_latches = FALSE
 	force = 19
 	throwforce = 22
+	var/base_force = 20
+	var/base_throwforce = 23
 
 /obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
 	var/power = 0
 	for (var/obj/item/stack/telecrystal/stored_crystals in get_all_contents())
 		power += (stored_crystals.amount / 2)
-	force = 19 + power
-	throwforce = 22 + power
+	force = base_force + power
+	throwforce = base_throwforce + power
 
 /obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
 	calc_damage()
