@@ -1,5 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - qol: "Supply console got little redesign, and ability to see what can be inside a order."
-  - code_imp: "Supply console and express supply console, now use a unified method of acquiring data"

@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixed PAIs not being able to send or reply to messages using their digital messenger app."
-  - bugfix: "fixed PAIs not being able to turn off the GPS tracking using their gpa app."

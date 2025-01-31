@@ -797,3 +797,51 @@
   TiviPlus:
   - bugfix: fixed timestamps being timezone sensitive
   - admin: due to this bug some logs may have been timestamped incorrectly
+2025-01-31:
+  00-Steven:
+  - refactor: Bitrunning item/ability loading has been refactored. Please report any
+      issues.
+  - rscadd: Added Bitrunning gimmick loadout disks. These disks contain full sets
+      of equipment for all your digital cosplay needs, each including questionably
+      helpful equipment. Currently includes Sports (Boxer, Skater, Archer, Fisher,
+      Gamer) and Dungeon Crawling (Alchemist, Rogue, Healer, Wizard).
+  - rscadd: Taking a lead acid battery into the netpod with you now gives your bit
+      avatar shock touch.
+  ArcaneMusic:
+  - rscadd: Stations in your sector may start with the GMM spotlight, a massive economic
+      broadcast spotlight that will follow the wealthiest crewmate on board until
+      the next paycheck
+  AyIong:
+  - qol: Supply console got little redesign, and ability to see what can be inside
+      a order.
+  - code_imp: Supply console and express supply console, now use a unified method
+      of acquiring data
+  Ben10Omintrix:
+  - bugfix: fixes megafauna instantly attacking people adjacent to them
+  GwynCodes:
+  - spellcheck: removed the word "autist" from a forced say effect.
+  Holoo-1:
+  - bugfix: fixed shadows on 516
+  Jacquerel:
+  - rscadd: Adds a new random lawset where anything that can speak counts as human.
+  Melbert:
+  - qol: Using items on cyborgs now use balloon alerts instead of chat messages.
+  - bugfix: You can flash cyborgs again
+  - refactor: Refactored item interaction on cyborgs.
+  SmArtKar:
+  - bugfix: Fixed a missing area in the corner of icebox morgue
+  - rscadd: You can wear voidwalker's skull on your head now
+  - bugfix: Void curse no longer colors stars in your skin color
+  - bugfix: Fixed issues with window tinting/coloration
+  SyncIt21:
+  - bugfix: Herignis has a decent heating effect on mobs reagents
+  Zenitheevee:
+  - bugfix: adds Ignored Factions to pellet cloud component variable transfer
+  necromanceranne:
+  - bugfix: You can no longer circumvent your honorbound oath by starting a surgery
+      on someone.
+  vinylspiders:
+  - bugfix: fixed PAIs not being able to send or reply to messages using their digital
+      messenger app.
+  - bugfix: fixed PAIs not being able to turn off the GPS tracking using their gpa
+      app.
