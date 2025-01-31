@@ -1418,9 +1418,10 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
 			speak("You are not of legal age to purchase [item_record.name].")
 			if(!(usr in GLOB.narcd_underages))
-				aas_config_announce(/datum/aas_config/announce/underage_purchase, list(
+				var/area/location = get_area(src)
+				aas_config_announce(/datum/aas_config_entry/vendomat_age_control, list(
 					"%PERSON" = usr.name,
-					"%LOCATION" = get_area(src).name,
+					"%LOCATION" = location.name,
 					"%VENDOR" = name,
 					"%PRODUCT" = item_record.name
 				), list(RADIO_CHANNEL_SECURITY))
