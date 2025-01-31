@@ -11,9 +11,14 @@
 	var/minimum_bodyparts = 1
 	/// Are we currently active? We don't NEED to track it, but it's a lot easier and faster if we do
 	var/is_active = FALSE
+	/// Whether or not to hook into COMSIG_LIVING_LIFE and use /proc/on_life()
+	var/proces_on_life = FALSE
 
 /datum/bodypart_effect/New(mob/living/carbon/carbon, obj/item/bodypart/bodypart)
 	add_bodypart(carbon, bodypart)
+
+	if(process_on_life)
+		RegisterSignal(carbon, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /// Merge a bodypart into the effect
 /datum/bodypart_effect/proc/add_bodypart(mob/living/carbon/carbon, bodypart)
@@ -60,7 +65,7 @@
 
 	is_active = FALSE
 
-/// Called about every 2 seconds
+/// Called about every 2 seconds if process_on_life was TRUE during instantiation
 /datum/bodypart_effect/proc/on_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	return
 
@@ -77,6 +82,7 @@
 
 /// This limb regens in light! Only BODYTYPE_PLANT limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
 /datum/bodypart_effect/photosynthesis
+	proces_on_life = TRUE
 
 /datum/bodypart_effect/photosynthesis/on_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -104,6 +110,7 @@
 /// This limb heals in darkness and dies in light!
 /// Only BODYTYPE_SHADOW limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
 /datum/bodypart_effect/nyxosynthesis
+	proces_on_life = TRUE
 
 /datum/bodypart_effect/nyxosynthesis/on_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	var/turf/owner_turf = owner.loc
@@ -118,5 +125,5 @@
 	else
 		owner.take_overall_damage(brute = 0.5 * seconds_per_tick * bodypart_coefficient, burn = 0.5 * seconds_per_tick * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
 
-#undefine GET_BODYPART_COEFFICIENT
-#undefine IS_FULL_BODY
+#undef GET_BODYPART_COEFFICIENT
+#undef IS_FULL_BODY
