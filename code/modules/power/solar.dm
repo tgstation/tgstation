@@ -356,8 +356,7 @@
 			return TRUE
 
 	//make a list of all the glass
-	var/list/acceptable_glass_list
-	acceptable_glass_list = typecacheof(list(
+	var/static/list/acceptable_glass_list = typecacheof(list(
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/plasmaglass,
 		/obj/item/stack/sheet/titaniumglass,
