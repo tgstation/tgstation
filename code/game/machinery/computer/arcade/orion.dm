@@ -119,15 +119,14 @@
 	gamers[gamer]++ // How many times the player has 'prestiged' (massacred their crew)
 
 	if(gamers[gamer] > ORION_GAMER_REPORT_THRESHOLD && prob(20 * gamers[gamer]))
-		var/area/location = get_area(src)
 		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
 			"PERSON" = gamer.name,
-			"LOCATION" = location.name,
+			"LOCATION" = get_area_name(src),
 			"SOURCE" = name), list(RADIO_CHANNEL_SECURITY), "Security")
 
 		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
 			"PERSON" = gamer.name,
-			"LOCATION" = location.name,
+			"LOCATION" = get_area_name(src),
 			"SOURCE" = name), list(RADIO_CHANNEL_MEDICAL), "Medical")
 
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph

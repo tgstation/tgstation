@@ -330,9 +330,9 @@
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
 		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent)
 		if (aas)
-			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area(src), "COST" = bounty_value), "Regular Message")
+			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value), "Regular Message")
 			if (speed_bonus)
-				aas.announce(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area(src), "COST" = bounty_value, "BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
+				aas.announce(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value, "BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
 			else
 				aas.broadcast("[nag_message]", list(RADIO_CHANNEL_SUPPLY))
 		speed_bonus = 0
@@ -360,7 +360,7 @@
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
 	aas_config_announce(/datum/aas_config_entry/bounty_cube_created, list(
-		"LOCATION" = get_area(src),
+		"LOCATION" = get_area_name(src),
 		"PERSON" = bounty_holder,
 		"RANK" = bounty_holder_job,
 		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss"),
