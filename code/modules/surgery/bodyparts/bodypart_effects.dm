@@ -82,7 +82,7 @@
 
 /// This limb regens in light! Only BODYTYPE_PLANT limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
 /datum/bodypart_effect/photosynthesis
-	proces_on_life = TRUE
+	process_on_life = TRUE
 
 /datum/bodypart_effect/photosynthesis/on_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -110,7 +110,7 @@
 /// This limb heals in darkness and dies in light!
 /// Only BODYTYPE_SHADOW limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
 /datum/bodypart_effect/nyxosynthesis
-	proces_on_life = TRUE
+	process_on_life = TRUE
 
 /datum/bodypart_effect/nyxosynthesis/on_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	var/turf/owner_turf = owner.loc
