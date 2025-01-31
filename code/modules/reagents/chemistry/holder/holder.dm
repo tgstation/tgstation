@@ -599,11 +599,11 @@
  * * datum/reagent/target_id - multiply only this reagent in this holder leaving others untouched
  */
 /datum/reagents/proc/multiply(multiplier = 1, datum/reagent/target_id)
-	if(multiplier == 1 || !total_volume)
+	if(!total_volume)
 		return
 
-	multiplier = round(clamp(multiplier, 0, maximum_volume / total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(!multiplier)
+	multiplier = round(min(multiplier, maximum_volume / total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(multiplier <= 0)
 		return
 
 	if(!isnull(target_id) && !ispath(target_id))
