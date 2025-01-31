@@ -602,8 +602,8 @@
 	if(multiplier == 1 || !total_volume)
 		return
 
-	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
-	if(multiplier < 0)
+	multiplier = round(clamp(multiplier, 0, maximum_volume / total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(!multiplier)
 		return
 
 	if(!isnull(target_id) && !ispath(target_id))
@@ -617,7 +617,7 @@
 		if(!isnull(target_id) && reagent.type != target_id)
 			continue
 
-		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
+		reagent_change = reagent.volume * change
 		if(change > 0)
 			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 		else
