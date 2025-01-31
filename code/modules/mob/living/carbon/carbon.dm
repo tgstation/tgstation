@@ -1049,6 +1049,17 @@
 	bodyparts += new_bodypart
 	new_bodypart.update_owner(src)
 
+	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
+	for(var/datum/bodypart_effect/effect_type as anything in new_bodypart.bodypart_effects)
+		var/datum/bodypart_effect/existing_effect = locate(effect_type) in bodypart_effects
+		if(existing_effect)
+			existing_effect.add_bodypart(src, new_bodypart)
+			continue
+
+		var/datum/bodypart_effect/new_effect = new effect_type (src, new_bodypart)
+		bodypart_effects += new_effect
+
+	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
 		organ.mob_insert(src)
 

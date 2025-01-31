@@ -3,13 +3,12 @@
 /// A special flag value used to make a nightmare heart not grant a light eater. Appears to be unused.
 #define HEART_SPECIAL_SHADOWIFY 2
 
-
 /obj/item/organ/brain/shadow/nightmare
 	name = "tumorous mass"
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
-	applied_status = /datum/status_effect/shadow_regeneration/nightmare
+
 	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
 	///Our associated terrorize spell, for antagonist nightmares
@@ -33,6 +32,17 @@
 	. = ..()
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
+
+/obj/item/organ/brain/shadow/nightmare/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	var/turf/owner_turf = owner.loc
+	if(!isturf(owner_turf))
+		return
+	var/light_amount = owner_turf.get_lumcount()
+
+	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+		owner.apply_status_effect(/datum/status_effect/shadow_regeneration/nightmare)
 
 /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
 	name = "Lightless Domain"
