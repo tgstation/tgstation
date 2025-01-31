@@ -607,7 +607,7 @@
 		return
 
 	if(!isnull(target_id) && !ispath(target_id))
-		stack_trace("Bad reagent path [target_id] passed to multiply_reagents")
+		stack_trace("Bad reagent path [target_id] passed to multiply")
 		return
 
 	var/change = (multiplier - 1) //Get the % change
@@ -620,7 +620,7 @@
 		//multiply within reasonable boundaries
 		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
 		if(change > 0)
-			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 		else
 			reagent.volume += reagent_change
 
