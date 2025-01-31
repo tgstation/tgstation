@@ -679,7 +679,9 @@
 /datum/aas_config_entry/medical_cryo_announcements/compile_announce(list/variables_map, announcement_line)
 	variables_map["AUTOEJECTING"] = variables_map["EJECTING"] ? announcement_lines_map["Autoejecting"] : ""
 	. = ..()
-	. = trim(replacetext_char(., "\[NO DATA\]", ""))
+	// Why double replacetext_char? Well, to handle cases where variable in the middle of sentence like "also %AUTOEJECTING this", so there will be no double spaces
+	// Yeah I am bad, at this, sorry (it should be a perfect place for regex usage, but I am weak)
+	. = trim(replacetext_char(replacetext_char(., "\[NO DATA\] ", ""), "\[NO DATA\]", ""))
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
