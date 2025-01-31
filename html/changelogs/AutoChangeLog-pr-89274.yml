@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Using items on cyborgs now use balloon alerts instead of chat messages."
-  - bugfix: "You can flash cyborgs again"
-  - refactor: "Refactored item interaction on cyborgs."
