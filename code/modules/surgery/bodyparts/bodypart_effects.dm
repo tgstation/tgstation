@@ -117,3 +117,6 @@
 		owner.heal_overall_damage(brute = 1 * seconds_per_tick * bodypart_coefficient, burn = 1 * seconds_per_tick * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
 	else
 		owner.take_overall_damage(brute = 0.5 * seconds_per_tick * bodypart_coefficient, burn = 0.5 * seconds_per_tick * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
+
+#undefine GET_BODYPART_COEFFICIENT
+#undefine IS_FULL_BODY
