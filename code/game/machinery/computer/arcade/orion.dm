@@ -121,14 +121,14 @@
 	if(gamers[gamer] > ORION_GAMER_REPORT_THRESHOLD && prob(20 * gamers[gamer]))
 		var/area/location = get_area(src)
 		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
-			"%PERSON" = gamer.name,
-			"%LOCATION" = location.name,
-			"%SOURCE" = name), list(RADIO_CHANNEL_SECURITY), "Security")
+			"PERSON" = gamer.name,
+			"LOCATION" = location.name,
+			"SOURCE" = name), list(RADIO_CHANNEL_SECURITY), "Security")
 
 		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
-			"%PERSON" = gamer.name,
-			"%LOCATION" = location.name,
-			"%SOURCE" = name), list(RADIO_CHANNEL_MEDICAL), "Medical")
+			"PERSON" = gamer.name,
+			"LOCATION" = location.name,
+			"SOURCE" = name), list(RADIO_CHANNEL_MEDICAL), "Medical")
 
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
@@ -553,9 +553,9 @@
 		"Medical" = "PSYCH ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please schedule psych evaluation.",
 	)
 	vars_and_tooltips_map = list(
-		"%PERSON" = "will be replaced with the crewmember reported",
-		"%LOCATION" = "with the area of violent behavior",
-		"%SOURCE" = "with the reporter",
+		"PERSON" = "will be replaced with the crewmember reported",
+		"LOCATION" = "with the area of violent behavior",
+		"SOURCE" = "with the reporter",
 	)
 
 #undef ORION_TRAIL_WINTURN

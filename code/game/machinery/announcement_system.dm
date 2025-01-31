@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	else if (announcement_line && isnum(announcement_line))
 		announcement_message = announcement_lines_map[announcement_lines_map[announcement_line]]
 	for(var/variable in vars_and_tooltips_map)
-		announcement_message = replacetext_char(announcement_message, variable, variables_map[variable] || "\[NO DATA\]")
+		announcement_message = replacetext_char(announcement_message, "%[variable]", variables_map[variable] || "\[NO DATA\]")
 	return announcement_message
 
 /// Called when the announcement system is emagged or EMPed.
@@ -261,8 +261,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	announcement_lines_map = list(
 		"Message" = "%PERSON has signed up as %RANK")
 	vars_and_tooltips_map = list(
-		"%PERSON" = "will be replaced with their name.",
-		"%RANK" = "with their job."
+		"PERSON" = "will be replaced with their name.",
+		"RANK" = "with their job."
 	)
 
 /datum/aas_config_entry/arrival/act_up()
@@ -279,8 +279,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	announcement_lines_map = list(
 		"Message" = "%PERSON, %RANK, is the department head.")
 	vars_and_tooltips_map = list(
-		"%PERSON" = "will be replaced with their name.",
-		"%RANK" = "with their job."
+		"PERSON" = "will be replaced with their name.",
+		"RANK" = "with their job."
 	)
 
 /datum/aas_config_entry/newhead/act_up()
@@ -297,7 +297,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	announcement_lines_map = list(
 		"Message" = "The %NODE techweb node has been researched")
 	vars_and_tooltips_map = list(
-		"%NODE" = "will be replaced with the researched node."
+		"NODE" = "will be replaced with the researched node."
 	)
 
 /datum/aas_config_entry/researched_node/act_up()
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	announcement_lines_map = list(
 		"Message" = "Officer %OFFICER has been assigned to %DEPARTMENT.")
 	vars_and_tooltips_map = list(
-		"%OFFICER" = "will be replaced with the officer's name.",
-		"%DEPARTMENT" = "with the department they were assigned to."
+		"OFFICER" = "will be replaced with the officer's name.",
+		"DEPARTMENT" = "with the department they were assigned to."
 	)
 	modifiable = FALSE

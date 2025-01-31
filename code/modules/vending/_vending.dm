@@ -1420,10 +1420,10 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if(!(usr in GLOB.narcd_underages))
 				var/area/location = get_area(src)
 				aas_config_announce(/datum/aas_config_entry/vendomat_age_control, list(
-					"%PERSON" = usr.name,
-					"%LOCATION" = location.name,
-					"%VENDOR" = name,
-					"%PRODUCT" = item_record.name
+					"PERSON" = usr.name,
+					"LOCATION" = location.name,
+					"VENDOR" = name,
+					"PRODUCT" = item_record.name
 				), list(RADIO_CHANNEL_SECURITY))
 				GLOB.narcd_underages += usr
 			flick(icon_deny,src)
@@ -1903,10 +1903,10 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		"Message" = "SECURITY ALERT: Underaged crewmember %PERSON recorded attempting to purchase %PRODUCT in %LOCATION by %VENDOR. Please watch for substance abuse."
 	)
 	vars_and_tooltips_map = list(
-		"%PERSON" = "will be replaced with the name of the crewmember",
-		"%PRODUCT" = "with the product, he attempted to purchase",
-		"%LOCATION" = "with place of purchase",
-		"%VENDOR" = "with the vending machine"
+		"PERSON" = "will be replaced with the name of the crewmember",
+		"PRODUCT" = "with the product, he attempted to purchase",
+		"LOCATION" = "with place of purchase",
+		"VENDOR" = "with the vending machine"
 	)
 
 #undef MAX_VENDING_INPUT_AMOUNT

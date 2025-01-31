@@ -162,8 +162,8 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		return
 
 	announcement_system.announce(/datum/aas_config_entry/announce_officer, list(
-		"%OFFICER" = officer.real_name,
-		"%DEPARTMENT" = department,
+		"OFFICER" = officer.real_name,
+		"DEPARTMENT" = department,
 	), list(RADIO_CHANNEL_SECURITY))
 
 	var/list/targets = list()
@@ -190,8 +190,8 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		"fakename" = "Security Department Update",
 		"fakejob" = "Automated Announcement System",
 		"message" = announcement_system.compile_config_message(/datum/aas_config_entry/announce_officer, list(
-			"%OFFICER" = officer.real_name,
-			"%DEPARTMENT" = department,
+			"OFFICER" = officer.real_name,
+			"DEPARTMENT" = department,
 		)),
 		"targets" = targets,
 		"automated" = TRUE,

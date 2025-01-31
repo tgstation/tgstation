@@ -131,7 +131,7 @@
 		return 0
 
 	if(!forced)
-		aas_config_announce(/datum/aas_config_entry/brig_cell_release_announcement, list("%CELL" = name), list(RADIO_CHANNEL_SECURITY))
+		aas_config_announce(/datum/aas_config_entry/brig_cell_release_announcement, list("CELL" = name), list(RADIO_CHANNEL_SECURITY))
 
 	timing = FALSE
 	activation_time = 0
@@ -280,7 +280,7 @@
 		"Message" = "Timer for %CELL has expired. Releasing prisoner.",
 	)
 	vars_and_tooltips_map = list(
-		"%CELL" = "will be replaced with the cell name.",
+		"CELL" = "will be replaced with the cell name.",
 	)
 
 #undef PRESET_SHORT

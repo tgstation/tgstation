@@ -330,9 +330,9 @@
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
 		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent)
 		if (aas)
-			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("%LOCATION" = get_area(src), "%COST" = bounty_value), "Regular Message")
+			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area(src), "COST" = bounty_value), "Regular Message")
 			if (speed_bonus)
-				aas.announce(/datum/aas_config_entry/bounty_cube_unsent, list("%LOCATION" = get_area(src), "%COST" = bounty_value, "%BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
+				aas.announce(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area(src), "COST" = bounty_value, "BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
 			else
 				aas.broadcast("[nag_message]", list(RADIO_CHANNEL_SUPPLY))
 		speed_bonus = 0
@@ -360,11 +360,11 @@
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
 	aas_config_announce(/datum/aas_config_entry/bounty_cube_created, list(
-		"%LOCATION" = get_area(src),
-		"%PERSON" = bounty_holder,
-		"%RANK" = bounty_holder_job,
-		"%BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss"),
-		"%COST" = bounty_value
+		"LOCATION" = get_area(src),
+		"PERSON" = bounty_holder,
+		"RANK" = bounty_holder_job,
+		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss"),
+		"COST" = bounty_value
 	), list(RADIO_CHANNEL_SUPPLY))
 
 //for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
@@ -416,11 +416,11 @@
 	announcement_lines_map = list(
 		"Message" = "A %COST cr bounty cube has been created in %LOCATION by %PERSON (%RANK). Speedy delivery bonus lost in %BONUSTIME.")
 	vars_and_tooltips_map = list(
-		"%LOCATION" = "will be replaced with the location of the cube.",
-		"%PERSON" = "with who created the cube.",
-		"%RANK" = "with their job.",
-		"%BONUSTIME" = "with the time left for speedy delivery tip.",
-		"%COST" = "with the cost of the cube.",
+		"LOCATION" = "will be replaced with the location of the cube.",
+		"PERSON" = "with who created the cube.",
+		"RANK" = "with their job.",
+		"BONUSTIME" = "with the time left for speedy delivery tip.",
+		"COST" = "with the cost of the cube.",
 	)
 
 /datum/aas_config_entry/bounty_cube_unsent
@@ -429,9 +429,9 @@
 		"Regular Message" = "The %COST cr bounty cube is unsent in %LOCATION.",
 		"When Bonus Lost" = "The %COST cr bounty cube is unsent in %LOCATION. Speedy delivery bonus of %BONUSLOST credits lost.")
 	vars_and_tooltips_map = list(
-		"%LOCATION" = "will be replaced with the location of the cube.",
-		"%COST" = "with the cost of the cube.",
-		"%BONUSLOST" = "with the lost bonus tip, it will be sent just for When Bonus Lost message!",
+		"LOCATION" = "will be replaced with the location of the cube.",
+		"COST" = "with the cost of the cube.",
+		"BONUSLOST" = "with the lost bonus tip, it will be sent just for When Bonus Lost message!",
 	)
 
 #undef CIV_BOUNTY_SPLIT
