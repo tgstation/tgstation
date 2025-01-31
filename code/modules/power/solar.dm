@@ -81,26 +81,23 @@
 	unset_control()
 	control = SC
 	SC.connected_panels += src
-	SC.totalCapacity += SOLAR_GEN_RATE * power_tier
+	SC.total_capacity += SOLAR_GEN_RATE * power_tier
 	queue_turn(SC.azimuth_target)
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
 /obj/machinery/power/solar/proc/unset_control()
 	if(control)
 		control.connected_panels -= src
-		control.totalCapacity -= SOLAR_GEN_RATE * power_tier
+		control.total_capacity -= SOLAR_GEN_RATE * power_tier
 		control = null
 
-/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/Assembly)
-	if(!Assembly)
-		Assembly = new /obj/item/solar_assembly(src)
-		Assembly.glass_type = /obj/item/stack/sheet/glass
-		Assembly.set_anchored(TRUE)
+/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/assembly)
+	if(!assembly)
+		assembly= new /obj/item/solar_assembly(src)
+		assembly.glass_type = /obj/item/stack/sheet/glass
+		assembly.set_anchored(TRUE)
 	else
-		Assembly.forceMove(src)
-	//if(Assembly.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
-	//	max_integrity *= 2  //this need to be placed here, because panels already on the map don't have an assembly linked to
-	//	atom_integrity = max_integrity
+		assembly.forceMove(src)
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
 	if(I.use_tool(src, user, 0))
@@ -315,8 +312,8 @@
 		return
 	randomise_offset(anchored ? 0 : random_offset)
 
-/obj/item/solar_assembly/attackby(obj/item/itemUsed, mob/user, params)
-	if(itemUsed.tool_behaviour == TOOL_WRENCH && isturf(loc))
+/obj/item/solar_assembly/attackby(obj/item/item_used, mob/user, params)
+	if(item_used.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
@@ -325,22 +322,22 @@
 			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly[anchored ? " into place" : null]."),
 			span_notice("You [anchored ? null : "un"]wrench the solar assembly[anchored ? " into place" : null]."),
 		)
-		itemUsed.play_tool_sound(src, 75)
+		item_used.play_tool_sound(src, 75)
 		return TRUE
 
 	if(tracker)
-		if(itemUsed.tool_behaviour == TOOL_CROWBAR)
+		if(item_used.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
 			update_appearance()
 			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
 			return TRUE
 
-		if(!istype(itemUsed, /obj/item/stack/sheet/glass))
+		if(!istype(item_used, /obj/item/stack/sheet/glass))
 			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
 			return
-		var/obj/item/stack/sheet/mySheet = itemUsed
-		if(!mySheet.use(2))
+		var/obj/item/stack/sheet/my_sheet = item_used
+		if(!my_sheet.use(2))
 			to_chat(user, span_warning("You don't have enough glass to complete the tracker."))
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -349,25 +346,28 @@
 		return
 
 	if(!tracker)
-		if(istype(itemUsed, /obj/item/electronics/tracker))
-			if(!user.temporarilyRemoveItemFromInventory(itemUsed))
+		if(istype(item_used, /obj/item/electronics/tracker))
+			if(!user.temporarilyRemoveItemFromInventory(item_used))
 				return
 			tracker = TRUE
 			update_appearance()
-			qdel(itemUsed)
+			qdel(item_used)
 			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
 			return TRUE
 
 	//make a list of all the glass
 	var/list/acceptable_glass_list
-	acceptable_glass_list = GLOB.glass_sheet_types.Copy()
-	//take out rglass and plasmarglass
-	acceptable_glass_list -= typecacheof(list(/obj/item/stack/sheet/rglass, /obj/item/stack/sheet/plasmarglass))
+	acceptable_glass_list = typecacheof(list(
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasmaglass,
+		/obj/item/stack/sheet/titaniumglass,
+		/obj/item/stack/sheet/plastitaniumglass,
+	))
 
-	if(!acceptable_glass_list[itemUsed.type])
+	if(!acceptable_glass_list[item_used.type])
 		//items that arent used above, or arent usable glass will make it here.
 		//so we check if its reinfocred glass, or some other item
-		if(istype(itemUsed, /obj/item/stack/sheet/rglass) || istype(itemUsed, /obj/item/stack/sheet/plasmarglass))
+		if(istype(item_used, /obj/item/stack/sheet/rglass) || istype(item_used, /obj/item/stack/sheet/plasmarglass))
 			to_chat(user, span_warning("The solar array will only accept glass or glass alloys that have not been reinforced."))
 		//an else statement can be put here if you want something to happen to all the misc items that make it this far
 		return
@@ -377,7 +377,7 @@
 		to_chat(user, span_warning("A solar panel is already assembled here."))
 		return
 
-	if(is_glass_sheet(itemUsed))
+	if(is_glass_sheet(item_used))
 		if(!anchored)
 			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
 			return
@@ -389,12 +389,12 @@
 	    /datum/material/alloy/plastitaniumglass = 4,
 		)
 
-		var/obj/item/stack/sheet/mySheet = itemUsed
-		if(!mySheet.use(2))
+		var/obj/item/stack/sheet/my_sheet = item_used
+		if(!my_sheet.use(2))
 			to_chat(user, span_warning("You need at least two sheets of glass to complete a solar panel!"))
 			return
 
-		var/datum/material/glass_material = mySheet.material_type
+		var/datum/material/glass_material = my_sheet.material_type
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
 		var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
@@ -432,7 +432,7 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
-	var/totalCapacity //The total amount of power we could generate with all our connected solars
+	var/total_capacity //The total amount of power we could generate with all our connected solars
 
 	///History of power supply
 	var/list/history = list()
@@ -496,7 +496,7 @@
 
 		var/list/capacity = history["capacity"]
 		if(powernet)
-			capacity += totalCapacity
+			capacity += total_capacity
 		if(capacity.len > record_size)
 			capacity.Cut(1, 2)
 
@@ -521,7 +521,7 @@
 /obj/machinery/power/solar_control/ui_data()
 	var/data = list()
 	data["supply"] = round(lastgen)
-	data["capacity"] = totalCapacity
+	data["capacity"] = total_capacity
 	data["azimuth_current"] = azimuth_target
 	data["azimuth_rate"] = azimuth_rate
 	data["max_rotation_rate"] = SSsun.base_rotation * 2
