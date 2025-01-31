@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Premium Internals Boxes station trait now has unique box sprites"

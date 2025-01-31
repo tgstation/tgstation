@@ -1,4 +1,4 @@
-#define SOLAR_GEN_RATE 1500
+#define SOLAR_GEN_RATE 2500
 #define OCCLUSION_DISTANCE 20
 #define PANEL_Z_OFFSET 13
 #define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
@@ -15,6 +15,7 @@
 	max_integrity = 150
 	integrity_failure = 0.33
 
+
 	var/id
 	var/obscured = FALSE
 	///`[0-1]` measure of obscuration -- multipllier against power generation
@@ -30,11 +31,17 @@
 	var/obj/effect/overlay/panel
 	var/obj/effect/overlay/panel_edge
 
+	//used to keep track of what material our panel currently has
+	var/datum/material/material_type = /datum/material/glass
+
+	///better glass increases the how much power the solar gives. the power_tier is a multiplier
+	var/power_tier = 1
+
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Z_OFFSET)
-	panel = add_panel_overlay("solar_panel", PANEL_Z_OFFSET)
+	panel_edge = add_panel_overlay("solar_panel_glass_edge", PANEL_EDGE_Z_OFFSET)
+	panel = add_panel_overlay("solar_panel_glass", PANEL_Z_OFFSET)
 
 	Make(S)
 	connect_to_network()
@@ -74,29 +81,26 @@
 	unset_control()
 	control = SC
 	SC.connected_panels += src
+	SC.total_capacity += SOLAR_GEN_RATE * power_tier
 	queue_turn(SC.azimuth_target)
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
 /obj/machinery/power/solar/proc/unset_control()
 	if(control)
 		control.connected_panels -= src
+		control.total_capacity -= SOLAR_GEN_RATE * power_tier
 		control = null
 
-/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
-	if(!S)
-		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/glass
-		S.set_anchored(TRUE)
+/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/assembly)
+	if(!assembly)
+		assembly= new /obj/item/solar_assembly(src)
+		assembly.glass_type = /obj/item/stack/sheet/glass
+		assembly.set_anchored(TRUE)
 	else
-		S.forceMove(src)
-	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
-		max_integrity *= 2  //this need to be placed here, because panels already on the map don't have an assembly linked to
-		atom_integrity = max_integrity
+		assembly.forceMove(src)
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] begins to take the glass off [src]."), span_notice("You begin to take the glass off [src]..."))
-	if(I.use_tool(src, user, 50))
+	if(I.use_tool(src, user, 0))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
 		deconstruct(TRUE)
@@ -125,19 +129,28 @@
 
 /obj/machinery/power/solar/on_deconstruction(disassembled)
 	if(disassembled)
-		var/obj/item/solar_assembly/S = locate() in src
-		if(S)
-			S.forceMove(loc)
-			S.give_glass(machine_stat & BROKEN)
+		var/obj/item/solar_assembly/assembly = locate() in src
+		if(assembly)
+			assembly.forceMove(loc)
+			if(machine_stat & BROKEN)
+				new material_type.shard_type(get_turf(src))
+				new material_type.shard_type(get_turf(src))
+			else
+				new material_type.sheet_type(get_turf(src))
+				new material_type.sheet_type(get_turf(src))
 	else
+		//When smashed to bits
 		playsound(src, SFX_SHATTER, 70, TRUE)
-		new /obj/item/shard(src.loc)
-		new /obj/item/shard(src.loc)
+
+		new material_type.shard_type(get_turf(src))
+		new material_type.shard_type(get_turf(src))
+
 
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
-	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
-	panel_edge.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : "_edge"]"
+	panel.icon_state = "solar_panel_[material_type.name][(machine_stat & BROKEN) ? "-b" : null]"
+	panel_edge.icon_state = "solar_panel_[material_type.name][(machine_stat & BROKEN) ? "-b" : "_edge"]"
+
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -249,7 +262,7 @@
 	if(sunfrac <= 0)
 		return
 
-	var/sgen = SOLAR_GEN_RATE * sunfrac
+	var/sgen = SOLAR_GEN_RATE * sunfrac * power_tier
 	add_avail(power_to_energy(sgen))
 	if(control)
 		control.gen += sgen
@@ -293,73 +306,102 @@
 	pixel_x = base_pixel_x + rand(-amount, amount)
 	pixel_y = base_pixel_y + rand(-amount, amount)
 
-// Give back the glass type we were supplied with
-/obj/item/solar_assembly/proc/give_glass(device_broken)
-	var/atom/Tsec = drop_location()
-	if(device_broken)
-		new /obj/item/shard(Tsec)
-		new /obj/item/shard(Tsec)
-	else if(glass_type)
-		new glass_type(Tsec, 2)
-	glass_type = null
-
 /obj/item/solar_assembly/set_anchored(anchorvalue)
 	. = ..()
 	if(isnull(.))
 		return
 	randomise_offset(anchored ? 0 : random_offset)
 
-/obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
+/obj/item/solar_assembly/attackby(obj/item/item_used, mob/user, params)
+	if(item_used.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
 		set_anchored(!anchored)
 		user.visible_message(
-			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
-			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
+			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly[anchored ? " into place" : null]."),
+			span_notice("You [anchored ? null : "un"]wrench the solar assembly[anchored ? " into place" : null]."),
 		)
-		W.play_tool_sound(src, 75)
+		item_used.play_tool_sound(src, 75)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
-		if(!anchored)
-			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
-			return
-		var/turf/solarturf = get_turf(src)
-		if(locate(/obj/machinery/power/solar) in solarturf)
-			to_chat(user, span_warning("A solar panel is already assembled here."))
-			return
-		var/obj/item/stack/sheet/S = W
-		if(S.use(2))
-			glass_type = W.type
-			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-			user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
-			if(tracker)
-				new /obj/machinery/power/tracker(get_turf(src), src)
-			else
-				new /obj/machinery/power/solar(get_turf(src), src)
-		else
-			to_chat(user, span_warning("You need two sheets of glass to put them into a solar panel!"))
-			return
-		return TRUE
-
-	if(!tracker)
-		if(istype(W, /obj/item/electronics/tracker))
-			if(!user.temporarilyRemoveItemFromInventory(W))
-				return
-			tracker = TRUE
-			update_appearance()
-			qdel(W)
-			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
-			return TRUE
-	else
-		if(W.tool_behaviour == TOOL_CROWBAR)
+	if(tracker)
+		if(item_used.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
 			update_appearance()
 			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
 			return TRUE
+
+		if(!istype(item_used, /obj/item/stack/sheet/glass))
+			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
+			return
+		var/obj/item/stack/sheet/my_sheet = item_used
+		if(!my_sheet.use(2))
+			to_chat(user, span_warning("You don't have enough glass to complete the tracker."))
+			return
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		user.visible_message(span_notice("[user] places the glass on the solar assembly."),span_notice("You place the glass on the solar assembly."))
+		new /obj/machinery/power/tracker/(get_turf(src))
+		return
+
+	if(!tracker)
+		if(istype(item_used, /obj/item/electronics/tracker))
+			if(!user.temporarilyRemoveItemFromInventory(item_used))
+				return
+			tracker = TRUE
+			update_appearance()
+			qdel(item_used)
+			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
+			return TRUE
+
+	//make a list of all the glass
+	var/static/list/acceptable_glass_list = typecacheof(list(
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasmaglass,
+		/obj/item/stack/sheet/titaniumglass,
+		/obj/item/stack/sheet/plastitaniumglass,
+	))
+
+	if(!acceptable_glass_list[item_used.type])
+		//items that arent used above, or arent usable glass will make it here.
+		//so we check if its reinfocred glass, or some other item
+		if(istype(item_used, /obj/item/stack/sheet/rglass) || istype(item_used, /obj/item/stack/sheet/plasmarglass))
+			to_chat(user, span_warning("The solar array will only accept glass or glass alloys that have not been reinforced."))
+		//an else statement can be put here if you want something to happen to all the misc items that make it this far
+		return
+
+	var/turf/solarturf = get_turf(src)
+	if(locate(/obj/machinery/power/solar) in solarturf)
+		to_chat(user, span_warning("A solar panel is already assembled here."))
+		return
+
+	if(is_glass_sheet(item_used))
+		if(!anchored)
+			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
+			return
+
+		var/list/glass_material_to_tier = list(
+	    /datum/material/glass = 1,
+	    /datum/material/alloy/titaniumglass = 2,
+	    /datum/material/alloy/plasmaglass = 3,
+	    /datum/material/alloy/plastitaniumglass = 4,
+		)
+
+		var/obj/item/stack/sheet/my_sheet = item_used
+		if(!my_sheet.use(2))
+			to_chat(user, span_warning("You need at least two sheets of glass to complete a solar panel!"))
+			return
+
+		var/datum/material/glass_material = my_sheet.material_type
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
+		var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
+		mySolar.power_tier = glass_material_to_tier[glass_material]
+		mySolar.material_type = glass_material
+		mySolar.panel.icon_state = "solar_panel_[glass_material.name]"
+		mySolar.panel_edge.icon_state = "solar_panel_[glass_material.name]_edge"
+		return TRUE
 	return ..()
 
 //
@@ -388,6 +430,8 @@
 
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
+
+	var/total_capacity //The total amount of power we could generate with all our connected solars
 
 	///History of power supply
 	var/list/history = list()
@@ -451,7 +495,7 @@
 
 		var/list/capacity = history["capacity"]
 		if(powernet)
-			capacity += round(max(connected_panels.len, 1) * SOLAR_GEN_RATE)
+			capacity += total_capacity
 		if(capacity.len > record_size)
 			capacity.Cut(1, 2)
 
@@ -476,7 +520,7 @@
 /obj/machinery/power/solar_control/ui_data()
 	var/data = list()
 	data["supply"] = round(lastgen)
-	data["capacity"] = connected_panels.len * SOLAR_GEN_RATE
+	data["capacity"] = total_capacity
 	data["azimuth_current"] = azimuth_target
 	data["azimuth_rate"] = azimuth_rate
 	data["max_rotation_rate"] = SSsun.base_rotation * 2
@@ -601,7 +645,7 @@
 
 /obj/item/paper/guides/jobs/engi/solars
 	name = "paper- 'Going green! Setup your own solar array instructions.'"
-	default_raw_text = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
+	default_raw_text = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, any non reinforced glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE

@@ -1,0 +1,4 @@
+author: "BobDABuilder9001"
+delete-after: True
+changes:
+  - balance: "solars now make 2.5kw each instead of 1.5kw"

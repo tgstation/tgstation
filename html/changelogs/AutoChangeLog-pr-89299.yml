@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "PENLITE defib mounts now actually charge the cell"
