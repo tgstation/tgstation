@@ -586,8 +586,6 @@
 	if(!no_react)
 		// pass over previous ongoing reactions before handle_reactions is called
 		transfer_reactions(target_holder)
-
-		target_holder.update_total()
 		target_holder.handle_reactions()
 
 	return total_transfered_amount
@@ -622,7 +620,7 @@
 		//multiply within reasonable boundaries
 		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
 		if(change > 0)
-			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, no_react = TRUE)
+			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 		else
 			reagent.volume += reagent_change
 
