@@ -617,7 +617,6 @@
 		if(!isnull(target_id) && reagent.type != target_id)
 			continue
 
-		//multiply within reasonable boundaries
 		reagent_change = round(reagent.volume * change, CHEMICAL_QUANTISATION_LEVEL)
 		if(change > 0)
 			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
