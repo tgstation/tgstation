@@ -42,26 +42,26 @@
 	var/light_amount = owner_turf.get_lumcount()
 
 	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //dodge in the dark
-		owner.apply_status_effect(/datum/status_effect/nightmare)
+		owner.apply_status_effect(/datum/status_effect/shadow/nightmare)
 
-/datum/status_effect/nightmare
+/datum/status_effect/shadow/nightmare
 	id = "nightmare"
-	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
 
-/datum/status_effect/nightmare/on_apply()
+/datum/status_effect/shadow/nightmare/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
 	return TRUE
 
-/datum/status_effect/nightmare/on_remove()
+/datum/status_effect/shadow/nightmare/on_remove()
 	UnregisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT)
 	return ..()
 
-/datum/status_effect/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
+/datum/status_effect/shadow/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
 	SIGNAL_HANDLER
 	source.visible_message(
 		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
