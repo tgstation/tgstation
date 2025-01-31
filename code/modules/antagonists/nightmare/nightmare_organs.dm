@@ -41,29 +41,27 @@
 		return
 	var/light_amount = owner_turf.get_lumcount()
 
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		owner.apply_status_effect(/datum/status_effect/shadow_regeneration/nightmare)
+	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //dodge in the dark
+		owner.apply_status_effect(/datum/status_effect/nightmare)
 
-/atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
-	name = "Lightless Domain"
-	desc = "Bathed in soothing darkness you will slowly regenerate, even past the point of death. \
-		Heightened reflexes will allow you to dodge projectile weapons."
-
-/datum/status_effect/shadow_regeneration/nightmare
+/datum/status_effect/nightmare
+	id = "nightmare"
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
+	duration = 2 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
 
-/datum/status_effect/shadow_regeneration/nightmare/on_apply()
+/datum/status_effect/nightmare/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
 	return TRUE
 
-/datum/status_effect/shadow_regeneration/nightmare/on_remove()
+/datum/status_effect/nightmare/on_remove()
 	UnregisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT)
 	return ..()
 
-/datum/status_effect/shadow_regeneration/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
+/datum/status_effect/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
 	SIGNAL_HANDLER
 	source.visible_message(
 		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
@@ -71,6 +69,11 @@
 	)
 	playsound(source, SFX_BULLET_MISS, 75, TRUE)
 	return COMPONENT_BULLET_PIERCED
+
+/atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
+	name = "Lightless Domain"
+	desc = "Bathed in soothing darkness you will slowly regenerate, even past the point of death. \
+		Heightened reflexes will allow you to dodge projectile weapons."
 
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
