@@ -231,22 +231,22 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 ///Sends the message from the request console
 /obj/machinery/requests_console/proc/send_message(recipient, message, priority, request_type)
-	var/radio_freq
+	var/radio_channel
 	// They all naming them wrong, all the time... I'll probably rewrite this later in separate PR.
 	// Automatically from areas or via mapping helpers. (ther is no "Cargobay Request Console" in any map)
 	switch(ckey(recipient))
 		if("bridge")
-			radio_freq = FREQ_COMMAND
+			radio_channel = RADIO_CHANNEL_COMMAND
 		if("medbay")
-			radio_freq = FREQ_MEDICAL
+			radio_channel = RADIO_CHANNEL_MEDICAL
 		if("science")
-			radio_freq = FREQ_SCIENCE
+			radio_channel = RADIO_CHANNEL_SCIENCE
 		if("engineering")
-			radio_freq = FREQ_ENGINEERING
+			radio_channel = RADIO_CHANNEL_ENGINEERING
 		if("security")
-			radio_freq = FREQ_SECURITY
+			radio_channel = RADIO_CHANNEL_SECURITY
 		if("cargobay", "mining")
-			radio_freq = FREQ_SUPPLY
+			radio_channel = RADIO_CHANNEL_SUPPLY
 
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"sender_department" = department,
@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		"verified" = message_verified_by,
 		"stamped" = message_stamped_by,
 		"priority" = priority,
-		"notify_freq" = radio_freq,
+		"notify_channel" = radio_channel,
 		"request_type" = request_type,
 	))
 	signal.send_to_receivers()
@@ -342,7 +342,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		say(new_message.get_alert())
 
-	if(new_message.radio_freq)
+	if(new_message.radio_channel)
 		var/authentication
 		var/announcement_line = "Unauthenticated"
 		if (new_message.message_verified_by)
@@ -357,7 +357,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			"%SENDER" = new_message.sender_department,
 			"%RECEIVER" = department,
 			"%MESSAGE" = new_message.content
-			), list(GLOB.reverseradiochannels["[new_message.radio_freq]"]), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
+			), list(new_message.radio_channel), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
