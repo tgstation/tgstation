@@ -145,12 +145,12 @@ Slimecrossing Items
 	armor_type = /datum/armor/structure_ice_stasis
 
 /datum/armor/structure_ice_stasis
-	melee = 30
-	bullet = 50
-	laser = -50
-	energy = -50
-	fire = -80
-	acid = 30
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	fire = 100
+	acid = 100
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
