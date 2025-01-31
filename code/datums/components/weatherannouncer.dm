@@ -179,7 +179,7 @@
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /datum/aas_config_entry/weather
-	name = "Weather Announcement"
+	name = "Cargo Alert: Weather Forecast"
 	general_tooltip = "Allows the radio to announce incoming weather."
 	announcement_lines_map = list(
 		"Clear" = "All clear, no weather alerts to report.",

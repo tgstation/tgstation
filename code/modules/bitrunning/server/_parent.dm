@@ -172,7 +172,7 @@
 	return ..()
 
 /datum/aas_config_entry/bitrunning_QS_ready_announcement
-	name = "Bitrunning Quantum Server Ready Announcement"
+	name = "Cargo Alert: Bitrunning QS Ready"
 	general_tooltip = "Announces when the quantum server is ready to be used. No variables provided"
 	announcement_lines_map = list(
 		"Message" = "Quantum Server report: Thermal systems within operational parameters. Proceeding to domain configuration."

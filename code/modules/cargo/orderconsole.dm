@@ -493,7 +493,7 @@
 	frequency.post_signal(src, status_signal)
 
 /datum/aas_config_entry/cargo_orders_announcement
-	name = "Cargo New Orders Announcement"
+	name = "Cargo Alert: New Orders"
 	announcement_lines_map = list(
 		"Single Order" = "A new order has been requested.",
 		"Multiple Orders" = "%AMOUNT orders have been requested.",

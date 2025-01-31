@@ -222,7 +222,7 @@
 	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
 
 /datum/aas_config_entry/security_labor_stacker
-	name = "Security Labor Camp Release Announcement"
+	name = "Security Alert: Labor Camp Release"
 	announcement_lines_map = list(
 		"Message" = "%PERSON returned to the station. Minerals and Prisoner ID card ready for retrieval."
 	)

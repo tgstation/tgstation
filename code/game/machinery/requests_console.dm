@@ -415,7 +415,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	pixel_shift = 30
 
 /datum/aas_config_entry/rc_emergency
-	name = "RC Emergency Announcement"
+	name = "RC Alert: Emergency"
 	announcement_lines_map = list(
 		"Security" = "Security emergency in %LOCATION!!!",
 		"Engineering" = "Engineering emergency in %LOCATION!!!",
@@ -426,7 +426,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	)
 
 /datum/aas_config_entry/rc_new_message
-	name = "RC New Message Announcement"
+	name = "RC Alert: New Message "
 	// Yes, players can't use html tags, however they can use speech mods like | or +, but sh-sh-sh, don't tell them!
 	announcement_lines_map = list(
 		"Unauthenticated" = "Message from %SENDER to %RECEIVER: <i>%MESSAGE</i>",

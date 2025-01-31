@@ -1897,7 +1897,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 /datum/aas_config_entry/vendomat_age_control
-	name = "Underaged Substance Abuse Alert"
+	name = "Security Alert: Underaged Substance Abuse"
 	announcement_lines_map = list(
 		"Message" = "SECURITY ALERT: Underaged crewmember %PERSON recorded attempting to purchase %PRODUCT in %LOCATION by %VENDOR. Please watch for substance abuse."
 	)

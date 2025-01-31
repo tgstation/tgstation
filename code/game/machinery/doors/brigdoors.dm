@@ -275,7 +275,7 @@
 		timer_end(forced = TRUE)
 
 /datum/aas_config_entry/brig_cell_release_announcement
-	name = "Brig Cell Release Announcement"
+	name = "Security Alert: Cell Timer Expired"
 	announcement_lines_map = list(
 		"Message" = "Timer for %CELL has expired. Releasing prisoner.",
 	)

@@ -697,7 +697,7 @@
 	-A word of warning, the machine is very inefficient in its gas consumption and many unburnt gases will pass through. If you want to be cheap you can either pre-burn the gases or add a filtering system to collect the unburnt gases and reuse them."
 
 /datum/aas_config_entry/engineering_turbine_failure
-	name = "Engineering Turbine Failure Alert"
+	name = "Engineering Alert: Turbine Failure"
 	announcement_lines_map = list(
 		"Message" = "Warning, turbine at %LOCATION taking damage, current integrity at %INTEGRITY%!",
 	)

@@ -412,7 +412,7 @@
 	uses--
 
 /datum/aas_config_entry/bounty_cube_created
-	name = "New Bounty Cube Announcement"
+	name = "Cargo Alert: Bounty Cube Created"
 	announcement_lines_map = list(
 		"Message" = "A %COST cr bounty cube has been created in %LOCATION by %PERSON (%RANK). Speedy delivery bonus lost in %BONUSTIME.")
 	vars_and_tooltips_map = list(
@@ -424,7 +424,7 @@
 	)
 
 /datum/aas_config_entry/bounty_cube_unsent
-	name = "Unsent Bounty Cube Announcement"
+	name = "Cargo Alert: Bounty Cube Unsent"
 	announcement_lines_map = list(
 		"Regular Message" = "The %COST cr bounty cube is unsent in %LOCATION.",
 		"When Bonus Lost" = "The %COST cr bounty cube is unsent in %LOCATION. Speedy delivery bonus of %BONUSLOST credits lost.")

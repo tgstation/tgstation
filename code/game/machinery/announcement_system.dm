@@ -319,7 +319,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	modifiable = FALSE
 
 /datum/aas_config_entry/announce_officer
-	name = "Security Officer Arrival Announcement"
+	name = "Security Alert: Officer Arrival Announcement"
 	announcement_lines_map = list(
 		"Message" = "Officer %OFFICER has been assigned to %DEPARTMENT.")
 	vars_and_tooltips_map = list(
