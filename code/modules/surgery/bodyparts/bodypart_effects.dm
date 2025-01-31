@@ -62,7 +62,6 @@
 
 /// Called about every 2 seconds
 /datum/bodypart_effect/proc/on_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
-	PROTECTED_PROC(TRUE)
 	return
 
 /// Clean up all references and self-destruct
@@ -107,7 +106,6 @@
 /datum/bodypart_effect/nyxosynthesis
 
 /datum/bodypart_effect/nyxosynthesis/on_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
-	. = ..()
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
 		return
