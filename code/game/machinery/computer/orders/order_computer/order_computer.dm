@@ -247,7 +247,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /datum/aas_config_entry/order_console/compile_announce(list/variables_map, announcement_line)
 	if (!announcement_lines_map.len)
-		announcement_lines_map["Error"] = "Unknown Error happened, while we tried to procceed an order, please report this to NanoTrasen."
+		announcement_lines_map["Error"] = "Unknown Error happened, while we tried to procceed an order, please report this to Nanotrasen."
 	. = ..()
 
 
