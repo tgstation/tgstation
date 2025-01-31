@@ -267,7 +267,6 @@
 		return FALSE
 	return  ..()
 
-
 /obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 

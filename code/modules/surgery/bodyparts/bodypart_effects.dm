@@ -23,6 +23,7 @@
 /// Merge a bodypart into the effect
 /datum/bodypart_effect/proc/add_bodypart(mob/living/carbon/carbon, bodypart)
 	RegisterSignal(bodypart, COMSIG_BODYPART_REMOVED, PROC_REF(on_bodypart_removed))
+	RegisterSignal(bodypart, COMSIG_QDELETING, PROC_REF(on_bodypart_destroyed))
 
 	bodyparts.Add(bodypart)
 
@@ -49,6 +50,12 @@
 	SIGNAL_HANDLER
 
 	remove_bodypart(owner, bodypart)
+
+/// Signal called when a bodypart is destroyed. Destruction of a bodypart doesn't necessarily drop it
+/datum/bodypart_effect/proc/on_bodypart_destroyed(obj/item/bodypart/bodypart)
+	SIGNAL_HANDLER
+
+	remove_bodypart(bodypart.owner, bodypart)
 
 /// Activate some sort of effect when a threshold is reached
 /datum/bodypart_effect/proc/activate(mob/living/carbon/carbon)
