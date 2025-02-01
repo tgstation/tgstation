@@ -180,8 +180,9 @@
 	var/y_offset = length(diroffsets) >= 2 ? diroffsets[2] : 0
 	var/layer = length(diroffsets) >= 3 ? diroffsets[3] : rider.layer
 
+	// if they are intended to be buckled, offset their existing offset
 	var/atom/movable/seat = parent
-	if(seat.buckle_lying)
+	if(seat.buckle_lying && rider.body_position == LYING_DOWN)
 		y_offset += (-1 * PIXEL_Y_OFFSET_LYING)
 
 	rider.add_offsets(RIDING_SOURCE, x_add = x_offset, y_add = y_offset, animate = animate)
