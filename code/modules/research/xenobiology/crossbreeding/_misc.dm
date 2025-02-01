@@ -142,6 +142,7 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
+	damage_deflection = 100 // just in case the armor doesn't cover it.
 	armor_type = /datum/armor/structure_ice_stasis
 
 /datum/armor/structure_ice_stasis
@@ -149,6 +150,8 @@ Slimecrossing Items
 	bullet = 100
 	laser = 100
 	energy = 100
+	bomb = 100
+	bio = 100
 	fire = 100
 	acid = 100
 
