@@ -277,17 +277,17 @@
 	// piggyback
 	return list(
 		TEXT_NORTH = list( 0, 6 + seat.base_pixel_y, MOB_LAYER),
-		TEXT_SOUTH = list( 0, 6+ seat.base_pixel_y, MOB_LAYER),
+		TEXT_SOUTH = list( 0, 6 + seat.base_pixel_y, MOB_LAYER),
 		TEXT_EAST =  list(-6, 6 - 2 + seat.base_pixel_y, MOB_LAYER),
 		TEXT_WEST =  list( 6, 6 - 2 + seat.base_pixel_y, MOB_LAYER),
 	)
 
 /datum/component/riding/creature/human/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list( 0, 0, MOB_BELOW_PIGGYBACK_LAYER),
-		TEXT_SOUTH = list( 0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
-		TEXT_EAST =  list( 0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
-		TEXT_WEST =  list( 0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/human/force_dismount(mob/living/dismounted_rider)
