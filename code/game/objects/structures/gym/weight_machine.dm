@@ -157,9 +157,9 @@
 	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
-	animate(user, pixel_y = pixel_shift_y, time = WORKOUT_LENGTH * 0.5)
+	animate(user, pixel_z = pixel_shift_y, time = WORKOUT_LENGTH * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_z = -pixel_shift_y, time = WORKOUT_LENGTH * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
-	animate(pixel_y = user.base_pixel_y, time = WORKOUT_LENGTH * 0.5)
 
 	if(!iscarbon(user) || isnull(user.mind))
 		return TRUE

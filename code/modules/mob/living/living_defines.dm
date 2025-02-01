@@ -233,4 +233,4 @@
 	/// Lazylists of pixel offsets this mob is currently using
 	/// Modify this via add_offsets and remove_offsets,
 	/// NOT directly (and definitely avoid modifying offsets directly)
-	var/list/offsets
+	VAR_PRIVATE/list/offsets

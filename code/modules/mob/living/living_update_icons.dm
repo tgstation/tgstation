@@ -146,3 +146,24 @@
 		time = UPDATE_TRANSFORM_ANIMATION_TIME,
 	)
 	return TRUE
+
+/**
+ * Checks if we are offset by the passed source for the passed pixel.
+ *
+ * * source: The source of the offset
+ * * pixel: The pixel to check
+ *
+ * Returns the offset if we are, 0 otherwise.
+ */
+/mob/living/proc/has_offset(source, pixel)
+	return offsets?[pixel]?[source] || 0
+
+// Updates offsets if base pixel changes
+// Future TODO: move base pixel onto /obj and make mobs just set a base pixel using a source
+/mob/living/set_base_pixel_x(new_value)
+	. = ..()
+	update_offsets()
+
+/mob/living/set_base_pixel_y(new_value)
+	. = ..()
+	update_offsets()

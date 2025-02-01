@@ -384,10 +384,10 @@
 	switch(pass_index)
 		if(1)
 			return list(
-				TEXT_NORTH = list(-10, -4),
-				TEXT_SOUTH = list( 16, -4),
-				TEXT_EAST =  list( -4, 30),
-				TEXT_WEST =  list(  4, -3),
+				TEXT_NORTH = list(-10, -4, LYING_MOB_LAYER),
+				TEXT_SOUTH = list( 16, -4, LYING_MOB_LAYER),
+				TEXT_EAST =  list( -4, 30, LYING_MOB_LAYER),
+				TEXT_WEST =  list(  4, -3, LYING_MOB_LAYER),
 			)
 		if(2)
 			return list(
@@ -400,15 +400,15 @@
 			return list(
 				TEXT_NORTH = list(-10, -18, ABOVE_MOB_LAYER + 0.1),
 				TEXT_SOUTH = list( 16,  25, VEHICLE_LAYER),
-				TEXT_EAST =  list(-22,  30,),
+				TEXT_EAST =  list(-22,  30, LYING_MOB_LAYER),
 				TEXT_WEST =  list( 22,  -3, ABOVE_MOB_LAYER),
 			)
 		if(4)
 			return list(
-				TEXT_NORTH = list( 19, -18, 4.2),
+				TEXT_NORTH = list( 19, -18, ABOVE_MOB_LAYER + 0.1),
 				TEXT_SOUTH = list(-13,  25, VEHICLE_LAYER),
 				TEXT_EAST =  list(-22,   3, VEHICLE_LAYER),
-				TEXT_WEST =  list( 22,  28,),
+				TEXT_WEST =  list( 22,  28, LYING_MOB_LAYER),
 			)
 
 /datum/component/riding/vehicle/speedwagon/get_parent_offsets_and_layers()

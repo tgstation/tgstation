@@ -124,7 +124,7 @@
 	var/matrix/m180 = matrix(target.transform)
 	m180.Turn(180)
 	animate(target, transform = m180, time = 3)
-	target.add_offsets(REF(src), y_add = -6, animate = FALSE)
+	target.add_offsets(type, y_add = -6, animate = FALSE)
 	ADD_TRAIT(target, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
@@ -156,7 +156,7 @@
 	var/matrix/m180 = matrix(buckled_mob.transform)
 	m180.Turn(180)
 	animate(buckled_mob, transform = m180, time = 3)
-	buckled_mob.remove_offsets(REF(src), animate = FALSE)
+	buckled_mob.remove_offsets(type, animate = FALSE)
 	REMOVE_TRAIT(buckled_mob, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 
 /obj/structure/kitchenspike/atom_deconstruct(disassembled = TRUE)
