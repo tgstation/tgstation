@@ -108,7 +108,6 @@
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
 	step(living_parent, direction)
-	var/modified_move_cooldown = vehicle_move_cooldown
 	var/modified_move_delay = vehicle_move_delay
 	if(ishuman(user) && HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
 		var/mob/living/carbon/human/rough_rider = user
@@ -119,21 +118,16 @@
 			ride_benefit = rough_rider.mob_mood.sanity_level
 		switch(ride_benefit)
 			if(SANITY_LEVEL_GREAT)
-				modified_move_cooldown *= 0.8
 				modified_move_delay *= 0.8
 			if(SANITY_LEVEL_NEUTRAL)
-				modified_move_cooldown *= 0.9
 				modified_move_delay *= 0.9
 			if(SANITY_LEVEL_DISTURBED)
-				modified_move_cooldown *= 1
 				modified_move_delay *= 1
 			if(SANITY_LEVEL_CRAZY)
-				modified_move_cooldown *= 1.1
 				modified_move_delay *= 1.1
 			if(SANITY_LEVEL_INSANE)
-				modified_move_cooldown *= 1.2
 				modified_move_delay *= 1.2
-	COOLDOWN_START(src, vehicle_move_cooldown = modified_move_cooldown, modified_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, modified_move_delay)
 	return ..()
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
