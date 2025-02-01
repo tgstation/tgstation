@@ -594,8 +594,9 @@
 
 	// spawn from popssible fishes
 	for(var/i in 1 to rand(1, created_volume)) // More flop.
-		var/obj/item/fish/spawned_fish = pick(fish_types)
-		new spawned_fish(location)
+		var/spawned_fish = pick(fish_types)
+		var/obj/item/fish/new_fish = new spawned_fish(location)
+		ADD_TRAIT(new_fish, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
 	return ..()
 
 //monkey powder heehoo
