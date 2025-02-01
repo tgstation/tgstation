@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - qol: "You can choose in preferences what layout use into the Smartfridge or Vending machines: Grid or List. Default TGUI Layout preference. In the future there may be more interfaces where there will be 2 layout options. Also Vending UI now use Grid layout by default."
