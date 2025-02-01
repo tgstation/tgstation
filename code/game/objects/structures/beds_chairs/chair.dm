@@ -436,7 +436,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 			if(give_this_fucker_the_chair.health < give_this_fucker_the_chair.maxHealth*0.5)
 				give_this_fucker_the_chair.adjust_confusion(10 SECONDS)
 			if(inflicts_stun_vulnerability)
-				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/next_shove_stuns)
+				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/dazed)
 
 	smash(user)
 
