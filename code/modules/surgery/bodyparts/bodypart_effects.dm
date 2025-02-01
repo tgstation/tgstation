@@ -84,7 +84,7 @@
 
 /// This limb regens in light! Only BODYTYPE_PLANT limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
 /datum/status_effect/bodypart_effect/photosynthesis
-	tick_interval = STATUS_EFFECT_NORMAL_PROCESS
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	id = "photosynthesis"
 
 /datum/status_effect/bodypart_effect/photosynthesis/tick(seconds_between_ticks)
@@ -113,7 +113,7 @@
 /// This limb heals in darkness and dies in light!
 /// Only BODYTYPE_SHADOW limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
 /datum/status_effect/bodypart_effect/nyxosynthesis
-	tick_interval = STATUS_EFFECT_NORMAL_PROCESS
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	id = "nyxosynthesis"
 
 /datum/status_effect/bodypart_effect/nyxosynthesis/tick(seconds_between_ticks)
