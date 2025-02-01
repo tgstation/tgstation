@@ -395,6 +395,7 @@
 	else
 		slipper.Knockdown(knockdown_amount)
 		slipper.Paralyze(paralyze_amount)
+		slipper.apply_status_effect(/datum/status_effect/next_shove_stuns)
 
 	if(!isnull(buckled_obj) && !ismob(buckled_obj))
 		buckled_obj.unbuckle_mob(slipper)
