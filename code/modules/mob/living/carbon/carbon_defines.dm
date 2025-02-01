@@ -86,10 +86,6 @@
 	var/list/icon_render_keys = list()
 	var/static/list/limb_icon_cache = list()
 
-	/// A list of /datum/bodypart_effect instances applied by bodyparts for on_life or on_apply effects that affect all appropriate limbs
-	/// such as plant limbs regenning in lights or snail limbs generating lube
-	var/list/bodypart_effects = list()
-
 	/// Used to temporarily increase severity of / apply a new damage overlay (the red ring around the ui / screen).
 	/// This number will translate to equivalent brute or burn damage taken. Handled in [mob/living/proc/update_damage_hud].
 	/// (For example, setting damageoverlaytemp = 20 will add 20 "damage" to the overlay the next time it updates.)
