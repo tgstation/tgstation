@@ -24,6 +24,8 @@
 /datum/status_effect/staggered/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/staggered)
+	// Resetting W on remove so we're back to normal
+	animate(owner, pixel_w = owner.base_pixel_w, time = 0.2 SECONDS, flags = ANIMATION_PARALLEL)
 
 /// Signal proc that self deletes our staggered effect
 /datum/status_effect/staggered/proc/clear_staggered(datum/source)

@@ -336,15 +336,16 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	var/new_x = vis_overlay.extra_width
 	var/new_y = vis_overlay.extra_height
 	var/old_div = source.current_size/resize
-	var/offset_lying = source.rotate_on_lying ? PIXEL_Y_OFFSET_LYING : source.get_pixel_y_offset_standing(source.current_size/resize)
+	var/offset_lying = source.rotate_on_lying ? PIXEL_Y_OFFSET_LYING : source.get_transform_translation_size(source.current_size/resize)
 	switch(source.lying_prev)
 		if(270)
 			vis_overlay.pixel_x += -offset_lying / old_div
 		if(90)
 			vis_overlay.pixel_x += offset_lying / old_div
 		if(0)
-			vis_overlay.pixel_y += -source.get_pixel_y_offset_standing(source.current_size/resize) / old_div
+			vis_overlay.pixel_y += -source.get_transform_translation_size(source.current_size/resize) / old_div
 
+/*
 	switch(new_lying_angle)
 		if(270)
 			new_x += -source.body_position_pixel_y_offset / source.current_size
@@ -352,6 +353,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 			new_x += source.body_position_pixel_y_offset / source.current_size
 		if(0)
 			new_y += -source.body_position_pixel_y_offset / source.current_size
+*/
 
 	animate(vis_overlay, transform = new_transform, pixel_x = new_x, pixel_y = new_y, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT))
 	addtimer(CALLBACK(vis_overlay, TYPE_PROC_REF(/atom/movable/immerse_overlay, adjust_living_overlay_offset), source), UPDATE_TRANSFORM_ANIMATION_TIME)
@@ -406,6 +408,6 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 /atom/movable/immerse_overlay/proc/adjust_living_overlay_offset(mob/living/source)
 	pixel_x = extra_width
 	pixel_y = extra_height
-	overlay_appearance.pixel_y = -source.body_position_pixel_y_offset
+	// overlay_appearance.pixel_y = -source.body_position_pixel_y_offset
 	overlays = list(overlay_appearance)
 	overlay_appearance.pixel_y = 0

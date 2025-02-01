@@ -46,11 +46,11 @@
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
 	///The pixel offset of the hat. List of "north" "south" "east" "west" x, y offsets
-	var/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(4, -3), "west" = list(-4, -3))
-	///The x offsets of a person riding the borg
-	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
-	///The y offsets of a person riding the borg
-	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
+	var/list/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(4, -3), "west" = list(-4, -3))
+	///The offsets of a person riding the borg of this model.
+	/// Format like list("north" = list(x, y, layer), ...)
+	/// Leave null to use defaults
+	var/list/ride_offsets
 	///List of skins the borg can be reskinned to, optional
 	var/list/borg_skins
 
