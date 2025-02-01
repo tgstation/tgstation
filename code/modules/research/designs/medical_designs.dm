@@ -381,7 +381,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/flesh_reshapers_medical
+/datum/design/flesh_reshapers
 	name = "Flesh Reshaper"
 	desc = "Reshape those external features!"
 	id = "fleshreshaper"
