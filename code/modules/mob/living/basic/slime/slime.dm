@@ -226,10 +226,6 @@
 /mob/living/basic/slime/start_pulling(atom/movable/moveable_atom, state, force = move_force, supress_message = FALSE)
 	return
 
-/mob/living/basic/slime/get_mob_buckling_height(mob/seat)
-	if(..() != 0)
-		return 3
-
 /mob/living/basic/slime/examine(mob/user)
 	. = ..()
 

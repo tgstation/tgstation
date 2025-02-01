@@ -110,7 +110,7 @@
 	step(living_parent, direction)
 	var/modified_move_delay = vehicle_move_delay
 	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
-		switch(HAS_TRAIT(rough_rider, TRAIT_PRIMITIVE) ? SANITY_LEVEL_GREAT : user.mob_mood?.sanity_level)
+		switch(HAS_TRAIT(user, TRAIT_PRIMITIVE) ? SANITY_LEVEL_GREAT : user.mob_mood?.sanity_level)
 			if(SANITY_LEVEL_GREAT)
 				modified_move_delay *= 0.8
 			if(SANITY_LEVEL_NEUTRAL)
@@ -206,7 +206,8 @@
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
 
-/datum/component/riding/creature/post_vehicle_mob_buckle(mob/living/ridden, mob/living/rider)
+/datum/component/riding/creature/handle_buckle(mob/living/rider)
+	var/mob/living/ridden = parent
 	if(!require_minigame || ridden.faction.Find(REF(rider)))
 		return
 	ridden.Shake(duration = 2 SECONDS)
@@ -290,14 +291,14 @@
 		TEXT_WEST =  list(0, 0),
 	)
 
-/datum/component/riding/creature/human/force_dismount(mob/living/dismounted_rider)
-	var/atom/movable/AM = parent
-	AM.unbuckle_mob(dismounted_rider)
-	dismounted_rider.Paralyze(1 SECONDS)
-	dismounted_rider.Knockdown(4 SECONDS)
-	dismounted_rider.visible_message(
-		span_warning("[AM] pushes [dismounted_rider] off of [AM.p_them()]!"),
-		span_warning("[AM] pushes you off of [AM.p_them()]!"),
+/datum/component/riding/creature/human/force_dismount(mob/living/rider, throw_range = 8, throw_speed = 3, gentle = FALSE)
+	var/atom/movable/seat = parent
+	seat.unbuckle_mob(rider)
+	rider.Paralyze(1 SECONDS)
+	rider.Knockdown(4 SECONDS)
+	rider.visible_message(
+		span_warning("[seat] pushes [rider] off of [seat.p_them()]!"),
+		span_warning("[seat] pushes you off of [seat.p_them()]!"),
 	)
 
 
@@ -639,16 +640,28 @@
 	for(var/mob/living/buckled_mob in living_parent.buckled_mobs)
 		force_dismount(buckled_mob, throw_range = 2, gentle = TRUE)
 
-/datum/component/riding/creature/raptor/handle_specials()
-	. = ..()
+/datum/component/riding/creature/raptor/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	if(!SSmapping.is_planetary())
-		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(7, 7), TEXT_SOUTH = list(2, 10), TEXT_EAST = list(12, 7), TEXT_WEST = list(10, 7)))
-	else
-		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 7), TEXT_SOUTH = list(0, 10), TEXT_EAST = list(-3, 9), TEXT_WEST = list(3, 9)))
-	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+		return list(
+			TEXT_NORTH = list( 7, 7),
+			TEXT_SOUTH = list( 2, 10),
+			TEXT_EAST =  list(12, 7),
+			TEXT_WEST =  list(10, 7),
+		)
+	return list(
+		TEXT_NORTH = list( 0, 7),
+		TEXT_SOUTH = list( 0, 10),
+		TEXT_EAST =  list(-3, 9),
+		TEXT_WEST =  list( 3, 9),
+	)
+
+/datum/component/riding/creature/raptor/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, OBJ_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_EAST =  list(0, 0, OBJ_LAYER),
+		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+	)
 
 /datum/component/riding/creature/raptor/fast
 	vehicle_move_delay = 1.5

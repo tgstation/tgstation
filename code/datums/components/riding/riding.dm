@@ -90,8 +90,6 @@
 		if (HAS_TRAIT(parent, trait))
 			REMOVE_TRAIT(rider, trait, REF(src))
 	rider.remove_traits(rider_traits, REF(src))
-	if(!movable_parent.has_buckled_mobs())
-		qdel(src)
 
 /// This proc is called when a rider buckles, allowing for offsets to be set properly
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
@@ -110,7 +108,6 @@
 		if (HAS_TRAIT(parent, trait))
 			ADD_TRAIT(rider, trait, REF(src))
 	rider.add_traits(rider_traits, REF(src))
-	post_vehicle_mob_buckle(movable_parent, rider)
 
 /// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
@@ -147,6 +144,10 @@
 /datum/component/riding/proc/ride_check(mob/living/rider, consequences = TRUE)
 	return TRUE
 
+#define GET_X_OFFSET(offsets) (length(offsets) >= 1 ? offsets[1] : 0)
+#define GET_Y_OFFSET(offsets) (length(offsets) >= 2 ? offsets[2] : 0)
+#define GET_LAYER(offsets, default) (length(offsets) >= 3 ? offsets[3] : default)
+
 /datum/component/riding/proc/update_parent_layer_and_offsets(dir, animate = FALSE)
 	var/atom/movable/seat = parent
 	if(!seat.has_buckled_mobs())
@@ -158,9 +159,9 @@
 		update_rider_layer_and_offsets(dir, passindex, buckled_mob)
 
 	var/list/offsets = get_parent_offsets_and_layers()?["[dir]"]
-	var/px = offsets?[1] || 0
-	var/py = offsets?[2] || 0
-	var/layer = offsets?[3] || seat.layer
+	var/px = GET_X_OFFSET(offsets)
+	var/py = GET_Y_OFFSET(offsets)
+	var/layer = GET_LAYER(offsets, seat.layer)
 
 	if(isliving(seat))
 		var/mob/living/living_seat = seat
@@ -171,14 +172,13 @@
 	seat.layer = layer
 
 /datum/component/riding/proc/update_rider_layer_and_offsets(dir, passindex, mob/living/rider, animate = FALSE)
-	var/list/diroffsets = get_rider_offsets_and_layers(passindex, rider)?["[dir]"]
-
 	if(rider.dir != dir)
 		rider.setDir(dir)
 
-	var/x_offset = length(diroffsets) >= 1 ? diroffsets[1] : 0
-	var/y_offset = length(diroffsets) >= 2 ? diroffsets[2] : 0
-	var/layer = length(diroffsets) >= 3 ? diroffsets[3] : rider.layer
+	var/list/diroffsets = get_rider_offsets_and_layers(passindex, rider)?["[dir]"]
+	var/x_offset = GET_X_OFFSET(diroffsets)
+	var/y_offset = GET_Y_OFFSET(diroffsets)
+	var/layer = GET_LAYER(diroffsets, rider.layer)
 
 	// if they are intended to be buckled, offset their existing offset
 	var/atom/movable/seat = parent

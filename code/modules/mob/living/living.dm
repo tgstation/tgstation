@@ -479,8 +479,10 @@
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
 	M.setDir(get_dir(M, src))
-
-	switch(M.dir)
+	var/dir_filter = M.dir
+	if(ISDIAGONALDIR(dir_filter))
+		dir_filter = EWCOMPONENT(dir_filter)
+	switch(dir_filter)
 		if(NORTH)
 			M.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = offset, animate = animate)
 		if(SOUTH)
@@ -494,8 +496,6 @@
 				M.set_lying_angle(270)
 			M.add_offsets(GRABBING_TRAIT, x_add = -offset, y_add = 0, animate = animate)
 
-	SEND_SIGNAL(M, COMSIG_LIVING_SET_PULL_OFFSET)
-
 /**
  * Removes any offsets from the passed mob that are related to being grabbed
  *
@@ -507,7 +507,6 @@
 	if(!override && M.buckled)
 		return
 	M.remove_offsets(GRABBING_TRAIT)
-	SEND_SIGNAL(M, COMSIG_LIVING_RESET_PULL_OFFSETS)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm

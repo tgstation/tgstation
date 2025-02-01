@@ -68,7 +68,6 @@
 	if(target_mob.buckle_mob(src, force = TRUE))
 		add_offsets("feeding", y_add = target_mob.mob_size <= MOB_SIZE_SMALL ? 0 : 3)
 		layer = MOB_ABOVE_PIGGYBACK_LAYER //appear above the target mob
-		RegisterSignal(src, COMSIG_MOB_UNBUCKLED, PROC_REF(unbuckled_feeding), override = TRUE)
 		target_mob.apply_status_effect(/datum/status_effect/slime_leech, src)
 		target_mob.visible_message(
 			span_danger("[name] latches onto [target_mob]!"),
