@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscdel: "Mobile hollow bioscramblers no longer spawn from the anomaly research ruin, sparing everyone from the inevitable unannounced arrival of a permanent hollow bioscrambler aboard the station. You maybe still encounter immobile bioscramblers in the ruin, however."
