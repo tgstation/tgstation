@@ -17,12 +17,12 @@
  * This is just so you can apply the animation to things which can be animated but are not movables (like images)
  */
 #define STOP_FLOATING_ANIM(target) \
-	var/final_pixel_z = 0; \
+	var/__final_pixel_z = 0; \
 	if(ismovable(target)) { \
 		var/atom/movable/__movable_target = target; \
-		final_pixel_z = __movable_target.base_pixel_z; \
+		__final_pixel_z = __movable_target.base_pixel_z; \
 	}; \
-	animate(target, pixel_z = final_pixel_z, time = 1 SECONDS)
+	animate(target, pixel_z = __final_pixel_z, time = 1 SECONDS)
 
 /// The duration of the animate call in mob/living/update_transform
 #define UPDATE_TRANSFORM_ANIMATION_TIME (0.2 SECONDS)
