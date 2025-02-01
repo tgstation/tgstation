@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_injured)) // this means we got hurt and it's go time
 	RegisterSignal(src, COMSIG_ANIMAL_PET, PROC_REF(on_pet))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_item_on_signal))
+	ADD_TRAIT(src, TRAIT_CAN_MOUNT_HUMANS, INNATE_TRAIT)
 
 /mob/living/basic/parrot/Destroy()
 	// should have cleaned these up on death, but let's be super safe in case that didn't happen
@@ -267,8 +268,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/basic/parrot/proc/toggle_perched(perched)
 	if(!perched)
 		REMOVE_TRAIT(src, TRAIT_PARROT_PERCHED, TRAIT_GENERIC)
+		remove_offsets("perched")
 	else
 		ADD_TRAIT(src, TRAIT_PARROT_PERCHED, TRAIT_GENERIC)
+		add_offsets("perched", y_add = 9)
 	update_appearance(UPDATE_ICON_STATE)
 
 /// Master proc which will determine the intent of OUR attacks on an object and summon the relevant procs accordingly.

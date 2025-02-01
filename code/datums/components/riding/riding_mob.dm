@@ -266,14 +266,6 @@
 
 /datum/component/riding/creature/human/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	var/mob/living/carbon/human/seat = parent
-	// snowflake for slime riding
-	if(isslime(offsetter))
-		return list(
-			TEXT_NORTH = list(0, 3, ABOVE_MOB_LAYER),
-			TEXT_SOUTH = list(0, 3, ABOVE_MOB_LAYER),
-			TEXT_EAST =  list(0, 3, ABOVE_MOB_LAYER),
-			TEXT_WEST =  list(0, 3, ABOVE_MOB_LAYER),
-		)
 	// fireman carry
 	if(seat.buckle_lying)
 		return list(
