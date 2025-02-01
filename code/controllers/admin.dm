@@ -61,9 +61,7 @@ ADMIN_VERB(debug_controller, R_DEBUG, "Debug Controller", "Debug the various per
 
 	for (var/var_key in global.vars)
 		var/datum/controller/controller = global.vars[var_key]
-		if(!istype(controller))
-			continue
-		if (istype(controller, /datum/controller/subsystem))
+		if(!istype(controller) || istype(controller, /datum/controller/subsystem))
 			continue
 		controllers[controller.name] = controller //we use an associated list to ensure clients can't hold references to controllers
 		controller_choices += controller.name
