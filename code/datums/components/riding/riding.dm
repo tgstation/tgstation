@@ -1,5 +1,6 @@
-
+/// Offsets applied for people riding something
 #define RIDING_SOURCE "riding"
+/// Offsets applied for something being ridden
 #define BEING_RIDDEN_SOURCE "being_ridden"
 
 /**

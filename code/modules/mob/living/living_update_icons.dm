@@ -44,6 +44,7 @@
 	if(!changed) //Nothing has been changed, nothing has to be done.
 		return FALSE
 
+	// ensures the floating animation doesn't mess with our animation
 	if(HAS_TRAIT(src, TRAIT_MOVE_FLOATING))
 		ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, UPDATE_TRANSFORM_TRAIT)
 		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NO_FLOATING_ANIM, UPDATE_TRANSFORM_TRAIT), 0.3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -63,6 +64,16 @@
 /mob/living/proc/get_transform_translation_size(value)
 	return (value - 1) * 16
 
+/**
+ * Adds an offset to the mob's pixel position.
+ *
+ * * source: The source of the offset, a string
+ * * w_add: pixel_w offset
+ * * x_add: pixel_x offset
+ * * y_add: pixel_y offset
+ * * z_add: pixel_z offset
+ * * animate: If TRUE, the mob will animate to the new position. If FALSE, it will instantly move.
+ */
 /mob/living/proc/add_offsets(source, w_add, x_add, y_add, z_add, animate = TRUE)
 	LAZYINITLIST(offsets)
 	if(isnum(w_add))
@@ -75,6 +86,12 @@
 		LAZYSET(offsets[PIXEL_Z_OFFSET], source, z_add)
 	update_offsets(animate)
 
+/**
+ * Goes through all pixel adjustments and removes any tied to the passed source.
+ *
+ * * source: The source of the offset to remove
+ * * animate: If TRUE, the mob will animate to the position with any offsets removed. If FALSE, it will instantly move.
+ */
 /mob/living/proc/remove_offsets(source, animate = TRUE)
 	for(var/offset in offsets)
 		LAZYREMOVE(offsets[offset], source)
@@ -82,43 +99,39 @@
 	UNSETEMPTY(offsets)
 	update_offsets(animate)
 
+/**
+ * Updates the mob's pixel position according to the offsets.
+ *
+ * * animate: If TRUE, the mob will animate to the new position. If FALSE, it will instantly move.
+ *
+ * Returns TRUE if the mob's position has changed, FALSE otherwise.
+ */
 /mob/living/proc/update_offsets(animate = FALSE)
-	var/old_pixel_w = pixel_w
-	var/old_pixel_x = pixel_x
-	var/old_pixel_y = pixel_y
-	var/old_pixel_z = pixel_z
-
-	pixel_w = base_pixel_w
-	pixel_x = base_pixel_x
-	pixel_y = base_pixel_y
-	pixel_z = base_pixel_z
+	var/new_w = base_pixel_w
+	var/new_x = base_pixel_x
+	var/new_y = base_pixel_y
+	var/new_z = base_pixel_z
 
 	for(var/offset_key in LAZYACCESS(offsets, PIXEL_W_OFFSET))
-		pixel_w += offsets[PIXEL_W_OFFSET][offset_key]
+		new_w += offsets[PIXEL_W_OFFSET][offset_key]
 	for(var/offset_key in LAZYACCESS(offsets, PIXEL_X_OFFSET))
-		pixel_x += offsets[PIXEL_X_OFFSET][offset_key]
+		new_x += offsets[PIXEL_X_OFFSET][offset_key]
 	for(var/offset_key in LAZYACCESS(offsets, PIXEL_Y_OFFSET))
-		pixel_y += offsets[PIXEL_Y_OFFSET][offset_key]
+		new_y += offsets[PIXEL_Y_OFFSET][offset_key]
 	for(var/offset_key in LAZYACCESS(offsets, PIXEL_Z_OFFSET))
-		pixel_z += offsets[PIXEL_Z_OFFSET][offset_key]
+		new_z += offsets[PIXEL_Z_OFFSET][offset_key]
 
-	if(old_pixel_w == pixel_w \
-		&& old_pixel_x == pixel_x \
-		&& old_pixel_y == pixel_y \
-		&& old_pixel_z == pixel_z)
+	if(new_w == pixel_w && new_x == pixel_x && new_y == pixel_y && new_z == pixel_z)
 		return FALSE
+
 	if(!animate)
+		pixel_w = new_w
+		pixel_x = new_x
+		pixel_y = new_y
+		pixel_z = new_z
 		return TRUE
 
-	var/new_w = pixel_w
-	var/new_x = pixel_x
-	var/new_y = pixel_y
-	var/new_z = pixel_z
-	pixel_w = old_pixel_w
-	pixel_x = old_pixel_x
-	pixel_y = old_pixel_y
-	pixel_z = old_pixel_z
-
+	// ensures the floating animation doesn't mess with our animation
 	if(HAS_TRAIT(src, TRAIT_MOVE_FLOATING))
 		ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, UPDATE_OFFSET_TRAIT)
 		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NO_FLOATING_ANIM, UPDATE_OFFSET_TRAIT), 0.3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
