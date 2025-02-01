@@ -93,7 +93,7 @@
 
 	if(isturf(owner.loc)) //else, there's considered to be no light
 		var/turf/turf_loc = owner.loc
-		light_amount = min(1, turf_loc.get_lumcount()) - 0.25
+		light_amount = min(1, turf_loc.get_lumcount()) - 0.5
 
 		if(owner.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
 			owner.adjust_nutrition(2.5 * light_amount * bodypart_coefficient)
