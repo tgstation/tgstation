@@ -1,0 +1,15 @@
+2025-02-01:
+  AyIong:
+  - qol: 'You can choose in preferences what layout use into the Smartfridge or Vending
+      machines: Grid or List. Default TGUI Layout preference. In the future there
+      may be more interfaces where there will be 2 layout options. Also Vending UI
+      now use Grid layout by default.'
+  BobDABuilder9001:
+  - balance: solars now make 2.5kw each instead of 1.5kw
+  MTandi:
+  - qol: Added forensic scanner UI
+  - qol: Made forensic scanner report format cleaner
+  Majkl-J:
+  - bugfix: PENLITE defib mounts now actually charge the cell
+  SmArtKar:
+  - image: Premium Internals Boxes station trait now has unique box sprites
