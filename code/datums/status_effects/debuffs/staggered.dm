@@ -66,6 +66,7 @@
 	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_NO_SIDE_KICK) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		return FALSE
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_stun_vulnverability_on_death))
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(clear_stun_vulnverability_on_stand))
 	RegisterSignals(owner, list(
 		COMSIG_LIVING_STATUS_PARALYZE,
 		COMSIG_LIVING_STATUS_STUN,
@@ -78,10 +79,11 @@
 
 /datum/status_effect/next_shove_stuns/on_remove()
 	UnregisterSignal(owner, list(
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_SET_BODY_POSITION,
 		COMSIG_LIVING_STATUS_PARALYZE,
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
-		COMSIG_LIVING_DEATH,
 	))
 	REMOVE_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, STATUS_EFFECT_TRAIT)
 	if(vulnverability_overlay)
@@ -94,6 +96,13 @@
 
 	if(amount > 0)
 		// Making absolutely sure we're removing this overlay
+		clear_stun_vulnverability_overlay()
+		qdel(src)
+
+/datum/status_effect/next_shove_stuns/proc/clear_stun_vulnverability_on_stand(mob/living/source, new_position)
+	SIGNAL_HANDLER
+
+	if(new_position == STANDING_UP)
 		clear_stun_vulnverability_overlay()
 		qdel(src)
 
