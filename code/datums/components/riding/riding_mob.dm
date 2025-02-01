@@ -269,25 +269,25 @@
 	// fireman carry
 	if(seat.buckle_lying)
 		return list(
-			TEXT_NORTH = list(0, 6 + seat.base_pixel_y, MOB_LAYER),
-			TEXT_SOUTH = list(0, 6 + seat.base_pixel_y, MOB_LAYER),
-			TEXT_EAST =  list(0, 6 + seat.base_pixel_y, MOB_LAYER),
-			TEXT_WEST =  list(0, 6 + seat.base_pixel_y, MOB_LAYER),
+			TEXT_NORTH = list(0, 6, MOB_ABOVE_PIGGYBACK_LAYER),
+			TEXT_SOUTH = list(0, 6, MOB_BELOW_PIGGYBACK_LAYER),
+			TEXT_EAST =  list(0, 6, MOB_BELOW_PIGGYBACK_LAYER),
+			TEXT_WEST =  list(0, 6, MOB_BELOW_PIGGYBACK_LAYER),
 		)
 	// piggyback
 	return list(
-		TEXT_NORTH = list( 0, 6 + seat.base_pixel_y, MOB_LAYER),
-		TEXT_SOUTH = list( 0, 6 + seat.base_pixel_y, MOB_LAYER),
-		TEXT_EAST =  list(-6, 6 - 2 + seat.base_pixel_y, MOB_LAYER),
-		TEXT_WEST =  list( 6, 6 - 2 + seat.base_pixel_y, MOB_LAYER),
+		TEXT_NORTH = list( 0, 8, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list( 0, 8, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(-6, 8, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list( 6, 8, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/human/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
-		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
-		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
-		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_NORTH = list(0, 0),
+		TEXT_SOUTH = list(0, 0),
+		TEXT_EAST =  list(0, 0),
+		TEXT_WEST =  list(0, 0),
 	)
 
 /datum/component/riding/creature/human/force_dismount(mob/living/dismounted_rider)
