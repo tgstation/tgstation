@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(location, 'sound/effects/bigsplash.ogg', 100)
-		if(ispath(reward_path, /obj/item/fish) || isfish(reward_path))
+		if(ispath(reward_path, /obj/item/fish))
 			var/obj/item/fish/fish_reward = reward_path
 			var/obj/item/fish/redirect_path = initial(fish_reward.fish_id_redirect_path)
 			var/fish_id = ispath(redirect_path, /obj/item/fish) ? initial(redirect_path.fish_id) : initial(fish_reward.fish_id)
