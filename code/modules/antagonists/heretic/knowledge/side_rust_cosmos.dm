@@ -14,7 +14,7 @@
 /datum/heretic_knowledge/essence
 	name = "Priest's Ritual"
 	desc = "Allows you to transmute a tank of water and a glass shard into a Flask of Eldritch Essence. \
-		Eldritch water can be consumed for potent healing, or given to heathens for deadly poisoning."
+		Eldritch Essence can be consumed for potent healing, or given to heathens for deadly poisoning."
 	gain_text = "This is an old recipe. The Owl whispered it to me. \
 		Created by the Priest - the Liquid that both was and is not."
 
