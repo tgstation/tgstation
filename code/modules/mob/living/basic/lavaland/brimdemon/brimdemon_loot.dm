@@ -1,7 +1,7 @@
 /// Reagent pool left by dying brimdemon
 /obj/effect/decal/cleanable/brimdust
 	name = "brimdust"
-	desc = "Dust from a brimdemon. It is considered valuable for its' botanical abilities."
+	desc = "Dust from a brimdemon. It is considered valuable for its botanical abilities."
 	icon_state = "brimdust"
 	icon = 'icons/obj/mining.dmi'
 	plane = GAME_PLANE

@@ -9,14 +9,18 @@
 	random_gain = FALSE
 	/// Type for the bodypart texture we add
 	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
+	/// Color in which we paint the space texture
+	var/space_color = COLOR_WHITE
 	///traits we give on gain
 	var/list/traits_to_apply = list(TRAIT_MUTE, TRAIT_PACIFISM)
 	/// Do we ban the person from entering space?
 	var/ban_from_space = TRUE
+	/// Statis list of all possible space colors
+	var/static/list/space_colors = list("#ffffff", "#00ccff","#b12bff","#ff7f3a","#ff1c55","#ff7597","#28ff94","#0fcfff","#ff8b4c","#ffc425","#2dff96","#1770ff","#ff3f31","#ffba3b")
 
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
-
+	space_color = pick(space_colors)
 	owner.add_traits(traits_to_apply, REF(src))
 	if(ban_from_space)
 		owner.AddComponent(/datum/component/banned_from_space)
@@ -53,6 +57,7 @@
 	SIGNAL_HANDLER
 
 	limb.add_bodypart_overlay(new bodypart_overlay_type)
+	limb.add_color_override(space_color, LIMB_COLOR_VOIDWALKER_CURSE)
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
 		head.head_flags &= ~HEAD_EYESPRITES
@@ -63,6 +68,7 @@
 	var/overlay = locate(bodypart_overlay_type) in limb.bodypart_overlays
 	if(overlay)
 		limb.remove_bodypart_overlay(overlay)
+		limb.remove_color_override(LIMB_COLOR_VOIDWALKER_CURSE)
 
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb

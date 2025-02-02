@@ -3,8 +3,8 @@
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
-@use 'pkg:tgui-styles/components/Button' as button;
-@use 'pkg:tgui-styles/components/Tabs' as tabs;
+@use '~tgui-core/styles/components/Button' as button;
+@use '~tgui-core/styles/components/Tabs' as tabs;
 
 .Fabricator__Recipe {
   padding: 0.25em 0;

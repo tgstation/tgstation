@@ -403,8 +403,8 @@
 	if(!panel_open || density || operating)
 		return
 	add_fingerprint(user)
-	user.visible_message(span_notice("[user] removes the electronics from the [name]."), \
-	span_notice("You start to remove electronics from the [name]..."))
+	user.visible_message(span_notice("[user] removes the electronics from \the [src]."), \
+	span_notice("You start to remove electronics from \the [src]..."))
 	if(!tool.use_tool(src, user, 40, volume=50))
 		return
 	if(!panel_open || density || operating || !loc)

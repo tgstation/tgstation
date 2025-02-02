@@ -319,7 +319,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<b><i>Looking down at the [name], you recall a tale told to you in some distant memory...</i></b>")
+	. += span_notice("<b><i>Looking down at \the [src], you recall a tale told to you in some distant memory...</i></b>")
 
 	. += span_info("It's said that the first slaying committed on a Nanotrasen space station was by an assistant.")
 	. += span_info("That this act, done by toolbox, maybe spear, was what consigned their kind to a life of destitution, rejection and violence.")

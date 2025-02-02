@@ -322,7 +322,7 @@
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
-	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
+	desc = "Even in a place filled to the brim with graves, this one shows a level of preparation and planning that fills you with dread."
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave_lead"
 	lead_tomb = TRUE

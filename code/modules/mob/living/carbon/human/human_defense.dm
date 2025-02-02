@@ -51,8 +51,8 @@
 	if(bullet.reflectable)
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message(
-				span_danger("The [bullet.name] gets reflected by [src]!"),
-				span_userdanger("The [bullet.name] gets reflected by [src]!"),
+				span_danger("\The [bullet] gets reflected by [src]!"),
+				span_userdanger("\The [bullet] gets reflected by [src]!"),
 			)
 			// Finds and plays the block_sound of item which reflected
 			for(var/obj/item/held_item in held_items)
@@ -64,7 +64,7 @@
 			bullet.reflect(src)
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-	if(check_block(bullet, bullet.damage, "the [bullet.name]", PROJECTILE_ATTACK, bullet.armour_penetration, bullet.damage_type))
+	if(check_block(bullet, bullet.damage, "\the [bullet]", PROJECTILE_ATTACK, bullet.armour_penetration, bullet.damage_type))
 		bullet.on_hit(src, 100, def_zone, piercing_hit)
 		return BULLET_ACT_HIT
 
@@ -191,7 +191,7 @@
 			var/damage = HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) ? monkey_mouth.unarmed_damage_high : rand(monkey_mouth.unarmed_damage_low, monkey_mouth.unarmed_damage_high)
 			if(!damage)
 				return FALSE
-			if(check_block(user, damage, "the [user.name]", attack_type = UNARMED_ATTACK))
+			if(check_block(user, damage, "\the [user]", attack_type = UNARMED_ATTACK))
 				return FALSE
 			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
@@ -248,18 +248,18 @@
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
-/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
+/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/worm, list/modifiers)
 	. = ..()
 	if(!.)
 		return //successful larva bite.
-	var/damage = rand(L.melee_damage_lower, L.melee_damage_upper)
+	var/damage = rand(worm.melee_damage_lower, worm.melee_damage_upper)
 	if(!damage)
 		return
-	if(check_block(L, damage, "the [L.name]", attack_type = UNARMED_ATTACK))
+	if(check_block(worm, damage, "\the [worm]", attack_type = UNARMED_ATTACK))
 		return FALSE
 	if(stat != DEAD)
-		L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(L.zone_selected))
+		worm.amount_grown = min(worm.amount_grown + damage, worm.max_grown)
+		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(worm.zone_selected))
 		var/armor_block = run_armor_check(affecting, MELEE)
 		apply_damage(damage, BRUTE, affecting, armor_block)
 

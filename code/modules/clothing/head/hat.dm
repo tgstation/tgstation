@@ -22,7 +22,7 @@
 
 /obj/item/clothing/head/costume/constable
 	name = "constable helmet"
-	desc = "A british looking helmet."
+	desc = "A British-looking helmet."
 	icon_state = "constable"
 	inhand_icon_state = null
 	custom_price = PAYCHECK_COMMAND * 1.5

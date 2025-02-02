@@ -305,7 +305,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
 	icon_state = "slipperyshots"
-	desc = "Slippery slope to drunkeness with our shots!"
+	desc = "Slippery slope to drunkenness with our shots!"
 	neon_color = "#70DF00"
 
 /datum/barsign/thegreytide
