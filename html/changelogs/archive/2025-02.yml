@@ -13,3 +13,24 @@
   - bugfix: PENLITE defib mounts now actually charge the cell
   SmArtKar:
   - image: Premium Internals Boxes station trait now has unique box sprites
+2025-02-02:
+  Arceniu:
+  - spellcheck: Replaced the words "Singularity Generation Disk" with "Supermatter
+      Crystal Shard" on a paper found by the old station ruin, to match the contents
+      of the inventory room.
+  MTandi:
+  - bugfix: Fixed medbot emag VFX
+  SmArtKar:
+  - bugfix: Large fish should not render behind their wall mounts now
+  - rscadd: Added fishing bags, found in fun vendors or made from carpskin.
+  - balance: Added the generator aquarium upgrade to service and science lathes.
+  - image: Resprited reels and bobber
+  - bugfix: Fixed partially missing fishing UI
+  - bugfix: Fixed glowsticks not working
+  necromanceranne:
+  - rscdel: Mobile hollow bioscramblers no longer spawn from the anomaly research
+      ruin, sparing everyone from the inevitable unannounced arrival of a permanent
+      hollow bioscrambler aboard the station. You maybe still encounter immobile bioscramblers
+      in the ruin, however.
+  zoomachina:
+  - bugfix: showers wash things under them when they're turned on again

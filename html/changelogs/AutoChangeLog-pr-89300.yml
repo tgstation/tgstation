@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Added fishing bags, found in fun vendors or made from carpskin."
-  - balance: "Added the generator aquarium upgrade to service and science lathes."
-  - image: "Resprited reels and bobber"
