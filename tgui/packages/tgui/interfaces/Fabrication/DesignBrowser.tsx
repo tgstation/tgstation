@@ -276,7 +276,7 @@ export const DesignBrowser = <T extends Design = Design>(
               </Section>
             </Stack.Item>
             <Stack.Item grow>
-              <Section fill style={{ overflow: 'auto' }}>
+              <Section fill scrollable>
                 {searchText.length > 0 ? (
                   <VirtualList>
                     {sortBy(
