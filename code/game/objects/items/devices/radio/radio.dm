@@ -690,7 +690,7 @@
 
 /obj/item/radio/entertainment/speakers/physical // Can be used as a physical item
 	name = "entertainment radio"
-	desc = "A portable one-way radio permamently tuned into entertainment frequency."
+	desc = "A portable one-way radio permanently tuned into entertainment frequency."
 	icon_state = "radio"
 	inhand_icon_state = "radio"
 	worn_icon_state = "radio"

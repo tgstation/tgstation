@@ -19,6 +19,12 @@ on:
 
 jobs:
   run_integration_tests:
+    # If `inputs.major` is specified, this will output `Run Tests (major.minor; map; max)`.
+    # For example, `Run Tests (515.1627; runtimestation; 515)`.
+    #
+    # Otherwise, it will output `Run Tests (map; max)`.
+    # For example, `Run Tests (runtimestation; 515)`.
+    name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:

@@ -61,22 +61,14 @@
 /obj/item/seeds/replicapod/Initialize(mapload)
 	. = ..()
 
-	create_reagents(volume, INJECTABLE|DRAWABLE)
+	create_reagents(volume, INJECTABLE | DRAWABLE)
 
 /obj/item/seeds/replicapod/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), PROC_REF(on_reagent_add))
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
-/// Handles the seeds' reagents datum getting deleted.
-/obj/item/seeds/replicapod/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_QDELETING))
-	return NONE
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_update))
 
 /// Handles reagents getting added to this seed.
-/obj/item/seeds/replicapod/proc/on_reagent_add(datum/reagents/reagents)
+/obj/item/seeds/replicapod/proc/on_reagent_update(datum/reagents/reagents)
 	SIGNAL_HANDLER
 	var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
 	if(!B)

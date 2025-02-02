@@ -57,7 +57,7 @@
 		return
 	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	user.visible_message(
-		span_notice("\The [user] points the [name] at \the [target] and performs a forensic scan.")
+		span_notice("\The [user] points \the [src] at \the [target] and performs a forensic scan.")
 	)
 
 /obj/item/forensics_spoofer/proc/clear_values(list/the_list)

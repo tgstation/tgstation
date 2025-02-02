@@ -66,7 +66,7 @@
 
 /obj/item/grenade/spawnergrenade/clown_broken
 	name = "stuffed C.L.U.W.N.E."
-	desc = "A sleek device often given to clowns on their 10th birthdays for protection. While a typical C.L.U.W.N.E only holds one creature, sometimes foolish young clowns try to cram more in, often to disasterous effect."
+	desc = "A sleek device often given to clowns on their 10th birthdays for protection. While a typical C.L.U.W.N.E only holds one creature, sometimes foolish young clowns try to cram more in, often to disastrous effect."
 	icon_state = "clown_broken"
 	inhand_icon_state = null
 	spawner_type = /mob/living/basic/clown/mutant

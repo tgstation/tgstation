@@ -793,25 +793,20 @@
 	var/timer_id = TIMER_ID_NULL
 
 /obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null)
-	. = ..()
 	max_fuel = isnull(fuel_override) ? rand(20, 25) : fuel_override
 	create_reagents(max_fuel + oxygen_added, DRAWABLE | INJECTABLE)
 	reagents.add_reagent(fuel_type, max_fuel)
+	. = ..()
 	set_light_color(color)
 	AddComponent(/datum/component/edible,\
 		food_flags = FOOD_NO_EXAMINE,\
 		volume = reagents.total_volume,\
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
 	)
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
-/obj/item/flashlight/glowstick/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
-	return reagents?.get_reagent_amount(fuel_type)
+	return reagents.get_reagent_amount(fuel_type)
 
 /// Burns down the glowstick by the specified time
 /// Returns the amount of time we need to burn before a visual change will occur

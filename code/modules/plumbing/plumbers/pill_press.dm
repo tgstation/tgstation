@@ -62,7 +62,7 @@
 
 /obj/machinery/plumbing/pill_press/examine(mob/user)
 	. = ..()
-	. += span_notice("The [name] currently has [stored_products.len] stored. There needs to be less than [MAX_FLOOR_PRODUCTS] on the floor to continue dispensing.")
+	. += span_notice("\The [src] currently has [stored_products.len] stored. There needs to be less than [MAX_FLOOR_PRODUCTS] on the floor to continue dispensing.")
 
 /obj/machinery/plumbing/pill_press/process(seconds_per_tick)
 	if(!is_operational)

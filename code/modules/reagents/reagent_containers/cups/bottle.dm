@@ -483,7 +483,7 @@
 
 /obj/item/reagent_containers/cup/bottle/caramel
 	name = "bottle of caramel"
-	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 30)
 
 /*
@@ -527,7 +527,7 @@
 			balloon_alert(user, "container full!")
 			return TRUE
 
-		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user)
+		var/transfer_amount = round(reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 
@@ -567,7 +567,7 @@
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel
 	name = "bottle of caramel syrup"
-	desc = "A pump bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A pump bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 50)
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur

@@ -1,4 +1,0 @@
-author: "dj-34"
-delete-after: True
-changes:
-  - bugfix: "Fixed shuttle parallax when a mob is standing still."

@@ -14,7 +14,7 @@
 // for the illusion of a moving train
 /turf/open/chasm/true/no_smooth/fake_motion_sand
 	name = "air"
-	desc = "Dont jump off, unless you want to fall a really long distance."
+	desc = "Don't jump off, unless you want to fall a really long distance."
 	icon_state = "sandmoving"
 	base_icon_state = "sandmoving"
 	icon = 'icons/turf/floors.dmi'
