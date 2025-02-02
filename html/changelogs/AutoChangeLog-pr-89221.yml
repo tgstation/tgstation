@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "Added forensic scanner UI"
-  - qol: "Made forensic scanner report format cleaner"

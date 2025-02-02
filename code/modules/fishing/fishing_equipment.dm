@@ -23,7 +23,7 @@
 	name = "reinforced fishing line reel"
 	desc = "Essential for fishing in extreme environments."
 	icon_state = "reel_green"
-	line_color = "#2b9c2b"
+	line_color = "#2aae34"
 	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
 
 /obj/item/fishing_line/reinforced/Initialize(mapload)
@@ -52,7 +52,7 @@
 	desc = "This specialized line is much harder to snap."
 	icon_state = "reel_red"
 	fishing_line_traits = FISHING_LINE_BOUNCY
-	line_color = "#99313f"
+	line_color = "#af221f"
 	wiki_desc = "It reduces the progression loss during the fishing minigame."
 
 /obj/item/fishing_line/sinew
@@ -580,3 +580,43 @@
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER
+
+/obj/item/storage/bag/fishing
+	name = "fishing bag"
+	desc = "A vibrant bag for storing caught fish."
+	icon = 'icons/obj/fishing.dmi'
+	icon_state = "fishing_bag"
+	worn_icon_state = "fishing_bag"
+	resistance_flags = FLAMMABLE
+	custom_price = PAYCHECK_CREW * 3
+	///How much holding this affects fishing difficulty
+	var/fishing_modifier = -2
+
+/obj/item/storage/bag/fishing/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 24 // Up to 8 normal fish
+	atom_storage.max_slots = 21
+	atom_storage.set_holdable(/obj/item/fish)
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier, ITEM_SLOT_HANDS)
+
+/obj/item/storage/bag/fishing/carpskin
+	name = "carpskin fishing bag"
+	desc = "A dapper fishing bag made from carpskin. You can store quite a lot of fishing gear in the small pockets formed by larger scales."
+	icon_state = "fishing_bag_carpskin"
+	worn_icon_state = "fishing_bag_carpskin"
+	resistance_flags = ACID_PROOF
+	storage_type = /datum/storage/carpskin_bag
+	fishing_modifier = -4
+
+/obj/item/storage/bag/fishing/carpskin/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 42 // Up to 14 normal fish, but we're assuming that you'll be storing a bunch of gear as well
+	atom_storage.set_holdable(list(
+		/obj/item/fish,
+		/obj/item/fishing_line,
+		/obj/item/fishing_hook,
+		/obj/item/fishing_lure,
+		/obj/item/fish_analyzer,
+		/obj/item/bait_can,
+	))

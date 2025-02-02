@@ -828,9 +828,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	bait_top.pixel_y += cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT
 	. += bait_top
 	for (var/i in 1 to (cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT))
-		var/mutable_appearance/bair_bar = mutable_appearance(icon, "bair_bar")
-		bair_bar.pixel_y += i
-		. += bair_bar
+		var/mutable_appearance/bait_bar = mutable_appearance(icon, "bait_bar")
+		bait_bar.pixel_y += i
+		. += bait_bar
 
 /atom/movable/screen/hud_fish
 	icon = 'icons/hud/fishing_hud.dmi'
