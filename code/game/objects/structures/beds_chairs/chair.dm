@@ -348,8 +348,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	item_flags = SKIP_FANTASY_ON_SPAWN
 
-	// Whether or not the chair causes the target to become shove stun vulnerable if smashed against someone from behind.
-	var/inflicts_stun_vulnerability = TRUE
+	// Deciseconds of daze inflicted when the chair is smashed against someone from behind.
+	var/daze_amount = 0
 
 	// What structure type does this chair become when placed?
 	var/obj/structure/chair/origin_type = /obj/structure/chair
@@ -432,11 +432,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [give_this_fucker_the_chair]"))
 	if(!HAS_TRAIT(give_this_fucker_the_chair, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		if(vulnerable_hit || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
-			give_this_fucker_the_chair.Knockdown(2 SECONDS)
+			give_this_fucker_the_chair.Knockdown(2 SECONDS, daze_amount = daze_amount)
 			if(give_this_fucker_the_chair.health < give_this_fucker_the_chair.maxHealth*0.5)
 				give_this_fucker_the_chair.adjust_confusion(10 SECONDS)
-			if(inflicts_stun_vulnerability)
-				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/dazed)
 
 	smash(user)
 

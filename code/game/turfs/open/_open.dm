@@ -393,9 +393,8 @@
 		slipper.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		slipper.stop_pulling()
 	else
-		slipper.Knockdown(knockdown_amount)
 		slipper.Paralyze(paralyze_amount)
-		slipper.apply_status_effect(/datum/status_effect/dazed)
+		slipper.Knockdown(knockdown_amount, daze_amount = 3 SECONDS)
 
 	if(!isnull(buckled_obj) && !ismob(buckled_obj))
 		buckled_obj.unbuckle_mob(slipper)

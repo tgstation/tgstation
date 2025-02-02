@@ -53,13 +53,16 @@
 /// Status effect specifically for instances where someone is vulnerable to being stunned when shoved.
 /datum/status_effect/dazed
 	id = "dazed"
-	duration = 3 SECONDS
 	status_type = STATUS_EFFECT_UNIQUE
 	tick_interval = 0.5 SECONDS
 	alert_type = null
 	remove_on_fullheal = TRUE
 	/// Our visual cue for the vulnerable state this status effect puts us in.
 	var/mutable_appearance/dazed_overlay
+
+/datum/status_effect/dazed/on_creation(mob/living/new_owner, duration = 3 SECONDS)
+	src.duration = duration
+	return ..()
 
 /datum/status_effect/dazed/on_apply()
 	//Let's just clear this if they're dead or we can't stun them on a shove
