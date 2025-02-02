@@ -1,18 +1,18 @@
 /obj/item/knife/poison
 	name = "venom knife"
-	icon = 'icons/obj/weapons/stabby.dmi'    // Пока что использует стандартный спрайт боевого ножа, если есть желание сделать уникальный спрайт - дерзайте.
+	icon = 'modular_meta/features/venom_knife/icons/stabby.dmi'
 	icon_state = "buckknife"
 	worn_icon_state = "buckknife"
-	force = 12
+	force = 13 // Если оставить 12 то урон будт как у тулбокса, пусть он будет чу-чуть сильнее.
 	throwforce = 15
 	throw_speed = 5
 	throw_range = 7
 	var/amount_per_transfer_from_this = 10
 	var/list/possible_transfer_amounts
+	var/turf/location
 	desc = "An infamous knife of syndicate design, \
-	it has a tiny hole going through the blade to the handle which stores toxins. \
-	Use in-hand to to increase or decrease its transfer amount. \
-	Each hit has a 40% chance to transfer reagents from knife's internal storage to your victim"
+	it has a tiny hole going through the blade to the handle which stores toxins."
+
 
 
 /obj/item/knife/poison/Initialize(mapload)
@@ -35,9 +35,58 @@
 				return
 
 /obj/item/knife/poison/afterattack(mob/living/enemy, mob/user)
-	if(!istype(enemy))
-		return
-	if(reagents?.total_volume && enemy.reagents && prob(40))
-		reagents.trans_to(enemy, amount_per_transfer_from_this)
+	location = get_turf(src)
+	if(istype(enemy))
+		if(reagents.has_reagent(/datum/reagent/toxin/initropidril))
+			to_chat(usr, span_warning("The knife violently explodes in your hand!"))
+			user.visible_message(span_warning("[user]'s knife violently explodes in their hand!"), ignored_mobs = user)
+			explosion(location, 0, 0, 1, 1, 0) // Придумайте лучше способ наказывать людей не умеющих читать маленький красный текст, такой взрыв к слову оторвёт руку в 100% случаев, но не введёт в крит при полном здоровье.
+			qdel(src)
+
+			if(enemy.can_inject() && prob(50)) // Проверяет на хардсуиты, модсуиты или еву, я бы ещё сделал чтобы он блокировался сековской бронёй, но увы такими знаниями не обладаю.
+				reagents.trans_to(enemy, amount_per_transfer_from_this)
+			else
+				to_chat(usr, span_warning("[enemy]'s armor is too thick to penetrate."))
+	return
+
+/obj/item/knife/poison/click_alt(mob/user)
+	. = ..()
+	if(!reagents.has_reagent(/datum/reagent/ , check_subtypes = TRUE))
+		to_chat(usr, span_warning("There's no reagents to remove from knife's internal compartment."))
+		return CLICK_ACTION_BLOCKING
 	else
-		return ..()
+		to_chat(usr, span_notice("You empty the knife's internal compartment from reagents."))
+		reagents.clear_reagents()
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/knife/poison/examine(mob/user)
+	. = ..()
+	. += span_notice("Use in-hand to to increase or decrease its transfer amount. \
+	Each hit has a 50% chance to transfer reagents from knife's internal storage to your victim, \
+	however spaceproof armor, like a MOD-suit will prevent reagent transfer.")
+	. += span_warning("Warning! Adding initropidril will cause the knife to malfunction and cause serious trouble to the user") // Чеклист, 1.Придумать нож с основной идеей - трансфер реагентов в цель, фокусируя своё внимание на initropidril, 2.Понять что данная схема слишком имбалансная 3.Взрывать людей при атаке этим ножём с инитропидрилом 4.Профит?
+
+/obj/item/knife/poison/suicide_act(mob/living/user) // Бтв ничего уникального в этих суисайд актах нет, просто почему бы и нет?
+	if (reagents.has_reagent(/datum/reagent/toxin/initropidril))
+		user.visible_message(span_suicide("[user] is trying to drink the initropidril from the knife!"))
+		playsound(src, 'sound/items/drink.ogg', 115, TRUE, -1)
+		reagents.clear_reagents()
+		spawn(10)
+			explosion(src, 0, 1, 1, 1, 0) // Почему взрыв? — Описано выше.
+			qdel(src)
+			spawn(15)
+				user.gib(DROP_ALL_REMAINS) //Здесь бы ещё по хорошему гибспаунер выставить на тайле, нооо мне очень очень впадлу это делать :)
+				new /obj/effect/gibspawner(get_turf(user)) // gibs не разлетаются по разным тайлам, нужно использовать get_step, но а что если оно в стену улетит?
+		return BRUTELOSS
+
+	else if (reagents.has_reagent(/datum/reagent/toxin, check_subtypes = TRUE))
+		user.visible_message(span_suicide("[user] is trying to drink the poison from the knife!"))
+		playsound(src, 'sound/items/drink.ogg', 50, TRUE, -1)
+		reagents.clear_reagents()
+		return TOXLOSS
+	else
+		user.visible_message(span_suicide("[user] slits their throat with [src]!"))
+		playsound(src, 'sound/effects/butcher.ogg', 25, TRUE, -1)
+		spawn(5)
+			playsound(src, 'sound/effects/wounds/blood3.ogg', 50, TRUE, -1)
+		return BRUTELOSS // Кто нибудь здесь знаёт как замедлить суисайд_акт? Сделав его не моментальным?
