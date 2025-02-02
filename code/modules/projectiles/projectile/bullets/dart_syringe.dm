@@ -1,7 +1,7 @@
 /obj/projectile/bullet/dart
 	name = "dart"
 	icon_state = "cbbolt"
-	damage = 6
+	damage = 0
 	embed_type = null
 	shrapnel_type = null
 	var/inject_flags = null
