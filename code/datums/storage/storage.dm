@@ -856,15 +856,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(ishuman(user))
 		var/mob/living/carbon/human/hum = user
-		if(hum.l_store == parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), parent)
-			hum.l_store = null
+		if(hum.l_store == parent || hum.r_store == parent)
 			return
-		if(hum.r_store == parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), parent)
-			hum.r_store = null
-			return
-
 	if(parent.loc == user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -926,14 +919,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!to_remove)
 			return TRUE
 
-		remove_single(to_show, to_remove)
-		INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
-		if(!silent)
-			to_show.visible_message(
-				span_warning("[to_show] draws [to_remove] from [parent]!"),
-				span_notice("You draw [to_remove] from [parent]."),
-			)
-		return TRUE
+		if (remove_single(to_show, to_remove))
+			INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
+			if(!silent)
+				to_show.visible_message(
+					span_warning("[to_show] draws [to_remove] from [parent]!"),
+					span_notice("You draw [to_remove] from [parent]."),
+				)
+			return TRUE
 
 	// If nothing else, then we want to open the thing, so do that
 	if(!show_contents(to_show))

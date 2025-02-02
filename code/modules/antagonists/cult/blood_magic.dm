@@ -198,7 +198,7 @@
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
-	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Purified soulstones (and any shades inside) into cultist soulstones<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
+	desc = "Empowers your hand to corrupt certain metallic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Purified soulstones (and any shades inside) into cultist soulstones<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = /obj/item/melee/blood_magic/construction
 	health_cost = 12
@@ -593,7 +593,7 @@
 //Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Twisting Aura"
-	desc = "Corrupts certain metalic objects on contact."
+	desc = "Corrupts certain metallic objects on contact."
 	invocation = "Ethra p'ni dedol!"
 	color = COLOR_BLACK // black
 	var/channeling = FALSE
@@ -750,7 +750,7 @@
 /obj/item/melee/blood_magic/manipulator/cast_spell(mob/living/target, mob/living/carbon/user)
 	if((isconstruct(target) || isshade(target)) && !heal_construct(target, user))
 		return
-	if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/decal/cleanable/trail_holder) || isturf(target))
+	if(istype(target, /obj/effect/decal/cleanable/blood) || isturf(target))
 		blood_draw(target, user)
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_bloodbag = target
@@ -882,19 +882,13 @@
 		return
 	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf,2))
 		if(blood_around_us.blood_state != BLOOD_STATE_HUMAN)
-			break
+			continue
 		if(blood_around_us.bloodiness == 100) // Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 			blood_to_gain += 30
 		else
 			blood_to_gain += max((blood_around_us.bloodiness**2)/800,1)
 		new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
 		qdel(blood_around_us)
-	for(var/obj/effect/decal/cleanable/trail_holder/trail_around_us in range(our_turf, 2))
-		if(trail_around_us.blood_state != BLOOD_STATE_HUMAN)
-			break
-		blood_to_gain += 5 //These don't get bloodiness, so we'll just increase this by a fixed value
-		new /obj/effect/temp_visual/cult/turf/floor(get_turf(trail_around_us))
-		qdel(trail_around_us)
 
 	if(!blood_to_gain)
 		return

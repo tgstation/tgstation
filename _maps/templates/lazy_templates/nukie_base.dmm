@@ -61,6 +61,26 @@
 /obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer,
 /area/centcom/syndicate_mothership/control)
+"bf" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/structure/closet/syndicate/personal,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "bo" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
@@ -97,6 +117,17 @@
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"bE" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 5
+	},
+/obj/structure/table/reinforced/plasmarglass,
+/obj/effect/spawner/surgery_tray/full{
+	pixel_y = -11
+	},
+/obj/item/storage/belt/medical,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/centcom/syndicate_mothership/control)
 "bF" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 10
@@ -476,22 +507,6 @@
 /obj/structure/sign/poster/contraband/syndiemoth/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
-"fx" = (
-/obj/machinery/light/small/dim/directional/west,
-/obj/structure/rack,
-/obj/effect/turf_decal/box/white,
-/obj/item/stack/cable_coil/thirty{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/circuitboard/computer/stationalert{
-	pixel_y = 1;
-	pixel_x = 3
-	},
-/obj/item/stack/cable_coil/thirty,
-/obj/item/circuitboard/computer/advanced_camera,
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/syndicate_mothership)
 "fy" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/turf_decal/stripes/line{
@@ -669,17 +684,6 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
-/area/centcom/syndicate_mothership/control)
-"hl" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 5
-	},
-/obj/structure/table/reinforced/plasmarglass,
-/obj/effect/spawner/surgery_tray/full{
-	pixel_y = -11
-	},
-/obj/item/storage/belt/medical,
-/turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
 "hp" = (
 /obj/structure/lattice/catwalk,
@@ -3610,6 +3614,22 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
+"OI" = (
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/rack,
+/obj/effect/turf_decal/box/white,
+/obj/item/stack/cable_coil/thirty{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/circuitboard/computer/station_alert{
+	pixel_y = 1;
+	pixel_x = 3
+	},
+/obj/item/stack/cable_coil/thirty,
+/obj/item/circuitboard/computer/advanced_camera,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "OK" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -3733,26 +3753,6 @@
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
-"PU" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating_new/light{
-	dir = 8
-	},
-/obj/structure/closet/syndicate/personal,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "Qe" = (
 /obj/machinery/button/door/directional/south{
 	desc = "Looks like the elevator is under maintenance..";
@@ -5201,7 +5201,7 @@ sU
 sU
 Ox
 nQ
-PU
+bf
 Ab
 Ab
 Ab
@@ -5692,7 +5692,7 @@ Ye
 Kq
 Kq
 YT
-fx
+OI
 Rn
 Kq
 Kq
@@ -6222,7 +6222,7 @@ Bm
 uT
 PN
 DZ
-hl
+bE
 gL
 rS
 iH

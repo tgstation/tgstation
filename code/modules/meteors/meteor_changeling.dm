@@ -38,7 +38,7 @@
 	for(var/atom/movable/changeling in contents)
 		changeling.forceMove(get_turf(src))
 		changeling.throw_at(landing_target, 2, 2)
-		changeling.visible_message(span_warning("[changeling] is launched out from inside of the [name]"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
+		changeling.visible_message(span_warning("[changeling] is launched out from inside of \the [src]!"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from \the [src]!"))
 		playsound(changeling, 'sound/effects/splat.ogg', 50, pressure_affected = FALSE)
 
 	return ..()

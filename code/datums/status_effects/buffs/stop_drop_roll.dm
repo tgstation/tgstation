@@ -1,8 +1,8 @@
 /datum/status_effect/stop_drop_roll
 	id = "stop_drop_roll"
 	alert_type = null
-
 	tick_interval = 0.8 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/stop_drop_roll/on_apply()
 	if(!iscarbon(owner))
@@ -15,7 +15,7 @@
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(stop_rolling))
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(body_position_changed))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, id) // they're kinda busy!
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id)) // they're kinda busy!
 
 	owner.visible_message(
 		span_danger("[owner] rolls on the floor, trying to put [owner.p_them()]self out!"),
@@ -31,7 +31,7 @@
 
 /datum/status_effect/stop_drop_roll/on_remove()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_SET_BODY_POSITION))
-	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, id)
+	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/stop_drop_roll/tick(seconds_between_ticks)
 	if(HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || HAS_TRAIT(owner, TRAIT_INCAPACITATED))

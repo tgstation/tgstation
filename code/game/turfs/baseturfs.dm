@@ -34,13 +34,15 @@
 	new_baseturfs.Add(baseturfs)
 	if(isopenturf(src))
 		new_baseturfs.Add(type)
+	var/area/our_area = get_area(src)
+	flags = our_area.place_on_top_react(new_baseturfs, added_layer, flags)
 
 	return ChangeTurf(added_layer, new_baseturfs, flags)
 
 /// Places a turf on top - for map loading
 /turf/proc/load_on_top(turf/added_layer, flags)
 	var/area/our_area = get_area(src)
-	flags = our_area.PlaceOnTopReact(list(baseturfs), added_layer, flags)
+	flags = our_area.place_on_top_react(list(baseturfs), added_layer, flags)
 
 	if(flags & CHANGETURF_SKIP) // We haven't been initialized
 		if(flags_1 & INITIALIZED_1)

@@ -927,7 +927,7 @@
 /datum/chemical_reaction/eigenstate/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/turf/open/location = get_turf(holder.my_atom)
-	if(reaction.data["ducts_teleported"] == TRUE) //If we teleported an duct, then we reconnect it at the end
+	if(reaction.data["ducts_teleported"] == TRUE) //If we teleported a duct, then we reconnect it at the end
 		for(var/obj/item/stack/ducts/duct in range(location, 3))
 			duct.check_attach_turf(duct.loc)
 

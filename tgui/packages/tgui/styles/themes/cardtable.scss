@@ -24,7 +24,7 @@
 
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(145.26, 73.64%, 25.29%),
       'color-disabled': hsl(0, 0%, 21.18%),
@@ -34,14 +34,14 @@
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/NumberInput',
+    '~tgui-core/styles/components/NumberInput',
     $with: ('border-color': #fff)
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
+    '~tgui-core/styles/components/ProgressBar',
     $with: ('background-color': rgba(0, 0, 0, 0.5))
   );
-  @include meta.load-css('pkg:tgui-styles/components/Section');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

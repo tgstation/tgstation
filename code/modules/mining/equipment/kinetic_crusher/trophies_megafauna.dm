@@ -7,24 +7,28 @@
 	name = "eye of a blood-drunk hunter"
 	desc = "Its pupil is collapsed and turned to mush. Suitable as a trophy for a kinetic crusher."
 	icon_state = "hunter_eye"
+	trophy_id = TROPHY_MINER_EYE
 	denied_type = /obj/item/crusher_trophy/miner_eye
 
 /obj/item/crusher_trophy/miner_eye/effect_desc()
 	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
 
 /obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	user.apply_status_effect(/datum/status_effect/blooddrunk)
 
 //ash drake
 /obj/item/crusher_trophy/tail_spike
 	desc = "A spike taken from an ash drake's tail. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/tail_spike
+	trophy_id = TROPHY_TAIL_SPIKE
 	bonus_value = 5
 
 /obj/item/crusher_trophy/tail_spike/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
 
 /obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	for(var/mob/living/living_target in oview(2, user))
 		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
@@ -45,6 +49,7 @@
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/demon_claws
 	bonus_value = 10
+	trophy_id = TROPHY_DEMON_CLAWS
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /obj/item/crusher_trophy/demon_claws/effect_desc()
@@ -68,6 +73,7 @@
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
 
 /obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	user.heal_ordered_damage(bonus_value * 0.4, damage_heal_order)
 
 //colossus
@@ -78,6 +84,7 @@
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/blaster_tubes
 	bonus_value = 15
+	trophy_id = TROPHY_BLASTER_TUBES
 	var/deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/effect_desc()
@@ -92,6 +99,7 @@
 		deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	deadly_shot = TRUE
 	addtimer(CALLBACK(src, PROC_REF(reset_deadly_shot)), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
 
@@ -103,12 +111,14 @@
 	name = "vortex talisman"
 	desc = "A glowing trinket that was originally the Hierophant's beacon. Suitable as a trophy for a kinetic crusher."
 	icon_state = "vortex_talisman"
+	trophy_id = TROPHY_VORTEX
 	denied_type = /obj/item/crusher_trophy/vortex_talisman
 
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
 	return "mark detonation to create a homing hierophant chaser"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	if(isliving(target))
 		var/obj/effect/temp_visual/hierophant/chaser/chaser = new(get_turf(user), user, target, 3, TRUE)
 		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
@@ -120,12 +130,14 @@
 	name = "ice block talisman"
 	desc = "A glowing trinket that a demonic miner had on him, it seems he couldn't utilize it for whatever reason."
 	icon_state = "ice_trap_talisman"
+	trophy_id = TROPHY_ICE_BLOCK
 	denied_type = /obj/item/crusher_trophy/ice_block_talisman
 
 /obj/item/crusher_trophy/ice_block_talisman/effect_desc()
 	return "mark detonation to freeze a creature in a block of ice for a period, preventing them from moving"
 
 /obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	target.apply_status_effect(/datum/status_effect/ice_block_talisman)
 
 // Wendigo
@@ -156,6 +168,7 @@
 	icon_state = "broodmother_tongue"
 	denied_type = /obj/item/crusher_trophy/broodmother_tongue
 	bonus_value = 10
+	trophy_id = TROPHY_BROOD_TONGUE
 	/// Time at which the item becomes usable again
 	var/use_time
 
@@ -163,6 +176,7 @@
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	if(prob(bonus_value) && target.stat != DEAD)
 		new /obj/effect/goliath_tentacle/broodmother/patch(get_turf(target), user)
 
@@ -189,6 +203,7 @@
 	icon_state = "legionnaire_spine"
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
 	bonus_value = 20
+	trophy_id = TROPHY_LEGIONNAIRE_SPINE
 	/// Time at which the item becomes usable again
 	var/next_use_time
 
@@ -196,6 +211,7 @@
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
 
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
 	var/mob/living/basic/legion_brood/minion = new (user.loc)
@@ -215,3 +231,23 @@
 	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
 	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
+
+//The Thing
+/obj/item/crusher_trophy/flesh_glob
+	name = "glob of shifting flesh"
+	desc = "A glob of shifting flesh. Sealed shut permanently. Suitable as a trophy for a kinetic crusher."
+	icon_state = "glob"
+	denied_type = /obj/item/crusher_trophy/flesh_glob
+	bonus_value = 20
+	/// the order in which we heal damage
+	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY, TOX)
+
+/obj/item/crusher_trophy/flesh_glob/effect_desc()
+	return "melee hits heal you for <b>[bonus_value * 0.2]</b>, and for <b>[bonus_value * 0.5]</b> on mark detonation"
+
+/obj/item/crusher_trophy/flesh_glob/on_melee_hit(mob/living/target, mob/living/user)
+	user.heal_ordered_damage(bonus_value * 0.2, damage_heal_order)
+
+/obj/item/crusher_trophy/flesh_glob/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
+	user.heal_ordered_damage(bonus_value * 0.5, damage_heal_order)
