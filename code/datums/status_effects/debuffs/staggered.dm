@@ -75,7 +75,7 @@
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE), PROC_REF(clear_daze)
 	)
-ADD_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_DAZED, TRAIT_STATUS_EFFECT(id))
 	dazed_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "dazed")
 	owner.add_overlay(dazed_overlay)
 	return TRUE
@@ -88,7 +88,8 @@ ADD_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, TRAIT_STATUS_EFFECT(id))
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
 	))
-if(dazed_overlay)
+	REMOVE_TRAIT(owner, TRAIT_DAZED, STATUS_EFFECT_TRAIT)
+	if(dazed_overlay)
 		clear_dazed_overlay()
 
 /// If our owner is either stunned, paralzyed or immobilized, we remove the status effect.
