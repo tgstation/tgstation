@@ -1,0 +1,4 @@
+author: "siliconOpossum"
+delete-after: True
+changes:
+  - bugfix: "Lathes interfaces are no longer unscrollable on 516"
