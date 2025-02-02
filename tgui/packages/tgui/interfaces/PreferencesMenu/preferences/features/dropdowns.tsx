@@ -30,19 +30,16 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
 
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
 
-  let displayNames: Record<string, string> = {};
-
   function populateOptions() {
     if (!serverData) return;
 
     const { choices = [] } = serverData;
-    displayNames = serverData.display_names as Record<string, string>;
 
     let newOptions: DropdownOptions = [];
 
     for (const choice of choices) {
-      let displayText: ReactNode = displayNames
-        ? displayNames[choice]
+      let displayText: ReactNode = serverData.display_names
+        ? serverData.display_names[choice]
         : capitalizeFirst(choice);
 
       newOptions.push({
@@ -60,10 +57,7 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
     }
   }, [serverData]);
 
-  let displayText = value;
-  if (displayNames) {
-    displayText = displayNames[value];
-  }
+  const displayText = serverData?.display_names?.[value] || String(value);
 
   return (
     <Dropdown
@@ -81,21 +75,17 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;
 
-  // Skeletons so we can load
-  let displayNames: Record<string, string> = {};
-
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
 
   function populateOptions() {
     if (!serverData) return;
     const { icons = {}, choices = [] } = serverData;
-    displayNames = serverData.display_names as Record<string, string>;
 
     let newOptions: DropdownOptions = [];
 
     for (const choice of choices) {
-      let displayText: ReactNode = displayNames
-        ? displayNames[choice]
+      let displayText: ReactNode = serverData.display_names?.[choice]
+        ? serverData.display_names?.[choice]
         : capitalizeFirst(choice);
 
       if (serverData.icons?.[choice]) {
@@ -127,10 +117,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     }
   }, [serverData]);
 
-  let displayText = capitalizeFirst(value || '');
-  if (displayNames) {
-    displayText = displayNames[value];
-  }
+  const displayText = serverData?.display_names?.[value] || String(value);
 
   return (
     <Dropdown
