@@ -115,7 +115,7 @@ Some memes and gags included.
 			Bump(future_statistic)
 
 /obj/vehicle/sealed/car/cheburek/atom_destruction(damage_flag)
-	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+	playsound(src, 'sound/vehicles/clown_car/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
 	if(gopmode)
 		var/turf/distant_turf = get_ranged_target_turf(get_turf(src), src.dir, 15)
