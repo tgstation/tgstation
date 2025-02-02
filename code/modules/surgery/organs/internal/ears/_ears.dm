@@ -264,4 +264,4 @@
 	name = "pod ears"
 	desc = "Strangest salad you've ever seen."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
-	color = COLOR_GREEN
+	color = COLOR_LIME

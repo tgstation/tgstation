@@ -307,4 +307,4 @@
 	name = "pod mitochondria"
 	desc = "This plant-like organ is the powerhouse of the podperson." // deliberate wording here
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
-	color = COLOR_GREEN
+	color = COLOR_LIME

@@ -645,7 +645,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
 	disliked_foodtypes = GORE | MEAT | DAIRY | SEAFOOD | BUGS
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
-	color = COLOR_GREEN
+	color = COLOR_LIME
 
 /obj/item/organ/tongue/golem
 	name = "golem tongue"

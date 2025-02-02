@@ -640,4 +640,4 @@
 	name = "pod nucleus"
 	desc = "The brain of a pod person, it's a bit more plant-like than a human brain."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
-	color = COLOR_GREEN
+	color = COLOR_LIME
