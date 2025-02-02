@@ -5,8 +5,8 @@
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	sprite_width = 12
 	sprite_height = 7
 	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG

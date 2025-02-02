@@ -75,7 +75,7 @@
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE), PROC_REF(clear_daze)
 	)
-	ADD_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, STATUS_EFFECT_TRAIT)
+ADD_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, TRAIT_STATUS_EFFECT(id))
 	dazed_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "dazed")
 	owner.add_overlay(dazed_overlay)
 	return TRUE
@@ -88,8 +88,7 @@
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
 	))
-	REMOVE_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, STATUS_EFFECT_TRAIT)
-	if(dazed_overlay)
+if(dazed_overlay)
 		clear_dazed_overlay()
 
 /// If our owner is either stunned, paralzyed or immobilized, we remove the status effect.
@@ -135,12 +134,12 @@
 	if(owner.stat == DEAD)
 		return FALSE
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_on_death))
-	ADD_TRAIT(owner, TRAIT_NO_SIDE_KICK, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NO_SIDE_KICK, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/no_side_kick/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_DEATH))
-	REMOVE_TRAIT(owner, TRAIT_NO_SIDE_KICK, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NO_SIDE_KICK, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/no_side_kick/proc/clear_on_death(mob/living/source)
 	SIGNAL_HANDLER

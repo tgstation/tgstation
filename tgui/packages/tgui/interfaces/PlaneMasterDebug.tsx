@@ -906,7 +906,7 @@ const RebuildButton = (props) => {
       right={no_position ? '' : '6px'}
       position={no_position ? '' : 'absolute'}
       icon="recycle"
-      onClick={() => act('Rebuild')}
+      onClick={() => act('rebuild')}
       tooltip="Rebuilds ALL plane masters. Kinda laggy, but useful"
     />
   );
