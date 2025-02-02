@@ -493,7 +493,7 @@
 			continue
 		if(methods)
 			r_to_send += reagent
-		reagents_to_remove += list(list("R" = reagent, "T" = transfer_amount))
+		reagents_to_remove[reagent] = transfer_amount
 		total_transfered_amount += transfered_amount
 
 		if(!isnull(target_id))
@@ -504,9 +504,8 @@
 		target_holder.expose(isorgan(target_atom) ? target : target_atom, methods, part, show_message, r_to_send)
 
 	//remove chemicals that were added above
-	for(var/list/data as anything in reagents_to_remove)
-		var/datum/reagent/reagent = data["R"]
-		transfer_amount = data["T"]
+	for(var/datum/reagent/reagent as anything in reagents_to_remove)
+		transfer_amount = reagents_to_remove[reagent]
 		if(methods)
 			reagent.on_transfer(target_atom, methods, transfer_amount)
 		reagent.volume -= transfer_amount
