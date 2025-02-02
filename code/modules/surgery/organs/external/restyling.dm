@@ -111,11 +111,12 @@
 	var/restyle_speed = 2 SECONDS
 
 ///Catch right clicks so we can stylize!
-/obj/item/flesh_shears/pre_attack_secondary(atom/target, mob/living/user, params)
+/obj/item/flesh_shears/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode)
-		return ..()
-	restyle(target, user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return NONE
+
+	restyle(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 ///Send a signal to whatever we clicked and start RESTYLING
 /obj/item/flesh_shears/proc/restyle(atom/target, mob/living/user)
