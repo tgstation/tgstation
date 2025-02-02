@@ -16,9 +16,9 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 	//List of currently processed vines, on this level to prevent runtime tomfoolery
 	var/list/obj/structure/spacevine/queue_end
 	///Spread multiplier, depends on productivity, affects how often kudzu spreads
-	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, approaches 10% of total vines will spread per second
+	var/spread_multiplier = 5 // corresponds to artificial kudzu with production speed of 1, approaches 10% of total vines will spread per second
 	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
-	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
+	var/spread_cap = 30 // corresponds to artificial kudzu with production speed of 3.5
 	///The chance that we will develop a new mutation
 	var/mutativeness = 1
 	///Maximum sum of mutation severities

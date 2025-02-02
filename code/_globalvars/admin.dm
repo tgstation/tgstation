@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"Tape Recorder" = "tape_recorder",
 	"Tiny Notice" = "tinynotice",
 	"Tiny Notice Italic" = "tinynoticeital",
-	"Unconcious" = "unconscious",
+	"Unconscious" = "unconscious",
 	"User Danger" = "userdanger",
 	"Warning" = "warning",
 	"Yelling" = "yell",

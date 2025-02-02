@@ -5,7 +5,7 @@
 
 @use 'sass:meta';
 @use 'base';
-@use 'pkg:tgui-styles';
+@use '~tgui-core/styles';
 
 // Core styles
 @include meta.load-css('./reset.scss');

@@ -137,6 +137,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/area_creator
 	name = "create new area"

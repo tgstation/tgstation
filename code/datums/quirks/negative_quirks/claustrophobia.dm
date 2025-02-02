@@ -7,17 +7,13 @@
 	hardcore_value = 5
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/syringe/convermol) // to help breathing
+	maximum_process_stat = SOFT_CRIT
+	no_process_traits = list(TRAIT_MIND_TEMPORARILY_GONE, TRAIT_FEARLESS, TRAIT_KNOCKEDOUT)
 
 /datum/quirk/claustrophobia/remove()
 	quirk_holder.clear_mood_event("claustrophobia")
 
 /datum/quirk/claustrophobia/process(seconds_per_tick)
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
-		return
-
-	if(HAS_TRAIT(quirk_holder, TRAIT_MIND_TEMPORARILY_GONE) || HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
-		return
-
 	var/nick_spotted = FALSE
 
 	for(var/mob/living/carbon/human/possible_claus in view(5, quirk_holder))

@@ -1,0 +1,25 @@
+name: Run Alternate BYOND Version Tests
+on:
+  workflow_call:
+    inputs:
+      alternate_tests:
+        required: true
+        type: string
+      default_max_required_byond_client:
+        required: true
+        type: string
+
+jobs:
+  run:
+    uses: ./.github/workflows/run_integration_tests.yml
+
+    strategy:
+      fail-fast: false
+      matrix:
+        setup: ${{ fromJSON(inputs.alternate_tests) }}
+
+    with:
+      map: ${{ matrix.setup.map }}
+      major: ${{ matrix.setup.major }}
+      minor: ${{ matrix.setup.minor }}
+      max_required_byond_client: ${{ matrix.setup.max_client_version || inputs.default_max_required_byond_client }}

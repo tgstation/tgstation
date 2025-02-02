@@ -678,7 +678,7 @@
 
 /obj/item/food/burger/sloppy_moe
 	name = "sloppy moe"
-	desc = "Ground meat mixed with onions and barbeque sauce, sloppily plopped onto a burger bun. Delicious, but guaranteed to get your hands dirty."
+	desc = "Ground meat mixed with onions and barbecue sauce, sloppily plopped onto a burger bun. Delicious, but guaranteed to get your hands dirty."
 	icon_state = "sloppy_moe"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,

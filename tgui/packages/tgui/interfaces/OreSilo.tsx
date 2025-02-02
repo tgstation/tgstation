@@ -210,13 +210,13 @@ const LogsList = (props: LogsListProps) => {
   const { logs } = props;
 
   return logs.length > 0 ? (
-    <Box pr={1} height="100%" overflowY="scroll">
+    <Section fill scrollable pr={1} height="100%">
       <VirtualList>
         {logs.map((log, index) => (
           <LogEntry key={index} log={log} />
         ))}
       </VirtualList>
-    </Box>
+    </Section>
   ) : (
     <NoticeBox>No log entries currently present!</NoticeBox>
   );

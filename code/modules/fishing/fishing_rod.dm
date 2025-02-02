@@ -41,11 +41,14 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
-	///Is this currently being used by the profound fisher component?
+	/// Is this currently being used by the profound fisher component?
 	var/internal = FALSE
 
-	///The name of the icon state of the reel overlay
+	/// The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
+
+	/// Icon state of the frame overlay this rod uses for the minigame
+	var/frame_state = "frame_wood"
 
 	/**
 	 * A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
@@ -263,7 +266,7 @@
 			if(kill_fish)
 				fish.set_status(FISH_DEAD, silent = TRUE)
 
-	QDEL_NULL(bait)
+	qdel(bait)
 	update_icon()
 
 ///Returns the probability that a fish caught by this (custom material) rod will be of the same material.
@@ -361,10 +364,8 @@
 
 /obj/item/fishing_rod/proc/get_cast_range(mob/living/user)
 	. = max(cast_range, 1)
-	if(!user && !isliving(loc))
-		return
-	user = loc
-	if(!user.is_holding(src) || !user.mind)
+	user = user || loc
+	if (!isliving(user) || !user.mind || !user.is_holding(src))
 		return
 	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
 	return max(., 1)
@@ -665,6 +666,9 @@
 	if(slot)
 		SEND_SIGNAL(gone, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, src, slot)
 
+/obj/item/fishing_rod/proc/get_frame(datum/fishing_challenge/challenge)
+	return mutable_appearance('icons/hud/fishing_hud.dmi', frame_state)
+
 ///Found in the fishing toolbox (the hook and line are separate items)
 /obj/item/fishing_rod/unslotted
 	hook = null
@@ -683,6 +687,7 @@
 	icon_state = "fishing_rod_bone"
 	reel_overlay = "reel_bone"
 	default_line_color = "red"
+	frame_state = "frame_bone"
 	line = null //sinew line (usable to fish in lava) not included
 	hook = /obj/item/fishing_hook/bone
 
@@ -697,6 +702,7 @@
 	ui_description = "A collapsible fishing rod that can fit within a backpack."
 	wiki_description = "<b>It has to be bought from Cargo</b>."
 	reel_overlay = "reel_telescopic"
+	frame_state = "frame_telescopic"
 	completion_speed_mult = 1.1
 	bait_speed_mult = 1.1
 	deceleration_mult = 1.1
@@ -760,12 +766,13 @@
 
 /obj/item/fishing_rod/telescopic/master
 	name = "master fishing rod"
-	desc = "The mythical rod of a lost fisher king. Said to be imbued with un-paralleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
+	desc = "The mythical rod of a lost fisher king. Said to be imbued with unparalleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
 	difficulty_modifier = -10
 	ui_description = "A mythical telescopic fishing rod that makes fishing quite easier."
 	wiki_description = null
 	icon_state = "fishing_rod_master"
 	reel_overlay = "reel_master"
+	frame_state = "frame_master"
 	active_force = 13 //It's that sturdy
 	cast_range = 5
 	line = /obj/item/fishing_line/bouncy
@@ -785,6 +792,7 @@
 	wiki_description = "<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
+	frame_state = "frame_science"
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
 	completion_speed_mult = 1.1
 	bait_speed_mult = 1.1
@@ -821,6 +829,7 @@
 	desc = "A custom fishing rod from your local autolathe."
 	icon_state = "fishing_rod_material"
 	reel_overlay = "reel_material"
+	frame_state = "frame_material"
 	ui_description = "An autolathe-printable fishing rod made of some material."
 	wiki_description = "Different materials can have different effects. They also catch fish made of the same material used to print the rod."
 	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX
@@ -832,6 +841,11 @@
 /obj/item/fishing_rod/material/finalize_remove_material_effects(list/materials)
 	. = ..()
 	name = "fishing rod" //so it doesn't reset to "material fishing rod"
+
+/obj/item/fishing_rod/material/get_frame(datum/fishing_challenge/challenge)
+	var/mutable_appearance/frame = ..()
+	frame.color = color
+	return frame
 
 #undef ROD_SLOT_BAIT
 #undef ROD_SLOT_LINE

@@ -657,7 +657,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /turf/proc/add_vomit_floor(mob/living/vomiter, vomit_type = /obj/effect/decal/cleanable/vomit, vomit_flags, purge_ratio = 0.1)
-	var/obj/effect/decal/cleanable/vomit/throw_up = new vomit_type (src, vomiter.get_static_viruses())
+	var/obj/effect/decal/cleanable/vomit/throw_up = new vomit_type (src, vomiter?.get_static_viruses())
 
 	// if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(throw_up))
@@ -771,7 +771,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
 	. = ..()
 	if(alpha < 255)
-		AddElement(/datum/element/turf_z_transparency)
+		ADD_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(main_material))
 		main_material.setup_glow(src)
 	rust_resistance = main_material.mat_rust_resistance
 
@@ -780,7 +780,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	rust_resistance = initial(rust_resistance)
 	if(alpha == 255)
 		return
-	RemoveElement(/datum/element/turf_z_transparency)
+	REMOVE_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(custom_material))
 	// yeets glow
 	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 	set_light(0, 0, null)

@@ -67,7 +67,7 @@
 	desc = "Recalled by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
 		This outcry was fabricated through various Syndicate-backed misinformation operations to force Nanotrasen to abandon \
 		its ballistics weapon program, cornering them into the energy weapons market. Most often found today in the hands of pirates, \
-		underfunded security personnel, cargo technicians, theoritical physicists and gang bangers out on the rim. \
+		underfunded security personnel, cargo technicians, theoretical physicists, and gang bangers out on the rim. \
 		Light-weight and fully automatic. Uses 4.6x30mm rounds."
 	icon_state = "wt550"
 	w_class = WEIGHT_CLASS_BULKY
@@ -326,7 +326,7 @@
 	icon_state = "surplus"
 	worn_icon_state = null
 	weapon_weight = WEAPON_HEAVY
-	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm/rifle
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sr10mm
 	fire_delay = 30
 	burst_size = 1
 	can_unsuppress = TRUE
@@ -419,7 +419,7 @@
 
 /obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<b><i>Looking down at the [name], you recall something you read in a promotional pamphlet... </i></b>")
+	. += span_notice("<b><i>Looking down at \the [src], you recall something you read in a promotional pamphlet... </i></b>")
 
 	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity.\
 		This allows even less powerful cartridges to put out significant amounts of stopping power.")

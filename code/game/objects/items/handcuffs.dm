@@ -423,7 +423,7 @@
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 

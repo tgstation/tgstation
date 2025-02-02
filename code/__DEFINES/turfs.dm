@@ -15,15 +15,15 @@
 
 #define RECT_TURFS(H_RADIUS, V_RADIUS, CENTER) \
 	block( \
-	locate(max((CENTER).x-(H_RADIUS),1), max((CENTER).y-(V_RADIUS),1), (CENTER).z), \
-	locate(min((CENTER).x+(H_RADIUS),world.maxx), min((CENTER).y+(V_RADIUS),world.maxy), (CENTER).z) \
+	(CENTER).x - (H_RADIUS), (CENTER).y - (V_RADIUS), (CENTER).z, \
+	(CENTER).x + (H_RADIUS), (CENTER).y + (V_RADIUS), (CENTER).z \
 	)
 
 ///Returns all turfs in a zlevel
-#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+#define Z_TURFS(ZLEVEL) block(1, 1, ZLEVEL, world.maxx, world.maxy, ZLEVEL)
 
 ///Returns all currently loaded turfs
-#define ALL_TURFS(...) block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
+#define ALL_TURFS(...) block(1, 1, 1, world.maxx, world.maxy, world.maxz)
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
 
@@ -31,7 +31,7 @@
 #define CORNER_BLOCK(corner, width, height) CORNER_BLOCK_OFFSET(corner, width, height, 0, 0)
 
 /// Returns a list of turfs similar to CORNER_BLOCK but with offsets
-#define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(locate(corner.x + offset_x, corner.y + offset_y, corner.z), locate(min(corner.x + (width - 1) + offset_x, world.maxx), min(corner.y + (height - 1) + offset_y, world.maxy), corner.z))))
+#define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(corner.x + offset_x, corner.y + offset_y, corner.z, corner.x + (width - 1) + offset_x, corner.y + (height - 1) + offset_y, corner.z)))
 
 /// Returns an outline (neighboring turfs) of the given block
 #define CORNER_OUTLINE(corner, width, height) ( \
@@ -123,3 +123,13 @@
 #define BASALT_LIGHT_RANGE_BRIGHT 2
 /// Defines a consistent light range for basalt turfs that have a smaller area of lava
 #define BASALT_LIGHT_RANGE_DIM 1.4
+
+/// Makes the set turf transparent
+#define ADD_TURF_TRANSPARENCY(modturf, source) \
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.AddElement(/datum/element/turf_z_transparency) }; \
+	ADD_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source))
+
+/// Removes the transparency from the set turf
+#define REMOVE_TURF_TRANSPARENCY(modturf, source) \
+	REMOVE_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source)); \
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.RemoveElement(/datum/element/turf_z_transparency) }

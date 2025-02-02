@@ -274,6 +274,7 @@
 /// Avoid calling this directly as this doesn't move the object from its owner's contents
 /// Returns TRUE if the item got deleted due to DROPDEL flag
 /datum/embedding/proc/stop_embedding()
+	STOP_PROCESSING(SSprocessing, src)
 	if (owner_limb)
 		UnregisterSignal(owner_limb, COMSIG_BODYPART_REMOVED)
 		owner_limb._unembed_object(parent)
@@ -360,7 +361,7 @@
 
 	owner.emote("scream")
 
-/// The proper proc to call when you want to remove something. If a mob is passed, the item will be put in its hands - otherwise its just dumped onto the ground
+/// The proper proc to call when you want to remove something. If a mob is passed, the item will be put in its hands - otherwise it's just dumped onto the ground
 /datum/embedding/proc/remove_embedding(mob/living/to_hands)
 	var/mob/living/carbon/stored_owner = owner
 	if (stop_embedding()) // Dropdel?

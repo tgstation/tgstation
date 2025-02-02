@@ -42,11 +42,12 @@
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		apply_debuff()
 	else
-		ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src))
+		ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id))
 		owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_water)
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
 		add_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, SKILL_EXP_JOURNEYMAN, silent = TRUE)
+	owner.grant_language(/datum/language/carptongue, ALL, type)
 
 /datum/status_effect/organ_set_bonus/fish/disable_bonus()
 	. = ..()
@@ -61,7 +62,7 @@
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		remove_debuff()
 	else
-		REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src))
+		REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id))
 	owner.clear_mood_event("fish_organs_bonus")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
@@ -71,6 +72,7 @@
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
+	owner.remove_language(/datum/language/carptongue, ALL, type)
 
 /datum/status_effect/organ_set_bonus/fish/proc/get_perceived_food_quality(datum/source, datum/component/edible/edible, list/extra_quality)
 	SIGNAL_HANDLER
@@ -115,7 +117,7 @@
 	human.physiology.damage_resistance -= 16 //from +8% to -8%
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_debuff()
-	ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src)) //harder to grab when wet.
+	ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id)) //harder to grab when wet.
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/fish_waterless)
 	owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_water)
 	if(!ishuman(owner))
@@ -418,6 +420,10 @@
 /obj/item/organ/tongue/inky/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "Slick black ink seldom rivulets from %PRONOUN_their mouth.", BODY_ZONE_PRECISE_MOUTH)
+
+/obj/item/organ/tongue/inky/get_possible_languages()
+	. = ..()
+	. += /datum/language/carptongue
 
 ///Organ from fish with the toxic trait. Allows the user to use tetrodotoxin as a healing chem instead of a toxin.
 /obj/item/organ/liver/fish

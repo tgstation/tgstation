@@ -168,7 +168,7 @@
 	trigger_mob = FALSE
 	trigger_item = TRUE
 	specific_item = /obj/structure/holobox
-	removable_signaller = FALSE //Being a pressure plate subtype, this can also use signals.
+	removable_assembly = FALSE //Being a pressure plate subtype, this can also use signals.
 	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on its own default channel however.
 	active = TRUE
 	trigger_delay = 10
@@ -526,7 +526,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 /obj/effect/puzzle_poddoor_open
 	name = "puzzle-poddoor relay"
-	desc = "activates poddoors if activated with a puzzle signal."
+	desc = "Activates pod doors if activated with a puzzle signal."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 	anchored = TRUE
