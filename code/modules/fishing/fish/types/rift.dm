@@ -127,8 +127,8 @@
 	pickup_sound = SFX_FISH_PICKUP
 	sound_vary = TRUE
 
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	sprite_width = 13
 	sprite_height = 9
 
