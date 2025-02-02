@@ -521,7 +521,7 @@
 	. = ..()
 	if (reac_volume < 5)
 		return
-	if (!isplatingturf(exposed_turf) && !(exposed_turf.type == /turf/closed/wall || exposed_turf.type == /turf/closed/wall/r_wall))
+	if (!isplatingturf(exposed_turf) && exposed_turf.type != /turf/closed/wall)
 		return
 	if (!HAS_TRAIT(exposed_turf, TRAIT_RUSTY))
 		exposed_turf.AddElement(/datum/element/rust)
