@@ -34,7 +34,13 @@ type Data = {
 export const LanguageMenu = (props) => {
   const {
     act,
-    data: { admin_mode, omnitongue, languages = [], unknown_languages = [] },
+    data: {
+      admin_mode,
+      is_living,
+      omnitongue,
+      languages = [],
+      unknown_languages = [],
+    },
   } = useBackend<Data>();
   return (
     <Window title="Language Menu" width={700} height={600}>
@@ -91,6 +97,23 @@ export const LanguageMenu = (props) => {
                 </Table.Cell>
                 <Table.Cell textAlign="center">,{language.key}</Table.Cell>
                 <Table.Cell p={0.5}>{language.desc}</Table.Cell>
+                {!!is_living && (
+                  <Table.Cell>
+                    <Button
+                      disabled={!language.can_speak}
+                      selected={language.is_default}
+                      onClick={() =>
+                        act('select_default', {
+                          language_name: language.name,
+                        })
+                      }
+                    >
+                      {language.is_default
+                        ? 'Default Language'
+                        : 'Select as Default'}
+                    </Button>
+                  </Table.Cell>
+                )}
                 {!!admin_mode && (
                   <Table.Cell>
                     <>
