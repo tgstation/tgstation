@@ -158,7 +158,7 @@
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
 	animate(user, pixel_z = pixel_shift_y, time = WORKOUT_LENGTH * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
-	animate(pixel_z = -pixel_shift_y, time = WORKOUT_LENGTH * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_z = -pixel_shift_y, time = WORKOUT_LENGTH * 0.5, flags = ANIMATION_PARALLEL)
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
 
 	if(!iscarbon(user) || isnull(user.mind))
