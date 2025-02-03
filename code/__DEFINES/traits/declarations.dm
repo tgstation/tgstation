@@ -872,6 +872,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker"
 /// For edible items that cannot be composted inside hydro trays
 #define TRAIT_UNCOMPOSTABLE "uncompostable"
+/// Items with this trait will not have their worn icon overlayed.
+#define TRAIT_NO_WORN_ICON "no_worn_icon"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
