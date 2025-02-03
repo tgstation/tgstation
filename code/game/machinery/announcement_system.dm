@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			return TRUE
 	return FALSE
 
-/// Can AAS recieve request for broadcast from you?
+/// Can AAS receive request for broadcast from you?
 /obj/machinery/announcement_system/proc/can_be_reached_from(atom/source)
 	if(!source || !istype(source))
 		return TRUE
