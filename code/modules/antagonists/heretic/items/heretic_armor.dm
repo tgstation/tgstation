@@ -56,7 +56,6 @@
 	icon_state = "void_cloak"
 	flags_inv = NONE
 	flags_cover = NONE
-	item_flags = EXAMINE_SKIP
 	armor_type = /datum/armor/cult_hoodie_void
 
 /datum/armor/cult_hoodie_void
@@ -69,7 +68,7 @@
 
 /obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+	add_traits(src, list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), INNATE_TRAIT)
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
@@ -152,8 +151,7 @@
 
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
-	item_flags |= EXAMINE_SKIP
-	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	RemoveElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
@@ -163,8 +161,7 @@
 
 /// Makes our cloak "visible" again.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
-	item_flags &= ~EXAMINE_SKIP
-	REMOVE_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+	remove_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	AddElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
