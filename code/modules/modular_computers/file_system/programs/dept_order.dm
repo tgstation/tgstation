@@ -228,8 +228,8 @@
 	if(!already_signalled)
 		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, PROC_REF(finalize_department_order))
 	if(!alert_silenced && alert_able)
-		aas_config_announce(/datum/aas_config_entry/department_orders, list("ORDER" = pack.name, "PERSON" = name), list(radio_channel), "Order Placed")
-		aas_config_announce(/datum/aas_config_entry/department_orders_cargo, list("DEPARTMENT" = linked_department.department_name), list(RADIO_CHANNEL_SUPPLY))
+		aas_config_announce(/datum/aas_config_entry/department_orders, list("ORDER" = pack.name, "PERSON" = name), computer.physical, list(radio_channel), "Order Placed")
+		aas_config_announce(/datum/aas_config_entry/department_orders_cargo, list("DEPARTMENT" = linked_department.department_name), computer.physical, list(RADIO_CHANNEL_SUPPLY))
 	computer.physical.say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 
@@ -248,7 +248,7 @@
 /datum/computer_file/program/department_order/process_tick(seconds_per_tick)
 	if(!check_cooldown() || alert_silenced || !alert_able)
 		return
-	aas_config_announce(/datum/aas_config_entry/department_orders, list(), list(radio_channel), "Cooldown Reset")
+	aas_config_announce(/datum/aas_config_entry/department_orders, list(), computer.physical, list(radio_channel), "Cooldown Reset")
 	computer.alert_call(src, "Order cooldown expired!", 'sound/machines/ping.ogg')
 
 /// Checks if the cooldown is up and resets it if so.

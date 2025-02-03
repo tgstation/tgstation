@@ -31,6 +31,8 @@
 	var/list/flashers = list()
 	///List of weakrefs to nearby closets
 	var/list/closets = list()
+	///Channel to report prisoneer's release
+	var/broadcast_channel = RADIO_CHANNEL_SECURITY
 
 /obj/machinery/status_display/door_timer/Initialize(mapload)
 	. = ..()
@@ -131,7 +133,7 @@
 		return 0
 
 	if(!forced)
-		aas_config_announce(/datum/aas_config_entry/brig_cell_release_announcement, list("CELL" = name), list(RADIO_CHANNEL_SECURITY))
+		aas_config_announce(/datum/aas_config_entry/brig_cell_release_announcement, list("CELL" = name), src, list(broadcast_channel))
 
 	timing = FALSE
 	activation_time = 0

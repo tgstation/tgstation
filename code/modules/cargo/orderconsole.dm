@@ -316,7 +316,7 @@
 	if(self_paid)
 		say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 	if(requestonly && message_cooldown < world.time)
-		aas_config_announce(/datum/aas_config_entry/cargo_orders_announcement, list("AMOUNT" = amount), list(RADIO_CHANNEL_SUPPLY), amount == 1 ? "Single Order" : "Multiple Orders")
+		aas_config_announce(/datum/aas_config_entry/cargo_orders_announcement, list("AMOUNT" = amount), src, list(RADIO_CHANNEL_SUPPLY), amount == 1 ? "Single Order" : "Multiple Orders")
 		message_cooldown = world.time + 30 SECONDS
 	. = TRUE
 

@@ -122,12 +122,12 @@
 		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
 			"PERSON" = gamer.name,
 			"LOCATION" = get_area_name(src),
-			"SOURCE" = name), list(RADIO_CHANNEL_SECURITY), "Security")
+			"SOURCE" = name), src, list(RADIO_CHANNEL_SECURITY), RADIO_CHANNEL_SECURITY)
 
 		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
 			"PERSON" = gamer.name,
 			"LOCATION" = get_area_name(src),
-			"SOURCE" = name), list(RADIO_CHANNEL_MEDICAL), "Medical")
+			"SOURCE" = name), src, list(RADIO_CHANNEL_MEDICAL), RADIO_CHANNEL_MEDICAL)
 
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
@@ -548,8 +548,8 @@
 	// Well we don't want to show that only Orion Trails reports violent behavior, eh-h?
 	name = "Violent Behavior Alert"
 	announcement_lines_map = list(
-		"Security" = "SECURITY ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please watch for violent behavior.",
-		"Medical" = "PSYCH ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please schedule psych evaluation.",
+		RADIO_CHANNEL_SECURITY = "SECURITY ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please watch for violent behavior.",
+		RADIO_CHANNEL_MEDICAL = "PSYCH ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please schedule psych evaluation.",
 	)
 	vars_and_tooltips_map = list(
 		"PERSON" = "will be replaced with the crewmember reported",

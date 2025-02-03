@@ -101,6 +101,8 @@
 	var/on = FALSE
 	/// The sound loop that can be heard when the generator is processing.
 	var/datum/looping_sound/cryo_cell/soundloop
+	/// For away sites, custom or admin events
+	var/broadcast_channel = RADIO_CHANNEL_MEDICAL
 
 /datum/armor/unary_cryo_cell
 	energy = 100
@@ -406,7 +408,7 @@
 		mob_occupant.extinguish_mob()
 	if(mob_occupant.stat == DEAD) // Notify doctors and potentially eject if the patient is dead
 		set_on(FALSE)
-		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), list(RADIO_CHANNEL_MEDICAL), "Deceased")
+		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Deceased")
 		if(autoeject) // Eject if configured.
 			open_machine()
 		playsound(src, 'sound/machines/cryo_warning.ogg', 100)
@@ -420,14 +422,14 @@
 				if(!treating_wounds) // if we have wounds and haven't already alerted the doctors we're only dealing with the wounds, let them know
 					treating_wounds = TRUE
 					playsound(src, 'sound/machines/cryo_warning.ogg', 100) // Bug the doctors.
-					aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list(), list(RADIO_CHANNEL_MEDICAL), "Wound Treatment")
+					aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list(), src, list(broadcast_channel), "Wound Treatment")
 			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
 				treating_wounds = FALSE
 
 		if(!treating_wounds)
 			set_on(FALSE)
 			playsound(src, 'sound/machines/cryo_warning.ogg', 100) // Bug the doctors.
-			aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), list(RADIO_CHANNEL_MEDICAL), "Fully Recovered")
+			aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Fully Recovered")
 			if(autoeject) // Eject if configured.
 				open_machine()
 			return PROCESS_KILL
@@ -450,7 +452,7 @@
 	//check for workable conditions
 	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		set_on(FALSE)
-		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), list(RADIO_CHANNEL_MEDICAL), "Insufficient Gas")
+		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Insufficient Gas")
 		if(autoeject) // Eject if configured.
 			open_machine()
 		return PROCESS_KILL

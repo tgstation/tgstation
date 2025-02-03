@@ -1423,7 +1423,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					"LOCATION" = get_area_name(src),
 					"VENDOR" = name,
 					"PRODUCT" = item_record.name
-				), list(RADIO_CHANNEL_SECURITY))
+				), src, list(RADIO_CHANNEL_SECURITY))
 				GLOB.narcd_underages += usr
 			flick(icon_deny,src)
 			vend_ready = TRUE

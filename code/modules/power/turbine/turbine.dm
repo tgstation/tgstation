@@ -659,7 +659,7 @@
 				explosion(src, 2, 5, 7)
 			return PROCESS_KILL
 
-		aas_config_announce(/datum/aas_config_entry/engineering_turbine_failure, list("INTEGRITY" = integrity, "LOCATION" = get_area_name(src)), list(RADIO_CHANNEL_ENGINEERING))
+		aas_config_announce(/datum/aas_config_entry/engineering_turbine_failure, list("INTEGRITY" = integrity, "LOCATION" = get_area_name(src)), src, list(RADIO_CHANNEL_ENGINEERING))
 		playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
 	//================ROTOR WORKING============//

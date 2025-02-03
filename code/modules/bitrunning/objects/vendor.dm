@@ -57,7 +57,7 @@
 		can_be_cancelled = FALSE,
 	)
 	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
-	aas_config_announce(/datum/aas_config_entry/order_console, list(), list(radio_channel), capitalize(blackbox_key))
+	aas_config_announce(/datum/aas_config_entry/order_console, list(), src, list(radio_channel), capitalize(blackbox_key))
 	SSshuttle.shopping_list += new_order
 
 /obj/machinery/computer/order_console/bitrunning/retrieve_points(obj/item/card/id/id_card)

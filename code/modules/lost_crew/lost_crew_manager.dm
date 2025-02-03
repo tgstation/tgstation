@@ -106,11 +106,11 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 /datum/lost_crew_manager/proc/award_succes(datum/mind/revived_mind, list/death_lore)
 	// I am incredibly disappointed in you
 	if(revived_mind.current.stat == DEAD)
-		aas_config_announce(/datum/aas_config_entry/medical_lost_crew_reward, list("PERSON" = revived_mind.name, "AWARD" = 0), list(RADIO_CHANNEL_MEDICAL), "Deceased")
+		aas_config_announce(/datum/aas_config_entry/medical_lost_crew_reward, list("PERSON" = revived_mind.name, "AWARD" = 0), null, list(RADIO_CHANNEL_MEDICAL), "Deceased")
 		return
 
 	// You are a credit to society
-	aas_config_announce(/datum/aas_config_entry/medical_lost_crew_reward, list("PERSON" = revived_mind.name, "AWARD" = credits_on_succes), list(RADIO_CHANNEL_MEDICAL), "Revived")
+	aas_config_announce(/datum/aas_config_entry/medical_lost_crew_reward, list("PERSON" = revived_mind.name, "AWARD" = credits_on_succes), null, list(RADIO_CHANNEL_MEDICAL), "Revived")
 
 	var/datum/bank_account/medical_budget = SSeconomy.get_dep_account(ACCOUNT_MED)
 	medical_budget.adjust_money(credits_on_succes)

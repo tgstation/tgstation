@@ -164,11 +164,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				return
 			switch(params["emergency"])
 				if(REQ_EMERGENCY_SECURITY) //Security
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
 				if(REQ_EMERGENCY_ENGINEERING) //Engineering
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
 				if(REQ_EMERGENCY_MEDICAL) //Medical
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
 			update_appearance()
 			addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
@@ -357,7 +357,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			"SENDER" = new_message.sender_department,
 			"RECEIVER" = department,
 			"MESSAGE" = new_message.content
-			), list(new_message.radio_channel), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
+			), null, list(new_message.radio_channel), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)

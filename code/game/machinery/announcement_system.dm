@@ -170,6 +170,16 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			return TRUE
 	return FALSE
 
+/// Can AAS recieve request for broadcast from you?
+/obj/machinery/announcement_system/proc/can_be_reached_from(atom/source)
+	if(!source || !istype(source))
+		return TRUE
+	var/turf/source_turf = get_turf(source)
+	if (!source_turf)
+		return TRUE
+	// Keep updated with broadcasting.dm (/datum/signal/subspace/vocal/New)
+	return z in SSmapping.get_connected_levels(source_turf)
+
 /// Compiles the announcement message with the provided variables. Announcement line is optional.
 /obj/machinery/announcement_system/proc/compile_config_message(aas_config_entry_type, list/variables_map, announcement_line, fail_if_disabled=FALSE)
 	var/datum/aas_config_entry/config = locate(aas_config_entry_type) in config_entries
@@ -196,13 +206,13 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if (msg)
 		broadcast(msg, channels, command_span)
 
-/// Returns a random announcement system that is operational and has the specified config entry and radio supports any channel in list. Config entry and channels are optional.
-/proc/get_announcement_system(aas_config_entry_type, list/channels)
+/// Returns a random announcement system that is operational, has the specified config entry, signal can reach source and radio supports any channel in list. Config entry, source and channels are optional.
+/proc/get_announcement_system(aas_config_entry_type, source, list/channels)
 	if (!GLOB.announcement_systems.len)
 		return null
 	var/list/intact_aass = list()
 	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
-		if(!QDELETED(announce) && announce.is_operational && announce.has_supported_channels(channels))
+		if(!QDELETED(announce) && announce.is_operational && announce.has_supported_channels(channels) && announce.can_be_reached_from(source))
 			if(aas_config_entry_type)
 				var/datum/aas_config_entry/entry = locate(aas_config_entry_type) in announce.config_entries
 				if(!entry || !entry.enabled)
@@ -210,9 +220,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			intact_aass += announce
 	return intact_aass.len ? pick(intact_aass) : null
 
-/// Announces the provided message with the provided variables and config entry type. Channels and announcement_line are optional.
-/proc/aas_config_announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line, command_span)
-	var/obj/machinery/announcement_system/announcer = get_announcement_system(aas_config_entry_type, channels)
+/// Announces the provided message with the provided variables and config entry type. Channels, announcement_line, command_span and source are optional.
+/proc/aas_config_announce(aas_config_entry_type, list/variables_map, source, list/channels, announcement_line, command_span)
+	var/obj/machinery/announcement_system/announcer = get_announcement_system(aas_config_entry_type, source, channels)
 	if (!announcer)
 		return
 	announcer.announce(aas_config_entry_type, variables_map, channels, announcement_line, command_span)

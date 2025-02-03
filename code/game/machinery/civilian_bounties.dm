@@ -328,7 +328,7 @@
 		var/nag_message = "[src] is unsent in [get_area(src)]."
 
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
-		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent)
+		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src)
 		if (aas)
 			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value), "Regular Message")
 			if (speed_bonus)
@@ -365,7 +365,7 @@
 		"RANK" = bounty_holder_job,
 		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss"),
 		"COST" = bounty_value
-	), list(RADIO_CHANNEL_SUPPLY))
+	), src, list(RADIO_CHANNEL_SUPPLY))
 
 //for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
 /obj/item/bounty_cube/debug_cube
