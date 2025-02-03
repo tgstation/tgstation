@@ -519,7 +519,7 @@
 
 /datum/reagent/hydrogen_peroxide/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	if (reac_volume < 5)
+	if (reac_volume < 1.5)
 		return
 	if (!isplatingturf(exposed_turf) && exposed_turf.type != /turf/closed/wall)
 		return
@@ -2903,7 +2903,7 @@
 
 /datum/reagent/eldritch/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	if ((reac_volume >= 5 || isplatingturf(exposed_turf)) && !HAS_TRAIT(exposed_turf, TRAIT_RUSTY))
+	if ((reac_volume >= 1.5 || isplatingturf(exposed_turf)) && !HAS_TRAIT(exposed_turf, TRAIT_RUSTY))
 		exposed_turf.rust_turf()
 
 /datum/reagent/universal_indicator
