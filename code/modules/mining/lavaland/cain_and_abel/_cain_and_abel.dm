@@ -48,8 +48,10 @@
 
 /obj/item/cain_and_abel/proc/on_unequip(datum/source, obj/item/dropped_item, force, new_location)
 	SIGNAL_HANDLER
+
 	if(dropped_item != src)
 		return
+
 	if(HAS_TRAIT(source, TRAIT_RELAYING_ATTACKER))
 		source.RemoveElement(/datum/element/relay_attackers)
 
@@ -58,8 +60,10 @@
 
 /obj/item/cain_and_abel/equipped(mob/user, slot)
 	. = ..()
+
 	if(!(slot & ITEM_SLOT_HANDS))
 		set_combo(new_value = 0, user = user)
+
 	if(!HAS_TRAIT(user, TRAIT_RELAYING_ATTACKER))
 		user.AddElement(/datum/element/relay_attackers)
 
@@ -73,6 +77,7 @@
 /obj/item/cain_and_abel/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(get_dist(interacting_with, user) > 9 || interacting_with.z != user.z)
 		return ITEM_INTERACT_BLOCKING
+
 	if(!length(current_wisps))
 		user.balloon_alert(user, "no wisps!")
 		return
@@ -85,6 +90,7 @@
 /obj/item/cain_and_abel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!istype(target) || target.mob_size < MOB_SIZE_LARGE || target.stat == DEAD)
 		return ..()
+
 	var/old_force = force
 	var/bonus_value = combo_count || 1
 	force = CEILING((bonus_value * damage_boost) * force, 1)
@@ -116,7 +122,7 @@
 		remove_wisp(my_wisp)
 
 /obj/item/cain_and_abel/proc/add_wisp(mob/living/user)
-	var/obj/effect/overlay/blood_wisp/new_wisp = new
+	var/obj/effect/overlay/blood_wisp/new_wisp = new(src)
 	current_wisps += new_wisp
 	var/list/position = wisp_offsets[length(current_wisps)]
 	user.vis_contents += new_wisp

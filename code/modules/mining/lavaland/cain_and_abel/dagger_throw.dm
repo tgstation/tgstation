@@ -6,9 +6,11 @@
 	if(!COOLDOWN_FINISHED(src, throw_cooldown))
 		user.balloon_alert(user, "on cooldown!")
 		return
+
 	if(user.incapacitated || HAS_TRAIT(user, TRAIT_NO_THROWING) || !isturf(user.loc) || user.buckled)
 		user.balloon_alert(user, "unable!")
 		return
+
 	if(get_dist(target, user) > 9)
 		user.balloon_alert(user, "too far away!")
 		return
@@ -23,17 +25,37 @@
 			"projectile" = /obj/projectile/dagger/crystal,
 		),
 	)
+
 	var/list/throw_settings = throw_options[throw_mode]
 	COOLDOWN_START(src, throw_cooldown, throw_settings["cooldown"])
 	var/atom/dagger = fire_projectile(throw_settings["projectile"], target, 'sound/items/weapons/fwoosh.ogg', user)
+	if(isnull(dagger))
+		return
+
+	set_dagger_icon(thrown = TRUE) //when we throw a dagger, we'll only be holding 1
 	user.Beam(dagger, icon_state = "chain", icon = 'icons/obj/mining_zones/artefacts.dmi', maxdistance = 9, layer = BELOW_MOB_LAYER)
 	RegisterSignal(dagger, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_dagger_hit))
 
 /obj/item/cain_and_abel/proc/on_dagger_hit(obj/projectile/dagger/source, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
+
 	if(!ismob(loc))
 		return
-	source.dagger_effects(target)
+
+	var/atom/dagger_visual = source.dagger_effects(target)
+	if(isnull(dagger_visual))
+		set_dagger_icon(thrown = FALSE)
+		return
+
+	RegisterSignal(dagger_visual, COMSIG_QDELETING, PROC_REF(reset_dagger_icon))
+
+/obj/item/cain_and_abel/proc/set_dagger_icon(thrown = FALSE)
+	inhand_icon_state = "[src::inhand_icon_state][thrown ? "_thrown" : ""]"
+	update_inhand_icon()
+
+/obj/item/cain_and_abel/proc/reset_dagger_icon()
+	SIGNAL_HANDLER
+	set_dagger_icon(thrown = FALSE)
 
 #undef THROW_CRYSTALS_COOLDOWN
 #undef THROW_LAUNCH_COOLDOWN

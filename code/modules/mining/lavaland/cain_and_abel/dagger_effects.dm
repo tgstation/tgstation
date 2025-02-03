@@ -47,16 +47,25 @@
 /obj/projectile/dagger/proc/dagger_effects(atom/target)
 	if(QDELETED(target))
 		return null
-	var/obj/effect/temp_visual/dagger_engraved/engraved = new effect_left(get_turf(target))
+	var/turf/target_turf = get_turf(target)
+	if(isgroundlessturf(target_turf))
+		return null
+	var/obj/effect/temp_visual/dagger_engraved/engraved = new effect_left(target_turf)
 	firer.Beam(engraved, icon_state = "chain", icon = 'icons/obj/mining_zones/artefacts.dmi', maxdistance = 9, layer = BELOW_MOB_LAYER)
 	return engraved
 
 /obj/projectile/dagger/crystal
 	effect_left = /obj/effect/temp_visual/dagger_engraved/crystals
 
+/obj/projectile/dagger/launch
+	effect_left = /obj/effect/temp_visual/dagger_engraved/launch
+
 /obj/projectile/dagger/launch/dagger_effects(atom/target)
 	. = ..()
-	firer.throw_at(target = get_turf(target), range = 9, speed = 1, spin = FALSE, gentle = TRUE)
+	if(isnull(.))
+		return
+	var/obj/effect/temp_visual/dagger_engraved/launch/launching_dagger = .
+	launching_dagger.launch(firer)
 
 //effect when monsters step on our crystals
 /obj/effect/temp_visual/dagger_lightning
@@ -69,11 +78,45 @@
 /obj/effect/temp_visual/dagger_engraved
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cain_abel_engraved"
-	light_color = "#3d50db"
+	light_color = "#5767e1"
 	light_power = 2
+	light_range = 2
 	duration = 3 SECONDS
+	///traits we apply to the user when being launched
+	var/static/list/traits_on_launch = list(
+		TRAIT_IMMOBILIZED,
+		TRAIT_MOVE_FLOATING,
+	)
 
+//the dagger thatll launch us toward it
+/obj/effect/temp_visual/dagger_engraved/launch
+
+/obj/effect/temp_visual/dagger_engraved/launch/proc/launch(mob/living/firer)
+	RegisterSignal(firer, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_firer_thrown))
+	firer.throw_at(target = src, range = 9, speed = 1, spin = FALSE, gentle = TRUE)
+	RegisterSignal(firer, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_firer_landed))
+
+/obj/effect/temp_visual/dagger_engraved/launch/proc/on_firer_thrown(mob/living/source, datum/thrownthing/thrown)
+	SIGNAL_HANDLER
+	if(thrown.initial_target?.resolve() != src)
+		end_throw(source)
+		return
+	source.add_traits(traits_on_launch, REF(src))
+	new /obj/effect/temp_visual/mook_dust(get_turf(source))
+
+/obj/effect/temp_visual/dagger_engraved/launch/proc/end_throw(mob/living/firer)
+	firer.remove_traits(traits_on_launch, REF(src))
+	new /obj/effect/temp_visual/mook_dust(get_turf(firer))
+	qdel(src)
+
+/obj/effect/temp_visual/dagger_engraved/launch/proc/on_firer_landed(mob/living/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
+	SIGNAL_HANDLER
+	end_throw(source)
+
+//dagger thatll spring up crystals
 /obj/effect/temp_visual/dagger_engraved/crystals
+	light_power = 1
+	light_range = 1
 
 /obj/effect/temp_visual/dagger_engraved/crystals/Initialize(mapload)
 	. = ..()
@@ -126,9 +169,9 @@
 	name = "dagger wisp"
 	damage = 25
 	armor_flag = BOMB
-	light_power = 1
-	light_range = 1
-	light_color = "#d74e63"
+	light_power = 2
+	light_range = 2
+	light_color = "#ea2e4a"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blood_wisp"
 
