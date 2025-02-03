@@ -265,14 +265,14 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	required_atoms = list(
 		list(/obj/item/toy/eldritch_book, /obj/item/book) = 1,
 		/obj/item/pen = 1,
-		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide) = 1,
+		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse) = 1,
 	)
 	banned_atom_types = list(/obj/item/pen)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	is_starting_knowledge = TRUE
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
-	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide))
+	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse))
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book"
 

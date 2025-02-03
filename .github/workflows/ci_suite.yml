@@ -149,14 +149,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Restore BYOND cache
-        uses: actions/cache@v4
-        with:
-          path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
+      - name: Restore BYOND from Cache
+        uses: ./.github/actions/restore_or_install_byond
       - name: Compile All Maps
         run: |
-          bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
       - name: Check client Compatibility
@@ -166,7 +162,7 @@ jobs:
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   collect_data:
-    name: Collect data for other tasks
+    name: Collect data and setup caches for other tasks
     needs: start_gate
     runs-on: ubuntu-22.04
     timeout-minutes: 5
@@ -194,36 +190,27 @@ jobs:
         #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
         run: |
           echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
+      - name: Set up BYOND cache
+        uses: ./.github/actions/restore_or_install_byond
 
   run_all_tests:
     name: Integration Tests
     needs: collect_data
 
-    strategy:
-      fail-fast: false
-      matrix:
-        map: ${{ fromJSON(needs.collect_data.outputs.maps).paths }}
-
-    uses: ./.github/workflows/run_integration_tests.yml
+    uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
-      map: ${{ matrix.map }}
+      maps: ${{ needs.collect_data.outputs.maps }}
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   run_alternate_tests:
     if: needs.collect_data.outputs.alternate_tests != '[]'
     name: Alternate Tests
     needs: collect_data
-    strategy:
-      fail-fast: false
-      matrix:
-        setup: ${{ fromJSON(needs.collect_data.outputs.alternate_tests) }}
 
-    uses: ./.github/workflows/run_integration_tests.yml
+    uses: ./.github/workflows/perform_alternate_version_tests.yml
     with:
-      map: ${{ matrix.setup.map }}
-      major: ${{ matrix.setup.major }}
-      minor: ${{ matrix.setup.minor }}
-      max_required_byond_client: ${{ matrix.setup.max_client_version || needs.collect_data.outputs.max_required_byond_client }}
+      alternate_tests: ${{ needs.collect_data.outputs.alternate_tests }}
+      default_max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
   compare_screenshots:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'

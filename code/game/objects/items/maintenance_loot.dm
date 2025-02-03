@@ -49,3 +49,19 @@
 	var/initial_percent = rand(40, 60) / 100 // 250kJ to 350kJ
 	charge = initial_percent * maxcharge
 	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+	AddComponent(/datum/component/loads_avatar_gear, \
+		load_callback = CALLBACK(src, PROC_REF(shockingly_improve_avatar)), \
+	)
+
+// Give our owner shock touch when entering the digital realm
+/obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
+		return BITRUNNER_GEAR_LOAD_BLOCKED
+
+	if(!avatar.can_mutate())
+		return BITRUNNER_GEAR_LOAD_FAILED
+
+	if(avatar.dna.mutation_in_sequence(/datum/mutation/human/shock))
+		avatar.dna.activate_mutation(/datum/mutation/human/shock)
+	else
+		avatar.dna.add_mutation(/datum/mutation/human/shock, MUT_EXTRA)

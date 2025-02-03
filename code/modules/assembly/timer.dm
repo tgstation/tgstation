@@ -3,7 +3,7 @@
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_TOGGLEABLE_INPUT
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 

@@ -53,6 +53,13 @@
 /.github/guides/VISUALS.md @LemonInTheDark
 /code/_onclick/hud/ @LemonInTheDark
 /code/__DEFINES/layers.dm @LemonInTheDark
+/code/__DEFINES/MC.dm @LemonInTheDark
+/code/controllers/admin.dm @LemonInTheDark
+/code/controllers/failsafe.dm @LemonInTheDark
+/code/controllers/master.dm @LemonInTheDark
+/code/controllers/subsystem.dm @LemonInTheDark
+/code/controllers/subsystem/air.dm @LemonInTheDark
+/code/controllers/subsystem/timer.dm @LemonInTheDark
 
 # Mothblocks
 
@@ -163,10 +170,6 @@
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
 /code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
-# MrStonedOne
-
-/code/controllers/subsystem/timer.dm @MrStonedOne
-
 # NamelessFairy
 
 /code/modules/capture_the_flag/ @NamelessFairy
@@ -181,7 +184,7 @@
 
 # MULTIPLE OWNERS
 
-/SQL/ @Jordie0608 @MrStonedOne @scriptis
+/SQL/ @Jordie0608 @scriptis
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 
@@ -190,14 +193,6 @@
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 
 /code/__HELPERS/logging/ @dragomagol @ZephyrTFA
-
-/code/__DEFINES/MC.dm @LemonInTheDark @MrStonedOne
-/code/controllers/admin.dm @LemonInTheDark @MrStonedOne
-/code/controllers/master.dm @LemonInTheDark @MrStonedOne
-/code/controllers/failsafe.dm @LemonInTheDark @MrStonedOne
-/code/controllers/subsystem.dm @LemonInTheDark @MrStonedOne
-
-/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
 
@@ -212,15 +207,15 @@
 
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
 
-/tools/build/ @MrStonedOne @scriptis @stylemistake
-/tools/tgs_scripts/ @Cyberboss @MrStonedOne @scriptis
+/tools/build/ @scriptis @stylemistake
+/tools/tgs_scripts/ @Cyberboss @scriptis
 
 /tools/WebhookProcessor/ @BraveMole @TiviPlus
 
 # Host Hell
 
-/code/controllers/configuration/entries @MrStonedOne @scriptis
-/config/ @MrStonedOne @scriptis
+/code/controllers/configuration/entries @scriptis
+/config/ @scriptis
 
 # Expensive files that touching basically always cause performance problems
 ## Init times

@@ -194,11 +194,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 
 /obj/machinery/defibrillator_mount/charging/process(seconds_per_tick)
-	var/obj/item/stock_parts/power_store/cell = get_cell()
-	if(!cell || !is_operational)
+	var/obj/item/stock_parts/power_store/defib_cell = defib.get_cell()
+	if(isnull(defib_cell) || !is_operational)
 		return PROCESS_KILL
-	if(cell.charge < cell.maxcharge)
-		charge_cell(active_power_usage * seconds_per_tick, cell)
+	if(defib_cell.charge < defib_cell.maxcharge)
+		charge_cell(active_power_usage * seconds_per_tick, defib_cell)
 		defib.update_power()
 
 //wallframe, for attaching the mounts easily

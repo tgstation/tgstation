@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Allows MOD holsters to once again activate while the modsuit is inactive and undeployed."

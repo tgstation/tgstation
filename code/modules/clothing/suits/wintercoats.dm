@@ -390,7 +390,7 @@
 // Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
 	name = "virology winter coat"
-	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
+	desc = "A white winter coat with green markings. Warm, but won't fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
 	icon_state = "coatviro"
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro

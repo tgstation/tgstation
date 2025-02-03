@@ -1,6 +1,6 @@
 /obj/item/market_uplink
 	name = "\improper Market Uplink"
-	desc = "An market uplink. Usable with markets. You probably shouldn't have this!"
+	desc = "A market uplink. Usable with markets. You probably shouldn't have this!"
 	icon = 'icons/obj/devices/blackmarket.dmi'
 	icon_state = "uplink"
 
