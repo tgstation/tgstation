@@ -32,14 +32,10 @@ type Data = {
 };
 
 export const LanguageMenu = (props) => {
-  const { act, data } = useBackend<Data>();
   const {
-    admin_mode,
-    is_living,
-    omnitongue,
-    languages = [],
-    unknown_languages = [],
-  } = data;
+    act,
+    data: { admin_mode, omnitongue, languages = [], unknown_languages = [] },
+  } = useBackend<Data>();
   return (
     <Window title="Language Menu" width={700} height={600}>
       <Window.Content scrollable>
