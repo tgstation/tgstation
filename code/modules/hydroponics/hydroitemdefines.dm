@@ -230,7 +230,7 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 ///Catch right clicks so we can stylize!
-/obj/item/secateurs/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/secateurs/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return NONE
 
