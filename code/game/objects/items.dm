@@ -761,7 +761,7 @@
 		give_item_action(action, user, slot)
 
 	item_flags |= IN_INVENTORY
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_EXAMINE_SKIP), SIGNAL_REMOVETRAIT(TRAIT_EXAMINE_SKIP)), PROC_REF(update_slot_icon))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_EXAMINE_SKIP), SIGNAL_REMOVETRAIT(TRAIT_EXAMINE_SKIP)), PROC_REF(update_slot_icon), override = TRUE)
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
