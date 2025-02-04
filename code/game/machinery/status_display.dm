@@ -647,7 +647,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	// if they have keep apart overlays we NEED to manually propogate the mask
 	for(var/mutable_appearance/subcopy as anything in list() + copy.underlays + copy.overlays)
 		if(subcopy.appearance_flags & KEEP_APART)
-			subcopy.filters = loc.filters // where loc = the display
+			subcopy.filters |= loc.filters // where loc = the display
 	appearance = copy
 	var/display_dir = ISDIAGONALDIR(loc.dir) ? EWCOMPONENT(loc.dir) : loc.dir
 	var/from_dir = ISDIAGONALDIR(from.dir) ? EWCOMPONENT(from.dir) : from.dir
@@ -726,7 +726,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 /// A stationary object which "records" anyone who is in front of it and broadcasts them to all status displays
 /obj/machinery/greenscreen_camera
-	name = "captaincaster"
+	name = "captain-caster"
 	desc = "A camera that can be used to display whomever is in front of it across all status displays. \
 		Pair with a greenscreen for best results."
 	density = FALSE
@@ -750,6 +750,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 /obj/machinery/greenscreen_camera/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/greenscreen_camera/Destroy()
 	deactivate_feed()
@@ -802,6 +803,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	become_hearing_sensitive("active")
 
 	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "greenscreen", "display" = WEAKREF(display)))
+	update_appearance(UPDATE_OVERLAYS)
 
 /// Sends a signal to all relevant status displays to update their greenscreen
 /obj/machinery/greenscreen_camera/proc/update_status_displays(list/signal_args)
@@ -820,6 +822,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	lose_hearing_sensitivity("active")
 
 	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "blank"))
+	update_appearance(UPDATE_OVERLAYS)
 
 /// Check if the passed atom can be shown on the display
 /obj/machinery/greenscreen_camera/proc/can_broadcast(atom/movable/thing)
@@ -900,3 +903,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	// no more power, no more feed
 	// (uses toggle for feedback)
 	toggle_feed()
+
+/obj/machinery/greenscreen_camera/update_overlays()
+	. = ..()
+	if(isnull(display))
+		. += "camera_off"
+	else
+		. += "camera_on"
+		. += emissive_appearance(icon, "camera_emissive", src, alpha = src.alpha)
