@@ -1184,28 +1184,29 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
 	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
 
-///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
-/proc/icon_exists(file, state, scream)
+/// Checks whether a given icon state exists in a given icon file. If `file` and `state` both exist,
+/// this will return `TRUE` - otherwise, it will return `FALSE`.
+///
+/// To output a stack trace if the given state/file doesn't exist, set `scream` to `TRUE`. The
+/// stack trace will only be output once per a given file.
+/proc/icon_exists(file, state, scream = FALSE)
+	var/static/list/screams = list()
 	var/static/list/icon_states_cache = list()
-	if(icon_states_cache[file]?[state])
-		return TRUE
+	if(isnull(file) || isnull(state))
+		return FALSE //This is common enough that it shouldn't panic, imo.
 
-	if(icon_states_cache[file]?[state] == FALSE)
-		return FALSE
-
-	var/list/states = icon_states(file)
-
-	if(!icon_states_cache[file])
+	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
+		for(var/istate in icon_states(file))
+			icon_states_cache[file][istate] = TRUE
 
-	if(state in states)
-		icon_states_cache[file][state] = TRUE
-		return TRUE
-	else
-		icon_states_cache[file][state] = FALSE
-		if(scream)
-			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
+	if(isnull(icon_states_cache[file][state]))
+		if(isnull(screams[file]) && scream)
+			screams[file] = TRUE
+			stack_trace("State [state] in file [file] does not exist.")
 		return FALSE
+	else
+		return TRUE
 
 /**
  * Returns the size of the sprite in tiles.

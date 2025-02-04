@@ -77,7 +77,7 @@
 	saved_appearance = temp.appearance
 
 /obj/item/chameleon/proc/check_sprite(atom/target)
-	if(target.icon_state in icon_states(target.icon))
+	if(icon_exists(target.icon, target.icon_state))
 		return TRUE
 	return FALSE
 
