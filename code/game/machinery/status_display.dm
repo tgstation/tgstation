@@ -685,7 +685,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 /obj/machinery/greenscreen_camera/examine(mob/user)
 	. = ..()
-	. += span_notice("It's currently [isnull(display) ? "not " : ""] broadcasting. Press it to change that.")
+	. += span_notice("It's currently [isnull(display) ? "not " : ""]broadcasting. <i>Click it to change that.</i>")
 
 /obj/machinery/greenscreen_camera/interact(mob/user)
 	. = ..()
@@ -713,7 +713,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	if(isnull(greenscreen_turf))
 		return
 
-	greenscreen_turf.add_filter("greenscreen_indicator", 1, outline_filter(1.5, COLOR_LIME))
+	greenscreen_turf.add_filter("greenscreen_indicator", 1, outline_filter(1.5, COLOR_VERY_SOFT_YELLOW))
 	animate(greenscreen_turf.get_filter("greenscreen_indicator"), alpha = 0, time = 2 SECONDS, loop = -1)
 	animate(alpha = 255, time = 2 SECONDS)
 
