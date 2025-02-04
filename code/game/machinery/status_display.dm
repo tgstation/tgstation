@@ -731,7 +731,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 		Pair with a greenscreen for best results."
 	density = FALSE
 	icon = 'icons/obj/machines/stationary_camera.dmi'
-	icon_state = "camera" // todo add emissives to this sprite
+	icon_state = "camera"
 	interaction_flags_atom = INTERACT_ATOM_REQUIRES_ANCHORED|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_ATTACK_PAW
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	processing_flags = NONE
