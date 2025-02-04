@@ -841,7 +841,7 @@
 		// Pirates require ghosts for the pirates obviously
 		if(num_ghosts >= MIN_GHOSTS_FOR_PIRATES)
 			hack_options += HACK_PIRATE
-		// Fugitives require ghosts for both fugitives and hunters (Please no waldo)
+		// Fugitives require ghosts for both fugitives and hunters (Please no wally)
 		if(num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES)
 			hack_options += HACK_FUGITIVES
 

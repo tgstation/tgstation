@@ -484,7 +484,7 @@
 /obj/item/clothing/suit/costume/striped_sweater
 	name = "striped sweater"
 	desc = "Reminds you of someone, but you just can't put your finger on it..."
-	icon_state = "waldo_shirt"
+	icon_state = "wally_shirt"
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/dracula

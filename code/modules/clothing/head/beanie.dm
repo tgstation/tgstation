@@ -56,12 +56,12 @@
 	worn_icon = 'icons/mob/clothing/head/beanie.dmi'
 	icon_state = "beanierasta"
 
-/obj/item/clothing/head/waldo
+/obj/item/clothing/head/wally
 	name = "red striped bobble hat"
 	desc = "If you're going on a worldwide hike, you'll need some cold protection."
 	icon = 'icons/obj/clothing/head/beanie.dmi'
 	worn_icon = 'icons/mob/clothing/head/beanie.dmi'
-	icon_state = "waldo_hat"
+	icon_state = "wally_hat"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet
 

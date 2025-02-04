@@ -21,21 +21,21 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	mask = /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
 
-/datum/outfit/waldo
-	name = "Waldo"
+/datum/outfit/wally
+	name = "Wally"
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/costume/striped_sweater
-	head = /obj/item/clothing/head/waldo
+	head = /obj/item/clothing/head/wally
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle
 
-/datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visuals_only=FALSE)
+/datum/outfit/wally/post_equip(mob/living/carbon/human/equipped_on, visuals_only=FALSE)
 	equipped_on.w_uniform?.update_greyscale()
 	equipped_on.update_worn_undersuit()
 	if(visuals_only)
 		return
-	equipped_on.fully_replace_character_name(null, "Waldo")
+	equipped_on.fully_replace_character_name(null, "Wally")
 	equipped_on.eye_color_left = COLOR_BLACK
 	equipped_on.eye_color_right = COLOR_BLACK
 	equipped_on.gender = MALE
@@ -55,8 +55,8 @@
 	for(var/obj/item/trait_needed as anything in no_drops)
 		ADD_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
 
-	var/datum/action/cooldown/spell/aoe/knock/waldos_key = new(equipped_on.mind || equipped_on)
-	waldos_key.Grant(equipped_on)
+	var/datum/action/cooldown/spell/aoe/knock/wallys_key = new(equipped_on.mind || equipped_on)
+	wallys_key.Grant(equipped_on)
 
 /datum/outfit/synthetic
 	name = "Factory Error Synth"

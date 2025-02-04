@@ -22,8 +22,8 @@
 
 	//then to the left add cultists of yalp elor
 	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/yalp_cultist), ICON_UNDERLAY, -8, 0)
-	//to the right add waldo (we just had to, okay?)
-	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/waldo), ICON_UNDERLAY, 8, 0)
+	//to the right add wally (we just had to, okay?)
+	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/wally), ICON_UNDERLAY, 8, 0)
 
 	final_icon.Scale(64, 64)
 
@@ -61,9 +61,9 @@
 			message += "<BR><B>Blessed be our journey so far, but I fear the worst has come to our doorstep, and only those with the strongest faith will survive.</B>"
 			message += "<BR><B>Our religion has been repeatedly culled by Nanotrasen because it is categorized as an \"Enemy of the Corporation\", whatever that means.</B>"
 			message += "<BR><B>Now there are only four of us left, and Nanotrasen is coming. When will our god show itself to save us from this hellish station?!</B>"
-		if(FUGITIVE_BACKSTORY_WALDO)
+		if(FUGITIVE_BACKSTORY_WALLY)
 			message += "<BR><B>Hi, Friends!</B>"
-			message += "<BR><B>My name is Waldo. I'm just setting off on a galaxywide hike. You can come too. All you have to do is find me.</B>"
+			message += "<BR><B>My name is Wally. I'm just setting off on a galaxywide hike. You can come too. All you have to do is find me.</B>"
 			message += "<BR><B>By the way, I'm not traveling on my own. wherever I go, there are lots of other characters for you to spot. First find the people trying to capture me! They're somewhere around the station!</B>"
 		if(FUGITIVE_BACKSTORY_SYNTH)
 			message += "<BR>[span_danger("ALERT: Wide-range teleport has scrambled primary systems.")]"
