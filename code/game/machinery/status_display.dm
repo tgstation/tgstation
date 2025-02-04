@@ -196,7 +196,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 				return
 		if(SD_GREENSCREEN)
 			if(active_display)
-				vis_contents |= active_display
+				vis_contents += active_display
 
 		else
 			if(active_display)
@@ -649,7 +649,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 		if(subcopy.appearance_flags & KEEP_APART)
 			subcopy.filters = loc.filters // where loc = the display
 	appearance = copy
-	dir = from.dir
+	var/display_dir = ISDIAGONALDIR(loc.dir) ? EWCOMPONENT(loc.dir) : loc.dir
+	var/from_dir = ISDIAGONALDIR(from.dir) ? EWCOMPONENT(from.dir) : from.dir
+	switch(display_dir)
+		if(NORTH)
+			pass() // it just works
+		if(EAST)
+			dir = turn(from_dir, 90)
+		if(SOUTH)
+			dir = turn(from_dir, 180)
+		if(WEST)
+			dir = turn(from_dir, 270)
 	// appearance copies these so we need to manually set them
 	vis_flags |= VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_INHERIT_ID // is vis_inherit recursive?
 
@@ -783,6 +793,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	mic = new(src)
 	mic.set_frequency(FREQ_STATUS_DISPLAYS)
 	display = new()
+	display.dir = dir
 	RegisterSignal(greenscreen_turf, COMSIG_ATOM_ENTERED, PROC_REF(turf_entered))
 	RegisterSignal(greenscreen_turf, COMSIG_ATOM_EXITED, PROC_REF(turf_exited))
 
