@@ -633,25 +633,89 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 #undef LINE2_Y
 #undef SCROLL_PADDING
 
+/// Basically exists to hold an appearance that we can slot into vis_contents
+/obj/effect/abstract/greenscreen_appearance_holder
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/abstract/greenscreen_appearance_holder/Initialize(mapload, atom/movable/to_copy)
+	. = ..()
+	if(istype(to_copy))
+		copy_appearance(to_copy)
+
+/obj/effect/abstract/greenscreen_appearance_holder/proc/copy_appearance(atom/movable/from)
+	var/mutable_appearance/copy = copy_appearance_filter_overlays(from.appearance)
+	// if they have keep apart overlays we NEED to manually propogate the mask
+	for(var/mutable_appearance/subcopy as anything in list() + copy.underlays + copy.overlays)
+		if(subcopy.appearance_flags & KEEP_APART)
+			subcopy.filters = loc.filters // where loc = the display
+	appearance = copy
+	dir = from.dir
+	// appearance copies these so we need to manually set them
+	vis_flags |= VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_INHERIT_ID // is vis_inherit recursive?
+
+/// Basically exists to compile a list of appearances to display to all status displays
 /obj/effect/abstract/greenscreen_display
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	invisibility = 0
 	pixel_y = -10
 	pixel_x = 1
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
+	/// Tracks who we're displaying
+	VAR_PRIVATE/list/atom/movable/displaying = list()
 
 /obj/effect/abstract/greenscreen_display/Initialize(mapload)
 	. = ..()
-	// make the display slightly larger
-	// i wanted to make it even larger, but i couldn't find a good scale that doesn't look ugly
-	transform = transform.Scale(1.1, 1.1)
 	// crops out the bits that don't fit the screen
 	add_filter("display_mask", 1, alpha_mask_filter(x = -1 * pixel_x, y = -1 * pixel_y, icon = icon('icons/obj/machines/status_display.dmi', "outline")))
 	// adds some pizzazz (copied from records)
 	underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
 	add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
 
+/obj/effect/abstract/greenscreen_display/Destroy()
+	for(var/thing in displaying)
+		remove_from_display(thing)
+	return ..()
+
+/obj/effect/abstract/greenscreen_display/proc/add_to_display(atom/movable/thing)
+	if(displaying[thing])
+		return
+
+	displaying[thing] = new /obj/effect/abstract/greenscreen_appearance_holder(src, thing)
+	RegisterSignals(thing, list(
+		COMSIG_ATOM_POST_DIR_CHANGE,
+		COMSIG_ATOM_UPDATED_ICON,
+		COMSIG_CARBON_APPLY_OVERLAY,
+		COMSIG_CARBON_REMOVE_OVERLAY,
+		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+	), PROC_REF(thing_changed))
+	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(remove_from_display))
+	vis_contents += displaying[thing]
+
+/obj/effect/abstract/greenscreen_display/proc/remove_from_display(atom/movable/thing)
+	SIGNAL_HANDLER
+
+	if(!displaying[thing])
+		return
+
+	UnregisterSignal(thing, list(
+		COMSIG_ATOM_POST_DIR_CHANGE,
+		COMSIG_ATOM_UPDATED_ICON,
+		COMSIG_CARBON_APPLY_OVERLAY,
+		COMSIG_CARBON_REMOVE_OVERLAY,
+		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+		COMSIG_QDELETING,
+	))
+	vis_contents -= displaying[thing]
+	qdel(displaying[thing])
+	displaying -= thing
+
+/obj/effect/abstract/greenscreen_display/proc/thing_changed(atom/movable/source)
+	SIGNAL_HANDLER
+
+	var/obj/effect/abstract/greenscreen_appearance_holder/holder = displaying[source]
+	holder.copy_appearance(source)
+
+/// A stationary object which "records" anyone who is in front of it and broadcasts them to all status displays
 /obj/machinery/greenscreen_camera
 	name = "captaincaster"
 	desc = "A camera that can be used to display whomever is in front of it across all status displays. \
@@ -669,8 +733,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 	/// Tracks the turf we are recording
 	VAR_PRIVATE/turf/greenscreen_turf
-	/// Tracks who we're displaying to status displays
-	VAR_PRIVATE/list/atom/movable/displaying = list()
 	/// The actual atom we hold the appearance on, held in nullspace
 	VAR_PRIVATE/obj/effect/abstract/greenscreen_display/display
 	/// Lazy-inited microphone to relay speech over the displays
@@ -742,9 +804,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 		greenscreen_turf.remove_filter("greenscreen_indicator")
 		UnregisterSignal(greenscreen_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 		greenscreen_turf = null
-	if(length(displaying))
-		display?.vis_contents -= displaying
-		displaying.Cut()
 	QDEL_NULL(mic)
 	QDEL_NULL(display)
 
@@ -762,21 +821,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	if(isliving(thing))
 		return TRUE
 	// show things like wheelchairs, but not beds which are low
-	if(thing.can_buckle && thing.buckle_lying == NO_BUCKLE_LYING)
+	if(thing.can_buckle && (thing.buckle_lying == NO_BUCKLE_LYING || thing.buckle_lying == 0))
 		return TRUE
 	return FALSE
 
 /obj/machinery/greenscreen_camera/proc/turf_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
 	if(can_broadcast(entered))
-		displaying |= entered
-		display.vis_contents |= entered
+		display.add_to_display(entered)
 
 /obj/machinery/greenscreen_camera/proc/turf_exited(datum/source, atom/movable/exited)
 	SIGNAL_HANDLER
-	if(exited in displaying)
-		displaying -= exited
-		display.vis_contents -= exited
+	display.remove_from_display(exited)
 
 /obj/machinery/greenscreen_camera/proc/find_displayed_turf()
 	var/list/turf/line = get_line(src, get_ranged_target_turf(src, dir, 5))
