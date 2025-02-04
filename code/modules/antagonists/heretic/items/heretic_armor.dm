@@ -112,16 +112,10 @@
 	SIGNAL_HANDLER
 	if(slot & ITEM_SLOT_SUITSTORE)
 		item.add_traits(list(TRAIT_NO_STRIP, TRAIT_NO_WORN_ICON), REF(src)) // i'd use examine hide but its a flag and yeah
-		if(isliving(loc))
-			var/mob/living/wearer = loc
-			wearer.update_clothing(slot)
 
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/show_item(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER
 	item.remove_traits(list(TRAIT_NO_STRIP, TRAIT_NO_WORN_ICON), REF(src))
-	if(isliving(loc))
-		var/mob/living/wearer = loc
-		wearer.update_clothing(slot)
 
 /obj/item/clothing/suit/hooded/cultrobes/void/examine(mob/user)
 	. = ..()
