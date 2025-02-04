@@ -37,6 +37,10 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	/// Color for headers, eg. "- ETA -"
 	var/header_text_color = COLOR_DISPLAY_PURPLE
 
+	var/obj/effect/abstract/greenscreen_display/active_display
+
+	var/obj/item/radio/entertainment/speakers/speakers
+
 /obj/item/wallframe/status_display
 	name = "status display frame"
 	desc = "Used to build status displays, just secure to the wall."
@@ -121,8 +125,9 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	message_key_2 = null
 	overlay_2?.disown(src)
 
-	if(GLOB.status_display_green_screen)
-		vis_contents -= GLOB.status_display_green_screen.display
+	if(active_display)
+		vis_contents -= active_display
+		active_display = null
 
 // List in the form key -> status display that shows said key
 GLOBAL_LIST_EMPTY(key_to_status_display)
@@ -189,12 +194,12 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
 				return
 		if(SD_GREENSCREEN)
-			if(GLOB.status_display_green_screen)
-				vis_contents |= GLOB.status_display_green_screen.display
+			if(active_display)
+				vis_contents |= active_display
 
 		else
-			if(GLOB.status_display_green_screen)
-				vis_contents -= GLOB.status_display_green_screen.display
+			if(active_display)
+				vis_contents -= active_display
 			var/line1_metric
 			var/line2_metric
 			var/line_pair
@@ -263,6 +268,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 
 /obj/machinery/status_display/Destroy()
 	clear_display()
+	QDEL_NULL(speakers)
 	return ..()
 
 /**
@@ -409,6 +415,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			last_picture = signal.data["picture_state"]
 			set_picture(last_picture)
 		if("greenscreen")
+			var/datum/weakref/display_ref = signal.data["display"]
+			var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
+			if(!istype(new_display))
+				return
+			if(isnull(speakers))
+				speakers = new(src)
+				speakers.set_frequency(FREQ_STATUS_DISPLAYS)
+			active_display = new_display
 			current_mode = SD_GREENSCREEN
 			update_appearance()
 		if("friendcomputer")
@@ -618,51 +632,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 #undef LINE2_Y
 #undef SCROLL_PADDING
 
-GLOBAL_DATUM(status_display_green_screen, /obj/effect/landmark/greenscreen_source)
-
-/obj/effect/landmark/greenscreen_source
-	icon_state = "x3"
-	/// Tracks who we're displaying to status displays.
-	var/list/displaying = list()
-	/// The actual atom we hold the appearance on, held in nullspace
-	var/obj/effect/abstract/greenscreen_display/display
-
-/obj/effect/landmark/greenscreen_source/Initialize(mapload)
-	. = ..()
-	if(GLOB.status_display_green_screen)
-		return
-	GLOB.status_display_green_screen = src
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	display = new()
-
-/obj/effect/landmark/greenscreen_source/Destroy()
-	if(GLOB.status_display_green_screen == src)
-		GLOB.status_display_green_screen = null
-	if(length(displaying))
-		display.vis_contents -= displaying
-		displaying.Cut()
-	QDEL_NULL(display)
-	return ..()
-
-/obj/effect/landmark/greenscreen_source/proc/on_entered(datum/source, atom/movable/entered)
-	SIGNAL_HANDLER
-
-	if(!isliving(entered) || entered.alpha == 0 || entered.invisibility >= INVISIBILITY_MAXIMUM)
-		return
-	displaying |= entered
-	display.vis_contents |= entered
-
-/obj/effect/landmark/greenscreen_source/proc/on_exited(datum/source, atom/movable/exited)
-	SIGNAL_HANDLER
-	if(!(exited in displaying))
-		return
-	display.vis_contents -= exited
-	displaying -= exited
-
 /obj/effect/abstract/greenscreen_display
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = 0
@@ -681,3 +650,171 @@ GLOBAL_DATUM(status_display_green_screen, /obj/effect/landmark/greenscreen_sourc
 	// adds some pizzazz (copied from records)
 	underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
 	add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
+
+/obj/machinery/greenscreen_camera
+	name = "captaincaster"
+	desc = "A camera that can be used to display whomever is in front of it across all status displays. \
+		Pair with a greenscreen for best results."
+	density = FALSE
+	icon = 'icons/obj/machines/stationary_camera.dmi'
+	icon_state = "camera" // todo add emissives to this sprite
+	interaction_flags_atom = INTERACT_ATOM_REQUIRES_ANCHORED|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_ATTACK_PAW
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
+	processing_flags = NONE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 0
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+	mouse_over_pointer = MOUSE_HAND_POINTER
+
+	/// Tracks the turf we are recording
+	VAR_PRIVATE/turf/greenscreen_turf
+	/// Tracks who we're displaying to status displays
+	VAR_PRIVATE/list/displaying = list()
+	/// The actual atom we hold the appearance on, held in nullspace
+	VAR_PRIVATE/obj/effect/abstract/greenscreen_display/display
+
+	VAR_PRIVATE/obj/item/radio/entertainment/microphone/mic
+
+/obj/machinery/greenscreen_camera/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+
+/obj/machinery/greenscreen_camera/Destroy()
+	deactivate_feed()
+	return ..()
+
+/obj/machinery/greenscreen_camera/examine(mob/user)
+	. = ..()
+	. += span_notice("It's currently [isnull(display) ? "not " : ""] broadcasting. Press it to change that.")
+
+/obj/machinery/greenscreen_camera/interact(mob/user)
+	. = ..()
+	if(.)
+		return TRUE
+
+	toggle_feed()
+	return TRUE
+
+/obj/machinery/greenscreen_camera/proc/toggle_feed()
+	if(isnull(display))
+		if(!is_operational)
+			return
+		use_power = ACTIVE_POWER_USE
+		activate_feed()
+		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 33, FALSE)
+	else
+		use_power = IDLE_POWER_USE
+		deactivate_feed()
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 33, FALSE)
+	balloon_alert_to_viewers("feed [isnull(display) ? "de" : ""]activated")
+
+/obj/machinery/greenscreen_camera/proc/activate_feed()
+	greenscreen_turf = find_displayed_turf()
+	if(isnull(greenscreen_turf))
+		return
+
+	greenscreen_turf.add_filter("greenscreen_indicator", 1, outline_filter(1.5, COLOR_LIME))
+	animate(greenscreen_turf.get_filter("greenscreen_indicator"), alpha = 0, time = 2 SECONDS, loop = -1)
+	animate(alpha = 255, time = 2 SECONDS)
+
+	mic = new(src)
+	mic.set_frequency(FREQ_STATUS_DISPLAYS)
+	display = new()
+	RegisterSignal(greenscreen_turf, COMSIG_ATOM_ENTERED, PROC_REF(turf_entered))
+	RegisterSignal(greenscreen_turf, COMSIG_ATOM_EXITED, PROC_REF(turf_exited))
+
+	for(var/mob/living/existing in greenscreen_turf)
+		turf_entered(greenscreen_turf, existing)
+
+	become_hearing_sensitive("active")
+
+	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "greenscreen", "display" = WEAKREF(display)))
+
+/obj/machinery/greenscreen_camera/proc/update_status_displays(list/signal_args)
+	// update the display on all status displays
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	frequency?.post_signal(src, new /datum/signal(signal_args))
+
+/obj/machinery/greenscreen_camera/proc/deactivate_feed()
+	if(!isnull(greenscreen_turf))
+		greenscreen_turf.remove_filter("greenscreen_indicator")
+		UnregisterSignal(greenscreen_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
+		greenscreen_turf = null
+	if(length(displaying))
+		display?.vis_contents -= displaying
+		displaying.Cut()
+	QDEL_NULL(mic)
+	QDEL_NULL(display)
+
+	lose_hearing_sensitivity("active")
+
+	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "blank"))
+
+/obj/machinery/greenscreen_camera/proc/turf_entered(datum/source, atom/entered)
+	SIGNAL_HANDLER
+	if(isliving(entered))
+		displaying |= entered
+		display.vis_contents |= entered
+
+/obj/machinery/greenscreen_camera/proc/turf_exited(datum/source, atom/exited)
+	SIGNAL_HANDLER
+	if(exited in displaying)
+		displaying -= exited
+		display.vis_contents -= exited
+
+/obj/machinery/greenscreen_camera/proc/find_displayed_turf()
+	var/list/turf/line = get_line(src, get_ranged_target_turf(src, dir, 5))
+	for(var/i in 1 to length(line))
+		var/turf/current = line[i]
+		// found a greenscreen turf
+		if(istype(current, /turf/open/floor/greenscreen))
+			return current
+		// found any wall, or something we can't see through
+		if(i != 1)
+			if(current.opacity)
+				return line[i - 1]
+			for(var/atom/movable/thing in current)
+				if(thing.opacity)
+					return line[i - 1]
+		// found a greenscreen poster
+		var/obj/structure/sign/poster/greenscreen = locate() in current
+		if(isnull(greenscreen))
+			continue
+		// the poster is wallmounted, so return this turf
+		if(isProbablyWallMounted(greenscreen))
+			return current
+		// the poster is clipped into a wall, so return the last turf
+		if(i != 1)
+			return line[i - 1]
+
+	return null
+
+/obj/machinery/greenscreen_camera/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(isnull(display))
+		return
+	// stop the feed if we're moved
+	deactivate_feed()
+
+/obj/machinery/greenscreen_camera/setDir(newdir)
+	var/old_dir
+	. = ..()
+	if(dir == old_dir || isnull(display))
+		return
+	// stop the feed if we're rotated
+	deactivate_feed()
+
+/obj/machinery/greenscreen_camera/set_anchored(anchorvalue)
+	. = ..()
+	if(anchored || isnull(display))
+		return
+	// stop the feed if we're unanchored
+	deactivate_feed()
+
+/obj/machinery/greenscreen_camera/on_set_is_operational(old_value)
+	. = ..()
+	if(is_operational || isnull(display))
+		return
+	// no more power, no more feed
+	// (uses toggle for feedback)
+	toggle_feed()

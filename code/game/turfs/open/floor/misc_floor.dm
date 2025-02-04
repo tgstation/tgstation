@@ -220,13 +220,7 @@
 
 /turf/open/floor/greenscreen
 	name = "greenscreen"
-	icon_state = "pure_white"
-	color = COLOR_LIME
-
-/turf/closed/wall/greenscreen
-	name = "greenscreen"
-	icon_state = "pure_white"
-	color = COLOR_LIME
+	icon_state = "green"
 
 /turf/open/floor/plastic
 	name = "plastic floor"
