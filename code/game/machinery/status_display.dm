@@ -658,9 +658,10 @@ GLOBAL_DATUM(status_display_green_screen, /obj/effect/landmark/greenscreen_sourc
 
 /obj/effect/landmark/greenscreen_source/proc/on_exited(datum/source, atom/movable/exited)
 	SIGNAL_HANDLER
-	if(exited in displaying)
-		display.vis_contents -= exited
-		displaying -= exited
+	if(!(exited in displaying))
+		return
+	display.vis_contents -= exited
+	displaying -= exited
 
 /obj/effect/abstract/greenscreen_display
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
