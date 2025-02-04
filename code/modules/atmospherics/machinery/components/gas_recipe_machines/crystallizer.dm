@@ -71,13 +71,8 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
-	cut_overlays()
-	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
-	pipe_appearance1.color = COLOR_LIME
-	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[REVERSE_DIR(dir)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
-	pipe_appearance2.color = COLOR_MOSTLY_PURE_RED
-	. += pipe_appearance1
-	. += pipe_appearance2
+	. += get_pipe_image(icon, "pipe", dir, COLOR_LIME, piping_layer)
+	. += get_pipe_image(icon, "pipe", REVERSE_DIR(dir), COLOR_MOSTLY_PURE_RED, piping_layer)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_icon_state()
 	. = ..()
