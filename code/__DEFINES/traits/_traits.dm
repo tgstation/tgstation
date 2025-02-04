@@ -100,7 +100,7 @@
 		if (_L) { \
 			for (var/_T in _L) { \
 				if (_L[_T]) { \
-					_L[_T] -= _S \
+					_L[_T] -= _S; \
 				}; \
 				if (!length(_L[_T])) { \
 					_L -= _T; \
