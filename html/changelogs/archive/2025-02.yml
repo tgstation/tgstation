@@ -48,3 +48,7 @@
       damage scaling.
   siliconOpossum:
   - bugfix: Lathes interfaces are no longer unscrollable on 516
+2025-02-04:
+  necromanceranne:
+  - bugfix: Allows MOD holsters to once again activate while the modsuit is inactive
+      and undeployed.
