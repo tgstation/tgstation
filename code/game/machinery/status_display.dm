@@ -37,9 +37,10 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	/// Color for headers, eg. "- ETA -"
 	var/header_text_color = COLOR_DISPLAY_PURPLE
 
-	var/obj/effect/abstract/greenscreen_display/active_display
-
-	var/obj/item/radio/entertainment/speakers/speakers
+	/// Used in greenscreen mode: the display currently being displayed (via vis_contents)
+	VAR_PRIVATE/obj/effect/abstract/greenscreen_display/active_display
+	/// Lazy-inited radio in greenscreen mode to recieve speech from the display
+	VAR_PRIVATE/obj/item/radio/entertainment/speakers/speakers
 
 /obj/item/wallframe/status_display
 	name = "status display frame"
@@ -669,10 +670,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	/// Tracks the turf we are recording
 	VAR_PRIVATE/turf/greenscreen_turf
 	/// Tracks who we're displaying to status displays
-	VAR_PRIVATE/list/displaying = list()
+	VAR_PRIVATE/list/atom/movable/displaying = list()
 	/// The actual atom we hold the appearance on, held in nullspace
 	VAR_PRIVATE/obj/effect/abstract/greenscreen_display/display
-
+	/// Lazy-inited microphone to relay speech over the displays
 	VAR_PRIVATE/obj/item/radio/entertainment/microphone/mic
 
 /obj/machinery/greenscreen_camera/Initialize(mapload)
@@ -730,6 +731,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "greenscreen", "display" = WEAKREF(display)))
 
+/// Sends a signal to all relevant status displays to update their greenscreen
 /obj/machinery/greenscreen_camera/proc/update_status_displays(list/signal_args)
 	// update the display on all status displays
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
@@ -750,13 +752,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "blank"))
 
-/obj/machinery/greenscreen_camera/proc/turf_entered(datum/source, atom/entered)
+/// Check if the passed atom can be shown on the display
+/obj/machinery/greenscreen_camera/proc/can_broadcast(atom/movable/thing)
+	// blacklist underfloor, just in case
+	// i would also blacklist invisible, but i figure it might be funny to see a ghost
+	if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
+		return FALSE
+	// always show any mobs
+	if(isliving(thing))
+		return TRUE
+	// show things like wheelchairs, but not beds which are low
+	if(thing.can_buckle && thing.buckle_lying == NO_BUCKLE_LYING)
+		return TRUE
+	return FALSE
+
+/obj/machinery/greenscreen_camera/proc/turf_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
-	if(isliving(entered))
+	if(can_broadcast(entered))
 		displaying |= entered
 		display.vis_contents |= entered
 
-/obj/machinery/greenscreen_camera/proc/turf_exited(datum/source, atom/exited)
+/obj/machinery/greenscreen_camera/proc/turf_exited(datum/source, atom/movable/exited)
 	SIGNAL_HANDLER
 	if(exited in displaying)
 		displaying -= exited
