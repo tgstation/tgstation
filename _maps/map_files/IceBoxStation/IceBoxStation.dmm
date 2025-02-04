@@ -12009,7 +12009,6 @@
 /area/icemoon/underground/explored)
 "dmG" = (
 /obj/structure/table/wood,
-/obj/item/camera,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "dmI" = (
@@ -22214,6 +22213,10 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"gmI" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "gmJ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Port to Infiltrate/Filter"
@@ -35607,12 +35610,18 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
 "khU" = (
-/obj/structure/displaycase/captain,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/storage/photo_album{
+	pixel_y = -1
+	},
+/obj/item/camera{
+	pixel_x = -4
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
@@ -53860,6 +53869,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/east,
+/obj/structure/bed/dogbed/renault,
+/mob/living/basic/pet/fox/renault,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "pnA" = (
@@ -57172,7 +57184,9 @@
 /area/station/maintenance/port/fore)
 "qjx" = (
 /obj/structure/cable,
-/obj/machinery/holopad/secure,
+/obj/machinery/greenscreen_camera{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "qjF" = (
@@ -61994,15 +62008,15 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "rCh" = (
-/obj/structure/table/wood,
-/obj/machinery/airalarm/directional/east,
-/obj/item/storage/photo_album{
-	pixel_y = -1
+/obj/structure/sign/poster/greenscreen/directional/east,
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/greenscreen,
 /area/station/command/heads_quarters/captain)
 "rCj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -78996,11 +79010,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "wDB" = (
-/obj/structure/bed/dogbed/renault,
-/mob/living/basic/pet/fox/renault,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/displaycase/captain,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "wDI" = (
@@ -246943,7 +246956,7 @@ aVH
 lpM
 rCD
 uEm
-uEm
+gmI
 mvc
 uQT
 uDa

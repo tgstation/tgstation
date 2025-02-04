@@ -5195,15 +5195,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "bRl" = (
-/obj/machinery/suit_storage_unit/captain{
-	req_access = list("captain")
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/computer/security/telescreen/minisat/directional/west,
-/turf/open/floor/carpet/royalblue,
+/obj/structure/sign/poster/greenscreen/directional/west,
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/turf/open/floor/greenscreen,
 /area/station/command/heads_quarters/captain/private)
 "bRD" = (
 /obj/structure/table,
@@ -26207,6 +26204,7 @@
 /obj/structure/closet/secure_closet/captains,
 /obj/machinery/firealarm/directional/north,
 /obj/item/storage/lockbox/medal,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "jpe" = (
@@ -27861,6 +27859,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/radio/intercom/command/directional/east,
+/obj/machinery/suit_storage_unit/captain{
+	req_access = list("captain")
+	},
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "jRj" = (
@@ -37282,7 +37283,6 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen/minisat/directional/west,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "neM" = (
@@ -39536,6 +39536,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/minisat/directional/west,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "nZH" = (
@@ -61391,6 +61392,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/computer/security/telescreen/minisat/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "vEL" = (
@@ -64729,6 +64731,9 @@
 /area/station/maintenance/department/engine)
 "wMy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/greenscreen_camera{
+	dir = 8
+	},
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/captain/private)
 "wMB" = (
@@ -67541,6 +67546,7 @@
 	pixel_x = 8;
 	pixel_y = -24
 	},
+/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "xNh" = (
@@ -94472,7 +94478,7 @@ sgz
 cIa
 lDn
 uZx
-aFJ
+ymi
 pyo
 paS
 mRi
@@ -94729,7 +94735,7 @@ ycO
 mrV
 egH
 uZx
-kmu
+aFJ
 tOm
 tCE
 sRU
@@ -98070,7 +98076,7 @@ juw
 cLf
 hQF
 wsM
-kmu
+ymi
 pyo
 ftF
 nuR
