@@ -666,8 +666,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 /// Basically exists to compile a list of appearances to display to all status displays
 /obj/effect/abstract/greenscreen_display
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	pixel_y = -10
-	pixel_x = 1
+	pixel_y = -8
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
 	/// Tracks who we're displaying
