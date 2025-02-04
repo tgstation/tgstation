@@ -111,13 +111,18 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
  * Remove both message objs and null the fields.
  * Don't call this in subclasses.
  */
-/obj/machinery/status_display/proc/remove_messages()
+/obj/machinery/status_display/proc/clear_display()
+	PRIVATE_PROC(TRUE)
+
 	var/obj/effect/overlay/status_display_text/overlay_1 = get_status_text(message_key_1)
 	message_key_1 = null
 	overlay_1?.disown(src)
 	var/obj/effect/overlay/status_display_text/overlay_2 = get_status_text(message_key_2)
 	message_key_2 = null
 	overlay_2?.disown(src)
+
+	if(GLOB.status_display_green_screen)
+		vis_contents -= GLOB.status_display_green_screen.display
 
 // List in the form key -> status display that shows said key
 GLOBAL_LIST_EMPTY(key_to_status_display)
@@ -170,20 +175,26 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	. = ..()
 
 	if(machine_stat & (NOPOWER|BROKEN))
-		remove_messages()
+		clear_display()
 		return
 
 	switch(current_mode)
 		if(SD_BLANK)
-			remove_messages()
+			clear_display()
 			// Turn off backlight.
 			return
 		if(SD_PICTURE)
-			remove_messages()
+			clear_display()
 			. += mutable_appearance(icon, current_picture)
 			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
-				return .
+				return
+		if(SD_GREENSCREEN)
+			if(GLOB.status_display_green_screen)
+				vis_contents |= GLOB.status_display_green_screen.display
+
 		else
+			if(GLOB.status_display_green_screen)
+				vis_contents -= GLOB.status_display_green_screen.display
 			var/line1_metric
 			var/line2_metric
 			var/line_pair
@@ -251,7 +262,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 		set_messages("", "")
 
 /obj/machinery/status_display/Destroy()
-	remove_messages()
+	clear_display()
 	return ..()
 
 /**
@@ -372,14 +383,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		return PROCESS_KILL
 
 	switch(current_mode)
-		if(SD_BLANK)
+		if(SD_BLANK, SD_MESSAGE, SD_GREENSCREEN)
 			return PROCESS_KILL
 
 		if(SD_EMERGENCY)
 			return display_shuttle_status(SSshuttle.emergency)
-
-		if(SD_MESSAGE)
-			return PROCESS_KILL
 
 		if(SD_PICTURE)
 			set_picture(last_picture)
@@ -400,10 +408,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			current_mode = SD_PICTURE
 			last_picture = signal.data["picture_state"]
 			set_picture(last_picture)
+		if("greenscreen")
+			current_mode = SD_GREENSCREEN
+			update_appearance()
 		if("friendcomputer")
 			friendc = !friendc
 	update()
 
+/obj/machinery/status_display/evac/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, current_mode))
+		update_appearance()
+		update()
 
 /// Supply display which shows the status of the supply shuttle.
 /obj/machinery/status_display/supply
@@ -601,3 +617,66 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 #undef LINE2_X
 #undef LINE2_Y
 #undef SCROLL_PADDING
+
+GLOBAL_DATUM(status_display_green_screen, /obj/effect/landmark/greenscreen_source)
+
+/obj/effect/landmark/greenscreen_source
+	icon_state = "x3"
+	/// Tracks who we're displaying to status displays.
+	var/list/displaying = list()
+	/// The actual atom we hold the appearance on, held in nullspace
+	var/obj/effect/abstract/greenscreen_display/display
+
+/obj/effect/landmark/greenscreen_source/Initialize(mapload)
+	. = ..()
+	if(GLOB.status_display_green_screen)
+		return
+	GLOB.status_display_green_screen = src
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	display = new()
+
+/obj/effect/landmark/greenscreen_source/Destroy()
+	if(GLOB.status_display_green_screen == src)
+		GLOB.status_display_green_screen = null
+	if(length(displaying))
+		display.vis_contents -= displaying
+		displaying.Cut()
+	QDEL_NULL(display)
+	return ..()
+
+/obj/effect/landmark/greenscreen_source/proc/on_entered(datum/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if(!isliving(entered) || entered.alpha == 0 || entered.invisibility >= INVISIBILITY_MAXIMUM)
+		return
+	displaying |= entered
+	display.vis_contents |= entered
+
+/obj/effect/landmark/greenscreen_source/proc/on_exited(datum/source, atom/movable/exited)
+	SIGNAL_HANDLER
+	if(exited in displaying)
+		display.vis_contents -= exited
+		displaying -= exited
+
+/obj/effect/abstract/greenscreen_display
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	invisibility = 0
+	pixel_y = -10
+	pixel_x = 1
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
+
+/obj/effect/abstract/greenscreen_display/Initialize(mapload)
+	. = ..()
+	// make the display slightly larger
+	// i wanted to make it even larger, but i couldn't find a good scale that doesn't look ugly
+	transform = transform.Scale(1.1, 1.1)
+	// crops out the bits that don't fit the screen
+	add_filter("display_mask", 1, alpha_mask_filter(x = -1 * pixel_x, y = -1 * pixel_y, icon = icon('icons/obj/machines/status_display.dmi', "outline")))
+	// adds some pizzazz (copied from records)
+	underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
+	add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))

@@ -218,6 +218,16 @@
 	name = "black floor"
 	icon_state = "black"
 
+/turf/open/floor/greenscreen
+	name = "greenscreen"
+	icon_state = "pure_white"
+	color = COLOR_LIME
+
+/turf/closed/wall/greenscreen
+	name = "greenscreen"
+	icon_state = "pure_white"
+	color = COLOR_LIME
+
 /turf/open/floor/plastic
 	name = "plastic floor"
 	desc = "Cheap, lightweight flooring. Melts easily."
