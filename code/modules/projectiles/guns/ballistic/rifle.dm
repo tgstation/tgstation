@@ -86,7 +86,7 @@
 			balloon_alert(user, "jammed!")
 			playsound(user,'sound/items/weapons/jammed.ogg', 75, TRUE)
 			return FALSE
-	..()
+	return ..()
 
 /obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
 	if(can_jam)

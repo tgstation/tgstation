@@ -14,7 +14,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
+	/// How many times we can use this maintenance kit to maintain a gun
 	var/uses = 3
+	/// THe maximum uses, used for our examine text.
 	var/max_uses = 3
 
 /obj/item/gun_maintenance_supplies/examine(mob/user)
@@ -22,6 +24,7 @@
 	. += span_info("This kit has [uses] uses out of [max_uses] left.")
 
 /obj/item/gun_maintenance_supplies/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return ITEM_INTERACT_BLOCKING
 
@@ -31,7 +34,7 @@
 
 	var/obj/item/gun/gun_to_fix = interacting_with
 
-	var/gun_is_damaged = gun_to_fix.get_integrity() < gun_to_fix.max_integrity ? TRUE : FALSE
+	var/gun_is_damaged = gun_to_fix.get_integrity() < gun_to_fix.max_integrity
 	var/use_charge = FALSE
 
 	if(gun_is_damaged)
