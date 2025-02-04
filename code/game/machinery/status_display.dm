@@ -39,7 +39,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 
 	/// Used in greenscreen mode: the display currently being displayed (via vis_contents)
 	VAR_PRIVATE/obj/effect/abstract/greenscreen_display/active_display
-	/// Lazy-inited radio in greenscreen mode to recieve speech from the display
+	/// Lazy-inited radio in greenscreen mode to receive speech from the display
 	VAR_PRIVATE/obj/item/radio/entertainment/speakers/speakers
 
 /obj/item/wallframe/status_display
