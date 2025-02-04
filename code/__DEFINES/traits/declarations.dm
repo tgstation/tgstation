@@ -379,8 +379,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
 #define TRAIT_BOT_PATH_HUD "bot_path_hud"
-/// Is a medbot healing you
-#define TRAIT_MEDIBOTCOMINGTHROUGH "medbot"
 #define TRAIT_PASSTABLE "passtable"
 /// Lets you fly through windows
 #define TRAIT_PASSWINDOW "passwindow"
