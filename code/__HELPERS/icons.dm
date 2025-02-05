@@ -1199,8 +1199,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		for(var/istate in icon_states(file))
 			icon_states_cache[file][istate] = TRUE
 
-	var/does_it_exist = !isnull(icon_states_cache[file][state])
-	return does_it_exist
+	return !isnull(icon_states_cache[file][state])
 
 /// Functions the same as `/proc/icon_exists()`, but with the addition of a stack trace if the
 /// specified file or state doesn't exist.
