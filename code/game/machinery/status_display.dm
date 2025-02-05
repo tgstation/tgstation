@@ -422,12 +422,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			set_picture(last_picture)
 		if("greenscreen")
 			var/datum/weakref/display_ref = signal.data["display"]
+			var/obj/effect/abstract/greenscreen_display/new_display
 			if(display_ref)
-				var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
-				if(!istype(new_display))
-					return
+				new_display = display_ref?.resolve()
 			else if(length(GLOB.greenscreen_displays))
 				new_display = GLOB.greenscreen_displays[1]
+			if(!istype(new_display))
+				return
 			if(isnull(speakers))
 				speakers = new(src)
 				speakers.set_frequency(FREQ_STATUS_DISPLAYS)
