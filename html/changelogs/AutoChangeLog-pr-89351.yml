@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Tactical medkits should no longer create invisible medbots"
+  - image: "Implemented the missing bezerk medbot skin"
