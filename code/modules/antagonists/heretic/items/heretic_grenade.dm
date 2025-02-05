@@ -54,7 +54,6 @@
 	taste_description = "rotten copper"
 	penetrates_skin = NONE
 	ph = 7.4
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/bottle/capsaicin
 
 /datum/reagent/heretic_rust/expose_atom(atom/exposed_atom, reac_volume)
@@ -90,6 +89,9 @@
 			addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
 		victim.adjust_disgust(5)
+		for(var/obj/item/bodypart/robotic_limb in victim.bodyparts)
+			if(robotic_limb.biological_state & BIO_ROBOTIC)
+				robotic_limb.receive_damage(5, 5)
 	if(methods & INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
 			if(prob(15))
