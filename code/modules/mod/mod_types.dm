@@ -86,6 +86,7 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/mister/atmos,
 		/obj/item/mod/module/flashlight,
 	)
 
