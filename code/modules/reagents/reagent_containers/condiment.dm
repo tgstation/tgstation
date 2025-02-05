@@ -76,7 +76,7 @@
 			to_chat(user, span_warning("[src] is full!"))
 			return ITEM_INTERACT_BLOCKING
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+		var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
 		return ITEM_INTERACT_SUCCESS
 
@@ -88,7 +88,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, span_warning("you can't add anymore to [target]!"))
 			return ITEM_INTERACT_BLOCKING
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
+		var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		to_chat(user, span_notice("You transfer [trans] units of the condiment to [target]."))
 		return ITEM_INTERACT_SUCCESS
 
@@ -387,7 +387,7 @@
 
 /obj/item/reagent_containers/condiment/chocolate
 	name = "chocolate sprinkle pack"
-	desc= "The amount of sugar thats already there wasn't enough for you?"
+	desc= "The amount of sugar that's already there wasn't enough for you?"
 	icon_state = "condi_chocolate"
 	list_reagents = list(/datum/reagent/consumable/choccyshake = 10)
 
@@ -458,7 +458,7 @@
 			qdel(src)
 			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
-		src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
+		reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
 	return ..()

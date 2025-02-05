@@ -53,7 +53,7 @@
 /datum/outfit/deathmatch_loadout/assistant/weaponless
 	name = "Deathmatch: Assistant loadout (Weaponless)"
 	display_name = "Assistant (Unarmed)"
-	desc = "What is an assistant without a toolbox? nothing"
+	desc = "What is an assistant without a toolbox? Nothing!"
 	l_hand = null
 
 /datum/outfit/deathmatch_loadout/operative
@@ -154,7 +154,7 @@
 /datum/outfit/deathmatch_loadout/battler
 	name = "Deathmatch: Battler Base"
 	display_name = "Battler"
-	desc = "What is a battler whith out weapone?."
+	desc = "What is a battler without weapons?"
 
 	shoes = /obj/item/clothing/shoes/combat
 	uniform = /obj/item/clothing/under/syndicate
@@ -779,7 +779,7 @@
 /datum/outfit/deathmatch_loadout/lizardkind
 	name = "Deathmatch: Lizard Species"
 	display_name = "Lizardfolk"
-	desc = "They may be heavily discrimated against, they may be most often seen doing menial activities, but at least they, uh, uhh..."
+	desc = "They may be heavily discriminated against, they may be most often seen doing menial activities, but at least they, uh, uhh..."
 	species_override = /datum/species/lizard
 
 	head = /obj/item/clothing/head/soft/purple

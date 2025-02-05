@@ -239,7 +239,7 @@
 ///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
 /obj/item/clothing/head/fedora/inspector_hat
 	name = "inspector's fedora"
-	desc = "There's only one man can try to stop an evil villian."
+	desc = "There's only one man can try to stop an evil villain."
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"

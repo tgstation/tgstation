@@ -337,7 +337,7 @@
 		beaker_data = list()
 		beaker_data["maxVolume"] = target_reagents.maximum_volume
 		beaker_data["pH"] = round(target_reagents.ph, 0.01)
-		beaker_data["currentVolume"] = round(target_reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+		beaker_data["currentVolume"] = target_reagents.total_volume
 		beaker_data["currentTemp"] = round(target_reagents.chem_temp, 1)
 		beaker_data["purity"] = round(target_reagents.get_average_purity(), 0.001)
 		var/list/beakerContents = list()
@@ -449,7 +449,7 @@
 			return TRUE
 
 		if("pick_reaction")
-			var/mode = tgui_alert(usr, "Play all or an specific reaction?","Select Reaction", list("All", "Specific"))
+			var/mode = tgui_alert(usr, "Play all or a specific reaction?","Select Reaction", list("All", "Specific"))
 			if(mode == "All")
 				reactions_to_test.Cut()
 				for(var/reaction as anything in all_reaction_list)

@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Autolathes no longer have a scrollbar that sends you off the screen."
+  - bugfix: "Exosuit fabricators' queue list & Techfab/Autolathe's left side (with the sections of printables) now have a scrollbar when the full list doesn't fit on the UI for 516 users. Techfab/Autolathe also now does this for the list of items too, instead of always having one."

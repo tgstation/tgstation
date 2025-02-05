@@ -15,7 +15,7 @@
 			icon_file = initial(path.research_icon)
 			icon_state = initial(path.research_icon_state)
 			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
-				if(!(icon_state in icon_states(icon_file)))
+				if(!icon_exists(icon_file, icon_state))
 					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
 					continue
 			I = icon(icon_file, icon_state, SOUTH)
@@ -48,7 +48,7 @@
 
 			icon_state = initial(item.icon_state)
 			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
-				if(!(icon_state in icon_states(icon_file)))
+				if(!icon_exists(icon_file, icon_state))
 					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
 					continue
 			I = icon(icon_file, icon_state, SOUTH)

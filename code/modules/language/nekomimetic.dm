@@ -1,6 +1,6 @@
 /datum/language/nekomimetic
 	name = "Nekomimetic"
-	desc = "To the casual observer, this langauge is an incomprehensible mess of broken Japanese. To the felinids, it's somehow comprehensible."
+	desc = "To the casual observer, this language is an incomprehensible mess of broken Japanese. To the felinids, it's somehow comprehensible."
 	key = "f"
 	space_chance = 70
 	syllables = list(

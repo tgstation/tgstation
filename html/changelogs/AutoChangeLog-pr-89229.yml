@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "\"Who\" and \"Adminwho\" are typed as \"Info\" and not \"OOC\" (so they no longer go to \"OOC\" tabs)"
-  - qol: "\"Tip of the Round\" and \"Show Server Revision\" are also typed as \"Info\", rather than \"OOC\" and untyped respectively"

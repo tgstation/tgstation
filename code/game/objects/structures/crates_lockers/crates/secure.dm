@@ -195,14 +195,14 @@
 
 /obj/structure/closet/crate/secure/freezer/interdyne
 	name = "\improper Interdyne freezer"
-	desc = "This is an Interdyne Pharmauceutics branded freezer. May or may not contain fresh organs."
+	desc = "This is an Interdyne Pharmaceuticals branded freezer. May or may not contain fresh organs."
 	icon_state = "interdynefreezer"
 	base_icon_state = "interdynefreezer"
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/structure/closet/crate/secure/freezer/interdyne/blood
 	name = "\improper Interdyne blood freezer"
-	desc = "This is an Interdyne Pharmauceutics branded freezer. It's made to contain fresh, high-quality blood."
+	desc = "This is an Interdyne Pharmaceuticals branded freezer. It's made to contain fresh, high-quality blood."
 
 /obj/structure/closet/crate/secure/freezer/interdyne/blood/PopulateContents()
 	. = ..()
@@ -272,13 +272,13 @@
 	base_icon_state = "cyber_duskcrate"
 
 /obj/structure/closet/crate/secure/syndicate/cybersun/night
-	desc = "A secure crate from Cybersun Industries. This one blatantly adorns syndicate colours. You can only guess it contains equipement for syndicate operatives."
+	desc = "A secure crate from Cybersun Industries. This one blatantly adorns syndicate colours. You can only guess it contains equipment for syndicate operatives."
 	icon_state = "cyber_nightcrate"
 	base_icon_state = "cyber_nightcrate"
 
 /obj/structure/closet/crate/secure/syndicate/wafflecorp
 	name = "\improper Waffle corp. crate"
-	desc = "A very outdated model and design of shipment crate with a modern lock strapped on it, how befitting of its brand owner, Waffle Corporation. Golden lettering written in cursive by the logo reads 'bringing you consecutively top five world-wide rated* breakfast since 2055. A much smaller fineprint, also in cursive, clarifies: '*in years 2099-2126'... It's year 2563 now, however."
+	desc = "A very outdated model and design of shipment crate with a modern lock strapped on it, how befitting of its brand owner, Waffle Corporation. Golden lettering written in cursive by the logo reads 'bringing you consecutively top five world-wide rated* breakfast since 2055. A much smaller fine print, also in cursive, clarifies: '*in years 2099-2126'... It's year 2563 now, however."
 	icon_state = "wafflecrate"
 	base_icon_state = "wafflecrate"
 

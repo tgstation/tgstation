@@ -118,6 +118,7 @@
 			var/input_amount = text2num(params["amount"])
 			if(!input_amount)
 				return FALSE
+			input_amount = round(input_amount, CHEMICAL_VOLUME_ROUNDING)
 
 			if(!required_reagents[input_reagent])
 				required_reagents[input_reagent] = input_amount

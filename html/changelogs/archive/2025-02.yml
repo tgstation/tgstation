@@ -1,0 +1,57 @@
+2025-02-01:
+  AyIong:
+  - qol: 'You can choose in preferences what layout use into the Smartfridge or Vending
+      machines: Grid or List. Default TGUI Layout preference. In the future there
+      may be more interfaces where there will be 2 layout options. Also Vending UI
+      now use Grid layout by default.'
+  BobDABuilder9001:
+  - balance: solars now make 2.5kw each instead of 1.5kw
+  MTandi:
+  - qol: Added forensic scanner UI
+  - qol: Made forensic scanner report format cleaner
+  Majkl-J:
+  - bugfix: PENLITE defib mounts now actually charge the cell
+  SmArtKar:
+  - image: Premium Internals Boxes station trait now has unique box sprites
+2025-02-02:
+  Arceniu:
+  - spellcheck: Replaced the words "Singularity Generation Disk" with "Supermatter
+      Crystal Shard" on a paper found by the old station ruin, to match the contents
+      of the inventory room.
+  MTandi:
+  - bugfix: Fixed medbot emag VFX
+  SmArtKar:
+  - bugfix: Large fish should not render behind their wall mounts now
+  - rscadd: Added fishing bags, found in fun vendors or made from carpskin.
+  - balance: Added the generator aquarium upgrade to service and science lathes.
+  - image: Resprited reels and bobber
+  - bugfix: Fixed partially missing fishing UI
+  - bugfix: Fixed glowsticks not working
+  necromanceranne:
+  - rscdel: Mobile hollow bioscramblers no longer spawn from the anomaly research
+      ruin, sparing everyone from the inevitable unannounced arrival of a permanent
+      hollow bioscrambler aboard the station. You maybe still encounter immobile bioscramblers
+      in the ruin, however.
+  zoomachina:
+  - bugfix: showers wash things under them when they're turned on again
+2025-02-03:
+  Absolucy:
+  - bugfix: Random messages should no longer be dropped and not appear in chat.
+  SmArtKar:
+  - bugfix: Fixed an issue with persisting brimbeams
+  jlsnow301:
+  - bugfix: Character pref dropdowns should have their display names fixed
+  necromanceranne:
+  - balance: The force of most standard varieties of toolboxes has increased from
+      12 to 13 force.
+  - code_imp: Removed some magic numbers from the calculations for ancient toolboxes
+      damage scaling.
+  siliconOpossum:
+  - bugfix: Lathes interfaces are no longer unscrollable on 516
+2025-02-04:
+  necromanceranne:
+  - bugfix: Allows MOD holsters to once again activate while the modsuit is inactive
+      and undeployed.
+2025-02-05:
+  Melbert:
+  - qol: Map vote tallies explains how they work if you hover them
