@@ -18,7 +18,7 @@ Version 5.29, 4 February 2024, by Tiviplus
 Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)
 
 ```sql
-ALTER TABLE 'admin_ranks'
+ALTER TABLE `admin_ranks`
 	MODIFY COLUMN `flags` mediumint(5) unsigned NOT NULL,
 	MODIFY COLUMN `exclude_flags` mediumint(5) unsigned NOT NULL,
 	MODIFY COLUMN `can_edit_flags` mediumint(5) unsigned NOT NULL;
