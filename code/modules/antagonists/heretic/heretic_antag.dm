@@ -196,9 +196,6 @@
 
 	return data
 
-/datum/antagonist/heretic/proc/test_exploit()
-	ui_act("research", list("path" = "/datum/heretic_knowledge/ultimate/ash_final"), ui = open_uis[1])
-
 /datum/antagonist/heretic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
