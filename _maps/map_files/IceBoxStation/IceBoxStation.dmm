@@ -84289,7 +84289,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "xZv" = (
 /obj/machinery/status_display/ai/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "xZy" = (
