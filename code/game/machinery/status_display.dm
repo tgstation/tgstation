@@ -433,7 +433,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 				speakers = new(src)
 				// not seen, primarily for VV
 				speakers.name = "[name] speakers"
-				 // to allow centcom cameras to reach the station
+				// to allow centcom cameras to reach the station
 				speakers.special_channels |= RADIO_SPECIAL_CENTCOM
 				speakers.set_frequency(FREQ_STATUS_DISPLAYS)
 			active_display = new_display
