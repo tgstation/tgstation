@@ -1207,14 +1207,15 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 ///
 /// Stack traces will only be output once for each file.
 /proc/icon_exists_or_scream(file, state)
-	var/static/list/screams = list()
-	var/does_it_exist = icon_exists(file, state)
+	if(icon_exists(file, state))
+		return TRUE
 
-	if(!does_it_exist && isnull(screams[file]))
+	var/static/list/screams = list()
+	if(!isnull(screams[file]))
 		screams[file] = TRUE
 		stack_trace("State [state] in file [file] does not exist.")
 
-	return does_it_exist
+	return FALSE
 
 /**
  * Returns the size of the sprite in tiles.
