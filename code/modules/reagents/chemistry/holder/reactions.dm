@@ -209,7 +209,9 @@
 
 	var/reaction_message = null
 
-	if (!HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
+	if (isnull(my_atom))
+		stack_trace("A reagent datum with no atom is being forced to end its reactions, this is likely a bug.")
+	else if (!HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
 		reaction_message = equilibrium.reaction.mix_message
 		if(equilibrium.reaction.mix_sound)
 			playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
