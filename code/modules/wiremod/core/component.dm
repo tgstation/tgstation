@@ -64,6 +64,10 @@
 	/// The UI buttons of this circuit component. An assoc list that has this format: "button_icon" = "action_name"
 	var/ui_buttons = null
 
+	/// The "important" UI tooltips of this circuit component. Used for important things like instant & disabled circuits, they're drawn next to the default tooltip icon.
+	/// An assoc list with the format "alert_icon" = "alert_name".
+	var/ui_alerts = null
+
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
 	return
@@ -87,7 +91,13 @@
 	if((circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL) && !trigger_output)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
-		ui_color = "orange"
+		if(!length(ui_alerts))
+			ui_alerts = list()
+		ui_alerts += list("tachometer-alt" = "Instant")
+	if(circuit_flags & CIRCUIT_FLAG_DISABLED)
+		if(!length(ui_alerts))
+			ui_alerts = list()
+		ui_alerts += list("exclamation" = "Non-functional")
 
 /obj/item/circuit_component/Destroy()
 	if(parent)

@@ -70,3 +70,65 @@ $border-radius: base.$border-radius !default;
   border: base.em(1px) solid rgba($border-color, 0.75);
   border-radius: $border-radius;
 }
+
+$category-colors: (
+  'Utility': (
+    bg: hsl(136, 82%, 30%),
+    contrast: white,
+  ),
+  'Entity': (
+    bg: hsl(288, 60%, 49%),
+    contrast: white,
+  ),
+  'Sensor': (
+    bg: hsl(337, 67%, 66%),
+    contrast: white,
+  ),
+  'Math': (
+    bg: hsl(113, 76%, 51%),
+    contrast: black,
+  ),
+  'Unassigned': (
+    bg: hsl(208, 65%, 47%),
+    contrast: white,
+  ),
+  'String': (
+    bg: hsl(24, 89%, 50%),
+    contrast: white,
+  ),
+  'List': (
+    bg: hsl(0, 0%, 67%),
+    contrast: black,
+  ),
+  'Action': (
+    bg: hsl(178, 73%, 51%),
+    contrast: black,
+  ),
+  'ID': (
+    bg: hsl(52, 97%, 52%),
+    contrast: black,
+  ),
+  'NTNet': (
+    bg: hsl(239, 64%, 44%),
+    contrast: white,
+  ),
+  'Abstract': (
+    bg: hsl(208, 65%, 47%),
+    contrast: white,
+  ),
+  'Admin': (
+    bg: hsl(0, 72%, 50%),
+    contrast: white,
+  ),
+  'BCI': (
+    bg: hsl(240, 1%, 13%),
+    contrast: white,
+  ),
+);
+
+@each $category-name, $values in $category-colors {
+  .ObjectComponent__Category__#{$category-name} {
+    background-color: map-get($values, bg);
+    color: map-get($values, contrast);
+  }
+}

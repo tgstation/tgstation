@@ -33,6 +33,11 @@
 
 	var/list/options_map
 
+/obj/item/circuit_component/soundemitter/Initialize(mapload)
+	if(CONFIG_GET(flag/disallow_circuit_sounds))
+		circuit_flags |= CIRCUIT_FLAG_DISABLED
+	. = ..()
+
 /obj/item/circuit_component/soundemitter/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Sound Cooldown: [DisplayTimeText(sound_cooldown)]", "orange", "stopwatch")
@@ -79,10 +84,7 @@
 
 /obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
 	if(CONFIG_GET(flag/disallow_circuit_sounds))
-		ui_color = "red"
 		return
-	else
-		ui_color = initial(ui_color)
 
 	if(!parent.shell)
 		return
