@@ -41,6 +41,10 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/closet/cardboard,
+/obj/item/modular_computer/pda/chameleon/broken{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "m" = (
@@ -63,7 +67,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "q" = (
-/obj/structure/girder,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/syndicate_lava_base/telecomms)
 "r" = (
@@ -75,16 +79,12 @@
 /area/ruin/syndicate_lava_base/telecomms)
 "t" = (
 /obj/structure/sign/poster/contraband/syndiemoth/directional/west,
-/obj/item/radio/intercom{
-	freerange = 1;
-	name = "Syndicate Radio Intercom";
-	pixel_y = 5
-	},
-/obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/phone{
-	pixel_x = -4;
-	pixel_y = -4
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
+/obj/item/paper/monitorkey{
+	pixel_x = 5
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -99,6 +99,7 @@
 /obj/machinery/door/poddoor{
 	id = "lavalandsyndi_fredrickleft"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
 "y" = (
@@ -112,16 +113,21 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
 "z" = (
-/obj/item/modular_computer/pda/chameleon/broken{
-	pixel_x = 5;
-	pixel_y = 4
-	},
 /obj/structure/table/reinforced,
 /obj/item/food/cherrycupcake{
 	pixel_x = -7;
 	pixel_y = 13
 	},
+/obj/item/radio/intercom{
+	freerange = 1;
+	name = "Syndicate Radio Intercom";
+	pixel_y = 5
+	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/phone{
+	pixel_x = -4;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
 "A" = (
@@ -189,6 +195,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/filingcabinet/security,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "K" = (
@@ -199,6 +206,7 @@
 "O" = (
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/machinery/airalarm/directional/north,
+/obj/structure/filingcabinet/medical,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "P" = (
