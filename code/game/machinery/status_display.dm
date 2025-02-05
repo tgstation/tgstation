@@ -422,9 +422,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			set_picture(last_picture)
 		if("greenscreen")
 			var/datum/weakref/display_ref = signal.data["display"]
-			var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
-			if(!istype(new_display))
-				return
+			if(display_ref)
+				var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
+				if(!istype(new_display))
+					return
+			else if(length(GLOB.greenscreen_displays))
+				new_display = GLOB.greenscreen_displays[1]
 			if(isnull(speakers))
 				speakers = new(src)
 				speakers.set_frequency(FREQ_STATUS_DISPLAYS)
@@ -638,6 +641,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 #undef LINE2_Y
 #undef SCROLL_PADDING
 
+/// Tracks all active greenscreen displays
+GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_display)
+
 /// Used to indicate where the greenscreen is recording
 /obj/effect/abstract/greenscreen_location_indicator
 	icon = 'icons/mob/telegraphing/telegraph.dmi'
@@ -692,6 +698,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 /obj/effect/abstract/greenscreen_display/Initialize(mapload)
 	. = ..()
+	GLOB.greenscreen_displays += src
 	// crops out the bits that don't fit the screen
 	add_filter("display_mask", 1, alpha_mask_filter(x = -1 * pixel_x, y = -1 * pixel_y, icon = icon('icons/obj/machines/status_display.dmi', "outline")))
 	// adds some pizzazz (copied from records)
@@ -701,6 +708,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 /obj/effect/abstract/greenscreen_display/Destroy()
 	for(var/thing in displaying)
 		remove_from_display(thing)
+	GLOB.greenscreen_displays -= src
 	return ..()
 
 /obj/effect/abstract/greenscreen_display/proc/add_to_display(atom/movable/thing)
@@ -841,7 +849,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 	lose_hearing_sensitivity("active")
 
-	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "blank"))
+	// there's another green screen to broadcast from, switch to it - otherwise, blank
+	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = (length(GLOB.greenscreen_displays) ? "greenscreen" : "blank")))
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Check if the passed atom can be shown on the display
