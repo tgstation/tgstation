@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - map: "Added cooling loops and cold tiles to all kitchen freezers that were missing them"
