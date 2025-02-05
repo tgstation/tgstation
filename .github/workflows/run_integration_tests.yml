@@ -44,6 +44,8 @@ jobs:
           mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
           mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
           mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
