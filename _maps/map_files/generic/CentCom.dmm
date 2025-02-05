@@ -6967,7 +6967,9 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "Fy" = (
-/obj/machinery/greenscreen_camera,
+/obj/machinery/greenscreen_camera{
+	name = "centcom-caster"
+	},
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/administration)
 "Fz" = (

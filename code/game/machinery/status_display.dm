@@ -431,6 +431,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 				return
 			if(isnull(speakers))
 				speakers = new(src)
+				// not seen, primarily for VV
+				speakers.name = "[name] speakers"
+				 // to allow centcom cameras to reach the station
+				speakers.special_channels |= RADIO_SPECIAL_CENTCOM
 				speakers.set_frequency(FREQ_STATUS_DISPLAYS)
 			active_display = new_display
 			current_mode = SD_GREENSCREEN
@@ -819,6 +823,10 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 
 	new /obj/effect/abstract/greenscreen_location_indicator(greenscreen_turf)
 	mic = new(src)
+	// not seen, primarily for VV
+	mic.name = "[name] microphone"
+	// allows centcom cameras to reach the station + keeps transmission active even if comms are out
+	mic.special_channels |= RADIO_SPECIAL_CENTCOM
 	mic.set_frequency(FREQ_STATUS_DISPLAYS)
 	display = new()
 	display.dir = dir
