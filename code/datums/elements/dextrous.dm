@@ -67,7 +67,7 @@
 /datum/element/dextrous/proc/on_examined(mob/living/examined, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	for(var/obj/item/held_item in examined.held_items)
-		if(held_item.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+		if((held_item.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_item, TRAIT_EXAMINE_SKIP))
 			continue
 		examine_list += span_info("[examined.p_They()] [examined.p_have()] [held_item.examine_title(user)] in [examined.p_their()] \
 			[examined.get_held_index_name(examined.get_held_index_of_item(held_item))].")
