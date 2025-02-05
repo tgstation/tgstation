@@ -5,9 +5,10 @@ description: Install Node using the version specified in `dependencies.sh`; addi
 
 inputs:
   restore-yarn-cache:
-    description: 'Whether to restore the Yarn cache alongside installing node.'
+    description: 'If `true`, restores the Yarn cache alongside installing node.'
     required: false
     type: boolean
+    default: false
 
 runs:
   using: composite
@@ -21,5 +22,5 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION_REQUIRED }}
-        cache: ${{ inputs.restore-yarn-cache && 'yarn' || '' }}
-        cache-dependency-path: ${{ inputs.restore-yarn-cache && 'tgui/yarn.lock' || '' }}
+        cache: ${{ fromJSON(inputs.restore-yarn-cache) && 'yarn' || '' }}
+        cache-dependency-path: ${{ fromJSON(inputs.restore-yarn-cache) && 'tgui/yarn.lock' || '' }}
