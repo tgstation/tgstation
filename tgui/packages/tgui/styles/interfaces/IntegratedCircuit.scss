@@ -73,7 +73,7 @@ $border-radius: base.$border-radius !default;
 
 $category-colors: (
   'Utility': (
-    bg: hsl(136, 82%, 30%),
+    bg: hsl(136, 77%, 23%),
     contrast: white,
   ),
   'Entity': (
@@ -85,7 +85,7 @@ $category-colors: (
     contrast: white,
   ),
   'Math': (
-    bg: hsl(113, 76%, 51%),
+    bg: hsl(113, 65%, 47%),
     contrast: black,
   ),
   'Unassigned': (
@@ -93,7 +93,7 @@ $category-colors: (
     contrast: white,
   ),
   'String': (
-    bg: hsl(24, 89%, 50%),
+    bg: hsl(24, 84%, 48%),
     contrast: white,
   ),
   'List': (
@@ -101,11 +101,11 @@ $category-colors: (
     contrast: black,
   ),
   'Action': (
-    bg: hsl(178, 73%, 51%),
+    bg: hsl(178, 59%, 45%),
     contrast: black,
   ),
   'ID': (
-    bg: hsl(52, 97%, 52%),
+    bg: hsl(52, 75%, 48%),
     contrast: black,
   ),
   'NTNet': (
@@ -121,7 +121,7 @@ $category-colors: (
     contrast: white,
   ),
   'BCI': (
-    bg: hsl(240, 1%, 13%),
+    bg: black,
     contrast: white,
   ),
 );

@@ -35,7 +35,7 @@
 
 /obj/item/circuit_component/soundemitter/Initialize(mapload)
 	if(CONFIG_GET(flag/disallow_circuit_sounds))
-		circuit_flags |= CIRCUIT_FLAG_DISABLED
+		update_ui_alerts(new_flag=CIRCUIT_FLAG_DISABLED)
 	. = ..()
 
 /obj/item/circuit_component/soundemitter/get_ui_notices()
@@ -43,6 +43,9 @@
 	. += create_ui_notice("Sound Cooldown: [DisplayTimeText(sound_cooldown)]", "orange", "stopwatch")
 	if(CONFIG_GET(flag/disallow_circuit_sounds))
 		. += create_ui_notice("Non-functional", "red", "exclamation")
+		update_ui_alerts(new_flag=CIRCUIT_FLAG_DISABLED)
+	else
+		update_ui_alerts(remove_flag=CIRCUIT_FLAG_DISABLED)
 
 
 /obj/item/circuit_component/soundemitter/populate_ports()
@@ -84,7 +87,11 @@
 
 /obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
 	if(CONFIG_GET(flag/disallow_circuit_sounds))
+		// Without constantly checking the config 24/7 or sending a signal to every circuit, best we can do to update existing emitters is this.
+		update_ui_alerts(new_flag=CIRCUIT_FLAG_DISABLED)
 		return
+	else
+		update_ui_alerts(remove_flag=CIRCUIT_FLAG_DISABLED)
 
 	if(!parent.shell)
 		return
