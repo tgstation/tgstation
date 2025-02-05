@@ -249,17 +249,15 @@
 	icon_state = "vial"
 
 /obj/item/mayhem/attack_self(mob/user)
-	var/safety_mayhem = tgui_alert(user, "Doing this will drive nearby crewmembers into a murderous frenzy. Be sure you know what you're doing.", "Break the bottle?", list("Proceed", "Abort"))
-		if(safety_mayhem = "Abort" || QDELETED(parent) || QDELETED(real_location) || QDELETED(user) || !user.can_perform_action(parent, NEED_DEXTERITY) )
-			return
-		else
-			for(var/mob/living/carbon/human/target in range(7,user))
-				target.apply_status_effect(/datum/status_effect/mayhem)
-			to_chat(user, span_notice("You shatter the bottle!"))
-			playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
-			message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!"))
-			user.log_message("activated a bottle of mayhem", LOG_ATTACK)
-			qdel(src)
+	if(tgui_alert(user, "Breaking the bottle will cause nearby crewmembers to go into a murderous frenzy. Be sure you know what you are doing","Break the bottle?",list("Break it!","DON'T")) != "Break it!")
+		return
+	for(var/mob/living/carbon/human/target in range(7,user))
+		target.apply_status_effect(/datum/status_effect/mayhem)
+	to_chat(user, span_notice("You shatter the bottle!"))
+	playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
+	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!"))
+	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
+	qdel(src)
 
 /obj/item/clothing/suit/hooded/hostile_environment
 	name = "H.E.C.K. suit"
