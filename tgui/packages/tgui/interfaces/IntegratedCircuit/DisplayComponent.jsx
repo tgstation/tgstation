@@ -48,7 +48,7 @@ export class DisplayComponent extends Component {
             px={1}
             className={classes([
               'ObjectComponent__Titlebar',
-              `ObjectComponent__Category__${component.category || "Unassigned"}`,
+              `ObjectComponent__Category__${component.category || 'Unassigned'}`,
             ])}
           >
             <Stack>
@@ -60,7 +60,7 @@ export class DisplayComponent extends Component {
                   <Stack.Item key={icon}>
                     <Button
                       icon={icon}
-                      className={`ObjectComponent__Category__${component.category || "Unassigned"}`}
+                      className={`ObjectComponent__Category__${component.category || 'Unassigned'}`}
                       compact
                       tooltip={component.ui_alerts[icon]}
                     />
@@ -70,7 +70,7 @@ export class DisplayComponent extends Component {
                 <Button
                   icon="info"
                   compact
-                  className={`ObjectComponent__Category__${component.category || "Unassigned"}`}
+                  className={`ObjectComponent__Category__${component.category || 'Unassigned'}`}
                   tooltip={component.description}
                   tooltipPosition="top"
                 />
