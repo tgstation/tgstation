@@ -1,4 +1,4 @@
-# This reusable workflow is a wrapper around `actions/setup-node`, to use the version specified in
+# This action is a wrapper around `actions/setup-node`, to use the version specified in
 # `dependencies.sh`.
 name: Setup Node
 description: Install Node using the version specified in `dependencies.sh`; additionally, restores the Yarn cache if one exists
