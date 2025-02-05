@@ -10608,7 +10608,9 @@
 /area/station/security/execution/transfer)
 "cBE" = (
 /obj/machinery/status_display/ai/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "cBL" = (
@@ -18380,10 +18382,10 @@
 /area/station/security/checkpoint/customs/aft)
 "eBw" = (
 /obj/structure/sign/poster/greenscreen/directional/west,
-/obj/effect/turf_decal/siding/dark/end{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/turf/open/floor/greenscreen,
+/turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "eBE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -30309,8 +30311,8 @@
 "hxP" = (
 /obj/structure/bed/dogbed/renault,
 /obj/machinery/newscaster/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /mob/living/basic/pet/fox/renault,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "hxS" = (
@@ -49038,7 +49040,9 @@
 /area/station/maintenance/fore)
 "mjn" = (
 /obj/machinery/greenscreen_camera{
-	dir = 8
+	dir = 8;
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -65518,7 +65522,7 @@
 /area/station/science/lobby)
 "qsY" = (
 /obj/machinery/status_display/evac/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "qtm" = (
@@ -86542,9 +86546,11 @@
 /turf/open/floor/iron/edge,
 /area/station/hallway/primary/central/aft)
 "vDo" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "vDw" = (
@@ -95533,7 +95539,7 @@
 /area/station/security/office)
 "xRO" = (
 /obj/structure/fireplace,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "xSf" = (

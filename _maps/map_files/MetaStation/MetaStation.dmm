@@ -23136,10 +23136,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/greenscreen_camera{
-	dir = 1;
-	pixel_x = 11
-	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "ioy" = (
@@ -31057,6 +31053,14 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
+"kXi" = (
+/obj/machinery/greenscreen_camera{
+	dir = 1;
+	pixel_x = 4;
+	pixel_y = 16
+	},
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/captain/private)
 "kXp" = (
 /obj/machinery/camera/autoname{
 	dir = 5
@@ -47414,9 +47418,7 @@
 /area/station/medical/virology)
 "qPF" = (
 /obj/structure/sign/poster/greenscreen/directional/north,
-/obj/effect/turf_decal/siding/dark/end,
-/obj/effect/turf_decal/siding/dark/end,
-/turf/open/floor/greenscreen,
+/turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "qPJ" = (
 /turf/closed/wall,
@@ -99497,7 +99499,7 @@ kON
 vjn
 syo
 qPF
-hlD
+kXi
 iox
 tyY
 eCB

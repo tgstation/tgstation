@@ -2245,6 +2245,10 @@
 /obj/structure/closet/wardrobe/cargotech,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"jR" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/grimy,
+/area/centcom/tdome/administration)
 "jU" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/computer,
@@ -3781,6 +3785,7 @@
 /area/centcom/central_command_areas/ferry)
 "ro" = (
 /obj/machinery/newscaster/directional/north,
+/obj/structure/chair,
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/administration)
 "rq" = (
@@ -7607,6 +7612,7 @@
 /area/centcom/central_command_areas/admin)
 "Kg" = (
 /obj/item/radio/intercom/directional/north,
+/obj/structure/chair,
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/administration)
 "Ko" = (
@@ -9249,6 +9255,7 @@
 "RA" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/light/cold/directional/north,
+/obj/structure/chair,
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/administration)
 "RB" = (
@@ -58723,7 +58730,7 @@ uf
 FU
 uf
 RA
-Xw
+jR
 Gy
 cU
 uf

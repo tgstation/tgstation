@@ -236,13 +236,18 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 
 /obj/machinery/status_display/emp_act(severity)
 	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if((machine_stat & (NOPOWER|BROKEN)) || (. & EMP_PROTECT_SELF))
 		return
 	current_mode = SD_PICTURE
 	set_picture("ai_bsod")
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
+	if(active_display)
+		. += span_notice("It's currently broadcasting. You can see...")
+		for(var/atom/movable/thing in active_display.displaying)
+			. += span_notice("&bull; [thing]")
+
 	var/obj/effect/overlay/status_display_text/message1_overlay = get_status_text(message_key_1)
 	var/obj/effect/overlay/status_display_text/message2_overlay = get_status_text(message_key_2)
 	if (message1_overlay || message2_overlay)
@@ -633,6 +638,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 #undef LINE2_Y
 #undef SCROLL_PADDING
 
+/// Used to indicate where the greenscreen is recording
+/obj/effect/abstract/greenscreen_location_indicator
+	icon = 'icons/mob/telegraphing/telegraph.dmi'
+	icon_state = "blank_semi_transparent"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = BELOW_OPEN_DOOR_LAYER
+
+/obj/effect/abstract/greenscreen_location_indicator/Initialize(mapload)
+	. = ..()
+	add_filter("greenscreen_indicator", 1, outline_filter(1.5, COLOR_YELLOW))
+	animate(get_filter("greenscreen_indicator"), alpha = 0, time = 2.5 SECONDS, loop = -1)
+	animate(alpha = 200, time = 1 SECONDS)
+
 /// Basically exists to hold an appearance that we can slot into vis_contents
 /obj/effect/abstract/greenscreen_appearance_holder
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -670,7 +688,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
 	/// Tracks who we're displaying
-	VAR_PRIVATE/list/atom/movable/displaying = list()
+	VAR_FINAL/list/atom/movable/displaying = list()
 
 /obj/effect/abstract/greenscreen_display/Initialize(mapload)
 	. = ..()
@@ -772,13 +790,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	if(isnull(display))
 		if(!is_operational)
 			return
-		use_power = ACTIVE_POWER_USE
 		activate_feed()
+		if(isnull(display))
+			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 33, TRUE, frequency = 0.5)
+			balloon_alert_to_viewers("no backdrop, can't broadcast!")
+			return
 		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 33, FALSE)
+		use_power = ACTIVE_POWER_USE
 	else
-		use_power = IDLE_POWER_USE
 		deactivate_feed()
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 33, FALSE)
+		use_power = IDLE_POWER_USE
 	balloon_alert_to_viewers("feed [isnull(display) ? "de" : ""]activated")
 
 /obj/machinery/greenscreen_camera/proc/activate_feed()
@@ -786,10 +808,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 	if(isnull(greenscreen_turf))
 		return
 
-	greenscreen_turf.add_filter("greenscreen_indicator", 1, outline_filter(1.5, COLOR_VERY_SOFT_YELLOW))
-	animate(greenscreen_turf.get_filter("greenscreen_indicator"), alpha = 0, time = 2 SECONDS, loop = -1)
-	animate(alpha = 255, time = 2 SECONDS)
-
+	new /obj/effect/abstract/greenscreen_location_indicator(greenscreen_turf)
 	mic = new(src)
 	mic.set_frequency(FREQ_STATUS_DISPLAYS)
 	display = new()
@@ -813,7 +832,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 /obj/machinery/greenscreen_camera/proc/deactivate_feed()
 	if(!isnull(greenscreen_turf))
-		greenscreen_turf.remove_filter("greenscreen_indicator")
+		for(var/obj/effect/abstract/greenscreen_location_indicator/indicator in greenscreen_turf)
+			qdel(indicator)
 		UnregisterSignal(greenscreen_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 		greenscreen_turf = null
 	QDEL_NULL(mic)

@@ -6157,7 +6157,9 @@
 /area/station/commons/lounge)
 "aZu" = (
 /obj/machinery/greenscreen_camera{
-	dir = 4
+	dir = 4;
+	pixel_y = 7;
+	pixel_x = 7
 	},
 /obj/machinery/light/warm/directional/west,
 /obj/structure/sign/flag/nanotrasen/directional/west,
@@ -53618,6 +53620,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain/private)
 "rUX" = (

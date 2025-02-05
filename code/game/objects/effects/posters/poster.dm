@@ -302,7 +302,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
 	icon_state = "greenscreen"
 	poster_item_name = "greenscreen"
 	poster_item_desc = "Used to create a convincing illusion of a different background."
-	color = COLOR_LIME
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/greenscreen, 32)
 

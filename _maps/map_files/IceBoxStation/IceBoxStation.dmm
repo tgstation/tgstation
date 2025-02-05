@@ -57182,13 +57182,6 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"qjx" = (
-/obj/structure/cable,
-/obj/machinery/greenscreen_camera{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/captain)
 "qjF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -58563,6 +58556,14 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"qEP" = (
+/obj/machinery/greenscreen_camera{
+	dir = 4;
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "qEU" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /obj/effect/decal/cleanable/glass,
@@ -62009,14 +62010,10 @@
 /area/station/maintenance/starboard/fore)
 "rCh" = (
 /obj/structure/sign/poster/greenscreen/directional/east,
-/obj/effect/turf_decal/siding/dark,
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/greenscreen,
+/turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "rCj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -247730,7 +247727,7 @@ auU
 auU
 fgq
 heX
-qjx
+heX
 heX
 viQ
 lpM
@@ -247987,7 +247984,7 @@ uEm
 uEm
 uEm
 uEm
-uEm
+qEP
 uEm
 eqU
 log

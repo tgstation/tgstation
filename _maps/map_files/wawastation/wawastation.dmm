@@ -5197,10 +5197,10 @@
 "bRl" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/sign/poster/greenscreen/directional/west,
-/obj/effect/turf_decal/siding/dark{
-	dir = 6
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
 	},
-/turf/open/floor/greenscreen,
+/turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "bRD" = (
 /obj/structure/table,
@@ -64732,7 +64732,9 @@
 "wMy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/greenscreen_camera{
-	dir = 8
+	dir = 8;
+	pixel_y = 6;
+	pixel_x = -4
 	},
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/captain/private)
@@ -94478,7 +94480,7 @@ sgz
 cIa
 lDn
 uZx
-ymi
+uxH
 pyo
 paS
 mRi
@@ -98076,7 +98078,7 @@ juw
 cLf
 hQF
 wsM
-ymi
+uxH
 pyo
 ftF
 nuR
