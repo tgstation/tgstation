@@ -200,9 +200,10 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 				vis_contents |= active_displays
 				speakers?.set_listening(TRUE)
 		else
+			speakers?.set_listening(FALSE)
 			if(LAZYLEN(active_displays))
 				vis_contents -= active_displays
-			speakers?.set_listening(FALSE)
+				LAZYNULL(active_displays)
 			var/line1_metric
 			var/line2_metric
 			var/line_pair
