@@ -118,7 +118,12 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
  */
 /obj/machinery/status_display/proc/clear_display()
 	PRIVATE_PROC(TRUE)
+	clear_text()
+	clear_green_screen()
 
+/// Clears text off the display.
+/obj/machinery/status_display/proc/clear_text()
+	PRIVATE_PROC(TRUE)
 	var/obj/effect/overlay/status_display_text/overlay_1 = get_status_text(message_key_1)
 	message_key_1 = null
 	overlay_1?.disown(src)
@@ -126,6 +131,9 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	message_key_2 = null
 	overlay_2?.disown(src)
 
+/// Clears the green screen display.
+/obj/machinery/status_display/proc/clear_green_screen()
+	PRIVATE_PROC(TRUE)
 	speakers?.set_listening(FALSE)
 	if(LAZYLEN(active_displays))
 		vis_contents -= active_displays
@@ -196,14 +204,12 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
 				return
 		if(SD_GREENSCREEN)
+			clear_text()
 			if(LAZYLEN(active_displays))
 				vis_contents |= active_displays
 				speakers?.set_listening(TRUE)
 		else
-			speakers?.set_listening(FALSE)
-			if(LAZYLEN(active_displays))
-				vis_contents -= active_displays
-				LAZYNULL(active_displays)
+			clear_green_screen()
 			var/line1_metric
 			var/line2_metric
 			var/line_pair
@@ -431,16 +437,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		if("greenscreen")
 			var/datum/weakref/display_ref = signal.data["display"]
 			var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
-			if(!istype(new_display))
-				return
-			if(isnull(speakers))
-				speakers = new(src)
-				// not seen, primarily for VV
-				speakers.name = "[name] speakers"
-				// to allow centcom cameras to reach the station
-				speakers.special_channels |= RADIO_SPECIAL_CENTCOM
-				speakers.set_frequency(FREQ_STATUS_DISPLAYS)
-			LAZYOR(active_displays, new_display)
+			if(istype(new_display))
+				if(isnull(speakers))
+					speakers = new(src)
+					// not seen, primarily for VV
+					speakers.name = "[name] speakers"
+					// to allow centcom cameras to reach the station
+					speakers.special_channels |= RADIO_SPECIAL_CENTCOM
+					speakers.set_frequency(FREQ_STATUS_DISPLAYS)
+				LAZYOR(active_displays, new_display)
 			current_mode = SD_GREENSCREEN
 			update_appearance()
 		if("friendcomputer")
@@ -863,7 +868,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 	lose_hearing_sensitivity("active")
 
 	// there's another green screen to broadcast from, switch to it - otherwise, blank
-	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = (length(GLOB.greenscreen_displays) ? "greenscreen" : "blank")))
+	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = (length(GLOB.greenscreen_displays) ? "greenscreen" : "shuttle")))
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Check if the passed atom can be shown on the display
