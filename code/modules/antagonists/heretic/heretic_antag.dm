@@ -196,6 +196,9 @@
 
 	return data
 
+/datum/antagonist/heretic/proc/test_exploit()
+	ui_act("research", list("path" = "/datum/heretic_knowledge/ultimate/ash_final"), ui = open_uis[1])
+
 /datum/antagonist/heretic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -207,11 +210,11 @@
 			if(!ispath(researched_path, /datum/heretic_knowledge))
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path || "invalid path"])")
 			if(!(researched_path in get_researchable_knowledge()))
-				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn! (Got: [researched_path])")
+				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
 				CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
 			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) && !can_ascend())
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
-				CRASH("Heretic attempted to learn final knowledge despite not being able to ascend!")
+				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 			if(initial(researched_path.cost) > knowledge_points)
 				return TRUE
 			if(!gain_knowledge(researched_path))
