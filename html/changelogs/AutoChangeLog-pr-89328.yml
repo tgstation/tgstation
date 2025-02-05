@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "AI-controlled ventcrawling mobs (botanical spiderlings and legioned monkeys) can once more do so without killing themselves shortly afterwards."

@@ -1,0 +1,6 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "Joining a minigame or taking certain ghost roles, while you have a mind without a body, will no longer DNR you, just in case you can be resurrected by some means."
+  - bugfix: "If your old body is permanently destroyed while you are playing a minigame or as certain ghost roles, you will still return to your character's original mind, just in case you can be resurrected by some means."
+  - bugfix: "The basketball minigame now gives its players and referee temporary bodies."

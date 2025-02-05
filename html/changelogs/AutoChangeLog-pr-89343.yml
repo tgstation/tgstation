@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Void Cloaks now properly hide blades and such in the suit storage from the wearer's sprite."
