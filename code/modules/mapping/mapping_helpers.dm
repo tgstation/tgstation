@@ -308,9 +308,11 @@
 
 	if(target.tlv_cold_room)
 		target.set_tlv_cold_room()
+	if(target.tlv_kitchen)
+		target.set_tlv_kitchen()
 	if(target.tlv_no_checks)
 		target.set_tlv_no_checks()
-	if(target.tlv_no_checks && target.tlv_cold_room)
+	if(target.tlv_no_checks + target.tlv_cold_room + target.tlv_kitchen > 1)
 		CRASH("Tried to apply incompatible air alarm threshold helpers!")
 
 	if(target.syndicate_access)
@@ -401,6 +403,16 @@
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
 	target.tlv_cold_room = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen
+	name = "airalarm kitchen tlv helper"
+	icon_state = "airalarm_tlv_kitchen_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen/payload(obj/machinery/airalarm/target)
+	if(target.tlv_kitchen)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to kitchen but it's already changed!")
+	target.tlv_kitchen = TRUE
 
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks
 	name = "airalarm no checks tlv helper"
