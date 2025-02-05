@@ -91,12 +91,12 @@
 
 /datum/status_effect/eldritch_sleep/on_apply()
 	. = ..()
-	owner.add_traits(sleeping_traits, STATUS_EFFECT_TRAIT)
+	owner.add_traits(sleeping_traits, TRAIT_STATUS_EFFECT(id))
 	owner.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_ELDRITCH_ETHER)
 
 /datum/status_effect/eldritch_sleep/on_remove()
 	owner.SetSleeping(0) // Wake up bookworm, we have some heathens to burn
-	owner.remove_traits(sleeping_traits, STATUS_EFFECT_TRAIT)
+	owner.remove_traits(sleeping_traits, TRAIT_STATUS_EFFECT(id))
 	owner.reagents?.remove_all(100) // If someone gives you over 100 units of poison while you sleep then you deserve this L
 	owner.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ELDRITCH_ETHER)
 

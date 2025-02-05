@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
-	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
+	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 
 	// The mansus celebrates your efforts
 	if(IS_HERETIC(owner))
@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 /datum/status_effect/arena_tracker/on_apply()
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
-	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
+	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 /datum/status_effect/arena_tracker/on_remove()
 	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOB_APPLY_DAMAGE))
-	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
+	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = null
 
