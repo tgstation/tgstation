@@ -38,7 +38,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	var/header_text_color = COLOR_DISPLAY_PURPLE
 
 	/// Used in greenscreen mode: the display currently being displayed (via vis_contents)
-	VAR_PRIVATE/obj/effect/abstract/greenscreen_display/active_display
+	VAR_PRIVATE/list/obj/effect/abstract/greenscreen_display/active_displays
 	/// Lazy-inited radio in greenscreen mode to receive speech from the display
 	VAR_PRIVATE/obj/item/radio/entertainment/speakers/speakers
 
@@ -126,9 +126,10 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	message_key_2 = null
 	overlay_2?.disown(src)
 
-	if(active_display)
-		vis_contents -= active_display
-		active_display = null
+	speakers?.set_listening(FALSE)
+	if(LAZYLEN(active_displays))
+		vis_contents -= active_displays
+		LAZYNULL(active_displays)
 
 // List in the form key -> status display that shows said key
 GLOBAL_LIST_EMPTY(key_to_status_display)
@@ -195,12 +196,13 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
 				return
 		if(SD_GREENSCREEN)
-			if(active_display)
-				vis_contents += active_display
-
+			if(LAZYLEN(active_displays))
+				vis_contents |= active_displays
+				speakers?.set_listening(TRUE)
 		else
-			if(active_display)
-				vis_contents -= active_display
+			if(LAZYLEN(active_displays))
+				vis_contents -= active_displays
+			speakers?.set_listening(FALSE)
 			var/line1_metric
 			var/line2_metric
 			var/line_pair
@@ -243,15 +245,20 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
-	if(active_display)
-		. += span_notice("It's currently broadcasting. You can see...")
-		for(var/atom/movable/thing in active_display.displaying)
-			. += span_notice("&bull; [thing]")
+	if(LAZYLEN(active_displays))
+		. += span_notice("<hr>It's currently broadcasting. You can see...")
+		var/has_any = FALSE
+		for(var/obj/effect/abstract/greenscreen_display/display as anything in active_displays)
+			for(var/atom/movable/thing in display.displaying)
+				. += span_notice("&bull; \A [thing.name]")
+				has_any = TRUE
+		if(!has_any)
+			. += span_notice("&bull; Nothing.")
 
 	var/obj/effect/overlay/status_display_text/message1_overlay = get_status_text(message_key_1)
 	var/obj/effect/overlay/status_display_text/message2_overlay = get_status_text(message_key_2)
 	if (message1_overlay || message2_overlay)
-		. += "The display says:"
+		. += "<hr>The display says:"
 		if (message1_overlay.message)
 			. += "\t<tt>[html_encode(message1_overlay.message)]</tt>"
 		if (message2_overlay.message)
@@ -422,11 +429,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			set_picture(last_picture)
 		if("greenscreen")
 			var/datum/weakref/display_ref = signal.data["display"]
-			var/obj/effect/abstract/greenscreen_display/new_display
-			if(display_ref)
-				new_display = display_ref?.resolve()
-			else if(length(GLOB.greenscreen_displays))
-				new_display = GLOB.greenscreen_displays[1]
+			var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
 			if(!istype(new_display))
 				return
 			if(isnull(speakers))
@@ -436,7 +439,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 				// to allow centcom cameras to reach the station
 				speakers.special_channels |= RADIO_SPECIAL_CENTCOM
 				speakers.set_frequency(FREQ_STATUS_DISPLAYS)
-			active_display = new_display
+			LAZYOR(active_displays, new_display)
 			current_mode = SD_GREENSCREEN
 			update_appearance()
 		if("friendcomputer")
