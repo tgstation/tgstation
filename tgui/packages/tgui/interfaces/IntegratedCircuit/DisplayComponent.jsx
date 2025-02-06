@@ -47,10 +47,7 @@ export class DisplayComponent extends Component {
           <Box
             py={1}
             px={1}
-            className={classes([
-              'ObjectComponent__Titlebar',
-              categoryClass,
-            ])}
+            className={classes(['ObjectComponent__Titlebar', categoryClass])}
           >
             <Stack>
               <Stack.Item grow={1} unselectable="on">
