@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Removed an oversight which allowed you to farm fishing achievements"

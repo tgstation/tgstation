@@ -82,7 +82,8 @@
 
 	if(!HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING) && isturf(get_turf(living_pawn))) // we're out of the vents, so no need to do an exit
 		// assume that we got yeeted out somehow and return this so we can halt the suicide pill timer.
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		finish_action(controller, TRUE, target_key)
+		return
 
 	living_pawn.forceMove(exit_vent)
 	if(!living_pawn.can_enter_vent(exit_vent, provide_feedback = FALSE))
@@ -90,7 +91,8 @@
 		emergency_vent = calculate_exit_vent(controller)
 		if(isnull(emergency_vent))
 			// it's joever. we cooked too hard.
-			return suicide_pill(controller) | AI_BEHAVIOR_DELAY
+			suicide_pill(controller)
+			return
 
 		controller.set_blackboard_key(BB_EXIT_VENT_TARGET, emergency_vent) // assign and go again
 		addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), (rand(controller.blackboard[BB_LOWER_VENT_TIME_LIMIT], controller.blackboard[BB_UPPER_VENT_TIME_LIMIT]) / 2)) // we're in danger mode, so scurry out at half the time it would normally take.
@@ -99,9 +101,11 @@
 	living_pawn.handle_ventcrawl(exit_vent)
 	if(HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING)) // how'd we fail? what the fuck
 		stack_trace("We failed to exit the vents, even though we should have been fine? This is very weird.")
-		return suicide_pill(controller) | AI_BEHAVIOR_DELAY // all of the prior checks say we should have definitely made it through, but we didn't. dammit.
+		suicide_pill(controller)
+		return
 
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED // we did it! we went into the vents and out of the vents. poggers.
+	finish_action(controller, TRUE, target_key)
+	return
 
 /// Incredibly stripped down version of the overarching `can_enter_vent` proc on `/mob, just meant for rapid rechecking of a vent. Will be TRUE if not blocked, FALSE otherwise.
 /datum/ai_behavior/crawl_through_vents/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/checkable)

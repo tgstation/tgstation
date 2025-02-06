@@ -78,7 +78,10 @@
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
+	contains = list(
+		/obj/item/gun/ballistic/shotgun/automatic/combat,
+		/obj/item/storage/belt/bandolier
+	)
 
 /datum/supply_pack/goody/disabler_single
 	name = "Disabler Single-Pack"
@@ -214,7 +217,10 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(
+		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/hypospray/medipen/ekit
+	)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"

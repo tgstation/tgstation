@@ -64,13 +64,15 @@
 
 	if(isliving(interacting_with))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
-		var/mob/living/L = interacting_with
-		if(L.mob_biotypes & MOB_PLANT)
-			plant_biotype_health_scan(interacting_with, user)
+		var/mob/living/living_target = interacting_with
+		if(living_target.mob_biotypes & MOB_PLANT)
+			plant_biotype_health_scan(living_target, user)
 			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 
-	analyze(user, interacting_with)
-	return ITEM_INTERACT_SUCCESS
+	if(analyze(user, interacting_with))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /// Same as above, but with right click. Right-clicking scans for chemicals.
 /obj/item/plant_analyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -78,7 +80,10 @@
 	if(!user.can_read(src))
 		return ITEM_INTERACT_BLOCKING
 
-	return do_plant_chem_scan(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	if(do_plant_chem_scan(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /*
  * Scan the target on chemical scan mode. This prints chemical genes and reagents to the user.
@@ -91,10 +96,10 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_chem_scan(atom/scan_target, mob/user)
 	if(isliving(scan_target))
-		var/mob/living/L = scan_target
-		if(L.mob_biotypes & MOB_PLANT)
+		var/mob/living/living_target = scan_target
+		if(living_target.mob_biotypes & MOB_PLANT)
 			plant_biotype_chem_scan(scan_target, user)
-			return TRUE
+		return TRUE
 
 	return analyze(user, scan_target)
 

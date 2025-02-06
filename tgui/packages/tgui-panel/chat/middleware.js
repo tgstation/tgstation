@@ -135,13 +135,14 @@ export const chatMiddleware = (store) => {
             requesting < sequence;
             requesting++
           ) {
-            requested_sequences.push(requesting);
+            sequences_requested.push(requesting);
             Byond.sendMessage('chat/resend', requesting);
           }
         }
       }
 
       chatRenderer.processBatch([payload_obj.content]);
+      sequences.push(sequence);
       return;
     }
     if (type === loadChat.type) {
