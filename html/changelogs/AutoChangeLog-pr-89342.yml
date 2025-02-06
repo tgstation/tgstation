@@ -1,4 +1,0 @@
-author: "Gaxeer"
-delete-after: True
-changes:
-  - bugfix: "fix image display in `NT IRN` PDA app for preview and contents"
