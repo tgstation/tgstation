@@ -153,9 +153,10 @@
 /// Registers a new mob to be elevated, and elevates it.
 /datum/element/elevation_core/proc/register_new_mob(mob/living/new_mob, elevate_time = ELEVATE_TIME)
 	elevate_mob(new_mob, elevate_time = elevate_time)
-	RegisterSignal(new_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
-	RegisterSignal(new_mob, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_add))
-	RegisterSignal(new_mob, SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_remove))
+	// mobs can reasonably be reigstered twice if the element is attached and then their init finishes
+	RegisterSignal(new_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled), override = TRUE)
+	RegisterSignal(new_mob, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_add), override = TRUE)
+	RegisterSignal(new_mob, SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_remove), override = TRUE)
 
 /**
  * Elevates the mob by pixel_shift amount.
@@ -169,6 +170,10 @@
  */
 /datum/element/elevation_core/proc/elevate_mob(mob/living/target, elevate_time = ELEVATE_TIME, force = FALSE)
 	if(HAS_TRAIT(target, TRAIT_IGNORE_ELEVATION) && !force)
+		return
+	// while the offset system can natively handle this,
+	// we want to avoid accidentally double-elevating anything they're buckled to (namely vehicles)
+	if(target.has_offset(ELEVATION_SOURCE(src)))
 		return
 	// We are buckled to something
 	if(target.buckled)

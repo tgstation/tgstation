@@ -151,11 +151,21 @@
  * Checks if we are offset by the passed source for the passed pixel.
  *
  * * source: The source of the offset
- * * pixel: The pixel to check
+ * * pixel: Optional, The pixel to check.
+ * If not supplied, just reports if it's offset by the source at all (returning the first offset found).
  *
  * Returns the offset if we are, 0 otherwise.
  */
 /mob/living/proc/has_offset(source, pixel)
+	if(isnull(pixel))
+		if(!length(offsets))
+			return FALSE
+		return offsets[PIXEL_W_OFFSET]?[source] \
+			|| offsets[PIXEL_X_OFFSET]?[source] \
+			|| offsets[PIXEL_Y_OFFSET]?[source] \
+			|| offsets[PIXEL_Z_OFFSET]?[source] \
+			|| 0
+
 	return offsets?[pixel]?[source] || 0
 
 // Updates offsets if base pixel changes
