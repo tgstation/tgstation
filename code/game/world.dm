@@ -503,7 +503,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+#ifndef DISABLE_DREAMLUAU
 	DREAMLUAU_SET_EXECUTION_LIMIT_MILLIS(tick_lag * 100)
+#endif
 
 /world/proc/init_byond_tracy()
 	if(!fexists(TRACY_DLL_PATH))

@@ -23,6 +23,8 @@
 	var/knockdown_time = 0
 	/// How long the slip paralyzes (prevents the crossing mob doing anything) for.
 	var/paralyze_time = 0
+	/// How long the slip dazes (makes the crossing mob vulnerable to shove stuns) for.
+	var/daze_time = 3 SECONDS
 	/// Flags for how slippery the parent is. See [__DEFINES/mobs.dm]
 	var/lube_flags
 	/// Optional callback allowing you to define custom conditions for slipping
@@ -53,6 +55,7 @@
  * * lube_flags - Controls the slip behaviour, they are listed starting [here][SLIDE]
  * * datum/callback/on_slip_callback - Callback to define further custom controls on when slipping is applied
  * * paralyze - length of time to paralyze the crossing mob for (Deciseconds)
+ * * daze - length of time to daze the crossing mob for (Deciseconds), default 3 seconds
  * * force_drop - should the crossing mob drop items in its hands or not
  * * slot_whitelist - flags controlling where on a mob this item can be equipped to make the parent mob slippery full list [here][ITEM_SLOT_OCLOTHING]
  * * datum/callback/on_slip_callback - Callback to add custom behaviours as the crossing mob is slipped
@@ -62,12 +65,14 @@
 	lube_flags = NONE,
 	datum/callback/on_slip_callback,
 	paralyze,
+	daze = 3 SECONDS,
 	force_drop = FALSE,
 	slot_whitelist,
 	datum/callback/can_slip_callback,
 )
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
+	src.daze_time = max(daze, 0)
 	src.force_drop_items = force_drop
 	src.lube_flags = lube_flags
 	src.can_slip_callback = can_slip_callback
@@ -126,6 +131,7 @@
 	lube_flags = NONE,
 	datum/callback/on_slip_callback,
 	paralyze,
+	daze,
 	force_drop = FALSE,
 	slot_whitelist,
 	datum/callback/can_slip_callback,
@@ -136,11 +142,13 @@
 		on_slip_callback = component.on_slip_callback
 		can_slip_callback = component.on_slip_callback
 		paralyze = component.paralyze_time
+		daze = component.daze_time
 		force_drop = component.force_drop_items
 		slot_whitelist = component.slot_whitelist
 
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
+	src.daze_time = max(daze, 0)
 	src.force_drop_items = force_drop
 	src.lube_flags = lube_flags
 	src.on_slip_callback = on_slip_callback
@@ -167,7 +175,7 @@
 		return
 	if(can_slip_callback && !can_slip_callback.Invoke(holder, victim))
 		return
-	if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items))
+	if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, daze_time, force_drop_items))
 		on_slip_callback?.Invoke(victim)
 
 /**
