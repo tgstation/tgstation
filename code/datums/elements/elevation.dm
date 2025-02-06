@@ -113,10 +113,7 @@
 	ADD_TRAIT(target, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))
 
 	for(var/mob/living/living in target)
-		RegisterSignal(living, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
-		RegisterSignal(living, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_add))
-		RegisterSignal(living, SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_remove))
-		elevate_mob(living)
+		register_new_mob(living)
 
 /datum/element/elevation_core/Detach(datum/source)
 	/**
@@ -139,15 +136,12 @@
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
 	SIGNAL_HANDLER
 	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))) && isliving(entered))
-		elevate_mob(entered, elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0)
-		RegisterSignal(entered, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
-		RegisterSignal(entered, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_add))
-		RegisterSignal(entered, SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_remove))
+		register_new_mob(entered, elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0)
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
 	if(isliving(spawned))
-		on_entered(entered = spawned)
+		register_new_mob(spawned, elevate_time = 0)
 
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
 	SIGNAL_HANDLER
@@ -155,6 +149,13 @@
 		// Always unregister the signals, we're still leaving even if not affected by elevation.
 		UnregisterSignal(gone, list(COMSIG_LIVING_SET_BUCKLED, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION)))
 		deelevate_mob(gone, isturf(gone.loc) && source.Adjacent(gone.loc) ? ELEVATE_TIME : 0)
+
+/// Registers a new mob to be elevated, and elevates it.
+/datum/element/elevation_core/proc/register_new_mob(mob/living/new_mob, elevate_time = ELEVATE_TIME)
+	elevate_mob(new_mob, elevate_time = elevate_time)
+	RegisterSignal(new_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
+	RegisterSignal(new_mob, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_add))
+	RegisterSignal(new_mob, SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION), PROC_REF(on_ignore_elevation_remove))
 
 /**
  * Elevates the mob by pixel_shift amount.
