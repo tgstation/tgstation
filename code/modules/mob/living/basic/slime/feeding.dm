@@ -62,11 +62,13 @@
 
 	return TRUE
 
+#define FEEDING_OFFSET "feeding"
+
 ///The slime will start feeding on the target
 /mob/living/basic/slime/proc/start_feeding(mob/living/target_mob)
 	target_mob.unbuckle_all_mobs(force = TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
 	if(target_mob.buckle_mob(src, force = TRUE))
-		add_offsets("feeding", y_add = target_mob.mob_size <= MOB_SIZE_SMALL ? 0 : 3)
+		add_offsets(FEEDING_OFFSET, y_add = target_mob.mob_size <= MOB_SIZE_SMALL ? 0 : 3)
 		layer = MOB_ABOVE_PIGGYBACK_LAYER //appear above the target mob
 		target_mob.apply_status_effect(/datum/status_effect/slime_leech, src)
 		target_mob.visible_message(
@@ -87,6 +89,8 @@
 	if(!silent)
 		visible_message(span_warning("[src] lets go of [buckled]!"), span_notice("You let go of [buckled]"))
 		balloon_alert(src, "feeding stopped")
-	remove_offsets("feeding")
+	remove_offsets(FEEDING_OFFSET)
 	layer = initial(layer)
 	buckled.unbuckle_mob(src,force=TRUE)
+
+#undef FEEDING_OFFSET

@@ -558,7 +558,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	return NONE
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
-	M.add_offsets(type, y_add = 5)
+	M.add_offsets(type, z_add = 5)
 
 /obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
 	M.remove_offsets(type)
@@ -576,7 +576,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	fishing_modifier = -10
 
 /obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
-	Mob.add_offsets(type, y_add = 2)
+	Mob.add_offsets(type, z_add = 2)
 	. = ..()
 	if(iscarbon(Mob))
 		INVOKE_ASYNC(src, PROC_REF(snap_check), Mob)

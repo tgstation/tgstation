@@ -838,7 +838,7 @@
 
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
-	buckled.add_offsets(type, y_add = 6)
+	buckled.add_offsets(type, z_add = 6)
 
 ///Disalign the mob with the table when unbuckled.
 /obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)

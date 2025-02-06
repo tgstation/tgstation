@@ -265,14 +265,18 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	UnregisterSignal(src, COMSIG_LIVING_SET_BUCKLED)
 	toggle_perched(perched = FALSE)
 
+#define PERCH_SOURCE "perched"
+
 /mob/living/basic/parrot/proc/toggle_perched(perched)
 	if(!perched)
-		REMOVE_TRAIT(src, TRAIT_PARROT_PERCHED, TRAIT_GENERIC)
-		remove_offsets("perched")
+		REMOVE_TRAIT(src, TRAIT_PARROT_PERCHED, PERCH_SOURCE)
+		remove_offsets(PERCH_SOURCE)
 	else
-		ADD_TRAIT(src, TRAIT_PARROT_PERCHED, TRAIT_GENERIC)
-		add_offsets("perched", y_add = 9)
+		ADD_TRAIT(src, TRAIT_PARROT_PERCHED, PERCH_SOURCE)
+		add_offsets(PERCH_SOURCE, y_add = 9)
 	update_appearance(UPDATE_ICON_STATE)
+
+#undef PERCH_SOURCE
 
 /// Master proc which will determine the intent of OUR attacks on an object and summon the relevant procs accordingly.
 /// This is pretty much meant for players, AI will use the task-specific procs instead.

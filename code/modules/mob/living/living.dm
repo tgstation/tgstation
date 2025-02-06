@@ -465,8 +465,8 @@
  * * grab_state - the state of the grab
  * * animate - whether or not to animate the offsets
  */
-/mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE, animate = TRUE)
-	if(M.buckled)
+/mob/living/proc/set_pull_offsets(mob/living/mob_to_set, grab_state = GRAB_PASSIVE, animate = TRUE)
+	if(mob_to_set.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
 	var/offset = 0
 	switch(grab_state)
@@ -478,23 +478,23 @@
 			offset = GRAB_PIXEL_SHIFT_NECK
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
-	M.setDir(get_dir(M, src))
-	var/dir_filter = M.dir
+	mob_to_set.setDir(get_dir(mob_to_set, src))
+	var/dir_filter = mob_to_set.dir
 	if(ISDIAGONALDIR(dir_filter))
 		dir_filter = EWCOMPONENT(dir_filter)
 	switch(dir_filter)
 		if(NORTH)
-			M.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = offset, animate = animate)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = offset, animate = animate)
 		if(SOUTH)
-			M.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = -offset, animate = animate)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = -offset, animate = animate)
 		if(EAST)
-			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
-				M.set_lying_angle(90)
-			M.add_offsets(GRABBING_TRAIT, x_add = offset, y_add = 0, animate = animate)
+			if(mob_to_set.lying_angle == LYING_ANGLE_WEST) //update the dragged dude's direction if we've turned
+				mob_to_set.set_lying_angle(LYING_ANGLE_EAST)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = offset, y_add = 0, animate = animate)
 		if(WEST)
-			if(M.lying_angle == 90)
-				M.set_lying_angle(270)
-			M.add_offsets(GRABBING_TRAIT, x_add = -offset, y_add = 0, animate = animate)
+			if(mob_to_set.lying_angle == LYING_ANGLE_EAST)
+				mob_to_set.set_lying_angle(LYING_ANGLE_WEST)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = -offset, y_add = 0, animate = animate)
 
 /**
  * Removes any offsets from the passed mob that are related to being grabbed
