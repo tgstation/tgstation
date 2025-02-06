@@ -107,7 +107,7 @@
 /// The "hand" "weapon" used by shattered risen
 /obj/item/mutant_hand/shattered_risen
 	name = "bone-shards"
-	desc = "What once appeared to be a normal human fist, now holds a maulled nest of sharp bone-shards."
+	desc = "What once appeared to be a normal human fist, now holds a mauled nest of sharp bone-shards."
 	color = "#001aff"
 	hitsound = SFX_SHATTER
 	force = 16

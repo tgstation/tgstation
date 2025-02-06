@@ -94,13 +94,18 @@
 			)
 		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
 			continue
+
+		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.get_cost(),
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = P.goody,
-			"access" = P.access
+			"access" = P.access,
+			"contains" = P.get_contents_ui_data(),
 		))
 
 	//Data regarding the User's capability to buy things.

@@ -325,7 +325,7 @@
 
 /obj/item/toy/balloon_animal/ai
 	name = "balloon ai core"
-	desc = "A somewhat unrealistic balloon effigy of the station's AI core. Actual AI propably wouldn't smile like this."
+	desc = "A somewhat unrealistic balloon effigy of the station's AI core. Actual AI probably wouldn't smile like this."
 	icon_state = "balloon_ai"
 
 /obj/item/toy/balloon_animal/dog
@@ -355,7 +355,7 @@
 
 /obj/item/toy/balloon_animal/moth
 	name = "balloon moth"
-	desc = "A balloon effigy of a common member of moth flotillas. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-dissapearing' acts."
+	desc = "A balloon effigy of a common member of moth flotillas. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-disappearing' acts."
 	icon_state = "balloon_moth"
 
 /obj/item/toy/balloon_animal/ethereal
@@ -542,7 +542,7 @@
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
-	desc = "Make sure to recyle the box in an autolathe when it gets empty."
+	desc = "Make sure to recycle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
@@ -1484,7 +1484,7 @@
  */
 /obj/item/toy/eldritch_book
 	name = "Codex Cicatrix"
-	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
+	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge googly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
 	icon = 'icons/obj/antags/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
@@ -1598,7 +1598,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento
 	name = "\improper Intento"
-	desc = "Fundamentally useless for all intentsive purposes."
+	desc = "Fundamentally useless for all intents and purposes."
 	icon = 'icons/obj/toys/intents.dmi'
 	icon_state = "blank"
 	custom_price = PAYCHECK_COMMAND * 1.25

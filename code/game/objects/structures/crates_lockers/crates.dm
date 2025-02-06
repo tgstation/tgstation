@@ -351,7 +351,7 @@
 
 /obj/structure/closet/crate/robust
 	name = "robust industries crate"
-	desc = "Robust Inustries LLC. crate. Feels oddly nostalgic."
+	desc = "Robust Industries LLC. crate. Feels oddly nostalgic."
 	icon_state = "robust"
 	base_icon_state = "robust"
 
