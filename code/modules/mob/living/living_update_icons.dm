@@ -158,13 +158,12 @@
  */
 /mob/living/proc/has_offset(source, pixel)
 	if(isnull(pixel))
-		if(!length(offsets))
-			return FALSE
-		return offsets[PIXEL_W_OFFSET]?[source] \
-			|| offsets[PIXEL_X_OFFSET]?[source] \
-			|| offsets[PIXEL_Y_OFFSET]?[source] \
-			|| offsets[PIXEL_Z_OFFSET]?[source] \
-			|| 0
+		for(var/pixel in offsets)
+			var/pixel_source = has_offset(source, pixel)
+			if(pixel_source)
+				return pixel_source
+
+		return 0
 
 	return offsets?[pixel]?[source] || 0
 
