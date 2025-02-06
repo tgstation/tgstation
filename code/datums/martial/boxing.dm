@@ -111,7 +111,7 @@
 		if(istype(potential_spine))
 			strength_bonus *= potential_spine.strength_bonus
 
-		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus)
+		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus, 1)
 		grant_experience = TRUE
 
 	var/current_atk_verb = atk_verb
@@ -346,16 +346,17 @@
 		human_attacker.say("[first_word_pick][second_word_pick]!!!", forced = "hunter boxing enthusiastic battlecry")
 	defender.apply_status_effect(/datum/status_effect/rebuked)
 	defender.apply_damage(damage * 2, default_damage_type, BODY_ZONE_CHEST, armor_block) //deals double our damage AGAIN
-	attacker.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood, 3) //Get a little healing in return for a successful crit
+
+	var/healing_factor = round(damage/3, 1)
+	attacker.heal_overall_damage(healing_factor, healing_factor, healing_factor)
 	log_combat(attacker, defender, "hunter crit punched (boxing)")
 
-// Our hunter boxer speeds up their attacks when completing a combo against a valid target, and does a sizable amount of extra damage.
+// Our hunter boxer does a sizable amount of extra damage on a successful combo or block
 
 /datum/martial_art/boxing/hunter/perform_extra_effect(mob/living/attacker, mob/living/defender)
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
 		return // Does not apply to humans (who aren't megafauna)
 
-	attacker.changeNext_move(CLICK_CD_RAPID)
 	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
 
 #undef LEFT_RIGHT_COMBO
