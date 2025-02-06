@@ -46,7 +46,7 @@
 			"Hard Crit" = HARD_CRIT,
 			"Dead (will probably get stuck punching a corpse forever)" = DEAD,
 		)
-		var/selected_stat = tgui_input_list(user, "Attack targets at the maximum health level of...?", "Persistence Level", stat_types, "Conscious")
+		var/selected_stat = tgui_input_list(user, "Attack targets at the maximum health level of...?", "Persistence Level", stat_types, "Soft Crit")
 		if (isnull(selected_stat))
 			return FALSE
 		minimum_stat = stat_types[selected_stat]
@@ -327,14 +327,14 @@
 /// Coward
 /datum/admin_ai_template/fearful
 	name = "Runs Away"
-	minimum_stat = SOFT_CRIT
+	minimum_stat = CONSCIOUS
 	make_hostile = FALSE
 	controller_type = /datum/ai_controller/basic_controller/simple/simple_fearful
 
 /// Doesn't like violence
 /datum/admin_ai_template/skittish
 	name = "Runs Away From Attackers"
-	minimum_stat = SOFT_CRIT
+	minimum_stat = CONSCIOUS
 	make_hostile = FALSE
 	controller_type = /datum/ai_controller/basic_controller/simple/simple_skittish
 
