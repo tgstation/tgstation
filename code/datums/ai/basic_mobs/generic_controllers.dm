@@ -30,6 +30,13 @@
 		/datum/ai_planning_subtree/ranged_skirmish,
 	)
 
+/datum/ai_controller/basic_controller/simple/simple_ranged_retaliate
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/maintain_distance,
+		/datum/ai_planning_subtree/ranged_skirmish,
+	)
+
 /// Find a target, walk towards it AND shoot it
 /datum/ai_controller/basic_controller/simple/simple_skirmisher
 	planning_subtrees = list(
@@ -43,6 +50,13 @@
 /datum/ai_controller/basic_controller/simple/simple_ability
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/maintain_distance,
+		/datum/ai_planning_subtree/targeted_mob_ability,
+	)
+
+/datum/ai_controller/basic_controller/simple/simple_ability_retaliate
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/targeted_mob_ability,
 	)

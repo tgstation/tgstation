@@ -281,11 +281,33 @@
 
 /// Chill unless you throw hands
 /datum/admin_ai_template/retaliate
-	name = "Passive But Fights Back"
+	name = "Passive But Fights Back (Melee)"
 	controller_type = /datum/ai_controller/basic_controller/simple/simple_retaliate
 	make_hostile = FALSE
 
 /datum/admin_ai_template/retaliate/apply_controller(mob/living/target, client/user)
+	. = ..()
+	if (!HAS_TRAIT_FROM(target, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, /datum/element/ai_retaliate)) // Not really what this is for but it should work
+		target.AddElement(/datum/element/ai_retaliate)
+
+/// Shoots anyone who attacks them
+/datum/admin_ai_template/hostile_ranged/ability/retaliate
+	name = "Passive But Fights Back (Ranged Attacks)"
+	controller_type = /datum/ai_controller/basic_controller/simple/simple_ranged_retaliate
+	make_hostile = FALSE
+
+/datum/admin_ai_template/hostile_ranged/ability/retaliate/apply_controller(mob/living/target, client/user)
+	. = ..()
+	if (!HAS_TRAIT_FROM(target, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, /datum/element/ai_retaliate)) // Not really what this is for but it should work
+		target.AddElement(/datum/element/ai_retaliate)
+
+/// Uses their signature move on anyone who attacks them
+/datum/admin_ai_template/ability/retaliate
+	name = "Passive But Fights Back (Ability)"
+	controller_type = /datum/ai_controller/basic_controller/simple/simple_ability_retaliate
+	make_hostile = FALSE
+
+/datum/admin_ai_template/ability/retaliate/apply_controller(mob/living/target, client/user)
 	. = ..()
 	if (!HAS_TRAIT_FROM(target, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, /datum/element/ai_retaliate)) // Not really what this is for but it should work
 		target.AddElement(/datum/element/ai_retaliate)
