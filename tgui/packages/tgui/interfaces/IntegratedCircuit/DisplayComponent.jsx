@@ -40,6 +40,7 @@ export class DisplayComponent extends Component {
 
   render() {
     const { component, fixedSize, ...rest } = this.props;
+    const cat_or_unassigned = component.category || 'Unassigned';
     return (
       <Box {...rest}>
         <div ref={this.ref}>
@@ -48,7 +49,7 @@ export class DisplayComponent extends Component {
             px={1}
             className={classes([
               'ObjectComponent__Titlebar',
-              `ObjectComponent__Category__${component.category || 'Unassigned'}`,
+              `ObjectComponent__Category__${cat_or_unassigned}`,
             ])}
           >
             <Stack>
@@ -60,7 +61,7 @@ export class DisplayComponent extends Component {
                   <Stack.Item key={icon}>
                     <Button
                       icon={icon}
-                      className={`ObjectComponent__Category__${component.category || 'Unassigned'}`}
+                      className={`ObjectComponent__Category__${cat_or_unassigned}`}
                       compact
                       tooltip={component.ui_alerts[icon]}
                     />
@@ -70,7 +71,7 @@ export class DisplayComponent extends Component {
                 <Button
                   icon="info"
                   compact
-                  className={`ObjectComponent__Category__${component.category || 'Unassigned'}`}
+                  className={`ObjectComponent__Category__${cat_or_unassigned}`}
                   tooltip={component.description}
                   tooltipPosition="top"
                 />

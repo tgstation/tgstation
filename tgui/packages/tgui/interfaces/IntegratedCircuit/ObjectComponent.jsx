@@ -95,7 +95,7 @@ export class ObjectComponent extends Component {
       x,
       y,
       index,
-      category = 'Uncategorized',
+      category = 'Unassigned',
       removable,
       ui_alerts,
       ui_buttons,
