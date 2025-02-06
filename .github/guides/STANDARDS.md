@@ -28,7 +28,7 @@ You can avoid hacky code by using object-oriented methodologies, such as overrid
 	* Input stalling is a very common exploit / bug that involves opening an input window when in a valid state, and triggering the input after exiting the valid state. These can be very serious, and allow players to teleport across the map or remove someone's brain at any given moment. If you check the player must be in a specific context before an input, you should generally check that they are still in the context AFTER the input resolves.
 		* For example, if you have an item which can be used (in hand) by a player to make it explode, but you want them to confirm (via prompt) that they want it to explode, you should check that the item is still in the player's hands after confirming. Otherwise, they could drop it and explode it at any moment they want.
 	* Another less common exploit involves allowing a player to open multiple of an input at once. This may allow the player to stack effects, such as triggering 10 explosions when only 1 should be allowed. While a lot of code is generally built in a way making this infeasible (usually due to runtime errors), it is noteworthy regardless.
-		* You should also consider if it would make sense to apply an timeout to your input, to prevent players from opening your input and keeping it on their screen until convenient.
+		* You should also consider if it would make sense to apply a timeout to your input, to prevent players from opening it and keeping it on their screen until convenient.
 
 * Calls to the database must be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
 
