@@ -141,7 +141,7 @@
 	new_player.dna.update_dna_identity()
 	new_player.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	new_player.add_traits(list(TRAIT_CANNOT_CRYSTALIZE, TRAIT_PERMANENTLY_MORTAL, TRAIT_TEMPORARY_BODY), INNATE_TRAIT)
-	if(!isnull(observer.mind) && observer.mind?.current)
+	if(observer.mind)
 		new_player.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = observer.mind, \

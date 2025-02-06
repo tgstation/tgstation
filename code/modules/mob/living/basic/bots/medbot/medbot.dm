@@ -369,12 +369,14 @@
 /mob/living/basic/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
+	skin = "bezerk"
 	damage_type_healer = HEAL_ALL_DAMAGE
 	heal_amount = 10
 
 /mob/living/basic/bot/medbot/derelict
 	name = "\improper Old Medibot"
 	desc = "Looks like it hasn't been modified since the late 2080s."
+	skin = "bezerk"
 	damage_type_healer = HEAL_ALL_DAMAGE
 	medical_mode_flags = MEDBOT_SPEAK_MODE
 	heal_threshold = 0
@@ -385,6 +387,7 @@
 	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
 	health = 40
 	maxHealth = 40
+	skin = "bezerk"
 	req_one_access = list(ACCESS_SYNDICATE)
 	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED
 	radio_key = /obj/item/encryptionkey/syndicate

@@ -273,6 +273,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		fisherman.balloon_alert(fisherman, "caught something!")
 		return
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+	if (isfish(reward))
+		ADD_TRAIT(reward, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
 
 	return reward
 
