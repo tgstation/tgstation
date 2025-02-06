@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - server: "An issue where more than 16 admin flags could not exist in the DB has been corrected"
