@@ -158,8 +158,8 @@
  */
 /mob/living/proc/has_offset(source, pixel)
 	if(isnull(pixel))
-		for(var/pixel in offsets)
-			var/pixel_source = has_offset(source, pixel)
+		for(var/found_pixel in offsets)
+			var/pixel_source = has_offset(source, found_pixel)
 			if(pixel_source)
 				return pixel_source
 
