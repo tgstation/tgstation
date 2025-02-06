@@ -375,7 +375,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		valid_achievement_catch = TRUE
 	else if (isfish(reward_path))
 		var/obj/item/fish/fishy_individual = reward_path
-		if (!HAS_TRAIT(fishy_individual, TRAIT_NO_FISHING_ACHIEVEMENT) || fishy_individual.status == FISH_DEAD)
+		if (!HAS_TRAIT(fishy_individual, TRAIT_NO_FISHING_ACHIEVEMENT) && fishy_individual.status == FISH_ALIVE)
 			valid_achievement_catch = TRUE
 
 	if(valid_achievement_catch)
