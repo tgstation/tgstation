@@ -40,12 +40,13 @@
 
 	if (isnull(minimum_stat))
 		var/static/list/stat_types = list(
-			"Badly Wounded" = SOFT_CRIT,
+			"Conscious" = CONSCIOUS,
+			"Soft Crit" = SOFT_CRIT,
 			"Unconscious" = UNCONSCIOUS,
-			"Critically Wounded" = HARD_CRIT,
-			"Dead" = DEAD,
+			"Hard Crit" = HARD_CRIT,
+			"Dead (will probably get stuck punching a corpse forever)" = DEAD,
 		)
-		var/selected_stat = tgui_input_list(user, "Stop attacking targets when they become...?", "Persistence Level", stat_types, "Badly Wounded")
+		var/selected_stat = tgui_input_list(user, "Attack targets at the maximum health level of...?", "Persistence Level", stat_types, "Conscious")
 		if (isnull(selected_stat))
 			return FALSE
 		minimum_stat = stat_types[selected_stat]
