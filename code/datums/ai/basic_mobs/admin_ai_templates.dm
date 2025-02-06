@@ -338,6 +338,11 @@
 	make_hostile = FALSE
 	controller_type = /datum/ai_controller/basic_controller/simple/simple_skittish
 
+/datum/admin_ai_template/skittish/apply_controller(mob/living/target, client/user)
+	. = ..()
+	if (!HAS_TRAIT_FROM(target, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, /datum/element/ai_retaliate)) // Not really what this is for but it should work
+		target.AddElement(/datum/element/ai_retaliate)
+
 /// You gottit boss
 /datum/admin_ai_template/goon
 	name = "Obeys Commands"
