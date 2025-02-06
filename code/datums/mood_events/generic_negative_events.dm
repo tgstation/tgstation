@@ -491,7 +491,7 @@
 
 //Used by the Veteran Advisor trait job
 /datum/mood_event/desentized
-	description = "Nothing will ever rival with what I seen in the past..."
+	description = "Nothing will ever rival what I've seen in the past..."
 	mood_change = -3
 	special_screen_obj = "mood_desentized"
 

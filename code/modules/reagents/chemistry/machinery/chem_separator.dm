@@ -115,7 +115,7 @@
 	if(burner_on)
 		. += span_notice("Off burner with [EXAMINE_HINT("ALT LMB")].")
 	else
-		. += span_notice("You can start a flame with an combustible device.")
+		. += span_notice("You can start a flame with a combustible device.")
 
 	if(condenser_installed)
 		. += span_notice("The in-built condenser can facilitate faster cooling but consumes fuel.")

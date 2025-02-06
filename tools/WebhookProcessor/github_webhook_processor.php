@@ -200,97 +200,6 @@ function get_labels($payload){
 	return $existing;
 }
 
-function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_label_to){
-	$title = $payload['pull_request']['title'];
-	if(stripos($title, $title_tag) !== FALSE){
-		$array_to_add_label_to[] = $label;
-		return true;
-	}
-	return false;
-}
-
-function set_labels($payload, $labels, $remove) {
-	global $repoAutoTaggerWhitelist;
-	if(!in_array($payload['repository']['name'], $repoAutoTaggerWhitelist)) {
-		return;
-	}
-
-	$existing = get_labels($payload);
-	$tags = array();
-
-	$tags = array_merge($labels, $existing);
-	$tags = array_unique($tags);
-	if($remove) {
-		$tags = array_diff($tags, $remove);
-	}
-
-	$final = array();
-	foreach($tags as $t)
-		$final[] = $t;
-
-	$url = $payload['pull_request']['issue_url'] . '/labels';
-	echo github_apisend($url, 'PUT', $final);
-}
-
-//rip bs-12
-function tag_pr($payload, $opened) {
-	//get the mergeable state
-	$url = $payload['pull_request']['url'];
-	$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
-	if (isset($new_pull_request_payload['id']))
-		$payload['pull_request'] = $new_pull_request_payload;
-	if($payload['pull_request']['mergeable'] == null) {
-		//STILL not ready. Give it a bit, then try one more time
-		sleep(10);
-		$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
-		if (isset($new_pull_request_payload['id']))
-			$payload['pull_request'] = $new_pull_request_payload;
-	}
-
-	$tags = array();
-	$title = $payload['pull_request']['title'];
-	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
-		$tags = checkchangelog($payload);
-
-		if(strpos(strtolower($title), 'logs') !== FALSE || strpos(strtolower($title), 'logging') !== FALSE)
-			$tags[] = 'Logging';
-		if(strpos(strtolower($title), 'refactor') !== FALSE)
-			$tags[] = 'Refactor';
-		if(strpos(strtolower($title), 'revert') !== FALSE)
-			$tags[] = 'Revert';
-		if(strpos(strtolower($title), 'removes') !== FALSE)
-			$tags[] = 'Removal';
-		if(strpos(strtolower($title), 'unit test') !== FALSE)
-			$tags[] = 'Unit Tests';
-	}
-
-	$remove = array('Test Merge Candidate');
-
-	$mergeable = $payload['pull_request']['mergeable'];
-	if($mergeable === TRUE)	//only look for the false value
-		$remove[] = 'Merge Conflict';
-	else if ($mergeable === FALSE)
-		$tags[] = 'Merge Conflict';
-
-	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', '.github' => 'GitHub');
-	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
-	foreach($treetags as $tree => $tag)
-		if(has_tree_been_edited($payload, $tree))
-			$tags[] = $tag;
-		else
-			$remove[] = $tag;
-	foreach($addonlytags as $tree => $tag)
-		if(has_tree_been_edited($payload, $tree))
-			$tags[] = $tag;
-
-	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	check_tag_and_replace($payload, '[no gbp]', 'GBP: No Update', $tags);
-	check_tag_and_replace($payload, '[april fools]', 'April Fools', $tags);
-	check_tag_and_replace($payload, '[tm only]', 'Test Merge Only', $tags);
-
-	return array($tags, $remove);
-}
-
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
@@ -357,16 +266,12 @@ function handle_pr($payload) {
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
-			list($labels, $remove) = tag_pr($payload, true);
-			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
 			break;
 		case 'edited':
 			check_dismiss_changelog_review($payload);
 		case 'synchronize':
-			list($labels, $remove) = tag_pr($payload, false);
-			set_labels($payload, $labels, $remove);
 			return;
 		case 'reopened':
 			$action = $payload['action'];
@@ -579,16 +484,6 @@ function discord_sanitize($text, $flags = S_MENTIONS|S_LINK_EMBED|S_MARKDOWN) {
 //creates a comment on the payload issue
 function create_comment($payload, $comment){
 	github_apisend($payload['pull_request']['comments_url'], 'POST', json_encode(array('body' => $comment)));
-}
-
-//returns the payload issue's labels as a flat array
-function get_pr_labels_array($payload){
-	$url = $payload['pull_request']['issue_url'] . '/labels';
-	$issue = json_decode(github_apisend($url), true);
-	$result = array();
-	foreach($issue as $l)
-		$result[] = $l['name'];
-	return $result;
 }
 
 function is_maintainer($payload, $author){

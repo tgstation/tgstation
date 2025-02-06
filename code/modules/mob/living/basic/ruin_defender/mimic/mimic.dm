@@ -251,8 +251,8 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/overlay_googly_eyes = TRUE
 	/// do we take damage when we are not sentient and have no target
 	var/idledamage = TRUE
-	/// copied object
-	var/atom/movable/copied
+	/// copied object weakref
+	var/datum/weakref/copied_ref
 
 /mob/living/basic/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = FALSE, no_googlies = FALSE)
 	. = ..()
@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/Destroy()
 	creator_ref = null
-	copied = null
+	copied_ref = null
 	return ..()
 
 /mob/living/basic/mimic/copy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
@@ -287,6 +287,10 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/Exited(atom/movable/gone, direction) // if our object gets deleted it calls Exited
 	. = ..()
+	var/atom/movable/copied = copied_ref?.resolve()
+	if(!copied)
+		copied_ref = null
+		return
 	if(QDELETED(src) || gone != copied)
 		return
 	death()
@@ -306,11 +310,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return ((isitem(target) || isstructure(target)) && !is_type_in_typecache(target, GLOB.animatable_blacklist))
 
 /mob/living/basic/mimic/copy/proc/CopyObject(obj/original, mob/living/user, destroy_original = FALSE)
-	if(!destroy_original && !check_object(original))
+	if(QDELETED(original) || !destroy_original && !check_object(original))
 		return FALSE
 	if(!destroy_original)
 		original.forceMove(src)
-	copied = original
+	copied_ref = WEAKREF(original)
 	CopyObjectVisuals(original)
 	if (overlay_googly_eyes)
 		add_overlay(googly_eyes)

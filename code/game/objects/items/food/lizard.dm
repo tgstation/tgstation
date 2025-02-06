@@ -496,7 +496,7 @@
 
 /obj/item/food/bread/root
 	name = "rootbread"
-	desc = "The lizard equivalent to bread, made from tubers like potatoes and yams mixed with ground nuts and seeds. Noticably denser than regular bread."
+	desc = "The lizard equivalent to bread, made from tubers like potatoes and yams mixed with ground nuts and seeds. Noticeably denser than regular bread."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_bread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
@@ -967,7 +967,7 @@
 
 /obj/item/food/burger/sloppyroot
 	name = "sssloppy moe"
-	desc = "Ground meat mixed with onions and barbeque sssauce, sssloppily plopped onto a rootroll. Delicious, but guaranteed to get your hands dirty."
+	desc = "Ground meat mixed with onions and barbecue sssauce, sssloppily plopped onto a rootroll. Delicious, but guaranteed to get your hands dirty."
 	icon_state = "sloppyroot"
 	icon = 'icons/obj/food/lizard.dmi'
 	food_reagents = list(

@@ -919,14 +919,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!to_remove)
 			return TRUE
 
-		remove_single(to_show, to_remove)
-		INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
-		if(!silent)
-			to_show.visible_message(
-				span_warning("[to_show] draws [to_remove] from [parent]!"),
-				span_notice("You draw [to_remove] from [parent]."),
-			)
-		return TRUE
+		if (remove_single(to_show, to_remove))
+			INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
+			if(!silent)
+				to_show.visible_message(
+					span_warning("[to_show] draws [to_remove] from [parent]!"),
+					span_notice("You draw [to_remove] from [parent]."),
+				)
+			return TRUE
 
 	// If nothing else, then we want to open the thing, so do that
 	if(!show_contents(to_show))

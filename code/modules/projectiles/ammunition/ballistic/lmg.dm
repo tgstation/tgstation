@@ -19,7 +19,7 @@
 
 /obj/item/ammo_casing/m7mm/incen
 	name = "7mm incendiary bullet casing"
-	desc = "A 7mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames."
+	desc = "A 7mm bullet casing designed with a chemical-filled capsule on the tip that when burst, reacts with the atmosphere to produce a fireball, engulfing the target in flames."
 	projectile_type = /obj/projectile/bullet/incendiary/a7mm
 
 /obj/item/ammo_casing/m7mm/match

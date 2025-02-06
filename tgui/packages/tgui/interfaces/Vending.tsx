@@ -12,6 +12,7 @@ import { capitalizeAll, createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
 type VendingData = {
   all_products_free: boolean;
@@ -209,7 +210,7 @@ const ProductDisplay = (props: {
     displayed_currency_icon,
     displayed_currency_name,
   } = data;
-  const [toggleLayout, setToggleLayout] = useState(true);
+  const [toggleLayout, setToggleLayout] = useState(getLayoutState(LAYOUT.Grid));
 
   return (
     <Section
@@ -221,7 +222,7 @@ const ProductDisplay = (props: {
           {!all_products_free && user && (
             <Stack.Item fontSize="16px" color="green">
               {(user && user.cash) || 0}
-              {displayed_currency_name}{' '}
+              {displayed_currency_name}
               <Icon name={displayed_currency_icon} color="gold" />
             </Stack.Item>
           )}
@@ -232,14 +233,7 @@ const ProductDisplay = (props: {
               value={stockSearch}
             />
           </Stack.Item>
-          <Stack.Item>
-            <Button
-              icon={toggleLayout ? 'border-all' : 'list'}
-              tooltip={toggleLayout ? 'View as Grid' : 'View as List'}
-              tooltipPosition={'bottom-end'}
-              onClick={() => setToggleLayout(!toggleLayout)}
-            />
-          </Stack.Item>
+          <LayoutToggle state={toggleLayout} setState={setToggleLayout} />
         </Stack>
       }
     >
@@ -254,7 +248,7 @@ const ProductDisplay = (props: {
         .map((product) => (
           <Product
             key={product.path}
-            fluid={toggleLayout}
+            fluid={toggleLayout === LAYOUT.List}
             custom={custom}
             product={product}
             productStock={stock[product.path]}
@@ -304,6 +298,7 @@ const Product = (props) => {
           })
         : act('vend', {
             ref: product.ref,
+            discountless: !!product.premium,
           });
     },
   };

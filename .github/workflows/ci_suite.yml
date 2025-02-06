@@ -197,31 +197,20 @@ jobs:
     name: Integration Tests
     needs: collect_data
 
-    strategy:
-      fail-fast: false
-      matrix:
-        map: ${{ fromJSON(needs.collect_data.outputs.maps).paths }}
-
-    uses: ./.github/workflows/run_integration_tests.yml
+    uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
-      map: ${{ matrix.map }}
+      maps: ${{ needs.collect_data.outputs.maps }}
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   run_alternate_tests:
     if: needs.collect_data.outputs.alternate_tests != '[]'
     name: Alternate Tests
     needs: collect_data
-    strategy:
-      fail-fast: false
-      matrix:
-        setup: ${{ fromJSON(needs.collect_data.outputs.alternate_tests) }}
 
-    uses: ./.github/workflows/run_integration_tests.yml
+    uses: ./.github/workflows/perform_alternate_version_tests.yml
     with:
-      map: ${{ matrix.setup.map }}
-      major: ${{ matrix.setup.major }}
-      minor: ${{ matrix.setup.minor }}
-      max_required_byond_client: ${{ matrix.setup.max_client_version || needs.collect_data.outputs.max_required_byond_client }}
+      alternate_tests: ${{ needs.collect_data.outputs.alternate_tests }}
+      default_max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
   compare_screenshots:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'

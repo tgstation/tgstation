@@ -195,7 +195,7 @@
 /mob/living/basic/spider/growing/young/breacher
 	grow_as = /mob/living/basic/spider/giant/breacher
 	name = "young breacher spider"
-	desc = "Furry and baige, it looks defenseless. This one has dim red eyes."
+	desc = "Furry and beige, it looks defenseless. This one has dim red eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_breacher"
 	icon_dead = "young_breacher_dead"
