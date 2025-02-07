@@ -496,6 +496,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		preference.apply_to_human(character, read_preference(preference.type))
 
+		if(preference.relevant_external_organ)
+			var/obj/item/organ/organ_type = preference.relevant_external_organ
+			var/obj/item/bodypart/bodypart = character.get_bodypart(check_zone(organ_type::zone))
+			if(!bodypart)
+				continue
+			var/datum/bodypart_overlay/mutant/mutant_overlay = (locate(organ_type::bodypart_overlay) in bodypart.bodypart_overlays)
+			if(!mutant_overlay)
+				continue
+			mutant_overlay?.set_appearance_from_name(read_preference(preference.type))
+
 	character.dna.real_name = character.real_name
 
 	if(icon_updates)
