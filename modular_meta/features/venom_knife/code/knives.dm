@@ -3,8 +3,8 @@
 	icon = 'modular_meta/features/venom_knife/icons/stabby.dmi'
 	icon_state = "buckknife"
 	worn_icon_state = "buckknife"
-	force = 14 // Если оставить 12 то урон будт как у тулбокса, пусть он будет чу-чуть сильнее.
-	throwforce = 15
+	force = 18
+	throwforce = 18
 	throw_speed = 5
 	throw_range = 7
 	var/amount_per_transfer_from_this = 10
