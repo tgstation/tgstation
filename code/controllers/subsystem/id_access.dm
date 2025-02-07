@@ -452,7 +452,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.big_pointer = trim.big_pointer
 	id_card.pointer_color = trim.pointer_color
 
-	if (!check_forged || !id_card.forged)
+	if (istype(id_card) && (!check_forged || !id_card.forged))
 		id_card.assignment = trim.assignment
 
 	if (ishuman(id_card.loc))
