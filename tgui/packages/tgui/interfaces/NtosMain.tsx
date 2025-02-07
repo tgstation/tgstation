@@ -55,9 +55,7 @@ export const NtosMain = (props) => {
                   />
                 </Stack.Item>
               ))}
-              <Stack.Item
-                right = "0px"
-              >
+              <Stack.Item right={0}>
                 <Button
                   inline
                   bold
