@@ -122,6 +122,14 @@
 	toggle()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/clothing/under/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	toggle()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/clothing/under/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	. = ..()
 	if(damaged_state == CLOTHING_SHREDDED && has_sensor > NO_SENSORS)
