@@ -200,7 +200,7 @@
 /// TOOD: Remove this entirely when 516 is stable
 /datum/plane_master_group/popup/attach_to(datum/hud/viewing_hud)
 	if(viewing_hud.master_groups[key])
-		stack_trace("Hey brother, our key [key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob]. Ya fucked up, why are there dupes")
+		stack_trace("[key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob]!")
 		return
 	relay_loc = "1,1"
 	rebuild_plane_masters()
