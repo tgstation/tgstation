@@ -35,7 +35,7 @@
 /obj/item/knife/poison/afterattack(mob/living/enemy, mob/user)
 	location = get_turf(src)
 	if(istype(enemy)) // ну типо рантаймамы срёт когда херачишь по объектам
-		if(enemy.can_inject() && prob(50)) // Проверяет на хардсуиты, модсуиты или еву, я бы ещё сделал чтобы он блокировался сековской бронёй, но увы такими знаниями не обладаю.
+		if(enemy.can_inject() && prob(65)) // Проверяет на хардсуиты, модсуиты или еву, я бы ещё сделал чтобы он блокировался сековской бронёй, но увы такими знаниями не обладаю.
 			reagents.trans_to(enemy, amount_per_transfer_from_this)
 		else
 			to_chat(usr, span_warning("[enemy]'s armor is too thick to penetrate."))
@@ -59,7 +59,7 @@
 /obj/item/knife/poison/examine(mob/user)
 	. = ..()
 	. += span_notice("Use in-hand to to increase or decrease its transfer amount. \
-	Each hit has a 50% chance to transfer reagents from knife's internal storage to your victim, \
+	Each hit has a 65% chance to transfer reagents from knife's internal storage to your victim, \
 	however spaceproof armor, like a MOD-suit will prevent reagent transfer.")
 	. += span_warning("Warning! Adding initropidril will cause the knife to malfunction and cause serious trouble to the user")
 
