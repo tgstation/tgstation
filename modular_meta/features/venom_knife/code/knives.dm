@@ -3,7 +3,7 @@
 	icon = 'modular_meta/features/venom_knife/icons/stabby.dmi'
 	icon_state = "buckknife"
 	worn_icon_state = "buckknife"
-	force = 13 // Если оставить 12 то урон будт как у тулбокса, пусть он будет чу-чуть сильнее.
+	force = 14 // Если оставить 12 то урон будт как у тулбокса, пусть он будет чу-чуть сильнее.
 	throwforce = 15
 	throw_speed = 5
 	throw_range = 7
@@ -36,17 +36,16 @@
 
 /obj/item/knife/poison/afterattack(mob/living/enemy, mob/user)
 	location = get_turf(src)
-	if(istype(enemy))
+	if(istype(enemy)) // ну типо рантаймамы срёт когда херачишь по объектам
+		if(enemy.can_inject() && prob(50)) // Проверяет на хардсуиты, модсуиты или еву, я бы ещё сделал чтобы он блокировался сековской бронёй, но увы такими знаниями не обладаю.
+			reagents.trans_to(enemy, amount_per_transfer_from_this)
+		else
+			to_chat(usr, span_warning("[enemy]'s armor is too thick to penetrate."))
 		if(reagents.has_reagent(/datum/reagent/toxin/initropidril))
 			to_chat(usr, span_warning("The knife violently explodes in your hand!"))
 			user.visible_message(span_warning("[user]'s knife violently explodes in their hand!"), ignored_mobs = user)
 			explosion(location, 0, 0, 1, 1, 0) // Придумайте лучше способ наказывать людей не умеющих читать маленький красный текст, такой взрыв к слову оторвёт руку в 100% случаев, но не введёт в крит при полном здоровье.
 			qdel(src)
-
-			if(enemy.can_inject() && prob(50)) // Проверяет на хардсуиты, модсуиты или еву, я бы ещё сделал чтобы он блокировался сековской бронёй, но увы такими знаниями не обладаю.
-				reagents.trans_to(enemy, amount_per_transfer_from_this)
-			else
-				to_chat(usr, span_warning("[enemy]'s armor is too thick to penetrate."))
 	return
 
 /obj/item/knife/poison/click_alt(mob/user)
