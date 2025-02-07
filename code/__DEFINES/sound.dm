@@ -248,6 +248,11 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_MALE_SIGH "male_sigh"
 #define SFX_FEMALE_SIGH "female_sigh"
 #define SFX_WRITING_PEN "writing_pen"
+#define SFX_CLOWN_CAR_LOAD "clown_car_load"
+#define SFX_SEATBELT_BUCKLE "buckle"
+#define SFX_SEATBELT_UNBUCKLE "unbuckle"
+#define SFX_HEADSET_EQUIP "headset_equip"
+#define SFX_HEADSET_PICKUP "headset_pickup"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000

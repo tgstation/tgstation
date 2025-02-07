@@ -968,7 +968,7 @@
 			REMOVE_TRAIT(src, TRAIT_UNCOMPOSTABLE, INNATE_TRAIT)
 			stop_flopping()
 			if(!silent)
-				var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
+				var/message = span_warning(replacetext(death_text, "%SRC", "[src]"))
 				if(loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 					loc.visible_message(message)
 				else
@@ -1456,9 +1456,9 @@
 
 /obj/item/fish/attack_self(mob/living/user)
 	. = ..()
-	pet_fish(user)
+	try_pet_fish(user)
 
-/obj/item/fish/proc/pet_fish(mob/living/user)
+/obj/item/fish/proc/try_pet_fish(mob/living/user)
 	var/in_aquarium = loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 	if(status == FISH_DEAD)
 		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] motionless!"))
@@ -1466,6 +1466,10 @@
 	if(!proper_environment())
 		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] not feeling well!"))
 		return FALSE
+
+	return pet_fish(user, in_aquarium)
+
+/obj/item/fish/proc/pet_fish(mob/living/user, in_aquarium)
 	if(fish_flags & FISH_FLAG_PETTED)
 		if(in_aquarium)
 			to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
@@ -1477,7 +1481,7 @@
 	fish_flags |= FISH_FLAG_PETTED
 	new /obj/effect/temp_visual/heart(get_turf(src))
 	if((/datum/fish_trait/predator in fish_traits) && prob(50))
-		if(!in_aquarium)
+		if(in_aquarium)
 			user.visible_message(
 				span_warning("[src] dances around before biting [user]!"),
 				span_warning("[src] dances around before biting you!"),

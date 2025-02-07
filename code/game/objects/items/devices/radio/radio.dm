@@ -528,7 +528,7 @@
 /obj/item/radio/examine(mob/user)
 	. = ..()
 	if (frequency && in_range(src, user))
-		. += span_notice("It is set to broadcast over the [frequency/10] frequency.")
+		. += span_notice("It is set to broadcast over the [span_radio("[frequency/10]")] frequency.")
 	if (unscrewed)
 		. += span_notice("It can be attached and modified.")
 	else
@@ -690,7 +690,7 @@
 
 /obj/item/radio/entertainment/speakers/physical // Can be used as a physical item
 	name = "entertainment radio"
-	desc = "A portable one-way radio permamently tuned into entertainment frequency."
+	desc = "A portable one-way radio permanently tuned into entertainment frequency."
 	icon_state = "radio"
 	inhand_icon_state = "radio"
 	worn_icon_state = "radio"

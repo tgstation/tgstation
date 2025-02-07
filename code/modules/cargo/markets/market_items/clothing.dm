@@ -72,7 +72,7 @@
 
 /datum/market_item/clothing/rocket_boots
 	name = "Rocket Boots"
-	desc = "We found a pair of jump boots and overclocked the hell out of them. No liability for grevious harm to or with a body."
+	desc = "We found a pair of jump boots and overclocked the hell out of them. No liability for grievous harm to or with a body."
 	item = /obj/item/clothing/shoes/bhop/rocket
 
 	price_min = CARGO_CRATE_VALUE * 5

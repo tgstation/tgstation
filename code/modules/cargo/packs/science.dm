@@ -61,7 +61,7 @@
 
 /datum/supply_pack/science/raw_ectoplasm_anomaly
 	name = "Raw Ectoplasm Anomaly"
-	desc = "Contains the raw core of a ectoplasm anomaly, ready to be implosion-compressed into a powerful artifact."
+	desc = "Contains the raw core of an ectoplasm anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE

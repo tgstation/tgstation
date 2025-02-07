@@ -614,18 +614,20 @@
 	// We want to turn only base drinking glasses with screwdriver(cocktail) into screwdrivers(tool),
 	// but we can't check style so we have to check type, and we don't want it match subtypes like istype does
 	if(holder?.my_atom && holder.my_atom.type == /obj/item/reagent_containers/cup/glass/drinkingglass/)
-		var/list/reagent_change_signals = list(
-			COMSIG_REAGENTS_ADD_REAGENT,
-			COMSIG_REAGENTS_NEW_REAGENT,
-			COMSIG_REAGENTS_REM_REAGENT,
-		)
-		RegisterSignals(holder, reagent_change_signals, PROC_REF(on_reagent_change))
-		RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
-		RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
+		RegisterSignal(holder, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 		if(src == holder.get_master_reagent())
 			var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
 			drink.tool_behaviour = TOOL_SCREWDRIVER
 			drink.usesound = list('sound/items/tools/screwdriver.ogg', 'sound/items/tools/screwdriver2.ogg')
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/Destroy()
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
+	if(istype(drink))
+		if(drink.tool_behaviour == TOOL_SCREWDRIVER)
+			drink.tool_behaviour = initial(drink.tool_behaviour)
+			drink.usesound = initial(drink.usesound)
+		UnregisterSignal(holder, COMSIG_REAGENTS_HOLDER_UPDATED)
+	return ..()
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
@@ -636,29 +638,6 @@
 	else
 		drink.tool_behaviour = initial(drink.tool_behaviour)
 		drink.usesound = initial(drink.usesound)
-
-/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagents_clear(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	unregister_screwdriver(reagents)
-
-/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
-	SIGNAL_HANDLER
-	if(deleted_reagent != src)
-		return
-	unregister_screwdriver(reagents)
-
-/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/unregister_screwdriver(datum/reagents/reagents)
-	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
-	if(drink.tool_behaviour == TOOL_SCREWDRIVER)
-		drink.tool_behaviour = initial(drink.tool_behaviour)
-		drink.usesound = initial(drink.usesound)
-	UnregisterSignal(reagents, list(
-			COMSIG_REAGENTS_ADD_REAGENT,
-			COMSIG_REAGENTS_NEW_REAGENT,
-			COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_DEL_REAGENT,
-			COMSIG_REAGENTS_CLEAR_REAGENTS,
-		))
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -1916,7 +1895,7 @@
 
 /datum/reagent/consumable/ethanol/fanciulli
 	name = "Fanciulli"
-	description = "What if the Manhattan cocktail ACTUALLY used a bitter herb liquour? Helps you sober up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
+	description = "What if the Manhattan cocktail ACTUALLY used a bitter herb liqueur? Helps you sober up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
 	color = "#CA933F" // rgb: 202, 147, 63
 	boozepwr = -10
 	quality = DRINK_NICE
@@ -1936,7 +1915,7 @@
 
 /datum/reagent/consumable/ethanol/branca_menta
 	name = "Branca Menta"
-	description = "A refreshing mixture of bitter Fernet with mint creme liquour."
+	description = "A refreshing mixture of bitter Fernet with mint creme liqueur."
 	color = "#4B5746" // rgb: 75, 87, 70
 	boozepwr = 35
 	quality = DRINK_GOOD
@@ -2193,7 +2172,7 @@
 	color = "#ffe65b"
 	boozepwr = 60
 	quality = DRINK_GOOD
-	taste_description = "artifical fruityness"
+	taste_description = "artificial fruitiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
@@ -2655,7 +2634,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.001 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 5 * ETHEREAL_DISCHARGE_RATE)
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
@@ -2675,7 +2654,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.008 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 10 * ETHEREAL_DISCHARGE_RATE)
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
@@ -2702,7 +2681,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.03 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 30 * ETHEREAL_DISCHARGE_RATE)
 
 // Welcome to the Blue Room Bar and Grill, home to Mars' finest cocktails
 /datum/reagent/consumable/ethanol/rice_beer

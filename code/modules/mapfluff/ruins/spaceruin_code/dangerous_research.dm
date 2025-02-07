@@ -18,7 +18,7 @@
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_2
 	name = "Journal of Dreams-Of-Beaches - Day 33"
 	default_raw_text = "Something odd is going on. John has been blinded and muted for a time now but he's still moving around in that central chamber, drawing something. Elias, Smith, and Whitner seem to have some idea about what's going on and won't answer my questions.<BR>I'm going to sneak into the lab tonight to get a look at those drawings."
-	
+
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_3
 	name = "Journal of Dreams-Of-Beaches - Day 52"
 	default_raw_text = "Smith was in the chamber, gone in an instant.<BR> I don't know what happened to the doctor or Elias, I just heard flesh tearing and glass shattering.<BR> When my eyes opened, the room was painted in red and rust.<BR>Simes was there, but she just flashed away, all that was left was the gun.<BR>Armstrong grabbed me and we somehow made it out, boarded it up with the tables in the lobby.<BR>Took two of the suits, we'll send out a distress signal when we're out there."
@@ -37,7 +37,7 @@
 /// Lore Terminals
 /obj/machinery/computer/terminal/dangerous_research/front_desk
 	upperinfo = "ISSUE REPORT - Officer Simes"
-	content = list("<B>Day 003 - Code 201</B> -> Three days into the 100 day mission, Doctor Greyham and Researcher Smith got into a minor dispute over the owner of a biopsy tool. Both were seperated and reprimanded by the Head Occultist.<BR>\
+	content = list("<B>Day 003 - Code 201</B> -> Three days into the 100 day mission, Doctor Greyham and Researcher Smith got into a minor dispute over the owner of a biopsy tool. Both were separated and reprimanded by the Head Occultist.<BR>\
 	<B>Day 014 - Code 104</B> -> Another issue with Researcher Smith, who was found to be using the chem dispensers to produce low-grade stimulants. Head Occultist Valentin seemed incredibly upset at the relatively harmless drugs, and has banned all production of stimulants.<BR>\
 	<B>Day 022 - Code ???</B> -> The HO and Armstrong are bickering, unsure about what, but since what Armstrong's suggesting will stop that horrific noise, I'm siding with them. The HO gave me a nasty look when I spoke up about the lack of sleep.<BR>\
 	<B>Day 034 - Code 109</B> -> Doctor Beaches apparently entered a restricted area during the off hours to check on a research sample without the Head Occultist's permission. A curfew has been installed.<BR>\

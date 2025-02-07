@@ -18,20 +18,20 @@
 #define STATUS_EFFECT_ID_ABSTRACT "abstract"
 
 ///Processing flags - used to define the speed at which the status will work
-///This is fast - 0.2s between ticks (I believe!)
+/// This is fast - 0.2s between ticks (I believe!)
 #define STATUS_EFFECT_FAST_PROCESS 0
-///This is slower and better for more intensive status effects - 1s between ticks
+/// This is slower and better for more intensive status effects - 1s between ticks
 #define STATUS_EFFECT_NORMAL_PROCESS 1
+/// Similar speed to STATUS_EFFECT_FAST_PROCESS, but uses a high priority subsystem (SSpriority_effects)
+#define STATUS_EFFECT_PRIORITY 2
 
 //several flags for the Necropolis curse status effect
 ///makes the edges of the target's screen obscured
 #define CURSE_BLINDING (1<<0)
-///spawns creatures that attack the target only
-#define CURSE_SPAWNING (1<<1)
 ///causes gradual damage
-#define CURSE_WASTING (1<<2)
+#define CURSE_WASTING (1<<1)
 ///hands reach out from the sides of the screen, doing damage and stunning if they hit the target
-#define CURSE_GRASPING (1<<3)
+#define CURSE_GRASPING (1<<2)
 
 //Incapacitated status effect flags
 /// If the mob is normal incapacitated. Should never need this, just avoids issues if we ever overexpand this
@@ -73,9 +73,18 @@
 /// Is the mob blind from the passed source or sources?
 #define is_blind_from(sources) has_status_effect_from_source(/datum/status_effect/grouped/blindness, sources)
 
-/// Causes the mob to become nearsighted via the passed source
+/// We are not nearsighted right now.
+#define NEARSIGHTED_DISABLED 0
+/// Something is correcting our vision, but we are still a bit nearsighted.
+#define NEARSIGHTED_CORRECTED 1
+/// We are fully nearsighted.
+#define NEARSIGHTED_ENABLED 2
+
+/// Simplified macro that causes the mob to become nearsighted (with correction possible) via the passed source.
 #define become_nearsighted(source) apply_status_effect(/datum/status_effect/grouped/nearsighted, source)
-/// Cures the mob's nearsightedness from the passed source, removing nearsighted wholesale if no sources are left
+/// Causes the mob to become nearsighted from the passed source by a severity, which may be corrected with glasses.
+#define assign_nearsightedness(source, amount, correctable) apply_status_effect(/datum/status_effect/grouped/nearsighted, source, amount, correctable)
+/// Cures the mob's nearsightedness from the passed source, removing nearsighted wholesale if no sources are left.
 #define cure_nearsighted(source) remove_status_effect(/datum/status_effect/grouped/nearsighted, source)
 
 /// Is the mob nearsighted?
@@ -89,7 +98,7 @@
 	var/datum/status_effect/grouped/nearsighted/nearsight = has_status_effect(/datum/status_effect/grouped/nearsighted)
 	if(isnull(nearsight))
 		return FALSE
-	return nearsight.should_be_nearsighted()
+	return (nearsight.should_be_nearsighted() > NEARSIGHTED_CORRECTED)
 
 // Status effect application helpers.
 // These are macros for easier use of adjust_timed_status_effect and set_timed_status_effect.

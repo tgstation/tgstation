@@ -223,7 +223,7 @@ handles linking back and forth.
 
 /**
  * Use materials from either the silo(if connected) or from the local storage. If silo then this action
- * is logged else not e.g. action="build" & name="matter bin" means you are trying to build an matter bin
+ * is logged else not e.g. action="build" & name="matter bin" means you are trying to build a matter bin
  *
  * Arguments
  * [mats][list]- list of materials to use

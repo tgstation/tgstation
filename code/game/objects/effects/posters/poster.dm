@@ -65,7 +65,7 @@
 		return
 
 	poster_structure.trap = WEAKREF(I)
-	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	to_chat(user, span_notice("You conceal \the [I] inside the rolled up poster."))
 
 /obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()

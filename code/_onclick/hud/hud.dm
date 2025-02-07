@@ -106,6 +106,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
 
+	/// The BYOND version of the client that was last logged into this mob.
+	/// Currently used to rebuild all plane master groups when going between 515<->516.
+	var/last_byond_version
+
 /datum/hud/New(mob/owner)
 	mymob = owner
 
@@ -153,13 +157,17 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
 	var/client/client = mymob.canon_client
-	if(client.rebuild_plane_masters)
-		var/new_relay_loc = (client.byond_version > 515) ? "1,1" : "CENTER"
+	var/new_byond_version = client.byond_version
+#if MIN_COMPILER_VERSION > 515
+	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
+#endif
+	if(!isnull(last_byond_version) && new_byond_version != last_byond_version)
+		var/new_relay_loc = (new_byond_version > 515) ? "1,1" : "CENTER"
 		for(var/group_key as anything in master_groups)
 			var/datum/plane_master_group/group = master_groups[group_key]
 			group.relay_loc = new_relay_loc
-			group.rebuild_plane_masters()
-		client.rebuild_plane_masters = FALSE
+			group.rebuild_hud()
+	last_byond_version = new_byond_version
 	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
 	on_eye_change(null, null, client.eye)
 
@@ -549,6 +557,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			floating_actions += button
 			button.screen_loc = position
 			position = SCRN_OBJ_FLOATING
+			toggle_palette.update_state()
 
 	button.location = position
 
@@ -567,6 +576,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				position_action(button, button.linked_action.default_button_position)
 				return
 			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, ICON_SIZE_ALL, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
+			toggle_palette.update_state()
 
 	button.location = relative_to.location
 
@@ -577,6 +587,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			CRASH("We just tried to hide an action buttion that somehow has the default position as its location, you done fucked up")
 		if(SCRN_OBJ_FLOATING)
 			floating_actions -= button
+			toggle_palette.update_state()
 		if(SCRN_OBJ_IN_LIST)
 			listed_actions.remove_action(button)
 		if(SCRN_OBJ_IN_PALETTE)

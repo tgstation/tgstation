@@ -1,9 +1,16 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	icon_state = "pellet"
-	damage = 50
+	damage = 25
+	armour_penetration = 30
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
+	bare_wound_bonus = 15
+
+/obj/projectile/bullet/shotgun_slug/milspec
+	name = "12g shotgun milspec slug"
+	icon_state = "pellet"
+	damage = 50
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
@@ -70,23 +77,29 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	damage_falloff_tile = -0.45
+	damage_falloff_tile = -0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 7.5
+	damage = 5
 	wound_bonus = 5
 	bare_wound_bonus = 5
-	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
+	speed = 1.1
+	wound_falloff_tile = -0.5 //We would very much like this to cause wounds despite the low damage, so the drop off is relatively slow
+	sharpness = SHARP_EDGED
 
 /**
  * A slightly weaker version of the buckshot, available from the blackmarket.
  * The casings they're in have a very small chance to misfire and will gradually damage the firearm, making it weaker.
  */
 /obj/projectile/bullet/pellet/shotgun_buckshot/old
-	damage_falloff_tile = -0.47
+	damage_falloff_tile = -1
 	wound_bonus = -100
 	bare_wound_bonus = -100
+
+/obj/projectile/bullet/pellet/shotgun_buckshot/milspec
+	name = "milspec buckshot pellet"
+	damage = 7.5
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
@@ -120,14 +133,16 @@
 /obj/projectile/bullet/pellet/flechette
 	name = "flechette"
 	icon_state = "flechette"
-	damage = 6
+	damage = 3
 	wound_bonus = -25
 	bare_wound_bonus = 50
+	damage_falloff_tile = 0.1
 	wound_falloff_tile = -10
 	speed = 1.2
 	ricochet_decay_chance = 0.6
 	ricochet_decay_damage = 0.3
 	demolition_mod = 10
+	sharpness = SHARP_POINTY
 	weak_against_armour = TRUE
 
 // Mech Scattershot

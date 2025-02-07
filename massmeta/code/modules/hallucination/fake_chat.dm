@@ -36,7 +36,7 @@
 			chosen = pick(list("Помогите!",
 				"[pick_list_replacements(HALLUCINATION_FILE, "people")] [pick_list_replacements(HALLUCINATION_FILE, "accusations")]!",
 				"[pick_list_replacements(HALLUCINATION_FILE, "threat")] в [pick_list_replacements(HALLUCINATION_FILE, "location")][prob(50)?"!":"!!"]",
-				"[pick("Где [hallucinator.first_name()]?", "Поставьте [hallucinator.first_name()] на арест!")]",
+				"[pick("Где [first_name(hallucinator.name)]?", "Поставьте [first_name(hallucinator.name)] на арест!")]",
 				"[pick("Выз","ИИ, з","Отз")]овите шаттл!",
 				"ИИ [pick("малф", "мертв")]!!",
 				"Борги плохие!",
@@ -44,7 +44,7 @@
 		else
 			chosen = pick(list("[pick_list_replacements(HALLUCINATION_FILE, "suspicion")]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "conversation")]",
-				"[pick_list_replacements(HALLUCINATION_FILE, "greetings")][hallucinator.first_name()]!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "greetings")][first_name(hallucinator.name)]!",
 				"[pick_list_replacements(HALLUCINATION_FILE, "getout")]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "weird")]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "didyouhearthat")]",
@@ -57,7 +57,7 @@
 
 		chosen = capitalize(chosen)
 
-	chosen = replacetext(chosen, "%TARGETNAME%", hallucinator.first_name())
+	chosen = replacetext(chosen, "%TARGETNAME%", first_name(hallucinator.name))
 
 	// Log the message
 	feedback_details += "Type: [is_radio ? "Radio" : "Talk"], Source: [speaker.real_name], Message: [chosen]"

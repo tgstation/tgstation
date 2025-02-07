@@ -27,6 +27,8 @@
 /obj/structure/destructible/eldritch_crucible/process(seconds_per_tick)
 	if(COOLDOWN_TIMELEFT(src, refill_cooldown))
 		return
+	if(current_mass >= max_mass)
+		return
 	COOLDOWN_START(src, refill_cooldown, 30 SECONDS)
 	current_mass++
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
@@ -290,21 +292,21 @@
 
 /obj/item/eldritch_potion/crucible_soul
 	name = "brew of the crucible soul"
-	desc = "A glass bottle contianing a bright orange, translucent liquid."
+	desc = "A glass bottle containing a bright orange, translucent liquid."
 	icon_state = "crucible_soul"
 	status_effect = /datum/status_effect/crucible_soul
 	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 15 seconds."
 
 /obj/item/eldritch_potion/duskndawn
 	name = "brew of dusk and dawn"
-	desc = "A glass bottle contianing a dull yellow liquid. It seems to fade in and out with regularity."
+	desc = "A glass bottle containing a dull yellow liquid. It seems to fade in and out with regularity."
 	icon_state = "clarity"
 	status_effect = /datum/status_effect/duskndawn
 	crucible_tip = "Allows you to see through walls and objects. Lasts 90 seconds."
 
 /obj/item/eldritch_potion/wounded
 	name = "brew of the wounded soldier"
-	desc = "A glass bottle contianing a colorless, dark liquid."
+	desc = "A glass bottle containing a colorless, dark liquid."
 	icon_state = "marshal"
 	status_effect = /datum/status_effect/marshal
 	crucible_tip = "Causes all wounds you are experiencing to begin to heal you. Fractures, sprains, cuts, and punctures will heal bruises, \
