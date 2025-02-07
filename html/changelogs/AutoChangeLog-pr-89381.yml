@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "alien eggs (xeno embryos, headslugs, etc) will now show up on the advanced medical scanner"
