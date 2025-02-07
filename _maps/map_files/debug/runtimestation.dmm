@@ -2283,6 +2283,10 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/station/science)
+"OZ" = (
+/obj/item/storage/bag/sheetsnatcher/debug,
+/turf/open/floor/iron,
+/area/station/science)
 "Pc" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L13"
@@ -6441,7 +6445,7 @@ Pv
 Xp
 ah
 NZ
-bD
+OZ
 XC
 co
 bA
