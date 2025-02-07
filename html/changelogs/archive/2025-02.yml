@@ -97,3 +97,11 @@
       or as certain ghost roles, you will still return to your character's original
       mind, just in case you can be resurrected by some means.
   - bugfix: The basketball minigame now gives its players and referee temporary bodies.
+2025-02-07:
+  Runi-c:
+  - balance: slips now make you eligible for being shove stunned
+  SmArtKar:
+  - balance: Removed an oversight which allowed you to farm fishing achievements
+  TiviPlus:
+  - server: An issue where more than 16 admin flags could not exist in the DB has
+      been corrected
