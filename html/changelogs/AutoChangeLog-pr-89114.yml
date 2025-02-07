@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "Tile context menu tweaks (Loot panel)"
