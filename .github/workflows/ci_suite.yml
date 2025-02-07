@@ -42,20 +42,10 @@ jobs:
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-spacemandmm-
-      - name: Restore Yarn cache
-        uses: actions/cache@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
         with:
-          path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Restore Node cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.nvm
-          key: ${{ runner.os }}-node-${{ hashFiles('dependencies.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          restore-yarn-cache: true
       - name: Restore Bootstrap cache
         uses: actions/cache@v4
         with:
@@ -89,7 +79,6 @@ jobs:
       - name: Install Tools
         run: |
           pip3 install setuptools
-          bash tools/ci/install_node.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
           bash tools/ci/install_ripgrep.sh
           tools/bootstrap/python -c ''
@@ -149,6 +138,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
       - name: Restore BYOND from Cache
         uses: ./.github/actions/restore_or_install_byond
       - name: Compile All Maps
@@ -258,13 +249,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Restore Yarn cache
-        uses: actions/cache@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
         with:
-          path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          restore-yarn-cache: true
       - name: Compile
         run: pwsh tools/ci/build.ps1
         env:
