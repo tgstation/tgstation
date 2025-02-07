@@ -5,6 +5,7 @@
 	visual = TRUE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 
 /obj/item/organ/body_egg/on_find(mob/living/finder)
 	..()
