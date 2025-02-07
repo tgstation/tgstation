@@ -14,16 +14,8 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 /obj/effect/landmark/ctf/Destroy()
 	if(map_bounds)
 		for(var/turf/ctf_turf in block(
-			locate(
-				map_bounds[MAP_MINX],
-				map_bounds[MAP_MINY],
-				map_bounds[MAP_MINZ],
-			),
-			locate(
-				map_bounds[MAP_MAXX],
-				map_bounds[MAP_MAXY],
-				map_bounds[MAP_MAXZ],
-			)
+			map_bounds[MAP_MINX], map_bounds[MAP_MINY], map_bounds[MAP_MINZ],
+			map_bounds[MAP_MAXX], map_bounds[MAP_MAXY], map_bounds[MAP_MAXZ]
 		))
 			ctf_turf.empty()
 	GLOB.ctf_spawner = null
