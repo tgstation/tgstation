@@ -29113,13 +29113,11 @@
 /area/station/commons/toilet/restrooms)
 "knj" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
-	name = "E.V.A. Storage"
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/command/eva,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "knt" = (
@@ -44134,13 +44132,11 @@
 /area/station/maintenance/port/aft)
 "pIm" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
-	name = "E.V.A. Storage"
-	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
 /obj/effect/mapping_helpers/airlock/access/any/command/eva,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "pIs" = (
