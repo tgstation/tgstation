@@ -38,6 +38,7 @@
 	overlay_state = "portal_beach"
 
 /datum/fish_source/ice_fishing
+	background = "background_ice"
 	catalog_description = "Ice-covered water"
 	radial_state = "ice"
 	overlay_state = "portal_ocean"
@@ -147,7 +148,7 @@
 	REMOVE_TRAIT(spot.parent, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
 
 /datum/fish_source/portal/chasm
-	background = "background_lavaland"
+	background = "background_chasm"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 10,
@@ -195,6 +196,7 @@
 	REMOVE_TRAIT(spot.parent, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
 
 /datum/fish_source/portal/hyperspace
+	background = "background_space"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/starfish = 6,
@@ -317,7 +319,7 @@
 
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
-	background = "background_lavaland"
+	background = "background_chasm"
 	radial_state = "ground_hole"
 	overlay_state = "portal_chasm"
 	fish_table = list(
@@ -370,6 +372,7 @@
 		return "You'll need reinforced fishing line to fish in there."
 
 /datum/fish_source/lavaland/icemoon
+	background = "background_plasma"
 	catalog_description = "Liquid plasma vents"
 	radial_state = "plasma"
 	fish_table = list(
@@ -395,6 +398,7 @@
 	overlay_state = "portal_plasma"
 
 /datum/fish_source/moisture_trap
+	background = "background_dank"
 	catalog_description = "Moisture trap basins"
 	radial_state = "garbage"
 	overlay_state = "portal_river" // placeholder
@@ -406,6 +410,7 @@
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 
 /datum/fish_source/toilet
+	background = "background_dank"
 	catalog_description = "Station toilets"
 	radial_state = "toilet"
 	duds = list("ewww... nothing", "it was nothing", "it was toilet paper", "it was flushed away", "the hook is empty", "where's the damn money?!")
@@ -470,6 +475,7 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 /datum/fish_source/oil_well
+	background = "background_oil_well"
 	catalog_description = "Oil wells"
 	radial_state = "oil"
 	overlay_state = "portal_chasm" //close enough to pitch black
@@ -494,6 +500,7 @@
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
 
 /datum/fish_source/hydro_tray
+	background = "background_tray"
 	catalog_description = "Hydroponics trays"
 	radial_state = "hydro"
 	overlay_state = "portal_tray"
@@ -604,6 +611,7 @@
 	return new picked_path(spawn_location)
 
 /datum/fish_source/carp_rift
+	background = "background_carp_rift"
 	catalog_description = "Space Dragon Rifts"
 	radial_state = "carp"
 	overlay_state = "portal_rift"
@@ -627,6 +635,7 @@
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 28
 
 /datum/fish_source/deepfryer
+	background = "background_lavaland"
 	catalog_description = "Deep Fryers"
 	radial_state = "fryer"
 	overlay_state = "portal_fry" // literally resprited lava. better than nothing
@@ -773,6 +782,7 @@
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/vending
+	background = "background_chasm"
 	catalog_description = "Vending Machines"
 	radial_state = "vending"
 	overlay_state = "portal_randomizer"
@@ -943,9 +953,10 @@
 	return reward
 
 /datum/fish_source/dimensional_rift
-	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	background = "background_mansus"
+	catalog_description = null // it's a secret (sorta, I know you're reading this)
 	radial_state = "cursed" // placeholder
-	overlay_state = "portal_rift_2" // yeah good luck adaptin the rift sprite to this template. recolored randomizer's the best you're getting
+	overlay_state = "portal_mansus"
 	fish_table = list(
 		FISHING_INFLUENCE = 6,
 		FISHING_RANDOM_ARM = 3,

@@ -326,7 +326,7 @@
 	name = "\improper Atlas gravitonic spinal implant"
 	desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
 		This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation. \
-		Not only can you walk with your feet planted firmly on the ground even during a loss of enviromental gravity, but you also \
+		Not only can you walk with your feet planted firmly on the ground even during a loss of environmental gravity, but you also \
 		carry heavier loads with relative ease."
 	icon_state = "herculean_implant_core"
 	athletics_boost_multiplier = 0.25

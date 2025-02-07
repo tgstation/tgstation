@@ -10,10 +10,8 @@
 	desc = "Bee business booming? Better be benevolent and boost botany by \
 		bestowing bi-Beekeeper-suits! Contains two beekeeper suits and matching headwear."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/utility/beekeeper_head,
-					/obj/item/clothing/suit/utility/beekeeper_suit,
-					/obj/item/clothing/head/utility/beekeeper_head,
-					/obj/item/clothing/suit/utility/beekeeper_suit,
+	contains = list(/obj/item/clothing/head/utility/beekeeper_head = 2,
+					/obj/item/clothing/suit/utility/beekeeper_suit = 2,
 				)
 	crate_name = "beekeeper suits"
 	crate_type = /obj/structure/closet/crate/hydroponics
@@ -363,8 +361,7 @@
 	desc = "A packaged box containing illegal coffee syrups. Possession of these carries a penalty established in the galactic penal code."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(
-		/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup,
-		/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup = 2,
 	)
 	crate_name = "illegal syrups box"
 	crate_type = /obj/structure/closet/crate/cardboard

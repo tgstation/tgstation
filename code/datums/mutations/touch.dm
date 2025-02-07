@@ -419,3 +419,4 @@
 	icon_state = "greyscale"
 	color = COLOR_VERY_PALE_LIME_GREEN
 	inhand_icon_state = "greyscale"
+	item_flags = parent_type::item_flags & ~NEEDS_PERMIT

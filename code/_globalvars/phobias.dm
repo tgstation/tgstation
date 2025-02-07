@@ -69,10 +69,10 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
 		/mob/living/basic/chicken,
+		/mob/living/basic/goose,
 		/mob/living/basic/parrot,
 		/mob/living/basic/pet/penguin,
 		/mob/living/basic/raptor,
-		/mob/living/simple_animal/hostile/retaliate/goose,
 	)),
 	"conspiracies" = typecacheof(list(
 		/mob/living/basic/drone,
@@ -400,6 +400,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/storage/toolbox/fishing,
 		/obj/item/stack/sheet/animalhide/carp,
 		/obj/item/toy/plush/carpplushie,
+		/obj/item/storage/bag/fishing,
 	)),
 	"greytide" = (typecacheof(list(
 		/obj/item/clothing/under/color/grey,

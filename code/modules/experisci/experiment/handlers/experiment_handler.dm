@@ -274,6 +274,7 @@
  */
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
 	if (can_select_experiment(experiment))
+		unlink_experiment()
 		selected_experiment = experiment
 		selected_experiment.on_selected(src)
 

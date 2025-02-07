@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - refactor: "Gun maintenance is now consolidated into a single item, the gun maintenance kit, rather than multiple different item interactions. It is handled on the maintenance kit itself, and not in gun code."
+  - qol: "You can order maintenance kits from cargo, and get some out of the security equipment vendor. Helpful if someone spilled acid onto your disabler. You can also make a makeshift one from maintenance trash."

@@ -12,7 +12,7 @@
 	infectivity = 0
 	agent = "Quantum Entanglement"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timesteam correction technology."
+	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timestream correction technology."
 	severity = DISEASE_SEVERITY_UNCURABLE
 	bypasses_immunity = TRUE
 

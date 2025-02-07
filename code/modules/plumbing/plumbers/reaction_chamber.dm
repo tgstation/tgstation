@@ -27,28 +27,14 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
-/obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
-	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
-/// Handles properly detaching signal hooks.
-/obj/machinery/plumbing/reaction_chamber/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
-
-	return NONE
-
 /// Handles stopping the emptying process when the chamber empties.
-/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder, ...)
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder)
 	SIGNAL_HANDLER
 
-	if(!holder.get_catalyst_excluded_volume() && emptying) //we were emptying, but now we aren't
+	if(!holder.get_catalyst_excluded_volume()) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
-
-	return NONE
+		UnregisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
 	if(!is_operational || !reagents.total_volume)
@@ -132,6 +118,7 @@
 			var/input_amount = text2num(params["amount"])
 			if(!input_amount)
 				return FALSE
+			input_amount = round(input_amount, CHEMICAL_VOLUME_ROUNDING)
 
 			if(!required_reagents[input_reagent])
 				required_reagents[input_reagent] = input_amount
