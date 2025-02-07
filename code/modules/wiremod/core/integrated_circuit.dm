@@ -380,6 +380,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		component_data["y"] = component.rel_y
 		component_data["removable"] = component.removable
 		component_data["color"] = component.ui_color
+		component_data["category"] = component.category
+		component_data["ui_alerts"] = component.ui_alerts
 		component_data["ui_buttons"] = component.ui_buttons
 		.["components"] += list(component_data)
 
