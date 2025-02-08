@@ -6605,6 +6605,7 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+#include "modular_doppler\z_lore_rename.dm"
 #include "modular_doppler\_HELPERS\preferences.dm"
 #include "modular_doppler\accent_toggle\code\accent_toggle.dm"
 #include "modular_doppler\accessable_storage\accessable_storage.dm"
