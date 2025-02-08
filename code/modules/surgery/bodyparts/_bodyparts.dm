@@ -957,6 +957,8 @@
 
 	// Recolors mutant overlays to match new mutant colors
 	for(var/datum/bodypart_overlay/mutant/overlay in bodypart_overlays)
+		if(overlay.get_global_feature_list()[human_owner.dna.features[overlay.feature_key]])
+			overlay.set_appearance_from_name(human_owner.dna.features[overlay.feature_key])
 		overlay.inherit_color(src, force = TRUE)
 	// Ensures marking overlays are updated accordingly as well
 	for(var/datum/bodypart_overlay/simple/body_marking/marking in bodypart_overlays)
