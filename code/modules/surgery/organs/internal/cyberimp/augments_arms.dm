@@ -32,7 +32,6 @@
 		var/atom/new_item = new typepath(src)
 		items_list += WEAKREF(new_item)
 
-	update_appearance()
 	SetSlotFromZone()
 
 /obj/item/organ/cyberimp/arm/Destroy()
@@ -57,6 +56,7 @@
 			slot = right_arm_organ_slot
 		else
 			CRASH("Invalid zone for [type]")
+	update_appearance()
 
 /obj/item/organ/cyberimp/arm/update_icon()
 	. = ..()
@@ -78,7 +78,12 @@
 		zone = BODY_ZONE_R_ARM
 	SetSlotFromZone()
 	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."))
-	update_appearance()
+
+/obj/item/organ/cyberimp/arm/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
+	if (target_zone == BODY_ZONE_R_ARM || target_zone == BODY_ZONE_L_ARM) // Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
+		zone = target_zone
+		SetSlotFromZone()
+	return ..()
 
 /obj/item/organ/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
