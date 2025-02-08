@@ -494,8 +494,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
 
-		var/readed_preference = read_preference(preference.type)
-		preference.apply_to_human(character, readed_preference)
+		preference.apply_to_human(character, read_preference(preference.type))
 
 	character.dna.real_name = character.real_name
 
