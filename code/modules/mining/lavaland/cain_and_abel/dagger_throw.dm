@@ -28,7 +28,7 @@
 
 	var/list/throw_settings = throw_options[throw_mode]
 	COOLDOWN_START(src, throw_cooldown, throw_settings["cooldown"])
-	var/atom/dagger = fire_projectile(throw_settings["projectile"], target, 'sound/items/weapons/fwoosh.ogg', user)
+	var/atom/dagger = user.fire_projectile(throw_settings["projectile"], target, 'sound/items/weapons/fwoosh.ogg', user)
 	if(isnull(dagger))
 		return
 
@@ -45,7 +45,7 @@
 		return
 
 	var/atom/dagger_visual = source.dagger_effects(target)
-	if(!isnull(dagger_visual))
+	if(!QDELETED(dagger_visual))
 		RegisterSignal(dagger_visual, COMSIG_QDELETING, PROC_REF(reset_dagger_icon))
 		return
 

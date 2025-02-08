@@ -90,7 +90,7 @@
 		return
 
 	for(var/index in 0 to (length(current_wisps) - 1))
-		addtimer(CALLBACK(src, PROC_REF(fire_wisp), interacting_with), index * 0.15 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(fire_wisp), user, interacting_with), index * 0.15 SECONDS)
 
 	set_combo(new_value = 0, user = user)
 
@@ -142,8 +142,8 @@
 	current_wisps -= source
 	UnregisterSignal(source, COMSIG_QDELETING)
 
-/obj/item/cain_and_abel/proc/fire_wisp(atom/target)
-	fire_projectile(/obj/projectile/dagger_wisp, target)
+/obj/item/cain_and_abel/proc/fire_wisp(atom/user, atom/target)
+	user.fire_projectile(/obj/projectile/dagger_wisp, target)
 
 /obj/item/cain_and_abel/proc/remove_wisp(obj/wisp_to_remove)
 	animate(wisp_to_remove, alpha = 0, time = 0.2 SECONDS)

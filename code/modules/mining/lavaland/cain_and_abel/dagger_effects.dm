@@ -106,9 +106,9 @@
 	new /obj/effect/temp_visual/mook_dust(get_turf(thrownthing))
 
 /datum/thrownthing/dagger_launch/finalize(hit, target)
-	. = ..()
 	if(thrownthing)
 		new /obj/effect/temp_visual/mook_dust(get_turf(thrownthing))
+	return ..()
 
 /datum/thrownthing/dagger_launch/Destroy()
 	if(thrownthing)
