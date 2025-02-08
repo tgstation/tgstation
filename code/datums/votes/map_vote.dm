@@ -39,7 +39,7 @@
 	if(. != VOTE_AVAILABLE)
 		return .
 
-	if(SSmap_vote.next_map_config && !forced)
+	if(SSmap_vote.next_map_config)
 		return "The next map has already been selected."
 
 	default_choices = SSmap_vote.get_valid_map_vote_choices()
