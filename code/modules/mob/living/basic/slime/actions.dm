@@ -77,6 +77,7 @@
 
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
+
 	if(stat != CONSCIOUS)
 		balloon_alert(src, "not conscious!")
 		return
@@ -90,6 +91,19 @@
 
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		balloon_alert(src, "need growth!")
+		return
+
+	var/list/friends_list = list()
+	for(var/mob/living/basic/slime/friend in loc)
+		if(QDELETED(friend))
+			continue
+		if(friend == src)
+			continue
+		friends_list += friend
+
+	overcrowded = length(friends_list) >= SLIME_OVERCROWD_AMOUNT
+	if(overcrowded)
+		balloon_alert(src, "overcrowded!")
 		return
 
 	var/list/babies = list()

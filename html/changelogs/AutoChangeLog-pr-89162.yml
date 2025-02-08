@@ -1,0 +1,4 @@
+author: "MichiRecRoom"
+delete-after: True
+changes:
+  - bugfix: "Word phobias should always apply now, rather than occasionally being missed."

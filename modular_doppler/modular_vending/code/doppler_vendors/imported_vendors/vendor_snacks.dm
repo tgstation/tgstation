@@ -24,105 +24,6 @@
 	)
 
 /*
-*	Yangyu Snacks
-*/
-
-/obj/item/reagent_containers/cup/glass/dry_ramen/prepared
-	name = "cup ramen"
-	desc = "This one even comes with water, amazing!"
-	list_reagents = list(/datum/reagent/consumable/hot_ramen = 15, /datum/reagent/consumable/salt = 3)
-
-/obj/item/reagent_containers/cup/glass/dry_ramen/prepared/hell
-	name = "spicy cup ramen"
-	desc = "This one comes with water, AND a security checkpoint's worth of capsaicin!"
-	list_reagents = list(/datum/reagent/consumable/hell_ramen = 15, /datum/reagent/consumable/salt = 3)
-
-/obj/item/food/vendor_snacks/rice_crackers
-	name = "rice crackers"
-	desc = "Despite most of the package being clear, you will never truly know what flavor these are until you eat them."
-	icon_state = "rice_cracka"
-	trash_type = /obj/item/trash/vendor_trash/rice_crackers
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/rice = 2)
-	tastes = list("incomprehensible flavoring" = 1, "rice cracker" = 2)
-	foodtypes = JUNKFOOD | GRAIN
-	custom_price = PAYCHECK_LOWER * 0.8
-
-/obj/item/food/vendor_snacks/rice_crackers/make_leave_trash()
-	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
-
-/obj/item/trash/vendor_trash/rice_crackers
-	name = "empty rice crackers bag"
-	desc = "You never did find out what flavor that was supposed to be, did you?"
-	icon_state = "rice_cracka_trash"
-
-/obj/item/food/vendor_snacks/mochi_ice_cream
-	name = "mochi ice cream balls - vanilla"
-	desc = "A six pack of mochi ice cream, which is to say vanilla icecream surrounded by mochi. Comes with small plastic skewer for consumption."
-	icon_state = "mochi_ice"
-	trash_type = /obj/item/trash/vendor_trash/mochi_ice_cream
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 3)
-	tastes = list("rice cake" = 2, "vanilla" = 2)
-	foodtypes = JUNKFOOD | DAIRY | GRAIN
-	custom_price = PAYCHECK_LOWER
-
-/obj/item/food/vendor_snacks/mochi_ice_cream/matcha
-	name = "mochi ice cream balls - matcha"
-	desc = "A six pack of mochi ice cream - or, more specifically, matcha icecream surrounded by mochi. Comes with small plastic skewer for consumption."
-	icon_state = "mochi_ice_green"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/tea = 2)
-	tastes = list("rice cake" = 1, "bitter matcha" = 2)
-	custom_price = PAYCHECK_LOWER * 1.2
-
-/obj/item/food/vendor_snacks/mochi_ice_cream/matcha/examine_more(mob/user)
-	. = ..()
-	. += span_notice("A small label on the container specifies that this icecream is made using only culinary grade matcha grown outside of the Sol system.")
-	return .
-
-/obj/item/trash/vendor_trash/mochi_ice_cream
-	name = "empty mochi ice cream tray"
-	desc = "Somehow, that tiny plastic skewer it came with has gone missing."
-	icon_state = "mochi_ice_trash"
-
-/obj/item/reagent_containers/cup/glass/waterbottle/tea
-	name = "bottle of tea"
-	desc = "A bottle of tea brought to you in a convenient plastic bottle."
-	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
-	icon_state = "tea_bottle"
-	list_reagents = list(/datum/reagent/consumable/tea = 40)
-	cap_icon_state = "bottle_cap_tea"
-	flip_chance = 5
-	custom_price = PAYCHECK_LOWER * 1.2
-	fill_icon_state = null
-
-/obj/item/reagent_containers/cup/glass/waterbottle/tea/astra
-	name = "bottle of tea astra"
-	desc = "A bottle of tea astra, known for the rather unusual tastes the leaf is known to give when brewed."
-	icon_state = "tea_bottle_blue"
-	list_reagents = list(
-		/datum/reagent/consumable/tea = 25,
-		/datum/reagent/medicine/salglu_solution = 10,
-		/datum/reagent/consumable/nutriment/vitamin = 5,
-	)
-	custom_price = PAYCHECK_LOWER * 2
-
-/obj/item/reagent_containers/cup/glass/waterbottle/tea/strawberry
-	name = "bottle of strawberry tea"
-	desc = "A bottle of strawberry flavored tea; does not contain any actual strawberries."
-	icon_state = "tea_bottle_pink"
-	list_reagents = list(/datum/reagent/consumable/pinktea = 40)
-	custom_price = PAYCHECK_LOWER * 2
-
-/obj/item/reagent_containers/cup/glass/waterbottle/tea/nip
-	name = "bottle of catnip tea"
-	desc = "A bottle of catnip tea, required to be at or under a 50% concentration by the SFDA for safety purposes."
-	icon_state = "tea_bottle_pink"
-	list_reagents = list(
-		/datum/reagent/consumable/catnip_tea = 20,
-		/datum/reagent/consumable/pinkmilk = 20,
-	)
-	custom_price = PAYCHECK_LOWER * 2.5
-
-/*
 *	Mothic Snacks
 */
 
@@ -300,3 +201,130 @@
 	icon_state = "kortara"
 	list_reagents = list(/datum/reagent/consumable/ethanol/kortara = 30)
 	drink_type = ALCOHOL
+
+/*
+*	Marsian Snacks
+*/
+
+/obj/item/reagent_containers/cup/soda_cans/doppler/red_beverage
+	name = "NULL STRENGTH Lemon-Grapefruit Fruit Cooler"
+	desc = "The red and blue cans of the NULL STRENGTH line of shochu coolers became a minor memetic icon when the silly \
+	commercials for Marsian holonet broadcasts were posted to the wider 'net."
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
+	icon_state = "thin_can"
+	list_reagents = list(/datum/reagent/consumable/ethanol/null_strength_lemon_grapefruit = 30)
+	drink_type = ALCOHOL | FRUIT
+
+/obj/item/reagent_containers/cup/soda_cans/doppler/yogurt_beverage
+	name = "Suannai yogurt soda"
+	desc = "A refreshing, lightly carbonated yogurt drink that goes by nealy a dozen different names depending \
+	on where you are. Supposedly good for your gut, but it's most commonly seen served alongside spicy food."
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
+	icon_state = "yogurt_can"
+	list_reagents = list(/datum/reagent/consumable/yogurt_soda = 30)
+	drink_type = DAIRY
+
+/obj/item/reagent_containers/condiment/pack/chili
+	name = "seasoning multi-pack"
+	desc = "A spicy chili sauce, seasoning oil with shallots, and sweetened shoyu all in one convenient pack."
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
+	icon_state = "sauce_pack"
+	list_reagents = list(/datum/reagent/consumable/chili_fish_sauce = 10)
+	possible_states = list(
+		/datum/reagent/consumable/chili_fish_sauce = list("sauce_pack", "spicy chili sauce", "A spicy chili sauce, seasoning oil with shallots, and sweetened shoyu all in one convenient pack.")
+	)
+
+/obj/item/reagent_containers/cup/glass/dry_ramen/prepared
+	name = "cup ramen"
+	desc = "This one even comes with water, amazing!"
+	list_reagents = list(/datum/reagent/consumable/hot_ramen = 15, /datum/reagent/consumable/salt = 3)
+
+/obj/item/reagent_containers/cup/glass/dry_ramen/prepared/hell
+	name = "spicy cup ramen"
+	desc = "This one comes with water, AND a security checkpoint's worth of capsaicin!"
+	list_reagents = list(/datum/reagent/consumable/hell_ramen = 15, /datum/reagent/consumable/salt = 3)
+
+/obj/item/food/vendor_snacks/rice_crackers
+	name = "rice crackers"
+	desc = "Despite most of the package being clear, you will never truly know what flavor these are until you eat them."
+	icon_state = "rice_cracka"
+	trash_type = /obj/item/trash/vendor_trash/rice_crackers
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/rice = 2)
+	tastes = list("incomprehensible flavoring" = 1, "rice cracker" = 2)
+	foodtypes = JUNKFOOD | GRAIN
+	custom_price = PAYCHECK_LOWER * 0.8
+
+/obj/item/food/vendor_snacks/rice_crackers/make_leave_trash()
+	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+
+/obj/item/trash/vendor_trash/rice_crackers
+	name = "empty rice crackers bag"
+	desc = "You never did find out what flavor that was supposed to be, did you?"
+	icon_state = "rice_cracka_trash"
+
+/obj/item/food/vendor_snacks/mochi_ice_cream
+	name = "mochi ice cream balls - vanilla"
+	desc = "A six pack of mochi ice cream, which is to say vanilla icecream surrounded by mochi. Comes with small plastic skewer for consumption."
+	icon_state = "mochi_ice"
+	trash_type = /obj/item/trash/vendor_trash/mochi_ice_cream
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 3)
+	tastes = list("rice cake" = 2, "vanilla" = 2)
+	foodtypes = JUNKFOOD | DAIRY | GRAIN
+	custom_price = PAYCHECK_LOWER
+
+/obj/item/food/vendor_snacks/mochi_ice_cream/matcha
+	name = "mochi ice cream balls - matcha"
+	desc = "A six pack of mochi ice cream - or, more specifically, matcha icecream surrounded by mochi. Comes with small plastic skewer for consumption."
+	icon_state = "mochi_ice_green"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/tea = 2)
+	tastes = list("rice cake" = 1, "bitter matcha" = 2)
+	custom_price = PAYCHECK_LOWER * 1.2
+
+/obj/item/food/vendor_snacks/mochi_ice_cream/matcha/examine_more(mob/user)
+	. = ..()
+	. += span_notice("A small label on the container specifies that this icecream is made using only culinary grade matcha grown outside of the Sol system.")
+	return .
+
+/obj/item/trash/vendor_trash/mochi_ice_cream
+	name = "empty mochi ice cream tray"
+	desc = "Somehow, that tiny plastic skewer it came with has gone missing."
+	icon_state = "mochi_ice_trash"
+
+/obj/item/reagent_containers/cup/glass/waterbottle/tea
+	name = "bottle of tea"
+	desc = "A bottle of tea brought to you in a convenient plastic bottle."
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
+	icon_state = "tea_bottle"
+	list_reagents = list(/datum/reagent/consumable/tea = 40)
+	cap_icon_state = "bottle_cap_tea"
+	flip_chance = 5
+	custom_price = PAYCHECK_LOWER * 1.2
+	fill_icon_state = null
+
+/obj/item/reagent_containers/cup/glass/waterbottle/tea/astra
+	name = "bottle of tea astra"
+	desc = "A bottle of tea astra, known for the rather unusual tastes the leaf is known to give when brewed."
+	icon_state = "tea_bottle_blue"
+	list_reagents = list(
+		/datum/reagent/consumable/tea = 25,
+		/datum/reagent/medicine/salglu_solution = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	custom_price = PAYCHECK_LOWER * 2
+
+/obj/item/reagent_containers/cup/glass/waterbottle/tea/strawberry
+	name = "bottle of strawberry tea"
+	desc = "A bottle of strawberry flavored tea; does not contain any actual strawberries."
+	icon_state = "tea_bottle_pink"
+	list_reagents = list(/datum/reagent/consumable/pinktea = 40)
+	custom_price = PAYCHECK_LOWER * 2
+
+/obj/item/reagent_containers/cup/glass/waterbottle/tea/nip
+	name = "bottle of catnip tea"
+	desc = "A bottle of catnip tea, required to be at or under a 50% concentration by the SFDA for safety purposes."
+	icon_state = "tea_bottle_pink"
+	list_reagents = list(
+		/datum/reagent/consumable/catnip_tea = 20,
+		/datum/reagent/consumable/pinkmilk = 20,
+	)
+	custom_price = PAYCHECK_LOWER * 2.5

@@ -23,14 +23,14 @@
 /obj/item/trash/empty_side_pack/nt
 	icon_state = "foodpack_nt_trash"
 
-/obj/item/trash/empty_side_pack/yangyu
-	icon_state = "foodpack_yangyu_trash"
-
 /obj/item/trash/empty_side_pack/moth
 	icon_state = "foodpack_moth_trash"
 
 /obj/item/trash/empty_side_pack/tizira
 	icon_state = "foodpack_tizira_trash"
+
+/obj/item/trash/empty_side_pack/marsian
+	icon_state = "foodpack_marsian_trash"
 
 /* MEALS */
 
@@ -79,31 +79,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/capsaicin = 10)
 	tastes = list("bread" = 2, "chicken?" = 2, "overwhelming spice" = 2, "laziness" = 1)
 	foodtypes = MEAT | GRAIN | DAIRY
-
-/*
-*	Yangyu Meals
-*/
-
-/obj/item/food/vendor_tray_meal/ramen
-	name = "\improper Meinkosu: Homestyle Noodles"
-	desc = "A brick of the finest factory made ramen, with a small amount of rehydrated vegetables and herbs floating around."
-	icon_state = "foodtray_noodle"
-	tastes = list("cheap noodles" = 2, "laziness" = 1)
-	foodtypes = GRAIN | VEGETABLES
-
-/obj/item/food/vendor_tray_meal/sushi
-	name = "\improper Meinkosu: Fresh Carp Rolls"
-	desc = "A pair of sushi rolls, the appearance of which would suggest that the label is lying to you."
-	icon_state = "foodtray_gas_station_sushi"
-	tastes = list("imitation space carp" = 2, "stale rice" = 2, "laziness" = 1)
-	foodtypes = GRAIN | SEAFOOD
-
-/obj/item/food/vendor_tray_meal/beef_rice
-	name = "\improper Meinkosu: Beef and Fried Rice"
-	desc = "A few slices of seemingly grilled beef, paired with a disproportionately large amount of rice."
-	icon_state = "foodtray_beef_n_rice"
-	tastes = list("cheap beef" = 1, "rice" = 3, "laziness" = 1)
-	foodtypes = GRAIN | MEAT
 
 /*
 *	Mothic Meals
@@ -155,6 +130,63 @@
 	tastes = list("mushroom" = 4, "becoming rich" = 1, "laziness" = 1)
 	foodtypes = VEGETABLES
 
+/*
+*	Marsian Meals
+*/
+
+/obj/effect/spawner/random/vendor_tray_meal/burger_blind_bag
+	name = "random marsian burger spawner"
+
+/obj/effect/spawner/random/vendor_tray_meal/burger_blind_bag/Initialize(mapload)
+	loot = list(
+		/obj/item/food/vendor_tray_meal/chappy_patty,
+		/obj/item/food/vendor_tray_meal/big_blue_burger,
+	)
+	. = ..()
+
+/obj/item/food/vendor_tray_meal/chappy_patty
+	name = "\improper Marsian MEGA-Main Course: Chappy Patty"
+	desc = "Two slices of grilled Chap with cheese, topped with a fried egg between two buns."
+	icon_state = "foodtray_chappy_patty"
+	tastes = list("bun" = 1, "fried pork" = 2, "egg" = 1, "cheese" = 1, "ketchup" = 1)
+	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES
+
+/obj/item/food/vendor_tray_meal/big_blue_burger
+	name = "\improper Marsian MEGA-Main Course: Big Blue Burger"
+	desc = "The signature burger. Two patties, cheese, onions, bacon, and pineapple between two buns."
+	icon_state = "foodtray_big_blue_burger"
+	tastes = list("bun" = 1, "beef" = 2, "pineapple" = 1, "cheese" = 1, "bacon" = 1)
+	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES | FRUIT
+
+/obj/item/food/vendor_tray_meal/duck_crepe
+	name = "\improper Marsian MEGA-Main Course: Peking duck crepes a l'orange"
+	desc = "Crispy roasted duck served with thin, savory pancakes and garnished with spring onions. Any self-respecting restaurant in \
+	the Grey will have it on the menu - and its popularity has led to this lesser, pre-packaged version."
+	icon_state = "foodtray_duck_crepe"
+	tastes = list("meat" = 1, "crepes" = 1, "orange" = 1)
+	foodtypes = MEAT | DAIRY | VEGETABLES | FRUIT
+
+/obj/item/food/vendor_tray_meal/mi_goreng
+	name = "\improper Marsian MEGA-Main Course: Mi Goreng Shanjing"
+	desc = "The Red Planet's take on the popular fried noodle dish. Shallots, garlic and shredded Tian mutton - all topped off with a fried egg."
+	icon_state = "foodtray_mi_goreng"
+	tastes = list("noodles" = 2, "fried pork" = 2, "egg" = 1, "garlic" = 1)
+	foodtypes = MEAT | GRAIN | VEGETABLES
+
+/obj/item/food/vendor_tray_meal/sushi
+	name = "\improper Marsian MEGA-Main Course: Fresh Carp Rolls"
+	desc = "A pair of sushi rolls, the appearance of which would suggest that the label is lying to you."
+	icon_state = "foodtray_gas_station_sushi"
+	tastes = list("imitation space carp" = 2, "stale rice" = 2, "laziness" = 1)
+	foodtypes = GRAIN | SEAFOOD
+
+/obj/item/food/vendor_tray_meal/beef_rice
+	name = "\improper Marsian MEGA-Main Course: Beef and Fried Rice"
+	desc = "A few slices of seemingly grilled beef, paired with a disproportionately large amount of rice."
+	icon_state = "foodtray_beef_n_rice"
+	tastes = list("cheap beef" = 1, "rice" = 3, "laziness" = 1)
+	foodtypes = GRAIN | MEAT
+
 /* SIDES */
 
 /obj/effect/spawner/random/vendor_meal_sides
@@ -199,45 +231,6 @@
 	desc = "A small stack of tough flatbread, and a small spread of cheese for each."
 	tastes = list("tough bread" = 2, "cheese" = 2)
 	foodtypes = GRAIN | DAIRY
-
-/*
-*	Yangyu Sides
-*/
-
-/obj/effect/spawner/random/vendor_meal_sides/yangyu
-	name = "random yangyu side spawner"
-
-/obj/effect/spawner/random/vendor_meal_sides/yangyu/Initialize(mapload)
-	loot = list(
-		/obj/item/food/vendor_tray_meal/side/miso,
-		/obj/item/food/vendor_tray_meal/side/rice,
-		/obj/item/food/vendor_tray_meal/side/pickled_vegetables,
-	)
-	. = ..()
-
-/obj/item/food/vendor_tray_meal/side/miso
-	name = "\improper Fukusai: Miso Soup"
-	desc = "This is quite literally just a plastic bag full of miso soup, opening it on any side other than the one indicated may result in spilled soup."
-	icon_state = "foodpack_yangyu"
-	trash_type = /obj/item/trash/empty_side_pack/yangyu
-	tastes = list("miso" = 2)
-	foodtypes = VEGETABLES
-
-/obj/item/food/vendor_tray_meal/side/rice
-	name = "\improper Fukusai: White Rice"
-	desc = "A bag stuffed full of white rice, in case your meal didn't come with enough to sate your needs."
-	icon_state = "foodpack_yangyu"
-	trash_type = /obj/item/trash/empty_side_pack/yangyu
-	tastes = list("old rice" = 2)
-	foodtypes = GRAIN
-
-/obj/item/food/vendor_tray_meal/side/pickled_vegetables
-	name = "\improper Fukusai: Pickled Vegetables"
-	desc = "Contains a small assortment of vegetables pickled in a vinegar-like solution."
-	icon_state = "foodpack_yangyu"
-	trash_type = /obj/item/trash/empty_side_pack/yangyu
-	tastes = list("vinegar" = 4)
-	foodtypes = VEGETABLES
 
 /*
 *	Mothic Sides
@@ -316,3 +309,56 @@
 	trash_type = /obj/item/trash/empty_side_pack/tizira
 	tastes = list("cheese" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE
+
+/*
+* Marsian Sides
+*/
+
+/obj/effect/spawner/random/vendor_meal_sides/marsian
+	name = "random marsian side spawner"
+
+/obj/effect/spawner/random/vendor_meal_sides/marsian/Initialize(mapload)
+	loot = list(
+		/obj/item/food/vendor_tray_meal/side/chap_potama,
+		/obj/item/food/vendor_tray_meal/side/haupia,
+		/obj/item/food/sticko/random,
+		/obj/item/food/vendor_tray_meal/side/roast_nori,
+	)
+	. = ..()
+
+/obj/item/food/vendor_tray_meal/side/chap_potama
+	name = "\improper chap potama"
+	desc = "A sheet of seaweed with rice, all folded over a slice of premium Chap and a sheet of egg. Ubiquitous \
+	in the lunchboxes of Red Marsians working at rural air exchange towers."
+	icon_state = "chap_potama"
+	trash_type = /obj/item/trash/empty_side_pack/chap_potama
+	tastes = list("fried pork" = 2, "rice" = 2, "egg" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+
+/obj/item/food/vendor_tray_meal/side/haupia
+	name = "\improper haupia"
+	desc = "A staple Marsian dessert. Sweetened coconut milk thickened into a pudding and sliced into portable squares. \
+	This pre-packaged version doesn't compare to the homemade stuff, but it's guaranteed to comfort a homesick Marsian."
+	icon_state = "haupia"
+	trash_type = /obj/item/trash/empty_side_pack/haupia
+	tastes = list("condensed coconut milk" = 2, "artificial sweetener" = 2)
+	foodtypes = SUGAR
+
+/obj/item/food/vendor_tray_meal/side/roast_nori
+	name = "\improper roasted nori"
+	desc = "Red algae was slurried into a fibre soup and poured into sheet molds. Once dried and seasoned it makes a \
+	shelf stable snack that happens to scale well with hydroponic growth facilities, making it a cheap fixture across \
+	Marsian arcologies."
+	icon_state = "foodpack_marsian"
+	trash_type = /obj/item/trash/empty_side_pack/roast_nori
+	tastes = list("salt" = 1, "roasted seaweed" = 2)
+	foodtypes = VEGETABLES
+
+/obj/item/trash/empty_side_pack/chap_potama
+	icon_state = "chap_potama-trash"
+
+/obj/item/trash/empty_side_pack/haupia
+	icon_state = "haupia-trash"
+
+/obj/item/trash/empty_side_pack/roast_nori
+	icon_state = "foodpack_marsian_trash"

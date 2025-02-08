@@ -335,3 +335,97 @@
 	var/list/hoodie_colors = (SSgreyscale.ParseColorString(greyscale_colors))
 	var/list/new_hoodie_colors = hoodie_colors.Copy(1)
 	hood.set_greyscale(new_hoodie_colors)
+
+/obj/item/clothing/suit/hooded/big_hoodie
+	name = "oversized hoodie"
+	desc = "Cotton fibres grown in vertical aeroponic farming systems were ringspun and knit into a continuous loop fleece with \
+	a soft pile and little stretch. This fabric was cut oversized with soft sloping shoulders and cuffs that fall right at the first knuckle."
+	icon_state = "big_hoodie"
+	greyscale_config = /datum/greyscale_config/big_hoodie
+	greyscale_config_worn = /datum/greyscale_config/big_hoodie/worn
+	greyscale_colors = "#5d6161"
+	hoodtype = /obj/item/clothing/head/hooded/big_hoodie_hood
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/hooded/big_hoodie_hood
+	name = "oversized hood"
+	desc = "Cotton fibres grown in vertical aeroponic farming systems were ringspun and knit into a continuous loop fleece with \
+	a soft pile and little stretch. The hood was cut comfortably oversized."
+	icon_state = "big_hoodie_hood"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEEARS|HIDEHAIR
+	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	greyscale_config = /datum/greyscale_config/big_hoodie_hood
+	greyscale_config_worn = /datum/greyscale_config/big_hoodie_hood/worn
+	greyscale_colors = "#5d6161"
+
+/obj/item/clothing/suit/hooded/big_hoodie/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/hoodie_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	var/list/new_hoodie_colors = hoodie_colors.Copy(1)
+	hood.set_greyscale(new_hoodie_colors)
+	hood.update_slot_icon()
+
+/obj/item/clothing/suit/hooded/big_hoodie/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	var/list/hoodie_colors = (SSgreyscale.ParseColorString(greyscale_colors))
+	var/list/new_hoodie_colors = hoodie_colors.Copy(1)
+	hood.set_greyscale(new_hoodie_colors)
+
+/obj/item/clothing/suit/hooded/big_hoodie/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/jacket/)
+
+/obj/item/clothing/suit/hooded/twee_hoodie
+	name = "disconcertingly twee hoodie"
+	desc = "A sweatshirt of heavy and soft ringspun fleece has been adorned with a fabric simulation of ears."
+	icon_state = "twee_hoodie"
+	greyscale_config = /datum/greyscale_config/twee_hoodie
+	greyscale_config_worn = /datum/greyscale_config/twee_hoodie/worn
+	greyscale_colors = "#dbc0e0"
+	hoodtype = /obj/item/clothing/head/hooded/twee_hoodie_hood
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/hooded/twee_hoodie_hood
+	name = "disconcertingly twee hood"
+	desc = "A hood of heavy and soft ringspun fleece has been adorned with a fabric simulation of ears."
+	icon_state = "twee_hoodie_hood"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEEARS|HIDEHAIR
+	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	greyscale_config = /datum/greyscale_config/twee_hoodie_hood
+	greyscale_config_worn = /datum/greyscale_config/twee_hoodie_hood/worn
+	greyscale_colors = "#dbc0e0"
+
+/obj/item/clothing/suit/hooded/twee_hoodie/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/hoodie_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	var/list/new_hoodie_colors = hoodie_colors.Copy(1,2)
+	hood.set_greyscale(new_hoodie_colors)
+	hood.update_slot_icon()
+
+/obj/item/clothing/suit/hooded/twee_hoodie/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	var/list/hoodie_colors = (SSgreyscale.ParseColorString(greyscale_colors))
+	var/list/new_hoodie_colors = hoodie_colors.Copy(1,2)
+	hood.set_greyscale(new_hoodie_colors)
+
+/obj/item/clothing/suit/hooded/twee_hoodie/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/jacket/)

@@ -549,12 +549,20 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/call_source, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
+// DOPPLER EDIT BEGIN: changes alert_call to have the ability to send internal notifications
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/call_source, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg', internal = FALSE)
 	if(!call_source || !call_source.alert_able || call_source.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
-	playsound(src, sound, 50, TRUE)
-	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [call_source.filedesc] notification: [alerttext]"))
-
+	if (!internal)
+		playsound(src, sound, 50, TRUE)
+		physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [call_source.filedesc] notification: [alerttext]"))
+	else
+		// internal notifications are a bit different: they're not outwardly broadcast to our loc surroundings
+		if (isliving(physical.loc))
+			var/mob/living/living_holder = physical.loc
+			to_chat(living_holder, span_notice("[icon2html(physical, viewers(physical.loc))] [alerttext]"))
+			living_holder.playsound_local(living_holder, sound, 50, TRUE)
+// DOPPLER EDIT END
 /obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
 	if(!use_energy())
 		return

@@ -34,22 +34,6 @@
 	name = "\improper NT-Combo Meal - Spicy Chicken Sandwich"
 	main_course = /obj/item/food/vendor_tray_meal/chicken_sandwich
 
-/obj/item/storage/box/foodpack/yangyu
-	name = "\improper Atatakai shokuji - Homestyle Noodles"
-	desc = "A well decorated red and white plastic package, covered in nearly incomprehensible konjin text."
-	icon_state = "foodpack_yangyu_big"
-	main_course = /obj/item/food/vendor_tray_meal/ramen
-	side_item = /obj/effect/spawner/random/vendor_meal_sides/yangyu
-	condiment_pack = /obj/item/reagent_containers/condiment/pack/hotsauce
-
-/obj/item/storage/box/foodpack/yangyu/sushi
-	name = "\improper Atatakai shokuji - Carp Sushi Rolls"
-	main_course = /obj/item/food/vendor_tray_meal/sushi
-
-/obj/item/storage/box/foodpack/yangyu/beef_rice
-	name = "\improper Atatakai shokuji - Beef and Rice"
-	main_course = /obj/item/food/vendor_tray_meal/beef_rice
-
 /obj/item/storage/box/foodpack/moth
 	name = "\improper Ration Type M - Pesto Pizza"
 	desc = "A cardboard-colored paper package with the symbol of the nomad fleet stamped upon it."
@@ -87,3 +71,32 @@
 /obj/item/storage/box/foodpack/tizira/stir_fry
 	name = "\improper Tizira Imports Pack - Mushroom Stirfry"
 	main_course = /obj/item/food/vendor_tray_meal/mushroom_fry
+
+/obj/item/storage/box/foodpack/marsian
+	name = "\improper Marsian MEGA-Meal: Mi Goreng Shanjing"
+	desc = "Orange metallicized plastic is emblazoned with the blue heraldry of the Marsian flag."
+	icon_state = "foodpack_marsian_big"
+	main_course = /obj/item/food/vendor_tray_meal/mi_goreng
+	side_item = /obj/effect/spawner/random/vendor_meal_sides/marsian
+	condiment_pack = /obj/item/reagent_containers/condiment/pack/chili
+
+/obj/item/storage/box/foodpack/marsian/burger_blind_bag
+	name = "\improper Marsian MEGA-Meal: Big Blue Burger Blind Bag"
+	desc = "The top selling burger chain on Mars, now in ready-to-eat format. One mystery burger inside, certified mothroach-free after a costly lawsuit!"
+	main_course = /obj/effect/spawner/random/vendor_tray_meal/burger_blind_bag
+	condiment_pack = /obj/item/reagent_containers/condiment/pack/bbqsauce
+
+/obj/item/storage/box/foodpack/marsian/duck_crepe
+	name = "\improper Marsian MEGA-Meal: Peking duck crepes a l'orange"
+	main_course = /obj/item/food/vendor_tray_meal/duck_crepe
+	condiment_pack = /obj/item/reagent_containers/condiment/pack/soysauce
+
+/obj/item/storage/box/foodpack/marsian/sushi
+	name = "\improper Marsian MEGA-Meal: Carp Sushi Rolls"
+	main_course = /obj/item/food/vendor_tray_meal/sushi
+	condiment_pack = /obj/item/reagent_containers/condiment/pack/soysauce
+
+/obj/item/storage/box/foodpack/marsian/beef_rice
+	name = "\improper Marsian MEGA-Meal: Beef and Rice"
+	main_course = /obj/item/food/vendor_tray_meal/beef_rice
+	condiment_pack = /obj/item/reagent_containers/condiment/pack/hotsauce

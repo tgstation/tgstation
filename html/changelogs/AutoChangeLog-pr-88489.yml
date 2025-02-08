@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed single-use spectral instruments losing their powers before skeletonizing anyone."
+  - rscadd: "A very rare spooky suffix for mythril items and the wizard RPG event."

@@ -1,0 +1,10 @@
+{
+	"big_hoodie_hood": [
+		{
+			"type": "icon_state",
+			"icon_state": "big_hoodie_hood",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
