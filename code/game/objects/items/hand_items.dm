@@ -472,7 +472,7 @@
 	icon_state = "heart"
 	inhand_icon_state = "nothing"
 	/// The kind of projectile this version of the kiss blower fires
-	var/kiss_type = /obj/projectile/kiss
+	var/kiss_type_override = null
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
@@ -480,11 +480,13 @@
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/hand_item/kisser/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
-		kiss_type = /obj/projectile/kiss/french
+	if(!kiss_type_overide)
+		if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
+			kiss_type_overide = /obj/projectile/kiss/french
+		if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
+			kiss_type_override = /obj/projectile/kiss/chef
 
-	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
-		kiss_type = /obj/projectile/kiss/chef
+	var/kiss_type = kiss_type_override || /obj/projectile/kiss
 
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
@@ -531,19 +533,19 @@
 	name = "kiss of death"
 	desc = "If looks could kill, they'd be this."
 	color = COLOR_BLACK
-	kiss_type = /obj/projectile/kiss/death
+	kiss_type_override = /obj/projectile/kiss/death
 
 /obj/item/hand_item/kisser/syndie
 	name = "syndie kiss"
 	desc = "oooooo you like syndicate ur a syndiekisser"
 	color = COLOR_SYNDIE_RED
-	kiss_type = /obj/projectile/kiss/syndie
+	kiss_type_override = /obj/projectile/kiss/syndie
 
 /obj/item/hand_item/kisser/ink
 	name = "ink kiss"
 	desc = "Is that a blot of ink in your pocket or are you just happy to see me?"
 	color = COLOR_ALMOST_BLACK
-	kiss_type = /obj/projectile/kiss/ink
+	kiss_type_override = /obj/projectile/kiss/ink
 
 /obj/projectile/kiss
 	name = "kiss"
