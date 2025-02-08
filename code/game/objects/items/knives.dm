@@ -54,9 +54,9 @@
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /obj/item/knife/suicide_act(mob/living/user)
-	user.visible_message(pick(span_suicide("[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
-		span_suicide("[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
-		span_suicide("[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.")))
+	user.visible_message(pick(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_theyre()] trying to commit suicide."), \
+		span_suicide("[user] is slitting [user.p_their()] throat with \the [src]! It looks like [user.p_theyre()] trying to commit suicide."), \
+		span_suicide("[user] is slitting [user.p_their()] stomach open with \the [src]! It looks like [user.p_theyre()] trying to commit seppuku.")))
 	return BRUTELOSS
 
 /obj/item/knife/ritual

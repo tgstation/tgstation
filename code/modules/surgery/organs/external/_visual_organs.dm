@@ -133,7 +133,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/frills
 	name = "frills"
-	desc = "Ear-like external organs often seen on aquatic reptillians."
+	desc = "Ear-like external organs often seen on aquatic reptilians."
 	icon_state = "frills"
 
 	zone = BODY_ZONE_HEAD

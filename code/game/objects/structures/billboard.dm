@@ -47,7 +47,7 @@
 
 /obj/structure/billboard/twenty_four_seven
 	name = "\improper 24-Seven billboard"
-	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Everyday."
+	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Every Day."
 	icon_state = "billboard_twenty_four_seven"
 
 /obj/structure/billboard/starway

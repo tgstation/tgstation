@@ -12,7 +12,7 @@ So, let's our suit should be a low-power usage with lowered module capacity. We'
 ```dm
 /datum/mod_theme/psychological
 	name = "psychological"
-	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its' module capacity."
+	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its module capacity."
 ```
 
 For people that want to see additional stuff, we add an extended description with some more insight into what the suit does. We also set the default skin to usually the theme name, like so.
@@ -20,7 +20,7 @@ For people that want to see additional stuff, we add an extended description wit
 ```dm
 /datum/mod_theme/psychological
 	name = "psychological"
-	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its' module capacity."
+	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its module capacity."
 	extended_desc = "DeForest Medical Corporation's prototype suit, based off the work of \
 		Nakamura Engineering. The suit has been modified to save power compared to regular suits, \
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
@@ -34,7 +34,7 @@ Currently crew MODsuits should be lightly armored in combat relevant stats.
 ```dm
 /datum/mod_theme/psychological
 	name = "psychological"
-	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its' module capacity."
+	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its module capacity."
 	extended_desc = "DeForest Medical Corporation's prototype suit, based off the work of \
 		Nakamura Engineering. The suit has been modified to save power compared to regular suits, \
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
@@ -73,7 +73,7 @@ So, now that we have our theme, we want to add a skin to it (or another theme of
 ```dm
 /datum/mod_theme/psychological
 	name = "psychological"
-	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its' module capacity."
+	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its module capacity."
 	extended_desc = "DeForest Medical Corporation's prototype suit, based off the work of \
 		Nakamura Engineering. The suit has been modified to save power compared to regular suits, \
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
@@ -96,7 +96,7 @@ So, now that we have our theme, we want to add a skin to it (or another theme of
 	)
 ```
 
-We now have a psychological skin, this will apply the psychological icons to every part of the suit. Next we'll be looking at the flags. Boots, gauntlets and the chestplate are usually very standard, we set their thickmaterial and pressureproofness while hiding the jumpsuit on the chestplate. On the helmet however, we'll actually look at its' icon. \
+We now have a psychological skin, this will apply the psychological icons to every part of the suit. Next we'll be looking at the flags. Boots, gauntlets and the chestplate are usually very standard, we set their thickmaterial and pressureproofness while hiding the jumpsuit on the chestplate. On the helmet however, we'll actually look at its icon. \
 For example, if our helmet's icon covers the full head (like the research skin), we want to do something like this.
 
 ```dm
@@ -126,7 +126,7 @@ There are specific cases of helmets that semi-cover the head, like the cosmohonk
 ```dm
 /datum/mod_theme/psychological
 	name = "psychological"
-	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its' module capacity."
+	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its module capacity."
 	extended_desc = "DeForest Medical Corporation's prototype suit, based off the work of \
 		Nakamura Engineering. The suit has been modified to save power compared to regular suits, \
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
@@ -254,7 +254,7 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 ```dm
 /datum/mod_theme/psychological
 	name = "psychological"
-	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its' module capacity."
+	desc = "A DeForest Medical Corporation power-saving psychological suit, limiting its module capacity."
 	extended_desc = "DeForest Medical Corporation's prototype suit, based off the work of \
 		Nakamura Engineering. The suit has been modified to save power compared to regular suits, \
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \

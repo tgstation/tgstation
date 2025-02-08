@@ -59,7 +59,7 @@
 /code/controllers/master.dm @LemonInTheDark
 /code/controllers/subsystem.dm @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark
-/code/controllers/subsystem/timer.dm @MrStonedOne
+/code/controllers/subsystem/timer.dm @LemonInTheDark
 
 # Mothblocks
 

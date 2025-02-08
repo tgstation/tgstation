@@ -8,6 +8,8 @@
 	var/found_food_key = BB_TARGET_FOOD
 	///key holding any emotes we play after eating food
 	var/emotes_blackboard_list = BB_EAT_EMOTES
+	///key where we store our search range
+	var/search_range = BB_SEARCH_RANGE
 
 /datum/ai_planning_subtree/find_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/list/foods_list = controller.blackboard[food_list_key]
@@ -15,9 +17,11 @@
 		CRASH("the types of food has not been supplied in the [food_list_key] key!")
 	if(controller.blackboard[BB_NEXT_FOOD_EAT] > world.time)
 		return
+
 	if(!controller.blackboard_key_exists(found_food_key))
-		controller.queue_behavior(finding_behavior, found_food_key, foods_list)
+		controller.queue_behavior(finding_behavior, found_food_key, foods_list, controller.blackboard[BB_SEARCH_RANGE])
 		return
+
 	controller.queue_behavior(/datum/ai_behavior/interact_with_target/eat_food, found_food_key, emotes_blackboard_list)
 	return SUBTREE_RETURN_FINISH_PLANNING
 

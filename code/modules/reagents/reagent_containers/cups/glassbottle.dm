@@ -851,7 +851,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/moonshine
 	name = "moonshine jug"
-	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
+	desc = "It is said that the ancient Appalachians used these stoneware jugs to capture lightning in a bottle."
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
 	drink_type = ALCOHOL
