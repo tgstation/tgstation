@@ -253,6 +253,8 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_SEATBELT_UNBUCKLE "unbuckle"
 #define SFX_HEADSET_EQUIP "headset_equip"
 #define SFX_HEADSET_PICKUP "headset_pickup"
+#define SFX_BANDAGE_BEGIN "bandage_begin"
+#define SFX_BANDAGE_END "bandage_end"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
