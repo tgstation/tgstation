@@ -98,10 +98,10 @@
 				Unconscious(rand(1 SECONDS, 2 SECONDS))
 				to_chat(src, span_userdanger("You black out for a moment!"))
 		// Instantly die upon this threshold
-		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+		/* if(-INFINITY to BLOOD_VOLUME_SURVIVE) // DOPPLER EDIT REMOVAL
 			if(!HAS_TRAIT(src, TRAIT_NODEATH))
 				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
-				death()
+				death() */
 
 	// Blood ratio! if you have 280 blood, this equals 0.5 as that's half of the current value, 560.
 	var/effective_blood_ratio = blood_volume / BLOOD_VOLUME_NORMAL

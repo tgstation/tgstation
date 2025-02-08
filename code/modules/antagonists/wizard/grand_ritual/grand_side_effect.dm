@@ -34,7 +34,7 @@
 	var/sound
 
 /// Casts dimensional instability on the area
-/datum/grand_side_effect/scramble_turfs
+/* /datum/grand_side_effect/scramble_turfs - DOPPLER SHIFT REMOVAL
 	abstract = FALSE
 
 /datum/grand_side_effect/scramble_turfs/trigger(potency, turf/ritual_location, mob/invoker)
@@ -43,7 +43,7 @@
 	spell.cast(ritual_location)
 
 	var/duration = LERP((10 SECONDS), (15 SECONDS), potency/GRAND_RITUAL_FINALE_COUNT)
-	QDEL_IN(spell, duration)
+	QDEL_IN(spell, duration) */
 
 /// Transform the surrounding area into something else.
 /datum/grand_side_effect/transmogrify_area

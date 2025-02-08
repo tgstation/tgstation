@@ -1,0 +1,18 @@
+{
+	"twee_hoodie": [
+		{
+			"type": "icon_state",
+			"icon_state": "twee_hoodie",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"twee_hoodie_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "twee_hoodie_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

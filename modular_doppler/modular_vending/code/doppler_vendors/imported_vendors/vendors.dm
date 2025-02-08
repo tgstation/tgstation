@@ -1,18 +1,18 @@
 /obj/effect/spawner/random/vending/snackvend
 	loot = list(
 		/obj/machinery/vending/imported/nt,
-		/obj/machinery/vending/imported/yangyu,
 		/obj/machinery/vending/imported/mothic,
 		/obj/machinery/vending/imported/tiziran,
+		/obj/machinery/vending/imported/marsian,
 		/obj/machinery/vending/deforest_medvend,
 	)
 
 /obj/effect/spawner/random/vending/colavend //These can serve both snacks AND drinks so it's kinda both of them?
 	loot = list(
 		/obj/machinery/vending/imported/nt,
-		/obj/machinery/vending/imported/yangyu,
 		/obj/machinery/vending/imported/mothic,
 		/obj/machinery/vending/imported/tiziran,
+		/obj/machinery/vending/imported/marsian,
 		/obj/machinery/vending/deforest_medvend,
 	)
 
@@ -70,62 +70,6 @@
 
 /obj/item/vending_refill/snack/imported/nt
 	machine_name = "NT Sustenance Supplier"
-
-/obj/machinery/vending/imported/yangyu
-	name = "Fudobenda"
-	desc = "A vendor selling traditional Sol eastern foods of dubious quality."
-	icon_state = "yangyu_food"
-	light_mask = "yangyu_food-light-mask"
-	light_color = LIGHT_COLOR_FLARE
-	product_slogans = "Fresh farmed space carp from local space!;Imitation lobstrocity sushi choices availible!;Made with traditional recipes and care!"
-	product_categories = list(
-		list(
-			"name" = "Snacks",
-			"icon" = "cookie",
-			"products" = list(
-				/obj/item/reagent_containers/cup/glass/dry_ramen/prepared = 6,
-				/obj/item/reagent_containers/cup/glass/dry_ramen/prepared/hell = 6,
-				/obj/item/food/vendor_snacks/rice_crackers = 6,
-				/obj/item/food/vendor_snacks/mochi_ice_cream = 6,
-				/obj/item/food/vendor_snacks/mochi_ice_cream/matcha = 6,
-				/obj/item/reagent_containers/cup/glass/waterbottle/tea = 6,
-				/obj/item/reagent_containers/cup/glass/waterbottle/tea/astra = 6,
-				/obj/item/reagent_containers/cup/glass/waterbottle/tea/strawberry = 6,
-				/obj/item/reagent_containers/cup/glass/waterbottle/tea/nip = 6,
-			),
-		),
-		list(
-			"name" = "Meals",
-			"icon" = "pizza-slice",
-			"products" = list(
-				/obj/item/storage/box/foodpack/yangyu = 6,
-				/obj/item/storage/box/foodpack/yangyu/sushi = 6,
-				/obj/item/storage/box/foodpack/yangyu/beef_rice = 6,
-				/obj/item/food/vendor_tray_meal/side/miso = 6,
-				/obj/item/food/vendor_tray_meal/side/rice = 6,
-				/obj/item/food/vendor_tray_meal/side/pickled_vegetables = 6,
-			),
-		),
-	)
-
-	refill_canister = /obj/item/vending_refill/snack/imported/yangyu
-	initial_language_holder = /datum/language_holder/yangyu_vendor
-
-/datum/language_holder/yangyu_vendor
-	understood_languages = list(
-		/datum/language/konjin = list(LANGUAGE_ATOM),
-		)
-	spoken_languages = list(
-		/datum/language/konjin = list(LANGUAGE_ATOM),
-		)
-
-/obj/machinery/vending/imported/yangyu/examine_more(mob/user)
-	. = ..()
-	. += span_notice("Someone appears to have written <i>\"Don't trust the sushi!\"</i> in marker on the side of the vendor.")
-	return .
-
-/obj/item/vending_refill/snack/imported/yangyu
-	machine_name = "Fudobenda"
 
 /obj/machinery/vending/imported/mothic
 	name = "Nomad Fleet Ration Chit Exchange"
@@ -227,3 +171,82 @@
 
 /obj/item/vending_refill/snack/imported/tiziran
 	machine_name = "Tiziran Imported Delicacies"
+
+
+/obj/machinery/vending/imported/marsian
+	name = "Marsian MEGA-vend"
+	desc = "An allegedly authentic vendor claiming to offer all the hallmarks of Marsian cuisine, in a convenient ready-to-eat format."
+	icon_state = "marsian_vendor"
+	light_mask = "marsian_vendor-light-mask"
+	light_color = LIGHT_COLOR_FLARE
+	product_slogans = "MEGA savings! MEGA selection! It's the Marsian MEGA-vend!;Exclusive Marsian Imports!"
+	product_categories = list(
+		list(
+			"name" = "Snacks",
+			"icon" = "cookie",
+			"products" = list(
+				/obj/item/food/sticko = 6,
+				/obj/item/food/sticko/matcha = 6,
+				/obj/item/food/sticko/nutty = 6,
+				/obj/item/food/sticko/pineapple = 6,
+				/obj/item/food/sticko/yuyake = 6,
+				/obj/item/food/vendor_snacks/rice_crackers = 6,
+				/obj/item/food/vendor_snacks/mochi_ice_cream = 6,
+				/obj/item/food/vendor_snacks/mochi_ice_cream/matcha = 6,
+				/obj/item/reagent_containers/cup/glass/dry_ramen/prepared = 6,
+				/obj/item/reagent_containers/cup/glass/dry_ramen/prepared/hell = 6,
+				/obj/item/food/takoyaki/taco = 6,
+				/obj/item/food/okonomiyaki = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/red_beverage = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/yogurt_beverage = 6,
+				/obj/item/reagent_containers/cup/glass/waterbottle/tea = 6,
+				/obj/item/reagent_containers/cup/glass/waterbottle/tea/astra = 6,
+				/obj/item/reagent_containers/cup/glass/waterbottle/tea/strawberry = 6,
+				/obj/item/reagent_containers/cup/glass/waterbottle/tea/nip = 6,
+			),
+		),
+		list(
+			"name" = "Meals",
+			"icon" = "pizza-slice",
+			"products" = list(
+				/obj/item/storage/box/foodpack/marsian = 6,
+				/obj/item/storage/box/foodpack/marsian/burger_blind_bag = 6,
+				/obj/item/storage/box/foodpack/marsian/duck_crepe = 6,
+				/obj/item/storage/box/foodpack/marsian/sushi = 6,
+				/obj/item/storage/box/foodpack/marsian/beef_rice = 6,
+				/obj/item/food/vendor_tray_meal/side/chap_potama = 6,
+				/obj/item/food/vendor_tray_meal/side/haupia = 6,
+				/obj/item/food/vendor_tray_meal/side/roast_nori = 6,
+			),
+		),
+		list(
+			"name" = "Smokes",
+			"icon" = "smoking",
+			"products" = list(
+				/obj/item/storage/fancy/cigarettes/tangerine = 6,
+				/obj/item/storage/fancy/cigarettes/cigpack_midori = 6,
+				/obj/item/storage/fancy/cigarettes/cigpack_cannabis = 3,
+				/obj/item/lighter = 3,
+				/obj/item/lighter/greyscale = 5,
+			),
+		)
+	)
+
+	refill_canister = /obj/item/vending_refill/snack/imported/marsian
+	initial_language_holder = /datum/language_holder/marsian_vendor
+
+/datum/language_holder/marsian_vendor
+	understood_languages = list(
+		/datum/language/konjin = list(LANGUAGE_ATOM),
+		)
+	spoken_languages = list(
+		/datum/language/konjin = list(LANGUAGE_ATOM),
+		)
+
+/obj/machinery/vending/imported/marsian/examine_more(mob/user)
+	. = ..()
+	. += span_notice("The scent of injection molded polymer is genuinely staggering.")
+	return .
+
+/obj/item/vending_refill/snack/imported/marsian
+	machine_name = "Marsian MEGA-vend"

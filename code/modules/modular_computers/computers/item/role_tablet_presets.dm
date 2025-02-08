@@ -390,7 +390,7 @@
 
 /obj/item/modular_computer/pda/bridge_assistant
 	name = "bridge assistant PDA"
-	greyscale_colors = "#374f7e#a92323"
+	greyscale_colors = "#69E062#E26F41" // DOPPLER EDIT, old code: greyscale_colors = "#374f7e#a92323"
 	starting_programs = list(
 		/datum/computer_file/program/status,
 	)

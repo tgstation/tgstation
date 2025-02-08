@@ -325,6 +325,11 @@
 	var/hidden_icon = "edagger"
 	var/list/alt_continuous = list("stabs", "pierces", "shanks")
 	var/list/alt_simple = list("stab", "pierce", "shank")
+	// DOPPLER ADDITION START
+	/// The inhands were hardcoded, so this non-modular code fixes that
+	var/lefthand_icon = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	var/righthand_icon = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	// DOPPLER ADDITION END
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
@@ -424,8 +429,8 @@
 		desc = hidden_desc
 		icon_state = hidden_icon
 		inhand_icon_state = hidden_icon
-		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+		lefthand_file = lefthand_icon // DOPPLER EDIT, old code: lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+		righthand_file = righthand_icon // DOPPLER EDIT, old code: righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		set_embed(/datum/embedding/edagger_active)
 	else
 		name = initial(name)
