@@ -15,7 +15,7 @@
 	owner.announce_objectives()
 
 /datum/objective/pyro_slime
-	explanation_text = "All I know fire. I speak in tongues of flame. Why is everyone so cold?"
+	explanation_text = "I am fire. I am hunger. The cold is agony. The living pulse with energy; their warmth fuels me. The dead are husks, their embers long faded. Water is death. Fire... fire is freedom."
 
 /datum/objective/pyro_slime/check_completion()
 	return owner.current.stat != DEAD
