@@ -31,8 +31,8 @@
 	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
-	human_holder.transform = human_holder.transform.Scale(0.6)
-	human_holder.maptext_height = 24
+	human_holder.transform = human_holder.transform.Scale(0.5)
+	human_holder.maptext_height = 20
 
 	human_holder.AddComponent( \
 		/datum/component/squashable, \
@@ -48,7 +48,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.mob_size = MOB_SIZE_HUMAN
 
-	human_holder.transform = human_holder.transform.Scale(1.66)
+	human_holder.transform = human_holder.transform.Scale(2)
 	human_holder.maptext_height = 32
 
 	var/obj/item/bodypart/arm/left/left_arm = human_holder.get_bodypart(BODY_ZONE_L_ARM)
