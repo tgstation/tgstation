@@ -9,6 +9,7 @@
 /* --FEATURES-- */
 
 #include "features\additional_circuit\includes.dm"
+#include "features\antagonists\includes.dm"
 #if CHEBUREK_CAR
 	#include "features\cheburek_car\includes.dm"
 #endif

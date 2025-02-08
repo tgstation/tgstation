@@ -2,3 +2,4 @@
 // So you can easily use your helpers in TG code folder, not only in our modular folder
 
 #include "tgui.dm"
+#include "antagonists.dm"
