@@ -1335,15 +1335,6 @@
 	dir = 4
 	},
 /area/shuttle/escape)
-"tp" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/iron/stairs/medium,
-/area/shuttle/escape)
 "tv" = (
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 5
@@ -2335,15 +2326,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape/brig)
-"Fp" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/iron/stairs/medium,
-/area/shuttle/escape)
 "Fq" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32;
@@ -4232,7 +4214,7 @@ La
 La
 YY
 tG
-tp
+tG
 Mz
 qc
 qc
@@ -4279,7 +4261,7 @@ La
 La
 IO
 Ew
-Fp
+Ew
 bn
 qc
 qc
