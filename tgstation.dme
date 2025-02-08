@@ -7151,6 +7151,7 @@
 #include "modular_doppler\modular_quirks\night_vision\night_vision.dm"
 #include "modular_doppler\modular_quirks\oversized\door.dm"
 #include "modular_doppler\modular_quirks\oversized\oversized.dm"
+#include "modular_doppler\modular_quirks\undersized\undersized.dm"
 #include "modular_doppler\modular_quirks\overwrites\equipping.dm"
 #include "modular_doppler\modular_quirks\overwrites\musician.dm"
 #include "modular_doppler\modular_quirks\paycheck_rations\code\quirk.dm"

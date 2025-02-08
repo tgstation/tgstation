@@ -6,3 +6,6 @@
 
 /// The trait corresponding with the oversized quirk.
 #define TRAIT_OVERSIZED "oversized"
+
+//// The trait for undersized quirk
+#define TRAIT_UNDERSIZED "undersized"
