@@ -3,6 +3,9 @@
 // /datum/atom_hud expects these to be unique
 // these need to be strings in order to make them associative lists
 
+/// Onstation jobs
+#define SECHUD_BODYGUARD "hudbodyguard"
+
 /// - - - ANTAGONIST - - -
 /// PLUTONIAN
 #define SECHUD_SAPPER "hudsapper"

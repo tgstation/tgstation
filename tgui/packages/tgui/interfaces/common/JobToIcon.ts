@@ -56,4 +56,7 @@ export const JOB2ICON = {
   'Veteran Security Advisor': 'ribbon',
   'Pun Pun': 'paw',
   Warden: 'handcuffs',
+  // DOPPLER EDIT START
+  'Command Bodyguard': 'user-tie',
+  // DOPPLER EDIT END
 } as const;

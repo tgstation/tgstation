@@ -295,6 +295,8 @@
 		/datum/job/warden = /obj/item/organ/cyberimp/eyes/hud/security,
 		// DOPPLER EDIT BEGIN
 		/datum/job/bridge_assistant = /obj/item/organ/cyberimp/arm/paperwork,
+		/datum/job/command_bodyguard = /obj/item/organ/eyes/robotic/shield,
+		// DOPPLER EDIT END
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
