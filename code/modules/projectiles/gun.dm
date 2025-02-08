@@ -76,6 +76,11 @@
 	/// Cooldown for the visible message sent from gun flipping.
 	COOLDOWN_DECLARE(flip_cooldown)
 
+	//doppler edit
+	var/kickback_force = 0
+	var/kickback_speed = 0
+	var/kickback_range = 0
+
 /obj/item/gun/Initialize(mapload)
 	. = ..()
 	if(ispath(pin))
@@ -194,9 +199,16 @@
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
+
+	if(user.mob_size == MOB_SIZE_TINY)
+		var/move_target = get_edge_target_turf(user, REVERSE_DIR(user.dir))
+		user.throw_at(move_target, kickback_range, kickback_speed, user, force = kickback_force)
+		shake_camera(user, 1, kickback_range/2) //small guys get a lil extra recoil as a treat
+
 	if(recoil && !tk_firing(user))
 		shake_camera(user, recoil + 1, recoil)
 	fire_sounds()
+
 	if(suppressed || !message)
 		return
 	if(tk_firing(user))
@@ -608,6 +620,10 @@
 
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
+	//doppler edit for lil guy
+	kickback_force = chambered.loaded_projectile.damage
+	kickback_speed = kickback_force
+	kickback_range = chambered.loaded_projectile.damage/10
 	return
 
 #undef FIRING_PIN_REMOVAL_DELAY

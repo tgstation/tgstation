@@ -38,7 +38,7 @@
 		/datum/component/squashable, \
 		squash_chance = UNDERSIZED_SQUASH_CHANCE, \
 		squash_damage = UNDERSIZED_SQUASH_DAMAGE, \
-		squash_flags = UNDERSIZED_SHOULD_GIBBED, \
+		squash_flags = UNDERSIZED_SHOULD_GIB, \
 	)
 
 	human_holder.can_be_held = TRUE
