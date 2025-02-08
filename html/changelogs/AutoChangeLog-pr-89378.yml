@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Hunter boxing now directly heals you instead of injecting you with healing chems on a successful crit."
-  - balance: "Your combos no longer cause you to screw up your next combo by changing your attack speed for exactly one punch."
-  - code_imp: "Fixes up a bit of odd rounding that occurs in the experience gain totals and uses division instead of multipliers where it makes sense."
