@@ -799,4 +799,18 @@
 				'sound/items/handling/headset/headset_pickup2.ogg',
 				'sound/items/handling/headset/headset_pickup3.ogg',
 			)
+		if(SFX_BANDAGE_BEGIN)
+			soundin = pick(
+				'sound/items/gauze/bandage_begin1.ogg',
+				'sound/items/gauze/bandage_begin2.ogg',
+				'sound/items/gauze/bandage_begin3.ogg',
+				'sound/items/gauze/bandage_begin4.ogg',
+			)
+		if(SFX_BANDAGE_END)
+			soundin = pick(
+				'sound/items/gauze/bandage_end1.ogg',
+				'sound/items/gauze/bandage_end2.ogg',
+				'sound/items/gauze/bandage_end3.ogg',
+				'sound/items/gauze/bandage_end4.ogg',
+			)
 	return soundin

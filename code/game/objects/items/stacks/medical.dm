@@ -36,6 +36,10 @@
 	var/apply_verb = "treating"
 	/// Whether this item can be used on dead bodies
 	var/works_on_dead = FALSE
+	/// The sound this makes when starting healing with this item
+	var/heal_begin_sound = null
+	/// The sound this makes when healed successfully with this item
+	var/heal_end_sound = null
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -375,6 +379,8 @@
 	apply_verb = "wrapping"
 	works_on_dead = TRUE
 	var/obj/item/bodypart/gauzed_bodypart
+	heal_end_sound = SFX_BANDAGE_END
+	heal_begin_sound = SFX_BANDAGE_BEGIN
 
 /obj/item/stack/medical/gauze/Destroy(force)
 	. = ..()
@@ -444,6 +450,7 @@
 				span_warning("You begin wrapping the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone] with [src]..."),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
+	playsound(src, heal_begin_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
 	if(!do_after(user, treatment_delay, target = patient))
 		return
@@ -455,6 +462,8 @@
 			span_green("You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
+		if(heal_end_sound)
+			playsound(patient, heal_end_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
