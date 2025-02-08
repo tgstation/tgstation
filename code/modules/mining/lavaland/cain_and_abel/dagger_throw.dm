@@ -34,26 +34,28 @@
 
 	set_dagger_icon(thrown = TRUE) //when we throw a dagger, we'll only be holding 1
 	user.Beam(dagger, icon_state = "chain", icon = 'icons/obj/mining_zones/artefacts.dmi', maxdistance = 9, layer = BELOW_MOB_LAYER)
+	RegisterSignal(dagger, COMSIG_QDELETING, PROC_REF(reset_dagger_icon))
 	RegisterSignal(dagger, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_dagger_hit))
 
 /obj/item/cain_and_abel/proc/on_dagger_hit(obj/projectile/dagger/source, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(!ismob(loc))
 		return
 
 	var/atom/dagger_visual = source.dagger_effects(target)
-	if(isnull(dagger_visual))
-		set_dagger_icon(thrown = FALSE)
+	if(!isnull(dagger_visual))
+		RegisterSignal(dagger_visual, COMSIG_QDELETING, PROC_REF(reset_dagger_icon))
 		return
 
-	RegisterSignal(dagger_visual, COMSIG_QDELETING, PROC_REF(reset_dagger_icon))
+	set_dagger_icon(thrown = FALSE)
 
 /obj/item/cain_and_abel/proc/set_dagger_icon(thrown = FALSE)
 	inhand_icon_state = "[src::inhand_icon_state][thrown ? "_thrown" : ""]"
 	update_inhand_icon()
 
-/obj/item/cain_and_abel/proc/reset_dagger_icon()
+/obj/item/cain_and_abel/proc/reset_dagger_icon(datum/source)
 	SIGNAL_HANDLER
 	set_dagger_icon(thrown = FALSE)
 

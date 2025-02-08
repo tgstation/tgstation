@@ -4807,6 +4807,7 @@
 #include "code\modules\mining\lavaland\cain_and_abel\_cain_and_abel.dm"
 #include "code\modules\mining\lavaland\cain_and_abel\dagger_abilities.dm"
 #include "code\modules\mining\lavaland\cain_and_abel\dagger_effects.dm"
+#include "code\modules\mining\lavaland\cain_and_abel\dagger_status_effects.dm"
 #include "code\modules\mining\lavaland\cain_and_abel\dagger_throw.dm"
 #include "code\modules\mob\emote.dm"
 #include "code\modules\mob\inventory.dm"

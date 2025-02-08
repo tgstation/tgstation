@@ -17,6 +17,9 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_EDGED
+	light_range = 3
+	light_power = 2
+	light_color = "#3db9db"
 	reach = 2
 	attack_icon = 'icons/effects/effects.dmi'
 	attack_icon_state = "cain_abel_attack"
@@ -46,28 +49,32 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = force, force_wielded = force)
 
-/obj/item/cain_and_abel/proc/on_unequip(datum/source, obj/item/dropped_item, force, new_location)
-	SIGNAL_HANDLER
 
-	if(dropped_item != src)
+/obj/item/cain_and_abel/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(!isliving(old_loc))
 		return
 
+	unset_user(old_loc)
+
+/obj/item/cain_and_abel/proc/unset_user(mob/living/source)
 	if(HAS_TRAIT(source, TRAIT_RELAYING_ATTACKER))
 		source.RemoveElement(/datum/element/relay_attackers)
 
 	set_combo(new_value = 0, user = source)
-	UnregisterSignal(source, list(COMSIG_ATOM_WAS_ATTACKED, COMSIG_MOB_UNEQUIPPED_ITEM))
+	UnregisterSignal(source, list(COMSIG_ATOM_WAS_ATTACKED))
+
 
 /obj/item/cain_and_abel/equipped(mob/user, slot)
 	. = ..()
 
 	if(!(slot & ITEM_SLOT_HANDS))
-		set_combo(new_value = 0, user = user)
+		unset_user(user)
+		return
 
 	if(!HAS_TRAIT(user, TRAIT_RELAYING_ATTACKER))
 		user.AddElement(/datum/element/relay_attackers)
 
-	RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(on_unequip))
 	RegisterSignal(user, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 /obj/item/cain_and_abel/proc/on_attacked(datum/source, atom/attacker, attack_flags)

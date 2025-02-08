@@ -24,8 +24,8 @@
 	layer = ABOVE_HUD_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blood_wisp"
-	light_power = 1
-	light_range = 1
+	light_power = 2
+	light_range = 2
 	light_color = "#d74e63"
 
 //blade we hurl
@@ -82,36 +82,41 @@
 	light_power = 2
 	light_range = 2
 	duration = 3 SECONDS
+
+//the dagger thatll launch us toward it
+/obj/effect/temp_visual/dagger_engraved/launch
+
+/obj/effect/temp_visual/dagger_engraved/launch/proc/launch(mob/living/firer)
+	firer.throw_at(target = src, range = 9, speed = 1, spin = FALSE, gentle = TRUE, throw_type_path = /datum/thrownthing/dagger_launch)
+
+//throw datum the cain and abel applies
+/datum/thrownthing/dagger_launch
 	///traits we apply to the user when being launched
 	var/static/list/traits_on_launch = list(
 		TRAIT_IMMOBILIZED,
 		TRAIT_MOVE_FLOATING,
 	)
 
-//the dagger thatll launch us toward it
-/obj/effect/temp_visual/dagger_engraved/launch
-
-/obj/effect/temp_visual/dagger_engraved/launch/proc/launch(mob/living/firer)
-	RegisterSignal(firer, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_firer_thrown))
-	firer.throw_at(target = src, range = 9, speed = 1, spin = FALSE, gentle = TRUE)
-	RegisterSignal(firer, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_firer_landed))
-
-/obj/effect/temp_visual/dagger_engraved/launch/proc/on_firer_thrown(mob/living/source, datum/thrownthing/thrown)
-	SIGNAL_HANDLER
-	if(thrown.initial_target?.resolve() != src)
-		end_throw(source)
+/datum/thrownthing/dagger_launch/New(thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
+	. = ..()
+	if(isnull(thrownthing))
 		return
-	source.add_traits(traits_on_launch, REF(src))
-	new /obj/effect/temp_visual/mook_dust(get_turf(source))
+	var/atom/thrown_atom = thrownthing
+	thrown_atom.add_traits(traits_on_launch, REF(src))
+	new /obj/effect/temp_visual/mook_dust(get_turf(thrownthing))
 
-/obj/effect/temp_visual/dagger_engraved/launch/proc/end_throw(mob/living/firer)
-	firer.remove_traits(traits_on_launch, REF(src))
-	new /obj/effect/temp_visual/mook_dust(get_turf(firer))
-	qdel(src)
+/datum/thrownthing/dagger_launch/finalize(hit, target)
+	. = ..()
+	if(thrownthing)
+		new /obj/effect/temp_visual/mook_dust(get_turf(thrownthing))
 
-/obj/effect/temp_visual/dagger_engraved/launch/proc/on_firer_landed(mob/living/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
-	SIGNAL_HANDLER
-	end_throw(source)
+/datum/thrownthing/dagger_launch/Destroy()
+	if(thrownthing)
+		thrownthing.remove_traits(traits_on_launch, REF(src))
+	var/obj/effect/temp_visual/dagger_engraved/launch/target_dagger = initial_target?.resolve()
+	if(istype(target_dagger))
+		qdel(target_dagger)
+	return ..()
 
 //dagger thatll spring up crystals
 /obj/effect/temp_visual/dagger_engraved/crystals
@@ -128,6 +133,7 @@
 		new /obj/effect/temp_visual/dagger_crystal(get_turf(src))
 		return
 
+	playsound(src, 'sound/items/weapons/crystal_dagger_sound.ogg', 60, vary = TRUE, pressure_affected = FALSE)
 	var/list/turfs_to_crystalize = border_diamond_range_turfs(src, range)
 	for(var/turf/turf_to_crystalize as anything in turfs_to_crystalize)
 		new /obj/effect/temp_visual/dagger_crystal(turf_to_crystalize)
@@ -142,6 +148,10 @@
 	light_color = "#d74e63"
 	duration = 0.5 SECONDS
 
+/obj/effect/temp_visual/wisp_explosion/Initialize(mapload)
+	. = ..()
+	playsound(get_turf(src), 'sound/items/weapons/effects/blood_wisp_explode.ogg', 60, vary = TRUE, pressure_affected = FALSE)
+
 //painful crystals to step on
 /obj/effect/temp_visual/dagger_crystal
 	icon = 'icons/effects/effects.dmi'
@@ -155,11 +165,26 @@
 
 /obj/effect/temp_visual/dagger_crystal/Initialize(mapload)
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 	for(var/mob/living/victim in get_turf(src))
 		if(victim.mob_size < MOB_SIZE_LARGE)
 			continue
-		victim.apply_damage(applied_damage, BRUTE)
+		apply_crystal_effects(victim)
 	addtimer(CALLBACK(src, PROC_REF(dissappear_gracefully)), duration - 1 SECONDS)
+
+/obj/effect/temp_visual/dagger_crystal/proc/on_entered(datum/source, mob/living/entered_living)
+	SIGNAL_HANDLER
+	if(!istype(entered_living) || entered_living.mob_size < MOB_SIZE_LARGE)
+		return
+	apply_crystal_effects(entered_living)
+
+/obj/effect/temp_visual/dagger_crystal/proc/apply_crystal_effects(mob/living/victim)
+	victim.apply_status_effect(/datum/status_effect/dagger_stun)
+	victim.apply_damage(applied_damage, BRUTE)
 
 /obj/effect/temp_visual/dagger_crystal/proc/dissappear_gracefully()
 	animate(src, alpha = 0, time = 0.9 SECONDS)
@@ -171,7 +196,7 @@
 	armor_flag = BOMB
 	light_power = 2
 	light_range = 2
-	light_color = "#ea2e4a"
+	light_color = "#d74e63"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blood_wisp"
 
