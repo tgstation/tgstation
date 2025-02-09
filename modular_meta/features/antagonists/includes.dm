@@ -1,4 +1,3 @@
-//BLOODSUCKERS TAKEN FROM FULPSTATION: https://github.com/fulpstation/fulpstation
 #include "bloodsuckers\code\assets\bloodsucker_assets.dm"
 #include "bloodsuckers\code\bloodsucker\bloodsucker_conversion.dm"
 #include "bloodsuckers\code\bloodsucker\bloodsucker_datum.dm"
