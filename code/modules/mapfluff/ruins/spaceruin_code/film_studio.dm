@@ -18,7 +18,7 @@
 	name = "HR Note to SPACE SECTOR 13 LOCAL TV"
 	desc = "Sophronia Broadcasting Inc. Regrets to inform you, our dearest employees. Due to an concerning quarterly end report, we decided to \
 	do some 'restructuring'. If you're reading this, you are lucky to be deemed as the BARE-MINIMUM EMPLOYEE, those who aren't have already been \
-	 woken up from their cryosleep and shuttled to the nearest habitable planet. We hope for better outcomes from this decision."
+	woken up from their cryosleep and shuttled to the nearest habitable planet. We hope for better outcomes from this decision."
 
 //Camera
 /obj/item/broadcast_camera/film_studio

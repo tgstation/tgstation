@@ -1049,6 +1049,7 @@
 /obj/item/card/id/away/filmstudio
 	name = "Film Studio ID"
 	desc = "An ID card that allows access to the variety of airlocks present in the film studio"
+
 /obj/item/card/id/departmental_budget
 	name = "departmental card (ERROR)"
 	desc = "Provides access to the departmental budget."

@@ -304,14 +304,12 @@
 	},
 /area/ruin/space/has_grav/film_studio/starboard)
 "fF" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "fG" = (
@@ -846,11 +844,9 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "qL" = (
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 8
-	},
 /obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "qU" = (
@@ -1646,11 +1642,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "DO" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "DP" = (
@@ -2123,10 +2117,8 @@
 /obj/structure/window/reinforced/spawner/directional/south{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 8
-	},
 /obj/item/storage/box/papersack,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "LD" = (
@@ -2480,9 +2472,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/light/floor,
 /obj/item/paper_bin,
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "QW" = (
@@ -2601,22 +2591,15 @@
 /turf/open/space/basic,
 /area/ruin/space)
 "Te" = (
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 8
-	},
 /obj/structure/filingcabinet/filingcabinet,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "Ti" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 9
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "Tj" = (
