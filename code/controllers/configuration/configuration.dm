@@ -177,7 +177,7 @@
 		// look at just the relative directory referenced
 		for(var/entry in separate_levels - actual_filename)
 			if(entry == ".." && length(parsed_folder_bits))
-				parsed_folder_bits.Cut(1, length(parsed_folder_bits) - 1)
+				parsed_folder_bits.Cut(length(parsed_folder_bits), 0)
 			else
 				parsed_folder_bits += entry
 		if(length(parsed_folder_bits))
