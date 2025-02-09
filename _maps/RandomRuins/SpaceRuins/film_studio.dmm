@@ -2990,7 +2990,6 @@
 	pixel_y = 8;
 	dir = 4
 	},
-/obj/machinery/light/small/built/directional/west,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/film_studio/dorms)
