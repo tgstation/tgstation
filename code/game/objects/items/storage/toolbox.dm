@@ -387,20 +387,6 @@
 	name = "4.6x30mm AP ammo box"
 	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9/wtap
 
-/obj/item/storage/toolbox/maint_kit
-	name = "gun maintenance kit"
-	desc = "It contains some gun maintenance supplies"
-	icon_state = "maint_kit"
-	inhand_icon_state = "ammobox"
-	has_latches = FALSE
-	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
-	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
-
-/obj/item/storage/toolbox/maint_kit/PopulateContents()
-	new /obj/item/gun_maintenance_supplies(src)
-	new /obj/item/gun_maintenance_supplies(src)
-	new /obj/item/gun_maintenance_supplies(src)
-
 //repairbot assembly
 /obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/assembly/prox_sensor))

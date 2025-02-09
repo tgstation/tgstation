@@ -1,4 +1,4 @@
-# This is a reusable workflow to restore BYOND from a cache, or to install it otherwise.
+# This action attempts to restore BYOND from a cache, or to install it otherwise.
 name: Restore or Install BYOND
 description: Attempts to restore a specified BYOND version from cache; if it can't, it installs it.
 

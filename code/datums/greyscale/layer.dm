@@ -92,8 +92,7 @@
 
 /datum/greyscale_layer/icon_state/Initialize(icon_file)
 	. = ..()
-	var/list/icon_states = icon_states(icon_file)
-	if(!(icon_state in icon_states))
+	if(!icon_exists(icon_file, icon_state))
 		CRASH("Configured icon state \[[icon_state]\] was not found in [icon_file]. Double check your json configuration.")
 	icon = new(icon_file, icon_state)
 
