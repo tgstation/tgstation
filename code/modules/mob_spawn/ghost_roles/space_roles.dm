@@ -188,29 +188,43 @@
 	r_pocket = /obj/item/melee/baton/telescopic
 
 //film studio space ruins, actors and such.
-/obj/effect/mob_spawn/ghost_role/human/oldsec
-	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant."
-	prompt_name = "a security officer"
+/obj/effect/mob_spawn/ghost_role/human/actor
+	name = "cryogenics pod"
+	desc = "A humming cryo pod. You recognize the person inside as a local celebrity of sort."
+	prompt_name = "a actor"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_species = /datum/species/human
-	you_are_text = "You are a security officer working for Nanotrasen, stationed onboard a state of the art research station."
-	flavour_text = "You vaguely recall rushing into a cryogenics pod due to an oncoming radiation storm. \
-	The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
-	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
-	important_text = "Work as a team with your fellow survivors and do not abandon them."
-	outfit = /datum/outfit/oldsec
-	spawner_job_path = /datum/job/ancient_crew
+	you_are_text = "You are an actor/actress working for Sophronia Broadcasting Inc., stationed onboard the local TV studio."
+	flavour_text = "You last remember corporate told everyone to go to cryosleep for whatever reason, where did everyone else go?"
+	important_text = "Work as a team with your fellow actors and the director to make entertainment for the massses."
+	outfit = /datum/outfit/actor
+	spawner_job_path = /datum/job/ghost_role
 
-/obj/effect/mob_spawn/ghost_role/human/oldsec/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
-	return ..()
+/datum/outfit/actor
+	name = "Actor"
+	id = /obj/item/card/id/away
+	id_trim= /datum/id_trim/away/actor
+	uniform = /obj/item/clothing/under/suit/charcoal
+	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/clothing/mask/chameleon
+	r_pocket = /obj/item/card/id/advanced/chameleon
 
-/datum/outfit/oldsec
-	name = "Ancient Security"
-	id = /obj/item/card/id/away/old/sec
-	uniform = /obj/item/clothing/under/rank/security/officer
-	shoes = /obj/item/clothing/shoes/jackboots
-	l_pocket = /obj/item/assembly/flash/handheld
-	r_pocket = /obj/item/restraints/handcuffs
+/obj/effect/mob_spawn/ghost_role/human/director
+	name = "cryogenics pod"
+	desc = "A humming cryo pod. You recognize the person inside as a local celebrity of sort."
+	prompt_name = "a director"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_species = /datum/species/human
+	you_are_text = "You are a director working for Sophronia Broadcasting Inc., stationed onboard the local TV studio."
+	flavour_text = "You just got hired to direct shows and entertainment for a local tv studio, make do with your team and produce something!"
+	important_text = "Work as a team with your fellow actors and the director to make entertainment for the massses."
+	outfit = /datum/outfit/actor/director
+	spawner_job_path = /datum/job/ghost_role
+
+/datum/outfit/actor/director
+	name = "Director"
+	id_trim = /datum/id_trim/away/director
+	uniform = /obj/item/clothing/under/suit/red
+	head = /obj/item/clothing/head/frenchberet

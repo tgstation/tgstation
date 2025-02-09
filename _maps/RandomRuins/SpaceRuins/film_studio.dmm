@@ -32,10 +32,8 @@
 /turf/open/space/basic,
 /area/template_noop)
 "aI" = (
-/obj/structure/curtain/cloth/fancy/mechanical{
-	id = "film_theatre"
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
 "aL" = (
@@ -58,6 +56,9 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
 /turf/open/floor/iron/half{
 	dir = 8
 	},
@@ -146,21 +147,16 @@
 /area/ruin/space/has_grav/film_studio/stage)
 "cR" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/rack,
-/obj/item/vending_refill/clothing,
-/obj/item/vending_refill/clothing{
-	pixel_y = -4;
-	pixel_x = -3
-	},
-/obj/item/vending_refill/autodrobe,
-/obj/item/vending_refill/autodrobe{
-	pixel_y = -5
-	},
 /obj/machinery/light/directional/east,
+/obj/structure/table,
+/obj/item/broadcast_camera/film_studio,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "cS" = (
 /obj/structure/chair/sofa/bench{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark_blue{
 	dir = 8
 	},
 /turf/open/floor/iron/half{
@@ -197,6 +193,21 @@
 	dir = 8
 	},
 /area/ruin/space/has_grav/film_studio/stage)
+"dI" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/vending_refill/clothing,
+/obj/item/vending_refill/clothing{
+	pixel_y = -4;
+	pixel_x = -3
+	},
+/obj/item/vending_refill/autodrobe,
+/obj/item/vending_refill/autodrobe{
+	pixel_y = -5
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/film_studio/solars)
 "dL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -338,9 +349,7 @@
 /obj/structure/railing{
 	color = "#683d21"
 	},
-/obj/structure/curtain/cloth/fancy/mechanical{
-	id = "film_theatre"
-	},
+/obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
 "gH" = (
@@ -355,6 +364,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/film_studio/dorms)
+"gW" = (
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "gZ" = (
 /obj/structure/closet/crate/freezer,
@@ -438,6 +451,7 @@
 /area/ruin/space/has_grav/film_studio/solars)
 "iR" = (
 /obj/machinery/vending/cola/sodie,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "iT" = (
@@ -562,6 +576,10 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/film_studio/dorms)
+"ln" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/film_studio/solars)
 "lp" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -608,17 +626,6 @@
 "mF" = (
 /obj/structure/table/wood,
 /obj/structure/mirror/directional/west,
-/obj/item/clothing/mask/chameleon{
-	pixel_x = 5
-	},
-/obj/item/clothing/mask/chameleon{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/obj/item/clothing/mask/chameleon{
-	pixel_x = -6;
-	pixel_y = -1
-	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "mH" = (
@@ -725,10 +732,8 @@
 /obj/structure/railing/corner/end/flip{
 	color = "#683d21"
 	},
-/obj/structure/curtain/cloth/fancy/mechanical{
-	id = "film_theatre"
-	},
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
 "ph" = (
@@ -890,6 +895,9 @@
 /area/ruin/space/has_grav/film_studio/stage)
 "sc" = (
 /obj/structure/closet/emcloset,
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/corner{
 	dir = 8
 	},
@@ -901,6 +909,10 @@
 	dir = 8
 	},
 /area/ruin/space/has_grav/film_studio/starboard)
+"sf" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/film_studio/solars)
 "sj" = (
 /obj/structure/window/reinforced/spawner/directional/south{
 	dir = 1
@@ -931,6 +943,9 @@
 /obj/structure/table,
 /obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = -6
+	},
+/obj/item/light/tube{
+	pixel_x = 13
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
@@ -998,6 +1013,10 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/film_studio/dorms)
+"tA" = (
+/obj/effect/turf_decal/siding/dark_blue/corner,
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/film_studio/starboard)
 "tD" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/teal,
@@ -1117,6 +1136,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/film_studio/director)
+"vR" = (
+/obj/effect/turf_decal/siding/dark_blue,
+/turf/open/floor/iron/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/film_studio/starboard)
 "vW" = (
 /turf/open/floor/iron/corner,
 /area/ruin/space/has_grav/film_studio/starboard)
@@ -1160,6 +1185,13 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/space/has_grav/film_studio/stage)
+"wW" = (
+/obj/machinery/button/door/directional/north{
+	pixel_x = 10;
+	id = "stage_two"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/film_studio/stage)
 "xd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -1188,10 +1220,6 @@
 "xw" = (
 /turf/open/floor/iron/large,
 /area/ruin/space/has_grav/film_studio/starboard)
-"xx" = (
-/obj/machinery/power/solar,
-/turf/open/floor/iron/solarpanel/airless,
-/area/ruin/space)
 "xy" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south{
@@ -1202,6 +1230,17 @@
 	pixel_y = 6
 	},
 /turf/open/floor/pod/light,
+/area/ruin/space/has_grav/film_studio/starboard)
+"xz" = (
+/obj/machinery/fax{
+	fax_name = "Radio Station";
+	name = "Radio Station Fax Machine"
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
 /area/ruin/space/has_grav/film_studio/starboard)
 "ya" = (
 /obj/structure/table/wood,
@@ -1244,9 +1283,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/space/has_grav/film_studio/stage)
 "yE" = (
-/obj/structure/mannequin/plastic{
-	dir = 1
-	},
+/obj/structure/mannequin/plastic,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "yP" = (
@@ -1326,6 +1363,11 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/starboard)
+"Al" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/film_studio/solars)
 "An" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -1346,9 +1388,7 @@
 	color = "#683d21";
 	dir = 6
 	},
-/obj/structure/curtain/cloth/fancy/mechanical{
-	id = "film_theatre"
-	},
+/obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
 "AR" = (
@@ -1372,20 +1412,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/dorms)
-"Bw" = (
-/obj/structure/table/wood,
-/obj/structure/mirror/directional/west,
-/obj/item/card/cardboard{
-	pixel_y = 12
-	},
-/obj/item/card/cardboard{
-	pixel_y = 5
-	},
-/obj/item/card/cardboard{
-	pixel_y = -6
-	},
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/film_studio/backstage)
 "BK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -1443,6 +1469,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/solars)
+"Ce" = (
+/obj/effect/turf_decal/siding/dark_blue,
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/film_studio/starboard)
 "Cf" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -1479,10 +1509,19 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/film_studio/starboard)
 "Cs" = (
+/obj/machinery/button/door/directional/north{
+	pixel_x = -10;
+	id = "stage_one"
+	},
 /turf/open/floor/iron/white/smooth_corner{
 	dir = 8
 	},
 /area/ruin/space/has_grav/film_studio/stage)
+"Cy" = (
+/obj/structure/cable,
+/obj/machinery/power/tracker,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space)
 "CC" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/wood,
@@ -1502,6 +1541,11 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/film_studio/director)
+"CJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/film_studio/dorms)
 "CS" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -1521,9 +1565,7 @@
 	color = "#683d21";
 	dir = 10
 	},
-/obj/structure/curtain/cloth/fancy/mechanical{
-	id = "film_theatre"
-	},
+/obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
 "CY" = (
@@ -1554,6 +1596,8 @@
 /area/ruin/space/has_grav/film_studio/stage)
 "Dk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/closet,
+/obj/item/storage/box/lights/tubes,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "Dv" = (
@@ -1655,6 +1699,14 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/director)
+"Ex" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/ruin/space/has_grav/film_studio/starboard)
 "EJ" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/wood,
@@ -1823,6 +1875,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
+"HG" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/turf/open/floor/iron/corner,
+/area/ruin/space/has_grav/film_studio/starboard)
 "HM" = (
 /obj/machinery/light/dim/directional/west,
 /obj/machinery/power/smes,
@@ -1904,6 +1962,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "JM" = (
+/obj/item/light/tube{
+	pixel_x = 13
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/solars)
 "JN" = (
@@ -1937,12 +1998,16 @@
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
 	dir = 1
 	},
-/obj/structure/bed{
-	dir = 8
-	},
-/obj/item/bedsheet/blue,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/director)
+"Kt" = (
+/obj/structure/table,
+/obj/structure/noticeboard/directional/north,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
+/obj/item/paper/fluff/ruins/film_studio,
+/obj/item/paper/fluff/ruins/film_studio/layoff,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/film_studio/dorms)
 "Kw" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark/smooth_edge{
@@ -1987,6 +2052,12 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
+"Lk" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/film_studio/starboard)
 "Lr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -2066,11 +2137,9 @@
 /area/ruin/space/has_grav/film_studio/dorms)
 "Mh" = (
 /obj/structure/cable,
-/obj/machinery/power/floodlight{
-	anchored = 1
-	},
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/floodlight_frame/completed,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/solars)
 "Mk" = (
@@ -2086,11 +2155,19 @@
 /area/ruin/space)
 "MB" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/rack,
+/obj/item/camera_film,
+/obj/item/camera,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "MG" = (
 /turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/space/has_grav/film_studio/starboard)
+"MH" = (
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
 /area/ruin/space/has_grav/film_studio/starboard)
 "MJ" = (
 /obj/structure/closet/crate{
@@ -2144,12 +2221,10 @@
 /obj/structure/railing/corner/end{
 	color = "#683d21"
 	},
-/obj/structure/curtain/cloth/fancy/mechanical{
-	id = "film_theatre"
-	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
 "NS" = (
@@ -2225,6 +2300,10 @@
 /area/ruin/space/has_grav/film_studio/starboard)
 "OM" = (
 /obj/structure/bed,
+/obj/effect/mob_spawn/ghost_role/human/actor{
+	dir = 8
+	},
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/dorms)
 "ON" = (
@@ -2253,6 +2332,9 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
 /turf/open/floor/iron/half{
 	dir = 8
 	},
@@ -2672,7 +2754,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/structure/displaycase,
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/effect/mob_spawn/ghost_role/human/actor/director{
+	dir = 8
+	},
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/director)
 "Wf" = (
@@ -2702,12 +2790,6 @@
 	name = "Radio Station Broadcast Channel"
 	},
 /turf/open/floor/iron/white/smooth_large,
-/area/ruin/space/has_grav/film_studio/stage)
-"Wy" = (
-/obj/machinery/button/door/directional/east{
-	id = "film_theatre"
-	},
-/turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
 "WC" = (
 /obj/structure/cable,
@@ -2919,6 +3001,8 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/film_studio/dorms)
 "YV" = (
+/obj/structure/noticeboard/directional/west,
+/obj/item/paper/fluff/ruins/film_studio/director_note,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/director)
 "Zd" = (
@@ -2928,6 +3012,7 @@
 "Zf" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta,
 /obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/under/suit/red,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/director)
 "Zi" = (
@@ -2965,6 +3050,9 @@
 /area/ruin/space/has_grav/film_studio/solars)
 "ZR" = (
 /obj/structure/closet/firecloset/full,
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -3438,7 +3526,7 @@ NB
 On
 pY
 NB
-NB
+gW
 NB
 aO
 Zd
@@ -3680,9 +3768,9 @@ zU
 uR
 hY
 XK
-fs
+Kt
 yb
-Ly
+CJ
 tN
 GL
 Qe
@@ -4005,7 +4093,7 @@ Ea
 Bg
 Yq
 eA
-Bw
+mF
 mF
 QC
 Yq
@@ -4546,7 +4634,7 @@ dd
 Cp
 Ek
 Cp
-sp
+Al
 dL
 Su
 xi
@@ -4608,7 +4696,7 @@ dd
 YG
 dd
 Cp
-sp
+dI
 dL
 Su
 xi
@@ -4732,7 +4820,7 @@ dd
 YG
 dd
 Ek
-iO
+ln
 dL
 Su
 xi
@@ -4847,7 +4935,7 @@ OI
 dd
 OI
 vi
-xx
+OI
 dd
 dd
 dd
@@ -4856,11 +4944,11 @@ dd
 YG
 dd
 Ek
-iO
+sf
 dL
 Su
+wW
 xi
-Wy
 xi
 aI
 ck
@@ -4995,7 +5083,7 @@ Lx
 dg
 SE
 TI
-TI
+xz
 bs
 OC
 dg
@@ -5025,7 +5113,7 @@ Mt
 YG
 YG
 YG
-OI
+Cy
 kq
 Gy
 vi
@@ -5852,14 +5940,14 @@ dd
 dg
 fB
 Ga
-xw
+tA
 zH
 xy
 VU
 SD
 yf
 qA
-xw
+MH
 vW
 Cj
 dg
@@ -5914,14 +6002,14 @@ dd
 dg
 dg
 vJ
-xw
+Ce
 yr
 yr
 yr
 yr
 yr
 yr
-xw
+Lk
 Po
 dg
 dg
@@ -5976,14 +6064,14 @@ dd
 dd
 dg
 kf
-Ga
+vR
 tl
 zk
 zk
 zk
 zk
 tl
-vW
+HG
 Sd
 dg
 dd
@@ -6039,12 +6127,12 @@ dd
 dg
 dg
 sc
-jt
+Ex
 OZ
 cS
 cS
 aX
-jt
+Ex
 ZR
 dg
 dg
