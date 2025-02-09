@@ -10,7 +10,7 @@
 /obj/item/paper/fluff/ruins/film_studio/director_note
 	name = "FUCK FUCK FUCK"
 	desc = "How the fuck am I supposed to write my magnum opus on such a shit budget!? \
-	This rustbucket is nothing like that rust-bucket told me \
+	This rust-bucket is nothing like that exec told me \
 	'revolutionary state-of-the-art studio' my ass! fuck this. i'm out! New guy, you can do shitty remakes or reruns of popular shows all you want. \
 	those are too unsophisticated for a man of my caliber. - Mr. Reiza Nakim"
 
