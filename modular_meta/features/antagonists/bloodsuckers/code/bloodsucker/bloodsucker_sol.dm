@@ -64,7 +64,7 @@
 
 	if(istype(owner.current.loc, /obj/structure/closet/crate/coffin)) // Coffins offer the BEST protection
 		if(owner.current.am_staked() && COOLDOWN_FINISHED(src, bloodsucker_spam_sol_burn))
-			to_chat(owner.current, span_userdanger("Вы на на колу! Уберите его из своего сердца, перед тем как спать."))
+			to_chat(owner.current, span_userdanger("Вы посажены на кол! Перед сном уберите оскорбительное оружие из своего сердца."))
 			COOLDOWN_START(src, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
 		if(!HAS_TRAIT(owner.current, TRAIT_NODEATH))
 			check_begin_torpor(TRUE)

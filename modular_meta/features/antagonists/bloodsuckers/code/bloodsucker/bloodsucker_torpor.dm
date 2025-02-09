@@ -62,7 +62,7 @@
 		return
 	/// Are we entering Torpor via Sol/Death? Then entering it isnt optional!
 	if(SkipChecks)
-		to_chat(user, span_danger("Твое бессмертное тело еще не отдаст душу бездне. Вы входите в Торпор."))
+		to_chat(user, span_danger("Ваше бессмертное тело еще не отдало душу в бездну. Вы входите в Торпор."))
 		owner.current.apply_status_effect(/datum/status_effect/torpor)
 		return
 	var/total_brute = user.getBruteLoss()

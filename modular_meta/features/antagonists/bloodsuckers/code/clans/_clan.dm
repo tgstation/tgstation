@@ -156,7 +156,7 @@
 		to_chat(bloodsuckerdatum.owner.current, span_notice("К ночи ты стареешь!"))
 	else
 		// Give them the UI to purchase a power.
-		var/choice = tgui_input_list(bloodsuckerdatum.owner.current, "У вас есть возможность стать еще старше. Выберите силу, чтобы повысить свой ранг.", "Ваша кровь сгущается...", options)
+		var/choice = tgui_input_list(bloodsuckerdatum.owner.current, "У вас есть возможность стать еще древнее. Выберите силу, чтобы повысить свой ранг.", "Ваша кровь сгущается...", options)
 		// Prevent Bloodsuckers from closing/reopning their coffin to spam Levels.
 		if(cost_rank && bloodsuckerdatum.bloodsucker_level_unspent <= 0)
 			return

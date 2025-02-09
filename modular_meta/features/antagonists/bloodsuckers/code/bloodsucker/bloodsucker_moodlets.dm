@@ -1,15 +1,15 @@
 /datum/mood_event/drankblood
-	description = span_nicegreen("Я жадно питался тем, что питает меня.")
+	description = span_nicegreen("Я жадно питался тем, что насыщает меня.")
 	mood_change = 6
 	timeout = 8 MINUTES
 
 /datum/mood_event/drankblood_bad
-	description = span_boldwarning("Я выпил кровь меньшего существа. Отвратительно.")
+	description = span_boldwarning("Я выпил кровь низшего существа. Омерзительно.")
 	mood_change = -8
 	timeout = 3 MINUTES
 
 /datum/mood_event/drankblood_dead
-	description = span_boldwarning("Я пил кровь мертвецов. Я лучше этого.")
+	description = span_boldwarning("Я пил кровь мертвецов. Я достоин лучшего.")
 	mood_change = -10
 	timeout = 8 MINUTES
 
@@ -24,7 +24,7 @@
 	timeout = 15 MINUTES
 
 /datum/mood_event/madevamp
-	description = span_boldwarning("Смертный достиг апофеоза — нежизни — моей собственной рукой..")
+	description = span_boldwarning("Смертный достиг апофеоза — стал нежитью — моей помощью.")
 	mood_change = 15
 	timeout = 10 MINUTES
 
@@ -39,7 +39,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/daylight_2
-	description = span_boldwarning("Меня атаковали неумолимые лучи солнца.")
+	description = span_boldwarning("Я был опален беспощадным солнцем.")
 	mood_change = -7
 	timeout = 5 MINUTES
 
@@ -51,6 +51,6 @@
 
 //Blood mirror's mood event to non-bloodsuckers/vassals that attempt to use it and get randomly warped.
 /datum/mood_event/bloodmirror
-	description = span_boldwarning("ПРОРОЧЕСТВО О КРОВИ РАЗЛИЛО СВОИ ПЯТНА НА МОЕЙ ПСИХИКЕ.")
+	description = span_boldwarning("КРОВАВОЕ ПРОРОЧЕСТВО ЗАПЯТНАЛО МОЮ ПСИХИКУ.")
 	mood_change = -30
 	timeout = 7 MINUTES

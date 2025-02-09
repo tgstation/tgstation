@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(sunlight)
 			SEND_SIGNAL(src, COMSIG_SOL_NEAR_START)
 			warn_daylight(
 				danger_level = DANGER_LEVEL_FIRST_WARNING,
-				vampire_warning_message = span_danger("Солнечные вспышки обрушат на станцию ​​опасное ультрафиолетовое-излучение через [TIME_BLOODSUCKER_DAY_WARN / 60] минут. <b>Приготовьтесь искать укрытие в гробу.</b>"),
+				vampire_warning_message = span_danger("Солнечные вспышки обрушат на станцию ​​опасное ультрафиолетовое излучение через [TIME_BLOODSUCKER_DAY_WARN / 60] минут. <b>Приготовьтесь искать укрытие в гробу.</b>"),
 			)
 		if(TIME_BLOODSUCKER_DAY_FINAL_WARN)
 			message_admins("BLOODSUCKER NOTICE: Daylight beginning in [TIME_BLOODSUCKER_DAY_FINAL_WARN] seconds.)")
