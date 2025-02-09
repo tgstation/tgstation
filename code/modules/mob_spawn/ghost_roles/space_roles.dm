@@ -186,3 +186,31 @@
 	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
+
+//film studio space ruins, actors and such.
+/obj/effect/mob_spawn/ghost_role/human/oldsec
+	name = "old cryogenics pod"
+	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant."
+	prompt_name = "a security officer"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_species = /datum/species/human
+	you_are_text = "You are a security officer working for Nanotrasen, stationed onboard a state of the art research station."
+	flavour_text = "You vaguely recall rushing into a cryogenics pod due to an oncoming radiation storm. \
+	The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
+	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
+	important_text = "Work as a team with your fellow survivors and do not abandon them."
+	outfit = /datum/outfit/oldsec
+	spawner_job_path = /datum/job/ancient_crew
+
+/obj/effect/mob_spawn/ghost_role/human/oldsec/Destroy()
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	return ..()
+
+/datum/outfit/oldsec
+	name = "Ancient Security"
+	id = /obj/item/card/id/away/old/sec
+	uniform = /obj/item/clothing/under/rank/security/officer
+	shoes = /obj/item/clothing/shoes/jackboots
+	l_pocket = /obj/item/assembly/flash/handheld
+	r_pocket = /obj/item/restraints/handcuffs
