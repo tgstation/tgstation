@@ -133,3 +133,25 @@
   vinylspiders:
   - qol: alien eggs (xeno embryos, headslugs, etc) will now show up on the advanced
       medical scanner
+2025-02-09:
+  Likteer:
+  - qol: Added the resin mister module to the roundstart atmos MODsuit.
+  Melbert:
+  - rscadd: Adds two fantasy affixes
+  SmArtKar:
+  - rscadd: Hydrogen Peroxide and Eldritch Essence now can rust turfs, with latter
+      producing heretic instead of normal rust.
+  - spellcheck: Fixed a misspelled comment and a reference to non-existent Eldritch
+      water (as opposed to Eldritch Essence)
+  TealSeer:
+  - bugfix: Fixed the crystallizer missing pipe connectors
+  grungussuss:
+  - sound: gauze now makes sounds when applied
+  loganuk:
+  - qol: Pyro Slime Objective Text Edit
+  necromanceranne:
+  - code_imp: Removes a variable in the riddable creature component that shouldn't
+      be doing what it is doing.
+  timothymtorres:
+  - code_imp: Add error message logs to screenshot CI test failure when screenshots
+      do not exist.

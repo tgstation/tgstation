@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Add error message logs to screenshot CI test failure when screenshots do not exist."

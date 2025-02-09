@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Hydrogen Peroxide and Eldritch Essence now can rust turfs, with latter producing heretic instead of normal rust."
-  - spellcheck: "Fixed a misspelled comment and a reference to non-existent Eldritch water (as opposed to Eldritch Essence)"

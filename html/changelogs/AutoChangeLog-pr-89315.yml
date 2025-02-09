@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - code_imp: "Removes a variable in the riddable creature component that shouldn't be doing what it is doing."
