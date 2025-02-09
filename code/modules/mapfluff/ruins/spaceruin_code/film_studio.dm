@@ -9,14 +9,14 @@
 
 /obj/item/paper/fluff/ruins/film_studio/director_note
 	name = "FUCK FUCK FUCK"
-	desc = "How the fuck am I supposed to write my magnum opus on such a shit budget!? \
+	default_raw_text = "How the fuck am I supposed to write my magnum opus on such a shit budget!? \
 	This rust-bucket is nothing like that exec told me \
 	'revolutionary state-of-the-art studio' my ass! fuck this. i'm out! New guy, you can do shitty remakes or reruns of popular shows all you want. \
 	those are too unsophisticated for a man of my caliber. - Mr. Reiza Nakim"
 
 /obj/item/paper/fluff/ruins/film_studio/layoff
 	name = "HR Note to SPACE SECTOR 13 LOCAL TV"
-	desc = "Sophronia Broadcasting Inc. Regrets to inform you, our dearest employees. Due to an concerning quarterly end report, we decided to \
+	default_raw_text = "Sophronia Broadcasting Inc. Regrets to inform you, our dearest employees. Due to an concerning quarterly end report, we decided to \
 	do some 'restructuring'. If you're reading this, you are lucky to be deemed as the BARE-MINIMUM EMPLOYEE, those who aren't have already been \
 	woken up from their cryosleep and shuttled to the nearest habitable planet. We hope for better outcomes from this decision."
 

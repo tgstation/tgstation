@@ -205,7 +205,6 @@
 /obj/item/vending_refill/autodrobe{
 	pixel_y = -5
 	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "dL" = (
@@ -275,8 +274,8 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/film_studio/starboard)
 "fa" = (
-/obj/machinery/power/smes,
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "fh" = (
@@ -1670,8 +1669,8 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/film_studio/starboard)
 "Ei" = (
-/obj/machinery/power/smes,
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "Ej" = (
@@ -1899,8 +1898,8 @@
 /area/ruin/space/has_grav/film_studio/starboard)
 "HM" = (
 /obj/machinery/light/dim/directional/west,
-/obj/machinery/power/smes,
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "HN" = (
