@@ -32,7 +32,7 @@
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
 	human_holder.transform = human_holder.transform.Scale(0.5)
-	human_holder.maptext_height = 20
+	human_holder.maptext_height = 24
 
 	human_holder.AddComponent( \
 		/datum/component/squashable, \
@@ -41,8 +41,10 @@
 		squash_flags = UNDERSIZED_SHOULD_GIB, \
 	)
 
-	human_holder.can_be_held = TRUE
-	human_holder.density = 0
+	human_holder.can_be_held = TRUE //makes u scoopable
+	human_holder.density = 0 //makes u walk overable
+	human_holder.max_grab = 1 //you are too weak to aggro grab
+	human_holder.add_traits(TRAIT_HATED_BY_DOGS) //I regret to inform you, you are chew toy sized
 
 /datum/quirk/undersized/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -93,6 +95,8 @@
 
 	human_holder.can_be_held = FALSE
 	human_holder.density = 1
+	human_holder.max_grab = 3
+	human_holder.remove_traits(TRAIT_HATED_BY_DOGS)
 
 /datum/quirk/undersized/proc/on_gain_limb(datum/source, obj/item/bodypart/gained, special)
 	SIGNAL_HANDLER
