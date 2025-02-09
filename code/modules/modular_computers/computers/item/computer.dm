@@ -1030,25 +1030,6 @@
 
 	return "NUL"
 
-#define ALERT_COLOR_CENTCOM "#FFFFFF"
-#define ALERT_COLOR_RED "#CC0000"
-#define ALERT_COLOR_GREEN "#1fb900"
-#define ALERT_COLOR_BLUE "#0044d6"
-
-/obj/item/modular_computer/proc/get_security_level_color()
-	switch (SSsecurity_level.get_current_level_as_number())
-		if(SEC_LEVEL_DELTA)
-			return ALERT_COLOR_CENTCOM
-		if(SEC_LEVEL_RED)
-			return ALERT_COLOR_RED
-		if(SEC_LEVEL_GREEN)
-			return ALERT_COLOR_GREEN
-		if(SEC_LEVEL_BLUE)
-			return ALERT_COLOR_BLUE
-
-	return COLOR_BLACK
-
-
 /**
  * Debug ModPC
  * Used to spawn all programs for Create and Destroy unit test.

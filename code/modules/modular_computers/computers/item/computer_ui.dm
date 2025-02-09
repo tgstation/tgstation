@@ -79,7 +79,7 @@
 
 	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
 	data["alert_style"] = get_security_level_relevancy()
-	data["alert_color"] = get_security_level_color()
+	data["alert_color"] = SSsecurity_level?.current_security_level?.fire_alarm_light_color
 	data["alert_name"] = get_security_level_shortform()
 	return data
 
