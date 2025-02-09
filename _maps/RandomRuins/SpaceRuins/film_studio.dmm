@@ -637,12 +637,6 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "mH" = (
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
 /obj/effect/turf_decal/box,
 /obj/structure/curtain,
 /obj/machinery/shower/directional/west,
@@ -2429,12 +2423,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "QA" = (
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
 /obj/effect/turf_decal/box,
 /obj/structure/curtain,
 /obj/machinery/shower/directional/east,
