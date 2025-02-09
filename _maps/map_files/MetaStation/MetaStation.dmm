@@ -2179,6 +2179,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "aNQ" = (
@@ -31313,12 +31314,12 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
-/obj/machinery/door/airlock{
-	name = "Kitchen Cold Room"
-	},
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/airlock/freezer{
+	name = "Freezer"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen/coldroom)
 "lbh" = (

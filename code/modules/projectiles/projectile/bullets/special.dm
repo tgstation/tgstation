@@ -23,7 +23,7 @@
 		if(M.can_block_magic())
 			return BULLET_ACT_BLOCK
 		else
-			M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+			M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE)
 
 // Mime
 

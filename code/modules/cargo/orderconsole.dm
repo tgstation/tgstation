@@ -206,26 +206,10 @@
 			"goody" = pack.goody,
 			"access" = pack.access,
 			"contraband" = pack.contraband,
-			"contains" = get_pack_contains(pack),
+			"contains" = pack.get_contents_ui_data(),
 		))
 
 	return packs
-
-/**
- * returns a list of the contents of a supply pack
- * * pack - the pack to get the contents of
- */
-/obj/machinery/computer/cargo/proc/get_pack_contains(datum/supply_pack/pack)
-	var/list/contains = list()
-	for(var/obj/item/item as anything in pack.contains)
-		contains += list(list(
-			"name" = item.name,
-			"icon" = item.greyscale_config ? null : item.icon,
-			"icon_state" = item.greyscale_config ? null : item.icon_state,
-			"amount" = pack.contains[item]
-		))
-
-	return contains
 
 /**
  * returns the discount multiplier applied to all supply packs,
