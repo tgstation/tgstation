@@ -94,7 +94,7 @@
 		var/mob/viewer = usr
 		var/can_see_still = (viewer in viewers(src))
 
-		var/obj/item/card/id/advanced/id = wear_id?.GetID()
+		var/obj/item/card/id/id = wear_id?.GetID()
 		var/same_id = id && (href_list["id_ref"] == REF(id) || href_list["id_name"] == id.registered_name)
 		if(!same_id && can_see_still)
 			to_chat(viewer, span_notice("[p_They()] [p_are()] no longer wearing that ID card."))
@@ -126,8 +126,9 @@
 			id_species ||= dna.species.name
 			id_blood_type ||= dna.blood_type
 
-		if(istype(id))
-			id_job = id.trim_assignment_override || id_job
+		if(istype(id, /obj/item/card/id/advanced))
+			var/obj/item/card/id/advanced/advancedID = id
+			id_job = advancedID.trim_assignment_override || id_job
 
 		var/id_examine = span_slightly_larger(separator_hr("This is <em>[src]'s ID card</em>."))
 		id_examine += "<div class='img_by_text_container'>"
