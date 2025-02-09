@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
 		copy_to_turf.icon = icon
-	if(atom_colours?.len)
+	if(LAZYLEN(atom_colours))
 		copy_to_turf.atom_colours = atom_colours.Copy()
 		copy_to_turf.update_atom_colour()
 	// New atom_colours system overrides color, but in rare cases its still used
