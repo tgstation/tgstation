@@ -310,6 +310,8 @@
 
 /datum/config_entry/string/server
 
+/datum/config_entry/string/public_address
+
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl

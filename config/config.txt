@@ -176,8 +176,12 @@ IPINTEL_REJECT_BAD
 ## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
 #USEWHITELIST
 
+## The address shown for the game server in the TGS check command
+# PUBLIC_ADDRESS ss13.example.com:2506
+
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
+## This is also used to show the server's address in the TGS check command if the public address isn't set
 # SERVER ss13.example.com:2506
 
 ## forum address
