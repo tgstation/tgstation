@@ -165,8 +165,7 @@
 	if(IsAdminAdvancedProcCall())
 		return
 
-	var/static/regex/folder_splitting = regex("\[\\/\]")
-	var/list/separate_levels = splittext(filename, folder_splitting)
+	var/list/separate_levels = splittext(filename, "/")
 	// allows for inheriting our folder from the thing that included us
 	var/subfolder = ""
 	// do we have an actual directory or is this just one file
