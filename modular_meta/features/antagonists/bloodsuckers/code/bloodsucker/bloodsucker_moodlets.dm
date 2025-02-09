@@ -4,7 +4,7 @@
 	timeout = 8 MINUTES
 
 /datum/mood_event/drankblood_bad
-	description = span_boldwarning("Я выпил кровь меньшего существа. Отвратительно.")
+	description = span_boldwarning("Я выпил кровь низшего существа. Омерзительно.")
 	mood_change = -8
 	timeout = 3 MINUTES
 
