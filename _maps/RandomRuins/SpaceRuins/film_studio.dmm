@@ -2055,7 +2055,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/solars)
 "Lf" = (
-/obj/structure/showcase/machinery/signal_decrypter,
+/obj/machinery/telecomms/relay/preset/ruskie{
+	use_power = 0
+	},
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/ruin/space/has_grav/film_studio/starboard)
 "Lj" = (
