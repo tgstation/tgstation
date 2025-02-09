@@ -142,6 +142,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/apc/unlocked,
+/obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "cR" = (
@@ -1426,6 +1427,7 @@
 /obj/item/stack/cable_coil/thirty{
 	pixel_x = 4
 	},
+/obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "BR" = (
@@ -1873,7 +1875,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/cell_charger,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -3
+	},
+/obj/item/clothing/head/utility/hardhat,
+/obj/item/clothing/head/utility/hardhat{
+	pixel_x = 5
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "HF" = (
