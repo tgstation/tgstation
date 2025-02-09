@@ -71,7 +71,6 @@
 			parent_as_living.visible_message(span_notice("[parent_as_living] avoids getting crushed."))
 
 /datum/component/squashable/proc/Squish(mob/living/target)
-	playsound(parent,'sound/effects/wounds/crack1.ogg', 90,)
 	if(squash_flags & SQUASHED_SHOULD_BE_GIBBED)
 		target.gib(DROP_ALL_REMAINS)
 	else
