@@ -1497,6 +1497,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * discountless - whether or not to apply discounts
  */
 /obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, discountless)
+	if(all_products_free)
+		return TRUE
 	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
 		speak("You do not possess an ID to purchase [product_to_vend.name].")
 		return FALSE
