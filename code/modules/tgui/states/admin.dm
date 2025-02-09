@@ -30,6 +30,12 @@ GLOBAL_PROTECT(admin_states)
 		return FALSE
 	return ..()
 
+/**
+ * Returns a ui_state that checks to see if the user has specific admin permissions.
+ *
+ * Arguments:
+ * * required_perms: Which admin permission flags to check the user for.
+ */
 /proc/admin_state(required_perms) as /datum/ui_state/admin_state
 	RETURN_TYPE(/datum/ui_state/admin_state)
 	if(isnull(required_perms))
