@@ -51,6 +51,6 @@
 
 //Blood mirror's mood event to non-bloodsuckers/vassals that attempt to use it and get randomly warped.
 /datum/mood_event/bloodmirror
-	description = span_boldwarning("ПРОРОЧЕСТВО О КРОВИ РАЗЛИЛО СВОИ ПЯТНА НА МОЕЙ ПСИХИКЕ.")
+	description = span_boldwarning("КРОВАВОЕ ПРОРОЧЕСТВО ЗАПЯТНАЛО МОЮ ПСИХИКУ.")
 	mood_change = -30
 	timeout = 7 MINUTES
