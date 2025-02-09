@@ -1,6 +1,6 @@
 /datum/objective/survive/bloodsucker
 	name = "bloodsuckersurvive"
-	explanation_text = "Доживите до конца смены, не умирая Финальной Смертью."
+	explanation_text = "Продержитесь всю смену, не потерпев окончательной смерти."
 
 /datum/objective/bloodsucker_lair
 	name = "claim lair"
