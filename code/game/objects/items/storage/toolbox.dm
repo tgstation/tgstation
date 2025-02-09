@@ -490,9 +490,15 @@
 
 /obj/item/storage/toolbox/guncase/traitor/click_alt_secondary(mob/user)
 	. = ..()
-	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
-	if(i_dont_even_think_once_about_blowing_stuff_up == "No")
+	if(currently_exploding)
+		user.balloon_alert(user, "already exploding!")
 		return
+
+	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
+
+	if(i_dont_even_think_once_about_blowing_stuff_up != "Yes" || currently_exploding || QDELETED(user) || QDELETED(src) || user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
+		return
+
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
 	to_chat(user, span_warning("You prime [src]'s evidence disposal bomb!"))
 	log_bomber(user, "has activated a", src, "for detonation")
