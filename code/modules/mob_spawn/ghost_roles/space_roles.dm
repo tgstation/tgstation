@@ -219,7 +219,7 @@
 	mob_species = /datum/species/human
 	you_are_text = "You are a director working for Sophronia Broadcasting Inc., stationed onboard the local TV studio."
 	flavour_text = "You just got hired to direct shows and entertainment for a local tv studio, make do with your team and produce something!"
-	important_text = "Work as a team with your fellow actors and the director to make entertainment for the massses."
+	important_text = "Work as a team with your fellow actors and the director to make entertainment for the masses."
 	outfit = /datum/outfit/actor/director
 	spawner_job_path = /datum/job/ghost_role
 

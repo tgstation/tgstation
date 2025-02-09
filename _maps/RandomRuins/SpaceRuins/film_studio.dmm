@@ -10,6 +10,7 @@
 	pixel_x = 8
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/film_studio/dorms)
 "aA" = (
@@ -284,6 +285,7 @@
 /area/ruin/space/has_grav/film_studio/dorms)
 "fs" = (
 /obj/structure/table,
+/obj/structure/showcase/machinery/microwave,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/film_studio/dorms)
 "ft" = (
@@ -352,6 +354,12 @@
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
+"gA" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/film_studio/starboard)
 "gH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/public/glass{
@@ -830,6 +838,12 @@
 /obj/structure/table/glass,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/film_studio/starboard)
+"qJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/film_studio/dorms)
 "qL" = (
 /obj/structure/window/reinforced/spawner/directional/south{
 	dir = 8
@@ -1115,6 +1129,7 @@
 /area/ruin/space/has_grav/film_studio/dorms)
 "vJ" = (
 /obj/structure/chair/sofa/bench/right,
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/half,
 /area/ruin/space/has_grav/film_studio/starboard)
 "vL" = (
@@ -1249,6 +1264,7 @@
 	pixel_x = -3;
 	pixel_y = -7
 	},
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "yb" = (
@@ -1572,6 +1588,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/film_studio/dorms)
+"Dd" = (
+/obj/structure/dresser,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/film_studio/backstage)
 "Df" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/item/clothing/head/wig/natural,
@@ -1961,6 +1982,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
+"JG" = (
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/film_studio/dorms)
 "JM" = (
 /obj/item/light/tube{
 	pixel_x = 13
@@ -2003,9 +2028,9 @@
 "Kt" = (
 /obj/structure/table,
 /obj/structure/noticeboard/directional/north,
-/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
 /obj/item/paper/fluff/ruins/film_studio,
 /obj/item/paper/fluff/ruins/film_studio/layoff,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/film_studio/dorms)
 "Kw" = (
@@ -2278,6 +2303,7 @@
 /obj/item/clipboard,
 /obj/item/paper/fluff/ruins/djstation,
 /obj/item/pen,
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -2369,6 +2395,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 1
 	},
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/half,
 /area/ruin/space/has_grav/film_studio/starboard)
 "Pu" = (
@@ -2757,7 +2784,7 @@
 /obj/structure/bed{
 	dir = 8
 	},
-/obj/effect/mob_spawn/ghost_role/human/actor/director{
+/obj/effect/mob_spawn/ghost_role/human/director{
 	dir = 8
 	},
 /obj/effect/spawner/random/bedsheet,
@@ -2791,6 +2818,10 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/space/has_grav/film_studio/stage)
+"Wo" = (
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/space/has_grav/film_studio/starboard)
 "WC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3582,7 +3613,7 @@ XK
 dk
 Me
 Me
-Me
+qJ
 Me
 Me
 Me
@@ -3957,7 +3988,7 @@ XK
 Ya
 qz
 tT
-vD
+JG
 Sv
 uN
 Rk
@@ -4216,7 +4247,7 @@ hn
 nf
 pA
 Yq
-uv
+Dd
 lJ
 lJ
 CC
@@ -5267,7 +5298,7 @@ kV
 BR
 Lx
 dg
-MG
+Wo
 zL
 dg
 uw
@@ -5572,7 +5603,7 @@ WC
 WC
 WC
 WC
-WC
+gA
 WC
 WC
 rw

@@ -537,7 +537,6 @@
 	connectivity - as long as you have your Employee ID handy. Though, this one has been reported to have some recent malfunctions."
 
 /datum/map_template/ruin/space/film_studio
-	always_place = TRUE
 	id = "film_studio"
 	suffix = "film_studio.dmm"
 	name = "Space-Ruin Space Sector 13 Local Channel"
