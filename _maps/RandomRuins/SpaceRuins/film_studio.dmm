@@ -100,9 +100,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Shooting Room"
 	},
-/obj/machinery/door/airlock/glass{
-	name = "Shooting Room"
-	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/stage)
 "cd" = (
@@ -249,6 +247,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "eA" = (
@@ -340,6 +339,7 @@
 /obj/machinery/door/airlock/material{
 	name = "Cabin 3"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/dorms)
 "gl" = (
@@ -365,6 +365,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Lobby"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/film_studio/starboard)
 "gT" = (
@@ -389,6 +390,7 @@
 /area/ruin/space/has_grav/film_studio/stage)
 "hw" = (
 /obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/starboard)
 "hA" = (
@@ -432,6 +434,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Shooting Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/film_studio/stage)
 "ig" = (
@@ -440,6 +443,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/director)
 "is" = (
@@ -463,13 +467,11 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "iT" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	name = "plasma fuel pump";
-	dir = 8;
-	piping_layer = 4
-	},
 /obj/effect/turf_decal/box,
 /obj/structure/sign/warning/no_smoking/directional/east,
+/obj/machinery/atmospherics/components/unary/portables_connector/layer4{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "jb" = (
@@ -671,12 +673,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "ni" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	name = "plasma fuel pump";
-	dir = 8;
-	piping_layer = 4
-	},
 /obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/components/unary/portables_connector/layer4{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "nQ" = (
@@ -699,6 +699,7 @@
 	name = "Canteen"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/film_studio/dorms)
 "od" = (
@@ -1025,6 +1026,7 @@
 /obj/machinery/door/airlock/material{
 	name = "Unit 1"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/film_studio/dorms)
 "tA" = (
@@ -1136,6 +1138,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/dorms)
 "vN" = (
@@ -1179,6 +1182,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/starboard)
 "wv" = (
@@ -1192,6 +1196,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Shooting Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "wU" = (
@@ -1277,6 +1282,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Lobby"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/starboard)
 "yf" = (
@@ -1331,6 +1337,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "zG" = (
@@ -1564,6 +1571,7 @@
 /area/ruin/space/has_grav/film_studio/dorms)
 "CS" = (
 /obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "CT" = (
@@ -1628,6 +1636,7 @@
 /obj/machinery/door/airlock/material{
 	name = "Unit 2"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/film_studio/dorms)
 "DB" = (
@@ -1832,6 +1841,7 @@
 	name = "Canned Audience Closet"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Ga" = (
@@ -1925,6 +1935,7 @@
 	name = "Cabin 2"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/dorms)
 "IA" = (
@@ -1972,6 +1983,7 @@
 /obj/machinery/door/airlock/material{
 	name = "Washroom 1"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/film_studio/dorms)
 "JE" = (
@@ -2040,9 +2052,7 @@
 	},
 /area/ruin/space/has_grav/film_studio/starboard)
 "Kx" = (
-/obj/machinery/atmospherics/components/tank/air{
-	piping_layer = 4
-	},
+/obj/machinery/atmospherics/components/tank/air/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "KH" = (
@@ -2141,6 +2151,7 @@
 	name = "Cabin 1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/dorms)
 "Ma" = (
@@ -2459,12 +2470,6 @@
 /area/ruin/space/has_grav/film_studio/backstage)
 "QH" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 9
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 5
-	},
 /obj/structure/rack,
 /obj/item/tank/internals/anesthetic,
 /obj/item/clothing/mask/breath/medical,
@@ -2486,6 +2491,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "Rf" = (
@@ -2553,6 +2559,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Custodial Closet"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/dorms)
 "SD" = (
@@ -2648,6 +2655,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "TQ" = (
@@ -2682,6 +2690,7 @@
 	name = "Generator Room"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/film_studio)
 "Uo" = (
@@ -2731,6 +2740,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Radio Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/starboard)
 "VH" = (
@@ -2742,12 +2752,6 @@
 /area/ruin/space/has_grav/film_studio/stage)
 "VL" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 5
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 9
-	},
 /obj/structure/rack,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/item/healthanalyzer{
@@ -2795,6 +2799,7 @@
 	name = "Restrooms"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/dorms)
 "Wl" = (
@@ -2875,6 +2880,7 @@
 	name = "Director Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/director)
 "Xr" = (
@@ -2969,13 +2975,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "Yc" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	name = "plasma fuel pump";
-	dir = 8;
-	piping_layer = 4
-	},
 /obj/effect/turf_decal/box,
 /obj/machinery/light/dim/directional/east,
+/obj/machinery/atmospherics/components/unary/portables_connector/layer4{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "Yi" = (
@@ -3077,6 +3081,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/away,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "ZR" = (

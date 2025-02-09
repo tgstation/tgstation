@@ -203,7 +203,7 @@
 
 /datum/outfit/actor
 	name = "Actor"
-	id = /obj/item/card/id/away
+	id = /obj/item/card/id/away/filmstudio
 	id_trim= /datum/id_trim/away/actor
 	uniform = /obj/item/clothing/under/suit/charcoal
 	shoes = /obj/item/clothing/shoes/laceup
