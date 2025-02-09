@@ -1011,25 +1011,6 @@
 
 	return 0
 
-#define ALERT_SHORTFORM_DELTA "Δ"
-#define ALERT_SHORTFORM_RED "RED"
-#define ALERT_SHORTFORM_GREEN "GRN"
-#define ALERT_SHORTFORM_BLUE "BLU"
-
-/// Returns strings for the current security level to display on the PDA.
-/obj/item/modular_computer/proc/get_security_level_shortform()
-	switch (SSsecurity_level.get_current_level_as_number())
-		if(SEC_LEVEL_DELTA)
-			return ALERT_SHORTFORM_DELTA
-		if(SEC_LEVEL_RED)
-			return ALERT_SHORTFORM_RED
-		if(SEC_LEVEL_BLUE)
-			return ALERT_SHORTFORM_BLUE
-		if(SEC_LEVEL_GREEN)
-			return ALERT_SHORTFORM_GREEN
-
-	return "NUL"
-
 /**
  * Debug ModPC
  * Used to spawn all programs for Create and Destroy unit test.
