@@ -826,10 +826,8 @@
 "qA" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 4
-	},
 /obj/item/storage/box/papersack,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "qE" = (
@@ -925,10 +923,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
 "sj" = (
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 1
-	},
 /obj/machinery/computer/old,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "sm" = (
@@ -1238,13 +1234,11 @@
 /area/ruin/space/has_grav/film_studio/starboard)
 "xy" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 4
-	},
 /obj/item/flashlight/lamp{
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "xz" = (
@@ -1282,12 +1276,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/starboard)
 "yf" = (
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 4
-	},
 /obj/machinery/computer/terminal{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "yr" = (
@@ -1342,12 +1334,8 @@
 /area/ruin/space/has_grav/film_studio/dorms)
 "zH" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "zL" = (
@@ -2114,11 +2102,9 @@
 /area/ruin/space/has_grav/film_studio/dorms)
 "LB" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 1
-	},
 /obj/item/storage/box/papersack,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
 "LD" = (
