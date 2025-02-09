@@ -705,7 +705,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 	T.flick_overlay_static(portal_appearance[GET_TURF_PLANE_OFFSET(T) + 1], 15)
 	playsound(T, 'sound/effects/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
-/// Docks the emergency shuttle back to the station and resets its' state
+/// Docks the emergency shuttle back to the station and resets its state
 /proc/return_escape_shuttle(make_announcement)
 	if (SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"), force = TRUE) != DOCKING_SUCCESS)
 		message_admins("Emergency shuttle was unable to dock back to the station!")

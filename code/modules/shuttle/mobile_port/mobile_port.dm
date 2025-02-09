@@ -743,7 +743,7 @@
 ///Let people know shits about to go down
 /obj/docking_port/mobile/proc/announce_shuttle_events()
 	for(var/datum/shuttle_event/event as anything in event_list)
-		notify_ghosts("The [name] has selected: [event.name]")
+		notify_ghosts("\The [src] has selected: [event.name]")
 
 /obj/docking_port/mobile/emergency/on_emergency_launch()
 	return

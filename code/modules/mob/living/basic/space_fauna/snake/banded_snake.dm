@@ -1,6 +1,6 @@
 /mob/living/basic/snake/banded
 	name = "banded snake"
-	desc = "A colourful stripy snake. It's either a harmless astroid kingsnake or a highly venomous and aggressive nebula viper. There's a mneumonic to tell them apart, you just need to look at the colours and examine them closely..."
+	desc = "A colourful stripy snake. It's either a harmless asteroid kingsnake or a highly venomous and aggressive nebula viper. There's a mnemonic to tell them apart, you just need to look at the colours and examine them closely..."
 	icon_state = "bandedsnake"
 	icon_living = "bandedsnake"
 	icon_dead = "bandedsnake_dead"

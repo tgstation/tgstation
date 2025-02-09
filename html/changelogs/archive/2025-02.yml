@@ -1,0 +1,107 @@
+2025-02-01:
+  AyIong:
+  - qol: 'You can choose in preferences what layout use into the Smartfridge or Vending
+      machines: Grid or List. Default TGUI Layout preference. In the future there
+      may be more interfaces where there will be 2 layout options. Also Vending UI
+      now use Grid layout by default.'
+  BobDABuilder9001:
+  - balance: solars now make 2.5kw each instead of 1.5kw
+  MTandi:
+  - qol: Added forensic scanner UI
+  - qol: Made forensic scanner report format cleaner
+  Majkl-J:
+  - bugfix: PENLITE defib mounts now actually charge the cell
+  SmArtKar:
+  - image: Premium Internals Boxes station trait now has unique box sprites
+2025-02-02:
+  Arceniu:
+  - spellcheck: Replaced the words "Singularity Generation Disk" with "Supermatter
+      Crystal Shard" on a paper found by the old station ruin, to match the contents
+      of the inventory room.
+  MTandi:
+  - bugfix: Fixed medbot emag VFX
+  SmArtKar:
+  - bugfix: Large fish should not render behind their wall mounts now
+  - rscadd: Added fishing bags, found in fun vendors or made from carpskin.
+  - balance: Added the generator aquarium upgrade to service and science lathes.
+  - image: Resprited reels and bobber
+  - bugfix: Fixed partially missing fishing UI
+  - bugfix: Fixed glowsticks not working
+  necromanceranne:
+  - rscdel: Mobile hollow bioscramblers no longer spawn from the anomaly research
+      ruin, sparing everyone from the inevitable unannounced arrival of a permanent
+      hollow bioscrambler aboard the station. You maybe still encounter immobile bioscramblers
+      in the ruin, however.
+  zoomachina:
+  - bugfix: showers wash things under them when they're turned on again
+2025-02-03:
+  Absolucy:
+  - bugfix: Random messages should no longer be dropped and not appear in chat.
+  SmArtKar:
+  - bugfix: Fixed an issue with persisting brimbeams
+  jlsnow301:
+  - bugfix: Character pref dropdowns should have their display names fixed
+  necromanceranne:
+  - balance: The force of most standard varieties of toolboxes has increased from
+      12 to 13 force.
+  - code_imp: Removed some magic numbers from the calculations for ancient toolboxes
+      damage scaling.
+  siliconOpossum:
+  - bugfix: Lathes interfaces are no longer unscrollable on 516
+2025-02-04:
+  necromanceranne:
+  - bugfix: Allows MOD holsters to once again activate while the modsuit is inactive
+      and undeployed.
+2025-02-05:
+  Melbert:
+  - qol: Map vote tallies explains how they work if you hover them
+2025-02-06:
+  Absolucy:
+  - bugfix: Void Cloaks now properly hide blades and such in the suit storage from
+      the wearer's sprite.
+  Ben10Omintrix:
+  - bugfix: fixes virtual pet app changing PDA's colors when open
+  Exester509:
+  - map: The Syndicate Lavaland base has been generally improved, with more defenses
+      and comms equipment.
+  Gaxeer:
+  - bugfix: fix image display in `NT IRN` PDA app for preview and contents
+  Holoo-1:
+  - bugfix: fixed state laws window on 516
+  Jacquerel:
+  - bugfix: AI-controlled ventcrawling mobs (botanical spiderlings and legioned monkeys)
+      can once more do so without killing themselves shortly afterwards.
+  JohnFulpWillard:
+  - bugfix: Autolathes no longer have a scrollbar that sends you off the screen.
+  - bugfix: Exosuit fabricators' queue list & Techfab/Autolathe's left side (with
+      the sections of printables) now have a scrollbar when the full list doesn't
+      fit on the UI for 516 users. Techfab/Autolathe also now does this for the list
+      of items too, instead of always having one.
+  SmArtKar:
+  - bugfix: Tactical medkits should no longer create invisible medbots
+  - image: Implemented the missing bezerk medbot skin
+  - bugfix: Fixed another two missing areas on icebox
+  - bugfix: Fixed incorrect power consumption on reagent grinders
+  - bugfix: Fixed wrong area/wall in Icemoon Underground
+  - map: Added cooling loops and cold tiles to all kitchen freezers that were missing
+      them
+  - bugfix: Fixed plant analyzers not being placeable on tables/in backpacks
+  - bugfix: Fixed stunprod's missing inhands sprite
+  TiviPlus:
+  - bugfix: fixed some admin links not working on 516
+  Y0SH1M4S73R:
+  - bugfix: Joining a minigame or taking certain ghost roles, while you have a mind
+      without a body, will no longer DNR you, just in case you can be resurrected
+      by some means.
+  - bugfix: If your old body is permanently destroyed while you are playing a minigame
+      or as certain ghost roles, you will still return to your character's original
+      mind, just in case you can be resurrected by some means.
+  - bugfix: The basketball minigame now gives its players and referee temporary bodies.
+2025-02-07:
+  Runi-c:
+  - balance: slips now make you eligible for being shove stunned
+  SmArtKar:
+  - balance: Removed an oversight which allowed you to farm fishing achievements
+  TiviPlus:
+  - server: An issue where more than 16 admin flags could not exist in the DB has
+      been corrected

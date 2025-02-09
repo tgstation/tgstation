@@ -657,7 +657,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /turf/proc/add_vomit_floor(mob/living/vomiter, vomit_type = /obj/effect/decal/cleanable/vomit, vomit_flags, purge_ratio = 0.1)
-	var/obj/effect/decal/cleanable/vomit/throw_up = new vomit_type (src, vomiter.get_static_viruses())
+	var/obj/effect/decal/cleanable/vomit/throw_up = new vomit_type (src, vomiter?.get_static_viruses())
 
 	// if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(throw_up))

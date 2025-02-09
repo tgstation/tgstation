@@ -112,10 +112,10 @@
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it "))
+		to_chat(user, span_notice("You connect the shock kit to \the [src], electrifying it "))
 	else
 		user.put_in_active_hand(input_shock_kit)
-		to_chat(user, span_notice("You cannot fit the shock kit onto the [name]!"))
+		to_chat(user, span_notice("You cannot fit the shock kit onto \the [src]!"))
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
@@ -348,8 +348,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	item_flags = SKIP_FANTASY_ON_SPAWN
 
-	// Whether or not the chair causes the target to become shove stun vulnerable if smashed against someone from behind.
-	var/inflicts_stun_vulnerability = TRUE
+	// Duration of daze inflicted when the chair is smashed against someone from behind.
+	var/daze_amount = 3 SECONDS
 
 	// What structure type does this chair become when placed?
 	var/obj/structure/chair/origin_type = /obj/structure/chair
@@ -398,7 +398,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(!stack_type)
 		return
 	var/remaining_mats = initial(origin_type.buildstackamount)
-	remaining_mats-- //Part of the chair was rendered completely unusable. It magically dissapears. Maybe make some dirt?
+	remaining_mats-- //Part of the chair was rendered completely unusable. It magically disappears. Maybe make some dirt?
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
@@ -432,11 +432,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [give_this_fucker_the_chair]"))
 	if(!HAS_TRAIT(give_this_fucker_the_chair, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		if(vulnerable_hit || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
-			give_this_fucker_the_chair.Knockdown(2 SECONDS)
+			give_this_fucker_the_chair.Knockdown(2 SECONDS, daze_amount = daze_amount)
 			if(give_this_fucker_the_chair.health < give_this_fucker_the_chair.maxHealth*0.5)
 				give_this_fucker_the_chair.adjust_confusion(10 SECONDS)
-			if(inflicts_stun_vulnerability)
-				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/next_shove_stuns)
 
 	smash(user)
 
@@ -470,7 +468,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
 	max_integrity = 40 //Submissive and breakable unlike the chad iron stool
-	inflicts_stun_vulnerability = FALSE //Not hard enough to cause them to become vulnerable to a shove
+	daze_amount = 0 //Not hard enough to cause them to become dazed
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
@@ -484,7 +482,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
-	inflicts_stun_vulnerability = FALSE
+	daze_amount = 0
 
 /obj/item/chair/wood/narsie_act()
 	return
@@ -606,7 +604,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	throw_range = 5 //Lighter Weight --> Flies Farther.
 	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 70
-	inflicts_stun_vulnerability = FALSE
+	daze_amount = 0
 	origin_type = /obj/structure/chair/plastic
 
 /obj/structure/chair/musical

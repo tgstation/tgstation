@@ -3,9 +3,9 @@
 #Project dependencies file
 #Final authority on what's required to fully build the project
 
-# byond version
+# byond version. Also must be updated in .tgs.yml
 export BYOND_MAJOR=515
-export BYOND_MINOR=1637
+export BYOND_MINOR=1647
 
 #rust_g git tag
 export RUST_G_VERSION=3.5.1

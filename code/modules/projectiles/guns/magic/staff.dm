@@ -271,7 +271,7 @@
 
 /obj/item/gun/magic/staff/locker
 	name = "staff of the locker"
-	desc = "An artefact that expells encapsulating bolts, for incapacitating thy enemy."
+	desc = "An artefact that expels encapsulating bolts, for incapacitating thy enemy."
 	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/locker
 	icon_state = "locker"

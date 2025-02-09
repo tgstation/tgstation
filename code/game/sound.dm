@@ -788,4 +788,15 @@
 				'sound/machines/buckle/unbuckle2.ogg',
 				'sound/machines/buckle/unbuckle3.ogg',
 			)
+		if(SFX_HEADSET_EQUIP)
+			soundin = pick(
+				'sound/items/equip/headset_equip1.ogg',
+				'sound/items/equip/headset_equip2.ogg',
+			)
+		if(SFX_HEADSET_PICKUP)
+			soundin = pick(
+				'sound/items/handling/headset/headset_pickup1.ogg',
+				'sound/items/handling/headset/headset_pickup2.ogg',
+				'sound/items/handling/headset/headset_pickup3.ogg',
+			)
 	return soundin

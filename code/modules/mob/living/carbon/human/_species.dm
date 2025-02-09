@@ -716,7 +716,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
-					to_chat(H, span_warning("The [I.name] is too big to attach!")) //should be src?
+					to_chat(H, span_warning("\The [I] is too big to attach!")) //should be src?
 				return FALSE
 			if( istype(I, /obj/item/modular_computer/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE

@@ -86,7 +86,8 @@
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/extinguish_laser()
 	if(!length(beam_parts))
 		return FALSE
-	owner.move_resist = initial(owner.move_resist)
+	if (owner)
+		owner.move_resist = initial(owner.move_resist)
 	for(var/obj/effect/brimbeam/beam in beam_parts)
 		beam.disperse()
 	beam_parts = list()

@@ -85,7 +85,7 @@
 /obj/item/stack/sticky_tape/super
 	name = "super sticky tape"
 	singular_name = "super sticky tape"
-	desc = "Quite possibly the most mischevious substance in the galaxy. Use with extreme lack of caution."
+	desc = "Quite possibly the most mischievous substance in the galaxy. Use with extreme lack of caution."
 	prefix = "super sticky"
 	conferred_embed = /datum/embedding/sticky_tape/super
 	splint_factor = 0.4

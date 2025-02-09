@@ -270,7 +270,7 @@
 				if(!brute_to_heal && stop_bleeding) // no brute, no bleeding
 					carbon_patient.balloon_alert(user, "[affecting.plaintext_zone] is not bleeding or bruised!")
 				else if(!burn_to_heal && (flesh_regeneration || sanitization) && any_burn_wound) // no burns, existing burn wounds are treated
-					carbon_patient.balloon_alert(user, "[affecting.plaintext_zone] has been fully treated!")
+					carbon_patient.balloon_alert(user, "[affecting.plaintext_zone] is fully treated, give it time!")
 				else if(!affecting.brute_dam && !affecting.burn_dam) // not hurt at all
 					carbon_patient.balloon_alert(user, "[affecting.plaintext_zone] is not hurt!")
 				else // probably hurt in some way but we are not the right item for this
