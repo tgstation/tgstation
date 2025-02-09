@@ -39,7 +39,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/daylight_2
-	description = span_boldwarning("Меня атаковали неумолимые лучи солнца.")
+	description = span_boldwarning("Я был опален беспощадным солнцем.")
 	mood_change = -7
 	timeout = 5 MINUTES
 
