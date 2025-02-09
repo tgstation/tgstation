@@ -2,7 +2,7 @@ import { Antagonist, Category } from '../base';
 
 const BloodsuckerBreakout: Antagonist = {
   key: 'bloodsuckerbreakout',
-  name: 'Bloodsucker (Latejoin)',
+  name: 'Bloodsucker Breakout',
   description: [
     `
       После смерти вы просыпаетесь и чуствуете себя монстром-нежитью.

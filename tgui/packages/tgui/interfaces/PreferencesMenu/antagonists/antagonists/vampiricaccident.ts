@@ -2,7 +2,7 @@ import { Antagonist, Category } from '../base';
 
 const VampiricAccident: Antagonist = {
   key: 'vampiricaccident',
-  name: 'Bloodsucker (Midround)',
+  name: 'Vampiric Accident',
   description: [
     `
       После смерти вы просыпаетесь и чуствуете себя монстром-нежитью.
