@@ -992,10 +992,7 @@
 #define ALERT_RELEVANCY_SAFE 0 /// * 0: User is not in immediate danger and not needed for some station-critical task.
 #define ALERT_RELEVANCY_WARN 1 /// * 1: Danger is around, but the user is not directly needed to handle it.
 #define ALERT_RELEVANCY_PERTINENT 2/// * 2: Danger is around and the user is responsible for handling it.
-/obj/item/modular_computer/proc/get_security_level_relevancy(var/obj/item/card/id/idToCheck)
-	var/list/id_accesses = list()
-	id_accesses = saved_id_accesses
-
+/obj/item/modular_computer/proc/get_security_level_relevancy()
 	switch(SSsecurity_level.get_current_level_as_number())
 		if(SEC_LEVEL_DELTA)
 			return ALERT_RELEVANCY_PERTINENT
@@ -1005,7 +1002,7 @@
 			if(ACCESS_SECURITY in saved_id_accesses)
 				return ALERT_RELEVANCY_PERTINENT
 			else
-				return ALERT_RELEVANCY_SAFE
+				return ALERT_RELEVANCY_WARN
 		if(SEC_LEVEL_GREEN) // no threats, no concerns
 			return ALERT_RELEVANCY_SAFE
 
