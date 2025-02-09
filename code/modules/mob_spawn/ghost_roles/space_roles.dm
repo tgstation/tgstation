@@ -205,7 +205,7 @@
 	name = "Actor"
 	id = /obj/item/card/id/away/filmstudio
 	id_trim= /datum/id_trim/away/actor
-	ears = /obj/item/radio
+	ears = /obj/item/clothing/radio
 	uniform = /obj/item/clothing/under/suit/charcoal
 	back = /obj/item/storage/backpack/satchel
 	shoes = /obj/item/clothing/shoes/laceup
