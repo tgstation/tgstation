@@ -19,6 +19,14 @@
   vertical-align: middle;
 }
 
+.alertIndicator {
+  font-weight: bold;
+  right: "0px";
+  text-align: "center";
+  vertical-align: "center";
+  font-family: "Courier New";
+}
+
 .alertBlink {
   color: #FFFFFF;
   animation: alertBlinkAnimation 1s infinite;
