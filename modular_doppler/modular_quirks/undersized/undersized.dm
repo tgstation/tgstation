@@ -5,6 +5,7 @@
 #define UNDERSIZED_SQUASH_CHANCE 100
 #define UNDERSIZED_SQUASH_DAMAGE 20
 #define UNDERSIZED_SHOULD_GIB FALSE
+#define BLOOD_VOLUME_UNDERSIZED = 250
 
 /datum/quirk/undersized
 	name = "Undersized"
@@ -28,6 +29,7 @@
 	for(var/obj/item/bodypart/bodypart as anything in human_holder.bodyparts)
 		on_gain_limb(src, bodypart, special = FALSE)
 
+	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
 	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
@@ -124,3 +126,4 @@
 #undef UNDERSIZED_SQUASH_CHANCE
 #undef UNDERSIZED_SQUASH_DAMAGE
 #undef UNDERSIZED_SHOULD_GIB
+#undef BLOOD_VOLUME_UNDERSIZED
