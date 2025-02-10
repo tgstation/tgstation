@@ -324,6 +324,7 @@
 "fY" = (
 /obj/structure/reagent_dispensers/fueltank/large,
 /obj/effect/turf_decal/bot,
+/obj/structure/sign/clock/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "gc" = (
@@ -382,6 +383,15 @@
 /obj/effect/mob_spawn/corpse/human,
 /obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/film_studio/backstage)
+"hf" = (
+/obj/structure/table/wood,
+/obj/structure/mirror/directional/west,
+/obj/item/gun/energy/laser/chameleon,
+/obj/item/gun/energy/laser/chameleon{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "hn" = (
 /turf/open/floor/plating,
@@ -634,6 +644,10 @@
 "mF" = (
 /obj/structure/table/wood,
 /obj/structure/mirror/directional/west,
+/obj/item/laser_pointer,
+/obj/item/laser_pointer{
+	pixel_x = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "mH" = (
@@ -2261,6 +2275,7 @@
 	},
 /obj/item/stack/sheet/iron/fifty,
 /obj/machinery/light/directional/south,
+/obj/structure/sign/calendar/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/stage)
 "NU" = (
@@ -4095,7 +4110,7 @@ Ea
 Bg
 Yq
 eA
-mF
+hf
 mF
 QC
 Yq
