@@ -92,7 +92,8 @@
 	return mutable_appearance(icon, "[icon_state]_armrest")
 
 /obj/structure/chair/proc/update_armrest()
-	armrest = color_atom_overlay(armrest)
+	if (cached_color_filter)
+		armrest = filter_appearance_recursive(armrest, cached_color_filter)
 	update_appearance()
 
 /obj/structure/chair/update_overlays()
