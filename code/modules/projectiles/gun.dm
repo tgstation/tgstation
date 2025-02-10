@@ -76,7 +76,6 @@
 	/// Cooldown for the visible message sent from gun flipping.
 	COOLDOWN_DECLARE(flip_cooldown)
 
-
 /obj/item/gun/Initialize(mapload)
 	. = ..()
 	if(ispath(pin))
@@ -195,12 +194,9 @@
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
-
-
 	if(recoil && !tk_firing(user))
 		shake_camera(user, recoil + 1, recoil)
 	fire_sounds()
-
 	if(suppressed || !message)
 		return
 	if(tk_firing(user))
@@ -612,7 +608,6 @@
 
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
-
 	return
 
 #undef FIRING_PIN_REMOVAL_DELAY
