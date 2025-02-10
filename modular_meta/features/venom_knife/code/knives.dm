@@ -34,7 +34,7 @@
 
 /obj/item/knife/poison/afterattack(mob/living/enemy, mob/user)
 	location = get_turf(src)
-	if(istype(enemy)) // ну типо рантаймамы срёт когда херачишь по объектам
+	if(istype(enemy)) // Вызывает рантаймы, если удар пришёлся не на моба, а на какой-то другой объект.
 		if(enemy.can_inject() && prob(65)) // Проверяет на хардсуиты, модсуиты или еву, я бы ещё сделал чтобы он блокировался сековской бронёй, но увы такими знаниями не обладаю.
 			reagents.trans_to(enemy, amount_per_transfer_from_this)
 		else
