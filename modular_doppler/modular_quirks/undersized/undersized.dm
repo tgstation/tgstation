@@ -5,7 +5,6 @@
 #define UNDERSIZED_SQUASH_CHANCE 100
 #define UNDERSIZED_SQUASH_DAMAGE 20
 #define UNDERSIZED_SHOULD_GIB FALSE
-#define BLOOD_VOLUME_UNDERSIZED = 250
 
 /datum/quirk/undersized
 	name = "Undersized"
@@ -19,19 +18,27 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	/// Saves refs to the original (normal size) organs, which are on ice in nullspace in case this quirk gets removed somehow.
 	var/list/obj/item/organ/old_organs
+	var/list/undersized_traits = list(
+		TRAIT_HATED_BY_DOGS,
+		TRAIT_UNDENSE,
+	)
 
 /datum/quirk/undersized/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.mob_size = MOB_SIZE_TINY
 
+	human_holder.add_traits(undersized_traits, QUIRK_TRAIT)
+
+	human_holder.can_be_held = TRUE //makes u scoopable
+	human_holder.max_grab = 1 //you are too weak to aggro grab
+	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
+	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
+	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
+
 	RegisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_gain_limb))
 
 	for(var/obj/item/bodypart/bodypart as anything in human_holder.bodyparts)
 		on_gain_limb(src, bodypart, special = FALSE)
-
-	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
-	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
-	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
 	human_holder.transform = human_holder.transform.Scale(0.5)
 	human_holder.maptext_height = 24
@@ -43,10 +50,8 @@
 		squash_flags = UNDERSIZED_SHOULD_GIB, \
 	)
 
-	human_holder.can_be_held = TRUE //makes u scoopable
-	human_holder.density = 0 //makes u walk overable
-	human_holder.max_grab = 1 //you are too weak to aggro grab
-	human_holder.add_traits(TRAIT_HATED_BY_DOGS) //I regret to inform you, you are chew toy sized
+	var/datum/action/cooldown/spell/adjust_sprite_size/shrink/action = new(src)
+	action.Grant(human_holder)
 
 /datum/quirk/undersized/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -76,6 +81,8 @@
 
 	UnregisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB)
 
+
+	human_holder.blood_volume_normal = BLOOD_VOLUME_NORMAL
 	human_holder.physiology.hunger_mod /= UNDERSIZED_HUNGER_MOD
 	human_holder.remove_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
@@ -119,6 +126,57 @@
 /datum/movespeed_modifier/undersized
 	multiplicative_slowdown = UNDERSIZED_SPEED_SLOWDOWN
 
+//this is about to get cringe and poorly designed.
+//ensmallening spell begin
+
+/datum/action/cooldown/spell/adjust_sprite_size/shrink
+	name = "Shrink Held Item"
+
+/datum/action/cooldown/spell/adjust_sprite_size/shrink/cast(mob/living/cast_on)
+	. = ...() //face holding back tears emoji
+
+	var/obj/item/to_change = cast_on.get_active_held_item() || cast_on.get_inactive_held_item()
+	if(!to_change)
+		to_chat(cast_on, span_notice("Nothing to shrink!"))
+		return
+
+	if(!cast_on)
+		owner.balloon_alert(owner, "no item in hand!")
+		return FALSE
+
+	var/datum/component/existing_component = to_change.GetComponent(/datum/component/embiggened/shrink)
+	if(existing_component)
+		owner.balloon_alert(owner, "already shrunk, unshrunking!")
+		qdel(existing_component)
+		return FALSE
+
+	to_change.AddComponent(/datum/component/embiggened/shrink)
+	owner.balloon_alert(owner, "item shrank")
+	return TRUE
+
+/datum/component/embiggened/shrink
+	// This component is used to mark items that have been embiggened by the Oversized quirk's spell.
+	// It's used to prevent the spell from embiggening the same item multiple times.
+
+/datum/component/embiggened/shrink/Initialize()
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
+	var/atom/parent_atom = parent
+	old_name = parent_atom.name
+	old_transform = parent_atom.transform
+	parent_atom.transform = parent_atom.transform.Scale(0.8, 0.8)
+	if(istype(parent_atom, /atom/movable))
+		parent_atom.name = "tiny [parent_atom.name]"
+
+/datum/component/embiggened/shrink/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	var/atom/owner = parent
+	if(owner)
+		examine_list += span_notice("Whether by modification or manufacture, this is clearly intended for sentients probably half your size.")
+
+//ensmallening spell end
+
 #undef UNDERSIZED_HUNGER_MOD
 #undef UNDERSIZED_SPEED_SLOWDOWN
 #undef UNDERSIZED_HARM_DAMAGE_BONUS
@@ -126,4 +184,3 @@
 #undef UNDERSIZED_SQUASH_CHANCE
 #undef UNDERSIZED_SQUASH_DAMAGE
 #undef UNDERSIZED_SHOULD_GIB
-#undef BLOOD_VOLUME_UNDERSIZED
