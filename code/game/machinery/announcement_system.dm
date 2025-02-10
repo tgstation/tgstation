@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/Destroy()
 	QDEL_NULL(radio)
-	QDEL_LIST(config_entries)
+	QDEL_LAZYLIST(config_entries)
 	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
@@ -144,6 +144,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			if (config.type in list(/datum/aas_config_entry/arrival, /datum/aas_config_entry/newhead))
 				update_appearance()
 		if("Text")
+			if(!param["lineKey"] in config.announcement_lines_map)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to set announcement line for nonexisting line in the [config.name] for AAS. Probably href injection. Received line: [param["lineKey"]]")
+				log_game("[key_name(usr)] tried to mess with AAS. For [config.name] he tried to edit nonexistend [param["lineKey"]]")
+				return
 			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
 			if(new_message)
 				config.announcement_lines_map[param["lineKey"]] = new_message
@@ -162,7 +166,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// If AAS can't broadcast message, it shouldn't be picked by randomizer.
 /obj/machinery/announcement_system/proc/has_supported_channels(list/channels)
-	if (!channels || !channels.len || (RADIO_CHANNEL_COMMON in channels))
+	if (!LAZYLEN(channels) || (RADIO_CHANNEL_COMMON in channels))
 		// Okay, I am not proud of this, but I don't want CentCom or Syndie AASs to broadcast on Common.
 		return src.type == /obj/machinery/announcement_system
 	for(var/channel in channels)
@@ -190,7 +194,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /// Sends a message to the appropriate channels.
 /obj/machinery/announcement_system/proc/broadcast(message, list/channels, command_span = FALSE)
 	use_energy(active_power_usage)
-	if(!channels || channels.len == 0)
+	if(!LAZYLEN(channels))
 		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
 	else
 		// For some reasons, radio can't recognize RADIO_CHANNEL_COMMON in channels, so we need to handle it separately.
@@ -242,13 +246,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// Compiles the announcement message with the provided variables. Announcement line is optional.
 /datum/aas_config_entry/proc/compile_announce(list/variables_map, announcement_line)
-	var/announcement_message = announcement_lines_map[announcement_lines_map[1]]
-	// In case of key
-	if (announcement_line && (announcement_line in announcement_lines_map))
-		announcement_message = announcement_lines_map[announcement_line]
-	// In case of index
-	else if (announcement_line && isnum(announcement_line))
-		announcement_message = announcement_lines_map[announcement_lines_map[announcement_line]]
+	var/announcement_message = LAZYACCESS(announcement_lines_map, announcement_line)
+	// If index was provided LAZYACCESS will return us a key, not value
+	if (isnum(announcement_line))
+		announcement_message = announcement_lines_map[announcement_message]
+	// Fallback - first line
+	if (!announcement_message)
+		announcement_message = announcement_lines_map[announcement_lines_map[1]]
+	// Replace variables with their value
 	for(var/variable in vars_and_tooltips_map)
 		announcement_message = replacetext_char(announcement_message, "%[variable]", variables_map[variable] || "\[NO DATA\]")
 	return announcement_message
