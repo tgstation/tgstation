@@ -17,9 +17,3 @@
 				. = ..()
 		else
 			return null
-
-	//the reset density issue
-	/obj/item/clothing/head/mob_holder/release()
-		if(iscarbon(held_mob))
-			held_mob.density = 0
-		. = ..()
