@@ -1,5 +1,5 @@
 // An unholy water flask, but for heretics.
-// Heals heretics, hearms non-heretics. Pretty much identical.
+// Heals heretics, harms non-heretics. Pretty much identical.
 /obj/item/reagent_containers/cup/beaker/eldritch
 	name = "flask of eldritch essence"
 	desc = "Toxic to the closed minded, yet refreshing to those with knowledge of the beyond."

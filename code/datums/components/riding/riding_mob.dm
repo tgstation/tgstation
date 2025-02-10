@@ -118,9 +118,9 @@
 			if(SANITY_LEVEL_DISTURBED)
 				modified_move_delay *= 1
 			if(SANITY_LEVEL_CRAZY)
-				modified_move_delay *= 1.2
+				modified_move_delay *= 1.1
 			if(SANITY_LEVEL_INSANE)
-				modified_move_delay *= 1.5
+				modified_move_delay *= 1.2
 	COOLDOWN_START(src, vehicle_move_cooldown, modified_move_delay)
 	return ..()
 
