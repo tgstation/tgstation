@@ -35,7 +35,6 @@
 	human_holder.worn_slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_BACKPACK
 
 	human_holder.max_grab = GRAB_AGGRESSIVE //you are too weak to neck slam or strangle
-	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
 	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
@@ -93,7 +92,6 @@
 	human_holder.worn_slot_flags = null
 
 	human_holder.max_grab = GRAB_KILL
-	human_holder.blood_volume_normal = BLOOD_VOLUME_NORMAL
 	human_holder.physiology.hunger_mod /= UNDERSIZED_HUNGER_MOD
 	human_holder.remove_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
