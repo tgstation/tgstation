@@ -29,6 +29,7 @@
 	human_holder.add_traits(undersized_traits, QUIRK_TRAIT)
 
 	human_holder.mob_size = MOB_SIZE_TINY
+	human_holder.w_class = MOB_SIZE_TINY
 	human_holder.can_be_held = TRUE //makes u scoopable
 	human_holder.max_grab = GRAB_AGGRESSIVE //you are too weak to neck slam or strangle
 	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
@@ -126,39 +127,50 @@
 /datum/movespeed_modifier/undersized
 	multiplicative_slowdown = UNDERSIZED_SPEED_SLOWDOWN
 
-//this is about to get cringe and poorly designed.
 //ensmallening spell begin
 
-/datum/action/cooldown/spell/adjust_sprite_size/shrink
+/datum/action/cooldown/spell/adjust_sprite_size_small
 	name = "Shrink Held Item"
+	desc = "Adjusts the sprite size of something you're holding, to more accurately reflect it being for you."
+	button_icon_state = "charge"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_INCAPACITATED
+	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
+	antimagic_flags = NONE
 
-/datum/action/cooldown/spell/adjust_sprite_size/shrink/cast(mob/living/cast_on)
-	. = ...() //face holding back tears emoji
+/datum/action/cooldown/spell/adjust_sprite_size/is_valid_target(atom/cast_on)
+	return isliving(cast_on)
+
+/datum/action/cooldown/spell/adjust_sprite_size/cast(mob/living/cast_on)
+	. = ..()
 
 	var/obj/item/to_change = cast_on.get_active_held_item() || cast_on.get_inactive_held_item()
 	if(!to_change)
-		to_chat(cast_on, span_notice("Nothing to shrink!"))
+		to_chat(cast_on, span_notice("Nothing to Shrink!"))
 		return
 
 	if(!cast_on)
 		owner.balloon_alert(owner, "no item in hand!")
 		return FALSE
 
-	var/datum/component/existing_component = to_change.GetComponent(/datum/component/embiggened/shrink)
+	var/datum/component/existing_component = to_change.GetComponent(/datum/component/emshranked)
 	if(existing_component)
-		owner.balloon_alert(owner, "already shrunk, unshrunking!")
+		owner.balloon_alert(owner, "already shrunk, removing!")
 		qdel(existing_component)
 		return FALSE
 
-	to_change.AddComponent(/datum/component/embiggened/shrink)
-	owner.balloon_alert(owner, "item shrank")
+	to_change.AddComponent(/datum/component/emshranked)
+	owner.balloon_alert(owner, "item shrank.")
 	return TRUE
 
-/datum/component/embiggened/shrink
+/datum/component/emshranked
 	// This component is used to mark items that have been embiggened by the Oversized quirk's spell.
 	// It's used to prevent the spell from embiggening the same item multiple times.
 
-/datum/component/embiggened/shrink/Initialize()
+var/old_name
+var/old_transform
+
+/datum/component/emshranked/Initialize()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/parent_atom = parent
@@ -168,12 +180,28 @@
 	if(istype(parent_atom, /atom/movable))
 		parent_atom.name = "tiny [parent_atom.name]"
 
-/datum/component/embiggened/shrink/examine(datum/source, mob/user, list/examine_list)
+/datum/component/emshranked/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+
+/datum/component/emshranked/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
+
+/datum/component/emshranked/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	var/atom/owner = parent
 	if(owner)
-		examine_list += span_notice("Whether by modification or manufacture, this is clearly intended for sentients probably half your size.")
+		examine_list += span_notice("Whether by modification or manufacture, this is clearly intended for sentients probably twice your size.")
+
+/datum/component/emshranked/Destroy(force)
+	var/atom/parent_atom = parent
+	if(parent_atom)
+		parent_atom.transform = old_transform // Revert the transform to original
+		if(istype(parent_atom, /atom/movable))
+			parent_atom.name = old_name // Revert the name to original
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
+	return ..()
+
 
 //ensmallening spell end
 
