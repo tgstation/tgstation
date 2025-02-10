@@ -11,8 +11,8 @@
 	inhand_icon_state = "cain_and_abel"
 	attack_verb_continuous = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "saw", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	force = 18
-	attack_speed = 5
+	force = 15
+	attack_speed = 6
 	actions_types = list(/datum/action/cooldown/dagger_swing)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_SMALL

@@ -11,6 +11,7 @@
 		return
 	var/obj/effect/temp_visual/dagger_slash/slash_effect = new
 	owner.vis_contents += slash_effect
+	ADD_TRAIT(owner, TRAIT_TENTACLE_IMMUNE, REF(src))
 	RegisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_attack))
 
@@ -63,6 +64,10 @@
 	playsound(owner, 'sound/items/weapons/parry.ogg', 75, TRUE)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(owner))
 	return SUCCESSFUL_BLOCK
+
+/datum/status_effect/dagger_swinging/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_TENTACLE_IMMUNE, REF(src))
 
 ///status effect applied to enemies who step on crystals
 /datum/status_effect/dagger_stun
