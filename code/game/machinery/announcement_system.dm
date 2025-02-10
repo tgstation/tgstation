@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			if (config.type in list(/datum/aas_config_entry/arrival, /datum/aas_config_entry/newhead))
 				update_appearance()
 		if("Text")
-			if(!param["lineKey"] in config.announcement_lines_map)
+			if(!(param["lineKey"] in config.announcement_lines_map))
 				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to set announcement line for nonexisting line in the [config.name] for AAS. Probably href injection. Received line: [param["lineKey"]]")
 				log_game("[key_name(usr)] tried to mess with AAS. For [config.name] he tried to edit nonexistend [param["lineKey"]]")
 				return
