@@ -7,6 +7,7 @@ import {
   NoticeBox,
   Section,
   Stack,
+  Table,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -86,62 +87,66 @@ export const AutomatedAnnouncement = (props) => {
                     key={entry.entryRef}
                     title={entry.name}
                     buttons={
-                      <Button
-                        icon={entry.enabled ? 'power-off' : 'times'}
-                        selected={entry.enabled}
-                        content={entry.enabled ? 'On' : 'Off'}
-                        disabled={!entry.modifiable}
-                        tooltip={
-                          !entry.modifiable
-                            ? 'Editing disabled by CentCom!'
-                            : undefined
-                        }
-                        onClick={() =>
-                          act('Toggle', { entryRef: entry.entryRef })
-                        }
-                      />
+                      <>
+                        <Button
+                          icon="info"
+                          tooltip={
+                            (entry.generalTooltip
+                              ? entry.generalTooltip + '\n'
+                              : '') +
+                            Object.entries(entry.varsAndTooltipsMap)
+                              .map(
+                                ([varName, tooltip]) =>
+                                  '%' + varName + ' ' + tooltip,
+                              )
+                              .join('\n')
+                          }
+                          tooltipPosition="left"
+                        />
+                        <Button
+                          icon={entry.enabled ? 'power-off' : 'times'}
+                          selected={entry.enabled}
+                          disabled={!entry.modifiable}
+                          tooltip={
+                            !entry.modifiable
+                              ? 'Editing disabled by CentCom!'
+                              : undefined
+                          }
+                          onClick={() =>
+                            act('Toggle', { entryRef: entry.entryRef })
+                          }
+                        >
+                          {entry.enabled ? 'On' : 'Off'}
+                        </Button>
+                      </>
                     }
                   >
-                    {Object.entries(entry.announcementLinesMap).map(
-                      ([lineKey, announcementLine]) => (
-                        <LabeledList key={lineKey}>
-                          <LabeledList.Item
-                            label={lineKey}
-                            buttons={
-                              <Button
-                                icon="info"
-                                tooltip={
-                                  (entry.generalTooltip
-                                    ? entry.generalTooltip + '\n'
-                                    : '') +
-                                  Object.entries(entry.varsAndTooltipsMap)
-                                    .map(
-                                      ([varName, tooltip]) =>
-                                        '%' + varName + ' ' + tooltip,
-                                    )
-                                    .join('\n')
+                    <Table>
+                      {Object.entries(entry.announcementLinesMap).map(
+                        ([lineKey, announcementLine]) => (
+                          <Table.Row key={lineKey}>
+                            <Table.Cell collapsing color="label">
+                              {lineKey}:
+                            </Table.Cell>
+                            <Table.Cell>
+                              <Input
+                                key={entry.entryRef + lineKey}
+                                fluid
+                                value={announcementLine}
+                                disabled={!entry.modifiable}
+                                onChange={(e, value) =>
+                                  act('Text', {
+                                    entryRef: entry.entryRef,
+                                    lineKey,
+                                    newText: value,
+                                  })
                                 }
-                                tooltipPosition="left"
                               />
-                            }
-                          >
-                            <Input
-                              key={entry.entryRef + lineKey}
-                              fluid
-                              value={announcementLine}
-                              disabled={!entry.modifiable}
-                              onChange={(e, value) =>
-                                act('Text', {
-                                  entryRef: entry.entryRef,
-                                  lineKey,
-                                  newText: value,
-                                })
-                              }
-                            />
-                          </LabeledList.Item>
-                        </LabeledList>
-                      ),
-                    )}
+                            </Table.Cell>
+                          </Table.Row>
+                        ),
+                      )}
+                    </Table>
                   </Section>
                 ))}
               </Section>
