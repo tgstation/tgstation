@@ -43,7 +43,7 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/riflestock
+/datum/crafting_recipe/gun_maint_kit
 	name = "Makeshift Gun Maintenance Kit"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SCREWDRIVER)
 	result = /obj/item/gun_maintenance_supplies/makeshift
