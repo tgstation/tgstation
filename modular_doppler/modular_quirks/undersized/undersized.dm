@@ -21,6 +21,7 @@
 	var/list/undersized_traits = list(
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_UNDENSE,
+		TRAIT_EASILY_WOUNDED,
 	)
 
 /datum/quirk/undersized/add(client/client_source)
