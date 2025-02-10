@@ -31,6 +31,7 @@
 	human_holder.mob_size = MOB_SIZE_TINY
 	human_holder.held_w_class = WEIGHT_CLASS_TINY
 	human_holder.can_be_held = TRUE //makes u scoopable
+	human_holder.worn_slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_BACKPACK
 
 	human_holder.max_grab = GRAB_AGGRESSIVE //you are too weak to neck slam or strangle
 	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
@@ -88,6 +89,7 @@
 	human_holder.mob_size = MOB_SIZE_HUMAN
 	human_holder.held_w_class = WEIGHT_CLASS_NORMAL
 	human_holder.can_be_held = FALSE
+	human_holder.worn_slot_flags = null
 
 	human_holder.max_grab = GRAB_KILL
 	human_holder.blood_volume_normal = BLOOD_VOLUME_NORMAL
