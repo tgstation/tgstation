@@ -14,7 +14,7 @@
 	medical_record_text = "Patient is abnormally small."
 	value = 0
 	mob_trait = TRAIT_UNDERSIZED
-	icon = FA_ICON_EXPAND_ARROWS_ALT
+	icon = FA_ICON_PERSON_FALLING
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	/// Saves refs to the original (normal size) organs, which are on ice in nullspace in case this quirk gets removed somehow.
 	var/list/obj/item/organ/old_organs
