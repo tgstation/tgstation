@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "The traitor guncase properly checks for condition changes before letting a player activate the time bomb."

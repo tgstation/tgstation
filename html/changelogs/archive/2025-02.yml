@@ -155,3 +155,13 @@
   timothymtorres:
   - code_imp: Add error message logs to screenshot CI test failure when screenshots
       do not exist.
+2025-02-10:
+  SmArtKar:
+  - bugfix: Fixed missing HTML encodes in comms console code
+  - bugfix: Examining walls no longer allows you to see items mounted on its other
+      side
+  TiviPlus:
+  - code_imp: updated hslify to correctly detect all hexcodes
+  necromanceranne:
+  - bugfix: The traitor guncase properly checks for condition changes before letting
+      a player activate the time bomb.
