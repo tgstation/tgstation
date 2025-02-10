@@ -101,8 +101,10 @@
 	if(HAS_TRAIT(exposed_mob, TRAIT_RESISTCOLD))
 		holder.remove_reagent(type, volume)
 		return
+
 	exposed_mob.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	exposed_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
+	if(!exposed_mob.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
+		exposed_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
