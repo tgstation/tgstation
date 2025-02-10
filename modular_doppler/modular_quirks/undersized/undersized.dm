@@ -29,8 +29,9 @@
 	human_holder.add_traits(undersized_traits, QUIRK_TRAIT)
 
 	human_holder.mob_size = MOB_SIZE_TINY
-	human_holder.w_class = MOB_SIZE_TINY
+	human_holder.held_w_class = WEIGHT_CLASS_TINY
 	human_holder.can_be_held = TRUE //makes u scoopable
+
 	human_holder.max_grab = GRAB_AGGRESSIVE //you are too weak to neck slam or strangle
 	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
 	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
@@ -51,7 +52,7 @@
 		squash_flags = UNDERSIZED_SHOULD_GIB, \
 	)
 
-	var/datum/action/cooldown/spell/adjust_sprite_size/shrink/action = new(src)
+	var/datum/action/cooldown/spell/adjust_sprite_size_small/action = new(src)
 	action.Grant(human_holder)
 
 /datum/quirk/undersized/remove()
@@ -82,10 +83,17 @@
 
 	UnregisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB)
 
+	human_holder.remove_traits(undersized_traits)
 
+	human_holder.mob_size = MOB_SIZE_HUMAN
+	human_holder.held_w_class = WEIGHT_CLASS_NORMAL
+	human_holder.can_be_held = FALSE
+
+	human_holder.max_grab = GRAB_KILL
 	human_holder.blood_volume_normal = BLOOD_VOLUME_NORMAL
 	human_holder.physiology.hunger_mod /= UNDERSIZED_HUNGER_MOD
 	human_holder.remove_movespeed_modifier(/datum/movespeed_modifier/undersized)
+
 
 	for(var/obj/item/organ/organ_to_restore in old_organs)
 		old_organs -= organ_to_restore
@@ -102,11 +110,6 @@
 
 	var/datum/component/squashable/component = human_holder.GetComponent(/datum/component/squashable)
 	qdel(component)
-
-	human_holder.can_be_held = FALSE
-	human_holder.density = 1
-	human_holder.max_grab = 3
-	human_holder.remove_traits(TRAIT_HATED_BY_DOGS)
 
 /datum/quirk/undersized/proc/on_gain_limb(datum/source, obj/item/bodypart/gained, special)
 	SIGNAL_HANDLER
@@ -138,10 +141,10 @@
 	spell_requirements = NONE
 	antimagic_flags = NONE
 
-/datum/action/cooldown/spell/adjust_sprite_size/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/adjust_sprite_size_small/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/adjust_sprite_size/cast(mob/living/cast_on)
+/datum/action/cooldown/spell/adjust_sprite_size_small/cast(mob/living/cast_on)
 	. = ..()
 
 	var/obj/item/to_change = cast_on.get_active_held_item() || cast_on.get_inactive_held_item()
@@ -164,11 +167,8 @@
 	return TRUE
 
 /datum/component/emshranked
-	// This component is used to mark items that have been embiggened by the Oversized quirk's spell.
-	// It's used to prevent the spell from embiggening the same item multiple times.
-
-var/old_name
-var/old_transform
+	// This component is used to mark items that have been shrinked by the Oversized quirk's spell.
+	// It's used to prevent the spell from shrunked the same item multiple times.
 
 /datum/component/emshranked/Initialize()
 	if(!isatom(parent))
