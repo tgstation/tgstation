@@ -1595,13 +1595,9 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Df" = (
-/obj/structure/closet/crate/wooden/toy,
-/obj/item/clothing/head/wig/natural,
-/obj/item/clothing/head/wig/natural{
-	pixel_x = 8
-	},
-/obj/item/clothing/head/wig/natural{
-	pixel_x = -6
+/obj/effect/turf_decal/bot,
+/obj/machinery/autolathe{
+	name = "Universal Prop Fabricator"
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
@@ -2512,6 +2508,12 @@
 /area/ruin/space/has_grav/film_studio)
 "RN" = (
 /obj/machinery/light/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate{
+	name = "set building crate"
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "RO" = (
@@ -2826,9 +2828,18 @@
 /turf/open/floor/iron/white/smooth_half,
 /area/ruin/space/has_grav/film_studio/stage)
 "WM" = (
+/obj/structure/closet/crate/wooden/toy,
+/obj/item/clothing/head/wig/natural,
+/obj/item/clothing/head/wig/natural{
+	pixel_x = 8
+	},
+/obj/item/clothing/head/wig/natural{
+	pixel_x = -6
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Xa" = (
