@@ -25,12 +25,12 @@
 
 /datum/quirk/undersized/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.mob_size = MOB_SIZE_TINY
 
 	human_holder.add_traits(undersized_traits, QUIRK_TRAIT)
 
+	human_holder.mob_size = MOB_SIZE_TINY
 	human_holder.can_be_held = TRUE //makes u scoopable
-	human_holder.max_grab = 1 //you are too weak to aggro grab
+	human_holder.max_grab = GRAB_AGGRESSIVE //you are too weak to neck slam or strangle
 	human_holder.blood_volume_normal = BLOOD_VOLUME_UNDERSIZED
 	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
