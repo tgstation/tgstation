@@ -438,7 +438,7 @@
 	// especially for entities with the profound fisher component, which should only work on
 	// proper fishing spots.
 	if(user.CanReach(target, src))
-		hook_hit(targer, user)
+		hook_hit(target, user)
 		return
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
