@@ -171,7 +171,7 @@
 
 /obj/structure/fish_mount/proc/remove_fish(mob/living/user)
 	balloon_alert(user, "removing fish...")
-	if(!do_after(user, 3 SECONDS, src) || !mounted_fish)
+	if(!do_after(user, (persistence_loaded_fish ? 6 : 3 SECONDS, src) || !mounted_fish)
 		return
 
 	var/obj/item/fish/fish_reference = mounted_fish
