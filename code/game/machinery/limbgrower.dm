@@ -32,6 +32,7 @@
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower]
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/simple_rotation)
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -159,6 +160,15 @@
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/limbgrower/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(busy)
+		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(default_unfasten_wrench(user, tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/limbgrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
