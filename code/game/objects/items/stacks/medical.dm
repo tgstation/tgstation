@@ -125,7 +125,6 @@
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE, continuous = FALSE)
 	if(heal_begin_sound && !continuous)
 		playsound(patient, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
-		to_chat(world, span_admin("heal begin playing now"))
 	if(patient == user)
 		if(!silent)
 			user.visible_message(
@@ -184,11 +183,9 @@
 		var/atom/alert_loc = QDELETED(src) ? user : src
 		alert_loc.balloon_alert(user, repeating ? "all used up!" : "treated [parse_zone(healed_zone)]")
 		playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
-		to_chat(world, span_admin("heal end playing now"))
 		return
 	if(heal_continuous_sound && (continuous || !silent))
 		playsound(patient, heal_continuous_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
-		to_chat(world, span_admin("heal continuous playing now"))
 	log_combat(user, patient, "healed", src)
 
 	// first, just try looping
@@ -213,7 +210,6 @@
 		try_heal_manual_target(patient, user)
 	if(heal_end_sound)
 		playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
-		to_chat(world, span_admin("heal end playing now"))
 
 /obj/item/stack/medical/proc/try_heal_auto_change_zone(mob/living/carbon/patient, mob/living/user, preferred_target, last_zone)
 	PRIVATE_PROC(TRUE)
