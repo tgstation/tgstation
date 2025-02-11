@@ -1,3 +1,4 @@
+/// TODO: Convert to batched spritesheet. Get rid of awful Turn() and SetIntensity() calls
 /datum/asset/spritesheet/rtd
 	name = "rtd"
 
