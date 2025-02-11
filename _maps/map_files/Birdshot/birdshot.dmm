@@ -1110,14 +1110,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
-"awO" = (
-/obj/machinery/door/airlock{
-	name = "Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science/xenobiology)
 "awQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -5810,7 +5802,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/rust,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "ciT" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/east,
@@ -6413,6 +6405,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "ctH" = (
@@ -7885,7 +7878,6 @@
 	name = "Abandoned Brewery"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "cTK" = (
@@ -8319,7 +8311,7 @@
 "cZW" = (
 /obj/structure/closet/crate/grave,
 /turf/open/misc/dirt/station,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "dah" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
@@ -11943,10 +11935,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/starboard)
-"enq" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "enE" = (
 /obj/item/cultivator/rake,
 /obj/structure/cable,
@@ -12711,7 +12699,7 @@
 "eBT" = (
 /obj/item/shovel,
 /turf/open/misc/dirt/station,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "eCf" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -29338,7 +29326,7 @@
 	dir = 10
 	},
 /turf/open/floor/grass,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "jOS" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light/small/directional/south,
@@ -31175,6 +31163,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -34904,7 +34895,7 @@
 "lCS" = (
 /obj/structure/closet/crate/grave/fresh,
 /turf/open/misc/dirt/station,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "lCT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 4
@@ -34963,7 +34954,7 @@
 /obj/structure/flora/bush/jungle,
 /obj/structure/marker_beacon/yellow,
 /turf/open/floor/grass,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "lEa" = (
 /turf/open/floor/iron/half,
 /area/station/hallway/primary/central/fore)
@@ -46121,7 +46112,7 @@
 	dir = 4
 	},
 /turf/open/misc/dirt/station,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "pAl" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/siding/white{
@@ -47964,14 +47955,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
-"qcQ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
 "qcX" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -57666,10 +57649,9 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /turf/open/floor/plating,
-/area/station/medical/morgue)
+/area/station/maintenance/department/science/xenobiology)
 "tnb" = (
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
@@ -59573,7 +59555,7 @@
 "tRn" = (
 /obj/structure/closet/crate/grave/filled,
 /turf/open/misc/dirt/station,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "tRw" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -60792,7 +60774,7 @@
 	},
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "ukI" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -61501,10 +61483,6 @@
 /obj/structure/trap/stun,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
-"uya" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/department/science/xenobiology)
 "uyA" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -61646,10 +61624,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
-"uBy" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/space/basic,
-/area/space)
 "uBE" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/machinery/light/no_nightlight/directional/north,
@@ -62499,7 +62473,7 @@
 /area/station/maintenance/central/lesser)
 "uOH" = (
 /turf/open/misc/dirt/station,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "uPf" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -66488,10 +66462,6 @@
 /obj/item/reagent_containers/cup/bowl,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
-"vXn" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space/basic,
-/area/space)
 "vXr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -69577,7 +69547,7 @@
 	pixel_y = -6
 	},
 /turf/open/misc/dirt/station,
-/area/station/maintenance/department/science/xenobiology)
+/area/station/medical/morgue)
 "wSZ" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/hallway/abandoned_command)
@@ -94854,10 +94824,10 @@ yeP
 fAf
 iGu
 wWU
-uBy
-uBy
-uBy
-uBy
+xep
+xep
+xep
+xep
 hCr
 mYp
 wlo
@@ -95368,10 +95338,10 @@ yeP
 aYN
 bMU
 wWU
-vXn
-vXn
-vXn
-vXn
+xuF
+xuF
+xuF
+xuF
 hCr
 jEp
 qGk
@@ -95625,10 +95595,10 @@ yeP
 ait
 xaW
 wWU
-enq
-enq
-enq
-enq
+blb
+blb
+blb
+blb
 hCr
 hCr
 qek
@@ -98451,11 +98421,11 @@ fyZ
 wen
 wen
 gcs
-enq
-enq
-enq
-enq
-enq
+blb
+blb
+blb
+blb
+blb
 ycC
 ycC
 iEk
@@ -107515,7 +107485,7 @@ pDU
 pDU
 qgj
 pDU
-qcQ
+pDU
 pDU
 koz
 jOk
@@ -107775,9 +107745,9 @@ ldq
 ldq
 ldq
 ldq
-ldq
-ldq
-ldq
+fmH
+fmH
+fmH
 fmH
 fmH
 fmH
@@ -109061,10 +109031,10 @@ ldq
 cTE
 ldq
 ldq
-awO
+tmV
 ldq
-fmH
-fmH
+ldq
+ldq
 aBv
 aBv
 aBv
@@ -109321,7 +109291,7 @@ xQI
 kuY
 lzf
 yja
-fmH
+ldq
 fjv
 ntW
 mmR
@@ -109560,17 +109530,17 @@ iht
 iht
 iht
 ssz
-uya
-yfQ
 ldq
 yfQ
 ldq
 yfQ
 ldq
 yfQ
-uya
+ldq
 yfQ
-uya
+ldq
+yfQ
+ldq
 yfQ
 ldq
 yfQ
@@ -109578,7 +109548,7 @@ ldq
 xnn
 xnn
 jzj
-fmH
+ldq
 tmr
 vWa
 hkt
@@ -109841,7 +109811,7 @@ nRS
 vIa
 bGk
 dst
-fmH
+ldq
 ssz
 ssz
 ssz
@@ -110092,13 +110062,13 @@ yfQ
 ctu
 ogl
 xGw
-fmH
+ldq
 kdn
 tSH
 jYP
-fmH
-fmH
-fmH
+ldq
+ldq
+ldq
 rff
 xQI
 xGw
@@ -110349,11 +110319,11 @@ ldq
 oFg
 xQI
 jzj
-fmH
-fmH
-fmH
-fmH
-fmH
+ldq
+ldq
+ldq
+ldq
+ldq
 jSX
 jzj
 jzj
@@ -111102,7 +111072,7 @@ ssz
 ssz
 ssz
 ssz
-uya
+ldq
 yfQ
 ldq
 yfQ
