@@ -6,3 +6,6 @@
 
 /// The trait corresponding with the oversized quirk.
 #define TRAIT_OVERSIZED "oversized"
+
+/// Carp infusion: allows preferential metabolism & production of carpotoxin
+#define TRAIT_CARP_GOODTOX "carp_goodtox"
