@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 /obj/item/shuttle_blueprints/proc/christen(mob/living/user, obj/docking_port/mobile/custom/shuttle, atom/attacked, hand)
 	var/trait_source = REF(shuttle)
 	ADD_TRAIT(user, TRAIT_ATTEMPTING_CHRISTENING, trait_source)
-	var/new_name = tgui_input_text(user, "What would you like to rechristen \the [shuttle] as?", "Shuttle Rechristening", max_length = 128)
+	var/new_name = reject_bad_name(tgui_input_text(user, "What would you like to rechristen \the [shuttle] as?", "Shuttle Rechristening", max_length = 128), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
 	if(QDELETED(user))
 		return
 	REMOVE_TRAIT(user, TRAIT_ATTEMPTING_CHRISTENING, trait_source)
