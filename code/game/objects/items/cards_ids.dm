@@ -1593,9 +1593,9 @@
 		return ..()
 	balloon_alert(user, "flipped")
 	if(trim_assignment_override)
-		SSid_access.remove_trim_from_chameleon_card(src)
+		SSid_access.remove_trim_override(src)
 	else
-		SSid_access.apply_trim_to_chameleon_card(src, alt_trim)
+		SSid_access.apply_trim_override(src, alt_trim)
 	update_label()
 	update_appearance()
 
@@ -1811,7 +1811,7 @@
 	if(forged) //reset the ID if forged
 		registered_name = initial(registered_name)
 		assignment = initial(assignment)
-		SSid_access.remove_trim_from_chameleon_card(src)
+		SSid_access.remove_trim_override(src)
 		REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 		user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 		update_label()
@@ -1866,7 +1866,7 @@
 
 	registered_name = input_name
 	if(selected_trim_path)
-		SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+		SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 	if(target_occupation)
 		assignment = sanitize(target_occupation)
 	if(new_age)
