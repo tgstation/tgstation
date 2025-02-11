@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - refactor: "Bitrunning item/ability loading has been refactored. Please report any issues."
-  - rscadd: "Added Bitrunning gimmick loadout disks. These disks contain full sets of equipment for all your digital cosplay needs, each including questionably helpful equipment. Currently includes Sports (Boxer, Skater, Archer, Fisher, Gamer) and Dungeon Crawling (Alchemist, Rogue, Healer, Wizard)."
-  - rscadd: "Taking a lead acid battery into the netpod with you now gives your bit avatar shock touch."

@@ -1,4 +1,0 @@
-author: "Zenitheevee"
-delete-after: True
-changes:
-  - bugfix: "adds Ignored Factions to pellet cloud component variable transfer"

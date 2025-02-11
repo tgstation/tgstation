@@ -246,7 +246,10 @@
 	json_data["config"] = list(
 		"title" = title,
 		"status" = status,
-		"interface" = interface,
+		"interface" = list(
+			"name" = interface,
+			"layout" = user.client.prefs.read_preference(/datum/preference/choiced/tgui_layout),
+		),
 		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,

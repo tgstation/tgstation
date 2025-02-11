@@ -290,3 +290,20 @@
 
 /datum/fantasy_affix/doot/remove(datum/component/fantasy/comp)
 	comp.parent.RemoveElement(/datum/element/spooky, too_spooky = comp.quality > 17, stam_damage_mult = comp.quality * 0.15)
+
+// On hitting a mob their click cd is slowed marginally
+/datum/fantasy_affix/windseeker
+	name = "of the Windseeker"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_GOOD
+	weight = 3
+
+/datum/fantasy_affix/windseeker/apply(datum/component/fantasy/comp, newName)
+	comp.parent.AddElement(/datum/element/slow_target_click_cd_attack, get_cd_penalty(comp))
+	return "[newName] of the Windseeker"
+
+/datum/fantasy_affix/windseeker/remove(datum/component/fantasy/comp)
+	comp.parent.RemoveElement(/datum/element/slow_target_click_cd_attack, get_cd_penalty(comp))
+
+/datum/fantasy_affix/windseeker/proc/get_cd_penalty(datum/component/fantasy/comp)
+	return min(round(sqrt(comp.quality) * 0.1, 0.1), 0.4) // this gives you a small number, like 0.2 seconds
