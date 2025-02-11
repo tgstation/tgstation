@@ -40,6 +40,8 @@
 	var/heal_begin_sound = null
 	/// The sound this makes when healed successfully with this item
 	var/heal_end_sound = null
+	/// The sound this makes when doing a continuous loop of healing with this item
+	var/heal_continuous_sound = null
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -120,6 +122,8 @@
  * If auto_change_zone is set to FALSE, it'll give the user a chance to pick a new zone to heal
  */
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
+	if(heal_begin_sound && !silent)
+		playsound(patient, heal_begin_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	if(patient == user)
 		if(!silent)
 			user.visible_message(
@@ -174,7 +178,11 @@
 			return
 	else
 		CRASH("Stack medical item healing a non-carbon, non-animal mob [patient] ([patient.type])")
-
+	if(!silent)
+		if(heal_end_sound)
+			playsound(patient, heal_end_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	else if (heal_continuous_sound)
+		playsound(patient, heal_continuous_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	log_combat(user, patient, "healed", src)
 	if(!use(1) || !repeating || amount <= 0)
 		var/atom/alert_loc = QDELETED(src) ? user : src
@@ -529,6 +537,11 @@
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/suture
 	apply_verb = "suturing"
+	drop_sound = SFX_SUTURE_DROP
+	pickup_sound = SFX_SUTURE_PICKUP
+	heal_begin_sound = SFX_SUTURE_BEGIN
+	heal_continuous_sound = SFX_SUTURE_CONTINUOUS
+	heal_end_sound = SFX_SUTURE_END
 
 /obj/item/stack/medical/suture/emergency
 	name = "emergency suture"
