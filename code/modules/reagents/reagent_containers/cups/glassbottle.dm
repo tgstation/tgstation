@@ -624,6 +624,8 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/bitters = 30)
 	drink_type = ALCOHOL
+	//allows for single unit dispensing
+	possible_transfer_amounts = list(1, 2, 3, 4, 5) 
 
 /obj/item/reagent_containers/cup/glass/bottle/curacao
 	name = "Beekhof Blauw Curaçao"
