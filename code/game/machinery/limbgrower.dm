@@ -7,6 +7,7 @@
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/limbgrower
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 
 	/// The category of limbs we're browing in our UI.
 	var/selected_category = SPECIES_HUMAN
