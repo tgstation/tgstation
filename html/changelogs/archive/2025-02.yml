@@ -165,3 +165,10 @@
   necromanceranne:
   - bugfix: The traitor guncase properly checks for condition changes before letting
       a player activate the time bomb.
+2025-02-11:
+  SmArtKar:
+  - bugfix: Fixed wooden rifle stock being uncraftable
+  - bugfix: Fixed exceptionally dark armrests on chairs
+  - bugfix: Fixed dress and gown rendering below gloves and shoes
+  Time-Green:
+  - rscdel: Reverts sneeze projectiles

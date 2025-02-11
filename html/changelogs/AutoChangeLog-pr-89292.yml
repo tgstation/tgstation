@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - rscdel: "Reverts sneeze projectiles"
