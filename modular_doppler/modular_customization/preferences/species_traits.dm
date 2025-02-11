@@ -18,7 +18,7 @@
 		if(BUNNY)
 			return icon('icons/mob/simple/rabbit.dmi', "rabbit_white", WEST)
 		if(BUG)
-			return icon('icons/mob/simple/animal.dmi', "cockroach", EAST)
+			return icon('icons/mob/simple/arachnoid.dmi', "young_tangle", SOUTH)
 		if(CAT)
 			return icon('icons/mob/simple/pets.dmi', "cat2", WEST)
 		if(CARP)
