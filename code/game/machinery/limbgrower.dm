@@ -124,8 +124,7 @@
 	return ..()
 
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
-	if (busy)
-		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
+	if (check_busy(user))
 		return
 
 	if(istype(user_item, /obj/item/disk/design_disk/limbs))
@@ -146,8 +145,7 @@
 
 /obj/machinery/limbgrower/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(busy)
-		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
+	if(check_busy(user))
 		return ITEM_INTERACT_BLOCKING
 
 	. = default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", tool)
@@ -156,16 +154,14 @@
 
 /obj/machinery/limbgrower/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(busy)
-		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
+	if(check_busy(user))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/limbgrower/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(busy)
-		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
+	if(check_busy(user))
 		return ITEM_INTERACT_BLOCKING
 
 	if(default_unfasten_wrench(user, tool))
@@ -176,8 +172,7 @@
 	if(.)
 		return
 
-	if (busy)
-		to_chat(usr, span_warning("The limb grower is busy. Please wait for completion of previous operation."))
+	if (check_busy(usr))
 		return
 
 	switch(action)
@@ -289,6 +284,18 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of reagents.<br>Reagent consumption rate at <b>[production_coefficient * 100]%</b>.")
+
+/**
+ * Check if the limb grower is currently busy.
+ *
+ * user - user initiating the check.
+ *
+ * returns the value of src.busy.
+ */
+/obj/machinery/limbgrower/proc/check_busy(mob/user)
+	. = busy
+	if(.)
+		to_chat(user, span_warning("The limb grower is busy. Please wait for completion of previous operation."))
 
 /*
  * Checks our reagent list to see if a design can be built.
