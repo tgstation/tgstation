@@ -964,6 +964,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
+"sM" = (
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
+/obj/effect/turf_decal/box,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/film_studio/backstage)
 "sO" = (
 /obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
@@ -1088,10 +1093,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/dorms)
-"uv" = (
-/obj/structure/dresser,
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/film_studio/backstage)
 "uw" = (
 /obj/machinery/door/airlock/centcom,
 /turf/open/floor/plating,
@@ -1595,10 +1596,10 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Df" = (
-/obj/effect/turf_decal/bot,
 /obj/machinery/autolathe{
 	name = "Universal Prop Fabricator"
 	},
+/obj/effect/turf_decal/box,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Dh" = (
@@ -4182,7 +4183,7 @@ hn
 nf
 iR
 Yq
-uv
+CC
 lJ
 Oi
 ya
@@ -4247,7 +4248,7 @@ Yq
 Dd
 lJ
 lJ
-CC
+sM
 Yq
 dd
 dd
