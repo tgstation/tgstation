@@ -124,6 +124,7 @@
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	if(heal_begin_sound && !silent)
 		playsound(patient, heal_begin_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+		to_chat(world, span_admin("heal begin playing now"))
 	if(patient == user)
 		if(!silent)
 			user.visible_message(
@@ -181,8 +182,10 @@
 	if(!silent)
 		if(heal_end_sound)
 			playsound(patient, heal_end_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+			to_chat(world, span_admin("heal end playing now"))
 	else if (heal_continuous_sound)
 		playsound(patient, heal_continuous_sound, 30, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+		to_chat(world, span_admin("heal continuous playing now"))
 	log_combat(user, patient, "healed", src)
 	if(!use(1) || !repeating || amount <= 0)
 		var/atom/alert_loc = QDELETED(src) ? user : src
