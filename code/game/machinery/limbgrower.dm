@@ -139,15 +139,26 @@
 		busy = FALSE
 		return
 
-	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", user_item))
-		ui_close(user)
-		return
-
-	if(panel_open && default_deconstruction_crowbar(user_item))
-		return
-
 	if(user.combat_mode) //so we can hit the machine
 		return ..()
+
+/obj/machinery/limbgrower/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(busy)
+		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
+		return ITEM_INTERACT_BLOCKING
+
+	. = default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", tool)
+	if(.)
+		ui_close(user)
+
+/obj/machinery/limbgrower/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(busy)
+		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
+		return ITEM_INTERACT_BLOCKING
+
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/limbgrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
