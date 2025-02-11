@@ -360,7 +360,7 @@ effective or pretty fucking useless.
 
 /obj/item/jammer/attack_self_secondary(mob/user, modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(.)
 		return
 	to_chat(user, span_notice("You [active ? "deactivate" : "activate"] [src]."))
 	user.balloon_alert(user, "[active ? "deactivated" : "activated"] the jammer")
