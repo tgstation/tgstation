@@ -122,7 +122,7 @@
  * If auto_change_zone is set to FALSE, it'll give the user a chance to pick a new zone to heal
  * If continuous is set to true, it will play the continuous sound for healing
  */
-/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE, continuous = FALSE)
+/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE, var/continuous = FALSE)
 	if(heal_begin_sound && !continuous)
 		playsound(patient, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	if(patient == user)
