@@ -34,6 +34,23 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
 	AddComponent(/datum/component/simple_rotation)
+	register_context()
+
+/obj/machinery/limbgrower/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!held_item)
+		return
+
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
+
+	if(istype(held_item, /obj/item/disk/design_disk/limbs))
+		context[SCREENTIP_CONTEXT_LMB] = "Load limb designs"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user, obj/item/card/emag/emag_card)
