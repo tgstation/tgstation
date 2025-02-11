@@ -12357,7 +12357,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "evv" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Abandoned Lab"
 	},
@@ -13279,16 +13278,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/starboard/greater)
-"eLx" = (
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge blast";
-	name = "Bridge Blast Door"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/command/meeting_room)
 "eLB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31120,9 +31109,6 @@
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "kqU" = (
@@ -35556,8 +35542,6 @@
 	name = "Xenobiology Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "lOj" = (
@@ -38332,7 +38316,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -43146,7 +43129,6 @@
 "owZ" = (
 /obj/item/kirbyplants/organic/applebush,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/smooth_large,
@@ -43907,15 +43889,6 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"oLj" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/textured_half{
-	dir = 1
-	},
-/area/station/command/bridge)
 "oLo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -46913,7 +46886,6 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Tech Storage"
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/storage/tech)
 "pLf" = (
@@ -51526,7 +51498,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/space/basic,
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
 /area/station/engineering/storage/tech)
 "rkM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -54958,7 +54932,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
-/turf/open/space/basic,
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
 /area/station/engineering/storage/tech)
 "stH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -94377,7 +94353,7 @@ xSd
 ubT
 sUy
 niT
-eLx
+utF
 qju
 tsF
 xRV
@@ -96684,7 +96660,7 @@ dDB
 pIS
 uAK
 anb
-oLj
+xsh
 owZ
 xsh
 ahE
