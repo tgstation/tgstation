@@ -176,7 +176,7 @@
 
 	var/obj/item/fish/fish_reference = mounted_fish
 	if(persistence_loaded_fish)
-		roll_for_safe_removal()
+		roll_for_safe_removal(user)
 
 	if(QDELETED(fish_reference))
 		var/ash_type = /obj/effect/decal/cleanable/ash
@@ -205,7 +205,7 @@
 	mounted_fish = null
 	return ..()
 
-/obj/structure/fish_mount/proc/roll_for_safe_removal(mob/user)
+/obj/structure/fish_mount/proc/roll_for_safe_removal(mob/living/user)
 	if(isnull(mounted_fish))
 		return FALSE
 
