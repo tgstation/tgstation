@@ -10,6 +10,7 @@
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
+	material_flags = MATERIAL_EFFECTS|MATERIAL_ADD_PREFIX|MATERIAL_COLOR|MATERIAL_AFFECT_STATISTICS|MATERIAL_NO_EDIBILITY
 	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not

@@ -141,6 +141,8 @@
 	var/mutable_appearance/filling = mutable_appearance(atom_parent.icon, "[initial(atom_parent.icon_state)]_filling")
 	// get average color
 	var/icon/icon = new(ingredient.icon, ingredient.icon_state)
+	if(ingredient.color)
+		icon.Blend(ingredient.color, ICON_MULTIPLY)
 	icon.Scale(1, 1)
 	var/fillcol = copytext(icon.GetPixel(1, 1), 1, 8) // remove opacity
 	filling.color = fillcol
@@ -229,7 +231,8 @@
 			continue
 		for(var/mat in ingredient.custom_materials)
 			base_materials[mat] += ingredient.custom_materials[mat]
-	atom_parent.material_flags |= MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS
+	atom_parent.material_flags |= MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_NO_EDIBILITY //we want these
+	atom_parent.material_flags &= ~MATERIAL_ADD_PREFIX|MATERIAL_COLOR // while we've fillings and examine strings for these.
 	atom_parent.set_custom_materials(mats)
 
 ///Gives an adjective to describe the size of the custom food.
