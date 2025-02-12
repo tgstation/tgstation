@@ -21,9 +21,9 @@
 	*	Otherwise, it should probably be put in hammers_lefthand/righthand, as appropriate.
 	*/
 	/// Specifies the left hand inhand icon file. If both this and retool_righthand_file are set, changes the inhand files and dimensions as appropriate.
-	var/retool_lefthand_file
+	var/retool_lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	/// Specifies the right hand inhand icon file. If both this and retool_lefthand_file are set, changes the inhand files and dimensions as appropriate.
-	var/retool_righthand_file
+	var/retool_righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	/// Specifies the X dimensions of the new inhand, only relevant with different inhand files.
 	var/retool_inhand_X = 32
 	/// Specifies the Y dimensions of the new inhand, only relevant with different inhand files.
@@ -38,11 +38,8 @@
 		pkc.icon_state = retool_icon
 		pkc.current_inhand_icon_state = retool_inhand_icon
 		pkc.projectile_icon = retool_projectile_icon
-		if(retool_lefthand_file && retool_righthand_file)
-			pkc.lefthand_file = retool_lefthand_file
-			pkc.righthand_file = retool_righthand_file
-			pkc.inhand_x_dimension = retool_inhand_X
-			pkc.inhand_y_dimension = retool_inhand_Y
+		pkc.inhand_x_dimension = retool_inhand_X
+		pkc.inhand_y_dimension = retool_inhand_Y
 		pkc.update_appearance()
 		if(iscarbon(pkc.loc))
 			var/mob/living/carbon/holder = pkc.loc
@@ -54,11 +51,10 @@
 	pkc.icon_state = initial(pkc.icon_state)
 	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
 	pkc.projectile_icon = initial(pkc.projectile_icon)
-	if(retool_lefthand_file && retool_righthand_file)
-		pkc.lefthand_file = initial(pkc.lefthand_file)
-		pkc.righthand_file = initial(pkc.righthand_file)
-		pkc.inhand_x_dimension = initial(pkc.inhand_x_dimension)
-		pkc.inhand_y_dimension = initial(pkc.inhand_y_dimension)
+	pkc.lefthand_file = initial(pkc.lefthand_file)
+	pkc.righthand_file = initial(pkc.righthand_file)
+	pkc.inhand_x_dimension = initial(pkc.inhand_x_dimension)
+	pkc.inhand_y_dimension = initial(pkc.inhand_y_dimension)
 	pkc.update_appearance()
 	if(iscarbon(pkc.loc))
 		var/mob/living/carbon/holder = pkc.loc
