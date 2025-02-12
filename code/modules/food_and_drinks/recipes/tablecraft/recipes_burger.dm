@@ -10,9 +10,6 @@
 		/obj/item/food/bun = 1,
 		/obj/item/food/patty/human = 1
 	)
-	parts = list(
-		/obj/item/food/patty = 1
-	)
 	result = /obj/item/food/burger/human
 	category = CAT_BURGER
 

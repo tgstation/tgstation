@@ -86,6 +86,12 @@
 		reagent_purity = starting_reagent_purity,\
 	)
 
+/obj/item/food/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	var/mob/living/user = crafter
+	if(istype(user) && !isnull(user.mind))
+		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/make_processable()
 	return

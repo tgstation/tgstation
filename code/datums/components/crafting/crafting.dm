@@ -37,7 +37,7 @@
 	check_contents - takes a recipe and a key-type list and checks if said recipe can be done with available stuff
 	check_tools - takes recipe, a key-type list, and a user and checks if there are enough tools to do the stuff, checks bugs one level deep
 	construct_item - takes a recipe and a user, call all the checking procs, calls do_after, checks all the things again, calls del_reqs, creates result, calls CheckParts of said result with argument being list returned by deel_reqs
-	del_reqs - takes recipe and a user, loops over the recipes reqs var and tries to find everything in the list make by get_environment and delete it/add to parts list, then returns the said list
+	get_used_reqs - takes recipe, a user and a list (for mats), loops over the recipes reqs var and tries to find everything in the list make by get_environment and returns a list of the components to be used
 */
 
 /**
@@ -264,7 +264,9 @@
 		return ", missing component."
 	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
-	var/list/parts = del_reqs(recipe, crafter)
+	//used to gather the material composition of the utilized requirements to transfer to the result
+	var/list/total_materials = list()
+	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
 	var/atom/movable/result
 	if(ispath(recipe.result, /obj/item/stack))
 		result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
@@ -275,157 +277,108 @@
 		if(result.atom_storage && recipe.delete_contents)
 			for(var/obj/item/thing in result)
 				qdel(thing)
-	var/datum/reagents/holder = locate() in parts
+	var/datum/reagents/holder = locate() in stuff_to_use
 	if(holder) //transfer reagents from ingredients to result
 		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
 			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
 				result.reagents.clear_reagents()
 			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
 				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
-		parts -= holder
+		stuff_to_use -= holder
 		qdel(holder)
-	result.CheckParts(parts, recipe)
+
+	result.set_custom_materials(total_materials)
+	result.on_craft_completion(stuff_to_use, recipe, crafter)
 	if(send_feedback)
 		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
 	return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 
-/*Del reqs works like this:
+/**
+ * get_used_reqs works like this:
+ * Loop over reqs var of the recipe
+ * Set var amt to the value current cycle req is pointing to, its amount of type we need to delete
+ * Get var/surroundings list of things accessable to crafting by get_environment()
+ * Check the type of the current cycle req
+ * * If its reagent then do a while loop, inside it try to locate() reagent containers, inside such containers try to locate needed reagent, if there isn't remove thing from surroundings
+ * * * Transfer a quantity (The required amount of the contained quantity, whichever is lower) of the reagent to the temporary reagents holder
+ *
+ * * If it's a stack, create a tally stack and then transfer an amount of the stack to the stack until it reaches the required amount.
+ *
+ * * If it's anything else just locate() it in the list in a while loop, for each find reduce the amt var by 1 and put the found stuff in return list
+ *
+ * For stacks and items, the material composition is also tallied in total_materials, to be transferred to the result after that is spawned.
+ *
+ * get_used_reqs returns the list of used required object the result will receive as argument of atom/CheckParts()
+ * If one or some of the object types is in the 'parts' list of the recipe, they will be stored inside the contents of the result
+ * The rest will instead be deleted by atom/CheckParts()
+**/
 
-	Loop over reqs var of the recipe
-	Set var amt to the value current cycle req is pointing to, its amount of type we need to delete
-	Get var/surroundings list of things accessable to crafting by get_environment()
-	Check the type of the current cycle req
-		If its reagent then do a while loop, inside it try to locate() reagent containers, inside such containers try to locate needed reagent, if there isn't remove thing from surroundings
-			If there is enough reagent in the search result then delete the needed amount, create the same type of reagent with the same data var and put it into deletion list
-			If there isn't enough take all of that reagent from the container, put into deletion list, substract the amt var by the volume of reagent, remove the container from surroundings list and keep searching
-			While doing above stuff check deletion list if it already has such reagnet, if yes merge instead of adding second one
-		If its stack check if it has enough amount
-			If yes create new stack with the needed amount and put in into deletion list, substract taken amount from the stack
-			If no put all of the stack in the deletion list, substract its amount from amt and keep searching
-			While doing above stuff check deletion list if it already has such stack type, if yes try to merge them instead of adding new one
-		If its anything else just locate() in in the list in a while loop, each find --s the amt var and puts the found stuff in deletion loop
-
-	Then do a loop over parts var of the recipe
-		Do similar stuff to what we have done above, but now in deletion list, until the parts conditions are satisfied keep taking from the deletion list and putting it into parts list for return
-
-	After its done loop over deletion list and delete all the shit that wasn't taken by parts loop
-
-	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
-*/
-
-/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, atom/a)
-	. = list()
+/datum/component/personal_crafting/proc/get_used_reqs(datum/crafting_recipe/recipe, atom/atom, list/total_materials = list())
+	var/list/return_list = list()
 
 	var/datum/reagents/holder
-	var/list/surroundings
-	var/list/Deletion = list()
-	var/amt
 	var/list/requirements = list()
-	if(R.reqs)
-		requirements += R.reqs
-	if(R.machinery)
-		requirements += R.machinery
-	if(R.structures)
-		requirements += R.structures
+	if(recipe.reqs)
+		requirements += recipe.reqs
+	if(recipe.machinery)
+		requirements += recipe.machinery
+	if(recipe.structures)
+		requirements += recipe.structures
+
 	main_loop:
 		for(var/path_key in requirements)
-			amt = R.reqs?[path_key] || R.machinery?[path_key] || R.structures?[path_key]
-			if(!amt)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
+			var/list/surroundings
+			var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
+			if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 				continue main_loop
-			surroundings = get_environment(a, R.blacklist)
-			surroundings -= Deletion
+			surroundings = get_environment(atom, recipe.blacklist)
+			surroundings -= return_list
 			if(ispath(path_key, /datum/reagent))
-				while(amt > 0)
-					var/obj/item/reagent_containers/RC = locate() in surroundings
-					if(isnull(RC)) //not found
-						break
-					if(QDELING(RC)) //deleting so is unusable
-						surroundings -= RC
+				while(amount > 0)
+					var/obj/item/reagent_containers/container = locate() in surroundings
+					if(QDELETED(container)) //not found
+						surroundings -= container
 						continue
 
-					var/reagent_volume = RC.reagents.get_reagent_amount(path_key)
+					var/reagent_volume = container.reagents.get_reagent_amount(path_key)
 					if(reagent_volume)
 						if(!holder)
 							holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
-							. += holder
-						if(reagent_volume >= amt)
-							RC.reagents.trans_to(holder, amt, target_id = path_key, no_react = TRUE)
+							return_list += holder
+						if(reagent_volume >= amount)
+							container.reagents.trans_to(holder, amount, target_id = path_key, no_react = TRUE)
 							continue main_loop
 						else
-							RC.reagents.trans_to(holder, reagent_volume, target_id = path_key, no_react = TRUE)
-							surroundings -= RC
-							amt -= reagent_volume
+							container.reagents.trans_to(holder, reagent_volume, target_id = path_key, no_react = TRUE)
+							surroundings -= container
+							amount -= reagent_volume
 					else
-						surroundings -= RC
-					RC.update_appearance(UPDATE_ICON)
+						surroundings -= container
+					container.update_appearance(UPDATE_ICON)
 			else if(ispath(path_key, /obj/item/stack))
-				var/obj/item/stack/S
-				var/obj/item/stack/SD
-				while(amt > 0)
-					S = locate(path_key) in surroundings
-					if(S.amount >= amt)
-						if(!locate(S.type) in Deletion)
-							SD = new S.type()
-							Deletion += SD
-						S.use(amt)
-						SD = SD || locate(S.type) in Deletion // SD might be already set here, no sense in searching for it again
-						SD.amount += amt
-						continue main_loop
-					else
-						amt -= S.amount
-						if(!locate(S.type) in Deletion)
-							Deletion += S
-						else
-							SD = SD || locate(S.type) in Deletion
-							SD.add(S.amount) // add the amount to our tally stack, SD
-							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway, saving some overhead from calling use()
-						surroundings -= S
+				var/obj/item/stack/origin_stack
+				var/obj/item/stack/tally_stack
+				while(amount > 0)
+					origin_stack = locate(origin_stack.merge_type) in surroundings
+					if(!tally_stack)
+						tally_stack = new origin_stack.merge_type (get_turf(atom), /*new_amount =*/ 0, /*merge =*/ FALSE)
+						return_list += tally_stack
+					var/amount_to_give = min(origin_stack.amount, amount)
+					origin_stack.use(amount_to_give)
+					tally_stack.add(amount_to_give)
+					surroundings -= origin_stack
+				for(var/material in tally_stack.custom_materials)
+					total_materials[material] += tally_stack.custom_materials[material]
 			else
-				var/atom/movable/I
-				while(amt > 0)
-					I = locate(path_key) in surroundings
-					Deletion += I
-					surroundings -= I
-					amt--
-	var/list/partlist = list(R.parts.len)
-	for(var/M in R.parts)
-		partlist[M] = R.parts[M]
-	for(var/part in R.parts)
-		if(istype(part, /datum/reagent))
-			var/datum/reagent/RG = locate(part) in Deletion
-			if(RG.volume > partlist[part])
-				RG.volume = partlist[part]
-			. += RG
-			Deletion -= RG
-			continue
-		else if(isstack(part))
-			var/obj/item/stack/ST = locate(part) in Deletion
-			if(ST.amount > partlist[part])
-				ST.amount = partlist[part]
-			. += ST
-			Deletion -= ST
-			continue
-		else
-			while(partlist[part] > 0)
-				var/atom/movable/AM = locate(part) in Deletion
-				. += AM
-				Deletion -= AM
-				partlist[part] -= 1
-	while(Deletion.len)
-		var/DL = Deletion[Deletion.len]
-		Deletion.Cut(Deletion.len)
-		// Snowflake handling of reagent containers, storage atoms, and structures with contents.
-		// If we consumed them in our crafting, we should dump their contents out before qdeling them.
-		if(is_reagent_container(DL))
-			var/obj/item/reagent_containers/container = DL
-			container.reagents.expose(container.loc, TOUCH)
-		else if(istype(DL, /obj/item/storage))
-			var/obj/item/storage/container = DL
-			container.emptyStorage()
-		else if(isstructure(DL))
-			var/obj/structure/structure = DL
-			structure.dump_contents(structure.drop_location())
-		qdel(DL)
+				while(amount > 0)
+					var/atom/movable/item = locate(path_key) in surroundings
+					return_list += item
+					surroundings -= item
+					amount--
+					for(var/material in item.custom_materials)
+						total_materials[material] += item.custom_materials[material]
+
+	return return_list
 
 /datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
 	if((recipe.crafting_flags & CRAFT_MUST_BE_LEARNED) && !(recipe.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
@@ -542,7 +495,6 @@
 		result.forceMove(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
-	recipe.on_craft_completion(user, result)
 	return TRUE
 
 

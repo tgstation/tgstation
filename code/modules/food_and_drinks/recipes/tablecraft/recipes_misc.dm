@@ -93,7 +93,6 @@
 		/obj/item/food/grown/holymelon = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/vodka = 1
 	)
-	parts = list(/obj/item/reagent_containers/cup/glass/bottle/vodka = 1)
 	result = /obj/item/food/melonkeg
 	category = CAT_MISCFOOD
 

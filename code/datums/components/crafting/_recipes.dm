@@ -17,7 +17,7 @@
 	var/list/tool_paths
 	///time in seconds. Remember to use the SECONDS define!
 	var/time = 3 SECONDS
-	///type paths of items that will be forceMoved() into the result, or added to the reagents of it
+	///type paths of items that will be forceMoved() into the result instead of being deleted
 	var/list/parts = list()
 	///like tool_behaviors but for reagents
 	var/list/chem_catalysts = list()
@@ -94,9 +94,6 @@
  */
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
-
-/datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
-	return
 
 ///Check if the pipe used for atmospheric device crafting is the proper one
 /datum/crafting_recipe/proc/atmos_pipe_check(mob/user, list/collected_requirements)

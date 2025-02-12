@@ -114,7 +114,6 @@
 			diff_result.pixel_x += rand(-4, 4)
 			diff_result.pixel_y += rand(-4, 4)
 		withheld += WEAKREF(diff_result)
-		recipe.on_craft_completion(src, diff_result)
 	send_withheld()
 
 /obj/machinery/power/manufacturing/crafter/cooker
