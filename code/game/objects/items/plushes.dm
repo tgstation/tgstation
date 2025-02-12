@@ -803,7 +803,7 @@
 
 /obj/item/toy/plush/Zorp //It's supposed to be a wet owl, but I call it Zorp
 	name = "Wet owl plush"
-	desc = "Plush is an owl who has seen some shit"
+	desc = "This plush has seen some shit."
 	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
 	icon_state = "zorp_plushie"
