@@ -10,8 +10,10 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "retool_kit"
 	denied_type = /obj/item/crusher_trophy/retool_kit
+	/// Specifies the icon file in which the crusher's new state is stored.
+	var/retool_icon = 'icons/obj/mining.dmi'
 	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
-	var/retool_icon = "crusher_sword"
+	var/retool_icon_state = "crusher_sword"
 	///Specifies the icon state for the crusher's appearance in hand. Should appear in both retool_lefthand_file and retool_righthand_file, which are icons/mob/inhands/weapons/hammers_lefthand.dmi and icons/mob/inhands/weapons/hammers_righthand.dmi by default.
 	var/retool_inhand_icon = "crusher_sword"
 	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi
@@ -31,7 +33,8 @@
 /obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/pkc, mob/user)
 	. = ..()
 	if(.)
-		pkc.icon_state = retool_icon
+		pkc.icon = retool_icon
+		pkc.icon_state = retool_icon_state
 		pkc.current_inhand_icon_state = retool_inhand_icon
 		pkc.projectile_icon = retool_projectile_icon
 		pkc.inhand_x_dimension = retool_inhand_X
@@ -44,6 +47,7 @@
 			holder.update_held_items()
 
 /obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/pkc)
+	pkc.icon = initial(pkc.icon)
 	pkc.icon_state = initial(pkc.icon_state)
 	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
 	pkc.projectile_icon = initial(pkc.projectile_icon)
