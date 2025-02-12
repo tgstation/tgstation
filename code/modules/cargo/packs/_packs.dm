@@ -41,6 +41,8 @@
 	var/goody = FALSE
 	/// Can coupons target this pack? If so, how rarely?
 	var/discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
+	/// Is this supply pack considered maleable, ie. are the costs extremely variable for the purposes of testing? Examples include the stock market, or miner supply crates.
+	var/abstract = FALSE
 
 /datum/supply_pack/New()
 	id = type
@@ -107,6 +109,7 @@
 	hidden = TRUE
 	crate_name = "shaft mining delivery crate"
 	access = ACCESS_MINING
+	abstract = TRUE
 
 /datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()
