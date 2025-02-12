@@ -37,6 +37,30 @@
 	)
 	category = CAT_ENTERTAINMENT
 
+/datum/crafting_recipe/ZorpPlush
+	name = "Wet owl plush"
+	tool_behaviors = list(TOOL_SCREWDRIVER,TOOL_WIRECUTTER)
+	result = /obj/item/toy/plush/Zorp
+	time = 4 SECONDS
+	reqs = list(
+		/datum/reagent/water = 100,
+		/obj/item/clothing/under/costume/owl = 1,
+		/obj/item/clothing/mask/gas/owl_mask = 1,
+		/obj/item/clothing/suit/toggle/owlwings = 1,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_ENTERTAINMENT
+
+/datum/crafting_recipe/EvilZorpPlush
+	name = "Evil wet owl plush"
+	result = /obj/item/toy/plush/EvilZorp
+	time = 1 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/unholywater = 100,
+		/obj/item/toy/plush/Zorp = 1,
+	)
+	category = CAT_ENTERTAINMENT
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
