@@ -195,7 +195,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 				var/mob/living/carbon/human/species/monkey/new_monkey = new
 				SSjob.send_to_late_join(new_monkey)
 				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
-				new_monkey.key = G_found.key
+				new_monkey.PossessByPlayer(G_found.key)
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 				var/msg = span_adminnotice("[key_name_admin(user)] has respawned [new_monkey.key] as a filthy monkey.")
 				message_admins(msg)
@@ -230,7 +230,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	if(is_unassigned_job(new_character.mind.assigned_role))
 		new_character.mind.set_assigned_role(SSjob.get_job_type(SSjob.overflow_role))
 
-	new_character.key = G_found.key
+	new_character.PossessByPlayer(G_found.key)
 
 	/*
 	The code below functions with the assumption that the mob is already a traitor if they have a special role.

@@ -109,6 +109,14 @@
 	. = ..()
 	tag = "mob_[next_mob_id++]"
 
+/// Assigns a (c)key to this mob.
+/mob/proc/PossessByPlayer(ckey)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!istext(ckey))
+		CRASH("Tried to assign a mob a non-text ckey, wtf?!")
+
+	src.ckey = ckey(ckey)
+
 /mob/serialize_list(list/options, list/semvers)
 	. = ..()
 
@@ -782,7 +790,7 @@
 		qdel(M)
 		return
 
-	M.key = key
+	M.PossessByPlayer(key)
 
 /// Checks if the mob can respawn yet according to the respawn delay
 /mob/proc/check_respawn_delay(override_delay = 0)

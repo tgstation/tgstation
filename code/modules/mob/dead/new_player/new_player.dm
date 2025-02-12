@@ -91,7 +91,7 @@
 		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
 
-	observer.key = key
+	observer.PossessByPlayer(key)
 	observer.client = client
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
@@ -285,7 +285,7 @@
 	. = new_character
 	if(!.)
 		return
-	new_character.key = key //Manually transfer the key to log them in,
+	new_character.PossessByPlayer(key) //Manually transfer the key to log them in,
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)
