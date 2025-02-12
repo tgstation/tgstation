@@ -114,11 +114,12 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 // doing this because set_mid_length can't run DURING a soundloop, which means we can't variably adjust the length of the sound
 /datum/looping_sound/snowstorm/start_sound_loop()
 	loop_started = TRUE
-	timer_id = sound_loop()
+	sound_loop()
 
 /datum/looping_sound/snowstorm/sound_loop(start_time)
+	if(!loop_started)
+		return
 	var/picked_sound = get_sound()
 	play(picked_sound)
 	if(sound_to_length[picked_sound])
-		return addtimer(CALLBACK(src, PROC_REF(sound_loop)), sound_to_length[picked_sound], TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_DELETE_ME, SSsound_loops)
-	return null
+		timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop)), sound_to_length[picked_sound], TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_DELETE_ME, SSsound_loops)
