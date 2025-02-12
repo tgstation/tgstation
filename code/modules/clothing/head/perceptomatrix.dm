@@ -19,7 +19,22 @@
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 8 SECONDS
 	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
-	clothing_traits = list(
+	flags_cover = HEADCOVERSEYES|EARS_COVERED
+	flags_inv = HIDEHAIR|HIDEFACE
+	flash_protect = FLASH_PROTECTION_WELDER_SENSITIVE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	armor_type = /datum/armor/head_helmet_matrix
+	actions_types = list(/datum/action/cooldown/spell/pointed/percept_hallucination)
+
+	/// If we have a core or not
+	var/core_installed = FALSE
+	/// Active components to add onto the mob, deleted and created on core installation/removal
+	var/list/active_components = list()
+	/// List of additonal clothing traits to apply when the core is inserted
+	var/list/additional_clothing_traits = list(
 		/* eye/ear protection */
 		TRAIT_NOFLASH,
 		TRAIT_TRUE_NIGHT_VISION,
@@ -35,20 +50,6 @@
 		TRAIT_NO_MINDSWAP,
 		TRAIT_UNCONVERTABLE,
 	)
-	flags_cover = HEADCOVERSEYES|EARS_COVERED
-	flags_inv = HIDEHAIR|HIDEFACE
-	flash_protect = FLASH_PROTECTION_WELDER_SENSITIVE
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
-	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
-	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-	armor_type = /datum/armor/head_helmet_matrix
-	actions_types = list(/datum/action/cooldown/spell/pointed/percept_hallucination)
-
-	/// If we have a core or not
-	var/core_installed = FALSE
-	/// Active components to add onto the mob, deleted and created on core installation/removal
-	var/list/active_components = list()
 
 // weaker overall but better against energy
 /datum/armor/head_helmet_matrix
@@ -90,13 +91,13 @@
 	// If the core isn't installed, or it's temporarily deactivated, disable special functions.
 	if(!core_installed)
 		clothing_flags = PERCEPTOMATRIX_INACTIVE_FLAGS
-		detach_clothing_traits(clothing_traits)
+		detach_clothing_traits(additional_clothing_traits)
 		QDEL_LIST(active_components)
 		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, forced = TRUE)
 		return
 
 	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
-	attach_clothing_traits(initial(clothing_traits))
+	attach_clothing_traits(additional_clothing_traits)
 
 	// When someone makes TRAIT_DEAF an element, or status effect, or whatever, give this item a way to bypass said deafness.
 	// just blocking future instances of deafness isn't what the item is meant to do but there's no proper way to do it otherwise at the moment.
