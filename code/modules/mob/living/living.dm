@@ -2621,6 +2621,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 //Used specifically for the clown box suicide act
 /mob/living/carbon/human/will_escape_storage()
+	if(HAS_TRAIT(src, TRAIT_UNDERSIZED)) //DOPPLER EDIT
+		return FALSE
 	return TRUE
 
 /// Changes the value of the [living/body_position] variable. Call this before set_lying_angle()

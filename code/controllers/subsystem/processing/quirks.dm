@@ -29,7 +29,9 @@ GLOBAL_LIST_INIT_TYPED(quirk_blacklist, /list/datum/quirk, list(
 	list(/datum/quirk/item_quirk/settler, /datum/quirk/freerunning),
 	list(/datum/quirk/numb, /datum/quirk/selfaware),
 	list(/datum/quirk/empath, /datum/quirk/bad_vibes), //DOPPLER EDIT ADDITION - Bad Vibes & Unholy Aura
-	list(/datum/quirk/item_quirk/spiritual, /datum/quirk/unholy), //DOPPLER EDIT ADDITION END
+	list(/datum/quirk/item_quirk/spiritual, /datum/quirk/unholy),
+	list(/datum/quirk/undersized, /datum/quirk/frail),
+	list(/datum/quirk/undersized, /datum/quirk/oversized),// DOPPLER EDIT ADDITION END - also undersized stuff now
 ))
 
 GLOBAL_LIST_INIT(quirk_string_blacklist, generate_quirk_string_blacklist())

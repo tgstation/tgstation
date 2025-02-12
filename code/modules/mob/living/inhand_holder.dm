@@ -23,6 +23,7 @@
 	update_weight_class(M.held_w_class)
 	deposit(M)
 	. = ..()
+	item_flags &= ~ABSTRACT //Scuffed Doppler edit. Removes the ABSTRACT Flag granted to underesized mob holders that all clothing items get if they don't have an icon state
 
 /obj/item/clothing/head/mob_holder/Destroy()
 	destroying = TRUE
