@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 	req_access = list()
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	possible_destinations = "whiteship_home;"
-	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE, PROC_REF(on_loc_added_to_shuttle))
+	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
 /obj/machinery/computer/shuttle/custom_shuttle/on_construction(mob/user)
 	circuit.configure_machine(src)
@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 		AddElement(/datum/element/connect_loc, connections)
 
 /obj/machinery/computer/shuttle/custom_shuttle/proc/on_loc_added_to_shuttle(turf/source, obj/docking_port/mobile/custom/port)
+	SIGNAL_HANDLER
 	if(!istype(port))
 		say("Cannot link to this kind of shuttle!")
 	else
@@ -50,7 +51,7 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 	jump_to_ports = list("whiteship_home" = 1)
 	designate_time = 100
 	circuit = /obj/item/circuitboard/computer/shuttle/docker
-	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE, PROC_REF(on_loc_added_to_shuttle))
+	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/on_construction(mob/user)
 	circuit.configure_machine(src)
