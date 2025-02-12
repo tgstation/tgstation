@@ -204,7 +204,10 @@
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
 	.["identifier"] = CONFIG_GET(string/serversqlname)
-	.["public_address"] = CONFIG_GET(string/public_address) || CONFIG_GET(string/server) || "[world.internet_address]:[world.port]"
+
+	var/public_address = CONFIG_GET(string/public_address)
+	if(public_address)
+		.["public_address"] = public_address
 
 
 	var/list/adm = get_admin_counts()
