@@ -62,11 +62,10 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 
 	body += "<b>Mob type</b> = [player.type]<br><br>"
 
-	if(player.client)
+	if(HAS_CONNECTED_PLAYER(player))
 		body += "<b>Old names:</b> "
-		var/datum/player_details/deets = GLOB.player_details[player.ckey]
-		if(deets)
-			body += deets.get_played_names()
+		if(player.persistent_client)
+			body += player.persistent_client.get_played_names()
 		else
 			body += "<i>None?!</i>"
 		body += "<br><br>"
