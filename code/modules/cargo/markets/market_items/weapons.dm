@@ -55,7 +55,7 @@
 	price_min = CARGO_CRATE_VALUE * 1
 	price_max = CARGO_CRATE_VALUE * 3
 	stock_max = 5
-	availability_prob = 90 //There are so many of these fucking things
+	availability_prob = 90
 
 /datum/market_item/weapon/bone_spear
 	name = "Bone Spear"
