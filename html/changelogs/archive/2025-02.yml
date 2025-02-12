@@ -172,3 +172,13 @@
   - bugfix: Fixed dress and gown rendering below gloves and shoes
   Time-Green:
   - rscdel: Reverts sneeze projectiles
+2025-02-12:
+  FlufflesTheDog:
+  - bugfix: crafted medibots are more consistently corporeal
+  Kiromaka:
+  - balance: Helbital reaper is now 100x more likely.
+  Rengan:
+  - bugfix: When you cast examine to the disguised detective, its assignment will
+      now display correctly.
+  grungussuss:
+  - sound: new sounds for cloth items
