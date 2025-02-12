@@ -140,25 +140,26 @@
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
 	return ..()
 
-/obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
-	if (check_busy(user))
-		return
+/obj/machinery/limbgrower/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	if(istype(user_item, /obj/item/disk/design_disk/limbs))
-		user.visible_message(span_notice("[user] begins to load \the [user_item] in \the [src]..."),
-			span_notice("You begin to load designs from \the [user_item]..."),
+	if(check_busy(user))
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/disk/design_disk/limbs))
+		user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
+			span_notice("You begin to load designs from \the [tool]..."),
 			span_hear("You hear the clatter of a floppy drive."))
 		busy = TRUE
-		var/obj/item/disk/design_disk/limbs/limb_design_disk = user_item
+		var/obj/item/disk/design_disk/limbs/limb_design_disk = tool
 		if(do_after(user, 2 SECONDS, target = src))
 			for(var/datum/design/found_design in limb_design_disk.blueprints)
 				imported_designs[found_design.id] = TRUE
 			update_static_data(user)
 		busy = FALSE
-		return
-
-	if(user.combat_mode) //so we can hit the machine
-		return ..()
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/limbgrower/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
