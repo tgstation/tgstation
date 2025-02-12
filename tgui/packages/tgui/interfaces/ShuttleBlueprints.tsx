@@ -41,6 +41,7 @@ type ShuttleBlueprintsData = {
   visualizing: BooleanLike;
   onShuttleFrame: BooleanLike;
   masterExists: BooleanLike;
+  isMaster: BooleanLike;
 } & (ShuttleConstructionUnieuqData | ShuttleConfigurationUniqueData);
 
 type DirectionPadProps = {
@@ -211,12 +212,12 @@ const ShuttleConfiguration = () => {
     onShuttle,
     inDefaultArea,
     currentArea = { name: '', ref: '' },
-    neighboringAreas,
+    neighboringAreas = {},
     apcs = {},
     defaultApc,
     apcInMergeRegion,
     idle,
-    masterExists,
+    isMaster,
   } = data;
   const { name: currentAreaName, ref: currentAreaRef } = currentArea;
   const { name: mergeAreaName, ref: mergeAreaRef } = mergeArea;
@@ -357,14 +358,14 @@ const ShuttleConfiguration = () => {
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
-          disabled={!idle || masterExists}
+          disabled={!idle || !isMaster}
           tooltip={
-            'Remove all empty space from the shuttle.' + masterExists
-              ? '\nOnly the master blueprint can do this.'
-              : idle
+            'Remove all empty space from the shuttle.' + isMaster
+              ? idle
                 ? '\nThis will delete any areas left without any space, \
               and will decommission the shuttle entirely if there is nothing left of it.'
                 : '\nThe shuttle must be idle to do this.'
+              : '\nOnly the master blueprint can do this.'
           }
           onClick={() => act('cleanupEmptyTurfs')}
         >
@@ -377,7 +378,7 @@ const ShuttleConfiguration = () => {
 
 export const ShuttleBlueprints = (props) => {
   const { act, data } = useBackend<ShuttleBlueprintsData>();
-  const { linkedShuttle, shuttles, masterExists } = data;
+  const { linkedShuttle, shuttles, masterExists, isMaster } = data;
   return (
     <Window width={450} height={340}>
       <Window.Content>
@@ -405,7 +406,7 @@ export const ShuttleBlueprints = (props) => {
                   }}
                 />
               )}
-              {!!linkedShuttle && !masterExists && (
+              {!!linkedShuttle && !masterExists && !isMaster && (
                 <Button.Confirm onClick={() => act('promoteToMaster')}>
                   Promote To Master Blueprint
                 </Button.Confirm>

@@ -340,7 +340,8 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 		data["masterExists"] = loc_shuttle?.master_blueprint?.resolve()
 	else
 		var/obj/item/shuttle_blueprints/master = linked_shuttle.master_blueprint?.resolve()
-		data["masterExists"] = master && (master != src)
+		data["masterExists"] = master
+		data["isMaster"] = master == src
 		var/area/current_area = get_area(current_turf)
 		var/area/default_area = linked_shuttle.default_area
 		data["onShuttle"] = linked_shuttle.shuttle_areas[current_area]
