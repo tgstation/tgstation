@@ -322,7 +322,7 @@
 
 /obj/item/gun/ballistic/automatic/sks
 	name = "\improper Sakhno SKS semi-automatic rifle"
-	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilized .310 Strilka rounds. Produced to celebrate the \
+	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. Produced to celebrate the \
 		establishment of the Third Soviet Union in the Spinward Sector. In the wake of the union's collapse, these weapons now hold a \
 		unique place in history amongst the populace of the sector. However, they are strangely rarer than the Sakhno M2442 Army. \
 		Frontier settlers are known for owning one of these for hunting purposes. Or fighting off annoying tax collectors."
@@ -351,7 +351,7 @@
 
 /obj/item/gun/ballistic/automatic/sks/chekhov
 	name = "\improper Chekhov's SKS semi-automatic rifle"
-	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilized .310 Strilka rounds. The name \
+	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. The name \
 		'Chekhov' is engraved in the side of the stock. You feel like this had some kind of significance at one point, \
 		but you cannot be sure as to what that might have been. Or whether that true meaning has yet to reveal itself."
 
