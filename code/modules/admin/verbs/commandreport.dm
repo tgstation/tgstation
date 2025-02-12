@@ -151,7 +151,10 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 	change_command_name(original_command_name)
 
 	log_admin("[key_name(ui_user)] has created a command report: \"[command_report_content]\", sent from \"[command_name]\" with the sound \"[played_sound]\".")
+
 	message_admins("[key_name_admin(ui_user)] has created a command report, sent from \"[command_name]\" with the sound \"[played_sound]\"")
+	if(!announce_contents)
+		message_admins("The message was: [command_report_content]")
 
 
 #undef DEFAULT_ANNOUNCEMENT_SOUND

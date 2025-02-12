@@ -273,18 +273,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if(circuit)
 				circuit.all_products_free = all_products_free //sync up the circuit so the pricing schema is carried over if it's reconstructed.
 
-		else if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
-			for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
-				/**
-				 * in average, it should be 37.5% of the max amount, rounded up to the nearest int,
-				 * tho the max boundary can be as low/high as 50%/100%
-				 */
-				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
-				product_record.amount = rand(0, max_amount)
-				credits_contained += rand(1, 5) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
-			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
-				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
-				credits_contained = 0 // If it's tilted, it's been looted, so no credits for you.
 	else if(circuit)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 	if(!all_products_free)
@@ -1444,7 +1432,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			vend_ready = TRUE
 			return
 
-		if(!proceed_payment(card_used, living_user, item_record, price_to_use))
+		if(!proceed_payment(card_used, living_user, item_record, price_to_use, params["discountless"]))
 			vend_ready = TRUE
 			return
 
@@ -1506,13 +1494,14 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * mob_paying - the mob that is trying to purchase the item.
  * product_to_vend - the product record of the item we're trying to vend.
  * price_to_use - price of the item we're trying to vend.
+ * discountless - whether or not to apply discounts
  */
-/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, discountless)
 	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
 		speak("You do not possess an ID to purchase [product_to_vend.name].")
 		return FALSE
 	var/datum/bank_account/account = paying_id_card.registered_account
-	if(account.account_job && account.account_job.paycheck_department == payment_department)
+	if(account.account_job && account.account_job.paycheck_department == payment_department && !discountless)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free

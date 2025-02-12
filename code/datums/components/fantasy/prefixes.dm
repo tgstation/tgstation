@@ -161,3 +161,26 @@
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/soul_stealer)
 	return "soul-[pick("stealing", "hungering", "devouring")] [newName]"
+
+// On hitting a mob chain lightning will jump to another mob within 2 tiles of the original target
+/datum/fantasy_affix/thunderfury
+	name = "Thunderfury"
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_GOOD
+	weight = 3
+
+/datum/fantasy_affix/thunderfury/apply(datum/component/fantasy/comp, newName)
+	comp.parent.AddElement(/datum/element/chain_lightning_attack, get_damage(comp), get_range(comp), get_limit(comp))
+	return "Thunderfury, Blessed [newName]"
+
+/datum/fantasy_affix/thunderfury/remove(datum/component/fantasy/comp)
+	comp.parent.RemoveElement(/datum/element/chain_lightning_attack, get_damage(comp), get_range(comp), get_limit(comp))
+
+/datum/fantasy_affix/thunderfury/proc/get_damage(datum/component/fantasy/comp)
+	return min(round(comp.quality, 2), 20)
+
+/datum/fantasy_affix/thunderfury/proc/get_range(datum/component/fantasy/comp)
+	return min(round(sqrt(comp.quality), 1), 3)
+
+/datum/fantasy_affix/thunderfury/proc/get_limit(datum/component/fantasy/comp)
+	return min(round(sqrt(comp.quality), 1), 3)

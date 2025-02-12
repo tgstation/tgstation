@@ -635,7 +635,7 @@
 
 /datum/design/holosign
 	name = "Holographic Sign Projector"
-	desc = "A holograpic projector used to project various warning signs."
+	desc = "A holographic projector used to project various warning signs."
 	id = "holosign"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
@@ -647,7 +647,7 @@
 
 /datum/design/holobarrier_jani
 	name = "Custodial Holobarrier Projector"
-	desc = "A holograpic projector used to project hard light wet floor barriers."
+	desc = "A holographic projector used to project hard light wet floor barriers."
 	id = "holobarrier_jani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT)
@@ -1137,7 +1137,7 @@
 /datum/design/perceptomatrix
 	name = "Perceptomatrix Helm"
 	id = "perceptomatrix"
-	desc = "This helm harnesses hallucinative energies to shield its owner from perceptual anomalies. It requires a Hallucination Anomaly Core in order to function."
+	desc = "This helm harnesses hallucinatory energies to shield its owner from perceptual anomalies. It requires a Hallucination Anomaly Core in order to function."
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/clothing/head/helmet/perceptomatrix
 	materials = list(

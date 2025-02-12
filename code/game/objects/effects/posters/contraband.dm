@@ -412,7 +412,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/gorlex_recruit
 
 /obj/structure/sign/poster/contraband/self_ai_liberation
 	name = "SELF: ALL SENTIENTS DESERVE FREEDOM"
-	desc = "Support Proposition 1253: Enancipate all Silicon life!"
+	desc = "Support Proposition 1253: Emancipate all Silicon life!"
 	icon_state = "self_ai_liberation"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/self_ai_liberation, 32)
@@ -609,7 +609,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/microwave, 32)
 
 /obj/structure/sign/poster/contraband/blood_geometer //Poster sprite art by MetalClone, original art by SpessMenArt.
 	name = "Movie Poster: THE BLOOD GEOMETER"
-	desc = "A poster for a thrilling noir detective movie set aboard a state-of-the-art space station, following a detective who finds himself wrapped up in the activies of a dangerous cult, who worship an ancient deity: THE BLOOD GEOMETER."
+	desc = "A poster for a thrilling noir detective movie set aboard a state-of-the-art space station, following a detective who finds himself wrapped up in the activities of a dangerous cult, who worship an ancient deity: THE BLOOD GEOMETER."
 	icon_state = "blood_geometer"
 
 /obj/structure/sign/poster/contraband/blood_geometer/examine_more(mob/user)

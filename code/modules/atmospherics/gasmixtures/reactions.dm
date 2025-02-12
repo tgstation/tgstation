@@ -171,7 +171,7 @@
 	name = "Plasma Combustion"
 	id = "plasmafire"
 	expands_hotspot = TRUE
-	desc = "Combustion of oxygen and plasma. Able to produce tritium or carbon dioxade and water vapor."
+	desc = "Combustion of oxygen and plasma. Able to produce tritium or carbon dioxide and water vapor."
 
 /datum/gas_reaction/plasmafire/init_reqs()
 	requirements = list(

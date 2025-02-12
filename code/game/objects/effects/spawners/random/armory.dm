@@ -24,6 +24,24 @@
 	icon_state = "rubbershot"
 	loot = list(/obj/item/storage/box/rubbershot)
 
+/obj/effect/spawner/random/armory/buckshot
+	name = "buckshot spawner"
+	icon_state = "buckshot"
+	loot = list(/obj/item/storage/box/lethalshot)
+
+/obj/effect/spawner/random/armory/buckshot/sketchy
+	name = "sketchy buckshot spawner"
+	icon_state = "buckshot"
+	loot = list(
+		/obj/item/storage/box/lethalshot = 4,
+		/obj/item/storage/box/lethalshot/old = 2,
+	)
+
+/obj/effect/spawner/random/armory/slug
+	name = "slug shell spawner"
+	icon_state = "buckshot"
+	loot = list(/obj/item/storage/box/slugs)
+
 // Weapons
 /obj/effect/spawner/random/armory/disablers
 	name = "disabler spawner"

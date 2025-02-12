@@ -231,7 +231,7 @@
 		if(93)
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
-			new /mob/living/simple_animal/hostile/mimic/crate(src)
+			new /mob/living/basic/mimic/crate(src)
 			qdel_on_open = TRUE
 		if(95)
 			new /obj/item/toy/plush/nukeplushie(src)

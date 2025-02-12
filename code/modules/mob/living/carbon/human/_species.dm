@@ -716,7 +716,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
-					to_chat(H, span_warning("The [I.name] is too big to attach!")) //should be src?
+					to_chat(H, span_warning("\The [I] is too big to attach!")) //should be src?
 				return FALSE
 			if( istype(I, /obj/item/modular_computer/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
@@ -2039,3 +2039,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/obj/item/bodypart/part as anything in hooman.bodyparts)
 		for(var/datum/bodypart_overlay/simple/body_marking/marking in part.bodypart_overlays)
 			part.remove_bodypart_overlay(marking)
+
+/**
+ * Calculates the expected height values for this species
+ *
+ * Return a height value corresponding to a specific height filter
+ * Return null to just use the mob's base height
+ */
+/datum/species/proc/update_species_heights(mob/living/carbon/human/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return HUMAN_HEIGHT_DWARF
+
+	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
+		return HUMAN_HEIGHT_TALLEST
+
+	return null

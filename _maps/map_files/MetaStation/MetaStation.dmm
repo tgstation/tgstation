@@ -2179,6 +2179,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "aNQ" = (
@@ -10020,7 +10021,7 @@
 /turf/closed/wall,
 /area/station/hallway/primary/port)
 "dHg" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert/station_only,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
@@ -13657,7 +13658,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "eSy" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -14361,7 +14362,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fgn" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "fgu" = (
@@ -18772,7 +18773,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering - Power Monitoring"
 	},
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert/station_only,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
@@ -27213,7 +27214,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/treatment_center)
 "jGN" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
@@ -31313,12 +31314,12 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
-/obj/machinery/door/airlock{
-	name = "Kitchen Cold Room"
-	},
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/airlock/freezer{
+	name = "Freezer"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen/coldroom)
 "lbh" = (
@@ -36420,7 +36421,7 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "mXj" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert/station_only,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -40682,7 +40683,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "owv" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert/station_only,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -44370,7 +44371,7 @@
 /turf/open/floor/iron,
 /area/station/security/warden)
 "pMH" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 4
 	},
 /obj/structure/plaque/static_plaque/atmos{
@@ -46968,7 +46969,7 @@
 /area/station/security/detectives_office)
 "qJd" = (
 /obj/machinery/status_display/ai/directional/north,
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert/station_only,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -60607,7 +60608,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "vqj" = (
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{

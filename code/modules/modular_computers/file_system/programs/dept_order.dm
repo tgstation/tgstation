@@ -194,6 +194,7 @@
 	submit_order(orderer, params["id"])
 	return TRUE
 
+/// Submits the order with the specified supply pack id as the specified orderer
 /datum/computer_file/program/department_order/proc/submit_order(mob/living/orderer, id)
 	id = text2path(id) || id
 
@@ -243,21 +244,16 @@
 	computer.physical.say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 
-///signal when the supply shuttle begins to spawn orders. we forget the current order preventing it from being overridden (since it's already past the point of no return on undoing the order)
+/// Signal when the supply shuttle begins to spawn orders. We forget the current order preventing it from being overridden (since it's already past the point of no return on undoing the order)
 /datum/computer_file/program/department_order/proc/finalize_department_order(datum/subsystem)
 	SIGNAL_HANDLER
 	if(!isnull(department_order) && (department_order in SSshuttle.shopping_list))
 		department_order = null
 	UnregisterSignal(subsystem, COMSIG_SUPPLY_SHUTTLE_BUY)
 
+/// Calculates the cooldown it will take for this department's free order, based on its credit cost
 /datum/computer_file/program/department_order/proc/calculate_cooldown(credits)
-	//minimum almost the lowest value of a crate
-	var/min = CARGO_CRATE_VALUE * 1.6
-	//maximum fairly expensive crate at 3000
-	var/max = CARGO_CRATE_VALUE * 15
-	credits = clamp(credits, min, max)
-	var/time_y = (credits - min)/(max - min) + 1 //convert to between 1 and 2
-	time_y = 10 MINUTES * time_y
+	var/time_y = DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT * (log(10, credits) ** DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT) * (1 SECONDS)
 	department_cooldowns[linked_department] = world.time + time_y
 
 /datum/computer_file/program/department_order/process_tick(seconds_per_tick)

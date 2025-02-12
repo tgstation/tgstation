@@ -541,7 +541,9 @@
 	return affected_addiction.on_lose_addiction_points(src)
 
 /// Whether or not we can roll for midrounds, specifically checking if we have any major antag datums that should block it
-/datum/mind/proc/can_roll_midround()
+/datum/mind/proc/can_roll_midround(datum/antagonist/antag_type)
+	if(SEND_SIGNAL(current, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, antag_type) & CANCEL_ROLL)
+		return FALSE
 	for(var/datum/antagonist/antag as anything in antag_datums)
 		if(antag.block_midrounds)
 			return FALSE

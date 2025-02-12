@@ -968,7 +968,7 @@
 			REMOVE_TRAIT(src, TRAIT_UNCOMPOSTABLE, INNATE_TRAIT)
 			stop_flopping()
 			if(!silent)
-				var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
+				var/message = span_warning(replacetext(death_text, "%SRC", "[src]"))
 				if(loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 					loc.visible_message(message)
 				else

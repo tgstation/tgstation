@@ -126,6 +126,10 @@
 			id_species ||= dna.species.name
 			id_blood_type ||= dna.blood_type
 
+		if(istype(id, /obj/item/card/id/advanced))
+			var/obj/item/card/id/advanced/advancedID = id
+			id_job = advancedID.trim_assignment_override || id_job
+
 		var/id_examine = span_slightly_larger(separator_hr("This is <em>[src]'s ID card</em>."))
 		id_examine += "<div class='img_by_text_container'>"
 		id_examine += "[id_icon]"
@@ -739,31 +743,13 @@
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
-		var/static/list/monkey_heights = list(
-			MONKEY_HEIGHT_DWARF,
-			MONKEY_HEIGHT_MEDIUM,
-		)
-		var/static/list/heights = list(
-			HUMAN_HEIGHT_SHORTEST,
-			HUMAN_HEIGHT_SHORT,
-			HUMAN_HEIGHT_MEDIUM,
-			HUMAN_HEIGHT_TALL,
-			HUMAN_HEIGHT_TALLER,
-			HUMAN_HEIGHT_TALLEST
-		)
-		if(ismonkey(src))
-			if(!(var_value in monkey_heights))
-				return
-		else if(!(var_value in heights))
-			return
-
-		. = set_mob_height(var_value)
-
-	if(!isnull(.))
-		datum_flags |= DF_VAR_EDITED
-		return
-
-	return ..()
+		// you wanna edit this one not that one
+		var_name = NAMEOF(src, base_mob_height)
+	. = ..()
+	if(!.)
+		return .
+	if(var_name == NAMEOF(src, base_mob_height))
+		update_mob_height()
 
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()

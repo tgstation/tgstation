@@ -1,7 +1,7 @@
 //Hydroponics tank and base code
 /obj/item/watertank
 	name = "backpack water tank"
-	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
+	desc = "A S.U.N.S.H.I.N.E. brand water tank backpack with a nozzle to water plants."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	inhand_icon_state = "waterbackpack"

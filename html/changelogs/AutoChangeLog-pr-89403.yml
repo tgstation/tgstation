@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed duplicated comsigs/text and HARS head deletion from prosthetic replacement"

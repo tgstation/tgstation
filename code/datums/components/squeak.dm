@@ -11,8 +11,8 @@
 	var/step_delay = 1
 
 	// This is to stop squeak spam from inhand usage
-	var/last_use = 0
-	var/use_delay = 20
+	COOLDOWN_DECLARE(spam_cooldown)
+	var/use_delay = 2 SECONDS
 
 	///extra-range for this component's sound
 	var/sound_extra_range = -1
@@ -102,6 +102,10 @@
 		return
 	if(ismob(arrived) && !arrived.density) // Prevents 10 overlapping mice from making an unholy sound while moving
 		return
+	if(isliving(arrived))
+		var/mob/living/living_arrived = arrived
+		if(living_arrived.mob_size < MOB_SIZE_HUMAN)
+			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent?.loc))
 		play_squeak()
@@ -109,8 +113,8 @@
 /datum/component/squeak/proc/use_squeak()
 	SIGNAL_HANDLER
 
-	if(last_use + use_delay < world.time)
-		last_use = world.time
+	if(COOLDOWN_FINISHED(src, spam_cooldown))
+		COOLDOWN_START(src, spam_cooldown, use_delay)
 		play_squeak()
 
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)

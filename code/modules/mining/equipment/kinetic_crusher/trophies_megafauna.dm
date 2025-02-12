@@ -231,3 +231,23 @@
 	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
 	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
+
+//The Thing
+/obj/item/crusher_trophy/flesh_glob
+	name = "glob of shifting flesh"
+	desc = "A glob of shifting flesh. Sealed shut permanently. Suitable as a trophy for a kinetic crusher."
+	icon_state = "glob"
+	denied_type = /obj/item/crusher_trophy/flesh_glob
+	bonus_value = 20
+	/// the order in which we heal damage
+	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY, TOX)
+
+/obj/item/crusher_trophy/flesh_glob/effect_desc()
+	return "melee hits heal you for <b>[bonus_value * 0.2]</b>, and for <b>[bonus_value * 0.5]</b> on mark detonation"
+
+/obj/item/crusher_trophy/flesh_glob/on_melee_hit(mob/living/target, mob/living/user)
+	user.heal_ordered_damage(bonus_value * 0.2, damage_heal_order)
+
+/obj/item/crusher_trophy/flesh_glob/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
+	user.heal_ordered_damage(bonus_value * 0.5, damage_heal_order)

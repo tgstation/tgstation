@@ -40,7 +40,7 @@
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	switch(requires_power)
+	switch(power_requirement)
 		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)

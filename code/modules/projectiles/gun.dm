@@ -317,6 +317,10 @@
 		return
 	if(firing_burst)
 		return
+
+	if(SEND_SIGNAL(user, COMSIG_MOB_TRYING_TO_FIRE_GUN, src, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
+		return
+
 	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
@@ -558,7 +562,7 @@
 			return TRUE
 
 /obj/item/gun/animate_atom_living(mob/living/owner)
-	new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
+	new /mob/living/basic/mimic/copy/ranged(drop_location(), src, owner)
 
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
