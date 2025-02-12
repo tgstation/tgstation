@@ -39,8 +39,8 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	/// World.time this player last died
 	var/time_of_death = 0
 
-/datum/persistent_client/New(ckey, _client)
-	client = _client
+/datum/persistent_client/New(ckey, client)
+	src.client = client
 	achievements = new(ckey)
 	GLOB.persistent_clients_by_ckey[ckey] = src
 	GLOB.persistent_clients += src
