@@ -110,10 +110,10 @@
 		else
 			client.change_view(getScreenSize(client.prefs.read_preference(/datum/preference/toggle/widescreen)))
 
-		for(var/datum/action/A in persistent_client.player_actions)
+		for(var/datum/action/A as anything in persistent_client.player_actions)
 			A.Grant(src)
 
-		for(var/datum/callback/CB in persistent_client.post_login_callbacks)
+		for(var/datum/callback/CB as anything in persistent_client.post_login_callbacks)
 			CB.Invoke()
 
 		log_played_names(

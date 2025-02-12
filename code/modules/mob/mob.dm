@@ -1557,7 +1557,7 @@
 	if(!canon_client)
 		return
 
-	for(var/datum/callback/CB in persistent_client.post_logout_callbacks)
+	for(var/datum/callback/CB as anything in persistent_client.post_logout_callbacks)
 		CB.Invoke()
 
 	if(canon_client?.movingmob)
