@@ -12,9 +12,8 @@
 	var/turf/turf = crafter.loc
 	var/old_turf_type = turf.type
 	var/datum/component/personal_crafting/unit_test/craft_comp = crafter.AddComponent(__IMPLIED_TYPE__)
-	var/obj/item/reagent_containers/cup/crafting_blacklist/bottomless_cup = allocate(__IMPLIED_TYPE__)
-	bottomless_cup.reagents.flags |= NO_REACT
-	bottomless_cup.reagents.maximum_volume = INFINITY
+	var/obj/item/reagent_containers/cup/bottomless_cup = allocate_bottomless_cup()
+
 	var/list/tools = list()
 
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
@@ -22,10 +21,19 @@
 			continue
 		//split into a different proc, so if something fails it's both easier to track and doesn't halt the loop.
 		process_recipe(crafter, craft_comp, recipe, bottomless_cup, tools)
+		if(QDELETED(bottomless_cup) || bottomless_cup.loc != turf) //The cup itself was used in a recipe, rather than its contents.
+			bottomless_cup = allocate_bottomless_cup()
 
 	// We have one or two recipes that generate turf (likely from stacks, like snow walls), which shouldn't be carried between tests
 	if(turf.type != old_turf_type)
 		turf.ChangeTurf(old_turf_type)
+
+///Allocate a reagent container with infinite capacity and no reaction to use in crafting
+/datum/unit_test/crafting/proc/allocate_bottomless_cup()
+	var/obj/item/reagent_containers/cup/bottomless_cup = (__IMPLIED_TYPE__)
+	bottomless_cup.reagents.flags |= NO_REACT
+	bottomless_cup.reagents.maximum_volume = INFINITY
+	return bottomless_cup
 
 /datum/unit_test/crafting/proc/process_recipe(atom/crafter, datum/component/personal_crafting/unit_test/craft_comp, datum/crafting_recipe/recipe, obj/item/reagent_containers/bottomless_cup, list/tools)
 	var/turf/turf = crafter.loc
@@ -96,13 +104,6 @@
 			what_it_should_be += ")"
 		TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or blacklist [recipe.type] in the unit test")
 */
-
-///Unit test only path, blacklisted from all recipes
-/obj/item/reagent_containers/cup/crafting_blacklist
-
-/datum/crafting_recipe/New()
-	LAZYADD(blacklist, /obj/item/reagent_containers/cup/crafting_blacklist)
-	return ..()
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND
