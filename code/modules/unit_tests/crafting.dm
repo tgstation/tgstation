@@ -30,7 +30,7 @@
 
 ///Allocate a reagent container with infinite capacity and no reaction to use in crafting
 /datum/unit_test/crafting/proc/allocate_bottomless_cup()
-	var/obj/item/reagent_containers/cup/bottomless_cup = (__IMPLIED_TYPE__)
+	var/obj/item/reagent_containers/cup/bottomless_cup = allocate(__IMPLIED_TYPE__)
 	bottomless_cup.reagents.flags |= NO_REACT|DRAINABLE
 	bottomless_cup.reagents.maximum_volume = INFINITY
 	return bottomless_cup
