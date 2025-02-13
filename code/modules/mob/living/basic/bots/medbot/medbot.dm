@@ -163,6 +163,7 @@
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
 /mob/living/basic/bot/medbot/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
 	var/obj/item/storage/medkit/medkit = locate() in contents
 	medkit_type = medkit
 	health_analyzer = locate(/obj/item/healthanalyzer) in contents

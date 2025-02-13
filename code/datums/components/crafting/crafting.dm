@@ -44,10 +44,10 @@
  * Check that the contents of the recipe meet the requirements.
  *
  * user: The /mob that initated the crafting.
- * R: The /datum/crafting_recipe being attempted.
- * contents: List of items to search for R's reqs.
+ * recipe: The /datum/crafting_recipe being attempted.
+ * contents: List of items to search for the recipe's reqs.
  */
-/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
+/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/recipe, list/contents)
 	var/list/item_instances = contents["instances"]
 	var/list/machines = contents["machinery"]
 	var/list/structures = contents["structures"]
@@ -57,12 +57,12 @@
 	var/list/requirements_list = list()
 
 	// Process all requirements
-	for(var/requirement_path in R.reqs)
+	for(var/requirement_path in recipe.reqs)
 		// Check we have the appropriate amount available in the contents list
-		var/needed_amount = R.reqs[requirement_path]
+		var/needed_amount = recipe.reqs[requirement_path]
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
+			if(!ispath(content_item_path, requirement_path) || recipe.blacklist.Find(content_item_path))
 				continue
 
 			needed_amount -= contents[content_item_path]
@@ -72,7 +72,7 @@
 		if(needed_amount > 0)
 			return FALSE
 
-		// Store the instances of what we will use for R.check_requirements() for requirement_path
+		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
 		var/list/instances_list = list()
 		for(var/instance_path in item_instances)
 			if(ispath(instance_path, requirement_path))
@@ -80,12 +80,12 @@
 
 		requirements_list[requirement_path] = instances_list
 
-	for(var/requirement_path in R.chem_catalysts)
-		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
+	for(var/requirement_path in recipe.chem_catalysts)
+		if(contents[requirement_path] < recipe.chem_catalysts[requirement_path])
 			return FALSE
 
 	var/mech_found = FALSE
-	for(var/machinery_path in R.machinery)
+	for(var/machinery_path in recipe.machinery)
 		mech_found = FALSE
 		for(var/obj/machinery/machine as anything in machines)
 			if(ispath(machine, machinery_path))//We don't care for volume with machines, just if one is there or not
@@ -94,11 +94,11 @@
 		if(!mech_found)
 			return FALSE
 
-	for(var/required_structure_path in R.structures)
+	for(var/required_structure_path in recipe.structures)
 		// Check for the presence of the required structure. Allow for subtypes to be used if not blacklisted
-		var/needed_amount = R.structures[required_structure_path]
+		var/needed_amount = recipe.structures[required_structure_path]
 		for(var/structure_path in structures)
-			if(!ispath(structure_path, required_structure_path) || R.blacklist.Find(structure_path))
+			if(!ispath(structure_path, required_structure_path) || recipe.blacklist.Find(structure_path))
 				continue
 
 				needed_amount -= structures[required_structure_path]
@@ -110,7 +110,8 @@
 		if(needed_amount > 0)
 			return FALSE
 
-	return R.check_requirements(a, requirements_list)
+	//Skip extra requirements when unit testing, like, underwater basket weaving? Get the hell out of here
+	return PERFORM_ALL_TESTS(crafting) || recipe.check_requirements(a, requirements_list)
 
 /datum/component/personal_crafting/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)
 	. = list()
@@ -286,10 +287,12 @@
 				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 		stuff_to_use -= holder
 		qdel(holder)
-
+	result.on_craft_completion(stuff_to_use, recipe, crafter)
 	if(length(total_materials))
 		result.set_custom_materials(total_materials)
-	result.on_craft_completion(stuff_to_use, recipe, crafter)
+	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
+		if(component.loc != result)
+			qdel(component)
 	if(send_feedback)
 		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
 	return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item

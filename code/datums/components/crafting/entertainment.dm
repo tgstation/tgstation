@@ -174,7 +174,7 @@
 	category = CAT_ENTERTAINMENT
 	tool_behaviors = list(TOOL_WRENCH)
 	reqs = list(/obj/item/flamethrower = 1)
-	structures = list(/obj/structure/toilet = 1)
+	structures = list(/obj/structure/toilet = CRAFTING_STRUCTURE_CONSUME)
 	result = /obj/structure/toiletbong
 	time = 5 SECONDS
 	steps = list(

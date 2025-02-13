@@ -346,19 +346,17 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
 	var/list/remaining_parts = current_recipe?.parts?.Copy()
-	for(var/atom/movable/object as anything in components)
-		object.used_in_craft(src, current_recipe)
-		var/matched_type
-		matched_type = find_type_match_in_list(object, remaining_parts)
+	for(var/obj/item/item in components) // any machinery or structure in the list is guaranteed to be used up.
+		item.used_in_craft(src, current_recipe)
+		var/matched_type = find_type_match_in_list(item, remaining_parts)
 		if(!matched_type)
-			qdel(object)
 			continue
 
-		if(isliving(object.loc))
-			var/mob/living/living = object.loc
-			living.transferItemToLoc(object, src)
+		if(isliving(item.loc))
+			var/mob/living/living = item.loc
+			living.transferItemToLoc(item, src)
 		else
-			object.forceMove(src)
+			item.forceMove(src)
 
 		if(matched_type)
 			remaining_parts[matched_type] -= 1
