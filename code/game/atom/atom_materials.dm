@@ -64,7 +64,7 @@
 			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(material, materials, index),
 		)
 		index++
-	sortTim(material_effects, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	sortTim(material_effects, GLOBAL_PROC_REF(cmp_mat_composition), associative = TRUE)
 	return material_effects
 
 /**
