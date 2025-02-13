@@ -295,3 +295,12 @@
 	cant_muffle = TRUE
 	vary = TRUE
 	sound = 'sound/effects/glass/glassbash.ogg'
+
+/datum/emote/living/click
+	key = "click"
+	key_third_person = "clicks"
+	message = "clicks."
+	emote_type = EMOTE_AUDIBLE
+	cant_muffle = TRUE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/crab/claw_click.ogg'
