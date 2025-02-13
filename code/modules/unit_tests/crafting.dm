@@ -11,7 +11,7 @@
 	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
 	var/turf/turf = crafter.loc
 	var/datum/component/personal_crafting/unit_test/craftsman = AddComponent(__IMPLIED_TYPE__)
-	var/obj/item/reagent_containers/cup/bottomless_beaker = allocate(__IMPLIED_TYPE__)
+	var/obj/item/reagent_containers/cup/crafting_blacklist/bottomless_cup = allocate(__IMPLIED_TYPE__)
 	bottomless_beaker.reagents.flags |= NO_REACT
 	bottomless_beaker.reagents.maximum_volume = INFINITY
 	var/list/tools = list()
@@ -20,8 +20,8 @@
 		for(var/req_path in recipe.reqs) //allocate items and reagents
 			var/amount = recipe.reqs[req_path]
 			if(ispath(req_path, /datum/reagent))
-				if(!bottomless_beaker.reagents.has_reagent(req_path, amount))
-					bottomless_beaker.reagents.add_reagent(req_path, amount, added_purity = 1)
+				if(!bottomless_cup.reagents.has_reagent(req_path, amount))
+					bottomless_cup.reagents.add_reagent(req_path, amount, added_purity = 1)
 			else
 				var/atom/located = locate(req_path) in allocated
 				if(ispath(req_path, /obj/item/stack))
@@ -61,6 +61,13 @@
 		if(istext(result)) //construct_item() returned a text string telling us why it failed.
 			TEST_FAIL("[recipe.type] couldn't be crafted during crafting unit test[result].")
 			continue
+
+///Unit test only path, blacklisted from all recipes
+/obj/item/reagent_containers/cup/crafting_blacklist
+
+/datum/crafting_recipe/New()
+	LAZYADD(blacklist, /obj/item/reagent_containers/cup/crafting_blacklist)
+	return ..()
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND

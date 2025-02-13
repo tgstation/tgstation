@@ -363,7 +363,7 @@
 				var/obj/item/stack/origin_stack
 				var/obj/item/stack/tally_stack
 				while(amount > 0)
-					origin_stack = locate(origin_stack.merge_type) in surroundings
+					origin_stack = locate(path_key) in surroundings
 					if(!tally_stack)
 						tally_stack = new origin_stack.merge_type (get_turf(atom), /*new_amount =*/ 0, /*merge =*/ FALSE)
 						return_list += tally_stack
