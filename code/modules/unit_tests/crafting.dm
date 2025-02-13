@@ -27,7 +27,7 @@
 				if(ispath(req_path, /obj/item/stack))
 					var/obj/item/stack/stack = located
 					if(QDELETED(located) || (located.type in recipe.blacklist) || stack.amount <= amount)
-						new (req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+						new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 				else
 					var/list/matches = turf.get_all_contents_type(req_path)
 					for(var/atom/match as anything in matches)
