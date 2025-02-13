@@ -33,23 +33,23 @@
 	if(!held_item)
 		return NONE
 
-		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
 		. = CONTEXTUAL_SCREENTIP_SET
-		else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
-			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+	else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		. = CONTEXTUAL_SCREENTIP_SET
-		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
 		. = CONTEXTUAL_SCREENTIP_SET
-		else if(is_reagent_container(held_item) && held_item.is_open_container())
-			context[SCREENTIP_CONTEXT_LMB] = "Refill machine"
+	else if(is_reagent_container(held_item) && held_item.is_open_container())
+		context[SCREENTIP_CONTEXT_LMB] = "Refill machine"
 		. = CONTEXTUAL_SCREENTIP_SET
-		else if(istype(held_item, /obj/item/reagent_containers/hypospray/medipen) && reagents.has_reagent(allowed_pens[held_item.type]))
-			context[SCREENTIP_CONTEXT_LMB] = "Refill medipen"
+	else if(istype(held_item, /obj/item/reagent_containers/hypospray/medipen) && reagents.has_reagent(allowed_pens[held_item.type]))
+		context[SCREENTIP_CONTEXT_LMB] = "Refill medipen"
 		. = CONTEXTUAL_SCREENTIP_SET
-		else if(istype(held_item, /obj/item/plunger))
-			context[SCREENTIP_CONTEXT_LMB] = "Plunge machine"
+	else if(istype(held_item, /obj/item/plunger))
+		context[SCREENTIP_CONTEXT_LMB] = "Plunge machine"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/medipen_refiller/RefreshParts()
@@ -122,7 +122,7 @@
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), tool)
