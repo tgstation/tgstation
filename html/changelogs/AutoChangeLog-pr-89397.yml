@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - admin: "Reload Configuration can be cancelled via the alert it gives you."
