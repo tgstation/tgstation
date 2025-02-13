@@ -1,4 +1,0 @@
-author: "Rengan"
-delete-after: True
-changes:
-  - bugfix: "When you cast examine to the disguised detective, its assignment will now display correctly."
