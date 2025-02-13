@@ -113,7 +113,7 @@
 
 /**
  * Stores the decal & overlays on the floor to preserve texture of the design
- * in short its just an wrapper for mutable appearance where we retrieve the nessassary information
+ * in short it's just an wrapper for mutable appearance where we retrieve the nessassary information
  * to recreate an mutable appearance
  */
 /datum/overlay_info

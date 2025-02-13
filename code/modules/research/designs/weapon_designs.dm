@@ -193,7 +193,7 @@
 
 /datum/design/beanbag_slug/sec
 	id = "sec_beanbag_slug"
-	desc = "Beangbag slug shotgun shells. Fires a single slug (a beanbag). Less-than-lethal."
+	desc = "Beanbag slug shotgun shells. Fires a single slug (a beanbag). Less-than-lethal."
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO

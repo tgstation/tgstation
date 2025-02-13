@@ -1,9 +1,11 @@
+import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
 
 import { FeatureChoiced, FeatureValueProps } from '../../base';
 import { FeatureDropdownInput } from '../../dropdowns';
 
-const FeatureBoopDropdownInput = (props: FeatureValueProps<string>) => {
+function FeatureBoopDropdownInput(props: FeatureValueProps<string>) {
+  const { act } = useBackend();
   return (
     <Stack>
       <Stack.Item grow>
@@ -12,7 +14,7 @@ const FeatureBoopDropdownInput = (props: FeatureValueProps<string>) => {
       <Stack.Item>
         <Button
           onClick={() => {
-            props.act('play_boop_voice');
+            act('play_boop_voice');
           }}
           icon="play"
           width="100%"
@@ -21,7 +23,7 @@ const FeatureBoopDropdownInput = (props: FeatureValueProps<string>) => {
       </Stack.Item>
     </Stack>
   );
-};
+}
 
 export const voice_type: FeatureChoiced = {
   name: 'Voice type',

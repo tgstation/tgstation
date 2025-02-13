@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Removed the arbitrary limit of 10 maximum highlights."

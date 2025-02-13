@@ -1,0 +1,196 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/ruin/comms_agent)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/syndicate/freerange{
+	pixel_x = 31
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/fax{
+	syndicate_network = 1;
+	allow_exotic_faxes = 1;
+	fax_name = "Listening Post";
+	desc = "Bluespace technologies on the application of bureaucracy. This one is send-only";
+	pixel_y = 5
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"f" = (
+/obj/machinery/modular_computer/preset{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"g" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin/carbon{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/machinery/newscaster/directional/south,
+/obj/item/pen/edagger,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"k" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/ruin/comms_agent)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"u" = (
+/obj/structure/filingcabinet,
+/obj/item/paperwork,
+/obj/item/paper/monitorkey,
+/obj/item/paper/fluff/ruins/listeningstation/briefing{
+	pixel_x = -2
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/item/pen/survival{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/button/door{
+	id = "syndie_lpost_icemoon_windows";
+	name = "Window Shutters";
+	req_access = list("syndicate")
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"y" = (
+/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"z" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "syndie_lpost_icemoon_windows"
+	},
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"C" = (
+/obj/structure/chair/office/tactical{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"G" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/centcom{
+	name = "Syndicate Secure Airlock System";
+	desc = "Truly, a marvel of modern engineering."
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"J" = (
+/obj/structure/sign/warning/explosives/alt/directional/north,
+/obj/machinery/syndicatebomb/self_destruct{
+	anchored = 1
+	},
+/obj/machinery/light/small/red/directional/north,
+/obj/machinery/door/window/brigdoor/left/directional/south,
+/turf/open/floor/circuit/red,
+/area/ruin/comms_agent)
+"L" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"M" = (
+/obj/structure/table/reinforced,
+/obj/item/paper/monitorkey{
+	pixel_x = -15;
+	pixel_y = 7
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"Q" = (
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"R" = (
+/turf/closed/wall/r_wall,
+/area/ruin/comms_agent)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/office/tactical,
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+
+(1,1,1) = {"
+k
+Q
+y
+g
+R
+"}
+(2,1,1) = {"
+G
+L
+C
+M
+z
+"}
+(3,1,1) = {"
+a
+b
+q
+f
+z
+"}
+(4,1,1) = {"
+a
+a
+X
+v
+z
+"}
+(5,1,1) = {"
+a
+J
+w
+u
+z
+"}
+(6,1,1) = {"
+a
+a
+a
+R
+R
+"}

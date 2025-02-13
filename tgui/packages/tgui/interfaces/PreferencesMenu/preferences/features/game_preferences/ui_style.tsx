@@ -8,9 +8,9 @@ import {
   sortChoices,
 } from '../base';
 
-const UIStyleInput = (
+function UIStyleInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
-) => {
+) {
   const { serverData, value } = props;
   if (!serverData) {
     return null;
@@ -58,7 +58,7 @@ const UIStyleInput = (
       )}
     />
   );
-};
+}
 
 export const UI_style: FeatureChoiced = {
   name: 'UI Style',

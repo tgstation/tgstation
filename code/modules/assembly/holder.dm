@@ -48,7 +48,7 @@
 
 /obj/item/assembly_holder/proc/try_add_assembly(obj/item/assembly/attached_assembly, mob/user)
 	if(attached_assembly.secured)
-		balloon_alert(attached_assembly, "not attachable!")
+		balloon_alert(user, "not attachable!")
 		return FALSE
 
 	if(LAZYLEN(assemblies) >= HOLDER_MAX_ASSEMBLIES)
@@ -143,14 +143,16 @@
 
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
-	if(..())
-		return TRUE
-	balloon_alert(user, "disassembled")
+	loc.balloon_alert(user, "disassembled")
+
+	deconstruct(TRUE)
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/assembly_holder/atom_deconstruct(disassembled)
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.on_detach()
 		LAZYREMOVE(assemblies, assembly)
-	qdel(src)
-	return TRUE
 
 /obj/item/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)

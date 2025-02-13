@@ -251,7 +251,7 @@
 
 /datum/dog_fashion/head/holymelon
 	name = "Holymelon Paladin %REAL_NAME%"
-	desc = "Extraterrestial powers beware, %NAME% is here to smite you down!"
+	desc = "Extraterrestrial powers beware, %NAME% is here to smite you down!"
 	obj_icon_state = "holymelon"
 
 /datum/dog_fashion/head/barrelmelon

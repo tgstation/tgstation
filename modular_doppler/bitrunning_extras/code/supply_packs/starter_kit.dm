@@ -53,26 +53,6 @@
 		var/obj/item/special_snack = pick(special_options)
 		new special_snack(our_crate)
 
-
-/obj/item/storage/cans/sixgamerdrink
-	name = "gamer drink bottle ring"
-	desc = "Holds six gamer drink cans. Remember to recycle when you're done!"
-
-	/// Pool of gamer drinks tm we may add from
-	var/list/gamer_drink_options = list(
-		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 25,
-		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 25,
-		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 25,
-		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 20,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5, 
-	)
-
-/obj/item/storage/cans/sixgamerdrink/PopulateContents()
-	for(var/i in 1 to 6)
-		var/obj/item/chosen_gamer_drink = pick_weight(gamer_drink_options)
-		new chosen_gamer_drink(src)
-
-
 /obj/item/folder/gamer
 	name = "folder - 'domain certificates'"
 	desc = "A folder to keep track of all your gamer highscores."
