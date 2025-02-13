@@ -27,13 +27,6 @@
 	item = /obj/item/storage/box/syndie_kit/space
 	cost = 4
 
-/datum/uplink_item/suits/modsuit
-	name = "Syndicate MODsuit"
-	desc = "The feared MODsuit of a Syndicate agent. Features armoring and a set of inbuilt modules."
-	item = /obj/item/mod/control/pre_equipped/traitor
-	cost = 8
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //you can't buy it in nuke, because the elite modsuit costs the same while being better
-
 /datum/uplink_item/suits/thermal
 	name = "MODsuit Thermal Visor Module"
 	desc = "A visor for a MODsuit. Lets you see living beings through walls."
