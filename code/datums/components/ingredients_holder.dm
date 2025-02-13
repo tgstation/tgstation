@@ -71,6 +71,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(food_exited))
 	RegisterSignal(parent, COMSIG_ATOM_PROCESSED, PROC_REF(on_processed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+	ADD_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER, INNATE_TRAIT)
 
 /datum/component/ingredients_holder/UnregisterFromParent()
 	. = ..()
@@ -81,6 +82,7 @@
 		COMSIG_ATOM_PROCESSED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
+	ADD_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER, INNATE_TRAIT)
 
 /datum/component/ingredients_holder/PostTransfer(datum/new_parent)
 	if(!isatom(new_parent))
@@ -101,7 +103,7 @@
 
 //// Proc that checks if an ingredient is valid or not, returning false if it isnt and true if it is.
 /datum/component/ingredients_holder/proc/valid_ingredient(obj/ingredient)
-	if (ingredient.GetComponent(/datum/component/ingredients_holder))
+	if (HAS_TRAIT(ingredient, TRAIT_INGREDIENTS_HOLDER))
 		return FALSE
 	if(HAS_TRAIT(ingredient, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT))
 		return TRUE

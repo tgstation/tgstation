@@ -34,6 +34,7 @@
 		span_notice("[crafter] attaches the flamethrower to the repurposed toilet."),
 		span_notice("You attach the flamethrower to the repurposed toilet."),
 	)
+	return ..()
 
 /obj/structure/toiletbong/update_overlays()
 	. = ..()

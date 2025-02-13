@@ -19,6 +19,8 @@
 	var/time = 3 SECONDS
 	///type paths of items that will be forceMoved() into the result instead of being deleted
 	var/list/parts = list()
+	///items, structures and machineries of types that are in this list won't transfer their materials to the result
+	var/list/requirements_mats_blacklist
 	///like tool_behaviors but for reagents
 	var/list/chem_catalysts = list()
 	///where it shows up in the crafting UI
@@ -71,6 +73,10 @@
 		tool_behaviors = string_list(tool_behaviors)
 	if(tool_paths)
 		tool_paths = string_list(tool_paths)
+	for(var/key in parts)
+		if(!parts[key])
+			//ensure every unit of the part used for the recipe will be transferred if the value is otherwise not specified
+			parts[key] = INFINITY
 
 /datum/crafting_recipe/stack/New(obj/item/stack/material, datum/stack_recipe/stack_recipe)
 	if(!material || !stack_recipe || !stack_recipe.result_type)
@@ -85,6 +91,9 @@
 	src.reqs[material] = stack_recipe.req_amount
 	src.category = stack_recipe.category || CAT_MISC
 	src.placement_checks = stack_recipe.placement_checks
+
+	if(!(stack_recipe.crafting_flags & CRAFT_APPLIES_MATS))
+		requirements_mats_blacklist = list(material) //the item is not intended to have mats :shrug:
 
 /**
  * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client

@@ -287,7 +287,8 @@
 		stuff_to_use -= holder
 		qdel(holder)
 
-	result.set_custom_materials(total_materials)
+	if(length(total_materials))
+		result.set_custom_materials(total_materials)
 	result.on_craft_completion(stuff_to_use, recipe, crafter)
 	if(send_feedback)
 		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
@@ -367,16 +368,18 @@
 					origin_stack.use(amount_to_give)
 					tally_stack.add(amount_to_give)
 					surroundings -= origin_stack
-				for(var/material in tally_stack.custom_materials)
-					total_materials[material] += tally_stack.custom_materials[material]
+				if(!recipe.requirements_mats_blacklist?[path_key])
+					for(var/material in tally_stack.custom_materials)
+						total_materials[material] += tally_stack.custom_materials[material]
 			else
 				while(amount > 0)
 					var/atom/movable/item = locate(path_key) in surroundings
 					return_list += item
 					surroundings -= item
 					amount--
-					for(var/material in item.custom_materials)
-						total_materials[material] += item.custom_materials[material]
+					if(!recipe.requirements_mats_blacklist?[path_key])
+						for(var/material in item.custom_materials)
+							total_materials[material] += item.custom_materials[material]
 
 	return return_list
 

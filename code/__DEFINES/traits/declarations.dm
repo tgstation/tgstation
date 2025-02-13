@@ -784,6 +784,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 /// If this item's been fried
 #define TRAIT_FOOD_FRIED "food_fried"
+/// Has the ingredients_holder component
+#define TRAIT_INGREDIENTS_HOLDER "ingredients_holder"
 /// If this item's been bbq grilled
 #define TRAIT_FOOD_BBQ_GRILLED "food_bbq_grilled"
 /// This is a silver slime created item
