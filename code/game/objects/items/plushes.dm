@@ -841,7 +841,7 @@
 
 /obj/item/toy/plush/evil_wet_owl/attack_self(mob/living/user)
 	. = ..()
-	to_chat(user, span_danger("You're cursed by a wet owl"))
+	to_chat(user, span_danger("You're cursed by [src]!"))
 	var/stunner = 1.25 SECONDS
 	if(iscarbon(user))
 		var/mob/living/carbon/carboner = user
