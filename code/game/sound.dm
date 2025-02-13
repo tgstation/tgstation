@@ -1,5 +1,7 @@
 
 ///Default override for echo
+// TFF CHANGE START - FIX STEREO-AUDIO
+/*
 /sound
 	echo = list(
 		0, // Direct
@@ -22,6 +24,8 @@
 		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
 	)
 	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
+//TFF CHANGE END - FIX STEREO-AUDIO
+*/
 
 /**
  * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
@@ -176,11 +180,13 @@
 		else
 			var/area/A = get_area(src)
 			sound_to_use.environment = A.sound_environment
-
+// TFF CHANGE START - FIX STEREO-AUDIO
+/*
 		if(use_reverb && sound_to_use.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
 			sound_to_use.echo[3] = 0 //Room setting, 0 means normal reverb
 			sound_to_use.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
-
+//TFF CHANGE END - FIX STEREO-AUDIO
+*/
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
