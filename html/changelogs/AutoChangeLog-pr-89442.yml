@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Syndicate encryption keys properly protect against AoE radio jamming again."
