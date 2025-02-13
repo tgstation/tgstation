@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - qol: "The limb grower can now be unwrenched and rotated"
