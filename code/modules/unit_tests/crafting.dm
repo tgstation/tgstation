@@ -11,7 +11,7 @@
 	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
 	var/turf/turf = crafter.loc
 	var/old_turf_type = turf.type
-	var/datum/component/personal_crafting/unit_test/craftsman = AddComponent(__IMPLIED_TYPE__)
+	var/datum/component/personal_crafting/unit_test/craft_comp = crafter.AddComponent(__IMPLIED_TYPE__)
 	var/obj/item/reagent_containers/cup/crafting_blacklist/bottomless_cup = allocate(__IMPLIED_TYPE__)
 	bottomless_cup.reagents.flags |= NO_REACT
 	bottomless_cup.reagents.maximum_volume = INFINITY
@@ -21,13 +21,14 @@
 		if(recipe.type in blacklisted_recipes)
 			continue
 		//split into a different proc, so if something fails it's both easier to track and doesn't halt the loop.
-		process_recipe(crafter, recipe, bottomless_cup, tools)
+		process_recipe(crafter, craft_comp, recipe, bottomless_cup, tools)
 
 	// We have one or two recipes that generate turf (likely from stacks, like snow walls), which shouldn't be carried between tests
 	if(turf.type != old_turf_type)
 		turf.ChangeTurf(old_turf_type)
 
-/datum/unit_test/crafting/proc/process_recipe(atom/crafter, datum/crafting_recipe/recipe, obj/item/reagent_containers/bottomless_cup, list/tools)
+/datum/unit_test/crafting/proc/process_recipe(atom/crafter, datum/component/personal_crafting/unit_test/craft_comp, datum/crafting_recipe/recipe, obj/item/reagent_containers/bottomless_cup, list/tools)
+	var/turf/turf = crafter.loc
 	for(var/req_path in recipe.reqs) //allocate items and reagents
 		var/amount = recipe.reqs[req_path]
 		if(ispath(req_path, /datum/reagent))
@@ -37,8 +38,8 @@
 			var/atom/located = locate(req_path) in allocated
 			if(ispath(req_path, /obj/item/stack))
 				var/obj/item/stack/stack = located
-				if(QDELETED(located) || (located.type in recipe.blacklist) || stack.amount <= amount)
-					new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+				if(QDELETED(located) || (located.type in recipe.blacklist) || stack.amount < amount)
+					allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			else
 				var/list/matches = turf.get_all_contents_type(req_path)
 				for(var/atom/match as anything in matches)
@@ -68,7 +69,7 @@
 			new_tool.tool_behaviour = tooltype
 		tools[tooltype] = new_tool
 
-	var/atom/result = craftsman.construct_item(crafter, recipe)
+	var/atom/result = craft_comp.construct_item(crafter, recipe)
 	if(istext(result)) //construct_item() returned a text string telling us why it failed.
 		TEST_FAIL("[recipe.type] couldn't be crafted during crafting unit test[result].")
 		return
