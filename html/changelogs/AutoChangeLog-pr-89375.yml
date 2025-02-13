@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "Added easier tooling for admins to add or change the AI controllers on mobs"
