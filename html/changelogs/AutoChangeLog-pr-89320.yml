@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed grab offsets not showing for anything but passive grab"
+  - bugfix: "Fix jank with mob offsets when riding things"
+  - refactor: "Refactored riding component, particularly how it selects layer and offsets. Report any oddities"
+  - refactor: "Refactored pixel offsets of mobs. Report any oddities"
