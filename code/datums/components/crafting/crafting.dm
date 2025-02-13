@@ -272,15 +272,15 @@
 	var/turf/craft_turf = get_turf(crafter.loc)
 	if(ispath(recipe.result, /turf))
 		result = craft_turf.place_on_top(recipe.result)
-	if(ispath(recipe.result, /obj/item/stack))
-		result = new recipe.result(craft_turf, recipe.result_amount || 1)
-		result.dir = crafter.dir
+	else if(ispath(recipe.result, /obj/item/stack))
+		//we don't merge the stack right away but try to put it in the hand of the crafter
+		result = new recipe.result(craft_turf, recipe.result_amount || 1, /*merge =*/FALSE)
 	else
 		result = new recipe.result(craft_turf)
-		result.dir = crafter.dir
 		if(result.atom_storage && recipe.delete_contents)
 			for(var/obj/item/thing in result)
 				qdel(thing)
+	result.setDir(crafter.dir)
 	var/datum/reagents/holder = locate() in stuff_to_use
 	if(holder) //transfer reagents from ingredients to result
 		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)

@@ -21,7 +21,7 @@
 		if(recipe.type in blacklisted_recipes)
 			continue
 		//split into a different proc, so if something fails it's both easier to track and doesn't halt the loop.
-		process_recipe(crafter, craft_comp, recipe, bottomless_cup, tools)
+		process_recipe(crafter, craftsman, recipe, bottomless_cup, tools)
 
 	// We have one or two recipes that generate turf (likely from stacks, like snow walls), which shouldn't be carried between tests
 	if(turf.type != old_turf_type)
@@ -70,8 +70,8 @@
 		tools[tooltype] = new_tool
 
 	var/atom/result = craft_comp.construct_item(crafter, recipe)
-	if(istext(result)) //construct_item() returned a text string telling us why it failed.
-		TEST_FAIL("[recipe.type] couldn't be crafted during crafting unit test[result].")
+	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
+		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason"].")
 		return
 	if(isturf(result)) //enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
 		return

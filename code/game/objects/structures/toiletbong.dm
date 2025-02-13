@@ -27,8 +27,8 @@
 		for(var/obj/item/cistern_item in toilet.contents)
 			cistern_item.forceMove(crafter.drop_location())
 			to_chat(crafter, span_warning("[cistern_item] falls out of the toilet!"))
-		dir = toilet.dir
-		loc = toilet.loc
+		setDir(toilet.dir)
+		forceMove(toilet.loc)
 
 	crafter.visible_message(
 		span_notice("[crafter] attaches the flamethrower to the repurposed toilet."),
