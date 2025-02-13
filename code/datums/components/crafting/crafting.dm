@@ -212,7 +212,7 @@
 
 	var/list/missing_component = list()
 	if(!check_contents(crafter, recipe, contents, missing_component))
-		return ", missing component: [missing_component]."
+		return ", missing component: [missing_component[1]]."
 
 	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
