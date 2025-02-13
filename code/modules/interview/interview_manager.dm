@@ -181,7 +181,7 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 		ui.open()
 
 /datum/interview_manager/ui_state(mob/user)
-	return admin_state(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/interview_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())

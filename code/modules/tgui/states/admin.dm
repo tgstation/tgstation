@@ -29,21 +29,3 @@ GLOBAL_PROTECT(admin_states)
 	if(var_name == NAMEOF(src, required_perms))
 		return FALSE
 	return ..()
-
-/**
- * Returns a ui_state that checks to see if the user has specific admin permissions.
- *
- * Arguments:
- * * required_perms: Which admin permission flags to check the user for, such as [R_ADMIN]
- */
-/proc/admin_state(required_perms) as /datum/ui_state/admin_state
-	RETURN_TYPE(/datum/ui_state/admin_state)
-	if(isnull(required_perms))
-		CRASH("Null permissions passed to admin_state, permission flags must be explicitly defined!")
-	// just to make the rest of this slightly easier on the eyes
-	var/list/admin_states = GLOB.admin_states
-	var/perms_key = "[required_perms]"
-
-	if(!isnull(admin_states[perms_key]))
-		return admin_states[perms_key]
-	return admin_states[perms_key] = new /datum/ui_state/admin_state(required_perms)

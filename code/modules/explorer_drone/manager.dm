@@ -11,7 +11,7 @@
 		ui.open()
 
 /datum/adventure_browser/ui_state(mob/user)
-	return admin_state(R_DEBUG)
+	return ADMIN_STATE(R_DEBUG)
 
 /// Handles finishing adventure
 /datum/adventure_browser/proc/resolve_adventure(datum/source,result)
