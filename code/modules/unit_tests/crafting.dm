@@ -12,8 +12,8 @@
 	var/turf/turf = crafter.loc
 	var/datum/component/personal_crafting/unit_test/craftsman = AddComponent(__IMPLIED_TYPE__)
 	var/obj/item/reagent_containers/cup/crafting_blacklist/bottomless_cup = allocate(__IMPLIED_TYPE__)
-	bottomless_beaker.reagents.flags |= NO_REACT
-	bottomless_beaker.reagents.maximum_volume = INFINITY
+	bottomless_cup.reagents.flags |= NO_REACT
+	bottomless_cup.reagents.maximum_volume = INFINITY
 	var/list/tools = list()
 
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
@@ -39,8 +39,8 @@
 
 		for(var/req_path in recipe.chem_catalysts) // allocate catalysts
 			var/amount = recipe.chem_catalysts[req_path]
-			if(!bottomless_beaker.reagents.has_reagent(req_path, amount))
-				bottomless_beaker.reagents.add_reagent(req_path, amount, added_purity = 1)
+			if(!bottomless_cup.reagents.has_reagent(req_path, amount))
+				bottomless_cup.reagents.add_reagent(req_path, amount, added_purity = 1)
 
 		for(var/req_path in recipe.structures + recipe.machinery) //allocate required machinery or structures
 			var/atom/located = locate(req_path) in allocated
