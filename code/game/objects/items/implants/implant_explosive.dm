@@ -39,6 +39,8 @@
 	var/notify_ghosts = TRUE
 	///Do we tell people when they activated it?
 	var/announce_activation = TRUE
+	///The id for the explode timer, if it exists
+	var/explode_timer_id
 
 /obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -75,7 +77,6 @@
 		return FALSE
 	if(announce_activation)
 		to_chat(imp_in, span_notice("You activate your [name]."))
-	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 	//If the delay is shorter or equal to the default delay, just blow up already jeez
@@ -123,6 +124,7 @@
  * Make the implantee beep a few times, keel over and explode. Usually to a devastating effect.
  */
 /obj/item/implant/explosive/proc/timed_explosion()
+	active = TRUE
 	if (isnull(imp_in))
 		visible_message(span_warning("[src] starts beeping ominously!"))
 	else
@@ -140,6 +142,8 @@
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	if(!panic_beep_sound)
 		sleep(delay * 0.25)
+	if(!active)
+		return
 	if(imp_in && !imp_in.stat && !no_paralyze)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
 		imp_in.Paralyze(14 SECONDS)
@@ -147,6 +151,8 @@
 	var/bomb_beeps_until_boom = 3
 	if(!panic_beep_sound)
 		while(bomb_beeps_until_boom > 0)
+			if(!active)
+				return
 			//for extra spice
 			var/beep_volume = 35
 			playsound(loc, 'sound/items/timer.ogg', beep_volume, vary = FALSE)
@@ -155,14 +161,20 @@
 			beep_volume += 5
 		explode()
 	else
-		addtimer(CALLBACK(src, PROC_REF(explode)), delay)
+		explode_timer_id = addtimer(CALLBACK(src, PROC_REF(explode)), delay, TIMER_STOPPABLE | TIMER_UNIQUE)
 		while(delay > 1) //so we dont accidentally enter an infinite sleep
+			if(!active)
+				return
 			var/beep_volume = 35
 			playsound(loc, 'sound/items/timer.ogg', beep_volume, vary = FALSE)
 			sleep(delay * 0.2)
 			delay -= delay * 0.2
 			beep_volume += 5
 
+/obj/item/implant/explosive/proc/cancel_timed_explode()
+	delay = initial(delay)
+	deltimer(explode_timer_id)
+	active = FALSE
 
 ///When called, just explodes
 /obj/item/implant/explosive/proc/explode(atom/override_explode_target = null)
@@ -212,6 +224,26 @@
 
 	if(source.health < source.crit_threshold)
 		INVOKE_ASYNC(src, PROC_REF(activate), "deniability")
+
+/// A microbomb which automatically activates when moving onto the enemy z-level
+/obj/item/implant/explosive/stationhating
+	delay = 10 SECONDS
+	notify_ghosts = FALSE
+	no_paralyze = TRUE
+	panic_beep_sound = TRUE
+	/// Whether this bomb was activated per the automatic detonation sequence
+	var/auto_detonate = FALSE
+
+/obj/item/implant/explosive/stationhating/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!active && SSmapping.level_has_any_trait(new_turf.z, list(ZTRAIT_STATION, ZTRAIT_CENTCOM)))
+		to_chat(imp_in, span_userdanger("You hear a loud voice in your head: \"Warning: Enemy communication frequencies detected. \
+			Leave the area in [delay / 10] seconds or this microbomb implant will automatically detonate.\""))
+		auto_detonate = TRUE
+		timed_explosion()
+	else if(auto_detonate)
+		auto_detonate = FALSE
+		cancel_timed_explode()
 
 /obj/item/implant/explosive/deathmatch
 	name = "deathmatch microbomb implant"

@@ -301,7 +301,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	shoes = /obj/item/clothing/shoes/combat
 
-	implants = list(/obj/item/implant/weapons_auth)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/explosive/stationhating)
 
 /datum/outfit/syndicatespace/post_equip(mob/living/carbon/human/syndie_scum)
 	syndie_scum.faction |= ROLE_SYNDICATE
