@@ -125,6 +125,7 @@
  */
 /obj/item/implant/explosive/proc/timed_explosion()
 	active = TRUE
+	balloon_alert(imp_in, "your implant beeps!")
 	if (isnull(imp_in))
 		visible_message(span_warning("[src] starts beeping ominously!"))
 	else
