@@ -55,7 +55,7 @@
 	worn_icon_state = "sakhno"
 
 	slot_flags = ITEM_SLOT_BACK
-	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_be_sawn_off = TRUE
 	weapon_weight = WEAPON_HEAVY
 	var/jamming_chance = 20
