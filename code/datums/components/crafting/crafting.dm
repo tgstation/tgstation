@@ -47,7 +47,7 @@
  * recipe: The /datum/crafting_recipe being attempted.
  * contents: List of items to search for the recipe's reqs.
  */
-/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/recipe, list/contents, list/missing_component = list())
+/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/recipe, list/contents)
 	var/list/item_instances = contents["instances"]
 	var/list/machines = contents["machinery"]
 	var/list/structures = contents["structures"]
@@ -70,7 +70,6 @@
 				break
 
 		if(needed_amount > 0)
-			missing_component += requirement_path
 			return FALSE
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
@@ -83,35 +82,26 @@
 
 	for(var/requirement_path in recipe.chem_catalysts)
 		if(contents[requirement_path] < recipe.chem_catalysts[requirement_path])
-			missing_component += requirement_path
 			return FALSE
 
 	var/mech_found = FALSE
 	for(var/machinery_path in recipe.machinery)
 		mech_found = FALSE
 		for(var/obj/machinery/machine as anything in machines)
-			if(ispath(machine, machinery_path))//We don't care for volume with machines, just if one is there or not
+			if(ispath(machine, machinery_path))// We only need one machine per key, unlike items
 				mech_found = TRUE
 				break
 		if(!mech_found)
-			missing_component += machinery_path
 			return FALSE
 
-	for(var/required_structure_path in recipe.structures)
-		// Check for the presence of the required structure. Allow for subtypes to be used if not blacklisted
-		var/needed_amount = recipe.structures[required_structure_path]
-		for(var/structure_path in structures)
-			if(!ispath(structure_path, required_structure_path) || recipe.blacklist.Find(structure_path))
-				continue
-
-				needed_amount -= structures[required_structure_path]
-				requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
-				if(needed_amount <= 0)
-					break
-
-		// We didn't find the required item
-		if(needed_amount > 0)
-			missing_component += required_structure_path
+	var/found = FALSE
+	for(var/structure_path in recipe.structures)
+		found = FALSE
+		for(var/obj/structure/structure as anything in structures)
+			if(ispath(structure, structure_path))// We only need one structure per key, unlike items
+				found = TRUE
+				break
+		if(!found)
 			return FALSE
 
 	//Skip extra requirements when unit testing, like, underwater basket weaving? Get the hell out of here
@@ -213,9 +203,8 @@
 	var/send_feedback = 1
 	var/turf/dest_turf = get_turf(crafter)
 
-	var/list/missing_component = list()
-	if(!check_contents(crafter, recipe, contents, missing_component))
-		return ", missing component: [missing_component[1]]."
+	if(!check_contents(crafter, recipe, contents))
+		return ", missing component."
 
 	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
@@ -263,14 +252,13 @@
 			return ", must be made on a tram!"
 
 	//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-	if(ismob(crafter))
-		if(!do_after(crafter, recipe.time, target = crafter))
-			return "."
-		contents = get_surroundings(crafter, recipe.blacklist)
-		if(!check_contents(crafter, recipe, contents))
-			return ", missing component."
-		if(!check_tools(crafter, recipe, contents))
-			return ", missing tool."
+	if(ismob(crafter) && !do_after(crafter, recipe.time, target = crafter))
+		return "."
+	contents = get_surroundings(crafter, recipe.blacklist)
+	if(!check_contents(crafter, recipe, contents))
+		return ", missing component."
+	if(!check_tools(crafter, recipe, contents))
+		return ", missing tool."
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
