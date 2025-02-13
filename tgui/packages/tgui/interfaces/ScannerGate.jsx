@@ -1,4 +1,10 @@
-import { Box, Button, LabeledList, Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  LabeledList,
+  Section,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -82,7 +88,7 @@ const ScannerGateControl = (props) => {
         scan_mode !== 'Off' && (
           <Button
             icon="arrow-left"
-            content="back"
+            content="Back"
             onClick={() => act('set_mode', { new_mode: 'Off' })}
           />
         )
@@ -95,33 +101,21 @@ const ScannerGateControl = (props) => {
 
 const ScannerGateOff = (props) => {
   const { act, data } = useBackend();
+  const { available_modes } = data;
+  const dropdownOptions = available_modes.filter(
+    (scan_mode) => scan_mode !== 'Off',
+  );
   return (
     <>
       <Box mb={2}>Select a scanning mode below.</Box>
       <Box>
-        <Button
-          content="Wanted"
-          onClick={() => act('set_mode', { new_mode: 'Wanted' })}
-        />
-        <Button
-          content="Guns"
-          onClick={() => act('set_mode', { new_mode: 'Guns' })}
-        />
-        <Button
-          content="Mindshield"
-          onClick={() => act('set_mode', { new_mode: 'Mindshield' })}
-        />
-        <Button
-          content="Disease"
-          onClick={() => act('set_mode', { new_mode: 'Disease' })}
-        />
-        <Button
-          content="Species"
-          onClick={() => act('set_mode', { new_mode: 'Species' })}
-        />
-        <Button
-          content="Nutrition"
-          onClick={() => act('set_mode', { new_mode: 'Nutrition' })}
+        <Dropdown
+          placeholder="Select the mode..."
+          options={dropdownOptions}
+          width="50%"
+          onSelected={(selected_mode) => {
+            act('set_mode', { new_mode: selected_mode });
+          }}
         />
       </Box>
     </>
