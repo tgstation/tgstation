@@ -70,7 +70,7 @@
 				break
 
 		if(needed_amount > 0)
-			missing_component += reqs
+			missing_component += requirement_path
 			return FALSE
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
