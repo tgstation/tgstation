@@ -37,10 +37,9 @@
 	)
 	category = CAT_ENTERTAINMENT
 
-/datum/crafting_recipe/ZorpPlush
+/datum/crafting_recipe/wet_owl_plush
 	name = "Wet owl plush"
-	tool_behaviors = list(TOOL_SCREWDRIVER,TOOL_WIRECUTTER)
-	result = /obj/item/toy/plush/Zorp
+	result = /obj/item/toy/plush/wet_owl
 	time = 4 SECONDS
 	reqs = list(
 		/datum/reagent/water = 100,
@@ -51,13 +50,13 @@
 	)
 	category = CAT_ENTERTAINMENT
 
-/datum/crafting_recipe/EvilZorpPlush
+/datum/crafting_recipe/evil_wet_owlPlush
 	name = "Evil wet owl plush"
-	result = /obj/item/toy/plush/EvilZorp
+	result = /obj/item/toy/plush/evil_wet_owl
 	time = 1 SECONDS
 	reqs = list(
 		/datum/reagent/fuel/unholywater = 100,
-		/obj/item/toy/plush/Zorp = 1,
+		/obj/item/toy/plush/wet_owl = 1,
 	)
 	category = CAT_ENTERTAINMENT
 

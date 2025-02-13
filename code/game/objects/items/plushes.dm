@@ -801,45 +801,45 @@
 	attack_verb_continuous = list("donks")
 	attack_verb_simple = list("donk")
 
-/obj/item/toy/plush/Zorp //It's supposed to be a wet owl, but I call it Zorp
+/obj/item/toy/plush/wet_owl
 	name = "Wet owl plush"
 	desc = "This plush has seen some shit."
 	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
-	icon_state = "zorp_plushie"
-	inhand_icon_state = "zorp_plushie"
+	icon_state = "wet_owl_plushie"
+	inhand_icon_state = "wet_owl_plushie"
 	attack_verb_continuous = list("hoo", "who-who", "toot")
 	attack_verb_simple = list("hoo", "who-who", "toot")
-///Used to track how many people killed themselves with /obj/item/toy/plush/Zorp (Honestly stolen from a moth toy)
+///Used to track how many people killed themselves with /obj/item/toy/plush/wet_owl (Honestly stolen from a moth toy)
 	var/suicide_count = 0
 
 
 
-/obj/item/toy/plush/Zorp/suicide_act(mob/living/user)
+/obj/item/toy/plush/wet_owl/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/effects/hallucinations/wail.ogg', 50, TRUE, -1)
 	suicide_count++
 	if(suicide_count < 3)
 		desc = "A plushie depicting an unsettling wet owl. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
 	else
-		new /obj/item/toy/plush/EvilZorp(get_turf(user))
+		new /obj/item/toy/plush/evil_wet_owl(get_turf(user))
 		qdel(src)
 	return MANUAL_SUICIDE
 
 
-/obj/item/toy/plush/EvilZorp
+/obj/item/toy/plush/evil_wet_owl
 	name = "Evil wet owl plush"
 	desc = "Plush is an owl who has seen some shit. She's very evil about it."
 	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
-	icon_state = "evilzorp_plushie"
-	inhand_icon_state = "evilzorp_plushie"
+	icon_state = "evil_wet_owl_plushie"
+	inhand_icon_state = "evil_wet_owl_plushie"
 	attack_verb_continuous = list("hoot-hoot", "who-whoa", "shriek")
 	attack_verb_simple = list("hoot-hoot", "who-whoa", "shriek")
-	squeak_override = list('sound/effects/zorp_horror.ogg' = 1)
+	squeak_override = list('sound/effects/wet_owl_horror.ogg' = 1)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 
-/obj/item/toy/plush/EvilZorp/attack_self(mob/living/user)
+/obj/item/toy/plush/evil_wet_owl/attack_self(mob/living/user)
 	. = ..()
 	to_chat(user, span_danger("You're cursed by a wet owl"))
 	var/stunner = 1.25 SECONDS
