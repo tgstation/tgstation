@@ -83,6 +83,7 @@
 
 	for(var/requirement_path in recipe.chem_catalysts)
 		if(contents[requirement_path] < recipe.chem_catalysts[requirement_path])
+			missing_component += requirement_path
 			return FALSE
 
 	var/mech_found = FALSE
@@ -93,6 +94,7 @@
 				mech_found = TRUE
 				break
 		if(!mech_found)
+			missing_component += machinery_path
 			return FALSE
 
 	for(var/required_structure_path in recipe.structures)
@@ -109,6 +111,7 @@
 
 		// We didn't find the required item
 		if(needed_amount > 0)
+			missing_component += required_structure_path
 			return FALSE
 
 	//Skip extra requirements when unit testing, like, underwater basket weaving? Get the hell out of here
