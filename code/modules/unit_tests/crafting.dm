@@ -6,7 +6,7 @@
 /datum/unit_test/crafting
 
 /datum/unit_test/crafting/Run()
-	var/static/list/ignored_recipes = list()
+	var/static/list/blacklisted_recipes = list()
 
 	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
 	var/turf/turf = crafter.loc
@@ -17,6 +17,8 @@
 	var/list/tools = list()
 
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
+		if(recipe.type in blacklisted_recipes)
+			continue
 		for(var/req_path in recipe.reqs) //allocate items and reagents
 			var/amount = recipe.reqs[req_path]
 			if(ispath(req_path, /datum/reagent))
@@ -61,6 +63,20 @@
 		if(istext(result)) //construct_item() returned a text string telling us why it failed.
 			TEST_FAIL("[recipe.type] couldn't be crafted during crafting unit test[result].")
 			continue
+		var/atom/copycat = allocate(result.type)
+		if(result.custom_materials != copycat.custom_materials) // SSmaterials caches the combinations so we don't have to run more complex checks.
+			var/warning = "custom_materials of [result.type] when crafted and spawned don't match."
+			var/what_it_should_be = "null"
+			if(result.custom_materials) //compose a text string containing the syntax and paths to use for editing the custom_materials var
+				what_it_should_be = "list("
+				var/index = 1
+				var/mats_len = length(result.custom_materials)
+				for(var/datum/material/mat as anything in result.custom_materials)
+					what_it_should_be += "[mat.type] = [result.custom_materials[mat]]"
+					if(index < length(mats_len))
+						what_it_should_be += ", "
+				what_it_should_be += ")"
+			TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or blacklist [recipe.type] in the unit test")
 
 ///Unit test only path, blacklisted from all recipes
 /obj/item/reagent_containers/cup/crafting_blacklist

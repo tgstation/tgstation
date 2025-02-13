@@ -365,11 +365,14 @@
 				while(amount > 0)
 					origin_stack = locate(path_key) in surroundings
 					if(!tally_stack)
-						tally_stack = new origin_stack.merge_type (get_turf(atom), /*new_amount =*/ 0, /*merge =*/ FALSE)
+						tally_stack = new origin_stack.merge_type (null, /*new_amount =*/ 1, /*merge =*/ FALSE)
+						amount -= 1
 						return_list += tally_stack
 					var/amount_to_give = min(origin_stack.amount, amount)
 					origin_stack.use(amount_to_give)
-					tally_stack.add(amount_to_give)
+					if(amount_to_give) // spawning tally_stack already consumes one unit so this isn't needed for a lot of recipes
+						tally_stack.add(amount_to_give)
+						amount -= amount_to_give
 					surroundings -= origin_stack
 				if(!recipe.requirements_mats_blacklist?[path_key])
 					for(var/material in tally_stack.custom_materials)
