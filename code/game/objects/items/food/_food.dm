@@ -74,7 +74,7 @@
 	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 
 /obj/item/food/finalize_material_effects(list/materials)
-	if(!HAS_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER)) //ingredients holder handle prefixes and colors differently
+	if(!HAS_TRAIT(src, TRAIT_INGREDIENTS_HOLDER)) //ingredients holder handle prefixes and colors differently
 		var/datum/material/main_material = materials[1] //The list is sorted based on composition so the first of the list is the main mat
 		if(!is_type_in_typecache(main_material, normally_found_materials))
 			material_flags |= MATERIAL_ADD_PREFIX|MATERIAL_COLOR
@@ -82,7 +82,7 @@
 
 /obj/item/food/finalize_remove_material_effects(list/materials)
 	. = ..()
-	if(!HAS_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER))
+	if(!HAS_TRAIT(src, TRAIT_INGREDIENTS_HOLDER))
 		material_flags &= ~(MATERIAL_ADD_PREFIX|MATERIAL_COLOR)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
