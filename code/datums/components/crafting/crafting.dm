@@ -47,7 +47,7 @@
  * recipe: The /datum/crafting_recipe being attempted.
  * contents: List of items to search for the recipe's reqs.
  */
-/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/recipe, list/contents)
+/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/recipe, list/contents, list/missing_component = list())
 	var/list/item_instances = contents["instances"]
 	var/list/machines = contents["machinery"]
 	var/list/structures = contents["structures"]
@@ -70,6 +70,7 @@
 				break
 
 		if(needed_amount > 0)
+			missing_component += reqs
 			return FALSE
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
@@ -209,8 +210,9 @@
 	var/send_feedback = 1
 	var/turf/dest_turf = get_turf(crafter)
 
-	if(!check_contents(crafter, recipe, contents))
-		return ", missing component."
+	var/list/missing_component = list()
+	if(!check_contents(crafter, recipe, contents, missing_component))
+		return ", missing component: [missing_component]."
 
 	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
@@ -258,13 +260,14 @@
 			return ", must be made on a tram!"
 
 	//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-	if(ismob(crafter) && !do_after(crafter, recipe.time, target = crafter))
-		return "."
-	contents = get_surroundings(crafter, recipe.blacklist)
-	if(!check_contents(crafter, recipe, contents))
-		return ", missing component."
-	if(!check_tools(crafter, recipe, contents))
-		return ", missing tool."
+	if(ismob(crafter))
+		if(!do_after(crafter, recipe.time, target = crafter))
+			return "."
+		contents = get_surroundings(crafter, recipe.blacklist)
+		if(!check_contents(crafter, recipe, contents))
+			return ", missing component."
+		if(!check_tools(crafter, recipe, contents))
+			return ", missing tool."
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
