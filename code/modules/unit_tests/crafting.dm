@@ -21,7 +21,7 @@
 		if(recipe.type in blacklisted_recipes)
 			continue
 		//split into a different proc, so if something fails it's both easier to track and doesn't halt the loop.
-		process_recipe(crafter, craftsman, recipe, bottomless_cup, tools)
+		process_recipe(crafter, craft_comp, recipe, bottomless_cup, tools)
 
 	// We have one or two recipes that generate turf (likely from stacks, like snow walls), which shouldn't be carried between tests
 	if(turf.type != old_turf_type)
