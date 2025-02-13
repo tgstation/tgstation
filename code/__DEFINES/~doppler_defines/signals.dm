@@ -19,3 +19,6 @@
 #define COMSIG_PRE_BATON_FINALIZE_ATTACK "pre_baton_finalize_attack"
 // For after a user has sent a say message
 #define COMSIG_MOB_POST_SAY "mob_post_say"
+
+/// For modifying a mob holder based on what it's holding
+#define COMSIG_ADDING_MOB_HOLDER_SPECIALS "adding_mob_holder_specials"
