@@ -294,7 +294,7 @@
 	if(length(total_materials))
 		result.set_custom_materials(total_materials)
 	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
-		if(isturf(result) || component.loc != result)
+		if(component.loc != result || isturf(result))
 			qdel(component)
 	if(send_feedback)
 		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)

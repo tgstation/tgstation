@@ -53,7 +53,7 @@
 
 		//it's a stack
 		if(ispath(req_path, /obj/item/stack))
-			var/obj/item/stack/stack = locate(req_path) in allocated
+			var/obj/item/stack/stack = locate(req_path) in turf
 			if(QDELETED(stack) || (stack.type in recipe.blacklist) || stack.amount < amount)
 				allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
@@ -71,16 +71,16 @@
 		if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 			bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
 
-	for(var/req_path in recipe.structures + recipe.machinery) //allocate required machinery or structures
-		var/atom/located = locate(req_path) in allocated
+	for(var/req_path in list_clear_nulls(recipe.structures + recipe.machinery)) //allocate required machinery or structures
+		var/atom/located = locate(req_path) in turf
 		if(QDELETED(located))
 			allocate(req_path)
 
-	for(var/tooltype in (recipe.tool_behaviors + recipe.tool_paths))
+	for(var/tooltype in list_clear_nulls(recipe.tool_behaviors + recipe.tool_paths))
 		var/atom/tool = tools[tooltype]
-		if(!QDELETED(tool))
+		if(!QDELETED(tool) && tool.loc == turf)
 			continue
-		var/is_behaviour = !ispath(tooltype)
+		var/is_behaviour = istext(tooltype)
 		var/obj/item/new_tool = allocate(is_behaviour ? /obj/item : tooltype)
 		if(is_behaviour)
 			new_tool.tool_behaviour = tooltype
