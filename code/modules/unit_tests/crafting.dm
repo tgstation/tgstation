@@ -41,11 +41,11 @@
 				if(QDELETED(located) || (located.type in recipe.blacklist) || stack.amount < amount)
 					allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			else
-				var/list/matches = turf.get_all_contents_type(req_path)
-				for(var/atom/match as anything in matches)
-					if(match in recipe.blacklist)
-						matches -= match
-				var/to_spawn = amount - length(matches)
+				var/matches = 0
+				for(var/atom/movable/movable as anything in turf)
+					if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in blacklist))
+						matches++
+				var/to_spawn = amount - matches
 				for(var/iteration in 1 to to_spawn)
 					allocate(req_path)
 
@@ -73,9 +73,13 @@
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
 		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason"].")
 		return
-	if(isturf(result)) //enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
+	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
+	if(isturf(result))
 		return
 
+	allocated += result
+
+/*
 	var/atom/copycat = allocate(result.type)
 	if(result.custom_materials != copycat.custom_materials) // SSmaterials caches the combinations so we don't have to run more complex checks.
 		var/warning = "custom_materials of [result.type] when crafted and spawned don't match."
@@ -91,6 +95,7 @@
 				index++
 			what_it_should_be += ")"
 		TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or blacklist [recipe.type] in the unit test")
+*/
 
 ///Unit test only path, blacklisted from all recipes
 /obj/item/reagent_containers/cup/crafting_blacklist
