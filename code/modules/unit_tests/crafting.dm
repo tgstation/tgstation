@@ -24,43 +24,52 @@
 		if(QDELETED(bottomless_cup) || bottomless_cup.loc != turf) //The cup itself was used in a recipe, rather than its contents.
 			bottomless_cup = allocate_bottomless_cup()
 
-	// We have one or two recipes that generate turf (likely from stacks, like snow walls), which shouldn't be carried between tests
+	// We have one or two recipes that generate turf (from stacks, like snow walls), which shouldn't be carried between tests
 	if(turf.type != old_turf_type)
 		turf.ChangeTurf(old_turf_type)
 
 ///Allocate a reagent container with infinite capacity and no reaction to use in crafting
 /datum/unit_test/crafting/proc/allocate_bottomless_cup()
 	var/obj/item/reagent_containers/cup/bottomless_cup = (__IMPLIED_TYPE__)
-	bottomless_cup.reagents.flags |= NO_REACT
+	bottomless_cup.reagents.flags |= NO_REACT|DRAINABLE
 	bottomless_cup.reagents.maximum_volume = INFINITY
 	return bottomless_cup
 
-/datum/unit_test/crafting/proc/process_recipe(atom/crafter, datum/component/personal_crafting/unit_test/craft_comp, datum/crafting_recipe/recipe, obj/item/reagent_containers/bottomless_cup, list/tools)
+/datum/unit_test/crafting/proc/process_recipe(
+	atom/crafter,
+	datum/component/personal_crafting/unit_test/craft_comp,
+	datum/crafting_recipe/recipe,
+	obj/item/reagent_containers/bottomless_cup,
+	list/tools
+)
 	var/turf/turf = crafter.loc
 	for(var/req_path in recipe.reqs) //allocate items and reagents
 		var/amount = recipe.reqs[req_path]
-		if(ispath(req_path, /datum/reagent))
+
+		if(ispath(req_path, /datum/reagent)) //it's a reagent
 			if(!bottomless_cup.reagents.has_reagent(req_path, amount))
-				bottomless_cup.reagents.add_reagent(req_path, amount, added_purity = 1)
-		else
-			var/atom/located = locate(req_path) in allocated
-			if(ispath(req_path, /obj/item/stack))
-				var/obj/item/stack/stack = located
-				if(QDELETED(located) || (located.type in recipe.blacklist) || stack.amount < amount)
-					allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
-			else
-				var/matches = 0
-				for(var/atom/movable/movable as anything in turf)
-					if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in recipe.blacklist))
-						matches++
-				var/to_spawn = amount - matches
-				for(var/iteration in 1 to to_spawn)
-					allocate(req_path)
+				bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
+			continue
+
+		//it's a stack
+		if(ispath(req_path, /obj/item/stack))
+			var/obj/item/stack/stack = locate(req_path) in allocated
+			if(QDELETED(located) || (located.type in recipe.blacklist) || stack.amount < amount)
+				allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+			continue
+		//it's any other item
+		var/matches = 0
+		for(var/atom/movable/movable as anything in turf)
+			if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in recipe.blacklist))
+				matches++
+		var/to_spawn = amount - matches
+		for(var/iteration in 1 to to_spawn)
+			allocate(req_path)
 
 	for(var/req_path in recipe.chem_catalysts) // allocate catalysts
 		var/amount = recipe.chem_catalysts[req_path]
 		if(!bottomless_cup.reagents.has_reagent(req_path, amount))
-			bottomless_cup.reagents.add_reagent(req_path, amount, added_purity = 1)
+			bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
 
 	for(var/req_path in recipe.structures + recipe.machinery) //allocate required machinery or structures
 		var/atom/located = locate(req_path) in allocated
@@ -79,7 +88,7 @@
 
 	var/atom/result = craft_comp.construct_item(crafter, recipe)
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
-		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason"].")
+		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason!"]")
 		return
 	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
 	if(isturf(result))
