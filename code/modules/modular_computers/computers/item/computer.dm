@@ -103,7 +103,7 @@
 	///If hit by a Clown virus, remaining honks left until it stops.
 	var/honkvirus_amount = 0
 	///Whether the PDA can still use NTNet while out of NTNet's reach.
-	var/long_ranged = FALSE
+	var/long_ranged = TRUE //DOPPLER EDIT CHANGE - Free wifi anywhere you go!
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
 
