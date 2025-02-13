@@ -234,4 +234,4 @@
 
 /// Orders incoming custom materials by their composition in get_material_effects_list)
 /proc/cmp_mat_composition(list/a, list/b)
-	return cmp_numeric_dsc(a[MATERIAL_LIST_OPTIMAL_AMOUNT], b[MATERIAL_LIST_OPTIMAL_AMOUNT]
+	return cmp_numeric_dsc(a[MATERIAL_LIST_OPTIMAL_AMOUNT], b[MATERIAL_LIST_OPTIMAL_AMOUNT])
