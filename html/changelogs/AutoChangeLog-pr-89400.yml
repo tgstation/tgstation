@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Chef's love and french kissing no longer can stop laser projectiles of syndiekissers."
+  - code_imp: "Unified two parts of kiss code."
