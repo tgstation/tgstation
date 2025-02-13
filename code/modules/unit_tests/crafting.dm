@@ -71,12 +71,16 @@
 		if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 			bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
 
-	for(var/req_path in list_clear_nulls(recipe.structures + recipe.machinery)) //allocate required machinery or structures
+	var/list/bulky_objects = recipe.structures + recipe.machinery
+	list_clear_nulls(bulky_objects)
+	for(var/req_path in bulky_objects) //allocate required machinery or structures
 		var/atom/located = locate(req_path) in turf
 		if(QDELETED(located))
 			allocate(req_path)
 
-	for(var/tooltype in list_clear_nulls(recipe.tool_behaviors + recipe.tool_paths))
+	var/list/needed_tools = recipe.tool_behaviors + recipe.tool_paths
+	list_clear_nulls(needed_tools)
+	for(var/tooltype in needed_tools)
 		var/atom/tool = tools[tooltype]
 		if(!QDELETED(tool) && tool.loc == turf)
 			continue
