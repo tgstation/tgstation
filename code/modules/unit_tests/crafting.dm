@@ -43,7 +43,7 @@
 			else
 				var/matches = 0
 				for(var/atom/movable/movable as anything in turf)
-					if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in blacklist))
+					if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in recipe.blacklist))
 						matches++
 				var/to_spawn = amount - matches
 				for(var/iteration in 1 to to_spawn)
