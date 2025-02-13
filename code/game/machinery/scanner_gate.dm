@@ -53,7 +53,7 @@
 	)
 	/// Overlay object we're using for scanlines
 	var/obj/effect/overlay/scanline = null
-	/// List of scanner modes this gate can be set to
+	/// List of modes this gate can be set to
 	var/list/available_scan_modes = list(
 		SCANGATE_NONE,
 		SCANGATE_MINDSHIELD,
