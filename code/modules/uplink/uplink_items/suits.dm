@@ -77,7 +77,7 @@
 	item = /obj/item/mod/control/pre_equipped/traitor_elite
 	// This one costs more than the nuke op counterpart
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
-	progression_minimum = 90 MINUTES
+	progression_minimum = 60 MINUTES
 	cost = 16
 	cant_discount = TRUE
 
