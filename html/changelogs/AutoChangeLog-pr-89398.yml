@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - admin: "Check antagonists & del/law/dna/fingerprint/radio log panels use browsers which means they have darkmode. Also the tram panel will cancel out if you click cancel."

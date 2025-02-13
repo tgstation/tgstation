@@ -182,3 +182,28 @@
       now display correctly.
   grungussuss:
   - sound: new sounds for cloth items
+2025-02-13:
+  Jacquerel:
+  - admin: Added easier tooling for admins to add or change the AI controllers on
+      mobs
+  JohnFulpWillard:
+  - admin: Reload Configuration can be cancelled via the alert it gives you.
+  - admin: Check antagonists & del/law/dna/fingerprint/radio log panels use browsers
+      which means they have darkmode. Also the tram panel will cancel out if you click
+      cancel.
+  Melbert:
+  - bugfix: Fixed grab offsets not showing for anything but passive grab
+  - bugfix: Fix jank with mob offsets when riding things
+  - refactor: Refactored riding component, particularly how it selects layer and offsets.
+      Report any oddities
+  - refactor: Refactored pixel offsets of mobs. Report any oddities
+  RusselNotSCP:
+  - qol: Andromeda Bitters bottle now only dispenses in 1-5u increments
+  SmArtKar:
+  - admin: Admins can now make vendors free without too much hassle
+  - bugfix: Fixed duplicated comsigs/text and HARS head deletion from prosthetic replacement
+  - bugfix: Barroaches no longer disappear when worn on your head
+  - image: Barroaches now have new worn sprites
+  - bugfix: Fixed perceptomatrix not applying any of its traits
+  TiviPlus:
+  - code_imp: deleted all remaining code referencing TGS3

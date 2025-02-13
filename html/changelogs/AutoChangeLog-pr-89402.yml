@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Barroaches no longer disappear when worn on your head"
-  - image: "Barroaches now have new worn sprites"
