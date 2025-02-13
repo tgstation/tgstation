@@ -54,7 +54,7 @@
 		//it's a stack
 		if(ispath(req_path, /obj/item/stack))
 			var/obj/item/stack/stack = locate(req_path) in allocated
-			if(QDELETED(located) || (located.type in recipe.blacklist) || stack.amount < amount)
+			if(QDELETED(stack) || (stack.type in recipe.blacklist) || stack.amount < amount)
 				allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 		//it's any other item
