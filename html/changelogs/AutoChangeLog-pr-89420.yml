@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - admin: "Admins can now make vendors free without too much hassle"
