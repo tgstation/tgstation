@@ -6650,6 +6650,7 @@
 #include "modular_doppler\bitrunning_extras\code\supply_packs\starter_kit.dm"
 #include "modular_doppler\bitrunning_prefs_disks\code\disks\prefs_disk.dm"
 #include "modular_doppler\bitrunning_prefs_disks\code\outfit_overrides\bitrunner_outfit_override.dm"
+#include "modular_doppler\carp_infusion\code\carp_knife.dm"
 #include "modular_doppler\carp_infusion\code\carp_organs.dm"
 #include "modular_doppler\cell_component\code\cell_component.dm"
 #include "modular_doppler\chatroom_soul\code\chatroom_keybinding.dm"
