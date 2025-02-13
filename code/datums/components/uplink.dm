@@ -66,8 +66,6 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(new_message))
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, PROC_REF(pen_rotation))
-	else if(istype(parent, /obj/item/uplink/replacement))
-		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(on_heard))
 
 	if(owner)
 		src.owner = owner
@@ -88,7 +86,6 @@
 	else
 		uplink_handler = uplink_handler_override
 	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, PROC_REF(handle_uplink_handler_update))
-	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED, PROC_REF(handle_uplink_replaced))
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -98,19 +95,6 @@
 /datum/component/uplink/proc/handle_uplink_handler_update()
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
-
-/// When a new uplink is made via the syndicate beacon it locks all lockable uplinks and destroys replacement uplinks
-/datum/component/uplink/proc/handle_uplink_replaced()
-	SIGNAL_HANDLER
-	if(lockable)
-		lock_uplink()
-	if(!istype(parent, /obj/item/uplink/replacement))
-		return
-	var/obj/item/uplink_item = parent
-	do_sparks(number = 3, cardinal_only = FALSE, source = uplink_item)
-	uplink_item.visible_message(span_warning("The [uplink_item] suddenly combusts!"), vision_distance = COMBAT_MESSAGE_RANGE)
-	new /obj/effect/decal/cleanable/ash(get_turf(uplink_item))
-	qdel(uplink_item)
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
@@ -431,17 +415,6 @@
 		return generate_code()
 
 	return returnable_code
-
-/// Proc that unlocks a locked replacement uplink when it hears the unlock code from their datum
-/datum/component/uplink/proc/on_heard(datum/source, list/hearing_args)
-	SIGNAL_HANDLER
-	if(!locked)
-		return
-	if(!findtext(hearing_args[HEARING_RAW_MESSAGE], unlock_code))
-		return
-	var/atom/replacement_uplink = parent
-	locked = FALSE
-	replacement_uplink.balloon_alert_to_viewers("beep", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /datum/component/uplink/proc/failsafe(atom/source)
 	if(!parent)

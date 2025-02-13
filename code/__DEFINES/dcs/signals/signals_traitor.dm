@@ -1,7 +1,5 @@
 /// Called whenever the uplink handler receives any sort of update. Used by uplinks to update their UI. No arguments passed
 #define COMSIG_UPLINK_HANDLER_ON_UPDATE "uplink_handler_on_update"
-/// Sent from the uplink handler when the traitor uses the syndicate uplink beacon to order a replacement uplink.
-#define COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED "uplink_handler_replacement_ordered"
 
 /// Called when a device a traitor has planted effects someone's mood. Pass the mind of the viewer.
 #define COMSIG_DEMORALISING_EVENT "traitor_demoralise_event"
