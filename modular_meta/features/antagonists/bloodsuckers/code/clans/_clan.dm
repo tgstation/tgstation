@@ -85,7 +85,7 @@
 	if(isnull(clan_objective))
 		return
 	clan_objective = new clan_objective()
-	clan_objective.objective_name = "Цель Клана"
+	clan_objective.objective_name = "Clan Objective"
 	clan_objective.owner = bloodsuckerdatum.owner
 	bloodsuckerdatum.objectives += clan_objective
 	bloodsuckerdatum.owner.announce_objectives()
@@ -153,31 +153,31 @@
 			options[initial(power.name)] = power
 
 	if(options.len < 1)
-		to_chat(bloodsuckerdatum.owner.current, span_notice("К ночи ты стареешь!"))
+		to_chat(bloodsuckerdatum.owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.
-		var/choice = tgui_input_list(bloodsuckerdatum.owner.current, "У вас есть возможность стать еще древнее. Выберите силу, чтобы повысить свой ранг.", "Ваша кровь сгущается...", options)
+		var/choice = tgui_input_list(bloodsuckerdatum.owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...", options)
 		// Prevent Bloodsuckers from closing/reopning their coffin to spam Levels.
 		if(cost_rank && bloodsuckerdatum.bloodsucker_level_unspent <= 0)
 			return
 		// Did you choose a power?
 		if(!choice || !options[choice])
-			to_chat(bloodsuckerdatum.owner.current, span_notice("Вы предотвращаете сгущение крови, но можете попробовать еще раз позже."))
+			to_chat(bloodsuckerdatum.owner.current, span_notice("You prevent your blood from thickening just yet, but you may try again later."))
 			return
 		// Prevent Bloodsuckers from closing/reopning their coffin to spam Levels.
 		if(locate(options[choice]) in bloodsuckerdatum.powers)
-			to_chat(bloodsuckerdatum.owner.current, span_notice("Вы предотвращаете сгущение крови, но можете попробовать еще раз позже."))
+			to_chat(bloodsuckerdatum.owner.current, span_notice("You prevent your blood from thickening just yet, but you may try again later."))
 			return
 		// Prevent Bloodsuckers from purchasing a power while outside of their Coffin.
 		if(!istype(bloodsuckerdatum.owner.current.loc, /obj/structure/closet/crate/coffin))
-			to_chat(bloodsuckerdatum.owner.current, span_warning("Ты должен быть в Гробу чтобы приобрести способности."))
+			to_chat(bloodsuckerdatum.owner.current, span_warning("You must be in your Coffin to purchase Powers."))
 			return
 
 		// Good to go - Buy Power!
 		var/datum/action/cooldown/bloodsucker/purchased_power = options[choice]
 		bloodsuckerdatum.BuyPower(new purchased_power)
-		bloodsuckerdatum.owner.current.balloon_alert(bloodsuckerdatum.owner.current, "Изучена способность [choice]!")
-		to_chat(bloodsuckerdatum.owner.current, span_notice("Вы уже изучили [choice]!"))
+		bloodsuckerdatum.owner.current.balloon_alert(bloodsuckerdatum.owner.current, "learned [choice]!")
+		to_chat(bloodsuckerdatum.owner.current, span_notice("You have learned how to use [choice]!"))
 
 	finalize_spend_rank(bloodsuckerdatum, cost_rank, blood_cost)
 
@@ -208,9 +208,9 @@
 		bloodsuckerdatum.SelectReputation(am_fledgling = FALSE, forced = TRUE)
 
 
-	to_chat(bloodsuckerdatum.owner.current, span_notice("На данный момент ваш ранг [bloodsuckerdatum.bloodsucker_level] Кровососа. \
-		Ваша сила, здоровье, питание, регенерация, и максимальное количество крови, всё это увеличено! \n\
-		* Ваши существующие способности были улучшены на ранг!"))
+	to_chat(bloodsuckerdatum.owner.current, span_notice("You are now a rank [bloodsuckerdatum.bloodsucker_level] Bloodsucker. \
+		Your strength, health, feed rate, regen rate, and maximum blood capacity have all increased! \n\
+		* Your existing powers have all ranked up as well!"))
 	bloodsuckerdatum.owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, TRUE, pressure_affected = FALSE)
 	bloodsuckerdatum.update_hud()
 
@@ -229,10 +229,10 @@
 	var/datum/mind/vassal_mind = vassaldatum.owner
 	var/datum/objective/source_objective = source.my_clan?.clan_objective
 	if(vassaldatum.special_type)
-		to_chat(bloodsuckerdatum.owner.current, span_notice("Этому вассалу уже была отведена особая должность."))
+		to_chat(bloodsuckerdatum.owner.current, span_notice("This Vassal was already assigned a special position."))
 		return FALSE
 	if(!vassaldatum.owner.can_make_special(creator = bloodsuckerdatum.owner))
-		to_chat(bloodsuckerdatum.owner.current, span_notice("Этот вассал не может получить особый ранг из-за врожденных особенностей."))
+		to_chat(bloodsuckerdatum.owner.current, span_notice("This Vassal is unable to gain a special rank due to innate features."))
 		return FALSE
 	if(istype(source_objective, /datum/objective/brujah_clan_objective) && (source_objective.target == vassal_mind))
 		var/datum/objective/brujah_clan_objective/brujah_objective = source_objective
@@ -241,7 +241,7 @@
 
 		vassaldatum.make_special(/datum/antagonist/vassal/discordant)
 		brujah_objective.target_subverted = TRUE
-		to_chat(source.owner, span_notice("Вы обратили [vassal_mind.current.name] в несогласного вассала."))
+		to_chat(source.owner, span_notice("You have turned [vassal_mind.current.name] into a Discordant Vassal."))
 		playsound(get_turf(vassal_mind.current), 'sound/effects/rock/rocktap3.ogg', 75)
 		vassaldatum.owner.announce_objectives()
 		return TRUE
@@ -263,7 +263,7 @@
 	if(!options.len)
 		return
 
-	to_chat(bloodsuckerdatum.owner.current, span_notice("Вы можете изменить какое значение имеет вассал, кто он для вас?"))
+	to_chat(bloodsuckerdatum.owner.current, span_notice("You can change who this Vassal is, who are they to you?"))
 	var/vassal_response = show_radial_menu(bloodsuckerdatum.owner.current, vassaldatum.owner.current, radial_display)
 	if(!vassal_response)
 		return
