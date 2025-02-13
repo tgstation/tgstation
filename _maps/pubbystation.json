@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"map_name": "Pubby Station",
+	"map_path": "map_files/Pubbystation",
+	"map_file": "pubbystation.dmm",
+	"shuttles": {
+		"emergency": "emergency_delta",
+		"ferry": "ferry_fancy",
+		"cargo": "cargo_pubby"
+	}
+}
