@@ -284,19 +284,18 @@
 		if ("set_radius")
 			if (active)
 				return
-			var/new_radius = text2num(params["new_radius"])
+			var/change_radius = max(1,(text2num(params["new_radius"])))
+			if(change_radius >= 10)
+				radius = round(change_radius)//if its over 10 we don't allow decimals
+				return
+			radius = change_radius
 
-			if(isnum(new_radius) && new_radius != radius)
-				if(new_radius >= 10)
-					new_radius = round(new_radius) //if its over 10 we don't allow decimals
-				radius = clamp(new_radius, 1, max_radius)
-				. = TRUE
 		if ("toggle_shields")
 			toggle_shields()
-			. = TRUE
+
 		if ("toggle_exterior")
 			exterior_only = !exterior_only
-			. = TRUE
+
 
 ///calculations for the stats supplied by the network of machines that boost us
 /obj/machinery/modular_shield_generator/proc/calculate_boost()

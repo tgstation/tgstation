@@ -53,16 +53,6 @@
 	)
 	/// Overlay object we're using for scanlines
 	var/obj/effect/overlay/scanline = null
-	/// List of modes this gate can be set to
-	var/list/available_scan_modes = list(
-		SCANGATE_NONE,
-		SCANGATE_MINDSHIELD,
-		SCANGATE_DISEASE,
-		SCANGATE_GUNS,
-		SCANGATE_WANTED,
-		SCANGATE_SPECIES,
-		SCANGATE_NUTRITION,
-	)
 
 /obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
@@ -275,17 +265,13 @@
 		ui.open()
 
 /obj/machinery/scanner_gate/ui_static_data(mob/user)
-	var/list/data = list()
-
+	. = ..()
 	for(var/species_id in available_species)
 		var/datum/species/specie = GLOB.species_list[species_id]
-		data["available_species"] += list(list(
+		.["available_species"] += list(list(
 			"specie_name" = capitalize(format_text(specie.name)),
 			"specie_id" = species_id,
 		))
-	data["available_modes"] = available_scan_modes
-
-	return data
 
 /obj/machinery/scanner_gate/ui_data()
 	var/list/data = list()
@@ -306,9 +292,8 @@
 	switch(action)
 		if("set_mode")
 			var/new_mode = params["new_mode"]
-			if(new_mode in available_scan_modes)
-				scangate_mode = new_mode
-				. = TRUE
+			scangate_mode = new_mode
+			. = TRUE
 		if("toggle_reverse")
 			reverse = !reverse
 			. = TRUE
