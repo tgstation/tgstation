@@ -246,7 +246,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
 "oA" = (
-/obj/structure/syndicate_uplink_beacon,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/syndielab)
 "oY" = (
