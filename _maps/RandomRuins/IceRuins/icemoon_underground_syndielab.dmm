@@ -267,10 +267,6 @@
 	pixel_x = -5;
 	pixel_y = 8
 	},
-/obj/item/traitor_bug{
-	pixel_y = 6;
-	pixel_x = 6
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
 "qy" = (

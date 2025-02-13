@@ -4692,6 +4692,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\derelict_sulaco.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\DJstation.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\forgottenship.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\garbagetruck.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hauntedtradingpost.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hellfactory.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hilbertshotel.dm"
