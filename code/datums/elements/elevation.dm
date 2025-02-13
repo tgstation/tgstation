@@ -18,7 +18,7 @@
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 	var/atom/atom_target = target
-	register_turf(target, target.loc)
+	register_turf(atom_target, atom_target.loc)
 
 /datum/element/elevation/Detach(atom/movable/source)
 	unregister_turf(source, source.loc)
@@ -43,7 +43,7 @@
 /datum/element/elevation/proc/on_moved(atom/movable/source, atom/oldloc)
 	SIGNAL_HANDLER
 	unregister_turf(source, oldloc)
-	register_turf(target, source.loc)
+	register_turf(source, source.loc)
 
 /datum/element/elevation/proc/register_turf(atom/movable/source, atom/location)
 	if(!isturf(location))

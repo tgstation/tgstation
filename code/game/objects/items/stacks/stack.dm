@@ -114,7 +114,7 @@
 		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
 
 ///the stack will loop through every stack in the loc and try to merge with them, and delete itself when the amount reaches zero.
-/obj/item/stack/proc/merge_with_all_stacks_on_same_loc()
+/obj/item/stack/proc/merge_with_stacks_on_same_loc()
 	for(var/obj/item/stack/item_stack in loc)
 		if(item_stack == src)
 			continue
