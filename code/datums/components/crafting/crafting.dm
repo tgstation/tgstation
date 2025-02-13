@@ -268,12 +268,15 @@
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
-	var/atom/movable/result
+	var/atom/result
+	var/turf/craft_turf = get_turf(crafter.loc)
+	if(ispath(recipe.result, /turf))
+		result = craft_turf.place_on_top(recipe.result)
 	if(ispath(recipe.result, /obj/item/stack))
-		result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
+		result = new recipe.result(craft_turf, recipe.result_amount || 1)
 		result.dir = crafter.dir
 	else
-		result = new recipe.result(get_turf(crafter.loc))
+		result = new recipe.result(craft_turf)
 		result.dir = crafter.dir
 		if(result.atom_storage && recipe.delete_contents)
 			for(var/obj/item/thing in result)
@@ -291,7 +294,7 @@
 	if(length(total_materials))
 		result.set_custom_materials(total_materials)
 	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
-		if(component.loc != result)
+		if(isturf(result) || component.loc != result)
 			qdel(component)
 	if(send_feedback)
 		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
@@ -494,14 +497,15 @@
 	return data
 
 /datum/component/personal_crafting/proc/make_action(datum/crafting_recipe/recipe, mob/user)
-	var/atom/movable/result = construct_item(user, recipe)
+	var/atom/result = construct_item(user, recipe)
 	if(istext(result)) //We failed to make an item and got a fail message
 		to_chat(user, span_warning("Construction failed[result]"))
 		return FALSE
 	if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 		user.put_in_hands(result)
-	else if(!istype(result, /obj/effect/spawner))
-		result.forceMove(user.drop_location())
+	else if(ismovable(result) && !istype(result, /obj/effect/spawner))
+		var/atom/movable/movable = result
+		movable.forceMove(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
 	return TRUE
