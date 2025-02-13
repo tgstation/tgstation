@@ -43,11 +43,11 @@
 /datum/action/cooldown/bloodsucker/New(Target)
 	. = ..()
 	if(bloodcost > 0)
-		desc += "<br><br><b>СТОИТ:</b> [bloodcost] крови"
+		desc += "<br><br><b>COST:</b> [bloodcost] blood"
 	if(constant_bloodcost > 0)
-		desc += "<br><br><b>ПОСТОЯННАЯ СТОИМОСТЬ:</b><i> [name] стоит [constant_bloodcost] активной крови.</i>"
+		desc += "<br><br><b>CONSTANT COST:</b><i> [name] costs [constant_bloodcost] blood maintain active.</i>"
 	if(power_flags & BP_AM_SINGLEUSE)
-		desc += "<br><br><b>ЕДИНИЧНОЕ ИСПОЛЬЗОВАНИЕ:</br><i> [name] может использован только один раз в ночь.</i>"
+		desc += "<br><br><b>SINGLE USE:</br><i> [name] can only be used once per night.</i>"
 
 /datum/action/cooldown/bloodsucker/Destroy()
 	bloodsuckerdatum_power = null
@@ -80,12 +80,12 @@
 		return FALSE
 	// Cooldown?
 	if(!COOLDOWN_FINISHED(src, next_use_time))
-		owner.balloon_alert(owner, "невозможно использовать способность!")
+		owner.balloon_alert(owner, "power unavailable!")
 		return FALSE
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD) && living_owner.blood_volume < bloodcost)
-			to_chat(owner, span_warning("Вам нужно как минимум [bloodcost] крови чтобы активировать [name]"))
+			to_chat(owner, span_warning("You need at least [bloodcost] blood to activate [name]"))
 			return FALSE
 		return TRUE
 
@@ -93,7 +93,7 @@
 	if(bloodsuckerdatum_power.frenzied)
 		return TRUE
 	if(bloodsuckerdatum_power.bloodsucker_blood_volume < bloodcost)
-		to_chat(owner, span_warning("Вам нужно как минимум [bloodcost] крови чтобы активировать [name]"))
+		to_chat(owner, span_warning("You need at least [bloodcost] blood to activate [name]"))
 		return FALSE
 	return TRUE
 
@@ -109,33 +109,33 @@
 		return FALSE
 	// Torpor?
 	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(user, TRAIT_NODEATH))
-		to_chat(user, span_warning("Нельзя использовать способности пока вы в Торпоре."))
+		to_chat(user, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
 	if((check_flags & BP_CANT_USE_IN_FRENZY) && (bloodsuckerdatum_power?.frenzied))
-		to_chat(user, span_warning("Нельзя использовать способности пока ты в Ярости!"))
+		to_chat(user, span_warning("You cannot use powers while in a frenzy!"))
 		return FALSE
 	// Stake?
 	if((check_flags & BP_CANT_USE_WHILE_STAKED) && user.am_staked())
-		to_chat(user, span_warning("У вас кол в груди! Ваши силы бесполезны."))
+		to_chat(user, span_warning("You have a stake in your chest! Your powers are useless."))
 		return FALSE
 	// Conscious? -- We use our own (AB_CHECK_CONSCIOUS) here so we can control it more, like the error message.
 	if((check_flags & BP_CANT_USE_WHILE_UNCONSCIOUS) && user.stat != CONSCIOUS)
-		to_chat(user, span_warning("Вы не можете ничего сделать пока вы без сознания!"))
+		to_chat(user, span_warning("You can't do this while you are unconcious!"))
 		return FALSE
 	// Incapacitated?
 	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated))
-		to_chat(user, span_warning("Нельзя пока ты недееспособен!"))
+		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Constant Cost (out of blood)
 	if(constant_bloodcost > 0)
 		if(bloodsuckerdatum_power)
 			if(bloodsuckerdatum_power.bloodsucker_blood_volume <= 0)
-				to_chat(user, span_warning("У вас нет крови чтобы поддерживать [src]."))
+				to_chat(user, span_warning("You don't have the blood to upkeep [src]."))
 				return FALSE
 		else
 			if(user.blood_volume <= 0)
-				to_chat(user, span_warning("У вас нет крови чтобы поддерживать [src]."))
+				to_chat(user, span_warning("You don't have the blood to upkeep [src]."))
 				return FALSE
 	return TRUE
 
@@ -176,7 +176,7 @@
 	if(power_flags & BP_AM_TOGGLE)
 		START_PROCESSING(SSprocessing, src)
 
-	owner.log_message("использовано [src][bloodcost != 0 ? " от стоимости в [bloodcost]" : ""].", LOG_ATTACK, color="red")
+	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
 	build_all_button_icons()
 
 /datum/action/cooldown/bloodsucker/proc/DeactivatePower()

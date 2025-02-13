@@ -118,7 +118,7 @@
 	RegisterSignal(current_mob,COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	handle_clown_mutation(current_mob, mob_override ? null : "Будучи клоуном-вампиром, ты больше не угрожаешь себе. твоя клоунская натура теперь подавлена твоей жаждой крови.")
+	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 
 	if(current_mob.hud_used)
@@ -280,15 +280,15 @@
 /datum/antagonist/bloodsucker/greet()
 	. = ..()
 	var/fullname = return_full_name()
-	to_chat(owner, span_userdanger("Твоё вампирское имя [fullname], ты тип вампиров известных как Кровососы!"))
+	to_chat(owner, span_userdanger("You are [fullname], a strain of vampire known as a Bloodsucker!"))
 	owner.announce_objectives()
 	if(bloodsucker_level_unspent >= 2)
-		to_chat(owner, span_announce("Будучи опоздавшим на смену, у тебя есть [bloodsucker_level_unspent] бонусных рангов, вход в гроб позволяет вам потратить ранг."))
+		to_chat(owner, span_announce("As a latejoiner, you have [bloodsucker_level_unspent] bonus ranks, entering your claimed coffin allows you to spend a rank."))
 	owner.current.playsound_local(null, 'modular_meta/features/antagonists/bloodsuckers/sounds/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
-	antag_memory += "Ты рождён смертным, тогда ты заработал себе имя <b>[fullname]</b>.<br>"
+	antag_memory += "Although you were born a mortal, in undeath you earned the name <b>[fullname]</b>.<br>"
 
 /datum/antagonist/bloodsucker/farewell()
-	to_chat(owner.current, span_userdanger("<FONT size = 3>Одним щелчком твое проклятие закончилось. Ты больше не Кровосос. Ты живешь еще раз!</FONT>"))
+	to_chat(owner.current, span_userdanger("<FONT size = 3>With a snap, your curse has ended. You are no longer a Bloodsucker. You live once more!</FONT>"))
 	// Refill with Blood so they don't instantly die.
 	if(!HAS_TRAIT(owner.current, TRAIT_NOBLOOD))
 		owner.current.blood_volume = max(owner.current.blood_volume, BLOOD_VOLUME_NORMAL)

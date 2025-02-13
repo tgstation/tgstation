@@ -24,7 +24,7 @@
 
 /atom/movable/screen/alert/status_effect/frenzy
 	name = "Frenzy"
-	desc = "Вы в бешенстве! Вы совершенно дикие и в зависимости от вашего клана, сражаетесь за свою жизнь!"
+	desc = "You are in a frenzy! You are entirely feral and, depending on your clan, fighting for your life!"
 	icon = 'modular_meta/features/antagonists/icons/bloodsuckers/bloodsucker_status_effects.dmi'
 	icon_state = "frenzy"
 	alerttooltipstyle = "cult"
@@ -44,7 +44,7 @@
 	var/brujah = FALSE
 
 /datum/status_effect/frenzy/get_examine_text()
-	return span_cult_italic("Эта персона кажется бесчеловечной и дикой!")
+	return span_cult_italic("They seem inhuman and feral!")
 
 /atom/movable/screen/alert/status_effect/masquerade/MouseEntered(location,control,params)
 	desc = initial(desc)
@@ -56,9 +56,9 @@
 
 	// Disable ALL Powers and notify their entry
 	bloodsuckerdatum.DisableAllPowers(forced = TRUE)
-	to_chat(owner, span_userdanger("<FONT size = 3>Кровь! Тебе нужна кровь, <b>сейчас же</b>! Ты входишь в тотальную ярость!"))
-	to_chat(owner, span_announce("* Совет Кровососам: Пока вы находитесь в ярости, вы мгновенно хватаете жертву 'АгроГрабом', имеете защиту к оглушениям, не можете говорить, слышать, или использовать способность Питания и Вампирской Телепортации (Если та имеется)."))
-	owner.balloon_alert(owner, "вы входите в состояние безумия!")
+	to_chat(owner, span_userdanger("<FONT size = 3>Blood! You need blood, <b>now</b>! You enter a total frenzy!"))
+	to_chat(owner, span_announce("* Bloodsucker Tip: While in a frenzy, you instantly aggresively grab, have stun resistance, cannot speak, hear, or use any powers outside of Feed and Trespass (If you have it)."))
+	owner.balloon_alert(owner, "you enter a frenzy!")
 	SEND_SIGNAL(bloodsuckerdatum, BLOODSUCKER_ENTERS_FRENZY)
 
 	// Give the other Frenzy effects
@@ -84,7 +84,7 @@
 
 /datum/status_effect/frenzy/on_remove()
 	var/mob/living/carbon/human/user = owner
-	owner.balloon_alert(owner, "Вы приходите в себя.")
+	owner.balloon_alert(owner, "You come back to your senses.")
 	owner.remove_traits(list(TRAIT_MUTE, TRAIT_DEAF), FRENZY_TRAIT)
 	if(was_tooluser)
 		ADD_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT)

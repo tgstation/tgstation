@@ -41,7 +41,7 @@ const ObjectivePrintout = (props: any) => {
   const { objectives } = data;
   return (
     <Stack vertical>
-      <Stack.Item bold>Ваши текщие задачи:</Stack.Item>
+      <Stack.Item bold>Your current objectives:</Stack.Item>
       <Stack.Item>
         {(!objectives && 'None!') ||
           objectives.map((objective) => (
@@ -71,7 +71,8 @@ const VassalInfo = () => {
         <Section scrollable fill>
           <Stack vertical>
             <Stack.Item textColor="red" fontSize="20px">
-              Вы подданый, задача которого отомстить за смерть своего мастера!
+              You are a Vassal tasked with taking revenge for the death of your
+              Master!
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout />
@@ -84,9 +85,10 @@ const VassalInfo = () => {
           <Stack vertical>
             <Stack.Item>
               <span>
-                Вы получили старые силы Мастера, и новые силы. Вам придется
-                выжить и сохранить старую целостность Мастера. Верните старых
-                вассалов обратно используя свою новую Способность.
+                You have gained your Master&#39;s old Powers, and a brand new
+                power. You will have to survive and maintain your old
+                Master&#39;s integrity. Bring their old Vassals back into the
+                fold using your new Ability.
               </span>
             </Stack.Item>
           </Stack>
@@ -112,12 +114,12 @@ const PowerSection = (props: any) => {
     <Section
       fill
       scrollable={!!power}
-      title="Силы"
+      title="Powers"
       buttons={
         <Button
           icon="info"
           tooltipPosition="left"
-          tooltip={'Выберете силу для объяснения.'}
+          tooltip={'Select a Power to explain.'}
         />
       }
     >

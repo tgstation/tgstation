@@ -17,7 +17,7 @@
 		INVOKE_ASYNC(src, PROC_REF(AddBloodVolume), -BLOODSUCKER_PASSIVE_BLOOD_DRAIN) // -.1 currently
 	if(HandleHealing())
 		if((COOLDOWN_FINISHED(src, bloodsucker_spam_healing)) && bloodsucker_blood_volume > 0)
-			to_chat(owner.current, span_notice("Сила вашей крови заживляет ваши раны..."))
+			to_chat(owner.current, span_notice("The power of your blood begins knitting your wounds..."))
 			COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_HEALING)
 	// Standard Updates
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_ON_LIFETICK)
@@ -43,11 +43,11 @@
 
 /datum/antagonist/bloodsucker/proc/AddHumanityLost(value)
 	if(humanity_lost >= 500)
-		to_chat(owner.current, span_warning("Вы потеряли слишком много человечности. Вы далеки от человека."))
+		to_chat(owner.current, span_warning("You hit the maximum amount of lost humanity. You are far from human."))
 		return
 	humanity_lost += value
 	frenzy_threshold = (FRENZY_MINIMUM_THRESHOLD_ENTER + humanity_lost * 10)
-	to_chat(owner.current, span_warning("Вы чувствуете, что потеряли часть своей человечности. Теперь вы войдёте в состояние при [frenzy_threshold] единицах от количества крови."))
+	to_chat(owner.current, span_warning("You feel as if you lost some of your humanity. You will now enter frenzy at [frenzy_threshold] Blood."))
 
 /// mult: SILENT feed is 1/3 the amount
 /datum/antagonist/bloodsucker/proc/handle_feeding(mob/living/carbon/target, mult=1, power_level)
@@ -97,7 +97,7 @@
 	var/amInCoffin = istype(user.loc, /obj/structure/closet/crate/coffin)
 	if(amInCoffin && HAS_TRAIT(user, TRAIT_NODEATH))
 		if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && (COOLDOWN_FINISHED(src, bloodsucker_spam_healing)))
-			to_chat(user, span_alert("Вы не лечитесь, пока активна ваша способность Маскарад."))
+			to_chat(user, span_alert("You do not heal while your Masquerade ability is active."))
 			COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_MASQUERADE)
 			return
 		fireheal = min(user.getFireLoss(), actual_regen)
@@ -132,7 +132,7 @@
 		AddBloodVolume(-limb_regen_cost)
 		var/obj/item/bodypart/missing_bodypart = user.get_bodypart(missing_limb) // 2) Limb returns Damaged
 		missing_bodypart.brute_dam = 60
-		to_chat(user, span_notice("Твоя плоть срастается, ты отращиваешь [missing_bodypart]!"))
+		to_chat(user, span_notice("Your flesh knits as it regrows your [missing_bodypart]!"))
 		playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		return TRUE
 
@@ -305,15 +305,15 @@
 	// Elders get dusted, Fledglings get gibbed.
 	if(bloodsucker_level >= 4)
 		user.visible_message(
-			span_warning("Кожа [user] потрескивает и сохнет, кожа и кости превращаются в пыль. Пустой крик доносится из того, что теперь представляет собой груду песка из костей."),
-			span_userdanger("Ваша душа покидает ваше увядающее тело, бездна приветствует вас на пути к Окончательной Смерти."),
-			span_hear("Вы слышите сухой, потрескивающий звук."))
+			span_warning("[user]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains."),
+			span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
+			span_hear("You hear a dry, crackling sound."))
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 		return
 	user.visible_message(
-		span_warning("Кожа [user] взрывается брызгами крови. Ужасный крик доносится из того, что теперь представляет собой влажную кучу разлагающегося мяса."),
-		span_userdanger("Ваша душа покидает ваше увядающее тело, бездна приветствует вас на пути к Окончательной Смерти."),
-		span_hear("<span class='italics'>Вы слышите влажный, лопающий звук."))
+		span_warning("[user]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat."),
+		span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
+		span_hear("<span class='italics'>You hear a wet, bursting sound."))
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 #undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

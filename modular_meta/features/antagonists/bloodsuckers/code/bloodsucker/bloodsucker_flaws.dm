@@ -38,14 +38,14 @@
 
 	var/chosen_clan
 	if(admin_selecting)
-		chosen_clan = tgui_input_list(person_selecting, "В каком клане [owner.current] должен быть?", "Выбор Клана", options)
+		chosen_clan = tgui_input_list(person_selecting, "What clan should [owner.current] be?", "Clan Selection", options)
 	else
 		chosen_clan = show_radial_menu(person_selecting, owner.current, radial_display)
 	chosen_clan = options[chosen_clan]
 	if(QDELETED(src) || QDELETED(owner.current))
 		return FALSE
 	if(!chosen_clan)
-		to_chat(person_selecting, span_announce("Вы предпочитаете оставаться в неведении."))
+		to_chat(person_selecting, span_announce("You choose to remain ignorant, for now."))
 		return
 	my_clan = new chosen_clan(src)
 
@@ -54,7 +54,7 @@
 		to_chat(admin, span_announce("Removing a Bloodsucker from a clan while they are in a Frenzy will break stuff. This action has been blocked."))
 		return
 	QDEL_NULL(my_clan)
-	to_chat(owner.current, span_announce("Вы были изгнаны из своего клана! Вы можете до сих пор можете вернуться в него."))
+	to_chat(owner.current, span_announce("You have been forced out of your clan! You can re-enter one by regular means."))
 
 /datum/antagonist/bloodsucker/proc/admin_set_clan(mob/admin)
 	assign_clan_and_bane(admin, admin_selecting = TRUE)

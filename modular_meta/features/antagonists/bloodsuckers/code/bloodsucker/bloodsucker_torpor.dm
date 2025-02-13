@@ -36,7 +36,7 @@
 	var/mob/living/carbon/human/user = owner
 	bloodsuckerdatum = IS_BLOODSUCKER(user)
 
-	to_chat(owner, span_notice("Вы погружаетесь в ужасный сон бессмертного Торпора. Вы будете исцеляться, пока не востановитесь."))
+	to_chat(owner, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
 	// Force them to go to sleep
 	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 	// Without this, you'll just keep dying while you recover.
@@ -47,7 +47,7 @@
 
 /datum/status_effect/torpor/on_remove()
 	owner.grab_ghost()
-	to_chat(owner, span_warning("Вы вернулись с Торпора."))
+	to_chat(owner, span_warning("You have recovered from Torpor."))
 	owner.remove_traits(list(TRAIT_NODEATH, TRAIT_FAKEDEATH, TRAIT_DEATHCOMA, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), BLOODSUCKER_TRAIT)
 	if(!HAS_TRAIT(owner, TRAIT_MASQUERADE))
 		ADD_TRAIT(owner, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
@@ -58,11 +58,11 @@
 	var/mob/living/carbon/user = owner.current
 	/// Prevent Torpor whilst frenzied.
 	if(frenzied || (IS_DEAD_OR_INCAP(user) && bloodsucker_blood_volume == 0))
-		to_chat(user, span_userdanger("Ваше безумие не дает вам войти в Торпор!"))
+		to_chat(user, span_userdanger("Your frenzy prevents you from entering torpor!"))
 		return
 	/// Are we entering Torpor via Sol/Death? Then entering it isnt optional!
 	if(SkipChecks)
-		to_chat(user, span_danger("Ваше бессмертное тело еще не отдало душу в бездну. Вы входите в Торпор."))
+		to_chat(user, span_danger("Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor."))
 		owner.current.apply_status_effect(/datum/status_effect/torpor)
 		return
 	var/total_brute = user.getBruteLoss()

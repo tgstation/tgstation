@@ -2,17 +2,17 @@
 #define FEED_DEFAULT_TIMER (10 SECONDS)
 
 /datum/action/cooldown/bloodsucker/feed
-	name = "Питание"
-	desc = "Питайся кровью существ."
+	name = "Feed"
+	desc = "Feed blood off of a living creature."
 	button_icon_state = "power_feed"
-	power_explanation = "Питание:\n\
-		Активируйте способность, находясь рядом с кем-то, и вы начнете питаться его кровью.\n\
-		Время, необходимое, прежде чем вы начнете питаться, уменьшается по мере получения рангов.\n\
-		Если вы будете питаться кем-то, крепко держа его, это усыпит его.\n\
-		Во время кормления нельзя говорить, так как рот прикрыт.\n\
-		Питание рядом (на расстоянии 2 клеток) со смертным, не подозревающего о существовании Кровососов, приведет к нарушению Маскарада.\n\
-		Если вы получите слишком много нарушений Маскарада, вы нарушите его.\n\
-		Если вы очень нуждаетесь в крови, можно питаться крысами — за определенную плату..."
+	power_explanation = "Feed:\n\
+		Activate Feed while next to someone and you will begin to feed blood off of them.\n\
+		The time needed before you start feeding decrases as you gain ranks.\n\
+		Feeding off of someone while you have them aggressively grabbed will put them to sleep.\n\
+		While feeding, you can't speak, as your mouth is covered.\n\
+		Feeding while nearby (2 tiles away from) a mortal who is unaware of Bloodsuckers' existence will cause a Masquerade infraction\n\
+		If you get too many Masquerade infractions, you will break the Masquerade.\n\
+		If you are in desperate need of blood, mice can be fed off of— at a cost..."
 	power_flags = BP_AM_TOGGLE|BP_AM_STATIC_COOLDOWN
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_WHILE_STAKED|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|BLOODSUCKER_DEFAULT_POWER

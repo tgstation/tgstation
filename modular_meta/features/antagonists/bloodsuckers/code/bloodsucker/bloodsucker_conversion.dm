@@ -29,10 +29,10 @@
 		return FALSE
 	// No Mind!
 	if(!conversion_target.mind)
-		to_chat(owner.current, span_danger("[conversion_target] недостаточно самосознателен, чтобы стать вассалом."))
+		to_chat(owner.current, span_danger("[conversion_target] isn't self-aware enough to be made into a vassal."))
 		return FALSE
 	if(AmValidAntag(conversion_target) == VASSALIZATION_BANNED)
-		to_chat(owner.current, span_danger("[conversion_target] сопротивляется силе вашей крови, чтобы доминировать над разумом!"))
+		to_chat(owner.current, span_danger("[conversion_target] resists the power of your blood to dominate their mind!"))
 		return FALSE
 	var/mob/living/master = conversion_target.mind.enslaved_to?.resolve()
 	if(!master || (master == owner.current))
@@ -41,7 +41,7 @@
 	if(bloodsuckerdatum && bloodsuckerdatum.broke_masquerade)
 		//vassal stealing
 		return TRUE
-	to_chat(owner.current, span_danger("[conversion_target] перегружен слишком большой внешней силой, чтобы воздействовать вашей!"))
+	to_chat(owner.current, span_danger("[conversion_target]'s mind is overwhelmed with too much external force to put your own!"))
 	return FALSE
 
 /**
@@ -67,7 +67,7 @@
 	vassaldatum.master = bloodsuckerdatum
 	conversion_target.mind.add_antag_datum(vassaldatum)
 
-	message_admins("[conversion_target] стал вассалом, и подчиняется [owner.current].")
+	message_admins("[conversion_target] has become a vassal, and is enslaved to [owner.current].")
 	log_admin("[conversion_target] has become a vassal, and is enslaved to [owner.current].")
 	return TRUE
 
@@ -85,7 +85,7 @@
 	var/mob/living/user = current
 	if(!(user.mob_biotypes & MOB_ORGANIC))
 		if(creator)
-			to_chat(creator, span_danger("[user] ДНК несовместимо!"))
+			to_chat(creator, span_danger("[user]'s DNA isn't compatible!"))
 		return FALSE
 	return TRUE
 
@@ -99,6 +99,6 @@
 /datum/mind/proc/make_bloodsucker(datum/mind/creator)
 	var/datum/antagonist/bloodsuckerdatum = add_antag_datum(/datum/antagonist/bloodsucker)
 	if(bloodsuckerdatum && creator)
-		message_admins("[src] стал Кровососом, и создан благодаря [creator].")
+		message_admins("[src] has become a Bloodsucker, and was created by [creator].")
 		log_admin("[src] has become a Bloodsucker, and was created by [creator].")
 	return bloodsuckerdatum

@@ -51,7 +51,7 @@ const ObjectivePrintout = (props: any) => {
   const { objectives } = data;
   return (
     <Stack vertical>
-      <Stack.Item bold>Ваши текущие задачи:</Stack.Item>
+      <Stack.Item bold>Your current objectives:</Stack.Item>
       <Stack.Item>
         {(!objectives && 'None!') ||
           objectives.map((objective) => (
@@ -76,7 +76,7 @@ export const AntagInfoBloodsucker = (props: any) => {
             selected={tab === 1}
             onClick={() => setTab(1)}
           >
-            О вас
+            Introduction
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
@@ -84,7 +84,7 @@ export const AntagInfoBloodsucker = (props: any) => {
             selected={tab === 2}
             onClick={() => setTab(2)}
           >
-            Кланы и Способности
+            Clan & Powers
           </Tabs.Tab>
         </Tabs>
         {tab === 1 && <BloodsuckerIntro />}
@@ -101,7 +101,8 @@ const BloodsuckerIntro = () => {
         <Section scrollable fill>
           <Stack vertical>
             <Stack.Item textColor="red" fontSize="20px">
-              Вы кровсос, нежить живущая борту Космической Станции 13
+              You are a Bloodsucker, an undead blood-seeking monster living
+              aboard Space Station 13
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout />
@@ -110,47 +111,46 @@ const BloodsuckerIntro = () => {
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section fill title="Силы и Слабости">
+        <Section fill title="Strengths and Weaknesses">
           <Stack vertical>
             <Stack.Item>
               <span>
-                Вы медленно регенирируете своё здоровьё, ты слаб к огню, и
-                должен пить кровь для того чтобы выжить. Не позволяйте своей
-                крови закончиться, либо вы войдёте в
+                You regenerate your health slowly, you&#39;re weak to fire, and
+                you depend on blood to survive. Don&#39;t allow your blood to
+                run too low, or you&#39;ll enter a
               </span>
-              <span className={'color-red'}> состояние Безумия</span>!<br />
+              <span className={'color-red'}> Frenzy</span>!<br />
               <span>
-                Будьте осторожны за свой уровень человечности! Чем больше вы
-                теряете человечности, тем легче вам войти в{' '}
-                <span className={'color-red'}> состояние Безумиия</span>!
+                Beware of your Humanity level! The more Humanity you lose, the
+                easier it is to fall into a{' '}
+                <span className={'color-red'}> Frenzy</span>!
               </span>
               <br />
               <span>
-                Избегайте питья крови находясь рядом с другими людьми, либо у
-                вас появится риск <i>ломания Маскарада</i>!
+                Avoid using your Feed ability while near others, or else you
+                will risk <i>breaking the Masquerade</i>!
               </span>
             </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section fill title="Особености">
+        <Section fill title="Items">
           <Stack vertical>
             <Stack.Item>
-              Ложитесь в <b>гроб</b> чтобы завладеть им, и эта местность будет
-              как ваше логово.
+              Rest in a <b>Coffin</b> to claim it, and that area, as your lair.
               <br />
-              Осматривайте ваши новые структуры чтобы узнать их функции!
+              Examine your new structures to see how they function!
               <br />
-              Медицинские и генетические сканнеры могут сдать вас, Способность
-              Маскарад Скроет вашу натуру чтобы предотвратить это.
+              Medical and Genetic Analyzers can sell you out, your Masquerade
+              ability will hide your identity to prevent this.
               <br />
             </Stack.Item>
             <Stack.Item>
               <Section textAlign="center" textColor="red" fontSize="20px">
-                Другие кровососы не обязательно ваши друзья, но ваши выживание
-                может зависеть от сотрудничества. Предай их сам по своему
-                желанию осмотрительность и опасность.
+                Other Bloodsuckers are not necessarily your friends, but your
+                survival may depend on cooperation. Betray them at your own
+                discretion and peril.
               </Section>
             </Stack.Item>
           </Stack>
@@ -168,13 +168,13 @@ const BloodsuckerClan = (props: any) => {
     return (
       <Section minHeight="220px">
         <Box mt={5} bold textAlign="center" fontSize="40px">
-          Вы не в клане.
+          You are not in a Clan.
         </Box>
         <Box mt={3}>
           <Button
             fluid
             icon="users"
-            content="Вход в клан"
+            content="Join Clan"
             textAlign="center"
             fontSize="30px"
             lineHeight={2}
@@ -202,7 +202,7 @@ const BloodsuckerClan = (props: any) => {
                     }}
                   />
                   <Stack.Item fontSize="20px" textAlign="center">
-                    Вы часть {ClanInfo.clan_name}
+                    You are part of the {ClanInfo.clan_name}
                   </Stack.Item>
                   <Stack.Item fontSize="16px">
                     {ClanInfo.clan_description}
@@ -231,13 +231,13 @@ const PowerSection = (props: any) => {
     <Section
       fill
       scrollable={!!power}
-      title="Силы"
+      title="Powers"
       buttons={
         <Button
           icon="info"
           tooltipPosition="left"
           tooltip={
-            'Выберите силу используя меню для получения подробного объяснения.'
+            'Select a Power using the dropdown menu for an in-depth explanation.'
           }
         />
       }

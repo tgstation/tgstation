@@ -29,7 +29,7 @@
 /// Prevents using a Memento Mori
 /obj/item/clothing/neck/necklace/memento_mori/memento(mob/living/carbon/human/user)
 	if(IS_BLOODSUCKER(user))
-		to_chat(user, span_warning("Мементо замечает вашу душу нежити и отказывается реагировать.."))
+		to_chat(user, span_warning("The Memento notices your undead soul, and refuses to react.."))
 		return
 	return ..()
 
@@ -47,7 +47,7 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(/datum/antagonist/bloodsucker)
 	if(bloodsuckerdatum)
 		. += ""
-		. += "Крови Выпито: [bloodsuckerdatum.total_blood_drank]"
+		. += "Blood Drank: [bloodsuckerdatum.total_blood_drank]"
 
 /datum/outfit/bloodsucker_outfit
 	name = "Bloodsucker outfit (Preview only)"

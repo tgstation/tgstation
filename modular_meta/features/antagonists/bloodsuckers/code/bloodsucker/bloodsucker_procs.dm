@@ -29,8 +29,8 @@
 	if(broke_masquerade)
 		return
 	owner.current.playsound_local(null, 'modular_meta/features/antagonists/bloodsuckers/sounds/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
-	to_chat(owner.current, span_cult_bold_italic("Вы сломали Маскарад!"))
-	to_chat(owner.current, span_warning("Совет Кровососам: когда вы нарушаете Маскарад, вы можете быть убиты другими кровососами, и ваши вассалы больше не полностью лояльны к вам, поскольку другие кровососы могут украсть их для себя!"))
+	to_chat(owner.current, span_cult_bold_italic("You have broken the Masquerade!"))
+	to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
 	broke_masquerade = TRUE
 	antag_hud_name = "masquerade_broken"
 	add_team_hud(owner.current)
@@ -41,7 +41,7 @@
 /datum/antagonist/bloodsucker/proc/fix_masquerade(mob/admin)
 	if(!broke_masquerade)
 		return
-	to_chat(owner.current, span_cult_bold_italic("Вы вернулись в Маскарад."))
+	to_chat(owner.current, span_cult_bold_italic("You have re-entered the Masquerade."))
 	GLOB.masquerade_breakers.Remove(src)
 	broke_masquerade = FALSE
 
@@ -52,20 +52,20 @@
 	if(masquerade_infractions >= 3)
 		break_masquerade()
 	else
-		to_chat(owner.current, span_cult_bold("Вы нарушили Маскарад! Разрушить маскарад ещё [3 - masquerade_infractions] раз(а) и ты станешь преступником для всех остальных кровососов!"))
+		to_chat(owner.current, span_cult_bold("You violated the Masquerade! Break the Masquerade [3 - masquerade_infractions] more times and you will become a criminal to all other Bloodsuckers!"))
 
 /datum/antagonist/bloodsucker/proc/RankUp()
 	if(!owner || !owner.current || IS_FAVORITE_VASSAL(owner.current))
 		return
 	bloodsucker_level_unspent++
 	if(!my_clan)
-		to_chat(owner.current, span_notice("Вы заработали ранг, войдите в клан чтобы потратить."))
+		to_chat(owner.current, span_notice("You have gained a rank. Join a Clan to spend it."))
 		return
 	// Spend Rank Immediately?
 	if(!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
-		to_chat(owner, span_notice("<EM>Вы постарел! Спите в гробу (или поставьте своего любимого вассала на стойку для Вентру), и станьте более могущественным.</EM>"))
+		to_chat(owner, span_notice("<EM>You have grown more ancient! Sleep in a coffin (or put your Favorite Vassal on a persuasion rack for Ventrue) that you have claimed to thicken your blood and become more powerful.</EM>"))
 		if(bloodsucker_level_unspent >= 2)
-			to_chat(owner, span_announce("Совет Кровососам: если вы не можете найти или украсть гроб, чтобы использовать его, вы можете построить его из дерева или металла."))
+			to_chat(owner, span_announce("Bloodsucker Tip: If you cannot find or steal a coffin to use, you can build one from wood or metal."))
 		return
 	SpendRank()
 
@@ -123,7 +123,7 @@
 		return FALSE
 	// Viewer is Target's Vassal?
 	if(viewer.mind.has_antag_datum(/datum/antagonist/vassal) in vassals)
-		var/returnString = "\[<span class='warning'><EM>Это твой мастер!</EM></span>\]"
+		var/returnString = "\[<span class='warning'><EM>This is your Master!</EM></span>\]"
 		var/returnIcon = "[icon2html('modular_meta/features/antagonists/icons/bloodsuckers/vampiric.dmi', world, "bloodsucker")]"
 		returnString += "\n"
 		return returnIcon + returnString

@@ -1,10 +1,10 @@
 /datum/objective/survive/bloodsucker
 	name = "bloodsuckersurvive"
-	explanation_text = "Продержитесь всю смену, не потерпев окончательной смерти."
+	explanation_text = "Survive the entire shift without succumbing to Final Death."
 
 /datum/objective/bloodsucker_lair
 	name = "claim lair"
-	explanation_text = "Займите свой гроб, охраняя логово до конца смены."
+	explanation_text = "Create a lair by claiming a coffin, and protect it until the end of the shift."
 	martyr_compatible = TRUE
 
 // WIN CONDITIONS?

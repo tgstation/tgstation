@@ -47,9 +47,9 @@
 	if(!istype(owner.current.loc, /obj/structure))
 		if(COOLDOWN_FINISHED(src, bloodsucker_spam_sol_burn))
 			if(bloodsucker_level > 0)
-				to_chat(owner, span_userdanger("Солнечная вспышка обжигает вашу кожу!"))
+				to_chat(owner, span_userdanger("The solar flare sets your skin ablaze!"))
 			else
-				to_chat(owner, span_userdanger("Солнечная вспышка обжигает кожу вашего неофита!"))
+				to_chat(owner, span_userdanger("The solar flare scalds your neophyte skin!"))
 			COOLDOWN_START(src, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
 
 		if(owner.current.fire_stacks <= 0)
@@ -64,7 +64,7 @@
 
 	if(istype(owner.current.loc, /obj/structure/closet/crate/coffin)) // Coffins offer the BEST protection
 		if(owner.current.am_staked() && COOLDOWN_FINISHED(src, bloodsucker_spam_sol_burn))
-			to_chat(owner.current, span_userdanger("Вы посажены на кол! Перед сном уберите оскорбительное оружие из своего сердца."))
+			to_chat(owner.current, span_userdanger("You are staked! Remove the offending weapon from your heart before sleeping."))
 			COOLDOWN_START(src, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
 		if(!HAS_TRAIT(owner.current, TRAIT_NODEATH))
 			check_begin_torpor(TRUE)
@@ -73,7 +73,7 @@
 		return
 
 	if(COOLDOWN_FINISHED(src, bloodsucker_spam_sol_burn)) // Closets offer SOME protection
-		to_chat(owner, span_warning("Ваша кожа шипит. [owner.current.loc] плохо защищает от ультрафиолетового-облучения."))
+		to_chat(owner, span_warning("Your skin sizzles. [owner.current.loc] doesn't protect well against UV bombardment."))
 		COOLDOWN_START(src, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
 	owner.current.adjustFireLoss(0.5 + (bloodsucker_level / 4))
 	owner.current.updatehealth()
