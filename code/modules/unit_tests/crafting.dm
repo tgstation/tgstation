@@ -1,7 +1,7 @@
 /**
  * Check if a generic atom (because both mobs and the crafter machinery can do it) can potentially craft all recipes,
  * with the exact same types required in the recipe, and also compare the materials of crafted result with one of the same type
- * to ansure they match.
+ * to ansure they match if the recipe has the CRAFT_ENFORCE_MATERIALS_PARITY flag.
  */
 /datum/unit_test/crafting
 
@@ -102,23 +102,26 @@
 
 	allocated += result
 
-/*
+	if(!(recipe.crafting_flags & CRAFT_ENFORCE_MATERIALS_PARITY))
+		return
+
 	var/atom/copycat = allocate(result.type)
-	if(result.custom_materials != copycat.custom_materials) // SSmaterials caches the combinations so we don't have to run more complex checks.
-		var/warning = "custom_materials of [result.type] when crafted and spawned don't match."
-		var/what_it_should_be = "null"
-		if(result.custom_materials) //compose a text string containing the syntax and paths to use for editing the custom_materials var
-			what_it_should_be = "list("
-			var/index = 1
-			var/mats_len = length(result.custom_materials)
-			for(var/datum/material/mat as anything in result.custom_materials)
-				what_it_should_be += "[mat.type] = [result.custom_materials[mat]]"
-				if(index < mats_len)
-					what_it_should_be += ", "
-				index++
-			what_it_should_be += ")"
-		TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or blacklist [recipe.type] in the unit test")
-*/
+	// SSmaterials caches the combinations so we don't have to run more complex checks
+	if(result.custom_materials == copycat.custom_materials)
+		return
+	var/warning = "custom_materials of [result.type] when crafted and spawned don't match."
+	var/what_it_should_be = "null"
+	if(result.custom_materials) //compose a text string containing the syntax and paths to use for editing the custom_materials var
+		what_it_should_be = "list("
+		var/index = 1
+		var/mats_len = length(result.custom_materials)
+		for(var/datum/material/mat as anything in result.custom_materials)
+			what_it_should_be += "[mat.type] = [result.custom_materials[mat]]"
+			if(index < mats_len)
+				what_it_should_be += ", "
+			index++
+		what_it_should_be += ")"
+	TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or blacklist [recipe.type] in the unit test")
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND

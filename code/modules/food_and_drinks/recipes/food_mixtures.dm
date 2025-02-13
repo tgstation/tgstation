@@ -1,6 +1,6 @@
 /datum/crafting_recipe/food
 	mass_craftable = TRUE
-	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS
+	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS | CRAFT_ENFORCE_MATERIALS_PARITY
 
 /datum/crafting_recipe/food/crafting_ui_data()
 	var/list/data = list()
