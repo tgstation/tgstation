@@ -189,6 +189,7 @@
 	prereq_ids = list(TECHWEB_NODE_ENERGY_MANIPULATION, TECHWEB_NODE_APPLIED_BLUESPACE)
 	design_ids = list(
 		"borg_upgrade_engineering_shuttle_blueprints",
+		"propulsion_engine",
 		"shuttle_blueprints",
 		"shuttle_control",
 		"shuttle_docker",
