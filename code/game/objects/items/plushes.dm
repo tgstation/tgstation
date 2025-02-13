@@ -829,7 +829,7 @@
 
 /obj/item/toy/plush/evil_wet_owl
 	name = "Evil wet owl plush"
-	desc = "Plush is an owl who has seen some shit. She's very evil about it."
+	desc = "This plush has seen some shit. She looks very evil about it."
 	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
 	icon_state = "evil_wet_owl_plushie"
