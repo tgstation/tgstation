@@ -80,9 +80,12 @@
 	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."))
 
 /obj/item/organ/cyberimp/arm/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
-	if (target_zone == BODY_ZONE_R_ARM || target_zone == BODY_ZONE_L_ARM) // Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
-		zone = target_zone
-		SetSlotFromZone()
+	// Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
+	if (target_zone != BODY_ZONE_R_ARM && target_zone != BODY_ZONE_L_ARM)
+		return FALSE
+
+	zone = target_zone
+	SetSlotFromZone()
 	return ..()
 
 /obj/item/organ/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
