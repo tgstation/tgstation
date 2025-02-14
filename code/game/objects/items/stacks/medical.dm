@@ -381,6 +381,8 @@
 	var/obj/item/bodypart/gauzed_bodypart
 	heal_end_sound = SFX_BANDAGE_END
 	heal_begin_sound = SFX_BANDAGE_BEGIN
+	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = SFX_CLOTH_PICKUP
 
 /obj/item/stack/medical/gauze/Destroy(force)
 	. = ..()
@@ -583,6 +585,8 @@
 	repeating = TRUE
 	sanitization = 0.75
 	flesh_regeneration = 3
+	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = SFX_CLOTH_DROP
 
 	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
@@ -763,6 +767,8 @@
 	other_delay = 1 SECONDS
 	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
 	apply_verb = "applying to"
+	pickup_sound = SFX_CLOTH_PICKUP
+	// add a better drop sound more fitting for a lil' itty bitty band-aid
 
 /obj/item/stack/medical/bandage/makeshift
 	name = "makeshift bandage"
