@@ -99,7 +99,7 @@
 	"escape": [
 		"@pick(add_name)follow me!",
 		"@pick(add_name)follow me",
-		"@pick(add_name)Look out!",
+		"@pick(add_name)look out!",
 		"@pick(add_name)RUN!!",
 		"It's here!",
 		"Oh shit!",
