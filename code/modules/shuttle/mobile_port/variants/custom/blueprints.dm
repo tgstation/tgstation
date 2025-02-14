@@ -966,6 +966,17 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	for(var/turf/turf as anything in turfs)
 		turf.stack_below_baseturf(/turf/open/floor/plating, /turf/baseturf_skipover/shuttle)
 		SEND_SIGNAL(turf, COMSIG_TURF_ADDED_TO_SHUTTLE, mobile_port)
+		if(!turf.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle))
+			continue
+		var/turf/new_ceiling = get_step_multiz(turf, UP) // check if a ceiling is needed
+		if(new_ceiling)
+			// generate ceiling
+			if(!(istype(new_ceiling, /turf/open/floor/engine/hull/ceiling) || new_ceiling.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
+				if(istype(new_ceiling, /turf/open/openspace) || istype(new_ceiling, /turf/open/space/openspace))
+					new_ceiling.place_on_top(/turf/open/floor/engine/hull/ceiling)
+				else
+					new_ceiling.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
+					new_ceiling.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
 
 	if(!istype(dock_at))
 		dock_at = new(origin)
@@ -973,7 +984,6 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 		dock_at.name = origin_area.name
 		dock_at.dir = port_dir
 
-	mobile_port.initiate_docking(dock_at, force = TRUE)
 	mobile_port.register(replace, custom)
 
 	message_admins("[key_name(user)] has created a shuttle at [ADMIN_VERBOSEJMP(origin)].")
@@ -1014,6 +1024,16 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	for(var/turf/turf as anything in turfs)
 		turf.stack_below_baseturf(/turf/open/floor/plating, /turf/baseturf_skipover/shuttle)
 		SEND_SIGNAL(turf, COMSIG_TURF_ADDED_TO_SHUTTLE, shuttle)
+		if(turf.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle))
+			var/turf/new_ceiling = get_step_multiz(turf, UP) // check if a ceiling is needed
+			if(new_ceiling)
+				// generate ceiling
+				if(!(istype(new_ceiling, /turf/open/floor/engine/hull/ceiling) || new_ceiling.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
+					if(istype(new_ceiling, /turf/open/openspace) || istype(new_ceiling, /turf/open/space/openspace))
+						new_ceiling.place_on_top(/turf/open/floor/engine/hull/ceiling)
+					else
+						new_ceiling.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
+						new_ceiling.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
 		if(bounds_need_recalculation)
 			continue
 		if(!(ISINRANGE(turf.x, x0, x1) && ISINRANGE(turf.y, y0, y1)))
