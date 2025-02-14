@@ -349,6 +349,9 @@
 
 	SET_BASE_PIXEL(-8, 0)
 
+/obj/item/gun/ballistic/automatic/sks/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 38, offset_y = 12)
+
 /obj/item/gun/ballistic/automatic/sks/chekhov
 	name = "\improper Chekhov's SKS semi-automatic rifle"
 	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. The name \
