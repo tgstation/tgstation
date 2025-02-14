@@ -1,4 +1,0 @@
-author: "hyperjll"
-delete-after: True
-changes:
-  - balance: "Haloperidol's self-purge is drastically reduced while the host is stamina crit, as a result of permanent stamina crit no longer being a thing to worry about."

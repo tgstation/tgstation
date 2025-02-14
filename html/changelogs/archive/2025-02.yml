@@ -207,3 +207,34 @@
   - bugfix: Fixed perceptomatrix not applying any of its traits
   TiviPlus:
   - code_imp: deleted all remaining code referencing TGS3
+2025-02-14:
+  Absolucy:
+  - bugfix: Syndicate encryption keys properly protect against AoE radio jamming again.
+  Melbert:
+  - rscdel: Honorific "full name" setting no longer cares about mononyms, meaning
+      Lizards and people with similarly hyphenated names will no longer get their
+      name butchered.
+  MelokGleb:
+  - image: broken radio is now not flat and old
+  SmArtKar:
+  - bugfix: Makes glowstick fluid respect chosen RLD color
+  - bugfix: Chef's love and french kissing no longer can stop laser projectiles of
+      syndiekissers.
+  - code_imp: Unified two parts of kiss code.
+  TealSeer:
+  - qol: The limb grower can now be unwrenched and rotated
+  Time-Green, Donglesplonge, SmartKar:
+  - rscadd: Adds the flesh reshaper to genetics and the Gene Engineering techweb!
+      Restyle all those visual organs! Don't like your moth coworkers' wings? Restyle
+      them to your liking!
+  TiviPlus:
+  - bugfix: Fixed stat panel turf list menu clicks only working on the text
+  hyperjll:
+  - qol: The Syndicate Tome's uplink description has been changed to mention it's
+      functionality.
+  - balance: Haloperidol's self-purge is drastically reduced while the host is stamina
+      crit, as a result of permanent stamina crit no longer being a thing to worry
+      about.
+  timothymtorres:
+  - code_imp: Optimize Nyctophobia quirk to not process while certain traits present
+  - code_imp: Convert weather duration to use time defines
