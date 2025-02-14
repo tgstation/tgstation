@@ -122,7 +122,7 @@
  * If auto_change_zone is set to FALSE, it'll give the user a chance to pick a new zone to heal
  * If continuous is set to true, it will play the continuous sound for healing
  */
-/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE, var/continuous = FALSE)
+/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE, continuous = FALSE)
 	if(heal_begin_sound && !continuous)
 		playsound(patient, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	if(patient == user)
@@ -429,7 +429,7 @@
 	return FALSE
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, healed_zone, silent, auto_change_zone)
+/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, healed_zone, silent, auto_change_zone, continuous)
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 	var/any_scanned = FALSE
