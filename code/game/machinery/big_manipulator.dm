@@ -107,8 +107,21 @@
 	var/mob/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
 		monkey_resolve.forceMove(get_turf(monkey_resolve))
-		monkey_resolve.pixel_x = initial(monkey_resolve.pixel_x)
-		monkey_resolve.pixel_y = initial(monkey_resolve.pixel_y)
+
+/obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
+	if(isnull(monkey_worker))
+		return
+	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
+	if(gone != poor_monkey)
+		return
+	if(!is_type_in_list(poor_monkey, manipulator_hand.vis_contents))
+		return
+	manipulator_hand.vis_contents -= poor_monkey
+	if(manipulate_mode == USE_ITEM_MODE)
+		change_mode()
+	poor_monkey.pixel_x = poor_monkey.base_pixel_x + poor_monkey.body_position_pixel_x_offset
+	poor_monkey.pixel_y = poor_monkey.base_pixel_y + poor_monkey.body_position_pixel_y_offset
+	monkey_worker = null
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -201,16 +214,8 @@
 		balloon_alert(user, "interrupted")
 		return
 	balloon_alert(user, "unbuckled")
-	monkey_worker = null
 	poor_monkey.drop_all_held_items()
-	poor_monkey.forceMove(drop_point.drop_location())
-	if(manipulate_mode == USE_ITEM_MODE)
-		change_mode()
-	if(!is_type_in_list(poor_monkey, manipulator_hand.vis_contents))
-		return
-	manipulator_hand.vis_contents -= poor_monkey
-	poor_monkey.pixel_x = initial(poor_monkey.pixel_x)
-	poor_monkey.pixel_y = initial(poor_monkey.pixel_y)
+	poor_monkey.forceMove(drop_point)
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
 	if(!ismonkey(monkey))
