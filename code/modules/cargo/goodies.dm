@@ -372,7 +372,7 @@
 	desc = "Contains a set of shuttle blueprints, and the circuitboards necessary for constructing your own shuttle. \
 			Well at least the ones you can't source yourself without Science's help."
 	cost = PAYCHECK_COMMAND * 12 //You assistants with shipwrighting ambitions can do a couple bounties, can't you?
-	access_view = ACCESS_MAINT_TUNNELS //Sure science doesn't have maintenance access like cargo techs and engineers do, but they can research the tech themselves.
+	access_view = ACCESS_AUX_BASE //Engineers have it, QM can give it to whoever, and scientists can just research the tech.
 	contains = list(
 		/obj/item/shuttle_blueprints,
 		/obj/item/circuitboard/computer/shuttle/flight_control,
