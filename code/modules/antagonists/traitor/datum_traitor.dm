@@ -355,9 +355,8 @@
 
 	result += objectives_text
 
-	if(uplink_handler)
-		if (uplink_handler.contractor_hub)
-			result += contractor_round_end()
+	if(uplink_handler && uplink_handler.contractor_hub)
+		result += contractor_round_end()
 
 	var/special_role_text = LOWER_TEXT(name)
 
