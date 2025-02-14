@@ -62,8 +62,7 @@
 	passthroughable = NONE
 	if(is_shifted)
 		var/mob/living/owner = parent
-		owner.pixel_x = owner.body_position_pixel_x_offset + owner.base_pixel_x
-		owner.pixel_y = owner.body_position_pixel_y_offset + owner.base_pixel_y
+		owner.remove_offsets(TRAIT_PIXEL_SHIFT, animate = TRUE)
 	qdel(src)
 
 /// In-turf pixel movement which can allow things to pass through if the threshold is met.
@@ -72,20 +71,20 @@
 	var/mob/living/owner = parent
 	switch(direct)
 		if(NORTH)
-			if(owner.pixel_y <= maximum_pixel_shift + owner.base_pixel_y)
-				owner.pixel_y++
+			if(owner.pixel_z <= maximum_pixel_shift + owner.base_pixel_z)
+				owner.pixel_z++
 				is_shifted = TRUE
 		if(EAST)
-			if(owner.pixel_x <= maximum_pixel_shift + owner.base_pixel_x)
-				owner.pixel_x++
+			if(owner.pixel_w <= maximum_pixel_shift + owner.base_pixel_w)
+				owner.pixel_w++
 				is_shifted = TRUE
 		if(SOUTH)
-			if(owner.pixel_y >= -maximum_pixel_shift + owner.base_pixel_y)
-				owner.pixel_y--
+			if(owner.pixel_z >= -maximum_pixel_shift + owner.base_pixel_z)
+				owner.pixel_z--
 				is_shifted = TRUE
 		if(WEST)
-			if(owner.pixel_x >= -maximum_pixel_shift + owner.base_pixel_x)
-				owner.pixel_x--
+			if(owner.pixel_w >= -maximum_pixel_shift + owner.base_pixel_w)
+				owner.pixel_w--
 				is_shifted = TRUE
 
 	// Yes, I know this sets it to true for everything if more than one is matched.

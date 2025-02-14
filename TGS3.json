@@ -1,9 +1,0 @@
-{
-    "documentation": "/tg/station server 3 configuration file",
-    "synchronize_paths": [],
-    "static_directories": [
-      "config",
-      "data"
-    ],
-    "dlls": []
-  }

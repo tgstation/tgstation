@@ -329,4 +329,4 @@ export const FeatureTextInput = (
       onChange={(_, value) => props.handleSetValue(value)}
     />
   );
-};
+}
