@@ -22,6 +22,12 @@
 		var/atom/movable/__movable_target = target; \
 		__final_pixel_z = __movable_target.base_pixel_z; \
 	}; \
+	if(isliving(target)) { \
+		var/mob/living/__living_target = target; \
+		for(var/__offset_key in LAZYACCESS(__living_target.offsets, PIXEL_Z_OFFSET)) { \
+			__final_pixel_z += __living_target.offsets[PIXEL_Z_OFFSET][__offset_key]; \
+		}; \
+	}; \
 	animate(target, pixel_z = __final_pixel_z, time = 1 SECONDS)
 
 /// The duration of the animate call in mob/living/update_transform
