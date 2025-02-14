@@ -444,6 +444,7 @@
 #include "code\__DEFINES\~doppler_defines\shuttle_defines.dm"
 #include "code\__DEFINES\~doppler_defines\signals.dm"
 #include "code\__DEFINES\~doppler_defines\sound.dm"
+#include "code\__DEFINES\~doppler_defines\sources.dm"
 #include "code\__DEFINES\~doppler_defines\span.dm"
 #include "code\__DEFINES\~doppler_defines\species.dm"
 #include "code\__DEFINES\~doppler_defines\speech_channels.dm"

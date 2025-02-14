@@ -744,7 +744,7 @@
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	if(rotate_on_lying)
-		add_offsets(LYING_DOWN_TRAIT, y_add = PIXEL_Y_OFFSET_LYING)
+		add_offsets(LYING_DOWN_TRAIT, z_add = PIXEL_Y_OFFSET_LYING) // DOPPLER EDIT pixelshift, old code: add_offsets(LYING_DOWN_TRAIT, y_add = PIXEL_Y_OFFSET_LYING)
 
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_standing_up()
