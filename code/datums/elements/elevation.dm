@@ -173,7 +173,7 @@
 		return
 	// while the offset system can natively handle this,
 	// we want to avoid accidentally double-elevating anything they're buckled to (namely vehicles)
-	if(target.has_offset(ELEVATION_SOURCE(src)))
+	if(target.has_offset(source = ELEVATION_SOURCE(src)))
 		return
 	// We are buckled to something
 	if(target.buckled)
