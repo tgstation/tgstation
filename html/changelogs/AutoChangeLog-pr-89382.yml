@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "Gives admins the ability to make mobs say/emote things from a list at random intervals for the rest of their lives."

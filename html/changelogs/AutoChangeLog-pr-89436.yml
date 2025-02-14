@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Added three tips to the fishing tips text file."

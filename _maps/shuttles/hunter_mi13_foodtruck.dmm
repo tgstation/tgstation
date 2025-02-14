@@ -104,14 +104,6 @@
 /obj/item/binoculars{
 	pixel_y = 10
 	},
-/obj/item/traitor_bug{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/item/traitor_bug{
-	pixel_y = 3;
-	pixel_x = -5
-	},
 /obj/item/storage/box/zipties{
 	pixel_y = -4;
 	pixel_x = 4
