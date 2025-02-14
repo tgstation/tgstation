@@ -499,7 +499,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					var/set_override = null
 					GLOB.department_cd_override = set_override
 					return
-				if(choice == "Cancel" || null)
+				if(!choice || choice == "Cancel")
 					return
 		//buttons that are fun for exactly you and nobody else.
 		if("monkey")
