@@ -1980,6 +1980,7 @@
 #include "code\datums\weather\weather_types\ash_storm.dm"
 #include "code\datums\weather\weather_types\floor_is_lava.dm"
 #include "code\datums\weather\weather_types\radiation_storm.dm"
+#include "code\datums\weather\weather_types\rain_storm.dm"
 #include "code\datums\weather\weather_types\snow_storm.dm"
 #include "code\datums\weather\weather_types\void_storm.dm"
 #include "code\datums\wires\_wires.dm"
