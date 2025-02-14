@@ -9380,6 +9380,9 @@
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/cable,
+/obj/item/flesh_shears{
+	pixel_x = -5
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "dtO" = (
@@ -39173,7 +39176,6 @@
 "ncb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/item/paper/calling_card,
 /obj/structure/alien/resin/membrane,
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds,
