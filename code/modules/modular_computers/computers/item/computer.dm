@@ -926,6 +926,8 @@
 	if(inserted_disk)
 		user.put_in_hands(inserted_disk)
 		balloon_alert(user, "disks swapped")
+	else
+		balloon_alert(user, "disk inserted")
 	inserted_disk = disk
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 	return ITEM_INTERACT_SUCCESS

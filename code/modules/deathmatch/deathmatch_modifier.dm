@@ -388,8 +388,10 @@
 	contents = list(
 		/mob/living/basic/ant = 2,
 		/mob/living/basic/construct/proteon = 2,
+		/mob/living/basic/dark_wizard = 2,
 		/mob/living/basic/flesh_spider = 2,
 		/mob/living/basic/garden_gnome = 2,
+		/mob/living/basic/goose = 2,
 		/mob/living/basic/killer_tomato = 2,
 		/mob/living/basic/leaper = 1,
 		/mob/living/basic/mega_arachnid = 1,
@@ -399,13 +401,11 @@
 		/mob/living/basic/mining/lobstrosity = 1,
 		/mob/living/basic/mining/mook = 2,
 		/mob/living/basic/mouse/rat = 2,
+		/mob/living/basic/vatbeast = 1,
 		/mob/living/basic/spider/giant/nurse/scrawny = 2,
 		/mob/living/basic/spider/giant/tarantula/scrawny = 2,
 		/mob/living/basic/spider/giant/hunter/scrawny = 2,
-		/mob/living/simple_animal/hostile/dark_wizard = 2,
-		/mob/living/simple_animal/hostile/retaliate/goose = 2,
 		/mob/living/simple_animal/hostile/ooze = 1,
-		/mob/living/simple_animal/hostile/vatbeast = 1,
 	)
 
 /datum/deathmatch_modifier/drop_pod/missiles

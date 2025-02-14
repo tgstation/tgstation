@@ -62,6 +62,7 @@
 /obj/item/food/bait/doughball/synthetic
 	name = "synthetic doughball"
 	icon_state = "doughball_blue"
+	rod_overlay_icon_state = "dough_blue_overlay"
 	preserved_food = TRUE
 	show_on_wiki = FALSE //It's an abstract item.
 

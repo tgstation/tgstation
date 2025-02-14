@@ -446,7 +446,7 @@
 	id = "waystation"
 	suffix = "waystation.dmm"
 	name = "Space-Ruin Waystation"
-	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+	description = "A waystation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
 
 /datum/map_template/ruin/space/allamericandiner
 	id = "allamericandiner"

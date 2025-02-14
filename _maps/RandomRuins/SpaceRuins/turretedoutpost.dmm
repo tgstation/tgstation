@@ -50,6 +50,10 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/turretedoutpost)
+"eR" = (
+/obj/structure/foamedmetal/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "eT" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/trimline/red/line{
@@ -190,7 +194,7 @@
 "mf" = (
 /obj/structure/lattice,
 /obj/structure/girder,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/airless,
 /area/template_noop)
 "my" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -204,7 +208,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "nd" = (
 /obj/structure/girder/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "no" = (
 /obj/machinery/light/dim/directional/west,
@@ -459,6 +463,10 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
 /area/ruin/space/has_grav/turretedoutpost)
+"Ct" = (
+/obj/structure/girder,
+/turf/open/floor/plating/rust/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "Cu" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -577,6 +585,10 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
+"Ny" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "NU" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
@@ -650,6 +662,14 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
+"Sw" = (
+/obj/structure/girder,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/turretedoutpost)
+"Te" = (
+/turf/open/floor/plating/rust/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "Tg" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/structure/table/reinforced,
@@ -686,6 +706,11 @@
 "TY" = (
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
+"Ut" = (
+/obj/structure/girder,
+/obj/structure/grille,
+/turf/open/floor/plating/rust/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "UD" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -721,7 +746,7 @@
 /obj/structure/girder/displaced,
 /obj/structure/grille/broken,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "VO" = (
 /obj/machinery/porta_turret/syndicate/energy/ruin,
@@ -904,7 +929,7 @@ ro
 ro
 ro
 nd
-up
+Te
 ro
 ro
 ro
@@ -931,13 +956,13 @@ jM
 jM
 ro
 ro
-ID
-cD
-ID
-ID
+Sw
+Ct
+Ut
+Sw
 VB
-ID
-pO
+Sw
+eR
 ro
 ro
 jM
@@ -961,15 +986,15 @@ Ci
 bU
 ro
 ro
-ID
-ID
+Sw
+Sw
 ro
 ro
 ro
 ro
 ro
-pO
-pO
+eR
+eR
 ro
 ro
 ro
@@ -991,8 +1016,8 @@ jM
 jM
 jM
 ro
-ID
-ID
+Sw
+Sw
 ro
 ro
 sy
@@ -1000,7 +1025,7 @@ fF
 EA
 ro
 ro
-ID
+Sw
 ro
 St
 pi
@@ -1022,7 +1047,7 @@ jM
 jM
 jM
 ro
-ID
+Ut
 ro
 ro
 hr
@@ -1053,7 +1078,7 @@ jM
 jM
 jM
 ro
-ID
+Ut
 ro
 Pf
 aH
@@ -1084,7 +1109,7 @@ bU
 jM
 rK
 ro
-ID
+Sw
 ro
 gn
 aH
@@ -1115,7 +1140,7 @@ bU
 bU
 bU
 ro
-pO
+eR
 ro
 ro
 lF
@@ -1146,8 +1171,8 @@ Ci
 jM
 rK
 ro
-pO
-cD
+eR
+Ny
 ro
 Lf
 US

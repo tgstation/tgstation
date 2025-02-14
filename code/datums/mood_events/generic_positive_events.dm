@@ -290,7 +290,7 @@
 	timeout = 30 SECONDS
 
 /datum/mood_event/gamer_won
-	description = "I love winning videogames!"
+	description = "I love winning video games!"
 	mood_change = 10
 	timeout = 5 MINUTES
 

@@ -139,8 +139,8 @@
 		balloon_alert(user, "empty!")
 	else
 		var/obj/item/grabbies = pick(contents)
-		atom_storage.remove_single(user, grabbies, drop_location())
-		user.put_in_hands(grabbies)
+		if(atom_storage.remove_single(user, grabbies, drop_location()))
+			user.put_in_hands(grabbies)
 	return TRUE
 
 /obj/item/surgery_tray/screwdriver_act_secondary(mob/living/user, obj/item/tool)

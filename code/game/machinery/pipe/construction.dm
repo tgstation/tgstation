@@ -448,7 +448,7 @@ Buildable meters
 
 	new /obj/machinery/meter/turf(loc, piping_layer)
 	S.play_tool_sound(src)
-	to_chat(user, span_notice("You fasten the meter to the [loc.name]."))
+	to_chat(user, span_notice("You fasten the meter to \the [loc]."))
 	qdel(src)
 
 /obj/item/pipe_meter/dropped()

@@ -40,8 +40,6 @@
 ///A trait given by a held item
 #define HELD_ITEM_TRAIT "held-item-trait"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
-/// A trait given by any status effect
-#define STATUS_EFFECT_TRAIT "status-effect"
 
 /// Trait from light debugging
 #define LIGHT_DEBUG_TRAIT "light-debug"
@@ -124,7 +122,6 @@
 #define MEGAFAUNA_TRAIT "megafauna"
 #define CLOWN_NUKE_TRAIT "clown-nuke"
 #define STICKY_MOUSTACHE_TRAIT "sticky-moustache"
-#define CHAINSAW_FRENZY_TRAIT "chainsaw-frenzy"
 #define CHRONO_GUN_TRAIT "chrono-gun"
 #define REVERSE_BEAR_TRAP_TRAIT "reverse-bear-trap"
 #define CURSED_MASK_TRAIT "cursed-mask"
@@ -152,6 +149,8 @@
 
 /// A trait gained from a mob's leap action, like the leaper
 #define LEAPING_TRAIT "leaping"
+/// From grabbing someone
+#define GRABBING_TRAIT "grabbing"
 /// A trait gained from a mob's vanish action, like the herophant
 #define VANISHING_TRAIT "vanishing"
 /// A trait gained from a mob's swoop action, like the ash drake
@@ -198,6 +197,8 @@
 
 /// Trait from mob/living/update_transform()
 #define UPDATE_TRANSFORM_TRAIT "update_transform"
+/// Trait from mob/living/update_offsets()
+#define UPDATE_OFFSET_TRAIT "update_offset"
 
 /// Trait granted by the berserker hood.
 #define BERSERK_TRAIT "berserk_trait"
@@ -211,8 +212,6 @@
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_DATUM_TRAIT "mood_datum"
 #define DRONE_SHY_TRAIT "drone_shy"
-/// Trait given by stabilized light pink extracts
-#define STABILIZED_LIGHT_PINK_EXTRACT_TRAIT "stabilized_light_pink"
 /// Trait given by adamantine extracts
 #define ADAMANTINE_EXTRACT_TRAIT "adamantine_extract"
 /// Given by the multiple_lives component to the previous body of the mob upon death.
@@ -313,7 +312,7 @@
 /// From the aquarium component
 #define AQUARIUM_TRAIT "aquarium"
 
-/// Trait aquired from being painted a certain color
+/// Trait acquired from being painted a certain color
 #define ATOM_COLOR_TRAIT "atom_color"
 
 /// Permanent trait from an overdose effect

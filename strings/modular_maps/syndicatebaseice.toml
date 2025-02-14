@@ -1,0 +1,5 @@
+directory = "_maps/RandomRuins/IceRuins/icemoon_underground_comms_agent/"
+
+[rooms.commsoffice]
+modules = ["commsoffice_standard.dmm", "commsoffice_cheap.dmm", "commsoffice_luxury.dmm"]
+

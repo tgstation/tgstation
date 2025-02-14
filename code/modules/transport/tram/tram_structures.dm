@@ -6,7 +6,7 @@
  *
  * if you map something on to the tram, make SURE if possible that it doesnt have anything reacting to its own movement
  * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
- * the tram took a third of the tick per movement when its just carrying its default mapped in objects
+ * the tram took a third of the tick per movement when it's just carrying its default mapped in objects
  */
 
 /obj/structure/grille/tram/Initialize(mapload)

@@ -436,9 +436,11 @@ export const TraitTooltip = (props) => {
   const trait = props.trait_db.find((t) => {
     return t.path === props.path;
   });
+  if (!trait) {
+    return;
+  }
   return (
     <Tooltip
-      key=""
       content={
         <Table>
           {!!props.grafting && (

@@ -1050,13 +1050,16 @@
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
 /mob/living/silicon/ai/proc/show_camera_list()
-	var/list/cameras = get_camera_list(network)
-	var/camera = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
-	if(isnull(camera))
+	var/list/cameras = GLOB.cameranet.get_available_camera_by_tag_list(network)
+	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
+	if(isnull(camera_tag))
 		return
-	if(isnull(cameras[camera]))
+
+	var/obj/machinery/camera/chosen_camera = cameras[camera_tag]
+	if(isnull(chosen_camera))
 		return
-	switchCamera(cameras[camera])
+
+	switchCamera(chosen_camera)
 
 /mob/living/silicon/on_handsblocked_start()
 	return // AIs have no hands

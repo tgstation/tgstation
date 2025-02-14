@@ -85,7 +85,7 @@
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
 	var/mob/living/player = usr
-	var/player_crew_name = player.first_name()
+	var/player_crew_name = first_name(player.name)
 	settlers = list()
 	for(var/i in 1 to ORION_STARTING_CREW_COUNT - 1) //one reserved to be YOU
 		add_crewmember(update = FALSE)

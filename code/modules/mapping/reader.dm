@@ -350,8 +350,9 @@
 
 	if(!no_changeturf)
 		var/list/turfs = block(
-			locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-			locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
+			bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ],
+			bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]
+		)
 		for(var/turf/T as anything in turfs)
 			//we do this after we load everything in. if we don't, we'll have weird atmos bugs regarding atmos adjacent turfs
 			T.AfterChange(CHANGETURF_IGNORE_AIR)

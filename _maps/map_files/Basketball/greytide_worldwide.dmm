@@ -704,7 +704,7 @@
 /obj/effect/turf_decal/box/red/corners{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)

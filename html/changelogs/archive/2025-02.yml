@@ -1,0 +1,240 @@
+2025-02-01:
+  AyIong:
+  - qol: 'You can choose in preferences what layout use into the Smartfridge or Vending
+      machines: Grid or List. Default TGUI Layout preference. In the future there
+      may be more interfaces where there will be 2 layout options. Also Vending UI
+      now use Grid layout by default.'
+  BobDABuilder9001:
+  - balance: solars now make 2.5kw each instead of 1.5kw
+  MTandi:
+  - qol: Added forensic scanner UI
+  - qol: Made forensic scanner report format cleaner
+  Majkl-J:
+  - bugfix: PENLITE defib mounts now actually charge the cell
+  SmArtKar:
+  - image: Premium Internals Boxes station trait now has unique box sprites
+2025-02-02:
+  Arceniu:
+  - spellcheck: Replaced the words "Singularity Generation Disk" with "Supermatter
+      Crystal Shard" on a paper found by the old station ruin, to match the contents
+      of the inventory room.
+  MTandi:
+  - bugfix: Fixed medbot emag VFX
+  SmArtKar:
+  - bugfix: Large fish should not render behind their wall mounts now
+  - rscadd: Added fishing bags, found in fun vendors or made from carpskin.
+  - balance: Added the generator aquarium upgrade to service and science lathes.
+  - image: Resprited reels and bobber
+  - bugfix: Fixed partially missing fishing UI
+  - bugfix: Fixed glowsticks not working
+  necromanceranne:
+  - rscdel: Mobile hollow bioscramblers no longer spawn from the anomaly research
+      ruin, sparing everyone from the inevitable unannounced arrival of a permanent
+      hollow bioscrambler aboard the station. You maybe still encounter immobile bioscramblers
+      in the ruin, however.
+  zoomachina:
+  - bugfix: showers wash things under them when they're turned on again
+2025-02-03:
+  Absolucy:
+  - bugfix: Random messages should no longer be dropped and not appear in chat.
+  SmArtKar:
+  - bugfix: Fixed an issue with persisting brimbeams
+  jlsnow301:
+  - bugfix: Character pref dropdowns should have their display names fixed
+  necromanceranne:
+  - balance: The force of most standard varieties of toolboxes has increased from
+      12 to 13 force.
+  - code_imp: Removed some magic numbers from the calculations for ancient toolboxes
+      damage scaling.
+  siliconOpossum:
+  - bugfix: Lathes interfaces are no longer unscrollable on 516
+2025-02-04:
+  necromanceranne:
+  - bugfix: Allows MOD holsters to once again activate while the modsuit is inactive
+      and undeployed.
+2025-02-05:
+  Melbert:
+  - qol: Map vote tallies explains how they work if you hover them
+2025-02-06:
+  Absolucy:
+  - bugfix: Void Cloaks now properly hide blades and such in the suit storage from
+      the wearer's sprite.
+  Ben10Omintrix:
+  - bugfix: fixes virtual pet app changing PDA's colors when open
+  Exester509:
+  - map: The Syndicate Lavaland base has been generally improved, with more defenses
+      and comms equipment.
+  Gaxeer:
+  - bugfix: fix image display in `NT IRN` PDA app for preview and contents
+  Holoo-1:
+  - bugfix: fixed state laws window on 516
+  Jacquerel:
+  - bugfix: AI-controlled ventcrawling mobs (botanical spiderlings and legioned monkeys)
+      can once more do so without killing themselves shortly afterwards.
+  JohnFulpWillard:
+  - bugfix: Autolathes no longer have a scrollbar that sends you off the screen.
+  - bugfix: Exosuit fabricators' queue list & Techfab/Autolathe's left side (with
+      the sections of printables) now have a scrollbar when the full list doesn't
+      fit on the UI for 516 users. Techfab/Autolathe also now does this for the list
+      of items too, instead of always having one.
+  SmArtKar:
+  - bugfix: Tactical medkits should no longer create invisible medbots
+  - image: Implemented the missing bezerk medbot skin
+  - bugfix: Fixed another two missing areas on icebox
+  - bugfix: Fixed incorrect power consumption on reagent grinders
+  - bugfix: Fixed wrong area/wall in Icemoon Underground
+  - map: Added cooling loops and cold tiles to all kitchen freezers that were missing
+      them
+  - bugfix: Fixed plant analyzers not being placeable on tables/in backpacks
+  - bugfix: Fixed stunprod's missing inhands sprite
+  TiviPlus:
+  - bugfix: fixed some admin links not working on 516
+  Y0SH1M4S73R:
+  - bugfix: Joining a minigame or taking certain ghost roles, while you have a mind
+      without a body, will no longer DNR you, just in case you can be resurrected
+      by some means.
+  - bugfix: If your old body is permanently destroyed while you are playing a minigame
+      or as certain ghost roles, you will still return to your character's original
+      mind, just in case you can be resurrected by some means.
+  - bugfix: The basketball minigame now gives its players and referee temporary bodies.
+2025-02-07:
+  Runi-c:
+  - balance: slips now make you eligible for being shove stunned
+  SmArtKar:
+  - balance: Removed an oversight which allowed you to farm fishing achievements
+  TiviPlus:
+  - server: An issue where more than 16 admin flags could not exist in the DB has
+      been corrected
+2025-02-08:
+  Absolucy:
+  - bugfix: Fixed some mistakes I made while fixing the void cloak.
+  Holoo-1:
+  - bugfix: fixed camera consoles, spyglasses etc. client crush on 516
+  MTandi:
+  - qol: Tile context menu tweaks (Loot panel)
+  Thunder12345:
+  - map: Removed a mounted machine gun from the Meta Central bitrunning domain, expect
+      85% less instant wipes.
+  Wallem:
+  - qol: Integrated Circuit nodes are now colored depending on their type.
+  necromanceranne:
+  - balance: Hunter boxing now directly heals you instead of injecting you with healing
+      chems on a successful crit.
+  - balance: Your combos no longer cause you to screw up your next combo by changing
+      your attack speed for exactly one punch.
+  - code_imp: Fixes up a bit of odd rounding that occurs in the experience gain totals
+      and uses division instead of multipliers where it makes sense.
+  - refactor: Gun maintenance is now consolidated into a single item, the gun maintenance
+      kit, rather than multiple different item interactions. It is handled on the
+      maintenance kit itself, and not in gun code.
+  - qol: You can order maintenance kits from cargo, and get some out of the security
+      equipment vendor. Helpful if someone spilled acid onto your disabler. You can
+      also make a makeshift one from maintenance trash.
+  vinylspiders:
+  - qol: alien eggs (xeno embryos, headslugs, etc) will now show up on the advanced
+      medical scanner
+2025-02-09:
+  Likteer:
+  - qol: Added the resin mister module to the roundstart atmos MODsuit.
+  Melbert:
+  - rscadd: Adds two fantasy affixes
+  SmArtKar:
+  - rscadd: Hydrogen Peroxide and Eldritch Essence now can rust turfs, with latter
+      producing heretic instead of normal rust.
+  - spellcheck: Fixed a misspelled comment and a reference to non-existent Eldritch
+      water (as opposed to Eldritch Essence)
+  TealSeer:
+  - bugfix: Fixed the crystallizer missing pipe connectors
+  grungussuss:
+  - sound: gauze now makes sounds when applied
+  loganuk:
+  - qol: Pyro Slime Objective Text Edit
+  necromanceranne:
+  - code_imp: Removes a variable in the riddable creature component that shouldn't
+      be doing what it is doing.
+  timothymtorres:
+  - code_imp: Add error message logs to screenshot CI test failure when screenshots
+      do not exist.
+2025-02-10:
+  SmArtKar:
+  - bugfix: Fixed missing HTML encodes in comms console code
+  - bugfix: Examining walls no longer allows you to see items mounted on its other
+      side
+  TiviPlus:
+  - code_imp: updated hslify to correctly detect all hexcodes
+  necromanceranne:
+  - bugfix: The traitor guncase properly checks for condition changes before letting
+      a player activate the time bomb.
+2025-02-11:
+  SmArtKar:
+  - bugfix: Fixed wooden rifle stock being uncraftable
+  - bugfix: Fixed exceptionally dark armrests on chairs
+  - bugfix: Fixed dress and gown rendering below gloves and shoes
+  Time-Green:
+  - rscdel: Reverts sneeze projectiles
+2025-02-12:
+  FlufflesTheDog:
+  - bugfix: crafted medibots are more consistently corporeal
+  Kiromaka:
+  - balance: Helbital reaper is now 100x more likely.
+  Rengan:
+  - bugfix: When you cast examine to the disguised detective, its assignment will
+      now display correctly.
+  grungussuss:
+  - sound: new sounds for cloth items
+2025-02-13:
+  Jacquerel:
+  - admin: Added easier tooling for admins to add or change the AI controllers on
+      mobs
+  JohnFulpWillard:
+  - admin: Reload Configuration can be cancelled via the alert it gives you.
+  - admin: Check antagonists & del/law/dna/fingerprint/radio log panels use browsers
+      which means they have darkmode. Also the tram panel will cancel out if you click
+      cancel.
+  Melbert:
+  - bugfix: Fixed grab offsets not showing for anything but passive grab
+  - bugfix: Fix jank with mob offsets when riding things
+  - refactor: Refactored riding component, particularly how it selects layer and offsets.
+      Report any oddities
+  - refactor: Refactored pixel offsets of mobs. Report any oddities
+  RusselNotSCP:
+  - qol: Andromeda Bitters bottle now only dispenses in 1-5u increments
+  SmArtKar:
+  - admin: Admins can now make vendors free without too much hassle
+  - bugfix: Fixed duplicated comsigs/text and HARS head deletion from prosthetic replacement
+  - bugfix: Barroaches no longer disappear when worn on your head
+  - image: Barroaches now have new worn sprites
+  - bugfix: Fixed perceptomatrix not applying any of its traits
+  TiviPlus:
+  - code_imp: deleted all remaining code referencing TGS3
+2025-02-14:
+  Absolucy:
+  - bugfix: Syndicate encryption keys properly protect against AoE radio jamming again.
+  Melbert:
+  - rscdel: Honorific "full name" setting no longer cares about mononyms, meaning
+      Lizards and people with similarly hyphenated names will no longer get their
+      name butchered.
+  MelokGleb:
+  - image: broken radio is now not flat and old
+  SmArtKar:
+  - bugfix: Makes glowstick fluid respect chosen RLD color
+  - bugfix: Chef's love and french kissing no longer can stop laser projectiles of
+      syndiekissers.
+  - code_imp: Unified two parts of kiss code.
+  TealSeer:
+  - qol: The limb grower can now be unwrenched and rotated
+  Time-Green, Donglesplonge, SmartKar:
+  - rscadd: Adds the flesh reshaper to genetics and the Gene Engineering techweb!
+      Restyle all those visual organs! Don't like your moth coworkers' wings? Restyle
+      them to your liking!
+  TiviPlus:
+  - bugfix: Fixed stat panel turf list menu clicks only working on the text
+  hyperjll:
+  - qol: The Syndicate Tome's uplink description has been changed to mention it's
+      functionality.
+  - balance: Haloperidol's self-purge is drastically reduced while the host is stamina
+      crit, as a result of permanent stamina crit no longer being a thing to worry
+      about.
+  timothymtorres:
+  - code_imp: Optimize Nyctophobia quirk to not process while certain traits present
+  - code_imp: Convert weather duration to use time defines

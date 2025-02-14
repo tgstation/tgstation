@@ -30,6 +30,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 	slot_flags = ITEM_SLOT_EARS
 	dog_fashion = null
+	equip_sound = SFX_HEADSET_EQUIP
+	pickup_sound = SFX_HEADSET_PICKUP
+	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
+	sound_vary = TRUE
 	var/obj/item/encryptionkey/keyslot2 = null
 	/// A list of all languages that this headset allows the user to understand. Populated by language encryption keys.
 	var/list/language_list

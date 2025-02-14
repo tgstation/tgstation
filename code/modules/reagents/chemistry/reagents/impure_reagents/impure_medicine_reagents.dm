@@ -1,4 +1,4 @@
-//Reagents produced by metabolising/reacting fermichems inoptimally these specifically are for medicines
+//Reagents produced by metabolising/reacting fermichems suboptimally these specifically are for medicines
 //Inverse = Splitting
 //Invert = Whole conversion
 //Failed = End reaction below purity_min
@@ -124,7 +124,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Simply reduces your alcohol tolerance, kinda simular to prohol
 /datum/reagent/inverse/libitoil
 	name = "Libitoil"
-	description = "Temporarilly interferes a patient's ability to process alcohol."
+	description = "Temporarily interferes with a patient's ability to process alcohol."
 	chemical_flags = REAGENT_DONOTSPLIT
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 4)
@@ -172,7 +172,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //probital
 /datum/reagent/impurity/probital_failed//Basically crashed out failed metafactor
 	name = "Metabolic Inhibition Factor"
-	description = "This enzyme catalyzes crashes the conversion of nutricious food into healing peptides."
+	description = "This enzyme catalyzes crashes the conversion of nutritious food into healing peptides."
 	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
 	color = "#b3ff00"
 	overdose_threshold = 10
@@ -200,7 +200,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //inverse
 /datum/reagent/inverse/lentslurri //Okay maybe I should outsource names for these
 	name = "Lentslurri"//This is a really bad name please replace
-	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong, this will cause the patient to move slowly."
+	description = "A highly addictive muscle relaxant that is made when Lenturi reactions go wrong, this will cause the patient to move slowly."
 	addiction_types = list(/datum/addiction/medicine = 8)
 	tox_damage = 0
 
@@ -247,7 +247,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
 	var/datum/reagents/mob_reagents = affected_mob.reagents
 	if(mob_reagents)
-		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating)
+		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating, 1)
 	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if(!ishuman(affected_mob))
 		return
@@ -910,7 +910,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/rezadone
 	name = "Inreziniver"
-	description = "Makes the user horribly afraid of all things related to carps."
+	description = "Makes the user horribly afraid of all things related to fish."
 	color = "#c92eb4"
 	ph = 13.9
 	metabolization_rate = 0.05 * REM
@@ -918,8 +918,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/rezadone/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/carps, TRAUMA_RESILIENCE_ABSOLUTE)
+	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/fish, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/inverse/rezadone/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/carps, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/fish, resilience = TRAUMA_RESILIENCE_ABSOLUTE)

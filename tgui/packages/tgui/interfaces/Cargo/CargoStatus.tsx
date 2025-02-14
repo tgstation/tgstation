@@ -30,7 +30,7 @@ export function CargoStatus(props) {
     <Section
       title={department}
       buttons={
-        <Box inline bold>
+        <Box inline bold verticalAlign="middle">
           <AnimatedNumber
             value={points}
             format={(value) => formatMoney(value)}
