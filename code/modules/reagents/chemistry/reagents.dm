@@ -120,6 +120,9 @@
 /datum/reagent/proc/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(isnull(exposed_mob.reagents)) // lots of simple mobs do not have a reagents holder
+		return
+
 	. = SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection)
 	if(penetrates_skin & methods) // models things like vapors which penetrate the skin
 		var/amount = round(reac_volume * clamp((1 - touch_protection), 0, 1), 0.1)
@@ -195,7 +198,7 @@ Primarily used in reagents/reaction_agents
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
 	// Scale the overdose threshold of the chem by the difference between the default and creation purity.
-	overdose_threshold += (src.creation_purity - initial(purity)) * overdose_threshold	
+	overdose_threshold += (src.creation_purity - initial(purity)) * overdose_threshold
 	if(added_traits)
 		affected_mob.add_traits(added_traits, "base:[type]")
 
