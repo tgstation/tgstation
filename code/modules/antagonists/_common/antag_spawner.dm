@@ -51,12 +51,12 @@
 		return
 	switch(action)
 		if("buy")
-			if(used || polling || !ishuman(ui.usr))
+			if(used || polling || !ishuman(ui.user))
 				return
 			var/selected_school = params["school"]
 			if(!(selected_school in ALL_APPRENTICE_TYPES))
 				return
-			INVOKE_ASYNC(src, PROC_REF(poll_for_student), ui.usr, params["school"])
+			INVOKE_ASYNC(src, PROC_REF(poll_for_student), ui.user, params["school"])
 			SStgui.close_uis(src)
 
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
