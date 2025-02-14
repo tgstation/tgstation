@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 		return
 
 	mob?.persistent_client = null
-	new_mob.persistent_client?.SetMob(null)
+	new_mob?.persistent_client?.SetMob(null)
 
 	mob = new_mob
 	new_mob?.persistent_client = src
