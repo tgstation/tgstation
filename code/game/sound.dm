@@ -152,6 +152,11 @@
 			var/area/A = get_area(src)
 			sound_to_use.environment = A.sound_environment
 
+		if(!use_reverb || sound_to_use.environment == SOUND_ENVIRONMENT_NONE)
+			sound_to_use.echo ||= new /list(18)
+			sound_to_use.echo[3] = -10000
+			sound_to_use.echo[4] = -10000
+
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
