@@ -192,6 +192,10 @@
 	name = "D00"
 	item_path = /obj/item/dice/d00
 
+/datum/loadout_item/pocket_items/lighter
+	name = "Zippo Lighter"
+	item_path = /obj/item/lighter
+
 /datum/loadout_item/pocket_items/cigarette
 	name = "Pack of Smokes"
 	item_path = /obj/item/storage/fancy/cigarettes
@@ -203,6 +207,10 @@
 /datum/loadout_item/pocket_items/cigar
 	name = "Pack of Cigars"
 	item_path = /obj/item/storage/fancy/cigarettes/cigars
+
+/datum/loadout_item/pocket_items/flask
+	name = "Pocket Flask"
+	item_path = /obj/item/reagent_containers/cup/glass/flask
 
 /datum/loadout_item/pocket_items/candles
 	name = "Box of Candles"
@@ -227,3 +235,7 @@
 /datum/loadout_item/pocket_items/poster_pinup
 	name = "Poster (Pinup)"
 	item_path = /obj/item/poster/random_contraband/pinup
+
+/datum/loadout_item/pocket_items/wallet
+	name = "Wallet"
+	item_path = /obj/item/storage/wallet
