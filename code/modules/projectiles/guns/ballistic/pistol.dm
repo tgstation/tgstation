@@ -261,7 +261,6 @@
 
 /obj/item/gun/ballistic/automatic/pistol/doorhickey/fire_gun(atom/target, mob/living/user, flag, params)
 	var/dmg_multiplier = 1
-	var/point_blank = FALSE
 
 	if (get_dist(target, user) <= 1)
 		dmg_multiplier *= 2
