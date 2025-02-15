@@ -31,3 +31,7 @@
 /datum/loadout_item/inhand/briefcase_secure
 	name = "Briefcase (Secure)"
 	item_path = /obj/item/storage/briefcase/secure
+
+/datum/loadout_item/inhand/instrument
+	name = "Musical Instrument (Choice Beacon)"
+	item_path = /obj/item/choice_beacon/music
