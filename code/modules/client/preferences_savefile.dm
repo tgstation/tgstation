@@ -115,7 +115,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 47)
 		migrate_quirk_to_loadout(
 			quirk_to_migrate = "Colorist",
-			new_typepath = /obj/item/dyespray),
+			new_typepath = /obj/item/dyespray,
 		)
 
 /// checks through keybindings for outdated unbound keys and updates them
