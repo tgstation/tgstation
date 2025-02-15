@@ -283,8 +283,14 @@
 	. = ..()
 	if (!.)
 		return
+
 	var/damage_to_take = rand(DOORHICKEY_GUN_MIN_DAMAGE, DOORHICKEY_GUN_MAX_DAMAGE)
 	if (atom_integrity > damage_to_take)
+		take_damage(damage_to_take)
+		return
+
+	playsound(loc, SFX_SHATTER, 75, TRUE)
+	if (loc != user)
 		take_damage(damage_to_take)
 		return
 
@@ -293,7 +299,6 @@
 	if (prob(damage_to_take - atom_integrity) && poor_sod)
 		shrapnel_bomb = TRUE
 
-	playsound(user, SFX_SHATTER, 75, TRUE)
 	user.visible_message(span_danger("[src] explodes into small pieces[shrapnel_bomb ? ", chunk of it embedding in [user]'s [user.parse_zone_with_bodypart(poor_sod.body_zone)]" : ""]!"),
 		span_userdanger("[src] explodes into small pieces[shrapnel_bomb ? ", chunk of it embedding in your [poor_sod]!" : ""]!"),
 		span_hear("You can hear sound of plastic shattering."))
