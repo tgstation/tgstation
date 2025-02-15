@@ -321,7 +321,7 @@
 	if(created_name)
 		windoor.name = created_name
 	else if(electronics.passed_name)
-		windoor.name = electronics.passed_name
+		windoor.name = sanitize(electronics.passed_name)
 	if(electronics.one_access)
 		windoor.req_one_access = electronics.accesses
 	else
