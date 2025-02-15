@@ -196,25 +196,9 @@
 	name = "Zippo Lighter"
 	item_path = /obj/item/lighter
 
-/datum/loadout_item/pocket_items/cigarette
-	name = "Pack of Smokes"
-	item_path = /obj/item/storage/fancy/cigarettes
-
-/datum/loadout_item/pocket_items/candy_cigarette
-	name = "Pack of Candy Cigarettes"
-	item_path = /obj/item/storage/fancy/cigarettes/cigpack_candy
-
-/datum/loadout_item/pocket_items/cigar
-	name = "Pack of Cigars"
-	item_path = /obj/item/storage/fancy/cigarettes/cigars
-
 /datum/loadout_item/pocket_items/flask
 	name = "Pocket Flask"
 	item_path = /obj/item/reagent_containers/cup/glass/flask
-
-/datum/loadout_item/pocket_items/candles
-	name = "Box of Candles"
-	item_path = /obj/item/storage/fancy/candle_box
 
 /datum/loadout_item/pocket_items/clipboard
 	name = "Clipboard"
@@ -223,10 +207,6 @@
 /datum/loadout_item/pocket_items/dye
 	name = "Hair Dye"
 	item_path = /obj/item/dyespray
-
-/datum/loadout_item/pocket_items/spraycan
-	name = "Spray Can"
-	item_path = /obj/item/toy/crayon/spraycan
 
 /datum/loadout_item/pocket_items/poster
 	name = "Poster (Contraband)"

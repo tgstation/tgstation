@@ -38,7 +38,3 @@
 /datum/loadout_item/neck/bowtie
 	name = "Bowtie"
 	item_path = /obj/item/clothing/neck/bowtie
-
-/datum/loadout_item/neck/camera
-	name = "Camera"
-	item_path = /obj/item/camera
