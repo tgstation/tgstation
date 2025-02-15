@@ -314,6 +314,7 @@
 		else if(!HAS_TRAIT(user, TRAIT_ANALGESIA))
 			user.emote("scream")
 
+	new /obj/effect/decal/cleanable/plastic(get_turf(src))
 	take_damage(damage_to_take)
 
 /obj/item/disk/design_disk/liberator
