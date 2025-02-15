@@ -131,6 +131,6 @@
 		/obj/item/clothing/shoes/jackboots = 1,
 		/obj/item/stack/sheet/mineral/titanium = 2,
 	)
-	result_atoms = list(/obj/item/clothing/shoes/magboots/greaves_of_the_prophet)
+	result_atoms = list(/obj/item/clothing/shoes/greaves_of_the_prophet)
 	research_tree_icon_path = 'icons/obj/clothing/shoes.dmi'
 	research_tree_icon_state = "hereticgreaves"
