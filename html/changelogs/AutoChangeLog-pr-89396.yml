@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Cryogelidia can no longer put you into stasis longer than the lifespan of the cube prison it kept you in."

@@ -21,7 +21,6 @@ import {
   dangerLevelsTooltip,
 } from './calculateDangerLevel';
 import { GenericUplink, Item } from './GenericUplink';
-import { Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
@@ -63,16 +62,10 @@ type UplinkData = {
     [key: string]: number;
   };
 
-  has_objectives: BooleanLike;
   has_progression: BooleanLike;
   primary_objectives: {
     [key: number]: string;
   };
-  completed_final_objective: string;
-  potential_objectives: Objective[];
-  active_objectives: Objective[];
-  maximum_active_objectives: number;
-  maximum_potential_objectives: number;
   purchased_items: number;
   shop_locked: BooleanLike;
   can_renegotiate: BooleanLike;
@@ -184,13 +177,7 @@ export class Uplink extends Component<{}, UplinkState> {
       progression_points,
       primary_objectives,
       can_renegotiate,
-      completed_final_objective,
-      active_objectives,
-      potential_objectives,
-      has_objectives,
       has_progression,
-      maximum_active_objectives,
-      maximum_potential_objectives,
       current_expected_progression,
       progression_scaling_deviance,
       current_progression_scaling,
@@ -294,11 +281,7 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Box>
                             <Box>
                               <Box>Your current level of threat.</Box> Threat
-                              determines
-                              {has_objectives
-                                ? ' the severity of secondary objectives you get and '
-                                : ' '}
-                              what items you can purchase.&nbsp;
+                              determines what items you can purchase.&nbsp;
                               <Box mt={0.5}>
                                 {/* A minute in deciseconds */}
                                 Threat passively increases by{' '}
@@ -341,7 +324,7 @@ export class Uplink extends Component<{}, UplinkState> {
                       </Tooltip>
                     </Stack.Item>
                   )}
-                  {!!(primary_objectives || has_objectives) && (
+                  {!!primary_objectives && (
                     <Stack.Item grow={1}>
                       <Tabs fluid>
                         {primary_objectives && (
@@ -356,20 +339,6 @@ export class Uplink extends Component<{}, UplinkState> {
                             onClick={() => this.setState({ currentTab: 0 })}
                           >
                             Primary Objectives
-                          </Tabs.Tab>
-                        )}
-                        {!!has_objectives && (
-                          <Tabs.Tab
-                            style={{
-                              overflow: 'hidden',
-                              whiteSpace: 'nowrap',
-                              textOverflow: 'ellipsis',
-                            }}
-                            icon="star-half-stroke"
-                            selected={currentTab === 1}
-                            onClick={() => this.setState({ currentTab: 1 })}
-                          >
-                            Secondary Objectives
                           </Tabs.Tab>
                         )}
                         <Tabs.Tab
@@ -409,73 +378,38 @@ export class Uplink extends Component<{}, UplinkState> {
               {(currentTab === 0 && primary_objectives && (
                 <PrimaryObjectiveMenu
                   primary_objectives={primary_objectives}
-                  final_objective={completed_final_objective}
                   can_renegotiate={can_renegotiate}
                 />
-              )) ||
-                (currentTab === 1 && has_objectives && (
-                  <ObjectiveMenu
-                    activeObjectives={active_objectives}
-                    potentialObjectives={potential_objectives}
-                    maximumActiveObjectives={maximum_active_objectives}
-                    maximumPotentialObjectives={maximum_potential_objectives}
-                    handleObjectiveAction={(objective, action) =>
-                      act('objective_act', {
-                        check: objective.original_progression,
-                        objective_action: action,
-                        index: objective.id,
-                      })
-                    }
-                    handleStartObjective={(objective) =>
-                      act('start_objective', {
-                        check: objective.original_progression,
-                        index: objective.id,
-                      })
-                    }
-                    handleObjectiveAbort={(objective) =>
-                      act('objective_abort', {
-                        check: objective.original_progression,
-                        index: objective.id,
-                      })
-                    }
-                    handleObjectiveCompleted={(objective) =>
-                      act('finish_objective', {
-                        check: objective.original_progression,
-                        index: objective.id,
-                      })
-                    }
-                    handleRequestObjectives={() => act('regenerate_objectives')}
+              )) || (
+                <>
+                  <GenericUplink
+                    currency={`${telecrystals} TC`}
+                    categories={allCategories}
+                    items={items}
+                    handleBuy={(item: ItemExtraData) => {
+                      if (!item.extraData?.ref) {
+                        act('buy', { path: item.id });
+                      } else {
+                        act('buy', { ref: item.extraData.ref });
+                      }
+                    }}
                   />
-                )) || (
-                  <>
-                    <GenericUplink
-                      currency={`${telecrystals} TC`}
-                      categories={allCategories}
-                      items={items}
-                      handleBuy={(item: ItemExtraData) => {
-                        if (!item.extraData?.ref) {
-                          act('buy', { path: item.id });
-                        } else {
-                          act('buy', { ref: item.extraData.ref });
-                        }
-                      }}
-                    />
-                    {(shop_locked && !data.debug && (
-                      <Dimmer>
-                        <Box
-                          color="red"
-                          fontFamily={'Bahnschrift'}
-                          fontSize={3}
-                          align={'top'}
-                          as="span"
-                        >
-                          SHOP LOCKED
-                        </Box>
-                      </Dimmer>
-                    )) ||
-                      null}
-                  </>
-                )}
+                  {(shop_locked && !data.debug && (
+                    <Dimmer>
+                      <Box
+                        color="red"
+                        fontFamily={'Bahnschrift'}
+                        fontSize={3}
+                        align={'top'}
+                        as="span"
+                      >
+                        SHOP LOCKED
+                      </Box>
+                    </Dimmer>
+                  )) ||
+                    null}
+                </>
+              )}
             </Stack.Item>
           </Stack>
         </Window.Content>
