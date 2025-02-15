@@ -14,8 +14,7 @@
 
 /obj/item/clothing/head/bio_hood/Initialize(mapload)
 	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+	AddComponent(/datum/component/clothing_dirt, mutable_appearance(icon, "bio_dirt", appearance_flags = KEEP_APART|RESET_COLOR))
 	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
