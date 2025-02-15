@@ -1,3 +1,6 @@
+/// Stores an override value for the order cooldown to be used by the Dpt. Order Cooldown button in the secrets menu. When null, the override is not active.
+GLOBAL_VAR(department_cd_override)
+
 /datum/computer_file/program/department_order
 	filename = "dept_order"
 	filedesc = "Departmental Orders"
@@ -253,8 +256,12 @@
 
 /// Calculates the cooldown it will take for this department's free order, based on its credit cost
 /datum/computer_file/program/department_order/proc/calculate_cooldown(credits)
-	var/time_y = DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT * (log(10, credits) ** DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT) * (1 SECONDS)
-	department_cooldowns[linked_department] = world.time + time_y
+	if(isnull(GLOB.department_cd_override))
+		var/time_y = DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT * (log(10, credits) ** DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT) * (1 SECONDS)
+		department_cooldowns[linked_department] = world.time + time_y
+	else
+		var/time_y = GLOB.department_cd_override SECONDS
+		department_cooldowns[linked_department] = world.time + time_y
 
 /datum/computer_file/program/department_order/process_tick(seconds_per_tick)
 	if(!check_cooldown() || alert_silenced || !alert_able)

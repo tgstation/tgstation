@@ -102,7 +102,6 @@
 "kp" = (
 /obj/structure/safe,
 /obj/item/stamp/syndicate,
-/obj/item/traitor_bug,
 /obj/item/eyesnatcher,
 /obj/item/stack/spacecash/c1000,
 /turf/open/floor/plating,

@@ -1,0 +1,4 @@
+author: "leaKsi"
+delete-after: True
+changes:
+  - bugfix: "Fixed a few sanitization issues."
