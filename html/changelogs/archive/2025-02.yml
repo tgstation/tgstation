@@ -238,3 +238,26 @@
   timothymtorres:
   - code_imp: Optimize Nyctophobia quirk to not process while certain traits present
   - code_imp: Convert weather duration to use time defines
+2025-02-15:
+  Ghommie:
+  - rscadd: Added three tips to the fishing tips text file.
+  Jacquerel:
+  - admin: Gives admins the ability to make mobs say/emote things from a list at random
+      intervals for the rest of their lives.
+  - rscdel: Misplaced or stolen traitor uplinks can no longer be recreated using a
+      radio code and special device, guard yours carefully or buy a backup implant.
+  - rscdel: Roundstart traitors can no longer take on additional objectives in order
+      to earn additional Telecrystals and fast-forward any unlock timers on items.
+      They also cannot earn the ability to complete a Final Objective.
+  - balance: Roundstart traitors can now buy the Contractor Kit from their traitor
+      uplink, rather than only midround traitors.
+  - rscadd: Traitors can buy Romerol for 25 TC, after 30 minutes of time has passed
+      in a round.
+  - image: Watchers won't display an animated cog at the same time as using their
+      gaze attack.
+  Melbert:
+  - bugfix: Spy uplink scans on RMB as intended
+  davethwave:
+  - rscdel: Removed the weighting of viro symptoms
+  grungussuss:
+  - sound: sutures got some sounds
