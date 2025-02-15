@@ -90,11 +90,12 @@
 		. += span_info("Can be used to cast a curse with blood in your offhand by right clicking a rune.")
 		return
 	. += span_danger("The eyes stop blinking. They stare at you. Their gaze burns...")
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		to_chat(human_user, span_userdanger("Your mind burns as you stare at the pages!"))
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
-		human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	to_chat(human_user, span_userdanger("Your mind burns as you stare at the pages!"))
+	human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/item/codex_cicatrix/morbus/examine_more(mob/user)
 	. = ..() // XANTODO - Add a summary of each curse to the description so that the curser knows what will happen the cursee

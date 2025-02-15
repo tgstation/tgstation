@@ -20,15 +20,15 @@
 	blood_samples = list()
 	for(var/atom/requirement as anything in atoms)
 		for(var/print in GET_ATOM_FINGERPRINTS(requirement))
-			fingerprints[print] = 1
+			fingerprints[print] = TRUE
 
 		for(var/blood in GET_ATOM_BLOOD_DNA(requirement))
-			blood_samples[blood] = 1
+			blood_samples[blood] = TRUE
 
 		for(var/datum/reagent/blood/usable_reagent as anything in requirement.reagents?.reagent_list)
 			if(!istype(usable_reagent, /datum/reagent/blood))
 				continue
-			blood_samples[usable_reagent.data["blood_DNA"]] = 1
+			blood_samples[usable_reagent.data["blood_DNA"]] = TRUE
 
 	return TRUE
 
