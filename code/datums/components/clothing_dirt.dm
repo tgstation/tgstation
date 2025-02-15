@@ -111,7 +111,7 @@
 	clothing.update_appearance()
 	wearer.update_tint()
 	user.visible_message(span_danger("[user] sprays [spraycan] into the face of [wearer]!"))
-	to_chat(target, span_userdanger("[user] sprays [spraycan] into your face!"))
+	to_chat(wearer, span_userdanger("[user] sprays [spraycan] into your face!"))
 	return COMPONENT_CANCEL_SPRAYPAINT
 
 /datum/component/clothing_dirt/proc/on_clean(datum/source, clean_types)
