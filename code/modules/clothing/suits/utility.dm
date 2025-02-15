@@ -106,7 +106,7 @@
 
 /obj/item/clothing/head/utility/bomb_hood/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/clothing_dirt, mutable_appearance(icon, "bomb_dirt", appearance_flags = KEEP_APART|RESET_COLOR))
+	AddComponent(/datum/component/clothing_dirt, "bomb_dirt")
 	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
@@ -189,7 +189,7 @@
 	AddComponent(/datum/component/adjust_fishing_difficulty, 7)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 	AddElement(/datum/element/radiation_protected_clothing)
-	AddComponent(/datum/component/clothing_dirt, mutable_appearance(icon, "rad_dirt", appearance_flags = KEEP_APART|RESET_COLOR))
+	AddComponent(/datum/component/clothing_dirt, "rad_dirt")
 
 /datum/armor/utility_radiation
 	bio = 60

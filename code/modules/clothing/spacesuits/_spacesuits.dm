@@ -37,7 +37,7 @@
 /obj/item/clothing/head/helmet/space/Initialize(mapload)
 	. = ..()
 	if(visor_dirt)
-		AddComponent(/datum/component/clothing_dirt, mutable_appearance(icon, visor_dirt, appearance_flags = KEEP_APART|RESET_COLOR))
+		AddComponent(/datum/component/clothing_dirt, visor_dirt)
 	if(fishing_modifier)
 		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
 	add_stabilizer()

@@ -11,10 +11,13 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	// Icon_state passed into clothing dirt component
+	var/dirt_state = "bio_dirt"
 
 /obj/item/clothing/head/bio_hood/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/clothing_dirt, mutable_appearance(icon, "bio_dirt", appearance_flags = KEEP_APART|RESET_COLOR))
+	if (dirt_state)
+		AddComponent(/datum/component/clothing_dirt, dirt_state)
 	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 

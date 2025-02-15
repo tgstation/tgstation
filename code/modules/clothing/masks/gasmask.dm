@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	. = ..()
 
 	if((flags_cover & PEPPERPROOF) && pepper_tint)
-		AddComponent(/datum/component/clothing_dirt, dirt_state ? mutable_appearance(icon, dirt_state, appearance_flags = KEEP_APART|RESET_COLOR) : null)
+		AddComponent(/datum/component/clothing_dirt, dirt_state)
 
 	if(fishing_modifier)
 		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
