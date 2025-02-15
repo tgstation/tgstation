@@ -154,6 +154,7 @@
 	damage_multiplier = parent_type::damage_multiplier // DOPPLER EDIT, old code: damage_multiplier = 2
 
 	preference = "feature_human_ears"
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	dna_block = DNA_EARS_BLOCK
 

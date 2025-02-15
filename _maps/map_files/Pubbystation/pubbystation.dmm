@@ -35584,6 +35584,10 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"jiw" = (
+/mob/living/basic/goose/vomit,
+/turf/open/floor/engine,
+/area/station/service/abandoned_gambling_den/gaming)
 "jiD" = (
 /turf/closed/wall/r_wall,
 /area/station/science/genetics)
@@ -44648,18 +44652,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"rch" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/defibrillator_mount/charging{
-	pixel_x = 32;
-	pixel_y = -2
-	},
-/obj/machinery/computer/records/medical/laptop,
-/turf/open/floor/iron/white,
-/area/station/medical/surgery/theatre)
 "rcF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/plating/airless,
@@ -48311,10 +48303,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"tSN" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-/turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
 "tSR" = (
 /obj/structure/chair,
 /obj/machinery/status_display/evac/directional/north,
@@ -48645,11 +48633,8 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/defibrillator_mount/charging{
-	pixel_x = 30;
-	pixel_y = -2
-	},
 /obj/machinery/computer/records/medical/laptop,
+/obj/machinery/defibrillator_mount/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "ufo" = (
@@ -73979,7 +73964,7 @@ bGL
 wXr
 tvP
 bKj
-bLv
+jiw
 bMB
 tDS
 bOz
@@ -80899,7 +80884,7 @@ gVy
 ioj
 bub
 lkA
-rch
+ufk
 hkF
 fMs
 hkF
@@ -91105,7 +91090,7 @@ cBk
 jhD
 cBo
 alQ
-tSN
+qRW
 cBw
 qRW
 aiS
