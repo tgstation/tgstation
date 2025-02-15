@@ -22,6 +22,7 @@
 
 /obj/item/grenade/chem_grenade/rust_sower/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_ON_GRIND, PROC_REF(on_try_grind))
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_two = new(src)
 
@@ -46,6 +47,11 @@
 
 /obj/item/grenade/chem_grenade/rust_sower/multitool_act(mob/living/user, obj/item/tool)
 	return NONE
+
+/// Returns -1 so that you cant extract the chems
+/obj/item/grenade/chem_grenade/rust_sower/proc/on_try_grind()
+	SIGNAL_HANDLER
+	return -1
 
 /datum/reagent/heretic_rust
 	name = "Eldritch Rust"
