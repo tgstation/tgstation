@@ -856,4 +856,19 @@
 				'sound/items/handling/suture/needle_drop2.ogg',
 				'sound/items/handling/suture/needle_drop3.ogg',
 			)
+		if(SFX_REGEN_MESH_BEGIN)
+			soundin = pick(
+			)
+		if(SFX_REGEN_MESH_CONTINUOUS)
+			soundin = pick(
+			)
+		if(SFX_REGEN_MESH_END)
+			soundin = pick(
+			)
+		if(SFX_REGEN_MESH_PICKUP)
+			soundin = pick(
+			)
+		if(SFX_REGEN_MESH_DROP)
+			soundin = pick(
+			)
 	return soundin
