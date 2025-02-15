@@ -60,9 +60,9 @@
 	if (dirtiness > 0)
 		examine_list += span_warning("It appears to be covered in something. Won't see much while wearing it until you wash it off.")
 
-/datum/component/clothing_dirt/proc/on_overlays_updated(datum/source, list/overlays)
+/datum/component/clothing_dirt/proc/on_overlays_updated(obj/item/clothing/source, list/overlays)
 	SIGNAL_HANDLER
-	if (dirtiness > 0 && dirt_overlay)
+	if (dirtiness > 0 && dirt_overlay && (source.flags_cover & PEPPERPROOF))
 		dirt_overlay.color = dirt_color
 		overlays += dirt_overlay
 
