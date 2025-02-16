@@ -1,5 +1,5 @@
 #define UNDERSIZED_SPEED_SLOWDOWN 0.5
-#define UNDERSIZED_HUNGER_MOD 1.0
+#define UNDERSIZED_HUNGER_MOD 0.5
 #define UNDERSIZED_HARM_DAMAGE_BONUS -10
 #define UNDERSIZED_KICK_EFFECTIVENESS_BONUS -5
 #define UNDERSIZED_SQUASH_CHANCE 100
@@ -29,14 +29,15 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	human_holder.add_traits(undersized_traits, QUIRK_TRAIT)
-
 	human_holder.mob_size = MOB_SIZE_TINY
 	human_holder.held_w_class = WEIGHT_CLASS_TINY
 	human_holder.can_be_held = TRUE //makes u scoopable
 	human_holder.worn_slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_BACKPACK
 
+	passtable_on(human_holder, QUIRK_TRAIT)
+
 	human_holder.max_grab = GRAB_AGGRESSIVE //you are too weak to neck slam or strangle
-	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
+	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
 	RegisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_gain_limb))
@@ -93,6 +94,8 @@
 	human_holder.held_w_class = WEIGHT_CLASS_NORMAL
 	human_holder.can_be_held = FALSE
 	human_holder.worn_slot_flags = null
+
+	passtable_off(human_holder, QUIRK_TRAIT)
 
 	human_holder.max_grab = GRAB_KILL
 	human_holder.physiology.hunger_mod /= UNDERSIZED_HUNGER_MOD
