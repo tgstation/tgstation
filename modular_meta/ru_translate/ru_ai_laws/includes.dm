@@ -2,6 +2,7 @@
 #include "code\m_laws_neutral.dm"
 #include "code\m_laws_station_sided.dm"
 #include "code\m_supplied.dm"
+#include "code\m_zeroth.dm"
 
 
 /datum/modpack/ru_ai_laws
