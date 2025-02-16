@@ -238,7 +238,7 @@
 	name = "Emergency Mutadone Pill Single-Pack"
 	desc = "A single pill for curing genetic defects. Useful for when you can't procure one from medbay."
 	cost = PAYCHECK_CREW * 2.5
-	contains = list(/obj/item/reagent_containers/pill/mutadone)
+	contains = list(/obj/item/reagent_containers/applicator/pill/mutadone)
 
 /datum/supply_pack/goody/rapid_lighting_device
 	name = "Rapid Lighting Device (RLD) Single-Pack"

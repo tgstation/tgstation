@@ -23,7 +23,7 @@
 	SSmobs.pause()
 
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
-	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
+	var/obj/item/reagent_containers/applicator/pill/pill = allocate(/obj/item/reagent_containers/applicator/pill)
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
 
 	// Give them enough meth to be consumed in 2 metabolizations
@@ -63,8 +63,8 @@
 	pill_syringe_mind.active = TRUE
 	pill_syringe_mind.transfer_to(pill_syringe_user)
 
-	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
-	var/obj/item/reagent_containers/pill/pill_two = allocate(/obj/item/reagent_containers/pill)
+	var/obj/item/reagent_containers/applicator/pill/pill = allocate(/obj/item/reagent_containers/applicator/pill)
+	var/obj/item/reagent_containers/applicator/pill/pill_two = allocate(/obj/item/reagent_containers/applicator/pill)
 
 	var/obj/item/reagent_containers/syringe/syringe = allocate(/obj/item/reagent_containers/syringe)
 

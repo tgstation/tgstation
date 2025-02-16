@@ -38476,7 +38476,7 @@
 	pixel_y = 4
 	},
 /obj/item/lighter,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/applicator/patch/aiuri,
 /obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1

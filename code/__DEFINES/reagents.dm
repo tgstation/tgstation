@@ -241,3 +241,6 @@
 #define GRENADE_WIRED 2
 /// Grenade is ready to be finished
 #define GRENADE_READY 3
+
+/// Maximum amount of layers a pill can hold, aka maximum number of seconds a pill takes to dissolve
+#define PILL_MAX_LAYERS 60

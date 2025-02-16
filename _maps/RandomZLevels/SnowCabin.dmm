@@ -2551,7 +2551,7 @@
 /area/awaymission/cabin/caves/sovietcave)
 "nw" = (
 /obj/effect/decal/cleanable/blood,
-/obj/item/reagent_containers/pill/patch/libital,
+/obj/item/reagent_containers/applicator/patch/libital,
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 6;
@@ -4263,7 +4263,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "IJ" = (
-/obj/item/reagent_containers/pill/patch/libital,
+/obj/item/reagent_containers/applicator/patch/libital,
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 6;
@@ -5557,7 +5557,7 @@
 /area/awaymission/cabin/snowforest)
 "ZB" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/reagent_containers/pill/patch/libital,
+/obj/item/reagent_containers/applicator/patch/libital,
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 6;

@@ -5013,7 +5013,7 @@
 /area/station/maintenance/disposal/incinerator)
 "bUq" = (
 /obj/structure/cable,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)

@@ -169,3 +169,6 @@
 #define COMSIG_MUTATION_GAINED "mutation_gained"
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
+
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+#define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"

@@ -426,6 +426,9 @@
 		parent.forceMove(get_turf(parent))
 		return
 
+	if (process_effect(seconds_per_tick))
+		return
+
 	if (owner.stat == DEAD)
 		return
 
@@ -463,6 +466,10 @@
 	)
 
 	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] hurts!"))
+
+/// Called every process, return TRUE in order to abort further processing - if it falls out, etc
+/datum/embedding/proc/process_effect(seconds_per_tick)
+	return
 
 /// Attempt to pluck out the embedded item using tweezers of some kind
 /datum/embedding/proc/try_pluck(obj/item/tool, mob/user)
@@ -505,8 +512,8 @@
 /// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls remove_embedding()
 /datum/embedding/proc/fall_out()
 	if(is_harmless())
-		owner.visible_message(span_danger("[parent] falls off of [owner.name]'s [owner_limb.plaintext_zone]!"),
-			span_userdanger("[parent] falls off of your [owner_limb.plaintext_zone]!"))
+		owner.visible_message(span_warning("[parent] falls off of [owner.name]'s [owner_limb.plaintext_zone]!"),
+			span_warning("[parent] falls off of your [owner_limb.plaintext_zone]!"))
 		remove_embedding()
 		return
 

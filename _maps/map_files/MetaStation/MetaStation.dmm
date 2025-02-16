@@ -15640,7 +15640,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
 /obj/item/stamp/head/ce,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/applicator/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
@@ -51869,19 +51869,19 @@
 	pixel_y = 4;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/pill/maintenance{
+/obj/item/reagent_containers/applicator/pill/maintenance{
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/pill/maintenance{
+/obj/item/reagent_containers/applicator/pill/maintenance{
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/pill/maintenance{
+/obj/item/reagent_containers/applicator/pill/maintenance{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/pill/happy{
+/obj/item/reagent_containers/applicator/pill/happy{
 	pixel_y = 6;
 	pixel_x = -4
 	},
@@ -56073,8 +56073,8 @@
 "tOV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/reagent_containers/pill/maintenance,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /obj/item/storage/box/gum,
 /obj/item/surgicaldrill,
 /obj/structure/disposalpipe/segment{
@@ -65320,7 +65320,7 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/pill/morphine{
+/obj/item/reagent_containers/applicator/pill/morphine{
 	name = "Exponential Entrophy";
 	pixel_x = -9;
 	pixel_y = -4
