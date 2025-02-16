@@ -6,13 +6,13 @@
 	target_trait = ZTRAIT_RAINSTORM
 
 	telegraph_message = span_danger("Thunder rumbles far above. You hear droplets drumming against the canopy.")
-	telegraph_overlay = "acid_rain"//"rain_med"
+	telegraph_overlay = "rain_med"
 
-	weather_message = span_danger("<i>Rain pours down around you!</i>")
-	weather_overlay = "acid_rain"//"rain_high"
+	weather_message = span_userdanger("<i>Rain pours down around you!</i>")
+	weather_overlay = "rain_high"
 
-	end_message = span_danger("The downpour gradually slows to a light shower.")
-	end_overlay = "acid_rain"//"rain_low"
+	end_message = span_bolddanger("The downpour gradually slows to a light shower.")
+	end_overlay = "rain_low"
 
 	weather_duration_lower = 3 MINUTES
 	weather_duration_upper = 5 MINUTES
@@ -50,8 +50,7 @@
 
 	rain_reagent = find_reagent_object_from_type(reagent_id)
 
-	// water reagent color has an ugly transparent grey that looks nasty
-	// so we skip adding its reagent.color and use the default weather_color
+	// water reagent color has an ugly transparent grey that looks nasty so it's skipped
 	if(!istype(rain_reagent, /datum/reagent/water))
 		weather_color = rain_reagent.color // other reagents get their colored applied
 
@@ -98,7 +97,8 @@
 	else if (prob(danger_chance))
 		dispensed_reagent.add_reagent(get_overflowing_reagent(dangerous = TRUE), reagents_amount)
 */
-	living.wash()
+	if(istype(rain_reagent, /datum/reagent/water))
+		living.wash()
 
 	//var/datum/reagent/water/water = new /datum/reagent/water()
 	rain_reagent.expose_mob(living, VAPOR, 10)
@@ -115,13 +115,13 @@
 */
 
 	if(prob(5))
-		var/wetmessage = pick( "You're drenched in [rain_reagent.name]!",
-		"You're completely soaked by the [rain_reagent.name] rainfall!",
-		"You become soaked by the heavy [rain_reagent.name] rainfall!",
+		var/wetmessage = pick( "You're drenched in [lowertext(rain_reagent.name)]!",
+		"You're completely soaked by the [lowertext(rain_reagent.name)] rainfall!",
+		"You become soaked by the heavy [lowertext(rain_reagent.name)] rainfall!",
 		"[capitalize(rain_reagent.name)] drips off your uniform as the rain soaks your outfit!",
-		"Rushing [rain_reagent.name] rolls off your face as the rain soaks you completely!",
-		"Heavy [rain_reagent.name] raindrops hit your face as the rain thoroughly soaks your body!",
-		"As you move through the heavy [rain_reagent.name] rain, your clothes become completely soaked!",
+		"Rushing [lowertext(rain_reagent.name)] rolls off your face as the rain soaks you completely!",
+		"Heavy [lowertext(rain_reagent.name)] raindrops hit your face as the rain thoroughly soaks your body!",
+		"As you move through the heavy [lowertext(rain_reagent.name)] rain, your clothes become completely soaked!",
 		)
 		to_chat(living, span_warning(wetmessage))
 
