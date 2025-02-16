@@ -310,6 +310,14 @@
 					var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
 					var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
 					var/wounding_type = (initial(proj_type.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
+					var/sharpness = initial(proj_type.sharpness)
+
+					if(wounding_type == WOUND_BLUNT && sharpness)
+						if(sharpness & SHARP_EDGED)
+							wounding_type = WOUND_SLASH
+						else if (sharpness & SHARP_POINTY)
+							wounding_type = WOUND_PIERCE
+
 					wound_info_by_part -= hit_part
 
 					// technically this only checks armor worn the moment that all the pellets resolve rather than as each one hits you,
@@ -322,7 +330,7 @@
 							armor_factor *= ARMOR_WEAKENED_MULTIPLIER
 						damage_dealt *= max(0, 1 - armor_factor*0.01)
 
-					hit_part.painless_wound_roll(wounding_type, damage_dealt, w_bonus, bw_bonus, initial(proj_type.sharpness))
+					hit_part.painless_wound_roll(wounding_type, damage_dealt, w_bonus, bw_bonus, sharpness)
 
 		var/limb_hit_text = ""
 		if(hit_part)

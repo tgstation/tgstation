@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes:
-  - bugfix: "Fixed stat panel turf list menu clicks only working on the text"
