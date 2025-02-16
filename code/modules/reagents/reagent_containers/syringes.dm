@@ -209,6 +209,9 @@
 	var/obj/item/reagent_containers/syringe = parent
 	if (!istype(syringe))
 		syringe = locate() in parent
+		if (!istype(syringe) && isammocasing(parent))
+			var/obj/item/ammo_casing/casing = parent
+			syringe = locate() in casing.loaded_projectile
 		if (!istype(syringe))
 			return
 
@@ -347,7 +350,7 @@
 	embed_type = /datum/embedding/syringe/crude
 
 /datum/embedding/syringe/crude
-	embed_chance = 65
+	embed_chance = 75
 	fall_chance = 3.5
 	jostle_chance = 4
 	pain_stam_pct = 0.5
