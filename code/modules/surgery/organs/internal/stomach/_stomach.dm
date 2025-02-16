@@ -264,14 +264,17 @@
 
 /obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if (!owner)
+	if (!owner || SSmobs.times_fired % 3 != 0)
+		return
+
+	if (!length(stomach_contents))
 		return
 
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
 	var/datum/wound/slash/flesh/slash = chest.get_wound_type(/datum/wound/slash/flesh)
 	// A chance to spill out all the contents
 	if (cut_open_damage && slash?.severity >= WOUND_SEVERITY_CRITICAL)
-		if (prob(chest.get_damage()))
+		if (SPT_PROB(chest.get_damage(), seconds_per_tick * 3))
 			var/emptied = empty_contents()
 			if (emptied > 0)
 				owner.apply_damage(emptied * 5, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
@@ -279,9 +282,6 @@
 				owner.visible_message(span_danger("Contents of [owner]'s intestines spill out from a huge cut in [owner.p_their()] [chest]!"),
 					span_userdanger("Contents of your intestines spill out from a huge cut in your [chest]!"))
 			return
-
-	if (SSmobs.times_fired % 3 != 0)
-		return
 
 	// Digest the stuff in our stomach, just a bit
 	for (var/atom/movable/thing as anything in stomach_contents)
