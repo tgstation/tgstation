@@ -142,9 +142,7 @@
 		return
 
 	var/mob/living/carbon/victim = hit
-	var/shrapnel_type = source.shrapnel_type
-	var/obj/item/payload = new shrapnel_type(get_turf(victim))
-	setup_shrapnel(payload, source, victim)
+	var/obj/item/payload = setup_shrapnel(source, victim)
 
 	if (!roll_embed_chance(victim, hit_zone))
 		failed_embed(victim, hit_zone, random = TRUE)
@@ -155,7 +153,9 @@
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 
 /// Used for custom logic while setting up shrapnel payload
-/datum/embedding/proc/setup_shrapnel(obj/item/payload, obj/projectile/source, mob/living/carbon/victim)
+/datum/embedding/proc/setup_shrapnel(obj/projectile/source, mob/living/carbon/victim)
+	var/shrapnel_type = source.shrapnel_type
+	var/obj/item/payload = new shrapnel_type(get_turf(victim))
 	// Detach from parent, we don't want em to delete us
 	source.set_embed(null, dont_delete = TRUE)
 	// Hook signals up first, as payload sends a comsig upon embed update

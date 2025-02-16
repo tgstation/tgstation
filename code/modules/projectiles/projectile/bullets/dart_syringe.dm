@@ -37,6 +37,8 @@
 /obj/projectile/bullet/dart/syringe
 	name = "syringe"
 	icon_state = "syringeproj"
+	/// Syringe stored by this projectile
+	var/obj/item/reagent_containers/syringe/inner_syringe
 
 /obj/projectile/bullet/dart/syringe/Initialize(mapload)
 	. = ..()
@@ -44,7 +46,16 @@
 	// Other syringe guns are loaded manually with pre-filled syringes which will react chems themselves.
 	// The traitor chem dartgun uses /obj/projectile/bullet/dart/piercing, so this does not impact it.
 	reagents.flags &= ~NO_REACT
-	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
+
+/obj/projectile/bullet/dart/syringe/on_range()
+	if (inner_syringe)
+		inner_syringe.forceMove(drop_location())
+	return ..()
+
+/obj/projectile/bullet/dart/syringe/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if (inner_syringe)
+		inner_syringe.forceMove(drop_location())
 
 /obj/projectile/bullet/dart/piercing
 	inject_flags = INJECT_CHECK_PENETRATE_THICK

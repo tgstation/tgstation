@@ -18,6 +18,7 @@
 		var/obj/projectile/bullet/dart/dart = loaded_projectile
 		dart.name = syringe.name
 		dart.inject_flags = syringe.inject_flags
+		dart.armour_penetration = syringe.armour_penetration
 		syringegun.syringes.Remove(syringe)
 		if (syringegun.low_power)
 			insert_syringe(syringe)
@@ -42,7 +43,7 @@
 
 /obj/item/ammo_casing/syringegun/proc/insert_syringe(obj/item/reagent_containers/syringe/syringe)
 	var/obj/projectile/bullet/dart/syringe/dart = loaded_projectile
-	dart.set_embed(syringe.get_embed()?.create_copy(dart))
+	dart.set_embed(syringe.get_embed()?.create_copy())
 	syringe.forceMove(dart)
 	dart.inner_syringe = syringe
 

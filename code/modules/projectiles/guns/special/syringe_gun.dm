@@ -69,15 +69,6 @@
 		. += span_notice("Its pressure regulator is cranked to the max, instantly injecting the reagents at the cost of breaking the syringes fired.")
 
 /obj/item/gun/syringe/attack_self(mob/living/user, list/modifiers)
-	if (LAZYACCESS(modifiers, CTRL_CLICK))
-		low_power = !low_power
-		if (low_power)
-			to_chat(user, span_notice("You carefully lower the pressure regulator setting, ensuring that fired syringes embed in your target."))
-		else
-			to_chat(user, span_notice("You crank the pressure regulator to the max, making sure that fired syringes inject their contents instantly."))
-		playsound(user, 'sound/machines/click.ogg', 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		return TRUE
-
 	if (!syringes.len)
 		balloon_alert(user, "it's empty!")
 		return FALSE
@@ -92,6 +83,21 @@
 	balloon_alert(user, "[syringe.name] unloaded")
 	update_appearance()
 	return TRUE
+
+/obj/item/gun/syringe/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if (.)
+		return
+
+	low_power = !low_power
+	if (low_power)
+		balloon_alert(user, "enabled low power mode")
+		to_chat(user, span_notice("You carefully lower the pressure regulator setting, ensuring that fired syringes embed in your target."))
+	else
+		balloon_alert(user, "enabled high power mode")
+		to_chat(user, span_notice("You crank the pressure regulator to the max, making sure that fired syringes inject their contents instantly."))
+	playsound(user, 'sound/machines/click.ogg', 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/syringe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/syringe/bluespace))
