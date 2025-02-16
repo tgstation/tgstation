@@ -9,12 +9,10 @@
 
 /datum/vote/map_vote/New()
 	. = ..()
-	cached_pop = length(GLOB.clients)
-	default_choices = SSmap_vote.get_valid_map_vote_choices()
+	update_choices()
 
 /datum/vote/map_vote/create_vote()
-	cached_pop = length(GLOB.clients)
-	default_choices = SSmap_vote.get_valid_map_vote_choices()
+	update_choices()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -47,8 +45,7 @@
 		return "The next map has already been selected."
 
 	if (cached_pop != length(GLOB.clients))
-		cached_pop = length(GLOB.clients)
-		default_choices = SSmap_vote.get_valid_map_vote_choices()
+		update_choices()
 
 	var/num_choices = length(default_choices)
 	if(num_choices <= 1)
@@ -76,6 +73,10 @@
 			choices[voting_for] += 1
 
 	return ..()
+
+/datum/vote/map_vote/proc/update_choices()
+	cached_pop = length(GLOB.clients)
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 
 /datum/vote/map_vote/finalize_vote(winning_option)
 	SSmap_vote.finalize_map_vote(src)
