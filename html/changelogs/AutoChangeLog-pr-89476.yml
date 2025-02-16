@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - qol: "The medipen refiller can now be rotated when unanchored with alt-click"
