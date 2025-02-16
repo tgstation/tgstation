@@ -603,4 +603,5 @@
 			age_text = "withering away"
 	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))
 
+#undef ADD_NEWLINE_IF_NECESSARY
 #undef CARBON_EXAMINE_EMBEDDING_MAX_DIST
