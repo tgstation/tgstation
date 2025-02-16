@@ -22,6 +22,7 @@
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_UNDENSE,
 		TRAIT_EASILY_WOUNDED,
+		TRAIT_GRABWEAKNESS,
 	)
 
 /datum/quirk/undersized/add(client/client_source)
@@ -39,6 +40,7 @@
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
 	RegisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_gain_limb))
+	RegisterSignal(human_holder, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
 	for(var/obj/item/bodypart/bodypart as anything in human_holder.bodyparts)
 		on_gain_limb(src, bodypart, special = FALSE)
@@ -47,7 +49,7 @@
 	human_holder.maptext_height = 24
 
 	human_holder.AddComponent( \
-		/datum/component/squashable, \
+		/datum/component/squashable_carbons, \
 		squash_chance = UNDERSIZED_SQUASH_CHANCE, \
 		squash_damage = UNDERSIZED_SQUASH_DAMAGE, \
 		squash_flags = UNDERSIZED_SHOULD_GIB, \
@@ -83,6 +85,7 @@
 		bodypart.name = replacetext(bodypart.name, "tiny ", "")
 
 	UnregisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB)
+	UnregisterSignal(human_holder, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
 
 	human_holder.remove_traits(undersized_traits)
 
@@ -130,6 +133,10 @@
 
 /datum/movespeed_modifier/undersized
 	multiplicative_slowdown = UNDERSIZED_SPEED_SLOWDOWN
+
+/datum/quirk/undersized/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	if(istype(attacking_item, /obj/item/melee/flyswatter))
+		damage_mods += 50 // :)
 
 //ensmallening spell begin
 
