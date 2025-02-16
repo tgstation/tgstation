@@ -9,10 +9,10 @@
 
 /datum/vote/map_vote/New()
 	. = ..()
-	update_choices()
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 
 /datum/vote/map_vote/create_vote()
-	update_choices()
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -44,9 +44,7 @@
 	if(SSmap_vote.next_map_config)
 		return "The next map has already been selected."
 
-	if (cached_pop != length(GLOB.clients))
-		update_choices()
-
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 	var/num_choices = length(default_choices)
 	if(num_choices <= 1)
 		return "There [num_choices == 1 ? "is only one map" : "are no maps"] to choose from."
@@ -73,10 +71,6 @@
 			choices[voting_for] += 1
 
 	return ..()
-
-/datum/vote/map_vote/proc/update_choices()
-	cached_pop = length(GLOB.clients)
-	default_choices = SSmap_vote.get_valid_map_vote_choices()
 
 /datum/vote/map_vote/finalize_vote(winning_option)
 	SSmap_vote.finalize_map_vote(src)
