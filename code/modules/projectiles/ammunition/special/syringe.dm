@@ -44,6 +44,7 @@
 /obj/item/ammo_casing/syringegun/proc/insert_syringe(obj/item/reagent_containers/syringe/syringe)
 	var/obj/projectile/bullet/dart/syringe/dart = loaded_projectile
 	dart.set_embed(syringe.get_embed()?.create_copy())
+	dart.get_embed().embed_chance = 100 // Don't want to fail the shot here
 	syringe.forceMove(dart)
 	dart.inner_syringe = syringe
 

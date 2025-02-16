@@ -237,6 +237,11 @@
 	register_on(syringe)
 	syringe.set_embed(src)
 
+/datum/embedding/syringe/fall_out()
+	. = ..()
+	// Nothing should modify this directly (hopefully), and this makes sure that ones fired from a syringe gun don't have 100% embedding later down the line
+	embed_chance = initial(embed_chance)
+
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
 	desc = "Contains epinephrine - used to stabilize patients."

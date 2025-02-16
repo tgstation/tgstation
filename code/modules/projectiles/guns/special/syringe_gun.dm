@@ -67,6 +67,7 @@
 		. += span_notice("Its pressure regulator is set to low power mode, making sure that syringes shot will embed and slowly bleed their reagents into their target.")
 	else
 		. += span_notice("Its pressure regulator is cranked to the max, instantly injecting the reagents at the cost of breaking the syringes fired.")
+	. += span_notice("Right-click [src] in-hand to switch it to [low_power ? "full" : "low"] power.")
 
 /obj/item/gun/syringe/attack_self(mob/living/user, list/modifiers)
 	if (!syringes.len)
