@@ -813,4 +813,47 @@
 				'sound/items/gauze/bandage_end3.ogg',
 				'sound/items/gauze/bandage_end4.ogg',
 			)
+		// Old cloth sounds are named cloth_...1.ogg, I wanted to keep them so these new ones go further down the line.
+		if(SFX_CLOTH_DROP)
+			soundin = pick(
+				'sound/items/handling/cloth/cloth_drop2.ogg',
+				'sound/items/handling/cloth/cloth_drop3.ogg',
+				'sound/items/handling/cloth/cloth_drop4.ogg',
+				'sound/items/handling/cloth/cloth_drop5.ogg',
+			)
+		if(SFX_CLOTH_PICKUP)
+			soundin = pick(
+				'sound/items/handling/cloth/cloth_pickup2.ogg',
+				'sound/items/handling/cloth/cloth_pickup3.ogg',
+				'sound/items/handling/cloth/cloth_pickup4.ogg',
+				'sound/items/handling/cloth/cloth_pickup5.ogg',
+			)
+		if(SFX_SUTURE_BEGIN)
+			soundin = pick(
+				'sound/items/suture/suture_begin1.ogg',
+			)
+		if(SFX_SUTURE_CONTINUOUS)
+			soundin = pick(
+				'sound/items/suture/suture_continuous1.ogg',
+				'sound/items/suture/suture_continuous2.ogg',
+				'sound/items/suture/suture_continuous3.ogg',
+			)
+		if(SFX_SUTURE_END)
+			soundin = pick(
+				'sound/items/suture/suture_end1.ogg',
+				'sound/items/suture/suture_end2.ogg',
+				'sound/items/suture/suture_end3.ogg',
+			)
+		if(SFX_SUTURE_PICKUP)
+			soundin = pick(
+				'sound/items/handling/suture/needle_pickup1.ogg',
+				'sound/items/handling/suture/needle_pickup2.ogg',
+			)
+		if(SFX_SUTURE_DROP)
+			soundin = pick(
+
+				'sound/items/handling/suture/needle_drop1.ogg',
+				'sound/items/handling/suture/needle_drop2.ogg',
+				'sound/items/handling/suture/needle_drop3.ogg',
+			)
 	return soundin

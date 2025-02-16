@@ -26,7 +26,7 @@
 /// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it). Very descriptive proc name.
 /obj/item/organ/body_egg/changeling_egg/proc/pop()
 	var/mob/living/carbon/human/spawned_monkey = new(owner)
-	spawned_monkey.set_species(/datum/species/monkey)
+	spawned_monkey.monkeyize(instant = TRUE)
 
 	for(var/obj/item/organ/insertable in src)
 		insertable.Insert(spawned_monkey, 1)
