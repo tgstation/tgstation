@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - bugfix: "Changeling egg burst now correctly gives \"monkey (123)\" name for the changeling-monkey instead of getting a random human name."

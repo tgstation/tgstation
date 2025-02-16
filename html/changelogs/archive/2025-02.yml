@@ -261,3 +261,23 @@
   - rscdel: Removed the weighting of viro symptoms
   grungussuss:
   - sound: sutures got some sounds
+2025-02-16:
+  00-Steven:
+  - bugfix: Emotion mask reskinning works properly
+  GwynCodes:
+  - rscadd: Added a button in the "Secrets" menu to alter the department console order
+      delay.
+  - qol: Button makes it easier to find cargo related bugs.
+  - code_imp: Changed code in department_order.dm to allow for overriding the order
+      cooldown duration.
+  - admin: Created an admin button in the "Secrets" panel.
+  larentoun:
+  - bugfix: Changeling egg burst now correctly gives "monkey (123)" name for the changeling-monkey
+      instead of getting a random human name.
+  leaKsi:
+  - bugfix: Fixed a few sanitization issues.
+  necromanceranne:
+  - bugfix: Pellet clouds now can cause bleeds and punctures if the projectile is
+      sharp.
+  - bugfix: Cryogelidia can no longer put you into stasis longer than the lifespan
+      of the cube prison it kept you in.
