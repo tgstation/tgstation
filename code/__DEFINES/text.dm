@@ -79,7 +79,7 @@
 /// File location for oguzok phrases
 #define OGUZOK_PHRASES_FILE "massmeta/oguzok.json" //MASSMETA EDIT ADDITION (oguzok)
 /// File location for AI ion laws
-#define ION_FILE "ion_laws.json"
+#define ION_FILE "massmeta/ion_laws.json" //MASSMETA EDIT ADDITION (ru_ai_laws)
 /// File location for pirate names
 #define PIRATE_NAMES_FILE "pirates.json"
 /// File location for redpill questions
