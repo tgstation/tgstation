@@ -184,10 +184,12 @@
 	return clamp(round((reagents.total_volume / volume * 15), 5), 1, 15)
 
 /obj/item/reagent_containers/syringe/proc/get_dart_var_modifiers(obj/projectile/projectile)
+	var/datum/embedding/embed_data = get_embed().create_copy()
+	embed_data.rip_time += projectile.get_embed()?.rip_time
 	return list(
 		"damage" = max(6, volume / 5), // Scales with size?
 		"speed" = max(0, throw_speed - 3),
-		"embedding" = get_embed().create_copy(),
+		"embedding" = embed_data,
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
 		"bare_wound_bonus" = bare_wound_bonus,
