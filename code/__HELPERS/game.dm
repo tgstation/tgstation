@@ -162,7 +162,7 @@
 			continue
 		if(afk_check && player_mob.client.is_afk())
 			continue
-	 	if(human_check && !ishuman(player_mob))
+		if(human_check && !ishuman(player_mob))
 			continue
 		if(isnewplayer(player_mob)) // exclude people in the lobby
 			continue
