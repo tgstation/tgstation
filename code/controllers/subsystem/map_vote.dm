@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(map_vote)
 		filter_threshold = length(GLOB.clients)
 
 	if(filter_threshold == player_cache)
-		return
+		return null
 
 	player_cache = filter_threshold
 	var/list/valid_maps = list()
