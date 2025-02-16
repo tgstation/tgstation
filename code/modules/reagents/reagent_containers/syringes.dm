@@ -203,7 +203,7 @@
 	jostle_pain_mult = 3
 	rip_time = 0.5 SECONDS
 	/// How much reagents are transferred per second
-	var/transfer_per_second = 1
+	var/transfer_per_second = 1.5
 
 /datum/embedding/syringe/process_effect(seconds_per_tick)
 	var/obj/item/reagent_containers/syringe = parent
@@ -341,7 +341,7 @@
 	embed_chance = 100
 	fall_chance = 1.5
 	pain_stam_pct = 0.6
-	transfer_per_second = 0.5
+	transfer_per_second = 1
 
 /obj/item/reagent_containers/syringe/crude
 	name = "crude syringe"
@@ -362,7 +362,7 @@
 	pain_mult = 5
 	jostle_pain_mult = 5
 	rip_time = 1 SECONDS
-	transfer_per_second = 0.25
+	transfer_per_second = 0.5
 
 /obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
 	return
