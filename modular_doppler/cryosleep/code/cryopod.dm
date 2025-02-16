@@ -209,13 +209,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 /obj/machinery/cryopod/close_machine(atom/movable/target, density_to_set = TRUE)
 	if(!control_computer_weakref)
 		find_control_computer(TRUE)
-	if((isnull(target) || isliving(target)) && state_open && !panel_open)
-		..(target)
-		var/mob/living/mob_occupant = occupant
-		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, span_notice("<b>You feel cool air surround you. You go numb as your senses turn inward.</b>"))
+	if(!isliving(target) || !state_open || panel_open)
+		return
+	target.forceMove(src)
+	set_occupant(target)
+	..()
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant && mob_occupant.stat != DEAD)
+		to_chat(occupant, span_notice("<b>You feel cool air surround you. You go numb as your senses turn inward.</b>"))
 
-		COOLDOWN_START(src, despawn_world_time, time_till_despawn)
+	COOLDOWN_START(src, despawn_world_time, time_till_despawn)
 
 /obj/machinery/cryopod/open_machine(drop = TRUE, density_to_set = FALSE)
 	..()

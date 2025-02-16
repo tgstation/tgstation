@@ -391,6 +391,7 @@
 		/mob/living/basic/dark_wizard = 2,
 		/mob/living/basic/flesh_spider = 2,
 		/mob/living/basic/garden_gnome = 2,
+		/mob/living/basic/goose = 2,
 		/mob/living/basic/killer_tomato = 2,
 		/mob/living/basic/leaper = 1,
 		/mob/living/basic/mega_arachnid = 1,
@@ -404,7 +405,6 @@
 		/mob/living/basic/spider/giant/nurse/scrawny = 2,
 		/mob/living/basic/spider/giant/tarantula/scrawny = 2,
 		/mob/living/basic/spider/giant/hunter/scrawny = 2,
-		/mob/living/simple_animal/hostile/retaliate/goose = 2,
 		/mob/living/simple_animal/hostile/ooze = 1,
 	)
 

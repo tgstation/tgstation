@@ -172,6 +172,7 @@
 	dna_block = null
 	organ_flags = ORGAN_ROBOTIC
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cybernetic
+	restyle_flags = NONE
 
 /datum/bodypart_overlay/mutant/tail/cybernetic
 	feature_key = "tail_other"

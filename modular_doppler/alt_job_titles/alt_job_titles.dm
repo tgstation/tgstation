@@ -83,11 +83,10 @@
 		"Command Intern",
 	)
 
-/datum/job/blueshield
+/datum/job/command_bodyguard
 	alt_titles = list(
-		"Blueshield",
 		"Command Bodyguard",
-		"Executive Protection Agent",
+		"Secreterial Officer",
 	)
 
 /datum/job/botanist

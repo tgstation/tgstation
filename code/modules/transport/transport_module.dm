@@ -304,15 +304,16 @@
 	var/x_offset = ROUND_UP(bound_width / ICON_SIZE_X) - 1 //how many tiles our horizontally farthest edge is from us
 	var/y_offset = ROUND_UP(bound_height / ICON_SIZE_Y) - 1 //how many tiles our vertically farthest edge is from us
 
+	var/destination_x = destination.x
+	var/destination_y = destination.y
+	var/destination_z = destination.z
 	//the x coordinate of the edge furthest from our future destination, which would be our right hand side
-	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
-	var/upper_edge_y = destination.y + y_offset
-
-	var/turf/upper_right_corner = locate(min(world.maxx, back_edge_x), min(world.maxy, upper_edge_y), destination.z)
+	var/back_edge_x = destination_x + x_offset//if we arent multitile this should just be destination.x
+	var/upper_edge_y = destination_y + y_offset
 
 	var/list/dest_locs = block(
-		destination,
-		upper_right_corner
+		destination_x, destination_y, destination_z,
+		back_edge_x, upper_edge_y, destination_z
 	)
 
 	var/list/entering_locs = dest_locs - locs

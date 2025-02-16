@@ -129,75 +129,48 @@
 
 /// Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.
 /obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo, datum/lazy_template/virtual_domain/generated_domain)
-	var/domain_forbids_items = generated_domain.forbids_disk_items
-	var/domain_forbids_spells = generated_domain.forbids_disk_spells
+	var/domain_forbids_flags = generated_domain.external_load_flags
 
-	var/import_ban = list()
-	var/disk_ban = list()
-	if(domain_forbids_items)
-		import_ban += "smuggled digital equipment"
-		disk_ban += "items"
-	if(domain_forbids_spells)
-		import_ban += "imported_abilities"
-		disk_ban += "powers"
-
-	if(length(import_ban))
-		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your disk [english_list(disk_ban)] will not be granted!"))
-
-	var/failed = FALSE
 	//DOPPLER EDIT ADDITION BEGIN - BITRUNNING_PREFS_DISKS - Track if we've used multiple avatar preference disks, for avoiding overrides and displaying the failure message.
 	var/duplicate_prefs = FALSE
 	//DOPPLER EDIT ADDITION END
 
-	// We don't need to bother going over the disks if neither of the types can be used.
-	if(domain_forbids_spells && domain_forbids_items)
-		return
+	var/import_ban = list()
+	var/disk_ban = list()
+	if(domain_forbids_flags & DOMAIN_FORBIDS_ITEMS)
+		import_ban += "smuggled digital equipment"
+		disk_ban += "items"
+	if(domain_forbids_flags & DOMAIN_FORBIDS_ABILITIES)
+		import_ban += "imported_abilities"
+		disk_ban += "powers"
+
+	if(length(import_ban))
+		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your externally loaded [english_list(disk_ban)] will not be granted!"))
+
+	var/return_flags = NONE
+	return_flags = SEND_SIGNAL(neo, COMSIG_BITRUNNER_STOCKING_GEAR, avatar, domain_forbids_flags)
+
+	if(return_flags & BITRUNNER_GEAR_LOAD_FAILED)
+		to_chat(neo, span_warning("At least one of your external data sources has encountered a failure in its loading process. Check for overlapping or inactive disks."))
+	if(return_flags & BITRUNNER_GEAR_LOAD_BLOCKED)
+		to_chat(neo, span_warning("At least one of your external data sources has been blocked from fully loading. Check domain restrictions."))
+
+	//DOPPLER EDIT ADDITION BEGIN - BITRUNNING_PREFS_DISKS - Handles our avatar preference disks, if present.
 	for(var/obj/item/bitrunning_disk/disk in neo.get_contents())
-		if(istype(disk, /obj/item/bitrunning_disk/ability) && !domain_forbids_spells)
-			var/obj/item/bitrunning_disk/ability/ability_disk = disk
-
-			if(isnull(ability_disk.granted_action))
-				failed = TRUE
-				continue
-
-			var/datum/action/our_action = new ability_disk.granted_action()
-
-			if(locate(our_action.type) in avatar.actions)
-				failed = TRUE
-				continue
-
-			our_action.Grant(avatar)
-			continue
-
-		if(istype(disk, /obj/item/bitrunning_disk/item) && !domain_forbids_items)
-			var/obj/item/bitrunning_disk/item/item_disk = disk
-
-			if(isnull(item_disk.granted_item))
-				failed = TRUE
-				continue
-
-			avatar.put_in_hands(new item_disk.granted_item())
-
-		//DOPPLER EDIT ADDITION BEGIN - BITRUNNING_PREFS_DISKS - Handles our avatar preference disks, if present.
 		if(istype(disk, /obj/item/bitrunning_disk/preferences))
 			var/obj/item/bitrunning_disk/preferences/prefs_disk = disk
 			var/datum/preferences/avatar_preference = prefs_disk.chosen_preference
 
 			if(isnull(avatar_preference) || duplicate_prefs)
-				failed = TRUE
 				continue
-
-			if(!domain_forbids_spells)
+			if(!(domain_forbids_flags & DOMAIN_FORBIDS_ABILITIES))
 				avatar_preference.safe_transfer_prefs_to(avatar)
 				SSquirks.AssignQuirks(avatar, prefs_disk.mock_client)
-			if(!domain_forbids_items && prefs_disk.include_loadout)
+			if(!(domain_forbids_flags & DOMAIN_FORBIDS_ITEMS) && prefs_disk.include_loadout)
 				avatar.equip_outfit_and_loadout(/datum/outfit, avatar_preference)
 
 			duplicate_prefs = TRUE
-		//DOPPLER EDIT ADDITION END
-
-	if(failed)
-		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))
+	//DOPPLER EDIT ADDITION END
 
 	var/obj/item/organ/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/obj/item/skillchip/skill_chip as anything in neo_brain?.skillchips)

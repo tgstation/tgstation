@@ -269,6 +269,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
 		/obj/item/knife/ritual,
+		/obj/item/flesh_shears,
 	))
 
 /obj/item/storage/belt/medical/paramedic
@@ -849,7 +850,7 @@
 
 /obj/item/storage/belt/grass_sabre
 	name = "sabre sheath"
-	desc = "An simple grass sheath designed to hold a sabre of... some sort. Actual metal one might be too sharp, though..."
+	desc = "A simple grass sheath designed to hold a sabre of... some sort. An actual metal one might be too sharp, though..."
 	icon_state = "grass_sheath"
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"

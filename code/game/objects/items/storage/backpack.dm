@@ -38,7 +38,7 @@
 
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
-	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
+	desc = "What is currently a just an unwieldy block of metal with a slot ready to accept a bluespace anomaly core."
 	icon = 'icons/obj/storage/backpack.dmi'
 	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
 	icon_state = "bag_of_holding-inert"
@@ -435,7 +435,8 @@
 
 /obj/item/storage/backpack/duffelbag/update_desc(updates)
 	. = ..()
-	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
+	if(!HAS_TRAIT(src, TRAIT_WAS_RENAMED)) // DOPPLER EDIT - loadout duffels won't shift description with zipper status
+		desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
 	if(loc != user) // God fuck TK

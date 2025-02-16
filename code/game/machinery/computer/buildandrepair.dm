@@ -82,7 +82,7 @@
 			else
 				. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
-			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
+			. += span_warning("\A [circuit] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
 			. += span_warning("It can be [EXAMINE_HINT("wired")] with some cable.")

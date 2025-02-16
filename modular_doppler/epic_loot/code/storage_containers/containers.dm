@@ -4,8 +4,8 @@
 	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "pencase"
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = SFX_CLOTH_DROP
 	storage_type = /datum/storage/maintenance_loot_structure/epic_loot_medpen_case
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_BULKY
@@ -39,8 +39,8 @@
 	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "documents"
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = SFX_CLOTH_DROP
 	storage_type = /datum/storage/maintenance_loot_structure/epic_loot_docs_case
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_BULKY
@@ -51,7 +51,7 @@
 	max_total_storage = WEIGHT_CLASS_BULKY * 4
 	screen_max_columns = 2
 	numerical_stacking = TRUE
-	opening_sound = 'sound/items/handling/cloth_pickup.ogg'
+	opening_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 
 /datum/storage/maintenance_loot_structure/epic_loot_docs_case/New()
 	. = ..()
@@ -76,8 +76,8 @@
 	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "sick"
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = SFX_CLOTH_DROP
 	storage_type = /datum/storage/maintenance_loot_structure/epic_loot_org_pouch
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_BULKY

@@ -115,6 +115,8 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation)
 
+	update_parallax_contents()
+
 	return TRUE
 
 /atom/movable/proc/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
@@ -239,7 +241,7 @@ All ShuttleMove procs go here
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
-		
+
 	var/missing_nodes = FALSE
 	for(var/i in 1 to device_type)
 		if(nodes[i])

@@ -148,7 +148,7 @@
 	if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, user, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
 		return FALSE
 
-	ringtone = ringtone
+	ringtone = new_ringtone
 	return TRUE
 
 /datum/computer_file/program/messenger/ui_interact(mob/user, datum/tgui/ui)
@@ -575,7 +575,7 @@
 	var/mob/sender
 	if(ismob(source))
 		sender = source
-		if(!sender.can_perform_action(computer, ALLOW_RESTING))
+		if(!sender.can_perform_action(computer, ALLOW_RESTING | ALLOW_PAI))
 			return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
@@ -730,7 +730,7 @@
 
 	if(QDELETED(src))
 		return
-	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING | ALLOW_PAI))
 		return
 
 	// send an activation message and open the messenger

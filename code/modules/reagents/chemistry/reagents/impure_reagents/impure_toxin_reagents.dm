@@ -1,4 +1,4 @@
-//Reagents produced by metabolising/reacting fermichems inoptimally these specifically are for toxins
+//Reagents produced by metabolising/reacting fermichems suboptimally these specifically are for toxins
 //Inverse = Splitting
 //Invert = Whole conversion
 //Failed = End reaction below purity_min

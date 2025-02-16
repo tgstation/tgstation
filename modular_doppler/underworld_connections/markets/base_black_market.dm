@@ -88,6 +88,16 @@
 	price_min = PAYCHECK_CREW * 2
 	price_max = PAYCHECK_CREW * 4
 
+/datum/market_item/misc/cyberbrain
+	name = "AI-uplink Brain"
+	desc = "Can be inserted into a body with NO ORGANIC INTERNAL ORGANS (robotic organs only) to allow AIs to control it. Comes with its own health sensors beacon. MUST be a humanoid or bad things happen to the consciousness, but the chassis itself can be flesh"
+	item = /obj/item/organ/brain/cybernetic/ai
+	price_min = PAYCHECK_CREW * 2
+	price_max = PAYCHECK_CREW * 4
+	stock_min = 1
+	stock_max = 1
+	availability_prob = 100
+
 /datum/market_item/misc/shove_blocker
 	// ok this is a seriously fucking good module so we'll make it cost a bit
 	price_min = PAYCHECK_CREW * 8

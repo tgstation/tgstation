@@ -1,5 +1,9 @@
 /datum/component/pixel_shift
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	/// holder for how the mob is shifted on the z (y) axis
+	var/pixel_shift_z = 0
+	/// holder for how the mob is shifted on the w (x) axis
+	var/pixel_shift_w = 0
 	/// Whether the mob is pixel shifted or not
 	var/is_shifted = FALSE
 	/// If we are in the shifting setting.
@@ -62,8 +66,7 @@
 	passthroughable = NONE
 	if(is_shifted)
 		var/mob/living/owner = parent
-		owner.pixel_x = owner.body_position_pixel_x_offset + owner.base_pixel_x
-		owner.pixel_y = owner.body_position_pixel_y_offset + owner.base_pixel_y
+		owner.remove_offsets(PIXEL_SHIFTING, animate = TRUE)
 	qdel(src)
 
 /// In-turf pixel movement which can allow things to pass through if the threshold is met.
@@ -72,29 +75,28 @@
 	var/mob/living/owner = parent
 	switch(direct)
 		if(NORTH)
-			if(owner.pixel_y <= maximum_pixel_shift + owner.base_pixel_y)
-				owner.pixel_y++
-				is_shifted = TRUE
+			if(pixel_shift_z <= maximum_pixel_shift + owner.base_pixel_z)
+				pixel_shift_z++
 		if(EAST)
-			if(owner.pixel_x <= maximum_pixel_shift + owner.base_pixel_x)
-				owner.pixel_x++
-				is_shifted = TRUE
+			if(pixel_shift_w <= maximum_pixel_shift + owner.base_pixel_w)
+				pixel_shift_w++
 		if(SOUTH)
-			if(owner.pixel_y >= -maximum_pixel_shift + owner.base_pixel_y)
-				owner.pixel_y--
-				is_shifted = TRUE
+			if(pixel_shift_z >= -maximum_pixel_shift + owner.base_pixel_z)
+				pixel_shift_z--
 		if(WEST)
-			if(owner.pixel_x >= -maximum_pixel_shift + owner.base_pixel_x)
-				owner.pixel_x--
-				is_shifted = TRUE
+			if(pixel_shift_w >= -maximum_pixel_shift + owner.base_pixel_w)
+				pixel_shift_w--
+
+	is_shifted = TRUE
+	owner.add_offsets(PIXEL_SHIFTING, w_add = pixel_shift_w, z_add = pixel_shift_z, animate = FALSE)
 
 	// Yes, I know this sets it to true for everything if more than one is matched.
 	// Movement doesn't check diagonals, and instead just checks EAST or WEST, depending on where you are for those.
-	if(owner.pixel_y > passable_shift_threshold)
+	if(pixel_shift_z > passable_shift_threshold)
 		passthroughable |= EAST | SOUTH | WEST
-	else if(owner.pixel_y < -passable_shift_threshold)
+	else if(pixel_shift_z < -passable_shift_threshold)
 		passthroughable |= NORTH | EAST | WEST
-	if(owner.pixel_x > passable_shift_threshold)
+	if(pixel_shift_w > passable_shift_threshold)
 		passthroughable |= NORTH | SOUTH | WEST
-	else if(owner.pixel_x < -passable_shift_threshold)
+	else if(pixel_shift_w < -passable_shift_threshold)
 		passthroughable |= NORTH | EAST | SOUTH

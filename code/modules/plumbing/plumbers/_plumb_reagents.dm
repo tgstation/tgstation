@@ -111,7 +111,7 @@
 	target_holder.handle_reactions()
 	src.handle_reactions()
 
-	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_transfered_amount
 
 ///Excludes catalysts during the emptying process
 /datum/reagents/plumbing/reaction_chamber
@@ -265,4 +265,4 @@
 	target_holder.handle_reactions()
 	src.handle_reactions()
 
-	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_transfered_amount
