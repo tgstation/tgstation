@@ -19,7 +19,7 @@
 
 /datum/component/squashable_carbons/Initialize(squash_chance, squash_damage, squash_flags, squash_callback)
 	. = ..()
-	if(!isliving(parent))
+	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(squash_chance)
 		src.squash_chance = squash_chance
@@ -70,7 +70,7 @@
 				return
 
 			//If you're on Combat intent, you will always squash. If you walk, you will avoid squashing.
-			if(crossing_mob.move_intent && crossing_mob.move_intent == MOVE_INTENT_WALK && crossing_mob.combat_mode == FALSE)
+			if(crossing_mob.move_intent == MOVE_INTENT_WALK && crossing_mob.combat_mode == FALSE)
 				crossing_mob.visible_message(span_notice("[crossing_mob] carefully walks around [parent_as_living]."), span_notice("You carefully walk around [parent_as_living] to avoid hurting it."))
 				return
 			//Tiny flying creatures are only squashed if the squasher is explicitly on combat mode
