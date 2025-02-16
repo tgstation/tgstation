@@ -194,6 +194,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	return NONE
 
+// This has to go at the very end of interaction so we don't block every interaction with ID-like items
 /mob/living/silicon/robot/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. || !tool.GetID())
