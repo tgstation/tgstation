@@ -40,11 +40,11 @@
 
 /obj/projectile/bullet/dart/syringe/Initialize(mapload)
 	. = ..()
-
 	// This prevents the Ody from being used as a combat mech spamming RDX/Teslium syringes all over the place.
 	// Other syringe guns are loaded manually with pre-filled syringes which will react chems themselves.
 	// The traitor chem dartgun uses /obj/projectile/bullet/dart/piercing, so this does not impact it.
 	reagents.flags &= ~NO_REACT
+	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
 
 /obj/projectile/bullet/dart/piercing
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
