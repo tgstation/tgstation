@@ -20,35 +20,6 @@
 		/obj/item/grenade/chem_grenade/smart_metal_foam = 7,
 	))
 
-/obj/item/storage/box/material
-	name = "box of materials"
-	illustration = "implant"
-
-/obj/item/storage/box/material/PopulateContents(datum/storage_config/config) //less uranium because radioactive
-	config.compute_max_values()
-
-	return flatten_quantified_list(list(
-		/obj/item/stack/sheet/iron/fifty = 1,
-		/obj/item/stack/sheet/glass/fifty= 1 ,
-		/obj/item/stack/sheet/rglass = 50,
-		/obj/item/stack/sheet/plasmaglass = 50,
-		/obj/item/stack/sheet/titaniumglass = 50,
-		/obj/item/stack/sheet/plastitaniumglass = 50,
-		/obj/item/stack/sheet/plasteel = 50,
-		/obj/item/stack/sheet/mineral/plastitanium = 50,
-		/obj/item/stack/sheet/mineral/titanium = 50,
-		/obj/item/stack/sheet/mineral/gold = 50,
-		/obj/item/stack/sheet/mineral/silver = 50,
-		/obj/item/stack/sheet/mineral/plasma = 50,
-		/obj/item/stack/sheet/mineral/uranium = 20,
-		/obj/item/stack/sheet/mineral/diamond = 50,
-		/obj/item/stack/sheet/bluespace_crystal = 50,
-		/obj/item/stack/sheet/mineral/bananium = 50,
-		/obj/item/stack/sheet/mineral/wood = 50,
-		/obj/item/stack/sheet/plastic/fifty = 1,
-		/obj/item/stack/sheet/runed_metal/fifty = 1,
-	))
-
 /obj/item/storage/box/debugtools
 	name = "box of debug tools"
 	icon_state = "syndiebox"
@@ -68,7 +39,7 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/storage/box/beakers/bluespace,
 		/obj/item/storage/box/beakers/variety,
-		/obj/item/storage/box/material,
+		/obj/item/storage/bag/sheetsnatcher/debug,
 		/obj/item/uplink/debug,
 		/obj/item/uplink/nuclear/debug,
 		/obj/item/clothing/ears/earmuffs/debug,

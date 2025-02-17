@@ -44,6 +44,8 @@ jobs:
           mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
           mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
           mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
@@ -61,6 +63,7 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
       - name: Run Tests
+        id: run_tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
@@ -71,6 +74,29 @@ jobs:
           name: test_artifacts_${{ inputs.map }}_${{ inputs.major }}_${{ inputs.minor }}
           path: data/screenshots_new/
           retention-days: 1
+      - name: On test fail, write a step summary
+        if: always() && steps.run_tests.outcome == 'failure'
+        run: |
+          # Get a JSON array of failed unit tests
+          FAILED_UNIT_TESTS=$(jq 'to_entries | map(.value | select(.status == 1))' data/unit_tests.json)
+
+          FAIL_COUNT=$(echo $FAILED_UNIT_TESTS | jq 'length')
+
+          echo "# Test failures" >> $GITHUB_STEP_SUMMARY
+          echo "$FAIL_COUNT tests failed." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          for i in $( seq $FAIL_COUNT ); do
+            CURRENT_FAIL=$(echo $FAILED_UNIT_TESTS | jq --arg i $i '.[($i | tonumber) - 1]')
+
+            TEST=$(echo $CURRENT_FAIL | jq --raw-output '.name')
+
+            echo "### $TEST" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo $CURRENT_FAIL | jq --raw-output '.message' >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          done
       - name: Check client Compatibility
         if: always() && steps.compile_tests.outcome == 'success'
         uses: tgstation/byond-client-compatibility-check@v3
