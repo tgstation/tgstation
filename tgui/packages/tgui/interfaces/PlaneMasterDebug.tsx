@@ -125,14 +125,14 @@ type PlaneDebugData = {
 };
 
 // Stolen wholesale from fontcode
-const textWidth = (text, font, fontsize) => {
+function textWidth(text: string, font: string, fontsize: number) {
   // default font height is 12 in tgui
   font = fontsize + 'x ' + font;
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d') as CanvasRenderingContext2D;
   ctx.font = font;
   return ctx.measureText(text).width;
-};
+}
 
 const planeToPosition = function (plane: Plane, index, is_incoming): Position {
   return {

@@ -20,7 +20,11 @@
 	var/__final_pixel_z = 0; \
 	if(ismovable(target)) { \
 		var/atom/movable/__movable_target = target; \
-		__final_pixel_z = __movable_target.base_pixel_z; \
+		__final_pixel_z += __movable_target.base_pixel_z; \
+	}; \
+	if(isliving(target)) { \
+		var/mob/living/__living_target = target; \
+		__final_pixel_z += __living_target.has_offset(pixel = PIXEL_Z_OFFSET); \
 	}; \
 	animate(target, pixel_z = __final_pixel_z, time = 1 SECONDS)
 
