@@ -7,7 +7,7 @@
 	default = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/flag/auto_deadmin_players
+/datum/config_entry/flag/auto_deadmin_always
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/auto_deadmin_timegate
