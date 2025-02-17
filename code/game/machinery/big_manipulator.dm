@@ -119,8 +119,7 @@
 	manipulator_hand.vis_contents -= poor_monkey
 	if(manipulate_mode == USE_ITEM_MODE)
 		change_mode()
-	poor_monkey.pixel_x = poor_monkey.base_pixel_x + poor_monkey.body_position_pixel_x_offset
-	poor_monkey.pixel_y = poor_monkey.base_pixel_y + poor_monkey.body_position_pixel_y_offset
+	poor_monkey.remove_offsets(type)
 	monkey_worker = null
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -239,8 +238,11 @@
 	poor_monkey.forceMove(src)
 	manipulator_hand.vis_contents += poor_monkey
 	poor_monkey.dir = manipulator_hand.dir
-	poor_monkey.pixel_x += 32 + manipulator_hand.calculate_item_offset(TRUE, pixels_to_offset = 16)
-	poor_monkey.pixel_y += 32 + manipulator_hand.calculate_item_offset(FALSE, pixels_to_offset = 16)
+	poor_monkey.add_offsets(
+		type,
+		x_add = 32 + manipulator_hand.calculate_item_offset(TRUE, pixels_to_offset = 16),
+		y_add = 32 + manipulator_hand.calculate_item_offset(FALSE, pixels_to_offset = 16)
+	)
 
 /// Creat manipulator hand effect on manipulator core.
 /obj/machinery/big_manipulator/proc/create_manipulator_hand()
