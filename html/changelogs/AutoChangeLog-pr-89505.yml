@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Revert next map command actually reverts the map vote"
+  - admin: "Admins now have a verb to revert the map vote"
