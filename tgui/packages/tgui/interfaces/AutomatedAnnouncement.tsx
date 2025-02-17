@@ -55,7 +55,7 @@ export const AutomatedAnnouncement = (props) => {
   };
 
   const errorMessage = !config_entries.length
-    ? 'No configurable options detected! Please report this to NanoTrasen.'
+    ? 'No configurable options detected! Please report this to Nanotrasen.'
     : 'No match. Refine your search.';
 
   const sorted = sortBy(
