@@ -1,0 +1,7 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "The reputation \"time locks\" on various items in the Traitor uplink have been reduced or removed. Effected items include the holoparasite kit, energy sword, power fist, gloves of the northstar, pizza bomb, bag of x4, combat bakery kit, reverse revolver, kinetic accelerator modkit, laser arm implant, concealed weapon bay, chemical dart gun, and stationwide APC check."
+  - balance: "The centcom inspector costume is now more expensive."
+  - rscdel: "Several previously nukie-only wardrobe options in the traitor uplink are now once more only available to nuclear operatives."
+  - rscdel: "Spies can no longer receive an elite nuclear operative suit."

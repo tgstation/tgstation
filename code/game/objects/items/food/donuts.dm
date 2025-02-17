@@ -199,7 +199,7 @@
 
 /obj/item/food/donut/laugh
 	name = "sweet pea donut"
-	desc = "Goes great with a bottle of Bastion Burbon!"
+	desc = "Goes great with a bottle of Bastion Bourbon!"
 	icon_state = "donut_laugh"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
@@ -347,7 +347,7 @@
 
 /obj/item/food/donut/jelly/laugh
 	name = "sweet pea jelly donut"
-	desc = "Goes great with a bottle of Bastion Burbon!"
+	desc = "Goes great with a bottle of Bastion Bourbon!"
 	icon_state = "jelly_laugh"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
@@ -483,7 +483,7 @@
 
 /obj/item/food/donut/jelly/slimejelly/laugh
 	name = "sweet pea jelly donut"
-	desc = "Goes great with a bottle of Bastion Burbon!"
+	desc = "Goes great with a bottle of Bastion Bourbon!"
 	icon_state = "jelly_laugh"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,

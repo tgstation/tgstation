@@ -11,8 +11,8 @@
 
 	weather_message = span_userdanger("<i>Harsh winds pick up as dense snow begins to fall from the sky! Seek shelter!</i>")
 	weather_overlay = "snow_storm"
-	weather_duration_lower = 60 SECONDS
-	weather_duration_upper = 150 SECONDS
+	weather_duration_lower = 1 MINUTES
+	weather_duration_upper = 2.5 MINUTES
 	use_glow = FALSE
 
 	end_duration = 10 SECONDS
@@ -35,9 +35,6 @@
 
 /datum/weather/snow_storm/weather_act(mob/living/living)
 	living.adjust_bodytemperature(-rand(cooling_lower, cooling_upper))
-
-/// Tracks where we should play snowstorm sounds for the area sound listener
-GLOBAL_LIST_EMPTY(snowstorm_sounds)
 
 /datum/weather/snow_storm/start()
 	GLOB.snowstorm_sounds.Cut() // it's passed by ref
@@ -81,45 +78,3 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 
 	cooling_lower = 5
 	cooling_upper = 18
-
-/datum/looping_sound/snowstorm
-	mid_sounds = list(
-		'sound/ambience/weather/snowstorm/snow1.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow2.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow3.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow4.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow5.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow6.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow7.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow8.ogg' = 1,
-		'sound/ambience/weather/snowstorm/snow9.ogg' = 1,
-	)
-	mid_length = 10 SECONDS
-	volume = 30
-	sound_channel = CHANNEL_WEATHER
-	/// Dynamically adjust the length of the sound to appropriate values
-	var/list/sound_to_length = list(
-		'sound/ambience/weather/snowstorm/snow1.ogg' = 11.3 SECONDS,
-		'sound/ambience/weather/snowstorm/snow2.ogg' = 9.7 SECONDS,
-		'sound/ambience/weather/snowstorm/snow3.ogg' = 9.7 SECONDS,
-		'sound/ambience/weather/snowstorm/snow4.ogg' = 7.3 SECONDS,
-		'sound/ambience/weather/snowstorm/snow5.ogg' = 7.3 SECONDS,
-		'sound/ambience/weather/snowstorm/snow6.ogg' = 8.8 SECONDS,
-		'sound/ambience/weather/snowstorm/snow7.ogg' = 11.6 SECONDS,
-		'sound/ambience/weather/snowstorm/snow8.ogg' = 11.6 SECONDS,
-		'sound/ambience/weather/snowstorm/snow9.ogg' = 7.3 SECONDS,
-	)
-
-// hijacking sound loop code to run loops of varying length
-// doing this because set_mid_length can't run DURING a soundloop, which means we can't variably adjust the length of the sound
-/datum/looping_sound/snowstorm/start_sound_loop()
-	loop_started = TRUE
-	sound_loop()
-
-/datum/looping_sound/snowstorm/sound_loop(start_time)
-	if(!loop_started)
-		return
-	var/picked_sound = get_sound()
-	play(picked_sound)
-	if(sound_to_length[picked_sound])
-		timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop)), sound_to_length[picked_sound], TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_DELETE_ME, SSsound_loops)

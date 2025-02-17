@@ -419,7 +419,7 @@
 
 /obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<b><i>Looking down at the [name], you recall something you read in a promotional pamphlet... </i></b>")
+	. += span_notice("<b><i>Looking down at \the [src], you recall something you read in a promotional pamphlet... </i></b>")
 
 	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity.\
 		This allows even less powerful cartridges to put out significant amounts of stopping power.")

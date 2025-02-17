@@ -40,6 +40,7 @@
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
+	initial_language_holder = /datum/language_holder/carp
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
@@ -197,6 +198,7 @@
 	gold_core_spawnable = NO_SPAWN
 	gender = FEMALE // Both current existing pet carp are female but you can remove this if someone else gets a male one?
 	ai_controller = /datum/ai_controller/basic_controller/carp/pet
+	initial_language_holder = /datum/language_holder/carp/hear_common
 
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()

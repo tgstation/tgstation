@@ -32,9 +32,9 @@
 
 		//short cut to break when we have found our one exact type
 		if(type_check == REAGENT_STRICT_TYPE)
-			return total_amount
+			break
 
-	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_amount
 
 
 //======================PH(clamped between 0->14)========================================

@@ -112,7 +112,7 @@
 	name = "Lava powered RTG"
 	desc = "This device only works when exposed to the toxic fumes of Lavaland"
 	circuit = null
-	power_gen = 1500
+	power_gen = 20000
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF
 

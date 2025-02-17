@@ -329,9 +329,11 @@
 
 // /obj/item/gun signals
 
+///called in /obj/item/gun/try_fire_gun (user, src, target, flag, params)
+#define COMSIG_MOB_TRYING_TO_FIRE_GUN "mob_trying_to_fire_gun"
 ///called in /obj/item/gun/fire_gun (user, target, flag, params)
 #define COMSIG_GUN_TRY_FIRE "gun_try_fire"
-	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0) /// Also returned to cancel COMSIG_MOB_TRYING_TO_FIRE_GUN
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override, bonus_spread_values)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 	#define MIN_BONUS_SPREAD_INDEX 1
@@ -558,19 +560,29 @@
 #define COMSIG_ASSEMBLY_DETACHED "assembly_detached"
 
 /*
- * The following two signals are separate from the above two because buttons don't set the holder of the inserted assembly.
+ * The following four signals are separate from the above two because buttons and pressure plates don't set the holder of the inserted assembly.
  * This causes subtle behavioral differences that future handlers for these signals may need to account for,
  * even if none of the currently implemented handlers do.
  */
 
-/// Sent from /obj/machinery/button/assembly_act(obj/machinery/button/button, mob/user)
+/// Sent when an assembly is added to a button : (obj/machinery/button/button, mob/user)
 #define COMSIG_ASSEMBLY_ADDED_TO_BUTTON "assembly_added_to_button"
 
-/// Sent from /obj/machinery/button/remove_assembly(obj/machinery/button/button, mob/user)
+/// Sent when an assembly is removed from a button : (obj/machinery/button/button, mob/user)
 #define COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON "assembly_removed_from_button"
+
+/// Sent when an assembly is added to a pressure plate : (obj/item/pressureplate/pressure_plate, mob/user)
+#define COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE "assembly_added_to_pressure_plate"
+
+/// Sent when an assembly is removed from a pressure plate : (obj/item/pressureplate/pressure_plate, mob/user)
+#define COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE "assembly_removed_from_pressure_playe"
 
 /// Sent from /datum/powernet/add_cable()
 #define COMSIG_CABLE_ADDED_TO_POWERNET "cable_added_to_powernet"
 
 /// Sent from /datum/powernet/remove_cable()
 #define COMSIG_CABLE_REMOVED_FROM_POWERNET "cable_removed_from_powernet"
+
+/// Sent from /datum/wires/attach_assembly() : (atom/holder)
+#define COMSIG_ASSEMBLY_PRE_ATTACH "assembly_pre_attach"
+	#define COMPONENT_CANCEL_ATTACH (1<<0)

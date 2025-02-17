@@ -55,9 +55,6 @@
 	return ..()
 
 /datum/quirk/item_quirk/family_heirloom/process()
-	if(quirk_holder.stat == DEAD)
-		return
-
 	var/obj/family_heirloom = heirloom?.resolve()
 
 	if(family_heirloom && (family_heirloom in quirk_holder.get_all_contents()))

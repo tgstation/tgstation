@@ -173,7 +173,7 @@
 					return
 				bomb_defused = FALSE
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
-				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
+				bomb.adminlog = "\The [bomb] in [src.name] that [key_name(user)] activated has detonated!"
 				balloon_alert(user, "bomb set")
 				update_appearance()
 	else if(length(boxes))
