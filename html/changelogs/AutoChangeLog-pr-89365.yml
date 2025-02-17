@@ -1,4 +1,0 @@
-author: "Archie700"
-delete-after: True
-changes:
-  - qol: "Gives a confirmation box describing the mayhem in a bottle's effect when a player tries to break the bottle. Player must confirm before bottle takes effect."

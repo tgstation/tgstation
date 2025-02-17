@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "multiplying reagents in cases like fishing & chem splash will yield accurate results. New amounts differ from present values"
-  - bugfix: "converting reagents actually yields correct ph again"
-  - code_imp: "improved performance of reagent logging"
-  - code_imp: "copying reagents won't return false negatives for values lesser than 0.01"

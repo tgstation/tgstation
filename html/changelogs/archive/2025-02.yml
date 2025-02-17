@@ -281,3 +281,77 @@
       sharp.
   - bugfix: Cryogelidia can no longer put you into stasis longer than the lifespan
       of the cube prison it kept you in.
+2025-02-17:
+  00-Steven:
+  - bugfix: Jumpsuit sensors context tips actually show when you are holding the jumpsuit.
+  - qol: You may right click to change jumpsuit sensors when it's in your active hand,
+      instead of having to swap to an empty hand or drop it to do so.
+  Absolucy:
+  - admin: Certain UI-based tools (plane debugger, filter editor, etc) that were given
+      to admins with only +VAREDIT or +DEBUG, but refused to open without +ADMIN,
+      now actually work for admins that have the needed permission.
+  Archemagus:
+  - code_imp: Shuttles with walls painted via color var shouldn't lose their walls
+      in transit
+  Archie700:
+  - qol: Gives a confirmation box describing the mayhem in a bottle's effect when
+      a player tries to break the bottle. Player must confirm before bottle takes
+      effect.
+  Ghommie:
+  - bugfix: Space dragons' eyes, teeths and claws (and shark form's underside) are
+      once again of a different color than the rest of the body.
+  - bugfix: Trying to fish on an adjacent spot won't end up hitting other things on
+      the same turf (provided you actually click the fishing spot and not other things).
+  - bugfix: Fixing the icon state for the "fritterish" fish variants.
+  Jacquerel:
+  - rscadd: Adjusted what things you can hallucinate people being accused of doing
+      or being over the radio
+  - bugfix: Prisoners will no longer spawn on Tram with an item which allows them
+      to immediately exit the jail.
+  - balance: Prisoners also don't get bonus goodies in their internals box when the
+      station trait rolls, because we're mean.
+  - bugfix: Traitor reputation (which is now basically just a number representing
+      how many seconds were in the round) is no longer displayed on the roundend screen.
+  Melbert:
+  - bugfix: Fixed offset during vehicle traversal over boxes and tables, as well as
+      while floating
+  Rengan:
+  - sound: the volume that vox, admin sound, insturments play at can now be tweaked
+      in preferences, check your preferences!
+  - sound: Elevator now uses ambience volume preference, jukeboxes uses instrument
+      volume preference and end of round musics uses admin music volume preference.
+  SmArtKar:
+  - qol: SiliConnect now informs you that you're successfully downloading logs
+  - bugfix: Fixes SiliConnect not being able to download logs
+  - bugfix: Fixed broken layering on some vehicles
+  - bugfix: You can no longer stuff abstract concepts of kisses and slaps into someone's
+      chest cavity
+  - bugfix: Fixed map votes not refreshing the amount of possible choices
+  - rscadd: Added a new 3D printable gun "The Liberator", you can find the gun itself
+      or its design disc in maintenance tunnels.
+  SyncIt21:
+  - bugfix: multiplying reagents in cases like fishing & chem splash will yield accurate
+      results. New amounts differ from present values
+  - bugfix: converting reagents actually yields correct ph again
+  - code_imp: improved performance of reagent logging
+  - code_imp: copying reagents won't return false negatives for values lesser than
+      0.01
+  TealSeer:
+  - qol: The medipen refiller can now be rotated when unanchored with alt-click
+  TiviPlus:
+  - code_imp: Made it easier to set custom orders for stat panel tabs in code
+  - bugfix: fixed some filters (e.g displacement) in filteriffic bluescreening the
+      UI
+  - bugfix: fixed tgui alerts sometimes having a lot of empty space in their layout
+  distributivgesetz:
+  - config: Added support for multiple chat channel configs for channel announcements.
+  norsvenska:
+  - map: The NTSS Independence has, once again, been upgraded. Now featuring a proper
+      ballroom, an expanded infirmary, a security office, and much more available
+      seating.
+  - bugfix: Doctor Rumack, the NTSS Independence's resident medibot, is no longer
+      invisible.
+  subject217:
+  - sound: The ghost poll sound is quieter.
+  timothymtorres:
+  - bugfix: Fix runtime when simple mobs are exposed to reagents

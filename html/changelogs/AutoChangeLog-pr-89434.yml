@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Trying to fish on an adjacent spot won't end up hitting other things on the same turf (provided you actually click the fishing spot and not other things)."
-  - bugfix: "Fixing the icon state for the \"fritterish\" fish variants."

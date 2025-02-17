@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes:
-  - bugfix: "fixed some filters (e.g displacement) in filteriffic bluescreening the UI"

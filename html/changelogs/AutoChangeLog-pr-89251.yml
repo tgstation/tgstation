@@ -1,5 +1,0 @@
-author: "Rengan"
-delete-after: True
-changes:
-  - sound: "the volume that vox, admin sound, insturments play at can now be tweaked in preferences, check your preferences!"
-  - sound: "Elevator now uses ambience volume preference, jukeboxes uses instrument volume preference and end of round musics uses admin music volume preference."

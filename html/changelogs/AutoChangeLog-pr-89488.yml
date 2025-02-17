@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Traitor reputation (which is now basically just a number representing how many seconds were in the round) is no longer displayed on the roundend screen."

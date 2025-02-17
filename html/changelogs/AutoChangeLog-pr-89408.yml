@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "SiliConnect now informs you that you're successfully downloading logs"
-  - bugfix: "Fixes SiliConnect not being able to download logs"

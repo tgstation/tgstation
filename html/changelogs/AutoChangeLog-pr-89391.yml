@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Jumpsuit sensors context tips actually show when you are holding the jumpsuit."
-  - qol: "You may right click to change jumpsuit sensors when it's in your active hand, instead of having to swap to an empty hand or drop it to do so."

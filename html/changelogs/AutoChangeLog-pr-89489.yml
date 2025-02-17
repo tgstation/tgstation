@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed offset during vehicle traversal over boxes and tables, as well as while floating"

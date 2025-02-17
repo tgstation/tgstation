@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes:
-  - code_imp: "Made it easier to set custom orders for stat panel tabs in code"

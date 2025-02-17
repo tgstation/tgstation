@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Prisoners will no longer spawn on Tram with an item which allows them to immediately exit the jail."
-  - balance: "Prisoners also don't get bonus goodies in their internals box when the station trait rolls, because we're mean."
