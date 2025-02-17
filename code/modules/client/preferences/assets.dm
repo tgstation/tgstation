@@ -19,7 +19,7 @@
 
 			if (ispath(create_icon_of, /atom))
 				var/atom/atom_icon_source = create_icon_of
-				icon = uni_icon(initial(atom_icon_source.icon), initial(atom_icon_source.icon_state))
+				icon = get_display_icon_for(atom_icon_source)
 			else if (istype(create_icon_of, /datum/universal_icon))
 				icon = create_icon_of
 			else if (isicon(create_icon_of))
