@@ -558,6 +558,6 @@
 
 /datum/status_effect/organ_set_bonus/strongarm/disable_bonus()
 	. = ..()
-owner.RemoveElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
+	owner.RemoveElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION
