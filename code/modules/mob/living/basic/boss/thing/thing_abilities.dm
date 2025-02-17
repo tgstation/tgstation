@@ -65,7 +65,7 @@
 /datum/action/cooldown/mob_cooldown/charge/the_thing/hit_target(atom/movable/source, mob/living/target, damage_dealt)
 	target.visible_message(span_danger("[source] lunges into [target]!"), span_userdanger("[source] knocks you into the ground, slashing you in the process!"))
 	target.apply_damage(damage_dealt, BRUTE)
-	target.Knockdown(1 SECONDS)
+	target.Knockdown(0.5 SECONDS)
 	playsound(get_turf(target), 'sound/items/weapons/rapierhit.ogg', 100, TRUE)
 	shake_camera(target, 4, 3)
 
