@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - image: "Watchers won't display an animated cog at the same time as using their gaze attack."
