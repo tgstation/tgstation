@@ -53,8 +53,22 @@
 	extra_range = 30
 
 /datum/looping_sound/rain
+	start_sound = 'sound/ambience/weather/rain/rain_start.ogg'
+	start_length = 12.5 SECONDS
 	mid_sounds = 'sound/ambience/weather/rain/rain_mid.ogg'
 	mid_length = 15 SECONDS
-	volume = 80
-	//sound_channel = CHANNEL_WEATHER
+	end_sound = 'sound/ambience/weather/rain/rain_end.ogg'
+	volume = 70
+	//sound_channel = CHANNEL_WEATHER (add this after Melbert's snow sound PR is finished)
 
+/datum/looping_sound/rain/start
+	mid_sounds = 'sound/ambience/weather/rain/rain_start.ogg'
+	mid_length = 12.5 SECONDS
+
+/datum/looping_sound/rain/middle
+	mid_sounds = 'sound/ambience/weather/rain/rain_mid.ogg'
+	mid_length = 15 SECONDS
+
+/datum/looping_sound/rain/end
+	mid_sounds = 'sound/ambience/weather/rain/rain_end.ogg'
+	mid_length = 17 SECONDS
