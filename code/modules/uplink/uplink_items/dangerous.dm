@@ -81,7 +81,6 @@
 	name = "Holoparasites"
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/guardian_creator/tech
 	cost = 18
 	surplus = 0
