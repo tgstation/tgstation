@@ -23,8 +23,8 @@
 	immunity_type = TRAIT_ASHSTORM_IMMUNE
 
 	probability = 90
+	weather_flags = (WEATHER_BAROMETER)
 
-	barometer_predictable = TRUE
 	var/list/weak_sounds = list()
 	var/list/strong_sounds = list()
 
@@ -57,7 +57,7 @@
 	GLOB.ash_storm_sounds += weak_sounds
 	return ..()
 
-/datum/weather/ash_storm/can_weather_act(mob/living/mob_to_check)
+/datum/weather/ash_storm/can_weather_act_mob(mob/living/mob_to_check)
 	. = ..()
 	if(!. || !ishuman(mob_to_check))
 		return
@@ -65,7 +65,7 @@
 	if(human_to_check.get_thermal_protection() >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 		return FALSE
 
-/datum/weather/ash_storm/weather_act(mob/living/victim)
+/datum/weather/ash_storm/weather_act_mob(mob/living/victim)
 	victim.adjustFireLoss(4, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/weather/ash_storm/end()

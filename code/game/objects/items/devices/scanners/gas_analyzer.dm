@@ -80,7 +80,7 @@
 
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
-		if(W.barometer_predictable && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
+		if((W.weather_flags & WEATHER_BAROMETER) && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
 			ongoing_weather = W
 			break
 

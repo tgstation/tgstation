@@ -19,5 +19,5 @@
 	protect_indoors = FALSE
 	target_trait = ZTRAIT_VOIDSTORM
 
-	barometer_predictable = FALSE
+	weather_flags = (WEATHER_BAROMETER)
 	perpetual = TRUE

@@ -115,7 +115,7 @@
 
 
 	for(var/datum/weather/check_weather as anything in SSweather.processing)
-		if(!check_weather.barometer_predictable || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
+		if(!(check_weather.weather_flags & WEATHER_BAROMETER) || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
 			continue
 		for (var/mining_level in mining_z_levels)
 			if(mining_level in check_weather.impacted_z_levels)
@@ -146,7 +146,7 @@
 	warning_level = WEATHER_ALERT_IMMINENT_OR_ACTIVE
 
 	for(var/datum/weather/check_weather as anything in SSweather.processing)
-		if(!check_weather.barometer_predictable || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
+		if(!(check_weather.weather_flags & WEATHER_BAROMETER) || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
 			continue
 		var/list/mining_z_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
 		for(var/mining_level in mining_z_levels)
