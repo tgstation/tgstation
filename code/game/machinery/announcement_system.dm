@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		))
 	return list("config_entries" = configs)
 
-/obj/machinery/announcement_system/ui_act(action, param)
+/obj/machinery/announcement_system/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 
 	add_fingerprint(usr)
-	var/datum/aas_config_entry/config = locate(param["entryRef"]) in config_entries
+	var/datum/aas_config_entry/config = locate(params["entryRef"]) in config_entries
 	if(!config || !config.modifiable)
 		return
 
@@ -144,14 +144,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			if (config.type in list(/datum/aas_config_entry/arrival, /datum/aas_config_entry/newhead))
 				update_appearance()
 		if("Text")
-			if(!(param["lineKey"] in config.announcement_lines_map))
-				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to set announcement line for nonexisting line in the [config.name] for AAS. Probably href injection. Received line: [param["lineKey"]]")
-				log_game("[key_name(usr)] tried to mess with AAS. For [config.name] he tried to edit nonexistend [param["lineKey"]]")
+			if(!(params["lineKey"] in config.announcement_lines_map))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to set announcement line for nonexisting line in the [config.name] for AAS. Probably href injection. Received line: [params["lineKey"]]")
+				log_game("[key_name(usr)] tried to mess with AAS. For [config.name] he tried to edit nonexistend [params["lineKey"]]")
 				return
-			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			var/new_message = trim(html_encode(params["newText"]), MAX_MESSAGE_LEN)
 			if(new_message)
-				config.announcement_lines_map[param["lineKey"]] = new_message
-				usr.log_message("updated [param["lineKey"]] line in the [config.name] to: [new_message]", LOG_GAME)
+				config.announcement_lines_map[params["lineKey"]] = new_message
+				usr.log_message("updated [params["lineKey"]] line in the [config.name] to: [new_message]", LOG_GAME)
 
 /obj/machinery/announcement_system/can_interact(mob/user)
 	. = ..()
@@ -196,13 +196,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	use_energy(active_power_usage)
 	if(!LAZYLEN(channels))
 		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
-	else
-		// For some reasons, radio can't recognize RADIO_CHANNEL_COMMON in channels, so we need to handle it separately.
-		if (RADIO_CHANNEL_COMMON in channels)
-			radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
-			channels -= RADIO_CHANNEL_COMMON
-		for(var/channel in channels)
-			radio.talk_into(src, message, channel, command_span ? list(speech_span, SPAN_COMMAND) : null)
+		return
+
+	// For some reasons, radio can't recognize RADIO_CHANNEL_COMMON in channels, so we need to handle it separately.
+	if (RADIO_CHANNEL_COMMON in channels)
+		radio.talk_into(src, message, null, command_span ? list(speech_span, SPAN_COMMAND) : null)
+		channels -= RADIO_CHANNEL_COMMON
+	for(var/channel in channels)
+		radio.talk_into(src, message, channel, command_span ? list(speech_span, SPAN_COMMAND) : null)
 
 /// Announces configs entry message with the provided variables. Channels and announcement_line are optional.
 /obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line, command_span)

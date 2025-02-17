@@ -920,20 +920,15 @@
 
 /// Re-generates the honorific title. Returns the compiled honorific_title value
 /obj/item/card/id/proc/update_honorific()
-	var/is_mononym = is_mononym(registered_name)
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
 			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST)
 			honorific_title = "[chosen_honorific] [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_FIRST_FULL)
-			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
-			if(!is_mononym)
-				honorific_title += " [last_name(registered_name)]"
+			honorific_title = "[chosen_honorific] [registered_name]"
 		if(HONORIFIC_POSITION_LAST_FULL)
-			if(!is_mononym)
-				honorific_title += "[first_name(registered_name)] "
-			honorific_title += "[last_name(registered_name)][chosen_honorific]"
+			honorific_title = "[registered_name][chosen_honorific]"
 	return honorific_title
 
 /// Returns the trim assignment name.
@@ -1593,9 +1588,9 @@
 		return ..()
 	balloon_alert(user, "flipped")
 	if(trim_assignment_override)
-		SSid_access.remove_trim_from_chameleon_card(src)
+		SSid_access.remove_trim_override(src)
 	else
-		SSid_access.apply_trim_to_chameleon_card(src, alt_trim)
+		SSid_access.apply_trim_override(src, alt_trim)
 	update_label()
 	update_appearance()
 
@@ -1811,7 +1806,7 @@
 	if(forged) //reset the ID if forged
 		registered_name = initial(registered_name)
 		assignment = initial(assignment)
-		SSid_access.remove_trim_from_chameleon_card(src)
+		SSid_access.remove_trim_override(src)
 		REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 		user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 		update_label()
@@ -1866,7 +1861,7 @@
 
 	registered_name = input_name
 	if(selected_trim_path)
-		SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+		SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 	if(target_occupation)
 		assignment = sanitize(target_occupation)
 	if(new_age)

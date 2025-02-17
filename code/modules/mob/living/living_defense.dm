@@ -195,7 +195,7 @@
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_appearance()
-	if(silent || !(client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode)))
+	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
 		return
 	if(combat_mode)
 		SEND_SOUND(src, sound('sound/misc/ui_togglecombat.ogg', volume = 25)) //Sound from interbay!
@@ -374,7 +374,7 @@
 			to_chat(user, span_danger("You're strangling [src]!"))
 			if(!buckled && !density)
 				Move(user.loc)
-	user.set_pull_offsets(src, grab_state)
+	user.set_pull_offsets(src, user.grab_state)
 	return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
