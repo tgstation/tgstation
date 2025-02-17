@@ -1,0 +1,6 @@
+author: "Archemagus"
+delete-after: True
+changes:
+  - rscadd: "Many things now handles via AAS: Bounty Cubes, Request Consoles, Brig Cells, Vending Machines and Orion Trails alerts, Weather Reports, Cargo Order Console"
+  - code_imp: "Now anyone can make their own entry for AAS"
+  - refactor: "AAS internals, also cleanup"
