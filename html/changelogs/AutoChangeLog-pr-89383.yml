@@ -1,0 +1,4 @@
+author: "Archemagus"
+delete-after: True
+changes:
+  - code_imp: "Shuttles with walls painted via color var shouldn't lose their walls in transit"
