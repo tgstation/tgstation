@@ -29,7 +29,7 @@
 	var/weather_duration_lower = 1200
 	/// See above - this is the highest possible duration
 	var/weather_duration_upper = 1500
-	/// Looping sound while weather is occuring
+	/// The sound played to everyone on an affected z-level when weather is occuring (does not loop)
 	var/weather_sound
 	/// Area overlay while the weather is occuring
 	var/weather_overlay
