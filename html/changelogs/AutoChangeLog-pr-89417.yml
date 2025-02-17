@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - admin: "Certain UI-based tools (plane debugger, filter editor, etc) that were given to admins with only +VAREDIT or +DEBUG, but refused to open without +ADMIN, now actually work for admins that have the needed permission."
