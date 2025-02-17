@@ -457,9 +457,8 @@ world
 	var/render_icon = curicon
 
 	if (render_icon)
-		var/curstates = icon_states(curicon)
-		if(!(curstate in curstates))
-			if ("" in curstates)
+		if(!icon_exists(curstate in curicon))
+			if(icon_exists("" in curicon))
 				curstate = ""
 			else
 				render_icon = FALSE
