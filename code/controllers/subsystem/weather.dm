@@ -12,11 +12,27 @@ SUBSYSTEM_DEF(weather)
 	// process active weather
 	for(var/V in processing)
 		var/datum/weather/our_event = V
-		if(our_event.aesthetic || our_event.stage != MAIN_STAGE)
+		var/is_aesthetic = !(our_event.weather_flags & (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER))
+		if(is_aesthetic || our_event.stage != MAIN_STAGE)
 			continue
-		for(var/mob/act_on as anything in GLOB.mob_living_list)
-			if(our_event.can_weather_act(act_on))
-				our_event.weather_act(act_on)
+
+		if(our_event.weather_flags & WEATHER_MOBS)
+			for(var/mob/act_on as anything in GLOB.mob_living_list)
+				if(our_event.can_weather_act_mob(act_on))
+					our_event.weather_act_mob(act_on)
+				CHECK_TICK
+
+		if(our_event.weather_flags & (WEATHER_TURFS))
+			for(var/i in 1 to our_event.weather_turfs_per_tick)
+				var/turf/open/selected_turf = pick(our_event.weather_turfs)
+				our_event.weather_act_turf(selected_turf)
+				CHECK_TICK
+
+		if(our_event.weather_flags & (WEATHER_THUNDER))
+			for(var/i in 1 to our_event.weather_turfs_per_tick)
+				var/turf/open/selected_turf = pick(our_event.weather_turfs)
+				our_event.lighting_act_turf(selected_turf)
+				CHECK_TICK
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
