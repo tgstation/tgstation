@@ -9,8 +9,8 @@
 		ASSERT(istype(sprite_accessory))
 
 		var/datum/universal_icon/head_accessory_icon = uni_icon(sprite_accessory.icon, sprite_accessory.icon_state)
-		if(y_offset) // essentially equivalent to icon.Shift(NORTH, y_offset) using expansion crops
-			head_accessory_icon.crop(1, 1 + y_offset, ICON_SIZE_X, ICON_SIZE_Y + y_offset)
+		if(y_offset)
+			head_accessory_icon.shift(NORTH, y_offset, ICON_SIZE_X, ICON_SIZE_Y)
 		head_accessory_icon.blend_color(COLOR_DARK_BROWN, ICON_MULTIPLY)
 		final_icon.blend_icon(head_accessory_icon, ICON_OVERLAY)
 
@@ -163,7 +163,7 @@
 
 /datum/preference/choiced/hairstyle/icon_for(value)
 	var/datum/sprite_accessory/hair/hairstyle = SSaccessories.hairstyles_list[value]
-	return generate_icon_with_head_accessory(hairstyle, -hairstyle?.y_offset)
+	return generate_icon_with_head_accessory(hairstyle, hairstyle?.y_offset)
 
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hairstyle(value, update = FALSE)

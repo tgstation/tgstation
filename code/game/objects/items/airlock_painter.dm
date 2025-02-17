@@ -460,7 +460,7 @@
 		render_alpha = text2num(tile_type.rgba_regex.group[2], 16)
 
 	var/datum/universal_icon/colored_icon = uni_icon('icons/turf/decals.dmi', source_decal, dir=source_dir)
-	colored_icon.blend_color("#ffffff" + num2hex(clamp(render_alpha, 0, 255), 2), ICON_MULTIPLY)
+	colored_icon.change_opacity(render_alpha / 255)
 	if(color == "custom")
 		// Do a fun rainbow pattern to stand out while still being static.
 		colored_icon.blend_icon(uni_icon('icons/effects/random_spawners.dmi', "rainbow"), ICON_MULTIPLY)
