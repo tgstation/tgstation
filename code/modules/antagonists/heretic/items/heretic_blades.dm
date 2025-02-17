@@ -56,7 +56,7 @@
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
 		user.balloon_alert(user, "can't escape!")
-		if(escape_attempts >= 2)
+		if(escape_attempts > 2)
 			to_chat(user, span_hypnophrase(span_big("Cowardly sheep will be slaughtered!")))
 			playsound(src, SFX_SHATTER, 70, TRUE)
 			var/obj/item/bodypart/to_remove = user.get_active_hand()
