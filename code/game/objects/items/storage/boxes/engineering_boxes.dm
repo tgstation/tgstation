@@ -6,8 +6,9 @@
 	illustration = "grenade"
 
 /obj/item/storage/box/metalfoam/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/grenade/chem_grenade/metalfoam(src)
+	return flatten_quantified_list(list(
+		/obj/item/grenade/chem_grenade/metalfoam = 7,
+	))
 
 /obj/item/storage/box/smart_metal_foam
 	name = "box of smart metal foam grenades"
@@ -15,76 +16,64 @@
 	illustration = "grenade"
 
 /obj/item/storage/box/smart_metal_foam/PopulateContents()
-	for(var/i in 1 to 7)
-		new/obj/item/grenade/chem_grenade/smart_metal_foam(src)
+	return flatten_quantified_list(list(
+		/obj/item/grenade/chem_grenade/smart_metal_foam = 7,
+	))
 
 /obj/item/storage/box/material
 	name = "box of materials"
 	illustration = "implant"
 
-/obj/item/storage/box/material/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC //This needs to be set here too because the parent type overrides it again
+/obj/item/storage/box/material/PopulateContents(datum/storage_config/config) //less uranium because radioactive
+	config.compute_max_values()
 
-/obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
-	var/static/items_inside = list(
-		/obj/item/stack/sheet/iron/fifty=1,
-		/obj/item/stack/sheet/glass/fifty=1,
-		/obj/item/stack/sheet/rglass=50,
-		/obj/item/stack/sheet/plasmaglass=50,
-		/obj/item/stack/sheet/titaniumglass=50,
-		/obj/item/stack/sheet/plastitaniumglass=50,
-		/obj/item/stack/sheet/plasteel=50,
-		/obj/item/stack/sheet/mineral/plastitanium=50,
-		/obj/item/stack/sheet/mineral/titanium=50,
-		/obj/item/stack/sheet/mineral/gold=50,
-		/obj/item/stack/sheet/mineral/silver=50,
-		/obj/item/stack/sheet/mineral/plasma=50,
-		/obj/item/stack/sheet/mineral/uranium=20,
-		/obj/item/stack/sheet/mineral/diamond=50,
-		/obj/item/stack/sheet/bluespace_crystal=50,
-		/obj/item/stack/sheet/mineral/bananium=50,
-		/obj/item/stack/sheet/mineral/wood=50,
-		/obj/item/stack/sheet/plastic/fifty=1,
-		/obj/item/stack/sheet/runed_metal/fifty=1,
-		)
-	//This needs to be done here and not in Initialize() because the stacks get merged and fall out when their weight updates if this is set after PopulateContents()
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.max_slots = 99
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.max_total_storage = 99
-	generate_items_inside(items_inside,src)
+	return flatten_quantified_list(list(
+		/obj/item/stack/sheet/iron/fifty = 1,
+		/obj/item/stack/sheet/glass/fifty= 1 ,
+		/obj/item/stack/sheet/rglass = 50,
+		/obj/item/stack/sheet/plasmaglass = 50,
+		/obj/item/stack/sheet/titaniumglass = 50,
+		/obj/item/stack/sheet/plastitaniumglass = 50,
+		/obj/item/stack/sheet/plasteel = 50,
+		/obj/item/stack/sheet/mineral/plastitanium = 50,
+		/obj/item/stack/sheet/mineral/titanium = 50,
+		/obj/item/stack/sheet/mineral/gold = 50,
+		/obj/item/stack/sheet/mineral/silver = 50,
+		/obj/item/stack/sheet/mineral/plasma = 50,
+		/obj/item/stack/sheet/mineral/uranium = 20,
+		/obj/item/stack/sheet/mineral/diamond = 50,
+		/obj/item/stack/sheet/bluespace_crystal = 50,
+		/obj/item/stack/sheet/mineral/bananium = 50,
+		/obj/item/stack/sheet/mineral/wood = 50,
+		/obj/item/stack/sheet/plastic/fifty = 1,
+		/obj/item/stack/sheet/runed_metal/fifty = 1,
+	))
 
 /obj/item/storage/box/debugtools
 	name = "box of debug tools"
 	icon_state = "syndiebox"
+	storage_type = /datum/storage/box/debug_tools
 
-/obj/item/storage/box/debugtools/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.max_slots = 99
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.max_total_storage = 99
+/obj/item/storage/box/debugtools/PopulateContents(datum/storage_config/config)
+	config.compute_max_values()
 
-/obj/item/storage/box/debugtools/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/card/emag=1,
-		/obj/item/construction/rcd/combat/admin=1,
-		/obj/item/disk/tech_disk/debug=1,
-		/obj/item/flashlight/emp/debug=1,
-		/obj/item/geiger_counter=1,
-		/obj/item/healthanalyzer/advanced=1,
-		/obj/item/modular_computer/pda/heads/captain=1,
-		/obj/item/pipe_dispenser=1,
-		/obj/item/stack/spacecash/c1000=50,
-		/obj/item/storage/box/beakers/bluespace=1,
-		/obj/item/storage/box/beakers/variety=1,
-		/obj/item/storage/box/material=1,
-		/obj/item/uplink/debug=1,
-		/obj/item/uplink/nuclear/debug=1,
-		/obj/item/clothing/ears/earmuffs/debug = 1,
-		)
-	generate_items_inside(items_inside,src)
+	return list(
+		/obj/item/card/emag,
+		/obj/item/construction/rcd/combat/admin,
+		/obj/item/disk/tech_disk/debug,
+		/obj/item/flashlight/emp/debug,
+		/obj/item/geiger_counter,
+		/obj/item/healthanalyzer/advanced,
+		/obj/item/modular_computer/pda/heads/captain,
+		/obj/item/pipe_dispenser,
+		/obj/item/storage/box/beakers/bluespace,
+		/obj/item/storage/box/beakers/variety,
+		/obj/item/storage/box/material,
+		/obj/item/uplink/debug,
+		/obj/item/uplink/nuclear/debug,
+		/obj/item/clothing/ears/earmuffs/debug,
+		new /obj/item/stack/spacecash/c1000(null, 50),
+	)
 
 /obj/item/storage/box/plastic
 	name = "plastic box"
@@ -100,9 +89,9 @@
 	illustration = "emergencytank"
 
 /obj/item/storage/box/emergencytank/PopulateContents()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/tank/internals/emergency_oxygen(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
+	return flatten_quantified_list(list(
+		/obj/item/tank/internals/emergency_oxygen = 7,
+	))
 
 /obj/item/storage/box/engitank
 	name = "extended-capacity emergency oxygen tank box"
@@ -110,9 +99,9 @@
 	illustration = "extendedtank"
 
 /obj/item/storage/box/engitank/PopulateContents()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/tank/internals/emergency_oxygen/engi(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
+	return flatten_quantified_list(list(
+		/obj/item/tank/internals/emergency_oxygen/engi = 7,
+	))
 
 /obj/item/storage/box/stickers/chief_engineer
 	name = "CE approved sticker pack"
@@ -120,5 +109,6 @@
 	illustration = "label_ce"
 
 /obj/item/storage/box/stickers/chief_engineer/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/sticker/chief_engineer(src)
+	return flatten_quantified_list(list(
+		/obj/item/sticker/chief_engineer = 3,
+	))

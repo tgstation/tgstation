@@ -31,8 +31,6 @@ do { \
 	armor_type = /datum/armor/clothing_under/chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/jumpsuit)
 
-/obj/item/clothing/under/chameleon/broken
-
 /obj/item/clothing/under/chameleon/broken/Initialize(mapload)
 	. = ..()
 	BREAK_CHAMELEON_ACTION(src)
@@ -269,12 +267,7 @@ do { \
 	name = "toolbelt"
 	desc = "Holds tools."
 	actions_types = list(/datum/action/item_action/chameleon/change/belt)
-
-/obj/item/storage/belt/chameleon/Initialize(mapload)
-	. = ..()
-	atom_storage.silent = TRUE
-
-/obj/item/storage/belt/chameleon/broken
+	storage_type = /datum/storage/chameleon_belt
 
 /obj/item/storage/belt/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -285,7 +278,6 @@ do { \
 	name = "radio headset"
 	actions_types = list(/datum/action/item_action/chameleon/change/headset)
 
-/obj/item/radio/headset/chameleon/broken
 
 /obj/item/radio/headset/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -296,8 +288,6 @@ do { \
 	name = "tablet"
 	actions_types = list(/datum/action/item_action/chameleon/change/tablet)
 
-/obj/item/modular_computer/pda/chameleon/broken
-
 /obj/item/modular_computer/pda/chameleon/broken/Initialize(mapload)
 	. = ..()
 	BREAK_CHAMELEON_ACTION(src)
@@ -305,8 +295,6 @@ do { \
 // Cham Stamp
 /obj/item/stamp/chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/stamp)
-
-/obj/item/stamp/chameleon/broken
 
 /obj/item/stamp/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -325,8 +313,6 @@ do { \
 	armor_type = /datum/armor/neck_chameleon
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/chameleon/change/neck)
-
-/obj/item/clothing/neck/chameleon/broken
 
 /obj/item/clothing/neck/chameleon/broken/Initialize(mapload)
 	. = ..()

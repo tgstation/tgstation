@@ -151,11 +151,6 @@
 	name = "exosuit tracking beacons"
 
 /obj/item/storage/box/mechabeacons/PopulateContents()
-	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
+	return flatten_quantified_list(list(
+		/obj/item/mecha_parts/mecha_tracking = 7,
+	))

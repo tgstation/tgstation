@@ -13,8 +13,10 @@
 	illustration = "writing_syndie"
 
 /obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
-	new /obj/item/extraction_pack/syndicate(src)
-	new /obj/item/fulton_core(src)
+	return list(
+		/obj/item/extraction_pack/syndicate,
+		/obj/item/fulton_core,
+	)
 
 /obj/item/paper/contractor_guide
 	name = "Contractor Guide"
