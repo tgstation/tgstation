@@ -109,14 +109,14 @@
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/file_path = size[SPRSZ_STRIPPED]
-		var/file_hash = rustg_hash_file("md5", file_path)
+		var/file_hash = rustg_hash_file(RUSTG_HASH_MD5, file_path)
 		SSassets.transport.register_asset("[name]_[size_id].png", file_path, file_hash=file_hash)
 	var/css_name = "spritesheet_[name].css"
 	var/file_directory = "data/spritesheets/[css_name]"
 	fdel(file_directory)
 	var/css = generate_css()
 	rustg_file_write(css, file_directory)
-	var/css_hash = rustg_hash_string("md5", css)
+	var/css_hash = rustg_hash_string(RUSTG_HASH_MD5, css)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory), file_hash=css_hash)
 
 	if(CONFIG_GET(flag/save_spritesheets))
@@ -223,7 +223,7 @@
 		var/asset_id = find_background_urls.group[1]
 		var/file_path = "[ASSET_CROSS_ROUND_CACHE_DIRECTORY]/spritesheet.[asset_id]"
 		// Hashing it here is a *lot* faster.
-		var/hash = rustg_hash_file("md5", file_path)
+		var/hash = rustg_hash_file(RUSTG_HASH_MD5, file_path)
 		var/asset_cache_item = SSassets.transport.register_asset(asset_id, file_path, file_hash=hash)
 		var/asset_url = SSassets.transport.get_asset_url(asset_cache_item = asset_cache_item)
 		replaced_css = replacetext(replaced_css, find_background_urls.match, "background-image:url('[asset_url]')")
@@ -231,7 +231,7 @@
 
 	var/finalized_name = "spritesheet_[name].css"
 	var/replaced_css_filename = "data/spritesheets/[finalized_name]"
-	var/css_hash = rustg_hash_string("md5", replaced_css)
+	var/css_hash = rustg_hash_string(RUSTG_HASH_MD5, replaced_css)
 	rustg_file_write(replaced_css, replaced_css_filename)
 	SSassets.transport.register_asset(finalized_name, replaced_css_filename, file_hash=css_hash)
 

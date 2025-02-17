@@ -208,7 +208,7 @@
 	for(var/size_id in sizes)
 		var/png_name = "[name]_[size_id].png"
 		var/file_directory = "data/spritesheets/[png_name]"
-		var/file_hash = rustg_hash_file("md5", file_directory)
+		var/file_hash = rustg_hash_file(RUSTG_HASH_MD5, file_directory)
 		SSassets.transport.register_asset(png_name, fcopy_rsc(file_directory), file_hash)
 		if(CONFIG_GET(flag/save_spritesheets))
 			save_to_logs(file_name = png_name, file_location = file_directory)
@@ -218,7 +218,7 @@
 	fdel(file_directory)
 	var/css = generate_css()
 	rustg_file_write(css, file_directory)
-	var/css_hash = rustg_hash_string("md5", css)
+	var/css_hash = rustg_hash_string(RUSTG_HASH_MD5, css)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory), file_hash=css_hash)
 
 	if(CONFIG_GET(flag/save_spritesheets))
@@ -293,11 +293,11 @@
 		if(!fexists(fname))
 			return FALSE
 
-	var/css_hash = rustg_hash_file("md5", css_file_directory)
+	var/css_hash = rustg_hash_file(RUSTG_HASH_MD5, css_file_directory)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(css_file_directory), file_hash=css_hash)
 	for(var/size_id in sizes)
 		var/fname = "data/spritesheets/[name]_[size_id].png"
-		var/hash = rustg_hash_file("md5", fname)
+		var/hash = rustg_hash_file(RUSTG_HASH_MD5, fname)
 		SSassets.transport.register_asset("[name]_[size_id].png", fcopy_rsc(fname), file_hash=hash)
 
 	if(CONFIG_GET(flag/save_spritesheets))
