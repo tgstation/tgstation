@@ -47,8 +47,6 @@
 
 	/// Types of area to affect
 	var/area_type = /area/space
-	/// TRUE value protects areas with outdoors marked as false, regardless of area type
-	var/protect_indoors = FALSE
 	/// Areas to be affected by the weather, calculated when the weather begins
 	var/list/impacted_areas = list()
 	/// Areas affected by weather have their blend modes changed
@@ -62,8 +60,6 @@
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
 	var/overlay_plane = WEATHER_PLANE
-	/// If the weather has no purpose other than looks
-	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
 	var/immunity_type
 	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
@@ -79,17 +75,45 @@
 	var/probability = 0
 	/// The z-level trait to affect when run randomly or when not overridden.
 	var/target_trait = ZTRAIT_STATION
-
-	/// Whether a barometer can predict when the weather will happen
-	var/barometer_predictable = FALSE
 	/// For barometers to know when the next storm will hit
 	var/next_hit_time = 0
+	/// The list of turfs (only /turf/open/ subtypes) that the weather event is being applied to. If WEATHER_TURFS or WEATHER_THUNDER weather_flags are not applied this will be an empty list
+	var/list/weather_turfs = list()
+	/// The chance, per tick, a turf will have weather effects applied to it
+	var/turf_weather_probability = 0
+	/// The chance, per tick, a turf will have a thunder strike applied to it
+	var/turf_thunder_probability = 0
+	/// The maximum amount of turfs that can be processed in a single tick regardless of
+	/// the number of turfs determined by turf_weather_prob and turf_thunder_prob
+	/// increasing this too high can result in severe lag so please be careful
+	var/max_turfs_per_tick = 100
+	/// The calculated amount of turfs that get weather effects processed each tick
+	var/weather_turfs_per_tick = 0
+	/// The calculated amount of turfs that get thunder effects processed each tick
+	var/thunder_turfs_per_tick = 0
+
+	/// Color to apply to thunder while weather is occuring
+	var/thunder_color = null
+
+
+
+	/// If the weather has no purpose other than looks
+	var/aesthetic = FALSE
 	/// This causes the weather to only end if forced to
 	var/perpetual = FALSE
+	/// TRUE value protects areas with outdoors marked as false, regardless of area type
+	var/protect_indoors = FALSE
+
+
+
+
+	/// List of weather bitflags that determines effects (see \code\__DEFINES\weather.dm)
+	var/weather_flags = NONE
 
 /datum/weather/New(z_levels)
 	..()
 	impacted_z_levels = z_levels
+
 
 /**
  * Telegraphs the beginning of the weather on the impacted z levels
@@ -98,11 +122,26 @@
  * Calculates duration and hit areas, and makes a callback for the actual weather to start
  *
  */
-/datum/weather/proc/telegraph()
+/datum/weather/proc/telegraph(already_setup_areas)
 	if(stage == STARTUP_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
 	stage = STARTUP_STAGE
+	if(!already_setup_areas)
+		setup_weather_areas(impacted_areas)
+
+	if(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER))
+		setup_weather_turfs()
+
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
+
+	weather_duration = rand(weather_duration_lower, weather_duration_upper)
+	SSweather.processing |= src
+	update_areas()
+	if(telegraph_duration)
+		send_alert(telegraph_message, telegraph_sound)
+	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
+
+/datum/weather/proc/setup_weather_areas(list/selected_areas)
 	var/list/affectareas = list()
 	for(var/area/selected_area as anything in get_areas(area_type))
 		affectareas += selected_area
@@ -114,15 +153,29 @@
 
 		for(var/z in impacted_z_levels)
 			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
-				impacted_areas |= affected_area
+				selected_areas |= affected_area
 				continue
 
-	weather_duration = rand(weather_duration_lower, weather_duration_upper)
-	SSweather.processing |= src
-	update_areas()
-	if(telegraph_duration)
-		send_alert(telegraph_message, telegraph_sound)
-	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
+	//return selected_areas
+
+/datum/weather/proc/setup_weather_turfs()
+	for(var/area/weather_area as anything in impacted_areas)
+		for(var/z in impacted_z_levels)
+			// we are going to skip walls to optimize our list
+			for(var/turf/open/valid_weather_turf in weather_area.get_turfs_by_zlevel(z))
+				weather_turfs += valid_weather_turf
+
+	var/total_turfs = length(weather_turfs)
+
+	if(!total_turfs || !(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER)))
+		return
+
+	if(weather_flags & (WEATHER_TURFS))
+		weather_turfs_per_tick = round(total_turfs * turf_weather_probability)
+		weather_turfs_per_tick = min(weather_turfs_per_tick, max_turfs_per_tick)
+	if(weather_flags & (WEATHER_THUNDER))
+		thunder_turfs_per_tick = round(total_turfs * turf_thunder_probability)
+		thunder_turfs_per_tick = min(thunder_turfs_per_tick, max_turfs_per_tick)
 
 /**
  * Starts the actual weather and effects from it
@@ -196,7 +249,7 @@
  * Returns TRUE if the living mob can be affected by the weather
  *
  */
-/datum/weather/proc/can_weather_act(mob/living/mob_to_check)
+/datum/weather/proc/can_weather_act_mob(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
 
 	if(!mob_turf)
@@ -223,7 +276,21 @@
  * Affects the mob with whatever the weather does
  *
  */
-/datum/weather/proc/weather_act(mob/living/L)
+/datum/weather/proc/weather_act_mob(mob/living/L)
+	return
+
+/**
+ * Affects the turf with whatever the weather does
+ *
+ */
+/datum/weather/proc/weather_act_turf(turf/open/weather_turf)
+	return
+
+/**
+ * Affects the turf with lighting
+ *
+ */
+/datum/weather/proc/lighting_act_turf(turf/open/weather_turf)
 	return
 
 /**

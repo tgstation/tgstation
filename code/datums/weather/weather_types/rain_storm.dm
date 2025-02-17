@@ -1,4 +1,3 @@
-//Acid rain is part of the natural weather cycle in the humid forests of LV, and cause acid damage to anyone unprotected.
 /datum/weather/rain
 	name = "rain"
 	desc = "Heavy thunderstorms rain down below, drenching anyone caught in it."
@@ -6,20 +5,20 @@
 	//target_trait = ZTRAIT_RAINSTORM
 
 	telegraph_message = span_danger("Thunder rumbles far above. You hear droplets drumming against the canopy.")
-	telegraph_overlay = "rain_med"
-	telegraph_sound = 'sound/ambience/weather/rain/rain_start.ogg'
-	telegraph_duration = 13.3 SECONDS // rain_start.ogg total time
+	telegraph_overlay = "rain_low"
+//	telegraph_sound = 'sound/ambience/weather/rain/rain_start.ogg'
+	telegraph_duration = 30 SECONDS
 
 	weather_message = span_userdanger("<i>Rain pours down around you!</i>")
 	weather_overlay = "rain_high"
 
 	end_message = span_bolddanger("The downpour gradually slows to a light shower.")
 	end_overlay = "rain_low"
-	end_sound = 'sound/ambience/weather/rain/rain_end.ogg'
-	end_duration = 20.7 SECONDS // rain_end.ogg total time
+//	end_sound = 'sound/ambience/weather/rain/rain_end.ogg'
+	end_duration = 30 SECONDS
 
-	weather_duration_lower = 3 MINUTES
-	weather_duration_upper = 5 MINUTES
+	weather_duration_lower = 0.3 MINUTES
+	weather_duration_upper = 0.5 MINUTES
 	// the default rain color when weather is aesethic otherwise gets overriden by reagent color
 	weather_color = "#516a91ff"
 
@@ -30,7 +29,7 @@
 	//protect_indoors = TRUE
 	area_type = /area/
 
-	barometer_predictable = TRUE
+	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_INDOORS | WEATHER_BAROMETER)
 
 	/// A weighted list of possible reagents that will rain down from the sky.
 	/// Only one of these will be selected to be used as the reagent
@@ -41,13 +40,8 @@
 	/// The selected reagent that will be rained down
 	var/datum/reagent/rain_reagent
 
-	/// A list of weather bitflags to control weather settings
-	var/weather_flags = NONE // MOBS|TURFS|THUNDER|
-
 	var/list/weak_sounds = list()
 	var/list/strong_sounds = list()
-
-	var/sound_plays_entire_z_level = FALSE
 
 /datum/weather/rain/New(z_levels)
 	..()
@@ -115,18 +109,21 @@
 */
 
 /datum/weather/rain/telegraph()
-	. = ..()
-
+	setup_weather_areas(impacted_areas)
+	// just in case the list didn't clear from an earlier weather event
+	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
-		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain
+		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
 		CHECK_TICK
 
-	//We modify this list instead of setting it to weak/stron sounds in order to preserve things that hold a reference to it
-	//It's essentially a playlist for a bunch of components that chose what sound to loop based on the area a player is in
-	//GLOB.rain_storm_sounds += weak_sounds
-
+	return ..(TRUE)
 
 /datum/weather/rain/start()
+	GLOB.rain_storm_sounds.Cut()
+	for(var/area/impacted_area as anything in impacted_areas)
+		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/middle
+		CHECK_TICK
+
 	//GLOB.rain_storm_sounds -= weak_sounds
 /*
 	GLOB.rain_storm_sounds.Cut()
@@ -137,10 +134,17 @@
 
 /datum/weather/rain/wind_down()
 	GLOB.rain_storm_sounds.Cut()
+	for(var/area/impacted_area as anything in impacted_areas)
+		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/end
+		CHECK_TICK
 	//GLOB.rain_storm_sounds.Cut() //-= strong_sounds
 	return ..()
 
-/datum/weather/rain/weather_act(mob/living/living)
+/datum/weather/rain/end()
+	GLOB.rain_storm_sounds.Cut()
+	return ..()
+
+/datum/weather/rain/weather_act_mob(mob/living/living)
 /*
 	/var/chem = /datum/reagent/water
 
@@ -237,7 +241,7 @@
 	. = ..()
 	//sound_active_acidrain.stop()
 
-/datum/weather/rain/acid/weather_act(mob/living/living)
+/datum/weather/rain/acid/weather_act_mob(mob/living/living)
 	if(living.stat == DEAD)
 		return
 

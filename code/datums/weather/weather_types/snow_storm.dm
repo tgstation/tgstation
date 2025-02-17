@@ -22,14 +22,14 @@
 
 	immunity_type = TRAIT_SNOWSTORM_IMMUNE
 
-	barometer_predictable = TRUE
+	weather_flags = (WEATHER_BAROMETER)
 
 	///Lowest we can cool someone randomly per weather act. Positive values only
 	var/cooling_lower = 5
 	///Highest we can cool someone randomly per weather act. Positive values only
 	var/cooling_upper = 15
 
-/datum/weather/snow_storm/weather_act(mob/living/living)
+/datum/weather/snow_storm/weather_act_mob(mob/living/living)
 	living.adjust_bodytemperature(-rand(cooling_lower, cooling_upper))
 
 // since snowstorm is on a station z level, add extra checks to not annoy everyone

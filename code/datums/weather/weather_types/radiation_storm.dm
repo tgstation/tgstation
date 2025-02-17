@@ -34,7 +34,7 @@
 	status_alarm(TRUE)
 
 
-/datum/weather/rad_storm/weather_act(mob/living/living)
+/datum/weather/rad_storm/weather_act_mob(mob/living/living)
 	if(!prob(mutate_chance))
 		return
 
@@ -100,7 +100,7 @@
 	///Chance we pulse a living during the storm
 	var/radiation_chance = 5
 
-/datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+/datum/weather/rad_storm/nebula/weather_act_mob(mob/living/living)
 	..()
 
 	if(!prob(radiation_chance))
