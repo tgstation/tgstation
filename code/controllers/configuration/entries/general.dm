@@ -20,6 +20,9 @@
 /datum/config_entry/flag/auto_deadmin_heads
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/auto_deadmin_on_ready_or_latejoin
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/auto_deadmin_silicons
 	protection = CONFIG_ENTRY_LOCKED
 
