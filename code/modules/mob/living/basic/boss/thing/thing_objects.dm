@@ -22,7 +22,7 @@
 		if(isliving(living_victim))
 			hit_someone = TRUE
 			living_victim.apply_damage(40, damagetype = BRUTE, sharpness = SHARP_POINTY, wound_bonus = -10)
-		else if(potential_target.uses_integrity && !(potential_target.resistance_flags & INDESTRUCTIBLE) && !(initial(potential_target.density)) && !HAS_TRAIT(potential_target, TRAIT_UNDERFLOOR))
+		else if(potential_target.uses_integrity && !(potential_target.resistance_flags & INDESTRUCTIBLE) && initial(potential_target.density) && !HAS_TRAIT(potential_target, TRAIT_UNDERFLOOR))
 			potential_target.take_damage(100, BRUTE)
 	if (hit_someone)
 		expiry_time /= 2
