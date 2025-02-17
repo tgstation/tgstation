@@ -93,7 +93,7 @@
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
-	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT | REAGENT_UNAFFECTED_BY_METABOLISM
 	metabolization_rate = 1 * REM
 
 /datum/reagent/inverse/cryostylane/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
@@ -101,10 +101,10 @@
 	if(HAS_TRAIT(exposed_mob, TRAIT_RESISTCOLD))
 		holder.remove_reagent(type, volume)
 		return
-
-	exposed_mob.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	if(!exposed_mob.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
-		exposed_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
+	if(methods & INJECT)
+		exposed_mob.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
+		if(!exposed_mob.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
+			exposed_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
