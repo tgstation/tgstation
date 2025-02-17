@@ -62,3 +62,7 @@
 /datum/techweb_node/surgery_exp
 	required_experiments = list()
 	discount_experiments = list(/datum/experiment/autopsy/nonhuman = TECHWEB_TIER_3_POINTS)
+
+/datum/techweb_node/medbay_equip_adv
+	required_experiments = list()
+	discount_experiments = list(/datum/experiment/scanning/reagent/haloperidol)
