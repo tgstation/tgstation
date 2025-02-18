@@ -374,7 +374,7 @@
 /mob/dead/new_player/proc/auto_deadmin_on_ready_or_latejoin()
 	if(!client?.holder) //If they aren't an admin we dont care
 		return TRUE
-	if(CONFIG_GET(flag/auto_deadmin_on_ready_or_latejoin) || (client.prefs?.toggles & DEADMIN_ALWAYS))
+	if(CONFIG_GET(flag/auto_deadmin_on_ready_or_latejoin) || (client.prefs.read_preference(/datum/preference/toggle/auto_deadmin_on_ready_or_latejoin)) || (client.prefs?.toggles & DEADMIN_ALWAYS))
 		return client.holder.auto_deadmin()
 
 #undef RESET_HUD_INTERVAL
