@@ -120,8 +120,11 @@
  * Returns a list of items(object typepaths or solid atoms) to be inserted into the storage
  * If you list contains solid atoms make sure they are created/moved in nullspace i.e. no bypassing storage
  * restrictions else this storage will self destruct with a stack trace
+ * Arguments
+ *
+ * * datum/storage_config/config - the config used to set storage values based on the contents returned here
  */
-/obj/item/storage/proc/PopulateContents()
+/obj/item/storage/proc/PopulateContents(datum/storage_config/config)
 	RETURN_TYPE(/list/obj/item)
 	PROTECTED_PROC(TRUE)
 
