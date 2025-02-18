@@ -108,12 +108,25 @@
 /datum/action/cooldown/track_target/Activate(atom/target)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
+
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		owner.balloon_alert(owner, "no targets, visit a rune!")
 		StartCooldown(1 SECONDS)
 		return TRUE
 
 	var/list/targets_to_choose = list()
+
+	var/obj/item/melee/sickly_blade/blade
+	for(var/datum/weakref/blade_ref as anything in heretic_datum.created_blades)
+		blade = blade_ref.resolve()
+		if(!blade)
+			heretic_datum.created_blades -= blade_ref
+			continue
+		if(blade.loc == owner || blade.loc.loc == owner)
+			continue
+		// Means our blade is somewhere, but not on our person, so let's track it
+		targets_to_choose[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
+
 	var/list/mob/living/carbon/human/human_targets = list()
 	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
 		human_targets[sac_target.real_name] = sac_target
@@ -139,12 +152,15 @@
 		return FALSE
 
 	var/mob/living/carbon/human/tracked_mob = human_targets[last_tracked_name]
-	if(QDELETED(tracked_mob))
+	if(QDELETED(tracked_mob) && QDELETED(blade))
 		last_tracked_name = null
 		return FALSE
 
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
+	if(tracked_mob)
+		owner.balloon_alert(owner, get_balloon_message(tracked_mob))
+	else
+		owner.balloon_alert(owner, get_balloon_message(blade))
 
 
 	// Let them know how to sacrifice people if they're able to be sac'd
@@ -184,9 +200,9 @@
 	return TRUE
 
 /// Gets the balloon message for who we're tracking.
-/datum/action/cooldown/track_target/proc/get_balloon_message(mob/living/carbon/human/tracked_mob)
+/datum/action/cooldown/track_target/proc/get_balloon_message(atom/tracked_thing)
 	var/balloon_message = "error text!"
-	var/turf/their_turf = get_turf(tracked_mob)
+	var/turf/their_turf = get_turf(tracked_thing)
 	var/turf/our_turf = get_turf(owner)
 	var/their_z = their_turf?.z
 	var/our_z = our_turf?.z
@@ -245,8 +261,10 @@
 
 		make_navigate_arrow(their_turf, arrow_color)
 
-	if(tracked_mob.stat == DEAD)
-		balloon_message = "they're dead, " + balloon_message
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		if(tracked_mob?.stat == DEAD)
+			balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message
 
