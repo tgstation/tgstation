@@ -170,8 +170,7 @@
 	else if (HAS_TRAIT(src, TRAIT_WING_BUFFET))
 		overlay_state = "overlay_gust"
 
-	var/mutable_appearance/overlay = mutable_appearance(icon, "[icon_living]_[overlay_state]")
-	overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/overlay = mutable_appearance(icon, "[icon_living]_[overlay_state]", appearance_flags = RESET_COLOR|KEEP_APART)
 	. += overlay
 
 /mob/living/basic/space_dragon/melee_attack(obj/vehicle/sealed/mecha/target, list/modifiers, ignore_cooldown)

@@ -212,10 +212,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"dc" = (
-/obj/machinery/vending/boozeomat/syndicate,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/infested_frigate)
 "df" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
@@ -451,23 +447,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
-"fB" = (
-/obj/structure/cable,
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/gibs{
-	icon_state = "floor6-old"
-	},
-/obj/item/shard{
-	icon_state = "plastitaniumtiny"
-	},
-/mob/living/basic/alien/queen/large{
-	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/smartgun,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
-	desc = "What you saw in your dreams last night.";
-	faction = list("syndicate","xenomorph")
-	},
-/obj/structure/alien/egg/burst,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "fM" = (
 /obj/structure/door_assembly/door_assembly_ext,
 /turf/template_noop,
@@ -577,6 +556,15 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/infested_frigate)
+"hX" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/icecream_vat{
+	desc = "Waffle Corp. actually ordered these guys to steal one of these just to be sure."
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "ie" = (
 /obj/structure/showcase/machinery{
@@ -700,6 +688,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"kw" = (
+/obj/machinery/vending/boozeomat/syndicate,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
 "kS" = (
 /obj/structure/cable,
@@ -856,6 +848,17 @@
 	desc = "The resin is thick and it keeps collapsing on itself."
 	},
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"nU" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5-old"
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/gun/ballistic/automatic/smartgun,
+/obj/effect/mob_spawn/corpse/human/syndicatepilot,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "oj" = (
 /obj/structure/fans/tiny,
@@ -1035,31 +1038,6 @@
 "rm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
-"rs" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = 28
-	},
-/obj/item/storage/toolbox/syndicate,
-/obj/item/storage/toolbox/maint_kit,
-/obj/item/storage/toolbox/maint_kit,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/box/lights/bulbs,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/structure/closet/crate/large{
-	anchored = 1;
-	name = "crew supplies"
-	},
-/obj/structure/cable,
-/obj/item/pickaxe/emergency,
-/obj/item/pickaxe/emergency,
-/obj/effect/spawner/random/decoration/carpet,
-/obj/effect/spawner/random/engineering/vending_restock,
-/obj/effect/spawner/random/engineering/vending_restock,
-/obj/item/bedsheet/syndie/double,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "rz" = (
 /obj/machinery/airalarm/directional/west,
@@ -2510,17 +2488,6 @@
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
-"NZ" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood{
-	icon_state = "floor5-old"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/gun/ballistic/automatic/smartgun,
-/obj/effect/mob_spawn/corpse/human/syndicatepilot,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/infested_frigate)
 "Or" = (
 /obj/item/stack/rods{
 	amount = 23
@@ -2653,15 +2620,6 @@
 	},
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
-"QF" = (
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/all_access,
-/obj/machinery/icecream_vat{
-	desc = "Waffle Corp. actually ordered these guys to steal one of these just to be sure."
-	},
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "QL" = (
 /obj/structure/broken_flooring/singular/directional/east,
@@ -2796,6 +2754,23 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"SM" = (
+/obj/structure/cable,
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "floor6-old"
+	},
+/obj/item/shard{
+	icon_state = "plastitaniumtiny"
+	},
+/mob/living/basic/alien/queen/large{
+	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/smartgun,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
+	desc = "What you saw in your dreams last night.";
+	faction = list("syndicate","xenomorph")
+	},
+/obj/structure/alien/egg/burst,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "SS" = (
 /obj/structure/table_frame,
@@ -2984,6 +2959,31 @@
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/spawner/random/special_lighter,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/infested_frigate)
+"WB" = (
+/obj/structure/sign/warning/no_smoking{
+	pixel_x = 28
+	},
+/obj/item/storage/toolbox/syndicate,
+/obj/item/gun_maintenance_supplies,
+/obj/item/gun_maintenance_supplies,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/box/lights/bulbs,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/structure/closet/crate/large{
+	anchored = 1;
+	name = "crew supplies"
+	},
+/obj/structure/cable,
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
+/obj/effect/spawner/random/decoration/carpet,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/item/bedsheet/syndie/double,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "WG" = (
@@ -3373,12 +3373,12 @@ fl
 wP
 EQ
 wP
-QF
-fB
+hX
+SM
 ME
 KT
 LF
-dc
+kw
 Po
 wP
 fl
@@ -3457,7 +3457,7 @@ wP
 iY
 Xc
 Hu
-rs
+WB
 AH
 yt
 YW
@@ -3861,7 +3861,7 @@ bM
 Ne
 wP
 bE
-NZ
+nU
 ML
 wP
 UX

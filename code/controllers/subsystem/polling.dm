@@ -155,7 +155,7 @@ SUBSYSTEM_DEF(polling)
 			act_never = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
 
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
-			SEND_SOUND(candidate_mob, sound('sound/misc/prompt.ogg', volume = 70))
+			SEND_SOUND(candidate_mob, sound('sound/misc/prompt.ogg', volume = 50))
 			var/surrounding_icon
 			if(chat_text_border_icon)
 				var/image/surrounding_image
