@@ -326,7 +326,7 @@
 
 /// Acid power of whatever we're digesting
 /obj/item/organ/stomach/proc/stomach_acid_power(atom/movable/nomnom, seconds_per_tick)
-	if (isliving(nomnom)) // NO VORE ALLOWED I BEG YOU
+	if (isliving(nomnom)) // NO VORE ALLOWED
 		return 0
 	// Yeah maybe don't, if something edible ended up here it should either handle itself or not be digested
 	if (IsEdible(nomnom))

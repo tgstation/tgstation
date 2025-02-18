@@ -299,12 +299,11 @@
 		owner.gib(DROP_ALL_REMAINS)
 	qdel(src)
 
-/obj/item/organ/stomach/alien/empty_contents(chance = 100, damaging = FALSE)
+/obj/item/organ/stomach/alien/empty_contents(chance = 100, damaging = FALSE, min_amount = 0)
 	// Under high pressure from all the acid!
 	return eject_stomach(border_diamond_range_turfs(get_turf(src), 3), 3, 1, 1, 4)
 
 /obj/item/organ/stomach/alien/on_vomit(mob/living/carbon/vomiter, distance, force)
-	SIGNAL_HANDLER
 	// If you get a xeno to vomit, you may be able to recover your comrades' corpses
 	empty_contents(chance = 100)
 
