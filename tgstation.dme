@@ -3035,6 +3035,7 @@
 #include "code\modules\admin\verbs\plane_debugger.dm"
 #include "code\modules\admin\verbs\player_ticket_history.dm"
 #include "code\modules\admin\verbs\playsound.dm"
+#include "code\modules\admin\verbs\policy_panel.dm"
 #include "code\modules\admin\verbs\possess.dm"
 #include "code\modules\admin\verbs\pray.dm"
 #include "code\modules\admin\verbs\reestablish_db_connection.dm"
