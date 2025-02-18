@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(weather)
 			LAZYINITLIST(eligible_zlevels["[z]"])
 			eligible_zlevels["[z]"][weather] = probability
 
-/datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, datum/reagent/reagent_type)
+/datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, area_type, weather_bitflags, datum/reagent/reagent_type)
 	if (istext(weather_datum_type))
 		for (var/V in subtypesof(/datum/weather))
 			var/datum/weather/W = V
@@ -81,7 +81,7 @@ SUBSYSTEM_DEF(weather)
 	else if (!islist(z_levels))
 		CRASH("run_weather called with invalid z_levels: [z_levels || "null"]")
 
-	var/datum/weather/W = new weather_datum_type(z_levels, reagent_type)
+	var/datum/weather/W = new weather_datum_type(z_levels, area_type, weather_bitflags, reagent_type)
 	W.telegraph()
 
 /datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)
@@ -100,11 +100,3 @@ SUBSYSTEM_DEF(weather)
 ///Returns an active storm by its type
 /datum/controller/subsystem/weather/proc/get_weather_by_type(type)
 	return locate(type) in processing
-
-ADMIN_VERB(stop_weather, R_DEBUG|R_ADMIN, "Stop All Active Weather", "Stop all currently active weather.", ADMIN_CATEGORY_DEBUG)
-	log_admin("[key_name(user)] stopped all currently active weather.")
-	message_admins("[key_name_admin(user)] stopped all currently active weather.")
-	for(var/datum/weather/current_weather as anything in SSweather.processing)
-		if(current_weather in SSweather.processing)
-			current_weather.end()
-	BLACKBOX_LOG_ADMIN_VERB("Stop All Active Weather")

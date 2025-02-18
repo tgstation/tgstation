@@ -3000,6 +3000,7 @@
 #include "code\modules\admin\verbs\adminpm.dm"
 #include "code\modules\admin\verbs\adminsay.dm"
 #include "code\modules\admin\verbs\adminshuttle.dm"
+#include "code\modules\admin\verbs\adminweather.dm"
 #include "code\modules\admin\verbs\ai_triumvirate.dm"
 #include "code\modules\admin\verbs\anonymousnames.dm"
 #include "code\modules\admin\verbs\atmosdebug.dm"

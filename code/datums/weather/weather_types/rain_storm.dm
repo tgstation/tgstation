@@ -37,7 +37,7 @@
 	/// The selected reagent that will be rained down
 	var/datum/reagent/rain_reagent
 
-/datum/weather/rain_storm/New(z_levels, datum/reagent/custom_reagent)
+/datum/weather/rain_storm/New(z_levels, area_override, weather_flags_override, datum/reagent/custom_reagent)
 	..()
 
 	if(IS_WEATHER_AESTHETIC(weather_flags))
@@ -142,6 +142,3 @@
 		/datum/reagent/toxin/acid/fluacid = 1,
 	)
 
-// special admin rain that lets them pick the reagent to use
-/datum/weather/rain_storm/admin
-	whitelist_weather_reagents = list()
