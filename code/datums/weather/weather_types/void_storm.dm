@@ -18,5 +18,4 @@
 	area_type = /area
 	target_trait = ZTRAIT_VOIDSTORM
 
-	weather_flags = (WEATHER_INDOORS | WEATHER_BAROMETER)
-	perpetual = TRUE
+	weather_flags = (WEATHER_INDOORS | WEATHER_BAROMETER | WEATHER_ENDLESS)

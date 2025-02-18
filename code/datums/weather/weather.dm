@@ -97,12 +97,6 @@
 	/// Color to apply to thunder while weather is occuring
 	var/thunder_color = null
 
-	/// This causes the weather to only end if forced to
-	var/perpetual = FALSE
-
-
-
-
 	/// List of weather bitflags that determines effects (see \code\__DEFINES\weather.dm)
 	var/weather_flags = NONE
 
@@ -187,7 +181,7 @@
 	stage = MAIN_STAGE
 	update_areas()
 	send_alert(weather_message, weather_sound)
-	if(!perpetual)
+	if(!(weather_flags & (WEATHER_ENDLESS)))
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 	for(var/area/impacted_area as anything in impacted_areas)
 		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type), src)
