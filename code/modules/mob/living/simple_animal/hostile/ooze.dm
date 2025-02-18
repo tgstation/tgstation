@@ -55,6 +55,9 @@
 /mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 
+	if(!.) //dead or deleted
+		return
+
 	if(!mind && stat != DEAD)//no mind no change
 		return
 
