@@ -500,7 +500,7 @@
 	fish.update_size_and_weight(fish.size, FISH_WEIGHT_BITE_DIVISOR)
 	fish.AddElement(/datum/element/fried_item, FISH_SAFE_COOKING_DURATION)
 	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish didn't die after being cooked")
-	TEST_ASSERT(bite_size < edible.bite_consumption, "The bite_consumption value hasn't increased after being cooked (it removes blood but doubles protein). Value: [bite_size]")
+	TEST_ASSERT(bite_size < edible.bite_consumption, "The bite_consumption value hasn't increased after being cooked (it removes blood but doubles protein). Old: [bite_size]. New: [edible.bite_consumption]")
 	TEST_ASSERT(!(edible.foodtypes & (RAW|GORE)), "Fish still has the GORE and/or RAW foodtypes flags after being cooked")
 	TEST_ASSERT(!fish.GetComponent(/datum/component/infective), "Fish still has the infective component after being cooked for long enough")
 

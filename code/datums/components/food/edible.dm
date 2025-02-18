@@ -166,6 +166,7 @@ Behavior that's still missing from this component that original food items had t
 
 	//Only the innate source is allowed to change the following vars if there are a plurality of sources.
 	if(source != SOURCE_EDIBLE_INNATE && length(sources) > 1)
+		stack_trace("[source] -- [length(sources)]")
 		return
 
 	// add all new eatverbs to the list
