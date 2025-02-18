@@ -18,10 +18,12 @@
 	initial_cofig.reset()
 	var/list/obj/item/items = PopulateContents(initial_cofig)
 
-	//no hacking our way into the storages loc without going through `can_insert()` first
-	if(contents.len)
+	///does not need to be on live as your storage code should be fixed before then. Performance
+	#if defined(UNIT_TESTS) || defined(DEBUG)
+	if(contents.len) //no hacking our way into the storages loc without going through `can_insert()` first
 		stack_trace("[contents.len] atoms were found inside storage before they could be inserted correctly")
 		return INITIALIZE_HINT_QDEL
+	#endif
 
 	//Create storage only after retriving the contents. This is done so `atom_storage` values are not modified
 	//manually which is error prone. Either create a storage subtype with your specified values or use
