@@ -17,6 +17,7 @@
 	end_duration = 30 SECONDS
 	end_overlay = "dust_med"
 
+	area_type = /area
 	target_trait = ZTRAIT_SANDSTORM
 	immunity_type = TRAIT_SANDSTORM_IMMUNE
 	probability = 0

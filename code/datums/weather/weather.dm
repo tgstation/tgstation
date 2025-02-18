@@ -131,8 +131,8 @@
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /datum/weather/proc/setup_weather_areas(list/selected_areas)
-	if(length(selected_areas)) // already setup impacted areas
-		return
+	if(length(selected_areas))
+		return // impacted areas already been setup
 
 	var/list/affectareas = list()
 	for(var/area/selected_area as anything in get_areas(area_type))
