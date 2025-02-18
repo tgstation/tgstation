@@ -72,7 +72,10 @@
 		else
 			icon_state = "[initial(icon_state)]-broken"
 		return ..()
-	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	if (state_open)
+		icon_state = "[initial(icon_state)][powered() ? "-broken" : "-broken-off"]"
+	else
+		icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
 	return ..()
 
 /obj/machinery/seed_extractor/add_context(
