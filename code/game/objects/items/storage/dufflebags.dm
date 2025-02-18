@@ -361,14 +361,14 @@
 	return stuff
 
 /obj/item/storage/backpack/duffelbag/syndie/c4/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/grenade/c4 = 10
-	))
+	. = list()
+	for(var/_ in 1 to 10)
+		. += /obj/item/grenade/c4
 
 /obj/item/storage/backpack/duffelbag/syndie/x4/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/grenade/c4/x4 = 10
-	))
+	. = list()
+	for(var/_ in 1 to 10)
+		. += /obj/item/grenade/c4/x4
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite MODsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."

@@ -6,9 +6,9 @@
 	illustration = "grenade"
 
 /obj/item/storage/box/metalfoam/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/grenade/chem_grenade/metalfoam = 7,
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/grenade/chem_grenade/metalfoam
 
 /obj/item/storage/box/smart_metal_foam
 	name = "box of smart metal foam grenades"
@@ -16,9 +16,9 @@
 	illustration = "grenade"
 
 /obj/item/storage/box/smart_metal_foam/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/grenade/chem_grenade/smart_metal_foam = 7,
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/grenade/chem_grenade/smart_metal_foam
 
 /obj/item/storage/box/debugtools
 	name = "box of debug tools"
@@ -60,9 +60,9 @@
 	illustration = "emergencytank"
 
 /obj/item/storage/box/emergencytank/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/tank/internals/emergency_oxygen = 7,
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/tank/internals/emergency_oxygen
 
 /obj/item/storage/box/engitank
 	name = "extended-capacity emergency oxygen tank box"
@@ -70,9 +70,9 @@
 	illustration = "extendedtank"
 
 /obj/item/storage/box/engitank/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/tank/internals/emergency_oxygen/engi = 7,
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/tank/internals/emergency_oxygen/engi
 
 /obj/item/storage/box/stickers/chief_engineer
 	name = "CE approved sticker pack"
@@ -80,6 +80,8 @@
 	illustration = "label_ce"
 
 /obj/item/storage/box/stickers/chief_engineer/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/sticker/chief_engineer = 3,
-	))
+	return list(
+		/obj/item/sticker/chief_engineer,
+		/obj/item/sticker/chief_engineer,
+		/obj/item/sticker/chief_engineer,
+	)

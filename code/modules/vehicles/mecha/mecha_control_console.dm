@@ -151,6 +151,6 @@
 	name = "exosuit tracking beacons"
 
 /obj/item/storage/box/mechabeacons/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/mecha_parts/mecha_tracking = 7,
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/mecha_parts/mecha_tracking

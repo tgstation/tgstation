@@ -6,9 +6,9 @@
 	illustration = "latex"
 
 /obj/item/storage/box/gloves/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/clothing/gloves/latex = 7
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/clothing/gloves/latex
 
 /obj/item/storage/box/masks
 	name = "box of sterile masks"
@@ -16,9 +16,9 @@
 	illustration = "sterile"
 
 /obj/item/storage/box/masks/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/clothing/mask/surgical = 7
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/clothing/mask/surgical
 
 /obj/item/storage/box/rxglasses
 	name = "box of prescription glasses"
@@ -26,9 +26,9 @@
 	illustration = "glasses"
 
 /obj/item/storage/box/rxglasses/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/clothing/glasses/regular = 7
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/clothing/glasses/regular
 
 /obj/item/storage/box/tape_wizard
 	name = "Tape Wizard - Episode 23"
@@ -74,9 +74,9 @@
 	illustration = "depband"
 
 /obj/item/storage/box/deputy/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/clothing/accessory/armband/deputy = 7
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/clothing/accessory/armband/deputy
 
 /obj/item/storage/box/hero
 	name = "Courageous Tomb Raider - 1940's."

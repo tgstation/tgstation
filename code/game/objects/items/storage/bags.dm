@@ -448,9 +448,9 @@
 	storage_type = /datum/storage/bag/harpoon_quiver
 
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/ammo_casing/harpoon = 40,
-	))
+	. = list()
+	for(var/_ in 1 to 40)
+		. += /obj/item/ammo_casing/harpoon
 
 /obj/item/storage/bag/rebar_quiver
 	name = "rebar quiver"
@@ -476,9 +476,9 @@
 	storage_type = /datum/storage/bag/rebar_quiver/syndicate
 
 /obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/ammo_casing/rebar/syndie = 20
-	))
+	. = list()
+	for(var/_ in 1 to 20)
+		/obj/item/ammo_casing/rebar/syndie
 
 /obj/item/storage/bag/rebar_quiver/syndicate/update_icon_state()
 	. = ..()

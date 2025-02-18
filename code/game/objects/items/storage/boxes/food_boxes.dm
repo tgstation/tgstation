@@ -135,17 +135,17 @@
 	desc = "It's slightly moist and smells like a slaughterhouse."
 
 /obj/item/storage/box/papersack/meat/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/meat/slab = 7,
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/food/meat/slab
 
 /obj/item/storage/box/papersack/wheat
 	desc = "It's a bit dusty, and smells like a barnyard."
 
 /obj/item/storage/box/papersack/wheat/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/grown/wheat = 7,
-	))
+	. = list()
+	for(var/_ in 1 to 7)
+		. += /obj/item/food/grown/wheat
 
 /obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
@@ -358,9 +358,9 @@
 	storage_type = /datum/storage/box/bubble_gum
 
 /obj/item/storage/box/gum/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/bubblegum = 4,
-	))
+	. = list()
+	for(var/_ in 1 to 4)
+		. += /obj/item/food/bubblegum
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
@@ -369,9 +369,9 @@
 	custom_premium_price = PAYCHECK_CREW * 1.5
 
 /obj/item/storage/box/gum/nicotine/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/bubblegum/nicotine = 4,
-	))
+	. = list()
+	for(var/_ in 1 to 4)
+		. += /obj/item/food/bubblegum/nicotine
 
 /obj/item/storage/box/gum/happiness
 	name = "HP+ gum packet"

@@ -350,14 +350,14 @@
 	storage_type = /datum/storage/soulstone_belt
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/soulstone/mystic = 6
-	))
+	. = list()
+	for(var/_ in 1 to 6)
+		. += /obj/item/soulstone/mystic
 
 /obj/item/storage/belt/soulstone/full/chappy/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/soulstone/anybody/chaplain = 6
-	))
+	. = list()
+	for(var/_ in 1 to 6)
+		. += /obj/item/soulstone/anybody/chaplain
 
 /obj/item/storage/belt/champion
 	name = "championship belt"
