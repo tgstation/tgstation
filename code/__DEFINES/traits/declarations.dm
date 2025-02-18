@@ -379,8 +379,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
 #define TRAIT_BOT_PATH_HUD "bot_path_hud"
-/// Is a medbot healing you
-#define TRAIT_MEDIBOTCOMINGTHROUGH "medbot"
 #define TRAIT_PASSTABLE "passtable"
 /// Lets you fly through windows
 #define TRAIT_PASSWINDOW "passwindow"
@@ -582,8 +580,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Whether or not the user is in a MODlink call, prevents making more calls
 #define TRAIT_IN_CALL "in_call"
 
-/// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
-#define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
 /// Does the mob ignore elevation? (e.g. xeno larvas on hiding)
 #define TRAIT_IGNORE_ELEVATION "ignore_elevation"
 
@@ -618,7 +614,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISPLAY_JOB_IN_BINARY "display job in binary"
 
 /// Trait that determines vulnerability to being stunned from a shove
-#define TRAIT_STUN_ON_NEXT_SHOVE "stun on next shove"
+#define TRAIT_DAZED "dazed"
 
 /// Trait that determines whether our mob gains more strength from drinking during a fist fight
 #define TRAIT_DRUNKEN_BRAWLER "drunken brawler"
@@ -872,6 +868,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker"
 /// For edible items that cannot be composted inside hydro trays
 #define TRAIT_UNCOMPOSTABLE "uncompostable"
+/// Items with this trait will not have their worn icon overlayed.
+#define TRAIT_NO_WORN_ICON "no_worn_icon"
+/// Items with this trait will not appear when examined.
+#define TRAIT_EXAMINE_SKIP "examine_skip"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -1323,6 +1323,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to anything linked to, not necessarily allied to, the mansus
 #define TRAIT_MANSUS_TOUCHED "mansus_touched"
 
+/// Trait given to all participants in a heretic arena
+#define TRAIT_ELDRITCH_ARENA_PARTICIPANT "eldritch_arena_participant"
 
 // These traits are used in IS_X() as an OR, and is utilized for pseudoantags (such as deathmatch or domains) so they don't need to actually get antag status.
 // To specifically and only get the antag datum, GET_X() exists now.
@@ -1426,5 +1428,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied when the wire bundle component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_WIRE_BUNDLE "component_wire_bundle"
+
+/// Apply this trait to mobs which can "buckle" to humans
+#define TRAIT_CAN_MOUNT_HUMANS "can_mount_humans"
+/// Apply this trait to mobs which can "buckle" to cyborgs
+#define TRAIT_CAN_MOUNT_CYBORGS "can_mount_cyborgs"
+
+/// Trait that is added to fishes that someone already caught, be it in-game or just theoretically, such as when they're bought
+/// Prevents fishing achievement from being granted by catching one of these
+#define TRAIT_NO_FISHING_ACHIEVEMENT "no_fishing_achievement"
 
 // END TRAIT DEFINES

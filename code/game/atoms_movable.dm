@@ -237,9 +237,11 @@
 
 	LAZYNULL(client_mobs_in_contents)
 
+#ifndef DISABLE_DREAMLUAU
 	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
 	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
 	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
+#endif
 
 	. = ..()
 
@@ -444,6 +446,8 @@
 			if(z_move_flags & ZMOVE_FEEDBACK)
 				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
 			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CAN_Z_MOVE, start, destination) & COMPONENT_CANT_Z_MOVE)
+		return FALSE
 	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || (movement_type & (FLYING|FLOATING)) || !has_gravity(start)))
 		return FALSE
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
@@ -588,7 +592,7 @@
 	if(!. || !isliving(moving_atom))
 		return
 	var/mob/living/pulled_mob = moving_atom
-	set_pull_offsets(pulled_mob, grab_state)
+	set_pull_offsets(pulled_mob, grab_state, animate = FALSE)
 
 /**
  * Checks if the pulling and pulledby should be stopped because they're out of reach.
@@ -661,13 +665,12 @@
 
 	var/list/new_locs
 	if(is_multi_tile_object && isturf(newloc))
+		var/dx = newloc.x
+		var/dy = newloc.y
+		var/dz = newloc.z
 		new_locs = block(
-			newloc,
-			locate(
-				min(world.maxx, newloc.x + CEILING(bound_width / 32, 1)),
-				min(world.maxy, newloc.y + CEILING(bound_height / 32, 1)),
-				newloc.z
-				)
+			dx, dy, dz,
+			dx + ceil(bound_width / 32), dy + ceil(bound_height / 32), dz
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
@@ -1153,13 +1156,12 @@
 				return FALSE
 
 			if(is_multi_tile && isturf(destination))
+				var/dx = destination.x
+				var/dy = destination.y
+				var/dz = destination.z
 				var/list/new_locs = block(
-					destination,
-					locate(
-						min(world.maxx, destination.x + ROUND_UP(bound_width / ICON_SIZE_X)),
-						min(world.maxy, destination.y + ROUND_UP(bound_height / ICON_SIZE_Y)),
-						destination.z
-					)
+					dx, dy, dz,
+					dx + ROUND_UP(bound_width / ICON_SIZE_X), dy + ROUND_UP(bound_height / ICON_SIZE_Y), dz
 				)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, movement_dir)

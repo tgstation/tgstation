@@ -43,6 +43,19 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
 
+/datum/crafting_recipe/gun_maint_kit
+	name = "Makeshift Gun Maintenance Kit"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SCREWDRIVER)
+	result = /obj/item/gun_maintenance_supplies/makeshift
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/sticky_tape = 1,
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/cloth = 2,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_RANGED
+
 /datum/crafting_recipe/advancedegun
 	name = "Advanced Energy Gun"
 	result = /obj/item/gun/energy/e_gun/nuclear

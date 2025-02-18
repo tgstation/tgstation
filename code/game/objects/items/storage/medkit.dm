@@ -446,8 +446,7 @@
 
 /// Gets what skin (icon_state) this medkit uses for a medbot
 /obj/item/storage/medkit/proc/get_medbot_skin()
-	// The skin var is nullsafe so returning nothing is A-OK
-	return
+	return "generic"
 
 /*
  * Pill Bottles
