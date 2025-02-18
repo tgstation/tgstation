@@ -1,4 +1,3 @@
-import { PropsWithChildren } from 'react';
 import {
   Box,
   Button,
@@ -33,8 +32,16 @@ type Data = {
   languages: Language[];
 };
 
-const LangSpeakIcon = (props: { language: Language } & PropsWithChildren) => {
-  const { language } = props;
+type LanguageProps = {
+  language: Language;
+};
+
+type LanguagePropsPassRest = LanguageProps & {
+  [key: string]: any;
+};
+
+const LangSpeakIcon = (props: LanguagePropsPassRest) => {
+  const { language, ...rest } = props;
   return (
     <Icon
       name="comment"
@@ -47,17 +54,17 @@ const LangSpeakIcon = (props: { language: Language } & PropsWithChildren) => {
             ? 'average' // could not speak but can speak
             : 'grey' // could not speak and cannot speak
       }
-      {...props}
+      {...rest}
     />
   );
 };
 
-const LangUnderstandIcon = (props: { language: Language }) => {
+const LangUnderstandIcon = (props: LanguageProps) => {
   const { language } = props;
   return <Icon name="brain" color={language.can_understand ? 'good' : 'bad'} />;
 };
 
-const LanguageNameAndDesc = (props: { language: Language }) => {
+const LanguageNameAndDesc = (props: LanguageProps) => {
   const { language } = props;
   return language.desc ? (
     <Tooltip content={language.desc} position="bottom-start">
@@ -75,7 +82,7 @@ const LanguageNameAndDesc = (props: { language: Language }) => {
   );
 };
 
-const LanguageRow = (props: { language: Language }) => {
+const LanguageRow = (props: LanguageProps) => {
   const { act, data } = useBackend<Data>();
   const { is_living, admin_mode } = data;
   const { language } = props;
