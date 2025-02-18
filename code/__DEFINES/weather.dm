@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(rain_storm_sounds)
 #define WEATHER_MOBS (1<<1)
 /// If weather will apply thunder strikes to turfs
 #define WEATHER_THUNDER (1<<2)
-/// If weather will affect indoor areas
+/// If weather will be allowed to affect indoor areas
 #define WEATHER_INDOORS (1<<3)
 /// If weather is endless and can only be stopped manually
 #define WEATHER_ENDLESS (1<<4)
