@@ -86,7 +86,7 @@
 	/// The maximum amount of turfs that can be processed in a single tick regardless of
 	/// the number of turfs determined by turf_weather_prob and turf_thunder_prob
 	/// increasing this too high can result in severe lag so please be careful
-	var/max_turfs_per_tick = 100
+	var/max_turfs_per_tick = 1000
 	/// The calculated amount of turfs that get weather effects processed each tick
 	var/weather_turfs_per_tick = 0
 	/// The calculated amount of turfs that get thunder effects processed each tick
@@ -101,8 +101,6 @@
 	var/aesthetic = FALSE
 	/// This causes the weather to only end if forced to
 	var/perpetual = FALSE
-	/// TRUE value protects areas with outdoors marked as false, regardless of area type
-	var/protect_indoors = FALSE
 
 
 
@@ -148,7 +146,7 @@
 	for(var/area/protected_area as anything in protected_areas)
 		affectareas -= get_areas(protected_area)
 	for(var/area/affected_area as anything in affectareas)
-		if(protect_indoors && !affected_area.outdoors)
+		if(!(weather_flags & WEATHER_INDOORS) && !affected_area.outdoors)
 			continue
 
 		for(var/z in impacted_z_levels)
@@ -171,10 +169,10 @@
 		return
 
 	if(weather_flags & (WEATHER_TURFS))
-		weather_turfs_per_tick = round(total_turfs * turf_weather_probability)
+		weather_turfs_per_tick = round(total_turfs * turf_weather_probability * 0.01)
 		weather_turfs_per_tick = min(weather_turfs_per_tick, max_turfs_per_tick)
 	if(weather_flags & (WEATHER_THUNDER))
-		thunder_turfs_per_tick = round(total_turfs * turf_thunder_probability)
+		thunder_turfs_per_tick = round(total_turfs * turf_thunder_probability * 0.01)
 		thunder_turfs_per_tick = min(thunder_turfs_per_tick, max_turfs_per_tick)
 
 /**
