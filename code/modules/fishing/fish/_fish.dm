@@ -23,7 +23,7 @@
 	obj_flags = UNIQUE_RENAME
 	item_flags = SLOWS_WHILE_IN_HAND
 	//we handle slowdowns internally, and the fish weight modifier from materials already contributes to it.
-	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX|MATERIAL_NO_SLOWDOWN
+	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX|MATERIAL_NO_SLOWDOWN|MATERIAL_NO_EDIBILITY
 
 	/// Flags for fish variables that would otherwise be TRUE/FALSE
 	var/fish_flags = FISH_FLAG_SHOW_IN_CATALOG|FISH_DO_FLOP_ANIM|FISH_FLAG_EXPERIMENT_SCANNABLE
@@ -299,7 +299,9 @@
 	create_reagents(INFINITY) //We'll set this to the total volume of the reagents right after generate_fish_reagents() is over
 	generate_fish_reagents(bites_to_finish)
 	reagents.maximum_volume = round(reagents.total_volume * 1.25) //make some meager space for condiments.
-	AddComponent(/datum/component/edible, \
+	AddComponentFrom( \
+		SOURCE_EDIBLE_INNATE, \
+		/datum/component/edible, \
 		food_flags = FOOD_NO_EXAMINE|FOOD_NO_BITECOUNT, \
 		foodtypes = foodtypes, \
 		volume = reagents.total_volume, \
@@ -435,7 +437,7 @@
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	///updates how many units of reagent one bite takes if edible.
 	if(IS_EDIBLE(src))
-		AddComponent(/datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
+		AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
 
 ///Grinding a fish replaces some the protein it has with blood and gibs. You ain't getting a clean smoothie out of it.
 /obj/item/fish/on_grind()

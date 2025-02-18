@@ -121,7 +121,7 @@
 				what_it_should_be += ", "
 			index++
 		what_it_should_be += ")"
-	TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or blacklist [recipe.type] in the unit test")
+	TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or remove the CRAFT_ENFORCE_MATERIALS_PARITY flag from [recipe.type]")
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND

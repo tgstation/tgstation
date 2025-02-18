@@ -28,8 +28,7 @@
 
 /datum/material/meat/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(!IS_EDIBLE(source))
-		make_edible(source, mat_amount, multiplier)
+	make_edible(source, mat_amount, multiplier)
 	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //The rod itself is the bait... sorta.
 
 /datum/material/meat/on_applied(atom/source, mat_amount, multiplier)
@@ -37,16 +36,40 @@
 	if(IS_EDIBLE(source))
 		make_edible(source, mat_amount, multiplier)
 
+/datum/material/meat/on_edible_applied(atom/source, datum/component/edible/edible)
+	source.reagents.convert_reagent(/datum/reagent/consumable/nutriment, /datum/reagent/consumable/nutriment/protein, keep_data = TRUE)
+	var/datum/reagent/meaty_chem = source.reagents.has_reagent(/datum/reagent/consumable/nutriment/protein)
+	if(meaty_chem)
+		LAZYSET(meaty_chem.data, "meat", length(meaty_chem.data) || 1) //adds meatiness to its tastes
+	source.reagents.convert_reagent(/datum/reagent/consumable/nutriment/fat/oil, /datum/reagent/consumable/nutriment/fat, include_source_subtypes = TRUE, keep_data = TRUE)
+	meaty_chem = source.reagents.has_reagent(/datum/reagent/consumable/nutriment/fat)
+	if(meaty_chem)
+		LAZYSET(meaty_chem.data, "meat", length(meaty_chem.data) || 1) //adds meatiness to its tastes
+	source.AddComponentFrom(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible, foodtypes = MEAT)
+
+/datum/material/meat/on_edible_removed(atom/source, datum/component/edible/edible)
+	source.reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/consumable/nutriment, keep_data = TRUE)
+	var/datum/reagent/unmeaty_chem = source.reagents.has_reagent(/datum/reagent/consumable/nutriment)
+	if(unmeaty_chem)
+		LAZYREMOVE(unmeaty_chem.data, "meat")
+	source.reagents.convert_reagent(/datum/reagent/consumable/nutriment/fat, /datum/reagent/consumable/nutriment/fat/oil, keep_data = TRUE)
+	unmeaty_chem = source.reagents.has_reagent(/datum/reagent/consumable/nutriment/fat/oil)
+	if(unmeaty_chem)
+		LAZYREMOVE(unmeaty_chem.data, "meat")
+	//the edible source is removed by on_removed()
+
 /datum/material/meat/proc/make_edible(atom/source, mat_amount, multiplier)
 	if(source.material_flags & MATERIAL_NO_EDIBILITY)
 		return
 	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT)
 	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT)
-	source.AddComponent(/datum/component/edible, \
-		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/nutriment/fat/oil = oil_count), \
+	source.AddComponentFrom( \
+		SOURCE_EDIBLE_MEAT_MAT, \
+		/datum/component/edible, \
+		initial_reagents = list(/datum/reagent/consumable/nutriment/protein = nutriment_count, /datum/reagent/consumable/nutriment/fat = oil_count), \
 		foodtypes = RAW | MEAT | GROSS, \
 		eat_time = 3 SECONDS, \
-		tastes = list("Meaty"))
+		tastes = list("meat" = 1))
 
 	source.AddComponent(
 		/datum/component/bloody_spreader,\
@@ -70,11 +93,10 @@
 	. = ..()
 	qdel(source.GetComponent(/datum/component/blood_walk))
 	qdel(source.GetComponent(/datum/component/bloody_spreader))
+	source.RemoveComponentSource(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible)
 
 /datum/material/meat/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(!(source.material_flags & MATERIAL_NO_EDIBILITY))
-		qdel(source.GetComponent(/datum/component/edible))
 	REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
 /datum/material/meat/mob_meat

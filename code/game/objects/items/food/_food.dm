@@ -11,8 +11,15 @@
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
 	material_flags = MATERIAL_NO_EDIBILITY
-	///If the food has materials and the main one isn't in this list, then MATERIAL_ADD_PREFIX and MATERIAL_COLOR are enabled
-	var/list/normally_found_materials
+	/**
+	 * A list of material paths. the main material in the custom_materials list is also added on init.
+	 *
+	 * If the food has materials and as long as the main one is in this list, effects and properties of materials are disabled
+	 * Food is coded mainly around reagents than materials, and the two may cause some issues if overlapped. For example, this
+	 * stops food *normally* containing meat from having redundant prefixes, an unfitting appearance and too much meatiness overall.
+	 * However, the same material effects will apply on a fruit or a vegetable.
+	 */
+	var/list/intrisic_food_materials
 	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
@@ -57,7 +64,20 @@
 /obj/item/food/Initialize(mapload)
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
+
+	///This has to be done before set_custom_materials is called at atom level
+	if(custom_materials)
+		var/main_mat_type = null
+		var/mat_amount = 0
+		for(var/mat_type in custom_materials)
+			if(custom_materials[mat_type] > mat_amount)
+				main_mat_type = mat_type
+		LAZYADD(intrisic_food_materials, main_mat_type)
+	if(intrisic_food_materials)
+		intrisic_food_materials = typecacheof(intrisic_food_materials)
+
 	. = ..()
+
 	if(tastes)
 		tastes = string_assoc_list(tastes)
 	if(eatverbs)
@@ -73,21 +93,23 @@
 	make_microwaveable()
 	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 
-/obj/item/food/finalize_material_effects(list/materials)
+/obj/item/food/apply_material_effects(list/materials)
 	if(!HAS_TRAIT(src, TRAIT_INGREDIENTS_HOLDER)) //ingredients holder handle prefixes and colors differently
-		var/datum/material/main_material = materials[1] //The list is sorted based on composition so the first of the list is the main mat
-		if(!is_type_in_typecache(main_material, normally_found_materials))
+		var/datum/material/main_material = materials[1] //The list is sorted by amount so the first of the list is the main mat
+		if(!is_type_in_typecache(main_material, intrisic_food_materials))
 			material_flags |= MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_ADD_PREFIX|MATERIAL_COLOR
 	return ..()
 
-/obj/item/food/finalize_remove_material_effects(list/materials)
+/obj/item/food/remove_material_effects(replace_mats = TRUE)
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_INGREDIENTS_HOLDER))
 		material_flags &= ~(MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_ADD_PREFIX|MATERIAL_COLOR)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/make_edible()
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(\
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		initial_reagents = food_reagents,\
 		food_flags = food_flags,\
 		foodtypes = foodtypes,\

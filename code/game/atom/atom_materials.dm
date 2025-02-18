@@ -10,6 +10,9 @@
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(custom_materials == materials) //No changes are being made.
+		return
+
 	var/replace_mats = length(materials)
 	if(length(custom_materials))
 		remove_material_effects(replace_mats)
@@ -30,6 +33,7 @@
 		for(var/current_material in materials)
 			materials[current_material] *= multiplier
 
+	sortTim(materials, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	apply_material_effects(materials)
 
 ///proc responsible for applying material effects when setting materials.
@@ -64,7 +68,6 @@
 			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(material, materials, index),
 		)
 		index++
-	sortTim(material_effects, GLOBAL_PROC_REF(cmp_mat_composition), associative = TRUE)
 	return material_effects
 
 /**
@@ -131,6 +134,8 @@
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		var/prefixes = get_material_prefixes(materials)
 		name = "[prefixes] [name]"
+
+	SEND_SIGNAL(src, COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS, materials, main_material)
 
 /**
  * A proc used by both finalize_material_effects() and finalize_remove_material_effects() to get the colors
@@ -248,6 +253,8 @@
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		name = initial(name)
+
+	SEND_SIGNAL(src, COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS, materials, main_material)
 
 ///Remove material effects of a single material.
 /atom/proc/remove_single_mat_effect(datum/material/custom_material, amount, multipier)

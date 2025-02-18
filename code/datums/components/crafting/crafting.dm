@@ -285,8 +285,7 @@
 		stuff_to_use -= holder
 		qdel(holder)
 	result.on_craft_completion(stuff_to_use, recipe, crafter)
-	if(length(total_materials))
-		result.set_custom_materials(total_materials)
+	result.set_custom_materials(total_materials)
 	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
 		if(component.loc != result || isturf(result))
 			qdel(component)
@@ -371,7 +370,7 @@
 						tally_stack.add(amount_to_give)
 						amount -= amount_to_give
 					surroundings -= origin_stack
-				if(!recipe.requirements_mats_blacklist?[path_key])
+				if(!(path_key in recipe.requirements_mats_blacklist))
 					for(var/material in tally_stack.custom_materials)
 						total_materials[material] += tally_stack.custom_materials[material]
 			else
@@ -380,7 +379,7 @@
 					return_list += item
 					surroundings -= item
 					amount--
-					if(!recipe.requirements_mats_blacklist?[path_key])
+					if(!(path_key in recipe.requirements_mats_blacklist))
 						for(var/material in item.custom_materials)
 							total_materials[material] += item.custom_materials[material]
 
