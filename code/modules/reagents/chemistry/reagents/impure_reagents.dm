@@ -84,12 +84,13 @@
 /*
 * Freezes the player in a block of ice, 1s = 1u
 * Will be removed when the required reagent is removed too
+* Only works with the INJECT method (syringes)
 * is processed on the dead.
 */
 
 /datum/reagent/inverse/cryostylane
 	name = "Cryogelidia"
-	description = "Freezes the live or dead patient in a cryostasis ice block."
+	description = "Freezes the live or dead patient in a cryostasis ice block. Only works via injection."
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
