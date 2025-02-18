@@ -90,7 +90,7 @@
 			return CLICK_ACTION_BLOCKING
 
 		to_chat(user, span_notice("The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)]."))
-		if(ongoing_weather.aesthetic)
+		if(IS_WEATHER_AESTHETIC(ongoing_weather.weather_flags))
 			to_chat(user, span_warning("[src]'s barometer function says that the next storm will breeze on by."))
 	else
 		var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]

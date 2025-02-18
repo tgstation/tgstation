@@ -48,7 +48,7 @@
 /datum/weather/rain/New(z_levels)
 	..()
 
-	if(aesthetic)
+	if(IS_WEATHER_AESTHETIC(weather_flags))
 		return
 
 	var/reagent_id

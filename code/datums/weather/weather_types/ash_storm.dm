@@ -86,6 +86,6 @@
 	end_message = span_notice("The emberfall slows, stops. Another layer of hardened soot to the basalt beneath your feet.")
 	end_sound = null
 
-	aesthetic = TRUE
+	weather_flags = (WEATHER_BAROMETER)
 
 	probability = 10

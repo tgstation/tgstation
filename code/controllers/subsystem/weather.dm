@@ -12,8 +12,7 @@ SUBSYSTEM_DEF(weather)
 	// process active weather
 	for(var/V in processing)
 		var/datum/weather/our_event = V
-		var/is_aesthetic = !(our_event.weather_flags & (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER))
-		if(is_aesthetic || our_event.stage != MAIN_STAGE)
+		if(IS_WEATHER_AESTHETIC(our_event.weather_flags) || our_event.stage != MAIN_STAGE)
 			continue
 
 		if(our_event.weather_flags & WEATHER_MOBS)

@@ -97,10 +97,6 @@
 	/// Color to apply to thunder while weather is occuring
 	var/thunder_color = null
 
-
-
-	/// If the weather has no purpose other than looks
-	var/aesthetic = FALSE
 	/// This causes the weather to only end if forced to
 	var/perpetual = FALSE
 

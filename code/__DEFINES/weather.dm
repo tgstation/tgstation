@@ -7,6 +7,9 @@ GLOBAL_LIST_EMPTY(rain_storm_sounds)
 #define WIND_DOWN_STAGE 3
 #define END_STAGE 4
 
+/// Does weather have any type of processing related to mobs, turfs, or thunder?
+#define IS_WEATHER_AESTHETIC(flags) (!(flags & (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)))
+
 //WEATHER FLAGS
 /// If weather will affect turfs
 #define WEATHER_TURFS (1<<0)
