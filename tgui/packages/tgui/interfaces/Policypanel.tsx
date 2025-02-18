@@ -25,7 +25,7 @@ export const Policypanel = () => {
   const { data } = useBackend<Data>();
   const { policy } = data;
 
-  const [currentPolicy, setCurrentPolicy] = useState<string>();
+  const [currentPolicy, setCurrentPolicy] = useState<string>('');
 
   return (
     <Window title="Policy Panel" theme="admin" width={400} height={300}>
@@ -38,7 +38,6 @@ export const Policypanel = () => {
                   options={Object.keys(policy)}
                   selected={currentPolicy}
                   onSelected={setCurrentPolicy}
-                  fill
                 />
               </Flex.Item>
               <Flex.Item width="50%">
