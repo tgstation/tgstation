@@ -2,8 +2,6 @@
 	name = "rain"
 	desc = "Heavy thunderstorms rain down below, drenching anyone caught in it."
 
-	//target_trait = ZTRAIT_RAINSTORM
-
 	telegraph_message = span_danger("Thunder rumbles far above. You hear droplets drumming against the canopy.")
 	telegraph_overlay = "rain_low"
 //	telegraph_sound = 'sound/ambience/weather/rain/rain_start.ogg'
@@ -28,6 +26,9 @@
 
 	/// need to remove these since I'm using them for debugging
 	area_type = /area/station
+
+	target_trait = ZTRAIT_RAINSTORM
+	immunity_type = TRAIT_RAINSTORM_IMMUNE
 
 	turf_weather_chance = 0.01
 	turf_thunder_chance = 0.001
