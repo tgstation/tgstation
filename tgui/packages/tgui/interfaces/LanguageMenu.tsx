@@ -141,9 +141,7 @@ const LanguageRow = (props: { language: Language }) => {
                 language_name: language.name,
               })
             }
-          >
-            Default
-          </Button.Checkbox>
+          />
         </Table.Cell>
       )}
       {!!admin_mode && (
@@ -191,7 +189,7 @@ const OmnitongueToggle = (props) => {
 
 export const LanguageMenu = (props) => {
   const { data } = useBackend<Data>();
-  const { admin_mode, languages } = data;
+  const { admin_mode, is_living, languages } = data;
 
   // only show languages we can speak OR understand, UNLESS we're an admin
   // also, push all languages we can speak to the top, then all languagse we can only understand, then alphabetize
@@ -208,13 +206,16 @@ export const LanguageMenu = (props) => {
   return (
     <Window
       title="Language Menu"
-      width={700}
-      height={Math.min(shown_languages.length * 25 + 100, 500)}
+      width={admin_mode ? 700 : 500}
+      height={Math.min(
+        shown_languages.length * 25 + (admin_mode ? 100 : 70),
+        500,
+      )}
     >
       <Window.Content>
         <Section
           scrollable
-          title="&nbsp;"
+          title={admin_mode ? <i>- Admin Mode -</i> : null}
           buttons={admin_mode ? <OmnitongueToggle /> : null}
           fill
         >
@@ -223,7 +224,39 @@ export const LanguageMenu = (props) => {
               <Table.Cell>Name</Table.Cell>
               <Table.Cell>Speak</Table.Cell>
               <Table.Cell>Understand</Table.Cell>
-              <Table.Cell>Key</Table.Cell>
+              <Table.Cell>
+                <Tooltip
+                  content="Use this key in your message
+                  to speak in this language."
+                >
+                  <Box
+                    inline
+                    style={{
+                      borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+                    }}
+                  >
+                    Key
+                  </Box>
+                </Tooltip>
+              </Table.Cell>
+              {!!is_living && (
+                <Table.Cell>
+                  <Tooltip
+                    content="Determines which language you speak
+                    naturally, without using the 'key'."
+                  >
+                    <Box
+                      inline
+                      style={{
+                        borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+                      }}
+                    >
+                      Default
+                    </Box>
+                  </Tooltip>
+                </Table.Cell>
+              )}
+              {!!admin_mode && <Table.Cell />}
             </Table.Row>
             {shown_languages.map((language) => (
               <LanguageRow key={language.name} language={language} />
