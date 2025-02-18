@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "hydrophonics circuit component actually sets output level when reagents are changed in the tray"
-  - refactor: "refactors how code listens for reagent changes. Report bugs on github"

@@ -86,7 +86,7 @@
 	bonus_active = TRUE
 	// Add traits
 	if(length(bonus_traits))
-		owner.add_traits(bonus_traits, REF(src))
+		owner.add_traits(bonus_traits, TRAIT_STATUS_EFFECT(id))
 
 	// Add biotype
 	if(owner.mob_biotypes & bonus_biotype)
@@ -113,7 +113,7 @@
 
 	// Remove traits
 	if(length(bonus_traits))
-		owner.remove_traits(bonus_traits, REF(src))
+		owner.remove_traits(bonus_traits, TRAIT_STATUS_EFFECT(id))
 	// Remove biotype (if added)
 	if(biotype_added)
 		owner.mob_biotypes &= ~bonus_biotype

@@ -43,7 +43,7 @@ Consuming extracts:
 /obj/item/slimecross/consuming/proc/spawncookie()
 	return new cookietype(get_turf(src))
 
-/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its' own type.
+/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its own type.
 	name = "error cookie"
 	desc = "A weird slime cookie. You shouldn't see this."
 	icon = 'icons/obj/food/slimecookies.dmi'

@@ -400,6 +400,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/storage/toolbox/fishing,
 		/obj/item/stack/sheet/animalhide/carp,
 		/obj/item/toy/plush/carpplushie,
+		/obj/item/storage/bag/fishing,
 	)),
 	"greytide" = (typecacheof(list(
 		/obj/item/clothing/under/color/grey,

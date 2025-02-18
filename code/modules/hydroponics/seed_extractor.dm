@@ -174,7 +174,7 @@
  * needed to go to the ui handler
  *
  * to_add - what seed are we adding?
- * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means its just laying on the turf so force move it in
+ * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means it's just laying on the turf so force move it in
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
 	var/seed_id = generate_seed_hash(to_add)

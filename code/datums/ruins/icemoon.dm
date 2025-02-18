@@ -70,7 +70,7 @@
 /datum/map_template/ruin/icemoon/frozen_phonebooth
 	name = "Ice-Ruin Frozen Phonebooth"
 	id = "frozen_phonebooth"
-	description = "A venture by Nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
+	description = "A venture by Nanotrasen to help popularize the use of holopads. This one was sent to an ice moon."
 	suffix = "icemoon_surface_phonebooth.dmm"
 
 /datum/map_template/ruin/icemoon/smoking_room
@@ -169,7 +169,7 @@
 /datum/map_template/ruin/icemoon/underground/biodome
 	name = "Ice-Ruin Syndicate Bio-Dome"
 	id = "biodome"
-	description = "Unchecked experimention gone awry."
+	description = "Unchecked experimentation gone awry."
 	suffix = "icemoon_underground_syndidome.dmm"
 
 /datum/map_template/ruin/icemoon/underground/frozen_comms

@@ -792,11 +792,13 @@
 	/// The timer id powering our burning
 	var/timer_id = TIMER_ID_NULL
 
-/obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null)
+/obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null, fuel_type_override = null)
+	max_fuel = isnull(fuel_override) ? rand(20, 25) : fuel_override
+	if (fuel_type_override)
+		fuel_type = fuel_type_override
 	create_reagents(max_fuel + oxygen_added, DRAWABLE | INJECTABLE)
 	reagents.add_reagent(fuel_type, max_fuel)
 	. = ..()
-	max_fuel = isnull(fuel_override) ? rand(20, 25) : fuel_override
 	set_light_color(color)
 	AddComponent(/datum/component/edible,\
 		food_flags = FOOD_NO_EXAMINE,\

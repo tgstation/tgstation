@@ -356,9 +356,20 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/thinkermov_module
+	name = "Sentience Preservation Module"
+	desc = "Allows for the construction of a Sentience Preservation AI Core Module"
+	id = "thinkermov_module"
+	materials = AI_MODULE_MATERIALS_UNUSUAL
+	build_path = /obj/item/ai_module/core/full/thinkermov
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/antimov_module
 	name = "Antimov Module"
-	desc = "Allows for the construction of a Antimov AI Core Module."
+	desc = "Allows for the construction of an Antimov AI Core Module."
 	id = "antimov_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/antimov

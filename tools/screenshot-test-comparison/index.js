@@ -64,6 +64,7 @@ for (const filename of fs.readdirSync(artifactsDirectory)) {
 
 		const fullPathCompareScreenshot = path.join(screenshotsDirectory, screenshotName)
 		if (!fs.existsSync(fullPathCompareScreenshot)) {
+			console.error(`${fullPathCompareScreenshot} is missing an existing screenshot to compare against`)
 			fail(screenshotName, fullPathScreenshotName)
 			continue
 		}
