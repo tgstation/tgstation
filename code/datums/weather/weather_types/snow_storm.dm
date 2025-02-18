@@ -58,7 +58,7 @@
 ///A storm that doesn't stop storming, and is a bit stronger
 /datum/weather/snow_storm/forever_storm
 	telegraph_duration = 0
-	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_ENDLESS)
+	weather_flags = parent_type::weather_flags | WEATHER_ENDLESS
 
 	probability = 0
 
