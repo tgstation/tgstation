@@ -920,7 +920,7 @@
 		/obj/item/food/bubblegum/wake_up,
 		/obj/item/food/bubblegum/wake_up,
 		/obj/item/food/bubblegum/wake_up,
-		/obj/item/food/bubblegum/wake_up.
+		/obj/item/food/bubblegum/wake_up,
 	)
 
 /obj/item/food/spacers_sidekick
