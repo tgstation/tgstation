@@ -240,13 +240,13 @@
 	desc = "A large duffel bag for holding extra tactical supplies. It contains an oiled plastitanium zipper for maximum speed tactical zipping, and is better balanced on your back than an average duffelbag. Can hold two bulky items!"
 	icon_state = "duffel-syndie"
 	inhand_icon_state = "duffel-syndieammo"
-	storage_type = /datum/storage/duffel/syndicate
 	resistance_flags = FIRE_PROOF
 	// Less slowdown while unzipped. Still bulky, but it won't halve your movement speed in an active combat situation.
 	zip_slowdown = 0.3
 	// Faster unzipping. Utilizes the same noise as zipping up to fit the unzip duration.
 	unzip_duration = 0.5 SECONDS
 	unzip_sfx = 'sound/items/zip/zip_up.ogg'
+	storage_type = /datum/storage/duffel/syndicate
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
@@ -302,6 +302,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+	storage_type = /datum/storage/duffel/syndicate/ammo_mech
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mech/PopulateContents()
 	return list(
@@ -314,6 +315,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+	storage_type = /datum/storage/duffel/syndicate/ammo_mauler
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler/PopulateContents()
 	return list(
@@ -370,8 +372,11 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite MODsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
+	storage_type = /datum/storage/duffel/syndicate/firestarter
 
-/obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
+/obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_weight = TRUE
+
 	return list(
 		/obj/item/clothing/under/syndicate/soviet,
 		/obj/item/mod/control/pre_equipped/elite/flamethrower,

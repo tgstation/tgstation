@@ -158,6 +158,10 @@
 /datum/storage/briefcase
 	max_total_storage = 21
 
+///Sniper brief case
+/datum/storage/briefcase/sniper
+	max_slots = 13
+
 //=======================Fancy storages======================
 ///Cigrate boxes
 /datum/storage/cigarette_box

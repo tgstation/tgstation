@@ -288,6 +288,7 @@
 GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/storage/proc/set_holdable(list/can_hold_list, list/cant_hold_list, list/exception_hold_list)
+	can_hold = null
 	if (!isnull(can_hold_list))
 		if(!islist(can_hold_list))
 			can_hold_list = list(can_hold_list)
@@ -297,6 +298,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			GLOB.cached_storage_typecaches[unique_key] = typecacheof(can_hold_list)
 		can_hold = GLOB.cached_storage_typecaches[unique_key]
 
+	cant_hold = null
 	if (!isnull(cant_hold_list))
 		if(!islist(cant_hold_list))
 			cant_hold_list = list(cant_hold_list)
@@ -306,6 +308,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			GLOB.cached_storage_typecaches[unique_key] = typecacheof(cant_hold_list)
 		cant_hold = GLOB.cached_storage_typecaches[unique_key]
 
+	exception_hold = null
 	if (!isnull(exception_hold_list))
 		if(!islist(exception_hold_list))
 			exception_hold_list = list(exception_hold_list)
@@ -315,10 +318,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			GLOB.cached_storage_typecaches[unique_key] = typecacheof(exception_hold_list)
 		exception_hold = GLOB.cached_storage_typecaches[unique_key]
 
-	if(isnull(can_hold_description))
-		var/list/holdables = can_hold_list | exception_hold
-		if(!isnull(holdables))
-			can_hold_description = generate_hold_desc(holdables)
+	var/list/holdables = can_hold_list | exception_hold
+	if(length(holdables))
+		can_hold_description = generate_hold_desc(holdables)
 
 /// Generates a description, primarily for clothing storage.
 /datum/storage/proc/generate_hold_desc(can_hold_list)

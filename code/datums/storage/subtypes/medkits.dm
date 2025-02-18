@@ -114,7 +114,7 @@
 ///Tatical premium medkit
 /datum/storage/medkit/tatical/premium
 	allow_big_nesting = TRUE // so you can put back the box you took out
-	max_total_storage = 34
+	max_total_storage = 36
 
 ///Corrinor medkit
 /datum/storage/medkit/coroner

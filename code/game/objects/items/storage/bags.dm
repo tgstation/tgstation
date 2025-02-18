@@ -281,6 +281,7 @@
 	desc = "A Nanotrasen storage system designed which has been given post-market alterations to hold any type of sheet. Comes pre-populated with "
 	color = "#ff3737" // I'm too lazy to make a unique sprite
 	w_class = WEIGHT_CLASS_TINY
+	storage_type = /datum/storage/bag/sheet_snatcher/debug
 
 // Copy-pasted from the former /obj/item/storage/box/material, w/ small additions like rods, cardboard, plastic.
 // "Only 20 uranium 'cause of radiation"
@@ -304,7 +305,7 @@
 		new /obj/item/stack/sheet/bluespace_crystal(null, 50),
 		new /obj/item/stack/sheet/mineral/bananium(null, 50),
 		/obj/item/stack/sheet/mineral/wood/fifty,
-		/obj/item/stack/sheet/plastic/fifty=
+		/obj/item/stack/sheet/plastic/fifty,
 		/obj/item/stack/sheet/runed_metal/fifty,
 		/obj/item/stack/rods/fifty,
 		new /obj/item/stack/sheet/mineral/plastitanium(null, 50),
@@ -611,6 +612,9 @@
 	))
 
 ///Used in the dutchmen pirate shuttle.
+/obj/item/storage/bag/money/dutchmen
+	storage_type = /datum/storage/bag/dutchmen
+
 /obj/item/storage/bag/money/dutchmen/PopulateContents()
 	return flatten_quantified_list(list(
 		/obj/item/coin/silver/doubloon = 9,

@@ -356,9 +356,8 @@
 	storage_type = /datum/storage/box/fishing_lures
 
 /obj/item/storage/box/fishing_lures/PopulateContents()
-	. = list(/obj/item/paper/lures_instructions)
-	for(var/type in typesof(/obj/item/fishing_lure))
-		. += type
+	. = typesof(/obj/item/fishing_lure)
+	. += /obj/item/paper/lures_instructions
 
 /obj/item/paper/lures_instructions
 	name = "instructions paper"

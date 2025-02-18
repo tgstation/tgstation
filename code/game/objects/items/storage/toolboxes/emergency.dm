@@ -28,6 +28,7 @@
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
 	material_flags = NONE
+	storage_type = /datum/storage/toolbox/ancient_bundle
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
 	return list(

@@ -6,10 +6,10 @@
 
 ///Trash bag
 /datum/storage/bag/trash_bag
-	max_specific_storage = WEIGHT_CLASS_SMALL
-	max_total_storage = 30
 	max_slots = 30
+	max_total_storage = 30
 	supports_smart_equip = FALSE
+	max_specific_storage = WEIGHT_CLASS_SMALL
 
 /datum/storage/bag/trash_bag/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -28,17 +28,17 @@
 
 ///Bluespace trash bag
 /datum/storage/bag/trash_bag/bluespace
-	max_total_storage = 60
 	max_slots = 60
+	max_total_storage = 60
 
 ///Ore bag
 /datum/storage/bag/ore_bag
-	max_specific_storage = WEIGHT_CLASS_HUGE
 	max_total_storage = 50
 	numerical_stacking = TRUE
 	allow_quick_empty = TRUE
 	allow_quick_gather = TRUE
 	silent_for_user = TRUE
+	max_specific_storage = WEIGHT_CLASS_HUGE
 
 /datum/storage/bag/ore_bag/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -53,9 +53,9 @@
 
 ///Plant bag
 /datum/storage/bag/plants
-	max_specific_storage = WEIGHT_CLASS_NORMAL
-	max_total_storage = 100
 	max_slots = 100
+	max_total_storage = 100
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/bag/plants/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -70,10 +70,10 @@
 
 ///Sheet snatcher bag
 /datum/storage/bag/sheet_snatcher
+	max_total_storage = 150
 	allow_quick_empty = TRUE
 	allow_quick_gather = TRUE
 	numerical_stacking = TRUE
-	max_total_storage = 150
 
 /datum/storage/bag/sheet_snatcher/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -88,15 +88,21 @@
 		),
 	)
 
+///Sheet snatcher debug bag
+/datum/storage/bag/sheet_snatcher/debug/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/stack)
+
 ///Sheet snatcher cyborg bag
 /datum/storage/bag/sheet_snatcher_cyborg
 	max_total_storage = 250
 
 ///Book bag
 /datum/storage/bag/books
-	max_specific_storage = WEIGHT_CLASS_NORMAL
-	max_total_storage = 21
 	max_slots = 7
+	max_total_storage = 21
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/bag/books/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -109,10 +115,10 @@
 
 ///Tray bag
 /datum/storage/bag/tray
-	max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
-	insert_preposition = "on"
 	max_slots = 8
 	max_total_storage = 16
+	insert_preposition = "on"
+	max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 
 /datum/storage/bag/tray/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -141,8 +147,8 @@
 
 ///Chemistry bag
 /datum/storage/bag/chemistry
-	max_total_storage = 200
 	max_slots = 50
+	max_total_storage = 200
 
 /datum/storage/bag/chemistry/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -161,8 +167,8 @@
 
 ///Bio bag
 /datum/storage/bag/bio
-	max_total_storage = 200
 	max_slots = 25
+	max_total_storage = 200
 
 /datum/storage/bag/bio/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -183,8 +189,8 @@
 
 ///Science bag
 /datum/storage/bag/science
-	max_total_storage = 200
 	max_slots = 25
+	max_total_storage = 200
 
 /datum/storage/bag/science/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -316,6 +322,11 @@
 	)
 
 	return ..()
+
+///Dutchmen bag
+/datum/storage/bag/dutchmen
+	max_slots = 19
+	max_total_storage = 21
 
 ///Money bag
 /datum/storage/bag/money

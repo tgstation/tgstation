@@ -631,6 +631,7 @@
 		. += /obj/item/grenade/chem_grenade/ez_clean
 
 /obj/item/storage/box/hug/reverse_revolver/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_weight = TRUE
 	config.compute_max_total_weight = TRUE
 
 	return /obj/item/gun/ballistic/revolver/reverse

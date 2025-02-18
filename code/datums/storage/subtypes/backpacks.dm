@@ -20,6 +20,7 @@
 ///Satchel flat
 /datum/storage/backpack/satchel
 	max_total_storage = 15
+	allow_big_nesting = TRUE
 
 /datum/storage/backpack/satchel/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()

@@ -295,7 +295,7 @@
 
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
-		return
+		return NONE
 
 	var/static/list/items_inside = flatten_quantified_list(list(
 		/obj/item/stack/medical/suture/medicated = 2,

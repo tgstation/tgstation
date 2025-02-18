@@ -12,7 +12,9 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
-/obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
+/obj/item/storage/box/contractor/fulton_extraction/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_weight = TRUE
+
 	return list(
 		/obj/item/extraction_pack/syndicate,
 		/obj/item/fulton_core,

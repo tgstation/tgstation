@@ -196,6 +196,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 
 /obj/item/storage/box/wizard_kit
 	name = "Generic Wizard Cosplay Kit"
+	storage_type = /datum/storage/box/wizard
 
 /obj/item/storage/box/wizard_kit/PopulateContents()
 	return list(

@@ -69,6 +69,7 @@
 		/obj/item/clothing/suit/utility,
 		// Storage
 		/obj/item/storage/bag/money,
+		/obj/item/storage/belt/utility/syndicate,
 		// Heads!
 		/obj/item/bodypart/head,
 		// Fish
@@ -77,3 +78,18 @@
 	)
 
 	set_holdable(exception_hold_list = exception_type_list)
+
+///Syndicate firestarter
+/datum/storage/duffel/syndicate/firestarter
+	allow_big_nesting = TRUE
+
+///Syndicate ammo mech box
+/datum/storage/duffel/syndicate/ammo_mech
+	exception_max = 5
+	allow_big_nesting = TRUE
+
+///Syndicate ammo mauler box
+/datum/storage/duffel/syndicate/ammo_mauler
+	exception_max = 9
+	max_total_storage = 36
+	allow_big_nesting = TRUE

@@ -7,7 +7,10 @@
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 
-/obj/item/storage/toolbox/maint_kit/PopulateContents()
+/obj/item/storage/toolbox/maint_kit/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_weight = TRUE
+	config.compute_max_total_weight = TRUE
+
 	return list(
 		/obj/item/gun_maintenance_supplies,
 		/obj/item/gun_maintenance_supplies,
@@ -89,11 +92,14 @@
 	var/extra_to_spawn = /obj/item/ammo_box/magazine/m9mm
 
 /obj/item/storage/toolbox/guncase/PopulateContents()
-	. = list()
-
-	. += weapon_to_spawn
+	new weapon_to_spawn(src)
 	for(var/i in 1 to 3)
-		. += extra_to_spawn
+		new extra_to_spawn(src)
+
+	. = list()
+	for(var/obj/item/insert as anything in src)
+		insert.moveToNullspace()
+		. += insert
 
 /obj/item/storage/toolbox/guncase/traitor
 	name = "makarov gun case"
@@ -235,7 +241,9 @@
 	weapon_to_spawn = /obj/item/book/granter/martial/cqc
 	extra_to_spawn = /obj/item/storage/box/syndie_kit/imp_stealth
 
-/obj/item/storage/toolbox/guncase/cqc/PopulateContents()
+/obj/item/storage/toolbox/guncase/cqc/PopulateContents(datum/storage_config/config)
+	config.compute_max_total_weight = TRUE
+
 	return list(
 		weapon_to_spawn,
 	 	extra_to_spawn,
@@ -286,7 +294,10 @@
 	playsound(src, SFX_SCREECH, 75, TRUE)
 	return FALSE
 
-/obj/item/storage/toolbox/guncase/monkeycase/PopulateContents()
+/obj/item/storage/toolbox/guncase/monkeycase/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_count = TRUE
+	config.compute_max_total_weight = TRUE
+
 	switch(rand(1, 3))
 		if(1)
 			// Uzi with a boxcutter.

@@ -117,6 +117,10 @@
 
 	set_holdable(/obj/item/toy/balloon/long)
 
+///Wizard box
+/datum/storage/box/wizard
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+
 ///Syndicate box
 /datum/storage/box/syndicate
 	allow_big_nesting = TRUE
@@ -129,6 +133,7 @@
 ///Syndicate contractor kit box
 /datum/storage/box/syndicate/contract_kit
 	allow_big_nesting = TRUE
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 ///Syndicate contractor loadout box
 /datum/storage/box/syndicate/contractor_loadout
@@ -281,12 +286,16 @@
 
 ///Fishing lures box
 /datum/storage/box/fishing_lures/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
+	set_holdable(list(
+		/obj/item/fishing_lure,
+		/obj/item/paper/lures_instructions
+	)) //can only hold lures
 
-	set_holdable(/obj/item/fishing_lure) //can only hold lures
 	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
 	max_slots = length(typesof(/obj/item/fishing_lure)) + 1
 	max_total_storage = WEIGHT_CLASS_SMALL * (max_slots + 1)
+
+	return ..()
 
 ///Stock parts box
 /datum/storage/box/stockparts
