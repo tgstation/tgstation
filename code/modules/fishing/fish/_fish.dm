@@ -340,7 +340,7 @@
 		adjust_reagents_capacity((protein_volume - old_blood_volume) * volume_mult)
 		///Add the extra nutriment
 		if(protein)
-			reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
+			reagents.multiply(2, /datum/reagent/consumable/nutriment/protein)
 
 	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
 	edible.foodtypes &= ~(RAW|GORE)
@@ -459,8 +459,7 @@
 			if(!result_reagent)
 				created.reagents.add_reagent(reagent.type, transfer_vol, reagents.copy_data(reagent), reagents.chem_temp, reagent.purity, reagent.ph, no_react = TRUE)
 				continue
-			var/multiplier = transfer_vol / result_reagent.volume
-			created.reagents.multiply_single_reagent(reagent.type, multiplier)
+			created.reagents.multiply(transfer_vol / result_reagent.volume, reagent.type)
 	return ..()
 
 /obj/item/fish/update_icon_state()
@@ -611,7 +610,7 @@
 				var/amount_to_gen = bites_left / initial_bites_left * multiplier
 				generate_fish_reagents(amount_to_gen)
 			else
-				reagents.multiply_reagents(new_weight_ratio)
+				reagents.multiply(new_weight_ratio)
 				adjust_reagents_capacity(volume_diff)
 
 	weight = new_weight
