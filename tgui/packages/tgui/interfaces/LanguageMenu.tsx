@@ -97,11 +97,17 @@ const LanguageRow = (props: { language: Language }) => {
         )}
       </Table.Cell>
       <Table.Cell>
-        {language.can_speak && !language.could_speak ? (
+        {!language.could_speak ? (
           <Tooltip
-            content={`Despite knowing how to speak ${language.name},
-              you are unable to due to physical limitations
-              (usually, your tongue).`}
+            content={
+              language.can_speak
+                ? `Despite knowing how to speak ${language.name},
+              you are unable due to physical limitations
+              (usually, your tongue).`
+                : `Even if you were to learn how to speak ${language.name},
+              you would be unable due to physical limitations
+              (usually, your tongue).`
+            }
           >
             <LangSpeakIcon
               language={language}
@@ -194,14 +200,16 @@ export const LanguageMenu = (props) => {
       (language) => admin_mode || language.can_speak || language.can_understand,
     )
     .sort(
-      (a, b) => (a.can_speak - b.can_speak) * -2 + (a.name > b.name ? 1 : -1),
+      (a, b) =>
+        ((a.can_speak ? 1 : 0) - (b.can_speak ? 1 : 0)) * -2 +
+        (a.name > b.name ? 1 : 0),
     );
 
   return (
     <Window
       title="Language Menu"
       width={700}
-      height={Math.min(shown_languages.length * 30 + 75, 500)}
+      height={Math.min(shown_languages.length * 25 + 100, 500)}
     >
       <Window.Content>
         <Section
