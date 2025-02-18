@@ -48,6 +48,8 @@
 	icon_state = "sextractor"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/seed_extractor
+	max_integrity = 200
+	integrity_failure = 0.5
 	/// Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each
 	// seed
 	var/list/piles = list()
@@ -57,6 +59,21 @@
 /obj/machinery/seed_extractor/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	register_context()
+
+/obj/machinery/seed_extractor/update_icon_state()
+	if(machine_stat & BROKEN)
+		if (!powered())
+			if (state_open)
+				icon_state = "[initial(icon_state)]-broken-off-open"
+			else
+				icon_state = "[initial(icon_state)]-broken-off"
+		else if (state_open)
+			icon_state = "[initial(icon_state)]-broken-open"
+		else
+			icon_state = "[initial(icon_state)]-broken"
+		return ..()
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	return ..()
 
 /obj/machinery/seed_extractor/add_context(
 	atom/source,
@@ -97,7 +114,20 @@
 	if(!isliving(user) || user.combat_mode)
 		return ..()
 
-	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", attacking_item))
+	if( \
+		default_deconstruction_screwdriver( \
+			user, \
+			icon_state_open = \
+				powered() ? \
+					(machine_stat & BROKEN ? "sextractor-broken-open" : "sextractor_open") : \
+					(machine_stat & BROKEN ? "sextractor-broken-off-open" : "sextractor-off-open"), \
+			icon_state_closed = \
+				powered() ? \
+					(machine_stat & BROKEN ? "sextractor-broken" : "sextractor") : \
+					(machine_stat & BROKEN ? "sextractor-broken-off" : "sextractor-off"), \
+			screwdriver = attacking_item \
+		) \
+	)
 		return TRUE
 
 	if(default_pry_open(attacking_item, close_after_pry = TRUE))
