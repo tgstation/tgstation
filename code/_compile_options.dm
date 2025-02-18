@@ -81,7 +81,7 @@
 #endif // REFERENCE_TRACKING_STANDARD
 
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
-// #define UNIT_TESTS
+//#define UNIT_TESTS
 
 // If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
 // Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
