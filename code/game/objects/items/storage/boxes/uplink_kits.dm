@@ -282,12 +282,13 @@
 			)
 
 		if(KIT_MAD_SCIENTIST)
-			return list(
+			for(var/_ in 1 to 2)
+				new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
+
+			. = list(
 				/obj/item/clothing/suit/toggle/labcoat/mad, // 0 tc
 				/obj/item/clothing/shoes/jackboots, // 0 tc
 				/obj/item/megaphone, // 0 tc
-				/obj/item/grenade/clusterbuster/random, // 10 tc?
-				/obj/item/grenade/clusterbuster/random, // 10 tc?
 				/obj/item/grenade/chem_grenade/bioterrorfoam, // 5 tc
 				/obj/item/assembly/signaler, // 0 tc
 				/obj/item/assembly/signaler, // 0 tc
@@ -297,6 +298,10 @@
 				/obj/item/pen/edagger, // 2 tc
 				/obj/item/gun/energy/wormhole_projector/core_inserted, // 5 tc easily
 			)
+
+			for(var/obj/item/grenade/insert as anything in src)
+				insert.moveToNullspace()
+				. += insert
 
 		if(KIT_BEES)
 			return list(
