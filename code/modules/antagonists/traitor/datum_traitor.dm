@@ -69,10 +69,6 @@
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
-		if(give_secondary_objectives && GLOB.joined_player_list.len >= 25) // MASSMETA EDIT CHANGE: original - if(give_seocndary_objectives)
-			uplink_handler.has_objectives = TRUE
-			uplink_handler.generate_objectives()
-
 		uplink_handler.can_replace_objectives = CALLBACK(src, PROC_REF(can_change_objectives))
 		uplink_handler.replace_objectives = CALLBACK(src, PROC_REF(submit_player_objective))
 
