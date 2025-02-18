@@ -7180,6 +7180,8 @@
 #include "modular_doppler\modular_quirks\permitted_cybernetic\code\preferences.dm"
 #include "modular_doppler\modular_quirks\system_shock\system_shock.dm"
 #include "modular_doppler\modular_quirks\undersized\gun.dm"
+#include "modular_doppler\modular_quirks\undersized\held_undersized_examine.dm"
+#include "modular_doppler\modular_quirks\undersized\held_undersized_id.dm"
 #include "modular_doppler\modular_quirks\undersized\held_undersized_specials.dm"
 #include "modular_doppler\modular_quirks\undersized\inhand_holder.dm"
 #include "modular_doppler\modular_quirks\undersized\squashable.dm"
