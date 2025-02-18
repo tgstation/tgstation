@@ -22,7 +22,7 @@ ADMIN_VERB(policy_panel, R_ADMIN, "Policy Panel", "View all policy the server ha
 /datum/policy_panel/ui_close(mob/user)
 	qdel(src)
 
-/datum/policy_panel/ui_data(mob/user)
+/datum/policy_panel/ui_static_data(mob/user)
 	var/list/data = list()
 	data["policy"] = global.config.policy
 	return data
