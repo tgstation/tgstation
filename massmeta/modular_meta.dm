@@ -98,4 +98,3 @@
 #include "code\modules\spells\spell_types\touch\testicular_torsion.dm"
 #include "code\modules\antags\wizard\equipment\spellbook_entries\offensive.dm"
 
-#include "features\revert_spacesuits\spacesuits.dm"
