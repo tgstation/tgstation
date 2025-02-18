@@ -17,41 +17,44 @@
 	weather_duration_upper = 5 MINUTES
 	// the default rain color when weather is aesethic otherwise gets overriden by reagent color
 	weather_color = "#516a91ff"
-	thunder_color = "#d83a0aff"
+	thunder_color = null
 
 	area_type = /area
-
 	target_trait = ZTRAIT_RAINSTORM
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
-
 	probability = 0
 	turf_weather_chance = 0.01
 	turf_thunder_chance = 0.001
+
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)
 
 	/// A weighted list of possible reagents that will rain down from the sky.
 	/// Only one of these will be selected to be used as the reagent
-	var/list/whitelist_weather_reagents
+	var/list/whitelist_weather_reagents = list(/datum/reagent/water)
 	/// A list of reagents that are forbidden from being selected when there is no
 	/// whitelist and the reagents are randomized
 	var/list/blacklist_weather_reagents
 	/// The selected reagent that will be rained down
 	var/datum/reagent/rain_reagent
 
-/datum/weather/rain_storm/New(z_levels)
+/datum/weather/rain_storm/New(z_levels, datum/reagent/custom_reagent)
 	..()
 
 	if(IS_WEATHER_AESTHETIC(weather_flags))
 		return
 
 	var/reagent_id
-
-	if(whitelist_weather_reagents)
+	if(custom_reagent)
+		reagent_id = custom_reagent
+	else if(whitelist_weather_reagents)
 		reagent_id = pick_weight_recursive(whitelist_weather_reagents)
 	else // randomized
 		reagent_id = get_random_reagent_id(blacklist_weather_reagents)
 
 	rain_reagent = find_reagent_object_from_type(reagent_id)
+
+	if(!rain_reagent)
+		CRASH("Attempted to call rain_storm weather with no rain_reagent present!")
 
 	// water reagent color has an ugly transparent grey that looks nasty so it's skipped
 	if(!istype(rain_reagent, /datum/reagent/water))
@@ -60,7 +63,6 @@
 /datum/weather/rain_storm/telegraph()
 	setup_weather_areas(impacted_areas)
 
-	// just in case the list didn't clear from an earlier weather event
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
@@ -86,9 +88,6 @@
 	return ..()
 
 /datum/weather/rain_storm/weather_act_mob(mob/living/living)
-	if(!rain_reagent)
-		CRASH("Attempted to call weather_act_mob() with no rain_reagent present! Check the weather_flag for WEATHER_MOBS or if rain_reagent is being set properly.")
-
 	if(istype(rain_reagent, /datum/reagent/water))
 		living.wash()
 	rain_reagent.expose_mob(living, TOUCH, 5)
@@ -106,9 +105,6 @@
 		to_chat(living, span_warning(wetmessage))
 
 /datum/weather/rain_storm/weather_act_turf(turf/open/weather_turf)
-	if(!rain_reagent)
-		CRASH("Attempted to call weather_act_turf() with no rain_reagent present! Check the weather_flag for WEATHER_TURFS or if rain_reagent is being set properly.")
-
 	for(var/obj/thing as anything in weather_turf.contents)
 		if(!thing.IsObscured())
 			rain_reagent.expose_obj(thing, 5, TOUCH)
@@ -117,9 +113,6 @@
 		weather_turf.wash(CLEAN_ALL, TRUE)
 
 	rain_reagent.expose_turf(weather_turf, 5)
-
-/datum/weather/rain_storm/water
-	whitelist_weather_reagents = list(/datum/reagent/water)
 
 /datum/weather/rain_storm/blood
 	whitelist_weather_reagents = list(/datum/reagent/blood)
@@ -149,3 +142,6 @@
 		/datum/reagent/toxin/acid/fluacid = 1,
 	)
 
+// special admin rain that lets them pick the reagent to use
+/datum/weather/rain_storm/admin
+	whitelist_weather_reagents = list()
