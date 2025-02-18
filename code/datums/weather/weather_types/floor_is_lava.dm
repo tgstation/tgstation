@@ -25,6 +25,7 @@
 	/// Can't really use like, the emissive system here because I am not about to make
 	/// all walls block emissive
 	use_glow = FALSE
+	weather_flags = (WEATHER_MOBS | WEATHER_INDOORS)
 
 
 /datum/weather/floor_is_lava/can_weather_act_mob(mob/living/mob_to_check)

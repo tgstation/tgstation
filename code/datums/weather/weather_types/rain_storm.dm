@@ -17,8 +17,8 @@
 //	end_sound = 'sound/ambience/weather/rain/rain_end.ogg'
 	end_duration = 30 SECONDS
 
-	weather_duration_lower = 0.3 MINUTES
-	weather_duration_upper = 0.5 MINUTES
+	weather_duration_lower = 3 MINUTES
+	weather_duration_upper = 5 MINUTES
 	// the default rain color when weather is aesethic otherwise gets overriden by reagent color
 	weather_color = "#516a91ff"
 
@@ -26,9 +26,9 @@
 //	weather_sound = 'sound/ambience/weather/rain/rain_mid.ogg'
 
 	/// need to remove these since I'm using them for debugging
-	//protect_indoors = TRUE
-	area_type = /area/
+	area_type = /area/station
 
+	turf_weather_probability = 1
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_INDOORS | WEATHER_BAROMETER)
 
 	/// A weighted list of possible reagents that will rain down from the sky.
@@ -171,6 +171,9 @@
 	else if (prob(danger_chance))
 		dispensed_reagent.add_reagent(get_overflowing_reagent(dangerous = TRUE), reagents_amount)
 */
+	if(!rain_reagent)
+		CRASH("Attempted to call weather_act_mob() with no rain_reagent present! Check the weather_flag for WEATHER_MOBS or if rain_reagent is being set properly.")
+
 	if(istype(rain_reagent, /datum/reagent/water))
 		living.wash()
 
@@ -198,6 +201,24 @@
 		"As you move through the heavy [rain_type] rain, your clothes become completely soaked!",
 		)
 		to_chat(living, span_warning(wetmessage))
+
+/datum/weather/rain/weather_act_turf(turf/open/weather_turf)
+	if(!rain_reagent)
+		CRASH("Attempted to call weather_act_turf() with no rain_reagent present! Check the weather_flag for WEATHER_TURFS or if rain_reagent is being set properly.")
+
+	//rain_reagent.expose(get_turf(src))
+	//for(var/atom/thing as anything in get_turf(src))
+	//	reagents.expose(thing)
+
+	for(var/obj/thing as anything in weather_turf.contents)
+		if(!thing.IsObscured())
+			rain_reagent.expose_obj(thing, 5, TOUCH)
+
+	if(istype(rain_reagent, /datum/reagent/water))
+		weather_turf.wash(CLEAN_ALL, TRUE)
+
+	rain_reagent.expose_turf(weather_turf, 5)
+	return
 
 /datum/weather/rain/water
 	whitelist_weather_reagents = list(/datum/reagent/water)

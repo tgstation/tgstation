@@ -24,6 +24,7 @@
 	target_trait = ZTRAIT_STATION
 
 	immunity_type = TRAIT_RADSTORM_IMMUNE
+	weather_flags = (WEATHER_MOBS | WEATHER_INDOORS)
 	/// Chance we get a negative mutation, if we fail we get a positive one
 	var/negative_mutation_chance = 90
 	/// Chance we mutate

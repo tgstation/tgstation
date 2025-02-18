@@ -17,13 +17,12 @@
 	end_overlay = "light_ash"
 
 	area_type = /area
-	protect_indoors = TRUE
 	target_trait = ZTRAIT_ASHSTORM
 
 	immunity_type = TRAIT_ASHSTORM_IMMUNE
 
 	probability = 90
-	weather_flags = (WEATHER_BAROMETER)
+	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
 
 	var/list/weak_sounds = list()
 	var/list/strong_sounds = list()

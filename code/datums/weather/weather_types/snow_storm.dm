@@ -17,12 +17,11 @@
 	end_message = span_bolddanger("The snowfall dies down, it should be safe to go outside again.")
 
 	area_type = /area
-	protect_indoors = TRUE
 	target_trait = ZTRAIT_SNOWSTORM
 
 	immunity_type = TRAIT_SNOWSTORM_IMMUNE
 
-	weather_flags = (WEATHER_BAROMETER)
+	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
 
 	///Lowest we can cool someone randomly per weather act. Positive values only
 	var/cooling_lower = 5
