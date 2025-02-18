@@ -51,8 +51,6 @@ export const Policypanel = () => {
                       setCurrentPolicy(results[0]);
                     }
                   }}
-                  // clear search after enter
-                  onEnterClear
                 />
               </Flex.Item>
             </Flex>
