@@ -355,3 +355,54 @@
   - sound: The ghost poll sound is quieter.
   timothymtorres:
   - bugfix: Fix runtime when simple mobs are exposed to reagents
+2025-02-18:
+  Absolucy:
+  - bugfix: SecurEye now properly follows moving cameras.
+  Archemagus:
+  - rscadd: 'Many things now handles via AAS: Bounty Cubes, Request Consoles, Brig
+      Cells, Vending Machines and Orion Trails alerts, Weather Reports, Cargo Order
+      Console'
+  - code_imp: Now anyone can make their own entry for AAS
+  - refactor: AAS internals, also cleanup
+  EnterTheJake:
+  - rscadd: New Heretic starting Side-Knowdge Warren King's Welcome
+  - rscadd: New Heretic T1 Side knowledge, Phylactery Of Damnation.
+  - rscadd: New Heretic T2 Side knowledge, Ether Of The Newborn.
+  - rscadd: New Heretic T3 Side knowledge, Codex Morbus.
+  - rscadd: New Heretic T2 Side knowledge, Rust Sower grenade.
+  - rscadd: New Heretic T3 Side knowledge, Greaves Of The Prophet.
+  - rscadd: New Blade Path Spell, Wolves Among Sheep.
+  - balance: Heretic curses have been removed from the tree and bundled in the new
+      Knowledge, Codex Morbus.
+  - balance: Blade Path tree has been shuffled a bit, all spells have been moved up
+      by one tier to make space for the new spell.
+  Jacquerel:
+  - balance: The reputation "time locks" on various items in the Traitor uplink have
+      been reduced or removed. Effected items include the holoparasite kit, energy
+      sword, power fist, gloves of the northstar, pizza bomb, bag of x4, combat bakery
+      kit, reverse revolver, kinetic accelerator modkit, laser arm implant, concealed
+      weapon bay, chemical dart gun, and stationwide APC check.
+  - balance: The centcom inspector costume is now more expensive.
+  - rscdel: Several previously nukie-only wardrobe options in the traitor uplink are
+      now once more only available to nuclear operatives.
+  - rscdel: Spies can no longer receive an elite nuclear operative suit.
+  LT3:
+  - bugfix: Revert next map command actually reverts the map vote
+  - admin: Admins now have a verb to revert the map vote
+  SmArtKar:
+  - bugfix: Fixed scars not being examine-able if you wore a mask
+  - bugfix: Fixed uniform sensors being examine-able even when worn under a spacesuit.
+  - map: Moved Birdshot's tech storage to be between bridge and engineering, with
+      a brand old abandoned brewery in its former place.
+  - bugfix: Fixed mapvotes spontaneously failing
+  - bugfix: Fixed pyroclastic slime RRing ghosts
+  - balance: Space helmets and bio/bomb/rad hoods have lost their slowdown/FOV respectively,
+      but now can have their visor covered by spraypaint or pepper spray.
+  - balance: Driscoll mask no longer protects your eyes, unlike welding gas mask which
+      received said protection.
+  Xackii:
+  - rscadd: Big Manipulator now has use mode once again. You need buckle monkey to
+      unlock this future.
+  - rscadd: Big Manipulator now has wires.
+  - bugfix: Big Manipualtor now sees objects that appeared on the tile using spawn
+      or any other means in which the object is not considered to have moved
