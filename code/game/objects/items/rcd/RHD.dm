@@ -85,6 +85,20 @@
 		var/iron = get_silo_iron()
 		if(iron)
 			. += "Remote connection has iron in equivalent to [iron] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
+	if(upgrade)
+		. += "It has the following upgrades installed:"
+		if(upgrade & RCD_UPGRADE_FRAMES)
+			. += /obj/item/rcd_upgrade/frames::name
+		if(upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+			. += /obj/item/rcd_upgrade/simple_circuits::name
+		if(upgrade & RCD_UPGRADE_SILO_LINK)
+			. += /obj/item/rcd_upgrade/silo_link::name
+		if(upgrade & RCD_UPGRADE_FURNISHING)
+			. += /obj/item/rcd_upgrade/furnishing::name
+		if(upgrade & RCD_UPGRADE_ANTI_INTERRUPT)
+			. += /obj/item/rcd_upgrade/anti_interrupt::name
+		if(upgrade & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN)
+			. += /obj/item/rcd_upgrade/cooling::name
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
