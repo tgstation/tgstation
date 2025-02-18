@@ -119,7 +119,7 @@
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(stat)
+	if(stat) // consciousness check
 		return
 
 	if(health < maxHealth)
