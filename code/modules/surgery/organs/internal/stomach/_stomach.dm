@@ -459,6 +459,11 @@
 	if (. < 0)
 		cut_open_damage = max(0, cut_open_damage + .)
 
+/obj/item/organ/stomach/examine(mob/user)
+	. = ..()
+	if (cut_open_damage)
+		. += span_danger("It has a sizeable cut in it, exposing its insides!")
+
 /obj/item/organ/stomach/bone
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
