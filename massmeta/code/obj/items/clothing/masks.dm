@@ -1,9 +1,6 @@
 /obj/item/clothing/mask/gas/sechailer
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
-
-/datum/component/clothing_fov_visor/Initialize(fov_angle)
-	. = ..()
-	src.fov_angle = null
+	pepper_tint = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	icon = 'massmeta/icons/obj/clothing/masks.dmi'
