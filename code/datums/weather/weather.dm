@@ -81,10 +81,10 @@
 	/// If WEATHER_TURFS or WEATHER_THUNDER weather_flags are not applied this will be an empty list
 	var/list/weather_turfs = list()
 	/// The chance, per tick, a turf will have weather effects applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
-	/// Recommend setting this low near 0.01 (results in 1 in 100 affected turfs having weather reagents applied per second)
+	/// Recommend setting this low near 0.01 (results in 1 in 100 affected turfs having weather reagents applied per tick)
 	var/turf_weather_chance = 0
 	/// The chance, per tick, a turf will have a thunder strike applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
-	/// Recommend setting this really low near 0.001 (results in 1 in 1000 affected turfs having thunder strikes applied per second)
+	/// Recommend setting this really low near 0.001 (results in 1 in 1000 affected turfs having thunder strikes applied per tick)
 	var/turf_thunder_chance = 0
 	/// The maximum amount of turfs that can be processed in a single tick regardless of
 	/// the number of turfs determined by turf_weather_chance and turf_thunder_chance
@@ -112,12 +112,11 @@
  * Calculates duration and hit areas, and makes a callback for the actual weather to start
  *
  */
-/datum/weather/proc/telegraph(already_setup_areas)
+/datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
-	if(!already_setup_areas)
-		setup_weather_areas(impacted_areas)
+	setup_weather_areas(impacted_areas)
 
 	if(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER))
 		setup_weather_turfs()
@@ -132,6 +131,9 @@
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /datum/weather/proc/setup_weather_areas(list/selected_areas)
+	if(length(selected_areas)) // already setup impacted areas
+		return
+
 	var/list/affectareas = list()
 	for(var/area/selected_area as anything in get_areas(area_type))
 		affectareas += selected_area
@@ -145,8 +147,6 @@
 			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
 				selected_areas |= affected_area
 				continue
-
-	//return selected_areas
 
 /datum/weather/proc/setup_weather_turfs()
 	for(var/area/weather_area as anything in impacted_areas)
