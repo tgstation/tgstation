@@ -66,13 +66,13 @@
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
 	return list(
-		 /obj/item/screwdriver/nuke,
-		 /obj/item/wrench,
-		 /obj/item/weldingtool/largetank,
-		 /obj/item/crowbar/red,
-		 new /obj/item/wirecutters(null, "red"),
-		 /obj/item/multitool,
-		 /obj/item/clothing/gloves/combat,
+		/obj/item/screwdriver/nuke,
+		/obj/item/wrench,
+		/obj/item/weldingtool/largetank,
+		/obj/item/crowbar/red,
+		new /obj/item/wirecutters(null, "red"),
+		/obj/item/multitool,
+		/obj/item/clothing/gloves/combat,
 	)
 
 /obj/item/storage/toolbox/guncase
@@ -246,9 +246,9 @@
 
 	return list(
 		weapon_to_spawn,
-	 	extra_to_spawn,
-	 	/obj/item/clothing/head/costume/snakeeater,
-	 	/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+		extra_to_spawn,
+		/obj/item/clothing/head/costume/snakeeater,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 	)
 
 /obj/item/storage/toolbox/guncase/soviet
@@ -342,6 +342,6 @@
 		weapon_to_spawn,
 		extra_to_spawn,
 		/obj/item/mod/module/noslip,
-	 	/obj/item/reagent_containers/hypospray/medipen/methamphetamine,
-	 	/obj/item/clothing/under/rank/prisoner/nosensor,
+		/obj/item/reagent_containers/hypospray/medipen/methamphetamine,
+		/obj/item/clothing/under/rank/prisoner/nosensor,
 	)

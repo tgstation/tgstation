@@ -30,16 +30,16 @@
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	return list(
 		/obj/item/storage/crayons,
-	 	/obj/item/crowbar,
-	 	/obj/item/stack/pipe_cleaner_coil/red,
+		/obj/item/crowbar,
+		/obj/item/stack/pipe_cleaner_coil/red,
 		/obj/item/stack/pipe_cleaner_coil/yellow,
 		/obj/item/stack/pipe_cleaner_coil/blue,
 		/obj/item/stack/pipe_cleaner_coil/green,
-	 	/obj/item/stack/pipe_cleaner_coil/pink,
-	 	/obj/item/stack/pipe_cleaner_coil/orange,
+		/obj/item/stack/pipe_cleaner_coil/pink,
+		/obj/item/stack/pipe_cleaner_coil/orange,
 		/obj/item/stack/pipe_cleaner_coil/cyan,
 		/obj/item/stack/pipe_cleaner_coil/white,
-	 	/obj/item/stack/pipe_cleaner_coil/brown,
+		/obj/item/stack/pipe_cleaner_coil/brown,
 	)
 
 /obj/item/storage/toolbox/haunted
