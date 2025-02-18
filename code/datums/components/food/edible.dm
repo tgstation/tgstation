@@ -125,11 +125,14 @@ Behavior that's still missing from this component that original food items had t
 	if(foodtypes & GORE)
 		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
+/datum/component/edible/allow_source_update(source)
+	return source == SOURCE_EDIBLE_INNATE
+
 /datum/component/edible/on_source_add(
 	source,
 	list/initial_reagents,
-	food_flags = NONE,
-	foodtypes = NONE,
+	food_flags,
+	foodtypes,
 	volume,
 	eat_time,
 	list/tastes,
@@ -143,6 +146,11 @@ Behavior that's still missing from this component that original food items had t
 )
 	. = ..()
 
+	if(!isnull(foodtypes) && foodtypes_by_source[source]) //foodtypes being overriden
+		src.foodtypes &= ~foodtypes_by_source[source]
+	if(!isnull(food_flags) && food_flags_by_source[source]) //food_flags being overriden
+		src.food_flags &= ~food_flags_by_source[source]
+
 	foodtypes_by_source[source] = foodtypes
 	food_flags_by_source[source] = food_flags
 
@@ -153,6 +161,13 @@ Behavior that's still missing from this component that original food items had t
 	src.food_flags |= food_flags
 	src.foodtypes |= foodtypes
 
+	// add newly passed in reagents
+	setup_initial_reagents(initial_reagents, reagent_purity, tastes, volume)
+
+	//Only the innate source is allowed to change the following vars if there are a plurality of sources.
+	if(source != SOURCE_EDIBLE_INNATE && length(sources) > 1)
+		return
+
 	// add all new eatverbs to the list
 	if(islist(eatverbs))
 		var/list/cached_verbs = src.eatverbs
@@ -161,7 +176,6 @@ Behavior that's still missing from this component that original food items had t
 			src.eatverbs = string_list(cached_verbs | eatverbs)
 		else
 			src.eatverbs = string_list(eatverbs)
-
 	// just set these directly
 	if(!isnull(bite_consumption))
 		src.bite_consumption = bite_consumption
@@ -175,9 +189,6 @@ Behavior that's still missing from this component that original food items had t
 		src.on_consume = on_consume
 	if(!isnull(check_liked))
 		src.check_liked = check_liked
-
-	// add newly passed in reagents
-	setup_initial_reagents(initial_reagents, reagent_purity, tastes, volume)
 
 /datum/component/edible/on_source_remove(source)
 	//rebuild the foodtypes and food_flags bitfields without the removed source
@@ -723,14 +734,19 @@ Behavior that's still missing from this component that original food items had t
 		qdel(food)
 		return COMPONENT_ATOM_EATEN
 
+#define REQUIRED_MAT_FLAGS (MATERIAL_EFFECTS|MATERIAL_NO_EDIBILITY)
+
 ///Calls on_edible_applied() for the main material composing the atom parent
 /datum/component/edible/proc/on_material_effects(atom/source, list/materials, datum/material/main_material)
 	SIGNAL_HANDLER
-	if(source.material_flags & MATERIAL_EFFECTS)
+	if((source.material_flags & REQUIRED_MAT_FLAGS) == REQUIRED_MAT_FLAGS)
 		main_material.on_edible_applied(source, src)
 
 ///Calls on_edible_removed() for the main material no longer composing the atom parent
 /datum/component/edible/proc/on_remove_material_effects(atom/source, list/materials, datum/material/main_material)
 	SIGNAL_HANDLER
-	if(source.material_flags & MATERIAL_EFFECTS)
+	if((source.material_flags & REQUIRED_MAT_FLAGS) == REQUIRED_MAT_FLAGS)
 		main_material.on_edible_removed(source, src)
+
+#undef REQUIRED_MAT_FLAGS
+#undef DEFAULT_EDIBLE_VOLUME

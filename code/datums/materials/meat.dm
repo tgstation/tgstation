@@ -61,19 +61,19 @@
 /datum/material/meat/proc/make_edible(atom/source, mat_amount, multiplier)
 	if(source.material_flags & MATERIAL_NO_EDIBILITY)
 		return
-	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT)
-	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT)
+	var/protein_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT) * multiplier
+	var/fat_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT) * multiplier
 	source.AddComponentFrom( \
 		SOURCE_EDIBLE_MEAT_MAT, \
 		/datum/component/edible, \
-		initial_reagents = list(/datum/reagent/consumable/nutriment/protein = nutriment_count, /datum/reagent/consumable/nutriment/fat = oil_count), \
-		foodtypes = RAW | MEAT | GROSS, \
+		initial_reagents = list(/datum/reagent/consumable/nutriment/protein = protein_count, /datum/reagent/consumable/nutriment/fat = fat_count), \
+		foodtypes = RAW | MEAT, \
 		eat_time = 3 SECONDS, \
 		tastes = list("meat" = 1))
 
 	source.AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = (nutriment_count + oil_count) * 0.3 * multiplier,\
+		blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
 		blood_dna = list("meaty DNA" = "MT-"),\
 		diseases = null,\
 	)
@@ -86,7 +86,7 @@
 		/datum/component/blood_walk,\
 		blood_type = /obj/effect/decal/cleanable/blood,\
 		blood_spawn_chance = 35,\
-		max_blood = (nutriment_count + oil_count) * 0.3 * multiplier,\
+		max_blood = (protein_count + fat_count) * 0.3 * multiplier,\
 	)
 
 /datum/material/meat/on_removed(atom/source, mat_amount, multiplier)

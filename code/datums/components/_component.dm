@@ -356,7 +356,7 @@
 						old_component.InheritComponent(new_component, TRUE)
 
 				if(COMPONENT_DUPE_SOURCES)
-					if(source in old_component.sources)
+					if((source in old_component.sources) && !old_component.allow_source_update(source))
 						return old_component // source already registered, no work to do
 
 					if(old_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
@@ -480,3 +480,7 @@
  */
 /datum/component/ui_host()
 	return parent
+
+///Whether the component is allowed to call on_source_add() on a source that's already present
+/datum/component/proc/allow_source_update(source)
+	return FALSE

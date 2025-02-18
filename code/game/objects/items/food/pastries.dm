@@ -36,7 +36,7 @@
 
 /obj/item/food/muffin/booberry/Initialize(mapload, starting_reagent_purity, no_base_reagents)
 	. = ..()
-	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/ghost_edible, bite_consumption = bite_consumption)
+	AddComponent(/datum/component/ghost_edible, bite_consumption = bite_consumption)
 
 /obj/item/food/muffin/moffin
 	name = "moffin"

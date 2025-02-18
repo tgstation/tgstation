@@ -342,8 +342,8 @@
 		if(protein)
 			reagents.multiply(2, /datum/reagent/consumable/nutriment/protein)
 
-	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
-	edible.foodtypes &= ~(RAW|GORE)
+	//Remove the raw and gore foodtypes from the edible component
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = get_food_types() & ~(RAW|GORE))
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
 		well_cooked()
 
