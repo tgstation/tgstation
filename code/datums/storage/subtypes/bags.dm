@@ -336,7 +336,11 @@
 /datum/storage/bag/money/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
-	set_holdable(list(/obj/item/coin, /obj/item/stack/spacecash, /obj/item/holochip))
+	set_holdable(list(
+		/obj/item/coin,
+		/obj/item/stack/spacecash,
+		/obj/item/holochip
+	))
 
 ///Bag of quivers
 /datum/storage/bag/quivers

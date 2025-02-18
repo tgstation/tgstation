@@ -16,6 +16,7 @@
 /datum/storage/box/ingredients
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
+///Coffee box
 /datum/storage/box/coffee/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
