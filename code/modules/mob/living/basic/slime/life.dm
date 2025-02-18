@@ -1,7 +1,7 @@
 
 /mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(QDELETED(src)) //dead or deleted
+	if(QDELETED(src))
 		return
 
 	if(!HAS_TRAIT(src, TRAIT_STASIS)) //No hunger in stasis
