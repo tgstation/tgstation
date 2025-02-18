@@ -1,4 +1,4 @@
-/datum/weather/rain
+/datum/weather/rain_storm
 	name = "rain"
 	desc = "Heavy thunderstorms rain down below, drenching anyone caught in it."
 
@@ -29,8 +29,8 @@
 	/// need to remove these since I'm using them for debugging
 	area_type = /area/station
 
-	turf_weather_chance = 1
-	turf_thunder_chance = 0.1
+	turf_weather_chance = 0.01
+	turf_thunder_chance = 0.001
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_INDOORS | WEATHER_BAROMETER)
 
 	/// A weighted list of possible reagents that will rain down from the sky.
@@ -45,7 +45,7 @@
 	var/list/weak_sounds = list()
 	var/list/strong_sounds = list()
 
-/datum/weather/rain/New(z_levels)
+/datum/weather/rain_storm/New(z_levels)
 	..()
 
 	if(IS_WEATHER_AESTHETIC(weather_flags))
@@ -91,7 +91,7 @@
 */
 
 /*
-/datum/weather/rain/telegraph()
+/datum/weather/rain_storm/telegraph()
 	. = ..()
 	for(var/area/impacted_area as anything in impacted_areas)
 		strong_sounds[impacted_area] = /datum/looping_sound/rain
@@ -99,18 +99,18 @@
 
 	GLOB.rain_storm_sounds += strong_sounds
 
-/datum/weather/rain/start()
+/datum/weather/rain_storm/start()
 	GLOB.rain_storm_sounds -= weak_sounds
 	GLOB.rain_storm_sounds += strong_sounds
 	return ..()
 
-/datum/weather/rain/wind_down()
+/datum/weather/rain_storm/wind_down()
 	GLOB.rain_storm_sounds -= strong_sounds
 	GLOB.rain_storm_sounds += weak_sounds
 	return ..()
 */
 
-/datum/weather/rain/telegraph()
+/datum/weather/rain_storm/telegraph()
 	setup_weather_areas(impacted_areas)
 	// just in case the list didn't clear from an earlier weather event
 	GLOB.rain_storm_sounds.Cut()
@@ -120,7 +120,7 @@
 
 	return ..(TRUE)
 
-/datum/weather/rain/start()
+/datum/weather/rain_storm/start()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/middle
@@ -134,7 +134,7 @@
 */
 	return ..()
 
-/datum/weather/rain/wind_down()
+/datum/weather/rain_storm/wind_down()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/end
@@ -142,11 +142,11 @@
 	//GLOB.rain_storm_sounds.Cut() //-= strong_sounds
 	return ..()
 
-/datum/weather/rain/end()
+/datum/weather/rain_storm/end()
 	GLOB.rain_storm_sounds.Cut()
 	return ..()
 
-/datum/weather/rain/weather_act_mob(mob/living/living)
+/datum/weather/rain_storm/weather_act_mob(mob/living/living)
 /*
 	/var/chem = /datum/reagent/water
 
@@ -204,7 +204,7 @@
 		)
 		to_chat(living, span_warning(wetmessage))
 
-/datum/weather/rain/weather_act_turf(turf/open/weather_turf)
+/datum/weather/rain_storm/weather_act_turf(turf/open/weather_turf)
 	if(!rain_reagent)
 		CRASH("Attempted to call weather_act_turf() with no rain_reagent present! Check the weather_flag for WEATHER_TURFS or if rain_reagent is being set properly.")
 
@@ -222,16 +222,16 @@
 	rain_reagent.expose_turf(weather_turf, 5)
 	return
 
-/datum/weather/rain/water
+/datum/weather/rain_storm/water
 	whitelist_weather_reagents = list(/datum/reagent/water)
 
-/datum/weather/rain/blood
+/datum/weather/rain_storm/blood
 	whitelist_weather_reagents = list(/datum/reagent/blood)
 
-/datum/weather/rain/plasma
+/datum/weather/rain_storm/plasma
 	whitelist_weather_reagents = list(/datum/reagent/toxin/plasma)
 
-/datum/weather/rain/acid
+/datum/weather/rain_storm/acid
 	name = "acid rain"
 	desc = "The planet's thunderstorms are by nature acidic, and will incinerate anyone standing beneath them without protection."
 
@@ -256,15 +256,15 @@
 /*
 	//var/datum/looping_sound/acidrain/sound_active_acidrain = new(list(), FALSE, TRUE)
 
-/datum/weather/rain/acid/start()
+/datum/weather/rain_storm/acid/start()
 	. = ..()
 	//sound_active_acidrain.start()
 
-/datum/weather/rain/acid/end()
+/datum/weather/rain_storm/acid/end()
 	. = ..()
 	//sound_active_acidrain.stop()
 
-/datum/weather/rain/acid/weather_act_mob(mob/living/living)
+/datum/weather/rain_storm/acid/weather_act_mob(mob/living/living)
 	if(living.stat == DEAD)
 		return
 
