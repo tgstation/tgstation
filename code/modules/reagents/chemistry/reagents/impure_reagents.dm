@@ -102,7 +102,7 @@
 	if(HAS_TRAIT(exposed_mob, TRAIT_RESISTCOLD))
 		holder.remove_reagent(type, volume)
 		return
-	if(!(methods & INJECT))
+	if(!(methods & INGEST))
 		exposed_mob.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
 		if(!exposed_mob.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
 			exposed_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
