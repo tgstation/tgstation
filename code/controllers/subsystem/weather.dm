@@ -29,9 +29,9 @@ SUBSYSTEM_DEF(weather)
 				CHECK_TICK
 
 		if(our_event.weather_flags & (WEATHER_THUNDER))
-			for(var/i in 1 to our_event.weather_turfs_per_tick)
+			for(var/i in 1 to our_event.thunder_turfs_per_tick)
 				var/turf/open/selected_turf = pick(our_event.weather_turfs)
-				our_event.lighting_act_turf(selected_turf)
+				our_event.thunder_act_turf(selected_turf)
 				CHECK_TICK
 
 	// start random weather on relevant levels

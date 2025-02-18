@@ -21,6 +21,7 @@
 	weather_duration_upper = 5 MINUTES
 	// the default rain color when weather is aesethic otherwise gets overriden by reagent color
 	weather_color = "#516a91ff"
+	thunder_color = "#d83a0aff"
 
 //	telegraph_sound = 'sound/ambience/weather/rain/rain_start.ogg'
 //	weather_sound = 'sound/ambience/weather/rain/rain_mid.ogg'
@@ -28,7 +29,8 @@
 	/// need to remove these since I'm using them for debugging
 	area_type = /area/station
 
-	turf_weather_probability = 1
+	turf_weather_chance = 1
+	turf_thunder_chance = 0.1
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_INDOORS | WEATHER_BAROMETER)
 
 	/// A weighted list of possible reagents that will rain down from the sky.
