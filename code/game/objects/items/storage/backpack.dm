@@ -280,6 +280,8 @@
 
 	AddComponent(/datum/component/squeak, meat_sounds)
 
+#undef INVERSE_MEAT_STRENTGH
+
 /*
  * Satchel Types
  */
