@@ -16,9 +16,6 @@
 	if(!iscarbon(eater))
 		return FALSE
 
-	if(!iscarbon(eater))
-		return TRUE
-
 	var/mob/living/carbon/carbon_eater = eater
 	var/obj/item/bodypart/affecting = carbon_eater.get_bodypart(check_zone(user.zone_selected))
 
@@ -80,6 +77,15 @@
 		owner.update_appearance()
 	return ..()
 
+/datum/embedding/med_patch/can_embed(atom/movable/source, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
+	. = ..()
+	if (!.)
+		return
+	var/obj/item/bodypart/affecting = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	if (!IS_ORGANIC_LIMB(affecting))
+		return FALSE
+	return TRUE
+
 /datum/embedding/med_patch/proc/on_ignited(datum/source)
 	SIGNAL_HANDLER
 	if (!(parent.resistance_flags & FLAMMABLE))
@@ -88,7 +94,7 @@
 		var/mob/living/carbon/human/as_human = owner
 		if (as_human.get_thermal_protection() >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 			return
-	fall_out()
+	INVOKE_ASYNC(src, PROC_REF(fall_out))
 	qdel(parent)
 
 /datum/embedding/med_patch/proc/on_update_overlays(datum/source, list/overlays)
