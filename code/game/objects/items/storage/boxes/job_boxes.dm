@@ -98,9 +98,11 @@
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
+	medipen_type = /obj/item/reagent_containers/hypospray/medipen/atropine
 
-/obj/item/storage/box/survival/syndie/PopulateContents()
+/obj/item/storage/box/survival/syndie/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_count = TRUE
+
 	. = ..()
 	. += /obj/item/crowbar/red
 	. += /obj/item/screwdriver/red
