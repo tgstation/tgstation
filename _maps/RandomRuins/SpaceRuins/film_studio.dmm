@@ -862,6 +862,12 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
+"qM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/film_studio/starboard)
 "qU" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
@@ -2205,6 +2211,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "MG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/space/has_grav/film_studio/starboard)
 "MH" = (
@@ -2826,6 +2833,10 @@
 "Wo" = (
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/space/has_grav/film_studio/starboard)
+"Wy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/starboard)
 "WC" = (
 /obj/structure/cable,
@@ -5188,7 +5199,7 @@ WC
 KP
 dg
 DP
-zL
+Wy
 zL
 ST
 Ym
@@ -5250,8 +5261,8 @@ WC
 Lx
 dg
 qU
-zL
-zL
+Wy
+qM
 zL
 ph
 dg
@@ -5312,7 +5323,7 @@ BR
 Lx
 dg
 Wo
-zL
+Wy
 dg
 uw
 dg
@@ -5371,10 +5382,10 @@ RO
 Xk
 kV
 Ed
-Lx
+rw
 Vf
 MG
-zL
+Wy
 Rf
 zc
 dg
