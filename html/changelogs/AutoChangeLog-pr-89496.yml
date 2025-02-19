@@ -1,0 +1,4 @@
+author: "Ez-Briz"
+delete-after: True
+changes:
+  - bugfix: "fixed bluescreen in Access Checker interface"
