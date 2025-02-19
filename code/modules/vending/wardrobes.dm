@@ -141,6 +141,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/backpack/satchel/eng = 3,
 		/obj/item/storage/backpack/duffelbag/engineering = 3,
 		/obj/item/storage/backpack/messenger/eng = 3,
+		/obj/item/flatpack/flatpacker = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -273,6 +274,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/storage/backpack/messenger/science = 3,
 		/obj/item/radio/headset/headset_sci = 3,
+		/obj/item/flatpack/flatpacker = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
