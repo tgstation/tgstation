@@ -1087,7 +1087,7 @@
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric Acid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
-	color = "#00FF32"
+	color = "#339966"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 2
@@ -1109,7 +1109,7 @@
 /datum/reagent/toxin/acid/nitracid
 	name = "Nitric Acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
-	color = "#007718"
+	color = "#669900"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 3
