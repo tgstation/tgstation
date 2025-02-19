@@ -131,7 +131,7 @@
 	track_reflection(arrived)
 
 /datum/component/reflection/proc/track_reflection(atom/movable/target, check_view = TRUE)
-	if(target == parent || target.loc == parent) // this stuff really shouldn't be tracked
+	if(QDELETED(target) || target == parent || target.loc == parent) // this stuff really shouldn't be tracked
 		return
 	if(!LAZYFIND(reflected_movables, target)) // not lazyaccess - value may be null
 		LAZYSET(reflected_movables, target, null)
