@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Space helmets and bio/bomb/rad hoods have lost their slowdown/FOV respectively, but now can have their visor covered by spraypaint or pepper spray."
-  - balance: "Driscoll mask no longer protects your eyes, unlike welding gas mask which received said protection."
