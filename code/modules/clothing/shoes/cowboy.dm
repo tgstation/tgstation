@@ -18,10 +18,9 @@
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
-	#ifndef UNIT_TESTS //ai controller runtimes during unit tests because this might end up in nullspace so the controller can't move the pawn there
-	if(prob(2)) //There's a snake in my boot
+	//syndicate cowboy shoes creates this in null space so don't spawn if we are there
+	if(!isnull(loc) && prob(2)) //There's a snake in my boot
 		new /mob/living/basic/snake(src)
-	#endif
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	if(has_spurs)
 		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)
