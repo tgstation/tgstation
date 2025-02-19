@@ -76,7 +76,7 @@
 
 	/// Tracks whether we were right clicked or left clicked in our last trigger
 	var/right_clicked = FALSE
-	/// The real name of the last mob we tracked
+	/// The real name of the last thing we tracked
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
@@ -116,16 +116,26 @@
 
 	var/list/targets_to_choose = list()
 
+	// Checks if our heretic has a blade research, and then checks if they have made blades
+	// adds them to our list of target when pulsing the living heart so that you can locate them
+	var/datum/heretic_knowledge/limited_amount/starting/blade_knowledge
+	for(var/datum/potential_knowledge as anything in subtypesof(/datum/heretic_knowledge/limited_amount/starting))
+		blade_knowledge = heretic_datum.get_knowledge(potential_knowledge)
+		if(blade_knowledge)
+			break
 	var/obj/item/melee/sickly_blade/blade
-	for(var/datum/weakref/blade_ref as anything in heretic_datum.created_blades)
-		blade = blade_ref.resolve()
-		if(!blade)
-			heretic_datum.created_blades -= blade_ref
-			continue
-		if(blade.loc == owner || blade.loc.loc == owner)
-			continue
-		// Means our blade is somewhere, but not on our person, so let's track it
-		targets_to_choose[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
+	if(blade_knowledge)
+		for(var/datum/weakref/blade_ref as anything in blade_knowledge.created_items)
+			blade = blade_ref.resolve()
+			if(!blade)
+				blade_knowledge.created_items -= blade_ref
+				continue
+			if(!istype(blade, /obj/item/melee/sickly_blade))
+				continue // Just in case someone makes a /datum/heretic_knowledge/limited_amount/starting that doesn't create blades
+			if(get(blade, /mob/living) == owner)
+				continue
+			// Means our blade is somewhere, but not on our person, so let's make it trackable
+			targets_to_choose[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
 
 	var/list/mob/living/carbon/human/human_targets = list()
 	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
@@ -151,22 +161,24 @@
 	if(isnull(last_tracked_name))
 		return FALSE
 
-	var/mob/living/carbon/human/tracked_mob = human_targets[last_tracked_name]
-	if(QDELETED(tracked_mob) && QDELETED(blade))
+	var/atom/tracked_thing = null
+	if(!isnull(human_targets[last_tracked_name]))
+		tracked_thing = human_targets[last_tracked_name]
+	else if(blade)
+		tracked_thing = blade
+	if(QDELETED(tracked_thing))
 		last_tracked_name = null
 		return FALSE
 
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-	if(tracked_mob)
-		owner.balloon_alert(owner, get_balloon_message(tracked_mob))
-	else
-		owner.balloon_alert(owner, get_balloon_message(blade))
-
+	owner.balloon_alert(owner, get_balloon_message(tracked_thing))
 
 	// Let them know how to sacrifice people if they're able to be sac'd
-	if(tracked_mob.stat == DEAD)
-		to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
-			and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		if(tracked_mob.stat == DEAD)
+			to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
+				and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
 
 	StartCooldown()
 	return TRUE
@@ -263,7 +275,7 @@
 
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
-		if(tracked_mob?.stat == DEAD)
+		if(tracked_mob.stat == DEAD)
 			balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message

@@ -52,8 +52,6 @@
 	var/list/mob/living/carbon/human/sac_targets
 	/// List of all sacrifice target's names, used for end of round report
 	var/list/all_sac_targets = list()
-	/// List of WEAKREFs to our created blades
-	var/list/created_blades = list()
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
