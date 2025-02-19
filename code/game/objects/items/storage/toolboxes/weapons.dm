@@ -259,6 +259,11 @@
 	weapon_to_spawn = /obj/effect/spawner/random/sakhno
 	extra_to_spawn = /obj/effect/spawner/random/sakhno/ammo
 
+/obj/item/storage/toolbox/guncase/soviet/PopulateContents(datum/storage_config/config)
+	config.compute_max_total_weight = TRUE
+
+	return ..()
+
 /obj/item/storage/toolbox/guncase/monkeycase
 	name = "monkey gun case"
 	desc = "Everything a monkey needs to truly go ape-shit. There's a paw-shaped hand scanner lock on the front of the case."
