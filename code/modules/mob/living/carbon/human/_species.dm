@@ -871,7 +871,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/puncher_brute_and_burn = (user.getFireLoss() + user.getBruteLoss())
 
 	//Get our targets combined brute and burn damage.
-	var/targeT_brute_and_burn = (target.getFireLoss() + target.getBruteLoss())
+	var/target_brute_and_burn = (target.getFireLoss() + target.getBruteLoss())
 
 	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
 	// But god is it going to make you sick moving too much while drunk
@@ -961,7 +961,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	// If our target is staggered, the target's armor, minus our limb effectiveness sets the minimum necessary amount of damage sustained to cause an effect. We clamp the value for sanity reasons.
-	if(staggered && targeT_brute_and_burn >= clamp(((armor_block && armor_block > UNARMED_COMBO_HIT_HEALTH_BASE) ? armor_block : UNARMED_COMBO_HIT_HEALTH_BASE) - limb_accuracy, 0, 200))
+	if(staggered && target_brute_and_burn >= clamp(((armor_block && armor_block > UNARMED_COMBO_HIT_HEALTH_BASE) ? armor_block : UNARMED_COMBO_HIT_HEALTH_BASE) - limb_accuracy, 0, 200))
 		stagger_combo(user, target, atk_verb, limb_accuracy, armor_block)
 
 /// Handles the stagger combo effect of our punch. Follows the same logic as the above proc, target is our owner, user is our attacker.
