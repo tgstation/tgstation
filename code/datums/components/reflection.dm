@@ -131,7 +131,12 @@
 	track_reflection(arrived)
 
 /datum/component/reflection/proc/track_reflection(atom/movable/target, check_view = TRUE)
-	if(QDELETED(target) || target == parent || target.loc == parent) // this stuff really shouldn't be tracked
+	// this stuff really shouldn't be tracked
+	if(QDELETED(target) || target == parent || target.loc == parent)
+		return
+	// i don't really want to do this but there's a bunch of abstract effects we should ignore...
+	// we can revisit this later when we actually have an object that wants to reflect this stuff
+	if(iseffect(target))
 		return
 	if(!LAZYFIND(reflected_movables, target)) // not lazyaccess - value may be null
 		LAZYSET(reflected_movables, target, null)
