@@ -18,9 +18,11 @@
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
-	create_storage(storage_type = /datum/storage/pockets/shoes)
+	#ifndef UNIT_TESTS //ai controller runtimes during unit tests because this might end up in nullspace so the controller can't move the pawn there
 	if(prob(2)) //There's a snake in my boot
 		new /mob/living/basic/snake(src)
+	#endif
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 	if(has_spurs)
 		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)
 	AddElement(/datum/element/ignites_matches)
