@@ -592,12 +592,9 @@
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
-		radiation_pulse(
-			source = affected_mob,
-			max_range = 0,
-			threshold = RAD_VERY_LIGHT_INSULATION,
-			chance = min(volume / (20 - rad_power * 5), rad_power),
-		)
+		var/chance = min(volume / (20 - rad_power * 5), rad_power)
+		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
+			affected_mob.AddComponent(/datum/component/irradiated)
 	else
 		if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
