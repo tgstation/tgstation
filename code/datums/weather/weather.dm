@@ -153,8 +153,12 @@
 /datum/weather/proc/setup_weather_turfs()
 	for(var/area/weather_area as anything in impacted_areas)
 		for(var/z in impacted_z_levels)
-			// we are going to skip walls to optimize our list
-			for(var/turf/open/valid_weather_turf in weather_area.get_turfs_by_zlevel(z))
+			for(var/valid_weather_turf in weather_area.get_turfs_by_zlevel(z))
+				if(isopenspaceturf(valid_weather_turf))
+					continue
+				if(isclosedturf(valid_weather_turf))
+					continue
+
 				weather_turfs += valid_weather_turf
 
 	var/total_turfs = length(weather_turfs)
