@@ -18,8 +18,8 @@
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
-	//syndicate cowboy shoe bix creates this in null space so don't spawn if we are there
-	if(!isnull(loc) && prob(2)) //There's a snake in my boot
+
+	if(prob(2)) //There's a snake in my boot
 		new /mob/living/basic/snake(src)
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	if(has_spurs)
