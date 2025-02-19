@@ -46,7 +46,7 @@
 		/datum/action/cooldown/mob_cooldown/the_thing/acid_spit = BB_THETHING_ACIDSPIT,
 	)
 	grant_actions_by_list(innate_actions)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.3 SECONDS)
+	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.4 SECONDS)
 	maploaded = mapload
 	if(maploaded)
 		SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)

@@ -406,3 +406,15 @@
   - rscadd: Big Manipulator now has wires.
   - bugfix: Big Manipualtor now sees objects that appeared on the tile using spawn
       or any other means in which the object is not considered to have moved
+2025-02-19:
+  Holoo-1:
+  - bugfix: fixed circuit connections not being drawn outside initial screen on 516
+  Jacquerel:
+  - rscadd: Players who choose to be evil via the quirk menu will be reminded at roundstart
+      that this doesn't exempt them from server rules.
+  SmArtKar:
+  - qol: Cybernetic arm implants now automatically change insertion zones without
+      the need to screwdriver them.
+  necromanceranne:
+  - balance: Having a strongarm implant installed into each arm now allows you to
+      pry open doors.
