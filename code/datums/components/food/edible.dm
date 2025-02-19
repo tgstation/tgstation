@@ -42,6 +42,8 @@ Behavior that's still missing from this component that original food items had t
 	var/list/foodtypes_by_source = list()
 	///Assoc list of sources and their food flags
 	var/list/food_flags_by_source = list()
+	///Assoc list of sources and their junkiness
+	var/list/junkiness_by_source = list()
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
@@ -71,7 +73,6 @@ Behavior that's still missing from this component that original food items had t
 	src.foodtypes = foodtypes
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
-	src.junkiness = junkiness
 	src.after_eat = after_eat
 	src.on_consume = on_consume
 	src.check_liked = check_liked
@@ -150,6 +151,10 @@ Behavior that's still missing from this component that original food items had t
 		src.foodtypes &= ~foodtypes_by_source[source]
 	if(!isnull(food_flags) && food_flags_by_source[source]) //food_flags being overriden
 		src.food_flags &= ~food_flags_by_source[source]
+	if(!isnull(junkiness))
+		src.junkiness += junkiness - junkiness_by_source[source]
+		junkiness_by_source[source] = junkiness
+		
 
 	foodtypes_by_source[source] = foodtypes
 	food_flags_by_source[source] = food_flags
@@ -181,8 +186,6 @@ Behavior that's still missing from this component that original food items had t
 		src.bite_consumption = bite_consumption
 	if(!isnull(eat_time))
 		src.eat_time = eat_time
-	if(!isnull(junkiness))
-		src.junkiness = junkiness
 	if(!isnull(after_eat))
 		src.after_eat = after_eat
 	if(!isnull(on_consume))
@@ -196,6 +199,8 @@ Behavior that's still missing from this component that original food items had t
 	food_flags = NONE
 	foodtypes_by_source -= source
 	food_flags_by_source -= source
+	junkiness -= junkiness_by_source[source]
+	junkiness_by_source -= source
 	for(var/source_key in foodtypes_by_source)
 		foodtypes |= foodtypes_by_source[source_key]
 		food_flags |= food_flags_by_source[source_key]

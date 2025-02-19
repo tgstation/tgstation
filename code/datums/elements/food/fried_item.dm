@@ -50,7 +50,6 @@
 		food_flags = FOOD_FINGER_FOOD, \
 		junkiness = 10, \
 		foodtypes = FRIED, \
-		volume = this_food.reagents?.maximum_volume, \
 	)
 	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 
