@@ -28,12 +28,12 @@
 	TEST_ASSERT(human.has_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine), "Human consumed meth, but did not gain movespeed modifier")
 
 	// Check if pills properly get stored in stomachs
-	pill_two.reagents.add_reagent(meth, 1.9 * initial(krok.metabolization_rate) * SSMOBS_DT)
+	pill_two.reagents.add_reagent(krok, 1.9 * initial(krok.metabolization_rate) * SSMOBS_DT)
 	pill_two.layers_remaining = 99
 	pill_two.interact_with_atom(human, human)
 	human.Life(SSMOBS_DT)
 
-	TEST_ASSERT(human.reagents.has_reagent(krok), "Human body has krokaine after taking a pill despite it having 99 layers")
+	TEST_ASSERT_EQUAL(human.reagents.has_reagent(krok), FALSE, "Human body has krokaine after taking a pill despite it having 99 layers")
 	TEST_ASSERT(pill_two in belly.stomach_contents, "Krokaine pill did not get stored in target's stomach")
 	TEST_ASSERT(pill_two.loc == human, "Krokaine pill was not put in target's body")
 
