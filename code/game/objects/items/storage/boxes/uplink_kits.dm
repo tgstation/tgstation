@@ -934,8 +934,12 @@
 	storage_type = /datum/storage/box/syndie_kit/cowboy
 
 /obj/item/storage/box/syndie_kit/cowboy/PopulateContents()
+	//Can spawn with snakes which runtime in null space so we do this
+	var/obj/item/clothing/shoes/cowboy/black/syndicate/shoes = new(src)
+	shoes.moveToNullspace()
+
 	return list(
-		/obj/item/clothing/shoes/cowboy/black/syndicate,
+		shoes,
 		/obj/item/clothing/head/cowboy/black/syndicate,
 		/obj/item/storage/belt/holster/nukie/cowboy/full,
 		/obj/item/clothing/under/costume/dutch/syndicate,
