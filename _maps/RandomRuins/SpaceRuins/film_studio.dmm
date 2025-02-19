@@ -545,6 +545,13 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/film_studio/dorms)
+"ko" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/film_studio)
 "kq" = (
 /obj/structure/railing{
 	dir = 8
@@ -723,7 +730,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable/layer1,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "oM" = (
@@ -1012,6 +1019,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/solars)
+"te" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/film_studio)
 "tl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1753,7 +1766,9 @@
 	name = "set building crate"
 	},
 /obj/item/stack/sheet/mineral/plasma/thirty,
-/obj/structure/cable/layer1,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)
 "Fr" = (
@@ -3685,7 +3700,7 @@ Me
 NB
 RG
 zf
-fa
+ko
 HM
 fa
 fa
@@ -3747,7 +3762,7 @@ Me
 Me
 Ua
 KH
-or
+te
 or
 or
 or
