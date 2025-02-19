@@ -48888,13 +48888,11 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qmC" = (
-/obj/structure/secure_safe/directional/east{
-	name = "evidence safe"
-	},
 /obj/effect/spawner/random/contraband/cannabis,
 /obj/structure/closet{
 	name = "evidence closet 1"
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "qmH" = (
@@ -63651,7 +63649,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "voL" = (
-/obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
@@ -63660,6 +63657,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/secure_safe/directional/north{
+	name = "evidence safe"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "voS" = (
