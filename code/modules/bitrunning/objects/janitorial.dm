@@ -57,6 +57,7 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 /obj/machinery/janitorial_scanner/Initialize(mapload)
 	. = ..()
 	GLOB.janitorial_scanners += src
+	name = "[area_name] janitorial area scanner"
 
 /obj/machinery/janitorial_scanner/proc/scan_area()
 	for(var/turf/floor in our_room)
@@ -64,11 +65,11 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 			continue
 		for(var/atom/possible_disqualifier in floor)
 			if(GET_ATOM_BLOOD_DNA_LENGTH(possible_disqualifier))
-				src.Beam(get_turf(possible_disqualifier), icon_state = "blood", time = 10 SECONDS)
+				src.Beam(get_turf(possible_disqualifier), icon_state = "blood", time = 3 MINUTES)
 				return "ERROR: Blood-stained [possible_disqualifier] detected in [area_name]!"
 			for(var/path in GLOB.janitorial_reject_type_to_speech)
 				if(istype(possible_disqualifier, path))
-					src.Beam(get_turf(possible_disqualifier), icon_state = "blood", time = 10 SECONDS)
+					src.Beam(get_turf(possible_disqualifier), icon_state = "blood", time = 3 MINUTES)
 					return "ERROR: [GLOB.janitorial_reject_type_to_speech[path]] detected in [area_name]!"
 			CHECK_TICK
 		CHECK_TICK

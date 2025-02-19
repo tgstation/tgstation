@@ -50,12 +50,9 @@
 /turf/open/misc/grass/jungle,
 /area/virtual_domain/fullbright)
 "o" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/large/style_random{
-	pixel_x = -16;
-	pixel_y = -3
-	},
-/turf/open/misc/grass/jungle,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/fullbright)
 "p" = (
 /obj/structure/flora/grass/jungle/b/style_random,
@@ -892,7 +889,7 @@ x
 n
 x
 S
-d
+o
 x
 h
 n

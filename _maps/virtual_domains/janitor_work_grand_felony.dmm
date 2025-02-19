@@ -1494,12 +1494,10 @@
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
 	},
-/obj/structure/stairs/material{
-	dir = 1
-	},
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/fake_stairs/directional/north,
 /turf/open/floor/iron/white/textured_large,
 /area/virtual_domain/fullbright)
 "of" = (
@@ -1586,17 +1584,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/fullbright)
-"pm" = (
-/obj/effect/turf_decal/siding/thinplating_new/light,
-/obj/effect/turf_decal/siding/thinplating_new/light{
-	dir = 1
-	},
-/obj/structure/stairs/material,
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/iron/white/textured_large,
-/area/virtual_domain/fullbright)
 "pr" = (
 /obj/effect/turf_decal/tile/dark_blue,
 /obj/effect/turf_decal/tile/blue{
@@ -1656,16 +1643,6 @@
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/small,
-/area/virtual_domain/fullbright)
-"pV" = (
-/obj/effect/turf_decal/siding/thinplating_new/light,
-/obj/effect/turf_decal/siding/thinplating_new/light{
-	dir = 1
-	},
-/obj/structure/stairs/material{
-	dir = 1
-	},
-/turf/open/floor/iron/white/textured_large,
 /area/virtual_domain/fullbright)
 "pX" = (
 /obj/effect/turf_decal/tile/blue{
@@ -3077,7 +3054,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
 	},
-/obj/structure/stairs/material,
+/obj/structure/fake_stairs/directional/north,
 /turf/open/floor/iron/white/textured_large,
 /area/virtual_domain/fullbright)
 "DX" = (
@@ -3509,17 +3486,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white/small,
-/area/virtual_domain/fullbright)
-"HF" = (
-/obj/effect/turf_decal/siding/thinplating_new/light,
-/obj/effect/turf_decal/siding/thinplating_new/light{
-	dir = 1
-	},
-/obj/structure/stairs/material,
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured_large,
 /area/virtual_domain/fullbright)
 "HJ" = (
 /obj/effect/turf_decal/tile/blue{
@@ -5094,12 +5060,10 @@
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
 	},
-/obj/structure/stairs/material{
-	dir = 1
-	},
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/fake_stairs/directional/north,
 /turf/open/floor/iron/white/textured_large,
 /area/virtual_domain/fullbright)
 "Zp" = (
@@ -5580,7 +5544,7 @@ yf
 RY
 SM
 eP
-pV
+DW
 XH
 RY
 Ie
@@ -5626,7 +5590,7 @@ oJ
 Re
 RY
 sv
-HF
+Zn
 kk
 vW
 bz
@@ -5702,7 +5666,7 @@ IV
 tm
 Vs
 WK
-pm
+oa
 qL
 eN
 Rd
