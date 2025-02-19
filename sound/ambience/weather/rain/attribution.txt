@@ -1,0 +1,7 @@
+These sounds were previously on tg but got deleted at one point and have now been added again. See - https://github.com/tgstation/tgstation/pull/25222#discussion_r106794579
+
+Sounds provided by Cuboos, using Royalty Free sounds. Presumed under default tg sound license - Creative Commons 3.0 BY-SA
+
+sound/effects/weather/rain/rain_end.ogg
+sound/effects/weather/rain/rain_mid.ogg
+sound/effects/weather/rain/rain_start.ogg
