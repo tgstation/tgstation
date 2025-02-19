@@ -9,8 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 50
 	/// How many "layers" we have remaining. Each layer equates to 1 second of digestion
-	/// Should be a multiple of SSmobs.wait
-	var/layers_remaining = 4
+	var/layers_remaining = 3
 
 /obj/item/reagent_containers/applicator/pill/Initialize(mapload)
 	. = ..()
@@ -18,18 +17,30 @@
 		icon_state = "pill[rand(1,20)]"
 	AddComponent(/datum/component/germ_sensitive, mapload)
 	RegisterSignal(src, COMSIG_ATOM_STOMACH_DIGESTED, PROC_REF(on_digestion))
+	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
+
+/obj/item/reagent_containers/applicator/pill/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
+	SIGNAL_HANDLER
+	if (layers_remaining)
+		examine_list += span_notice("Its sugary shell will last approximately [layers_remaining] seconds in a human stomach.")
+	else
+		examine_list += span_warning("Its shell is completely dissolved!")
 
 ///Runs the consumption code, can be overriden for special effects
-/obj/item/reagent_containers/applicator/pill/on_consumption(mob/consumer, mob/giver, list/modifiers)
+/obj/item/reagent_containers/applicator/pill/on_consumption(mob/living/consumer, mob/giver, list/modifiers)
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), consumer, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 5 SECONDS)
 	SEND_SIGNAL(consumer, COMSIG_LIVING_PILL_CONSUMED, src, giver)
 	SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = consumer, feeder = giver)
 
-	if (iscarbon(consumer))
+	if (iscarbon(consumer) && layers_remaining)
 		var/mob/living/carbon/as_carbon = consumer
 		var/obj/item/organ/stomach/stomach = as_carbon.get_organ_by_type(/obj/item/organ/stomach)
 		if (stomach)
+			if (prob(max(0, 100 * (layers_remaining - PILL_MAX_TASTE_LAYERS))))
+				consumer.taste_list(reagents)
+			else if (!consumer.check_tasting_blocks())
+				consumer.send_taste_message("starchy sugar")
 			stomach.consume_thing(src)
 			return
 
@@ -59,18 +70,84 @@
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/reagent_containers/applicator/pill/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if (.)
+		return
+
+	var/obj/item/reagent_containers/container = null
+	var/use_verb = null
+	if (istype(tool, /obj/item/reagent_containers/dropper))
+		container = tool
+		use_verb = "squirt"
+	else if (istype(tool, /obj/item/reagent_containers/cup))
+		container = tool
+		if (!container.is_drainable())
+			to_chat(user, span_warning("You cannot pour [container]'s contents onto [src]!"))
+			return ITEM_INTERACT_BLOCKING
+		use_verb = "pour"
+
+	if (!container)
+		return NONE
+
+	var/datum/reagent/consumable/sugar/sugar = container.reagents.has_reagent(/datum/reagent/consumable/sugar)
+	if (sugar)
+		if (layers_remaining >= PILL_MAX_LAYERS) // Full minute
+			to_chat(user, span_warning("[src]'s coating is too thick for you to cover it in any more sugar!"))
+			return ITEM_INTERACT_BLOCKING
+		var/to_apply = floor(min(container.amount_per_transfer_from_this, sugar.volume, PILL_MAX_LAYERS - layers_remaining))
+		container.reagents.remove_reagent(/datum/reagent/consumable/sugar, to_apply)
+		layers_remaining += to_apply
+		to_chat(user, span_notice("You [use_verb] some of [container]'s contents onto [src], thickening its sugary shell."))
+		return ITEM_INTERACT_SUCCESS
+
+	var/datum/reagent/water/water = container.reagents.has_reagent(/datum/reagent/water)
+	if (!water)
+		return ..()
+
+	if (!layers_remaining) // No coating
+		to_chat(user, span_warning("[src] doesn't have any more external layers to dissolve!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/to_apply = floor(min(container.amount_per_transfer_from_this, water.volume, layers_remaining))
+	container.reagents.remove_reagent(/datum/reagent/water, to_apply)
+	layers_remaining -= to_apply
+	to_chat(user, span_notice("You [use_verb] some of [container]'s contents onto [src], dissolving its sugary shell."))
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/reagent_containers/applicator/pill/proc/on_digestion(datum/source, obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
 	SIGNAL_HANDLER
 	layers_remaining -= seconds_per_tick
+	if (layers_remaining >= seconds_per_tick)
+		return COMPONENT_CANCEL_DIGESTION
+
+	// SSmobs.wait is 2 seconds (as of writing this), so we can end up with a delay of 1 second. In this case, use a timer
 	if (layers_remaining > 0)
+		// Using weakrefs because the mob can get deleted in the meanwhile and leave the pill behind
+		addtimer(CALLBACK(src, PROC_REF(finish_digesting), WEAKREF(stomach), WEAKREF(owner)), layers_remaining SECONDS)
 		return COMPONENT_CANCEL_DIGESTION
 
 	// I think we should log this in case of horrible shenanigans
 	owner.log_message("Had \a [src] pill dissolve in [owner.p_their()] stomach, containing the following reagents: [english_list(reagents.reagent_list)].", LOG_GAME)
 	if(reagents.total_volume)
-		reagents.trans_to(owner, reagents.total_volume, methods = INGEST)
+		reagents.trans_to(owner, reagents.total_volume, methods = INGEST, show_message = FALSE)
 	qdel(src)
 	return COMPONENT_CANCEL_DIGESTION
+
+/obj/item/reagent_containers/applicator/pill/proc/finish_digesting(datum/weakref/stomach_ref, datum/weakref/owner_ref)
+	var/obj/item/organ/stomach/stomach = stomach_ref.resolve()
+	var/mob/living/carbon/owner = owner_ref.resolve()
+	if (!owner || !stomach)
+		return
+
+	// Whenever stomach is inside of a mob, its contents are also moved to the mob, so we check for owner as our loc
+	if (loc != owner || stomach.owner != owner || stomach.loc != owner)
+		return
+
+	owner.log_message("Had \a [src] pill dissolve in [owner.p_their()] stomach, containing the following reagents: [english_list(reagents.reagent_list)].", LOG_GAME)
+	if(reagents.total_volume)
+		reagents.trans_to(owner, reagents.total_volume, methods = INGEST)
+	qdel(src)
 
 /*
  * On accidental consumption, consume the pill

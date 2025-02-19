@@ -244,3 +244,5 @@
 
 /// Maximum amount of layers a pill can hold, aka maximum number of seconds a pill takes to dissolve
 #define PILL_MAX_LAYERS 60
+/// Maximum amount of layers above which you cannot taste the pill's contents
+#define PILL_MAX_TASTE_LAYERS 20

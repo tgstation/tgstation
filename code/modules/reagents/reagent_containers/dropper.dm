@@ -20,18 +20,6 @@
 			to_chat(user, span_notice("[target] is full."))
 			return ITEM_INTERACT_BLOCKING
 
-		if(istype(target, /obj/item/reagent_containers/applicator/pill) && reagents.has_reagent(/datum/reagent/consumable/sugar))
-			var/obj/item/reagent_containers/applicator/pill/pill = target
-			if (pill.layers_remaining >= PILL_MAX_LAYERS) // Full minute
-				to_chat(user, span_warning("[pill]'s coating is too thick for you to cover it in any more sugar!"))
-				return ITEM_INTERACT_BLOCKING
-			var/datum/reagent/consumable/sugar/sugar = reagents.has_reagent(/datum/reagent/consumable/sugar)
-			var/to_apply = floor(min(amount_per_transfer_from_this, sugar.volume, PILL_MAX_LAYERS - pill.layers_remaining))
-			reagents.remove_reagent(/datum/reagent/consumable/sugar, to_apply)
-			pill.layers_remaining += to_apply
-			to_chat(user, span_notice("You squirt some of [src]'s contents onto [pill], thickening its sugary shell."))
-			return ITEM_INTERACT_SUCCESS
-
 		if(!target.is_injectable(user))
 			to_chat(user, span_warning("You cannot transfer reagents to [target]!"))
 			return ITEM_INTERACT_BLOCKING
