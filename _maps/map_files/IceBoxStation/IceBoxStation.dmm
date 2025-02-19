@@ -73011,9 +73011,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/item/multitool,
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker
-	},
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
@@ -81778,10 +81775,6 @@
 /obj/effect/turf_decal/siding/yellow/corner,
 /obj/machinery/status_display/evac/directional/south,
 /obj/structure/table,
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker;
-	pixel_x = -5
-	},
 /obj/item/multitool{
 	pixel_x = 8
 	},

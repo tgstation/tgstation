@@ -76009,9 +76009,6 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker
-	},
 /obj/item/multitool,
 /turf/open/floor/iron,
 /area/station/science/lab)
@@ -78472,11 +78469,6 @@
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker;
-	pixel_x = -6;
-	pixel_y = 5
-	},
 /obj/item/multitool{
 	pixel_x = 8
 	},

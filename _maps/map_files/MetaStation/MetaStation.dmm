@@ -18733,9 +18733,6 @@
 	},
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/micro_laser,
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker
-	},
 /obj/item/multitool,
 /turf/open/floor/iron,
 /area/station/science/lab)
@@ -58721,10 +58718,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
-	},
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker;
-	pixel_x = -5
 	},
 /obj/item/multitool{
 	pixel_x = 8

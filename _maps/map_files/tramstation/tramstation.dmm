@@ -41518,9 +41518,6 @@
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/micro_laser,
 /obj/item/multitool,
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker
-	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "nDX" = (
@@ -49395,10 +49392,6 @@
 /obj/structure/table,
 /obj/item/multitool{
 	pixel_x = 8
-	},
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker;
-	pixel_x = -5
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
