@@ -92,7 +92,7 @@
 		living.wash()
 	rain_reagent.expose_mob(living, TOUCH, 5)
 
-	var/rain_type = lowertext(rain_reagent.name)
+	var/rain_type = LOWER_TEXT(rain_reagent.name)
 	if(prob(5))
 		var/wetmessage = pick( "You're drenched in [rain_type]!",
 		"You're completely soaked by the [rain_type] rainfall!",
