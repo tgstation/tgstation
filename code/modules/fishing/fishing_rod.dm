@@ -533,16 +533,9 @@
 		use_slot(ROD_SLOT_HOOK, user, attacking_item)
 		SStgui.update_uis(src)
 		return TRUE
-	else if(slot_check(attacking_item,ROD_SLOT_BAIT))
+	else if(slot_check(attacking_item,ROD_SLOT_BAIT) || istype(attacking_item, /obj/item/bait_can)) //Can click on the fishing rod with bait can directly
 		use_slot(ROD_SLOT_BAIT, user, attacking_item)
 		SStgui.update_uis(src)
-		return TRUE
-	else if(istype(attacking_item, /obj/item/bait_can)) //Quicker filling from bait can
-		var/obj/item/bait_can/can = attacking_item
-		var/bait = can.retrieve_bait(user)
-		if(bait)
-			use_slot(ROD_SLOT_BAIT, user, bait)
-			SStgui.update_uis(src)
 		return TRUE
 	. = ..()
 
@@ -597,6 +590,13 @@
 /obj/item/fishing_rod/proc/use_slot(slot, mob/user, obj/item/new_item)
 	if(fishing_line || GLOB.fishing_challenges_by_user[user])
 		return
+	// If the new item is a bait can, try to get bait from it
+	if(istype(new_item, /obj/item/bait_can))
+		var/obj/item/bait_can/can = new_item
+		var/bait = can.retrieve_bait(user)
+		if(!bait)
+			return
+		new_item = bait
 	var/obj/item/current_item
 	switch(slot)
 		if(ROD_SLOT_BAIT)
