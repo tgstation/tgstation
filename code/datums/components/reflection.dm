@@ -133,13 +133,10 @@
 /datum/component/reflection/proc/track_reflection(atom/movable/target, check_view = TRUE)
 	if(target == parent || target.loc == parent) // this stuff really shouldn't be tracked
 		return
-	if(LAZYFIND(reflected_movables, target)) // not lazyaccess - value may be null
-		update_reflection(target) // just do an update, may as well
-		return
-
-	LAZYSET(reflected_movables, target, null)
-	RegisterSignals(target, check_reflect_signals, PROC_REF(update_reflection))
-	RegisterSignals(target, COMSIG_QDELETING, PROC_REF(nuke_reflection))
+	if(!LAZYFIND(reflected_movables, target)) // not lazyaccess - value may be null
+		LAZYSET(reflected_movables, target, null)
+		RegisterSignals(target, check_reflect_signals, PROC_REF(update_reflection))
+		RegisterSignals(target, COMSIG_QDELETING, PROC_REF(nuke_reflection))
 	update_reflection(target)
 
 /datum/component/reflection/proc/nuke_reflection(atom/movable/target)
