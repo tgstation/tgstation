@@ -596,7 +596,7 @@
 			source = affected_mob,
 			max_range = 0,
 			threshold = RAD_VERY_LIGHT_INSULATION,
-			chance = min(volume/10 * rad_power, 2*rad_power),
+			chance = min(volume / (20 - rad_power * 5), rad_power),
 		)
 	else
 		if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))

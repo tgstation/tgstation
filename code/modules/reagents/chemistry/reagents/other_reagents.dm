@@ -1245,7 +1245,7 @@
 			source = affected_mob,
 			max_range = 0,
 			threshold = RAD_VERY_LIGHT_INSULATION,
-			chance = min(volume/10 * rad_power, 2*rad_power),
+			chance = min(volume / (20 - rad_power * 5), rad_power),
 		)
 	if(affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
