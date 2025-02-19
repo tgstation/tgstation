@@ -582,7 +582,7 @@
 /datum/reagent/toxin/polonium
 	name = "Polonium"
 	description = "An extremely radioactive material in liquid form. Ingestion results in fatal irradiation."
-	color = "#52f852"
+	color = "#35ff49"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -1039,7 +1039,7 @@
 /datum/reagent/toxin/acid
 	name = "Sulfuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
-	color = "#00df2d"
+	color = "#00be26"
 	toxpwr = 1
 	taste_description = "acid"
 	self_consuming = TRUE
@@ -1109,7 +1109,7 @@
 /datum/reagent/toxin/acid/nitracid
 	name = "Nitric Acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
-	color = "#00a721"
+	color = "#007718"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 3

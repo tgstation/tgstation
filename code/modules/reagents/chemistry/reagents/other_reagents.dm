@@ -1226,7 +1226,7 @@
 /datum/reagent/uranium
 	name = "Uranium"
 	description = "A jade-green metallic chemical element in the actinide series, weakly radioactive."
-	color = "#5E9964" //this used to be silver, but liquid uranium can still be green and it's more easily noticeable as uranium like this so why bother?
+	color = "#5E9964"
 	taste_description = "the inside of a reactor"
 	ph = 4
 	material = /datum/material/uranium
@@ -1258,7 +1258,7 @@
 /datum/reagent/uranium/radium
 	name = "Radium"
 	description = "Radium is an alkaline earth metal. It is extremely radioactive."
-	color = "#00CC00" // ditto
+	color = "#31b83f"
 	taste_description = "the colour blue and regret"
 	tox_damage = 1
 	material = null
