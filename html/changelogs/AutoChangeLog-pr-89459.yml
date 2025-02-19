@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes:
-  - bugfix: "fixed tgui alerts sometimes having a lot of empty space in their layout"
