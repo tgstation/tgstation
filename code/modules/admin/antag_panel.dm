@@ -195,14 +195,10 @@ GLOBAL_VAR(antag_prototypes)
 		var/uplink_info = "<i><b>Uplink</b></i>:"
 		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
-			if(!U.uplink_handler.has_objectives)
-				uplink_info += "<a href='byond://?src=[REF(src)];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
 				uplink_info += ", <a href='byond://?src=[REF(src)];common=crystals'>[U.uplink_handler.telecrystals]</a> TC"
 				if(U.uplink_handler.has_progression)
 					uplink_info += ", <a href='byond://?src=[REF(src)];common=progression'>[U.uplink_handler.progression_points]</a> PR"
-				if(U.uplink_handler.has_objectives)
-					uplink_info += ", <a href='byond://?src=[REF(src)];common=give_objective'>Force Give Objective</a>"
 			else
 				uplink_info += ", [U.uplink_handler.telecrystals] TC"
 				if(U.uplink_handler.has_progression)

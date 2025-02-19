@@ -69,7 +69,8 @@
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the movable. Stops it from bobbing up and down.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_gain(atom/movable/source, trait)
 	SIGNAL_HANDLER
-	STOP_FLOATING_ANIM(source)
+	if(source.movement_type & (FLOATING|FLYING))
+		STOP_FLOATING_ANIM(source)
 
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob. Restarts the bobbing animation.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_loss(atom/movable/source, trait)

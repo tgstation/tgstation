@@ -367,7 +367,7 @@
 	data["active_status_4"] = scan_active & KIOSK_SCANNING_REAGENTS // Reagents/hallucination Scan Check
 	return data
 
-/obj/machinery/medical_kiosk/ui_act(action,active)
+/obj/machinery/medical_kiosk/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

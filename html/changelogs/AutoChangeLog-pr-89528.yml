@@ -1,0 +1,5 @@
+author: "Aniantan"
+delete-after: True
+changes:
+  - bugfix: "Can of fishing bait no longer evaporates its bait when used on an active fishing rod"
+  - bugfix: "Can of fishing bait's quick refill can be used with the fishing rod's UI too"
