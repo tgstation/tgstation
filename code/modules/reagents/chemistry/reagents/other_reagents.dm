@@ -1258,7 +1258,7 @@
 /datum/reagent/uranium/radium
 	name = "Radium"
 	description = "Radium is an alkaline earth metal. It is extremely radioactive."
-	color = "#31b83f"
+	color = "#7FFF00"
 	taste_description = "the colour blue and regret"
 	tox_damage = 1
 	material = null
