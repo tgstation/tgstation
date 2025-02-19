@@ -31,7 +31,17 @@
 	///List of signals registered on reflected atoms to update their reflections.
 	var/list/check_reflect_signals
 
-/datum/component/reflection/Initialize(reflected_dir = NORTH, list/reflection_filter, matrix/reflection_matrix, datum/callback/can_reflect, alpha = 150, list/update_signals, list/check_reflect_signals)
+/**
+ * Init Args
+ * * set_reflected_dir: Optional: What dir to reflect. If not provided, uses (and updates to) the parent's dir.
+ * * reflection_filter: Optional: A list of filters to apply to the reflection.
+ * * reflection_matrix: Optional: A matrix to apply as the transform of the reflection.
+ * * can_reflect: Optional: A callback to check if a movable should be reflected.
+ * * alpha: The transparency of the reflection holder.
+ * * update_signals: Optional: Additional signals to provide to update_signals (to check for when to recalculate all reflections).
+ * * check_reflect_signals: Optional: Additional signals to provide to check_reflect_signals (to check for when to update a single reflection).
+ */
+/datum/component/reflection/Initialize(set_reflected_dir, list/reflection_filter, matrix/reflection_matrix, datum/callback/can_reflect, alpha = 150, list/update_signals, list/check_reflect_signals)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -54,7 +64,6 @@
 		COMSIG_MOVABLE_MOVED,
 	)
 
-	src.reflected_dir = reflected_dir
 	src.reflection_matrix = reflection_matrix
 	src.reflection_filter = reflection_filter
 	src.can_reflect = can_reflect
@@ -69,9 +78,10 @@
 
 	var/atom/movable/mov_parent = parent
 	mov_parent.vis_contents += reflection_holder
-	set_reflection(new_dir = mov_parent.dir)
+	set_reflection(set_reflected_dir || REVERSE_DIR(mov_parent.dir))
 
-	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	if(!set_reflected_dir)
+		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	RegisterSignals(parent, (update_signals || list()) + default_update_signals, PROC_REF(get_reflection_targets))
 
 /datum/component/reflection/Destroy(force)
@@ -84,14 +94,14 @@
 ///Called when the parent changes its direction.
 /datum/component/reflection/proc/on_dir_change(atom/movable/source, old_dir, new_dir)
 	SIGNAL_HANDLER
-	set_reflection(old_dir, new_dir)
+	set_reflection(REVERSE_DIR(new_dir))
 
 ///Turns the allowed reflected direction alongside the parent's dir. then calls get_reflection_targets.
-/datum/component/reflection/proc/set_reflection(old_dir = SOUTH, new_dir = SOUTH)
-	if(old_dir == new_dir)
+/datum/component/reflection/proc/set_reflection(new_dir = SOUTH)
+	if(reflected_dir == new_dir)
 		return
 
-	reflected_dir = turn(reflected_dir, dir2angle(new_dir) - dir2angle(old_dir))
+	reflected_dir = new_dir
 	get_reflection_targets(parent)
 
 ///Unsets the old reflected movables and sets it with new ones.
