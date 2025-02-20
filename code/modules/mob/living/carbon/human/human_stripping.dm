@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 	var/result = start_unequip_mob(item, source, user, strip_delay = POCKET_STRIP_DELAY, hidden = TRUE)
 
-	if (!result)
+	if(!result && !(HAS_TRAIT(user, TRAIT_THIEF)))
 		warn_owner(source)
 
 	return result

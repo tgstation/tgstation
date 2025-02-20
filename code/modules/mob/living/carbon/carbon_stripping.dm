@@ -117,7 +117,8 @@
 	if (!.)
 		return
 
-	return start_unequip_mob(get_item(source), source, user)
+	var/is_stealthy = HAS_TRAIT(user, TRAIT_THIEF)
+	return start_unequip_mob(get_item(source), source, user, hidden=is_stealthy)
 
 /datum/strippable_item/hand/finish_unequip(atom/source, mob/user)
 	var/obj/item/item = get_item(source)
