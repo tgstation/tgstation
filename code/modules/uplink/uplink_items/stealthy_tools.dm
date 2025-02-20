@@ -140,3 +140,9 @@
 /datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	force_event(/datum/round_event_control/grid_check, "a syndicate virus")
 	return source //For log icon
+
+/datum/uplink_item/stealthy_tools/gloves
+	name = "Thief Gloves"
+	desc = "A pair of sneaky gloves that allow you to quickly steal items from a target without being detected."
+	item = /obj/item/clothing/gloves/thief
+	cost = 4

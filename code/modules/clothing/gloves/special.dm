@@ -274,3 +274,14 @@
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage(damage, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
 		playsound(src,'sound/items/weapons/bite.ogg', damage * 2, TRUE)
+
+/obj/item/clothing/gloves/thief
+	name = "suspicious gloves"
+	desc = "A pair of gloves that seem unusually nimble."
+	icon_state = "black"
+	greyscale_colors = "#2f2e31"
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	clothing_traits = list(TRAIT_THIEF)
