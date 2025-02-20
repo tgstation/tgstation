@@ -59,6 +59,8 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	layers = EXTERNAL_ADJACENT
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
+	draw_color = "#FFFFFF"
+
 // the component
 /datum/component/monitor_head
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -109,10 +111,14 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	if(!new_display)
 		return
 
+	var/new_color = sanitize_hexcolor(input(usr, "Choose your screen's color:", "Monitor Color") as null | color) // BAD
+	if(!new_color)
+		return
+
 	if(!display_overlay)
 		create_screen(wearer)
 
-	change_screen(wearer, "[head_type & MONITOR_HEAD ? GLOB.monitor_displays[new_display] : GLOB.monitor_lizard_displays[new_display]]")
+	change_screen(wearer, "[head_type & MONITOR_HEAD ? GLOB.monitor_displays[new_display] : GLOB.monitor_lizard_displays[new_display]]", new_color)
 
 /datum/action/innate/monitor_head/proc/check_emote(mob/living/carbon/wearer, datum/emote/emote)
 	SIGNAL_HANDLER
@@ -154,13 +160,13 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	if(head_type & MONITOR_HEAD)
 		switch(new_stat)
 			if(SOFT_CRIT)
-				change_screen(wearer, "bsod")
+				change_screen(wearer, "bsod", "#FFFFFF")
 			if(HARD_CRIT)
-				change_screen(wearer, "static3")
+				change_screen(wearer, "static3", "#FFFFFF")
 			if(UNCONSCIOUS)
-				change_screen(wearer, "none")
+				change_screen(wearer, "none", "#FFFFFF")
 			if(DEAD)
-				change_screen(wearer, "none")
+				change_screen(wearer, "none", "#FFFFFF")
 
 	if(head_type & MONITOR_HEAD_LIZARD)
 		switch(new_stat)
@@ -179,11 +185,19 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 
 	monitor_head.add_bodypart_overlay(display_overlay)
 
-/datum/action/innate/monitor_head/proc/change_screen(mob/living/carbon/wearer, screen)
+/datum/action/innate/monitor_head/proc/change_screen(mob/living/carbon/wearer, screen, new_color = null)
 	var/obj/item/bodypart/head/robot/android/monitor_head = wearer.get_bodypart(BODY_ZONE_HEAD)
+
+	var/old_screen = display_overlay.icon_state
+	if(old_screen == screen) // EXTREMELY BAD
+		display_overlay.icon_state = "none"
+		wearer.update_body_parts()
 
 	display_overlay.icon_state = screen
 	monitor_head.monitor_state = screen
+
+	if(new_color)
+		display_overlay.draw_color = new_color
 
 	playsound(wearer, 'modular_doppler/modular_sounds/sound/mobs/humanoids/android/monitor_switch.ogg', 100, TRUE)
 	wearer.update_body_parts()
