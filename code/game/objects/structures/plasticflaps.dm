@@ -9,17 +9,14 @@
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
-	/// If TRUE, we can't pass through unless the mob is resting
+	// This layer only matters for determining when you click it vs other objects
+	layer = BELOW_OPEN_DOOR_LAYER
+	/// If TRUE, we can't pass through unless the mob is resting (or fulfills more specific requirements)
 	var/require_resting = TRUE
-
-/obj/structure/plasticflaps/opaque
-	opacity = TRUE
-
-/obj/structure/plasticflaps/kitchen
-	name = "cold room plastic flaps"
-	desc = "Light and airtight plastic flaps made to keep the cold room cold and the warm room warm."
-	require_resting = FALSE
-	alpha = 150
+	/// Layer the flaps render on
+	var/flaps_layer = ABOVE_MOB_LAYER
+	/// Alpha of the flaps
+	var/flaps_alpha = 255
 
 /datum/armor/structure_plasticflaps
 	melee = 100
@@ -30,10 +27,25 @@
 	fire = 50
 	acid = 50
 
+/obj/structure/plasticflaps/opaque
+	opacity = TRUE
+
+/obj/structure/plasticflaps/kitchen
+	name = "cold room plastic flaps"
+	desc = "Light and airtight plastic flaps made to keep the cold room cold and the warm room warm."
+	armor_type = /datum/armor/structure_plasticflaps/kitchen
+	require_resting = FALSE
+	flaps_alpha = 150
+
+/datum/armor/structure_plasticflaps/kitchen
+	melee = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
-	gen_overlay()
 	alpha = 0
+	gen_overlay()
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -42,9 +54,34 @@
 		gen_overlay()
 	return ..()
 
+/obj/structure/plasticflaps/setDir(newdir)
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	gen_overlay()
+
 /obj/structure/plasticflaps/proc/gen_overlay()
 	var/turf/our_turf = get_turf(src)
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir = src.dir, alpha = src.alpha, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	//you see mobs under it, but you hit them like they are above it
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state,
+		layer = flaps_layer,
+		plane = MUTATE_PLANE(GAME_PLANE, our_turf),
+		dir = dir,
+		alpha = flaps_alpha,
+		add_appearance_flags = RESET_ALPHA,
+	)
+
+/obj/structure/plasticflaps/vv_edit_var(var_name, var_val)
+	. = ..()
+	var/list/relevant_vars = list(
+		NAMEOF(src, flaps_layer),
+		NAMEOF(src, flaps_alpha),
+		NAMEOF(src, dir),
+		NAMEOF(src, icon),
+		NAMEOF(src, icon_state),
+	)
+	if(var_name in relevant_vars)
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+		gen_overlay()
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
