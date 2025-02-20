@@ -17,6 +17,7 @@
 		TRAIT_NOBLOOD,
 		TRAIT_TOXINLOVER,
 		TRAIT_EASYDISMEMBER,
+		TRAIT_WET_FOR_LONGER,
 	)
 	/// Ability to allow them to shapeshift their body around.
 	var/datum/action/innate/alter_form/alter_form
@@ -270,17 +271,11 @@
 
 	var/healing = TRUE
 
-	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects
-	if(istype(wetness) && wetness.stacks > (WATER_STACKS_DAMAGING))
+	if(HAS_TRAIT(slime, TRAIT_IS_WET))
 		slime.blood_volume -= 2 * seconds_per_tick
+		healing = FALSE
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
-
-	if(istype(wetness) && wetness.stacks > (WATER_STACKS_NO_REGEN))
-		healing = FALSE
-		if(SPT_PROB(1, seconds_per_tick))
-			to_chat(slime, span_warning("You can't pull your body together and regenerate with water inside it!"))
-			slime.blood_volume -= 1 * seconds_per_tick
 
 	if(slime.blood_volume >= BLOOD_VOLUME_NORMAL && healing)
 		if(slime.stat != CONSCIOUS)
