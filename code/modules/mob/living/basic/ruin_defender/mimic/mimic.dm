@@ -301,10 +301,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/mob/creator_resolved = creator_ref?.resolve()
 	if(!creator_resolved)
 		creator_ref = null
-	if(isnull(owner) || creator_resolved == owner)
+	if(QDELETED(owner) || creator_resolved == owner)
 		return
-	unfriend(creator_resolved)
-	befriend(owner)
+	if(istype(owner))
+		unfriend(creator_resolved)
+		befriend(owner)
 	creator_ref = WEAKREF(owner)
 
 /// Check whether this object can be copied. If destroy_original is true, this proc is ignored.
