@@ -7,7 +7,7 @@
 
 /datum/unit_test/cargo_crate_sanity/Run()
 	for(var/crate in subtypesof(/datum/supply_pack))
-		var/datum/supply_pack/new_crate = new crate
+		var/datum/supply_pack/new_crate = allocate(crate)
 		if(new_crate.abstract)
 			continue // We can safely ignore custom supply packs like the stock market or mining supply crates.
 		if(!new_crate?.crate_type)
@@ -15,7 +15,7 @@
 		var/obj/crate_type = allocate(new_crate.crate_type)
 		var/datum/export_report/minimum_cost = export_item_and_contents(crate_type, dry_run = TRUE)
 		var/crate_value = counterlist_sum(minimum_cost.total_value)
-		var/turf/open/floor/testing_floor = EASY_ALLOCATE()
+		var/turf/open/floor/testing_floor = get_turf(crate_type)
 
 		var/obj/results = new_crate.generate(testing_floor)
 		var/datum/export_report/export_log = export_item_and_contents(results, apply_elastic = TRUE)

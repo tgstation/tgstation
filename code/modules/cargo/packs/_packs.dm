@@ -47,6 +47,12 @@
 /datum/supply_pack/New()
 	id = type
 
+/**
+ * Proc that takes a given supply_pack, and attempts to create a crate containing the pack's contents as determined by fill()
+ *
+ * @ atom/A: The location or turf that the pack is being generated onto. Cargo shuttle provides an empty turf, other generate()s call this either null or otherwise.
+ * @ datum/bank_account/paying_account: The account to associate the supply pack with when going and generating the crate. Only the paying account can open said secure crate/case.
+ */
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
