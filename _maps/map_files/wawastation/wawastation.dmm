@@ -48109,6 +48109,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
+/obj/structure/plasticflaps,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "rbw" = (
@@ -53898,6 +53899,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
+/obj/structure/plasticflaps,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "sUM" = (

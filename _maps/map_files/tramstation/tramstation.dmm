@@ -1459,6 +1459,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
+/obj/structure/plasticflaps,
 /turf/open/floor/catwalk_floor,
 /area/station/service/kitchen/coldroom)
 "aeO" = (

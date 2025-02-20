@@ -30768,6 +30768,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/structure/plasticflaps,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "hFQ" = (
@@ -46939,6 +46940,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/structure/plasticflaps,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "lGF" = (

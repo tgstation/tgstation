@@ -31320,6 +31320,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
+/obj/structure/plasticflaps,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen/coldroom)
 "lbh" = (

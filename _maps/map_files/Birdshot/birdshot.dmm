@@ -3913,6 +3913,7 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
+/obj/structure/plasticflaps,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "bwz" = (
@@ -46482,6 +46483,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 1
 	},
+/obj/structure/plasticflaps,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen)
 "pFk" = (
