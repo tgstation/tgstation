@@ -369,6 +369,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_QUICK_BUILD "quick-build"
 /// We can handle 'dangerous' plants in botany safely
 #define TRAIT_PLANT_SAFE "plant_safe"
+/// Prevents chat/icon notifications when stealing items from other mobs. Also reduces the time to steal objects by 50%
+#define TRAIT_THIEF "thief"
 /// Prevents the overlay from nearsighted
 #define TRAIT_NEARSIGHTED_CORRECTED "fixes_nearsighted"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
