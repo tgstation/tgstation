@@ -114,7 +114,10 @@
 		StartCooldown(1 SECONDS)
 		return TRUE
 
-	var/list/targets_to_choose = list()
+	// Holds a list of `name = image` used to display the radial menu when you left click the living heart
+	var/list/choosable_targets = list()
+	// Holds a list of 'name = atom/thing` used to check if our thing still exists after we've made our selection
+	var/list/possible_tracked_atoms = list()
 
 	// Checks if our heretic has a blade research, and then checks if they have made blades
 	// adds them to our list of target when pulsing the living heart so that you can locate them
@@ -124,23 +127,22 @@
 		if(blade_knowledge)
 			break
 	var/obj/item/melee/sickly_blade/blade
-	if(blade_knowledge)
-		for(var/datum/weakref/blade_ref as anything in blade_knowledge.created_items)
-			blade = blade_ref.resolve()
-			if(!blade)
-				blade_knowledge.created_items -= blade_ref
-				continue
-			if(!istype(blade, /obj/item/melee/sickly_blade))
-				continue // Just in case someone makes a /datum/heretic_knowledge/limited_amount/starting that doesn't create blades
-			if(get(blade, /mob/living) == owner)
-				continue
-			// Means our blade is somewhere, but not on our person, so let's make it trackable
-			targets_to_choose[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
+	for(var/datum/weakref/blade_ref as anything in blade_knowledge?.created_items)
+		blade = blade_ref.resolve()
+		if(!blade)
+			blade_knowledge.created_items -= blade_ref
+			continue
+		if(!istype(blade, /obj/item/melee/sickly_blade))
+			continue // Just in case someone makes a /datum/heretic_knowledge/limited_amount/starting that doesn't create blades
+		if(get(blade, /mob/living) == owner)
+			continue
+		// Means our blade is somewhere, but not on our person, so let's make it trackable
+		choosable_targets[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
+		possible_tracked_atoms[blade.name] = blade
 
-	var/list/mob/living/carbon/human/human_targets = list()
 	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
-		human_targets[sac_target.real_name] = sac_target
-		targets_to_choose[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
+		choosable_targets[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
+		possible_tracked_atoms[sac_target.real_name] = sac_target
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.
@@ -149,7 +151,7 @@
 		last_tracked_name = show_radial_menu(
 			owner,
 			owner,
-			targets_to_choose,
+			choosable_targets,
 			custom_check = CALLBACK(src, PROC_REF(check_menu)),
 			radius = 40,
 			require_near = TRUE,
@@ -161,11 +163,7 @@
 	if(isnull(last_tracked_name))
 		return FALSE
 
-	var/atom/tracked_thing = null
-	if(!isnull(human_targets[last_tracked_name]))
-		tracked_thing = human_targets[last_tracked_name]
-	else if(blade)
-		tracked_thing = blade
+	var/atom/tracked_thing = possible_tracked_atoms[last_tracked_name]
 	if(QDELETED(tracked_thing))
 		last_tracked_name = null
 		return FALSE
