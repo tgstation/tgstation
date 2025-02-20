@@ -851,6 +851,8 @@
 	icon_state = "synth_lizard_r_leg"
 	limb_id = "synth_lizard"
 
+	footstep_type = FOOTSTEP_MOB_CLAW
+
 /obj/item/bodypart/leg/left/robot/android/synth_lizard
 	bodypart_traits = list(TRAIT_HARD_SOLES)
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
@@ -860,6 +862,8 @@
 	icon_greyscale = ANDROID_BODYPARTS_DMI
 	icon_state = "synth_lizard_r_leg"
 	limb_id = "synth_lizard"
+
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 ///
 // Human-Like
@@ -906,6 +910,8 @@
 	icon_state = "human_like_r_leg"
 	limb_id = "human_like"
 
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
+
 /obj/item/bodypart/leg/left/robot/android/human_like
 	should_draw_greyscale = TRUE
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -913,6 +919,8 @@
 	icon_greyscale = ANDROID_BODYPARTS_DMI
 	icon_state = "human_like_r_leg"
 	limb_id = "human_like"
+
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 ///
 // zhenkov-light
@@ -1063,3 +1071,14 @@
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
+
+
+///
+// sound overwrites
+///
+
+/obj/item/bodypart/leg/right/robot
+	footstep_type = FOOTSTEP_MOB_SHOE //stop making meat noises. consider custom sounds for this later
+
+/obj/item/bodypart/leg/left/robot
+	footstep_type = FOOTSTEP_MOB_SHOE

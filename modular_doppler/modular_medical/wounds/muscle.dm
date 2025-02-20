@@ -5,6 +5,11 @@
 
 /datum/wound/muscle
 	name = "Muscle Wound"
+
+	simple_desc = "Patient has torn something in their limb, reducing overall functionality."
+	simple_treat_text = "Applying a <b>splint or gauze wrapping</b> will assist greatly with the tear. After that, it's just <b>bed rest</b> until everything heals."
+	homemade_treat_text = "Sheets can be torn up to make <b>makeshift gauze</b>, which can be used to wrap the tear. Or, you can just <b>sleep it off</b>."
+
 	sound_effect = 'sound/effects/wounds/blood1.ogg'
 	wound_flags = (ACCEPTS_GAUZE | SPLINT_OVERLAY)
 
@@ -126,7 +131,9 @@
 /datum/wound/muscle/moderate
 	name = "Muscle Tear"
 	desc = "Patient's muscle has torn, causing serious pain and reduced limb functionality."
-	treat_text = "A tight splint on the affected limb, as well as plenty of rest and sleep."
+	treat_text = "The affected limb should have a tight splint applied. A wrapping of gauze can suffice in a pinch. \
+		Follow with plenty of rest and sleep."
+	treat_text_short = "Apply a splint or a gauze wrapping and allow the patient to rest."
 	examine_desc = "appears unnaturallly red and swollen"
 	occur_text = "swells up, its skin turning red"
 	severity = WOUND_SEVERITY_MODERATE
@@ -151,7 +158,9 @@
 	name = "Ruptured Tendon"
 	sound_effect = 'sound/effects/wounds/blood2.ogg'
 	desc = "Patient's tendon has been severed, causing significant pain and near uselessness of limb."
-	treat_text = "A tight splint on the affected limb, as well as plenty of rest and sleep."
+	treat_text = "The affected limb should have a tight splint applied. A wrapping of gauze can suffice in a pinch. \
+		Follow with plenty of rest and sleep."
+	treat_text_short = "Apply a splint or a gauze wrapping and allow the patient to rest."
 	examine_desc = "is limp and awkwardly twitching, skin swollen and red"
 	occur_text = "twists in pain and goes limp, its tendon ruptured"
 	severity = WOUND_SEVERITY_SEVERE
