@@ -1285,7 +1285,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "asf" = (
-/obj/structure/plasticflaps,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/coldroom)
 "asg" = (
@@ -24613,7 +24613,7 @@
 	desc = "The freezer where the chef keeps all the stuff that needs to be kept cold. Ice cold.";
 	name = "The Ice Box"
 	},
-/obj/structure/plasticflaps,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/plating,
 /area/station/service/kitchen/coldroom)
 "gWn" = (
@@ -49041,7 +49041,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/structure/cable,
-/obj/structure/plasticflaps,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/plating,
 /area/station/service/kitchen/coldroom)
 "nVR" = (

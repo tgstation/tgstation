@@ -9,9 +9,17 @@
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
+	/// If TRUE, we can't pass through unless the mob is resting
+	var/require_resting = TRUE
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
+
+/obj/structure/plasticflaps/kitchen
+	name = "cold room plastic flaps"
+	desc = "Light and airtight plastic flaps made to keep the cold room cold and the warm room warm."
+	require_resting = FALSE
+	alpha = 150
 
 /datum/armor/structure_plasticflaps
 	melee = 100
@@ -24,20 +32,19 @@
 
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
-	alpha = 0
 	gen_overlay()
+	alpha = 0
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	gen_overlay()
+	if(!same_z_layer)
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+		gen_overlay()
 	return ..()
 
 /obj/structure/plasticflaps/proc/gen_overlay()
 	var/turf/our_turf = get_turf(src)
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir = src.dir, alpha = src.alpha, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
@@ -85,12 +92,15 @@
 	return TRUE
 
 /obj/structure/plasticflaps/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(!require_resting)
+		return TRUE
 	if(pass_info.is_living)
 		if(pass_info.is_bot)
 			return TRUE
 		if(pass_info.can_ventcrawl && pass_info.mob_size != MOB_SIZE_TINY)
 			return FALSE
-
+	if(pass_info.pass_flags & PASSFLAPS)
+		return TRUE
 	if(pass_info.pulling_info)
 		return CanAStarPass(to_dir, pass_info.pulling_info)
 	return TRUE //diseases, stings, etc can pass
@@ -100,8 +110,10 @@
 	. = ..()
 	if(mover.pass_flags & PASSFLAPS) //For anything specifically engineered to cross plastic flaps.
 		return TRUE
-	if(mover.pass_flags & PASSGLASS)
-		return prob(60)
+	if((mover.pass_flags & PASSGLASS) && prob(60))
+		return TRUE
+	if(!require_resting)
+		return TRUE
 
 	if(istype(mover, /obj/structure/bed))
 		var/obj/structure/bed/bed_mover = mover
@@ -124,6 +136,7 @@
 		if(living_mover.body_position == STANDING_UP && living_mover.mob_size != MOB_SIZE_TINY && !(HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_NUDE)))
 			return FALSE //If you're not laying down, or a small creature, or a ventcrawler, then no pass.
 
+	return .
 
 /obj/structure/plasticflaps/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/plastic/five(loc)
