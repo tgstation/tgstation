@@ -2989,7 +2989,6 @@
 #include "code\modules\admin\smites\supply_pod.dm"
 #include "code\modules\admin\smites\supply_pod_quick.dm"
 #include "code\modules\admin\verb_datums\_admin_verb_datum.dm"
-#include "code\modules\admin\verb_datums\_admin_verb_holder.dm"
 #include "code\modules\admin\verbs\admin.dm"
 #include "code\modules\admin\verbs\admin_newscaster.dm"
 #include "code\modules\admin\verbs\adminevents.dm"
