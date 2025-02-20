@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Players who choose to be evil via the quirk menu will be reminded at roundstart that this doesn't exempt them from server rules."
