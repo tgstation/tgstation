@@ -5870,6 +5870,7 @@
 	},
 /obj/machinery/light/small/dim/directional/north,
 /obj/structure/cable/layer3,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cdI" = (
@@ -15430,6 +15431,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /obj/structure/cable,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "fyS" = (
@@ -23477,6 +23479,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "inC" = (
@@ -31437,6 +31440,8 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/plasticflaps/kitchen,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "laf" = (
@@ -44791,6 +44796,7 @@
 /obj/machinery/camera/autoname/directional/south{
 	network = list("aicore")
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/ai)
 "pRq" = (
