@@ -12,7 +12,7 @@
 		/datum/surgery_step/close,
 	)
 
-/datum/surgery/gastrectomy/mechanic
+/datum/surgery/coronary_bypass/mechanic
 	name = "Engine Diagnostic"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	steps = list(

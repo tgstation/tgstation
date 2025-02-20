@@ -8,7 +8,7 @@
 
 /obj/item/melee/powerfist
 	name = "power-fist"
-	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
+	desc = "A metal gauntlet with a piston-powered ram on top for that extra 'oomph' in your punch."
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "powerfist"
 	inhand_icon_state = "powerfist"

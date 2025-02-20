@@ -1,9 +1,3 @@
-#define FAKE_GREENSHIFT_FORM_CHANCE 15
-#define FAKE_REPORT_CHANCE 8
-#define PULSAR_REPORT_CHANCE 8
-#define REPORT_NEG_DIVERGENCE -15
-#define REPORT_POS_DIVERGENCE 15
-
 // Are HIGH_IMPACT_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // If enabled does not accept or execute any rulesets.
@@ -195,10 +189,6 @@ SUBSYSTEM_DEF(dynamic)
 	/// Used for choosing different midround injections.
 	var/list/current_midround_rulesets
 
-	/// The amount of threat shown on the piece of paper.
-	/// Can differ from the actual threat amount.
-	var/shown_threat
-
 	VAR_PRIVATE/next_midround_injection
 
 /datum/controller/subsystem/dynamic/proc/admin_panel()
@@ -336,7 +326,7 @@ SUBSYSTEM_DEF(dynamic)
 			continue
 		min_threat = min(ruleset.cost, min_threat)
 
-	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat) //if threat is below any ruleset, its extended time
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 
 	var/list/datum/station_goal/goals = SSstation.get_station_goals()
@@ -380,39 +370,10 @@ SUBSYSTEM_DEF(dynamic)
 /// Generate the advisory level depending on the shown threat level.
 /datum/controller/subsystem/dynamic/proc/generate_advisory_level()
 	var/advisory_string = ""
-	if(prob(PULSAR_REPORT_CHANCE))
-		for(var/datum/station_trait/our_trait as anything in shuffle(SSstation.station_traits))
-			advisory_string += our_trait.get_pulsar_message()
-			if(length(advisory_string))
-				return advisory_string
-
-		advisory_string += "Advisory Level: <b>Pulsar Star</b></center><BR>"
-		advisory_string += "Your sector's advisory level is Pulsar Star. A large, unknown electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data."
-		return advisory_string
-	//a white dwarf shift leads to a green security alert on report and special announcement, this prevents a meta check if the alert report is fake or not.
-	if(round(shown_threat) == 0 && round(threat_level) == 0)
-		advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
-		advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
-		return advisory_string
-
-	switch(round(shown_threat))
-		if(0 to 19)
-			var/show_core_territory = (GLOB.current_living_antags.len > 0)
-			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
-				show_core_territory = !show_core_territory
-
-			if (show_core_territory)
-				advisory_string += "Advisory Level: <b>Blue Star</b></center><BR>"
-				advisory_string += "Your sector's advisory level is Blue Star. At this threat advisory, the risk of attacks on Nanotrasen assets within the sector is minor but cannot be ruled out entirely. Remain vigilant."
-			else
-				advisory_string += "Advisory Level: <b>Green Star</b></center><BR>"
-				advisory_string += "Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department of Intelligence advises maintaining vigilance against potential threats, regardless of a lack of known threats."
-		if(20 to 39)
+	switch(round(threat_level))
+		if(0 to 65)
 			advisory_string += "Advisory Level: <b>Yellow Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
-		if(40 to 65)
-			advisory_string += "Advisory Level: <b>Orange Star</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and reviewing red alert protocols with command and the crew."
 		if(66 to 79)
 			advisory_string += "Advisory Level: <b>Red Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
@@ -497,11 +458,6 @@ SUBSYSTEM_DEF(dynamic)
 	)
 	return TRUE
 
-/datum/controller/subsystem/dynamic/proc/setup_shown_threat()
-	if (prob(FAKE_REPORT_CHANCE))
-		shown_threat = rand(1, 100)
-	else
-		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 
 /datum/controller/subsystem/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
@@ -523,7 +479,6 @@ SUBSYSTEM_DEF(dynamic)
 	configure_station_trait_costs()
 	setup_parameters()
 	setup_hijacking()
-	setup_shown_threat()
 	setup_rulesets()
 
 	//We do this here instead of with the midround rulesets and such because these rules can hang refs
@@ -1056,9 +1011,3 @@ SUBSYSTEM_DEF(dynamic)
 
 
 #undef MAXIMUM_DYN_DISTANCE
-
-#undef FAKE_REPORT_CHANCE
-#undef FAKE_GREENSHIFT_FORM_CHANCE
-#undef PULSAR_REPORT_CHANCE
-#undef REPORT_NEG_DIVERGENCE
-#undef REPORT_POS_DIVERGENCE

@@ -329,6 +329,9 @@
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
 
+//How many slimes can be on the same tile before it can no longer reproduce.
+#define SLIME_OVERCROWD_AMOUNT 2
+
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 3 //Min friendship to order it to follow
 #define SLIME_FRIENDSHIP_STOPEAT 5 //Min friendship to order it to stop eating someone
@@ -827,12 +830,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 
 // Bitflags for external organs restylability
+#define EXTERNAL_RESTYLE_ALL ALL
 /// This organ allows restyle through plant restyling (like secateurs)
-#define EXTERNAL_RESTYLE_PLANT (1 << 1)
+#define EXTERNAL_RESTYLE_PLANT (1 << 0)
 /// This organ allows restyling with flesh restyling stuff (surgery or something idk)
-#define EXTERNAL_RESTYLE_FLESH (1 << 2)
+#define EXTERNAL_RESTYLE_FLESH (1 << 1)
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
-#define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
+#define EXTERNAL_RESTYLE_ENAMEL (1 << 2)
 
 //Mob Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"

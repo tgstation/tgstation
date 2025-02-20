@@ -33,7 +33,7 @@
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
 	owner.remove_alt_appearance("heretic_status")
-	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_between_ticks)
@@ -74,7 +74,7 @@
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	update_movespeed(stacks)
 	if(stacks >= 5)
-		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, REF(src))
+		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 
 ///Updates the movespeed of owner based on the amount of stacks of the debuff
 /datum/status_effect/void_chill/proc/update_movespeed(stacks)

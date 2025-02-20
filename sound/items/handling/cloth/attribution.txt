@@ -1,0 +1,10 @@
+{
+cloth_drop1.ogg
+cloth_drop2.ogg
+cloth_drop3.ogg
+cloth_drop4.ogg
+cloth_pickup1.ogg
+cloth_pickup2.ogg
+cloth_pickup3.ogg
+cloth_pickup4.ogg
+} - made by sadboyssuss

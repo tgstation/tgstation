@@ -352,7 +352,7 @@
 
 /obj/item/food/cannoli
 	name = "cannoli"
-	desc = "A sicilian treat that makes you into a wise guy."
+	desc = "A Sicilian treat that makes you into a wise guy."
 	icon_state = "cannoli"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,

@@ -47,6 +47,20 @@
 /datum/supply_pack/New()
 	id = type
 
+/// Returns data used for cargo purchasing UI
+/datum/supply_pack/proc/get_contents_ui_data()
+	var/list/data = list()
+	for(var/obj/item/item as anything in contains)
+		var/list/item_data = list(
+			"name" = item.name,
+			"icon" = item.greyscale_config ? null : item.icon,
+			"icon_state" = item.greyscale_config ? null : item.icon_state,
+			"amount" = contains[item]
+		)
+		UNTYPED_LIST_ADD(data, item_data)
+
+	return data
+
 /**
  * Proc that takes a given supply_pack, and attempts to create a crate containing the pack's contents as determined by fill()
  *

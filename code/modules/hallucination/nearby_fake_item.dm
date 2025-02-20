@@ -89,7 +89,7 @@
 /datum/hallucination/nearby_fake_item/baton
 	left_hand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	right_hand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	image_icon_state = "baton"
+	image_icon_state = "stunbaton"
 
 /datum/hallucination/nearby_fake_item/baton/generate_fake_image(mob/living/carbon/human/holder, file)
 	hallucinator.playsound_local(get_turf(holder), SFX_SPARKS, 75, TRUE, -1)

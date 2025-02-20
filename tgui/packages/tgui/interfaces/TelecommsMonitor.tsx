@@ -161,6 +161,7 @@ const MachineList = (props: MachineListProps) => {
 
   return (
     <Section
+      scrollable
       fill
       title={title}
       buttons={
@@ -179,7 +180,7 @@ const MachineList = (props: MachineListProps) => {
       {sortedMachines.length > 0 ? (
         <Stack fill vertical>
           <Stack.Item grow>
-            <Stack fill vertical overflowY="scroll">
+            <Stack fill vertical>
               {sortedMachines.map((machine, index) => (
                 <Stack.Item key={index}>
                   <Button

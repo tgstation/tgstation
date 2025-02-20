@@ -304,7 +304,7 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "godslayer"
-	desc = "The horns and skull of a wendigo, held together by the remaining icey energy of a demonic miner."
+	desc = "The horns and skull of a wendigo, held together by the remaining icy energy of a demonic miner."
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 	cold_protection = HEAD

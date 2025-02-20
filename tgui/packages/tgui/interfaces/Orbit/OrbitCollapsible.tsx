@@ -4,7 +4,7 @@ import { Collapsible, Flex, Tooltip } from 'tgui-core/components';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import {
-  isJobOrNameMatch,
+  isJobCkeyOrNameMatch,
   sortByDepartment,
   sortByDisplayName,
 } from './helpers';
@@ -29,7 +29,7 @@ export function OrbitCollapsible(props: Props) {
     useContext(OrbitContext);
 
   const filteredSection = section.filter((observable) =>
-    isJobOrNameMatch(observable, searchQuery),
+    isJobCkeyOrNameMatch(observable, searchQuery),
   );
 
   if (viewMode === VIEWMODE.Department) {

@@ -309,7 +309,6 @@
 	using = new /atom/movable/screen/ai/modpc(null, src)
 	using.screen_loc = ui_ai_mod_int
 	static_inventory += using
-	myai.interfaceButton = using
 	var/atom/movable/screen/ai/modpc/tabletbutton = using
 	tabletbutton.robot = myai
 

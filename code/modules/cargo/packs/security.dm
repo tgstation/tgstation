@@ -113,6 +113,14 @@
 				)
 	crate_name = "security supply crate"
 
+/datum/supply_pack/security/maintenance_kits
+	name = "Gun Maintenance Kits"
+	desc = "Three gun maintenance kits for the repair and maintenance of a firearm."
+	access_view = ACCESS_BRIG
+	contains = list(/obj/item/gun_maintenance_supplies = 3)
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "gun maintenance kit crate"
+
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	desc = "Upgrade your arsenal with 10 standard firing pins."
