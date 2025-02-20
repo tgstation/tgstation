@@ -415,8 +415,8 @@
 		|| !ishuman(burn_living) \
 		|| HAS_TRAIT(burn_living, TRAIT_NODISMEMBER) \
 		|| HAS_TRAIT(burn_living, TRAIT_NO_PLASMA_TRANSFORM) \
-		|| SPT_PROB(65, seconds_per_tick) \
-	)
+		|| SPT_PROB(99, seconds_per_tick) \
+	) // DOPPLER EDIT: decrease the chance of plasmoid infection massively (original: SPT_PROB(65)
 		return
 
 	var/mob/living/carbon/human/burn_human = burn_living
