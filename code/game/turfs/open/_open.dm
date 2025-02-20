@@ -340,7 +340,7 @@
 	wash(CLEAN_WASH, TRUE)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
+/turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, daze_amount, force_drop)
 	if(slipper.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 	if(!has_gravity(src))
@@ -373,7 +373,7 @@
 
 	if(!(lube & SLIDE_ICE))
 		// Ice slides are intended to be combo'd so don't give the feedback
-		to_chat(slipper, span_notice("You slipped[ slippable ? " on the [slippable.name]" : ""]!"))
+		to_chat(slipper, span_notice("You slipped[ slippable ? " on \the [slippable]" : ""]!"))
 		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
@@ -393,8 +393,8 @@
 		slipper.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		slipper.stop_pulling()
 	else
-		slipper.Knockdown(knockdown_amount)
 		slipper.Paralyze(paralyze_amount)
+		slipper.Knockdown(knockdown_amount, daze_amount = daze_amount)
 
 	if(!isnull(buckled_obj) && !ismob(buckled_obj))
 		buckled_obj.unbuckle_mob(slipper)

@@ -40,7 +40,7 @@
 			for(var/mob/living/silicon/ai/aipilot in occupants)
 				ai_pilots += aipilot
 			if(!length(ai_pilots)) //Mech does not have an AI for a pilot
-				to_chat(user, span_warning("No AI detected in the [name] onboard computer."))
+				to_chat(user, span_warning("No AI detected in \the [src]'s onboard computer."))
 				return
 			if(length(ai_pilots) > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
 				AI = tgui_input_list(user, "Which AI do you wish to card?", "AI Selection", sort_list(ai_pilots))

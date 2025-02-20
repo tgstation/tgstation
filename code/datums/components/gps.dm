@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 ///Toggles the tracking for the gps
 /datum/component/gps/item/proc/toggletracking(mob/user)
-	if(!user.can_perform_action(parent))
+	if(!user.can_perform_action(parent, ALLOW_RESTING | ALLOW_PAI))
 		return //user not valid to use gps
 	if(emped)
 		to_chat(user, span_warning("It's busted!"))

@@ -204,7 +204,7 @@
 		if(bees_attack)
 			visible_message(span_danger("[user] disturbs the bees!"))
 		else
-			visible_message(span_danger("[user] disturbs the [name] to no effect!"))
+			visible_message(span_danger("[user] disturbs \the [src] to no effect!"))
 	else
 		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
 		if(!option || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY))

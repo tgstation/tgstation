@@ -117,7 +117,7 @@
 
 /obj/structure/mounted_gun/pipe/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<b><i>Looking down at the [name], you recall a tale told to you in some distant memory...</i></b>")
+	. += span_notice("<b><i>Looking down at \the [src], you recall a tale told to you in some distant memory...</i></b>")
 
 	. += span_info("To commit an act of vengeance is not unlike to enter a blood pact with a devil, ending the life of another, at the cost of your own.")
 	. += span_info("When humanity first spilled the blood of its own kind, with likely nothing more than a rock, the seal was broken. Vengeance was borne unto the world.")

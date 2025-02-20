@@ -517,12 +517,14 @@
  * Water reaction to turf
  */
 
-/datum/reagent/hydrogen_peroxide/expose_turf(turf/open/exposed_turf, reac_volume)
+/datum/reagent/hydrogen_peroxide/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	if(!istype(exposed_turf))
+	if (reac_volume < 1.5)
 		return
-	if(reac_volume >= 5)
-		exposed_turf.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
+	if (!isplatingturf(exposed_turf) && exposed_turf.type != /turf/closed/wall)
+		return
+	if (!HAS_TRAIT(exposed_turf, TRAIT_RUSTY))
+		exposed_turf.AddElement(/datum/element/rust)
 /*
  * Water reaction to a mob
  */
@@ -2899,6 +2901,11 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/eldritch/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if ((reac_volume >= 1.5 || isplatingturf(exposed_turf)) && !HAS_TRAIT(exposed_turf, TRAIT_RUSTY))
+		exposed_turf.rust_turf()
+
 /datum/reagent/universal_indicator
 	name = "Universal Indicator"
 	description = "A solution that can be used to create pH paper booklets, or sprayed on things to colour them by their pH."
@@ -2966,7 +2973,7 @@
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
 	. = ..()
 	ant_ticks = 0
-	to_chat(living_anthill, span_notice("You feel like the last of the [name] are out of your system."))
+	to_chat(living_anthill, span_notice("You feel like the last of \the [src] are out of your system."))
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

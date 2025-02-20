@@ -398,8 +398,8 @@
 	playsound(source, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 	victim.visible_message(
-		message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"),
-		self_message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from you!"),
+		message = span_warning("The blade of the [hidden_name] retracts as \the [source] is removed from [victim]!"),
+		self_message = span_warning("The blade of the [hidden_name] retracts as \the [source] is removed from you!"),
 		blind_message = span_warning("You hear an energy blade retract!"),
 		vision_distance = 1
 	)

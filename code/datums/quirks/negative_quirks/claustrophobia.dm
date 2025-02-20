@@ -7,7 +7,7 @@
 	hardcore_value = 5
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/syringe/convermol) // to help breathing
-	minimum_process_stat = CONSCIOUS
+	maximum_process_stat = SOFT_CRIT
 	no_process_traits = list(TRAIT_MIND_TEMPORARILY_GONE, TRAIT_FEARLESS, TRAIT_KNOCKEDOUT)
 
 /datum/quirk/claustrophobia/remove()

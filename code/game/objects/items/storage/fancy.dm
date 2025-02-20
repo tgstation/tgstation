@@ -260,8 +260,8 @@
 	var/obj/item/finger = locate(grabbies) in contents
 	if(finger)
 		if(!equip_to_mouth)
-			atom_storage.remove_single(user, finger, drop_location())
-			user.put_in_hands(finger)
+			if(atom_storage.remove_single(user, finger, drop_location()))
+				user.put_in_hands(finger)
 			return
 		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
 			finger.forceMove(user)

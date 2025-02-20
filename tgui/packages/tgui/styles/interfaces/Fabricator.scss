@@ -8,7 +8,7 @@
 
 .Fabricator__Recipe {
   padding: 0.25em 0;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid hsl(0, 0%, 0%);
   position: relative;
 
   &:last-child {
@@ -41,7 +41,7 @@
 }
 
 .MaterialDock--active {
-  background-color: #111;
+  background-color: hsl(0, 0%, 6.7%);
   transition: background-color 0.125s ease-out;
 }
 
@@ -55,14 +55,14 @@
 
 .MaterialDock__Dock {
   position: absolute;
-  background-color: #111;
+  background-color: hsl(0, 0%, 6.7%);
   bottom: 100%;
   left: 0;
   width: 100%;
   padding: 1em;
   border-radius: 0.25em 0.25em 0 0;
   text-align: center;
-  box-shadow: 0 0 3px #000;
+  box-shadow: 0 0 3px hsl(0, 0%, 0%);
 }
 
 .MaterialDock--active .MaterialDock__Dock {
@@ -83,7 +83,7 @@
   height: 0;
   padding-bottom: 100%;
   position: relative;
-  box-shadow: 0 0 3px #000;
+  box-shadow: 0 0 3px hsl(0, 0%, 0%);
 }
 
 .FabricatorRecipe {
@@ -205,7 +205,7 @@
     }
 
     &--active {
-      color: #fff;
+      color: hsl(0, 0%, 100%);
       border-right: 2px solid colors.$primary;
     }
   }
