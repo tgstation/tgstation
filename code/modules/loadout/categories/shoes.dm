@@ -16,12 +16,12 @@
 	item_path = /obj/item/clothing/shoes/sneakers
 
 /datum/loadout_item/shoes/sandals_laced
-	name = "Sandals (Laced)"
-	item_path = /obj/item/clothing/shoes/sandal/laced
+	name = "Sandals (Velcro)"
+	item_path = /obj/item/clothing/shoes/sandal/velcro
 
 /datum/loadout_item/shoes/sandals_laced_black
-	name = "Sandals (Black, Laced)"
-	item_path = /obj/item/clothing/shoes/sandal/alt/laced
+	name = "Sandals (Black, Velcro)"
+	item_path = /obj/item/clothing/shoes/sandal/alt/velcro
 
 /datum/loadout_item/shoes/laceup
 	name = "Shoes (Laceup)"
