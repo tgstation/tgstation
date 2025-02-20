@@ -12,7 +12,7 @@
  * Plant Bag
  * Sheet Snatcher
  * Book Bag
- *      Biowaste Bag
+ * Biowaste Bag
  *
  * -Sayu
  */
@@ -319,6 +319,63 @@
 	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
+
+
+// -----------------------------
+//    Sheet Snatcher (Debug)
+// -----------------------------
+
+/obj/item/storage/bag/sheetsnatcher/debug
+	name = "sheet snatcher EXTREME EDITION"
+	desc = "A Nanotrasen storage system designed which has been given post-market alterations to hold any type of sheet. Comes pre-populated with "
+	color = "#ff3737" // I'm too lazy to make a unique sprite
+	capacity = 5000 // Hopefully enough to fit anything you need
+	w_class = WEIGHT_CLASS_TINY
+
+// Copy-pasted from the former /obj/item/storage/box/material, w/ small additions like rods, cardboard, plastic.
+// "Only 20 uranium 'cause of radiation"
+/obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/stack/sheet/iron/fifty=1,
+		/obj/item/stack/sheet/glass/fifty=1,
+		/obj/item/stack/sheet/rglass/fifty=1,
+		/obj/item/stack/sheet/plasmaglass/fifty=1,
+		/obj/item/stack/sheet/titaniumglass/fifty=1,
+		/obj/item/stack/sheet/plastitaniumglass/fifty=1,
+		/obj/item/stack/sheet/plasteel/fifty=1,
+		/obj/item/stack/sheet/mineral/titanium/fifty=1,
+		/obj/item/stack/sheet/mineral/gold=50,
+		/obj/item/stack/sheet/mineral/silver=50,
+		/obj/item/stack/sheet/mineral/plasma=50,
+		/obj/item/stack/sheet/mineral/uranium=20,
+		/obj/item/stack/sheet/mineral/diamond=50,
+		/obj/item/stack/sheet/bluespace_crystal=50,
+		/obj/item/stack/sheet/mineral/bananium=50,
+		/obj/item/stack/sheet/mineral/wood/fifty=1,
+		/obj/item/stack/sheet/plastic/fifty=1,
+		/obj/item/stack/sheet/runed_metal/fifty=1,
+		/obj/item/stack/rods/fifty=1,
+		/obj/item/stack/sheet/mineral/plastitanium=50,
+		/obj/item/stack/sheet/mineral/abductor=50,
+		/obj/item/stack/sheet/cardboard/fifty=1,
+		)
+	//This needs to be done here and not in Initialize() because the stacks get merged and fall out when their weight updates if this is set after PopulateContents()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = capacity
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/bag/sheetsnatcher/debug/Initialize(mapload)
+	. = ..()
+	// Overrides so it can hold all possible sheets
+	atom_storage.set_holdable(
+		can_hold_list = list(
+			/obj/item/stack/sheet,
+			/obj/item/stack/sheet/mineral/sandstone,
+			/obj/item/stack/sheet/mineral/wood,
+		)
+	)
 
 // -----------------------------
 //           Book bag
