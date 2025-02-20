@@ -571,25 +571,22 @@
 	integer = FALSE
 
 /datum/config_entry/flag/irc_announce_new_game
-	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+	deprecated_by = /datum/config_entry/str_list/channel_announce_new_game
 
 /datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
 /datum/config_entry/string/chat_announce_new_game
-	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+	deprecated_by = /datum/config_entry/str_list/channel_announce_new_game
 
 /datum/config_entry/string/chat_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
-/datum/config_entry/string/channel_announce_new_game
-	default = null
+/datum/config_entry/str_list/channel_announce_new_game
 
-/datum/config_entry/string/channel_announce_end_game
-	default = null
+/datum/config_entry/str_list/channel_announce_end_game
 
-/datum/config_entry/string/chat_new_game_notifications
-	default = null
+/datum/config_entry/str_list/chat_new_game_notifications
 
 /// validate ownership of admin flags for chat commands
 /datum/config_entry/flag/secure_chat_commands

@@ -517,9 +517,11 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	grind_results = list(/datum/reagent/cellulose = 20)
+	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = SFX_CLOTH_DROP
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
@@ -548,8 +550,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/durathread
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 
 /obj/item/stack/sheet/durathread/Initialize(mapload)
 	. = ..()
@@ -579,8 +581,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	grind_results = list(/datum/reagent/cellulose = 20)
 	var/loom_result = /obj/item/stack/sheet/cloth
 	var/loom_time = 1 SECONDS
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 
 /obj/item/stack/sheet/cotton/Initialize(mapload)
 	. = ..()
