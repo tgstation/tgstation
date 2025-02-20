@@ -4,6 +4,7 @@
 	treat_text = "Reforming of superstructure via either RCD or manual molding, followed by typical treatment of loosened internals. \
 				To manually mold, the limb must be aggressively grabbed and welded held to it to make it malleable (though attacking it til thermal overload may be adequate) \
 				followed by firmly grasping and molding the limb with heat-resistant gloves."
+	treat_text_short = "Reform with an RCD, then screw together and solder with a heat source. Grab strongly, apply heat, and mold with your hands if an RCD is unavailable."
 	occur_text = "caves in on itself, damaged solder and shrapnel flying out in a miniature explosion"
 	examine_desc = "has caved in, with internal components visible through gaps in the metal"
 	severity = WOUND_SEVERITY_CRITICAL

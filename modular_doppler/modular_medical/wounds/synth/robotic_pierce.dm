@@ -24,8 +24,9 @@
 	desc = "A major capacitor has been broken open, causing slow but noticable electrical damage."
 	occur_text = "shoots out a short stream of sparks"
 	examine_desc = "is shuddering gently, movements a little weak"
-	treat_text = "Replacing of damaged wiring, though repairs via wirecutting instruments or sutures may suffice, albeit at limited efficiency. In case of emergency, \
-				subject may be subjected to high temperatures to allow solder to reset."
+	treat_text = "Replace the damaged wiring. Repairs via wirecutting instruments or sutures may suffice, albeit at limited efficiency. \
+				In case of emergency, subject may be subjected to high temperatures to allow solder to reset."
+	treat_text_short = "Replace wiring, or repair with wirecutters or sutures. Apply heat in a pinch."
 
 	sound_effect = 'modular_doppler/modular_medical/wounds/synth/sound/robotic_slash_T1.ogg'
 
@@ -68,7 +69,9 @@
 	desc = "A major transformer has been pierced, causing slow-to-progess but eventually intense electrical damage."
 	occur_text = "sputters and goes limp for a moment as it ejects a stream of sparks"
 	examine_desc = "is shuddering significantly, its servos briefly giving way in a rythmic pattern"
-	treat_text = "Containment of damaged wiring via gauze, then application of fresh wiring/sutures, or resetting of displaced wiring via wirecutter/retractor."
+	treat_text = "Wrap the injury with gauze to contain the severed wiring, then replace it with fresh cabling, or sutures if necessary. \
+				Displaced wiring can also be reset using a wirecutter or retractor."
+	treat_text_short = "Wrap in gauze, then replace cabling or suture. Wirecutters or a retractor can also reset the wiring."
 
 	sound_effect = 'modular_doppler/modular_medical/wounds/synth/sound/robotic_slash_T2.ogg'
 
@@ -111,8 +114,9 @@
 	desc = "The local PSU of this limb has suffered a core rupture, causing a progressive power failure that will slowly intensify into massive electrical damage."
 	occur_text = "flashes with radiant blue, emitting a noise not unlike a Jacob's Ladder"
 	examine_desc = "'s PSU is visible, with a sizable hole in the center"
-	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or hemostat. \
+	treat_text = "Immediately secure the damaged area with gauze. Replace all cabling, and secure it into place via wirecutters or a retractor. \
 		If the fault has become uncontrollable, extreme heat therapy is recommended."
+	treat_text_short = "Wrap with gauze, then replace cabling and secure with wirecutters or a retractor. In an emergency, apply high heat."
 
 	severity = WOUND_SEVERITY_CRITICAL
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_EXTERIOR|CAN_BE_GRASPED|SPLINT_OVERLAY)
