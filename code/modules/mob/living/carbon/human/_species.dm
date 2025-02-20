@@ -859,7 +859,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	user.do_attack_animation(target, atk_effect)
 
 	//has our target been shoved recently? If so, they're staggered and we get an easy hit.
-	var/staggered = target.get_timed_status_effect_duration(/datum/status_effect/staggered)
+	var/staggered = target.has_status_effect(/datum/status_effect/staggered)
 
 	//Someone in a grapple is much more vulnerable to being harmed by punches.
 	var/grappled = (target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
@@ -961,7 +961,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	// If our target is staggered, the target's armor, minus our limb effectiveness sets the minimum necessary amount of damage sustained to cause an effect. We clamp the value for sanity reasons.
-	if(staggered && target_brute_and_burn >= clamp(((armor_block && armor_block > UNARMED_COMBO_HIT_HEALTH_BASE) ? armor_block : UNARMED_COMBO_HIT_HEALTH_BASE) - limb_accuracy, 0, 200))
+	var/effective_armor = max(armor_block, UNARMED_COMBO_HIT_HEALTH_BASE) - limb_accuracy
+	if(staggered && target_brute_and_burn >= clamp(effective_armor, 0, 200))
 		stagger_combo(user, target, atk_verb, limb_accuracy, armor_block)
 
 /// Handles the stagger combo effect of our punch. Follows the same logic as the above proc, target is our owner, user is our attacker.
