@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /// Version of roll_reward() that blacklists objects that shouldn't be caught by ai-controlled mobs.
 /datum/fish_source/proc/roll_mindless_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
-	var/list/final_table = get_modified_fish_table(rod, fisherman, location))
+	var/list/final_table = get_modified_fish_table(rod, fisherman, location)
 	final_table -= profound_fisher_blacklist
 	return pick_weight(final_table) || FISHING_DUD
 
