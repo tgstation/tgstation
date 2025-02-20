@@ -43,7 +43,7 @@
 	uniform = /obj/item/clothing/under/suit/black_really
 	neck = /obj/item/clothing/neck/tie/red/tied
 	shoes = /obj/item/clothing/shoes/laceup
-	ears = /obj/item/radio/headset/headset_sec/alt
+	ears = /obj/item/radio/headset/heads/hos/alt
 	implants = list(/obj/item/implant/mindshield)
 	backpack_contents = list(
 		/obj/item/sensor_device/command_bodyguard = 1,
