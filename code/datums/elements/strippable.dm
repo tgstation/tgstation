@@ -303,8 +303,12 @@
 
 /// A utility function for `/datum/strippable_item`s to finish unequipping an item from a mob.
 /proc/finish_unequip_mob(obj/item/item, mob/source, mob/user)
-	if (!item.doStrip(user, source))
+	var/obj/item/dropped_item = item.doStrip(user, source)
+	if(!dropped_item)
 		return FALSE
+
+	if(HAS_TRAIT(user, TRAIT_THIEF))
+		user.put_in_hands(dropped_item)
 
 	user.log_message("has stripped [key_name(source)] of [item].", LOG_ATTACK, color="red")
 	source.log_message("has been stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
