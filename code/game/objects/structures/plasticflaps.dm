@@ -47,6 +47,33 @@
 	alpha = 0
 	gen_overlay()
 	air_update_turf(TRUE, TRUE)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXITED = PROC_REF(play_plastsicflaps_sound),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/plasticflaps/proc/play_plastsicflaps_sound(datum/source, atom/movable/exiting)
+	SIGNAL_HANDLER
+	if(isitem(exiting))
+		var/obj/item/item_exiter = exiting
+		if(item_exiter.w_class <= WEIGHT_CLASS_NORMAL)
+			return
+		if(item_exiter.item_flags & ABSTRACT)
+			return
+	if(isliving(exiting))
+		var/mob/living/living_exiter = exiting
+		if(living_exiter.mob_size <= MOB_SIZE_TINY)
+			return
+		// you're crawling under them
+		if(living_exiter.body_position == LYING_DOWN)
+			return
+		if(living_exiter.incorporeal_move)
+			return
+	if(HAS_TRAIT(exiting, TRAIT_MAGICALLY_PHASED))
+		return
+	if(locate(/obj/structure/plasticflaps) in exiting.loc)
+		return
+	playsound(src, 'sound/effects/plasticflaps.ogg', 50, TRUE, ignore_walls = FALSE, falloff_exponent = 8, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(!same_z_layer)
