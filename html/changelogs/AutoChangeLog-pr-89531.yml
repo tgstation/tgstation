@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Prevents Cryogelidia from putting you into a permanent stasis until someone injects you with the reagent."
