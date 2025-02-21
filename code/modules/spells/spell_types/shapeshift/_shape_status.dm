@@ -31,7 +31,7 @@
 
 /datum/status_effect/shapechange_mob/on_apply()
 	caster_mob.mind?.transfer_to(owner)
-	caster_mob.forceMove(owner)
+	caster_mob.moveToNullspace()
 	ADD_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
 	caster_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
