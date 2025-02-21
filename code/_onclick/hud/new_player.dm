@@ -633,7 +633,6 @@
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_big(span_admin("The server is still setting up, but the round will be started as soon as possible.")))
-		return
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
