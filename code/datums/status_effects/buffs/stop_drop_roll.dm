@@ -1,8 +1,8 @@
 /datum/status_effect/stop_drop_roll
 	id = "stop_drop_roll"
 	alert_type = null
-
 	tick_interval = 0.8 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/stop_drop_roll/on_apply()
 	if(!iscarbon(owner))

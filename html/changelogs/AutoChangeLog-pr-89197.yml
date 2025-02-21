@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - bugfix: "You can rename supply pod beacon with a any writing tool."
