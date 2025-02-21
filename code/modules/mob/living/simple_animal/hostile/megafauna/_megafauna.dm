@@ -169,11 +169,9 @@
 
 /mob/living/simple_animal/hostile/megafauna/CanAttack(atom/the_target)
 	. = ..()
-	var/mob/living/living_target = the_target
-	if(living_target.has_status_effect(/datum/status_effect/shapechange_mob/from_spell && !isnull(living_target.ckey))) // Prevents polymorph belt cheese
-		return TRUE
 	if (!.)
 		return FALSE
+	var/mob/living/living_target = the_target
 	if(!isliving(the_target))
 		return TRUE
 	return !living_target.has_status_effect(/datum/status_effect/gutted)
