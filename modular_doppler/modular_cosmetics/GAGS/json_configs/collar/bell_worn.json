@@ -2,13 +2,13 @@
 	"bell": [
 		{
 			"type": "icon_state",
-			"icon_state": "bell_mob",
+			"icon_state": "thin_collar_mob",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "bell_tag_mob",
+			"icon_state": "bell_mob",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		}

@@ -2,13 +2,13 @@
 	"cow": [
 		{
 			"type": "icon_state",
-			"icon_state": "cow_mob",
+			"icon_state": "thick_collar_mob",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "cow_tag_mob",
+			"icon_state": "cowbell_mob",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		}

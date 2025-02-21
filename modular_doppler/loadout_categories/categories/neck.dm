@@ -35,32 +35,32 @@
 	item_path = /obj/item/clothing/neck/maid_neck_cover
 
 /datum/loadout_item/neck/collar
-	name = "Choker"
-	item_path = /obj/item/clothing/neck/human_petcollar/locked/choker
+	name = "Thin Collar"
+	item_path = /obj/item/clothing/neck/fashion_collar
 
-/datum/loadout_item/neck/collar/bell
+/datum/loadout_item/neck/thick_collar
+	name = "Thick Collar"
+	item_path = /obj/item/clothing/neck/fashion_collar/thick
+
+/datum/loadout_item/neck/bell_collar
 	name = "Bell Collar"
-	item_path = /obj/item/clothing/neck/human_petcollar/locked/bell
+	item_path = /obj/item/clothing/neck/fashion_collar/bell
 
-/datum/loadout_item/neck/collar/cross
+/datum/loadout_item/neck/cross_collar
 	name = "Cross Collar"
-	item_path = /obj/item/clothing/neck/human_petcollar/locked/cross
+	item_path = /obj/item/clothing/neck/fashion_collar/cross
 
-/datum/loadout_item/neck/collar/holo
+/datum/loadout_item/neck/holocollar
 	name = "Holocollar"
-	item_path = /obj/item/clothing/neck/human_petcollar/locked/holo
+	item_path = /obj/item/clothing/neck/fashion_collar/holo
 
-/datum/loadout_item/neck/collar/cow
+/datum/loadout_item/neck/cow_collar
 	name = "Cowbell Collar"
-	item_path = /obj/item/clothing/neck/human_petcollar/locked/cow
+	item_path = /obj/item/clothing/neck/fashion_collar/cow
 
-/datum/loadout_item/neck/collar/leather
-	name = "Leather Collar"
-	item_path = /obj/item/clothing/neck/human_petcollar/locked/leather
-
-/datum/loadout_item/neck/collar/spike
+/datum/loadout_item/neck/spike_collar
 	name = "Spiked Collar"
-	item_path = /obj/item/clothing/neck/human_petcollar/locked/spike
+	item_path = /obj/item/clothing/neck/fashion_collar/spike
 
 /datum/loadout_item/neck/bowtie
 	name = "Bowtie (Colorable)"
