@@ -117,7 +117,9 @@
 
 /mob/living/basic/pet/dog/breaddog/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(stat)
+	if(!.) //dead or deleted
+		return
+	if(stat) // consciousness check
 		return
 
 	if(health < maxHealth)

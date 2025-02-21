@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "EVA doors become all access on Red Alert"
+  - rscadd: "First Aid Supplies (the compartments in Medbay Storage which hold medkits) become all access on Red Alert (already present on Icebox). Medbay Storage itself does NOT become all access."

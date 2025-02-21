@@ -1,4 +1,0 @@
-author: "Holoo-1"
-delete-after: True
-changes:
-  - bugfix: "fixed circuit connections not being drawn outside initial screen on 516"
