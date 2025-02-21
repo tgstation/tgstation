@@ -627,7 +627,7 @@
 		secure_radio_connections[ch_name] = null
 
 	if (!user.put_in_hands(keyslot))
-		keyslot.forceMove(get_turf(user) || get_turf(src))
+		keyslot.forceMove(drop_location())
 
 	keyslot = null
 	recalculateChannels()
@@ -648,7 +648,7 @@
 
 	keyslot = tool
 	recalculateChannels()
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	loc.balloon_alert(user, "encryption key installed")
 	return ITEM_INTERACT_SUCCESS
 
