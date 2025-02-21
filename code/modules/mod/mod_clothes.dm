@@ -64,5 +64,5 @@
 	heat_protection = FEET|LEGS
 	cold_protection = FEET|LEGS
 	item_flags = IGNORE_DIGITIGRADE | IMMUTABLE_SLOW
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	equip_sound = null
