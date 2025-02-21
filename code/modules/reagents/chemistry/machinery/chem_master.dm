@@ -522,6 +522,7 @@
  * * item_count - number of containers to print
  * * item_name - the name for each container printed
  * * volume_in_each - volume in each container created
+ * * chosen_container - type of the container we're going to print
  */
 /obj/machinery/chem_master/proc/create_containers(mob/user, item_count, item_name, volume_in_each, chosen_container)
 	PRIVATE_PROC(TRUE)
