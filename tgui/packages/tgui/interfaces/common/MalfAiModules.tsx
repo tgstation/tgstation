@@ -33,7 +33,9 @@ export function MalfAiModules(props) {
         icon_state: item.icon_state,
         icon: item.icon,
         id: item.name,
-        name: item.name,
+        name: item.name,,
+        population_tooltip: "",
+        insufficient_population: false,
       });
     }
   }

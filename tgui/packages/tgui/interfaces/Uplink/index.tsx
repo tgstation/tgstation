@@ -47,6 +47,7 @@ type UplinkItem = {
 type UplinkData = {
   telecrystals: number;
   progression_points: number;
+  joined_population?: number;
   lockable: BooleanLike;
   current_progression_scaling: number;
   uplink_flag: number;
@@ -200,7 +201,8 @@ export class Uplink extends Component<{}, UplinkState> {
       const item = itemsToAdd[i];
       const hasEnoughProgression =
         progression_points >= item.progression_minimum;
-      const hasEnoughPop = joined_population >= item.population_minimum;
+      const hasEnoughPop =
+        !joined_population || joined_population >= item.population_minimum;
 
       let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
