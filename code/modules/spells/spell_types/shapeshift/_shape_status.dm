@@ -46,7 +46,7 @@
 
 /datum/status_effect/shapechange_mob/on_remove()
 	// If the owner was straight up deleted we shouldn't restore anyone
-	// (the caster's stored in the owner's contents so if it's qdel'd so is the caster)
+	// (the caster's stored in nullspace so if it's qdel'd so is the caster)
 	if(!QDELETED(owner))
 		restore_caster()
 
