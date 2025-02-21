@@ -1105,6 +1105,7 @@
 			create_hitscan_point()
 			// Create tracers if we get timestopped or lagchunk so there aren't weird delays
 			generate_hitscan_tracers(impact_point = FALSE, impact_visual = FALSE)
+			record_hitscan_start(offset = FALSE)
 			return
 
 /// Creates (or wipes clean) list of tracer keypoints and creates a first point.
