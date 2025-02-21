@@ -1090,15 +1090,13 @@
 		qdel(src)
 		return
 
-	var/test = 0
 	while (isturf(loc) && !QDELETED(src))
 		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
-		test += 1
 
 		if (QDELETED(src))
 			return
 
-		if (TICK_CHECK || paused || test >= 2)
+		if (TICK_CHECK || paused)
 			create_hitscan_point()
 			// Create tracers if we get timestopped or lagchunk so there aren't weird delays
 			generate_hitscan_tracers(impact_point = FALSE, impact_visual = FALSE)
