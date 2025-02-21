@@ -1,5 +1,5 @@
 {
-	"collar": [
+	"thin_collar": [
 		{
 			"type": "icon_state",
 			"icon_state": "thin_collar_mob",
