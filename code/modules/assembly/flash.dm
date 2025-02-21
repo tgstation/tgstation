@@ -307,6 +307,7 @@
 	if(issilicon(M))
 		//act as a normal flash
 		return ..()
+	M.wipe_memory() // I was gonna... 
 	to_chat(M, "<br/><br/<br/<br/<br/<br/<br/<br/<br/>")
 	to_chat(M, span_hypnophrase(implant_message))
 	return ..()
