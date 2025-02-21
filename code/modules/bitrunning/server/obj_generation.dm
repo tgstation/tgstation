@@ -129,54 +129,27 @@
 
 /// Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.
 /obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo, datum/lazy_template/virtual_domain/generated_domain)
-	var/domain_forbids_items = generated_domain.forbids_disk_items
-	var/domain_forbids_spells = generated_domain.forbids_disk_spells
+	var/domain_forbids_flags = generated_domain.external_load_flags
 
 	var/import_ban = list()
 	var/disk_ban = list()
-	if(domain_forbids_items)
+	if(domain_forbids_flags & DOMAIN_FORBIDS_ITEMS)
 		import_ban += "smuggled digital equipment"
 		disk_ban += "items"
-	if(domain_forbids_spells)
+	if(domain_forbids_flags & DOMAIN_FORBIDS_ABILITIES)
 		import_ban += "imported_abilities"
 		disk_ban += "powers"
 
 	if(length(import_ban))
-		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your disk [english_list(disk_ban)] will not be granted!"))
+		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your externally loaded [english_list(disk_ban)] will not be granted!"))
 
-	var/failed = FALSE
+	var/return_flags = NONE
+	return_flags = SEND_SIGNAL(neo, COMSIG_BITRUNNER_STOCKING_GEAR, avatar, domain_forbids_flags)
 
-	// We don't need to bother going over the disks if neither of the types can be used.
-	if(domain_forbids_spells && domain_forbids_items)
-		return
-	for(var/obj/item/bitrunning_disk/disk in neo.get_contents())
-		if(istype(disk, /obj/item/bitrunning_disk/ability) && !domain_forbids_spells)
-			var/obj/item/bitrunning_disk/ability/ability_disk = disk
-
-			if(isnull(ability_disk.granted_action))
-				failed = TRUE
-				continue
-
-			var/datum/action/our_action = new ability_disk.granted_action()
-
-			if(locate(our_action.type) in avatar.actions)
-				failed = TRUE
-				continue
-
-			our_action.Grant(avatar)
-			continue
-
-		if(istype(disk, /obj/item/bitrunning_disk/item) && !domain_forbids_items)
-			var/obj/item/bitrunning_disk/item/item_disk = disk
-
-			if(isnull(item_disk.granted_item))
-				failed = TRUE
-				continue
-
-			avatar.put_in_hands(new item_disk.granted_item())
-
-	if(failed)
-		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))
+	if(return_flags & BITRUNNER_GEAR_LOAD_FAILED)
+		to_chat(neo, span_warning("At least one of your external data sources has encountered a failure in its loading process. Check for overlapping or inactive disks."))
+	if(return_flags & BITRUNNER_GEAR_LOAD_BLOCKED)
+		to_chat(neo, span_warning("At least one of your external data sources has been blocked from fully loading. Check domain restrictions."))
 
 	var/obj/item/organ/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/obj/item/skillchip/skill_chip as anything in neo_brain?.skillchips)

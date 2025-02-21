@@ -111,7 +111,7 @@
 		if(istype(potential_spine))
 			strength_bonus *= potential_spine.strength_bonus
 
-		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus)
+		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus, 1)
 		grant_experience = TRUE
 
 	var/current_atk_verb = atk_verb
@@ -149,7 +149,7 @@
 	to_chat(attacker, span_danger("You [current_atk_verbed] [defender]!"))
 
 	// Determines the total amount of experience earned per punch
-	var/experience_earned = round(damage * 0.25, 0.1)
+	var/experience_earned = round(damage/4, 1)
 
 	defender.apply_damage(damage, damage_type, affecting, armor_block)
 
@@ -168,7 +168,7 @@
 	var/defender_athletics_skill =  clamp(defender.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER), 0, 100)
 
 	//Determine our final probability, using a clamp to stop any prob() weirdness.
-	var/final_knockout_probability = clamp(round(attacker_athletics_skill - defender_athletics_skill), 0 , 100)
+	var/final_knockout_probability = clamp(round(attacker_athletics_skill - defender_athletics_skill, 1), 0 , 100)
 
 	if(!prob(final_knockout_probability))
 		return TRUE
@@ -222,10 +222,10 @@
 /// Handles our instances of experience gain while boxing. It also applies the exercised status effect.
 /datum/martial_art/boxing/proc/skill_experience_adjustment(mob/living/boxer, experience_value)
 	//Boxing in heavier gravity gives you more experience
-	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 0.5
+	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 2
 
 	//You gotta sleep before you get any experience!
-	boxer.mind?.adjust_experience(/datum/skill/athletics, round(experience_value * gravity_modifier, 0.1))
+	boxer.mind?.adjust_experience(/datum/skill/athletics, round(experience_value / gravity_modifier, 1))
 	boxer.apply_status_effect(/datum/status_effect/exercised)
 
 /// Handles our blocking signals, similar to hit_reaction() on items. Only blocks while the boxer is in throw mode.
@@ -254,7 +254,7 @@
 	if(!honor_check(attacker))
 		return NONE
 
-	var/experience_earned = round(damage * 0.25, 0.1)
+	var/experience_earned = round(damage/4, 1)
 
 	if(!damage)
 		experience_earned = 2
@@ -346,16 +346,17 @@
 		human_attacker.say("[first_word_pick][second_word_pick]!!!", forced = "hunter boxing enthusiastic battlecry")
 	defender.apply_status_effect(/datum/status_effect/rebuked)
 	defender.apply_damage(damage * 2, default_damage_type, BODY_ZONE_CHEST, armor_block) //deals double our damage AGAIN
-	attacker.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood, 3) //Get a little healing in return for a successful crit
+
+	var/healing_factor = round(damage/3, 1)
+	attacker.heal_overall_damage(healing_factor, healing_factor, healing_factor)
 	log_combat(attacker, defender, "hunter crit punched (boxing)")
 
-// Our hunter boxer speeds up their attacks when completing a combo against a valid target, and does a sizable amount of extra damage.
+// Our hunter boxer does a sizable amount of extra damage on a successful combo or block
 
 /datum/martial_art/boxing/hunter/perform_extra_effect(mob/living/attacker, mob/living/defender)
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
 		return // Does not apply to humans (who aren't megafauna)
 
-	attacker.changeNext_move(CLICK_CD_RAPID)
 	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
 
 #undef LEFT_RIGHT_COMBO

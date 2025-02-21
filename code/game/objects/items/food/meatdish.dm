@@ -1115,7 +1115,7 @@
 
 /obj/item/food/roast_dinner_tofu
 	name = "tofu roast dinner"
-	desc = "A luxuriously roasted tofu-'chicken', accompanied by cabbage, parsnip, potatoes, peas, stuffing and a small boat of soybased gravy."
+	desc = "A luxuriously roasted tofu-'chicken', accompanied by cabbage, parsnip, potatoes, peas, stuffing and a small boat of soy-based gravy."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "full_roast_tofu"
 	food_reagents = list(

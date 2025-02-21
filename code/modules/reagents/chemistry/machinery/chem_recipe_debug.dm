@@ -72,7 +72,7 @@
 
 	create_reagents(MAXIMUM_HOLDER_VOLUME)
 	target_reagents = reagents
-	RegisterSignal(reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_recipe_debug, on_reaction_step))
+	RegisterSignal(reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 	register_context()
 
 	if(isnull(all_reaction_list))
@@ -172,7 +172,7 @@
 
 	var/target_temperature = decode_target_temperature()
 	if(!isnull(target_temperature))
-		target_reagents.adjust_thermal_energy((target_temperature - target_reagents.chem_temp) * 0.45 * seconds_per_tick * target_reagents.heat_capacity())
+		target_reagents.adjust_thermal_energy((target_temperature - target_reagents.chem_temp) * 0.4 * seconds_per_tick * target_reagents.heat_capacity())
 
 	if(use_forced_purity)
 		target_reagents.set_all_reagents_purity(forced_purity)
@@ -337,7 +337,7 @@
 		beaker_data = list()
 		beaker_data["maxVolume"] = target_reagents.maximum_volume
 		beaker_data["pH"] = round(target_reagents.ph, 0.01)
-		beaker_data["currentVolume"] = round(target_reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+		beaker_data["currentVolume"] = target_reagents.total_volume
 		beaker_data["currentTemp"] = round(target_reagents.chem_temp, 1)
 		beaker_data["purity"] = round(target_reagents.get_average_purity(), 0.001)
 		var/list/beakerContents = list()
@@ -449,7 +449,7 @@
 			return TRUE
 
 		if("pick_reaction")
-			var/mode = tgui_alert(usr, "Play all or an specific reaction?","Select Reaction", list("All", "Specific"))
+			var/mode = tgui_alert(usr, "Play all or a specific reaction?","Select Reaction", list("All", "Specific"))
 			if(mode == "All")
 				reactions_to_test.Cut()
 				for(var/reaction as anything in all_reaction_list)
@@ -529,7 +529,7 @@
 				required_container = new test_reaction.required_container(src)
 				required_container.create_reagents(MAXIMUM_HOLDER_VOLUME)
 				target_reagents = required_container.reagents
-				RegisterSignal(target_reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_recipe_debug, on_reaction_step))
+				RegisterSignal(target_reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 
 			//append everything required
 			var/list/reagent_list = list()

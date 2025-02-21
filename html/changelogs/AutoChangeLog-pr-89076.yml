@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Certain status effects, such as stuns and attempting to extinguish fires via stop, drop & roll, shouldn't last much longer than intended while the server is under load."

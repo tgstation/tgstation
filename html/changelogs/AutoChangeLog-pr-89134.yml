@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "You can now purchase pet mice as a cargo goodie."
-  - qol: "Pet carriers now have contextual screentips."
-  - bugfix: "The biopod pet carrier now doesn't randomly turn invisible."

@@ -382,7 +382,7 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/baton/telescopic/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.apply_status_effect(/datum/status_effect/next_shove_stuns)
+	target.apply_status_effect(/datum/status_effect/dazed)
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
@@ -530,6 +530,8 @@
 	var/active_changes_inhand = TRUE
 	///Whether or not our baton visibly changes the inhand sprite based on inserted cell
 	var/tip_changes_color = TRUE
+	///When set, inhand_icon_state defaults to this instead of base_icon_state
+	var/base_inhand_state = null
 
 /datum/armor/baton_security
 	bomb = 50
@@ -555,7 +557,7 @@
 		attack(user, user)
 		return FIRELOSS
 	else
-		user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] is shoving \the [src] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return OXYLOSS
 
 /obj/item/melee/baton/security/Destroy()
@@ -594,20 +596,21 @@
 		update_appearance()
 
 /obj/item/melee/baton/security/update_icon_state()
+	var/base_inhand = base_inhand_state || base_icon_state
 	if(active)
 		icon_state = "[base_icon_state]_active"
 		if(active_changes_inhand)
 			if(tip_changes_color)
-				inhand_icon_state = "[base_icon_state]_active_[get_baton_tip_color()]"
+				inhand_icon_state = "[base_inhand]_active_[get_baton_tip_color()]"
 			else
-				inhand_icon_state = "[base_icon_state]_active"
+				inhand_icon_state = "[base_inhand]_active"
 		return ..()
 	if(!cell)
 		icon_state = "[base_icon_state]_nocell"
-		inhand_icon_state = "[base_icon_state]"
+		inhand_icon_state = base_inhand
 		return ..()
-	icon_state = "[base_icon_state]"
-	inhand_icon_state = "[base_icon_state]"
+	icon_state = base_icon_state
+	inhand_icon_state = base_inhand
 	return ..()
 
 /obj/item/melee/baton/security/examine(mob/user)
@@ -833,6 +836,7 @@
 	icon_state = "stunprod"
 	base_icon_state = "stunprod"
 	inhand_icon_state = "prod"
+	base_inhand_state = "prod"
 	worn_icon_state = null
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -877,10 +881,10 @@
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	else
-		to_chat(user, span_notice("You don't think the [item.name] will do anything to improve the [src]."))
+		to_chat(user, span_notice("You don't think \the [item] will do anything to improve \the [src]."))
 		return ..()
 
-	to_chat(user, span_notice("You place the [item.name] firmly into the igniter."))
+	to_chat(user, span_notice("You place \the [item] firmly into \the [sparkler]."))
 	remove_item_from_storage(user)
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)

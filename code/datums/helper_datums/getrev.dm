@@ -89,4 +89,4 @@
 	msg += "<b>Protect Assistant Role From Traitor:</b> [CONFIG_GET(flag/protect_assistant_from_antagonist) ? "Yes" : "No"]"
 	msg += "<b>Enforce Human Authority:</b> [CONFIG_GET(string/human_authority) ? "Yes" : "No"]"
 	msg += "<b>Allow Latejoin Antagonists:</b> [CONFIG_GET(flag/allow_latejoin_antagonists) ? "Yes" : "No"]"
-	to_chat(src, fieldset_block("Server Revision Info", span_infoplain(jointext(msg, "<br>")), "boxed_message"))
+	to_chat(src, fieldset_block("Server Revision Info", span_infoplain(jointext(msg, "<br>")), "boxed_message"), type = MESSAGE_TYPE_INFO)

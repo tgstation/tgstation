@@ -19,7 +19,17 @@
 	exotic_blood = /datum/reagent/water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
+
+	mutantappendix = /obj/item/organ/appendix/pod
+	mutantbrain = /obj/item/organ/brain/pod
+	mutantears = /obj/item/organ/ears/pod
+	mutanteyes = /obj/item/organ/eyes/pod
+	mutantheart = /obj/item/organ/heart/pod
+	mutantliver = /obj/item/organ/liver/pod
+	mutantlungs = /obj/item/organ/lungs/pod
+	mutantstomach = /obj/item/organ/stomach/pod
 	mutanttongue = /obj/item/organ/tongue/pod
+
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/pod,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/pod,
@@ -87,7 +97,7 @@
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "lightbulb",
 		SPECIES_PERK_NAME = "Photosynthetic",
-		SPECIES_PERK_DESC = "As long as you are concious, and within a well-lit area, you will slowly heal brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
+		SPECIES_PERK_DESC = "As long as you are conscious, and within a well-lit area, you will slowly heal brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
 		However, if you are LOW on nutrition, you will progressively take brute damage until you die or enter the light once more."
 	))
 

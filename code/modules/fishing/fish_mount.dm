@@ -74,7 +74,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fish_mount/proc/add_first_fish()
-	var/obj/item/fish/fish_path = pick(subtypesof(/obj/item/fish) - typesof(/obj/item/fish/holo))
+	var/obj/item/fish/fish_path = pick(subtypesof(/obj/item/fish) - list(typesof(/obj/item/fish/holo) + list(/obj/item/fish/starfish/chrystarfish))) // chrystarfish immediately shatters when placed
 	if(fish_path.fish_id_redirect_path)
 		fish_path = fish_path.fish_id_redirect_path
 	var/fluff_name = pick("John Trasen III", "a nameless intern", "Pun Pun", AQUARIUM_COMPANY, "Unknown", "Central Command")

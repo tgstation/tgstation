@@ -433,14 +433,14 @@ SUBSYSTEM_DEF(id_access)
 	id_card.update_icon()
 
 /**
- * Applies a trim to a chameleon card. This is purely visual, utilising the card's override vars.
+ * Applies a trim to a card. This is purely visual, utilising the card's override vars.
  *
  * Arguments:
- * * id_card - The chameleon card to apply the trim visuals to.
-* * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
+ * * id_card - The card to apply the trim visuals to.
+ * * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
  * * check_forged - Boolean value. If TRUE, will not overwrite the card's assignment if the card has been forged.
  */
-/datum/controller/subsystem/id_access/proc/apply_trim_to_chameleon_card(obj/item/card/id/advanced/chameleon/id_card, trim_path, check_forged = TRUE)
+/datum/controller/subsystem/id_access/proc/apply_trim_override(obj/item/card/id/advanced/id_card, trim_path, check_forged = TRUE)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 	id_card.trim_icon_override = trim.trim_icon
 	id_card.trim_state_override = trim.trim_state
@@ -452,22 +452,21 @@ SUBSYSTEM_DEF(id_access)
 	id_card.big_pointer = trim.big_pointer
 	id_card.pointer_color = trim.pointer_color
 
-	if (!check_forged || !id_card.forged)
-		id_card.assignment = trim.assignment
+	var/obj/item/card/id/advanced/chameleon/cham_id = id_card
+	if (istype(cham_id) && (!check_forged || !cham_id.forged))
+		cham_id.assignment = trim.assignment
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
 		owner.sec_hud_set_ID()
 
-	// We'll let the chameleon action update the card's label as necessary instead of doing it here.
-
 /**
- * Removes a trim from a chameleon ID card.
+ * Removes a trim from a ID card.
  *
  * Arguments:
  * * id_card - The ID card to remove the trim from.
  */
-/datum/controller/subsystem/id_access/proc/remove_trim_from_chameleon_card(obj/item/card/id/advanced/chameleon/id_card)
+/datum/controller/subsystem/id_access/proc/remove_trim_override(obj/item/card/id/advanced/id_card)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
 	id_card.trim_assignment_override = null

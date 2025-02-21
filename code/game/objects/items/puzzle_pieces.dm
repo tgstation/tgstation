@@ -526,7 +526,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 /obj/effect/puzzle_poddoor_open
 	name = "puzzle-poddoor relay"
-	desc = "activates poddoors if activated with a puzzle signal."
+	desc = "Activates pod doors if activated with a puzzle signal."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 	anchored = TRUE

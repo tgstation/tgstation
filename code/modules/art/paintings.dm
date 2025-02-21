@@ -69,7 +69,7 @@
 
 	/**
 	 * How big the grid cells that compose the painting are in the UI (multiplied by zoom).
-	 * This impacts the size of the UI, so smaller values are generally better for bigger canvases and viceversa
+	 * This impacts the size of the UI, so smaller values are generally better for bigger canvases and vice-versa
 	 */
 	var/pixels_per_unit = 9
 

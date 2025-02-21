@@ -16,7 +16,7 @@
 
 /obj/item/stack/light_w/examine(mob/user)
 	. = ..()
-	. += span_warning("The [name] looks unfinished, add <b>iron</b> to complete it.")
+	. += span_warning("\The [src] looks unfinished, add <b>iron</b> to complete it.")
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/sheet/iron))
