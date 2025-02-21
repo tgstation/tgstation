@@ -55,6 +55,7 @@
 
 /obj/projectile/bullet/c10mm/reaper
 	name = "10mm reaper pellet"
+	icon_state = null
 	damage = 50
 	armour_penetration = 40
 	tracer_type = /obj/effect/projectile/tracer/sniper
