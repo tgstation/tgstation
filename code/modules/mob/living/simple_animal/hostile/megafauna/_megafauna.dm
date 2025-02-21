@@ -174,6 +174,8 @@
 	if(!isliving(the_target))
 		return TRUE
 	var/mob/living/living_target = the_target
+	if(living_target.has_status_effect(/datum/status_effect/shapechange_mob)) // Prevents polymorph belt cheese
+		return !isnull(living_target.ckey)
 	return !living_target.has_status_effect(/datum/status_effect/gutted)
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
