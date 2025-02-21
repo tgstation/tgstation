@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Refactored some code relating to how entertainment monitors are notified of active feeds."
