@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes:
+  - admin: "Added a new config to force admins to deadmin when readying up or latejoining the round."
