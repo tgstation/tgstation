@@ -301,13 +301,13 @@
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	var/implant_message = "You don't remember anything before the start of this shift"
+	var/implant_message = "You don't remember anything between the start of the shift and now"
 
 /obj/item/assembly/flash/memorizer/attack(mob/living/M, mob/user)
 	if(issilicon(M))
 		//act as a normal flash
 		return ..()
-	M.wipe_memory() // I was gonna... 
+	M.mind.wipe_memory() // I was gonna...
 	to_chat(M, "<br/><br/<br/<br/<br/<br/<br/<br/<br/>")
 	to_chat(M, span_hypnophrase(implant_message))
 	return ..()
