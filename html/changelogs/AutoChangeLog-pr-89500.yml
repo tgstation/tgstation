@@ -1,0 +1,7 @@
+author: "Jacquerel, Dawnseer, & Carlarc"
+delete-after: True
+changes:
+  - rscadd: "Added a variety of shoes to the loadout system"
+  - rscadd: "Added another pair of pairs of glasses to the loadout system"
+  - rscadd: "Added a variety of pocket items to the loadout system"
+  - rscdel: "Removed the Colourist quirk, as you can now get the exact same item via the loadout system"
