@@ -441,3 +441,15 @@
   timothymtorres:
   - bugfix: Fix deprecated mob robot path from basketball stadium map
   - bugfix: Revert Midi2Piano fix (#85967) that broke the the midi converter tool.
+2025-02-21:
+  Aniantan:
+  - bugfix: You can no longer "use" can of bait on non-bait slots in fishing rod
+  Melbert:
+  - sound: Snowstorms now have sounds associated.
+  Singul0:
+  - rscadd: After some light bit of restructuring, the local TV station, serving SPACE
+      SECTOR 13 has opened up again!
+  TiviPlus:
+  - code_imp: optimized some icon code
+  necromanceranne:
+  - image: Changes Sakhno rifles from olive drab to a wooden finish.
