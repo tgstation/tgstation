@@ -301,6 +301,16 @@
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	var/implant_message = "You don't remember anything before the start of this shift"
+
+/obj/item/assembly/flash/memorizer/attack(mob/living/M, mob/user)
+	if(issilicon(M))
+		//act as a normal flash
+		return ..()
+	to_chat(M, "<br/><br/<br/<br/<br/<br/<br/<br/<br/")
+	to_chat(M, span_hypnophrase(implant_message))
+	return ..()
+
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 
