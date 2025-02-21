@@ -38,6 +38,7 @@ type UplinkItem = {
   restricted_roles: string;
   restricted_species: string;
   progression_minimum: number;
+  population_minimum: number;
   cost_override_string: string;
   lock_other_purchases: BooleanLike;
   ref?: string;
@@ -173,6 +174,7 @@ export class Uplink extends Component<{}, UplinkState> {
     const {
       telecrystals,
       progression_points,
+      joined_population,
       primary_objectives,
       can_renegotiate,
       has_progression,
@@ -198,6 +200,7 @@ export class Uplink extends Component<{}, UplinkState> {
       const item = itemsToAdd[i];
       const hasEnoughProgression =
         progression_points >= item.progression_minimum;
+      const hasEnoughPop = joined_population >= item.population_minimum;
 
       let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
@@ -241,8 +244,14 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
+        population_tooltip:
+          'This item requires at least ' +
+          item.population_minimum +
+          ' players to have joined.',
+        insufficient_population: !hasEnoughPop,
         disabled:
           !canBuy ||
+          !hasEnoughPop ||
           (has_progression && !hasEnoughProgression) ||
           (item.lock_other_purchases && purchased_items > 0),
         extraData: {
