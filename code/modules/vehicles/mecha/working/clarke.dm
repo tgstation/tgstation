@@ -33,6 +33,10 @@
 	accesses = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 	allow_diagonal_movement = FALSE
 	pivot_step = TRUE
+	/// How fast the mech is in low pressure
+	var/fast_pressure_step_in = 1.25
+	/// How fast the mech is in normal pressure
+	var/slow_pressure_step_in = 2
 
 /datum/armor/mecha_clarke
 	melee = 40
@@ -190,3 +194,18 @@
 	desc = "Searching for valuables..."
 
 #undef SEARCH_COOLDOWN
+
+//Controls speed when not in lavaland pressure
+
+/obj/vehicle/sealed/mecha/clarke/Move()
+	. = ..()
+	update_pressure()
+
+/obj/vehicle/sealed/mecha/clarke/proc/update_pressure()
+	var/turf/T = get_turf(loc)
+
+	if(lavaland_equipment_pressure_check(T))
+		movedelay = !overclock_mode ? fast_pressure_step_in : fast_pressure_step_in / overclock_coeff
+
+	else
+		movedelay = !overclock_mode ? slow_pressure_step_in : slow_pressure_step_in / overclock_coeff
