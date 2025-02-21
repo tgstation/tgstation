@@ -303,13 +303,13 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	var/implant_message = "You don't remember anything between the start of the shift and now"
 
-/obj/item/assembly/flash/memorizer/attack(mob/living/M, mob/user)
-	if(issilicon(M))
+/obj/item/assembly/flash/memorizer/interact_with_atom(mob/living/victim, mob/user)
+	if(issilicon(victim))
 		//act as a normal flash
 		return ..()
-	M.mind.wipe_memory() // I was gonna...
-	to_chat(M, "<br/><br/<br/<br/<br/<br/<br/<br/<br/>")
-	to_chat(M, span_hypnophrase(implant_message))
+	victim.mind.wipe_memory() // I was gonna...
+	to_chat(victim, "<br/><br/<br/<br/<br/<br/<br/<br/<br/>")
+	to_chat(victim, span_hypnophrase(implant_message))
 	return ..()
 
 
