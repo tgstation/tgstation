@@ -9,6 +9,7 @@
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
+	integrity_failure = 0.75
 	// This layer only matters for determining when you click it vs other objects
 	layer = BELOW_OPEN_DOOR_LAYER
 	/// If TRUE, we can't pass through unless the mob is resting (or fulfills more specific requirements)
@@ -17,6 +18,8 @@
 	var/flaps_layer = ABOVE_MOB_LAYER
 	/// Alpha of the flaps
 	var/flaps_alpha = 255
+	/// Limits how much damage from environmental fire we can take per second
+	COOLDOWN_DECLARE(burn_damage_cd)
 
 /datum/armor/structure_plasticflaps
 	melee = 100
@@ -48,11 +51,15 @@
 	gen_overlay()
 	air_update_turf(TRUE, TRUE)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXITED = PROC_REF(play_plastsicflaps_sound),
+		COMSIG_ATOM_EXITED = PROC_REF(play_plastic_sound),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	var/static/list/adjacent_loc_connections = list(
+		COMSIG_TURF_EXPOSE = PROC_REF(check_melt),
+	)
+	AddComponent(/datum/component/connect_range, tracked = src, connections = adjacent_loc_connections, range = 1, works_in_containers = FALSE)
 
-/obj/structure/plasticflaps/proc/play_plastsicflaps_sound(datum/source, atom/movable/exiting)
+/obj/structure/plasticflaps/proc/play_plastic_sound(obj/source, atom/movable/exiting)
 	SIGNAL_HANDLER
 	if(isitem(exiting))
 		var/obj/item/item_exiter = exiting
@@ -74,6 +81,28 @@
 	if(locate(/obj/structure/plasticflaps) in exiting.loc)
 		return
 	playsound(src, 'sound/effects/plasticflaps.ogg', 50, TRUE, ignore_walls = FALSE, falloff_exponent = 8, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/structure/plasticflaps/proc/check_melt(turf/source, datum/gas_mixture/air, temperature)
+	SIGNAL_HANDLER
+	if(temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		return
+	if(!COOLDOWN_FINISHED(src, burn_damage_cd))
+		return
+
+	COOLDOWN_START(src, burn_damage_cd, 1 SECONDS)
+
+	var/percent_damage_taken = clamp(0.2 * (temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 2.5)), 0.05, 0.25)
+	take_damage(max_integrity * percent_damage_taken, BURN, FIRE, sound_effect = FALSE)
+
+/obj/structure/plasticflaps/atom_break(damage_flag)
+	if(damage_flag == FIRE)
+		visible_message(span_warning("[src] start\s to melt from the heat!"))
+	return ..()
+
+/obj/structure/plasticflaps/atom_destruction(damage_flag)
+	if(damage_flag == FIRE)
+		visible_message(span_warning("[src] melt\s away into plastic goo!"))
+	return ..()
 
 /obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(!same_z_layer)
