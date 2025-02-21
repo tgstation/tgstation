@@ -151,8 +151,8 @@
 			num_spins = -1
 		if(!num_spins)
 			return
-		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
-		if(!spin_speed)
+		var/spins_per_sec = input(usr, "How many spins per second?", "Spin Animation") as null|num
+		if(!spins_per_sec)
 			return
 		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
 		switch(direction)
@@ -162,7 +162,7 @@
 				direction = 0
 			else
 				return
-		SpinAnimation(spin_speed, num_spins, direction)
+		SpinAnimation(1 SECONDS / spins_per_sec, num_spins, direction)
 
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
 		if(!check_rights(R_VAREDIT))

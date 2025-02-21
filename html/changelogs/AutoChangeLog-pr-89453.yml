@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Replaces the 10mm semi-automatic surplus rifle with the Sakhno SKS semi-automatic rifle."
+  - rscadd: "You can acquire a SKS parts kit from the black market."
