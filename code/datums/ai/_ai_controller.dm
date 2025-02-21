@@ -635,8 +635,8 @@ multiple modular subtrees with behaviors
 	}; \
 	else if(isdatum(tracked_datum)) { \
 		var/datum/_tracked_datum = tracked_datum; \
-		if(QDELETED(tracked_datum)) { \
-		stack_trace("Tried to track a qdeleted datum ([tracked_datum]) in ai datum blackboard (key: [key])! \
+		if(QDELETED(_tracked_datum)) { \
+		stack_trace("Tried to track a qdeleted datum ([_tracked_datum]) in ai datum blackboard (key: [key])! \
 			Please ensure that we are not doing this by adding handling where necessary."); \
 		return; \
 		}; \
