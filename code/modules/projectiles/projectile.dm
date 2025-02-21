@@ -999,7 +999,8 @@
 				moving_turfs = FALSE
 			// If we've impacted something, we need to animate our movement until the actual hit
 			// Otherwise the projectile visually disappears slightly before the actual impact
-			if (deletion_queued)
+			// Not if we're hitscan, however, microop time!
+			if (deletion_queued && !hitscan)
 				// distance_to_move is how much we have to step to get to the next turf, hypotenuse is how much we need
 				// to move in the next turf to get from entry to impact position
 				delete_distance = distance_to_move + sqrt((impact_x - entry_x) ** 2 + (impact_y - entry_y) ** 2)
@@ -1016,6 +1017,10 @@
 				delete_distance = distance_to_move - (ICON_SIZE_ALL - pixels_moved_last_tile)
 
 		if (deletion_queued)
+			// Hitscans don't need to wait before deleting
+			if (hitscan)
+				return movements_done
+
 			// We moved to the next turf first, then impacted something
 			// This means that we need to offset our visual position back to the previous turf, then figure out
 			// how much we moved on the next turf (or we didn't move at all in which case we both shifts are 0 anyways)
