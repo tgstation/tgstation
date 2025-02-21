@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Being a team antagonist will no longer hide all of your other antagonist roles from the roundend report, i.e a BB+traitor will properly show as both a BB and a traitor in the roundend report."
