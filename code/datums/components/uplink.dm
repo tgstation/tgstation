@@ -168,8 +168,6 @@
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
 	data["progression_points"] = uplink_handler.progression_points
-	data["current_expected_progression"] = SStraitor.current_global_progression
-	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
 	data["current_progression_scaling"] = SStraitor.current_progression_scaling
 
 	if(uplink_handler.primary_objectives)
