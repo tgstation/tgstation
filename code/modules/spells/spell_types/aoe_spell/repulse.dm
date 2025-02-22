@@ -107,6 +107,15 @@
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_caster = cast_on
 		playsound(get_turf(carbon_caster), 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 80, TRUE, TRUE)
-		carbon_caster.spin(6, 1)
+		carbon_caster.spin(0.6 SECONDS, 1)
+	if(isliving(cast_on) && !HAS_TRAIT(cast_on, TRAIT_STRENGTH))
+		addtimer(CALLBACK(src, PROC_REF(after_spin)), 0.6 SECONDS, TIMER_DELETE_ME)
 
 	return ..()
+
+/// You're not strong enough :(
+/datum/action/cooldown/spell/aoe/repulse/xeno/proc/after_spin()
+	if(QDELETED(owner) || !isliving(owner) || HAS_TRAIT(owner, TRAIT_STRENGTH))
+		return
+	var/mob/living/living_owner = owner
+	living_owner.Knockdown(5 SECONDS)
