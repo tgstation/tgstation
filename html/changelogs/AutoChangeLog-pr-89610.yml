@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Gave space suits back half of their missing slowdown due to an oversight in a prior change."
