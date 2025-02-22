@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed scars not being examine-able if you wore a mask"
-  - bugfix: "Fixed uniform sensors being examine-able even when worn under a spacesuit."
