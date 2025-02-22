@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixes borgs not accepting encryption keys"
+  - qol: "Borg encryption key interactions now use balloon alerts, and popping out a key puts it in your hands instead of dropping it on the ground."
