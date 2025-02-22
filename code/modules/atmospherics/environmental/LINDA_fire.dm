@@ -104,8 +104,25 @@
 	if(!isnull(starting_temperature))
 		temperature = starting_temperature
 
+	var/turf/open/our_turf = loc
+	//on creation we check adjacent turfs for hot spot to start grouping, if surrounding do not have hot spots we create our own
+	for(var/turf/open/to_check as anything in our_turf.atmos_adjacent_turfs)
+		if(!to_check.active_hotspot)
+			continue
+		var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
+		if(!our_hot_group)
+			enemy_spot.our_hot_group.add_to_group(src)
+		else if(our_hot_group != enemy_spot.our_hot_group && enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
+			our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
+
+	if(!our_hot_group)//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
+		our_hot_group = new
+		our_hot_group.add_to_group(src)
+
 	// If our hotspot gets created on a turf with existing hotspots on it that just got spawned, abort
-	if(!perform_exposure() && !QDELETED(src))
+	if(!perform_exposure())
+		if (QDELETED(src))
+			return
 		return INITIALIZE_HINT_QDEL
 
 	if(QDELETED(src)) // It is actually possible for this hotspot to become qdeleted in perform_exposure() if another hotspot gets created (for example in fire_act() of fuel pools)
@@ -118,18 +135,6 @@
 		COMSIG_ATOM_ABSTRACT_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	var/turf/open/our_turf = loc
-	//on creation we check adjacent turfs for hot spot to start grouping, if surrounding do not have hot spots we create our own
-	for(var/turf/open/to_check as anything in our_turf.atmos_adjacent_turfs)
-		if(to_check.active_hotspot)
-			var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
-			if(!our_hot_group)
-				enemy_spot.our_hot_group.add_to_group(src)
-			else if(our_hot_group != enemy_spot.our_hot_group && enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
-				our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
-	if(!our_hot_group)//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
-		our_hot_group = new
-		our_hot_group.add_to_group(src)
 
 	if(COOLDOWN_FINISHED(our_turf, fire_puff_cooldown))
 		playsound(our_turf, 'sound/effects/fire_puff.ogg', 30)
