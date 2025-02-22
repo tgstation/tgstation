@@ -18,12 +18,10 @@
 	initial_cofig.reset()
 	var/list/obj/item/items = PopulateContents(initial_cofig)
 
-	///does not need to be on live as your storage code should be fixed before then. Performance
-	#if defined(UNIT_TESTS) || defined(DEBUG)
-	if(contents.len) //no hacking our way into the storages loc without going through `can_insert()` first
+	//no hacking our way into the storages loc without going through `can_insert()` first
+	if(contents.len)
 		stack_trace("[contents.len] atoms were found inside storage before they could be inserted correctly")
 		return INITIALIZE_HINT_QDEL
-	#endif
 
 	//Create storage only after retriving the contents. This is done so `atom_storage` values are not modified
 	//manually which is error prone. Either create a storage subtype with your specified values or use
@@ -73,11 +71,8 @@
 			if(type_paths)
 				type_paths |= insert.type
 
-		///does not need to be on live as your storage code should be fixed before then. Performance
-		#if defined(UNIT_TESTS) || defined(DEBUG)
 		if(!atom_storage.can_insert(insert, messages = STORAGE_ERROR_INSERT))
 			. = INITIALIZE_HINT_QDEL //this thing was shoved inside & destroyed us. Fix your storage caps and try again
-		#endif
 		insert.forceMove(src)
 
 	if(!pre_compute || . == INITIALIZE_HINT_QDEL)
@@ -90,8 +85,8 @@
 		atom_storage.max_specific_storage = max_item_weight
 	if(type_paths)
 		atom_storage.set_holdable(
-			can_hold_list = initial_cofig.whitelist_content_types ? type_paths : null,
-			exception_hold_list = initial_cofig.contents_are_exceptions ? type_paths : null
+			can_hold_list = initial_cofig.whitelist_content_types ? type_paths : atom_storage.can_hold,
+			exception_hold_list = initial_cofig.contents_are_exceptions ? type_paths : atom_storage.exception_hold
 		)
 
 /obj/item/storage/create_storage(
