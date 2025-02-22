@@ -212,50 +212,53 @@
 					disperse_pizzas()
 				else
 					balloon_alert(user, "looks unstable...")
-			return
+			return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "close it first!")
+			return ITEM_INTERACT_FAILURE
 	else if(istype(used_item, /obj/item/food/pizza))
 		if(open)
 			if(pizza)
 				balloon_alert(user, "it's full!")
-				return
+				return ITEM_INTERACT_FAILURE
 			if(!user.transferItemToLoc(used_item, src))
-				return
+				return ITEM_INTERACT_FAILURE
 			pizza = used_item
 			update_appearance()
-			return
+			return ITEM_INTERACT_SUCCESS
 	else if(istype(used_item, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
 			if(!user.transferItemToLoc(used_item, src))
-				return
+				return ITEM_INTERACT_FAILURE
 			set_wires(new /datum/wires/explosive/pizza(src))
 			register_bomb(used_item)
 			balloon_alert(user, "bomb placed")
 			update_appearance()
-			return
+			return ITEM_INTERACT_SUCCESS
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
+			return ITEM_INTERACT_FAILURE
 	else if(IS_WRITING_UTENSIL(used_item))
-		if(!open)
-			if(!user.can_write(used_item))
-				return
-			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
-			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
-			if(!user.can_perform_action(src))
-				return
-			balloon_alert(user, "writing box tag...")
-			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			boxtag_set = TRUE
-			update_appearance()
-			return
-	else if(is_wire_tool(used_item))
-		if(wires && bomb)
-			wires.interact(user)
+		if(open)
+			return ITEM_INTERACT_FAILURE
+		if(!user.can_write(used_item))
+			return ITEM_INTERACT_FAILURE
+		var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
+		box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
+		if(!user.can_perform_action(src))
+			return ITEM_INTERACT_FAILURE
+		balloon_alert(user, "writing box tag...")
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+		boxtag_set = TRUE
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	else if(is_wire_tool(used_item) && wires && bomb)
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
 	else if(istype(used_item, /obj/item/knife) && !isnull(pizza) && open && !pizza.sliced)
 		pizza.slice(user, used_item)
-		return
-	..()
+		return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/pizzabox/process(seconds_per_tick)
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
