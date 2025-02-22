@@ -237,6 +237,9 @@
 /datum/bodypart_overlay/mutant/tail/xeno/get_global_feature_list()
 	return SSaccessories.tails_list_xeno
 
+/datum/bodypart_overlay/mutant/tail/xeno/randomize_appearance()
+	set_appearance_from_name(default_appearance)
+
 /datum/bodypart_overlay/mutant/tail/xeno/queen
 	default_appearance = "Xeno Queen"
 
