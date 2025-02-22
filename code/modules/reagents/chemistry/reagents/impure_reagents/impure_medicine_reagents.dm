@@ -278,7 +278,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 12.5 //sleeping is a basic need of all lifeformsa
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
-	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 5)
 	metabolized_traits = list(TRAIT_SUPERSLEEPER)
 
@@ -396,9 +395,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Syrinifergus"
 	description = "This reagent heals toxin damage faster the more damaged the patient's liver is."
 	chemical_flags = REAGENT_DONOTSPLIT
-	///The list of reagents we've affected
-	var/cached_reagent_list = list()
+	tox_damage = 0
 	addiction_types = list(/datum/addiction/medicine = 1.75)
+
+	var/liver_damagestate = 0
 
 /datum/reagent/inverse/healing/syriniver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -406,9 +406,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!liver || liver.organ_flags & ORGAN_FAILING)
 		return
 
-	var/liver_damagestate
 	liver_damagestate = affected_mob.get_organ_loss(ORGAN_SLOT_LIVER)
-	if(affected_mob.adjustToxLoss(min(-1, (1 * liver_damagestate / 10)) * seconds_per_tick * REM, updating_health = FALSE))
+	if(affected_mob.adjustToxLoss(-liver_damagestate / 10 * seconds_per_tick * REM, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 //Multiver
