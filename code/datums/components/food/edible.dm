@@ -63,19 +63,15 @@ Behavior that's still missing from this component that original food items had t
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	//these lines might seem a bit redundant if on_source_add() is called anyway
-	//but they are not. Most of these args have null default value in on_source_add()
-	//and the proc also has several isnull() or islist() checks
-	//so to not override the vars of an already existing component if it were to receive
-	//additional sources unless the args were made explicit in the AddComponentFrom() call.
+	// If these args are not explicitly stated when initializing the component
+	// Use the defaults provided in this proc definition, so we don't have to worry
+	// about these being null. We cannot rely on on_add_source() for this lest these
+	// end up being unwantedly overriden by other sources.
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
 	src.foodtypes = foodtypes
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
-	src.after_eat = after_eat
-	src.on_consume = on_consume
-	src.check_liked = check_liked
 
 /datum/component/edible/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
@@ -147,24 +143,27 @@ Behavior that's still missing from this component that original food items had t
 )
 	. = ..()
 
-	if(!isnull(foodtypes) && foodtypes_by_source[source]) //foodtypes being overriden
-		src.foodtypes &= ~foodtypes_by_source[source]
-	if(!isnull(food_flags) && food_flags_by_source[source]) //food_flags being overriden
-		src.food_flags &= ~food_flags_by_source[source]
+	var/recalculate = FALSE
+	if(!isnull(foodtypes))
+		if(foodtypes_by_source[source]) //foodtypes being overriden
+			recalculate = TRUE
+		foodtypes_by_source[source] = foodtypes
+	if(!isnull(food_flags))
+		if(food_flags_by_source[source]) //food_flags being overriden
+			recalculate = TRUE
+		food_flags_by_source[source] = food_flags
 	if(!isnull(junkiness))
 		src.junkiness += junkiness - junkiness_by_source[source]
 		junkiness_by_source[source] = junkiness
-		
 
-	foodtypes_by_source[source] = foodtypes
-	food_flags_by_source[source] = food_flags
-
-	if(foodtypes & GORE)
-		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
-
-	// add food flags and types
-	src.food_flags |= food_flags
-	src.foodtypes |= foodtypes
+	if(recalculate)
+		recalculate_food_flags()
+	else
+		// nothing is being removed
+		src.food_flags |= food_flags
+		src.foodtypes |= foodtypes
+		if(foodtypes & GORE)
+			ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 	// add newly passed in reagents
 	setup_initial_reagents(initial_reagents, reagent_purity, tastes, volume)
@@ -195,18 +194,23 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/on_source_remove(source)
 	//rebuild the foodtypes and food_flags bitfields without the removed source
-	foodtypes = NONE
-	food_flags = NONE
 	foodtypes_by_source -= source
 	food_flags_by_source -= source
 	junkiness -= junkiness_by_source[source]
 	junkiness_by_source -= source
+	recalculate_food_flags()
+	return ..()
+
+/datum/component/edible/proc/recalculate_food_flags()
+	foodtypes = NONE
+	food_flags = NONE
 	for(var/source_key in foodtypes_by_source)
 		foodtypes |= foodtypes_by_source[source_key]
 		food_flags |= food_flags_by_source[source_key]
-	if(!(foodtypes & GORE))
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+	else
 		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
-	return ..()
 
 /datum/component/edible/Destroy(force)
 	after_eat = null
@@ -217,10 +221,10 @@ Behavior that's still missing from this component that original food items had t
 /// Sets up the initial reagents of the food.
 /datum/component/edible/proc/setup_initial_reagents(list/reagents, reagent_purity, list/tastes, volume)
 	var/atom/owner = parent
-	if(owner.reagents && volume)
-		owner.reagents.maximum_volume = volume
-	else
+	if(!owner.reagents)
 		owner.create_reagents(volume || DEFAULT_EDIBLE_VOLUME, INJECTABLE)
+	else
+		owner.reagents.maximum_volume = volume
 
 	for(var/rid in reagents)
 		var/amount = reagents[rid]
