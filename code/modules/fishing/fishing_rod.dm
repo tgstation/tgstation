@@ -591,7 +591,7 @@
 	if(fishing_line || GLOB.fishing_challenges_by_user[user])
 		return
 	// If the new item is a bait can, try to get bait from it
-	if(istype(new_item, /obj/item/bait_can))
+	if(slot == ROD_SLOT_BAIT && istype(new_item, /obj/item/bait_can))
 		var/obj/item/bait_can/can = new_item
 		var/bait = can.retrieve_bait(user)
 		if(!bait)
