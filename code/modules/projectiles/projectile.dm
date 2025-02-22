@@ -1101,12 +1101,14 @@
 		if (QDELETED(src))
 			return
 
-		if (TICK_CHECK || paused)
-			create_hitscan_point()
-			// Create tracers if we get timestopped or lagchunk so there aren't weird delays
-			generate_hitscan_tracers(impact_point = FALSE, impact_visual = FALSE)
-			record_hitscan_start(offset = FALSE)
-			return
+		if (!TICK_CHECK && paused)
+			continue
+
+		create_hitscan_point()
+		// Create tracers if we get timestopped or lagchunk so there aren't weird delays
+		generate_hitscan_tracers(impact_point = FALSE, impact_visual = FALSE)
+		record_hitscan_start(offset = FALSE)
+		return
 
 /// Creates (or wipes clean) list of tracer keypoints and creates a first point.
 /obj/projectile/proc/record_hitscan_start(offset = TRUE)
