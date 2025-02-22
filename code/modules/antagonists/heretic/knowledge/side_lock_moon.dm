@@ -111,9 +111,9 @@
  */
 /datum/heretic_knowledge/codex_morbus
 	name = "Codex Morbus"
-	desc = "Allows you to use a codex cicatrix, and a body upgrades your Codex Cicactrix into a Codex Morbus. \
+	desc = "Allows you to to combine a codex cicatrix, and a body into a Codex Morbus. \
 		It draws runes and siphons essences a bit faster. \
-		Right Click on a rune to curse crewmembers, the target's blood is required for a curse to take effect."
+		Right Click on a rune to curse crewmembers, the target's blood is required in your off hand for a curse to take effect (Best combined with Phylactery Of Damnation)."
 	gain_text = "The spine of this leather-bound tome creaks with an eerily pained sigh. \
 		To ply page from place takes considerable effort, and I dare not linger on the suggestions the book makes for longer than necessary. \
 		It speaks of coming plagues, of waiting supplicants of dead and forgotten gods, and the undoing of mortal kind. \
