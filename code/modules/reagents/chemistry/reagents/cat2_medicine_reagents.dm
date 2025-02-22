@@ -526,7 +526,7 @@
 	if (methods & TOUCH)	//touch does not apply chems to blood, we want to combine the two volumes before attempting to unhusk
 		current_volume += reac_volume
 
-	if(current_volume >= SYNTHFLESH_UNHUSK_MAX)
+	if(current_volume >= SYNTHFLESH_UNHUSK_AMOUNT)
 		carbies.cure_husk(BURN)
 		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!")) //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 
