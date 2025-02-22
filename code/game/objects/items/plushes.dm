@@ -803,16 +803,11 @@
 
 /obj/item/toy/plush/human
 	name = "human plushie"
-	desc = "This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming."
+	desc = "This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is crying. The human is screaming."
 	icon_state = "plushie_human"
 	inhand_icon_state = null //i would rather not have a blue coder plushie inhand
 	attack_verb_continuous = list("whines at", "cries at", "screams at")
 	attack_verb_simple = list("whine at", "cry at", "scream at")  //i cant think of a better verb please tell me something else
 	squeak_override = list(
-		'sound/mobs/humanoids/human/scream/malescream_1.ogg' = 1,
-		'sound/mobs/humanoids/human/scream/malescream_2.ogg' = 1,
-		'sound/mobs/humanoids/human/scream/malescream_3.ogg' = 1,
-		'sound/mobs/humanoids/human/scream/malescream_4.ogg' = 1,
-		'sound/mobs/humanoids/human/scream/malescream_5.ogg' = 1,
-		'sound/mobs/humanoids/human/scream/malescream_6.ogg' = 1,
+		'sound/mobs/humanoids/human/scream/malescream_3.ogg' = 1
 		)
