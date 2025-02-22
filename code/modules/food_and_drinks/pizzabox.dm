@@ -70,7 +70,7 @@
 		boxtag_set = TRUE
 	if(open)
 		if(pizza)
-			desc = "[desc] It appears to have \a [pizza] inside. Use your other hand to take it out."
+			desc = "[desc] It appears to have \a [pizza] inside[pizza.sliced ? ". It is sliced" : ""]. Use your other hand to take it out."
 		if(bomb)
 			desc = "[desc] Wait, what?! It has \a [bomb] inside!"
 			if(bomb_defused)
