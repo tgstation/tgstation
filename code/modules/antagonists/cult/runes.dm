@@ -306,8 +306,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
 	var/mob/living/carbon/human/human_convertee = convertee
 
-	if(istype(human_convertee)) //remove the slurring/stuttering before the april fools punch line reference
+	if(istype(human_convertee)) //remove the slurring/stuttering/silence before the april fools punch line reference
 		human_convertee.uncuff()
+		human_convertee.remove_status_effect(/datum/status_effect/silenced)
 		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
 		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
 
