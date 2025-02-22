@@ -453,3 +453,37 @@
   - code_imp: optimized some icon code
   necromanceranne:
   - image: Changes Sakhno rifles from olive drab to a wooden finish.
+2025-02-22:
+  Absolucy:
+  - bugfix: Being a team antagonist will no longer hide all of your other antagonist
+      roles from the roundend report, i.e a BB+traitor will properly show as both
+      a BB and a traitor in the roundend report.
+  - refactor: Refactored some code relating to how entertainment monitors are notified
+      of active feeds.
+  Jackraxxus:
+  - admin: Added a new config to force admins to deadmin when readying up or latejoining
+      the round.
+  Jacquerel:
+  - spellcheck: Makes some VV input prompts clearer to read and use
+  Jacquerel, Dawnseer, & Carlarc:
+  - rscadd: Added a variety of shoes to the loadout system
+  - rscadd: Added another pair of pairs of glasses to the loadout system
+  - rscadd: Added a variety of pocket items to the loadout system
+  - rscdel: Removed the Colourist quirk, as you can now get the exact same item via
+      the loadout system
+  Melbert:
+  - rscadd: EVA doors become all access on Red Alert
+  - rscadd: First Aid Supplies (the compartments in Medbay Storage which hold medkits)
+      become all access on Red Alert (already present on Icebox). Medbay Storage itself
+      does NOT become all access.
+  Melbert, Wallem:
+  - rscadd: Adds recording setups to the Captain's office on all maps, allowing them
+      to project their face to all status displays on the station
+  - rscadd: Centcom now has a soundstage for broadcasting to the station. It's besides
+      the Thunderdome.
+  SmArtKar:
+  - bugfix: Fixed ChemMaster incorrectly lableling produced items
+  necromanceranne:
+  - rscadd: Replaces the 10mm semi-automatic surplus rifle with the Sakhno SKS semi-automatic
+      rifle.
+  - rscadd: You can acquire a SKS parts kit from the black market.
