@@ -1008,6 +1008,10 @@
 
 	return 0
 
+#undef ALERT_RELEVANCY_SAFE
+#undef ALERT_RELEVANCY_WARN
+#undef ALERT_RELEVANCY_PERTINENT
+
 /**
  * Debug ModPC
  * Used to spawn all programs for Create and Destroy unit test.
