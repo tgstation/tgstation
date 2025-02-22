@@ -128,7 +128,7 @@
 			break
 	for(var/datum/weakref/blade_ref as anything in blade_knowledge?.created_items)
 		var/obj/item/melee/sickly_blade/blade = blade_ref.resolve()
-		if(!blade)
+		if(QDELETED(blade))
 			blade_knowledge.created_items -= blade_ref
 			continue
 		if(!istype(blade, /obj/item/melee/sickly_blade))
