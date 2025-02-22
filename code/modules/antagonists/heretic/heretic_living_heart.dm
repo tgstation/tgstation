@@ -126,9 +126,8 @@
 		blade_knowledge = heretic_datum.get_knowledge(potential_knowledge)
 		if(blade_knowledge)
 			break
-	var/obj/item/melee/sickly_blade/blade
 	for(var/datum/weakref/blade_ref as anything in blade_knowledge?.created_items)
-		blade = blade_ref.resolve()
+		var/obj/item/melee/sickly_blade/blade = blade_ref.resolve()
 		if(!blade)
 			blade_knowledge.created_items -= blade_ref
 			continue
