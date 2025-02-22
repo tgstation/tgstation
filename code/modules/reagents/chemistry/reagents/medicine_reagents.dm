@@ -595,16 +595,16 @@
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(SPT_PROB(2), seconds_per_tick && iscarbon(affected_mob))
+	if(SPT_PROB(2, seconds_per_tick) && iscarbon(affected_mob))
 		var/datum/disease/D = new /datum/disease/heart_failure
 		affected_mob.ForceContractDisease(D)
 		to_chat(affected_mob, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		affected_mob.playsound_local(affected_mob, 'sound/effects/singlebeat.ogg', 100, 0)
 
-	if(SPT_PROB(3.5), seconds_per_tick)
+	if(SPT_PROB(3.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 
-	if(SPT_PROB(18), seconds_per_tick)
+	if(SPT_PROB(18, seconds_per_tick))
 		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath++
 		return UPDATE_MOB_HEALTH
@@ -658,7 +658,7 @@
 				affected_mob.emote("yawn")
 
 		if(24 to 36) // 5u to 7.5u
-			if(SPT_PROB(66), seconds_per_tick)
+			if(SPT_PROB(66, seconds_per_tick))
 				affected_mob.adjust_drowsiness_up_to(2 SECONDS * REM * seconds_per_tick, 12 SECONDS)
 
 		if(36 to 48) // 7.5u to 10u
