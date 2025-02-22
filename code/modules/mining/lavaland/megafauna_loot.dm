@@ -1156,7 +1156,7 @@
 
 /obj/item/organ/brain/cybernetic/ai/on_mob_insert(mob/living/carbon/brain_owner, special, movement_flags)
 	. = ..()
-	brain_owner.add_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP), ORGAN_TRAIT)
+	brain_owner.add_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
 	update_med_hud_status(brain_owner)
 	RegisterSignal(brain_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
 	RegisterSignal(brain_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
@@ -1168,7 +1168,7 @@
 /obj/item/organ/brain/cybernetic/ai/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	undeploy()
 	. = ..()
-	organ_owner.remove_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP), ORGAN_TRAIT)
+	organ_owner.remove_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
 	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
 
 /obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
@@ -1236,7 +1236,8 @@
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(undeploy))
 	AI.deployed_shell = owner
 	deploy_init(AI)
-	ADD_TRAIT(AI.mind, TRAIT_UNCONVERTABLE, ORGAN_TRAIT)
+	ADD_TRAIT(AI.mind, TRAIT_UNCONVERTABLE, REF(src))
+	ADD_TRAIT(AI, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	AI.mind.transfer_to(owner)
 
 /obj/item/organ/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
@@ -1251,7 +1252,8 @@
 	SIGNAL_HANDLER
 	if(!owner?.mind || !mainframe)
 		return
-	UnregisterSignal(src, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
+	UnregisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
+	UnregisterSignal(mainframe, COMSIG_QDELETING)
 	mainframe.redeploy_action.Remove(mainframe)
 	mainframe.redeploy_action.last_used_shell = null
 	owner.mind.transfer_to(mainframe)
@@ -1261,7 +1263,8 @@
 		mainframe.laws.show_laws(mainframe)
 	if(mainframe.eyeobj)
 		mainframe.eyeobj.setLoc(loc)
-	REMOVE_TRAIT(mainframe.mind, TRAIT_UNCONVERTABLE, ORGAN_TRAIT)
+	REMOVE_TRAIT(mainframe.mind, TRAIT_UNCONVERTABLE, REF(src))
+	REMOVE_TRAIT(mainframe, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	mainframe = null
 	update_med_hud_status(owner)
 

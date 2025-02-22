@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Mirror reflections should be more accurate now"
+  - bugfix: "Becoming a Vampire while standing in front of a mirror correctly vanishes you (rather than waiting to exit and enter the mirror's view)"

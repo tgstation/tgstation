@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "AI uplink brain can no longer give you free ghost from which you can return to your AI core"
