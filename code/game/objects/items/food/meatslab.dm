@@ -2,7 +2,6 @@
 
 /obj/item/food/meat
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
-	material_flags = parent_type::material_flags & ~(MATERIAL_ADD_PREFIX|MATERIAL_COLOR) //avoid extra redness, redundancy and texture
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/meat.dmi'
 	var/subjectname = ""
@@ -12,7 +11,7 @@
 /obj/item/food/meat/Initialize(mapload)
 	. = ..()
 
-	if(!blood_decal_type)
+	if(!blood_decal_type || !length(custom_materials))
 		return
 
 	AddComponent(
