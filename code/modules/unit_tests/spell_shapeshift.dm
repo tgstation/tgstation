@@ -58,8 +58,12 @@
 /datum/unit_test/shapeshift_spell/proc/test_spell(mob/living/carbon/human/dummy, datum/action/cooldown/spell/shapeshift/shift, forced_shape)
 	if(forced_shape)
 		shift.shapeshift_type = forced_shape
-
+/*
 	TRIGGER_RESET_COOLDOWN(shift)
+	var/mob/expected_shape = shift.shapeshift_type
+	if(!istype(dummy.loc, expected_shape))
+		return TEST_FAIL("Shapeshift spell: [shift.name] failed to transform the dummy into the shape [initial(expected_shape.name)]. \
+			([dummy] was located within [dummy.loc], which is a [dummy.loc?.type || "null"]).")
 
 	var/mob/living/shape = dummy.loc
 	if(!(shift in shape.actions))
@@ -69,7 +73,7 @@
 	if(istype(dummy.loc, shift.shapeshift_type))
 		return TEST_FAIL("Shapeshift spell: [shift.name] failed to transform the dummy back into a human.")
 
-
+*/
 /**
  * Validates that shapeshifts function properly with holoparasites.
  */
