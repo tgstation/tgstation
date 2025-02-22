@@ -53630,13 +53630,7 @@
 /area/station/science/lobby)
 "rWr" = (
 /obj/structure/table,
-/obj/item/stock_parts/matter_bin{
-	pixel_x = 6;
-	pixel_y = 15
-	},
-/obj/item/stock_parts/matter_bin{
-	pixel_y = 5
-	},
+/obj/item/flatpack/flatpacker,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "rWs" = (
@@ -57230,6 +57224,13 @@
 /obj/machinery/reagentgrinder{
 	pixel_x = -9;
 	pixel_y = 8
+	},
+/obj/item/stock_parts/matter_bin{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/stock_parts/matter_bin{
+	pixel_x = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
