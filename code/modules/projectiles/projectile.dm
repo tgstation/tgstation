@@ -1101,7 +1101,7 @@
 		if (QDELETED(src))
 			return
 
-		if (!TICK_CHECK && paused)
+		if (!TICK_CHECK && !paused)
 			continue
 
 		create_hitscan_point()
