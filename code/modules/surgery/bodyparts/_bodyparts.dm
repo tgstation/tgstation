@@ -203,7 +203,7 @@
 	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
 	/// A potential texturing overlay to put on the limb
 	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
-	/// Lazylist of /datum/status_effect/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
+	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
 	var/list/bodypart_effects
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)

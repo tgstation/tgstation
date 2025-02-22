@@ -1050,13 +1050,8 @@
 	new_bodypart.update_owner(src)
 
 	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
-	for(var/datum/status_effect/bodypart_effect/effect_type as anything in new_bodypart.bodypart_effects)
-		var/datum/status_effect/bodypart_effect/existing_effect = has_status_effect(effect_type)
-
-		if(existing_effect)
-			existing_effect.add_bodypart(new_bodypart)
-			continue
-		apply_status_effect(effect_type, new_bodypart)
+	for(var/datum/status_effect/grouped/bodypart_effect/effect_type as anything in new_bodypart.bodypart_effects)
+		apply_status_effect(effect_type, type, new_bodypart)
 
 	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
