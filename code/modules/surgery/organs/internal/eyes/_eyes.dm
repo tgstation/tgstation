@@ -286,9 +286,15 @@
 /obj/item/organ/eyes/update_overlays()
 	. = ..()
 	if (scarring & RIGHT_EYE_SCAR)
-		. += mutable_appearance('icons/obj/medical/organs/organs.dmi', "eye_scar_right")
+		var/mutable_appearance/right_scar = mutable_appearance('icons/obj/medical/organs/organs.dmi', "eye_scar_right")
+		right_scar.blend_mode = BLEND_INSET_OVERLAY
+		. += right_scar
+
 	if (scarring & LEFT_EYE_SCAR)
-		. += mutable_appearance('icons/obj/medical/organs/organs.dmi', "eye_scar_left")
+		var/mutable_appearance/left_scar = mutable_appearance('icons/obj/medical/organs/organs.dmi', "eye_scar_left")
+		left_scar.blend_mode = BLEND_INSET_OVERLAY
+		. += left_scar
+
 	if (iris_overlays && eye_color_left && eye_color_right)
 		var/mutable_appearance/left_iris = mutable_appearance(icon, "[icon_state]_iris_l")
 		var/mutable_appearance/right_iris = mutable_appearance(icon, "[icon_state]_iris_r")
@@ -1033,3 +1039,8 @@
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_remove(mob/living/carbon/unadapted, special = FALSE, movement_flags)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
+
+/obj/item/organ/eyes/pod
+	name = "pod eyes"
+	desc = "Strangest salad you've ever seen."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES

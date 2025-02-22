@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Crusher marks now can be instantly detonated, but firing one puts you on an attack cooldown again"

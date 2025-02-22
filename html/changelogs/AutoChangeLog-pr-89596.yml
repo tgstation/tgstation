@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "White canes need to be extended in order to allow you to examine faster with them"

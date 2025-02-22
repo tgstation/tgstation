@@ -1,0 +1,4 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscadd: "Living heart can now track lost eldritch blades"

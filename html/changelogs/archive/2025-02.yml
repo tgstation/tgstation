@@ -418,3 +418,72 @@
   necromanceranne:
   - balance: Having a strongarm implant installed into each arm now allows you to
       pry open doors.
+2025-02-20:
+  Aniantan:
+  - bugfix: Can of fishing bait no longer evaporates its bait when used on an active
+      fishing rod
+  - bugfix: Can of fishing bait's quick refill can be used with the fishing rod's
+      UI too
+  Ez-Briz:
+  - bugfix: fixed bluescreen in Access Checker interface
+  LePiromano:
+  - balance: nerfed Icebox's "The Thing" boss
+  - bugfix: fixed "The Thing" 's spike walls destroying items on the floor when summoned
+  MrMelbert, Time-Green:
+  - rscadd: Adds an organ tree as a mutation of shrubs (from the exotic seeds crate)!
+      Spare organs have never been so green!
+  OrionTheFox:
+  - map: Tramstation Evidence Storage now has secure lockers, a security records filing
+      cabinet, and number labels on unsecure lockers
+  necromanceranne:
+  - bugfix: Prevents Cryogelidia from putting you into a permanent stasis until someone
+      injects you with the reagent.
+  timothymtorres:
+  - bugfix: Fix deprecated mob robot path from basketball stadium map
+  - bugfix: Revert Midi2Piano fix (#85967) that broke the the midi converter tool.
+2025-02-21:
+  Aniantan:
+  - bugfix: You can no longer "use" can of bait on non-bait slots in fishing rod
+  Melbert:
+  - sound: Snowstorms now have sounds associated.
+  Singul0:
+  - rscadd: After some light bit of restructuring, the local TV station, serving SPACE
+      SECTOR 13 has opened up again!
+  TiviPlus:
+  - code_imp: optimized some icon code
+  necromanceranne:
+  - image: Changes Sakhno rifles from olive drab to a wooden finish.
+2025-02-22:
+  Absolucy:
+  - bugfix: Being a team antagonist will no longer hide all of your other antagonist
+      roles from the roundend report, i.e a BB+traitor will properly show as both
+      a BB and a traitor in the roundend report.
+  - refactor: Refactored some code relating to how entertainment monitors are notified
+      of active feeds.
+  Jackraxxus:
+  - admin: Added a new config to force admins to deadmin when readying up or latejoining
+      the round.
+  Jacquerel:
+  - spellcheck: Makes some VV input prompts clearer to read and use
+  Jacquerel, Dawnseer, & Carlarc:
+  - rscadd: Added a variety of shoes to the loadout system
+  - rscadd: Added another pair of pairs of glasses to the loadout system
+  - rscadd: Added a variety of pocket items to the loadout system
+  - rscdel: Removed the Colourist quirk, as you can now get the exact same item via
+      the loadout system
+  Melbert:
+  - rscadd: EVA doors become all access on Red Alert
+  - rscadd: First Aid Supplies (the compartments in Medbay Storage which hold medkits)
+      become all access on Red Alert (already present on Icebox). Medbay Storage itself
+      does NOT become all access.
+  Melbert, Wallem:
+  - rscadd: Adds recording setups to the Captain's office on all maps, allowing them
+      to project their face to all status displays on the station
+  - rscadd: Centcom now has a soundstage for broadcasting to the station. It's besides
+      the Thunderdome.
+  SmArtKar:
+  - bugfix: Fixed ChemMaster incorrectly lableling produced items
+  necromanceranne:
+  - rscadd: Replaces the 10mm semi-automatic surplus rifle with the Sakhno SKS semi-automatic
+      rifle.
+  - rscadd: You can acquire a SKS parts kit from the black market.
