@@ -442,6 +442,7 @@
 	desc = "A great meal all round. Not a cord of wood. Kinda raw"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "raw_meatball"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / (/datum/food_processor_process/meat::food_multiplier))
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
@@ -486,6 +487,7 @@
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "meatball"
 	inhand_icon_state = "meatball"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / (/datum/food_processor_process/meat::food_multiplier))
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
@@ -518,6 +520,7 @@
 	desc = "I'm.....NOT REAAADDYY."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "raw_patty"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / (/datum/food_processor_process/meat::food_multiplier))
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
@@ -555,6 +558,7 @@
 	desc = "The Nanotrasen patty is the patty for you and me!"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "patty"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / (/datum/food_processor_process/meat::food_multiplier))
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
