@@ -244,7 +244,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
+	var/heating = rand(5, 25) * REM * seconds_per_tick
 	var/datum/reagents/mob_reagents = affected_mob.reagents
 	if(mob_reagents)
 		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating, 1)
@@ -266,7 +266,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 		. = UPDATE_MOB_HEALTH
-	var/heating = 10 * creation_purity * REM * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
+	var/heating = 10 * REM * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
 	affected_mob.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/human = affected_mob
@@ -274,14 +274,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/tirimol
 	name = "Super Melatonin"//It's melatonin, but super!
-	description = "This will send the patient to sleep, adding a bonus to the efficacy of all reagents administered."
+	description = "This will send the patient to sleep, adding a bonus to their sleep quality."
 	ph = 12.5 //sleeping is a basic need of all lifeformsa
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 5)
+	metabolized_traits = list(TRAIT_SUPERSLEEPER)
 
-//Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
+//Makes patients fall asleep
 /datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	switch(current_cycle)
@@ -290,32 +291,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				affected_mob.emote("yawn")
 		if(11 to INFINITY)
 			affected_mob.Sleeping(40)
-			. = 1
-			if(affected_mob.IsSleeping())
-				for(var/datum/reagent/reagent as anything in affected_mob.reagents.reagent_list)
-					if(reagent in cached_reagent_list)
-						continue
-					if(!istype(reagent, /datum/reagent/medicine))
-						continue
-					reagent.creation_purity *= 1.25
-					cached_reagent_list += reagent
-
-			else if(!affected_mob.IsSleeping() && length(cached_reagent_list))
-				for(var/datum/reagent/reagent as anything in cached_reagent_list)
-					if(!reagent)
-						continue
-					reagent.creation_purity *= 0.8
-				cached_reagent_list = list()
 
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	if(affected_mob.IsSleeping())
 		affected_mob.visible_message(span_notice("[icon2html(affected_mob, viewers(DEFAULT_MESSAGE_RANGE, src))] [affected_mob] lets out a hearty snore!"))//small way of letting people know the supersnooze is ended
-	for(var/datum/reagent/reagent as anything in cached_reagent_list)
-		if(!reagent)
-			continue
-		reagent.creation_purity *= 0.8
-	cached_reagent_list = list()
 
 //convermol
 //inverse
@@ -358,13 +338,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	cached_cold_level_2 = lungs.cold_level_2_threshold
 	cached_cold_level_3 = lungs.cold_level_3_threshold
 	//Heat threshold is increased
-	lungs.heat_level_1_threshold *= creation_purity * 1.5
-	lungs.heat_level_2_threshold *= creation_purity * 1.5
-	lungs.heat_level_3_threshold *= creation_purity * 1.5
+	lungs.heat_level_1_threshold *= 1.5
+	lungs.heat_level_2_threshold *= 1.5
+	lungs.heat_level_3_threshold *= 1.5
 	//Cold threshold is decreased
-	lungs.cold_level_1_threshold *= creation_purity * 0.5
-	lungs.cold_level_2_threshold *= creation_purity * 0.5
-	lungs.cold_level_3_threshold *= creation_purity * 0.5
+	lungs.cold_level_1_threshold *= 0.5
+	lungs.cold_level_2_threshold *= 0.5
+	lungs.cold_level_3_threshold *= 0.5
 
 /datum/reagent/inverse/healing/convermol/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
@@ -409,43 +389,27 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	time_until_next_poison -= seconds_per_tick * (1 SECONDS)
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
-		if(affected_mob.adjustToxLoss(creation_purity * 1, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjustToxLoss(1, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
-//Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
 	name = "Syrinifergus"
-	description = "This reagent reduces the impurity of all non medicines within the patient, reducing their negative effects."
-	self_consuming = TRUE //No pesky liver shenanigans
-	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	description = "This reagent heals toxin damage faster the more damaged the patient's liver is."
+	chemical_flags = REAGENT_DONOTSPLIT
 	///The list of reagents we've affected
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 1.75)
 
-/datum/reagent/inverse/healing/syriniver/on_mob_add(mob/living/affected_mob, amount)
-	if(!(iscarbon(affected_mob)))
-		return ..()
-	var/mob/living/carbon/affected_carbon = affected_mob
-	for(var/datum/reagent/reagent as anything in affected_carbon.reagents.reagent_list)
-		if(reagent in cached_reagent_list)
-			continue
-		if(istype(reagent, /datum/reagent/medicine))
-			continue
-		reagent.creation_purity *= 0.8
-		cached_reagent_list += reagent
-	..()
-
-/datum/reagent/inverse/healing/syriniver/on_mob_delete(mob/living/affected_mob)
+/datum/reagent/inverse/healing/syriniver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!(iscarbon(affected_mob)))
+	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(!liver || liver.organ_flags & ORGAN_FAILING)
 		return
-	if(!cached_reagent_list)
-		return
-	for(var/datum/reagent/reagent as anything in cached_reagent_list)
-		if(!reagent)
-			continue
-		reagent.creation_purity *= 1.25
-	cached_reagent_list = null
+
+	var/liver_damagestate
+	liver_damagestate = affected_mob.get_organ_loss(ORGAN_SLOT_LIVER)
+	if(affected_mob.adjustToxLoss(min(-1, (1 * liver_damagestate / 10)) * seconds_per_tick * REM, updating_health = FALSE))
+		return UPDATE_MOB_HEALTH
 
 //Multiver
 //Inverse
@@ -463,7 +427,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(length(affected_mob.reagents.reagent_list) > 1)
 		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
 	else
-		need_mob_update = affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -522,10 +486,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-		iter_wound.adjust_blood_flow(1-creation_purity)
+		iter_wound.adjust_blood_flow(1)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustBruteLoss(5 * (1-creation_purity) * seconds_per_tick, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjustBruteLoss(5 * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -624,7 +588,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(temp_trauma)
 		return
-	if(!(SPT_PROB(creation_purity*10, seconds_per_tick)))
+	if(!(SPT_PROB(10, seconds_per_tick)))
 		return
 	var/static/list/traumalist
 	if (!traumalist)
@@ -737,10 +701,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(headache)
 		return ..()
-	if(SPT_PROB(100 * creation_purity, seconds_per_tick))
-		affected_mob.become_blind(IMPURE_OCULINE)
-		to_chat(affected_mob, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
-		headache = TRUE
+	affected_mob.become_blind(IMPURE_OCULINE)
+	to_chat(affected_mob, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
+	headache = TRUE
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()

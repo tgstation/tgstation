@@ -268,9 +268,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.getFireLoss() > 25)
-		need_mob_update = affected_mob.adjustFireLoss(-4 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype) //Twice as effective as AIURI for severe burns
+		need_mob_update = affected_mob.adjustFireLoss(-4 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype) //Twice as effective as AIURI for severe burns
 	else
-		need_mob_update = affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype) //But only a quarter as effective for more minor ones
+		need_mob_update = affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype) //But only a quarter as effective for more minor ones
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -521,9 +521,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.getBruteLoss() > 25)
-		need_mob_update = affected_mob.adjustBruteLoss(-4 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustBruteLoss(-4 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	else
-		need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -573,7 +573,7 @@
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
-	var/purity_movespeed_accounting = -0.375 * normalise_creation_purity()
+	var/purity_movespeed_accounting = -0.4
 	affected_mob.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine, TRUE, purity_movespeed_accounting)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/affected_mob)
@@ -583,28 +583,28 @@
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/active_held_item = affected_mob.get_active_held_item()
-	if(SPT_PROB(10 * (1.5-creation_purity), seconds_per_tick) && iscarbon(affected_mob) && active_held_item?.w_class > WEIGHT_CLASS_SMALL)
+	if(SPT_PROB(7.5, seconds_per_tick) && iscarbon(affected_mob) && active_held_item?.w_class > WEIGHT_CLASS_SMALL)
 		if(active_held_item && affected_mob.dropItemToGround(active_held_item))
 			to_chat(affected_mob, span_notice("Your hands spaz out and you drop what you were holding!"))
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 
-	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick * normalise_creation_purity())
-	affected_mob.adjustStaminaLoss(-4 * REM * seconds_per_tick * normalise_creation_purity(), updating_stamina = FALSE)
+	affected_mob.AdjustAllImmobility(-25 * REM * seconds_per_tick)
+	affected_mob.adjustStaminaLoss(-5 * REM * seconds_per_tick, updating_stamina = FALSE)
 
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(SPT_PROB(1 * (1 + (1-normalise_creation_purity())), seconds_per_tick) && iscarbon(affected_mob))
+	if(SPT_PROB(2), seconds_per_tick) && iscarbon(affected_mob))
 		var/datum/disease/D = new /datum/disease/heart_failure
 		affected_mob.ForceContractDisease(D)
 		to_chat(affected_mob, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		affected_mob.playsound_local(affected_mob, 'sound/effects/singlebeat.ogg', 100, 0)
 
-	if(SPT_PROB(3.5 * (1 + (1-normalise_creation_purity())), seconds_per_tick))
+	if(SPT_PROB(3.5), seconds_per_tick)
 		to_chat(affected_mob, span_notice("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 
-	if(SPT_PROB(18 * (1 + (1-normalise_creation_purity())), seconds_per_tick))
+	if(SPT_PROB(18), seconds_per_tick)
 		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath++
 		return UPDATE_MOB_HEALTH
@@ -647,7 +647,7 @@
 	. = ..()
 	if(current_cycle > 5)
 		affected_mob.add_mood_event("numb", /datum/mood_event/narcotic_medium, name)
-	if(affected_mob.disgust < DISGUST_LEVEL_VERYGROSS && SPT_PROB(50 * (2 - creation_purity), seconds_per_tick))
+	if(affected_mob.disgust < DISGUST_LEVEL_VERYGROSS && SPT_PROB(50, seconds_per_tick))
 		affected_mob.adjust_disgust(1.5 * REM * seconds_per_tick)
 
 	switch(current_cycle)
@@ -658,7 +658,7 @@
 				affected_mob.emote("yawn")
 
 		if(24 to 36) // 5u to 7.5u
-			if(SPT_PROB(66 * (2 - creation_purity), seconds_per_tick))
+			if(SPT_PROB(66), seconds_per_tick)
 				affected_mob.adjust_drowsiness_up_to(2 SECONDS * REM * seconds_per_tick, 12 SECONDS)
 
 		if(36 to 48) // 7.5u to 10u
@@ -705,7 +705,7 @@
 
 
 /datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/eyes/eyes)
-	delta_light = creation_purity*10
+	delta_light = 7.5
 	eyes.lighting_cutoff += delta_light
 	affected_mob.update_sight()
 
@@ -729,16 +729,15 @@
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/normalized_purity = normalise_creation_purity()
-	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
-	affected_mob.adjust_eye_blur(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
+	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_eye_blur(-4 SECONDS * REM * seconds_per_tick)
 	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
-		if(eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+		if(eyes.apply_organ_damage(-2.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 			. = UPDATE_MOB_HEALTH
-		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
-		if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
+		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing
+		if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(6, 12), seconds_per_tick))
 			// While healing, gives some eye blur
 			if(affected_mob.is_blind_from(EYE_DAMAGE))
 				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
@@ -828,17 +827,16 @@
 
 /datum/reagent/medicine/inacusiate/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
-	if(creation_purity >= 1)
-		ADD_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
-		if(affected_mob.can_hear())
-			to_chat(affected_mob, span_nicegreen("You can feel your hearing drastically improve!"))
+	ADD_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
+	if(affected_mob.can_hear())
+		to_chat(affected_mob, span_nicegreen("You can feel your hearing drastically improve!"))
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/organ/ears/ears = affected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		return
-	ears.adjustEarDamage(-4 * REM * seconds_per_tick * normalise_creation_purity(), -4 * REM * seconds_per_tick * normalise_creation_purity())
+	ears.adjustEarDamage(-5 * REM * seconds_per_tick, -5 * REM * seconds_per_tick)
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
@@ -1093,7 +1091,7 @@
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/mannitol/overdose_start(mob/living/affected_mob)
@@ -1131,8 +1129,7 @@
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/affected_carbon = affected_mob
-	if(creation_purity >= 1)
-		initial_bdamage = affected_carbon.get_organ_loss(ORGAN_SLOT_BRAIN)
+	initial_bdamage = affected_carbon.get_organ_loss(ORGAN_SLOT_BRAIN)
 
 /datum/reagent/medicine/neurine/on_mob_delete(mob/living/affected_mob)
 	. = ..()
@@ -1145,13 +1142,13 @@
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
-		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5 * REM * seconds_per_tick * normalise_creation_purity())
-	if(SPT_PROB(8 * normalise_creation_purity(), seconds_per_tick))
+		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5 * REM * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 
 /datum/reagent/medicine/neurine/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/mutadone
@@ -1203,10 +1200,10 @@
 	. = ..()
 	for(var/effect in status_effects_to_clear)
 		affected_mob.remove_status_effect(effect)
-	affected_mob.reagents.remove_reagent(/datum/reagent/consumable/ethanol, 8 * REM * seconds_per_tick * normalise_creation_purity(), include_subtypes = TRUE)
+	affected_mob.reagents.remove_reagent(/datum/reagent/consumable/ethanol, 10 * REM * seconds_per_tick, include_subtypes = TRUE)
 	if(affected_mob.adjustToxLoss(-0.2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		. = UPDATE_MOB_HEALTH
-	affected_mob.adjust_drunk_effect(-10 * REM * seconds_per_tick * normalise_creation_purity())
+	affected_mob.adjust_drunk_effect(-12 * REM * seconds_per_tick)
 
 /datum/reagent/medicine/antihol/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()

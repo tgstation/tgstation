@@ -2317,11 +2317,11 @@
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(current_cycle > 21 / creation_purity)
+	if(current_cycle > 21)
 		if(!ishuman(affected_mob))
 			return
 		var/mob/living/carbon/human/human_mob = affected_mob
-		if(creation_purity == 1 && human_mob.has_quirk(/datum/quirk/item_quirk/bald))
+		if(human_mob.has_quirk(/datum/quirk/item_quirk/bald))
 			human_mob.remove_quirk(/datum/quirk/item_quirk/bald)
 		var/obj/item/bodypart/head/head = human_mob.get_bodypart(BODY_ZONE_HEAD)
 		if(!head || (head.head_flags & HEAD_HAIR))
