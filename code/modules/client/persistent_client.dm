@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 /datum/persistent_client
 	/// The true client
 	var/client/client
-	/// The mob this pclient is currently bound to.
+	/// The mob this persistent client is currently bound to.
 	var/mob/mob
 
 	/// Major version of BYOND this client is using.
@@ -51,12 +51,12 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	CRASH("Who the FUCK tried to delete a persistent client? Get your head checked you leadskull.")
 
 /// Setter for the mob var, handles both references.
-/datum/persistent_client/proc/SetMob(mob/new_mob)
+/datum/persistent_client/proc/set_mob(mob/new_mob)
 	if(mob == new_mob)
 		return
 
 	mob?.persistent_client = null
-	new_mob?.persistent_client?.SetMob(null)
+	new_mob?.persistent_client?.set_mob(null)
 
 	mob = new_mob
 	new_mob?.persistent_client = src

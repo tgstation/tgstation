@@ -31,7 +31,7 @@
 		return FALSE
 
 	canon_client = client
-	client.persistent_client.SetMob(src)
+	client.persistent_client.set_mob(src)
 
 	add_to_player_list()
 	lastKnownIP = client.address
