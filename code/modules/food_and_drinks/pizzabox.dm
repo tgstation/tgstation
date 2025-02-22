@@ -97,6 +97,8 @@
 	if(open)
 		if(pizza)
 			var/mutable_appearance/pizza_overlay = mutable_appearance(pizza.icon, pizza.icon_state)
+			if(pizza.slices_left != initial(pizza.slices_left))
+				pizza_overlay.add_filter("pizzaslices", 1, pizza.get_slices_filter())
 			pizza_overlay.pixel_y = -2
 			. += pizza_overlay
 		if(bomb)
@@ -154,6 +156,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
+		if(pizza?.sliced && isturf(loc))
+			pizza.produce_slice(user)
+			update_appearance()
+			return
 		return ..()
 	if(open)
 		if(pizza)
