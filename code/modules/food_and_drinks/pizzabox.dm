@@ -40,7 +40,8 @@
 /obj/item/pizzabox/Initialize(mapload)
 	. = ..()
 	if(pizza)
-		pizza = new pizza
+		pizza = new pizza(src)
+		pizza.slice()
 	update_appearance()
 	register_context()
 
@@ -156,7 +157,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
-		if(pizza?.sliced && isturf(loc))
+		if(open && pizza?.sliced && !isobj(loc))
 			pizza.produce_slice(user)
 			update_appearance()
 			return
@@ -190,15 +191,16 @@
 		update_appearance()
 		user.regenerate_icons()
 
-/obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pizzabox))
-		var/obj/item/pizzabox/newbox = I
+/obj/item/pizzabox/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
+	. = NONE
+	if(istype(used_item, /obj/item/pizzabox))
+		var/obj/item/pizzabox/newbox = used_item
 		if(!open && !newbox.open)
 			var/list/add = list()
 			add += newbox
 			add += newbox.boxes
 			if(!user.transferItemToLoc(newbox, src))
-				return
+				return ITEM_INTERACT_FAILURE
 			boxes += add
 			newbox.boxes.Cut()
 			newbox.update_appearance()
@@ -213,30 +215,30 @@
 			return
 		else
 			balloon_alert(user, "close it first!")
-	else if(istype(I, /obj/item/food/pizza))
+	else if(istype(used_item, /obj/item/food/pizza))
 		if(open)
 			if(pizza)
 				balloon_alert(user, "it's full!")
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(used_item, src))
 				return
-			pizza = I
+			pizza = used_item
 			update_appearance()
 			return
-	else if(istype(I, /obj/item/bombcore/miniature/pizza))
+	else if(istype(used_item, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(used_item, src))
 				return
 			set_wires(new /datum/wires/explosive/pizza(src))
-			register_bomb(I)
+			register_bomb(used_item)
 			balloon_alert(user, "bomb placed")
 			update_appearance()
 			return
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-	else if(IS_WRITING_UTENSIL(I))
+	else if(IS_WRITING_UTENSIL(used_item))
 		if(!open)
-			if(!user.can_write(I))
+			if(!user.can_write(used_item))
 				return
 			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
@@ -247,9 +249,12 @@
 			boxtag_set = TRUE
 			update_appearance()
 			return
-	else if(is_wire_tool(I))
+	else if(is_wire_tool(used_item))
 		if(wires && bomb)
 			wires.interact(user)
+	else if(istype(used_item, /obj/item/knife) && !isnull(pizza) && open && !pizza.sliced)
+		pizza.slice(user, used_item)
+		return
 	..()
 
 /obj/item/pizzabox/process(seconds_per_tick)
@@ -303,6 +308,13 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
+
+/obj/item/pizzabox/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != pizza)
+		return
+	pizza = null
+	update_appearance()
 
 /obj/item/pizzabox/proc/unprocess()
 	STOP_PROCESSING(SSobj, src)

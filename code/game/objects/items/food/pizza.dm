@@ -23,7 +23,7 @@
 	var/slices_left = 6
 	/// have we been sliced? like sliced and you can take it apart by hand
 	var/sliced = FALSE
-	/// cutting tools (this should be a macro)
+	/// cutting tools
 	var/static/list/cutting_tools = list(TOOL_KNIFE, TOOL_SAW, TOOL_SCALPEL)
 
 /obj/item/food/pizza/Initialize(mapload)
@@ -39,6 +39,10 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Slice apart"
 		return TRUE
 
+	if(sliced)
+		context[SCREENTIP_CONTEXT_LMB] = "Take Slice"
+		return TRUE
+
 /obj/item/food/pizza/examine(mob/user)
 	. = ..()
 	if(isnull(slice_type) || !sliced)
@@ -50,13 +54,9 @@
 	if(isnull(slice_type) || !(tool.tool_behaviour in cutting_tools))
 		return
 	if(!sliced)
-		tool.play_tool_sound(src)
-		sliced = TRUE
-		to_chat(user, span_notice("You take a slice of [src]."))
-		visible_message(span_notice("[user] cuts [src] into 6 slices with [tool].")) //ok the overlay only has 6 slices anyway
-		interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+		slice(user, tool)
 		return ITEM_INTERACT_SUCCESS
-	visible_message(span_notice("[user] seperates [src] into individual slices with [tool].")) //ok the overlay only has 6 slices anyway
+	user.visible_message(span_notice("[user] seperates [src] into individual slices with [tool]."))
 	cut_apart()
 	return ITEM_INTERACT_SUCCESS
 
@@ -64,7 +64,7 @@
 	. = NONE
 	if(isnull(slice_type) || !(tool.tool_behaviour in cutting_tools))
 		return
-	visible_message(span_notice("[user] seperates [src] into individual slices with [tool].")) //ok the overlay only has 6 slices anyway
+	visible_message(span_notice("[user] seperates [src] into individual slices with [tool]."))
 	cut_apart()
 	return ITEM_INTERACT_SUCCESS
 
@@ -72,16 +72,26 @@
 	. = ..()
 	if(!sliced)
 		return
+	user.visible_message(span_notice("You take a slice of [src]."), span_notice("[user] takes a slice of [src]."))
 	produce_slice(user)
 
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
 	return alpha_mask_filter(icon = icon('icons/obj/food/pizza.dmi', "[slices_left]slices"))
 
+/// makes us possible to take slices out of
+/obj/item/food/pizza/proc/slice(mob/user, obj/item/tool)
+	if(sliced)
+		return
+	tool?.play_tool_sound(src)
+	sliced = TRUE
+	user?.visible_message(span_notice("[user] cuts [src] into 6 slices with [tool]."))
+	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+
 /obj/item/food/pizza/proc/cut_apart()
 	for(var/i=1 to slices_left)
 		produce_slice(no_update = TRUE)
 
-/// make a slice and give it to user.
+/// make a slice and give it to user. no_update means no filter work is done
 /obj/item/food/pizza/proc/produce_slice(mob/user, no_update = FALSE)
 	var/turf/our_turf = get_turf(src)
 	var/obj/item/food/pizzaslice/slice = new slice_type(our_turf)
@@ -96,10 +106,12 @@
 	if(slices_left <= 0)
 		qdel(src)
 		return
+	if(no_update)
+		return
 	remove_filter("pizzaslices")
 	add_filter("pizzaslices", 1, get_slices_filter())
 
-// raw pizza
+// Raw Pizza
 /obj/item/food/pizza/raw
 	foodtypes = GRAIN | RAW
 	slice_type = null
