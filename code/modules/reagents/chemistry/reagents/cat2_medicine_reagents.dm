@@ -403,6 +403,8 @@
 	ph = 8.6
 	var/conversion_amount
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/healing/syriniver
 
 /datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, methods=INJECT, trans_volume)
 	if(!(methods & INJECT) || !iscarbon(A))
