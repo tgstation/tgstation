@@ -806,8 +806,9 @@
 	desc = "This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is crying. The human is screaming."
 	icon_state = "plushie_human"
 	inhand_icon_state = null //i would rather not have a blue coder plushie inhand
-	attack_verb_continuous = list("whines at", "cries at", "screams at")
-	attack_verb_simple = list("whine at", "cry at", "scream at")  //i cant think of a better verb please tell me something else
+	attack_verb_continuous = list("screams at", "strikes", "bashes")
+	attack_verb_simple = list("scream at", "strike", "bash")
 	squeak_override = list(
-		'sound/mobs/humanoids/human/scream/malescream_3.ogg' = 1
+		'sound/mobs/humanoids/human/scream/malescream_2.ogg' = 10, //10% chance to scream, rare but not abysmal
+		'sound/items/weapons/smash.ogg' = 90,
 		)
