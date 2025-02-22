@@ -15,11 +15,11 @@
 			continue
 		var/obj/crate_type = allocate(new_crate.crate_type)
 		var/turf/open/floor/testing_floor = get_turf(crate_type)
-		var/datum/export_report/minimum_cost = export_item_and_contents(crate_type, dry_run = TRUE)
+		var/datum/export_report/minimum_cost = export_item_and_contents(crate_type, delete_unsold = TRUE, dry_run = TRUE)
 		var/crate_value = counterlist_sum(minimum_cost.total_value)
 
 		var/obj/results = new_crate.generate(testing_floor)
-		var/datum/export_report/export_log = export_item_and_contents(results, apply_elastic = TRUE)
+		var/datum/export_report/export_log = export_item_and_contents(results, apply_elastic = TRUE, delete_unsold = TRUE, export_market = EXPORT_MARKET_STATION)
 
 		// The value of the crate and all of it's contents.
 		var/value = counterlist_sum(export_log.total_value)
@@ -33,11 +33,10 @@
 			TEST_FAIL("Cargo crate [new_crate.type] container sells for [crate_value], Selling for more than [new_crate.get_cost()], the cost to buy")
 		for(var/atom/stuff as anything in results.contents)
 			qdel(stuff)
+			stuff = null
 
-		qdel(crate_type)
 		qdel(results)
 		results =  null
-		crate_type = null
 		new_crate = null
 		minimum_cost = null
 		export_log = null
