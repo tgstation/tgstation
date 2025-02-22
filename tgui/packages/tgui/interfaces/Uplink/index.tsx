@@ -247,9 +247,9 @@ export class Uplink extends Component<{}, UplinkState> {
           </Box>
         ),
         population_tooltip:
-          'This item requires at least ' +
+          'This item is not cleared for operations performed against stations crewed by fewer than ' +
           item.population_minimum +
-          ' players to have joined.',
+          ' people.',
         insufficient_population: !hasEnoughPop,
         disabled:
           !canBuy ||
