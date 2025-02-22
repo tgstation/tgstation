@@ -6,7 +6,6 @@
 /datum/unit_test/cargo_crate_sanity
 
 /datum/unit_test/cargo_crate_sanity/Run()
-	var/turf/open/floor/testing_floor = get_turf(crate_type)
 
 	for(var/crate in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/new_crate = allocate(crate)
@@ -15,6 +14,7 @@
 		if(!new_crate?.crate_type)
 			continue
 		var/obj/crate_type = allocate(new_crate.crate_type)
+		var/turf/open/floor/testing_floor = get_turf(crate_type)
 		var/datum/export_report/minimum_cost = export_item_and_contents(crate_type, dry_run = TRUE)
 		var/crate_value = counterlist_sum(minimum_cost.total_value)
 
