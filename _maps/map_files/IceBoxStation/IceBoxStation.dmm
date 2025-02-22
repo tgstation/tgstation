@@ -46334,6 +46334,7 @@
 /area/station/science/research)
 "nSc" = (
 /obj/effect/turf_decal/siding/yellow,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nSk" = (
@@ -55824,6 +55825,10 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"qGf" = (
+/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "qGg" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -238186,7 +238191,7 @@ xYI
 mNY
 oXX
 mNY
-hpd
+qGf
 hpd
 hpd
 wkw

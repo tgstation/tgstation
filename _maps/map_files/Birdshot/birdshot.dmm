@@ -13899,6 +13899,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/storage_shared)
 "fHK" = (
@@ -68097,11 +68098,10 @@
 /area/station/hallway/secondary/dock)
 "wGo" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/structure/rack,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden,
 /obj/machinery/status_display/evac/directional/south,
-/obj/item/tank/internals/emergency_oxygen,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "wGq" = (

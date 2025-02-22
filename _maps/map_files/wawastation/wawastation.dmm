@@ -15268,6 +15268,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
+"fyN" = (
+/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/plating,
+/area/station/engineering/storage)
 "fyS" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_corner{
@@ -67631,6 +67635,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -111188,7 +111193,7 @@ dTb
 aTv
 aYf
 aYf
-aYf
+fyN
 eRD
 lPp
 cpG
