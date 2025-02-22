@@ -223,7 +223,7 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/owner = parent
 	if(!owner.reagents)
 		owner.create_reagents(volume || DEFAULT_EDIBLE_VOLUME, INJECTABLE)
-	else
+	else if(volume > owner.reagents.maximum_volume)
 		owner.reagents.maximum_volume = volume
 
 	for(var/rid in reagents)
