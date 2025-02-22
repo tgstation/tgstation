@@ -24,7 +24,7 @@
 	/// have we been sliced? like sliced and you can take it apart by hand
 	var/sliced = FALSE
 	/// cutting tools
-	var/static/list/cutting_tools = list(TOOL_KNIFE, TOOL_SAW, TOOL_SCALPEL)
+	var/list/cutting_tools = list(TOOL_KNIFE, TOOL_SAW, TOOL_SCALPEL)
 
 /obj/item/food/pizza/Initialize(mapload)
 	. = ..()
@@ -78,7 +78,7 @@
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
 	return alpha_mask_filter(icon = icon('icons/obj/food/pizza.dmi', "[slices_left]slices"))
 
-/// makes us possible to take slices out of
+/// slices this pizza. all arguments optional.
 /obj/item/food/pizza/proc/slice(mob/user, obj/item/tool)
 	if(sliced)
 		return
@@ -88,10 +88,10 @@
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 
 /obj/item/food/pizza/proc/cut_apart()
-	for(var/i=1 to slices_left)
+	for(var/_ in 1 to slices_left)
 		produce_slice(no_update = TRUE)
 
-/// make a slice and give it to user. no_update means no filter work is done
+/// make a slice and give it to user. no_update means no filter work is done. user is optional
 /obj/item/food/pizza/proc/produce_slice(mob/user, no_update = FALSE)
 	var/turf/our_turf = get_turf(src)
 	var/obj/item/food/pizzaslice/slice = new slice_type(our_turf)
