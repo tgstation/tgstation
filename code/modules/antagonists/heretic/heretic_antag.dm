@@ -106,13 +106,6 @@
 		icon_path = result_mob.icon
 		icon_state = result_mob.icon_state
 
-	//if the knowledge is an eldritch mark, use the mark sprite
-	else if(ispath(knowledge,/datum/heretic_knowledge/mark))
-		var/datum/heretic_knowledge/mark/mark_knowledge = knowledge
-		var/datum/status_effect/eldritch/mark_effect = mark_knowledge.mark_type
-		icon_path = mark_effect.effect_icon
-		icon_state = mark_effect.effect_icon_state
-
 	//if the knowledge is an ascension, use the achievement sprite
 	else if(ispath(knowledge,/datum/heretic_knowledge/ultimate))
 		var/datum/heretic_knowledge/ultimate/ascension_knowledge = knowledge

@@ -245,6 +245,7 @@
 /**
  * A knowledge subtype for limited_amount knowledge
  * used for base knowledge (the ones that make blades)
+ * Grants your path-relevant grasp upgrade, passive and grasp mark
  *
  * A heretic can only learn one /starting type knowledge,
  * and their ascension depends on whichever they chose.
@@ -254,29 +255,20 @@
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
+	//- Mark variables
+	/// The status effect typepath we apply on people on mansus grasp.
+	var/datum/status_effect/eldritch/mark_type
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	our_heretic.heretic_path = GLOB.heretic_research_tree[type][HKT_ROUTE]
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path)
 
-/**
- * A knowledge subtype for heretic knowledge
- * that applies a mark on use.
- *
- * A heretic can only learn one /mark type knowledge.
- */
-/datum/heretic_knowledge/mark
-	abstract_parent_type = /datum/heretic_knowledge/mark
-	cost = 2
-	/// The status effect typepath we apply on people on mansus grasp.
-	var/datum/status_effect/eldritch/mark_type
-
-/datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
-/datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /**
@@ -284,8 +276,9 @@
  *
  * Whenever we cast mansus grasp on someone, apply our mark.
  */
-/datum/heretic_knowledge/mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
 
 	create_mark(source, target)
 
@@ -294,7 +287,7 @@
  *
  * Whenever we attack someone with our blade, attempt to trigger any marks on them.
  */
-/datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/limited_amount/starting/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
 	if(!isliving(target))
@@ -308,7 +301,7 @@
  *
  * Can be overriden to set or pass in additional vars of the status effect.
  */
-/datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/proc/create_mark(mob/living/source, mob/living/target)
 	if(target.stat == DEAD)
 		return
 	return target.apply_status_effect(mark_type)
@@ -318,7 +311,7 @@
  *
  * If there is no mark, returns FALSE. Returns TRUE if a mark was triggered.
  */
-/datum/heretic_knowledge/mark/proc/trigger_mark(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/proc/trigger_mark(mob/living/source, mob/living/target)
 	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
 	if(!istype(mark))
 		return FALSE

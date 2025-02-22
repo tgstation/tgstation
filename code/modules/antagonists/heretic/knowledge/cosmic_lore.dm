@@ -1,4 +1,3 @@
-
 /datum/heretic_knowledge_tree_column/main/cosmic
 	neighbour_type_left = /datum/heretic_knowledge_tree_column/rust_to_cosmic
 	neighbour_type_right = /datum/heretic_knowledge_tree_column/cosmic_to_ash
@@ -7,9 +6,7 @@
 	ui_bgr = "node_cosmos"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
-	grasp = /datum/heretic_knowledge/cosmic_grasp
 	tier1 = /datum/heretic_knowledge/spell/cosmic_runes
-	mark = /datum/heretic_knowledge/mark/cosmic_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/cosmic
 	unique_ability = /datum/heretic_knowledge/spell/star_touch
 	tier2 = /datum/heretic_knowledge/spell/star_blast
@@ -30,26 +27,11 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/cosmic)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "cosmic_blade"
-
-/datum/heretic_knowledge/cosmic_grasp
-	name = "Grasp of Cosmos"
-	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand. \
-		People with a star mark can not pass cosmic fields."
-	gain_text = "Some stars dimmed, others' magnitude increased. \
-		With newfound strength I could channel the nebula's power into myself."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_cosmos"
-
-/datum/heretic_knowledge/cosmic_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/cosmic_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+	mark_type = /datum/status_effect/eldritch/cosmic
 
 /// Aplies the effect of the mansus grasp when it hits a target.
-/datum/heretic_knowledge/cosmic_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_cosmic/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	to_chat(target, span_danger("A cosmic ring appeared above your head!"))
 	target.apply_status_effect(/datum/status_effect/star_mark, source)
@@ -64,17 +46,6 @@
 		I spoke, and heard my own words echoed back."
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
-
-
-/datum/heretic_knowledge/mark/cosmic_mark
-	name = "Mark of Cosmos"
-	desc = "Your Mansus Grasp now applies the Mark of Cosmos. The mark is triggered from an attack with your Cosmic Blade. \
-		When triggered, the victim is returned to the location where the mark was originally applied to them, \
-		leaving a cosmic field in their place. \
-		They will then be paralyzed for 2 seconds."
-	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. \
-		I can help them, I have to help them."
-	mark_type = /datum/status_effect/eldritch/cosmic
 
 /datum/heretic_knowledge/knowledge_ritual/cosmic
 

@@ -6,9 +6,7 @@
 	route = PATH_ASH
 	ui_bgr = "node_ash"
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
-	grasp = /datum/heretic_knowledge/ashen_grasp
 	tier1 = /datum/heretic_knowledge/spell/ash_passage
-	mark = /datum/heretic_knowledge/mark/ash_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/ash
 	unique_ability = /datum/heretic_knowledge/spell/fire_blast
 	tier2 = /datum/heretic_knowledge/mad_mask
@@ -29,24 +27,10 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "ash_blade"
+	mark_type = /datum/status_effect/eldritch/ash
 
-/datum/heretic_knowledge/ashen_grasp
-	name = "Grasp of Ash"
-	desc = "Your Mansus Grasp will burn the eyes of the victim, damaging them and blurring their vision."
-	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
-		Their lantern, expired to ash - their watch, absent."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_ash"
-
-/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_ash/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(target.is_blind())
 		return
@@ -58,27 +42,7 @@
 	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
 	target.set_eye_blur_if_lower(20 SECONDS)
 
-/datum/heretic_knowledge/spell/ash_passage
-	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
-	gain_text = "He knew how to walk between the planes."
-
-	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
-	cost = 1
-
-
-/datum/heretic_knowledge/mark/ash_mark
-	name = "Mark of Ash"
-	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
-		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to a nearby heathen. \
-		Damage dealt is decreased with each transfer. \
-		Triggering the mark will also greatly reduce the cooldown of your Mansus Grasp."
-	gain_text = "He was a very particular man, always watching in the dead of night. \
-		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
-		He shone brightly in the darkness, until the blaze begin to die."
-	mark_type = /datum/status_effect/eldritch/ash
-
-/datum/heretic_knowledge/mark/ash_mark/trigger_mark(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/base_ash/trigger_mark(mob/living/source, mob/living/target)
 	. = ..()
 	if(!.)
 		return
@@ -88,6 +52,14 @@
 	if(grasp)
 		grasp.next_use_time -= round(grasp.cooldown_time*0.75)
 		grasp.build_all_button_icons()
+
+/datum/heretic_knowledge/spell/ash_passage
+	name = "Ashen Passage"
+	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
+	gain_text = "He knew how to walk between the planes."
+
+	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+	cost = 1
 
 /datum/heretic_knowledge/knowledge_ritual/ash
 

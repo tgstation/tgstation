@@ -1,4 +1,3 @@
-
 /datum/heretic_knowledge_tree_column/main/moon
 	neighbour_type_left = /datum/heretic_knowledge_tree_column/ash_to_moon
 	neighbour_type_right = /datum/heretic_knowledge_tree_column/moon_to_lock
@@ -7,9 +6,7 @@
 	ui_bgr = "node_moon"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
-	grasp = /datum/heretic_knowledge/moon_grasp
 	tier1 = /datum/heretic_knowledge/spell/moon_smile
-	mark = /datum/heretic_knowledge/mark/moon_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/moon
 	unique_ability = /datum/heretic_knowledge/spell/moon_parade
 	tier2 = /datum/heretic_knowledge/moon_amulet
@@ -30,27 +27,15 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "moon_blade"
+	mark_type = /datum/status_effect/eldritch/moon
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
 	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
 
-/datum/heretic_knowledge/moon_grasp
-	name = "Grasp of Lunacy"
-	desc = "Your Mansus Grasp will cause your victims to hallucinate everyone as lunar mass, \
-		and hides your identity for a short duration."
-	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_moon"
+/datum/heretic_knowledge/limited_amount/starting/base_moon/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
-/datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/moon_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
 	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 		to_chat(target, span_danger("You hear echoing laughter from above..but it is dull and distant."))
 		return
@@ -72,15 +57,6 @@
 
 	action_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
-
-/datum/heretic_knowledge/mark/moon_mark
-	name = "Mark of Moon"
-	desc = "Your Mansus Grasp now applies the Mark of Moon, pacifying the victim until attacked. \
-		The mark can also be triggered from an attack with your Moon Blade, leaving the victim confused."
-	gain_text = "The troupe on the moon would dance all day long \
-		and in that dance the moon would smile upon us \
-		but when the night came its smile would dull forced to gaze on the earth."
-	mark_type = /datum/status_effect/eldritch/moon
 
 /datum/heretic_knowledge/knowledge_ritual/moon
 

@@ -1,8 +1,3 @@
-/// The max amount of health a ghoul has.
-#define GHOUL_MAX_HEALTH 25
-/// The max amount of health a voiceless dead has.
-#define MUTE_MAX_HEALTH 50
-
 /datum/heretic_knowledge_tree_column/main/flesh
 	neighbour_type_left = /datum/heretic_knowledge_tree_column/lock_to_flesh
 	neighbour_type_right = /datum/heretic_knowledge_tree_column/flesh_to_void
@@ -11,9 +6,7 @@
 	ui_bgr = "node_flesh"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
-	grasp = /datum/heretic_knowledge/limited_amount/flesh_grasp
 	tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul
-	mark = 	/datum/heretic_knowledge/mark/flesh_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/flesh
 	unique_ability = /datum/heretic_knowledge/spell/flesh_surgery
 	tier2 = /datum/heretic_knowledge/summon/raw_prophet
@@ -35,6 +28,7 @@
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
+	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -45,28 +39,8 @@
 	to_chat(user, span_hierophant("Undertaking the Path of Flesh, you are given another objective."))
 	our_heretic.owner.announce_objectives()
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp
-	name = "Grasp of Flesh"
-	desc = "Your Mansus Grasp gains the ability to create a ghoul out of corpse with a soul. \
-		Ghouls have only 25 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively. \
-		You can only create one at a time by this method."
-	gain_text = "My new found desires drove me to greater and greater heights."
-
-	limit = 1
-	cost = 1
-
-
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_flesh"
-
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(target.stat != DEAD)
 		return
@@ -92,8 +66,11 @@
 
 	make_ghoul(source, target)
 
+/// The max amount of health a ghoul has.
+#define GHOUL_MAX_HEALTH 25
+
 /// Makes [victim] into a ghoul.
-/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
 	user.log_message("created a ghoul, controlled by [key_name(victim)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a ghoul, [ADMIN_LOOKUPFLW(victim)].")
 
@@ -106,11 +83,11 @@
 	)
 
 /// Callback for the ghoul status effect - Tracking all of our ghouls
-/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/apply_to_ghoul(mob/living/ghoul)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/apply_to_ghoul(mob/living/ghoul)
 	LAZYADD(created_items, WEAKREF(ghoul))
 
 /// Callback for the ghoul status effect - Tracking all of our ghouls
-/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/remove_from_ghoul(mob/living/ghoul)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/remove_from_ghoul(mob/living/ghoul)
 	LAZYREMOVE(created_items, WEAKREF(ghoul))
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
@@ -128,8 +105,6 @@
 	cost = 1
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
-
-
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -173,6 +148,9 @@
 	make_ghoul(user, soon_to_be_ghoul)
 	return TRUE
 
+/// The max amount of health a voiceless dead has.
+#define MUTE_MAX_HEALTH 50
+
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
 	user.log_message("created a voiceless dead, controlled by [key_name(victim)].", LOG_GAME)
@@ -195,15 +173,6 @@
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
 	LAZYREMOVE(created_items, WEAKREF(ghoul))
 	REMOVE_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
-
-/datum/heretic_knowledge/mark/flesh_mark
-	name = "Mark of Flesh"
-	desc = "Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade. \
-		When triggered, the victim begins to bleed significantly."
-	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
-
-
-	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
 
@@ -297,7 +266,7 @@
 	worm_spell.Grant(user)
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)
+	var/datum/heretic_knowledge/limited_amount/starting/base_flesh/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_flesh)
 	grasp_ghoul.limit *= 3
 	var/datum/heretic_knowledge/limited_amount/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
 	ritual_ghoul.limit *= 3

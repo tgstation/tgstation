@@ -1,4 +1,3 @@
-
 /datum/heretic_knowledge_tree_column/main/void
 	neighbour_type_left = /datum/heretic_knowledge_tree_column/flesh_to_void
 	neighbour_type_right = /datum/heretic_knowledge_tree_column/void_to_blade
@@ -7,9 +6,7 @@
 	ui_bgr = "node_void"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
-	grasp = /datum/heretic_knowledge/void_grasp
 	tier1 = /datum/heretic_knowledge/cold_snap
-	mark = 	/datum/heretic_knowledge/mark/void_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/void
 	unique_ability = /datum/heretic_knowledge/spell/void_conduit
 	tier2 = /datum/heretic_knowledge/spell/void_phase
@@ -28,6 +25,7 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
+	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
@@ -41,23 +39,8 @@
 
 	return ..()
 
-/datum/heretic_knowledge/void_grasp
-	name = "Grasp of Void"
-	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
-	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
-		They are quiet. This isn't the end of the mystery."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_void"
-
-/datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/void_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_void/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(!iscarbon(target))
 		return
@@ -99,14 +82,6 @@
 			user.add_traits(gain_traits, type)
 		else
 			user.remove_traits(gain_traits, type)
-
-/datum/heretic_knowledge/mark/void_mark
-	name = "Mark of Void"
-	desc = "Your Mansus Grasp now applies the Mark of Void. The mark is triggered from an attack with your Void Blade. \
-		When triggered, further silences the victim and swiftly lowers the temperature of their body and the air around them."
-	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
-		my senses began to betray me. My mind is my own enemy."
-	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
 

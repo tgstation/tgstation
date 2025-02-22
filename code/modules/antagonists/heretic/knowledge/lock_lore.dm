@@ -1,4 +1,3 @@
-
 /datum/heretic_knowledge_tree_column/main/lock
 	neighbour_type_left = /datum/heretic_knowledge_tree_column/moon_to_lock
 	neighbour_type_right = /datum/heretic_knowledge_tree_column/lock_to_flesh
@@ -7,9 +6,7 @@
 	ui_bgr = "node_lock"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
-	grasp = /datum/heretic_knowledge/lock_grasp
 	tier1 = /datum/heretic_knowledge/key_ring
-	mark = /datum/heretic_knowledge/mark/lock_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/lock
 	unique_ability = /datum/heretic_knowledge/limited_amount/concierge_rite
 	tier2 = /datum/heretic_knowledge/spell/burglar_finesse
@@ -32,33 +29,25 @@
 	limit = 2
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "key_blade"
+	mark_type = /datum/status_effect/eldritch/lock
 
-/datum/heretic_knowledge/lock_grasp
-	name = "Grasp of Lock"
-	desc = "Your mansus grasp allows you to access anything! Right click on an airlock or a locker to force it open. \
-		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
-		Makes a distinctive knocking sound on use."
-	gain_text = "Nothing may remain closed from my touch."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_lock"
-
-/datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/base_knock/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/lock_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/base_knock/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
-/datum/heretic_knowledge/lock_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_knock/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
+
 	var/obj/item/clothing/under/suit = target.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	if(istype(suit) && suit.adjusted == NORMAL_STYLE)
 		suit.toggle_jumpsuit_adjust()
 		suit.update_appearance()
 
-/datum/heretic_knowledge/lock_grasp/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
+/datum/heretic_knowledge/limited_amount/starting/base_knock/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
 	if(ismecha(target))
@@ -103,14 +92,6 @@
 	cost = 1
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "card_gold"
-
-/datum/heretic_knowledge/mark/lock_mark
-	name = "Mark of Lock"
-	desc = "Your Mansus Grasp now applies the Mark of Lock. \
-		Attack a marked person to bar them from all passages for the duration of the mark. \
-		This will make it so that they have no access whatsoever, even public access doors will reject them."
-	gain_text = "The Gatekeeper was a corrupt Steward. She hindered her fellows for her own twisted amusement."
-	mark_type = /datum/status_effect/eldritch/lock
 
 /datum/heretic_knowledge/knowledge_ritual/lock
 

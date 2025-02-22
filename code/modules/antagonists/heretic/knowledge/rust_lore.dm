@@ -1,4 +1,3 @@
-
 /datum/heretic_knowledge_tree_column/main/rust
 	neighbour_type_left = /datum/heretic_knowledge_tree_column/blade_to_rust
 	neighbour_type_right = /datum/heretic_knowledge_tree_column/rust_to_cosmic
@@ -7,9 +6,7 @@
 	ui_bgr = "node_rust"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
-	grasp = /datum/heretic_knowledge/rust_fist
 	tier1 = /datum/heretic_knowledge/rust_regen
-	mark = /datum/heretic_knowledge/mark/rust_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/rust
 	unique_ability = /datum/heretic_knowledge/spell/rust_construction
 	tier2 = /datum/heretic_knowledge/spell/area_conversion
@@ -30,34 +27,26 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "rust_blade"
+	mark_type = /datum/status_effect/eldritch/rust
 
-/datum/heretic_knowledge/rust_fist
-	name = "Grasp of Rust"
-	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \
-		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click. \
-		Allows you to rust basic iron walls and floors."
-	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_rust"
-
-/datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
+/datum/heretic_knowledge/limited_amount/starting/base_rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
 	our_heretic.increase_rust_strength()
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
 
-/datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
+/datum/heretic_knowledge/limited_amount/starting/base_rust/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
 
-/datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_rust/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
 
 	source.do_rust_heretic_act(target)
 
-/datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
+/datum/heretic_knowledge/limited_amount/starting/base_rust/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
 	// Rusting an airlock causes it to lose power, mostly to prevent the airlock from shocking you.
@@ -90,11 +79,6 @@
 		When triggered, your victim will suffer heavy disgust and confusion. \
 		Allows you to rust reinforced walls and floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
-	mark_type = /datum/status_effect/eldritch/rust
-
-/datum/heretic_knowledge/mark/rust_mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/knowledge_ritual/rust
 

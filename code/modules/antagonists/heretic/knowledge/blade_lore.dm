@@ -1,4 +1,3 @@
-
 /datum/heretic_knowledge_tree_column/main/blade
 	neighbour_type_left = /datum/heretic_knowledge_tree_column/void_to_blade
 	neighbour_type_right = /datum/heretic_knowledge_tree_column/blade_to_rust
@@ -7,9 +6,7 @@
 	ui_bgr = "node_blade"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
-	grasp = /datum/heretic_knowledge/blade_grasp
 	tier1 = /datum/heretic_knowledge/blade_dance
-	mark = /datum/heretic_knowledge/mark/blade_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/blade
 	unique_ability = /datum/heretic_knowledge/spell/realignment
 	tier2 = /datum/heretic_knowledge/spell/furious_steel
@@ -31,24 +28,10 @@
 	limit = 4 // It's the blade path, it's a given
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
+	mark_type = /datum/status_effect/eldritch/blade
 
-/datum/heretic_knowledge/blade_grasp
-	name = "Grasp of the Blade"
-	desc = "Your Mansus Grasp will cause a short stun when used on someone lying down or facing away from you."
-	gain_text = "The story of the footsoldier has been told since antiquity. It is one of blood and valor, \
-		and is championed by sword, steel and silver."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_blade"
-
-/datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/blade_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/blade_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_blade/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(!check_behind(source, target))
 		return
@@ -58,6 +41,20 @@
 	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	target.balloon_alert(source, "backstab!")
 	playsound(target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+
+/datum/heretic_knowledge/limited_amount/starting/base_blade/create_mark(mob/living/source, mob/living/target)
+	var/datum/status_effect/eldritch/blade/blade_mark = ..()
+	if(istype(blade_mark))
+		var/area/to_lock_to = get_area(target)
+		blade_mark.locked_to = to_lock_to
+		to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+	return blade_mark
+
+/datum/heretic_knowledge/limited_amount/starting/base_blade/trigger_mark(mob/living/source, mob/living/target)
+	. = ..()
+	if(!.)
+		return
+	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
 
 /// The cooldown duration between triggers of blade dance
 #define BLADE_DANCE_COOLDOWN (20 SECONDS)
@@ -151,33 +148,7 @@
 
 #undef BLADE_DANCE_COOLDOWN
 
-/datum/heretic_knowledge/mark/blade_mark
-	name = "Mark of the Blade"
-	desc = "Your Mansus Grasp now applies the Mark of the Blade. While marked, \
-		the victim will be unable to leave their current room until it expires or is triggered. \
-		Triggering the mark will summon a knife that will orbit you for a short time. \
-		The knife will block any attack directed towards you, but is consumed on use."
-	gain_text = "His general wished to end the war, but the Champion knew there could be no life without death. \
-		He would slay the coward himself, and anyone who tried to run."
-	mark_type = /datum/status_effect/eldritch/blade
-
-/datum/heretic_knowledge/mark/blade_mark/create_mark(mob/living/source, mob/living/target)
-	var/datum/status_effect/eldritch/blade/blade_mark = ..()
-	if(istype(blade_mark))
-		var/area/to_lock_to = get_area(target)
-		blade_mark.locked_to = to_lock_to
-		to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
-	return blade_mark
-
-/datum/heretic_knowledge/mark/blade_mark/trigger_mark(mob/living/source, mob/living/target)
-	. = ..()
-	if(!.)
-		return
-	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
-
 /datum/heretic_knowledge/knowledge_ritual/blade
-
-
 
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"

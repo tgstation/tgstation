@@ -173,7 +173,7 @@
 		return
 
 	//Apply our heretic mark
-	var/datum/heretic_knowledge/mark/blade_mark/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/mark/blade_mark)
+	var/datum/heretic_knowledge/limited_amount/starting/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting)
 	if(!mark_to_apply)
 		return
 	mark_to_apply.create_mark(user, living_target)
