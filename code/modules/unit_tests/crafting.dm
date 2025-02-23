@@ -62,7 +62,7 @@
 			continue
 
 		if(ispath(req_path, /obj/item/stack)) //it's a stack
-			spawned_components += new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+			spawned_components += new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 
 		//it's any other item
