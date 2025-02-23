@@ -16038,6 +16038,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/storage_shared)
 "fHK" = (
