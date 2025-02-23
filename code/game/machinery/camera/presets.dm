@@ -141,6 +141,14 @@
 	c_tag = "Exosuit: [mech_name] #[number]"
 	current_name = mech_name
 
+/**
+ * Bodycamera subtype of Camera
+ * Meant to make sure AIs and such cannot use this as pure vision.
+ */
+/obj/machinery/camera/bodycamera
+	start_active = TRUE
+	internal_light = FALSE
+
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/isEmpProof(ignore_malf_upgrades)
