@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Spawn Debug Full Crew no longer runtimes"
-  - admin: "Spawn Debug Full Crew now explicitly warns you a second time if you're attempting to use it as a non-localhost user."
