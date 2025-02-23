@@ -352,8 +352,8 @@
 	base_icon_state = "crude"
 	possible_transfer_amounts = list(1,5)
 	volume = 5
-	dart_insert_casing_icon_state = "overlay_syringe_bluespace"
-	dart_insert_projectile_icon_state = "overlay_syringe_bluespace_proj"
+	dart_insert_casing_icon_state = "overlay_syringe_crude"
+	dart_insert_projectile_icon_state = "overlay_syringe_crude_proj"
 	embed_type = /datum/embedding/syringe/crude
 
 /datum/embedding/syringe/crude
