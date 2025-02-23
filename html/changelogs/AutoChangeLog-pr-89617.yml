@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Traitor reputation now advances at a fixed rate, not dependent on current server population."
-  - balance: "The dual esword, sleeping carp scroll, spider extract, and romerol vial cannot be purchased if fewer than 20 players have joined the game."
