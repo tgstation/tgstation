@@ -2304,6 +2304,7 @@
 "aRT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster/directional/west,
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "aSt" = (
@@ -4120,9 +4121,16 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "bAI" = (
-/obj/structure/chair/office,
-/obj/structure/sign/poster/official/work_for_a_future/directional/east,
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "bAT" = (
@@ -4433,16 +4441,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/science/circuits)
 "bGi" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/mug{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
@@ -10764,7 +10763,6 @@
 /obj/structure/broken_flooring/pile/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/obj/structure/alien/weeds,
 /obj/structure/alien/weeds,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29156,6 +29154,7 @@
 /area/station/hallway/secondary/entry)
 "jKT" = (
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "jKU" = (
@@ -37767,10 +37766,6 @@
 /obj/item/instrument/eguitar,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
-"mBC" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
-/turf/open/floor/iron/grimy,
-/area/station/commons/vacant_room/office)
 "mCf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external/glass{
@@ -38485,9 +38480,12 @@
 /turf/open/floor/iron/dark/small,
 /area/station/medical/paramedic)
 "mMr" = (
-/obj/structure/alien/weeds,
-/turf/closed/wall,
-/area/station/maintenance/starboard/greater)
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/grimy,
+/area/station/commons/vacant_room/office)
 "mMt" = (
 /obj/structure/cable,
 /obj/structure/chair{
@@ -39268,7 +39266,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /obj/structure/alien/resin/membrane,
-/obj/structure/alien/weeds,
 /obj/structure/alien/weeds,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
@@ -51370,9 +51367,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "rhL" = (
+/obj/machinery/photocopier,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "rig" = (
@@ -51513,12 +51510,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
-"rlg" = (
-/obj/structure/chair/office,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/grimy,
-/area/station/commons/vacant_room/office)
 "rli" = (
 /obj/machinery/door/airlock/silver{
 	name = "Showers"
@@ -53465,11 +53456,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/dirt/station,
 /area/station/service/chapel)
-"rTq" = (
-/obj/machinery/photocopier,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/grimy,
-/area/station/commons/vacant_room/office)
 "rTy" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -55105,14 +55091,9 @@
 /area/station/maintenance/starboard/central)
 "swh" = (
 /obj/structure/table/wood,
-/obj/item/pen/fountain{
-	pixel_x = -4
+/obj/machinery/computer/pod/old{
+	dir = 8
 	},
-/obj/item/coin/gold{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "swk" = (
@@ -59674,8 +59655,9 @@
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/starboard)
 "tTA" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/pod/old,
+/obj/structure/chair/office{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/very_dim/directional/east,
 /turf/open/floor/iron/grimy,
@@ -72243,7 +72225,14 @@
 /area/station/hallway/primary/port)
 "xFT" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/pod/old,
+/obj/item/pen/fountain{
+	pixel_x = -4
+	},
+/obj/item/coin/gold{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
@@ -73587,7 +73576,6 @@
 /turf/open/floor/plating,
 /area/station/security/processing)
 "xYz" = (
-/obj/structure/alien/weeds,
 /obj/structure/alien/weeds,
 /obj/effect/gibspawner/human,
 /turf/open/misc/asteroid,
@@ -128844,7 +128832,7 @@ ylD
 ylD
 ylD
 cSC
-mBC
+rir
 swh
 xFT
 ylD
@@ -129355,10 +129343,10 @@ ylD
 ylD
 ylD
 mUn
-mMr
+ylD
 ylD
 rhL
-rTq
+sEB
 rMb
 jTp
 sWA
@@ -129610,15 +129598,15 @@ bRm
 wKG
 lAO
 ncb
-mMr
+ylD
 mLA
 pFk
 ylD
-rir
 sIZ
-sEB
+rir
+bAI
 bGi
-mMr
+ylD
 vPJ
 dTB
 ylD
@@ -129871,11 +129859,11 @@ mZA
 uqU
 qwc
 ylD
-rlg
+fbj
 tTA
-bAI
 fbj
 mMr
+ylD
 nuY
 ovB
 ylD
@@ -130123,8 +130111,8 @@ sKS
 wPu
 yma
 lQu
-mMr
-mMr
+ylD
+ylD
 oWk
 mVy
 ylD
@@ -130132,7 +130120,7 @@ ylD
 ylD
 ylD
 ylD
-mMr
+ylD
 dOb
 ovB
 kUW
@@ -132189,7 +132177,7 @@ aCM
 bDq
 eUF
 fcq
-mMr
+ylD
 fPR
 ylD
 aJq
