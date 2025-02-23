@@ -8,7 +8,6 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/food/meat/steak/plain/human = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/human
 	category = CAT_MEAT
 
@@ -18,7 +17,6 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/food/meat/steak = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/monkey
 	category = CAT_MEAT
 
@@ -28,7 +26,6 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/food/tofu = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/tofu
 	category = CAT_MEAT
 
@@ -38,7 +35,6 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/organ/tail/lizard = 1
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/tail
 	category = CAT_MEAT
 
@@ -51,7 +47,6 @@
 		/obj/item/food/grown/corn = 1,
 		/obj/item/food/grown/tomato = 1
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/fiesta
 	category = CAT_MEAT
 
@@ -162,7 +157,6 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/food/deadmouse = 1
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/rat
 	category = CAT_MEAT
 
@@ -172,7 +166,6 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/food/deadmouse = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/rat/double
 	category = CAT_MEAT
 
@@ -193,7 +186,6 @@
 		/obj/item/food/meat/steak = 2,
 		/obj/item/stack/rods = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/bbqribs
 	category = CAT_MEAT
 
@@ -393,6 +385,5 @@
 		/obj/item/food/pineappleslice = 2,
 		/obj/item/food/meat/cutlet = 2,
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/pineapple_skewer
 	category = CAT_MEAT

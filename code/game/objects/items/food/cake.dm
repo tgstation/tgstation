@@ -485,6 +485,7 @@
 	foodtypes = GRAIN | GROSS
 	slice_type = /obj/item/food/cakeslice/hardware_cake_slice
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/food/cakeslice/hardware_cake_slice
 	name = "hardware cake slice"

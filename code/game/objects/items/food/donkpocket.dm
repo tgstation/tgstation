@@ -9,10 +9,11 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | MEAT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 	/// What type of donk pocket we're warmed into via baking or microwaving.
 	var/warm_type = /obj/item/food/donkpocket/warm
@@ -278,6 +279,7 @@
 	var/static/list/deluxe_added_reagents = list(
 		/datum/reagent/medicine/omnizine = 8,
 	)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/donkpocket/deluxe/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, deluxe_added_reagents)
@@ -297,6 +299,7 @@
 	)
 	tastes = list("quality meat" = 2, "dough" = 2, "fanciness" = 1)
 	foodtypes = GRAIN | MEAT | FRIED
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/donkpocket/deluxe/nocarb
 	name = "\improper Meat-pocket"
@@ -311,6 +314,7 @@
 	foodtypes = MEAT | RAW
 	crafting_complexity = FOOD_COMPLEXITY_4
 	warm_type = /obj/item/food/donkpocket/warm/deluxe/nocarb
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT + MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/deluxe/meat/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, deluxe_added_reagents)

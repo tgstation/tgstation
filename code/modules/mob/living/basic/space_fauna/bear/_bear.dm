@@ -137,6 +137,8 @@
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
+	//just ensuring the mats contained by the bear when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 5)
 
 /mob/living/basic/bear/butter/Initialize(mapload)
 	. = ..()

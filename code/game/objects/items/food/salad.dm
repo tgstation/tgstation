@@ -119,6 +119,7 @@
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/salad/risotto
 	name = "risotto"
@@ -170,6 +171,7 @@
 	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/bowl
 	name = "bowl"

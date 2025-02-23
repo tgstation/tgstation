@@ -21,6 +21,8 @@
 	death_sound = SFX_BODYFALL
 	held_state = "cak"
 	can_interact_with_stove = TRUE
+	//just ensuring the mats contained by the cat when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 3)
 
 /mob/living/basic/pet/cat/cak/Initialize(mapload)
 	. = ..()

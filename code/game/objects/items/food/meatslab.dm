@@ -1,5 +1,3 @@
-#define MEATSLAB_CUTLET_AMOUNT 3
-
 /obj/item/food/meat
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_SMALL
@@ -52,7 +50,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, MEATSLAB_CUTLET_AMOUNT, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, MEATSLAB_PROCESSED_AMOUNT, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 ///////////////////////////////////// HUMAN MEATS //////////////////////////////////////////////////////
 
@@ -358,7 +356,7 @@
 	desc = "A raw piece of bacon."
 	icon_state = "bacon"
 	bite_consumption = 2
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_CUTLET_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/fat = 3,
@@ -374,7 +372,7 @@
 	name = "piece of bacon"
 	desc = "A delicious piece of bacon."
 	icon_state = "baconcooked"
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_CUTLET_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
@@ -611,7 +609,7 @@
 	desc = "A raw meat cutlet."
 	icon_state = "rawcutlet"
 	bite_consumption = 2
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_CUTLET_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
@@ -721,7 +719,7 @@
 	desc = "A cooked meat cutlet."
 	icon_state = "cutlet"
 	bite_consumption = 2
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_CUTLET_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
@@ -787,5 +785,3 @@
 /obj/item/food/meat/cutlet/chicken
 	name = "chicken cutlet"
 	tastes = list("chicken" = 1)
-
-#undef MEATSLAB_CUTLET_AMOUNT

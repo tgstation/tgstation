@@ -115,6 +115,7 @@
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
 	foodtypes = GRAIN | SUGAR | MEAT | FRUIT
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pie/meatpie
 	name = "meat-pie"
@@ -130,6 +131,7 @@
 	venue_value = FOOD_PRICE_NORMAL
 	slice_type = /obj/item/food/pieslice/meatpie
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pieslice/meatpie
 	name = "meat-pie slice"
@@ -213,6 +215,7 @@
 	foodtypes = GRAIN | MEAT
 	slice_type = /obj/item/food/pieslice/xemeatpie
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/pieslice/xemeatpie
 	name = "xeno-pie slice"
@@ -467,6 +470,7 @@
 	slice_type = /obj/item/food/pieslice/shepherds_pie
 	yield = 4
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
 
 /obj/item/food/pieslice/shepherds_pie
 	name = "shepherds pie slice"

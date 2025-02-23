@@ -268,7 +268,6 @@
 		/datum/reagent/consumable/vanilla = 2,
 		/datum/reagent/consumable/sugar = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/popsicle_stick)
 	result = /obj/item/food/popsicle/creamsicle_orange
 	category = CAT_ICE
 
@@ -282,7 +281,6 @@
 		/datum/reagent/consumable/vanilla = 2,
 		/datum/reagent/consumable/sugar = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/popsicle_stick)
 	result = /obj/item/food/popsicle/creamsicle_berry
 	category = CAT_ICE
 
@@ -296,7 +294,6 @@
 		/datum/reagent/consumable/vanilla = 3,
 		/datum/reagent/consumable/sugar = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/popsicle_stick)
 	result = /obj/item/food/popsicle/jumbo
 	category = CAT_ICE
 
@@ -311,7 +308,6 @@
 		/datum/reagent/consumable/vanilla = 2,
 		/datum/reagent/consumable/sugar = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/popsicle_stick)
 	result = /obj/item/food/popsicle/licorice_creamsicle
 	category = CAT_ICE
 
@@ -323,6 +319,5 @@
 		/datum/reagent/consumable/ice = 2,
 		/datum/reagent/consumable/sugar = 2
 	)
-	requirements_mats_blacklist = list(/obj/item/popsicle_stick)
 	result = /obj/item/food/popsicle/meatsicle
 	category = CAT_ICE

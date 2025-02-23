@@ -1,5 +1,10 @@
 /datum/crafting_recipe/food
 	mass_craftable = TRUE
+	requirements_mats_blacklist = list(
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/popsicle_stick,
+		/obj/item/stack/rods,
+	)
 	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS | CRAFT_ENFORCE_MATERIALS_PARITY
 
 /datum/crafting_recipe/food/crafting_ui_data()

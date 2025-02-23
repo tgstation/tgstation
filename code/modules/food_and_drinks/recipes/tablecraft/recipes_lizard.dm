@@ -31,7 +31,6 @@
 	blacklist = list(
 		/obj/item/organ/lungs/cybernetic,
 	)
-
 	result = /obj/item/food/shredded_lungs
 	category = CAT_LIZARD
 
@@ -130,7 +129,6 @@
 		/obj/item/stack/rods = 1,
 		/datum/reagent/consumable/vinegar = 5
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/picoss_skewers
 	category = CAT_LIZARD
 
@@ -416,7 +414,6 @@
 		/datum/reagent/consumable/caramel = 5,
 		/datum/reagent/consumable/salt = 1
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/kebab/candied_mushrooms
 	category = CAT_LIZARD
 

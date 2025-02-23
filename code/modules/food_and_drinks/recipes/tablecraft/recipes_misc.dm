@@ -19,16 +19,13 @@
 		/datum/reagent/water = 5,
 		/obj/item/food/spiderling = 1
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/spiderlollipop
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
 	name = "Choco coin"
-	reqs = list(
-		/obj/item/coin = 1,
-		/obj/item/food/chocolatebar = 1,
-	)
+	reqs = list(/obj/item/food/chocolatebar = 1)
+	tool_paths = list(/obj/item/coin)
 	result = /obj/item/food/chococoin
 	category = CAT_MISCFOOD
 
@@ -116,6 +113,7 @@
 		/obj/item/stock_parts/power_store/cell/super =1,
 		/obj/item/melee/sabre = 1
 	)
+	requirements_mats_blacklist = list(/obj/item/stock_parts/power_store/cell/super)
 	result = /obj/item/food/powercrepe
 	category = CAT_MISCFOOD
 
@@ -193,7 +191,6 @@
 		/datum/reagent/water = 5,
 		/datum/reagent/ants = 10
 	)
-	requirements_mats_blacklist = list(/obj/item/stack/rods)
 	result = /obj/item/food/ant_candy
 	category = CAT_MISCFOOD
 

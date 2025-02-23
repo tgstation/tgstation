@@ -42,16 +42,18 @@
 	list/tools
 )
 	var/turf/turf = crafter.loc
+	//Components that have to be deleted later so they don't mess up with other recipes
+	var/list/spawned_components = list()
 
 	for(var/spawn_path in recipe.unit_test_spawn_extras)
 		var/amount = recipe.unit_test_spawn_extras[spawn_path]
 		if(ispath(spawn_path, /obj/item/stack))
-			allocate(spawn_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+			spawned_components += new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 		for(var/index in 1 to amount)
-			allocate(spawn_path)
+			spawned_components += new spawn_path(turf)
 
-	for(var/req_path in recipe.reqs) //allocate items and reagents
+	for(var/req_path in recipe.reqs) //spawn items and reagents
 		var/amount = recipe.reqs[req_path]
 
 		if(ispath(req_path, /datum/reagent)) //it's a reagent
@@ -61,20 +63,16 @@
 
 		//it's a stack
 		if(ispath(req_path, /obj/item/stack))
-			var/obj/item/stack/stack = locate(req_path) in turf
 			if(QDELETED(stack) || (stack.type in recipe.blacklist) || stack.amount < amount)
-				allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+				spawned_components += new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
+
 		//it's any other item
-		var/matches = 0
-		for(var/atom/movable/movable as anything in turf)
-			if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in recipe.blacklist))
-				matches++
 		var/to_spawn = amount - matches
 		for(var/iteration in 1 to to_spawn)
-			allocate(req_path)
+			spawned_components += new req_path(turf)
 
-	for(var/req_path in recipe.chem_catalysts) // allocate catalysts
+	for(var/req_path in recipe.chem_catalysts) // spawn catalysts
 		var/amount = recipe.chem_catalysts[req_path]
 		if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 			bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
@@ -82,38 +80,50 @@
 	var/list/bulky_objects = list()
 	bulky_objects += recipe.structures + recipe.machinery //either structures and machinery could be null
 	list_clear_nulls(bulky_objects) //so we clear the list
-	for(var/req_path in bulky_objects) //allocate required machinery or structures
-		var/atom/located = locate(req_path) in turf
-		if(QDELETED(located))
-			allocate(req_path)
+	for(var/req_path in bulky_objects) //spawn required machinery or structures
+		spawned_components += new req_path(turf)
 
 	var/list/needed_tools = list()
 	needed_tools += recipe.tool_behaviors + recipe.tool_paths //either tool_behaviors and tool_paths could be null
 	list_clear_nulls(needed_tools) //so we clear the list
+	///tool instances which have been moved to the crafter loc, which are moved back to nullspace once the recipe is done
+	var/list/summoned_tools = list()
 	for(var/tooltype in needed_tools)
-		var/atom/tool = tools[tooltype]
-		if(!QDELETED(tool) && tool.loc == turf)
-			continue
-		var/is_behaviour = istext(tooltype)
-		var/obj/item/new_tool = allocate(is_behaviour ? /obj/item : tooltype)
-		if(is_behaviour)
-			new_tool.tool_behaviour = tooltype
-		tools[tooltype] = new_tool
+		var/atom/movable/tool = tools[tooltype]
+		if(!QDELETED(tool))
+			tool.forceMove(crafter.loc)
+		else
+			var/is_behaviour = istext(tooltype)
+			var/path_to_use = is_behaviour ? /obj/item : tooltype
+			tool = allocate(path_to_use, crafter.loc) //we shouldn't delete the tools and allocate and keep them between recipes
+			if(is_behaviour)
+				new_tool.tool_behaviour = tooltype
+			tools[tooltype] = new_tool
+		summoned_tools |= tool
 
 	var/atom/result = craft_comp.construct_item(crafter, recipe)
+
+	for(var/atom/movable/tool as anything in summoned_tools)
+		tool.moveToNullspace()
+
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
 		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason!"]")
+		delete_components(spawned_components)
 		return
 	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
 	if(isturf(result))
+		delete_components(spawned_components)
 		return
 
-	allocated += result
+	spawned_components += result
+
 
 	if(!(recipe.crafting_flags & CRAFT_ENFORCE_MATERIALS_PARITY))
 		return
 
-	var/atom/copycat = allocate(result.type)
+	var/atom/copycat = new result.type
+	spawned_components += copycat
+
 	// SSmaterials caches the combinations so we don't have to run more complex checks
 	if(result.custom_materials == copycat.custom_materials)
 		return
@@ -130,6 +140,17 @@
 			index++
 		what_it_should_be += ")"
 	TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or remove the CRAFT_ENFORCE_MATERIALS_PARITY flag from [recipe.type]")
+
+	delete_components(spawned_components)
+
+/**
+ * Clear the area of the components that have been spawned as either the requirements of a recipe or its result
+ * so they don't mess up with recipes that come after it.
+ */
+/datum/unit_test/crafting/proc/delete_components(list/comps)
+	for(var/atom/movable/used in comps)
+		if(!QDELETED(used))
+			qdel(used)
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND
