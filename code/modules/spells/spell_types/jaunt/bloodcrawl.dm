@@ -255,10 +255,13 @@
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
 	if(victim.stat != DEAD)
-		victim.investigate_log("has been killed by being consumed by a slaugter demon.", INVESTIGATE_DEATHS)
+		victim.investigate_log("has been killed by being consumed by a slaughter demon.", INVESTIGATE_DEATHS)
 	victim.death()
 	on_victim_consumed(victim, jaunter)
-	consume_count++
+
+	var/datum/antagonist/slaughter/antag = jaunter.mind?.has_antag_datum(/datum/antagonist/slaughter)
+	if(!isnull(antag))
+		antag.consume_count++
 
 /**
  * Called when a victim starts to be consumed.
