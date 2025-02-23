@@ -1,12 +1,12 @@
 {
-    description = "Tgstation.PRAnnouncer";
+    description = "tgstation-pr-announcer";
 
     inputs = {};
 
     outputs = { ... }: {
         nixosModules = {
             default = { ... }: {
-                imports = [ ./Tgstation.PRAnnouncer.nix ];
+                imports = [ ./tgstation-pr-announcer.nix ];
             };
         };
     };
