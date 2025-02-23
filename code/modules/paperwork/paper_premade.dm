@@ -145,6 +145,23 @@
 	May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.
 	</i>"}
 
+/obj/item/paper/fluff/jobs/medical/blood_types
+	name = "blood type compatibility reference"
+	default_raw_text = {"<h2>Blood Type Compatibility</h2>
+	<b>A-</b> can receive: A-, O-</br>
+	<b>A+</b> can receive: A-, A+, O-, O+</br>
+	<b>B-</b> can receive: B-, O-</br>
+	<b>B+</b> can receive: B-, B+, O-, O+</br>
+	<b>AB-</b> can receive: A-, B-, O-, AB-</br>
+	<b>AB+</b> can receive: A-, A+, B-, B+, O-, O+, AB-, AB+</br>
+	<b>O-</b> can receive: O-</br>
+	<b>O+</b> can receive: O-, O+</br>
+	<b>L</b> can receive: L</br>
+	<b>U</b> can receive: all of the above and U</br>
+	</br>
+	Blood types not written above can only receive from the same blood type.
+	"}
+
 	/*
 	* Stations
 	*/
