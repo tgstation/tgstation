@@ -688,8 +688,8 @@
 	wearer.update_spacesuit_hud_icon(state_to_use || "0")
 
 /obj/item/mod/control/proc/update_speed()
-	for(var/obj/item/part as anything in get_parts(all = TRUE))
-		part.slowdown = get_part_datum(part).sealed ? slowdown_active / length(mod_parts) : 0
+	for(var/obj/item/part as anything in get_parts())
+		part.slowdown = slowdown_active / (length(mod_parts) - 1)
 	wearer?.update_equipment_speed_mods()
 
 /obj/item/mod/control/proc/power_off()
