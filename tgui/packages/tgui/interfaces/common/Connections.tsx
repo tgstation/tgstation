@@ -1,4 +1,5 @@
-import { classes } from '../../../common/react';
+import { classes } from 'tgui-core/react';
+
 import { CSS_COLORS } from '../../constants';
 
 const SVG_CURVE_INTENSITY = 64;
@@ -47,6 +48,7 @@ export const Connections = (props: {
         position: 'absolute',
         pointerEvents: 'none',
         zIndex: zLayer,
+        overflow: 'visible',
       }}
     >
       {connections.map((val, index) => {

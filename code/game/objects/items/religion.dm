@@ -219,7 +219,7 @@
 
 /obj/item/banner/command
 	name = "command banner"
-	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
+	desc = "The banner of Command, a staunch and ancient line of bureaucratic kings and queens."
 	//No icon state here since the default one is the NT banner
 	warcry = "Hail Nanotrasen!"
 

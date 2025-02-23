@@ -458,8 +458,15 @@
 		set_pull_offsets(M, state)
 		return TRUE
 
-/mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
-	if(M.buckled)
+/**
+ * Updates the offsets of the passed mob according to the passed grab state and the direction between them and us
+ *
+ * * M - the mob to update the offsets of
+ * * grab_state - the state of the grab
+ * * animate - whether or not to animate the offsets
+ */
+/mob/living/proc/set_pull_offsets(mob/living/mob_to_set, grab_state = GRAB_PASSIVE, animate = TRUE)
+	if(mob_to_set.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
 	var/offset = 0
 	switch(grab_state)
@@ -471,27 +478,35 @@
 			offset = GRAB_PIXEL_SHIFT_NECK
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
-	M.setDir(get_dir(M, src))
-	var/target_pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
-	var/target_pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
-	switch(M.dir)
+	mob_to_set.setDir(get_dir(mob_to_set, src))
+	var/dir_filter = mob_to_set.dir
+	if(ISDIAGONALDIR(dir_filter))
+		dir_filter = EWCOMPONENT(dir_filter)
+	switch(dir_filter)
 		if(NORTH)
-			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y + offset, 3)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = offset, animate = animate)
 		if(SOUTH)
-			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y - offset, 3)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = -offset, animate = animate)
 		if(EAST)
-			if(M.lying_angle == LYING_ANGLE_WEST) //update the dragged dude's direction if we've turned
-				M.set_lying_angle(LYING_ANGLE_EAST)
-			animate(M, pixel_x = target_pixel_x + offset, pixel_y = target_pixel_y, 3)
+			if(mob_to_set.lying_angle == LYING_ANGLE_WEST) //update the dragged dude's direction if we've turned
+				mob_to_set.set_lying_angle(LYING_ANGLE_EAST)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = offset, y_add = 0, animate = animate)
 		if(WEST)
-			if(M.lying_angle == LYING_ANGLE_EAST)
-				M.set_lying_angle(LYING_ANGLE_WEST)
-			animate(M, pixel_x = target_pixel_x - offset, pixel_y = target_pixel_y, 3)
+			if(mob_to_set.lying_angle == LYING_ANGLE_EAST)
+				mob_to_set.set_lying_angle(LYING_ANGLE_WEST)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = -offset, y_add = 0, animate = animate)
 
+/**
+ * Removes any offsets from the passed mob that are related to being grabbed
+ *
+ * * M - the mob to remove the offsets from
+ * * override - if TRUE, the offsets will be removed regardless of the mob's buckled state
+ * otherwise we won't remove the offsets if the mob is buckled
+ */
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset , pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset, 1)
+	M.remove_offsets(GRABBING_TRAIT)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -729,19 +744,14 @@
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	if(rotate_on_lying)
-		body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
+		add_offsets(LYING_DOWN_TRAIT, y_add = PIXEL_Y_OFFSET_LYING)
 
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_standing_up()
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
 	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
-	// Make sure it doesn't go out of the southern bounds of the tile when standing.
-	body_position_pixel_y_offset = get_pixel_y_offset_standing(current_size)
-
-/// Returns what the body_position_pixel_y_offset should be if the current size were `value`
-/mob/living/proc/get_pixel_y_offset_standing(value)
-	return (value-1) * get_cached_height() * 0.5
+	remove_offsets(LYING_DOWN_TRAIT)
 
 /mob/living/proc/update_density()
 	if(HAS_TRAIT(src, TRAIT_UNDENSE))
@@ -1056,14 +1066,13 @@
 	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
 
-	var/blood_exists = locate(/obj/effect/decal/cleanable/trail_holder) in start
-
 	var/trail_type = getTrail()
-	if(!trail_type)
+	var/trail_blood_type = get_trail_blood()
+	if(!trail_type || !trail_blood_type)
 		return
 
 	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 		return
 
 	var/bleed_amount = bleedDragAmount()
@@ -1075,16 +1084,39 @@
 			newdir = NORTH
 		else if(newdir == (EAST|WEST))
 			newdir = EAST
+
 	if((newdir in GLOB.cardinals) && (prob(50)))
 		newdir = REVERSE_DIR(get_dir(target_turf, start))
-	if(!blood_exists)
-		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
 
-	for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
-		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-			TH.existing_dirs += newdir
-			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-			TH.transfer_mob_blood_dna(src)
+	var/found_trail = FALSE
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail in start)
+		if (trail.blood_state != trail_blood_type)
+			continue
+
+		// Don't make double trails, even if they're of a different type
+		if(newdir in trail.existing_dirs)
+			found_trail = TRUE
+			break
+
+		trail.existing_dirs += newdir
+		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+		trail.transfer_mob_blood_dna(src)
+		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
+		found_trail = TRUE
+		break
+
+	if (found_trail)
+		return
+
+	var/obj/effect/decal/cleanable/blood/trail_holder/trail = new(start, get_static_viruses())
+	trail.blood_state = trail_blood_type
+	trail.existing_dirs += newdir
+	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+	trail.transfer_mob_blood_dna(src)
+	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
+
+/mob/living/proc/get_trail_blood()
+	return BLOOD_STATE_HUMAN
 
 /mob/living/carbon/human/makeTrail(turf/T)
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLOOD))
@@ -1279,8 +1311,8 @@
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
-				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
-				base_pixel_y += 4
+				animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+				add_offsets(NEGATIVE_GRAVITY_TRAIT, y_add = 4)
 		if(NEGATIVE_GRAVITY + 0.01 to 0)
 			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
 				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
@@ -1304,8 +1336,8 @@
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
-		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
-		base_pixel_y -= 4
+		animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+		remove_offsets(NEGATIVE_GRAVITY_TRAIT)
 
 /mob/living/singularity_pull(atom/singularity, current_size)
 	..()
@@ -1395,6 +1427,10 @@
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
+
+	if(!(action_bitflags & ALLOW_PAI) && ispAI(src))
+		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
+		return FALSE
 
 	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
@@ -2298,7 +2334,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
 		if (prob(0.1))
-			to_chat(src, span_warning("You gaze out into the infinite vastness of deep space, for a moment, you have the impulse to continue travelling, out there, out into the deep beyond, before your conciousness reasserts itself and you decide to stay within travelling distance of the station."))
+			to_chat(src, span_warning("You gaze out into the infinite vastness of deep space, for a moment, you have the impulse to continue travelling, out there, out into the deep beyond, before your consciousness reasserts itself and you decide to stay within travelling distance of the station."))
 			return
 		to_chat(src, span_warning("There's nothing interesting up there."))
 		return
@@ -2785,9 +2821,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		lazarus_policy = get_policy(ROLE_LAZARUS_BAD) || "You have been revived by a malfunctioning lazarus injector! You are now enslaved by whoever revived you."
 	to_chat(src, span_boldnotice(lazarus_policy))
 
-/// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends.
+/// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends or null if qdeleted.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
+	if(QDELETED(new_friend))
+		return
 	var/friend_ref = REF(new_friend)
 	if (faction.Find(friend_ref))
 		return FALSE

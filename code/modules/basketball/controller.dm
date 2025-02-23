@@ -192,6 +192,12 @@ GLOBAL_VAR(basketball_game)
 		var/client/player_client = GLOB.directory[player_key]
 		if(player_client)
 			player_client.prefs.safe_transfer_prefs_to(baller, is_antag = TRUE)
+		if(player_client.mob.mind)
+			baller.AddComponent( \
+				/datum/component/temporary_body, \
+				old_mind = player_client.mob.mind, \
+				old_body = player_client.mob.mind.current, \
+			)
 		baller.key = player_key
 
 		SEND_SOUND(baller, sound('sound/items/whistle/whistle.ogg', volume=30))

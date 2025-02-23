@@ -780,6 +780,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	desc = "An energy blaster auto-turret."
 	armor_type = /datum/armor/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/energy/ruin/assess_perp(mob/living/carbon/human/perp)
+	if (!check_access(perp.wear_id?.GetID()))
+		return 10
+	return 0
+
 /datum/armor/syndicate_turret
 	melee = 40
 	bullet = 40

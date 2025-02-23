@@ -18,7 +18,7 @@
 	job_gear += job_stuffs
 
 	if(job_datum)
-		on_revive_and_player_occupancy += CALLBACK(src, PROC_REF(assign_job), working_dead) //this needs to happen once the body has been succesfully occupied and revived
+		on_revive_and_player_occupancy += CALLBACK(src, PROC_REF(assign_job), working_dead) //this needs to happen once the body has been successfully occupied and revived
 
 	if(trim)
 		var/obj/item/card/id/advanced/card = new()

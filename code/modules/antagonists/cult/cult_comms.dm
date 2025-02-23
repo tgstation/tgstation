@@ -81,7 +81,7 @@
 	var/my_message
 	if(!message)
 		return
-	my_message = span_cult_bold_italic("The [user.name]: [message]")
+	my_message = span_cult_bold_italic("\The [user]: [message]")
 	for(var/mob/player_list as anything in GLOB.player_list)
 		if(IS_CULTIST(player_list))
 			to_chat(player_list, my_message)

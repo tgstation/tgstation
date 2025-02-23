@@ -21,7 +21,7 @@
 			var/datum/action/gifted_action = new ability
 			gifted_action.Grant(AI)
 		else if(gifted_ability.one_purchase)
-			to_chat(user, "[AI] already has an [src] installed!")
+			to_chat(user, "[AI] already has \a [src] installed!")
 			return
 		else
 			action.uses += initial(action.uses)

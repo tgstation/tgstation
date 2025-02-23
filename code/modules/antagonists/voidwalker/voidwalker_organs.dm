@@ -3,6 +3,8 @@
 	name = "blackened orbs"
 	desc = "These orbs will withstand the light of the sun, yet still see within the darkest voids."
 	eye_icon_state = null
+	blink_animation = FALSE
+	iris_overlays = FALSE
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	color_cutoffs = list(20, 10, 40)
@@ -93,8 +95,8 @@
 	. = ..()
 
 	var/turf/spawn_loc = get_turf(owner)
-	new /obj/effect/spawner/random/glass_shards (spawn_loc)
-	new /obj/item/cosmic_skull (spawn_loc)
+	new /obj/effect/spawner/random/glass_shards(spawn_loc)
+	new /obj/item/clothing/head/helmet/skull/cosmic(spawn_loc)
 	playsound(get_turf(owner), SFX_SHATTER, 100)
 
 	qdel(owner)

@@ -519,7 +519,7 @@
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
-	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf_equal_weight()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)

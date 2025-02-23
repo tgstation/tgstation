@@ -95,7 +95,7 @@
 
 /datum/memory/high_five/get_starts()
 	return list(
-		"[protagonist_name] and [deuteragonist_name] having a a legendary [high_five_type]",
+		"[protagonist_name] and [deuteragonist_name] having a legendary [high_five_type]",
 		"[protagonist_name] giving [deuteragonist_name] a [high_five_type]",
 		"[protagonist_name] and [deuteragonist_name] giving each other a [high_five_type]",
 	)

@@ -1,6 +1,7 @@
 /// Used to apply certain speech patterns
 /// Can be used on organs, wearables, mutations and mobs
 /datum/component/speechmod
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// Assoc list for strings/regexes and their replacements. Should be lowercase, as case will be automatically changed
 	var/list/replacements = list()
 	/// String added to the end of the message

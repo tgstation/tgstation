@@ -60,7 +60,7 @@
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
-	desc = "Looking at the lushious field, you suddenly feel homesick."
+	desc = "Looking at the luscious field, you suddenly feel homesick."
 	icon_state = "grass0"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE

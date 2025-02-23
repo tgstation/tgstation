@@ -219,7 +219,7 @@
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(params["purchased_boost"])
 			if(partner && node)
 				if(partner.purchase_boost(linked_techweb, node))
-					computer.say("Purchase succesful.")
+					computer.say("Purchase successful.")
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
 			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)

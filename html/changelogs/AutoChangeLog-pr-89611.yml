@@ -1,0 +1,5 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - map: "[Birdshot] Deleted some badly-placed resin tiles in eastern maints."
+  - map: "[Birdshot] Shuffled the items inside the Gold Standard Law Firm room to look better."

@@ -6,6 +6,15 @@
 /// Shoes have been tied in knots
 #define SHOES_KNOTTED 2
 
+/// Shoes aren't fastened with anything
+#define SHOES_SLIPON "absence of laces"
+/// Shoes are fastened with laces
+#define SHOES_LACED "shoelaces"
+/// Shoes are fastened with velcro
+#define SHOES_VELCRO "velcro straps"
+/// Shoes are fastened with buckled straps
+#define SHOES_STRAPS "straps"
+
 //suit sensors: sensor_mode defines
 /// Suit sensor is turned off
 #define SENSOR_OFF 0

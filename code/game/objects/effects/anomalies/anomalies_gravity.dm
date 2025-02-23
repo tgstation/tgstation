@@ -17,7 +17,7 @@
 	///Warp effect holder for displacement filter to "pulse" the anomaly
 	var/atom/movable/warp_effect/warp
 
-/obj/effect/anomaly/grav/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/grav/Initialize(mapload, new_lifespan)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -112,7 +112,7 @@
 	anomaly_core = null
 	move_force = MOVE_FORCE_OVERPOWERING
 
-/obj/effect/anomaly/grav/high/big/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/grav/high/big/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	transform *= 3

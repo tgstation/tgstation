@@ -43,6 +43,21 @@
 	melee_damage_upper = 50
 	alien_speed = 2
 
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel/large/queen,
+		ORGAN_SLOT_XENO_RESINSPINNER = /obj/item/organ/alien/resinspinner,
+		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = /obj/item/organ/alien/neurotoxin,
+		ORGAN_SLOT_XENO_EGGSAC = /obj/item/organ/alien/eggsac,
+	)
+
 /mob/living/carbon/alien/adult/royal/queen/Initialize(mapload)
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/alien/promote,
@@ -50,14 +65,6 @@
 	)
 	grant_actions_by_list(innate_actions)
 
-	return ..()
-
-/mob/living/carbon/alien/adult/royal/queen/create_internal_organs()
-	organs += new /obj/item/organ/alien/plasmavessel/large/queen
-	organs += new /obj/item/organ/alien/resinspinner
-	organs += new /obj/item/organ/alien/acid
-	organs += new /obj/item/organ/alien/neurotoxin
-	organs += new /obj/item/organ/alien/eggsac
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/set_name()

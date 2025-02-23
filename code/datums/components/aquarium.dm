@@ -105,7 +105,7 @@
 		if(movable.reagents.total_volume)
 			start_autofeed(movable.reagents)
 		else
-			RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
+			RegisterSignal(movable.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_autofeed))
 		RegisterSignal(movable, COMSIG_PLUNGER_ACT, PROC_REF(on_plunger_act))
 
 	RegisterSignal(movable, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
@@ -114,6 +114,7 @@
 
 	if(isitem(movable))
 		RegisterSignal(movable, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
+		RegisterSignal(movable, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(secondary_interact))
 		RegisterSignals(movable, list(COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(on_secondary_attack_hand))
 	else
 		RegisterSignal(movable, COMSIG_ATOM_UI_INTERACT, PROC_REF(interact))
@@ -152,7 +153,7 @@
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
 	if(movable.reagents)
-		UnregisterSignal(movable, COMSIG_REAGENTS_NEW_REAGENT)
+		UnregisterSignal(movable, COMSIG_REAGENTS_HOLDER_UPDATED)
 		STOP_PROCESSING(SSobj, src)
 	beauty_by_content = null
 	tracked_fish_by_type = null
@@ -241,10 +242,10 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Called when the feed storage is no longer empty.
-/datum/component/aquarium/proc/start_autofeed(datum/reagents/source, new_reagent, amount, reagtemp, data, no_react)
+/datum/component/aquarium/proc/start_autofeed(datum/reagents/source)
 	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_REAGENTS_HOLDER_UPDATED)
 	START_PROCESSING(SSobj, src)
-	UnregisterSignal(source, COMSIG_REAGENTS_NEW_REAGENT)
 
 ///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)
@@ -255,7 +256,7 @@
 	var/atom/movable/movable = parent
 	if(!movable.reagents?.total_volume)
 		if(movable.reagents)
-			RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
+			RegisterSignal(movable.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_autofeed))
 		return PROCESS_KILL
 	if(world.time < last_feeding + feeding_interval)
 		return
@@ -453,15 +454,20 @@
 
 /datum/component/aquarium/proc/interact(atom/movable/source, mob/user)
 	SIGNAL_HANDLER
-
 	if(HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
 		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
-	else if(!isitem(source))
-		INVOKE_ASYNC(src, PROC_REF(admire), user)
+		return
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
+
+/datum/component/aquarium/proc/secondary_interact(atom/movable/source, mob/user)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
+		return
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
 
 /datum/component/aquarium/proc/on_secondary_attack_hand(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(admire), user)
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/aquarium/ui_interact(mob/user, datum/tgui/ui)
@@ -579,13 +585,14 @@
 /datum/component/aquarium/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	var/open_panel = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)
-	if(!held_item)
+	var/is_held_item = (held_item == source)
+	if(!held_item || is_held_item)
 		var/isitem = isitem(source)
-		if(!isitem || open_panel)
+		if(!isitem || is_held_item)
 			context[SCREENTIP_CONTEXT_LMB] = open_panel ? "Adjust settings" : "Admire"
 		if(isitem)
 			context[SCREENTIP_CONTEXT_RMB] = "Admire"
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "[open_panel ? "Open" : "Close"] settings panel"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "[!open_panel ? "Open" : "Close"] settings panel"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/plunger))
 		context[SCREENTIP_CONTEXT_LMB] = "Empty feed storage"

@@ -23,7 +23,10 @@
 			T.turf_flags |= NO_RUINS
 
 	if(SSshuttle.initialized)
-		INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/docking_port/stationary/LateInitialize()
+	INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 #ifdef TESTING
 	highlight("#f00")

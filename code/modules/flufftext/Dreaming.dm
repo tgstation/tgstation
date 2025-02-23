@@ -21,8 +21,12 @@
 
 /mob/living/carbon/proc/dream()
 	set waitfor = FALSE
+	var/datum/dream/chosen_dream
 
-	var/datum/dream/chosen_dream = pick_weight(GLOB.dreams)
+	if (IS_HERETIC(src) && !("mansus_dream_fatigue" in src.mob_mood.mood_events) && GLOB.reality_smash_track.smashes.len)
+		chosen_dream = new /datum/dream/heretic(pick(GLOB.reality_smash_track.smashes))
+	else
+		chosen_dream = pick_weight(GLOB.dreams)
 
 	ADD_TRAIT(src, TRAIT_DREAMING, DREAMING_SOURCE)
 	dream_sequence(chosen_dream.GenerateDream(src), chosen_dream)
@@ -182,5 +186,77 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 
 /datum/dream/hear_something/proc/StopSound(mob/living/carbon/dreamer)
 	SEND_SOUND(dreamer, sound(channel=reserved_sound_channel))
+
+/// Heretics can see dreams about random machinery from the perspective of a random unused influence
+/datum/dream/heretic
+	sleep_until_finished = TRUE
+	/// The influence we will be dreaming about
+	var/obj/effect/heretic_influence/influence
+	/// The distance to the objects visible from the influence during the dream
+	var/dream_view_range = 5
+	var/list/what_you_can_see = list(
+		/obj/item,
+		/obj/structure,
+		/obj/machinery,
+	)
+	var/static/list/what_you_cant_see = typecacheof(list(
+		// Underfloor stuff and default wallmounts
+		/obj/item/radio/intercom,
+		/obj/structure/cable,
+		/obj/structure/disposalpipe/segment,
+		/obj/machinery/atmospherics/pipe/smart/manifold4w,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/duct,
+		/obj/machinery/navbeacon,
+		/obj/machinery/power/terminal,
+		/obj/machinery/power/apc,
+		/obj/machinery/light_switch,
+		/obj/machinery/light,
+		/obj/machinery/camera,
+		/obj/machinery/door/firedoor,
+		/obj/machinery/firealarm,
+		/obj/machinery/airalarm,
+		/obj/structure/window/fulltile,
+		/obj/structure/window/reinforced/fulltile,
+	))
+	/// Cached list of allowed typecaches for each type in what_you_can_see
+	var/static/list/allowed_typecaches_by_root_type = null
+
+/datum/dream/heretic/New(obj/effect/heretic_influence/found_influence)
+	influence = found_influence
+
+/datum/dream/heretic/GenerateDream(mob/living/carbon/dreamer)
+	. = list()
+	. += "You wander through the forest of Mansus"
+	. += "There is a " + pick("pond", "well", "lake", "puddle", "stream", "spring", "brook", "marsh")
+
+	dreamer.add_mood_event("mansus_dream_fatigue", /datum/mood_event/mansus_dream_fatigue)
+
+	if(isnull(allowed_typecaches_by_root_type))
+		allowed_typecaches_by_root_type = list()
+		for(var/type in what_you_can_see)
+			allowed_typecaches_by_root_type[type] = typecacheof(type) - what_you_cant_see
+
+	var/list/all_objects = oview(dream_view_range, influence)
+	var/something_found = FALSE
+	for(var/object_type in allowed_typecaches_by_root_type)
+		var/list/filtered_objects = typecache_filter_list(all_objects, allowed_typecaches_by_root_type[object_type])
+		if(filtered_objects.len)
+			if (!something_found)
+				. += "Its waters reflect"
+				something_found = TRUE
+			var/obj/found_object = pick(filtered_objects)
+			. += initial(found_object.name)
+	if(!something_found)
+		. += pick("It's pitch black", "The reflections are vague", "You stroll aimlessly")
+	else
+		. += "The images fade in the ripples"
+	. += "You feel exhausted"
+
+/datum/mood_event/mansus_dream_fatigue
+	description = "I must recover before I can dream of Mansus again."
+	mood_change = -2
+	timeout = 5 MINUTES
 
 #undef DREAMING_SOURCE

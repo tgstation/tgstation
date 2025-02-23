@@ -20,7 +20,7 @@
 	/// Maximum teleports it will do before going away permanently
 	var/maximum_teleports = 4
 
-/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan)
 	. = ..()
 	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
 

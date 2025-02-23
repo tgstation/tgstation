@@ -73,10 +73,6 @@
 ///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
 #define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
-///defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
-#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
-///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
-#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
@@ -168,6 +164,10 @@
 /// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it should go
 #define COMSIG_CARBON_LIMPING "mob_limp_check"
 	#define COMPONENT_CANCEL_LIMP (1<<0)
+
+/// from /obj/item/toy/crayon/spraycan/use_on(target, user, modifiers): (atom/target, mob/user)
+#define COMSIG_CARBON_SPRAYPAINTED "comsig_carbon_spraypainted"
+	#define COMPONENT_CANCEL_SPRAYPAINT (1<<0)
 
 ///Called from on_acquiring(mob/living/carbon/human/acquirer)
 #define COMSIG_MUTATION_GAINED "mutation_gained"

@@ -446,7 +446,7 @@
 	id = "waystation"
 	suffix = "waystation.dmm"
 	name = "Space-Ruin Waystation"
-	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+	description = "A waystation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
 
 /datum/map_template/ruin/space/allamericandiner
 	id = "allamericandiner"
@@ -535,3 +535,9 @@
 	description = "One of Nanotrasen's highly advanced Communication Buoys. Besides acting as a broadcaster, receiver and relay for interstellar \
 	communications, the satellite also includes a Local-Network array and two multi-function satellite dishes, providing the local sector with \
 	connectivity - as long as you have your Employee ID handy. Though, this one has been reported to have some recent malfunctions."
+
+/datum/map_template/ruin/space/film_studio
+	id = "film_studio"
+	suffix = "film_studio.dmm"
+	name = "Space-Ruin Space Sector 13 Local Channel"
+	description = "A local TV station serving areas surrounding Space Sector 13, shows including but not limited to: talk shows, operas, stage plays and more!"

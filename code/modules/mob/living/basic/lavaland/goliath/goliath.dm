@@ -68,8 +68,7 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		var/static/list/food_types = list(/obj/item/food/grown/ash_flora)
-		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 10, bonus_tame_chance = 5)
+		AddComponent(/datum/component/tameable, tame_chance = 10, bonus_tame_chance = 5)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -152,6 +151,8 @@
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction = new_friend.faction.Copy()
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
