@@ -94,10 +94,12 @@
 	new_statue.name = "statue of [petrified_mob.name]"
 	if(owner)
 		new_statue.befriend(owner)
-	new_statue.icon = icon
-	new_statue.icon_state = icon_state
-	new_statue.copy_overlays(src, TRUE)
+	new_statue.icon = 'icons/blanks/32x32.dmi'
+	new_statue.icon_state = "nothing"
+	new_statue.appearance_flags |= KEEP_TOGETHER
+	new_statue.copy_overlays(src, cut_old = TRUE)
 	new_statue.atom_colours = atom_colours.Copy()
+	new_statue.update_atom_colour()
 	petrified_mob.mind?.transfer_to(new_statue)
 	to_chat(new_statue, span_userdanger("You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! [owner ? "Do not harm [owner], your creator" : ""]."))
 	forceMove(new_statue)
@@ -111,11 +113,11 @@
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
 	S.name = "statue of [name]"
-	S.copy_overlays(src)
-	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-	if(colorlist)
-		newcolor = colorlist
-	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	S.icon = 'icons/blanks/32x32.dmi'
+	S.icon_state = "nothing"
+	S.appearance_flags |= KEEP_TOGETHER
+	S.copy_overlays(src, cut_old = TRUE)
+	S.add_atom_colour(colorlist || list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
 	return TRUE
 
 /mob/living/basic/pet/dog/corgi/petrify(statue_timer)
