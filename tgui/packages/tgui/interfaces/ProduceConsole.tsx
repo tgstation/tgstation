@@ -303,7 +303,7 @@ const CheckoutTab = (props) => {
                 disabled={total_cost <= 0}
                 tooltip={
                   total_cost <= 0
-                    ? 'Order atleast 1 item'
+                    ? 'Order at least 1 item'
                     : autodelivery_tooltip
                 }
                 tooltipPosition="top-start"
