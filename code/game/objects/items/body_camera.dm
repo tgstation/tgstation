@@ -145,7 +145,7 @@
 /obj/item/bodycam_upgrade/proc/on_screwdriver_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
-	playsound(source, 'sound/items/tools/drill_use.ogg', tool.get_clamped_volume(), TRUE, -1)
+	tool.play_tool_sound(source, 40)
 	INVOKE_ASYNC(src, PROC_REF(uninstall_camera), source, user)
 
 /**
