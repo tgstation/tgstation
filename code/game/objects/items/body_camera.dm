@@ -80,14 +80,16 @@
 	if(user.get_item_by_slot(ITEM_SLOT_OCLOTHING) == taking_from)
 		user.update_worn_oversuit(update_obscured = FALSE)
 
-///Turns the camera on. Will be silent if 'user' is null.
+///Turns the camera on. Will be silent if 'user' is null, but it REQUIRES either a user or a provided ID.
+///Because cameras are named after the ID, or person if there isn't one, then having neither means we can't turn
+///on at all.
 /obj/item/bodycam_upgrade/proc/turn_on(mob/living/user, obj/item/card/id/id_card)
-	if(!id_card)
-		var/obj/item/card/id/card = user.get_idcard()
-		if(card)
-			id_card = card
+	if(!id_card && !user)
+		return
 	if(!builtin_bodycamera)
 		builtin_bodycamera = new(loc) //made in the vest it's located in.
+	if(!id_card)
+		id_card = user.get_idcard() || null
 	if(id_card)
 		builtin_bodycamera.c_tag = "-Body Camera: [(id_card.registered_name)] ([id_card.assignment])"
 	else
