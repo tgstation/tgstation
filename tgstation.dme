@@ -218,6 +218,7 @@
 #include "code\__DEFINES\song.dm"
 #include "code\__DEFINES\sort_types.dm"
 #include "code\__DEFINES\sound.dm"
+#include "code\__DEFINES\sound_preferences.dm"
 #include "code\__DEFINES\space.dm"
 #include "code\__DEFINES\spaceman_dmm.dm"
 #include "code\__DEFINES\spacevines.dm"
