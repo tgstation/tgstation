@@ -21,6 +21,7 @@
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 	create_vis_overlay()
 	if(source_projector)
 		projector = source_projector
