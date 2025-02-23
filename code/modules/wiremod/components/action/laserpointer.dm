@@ -11,8 +11,8 @@
 
 	/// The input port
 	var/datum/port/input/target_input
-	var/datum/port/input/image_pixel_x = 0
-	var/datum/port/input/image_pixel_y = 0
+	var/datum/port/input/image_pixel_x
+	var/datum/port/input/image_pixel_y
 
 	var/max_range = 7
 
@@ -59,10 +59,9 @@
 		silicon.flash_act(affect_silicon = TRUE) /// no stunning, just a blind
 		to_chat(silicon, span_danger("Your sensors were overloaded by a weakened laser shone by [shell]!"))
 
-	var/image/laser_location = image('icons/obj/weapons/guns/projectiles.dmi',target_location,"[pointer_icon_state]_laser",10)
+	var/mutable_appearance/laser_location = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "[pointer_icon_state]_laser")
 
 	laser_location.pixel_x = clamp(target.pixel_x + image_pixel_x.value,-15,15)
 	laser_location.pixel_y = clamp(target.pixel_y + image_pixel_y.value,-15,15)
 
-	target_location.add_overlay(laser_location)
-	addtimer(CALLBACK(target_location, TYPE_PROC_REF(/atom, cut_overlay), laser_location), 1 SECONDS)
+	target_location.flick_overlay_view(laser_location, 1 SECONDS)

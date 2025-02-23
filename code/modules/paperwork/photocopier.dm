@@ -78,8 +78,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/color_mode = PHOTO_COLOR
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
-	/// Variable needed to determine the selected category of forms on Photocopier.js
-	var/category
 	/// Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
 	/// Variable for the UI telling us how many copies are in the queue.
@@ -149,6 +147,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	static_data["blanks"] = blank_infos
 	static_data["categories"] = category_names
+	static_data["max_paper_count"] = MAX_PAPER_CAPACITY
+	static_data["max_copies"] = MAX_COPIES_AT_ONCE
 
 	return static_data
 
@@ -156,8 +156,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
-
-	data["category"] = category
 	data["copies_left"] = copies_left
 
 	if(istype(object_copy, /obj/item/photo))
@@ -181,7 +179,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	return data
 
-/obj/machinery/photocopier/ui_act(action, list/params)
+/obj/machinery/photocopier/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -265,10 +263,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if("set_copies")
 			num_copies = clamp(text2num(params["num_copies"]), 1, MAX_COPIES_AT_ONCE)
 			return TRUE
-		// Changes the forms displayed on Photocopier.js when you switch categories
-		if("choose_category")
-			category = params["category"]
-			return TRUE
 		// Called when you press print blank
 		if("print_blank")
 			if(check_busy(usr))
@@ -276,7 +270,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(!(params["code"] in GLOB.paper_blanks))
 				return FALSE
 			var/list/blank = GLOB.paper_blanks[params["code"]]
-			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, 1)
+			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
 			return TRUE
 
 /// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
@@ -495,10 +489,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/make_ass_copy()
 	if(!check_ass())
 		return null
-	var/butt_icon_state = ass.get_butt_sprite()
-	if(isnull(butt_icon_state))
+	var/icon/temp_img = ass.get_butt_sprite()
+	if(isnull(temp_img))
 		return null
-	var/icon/temp_img = icon('icons/mob/butts.dmi', butt_icon_state)
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
 	toEmbed.psize_x = 128

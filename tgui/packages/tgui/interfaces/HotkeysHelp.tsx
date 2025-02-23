@@ -1,5 +1,6 @@
+import { Box, Section, Table, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type BindingInfo = {

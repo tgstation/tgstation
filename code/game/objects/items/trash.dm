@@ -85,10 +85,6 @@
 	desc = "In the Mothic Fleet every individual wrapper is carefully recycled and repurposed into fresh material. Over here they are more commonly dropped directly onto the floor."
 	icon_state = "moth_ration"
 
-/obj/item/trash/waffles
-	name = "waffles tray"
-	icon_state = "waffles"
-
 /obj/item/trash/pistachios
 	name = "pistachios pack"
 	icon_state = "pistachios_pack"

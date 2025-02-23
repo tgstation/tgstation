@@ -18,19 +18,19 @@
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/ruin/syndicate_lava_base/virology)
 "ak" = (
-/obj/machinery/vending/boozeomat/syndicate_access,
+/obj/machinery/vending/boozeomat/syndicate,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/bar)
 "al" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate,
 /turf/open/floor/iron/white,
 /area/ruin/syndicate_lava_base/medbay)
 "ap" = (
@@ -667,6 +667,9 @@
 /area/ruin/syndicate_lava_base/chemistry)
 "fx" = (
 /obj/structure/sign/warning/secure_area,
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/cargo)
 "fA" = (
@@ -1445,23 +1448,6 @@
 /obj/machinery/duct,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/dormitories)
-"lk" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small/directional/east,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 30
-	},
-/obj/structure/window/reinforced/spawner/directional/north{
-	pixel_y = 1
-	},
-/obj/item/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/cup/glass/shaker,
-/turf/open/floor/wood,
-/area/ruin/syndicate_lava_base/bar)
 "lm" = (
 /obj/structure/closet/secure_closet/medical1{
 	req_access = list("syndicate")
@@ -1610,6 +1596,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -1745,6 +1732,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/engineering)
+"nI" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/obj/item/book/manual/chef_recipes{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/book/manual/wiki/barman_recipes,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/turf/open/floor/wood,
+/area/ruin/syndicate_lava_base/bar)
 "nK" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Bar"
@@ -1868,6 +1870,9 @@
 /area/ruin/syndicate_lava_base/arrivals)
 "oF" = (
 /obj/structure/sign/warning/secure_area,
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/arrivals)
 "oH" = (
@@ -2000,16 +2005,6 @@
 	dir = 1
 	},
 /area/ruin/syndicate_lava_base/medbay)
-"qv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/syndicate_lava_base/cargo)
 "qA" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/iron/dark,
@@ -2077,15 +2072,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
-"rI" = (
-/obj/machinery/firealarm/directional/west,
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/engineering)
 "rO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
@@ -2183,6 +2169,10 @@
 /obj/effect/turf_decal/box/white/corners,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/cargo)
+"sB" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/cargo)
 "sH" = (
 /obj/machinery/door/airlock/virology/glass{
@@ -3176,6 +3166,15 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
+"GI" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/engineering)
 "GV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -3328,7 +3327,6 @@
 /obj/structure/table/wood,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/machinery/airalarm/directional/north,
-/obj/item/crowbar/red,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
@@ -3660,6 +3658,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
+"Oj" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/arrivals)
 "Oq" = (
 /obj/effect/spawner/random/vending/colavend{
 	hacked = 1
@@ -3824,6 +3826,16 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/arrivals)
+"QG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndicate_lava_base/cargo)
 "QN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -4129,7 +4141,6 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/machinery/airalarm/directional/north,
-/obj/item/crowbar/red,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
@@ -4428,6 +4439,9 @@
 /obj/item/stack/sheet/plastitaniumglass{
 	amount = 15
 	},
+/obj/item/holosign_creator/atmos,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "YP" = (
@@ -4505,7 +4519,6 @@
 /obj/structure/table/wood,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
-/obj/item/crowbar/red,
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Zw" = (
@@ -5324,7 +5337,7 @@ Vb
 mT
 mT
 mT
-oF
+Oj
 ab
 ab
 ab
@@ -5664,7 +5677,7 @@ jy
 ka
 ue
 kM
-lk
+nI
 lC
 To
 TN
@@ -6316,7 +6329,7 @@ Bu
 kV
 lp
 Dr
-rI
+GI
 mF
 Cj
 Lp
@@ -6496,7 +6509,7 @@ ab
 dy
 dy
 eE
-qv
+QG
 dy
 gd
 dy
@@ -6647,7 +6660,7 @@ ab
 ab
 ab
 ab
-fx
+sB
 gh
 fx
 si

@@ -211,7 +211,7 @@
 		/obj/item/clothing/head/costume/lobsterhat,
 		/obj/item/clothing/head/costume/cardborg,
 		/obj/item/clothing/head/costume/football_helmet,
-		/obj/item/clothing/head/costume/tv_head/fov_less,
+		/obj/item/clothing/head/costume/tv_head,
 		/obj/item/clothing/head/costume/tmc,
 		/obj/item/clothing/head/costume/deckers,
 		/obj/item/clothing/head/costume/yuri,

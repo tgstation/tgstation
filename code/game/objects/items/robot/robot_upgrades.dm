@@ -2,17 +2,17 @@
 // Contains various borg upgrades.
 
 /obj/item/borg/upgrade
-	name = "borg upgrade module."
+	name = "borg upgrade module"
 	desc = "Protected by FRM."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
-	icon_state = "cyborg_upgrade"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "module_general"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
 	var/installed = FALSE
 	var/require_model = FALSE
 	var/list/model_type = null
 	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
-	var/list/model_flags = NONE
+	var/model_flags = NONE
 
 	/// List of items to add with the module, if any
 	var/list/items_to_add
@@ -73,6 +73,7 @@
 /obj/item/borg/upgrade/rename
 	name = "cyborg reclassification board"
 	desc = "Used to rename a cyborg."
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade1"
 	var/heldname = ""
 	one_use = TRUE
@@ -99,7 +100,7 @@
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
 	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_security"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/security)
 	model_flags = BORG_MODEL_SECURITY
@@ -134,7 +135,7 @@
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
 	desc = "An energy-operated thruster system for cyborgs."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_general"
 
 /obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
@@ -156,7 +157,7 @@
 /obj/item/borg/upgrade/diamond_drill
 	name = "mining cyborg diamond drill"
 	desc = "A diamond drill replacement for the mining model's standard drill."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_miner"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
@@ -167,7 +168,7 @@
 /obj/item/borg/upgrade/soh
 	name = "mining cyborg satchel of holding"
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_miner"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
@@ -178,7 +179,7 @@
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_janitor"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
@@ -189,7 +190,7 @@
 /obj/item/borg/upgrade/amop
 	name = "janitor cyborg advanced mop"
 	desc = "An advanced mop replacement for the janiborg's standard mop."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_janitor"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
@@ -200,18 +201,43 @@
 /obj/item/borg/upgrade/prt
 	name = "janitor cyborg plating repair tool"
 	desc = "A tiny heating device to repair burnt and damaged hull platings with."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_janitor"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
 	items_to_add = list(/obj/item/cautery/prt)
 
+/obj/item/borg/upgrade/plunger
+	name = "janitor cyborg plunging tool"
+	desc = "An integrated cyborg retractable plunger. It's meant for plunging things, duh."
+	icon_state = "module_janitor"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/janitor)
+	model_flags = BORG_MODEL_JANITOR
+
+	items_to_add = list(/obj/item/plunger/cyborg)
+
+/obj/item/borg/upgrade/high_capacity_light_replacer
+	name = "janitor cyborg high capacity replacer"
+	desc = "Increases the amount of lights that can be stored in the replacer."
+	icon_state = "module_janitor"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/janitor)
+	model_flags = BORG_MODEL_JANITOR
+
+	items_to_add = list (/obj/item/lightreplacer/cyborg/advanced)
+	items_to_remove = list(/obj/item/lightreplacer/cyborg)
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_illegal"
 	require_model = TRUE
+
+/obj/item/borg/upgrade/syndicate/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
@@ -235,7 +261,7 @@
 /obj/item/borg/upgrade/lavaproof
 	name = "mining cyborg lavaproof chassis"
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to a mining cyborg's chassis, enabling them to withstand exposure to molten rock and liquid plasma."
-	icon_state = "cyborg_ash_tracks"
+	icon_state = "module_miner"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
@@ -256,7 +282,7 @@
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
 	desc = "This module will repair the cyborg over time."
-	icon_state = "cyborg_upgrade5"
+	icon_state = "module_general"
 	require_model = TRUE
 	var/repair_amount = -1
 	/// world.time of next repair
@@ -356,7 +382,7 @@
 	name = "medical cyborg hypospray advanced synthesiser"
 	desc = "An upgrade to the Medical model cyborg's hypospray, allowing it \
 		to produce more advanced and complex medical reagents."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
@@ -385,7 +411,7 @@
 	name = "cyborg piercing hypospray"
 	desc = "An upgrade to a cyborg's hypospray, allowing it to \
 		pierce armor and thick material."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_medical"
 
 /obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
@@ -415,11 +441,15 @@
 /obj/item/borg/upgrade/surgery_omnitool
 	name = "cyborg surgical omni-tool upgrade"
 	desc = "An upgrade to the Medical model, upgrading the built-in \
-		surgical omnitool, to be on par with advanced surgical tools"
-	icon_state = "cyborg_upgrade3"
+		surgical omnitool, to be on par with advanced surgical tools, allowing for faster surgery. \
+		It also upgrades their scanner."
+	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical,  /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
+
+	items_to_add = list(/obj/item/healthanalyzer/advanced)
+	items_to_remove = list(/obj/item/healthanalyzer)
 
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
@@ -431,7 +461,7 @@
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
 			return FALSE
 	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
-		omnitool.upgrade_omnitool()
+		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
@@ -439,13 +469,13 @@
 		return .
 	REMOVE_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-		omnitool.downgrade_omnitool()
+		omnitool.set_upgraded(FALSE)
 
 /obj/item/borg/upgrade/engineering_omnitool
 	name = "cyborg engineering omni-tool upgrade"
 	desc = "An upgrade to the Engineering model, upgrading the built-in \
 		engineering omnitool, to be on par with advanced engineering tools"
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering,  /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
@@ -459,20 +489,20 @@
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
 			return FALSE
 	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
-		omnitool.upgrade_omnitool()
+		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-		omnitool.downgrade_omnitool()
+		omnitool.set_upgraded(FALSE)
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
 	desc = "An upgrade to the Medical model, installing a built-in \
 		defibrillator, for on the scene revival."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
@@ -523,7 +553,7 @@
 	desc = "An upgrade to the Medical model, installing a processor \
 		capable of scanning surgery disks and carrying \
 		out procedures"
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
@@ -533,6 +563,7 @@
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "boris"
 
 /obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/borg, mob/living/user = usr)
@@ -556,7 +587,7 @@
 /obj/item/borg/upgrade/expand
 	name = "borg expander"
 	desc = "A cyborg resizer, it makes a cyborg huge."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_general"
 
 /obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
@@ -576,7 +607,13 @@
 	smoke.start()
 	sleep(0.2 SECONDS)
 	for(var/i in 1 to 4)
-		playsound(borg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		playsound(borg, pick(
+			'sound/items/tools/drill_use.ogg',
+			'sound/items/tools/jaws_cut.ogg',
+			'sound/items/tools/jaws_pry.ogg',
+			'sound/items/tools/welder.ogg',
+			'sound/items/tools/ratchet.ogg',
+			), 80, TRUE, -1)
 		sleep(1.2 SECONDS)
 	if(!prev_lockcharge)
 		borg.SetLockdown(FALSE)
@@ -596,8 +633,7 @@
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
-	icon = 'icons/obj/storage/storage.dmi'
-	icon_state = "borgrped"
+	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
@@ -607,32 +643,16 @@
 /obj/item/borg/upgrade/inducer
 	name = "engineering integrated power inducer"
 	desc = "An integrated inducer that can charge a device's internal cell from power provided by the cyborg."
+	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
-
 	items_to_add = list(/obj/item/inducer/cyborg)
-
-/obj/item/inducer/cyborg
-	name = "Internal inducer"
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "inducer-engi"
-	cell_type = null
-
-/obj/item/inducer/cyborg/get_cell()
-	var/obj/item/robot_model/possible_model = loc
-	var/mob/living/silicon/robot/silicon_friend = istype(possible_model) ? possible_model.robot : possible_model
-	if(istype(silicon_friend))
-		. = silicon_friend.cell
-
-/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
-	return FALSE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
-	icon = 'icons/obj/devices/tracker.dmi'
-	icon_state = "pinpointer_crew"
+	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
@@ -668,8 +688,8 @@
 
 /obj/item/borg/upgrade/transform
 	name = "borg model picker (Standard)"
-	desc = "Allows you to to turn a cyborg into a standard cyborg."
-	icon_state = "cyborg_upgrade3"
+	desc = "Allows you to turn a cyborg into a standard cyborg."
+	icon_state = "module_general"
 	var/obj/item/robot_model/new_model = null
 
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/borg, mob/living/user = usr)
@@ -679,14 +699,14 @@
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
-	desc = "Allows you to to turn a cyborg into a clown, honk."
-	icon_state = "cyborg_upgrade3"
+	desc = "Allows you to turn a cyborg into a clown, honk."
+	icon_state = "module_honk"
 	new_model = /obj/item/robot_model/clown
 
 /obj/item/borg/upgrade/circuit_app
 	name = "circuit manipulation apparatus"
 	desc = "An engineering cyborg upgrade allowing for manipulation of circuit boards."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
@@ -696,7 +716,7 @@
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
 	desc = "A supplementary beaker storage apparatus for medical cyborgs."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
@@ -706,7 +726,7 @@
 /obj/item/borg/upgrade/drink_app
 	name = "glass storage apparatus"
 	desc = "A supplementary drinking glass storage apparatus for service cyborgs."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_service"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
@@ -716,7 +736,7 @@
 /obj/item/borg/upgrade/broomer
 	name = "experimental push broom"
 	desc = "An experimental push broom used for efficiently pushing refuse."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_janitor"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
@@ -726,7 +746,7 @@
 /obj/item/borg/upgrade/condiment_synthesizer
 	name = "Service Cyborg Condiment Synthesiser"
 	desc = "An upgrade to the service model cyborg, allowing it to produce solid condiments."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_service"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
@@ -736,7 +756,7 @@
 /obj/item/borg/upgrade/silicon_knife
 	name = "Service Cyborg Kitchen Toolset"
 	desc = "An upgrade to the service model cyborg, to help process foods."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_service"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
@@ -746,7 +766,7 @@
 /obj/item/borg/upgrade/service_apparatus
 	name = "Service Cyborg Service Apparatus"
 	desc = "An upgrade to the service model cyborg, to help handle foods and paper."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_service"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
@@ -756,7 +776,7 @@
 /obj/item/borg/upgrade/rolling_table
 	name = "Service Cyborg Rolling Table Dock"
 	desc = "An upgrade to the service model cyborg, to help provide mobile service."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_service"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
@@ -766,12 +786,23 @@
 /obj/item/borg/upgrade/service_cookbook
 	name = "Service Cyborg Cookbook"
 	desc = "An upgrade to the service model cyborg, that lets them create more foods."
-	icon_state = "cyborg_upgrade3"
+	icon_state = "module_service"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 
 	items_to_add = list(/obj/item/borg/cookbook)
+
+/obj/item/borg/upgrade/botany_upgrade
+	name = "Service Cyborg Botany Tools"
+	desc = "An upgrade to the service model cyborg, that let them do gardening and plant processing."
+	icon_state = "module_service"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+	items_to_add = list(/obj/item/storage/bag/plants/cyborg, /obj/item/borg/cyborg_omnitool/botany, /obj/item/plant_analyzer)
+
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
@@ -797,7 +828,7 @@
 
 	if(borgo.mind)
 		borgo.mind.grab_ghost()
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+		playsound(loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 	else
 		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
 

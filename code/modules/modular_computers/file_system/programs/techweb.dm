@@ -26,13 +26,16 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, computer)
 
-/datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/multitool))
-		return FALSE
-	var/obj/item/multitool/attacking_tool = attacking_item
-	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
-		stored_research = attacking_tool.buffer
-	return TRUE
+/datum/computer_file/program/science/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/multitool))
+		return multitool_act(user, tool)
+
+/datum/computer_file/program/science/proc/multitool_act(mob/living/user, obj/item/multitool/used_multitool)
+	if(QDELETED(used_multitool.buffer) || !istype(used_multitool.buffer, /datum/techweb))
+		return ITEM_INTERACT_BLOCKING
+	stored_research = used_multitool.buffer
+	computer.balloon_alert(user, "buffer linked!")
+	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/science/ui_assets(mob/user)
 	return list(
@@ -47,6 +50,7 @@
 		return data
 	data += list(
 		"nodes" = list(),
+		"queue_nodes" = stored_research.research_queue_nodes,
 		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
@@ -61,6 +65,10 @@
 	// Serialize all nodes to display
 	for(var/tier in stored_research.tiers)
 		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(tier)
+		var/enqueued_by_user = FALSE
+
+		if((tier in stored_research.research_queue_nodes) && stored_research.research_queue_nodes[tier] == user)
+			enqueued_by_user = TRUE
 
 		// Ensure node is supposed to be visible
 		if (stored_research.hidden_nodes[tier])
@@ -68,8 +76,11 @@
 
 		data["nodes"] += list(list(
 			"id" = node.id,
+			"is_free" = node.is_free(stored_research),
 			"can_unlock" = stored_research.can_unlock_node(node),
-			"tier" = stored_research.tiers[node.id]
+			"have_experiments_done" = stored_research.have_experiments_for_node(node),
+			"tier" = stored_research.tiers[node.id],
+			"enqueued_by_user" = enqueued_by_user
 		))
 
 	// Get experiments and serialize them
@@ -107,6 +118,12 @@
 			return TRUE
 		if ("researchNode")
 			research_node(params["node_id"], usr)
+			return TRUE
+		if ("enqueueNode")
+			enqueue_node(params["node_id"], usr)
+			return TRUE
+		if ("dequeueNode")
+			dequeue_node(params["node_id"], usr)
 			return TRUE
 
 /datum/computer_file/program/science/ui_static_data(mob/user)
@@ -184,6 +201,20 @@
 		id_cache[id] = id_cache_seq
 		id_cache_seq += 1
 	return id_cache[id]
+
+/datum/computer_file/program/science/proc/enqueue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		computer.say("Node enqueue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.enqueue_node(id, user)
+	return TRUE
+
+/datum/computer_file/program/science/proc/dequeue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		computer.say("Node dequeue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.dequeue_node(id, user)
+	return TRUE
 
 /datum/computer_file/program/science/proc/research_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])

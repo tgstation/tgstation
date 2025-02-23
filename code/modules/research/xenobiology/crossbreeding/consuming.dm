@@ -43,7 +43,7 @@ Consuming extracts:
 /obj/item/slimecross/consuming/proc/spawncookie()
 	return new cookietype(get_turf(src))
 
-/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its' own type.
+/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its own type.
 	name = "error cookie"
 	desc = "A weird slime cookie. You shouldn't see this."
 	icon = 'icons/obj/food/slimecookies.dmi'
@@ -152,7 +152,7 @@ Consuming extracts:
 	name = "metallic cookie"
 	desc = "A shiny grey cookie. Hard to the touch."
 	icon_state = "metal"
-	taste = /datum/reagent/copper
+	taste = "copper"
 
 /obj/item/slime_cookie/metal/do_effect(mob/living/M, mob/user)
 	M.apply_status_effect(/datum/status_effect/metalcookie)
@@ -226,30 +226,35 @@ Consuming extracts:
 	icon_state = "bluespace"
 	taste = "sugar and starlight"
 
-/obj/item/slime_cookie/bluespace/do_effect(mob/living/M, mob/user)
-	var/list/L = get_area_turfs(get_area(get_turf(M)))
+/obj/item/slime_cookie/bluespace/do_effect(mob/living/eater, mob/user)
+	var/list/area_turfs = get_area_turfs(get_area(get_turf(eater)))
 	var/turf/target
-	while (L.len && !target)
-		var/I = rand(1, L.len)
-		var/turf/T = L[I]
-		if (is_centcom_level(T.z))
-			L.Cut(I,I+1)
-			continue
-		if(!T.density)
-			var/clear = TRUE
-			for(var/obj/O in T)
-				if(O.density)
-					clear = FALSE
-					break
-			if(clear)
-				target = T
-		if (!target)
-			L.Cut(I,I+1)
 
-	if(target)
-		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		new /obj/effect/particle_effect/sparks(get_turf(M))
-		playsound(get_turf(M), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	while (length(area_turfs))
+		var/turf/check_turf = pick_n_take(area_turfs)
+		if (is_centcom_level(check_turf.z))
+			continue // Probably already filtered out by NOTELEPORT but let's just be careful
+		if (check_turf.is_blocked_turf())
+			continue
+		target = check_turf
+		break
+
+	if (isnull(target))
+		fail_effect(eater)
+		return
+	if (!do_teleport(eater, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE))
+		fail_effect(eater)
+		return
+	new /obj/effect/particle_effect/sparks(target)
+	playsound(target, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/item/slime_cookie/bluespace/proc/fail_effect(mob/living/eater)
+	eater.visible_message(
+		message = span_warning("[eater] briefly vanishes... then slams forcefully into the ground"),
+		self_message = span_warning("You briefly vanish... and are returned forcefully to the ground.")
+	)
+	eater.Knockdown(0.1 SECONDS)
+	new /obj/effect/particle_effect/sparks(get_turf(eater))
 
 /obj/item/slimecross/consuming/sepia
 	colour = SLIME_TYPE_SEPIA

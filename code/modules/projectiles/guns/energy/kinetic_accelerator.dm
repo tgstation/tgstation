@@ -9,9 +9,6 @@
 	obj_flags = UNIQUE_RENAME
 	resistance_flags = FIRE_PROOF
 	weapon_weight = WEAPON_LIGHT
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
 	gun_flags = NOT_A_REAL_GUN
 	///List of all mobs that projectiles fired from this gun will ignore.
 	var/list/ignored_mob_types
@@ -20,6 +17,9 @@
 	///The max capacity of modkits the PKA can have installed at once.
 	var/max_mod_capacity = 100
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 	// Only actual KAs can be converted
@@ -27,8 +27,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -84,6 +84,9 @@
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/try_fire_gun(atom/target, mob/living/user, params)
+	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -120,7 +123,7 @@
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/check_menu(mob/living/carbon/human/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 
@@ -170,7 +173,8 @@
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
-	fire_sound = 'sound/weapons/kinetic_accel.ogg'
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
+	newtonian_force = 1
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
@@ -192,6 +196,10 @@
 	var/pressure_decrease = 0.25
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/kinetic_gun
 
+/obj/projectile/kinetic/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
 /obj/projectile/kinetic/Destroy()
 	kinetic_gun = null
 	return ..()
@@ -209,8 +217,20 @@
 		damage = damage * pressure_decrease
 		pressure_decrease_active = TRUE
 
+/obj/projectile/kinetic/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+
+	// Ensure that if the user doesn't have tracer mod we're still visible
+	icon_state = "ka_tracer"
+	update_appearance()
+
 /obj/projectile/kinetic/on_range()
-	strike_thing()
+	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
+
+	strike_thing(loc)
 	..()
 
 /obj/projectile/kinetic/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -243,6 +263,17 @@
 //mecha_kineticgun version of the projectile
 /obj/projectile/kinetic/mech
 	range = 5
+	damage = 80
+
+/obj/projectile/kinetic/mech/strike_thing(atom/target)
+	. = ..()
+	new /obj/effect/temp_visual/explosion/fast(target)
+	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, target) - target)
+		mineral_turf.gets_drilled(firer, TRUE)
+	for(var/mob/living/living_mob in range(1, target) - firer - target)
+		var/armor = living_mob.run_armor_check(def_zone, armor_flag, armour_penetration = armour_penetration)
+		living_mob.apply_damage(damage, damage_type, def_zone, armor)
+		to_chat(living_mob, span_userdanger("You're struck by a [name]!"))
 
 //Modkits
 /obj/item/borg/upgrade/modkit
@@ -301,7 +332,7 @@
 			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
 				return
 			to_chat(user, span_notice("You install the modkit."))
-			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/tools/screwdriver.ogg', 100, TRUE)
 			KA.modkits |= src
 		else
 			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
@@ -355,14 +386,27 @@
 	modifier = 3.2
 	minebot_upgrade = FALSE
 
+// Recalculate recharge time after adding or removing cooldown mods.
+/obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	
+	var/new_recharge_time = initial(KA.recharge_time)
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+		if(istype(modkit_upgrade, src))	
+			new_recharge_time -= modifier
+
+	return new_recharge_time
+
+
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-		KA.recharge_time -= modifier
+		KA.recharge_time = get_recharge_time(KA)
+
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-	KA.recharge_time += modifier
 	..()
+	KA.recharge_time = get_recharge_time(KA)
+
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot
 	name = "minebot cooldown decrease"

@@ -1,7 +1,5 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 #define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.0004 * STANDARD_CELL_RATE)
-#define NO_TOOL "deactivated"
-#define TOOL_DRAPES "surgical_drapes"
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -11,8 +9,8 @@
 	resistance_flags = FIRE_PROOF //if it's channeling a cyborg's excess heat, it's probably fireproof
 	force = 5
 	damtype = BURN
-	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg') //the usesounds of a lit welder
-	hitsound = 'sound/items/welder.ogg' //the hitsound of a lit welder
+	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg') //the usesounds of a lit welder
+	hitsound = 'sound/items/tools/welder.ogg' //the hitsound of a lit welder
 
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
@@ -33,19 +31,13 @@
 	var/mob/living/silicon/robot/host = null
 	/// The field
 	var/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/dampening_field
-	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
-	/**
-	 * Speed coefficient
-	 * Higher the coefficient slower the projectile.
-	*/
-	var/projectile_speed_coefficient = 1.5
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
-	/// Projectile sent out by the dampener
-	var/list/obj/projectile/tracked
-	var/image/projectile_effect
+	/// Projectiles dampened by our dampener
+	var/list/tracked_bullet_cost = list()
+	/// the radius of our field
 	var/field_radius = 3
 	var/active = FALSE
 	/// activation cooldown
@@ -57,8 +49,6 @@
 	energy_recharge = 5000
 
 /obj/item/borg/projectile_dampen/Initialize(mapload)
-	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
-	tracked = list()
 	START_PROCESSING(SSfastprocess, src)
 	host = loc
 	RegisterSignal(host, COMSIG_LIVING_DEATH, PROC_REF(on_death))
@@ -96,7 +86,7 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	var/mob/living/silicon/robot/owner = get_host()
-	dampening_field = new(owner, field_radius, TRUE, src)
+	dampening_field = new(owner, field_radius, TRUE, src, /datum/dampener_projectile_effects/peacekeeper)
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(restore_projectile))
 	owner?.model.allow_riding = FALSE
@@ -105,8 +95,7 @@
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
 	visible_message(span_warning("\The [src] shuts off!"))
-	for(var/projectile in tracked)
-		restore_projectile(projectile = projectile)
+	tracked_bullet_cost.Cut()
 	active = FALSE
 
 	var/mob/living/silicon/robot/owner = get_host()
@@ -139,11 +128,9 @@
 
 /obj/item/borg/projectile_dampen/proc/process_usage(seconds_per_tick)
 	var/usage = 0
-	for(var/obj/projectile/inner_projectile as anything in tracked)
-		if(!inner_projectile.is_hostile_projectile())
-			continue
+	for(var/projectile as anything in tracked_bullet_cost)
 		usage += projectile_tick_speed_ecost * seconds_per_tick
-		usage += tracked[inner_projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
+		usage += tracked_bullet_cost[projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
 	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
@@ -163,18 +150,12 @@
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
-	tracked[projectile] = projectile.damage
-	projectile.damage *= projectile_damage_coefficient
-	projectile.speed *= projectile_speed_coefficient
-	projectile.add_overlay(projectile_effect)
+	if(projectile.is_hostile_projectile())
+		tracked_bullet_cost[REF(projectile)] = projectile.damage
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
-
-	tracked -= projectile
-	projectile.damage *= (1 / projectile_damage_coefficient)
-	projectile.speed *= (1 / projectile_speed_coefficient)
-	projectile.cut_overlay(projectile_effect)
+	tracked_bullet_cost -= REF(projectile)
 
 //bare minimum omni-toolset for modularity
 /obj/item/borg/cyborg_omnitool
@@ -182,174 +163,104 @@
 	desc = "You shouldn't see this in-game normally."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_medborg"
-	///our tools
-	var/list/radial_menu_options = list()
+
+	///our tools (list of item typepaths)
+	var/list/obj/item/omni_toolkit = list()
+	///Map of solid objects internally used by the omni tool
+	var/list/obj/item/atoms = list()
 	///object we are referencing to for force, sharpness and sound
 	var/obj/item/reference
 	//is the toolset upgraded or not
 	var/upgraded = FALSE
-	///how much faster should the toolspeed be?
-	var/upgraded_toolspeed = 0.7
 
-/obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
-	return list(TOOL_SCALPEL, TOOL_HEMOSTAT)
-
-/obj/item/borg/cyborg_omnitool/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 8 SECONDS, \
-	effectiveness = 100, \
-	disabled = TRUE, \
-	)
-	radial_menu_options = list(
-		NO_TOOL = image(icon = 'icons/mob/silicon/robot_items.dmi', icon_state = initial(icon_state)),
-		TOOL_SCALPEL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_SCALPEL]"),
-		TOOL_HEMOSTAT = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_HEMOSTAT]"),
-	)
-
-/obj/item/borg/cyborg_omnitool/attack_self(mob/user)
-	var/new_tool_behaviour = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
-
-	if(isnull(new_tool_behaviour) || new_tool_behaviour == tool_behaviour)
-		return
-	if(new_tool_behaviour == NO_TOOL)
-		tool_behaviour = null
-	else
-		tool_behaviour = new_tool_behaviour
-
-	reference_item_for_parameters()
-	update_tool_parameters(reference)
-	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
-
-/// Used to get reference item for the tools
-/obj/item/borg/cyborg_omnitool/proc/reference_item_for_parameters()
-	SHOULD_CALL_PARENT(FALSE)
-	switch(tool_behaviour)
-		if(TOOL_SCALPEL)
-			reference = /obj/item/scalpel
-		if(TOOL_HEMOSTAT)
-			reference = /obj/item/hemostat
-
-/// Used to update sounds and tool parameters during switching
-/obj/item/borg/cyborg_omnitool/proc/update_tool_parameters(/obj/item/reference)
-	if(isnull(reference))
-		sharpness = NONE
-		force = initial(force)
-		wound_bonus = 0
-		bare_wound_bonus = 0
-		armour_penetration = 0
-		hitsound = initial(hitsound)
-		usesound = initial(usesound)
-	else
-		force = initial(reference.force)
-		wound_bonus = reference::wound_bonus
-		bare_wound_bonus = reference::bare_wound_bonus
-		armour_penetration = reference::armour_penetration
-		sharpness = initial(reference.sharpness)
-		hitsound = initial(reference.hitsound)
-		usesound = initial(reference.usesound)
-
-/obj/item/borg/cyborg_omnitool/update_icon_state()
-	icon_state = initial(icon_state)
-
-	if (tool_behaviour)
-		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
-
-	if(tool_behaviour)
-		inhand_icon_state = initial(inhand_icon_state) + "_deactivated"
-	else
-		inhand_icon_state = initial(inhand_icon_state)
+/obj/item/borg/cyborg_omnitool/Destroy(force)
+	for(var/obj/item/tool_path as anything in atoms)
+		var/obj/item/tool = atoms[tool_path]
+		if(!QDELETED(tool)) //if we are sharing tools from our other omnitool brothers we don't want to re delete them if they got deleted first
+			qdel(tool)
+	atoms.Cut()
 
 	return ..()
 
-/**
- * proc that's used when cyborg is upgraded with an omnitool upgrade board
- *
- * adds name and desc changes. also changes tools to default configuration to indicate it's been sucessfully upgraded
- * changes the toolspeed to the upgraded_toolspeed variable
- */
-/obj/item/borg/cyborg_omnitool/proc/upgrade_omnitool()
-	name = "advanced [name]"
-	desc += "\nIt seems that this one has been upgraded to perform tasks faster."
-	toolspeed = upgraded_toolspeed
-	upgraded = TRUE
-	tool_behaviour = null
-	reference_item_for_parameters()
-	update_tool_parameters(reference)
-	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+/obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
+	. = list()
+	for(var/obj/item/tool as anything in omni_toolkit)
+		. += initial(tool.tool_behaviour)
+
+///The omnitool interacts with real world objects based on the state it has assumed
+/obj/item/borg/cyborg_omnitool/get_proxy_attacker_for(atom/target, mob/user)
+	if(!reference)
+		return src
+
+	//first check if we have the tool
+	var/obj/item/tool = atoms[reference]
+	if(!QDELETED(tool))
+		return tool
+
+	//else try to borrow an in-built tool from our other omnitool brothers to save & share memory & such
+	var/mob/living/silicon/robot/borg = user
+	for(var/obj/item/borg/cyborg_omnitool/omni_tool in borg.model.basic_modules)
+		if(omni_tool == src)
+			continue
+		tool = omni_tool.atoms[reference]
+		if(!QDELETED(tool))
+			atoms[reference] = tool
+			return tool
+
+	//if all else fails just make a new one from scratch
+	tool = new reference(user)
+	ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	atoms[reference] = tool
+	return tool
+
+/obj/item/borg/cyborg_omnitool/attack_self(mob/user)
+	//build the radial menu options
+	var/list/radial_menu_options = list()
+	for(var/obj/item as anything in omni_toolkit)
+		radial_menu_options[initial(item.name)] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
+
+	//assign the new tool behaviour
+	var/toolkit_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+
+	//set the reference & update icons
+	for(var/obj/item/tool as anything in omni_toolkit)
+		if(initial(tool.name) == toolkit_menu)
+			reference = tool
+			tool_behaviour = initial(tool.tool_behaviour)
+			update_appearance(UPDATE_ICON_STATE)
+			playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
+			break
+
+/obj/item/borg/cyborg_omnitool/update_icon_state()
+	if (reference)
+		icon_state = reference.icon_state
+	return ..()
 
 /**
- * proc that's used when a cyborg with an upgraded omnitool is downgraded
+ * Is this omni tool upgraded or not
+ * Arguments
  *
- * reverts all name and desc changes to it's initial variables. also changes tools to default configuration to indicate it's been downgraded
- * changes the toolspeed to default variable
+ * * upgrade - TRUE/FALSE for upgraded
  */
-/obj/item/borg/cyborg_omnitool/proc/downgrade_omnitool()
-	name = initial(name)
-	desc = initial(desc)
-	toolspeed = initial(toolspeed)
-	upgraded = FALSE
-	tool_behaviour = null
-	reference_item_for_parameters()
-	update_tool_parameters(reference)
-	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+/obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
+	upgraded = upgraded
+
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
 	desc = "A set of surgical tools used by cyborgs to operate on various surgical operations."
-	item_flags = SURGICAL_TOOL
 
-/obj/item/borg/cyborg_omnitool/medical/get_all_tool_behaviours()
-	return list(TOOL_SCALPEL, TOOL_HEMOSTAT, TOOL_RETRACTOR, TOOL_SAW, TOOL_DRILL, TOOL_CAUTERY, TOOL_BONESET)
-
-/obj/item/borg/cyborg_omnitool/medical/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 8 SECONDS, \
-	effectiveness = 100, \
-	disabled = TRUE, \
+	omni_toolkit = list(
+		/obj/item/surgical_drapes/cyborg,
+		/obj/item/scalpel/cyborg,
+		/obj/item/surgicaldrill/cyborg,
+		/obj/item/hemostat/cyborg,
+		/obj/item/retractor/cyborg,
+		/obj/item/cautery/cyborg,
+		/obj/item/circular_saw/cyborg,
+		/obj/item/bonesetter/cyborg,
 	)
-	radial_menu_options = list(
-		TOOL_SCALPEL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_SCALPEL]"),
-		TOOL_HEMOSTAT = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_HEMOSTAT]"),
-		TOOL_RETRACTOR = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_RETRACTOR]"),
-		TOOL_SAW = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_SAW]"),
-		TOOL_DRILL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_DRILL]"),
-		TOOL_CAUTERY = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_CAUTERY]"),
-		TOOL_BONESET = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_BONESET]"),
-		TOOL_DRAPES = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_DRAPES]"),
-	)
-
-/obj/item/borg/cyborg_omnitool/medical/reference_item_for_parameters()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = (tool_behaviour == TOOL_SCALPEL || tool_behaviour == TOOL_SAW)
-	RemoveElement(/datum/element/eyestab)
-	qdel(GetComponent(/datum/component/surgery_initiator))
-	item_flags = SURGICAL_TOOL
-	switch(tool_behaviour)
-		if(TOOL_SCALPEL)
-			reference = /obj/item/scalpel
-			AddElement(/datum/element/eyestab)
-		if(TOOL_DRILL)
-			reference = /obj/item/surgicaldrill
-			AddElement(/datum/element/eyestab)
-		if(TOOL_HEMOSTAT)
-			reference = /obj/item/hemostat
-		if(TOOL_RETRACTOR)
-			reference = /obj/item/retractor
-		if(TOOL_CAUTERY)
-			reference = /obj/item/cautery
-		if(TOOL_SAW)
-			reference = /obj/item/circular_saw
-		if(TOOL_BONESET)
-			reference = /obj/item/bonesetter
-		if(TOOL_DRAPES)
-			reference = /obj/item/surgical_drapes
-			AddComponent(/datum/component/surgery_initiator)
-			item_flags = null
 
 //Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
 /obj/item/borg/cyborg_omnitool/engineering
@@ -357,39 +268,36 @@
 	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg"
-	item_flags = null
-	toolspeed = 0.5
-	upgraded_toolspeed = 0.3
 
-/obj/item/borg/cyborg_omnitool/engineering/get_all_tool_behaviours()
-	return list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WRENCH, TOOL_WIRECUTTER, TOOL_MULTITOOL)
-
-/obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
-	. = ..()
-	radial_menu_options = list(
-		TOOL_SCREWDRIVER = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_SCREWDRIVER]_map"),
-		TOOL_CROWBAR = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_CROWBAR]"),
-		TOOL_WRENCH = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_WRENCH]"),
-		TOOL_WIRECUTTER = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_WIRECUTTER]_map"),
-		TOOL_MULTITOOL = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "[TOOL_MULTITOOL]"),
+	omni_toolkit = list(
+		/obj/item/wrench/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/multitool/cyborg,
 	)
 
-/obj/item/borg/cyborg_omnitool/engineering/reference_item_for_parameters()
-	RemoveElement(/datum/element/eyestab)
-	switch(tool_behaviour)
-		if(TOOL_SCREWDRIVER)
-			reference = /obj/item/screwdriver
-			AddElement(/datum/element/eyestab)
-		if(TOOL_CROWBAR)
-			reference = /obj/item/crowbar
-		if(TOOL_WRENCH)
-			reference = /obj/item/wrench
-		if(TOOL_WIRECUTTER)
-			reference = /obj/item/wirecutters
-		if(TOOL_MULTITOOL)
-			reference = /obj/item/multitool
+/obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
+	. = ..()
+
+	if(tool_behaviour == TOOL_MULTITOOL)
+		for(var/obj/item/multitool/tool in atoms)
+			. += "Its multitool buffer contains [tool.buffer]"
+			break
+
+/obj/item/borg/cyborg_omnitool/botany
+	name = "botanical omni-toolset"
+	desc = "A set of botanical tools used by cyborgs to do gardening."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili"
+
+	omni_toolkit = list(
+		/obj/item/secateurs/cyborg,
+		/obj/item/cultivator/cyborg,
+		/obj/item/hatchet/cyborg,
+		/obj/item/shovel/spade/cyborg,
+	)
+
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
-#undef NO_TOOL
-#undef TOOL_DRAPES

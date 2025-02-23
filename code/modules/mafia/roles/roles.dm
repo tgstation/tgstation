@@ -116,7 +116,7 @@
  * Adds the playing_mafia trait so people examining them will know why they're currently lacking a soul.
  */
 /datum/mafia_role/proc/put_player_in_body(client/player)
-	if(player.mob.mind && player.mob.mind.current)
+	if(player.mob.mind)
 		body.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = player.mob.mind, \
@@ -145,7 +145,7 @@
 
 /datum/mafia_role/proc/greet()
 	mafia_alert = new(body, src)
-	SEND_SOUND(body, 'sound/ambience/ambifailure.ogg')
+	SEND_SOUND(body, 'sound/ambience/misc/ambifailure.ogg')
 	to_chat(body, span_danger("You are the [name]."))
 	to_chat(body, span_danger("[desc]"))
 	switch(team)
@@ -189,6 +189,6 @@
 			team_span = "comradio"
 			the = FALSE
 	result += span_notice("The [span_bold("[name]")] is aligned with [the ? "the " : ""]<span class='[team_span]'>[team_desc]</span>")
-	result += "<span class='bold notice'>\"[desc]\"</span>"
+	result += "<span class='bold notice'>\"[initial(desc)]\"</span>"
 	result += span_notice("[name] wins when they [win_condition]")
 	to_chat(clueless, result.Join("</br>"))

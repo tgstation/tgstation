@@ -4,7 +4,7 @@
 	button_icon_state = "lightning"
 	active_overlay_icon_state = "bg_spell_border_active_yellow"
 
-	sound = 'sound/magic/lightningbolt.ogg'
+	sound = 'sound/effects/magic/lightningbolt.ogg'
 	school = SCHOOL_EVOCATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS

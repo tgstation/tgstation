@@ -15,7 +15,7 @@
 				ignored_mobs = user,
 			)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -72,7 +72,7 @@
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
 							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
 /mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -80,7 +80,7 @@
 	if(!.)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/pierce.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
 			span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
@@ -90,7 +90,7 @@
 	visible_message(span_danger("[user] slashes at [src]!"), \
 		span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You slash at [src]!"))
-	playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 	apply_damage(damage)
 	log_combat(user, src, "attacked")
 
@@ -159,7 +159,7 @@
 	..()
 
 /mob/living/basic/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= 0)

@@ -192,9 +192,15 @@ GLOBAL_VAR(basketball_game)
 		var/client/player_client = GLOB.directory[player_key]
 		if(player_client)
 			player_client.prefs.safe_transfer_prefs_to(baller, is_antag = TRUE)
+		if(player_client.mob.mind)
+			baller.AddComponent( \
+				/datum/component/temporary_body, \
+				old_mind = player_client.mob.mind, \
+				old_body = player_client.mob.mind.current, \
+			)
 		baller.key = player_key
 
-		SEND_SOUND(baller, sound('sound/misc/whistle.ogg', volume=30))
+		SEND_SOUND(baller, sound('sound/items/whistle/whistle.ogg', volume=30))
 		if(is_player_referee)
 			to_chat(baller, span_notice("You are a referee. Make sure the teams play fair and use your whistle to call fouls appropriately."))
 		else

@@ -37,7 +37,7 @@
 	animate(cling, color = COLOR_DARK, time = 3 SECONDS) // Darkens their overall appearance
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown -= recharge_slowdown //Slows down chem regeneration
-	var/obj/item/organ/internal/eyes/eyes = cling.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes = cling.get_organ_by_type(/obj/item/organ/eyes)
 	if(!istype(eyes))
 		return
 	eyes.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM // Adds barely usable, kinda shit night vision
@@ -53,7 +53,7 @@
 	animate(cling, color = null, time = 3 SECONDS)
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown += recharge_slowdown
-	var/obj/item/organ/internal/eyes/eyes = cling.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes = cling.get_organ_by_type(/obj/item/organ/eyes)
 	if(!istype(eyes))
 		return
 	eyes.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
@@ -64,7 +64,7 @@
 /datum/action/changeling/darkness_adaptation/proc/eye_implanted(mob/living/source, obj/item/organ/gained, special)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/eyes/eyes = gained
+	var/obj/item/organ/eyes/eyes = gained
 	if(!istype(eyes))
 		return
 	if(is_active)
@@ -76,7 +76,7 @@
 /datum/action/changeling/darkness_adaptation/proc/eye_removed(mob/living/source, obj/item/organ/removed, special)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/eyes/eyes = removed
+	var/obj/item/organ/eyes/eyes = removed
 	if(!istype(eyes))
 		return
 	eyes.flash_protect = initial(eyes.flash_protect)

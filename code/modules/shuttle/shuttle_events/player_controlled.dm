@@ -17,12 +17,16 @@
 
 /// Attempt to grant control of a mob to ghosts before spawning it in. if spawn_anyway_if_no_player = TRUE, we spawn the mob even if there's no ghosts
 /datum/shuttle_event/simple_spawner/player_controlled/proc/try_grant_ghost_control(spawn_type)
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(ghost_alert_string + " (Warning: you will not be able to return to your body!)", check_jobban = role_type, poll_time = 10 SECONDS, alert_pic = spawn_type, role_name_text = "shot at shuttle", amount_to_pick = 1)
-	if(isnull(chosen_one) && !spawn_anyway_if_no_player)
-		return
-	var/mob/living/new_mob = new spawn_type (get_turf(get_spawn_turf()))
-	new_mob.ckey = chosen_one.ckey
+	var/mob/living/new_mob = new spawn_type (null)
+	ADD_TRAIT(new_mob, TRAIT_STASIS, type)
 	post_spawn(new_mob)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(ghost_alert_string + " (Warning: you will not be able to return to your body!)", check_jobban = role_type, poll_time = 10 SECONDS, alert_pic = new_mob, role_name_text = "shot at shuttle", amount_to_pick = 1)
+	if(isnull(chosen_one) && !spawn_anyway_if_no_player || !isdead(chosen_one)) //we can get sniped if there's multiple spawns, so check if dead
+		qdel(new_mob)
+		return
+	new_mob.forceMove(get_turf(get_spawn_turf()))
+	REMOVE_TRAIT(new_mob, TRAIT_STASIS, type)
+	new_mob.ckey = chosen_one?.ckey
 
 ///BACK FOR REVENGE!!!
 /datum/shuttle_event/simple_spawner/player_controlled/alien_queen

@@ -35,7 +35,6 @@
 	set_wires(new /datum/wires/explosive/chem_grenade(src))
 
 /obj/item/grenade/chem_grenade/Destroy(force)
-	QDEL_NULL(wires)
 	QDEL_NULL(landminemode)
 	QDEL_LIST(beakers)
 	return ..()
@@ -54,7 +53,7 @@
 			. += span_notice("You scan the grenade and detect the following reagents:")
 			for(var/obj/item/reagent_containers/cup/glass_beaker in beakers)
 				for(var/datum/reagent/reagent in glass_beaker.reagents.reagent_list)
-					. += span_notice("[reagent.volume] units of [reagent.name] in the [glass_beaker.name].")
+					. += span_notice("[reagent.volume] units of [reagent.name] in \the [glass_beaker].")
 			if(beakers.len == 1)
 				. += span_notice("You detect no second beaker in the grenade.")
 		else
@@ -127,7 +126,7 @@
 			if(!landminemode.secured)
 				landminemode.toggle_secure()
 			landminemode.toggle_scan(FALSE)
-			to_chat(user, span_notice("You disarm the [landminemode.name]."))
+			to_chat(user, span_notice("You disarm \the [landminemode]."))
 			tool.play_tool_sound(src, 25)
 		else
 			to_chat(user, span_warning("You need to add at least one beaker before locking the [initial(name)] assembly!"))
@@ -235,7 +234,7 @@
 
 	active = TRUE
 	update_icon_state()
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
+	playsound(src, grenade_arm_sound, volume, grenade_sound_vary)
 	if(landminemode)
 		landminemode.activate()
 		return
@@ -502,7 +501,7 @@
 
 /obj/item/grenade/chem_grenade/ez_clean
 	name = "cleaner grenade"
-	desc = "Waffle Co.-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	desc = "Waffle Corp. brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/ez_clean/Initialize(mapload)
@@ -630,7 +629,7 @@
 
 /obj/item/grenade/chem_grenade/bioterrorfoam
 	name = "Bio terror foam grenade"
-	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin."
+	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irritation, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin."
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/bioterrorfoam/Initialize(mapload)

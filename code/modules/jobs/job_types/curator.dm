@@ -47,7 +47,7 @@
 		/obj/item/choice_beacon/hero = 1,
 	)
 	belt = /obj/item/modular_computer/pda/curator
-	ears = /obj/item/radio/headset/headset_srv
+	ears = /obj/item/radio/headset/headset_srvent
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/laser_pointer/green
 	r_pocket = /obj/item/key/displaycase
@@ -55,10 +55,22 @@
 
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
-/datum/outfit/job/curator/post_equip(mob/living/carbon/human/translator, visualsOnly = FALSE)
+/datum/outfit/job/curator/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
+		return ..()
+
+	/// There can be only one cameraman on this station, and no, not that kind
+	var/static/cameraman_choosen = FALSE
+	if(!cameraman_choosen)
+		backpack_contents[/obj/item/broadcast_camera] = 1
+		cameraman_choosen = TRUE
+	return ..()
+
+
+/datum/outfit/job/curator/post_equip(mob/living/carbon/human/translator, visuals_only = FALSE)
 	..()
 
-	if(visualsOnly)
+	if(visuals_only)
 		return
 
 	translator.grant_all_languages(source = LANGUAGE_CURATOR)

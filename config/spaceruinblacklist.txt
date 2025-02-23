@@ -20,6 +20,9 @@
 #_maps/RandomRuins/SpaceRuins/caravanambush.dmm
 #_maps/RandomRuins/SpaceRuins/clericden.dmm
 #_maps/RandomRuins/SpaceRuins/clownplanet.dmm
+#_maps/RandomRuins/SpaceRuins/commsbuoy_lowtech.dmm
+#_maps/RandomRuins/SpaceRuins/commsbuoy_nt.dmm
+#_maps/RandomRuins/SpaceRuins/commsbuoy_pirate.dmm
 #_maps/RandomRuins/SpaceRuins/crashedclownship.dmm
 #_maps/RandomRuins/SpaceRuins/crashedship.dmm
 #_maps/RandomRuins/SpaceRuins/cyborg_mothership.dmm
@@ -38,12 +41,14 @@
 #_maps/RandomRuins/SpaceRuins/dj_station.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
 #_maps/RandomRuins/SpaceRuins/fasttravel.dmm
+#_maps/RandomRuins/SpaceRuins/film_studio.dmm
 #_maps/RandomRuins/SpaceRuins/forgottenship.dmm
 #_maps/RandomRuins/SpaceRuins/garbagetruck1.dmm
 #_maps/RandomRuins/SpaceRuins/garbagetruck2.dmm
 #_maps/RandomRuins/SpaceRuins/garbagetruck3.dmm
 #_maps/RandomRuins/SpaceRuins/garbagetruck4.dmm
 #_maps/RandomRuins/SpaceRuins/gondolaasteroid.dmm
+#_maps/RandomRuins/SpaceRuins/hauntedtradingpost.dmm
 #_maps/RandomRuins/SpaceRuins/hellfactory.dmm
 #_maps/RandomRuins/SpaceRuins/hilbertsresearchfacility.dmm
 #_maps/RandomRuins/SpaceRuins/infested_frigate.dmm

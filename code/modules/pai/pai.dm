@@ -123,20 +123,6 @@
 		"puppy" = TRUE,
 		"spider" = TRUE,
 	)
-	/// List of all available card overlays.
-	var/static/list/possible_overlays = list(
-		"null",
-		"angry",
-		"cat",
-		"extremely-happy",
-		"face",
-		"happy",
-		"laugh",
-		"off",
-		"sad",
-		"sunglasses",
-		"what"
-	)
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
@@ -149,7 +135,7 @@
 	return ..()
 
 // See software.dm for Topic()
-/mob/living/silicon/pai/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/silicon/pai/can_perform_action(atom/target, action_bitflags)
 	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
 	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
 	return ..(target, action_bitflags)
@@ -164,7 +150,6 @@
 	QDEL_NULL(signaler)
 	QDEL_NULL(leash)
 	card = null
-	GLOB.pai_list.Remove(src)
 	return ..()
 
 // Need to override parent here because the message we dispatch is turf-based, not based on the location of the object because that could be fuckin anywhere
@@ -221,7 +206,6 @@
 	if(istype(loc, /obj/item/modular_computer))
 		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
-	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
 		lawcheck += law
@@ -241,7 +225,11 @@
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
+/mob/living/silicon/pai/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/pai(src)
+	return ..()
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -262,7 +250,7 @@
 	return radio.screwdriver_act(user, tool)
 
 /mob/living/silicon/pai/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
@@ -355,11 +343,11 @@
 	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
-/mob/living/silicon/pai/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	set_silence_if_lower(disrupt_duration)
 	balloon_alert(src, "muted!")
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /**
  * Resets the pAI and any emagged status.
@@ -396,7 +384,7 @@
 	master_ref = WEAKREF(master)
 	master_name = master.real_name
 	master_dna = master.dna.unique_enzymes
-	to_chat(src, span_boldannounce("You have been bound to a new master: [user.real_name]!"))
+	to_chat(src, span_bolddanger("You have been bound to a new master: [user.real_name]!"))
 	holochassis_ready = TRUE
 	return TRUE
 
@@ -410,7 +398,13 @@
 	if(!master_ref)
 		balloon_alert(user, "access denied: no master")
 		return FALSE
-	var/new_laws = tgui_input_text(user, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", laws.supplied[1], 300)
+	var/new_laws = tgui_input_text(
+		user,
+		"Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.",
+		"pAI Directive Configuration",
+		laws.supplied[1],
+		max_length = 300,
+	)
 	if(!new_laws || !master_ref)
 		return FALSE
 	add_supplied_law(0, new_laws)
@@ -460,7 +454,7 @@
 	to_chat(src, span_userdanger("Your mental faculties leave you."))
 	to_chat(src, span_rose("oblivion... "))
 	balloon_alert(user, "personality wiped")
-	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 	qdel(src)
 	return TRUE
 
@@ -470,7 +464,7 @@
 
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cult_italic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
-	return STOP_SACRIFICE
+	return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)

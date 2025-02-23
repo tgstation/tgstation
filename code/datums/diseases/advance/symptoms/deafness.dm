@@ -45,7 +45,7 @@
 		return
 
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-	var/obj/item/organ/internal/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 
 	switch(advanced_disease.stage)
 		if(3, 4)

@@ -165,7 +165,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Scan for export value"
 	return CONTEXTUAL_SCREENTIP_SET
 /**
- * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
+ * Scans an object, target, and provides its export value based on selling to the cargo shuttle, to mob/user.
  */
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
 	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
@@ -200,7 +200,7 @@
 		to_chat(user, span_notice(message))
 
 	if(price)
-		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_select.ogg', 50, vary = TRUE)
 
 	if(istype(target, /obj/item/delivery))
 		var/obj/item/delivery/parcel = target
@@ -240,7 +240,7 @@
 				to_chat(user, span_warning("Bank account not detected. Handling tip not registered."))
 
 /**
- * Scans an object, target, and sets it's custom_price variable to new_custom_price, presenting it to the user.
+ * Scans an object, target, and sets its custom_price variable to new_custom_price, presenting it to the user.
  */
 /obj/item/universal_scanner/proc/price_tag(obj/target, mob/user)
 	if(isitem(target))
@@ -257,7 +257,7 @@
 /obj/item/universal_scanner/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 

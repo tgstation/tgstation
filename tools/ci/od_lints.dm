@@ -12,7 +12,6 @@
 #pragma SoftReservedKeyword error
 #pragma DuplicateVariable error
 #pragma DuplicateProcDefinition error
-#pragma TooManyArguments error
 #pragma PointlessParentCall error
 #pragma PointlessBuiltinCall error
 #pragma SuspiciousMatrixCall error
@@ -24,6 +23,7 @@
 #pragma DanglingVarType error
 #pragma MissingInterpolatedExpression error
 #pragma AmbiguousResourcePath error
+#pragma ProcArgumentGlobal error
 
 //3000-3999
 #pragma EmptyBlock error
@@ -31,3 +31,4 @@
 #pragma UnsafeClientAccess disabled
 #pragma SuspiciousSwitchCase error
 #pragma AssignmentInConditional error
+#pragma AmbiguousInOrder error

@@ -17,8 +17,6 @@
 		human remains, classified nuclear weaponry, mail, undelivered departmental order crates, syndicate bombs, \
 		homing beacons, unstable eigenstates, fax machines, or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	/// radio used by the console to send messages on supply channel
-	var/obj/item/radio/headset/radio
 	/// var that tracks message cooldown
 	var/message_cooldown
 	var/list/loaded_coupons
@@ -45,14 +43,6 @@
 	can_send = FALSE
 	can_approve_requests = FALSE
 	requestonly = TRUE
-
-/obj/machinery/computer/cargo/Initialize(mapload)
-	. = ..()
-	radio = new /obj/item/radio/headset/headset_cargo(src)
-
-/obj/machinery/computer/cargo/Destroy()
-	QDEL_NULL(radio)
-	return ..()
 
 /obj/machinery/computer/cargo/attacked_by(obj/item/I, mob/living/user)
 	if(istype(I,/obj/item/trade_chip))
@@ -95,9 +85,9 @@
 	var/list/data = list()
 	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
-	if(D)
-		data["points"] = D.account_balance
+	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
+	if(bank)
+		data["points"] = bank.account_balance
 	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
@@ -162,24 +152,61 @@
 	var/list/data = list()
 	data["max_order"] = CARGO_MAX_ORDER
 	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!data["supplies"][P.group])
-			data["supplies"][P.group] = list(
-				"name" = P.group,
-				"packs" = list()
+
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(!data["supplies"][pack.group])
+			data["supplies"][pack.group] = list(
+				"name" = pack.group,
+				"packs" = get_packs_data(pack.group),
 			)
-		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only)
-			continue
-		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.get_cost(),
-			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"goody" = P.goody,
-			"access" = P.access,
-		))
+
 	return data
+
+/**
+ * returns a list of supply packs for a certain group
+ * * group - the group of packs to return
+ * * express - if this is an express console
+ */
+/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
+	var/list/packs = list()
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(pack.group != group)
+			continue
+
+		// Express console packs check
+		if(express && (pack.hidden || pack.special))
+			continue
+
+		if(!express && ((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only))
+			continue
+
+		if(pack.contraband && !contraband)
+			continue
+
+		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
+		packs += list(list(
+			"name" = pack.name,
+			"cost" = pack.get_cost() * get_discount(),
+			"id" = pack_id,
+			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
+			"goody" = pack.goody,
+			"access" = pack.access,
+			"contraband" = pack.contraband,
+			"contains" = pack.get_contents_ui_data(),
+		))
+
+	return packs
+
+/**
+ * returns the discount multiplier applied to all supply packs,
+ * the discount is calculated as follows: pack_cost * get_discount()
+ */
+/obj/machinery/computer/cargo/proc/get_discount()
+	return 1
 
 /**
  * adds an supply pack to the checkout cart
@@ -234,18 +261,18 @@
 	var/reason = ""
 	if(requestonly && !self_paid)
 		working_list = SSshuttle.request_list
-		reason = tgui_input_text(user, "Reason", name)
+		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
 
 	if(pack.goody && !self_paid)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: Small crates may only be purchased by private accounts.")
 		return
 
 	var/similar_count = SSshuttle.supply.get_order_count(pack)
 	if(similar_count == OVER_ORDER_LIMIT)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return
 
@@ -273,8 +300,7 @@
 	if(self_paid)
 		say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 	if(requestonly && message_cooldown < world.time)
-		var/message = amount == 1 ? "A new order has been requested." : "[amount] order has been requested."
-		radio.talk_into(src, message, RADIO_CHANNEL_SUPPLY)
+		aas_config_announce(/datum/aas_config_entry/cargo_orders_announcement, list("AMOUNT" = amount), src, list(RADIO_CHANNEL_SUPPLY), amount == 1 ? "Single Order" : "Multiple Orders")
 		message_cooldown = world.time + 30 SECONDS
 	. = TRUE
 
@@ -328,7 +354,7 @@
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
-					var/obj/item/paper/requisition_paper = new(get_turf(src))
+					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
 					requisition_paper.name = "requisition form - [station_time_timestamp()]"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"
@@ -383,7 +409,7 @@
 			return add_item(ui.user, supply_pack_id)
 		if("remove")
 			var/order_name = params["order_name"]
-			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
+			//try removing at least one item with the specified name. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				if(order.pack.name != order_name)
 					continue
@@ -449,3 +475,13 @@
 
 	var/datum/signal/status_signal = new(list("command" = command))
 	frequency.post_signal(src, status_signal)
+
+/datum/aas_config_entry/cargo_orders_announcement
+	name = "Cargo Alert: New Orders"
+	announcement_lines_map = list(
+		"Single Order" = "A new order has been requested.",
+		"Multiple Orders" = "%AMOUNT orders have been requested.",
+	)
+	vars_and_tooltips_map = list(
+		"AMOUNT" = "will be replaced wuth number of orders.",
+	)

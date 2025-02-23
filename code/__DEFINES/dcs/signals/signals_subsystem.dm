@@ -23,3 +23,6 @@
 #define COMSIG_ADDED_POINT_OF_INTEREST "added_point_of_interest"
 /// Sent from base of /datum/controller/subsystem/points_of_interest/proc/on_poi_element_removed : (atom/old_poi)
 #define COMSIG_REMOVED_POINT_OF_INTEREST "removed_point_of_interest"
+
+///Sent after awards are saved in the database (/datum/controller/subsystem/achievements/save_achievements_to_db)
+#define COMSIG_ACHIEVEMENTS_SAVED_TO_DB "achievements_saved_to_db"

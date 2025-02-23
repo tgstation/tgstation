@@ -29,8 +29,11 @@
 	var/datum/component/material_container/materials
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
 
 /obj/machinery/autolathe/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	materials = AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
@@ -48,8 +51,8 @@
 	register_context()
 
 /obj/machinery/autolathe/Destroy()
+	QDEL_NULL(print_sound)
 	materials = null
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/autolathe/examine(mob/user)
@@ -85,7 +88,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
+	. = NONE
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
@@ -97,7 +100,7 @@
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
-	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
 	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
 		flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "autolathe_mat"), 1 SECONDS)
 
@@ -109,7 +112,7 @@
 				highest_mat = present_mat
 				highest_mat_ref = mat
 
-		flick_overlay_view(material_insertion_animation(highest_mat_ref.greyscale_colors), 1 SECONDS)
+		flick_overlay_view(material_insertion_animation(highest_mat_ref), 1 SECONDS)
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -124,7 +127,6 @@
 	if(!ui)
 		ui = new(user, src, "Autolathe")
 		ui.open()
-
 
 /**
  * Converts all the designs supported by this autolathe into UI data
@@ -186,7 +188,6 @@
 		data["designs"] += handle_designs(stored_research.hacked_designs)
 
 	return data
-
 
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
@@ -254,7 +255,7 @@
 		if(istext(material)) // category
 			var/list/choices = list()
 			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < amount_needed)
+				if(materials.get_material_amount(valid_candidate) < (amount_needed + materials_needed[material]))
 					continue
 				choices[valid_candidate.name] = valid_candidate
 			if(!length(choices))
@@ -273,7 +274,7 @@
 		if(isnull(material))
 			stack_trace("got passed an invalid material id: [material]")
 			return
-		materials_needed[material] = amount_needed
+		materials_needed[material] += amount_needed
 
 	//checks for available materials
 	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
@@ -292,6 +293,8 @@
 	busy = TRUE
 	icon_state = "autolathe_n"
 	SStgui.update_uis(src)
+	// play this after all checks passed individually for each item.
+	print_sound.start()
 	var/turf/target_location
 	if(drop_direction)
 		target_location = get_step(src, drop_direction)
@@ -355,8 +358,9 @@
 		var/number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
 			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
-			created.pixel_x = created.base_pixel_x + rand(-6, 6)
-			created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			if(isitem(created))
+				created.pixel_x = created.base_pixel_x + rand(-6, 6)
+				created.pixel_y = created.base_pixel_y + rand(-6, 6)
 			created.forceMove(target)
 			number_to_make -= max_stack_amount
 
@@ -366,8 +370,9 @@
 		created = new design.build_path(null)
 		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	if(isitem(created))
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
 	created.forceMove(target)
 
@@ -387,7 +392,7 @@
 */
 /obj/machinery/autolathe/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	icon_state = initial(icon_state)
 	busy = FALSE
 	SStgui.update_uis(src)

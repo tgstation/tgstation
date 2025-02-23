@@ -247,11 +247,6 @@
 /obj/machinery/chem_master/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/chem_master/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/chemmaster)
-	)
-
 /obj/machinery/chem_master/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -273,9 +268,10 @@
 		//add containers to this category
 		for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
 			category_list["containers"] += list(list(
-				"icon" = sanitize_css_class_name("[container]"),
 				"ref" = REF(container),
 				"name" = initial(container.name),
+				"icon" = initial(container.icon),
+				"icon_state" = initial(container.icon_state),
 				"volume" = initial(container.volume),
 			))
 
@@ -297,7 +293,7 @@
 	if(!QDELETED(beaker))
 		beaker_data = list()
 		beaker_data["maxVolume"] = beaker.volume
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+		beaker_data["currentVolume"] = beaker.reagents.total_volume
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent as anything in beaker.reagents.reagent_list)
@@ -319,7 +315,7 @@
 	//contents of buffer
 	beaker_data = list()
 	beaker_data["maxVolume"] = reagents.maximum_volume
-	beaker_data["currentVolume"] = round(reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+	beaker_data["currentVolume"] = reagents.total_volume
 	var/list/beakerContents = list()
 	if(length(reagents.reagent_list))
 		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
@@ -365,32 +361,18 @@
  * Transfers a single reagent between buffer & beaker
  * Arguments
  *
- * * mob/user - the player who is attempting the transfer
  * * datum/reagents/source - the holder we are transferring from
  * * datum/reagents/target - the holder we are transferring to
  * * datum/reagent/path - the reagent typepath we are transfering
- * * amount - volume to transfer -1 means custom amount
+ * * amount - volume to transfer
  * * do_transfer - transfer the reagents else destroy them
  */
-/obj/machinery/chem_master/proc/transfer_reagent(mob/user, datum/reagents/source, datum/reagents/target, datum/reagent/path, amount, do_transfer)
+/obj/machinery/chem_master/proc/transfer_reagent(datum/reagents/source, datum/reagents/target, datum/reagent/path, amount, do_transfer)
 	PRIVATE_PROC(TRUE)
 
 	//sanity checks for transfer amount
-	if(isnull(amount))
+	if(isnull(amount) || amount <= 0)
 		return FALSE
-	amount = text2num(amount)
-	if(isnull(amount))
-		return FALSE
-	if(amount == -1)
-		var/target_amount = tgui_input_number(user, "Enter amount to transfer", "Transfer amount")
-		if(!target_amount)
-			return FALSE
-		amount = text2num(target_amount)
-		if(isnull(amount))
-			return FALSE
-	if(amount <= 0)
-		return FALSE
-
 	//sanity checks for reagent path
 	var/datum/reagent/reagent = text2path(path)
 	if (!reagent)
@@ -411,7 +393,6 @@
 		. = TRUE
 	if(. && !QDELETED(src)) //transferring volatile reagents can cause a explosion & destory us
 		update_appearance(UPDATE_OVERLAYS)
-	return .
 
 /obj/machinery/chem_master/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -420,23 +401,43 @@
 
 	switch(action)
 		if("eject")
+			if(is_printing)
+				say("The buffer is locked while printing.")
+				return
+
 			replace_beaker(ui.user)
 			return TRUE
 
 		if("transfer")
 			if(is_printing)
-				say("buffer locked while printing!")
+				say("The buffer is locked while printing.")
 				return
 
 			var/reagent_ref = params["reagentRef"]
 			var/amount = params["amount"]
 			var/target = params["target"]
 
+			if(amount == -1) // Set custom amount
+				var/mob/user = ui.user //Hold a reference of the user if the UI is closed
+				amount = round(tgui_input_number(user, "Enter amount to transfer", "Transfer amount", round_value = FALSE), CHEMICAL_VOLUME_ROUNDING)
+				if(!amount || !user.can_perform_action(src))
+					return FALSE
+
+			var/should_transfer = is_transfering || (target == "buffer") // we should always transfer if target is the buffer
+			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
+				say("No reagent container is inserted.")
+				return FALSE
+
+			var/reagents_from
+			var/reagents_to = null
 			if(target == "buffer")
-				return transfer_reagent(ui.user, beaker.reagents, reagents, reagent_ref, amount, TRUE)
+				reagents_from = beaker.reagents
+				reagents_to = reagents // buffer
 			else if(target == "beaker")
-				return transfer_reagent(ui.user, reagents, beaker.reagents, reagent_ref, amount, is_transfering)
-			return FALSE
+				reagents_from = reagents // buffer
+				if(should_transfer)
+					reagents_to = beaker.reagents
+			return transfer_reagent(reagents_from, reagents_to, reagent_ref, amount, should_transfer)
 
 		if("toggleTransferMode")
 			is_transfering = !is_transfering
@@ -449,9 +450,27 @@
 
 		if("selectContainer")
 			var/obj/item/reagent_containers/target = locate(params["ref"])
+
+			//is this even a valid type path
 			if(!ispath(target))
 				return FALSE
 
+			//are we printing a valid container
+			var/container_found = FALSE
+			for(var/category in printable_containers)
+				//container found in previous iteration
+				if(container_found)
+					break
+
+				//find for matching typepath
+				for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
+					if(target == container)
+						container_found = TRUE
+						break
+			if(!container_found)
+				return FALSE
+
+			//set the container
 			selected_container = target
 			return TRUE
 
@@ -467,7 +486,7 @@
 			if(isnull(item_count) || item_count <= 0)
 				return FALSE
 			item_count = min(item_count, MAX_CONTAINER_PRINT_AMOUNT)
-			var/volume_in_each = round(reagents.total_volume / item_count, CHEMICAL_VOLUME_ROUNDING)
+			var/volume_in_each = min(round(reagents.total_volume / item_count, CHEMICAL_VOLUME_ROUNDING), initial(selected_container.volume))
 
 			// Generate item name
 			var/item_name_default = initial(selected_container.name)
@@ -476,12 +495,15 @@
 				item_name_default = "[master_reagent.name] [item_name_default]"
 			if(!(initial(selected_container.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
 				item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
-			var/item_name = tgui_input_text(usr,
+			var/item_name = tgui_input_text(
+				usr,
 				"Container name",
 				"Name",
 				item_name_default,
-				MAX_NAME_LEN)
-			if(!item_name)
+				max_length = MAX_NAME_LEN,
+			)
+
+			if(!item_name || is_printing)
 				return FALSE
 
 			//start printing
@@ -489,7 +511,7 @@
 			printing_progress = 0
 			printing_total = item_count
 			update_appearance(UPDATE_OVERLAYS)
-			create_containers(ui.user, item_count, item_name, volume_in_each)
+			create_containers(ui.user, item_count, item_name, volume_in_each, selected_container)
 			return TRUE
 
 /**
@@ -500,8 +522,9 @@
  * * item_count - number of containers to print
  * * item_name - the name for each container printed
  * * volume_in_each - volume in each container created
+ * * chosen_container - type of the container we're going to print
  */
-/obj/machinery/chem_master/proc/create_containers(mob/user, item_count, item_name, volume_in_each)
+/obj/machinery/chem_master/proc/create_containers(mob/user, item_count, item_name, volume_in_each, chosen_container)
 	PRIVATE_PROC(TRUE)
 
 	//lost power or manually stopped
@@ -515,7 +538,7 @@
 		return
 
 	//print the stuff
-	var/obj/item/reagent_containers/item = new selected_container(drop_location())
+	var/obj/item/reagent_containers/item = new chosen_container(drop_location())
 	adjust_item_drop_location(item)
 	item.name = item_name
 	item.reagents.clear_reagents()
@@ -526,7 +549,7 @@
 	//print more items
 	item_count --
 	if(item_count > 0)
-		addtimer(CALLBACK(src, PROC_REF(create_containers), user, item_count, item_name, volume_in_each), printing_speed)
+		addtimer(CALLBACK(src, PROC_REF(create_containers), user, item_count, item_name, volume_in_each, chosen_container), printing_speed)
 	else
 		is_printing = FALSE
 		update_appearance(UPDATE_OVERLAYS)

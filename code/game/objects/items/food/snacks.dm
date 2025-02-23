@@ -157,7 +157,7 @@
 
 /obj/item/food/candy_trash
 	name = "candy cigarette butt"
-	icon = 'icons/obj/clothing/masks.dmi'
+	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "candybum"
 	desc = "The leftover from a smoked-out candy cigarette. Can be eaten!"
 	food_reagents = list(
@@ -400,7 +400,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/semki
 	name = "\improper Semki Sunflower Seeds"
-	desc = "A pack of roasted sunflower seeds. Beloved by space russians and babushka alike."
+	desc = "A pack of roasted sunflower seeds. Beloved by space Russians and babushka alike."
 	icon_state = "semki"
 	trash_type = /obj/item/trash/semki
 	food_reagents = list(
@@ -639,7 +639,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/shok_roks/berry
 	name = "\improper Shok-Roks - Berry Storm flavour"
-	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Berry Storm- filled with non-descript sour berry flavour!"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Berry Storm- filled with nondescript sour berry flavour!"
 	icon_state = "shok_roks_berry"
 	trash_type = /obj/item/trash/shok_roks/berry
 	tastes = list("sour berry" = 1, "lightning" = 1)

@@ -1,7 +1,7 @@
 /datum/quirk/item_quirk/blindness
 	name = "Blind"
 	desc = "You are completely blind, nothing can counteract this."
-	icon = FA_ICON_EYE_SLASH
+	icon = FA_ICON_BLIND
 	value = -16
 	gain_text = span_danger("You can't see anything.")
 	lose_text = span_notice("You miraculously gain back your vision.")

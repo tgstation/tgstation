@@ -19,7 +19,7 @@
 	melee_damage_upper = 0
 	attack_verb_continuous = "barrels into"
 	attack_verb_simple = "barrel into"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	combat_mode = FALSE
 	speak_emote = list("screeches")
 	death_message = "stops moving as green liquid oozes from the carcass!"
@@ -36,7 +36,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/grub_spit,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 	)
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
@@ -47,12 +47,15 @@
 	else
 		can_lay_eggs = FALSE
 
+	var/list/food_types = string_list(list(/obj/item/stack/ore))
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/spit_ore = BB_SPIT_ABILITY,
 		/datum/action/cooldown/mob_cooldown/burrow = BB_BURROW_ABILITY,
 	)
 	grant_actions_by_list(innate_actions)
+
 	AddElement(/datum/element/ore_collecting)
+	AddElement(/datum/element/basic_eating, food_types = food_types, add_to_contents = TRUE)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
@@ -60,10 +63,12 @@
 		overlay_icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi',\
 		overlay_state = "goldgrub_alert",\
 	)
+
 	if(can_tame)
-		make_tameable()
+		make_tameable(food_types)
 	if(can_lay_eggs)
 		make_egg_layer()
+
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
@@ -104,8 +109,8 @@
 	barf_contents(gibbed)
 	return ..()
 
-/mob/living/basic/mining/goldgrub/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)
+/mob/living/basic/mining/goldgrub/proc/make_tameable(list/food_types)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/goldgrub/tamed(mob/living/tamer, atom/food)
 	new /obj/effect/temp_visual/heart(src.loc)
@@ -127,7 +132,6 @@
 	. = ..()
 	if(!istype(arrived, /obj/item/stack/ore))
 		return
-	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!can_lay_eggs)
 		return
 	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))

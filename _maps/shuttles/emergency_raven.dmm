@@ -742,7 +742,7 @@
 /area/shuttle/escape)
 "cd" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1456,7 +1456,7 @@
 /area/shuttle/escape)
 "eo" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/docking_port/mobile/emergency{
 	name = "CentCom Raven Cruiser"
@@ -1524,7 +1524,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)

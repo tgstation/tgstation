@@ -64,7 +64,7 @@
 /datum/greyscale_layer/proc/CrossVerify()
 	return
 
-/// Used to actualy create the layer using the given colors
+/// Used to actually create the layer using the given colors
 /// Do not override, use InternalGenerate instead
 /datum/greyscale_layer/proc/Generate(list/colors, list/render_steps, icon/new_icon)
 	var/list/processed_colors = list()
@@ -92,8 +92,7 @@
 
 /datum/greyscale_layer/icon_state/Initialize(icon_file)
 	. = ..()
-	var/list/icon_states = icon_states(icon_file)
-	if(!(icon_state in icon_states))
+	if(!icon_exists(icon_file, icon_state))
 		CRASH("Configured icon state \[[icon_state]\] was not found in [icon_file]. Double check your json configuration.")
 	icon = new(icon_file, icon_state)
 

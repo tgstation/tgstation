@@ -1,6 +1,6 @@
 // Starthistle
 /obj/item/seeds/starthistle
-	name = "pack of starthistle seeds"
+	name = "starthistle seed pack"
 	desc = "A robust species of weed that often springs up in-between the cracks of spaceship parking lots."
 	icon_state = "seed-starthistle"
 	plant_icon_offset = 3
@@ -33,7 +33,7 @@
 
 // Corpse flower
 /obj/item/seeds/starthistle/corpse_flower
-	name = "pack of corpse flower seeds"
+	name = "corpse flower seed pack"
 	desc = "A species of plant that emits a horrible odor. The odor stops being produced in difficult atmospheric conditions."
 	icon_state = "seed-corpse-flower"
 	species = "corpse-flower"
@@ -46,7 +46,7 @@
 
 //Galaxy Thistle
 /obj/item/seeds/galaxythistle
-	name = "pack of galaxythistle seeds"
+	name = "galaxythistle seed pack"
 	desc = "An impressive species of weed that is thought to have evolved from the simple milk thistle. Contains flavolignans that can help repair a damaged liver."
 	icon_state = "seed-galaxythistle"
 	species = "galaxythistle"

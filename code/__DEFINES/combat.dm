@@ -13,14 +13,14 @@
 #define OXY "oxygen"
 /// Exhaustion and nonlethal damage.
 #define STAMINA "stamina"
-/// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
+/// Brain damage. Should probably be decommissioned and replaced with proper organ damage.
 #define BRAIN "brain"
 
 //Damage flag defines //
 
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+/// Involved in checking whether a disease can infect or spread. Also involved in xeno neurotoxin.
 #define BIO "bio"
 /// Involves a shockwave, usually from an explosion.
 #define BOMB "bomb"
@@ -36,7 +36,7 @@
 #define LASER "laser"
 /// Involves a melee attack or a thrown object.
 #define MELEE "melee"
-/// Involved in checking the likelyhood of applying a wound to a mob.
+/// Involved in checking the likelihood of applying a wound to a mob.
 #define WOUND "wound"
 
 #define ARMOR_ALL "all_damage_types"
@@ -76,15 +76,12 @@
 #define CANUNCONSCIOUS (1<<2)
 /// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
-/// Mob godmode. Prevents most statuses and damage from being taken, but is more often than not a crapshoot. Use with caution.
-#define GODMODE (1<<4)
 
 DEFINE_BITFIELD(status_flags, list(
 	"CAN STUN" = CANSTUN,
 	"CAN KNOCKDOWN" = CANKNOCKDOWN,
 	"CAN UNCONSCIOUS" = CANUNCONSCIOUS,
 	"CAN PUSH" = CANPUSH,
-	"GOD MODE" = GODMODE,
 ))
 
 //Health Defines
@@ -101,6 +98,7 @@ DEFINE_BITFIELD(status_flags, list(
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_HYPER_RAPID 1
 #define CLICK_CD_SLOW 10
+#define CLICK_CD_ACTIVATE_ABILITY 1
 
 #define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
@@ -157,19 +155,26 @@ DEFINE_BITFIELD(status_flags, list(
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
 
+/// Attack animation for sharp items
+#define ATTACK_ANIMATION_SLASH "slash"
+/// Attack animation for pointy items
+#define ATTACK_ANIMATION_PIERCE "pierce"
+/// Animation for blunt attacks
+#define ATTACK_ANIMATION_BLUNT "blunt"
+
 //the define for visible message range in combat
 #define SAMETILE_MESSAGE_RANGE 1
 #define COMBAT_MESSAGE_RANGE 3
 #define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 20
-#define SHOVE_KNOCKDOWN_HUMAN 20
-#define SHOVE_KNOCKDOWN_TABLE 20
+#define SHOVE_KNOCKDOWN_SOLID 2 SECONDS
+#define SHOVE_KNOCKDOWN_HUMAN 2 SECONDS
+#define SHOVE_KNOCKDOWN_TABLE 2 SECONDS
 #define SHOVE_KNOCKDOWN_COLLATERAL 1
-#define SHOVE_CHAIN_PARALYZE 30
+#define SHOVE_CHAIN_PARALYZE 3 SECONDS
 //Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
-#define STAGGERED_SLOWDOWN_LENGTH 30
+#define STAGGERED_SLOWDOWN_LENGTH 3 SECONDS
 #define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
@@ -180,41 +185,17 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define UNARMED_MISS_CHANCE_MAX 80
 
 //Combat object defines
-
-//Embedded objects
-///Chance for embedded objects to cause pain (damage user)
-#define EMBEDDED_PAIN_CHANCE 15
-///Chance for embedded object to fall out (causing pain but removing the object)
-#define EMBEDDED_ITEM_FALLOUT 5
-///Chance for an object to embed into somebody when thrown
-#define EMBED_CHANCE 45
-///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
-#define EMBEDDED_PAIN_MULTIPLIER 2
-///Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
-#define EMBEDDED_IMPACT_PAIN_MULTIPLIER 4
-///The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
+/// The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBED_THROWSPEED_THRESHOLD 4
-///Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 6
-///A Time in ticks, total removal time = (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME 30
-///Chance for embedded objects to cause pain every time they move (jostle)
-#define EMBEDDED_JOSTLE_CHANCE 5
-///Coefficient of multiplication for the damage the item does while
-#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER 1
-///This percentage of all pain will be dealt as stam damage rather than brute (0-1)
-#define EMBEDDED_PAIN_STAM_PCT 0.0
-///For thrown weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
+/// For thrown embedding weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
 #define EMBED_CHANCE_SPEED_BONUS 10
 
-#define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
-#define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
-#define EMBED_POINTY list("ignore_throwspeed_threshold" = TRUE)
-#define EMBED_POINTY_SUPERIOR list("embed_chance" = 100, "ignore_throwspeed_threshold" = TRUE)
-
 //Gun weapon weight
+/// Default normal ol' gun. Akimboable, one handed.
 #define WEAPON_LIGHT 1
+/// Can't be used akimbo, but only needs one hand to fire
 #define WEAPON_MEDIUM 2
+/// Can't be used akimbo, and needs two hands to fire
 #define WEAPON_HEAVY 3
 //Gun trigger guards
 #define TRIGGER_GUARD_ALLOW_ALL -1
@@ -251,10 +232,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SUPPRESSED_QUIET 1 ///standard suppressed
 #define SUPPRESSED_VERY 2 /// no message
 
-//Projectile Reflect
-#define REFLECT_NORMAL (1<<0)
-#define REFLECT_FAKEPROJECTILE (1<<1)
-
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
 #define HIS_GRACE_PECKISH 20 //Slightly hungry.
@@ -269,8 +246,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
 #define EXPLODE_GIB_THRESHOLD 50
 
-#define EMP_HEAVY 1
 #define EMP_LIGHT 2
+#define EMP_HEAVY 1
 
 #define GRENADE_CLUMSY_FUMBLE 1
 #define GRENADE_NONCLUMSY_FUMBLE 2
@@ -381,7 +358,7 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 ///If the obstacle is an object at the border of the turf (so no signal from being sent to the other turf)
 #define SHOVE_DIRECTIONAL_BLOCKED (1<<6)
 
-///Bitfield returned by listeners for COMSIG_CARBON_ENTER_STAMCRIT when they perform some action that prevents a mob going into stamcrit.
+///Bitfield returned by listeners for COMSIG_LIVING_ENTER_STAMCRIT when they perform some action that prevents a mob going into stamcrit.
 #define STAMCRIT_CANCELLED (1<<0)
 
 ///Deathmatch lobby current status

@@ -13,41 +13,46 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	. = ..()
 	password = "[GLOB.fscpassword]"
 
-/obj/machinery/vending/medical/syndicate_access/cybersun
+/obj/machinery/vending/medical/syndicate/cybersun
 	name = "\improper CyberMed ++"
 	desc = "An advanced vendor that dispenses medical drugs, both recreational and medicinal."
-	products = list(/obj/item/reagent_containers/syringe = 4,
-					/obj/item/healthanalyzer = 4,
-					/obj/item/reagent_containers/pill/patch/libital = 5,
-					/obj/item/reagent_containers/pill/patch/aiuri = 5,
-					/obj/item/reagent_containers/cup/bottle/multiver = 1,
-					/obj/item/reagent_containers/cup/bottle/syriniver = 1,
-					/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
-					/obj/item/reagent_containers/cup/bottle/morphine = 3,
-					/obj/item/reagent_containers/cup/bottle/potass_iodide = 1,
-					/obj/item/reagent_containers/cup/bottle/salglu_solution = 3,
-					/obj/item/reagent_containers/syringe/antiviral = 5,
-					/obj/item/reagent_containers/medigel/libital = 2,
-					/obj/item/reagent_containers/medigel/aiuri = 2,
-					/obj/item/reagent_containers/medigel/sterilizine = 1)
+	products = list(
+		/obj/item/reagent_containers/syringe = 4,
+		/obj/item/healthanalyzer = 4,
+		/obj/item/reagent_containers/pill/patch/libital = 5,
+		/obj/item/reagent_containers/pill/patch/aiuri = 5,
+		/obj/item/reagent_containers/cup/bottle/multiver = 1,
+		/obj/item/reagent_containers/cup/bottle/syriniver = 1,
+		/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
+		/obj/item/reagent_containers/cup/bottle/morphine = 3,
+		/obj/item/reagent_containers/cup/bottle/potass_iodide = 1,
+		/obj/item/reagent_containers/cup/bottle/salglu_solution = 3,
+		/obj/item/reagent_containers/syringe/antiviral = 5,
+		/obj/item/reagent_containers/medigel/libital = 2,
+		/obj/item/reagent_containers/medigel/aiuri = 2,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+	)
 	contraband = list(/obj/item/reagent_containers/cup/bottle/cold = 2,
-					/obj/item/restraints/handcuffs = 4,
-					/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
-					/obj/item/storage/medkit/tactical = 1)
-	premium = list(/obj/item/storage/pill_bottle/psicodine = 2,
-					/obj/item/reagent_containers/hypospray/medipen = 3,
-					/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-					/obj/item/storage/medkit/regular = 3,
-					/obj/item/storage/medkit/brute = 1,
-					/obj/item/storage/medkit/fire = 1,
-					/obj/item/storage/medkit/toxin = 1,
-					/obj/item/storage/medkit/o2 = 1,
-					/obj/item/storage/medkit/advanced = 1,
-					/obj/item/defibrillator/loaded = 1,
-					/obj/item/wallframe/defib_mount = 1,
-					/obj/item/sensor_device = 2,
-					/obj/item/pinpointer/crew = 2,
-					/obj/item/shears = 1)
+		/obj/item/restraints/handcuffs = 4,
+		/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
+		/obj/item/storage/medkit/tactical = 1,
+	)
+	premium = list(
+		/obj/item/storage/pill_bottle/psicodine = 2,
+		/obj/item/reagent_containers/hypospray/medipen = 3,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/storage/medkit/regular = 3,
+		/obj/item/storage/medkit/brute = 1,
+		/obj/item/storage/medkit/fire = 1,
+		/obj/item/storage/medkit/toxin = 1,
+		/obj/item/storage/medkit/o2 = 1,
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/defibrillator/loaded = 1,
+		/obj/item/wallframe/defib_mount = 1,
+		/obj/item/sensor_device = 2,
+		/obj/item/pinpointer/crew = 2,
+		/obj/item/shears = 1,
+	)
 
 /////////// forgottenship lore
 
@@ -112,15 +117,15 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /area/ruin/space/has_grav/syndicate_forgotten_ship
 	name = "Syndicate Forgotten Ship"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambigen8.ogg', 'sound/ambience/ambigen9.ogg')
+	ambientsounds = list('sound/ambience/misc/ambidanger.ogg', 'sound/ambience/misc/ambidanger2.ogg', 'sound/ambience/general/ambigen8.ogg', 'sound/ambience/general/ambigen9.ogg')
 
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod
 	name = "Syndicate Forgotten Cargo pod"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/ambience/ambigen3.ogg', 'sound/ambience/signal.ogg')
+	ambientsounds = list('sound/ambience/general/ambigen3.ogg', 'sound/ambience/misc/signal.ogg')
 
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault
 	name = "Syndicate Forgotten Vault"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambitech3.ogg')
 	area_flags = NOTELEPORT | UNIQUE_AREA

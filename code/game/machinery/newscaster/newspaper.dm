@@ -55,7 +55,7 @@
 
 /obj/item/newspaper/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(istype(held_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(held_item))
 			context[SCREENTIP_CONTEXT_LMB] = "Scribble"
 			return CONTEXTUAL_SCREENTIP_SET
 		if(held_item.get_temperature())
@@ -84,11 +84,12 @@
 	if(scribble_page == current_page)
 		user.balloon_alert(user, "already scribbled!")
 		return
-	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something")
+	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something", max_length = MAX_MESSAGE_LEN)
 	if(isnull(new_scribble_text))
 		return
 	add_fingerprint(user)
 	user.balloon_alert(user, "scribbling...")
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	user.balloon_alert(user, "scribbled!")
@@ -132,6 +133,15 @@
 /// Called when someone tries to figure out what our identity is, but they can't see it because of the newspaper
 /obj/item/newspaper/proc/holder_checked_name(mob/living/carbon/human/source, list/identity)
 	SIGNAL_HANDLER
+
+	var/newspaper_obscurity_priority = 100 // how powerful obscuring your appearance with a newspaper is
+	if(identity[VISIBLE_NAME_FORCED])
+		if(identity[VISIBLE_NAME_FORCED] > newspaper_obscurity_priority) // the other set forced name is forcier than breaking news
+			return
+		else if(identity[VISIBLE_NAME_FORCED] == newspaper_obscurity_priority)
+			stack_trace("A name-setting signal operation ([identity[VISIBLE_NAME_FACE]]) has a priority collision with [src].")
+		else
+			identity[VISIBLE_NAME_FORCED] = newspaper_obscurity_priority
 	identity[VISIBLE_NAME_FACE] = ""
 	identity[VISIBLE_NAME_ID] = ""
 

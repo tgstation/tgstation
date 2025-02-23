@@ -7,7 +7,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mind_gate"
 
-	sound = 'sound/magic/curse.ogg'
+	sound = 'sound/effects/magic/curse.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 

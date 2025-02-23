@@ -13,8 +13,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
 	sexes = FALSE //snails are hermaphrodites
 
-	mutanteyes = /obj/item/organ/internal/eyes/snail
-	mutanttongue = /obj/item/organ/internal/tongue/snail
+	mutanteyes = /obj/item/organ/eyes/snail
+	mutanttongue = /obj/item/organ/tongue/snail
 	exotic_blood = /datum/reagent/lube
 
 	bodypart_overrides = list(
@@ -85,12 +85,11 @@
 		affected.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_CHECK
 
-/datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load)
+/datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	var/obj/item/storage/backpack/bag = new_snailperson.get_item_by_slot(ITEM_SLOT_BACK)
 	if(!istype(bag, /obj/item/storage/backpack/snail))
-		if(new_snailperson.dropItemToGround(bag)) //returns TRUE even if its null
-			new_snailperson.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(new_snailperson), ITEM_SLOT_BACK)
+		new_snailperson.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(new_snailperson), ITEM_SLOT_BACK)
 	new_snailperson.AddElement(/datum/element/lube_walking, require_resting = TRUE)
 	new_snailperson.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/snail, multiplicative_slowdown = snail_speed_mod)
 
@@ -114,6 +113,9 @@
 	armor_type = /datum/armor/backpack_snail
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	drop_sound = null
+	pickup_sound = null
+	equip_sound = null
 
 /datum/armor/backpack_snail
 	melee = 40

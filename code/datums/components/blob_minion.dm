@@ -4,23 +4,23 @@
 /datum/component/blob_minion
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Overmind who is our boss
-	var/mob/camera/blob/overmind
+	var/mob/eye/blob/overmind
 	/// Callback to run if overmind strain changes
 	var/datum/callback/on_strain_changed
 
-/datum/component/blob_minion/Initialize(mob/camera/blob/overmind, datum/callback/on_strain_changed)
+/datum/component/blob_minion/Initialize(mob/eye/blob/overmind, datum/callback/on_strain_changed)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.on_strain_changed = on_strain_changed
 	register_overlord(overmind)
 
-/datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/camera/blob/overmind, datum/callback/on_strain_changed)
+/datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/eye/blob/overmind, datum/callback/on_strain_changed)
 	if (!isnull(on_strain_changed))
 		src.on_strain_changed = on_strain_changed
 	register_overlord(overmind)
 
-/datum/component/blob_minion/proc/register_overlord(mob/camera/blob/overmind)
+/datum/component/blob_minion/proc/register_overlord(mob/eye/blob/overmind)
 	if (isnull(overmind))
 		return
 	src.overmind = overmind
@@ -36,7 +36,7 @@
 	overmind_properties_changed()
 
 /// Our overmind has changed colour and properties
-/datum/component/blob_minion/proc/overmind_properties_changed(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/datum/component/blob_minion/proc/overmind_properties_changed(mob/eye/blob/overmind, datum/blobstrain/new_strain)
 	SIGNAL_HANDLER
 	var/mob/living/living_parent = parent
 	living_parent.update_appearance(UPDATE_ICON)
@@ -139,6 +139,7 @@
 /// We only speak telepathically to blobs
 /datum/component/blob_minion/proc/on_try_speech(mob/living/minion, message, ignore_spam, forced)
 	SIGNAL_HANDLER
+	minion.log_talk(message, LOG_SAY, tag = "blob hivemind telepathy")
 	var/spanned_message = minion.say_quote(message)
 	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, minion)
@@ -149,6 +150,6 @@
 	SIGNAL_HANDLER
 	overmind?.assume_direct_control(replacement)
 
-/datum/component/blob_minion/PostTransfer()
-	if(!isliving(parent))
+/datum/component/blob_minion/PostTransfer(datum/new_parent)
+	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE

@@ -19,7 +19,7 @@
 
 /datum/grand_finale/immortality/trigger(mob/living/carbon/human/invoker)
 	new /obj/effect/temp_visual/immortality_blast(get_turf(invoker))
-	SEND_SOUND(world, sound('sound/magic/teleport_diss.ogg'))
+	SEND_SOUND(world, sound('sound/effects/magic/teleport_diss.ogg'))
 	for (var/mob/living/alive_guy as anything in GLOB.mob_living_list)
 		new /obj/effect/temp_visual/immortality_pulse(get_turf(alive_guy))
 		if (!alive_guy.mind)

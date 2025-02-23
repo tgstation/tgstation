@@ -11,7 +11,7 @@
 /obj/effect/landmark/singularity_act()
 	return
 
-/obj/effect/landmark/singularity_pull()
+/obj/effect/landmark/singularity_pull(atom/singularity, current_size)
 	return
 
 INITIALIZE_IMMEDIATE(/obj/effect/landmark)
@@ -306,6 +306,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.newplayer_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/pun_pun
+	name = JOB_PUN_PUN
+	icon = 'icons/mob/human/human.dmi'
+	icon_state = "monkey"
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 
@@ -535,7 +540,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 				continue
 			hangover_debris += new /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty(turf_to_spawn_on)
 
-///Spawns the mob with some drugginess/drunkeness, and some disgust.
+///Spawns the mob with some drugginess/drunkenness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
 	if(!iscarbon(hangover_mob))
 		return

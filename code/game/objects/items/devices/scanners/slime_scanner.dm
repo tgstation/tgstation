@@ -22,6 +22,7 @@
 		to_chat(user, span_warning("This device can only scan slimes!"))
 		return ITEM_INTERACT_BLOCKING
 	var/mob/living/basic/slime/scanned_slime = interacting_with
+	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	slime_scan(scanned_slime, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -56,4 +57,4 @@
 		to_render += "\n[span_notice("Core mutation in progress: [scanned_slime.crossbreed_modification]")]\
 					  \n[span_notice("Progress in core mutation: [scanned_slime.applied_crossbreed_amount] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
 
-	to_chat(user, examine_block(jointext(to_render,"")))
+	to_chat(user, boxed_message(jointext(to_render,"")))

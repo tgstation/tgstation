@@ -3,7 +3,7 @@
 	desc = "This spell fires an explosive fireball at a target."
 	button_icon_state = "fireball0"
 
-	sound = 'sound/magic/fireball.ogg'
+	sound = 'sound/effects/magic/fireball.ogg'
 	school = SCHOOL_EVOCATION
 	cooldown_time = 6 SECONDS
 	cooldown_reduction_per_rank = 1 SECONDS // 1 second reduction per rank

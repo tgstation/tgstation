@@ -1,10 +1,10 @@
 import { useContext } from 'react';
+import { Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Button, Icon, Input, Section, Stack } from '../../components';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
-import { isJobOrNameMatch, sortByOrbiters } from './helpers';
+import { isJobCkeyOrNameMatch, sortByOrbiters } from './helpers';
 import { OrbitData } from './types';
 
 /** Search bar for the orbit ui. Has a few buttons to switch between view modes and auto-observe */
@@ -12,10 +12,12 @@ export function OrbitSearchBar(props) {
   const {
     autoObserve,
     bladeOpen,
+    realNameDisplay,
     searchQuery,
     viewMode,
     setAutoObserve,
     setBladeOpen,
+    setRealNameDisplay,
     setSearchQuery,
     setViewMode,
   } = useContext(OrbitContext);
@@ -35,7 +37,7 @@ export function OrbitSearchBar(props) {
       data.npcs,
     ]
       .flat()
-      .filter((observable) => isJobOrNameMatch(observable, searchQuery))
+      .filter((observable) => isJobCkeyOrNameMatch(observable, searchQuery))
       .sort(sortByOrbiters)[0];
 
     if (mostRelevant !== undefined) {
@@ -100,6 +102,17 @@ export function OrbitSearchBar(props) {
             icon="sync-alt"
             onClick={() => act('refresh')}
             tooltip="Refresh"
+            tooltipPosition="bottom-start"
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            color="transparent"
+            icon="passport"
+            onClick={() => setRealNameDisplay(!realNameDisplay)}
+            selected={realNameDisplay}
+            tooltip="Toggle real name display. When active, you'll see real
+            names instead of disguises in orbit menu."
             tooltipPosition="bottom-start"
           />
         </Stack.Item>

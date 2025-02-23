@@ -50,6 +50,8 @@
 	var/animate_start = 0
 	/// Our animation lifespan, how long this message will last
 	var/animate_lifespan = 0
+	/// Callback to finish_image_generation passed to SSrunechat
+	var/datum/callback/finish_callback
 
 /**
  * Constructs a chat message overlay
@@ -80,6 +82,10 @@
 		if (owned_by.seen_messages)
 			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images.Remove(message)
+
+	if (finish_callback)
+		SSrunechat.message_queue -= finish_callback
+		finish_callback = null
 
 	owned_by = null
 	message_loc = null
@@ -188,13 +194,14 @@
 	if(!VERB_SHOULD_YIELD)
 		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
 
-	var/datum/callback/our_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
-	SSrunechat.message_queue += our_callback
+	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
+	SSrunechat.message_queue += finish_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
 ///necessary because after that call the proc can resume at the end of the tick and cause overtime.
 /datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan)
+	finish_callback = null
 	var/rough_time = REALTIMEOFDAY
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 	var/starting_height = target.maptext_height
@@ -223,9 +230,12 @@
 			var/remaining_time = time_before_fade * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
 			// Ensure we don't accidentially spike alpha up or something silly like that
 			m.message.alpha = m.get_current_alpha(time_spent)
-			if (remaining_time > 0)
+			if(remaining_time > 0)
+				if(time_spent < CHAT_MESSAGE_SPAWN_TIME)
+					// We haven't even had the time to fade in yet!
+					animate(m.message, alpha = 255, CHAT_MESSAGE_SPAWN_TIME - time_spent)
 				// Stay faded in for a while, then
-				animate(m.message, alpha = 255, remaining_time)
+				animate(m.message, alpha = 255, remaining_time, flags=ANIMATION_CONTINUE)
 				// Fade out
 				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
 				m.animate_lifespan = remaining_time + CHAT_MESSAGE_EOL_FADE
@@ -314,7 +324,7 @@
 		speaker = v.source
 		spans |= "virtual-speaker"
 
-	// Ignore virtual speaker (most often radio messages) from ourself
+	// Ignore virtual speaker (most often radio messages) from ourselves
 	if (originalSpeaker != src && speaker == src)
 		return
 
@@ -323,59 +333,6 @@
 		new /datum/chatmessage(raw_message, speaker, src, message_language, list("emote", "italics"))
 	else
 		new /datum/chatmessage(raw_message, speaker, src, message_language, spans)
-
-// Tweak these defines to change the available color ranges
-#define CM_COLOR_SAT_MIN 0.6
-#define CM_COLOR_SAT_MAX 0.7
-#define CM_COLOR_LUM_MIN 0.65
-#define CM_COLOR_LUM_MAX 0.75
-
-/**
- * Gets a color for a name, will return the same color for a given string consistently within a round.atom
- *
- * Note that this proc aims to produce pastel-ish colors using the HSL colorspace. These seem to be favorable for displaying on the map.
- *
- * Arguments:
- * * name - The name to generate a color for
- * * sat_shift - A value between 0 and 1 that will be multiplied against the saturation
- * * lum_shift - A value between 0 and 1 that will be multiplied against the luminescence
- */
-/datum/chatmessage/proc/colorize_string(name, sat_shift = 1, lum_shift = 1)
-	// seed to help randomness
-	var/static/rseed = rand(1,26)
-
-	// get hsl using the selected 6 characters of the md5 hash
-	var/hash = copytext(md5(name + GLOB.round_id), rseed, rseed + 6)
-	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
-	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
-	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
-
-	// adjust for shifts
-	s *= clamp(sat_shift, 0, 1)
-	l *= clamp(lum_shift, 0, 1)
-
-	// convert to rgb
-	var/h_int = round(h/60) // mapping each section of H to 60 degree sections
-	var/c = (1 - abs(2 * l - 1)) * s
-	var/x = c * (1 - abs((h / 60) % 2 - 1))
-	var/m = l - c * 0.5
-	x = (x + m) * 255
-	c = (c + m) * 255
-	m *= 255
-	switch(h_int)
-		if(0)
-			return "#[num2hex(c, 2)][num2hex(x, 2)][num2hex(m, 2)]"
-		if(1)
-			return "#[num2hex(x, 2)][num2hex(c, 2)][num2hex(m, 2)]"
-		if(2)
-			return "#[num2hex(m, 2)][num2hex(c, 2)][num2hex(x, 2)]"
-		if(3)
-			return "#[num2hex(m, 2)][num2hex(x, 2)][num2hex(c, 2)]"
-		if(4)
-			return "#[num2hex(x, 2)][num2hex(m, 2)][num2hex(c, 2)]"
-		if(5)
-			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
-
 
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_LAYER_Z_STEP
@@ -388,7 +345,3 @@
 #undef CHAT_MESSAGE_LIFESPAN
 #undef CHAT_MESSAGE_SPAWN_TIME
 #undef CHAT_MESSAGE_WIDTH
-#undef CM_COLOR_LUM_MAX
-#undef CM_COLOR_LUM_MIN
-#undef CM_COLOR_SAT_MAX
-#undef CM_COLOR_SAT_MIN

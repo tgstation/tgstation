@@ -19,7 +19,7 @@
 		return
 	var/area/rift_location = get_area(owner)
 	if(!(rift_location in dragon.chosen_rift_areas))
-		owner.balloon_alert(owner, "can't summon a rift here!")
+		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
 		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
@@ -111,6 +111,8 @@
 		healing_color = COLOR_BLUE, \
 	)
 
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/carp_rift)
+
 	gravity_aura = new(
 		/* host = */src,
 		/* range = */15,
@@ -141,7 +143,7 @@
 		. += span_notice("It has [carp_stored] carp available to spawn as.")
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE)
 
 /obj/structure/carp_rift/Destroy()
 	STOP_PROCESSING(SSobj, src)

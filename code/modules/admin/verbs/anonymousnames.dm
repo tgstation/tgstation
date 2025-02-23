@@ -94,7 +94,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 			return
 		var/mob/living/carbon/human/human_mob = player
 		var/original_name = player.real_name //id will not be changed if you do not do this
-		randomize_human(player) //do this first so the special name can be given
+		randomize_human_normie(player) //do this first so the special name can be given
 		player.fully_replace_character_name(original_name, anonymous_name(player))
 		if(extras_enabled)
 			player_extras(player)
@@ -268,7 +268,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	set_station_name("[pick(GLOB.first_names)] [pick(GLOB.last_names)]")
 
 /datum/anonymous_theme/station/announce_to_all_players()
-	priority_announce("Confirmed level 9 reality error event near [station_name()]. All personnel must try their best to carry on, as to not trigger more reality events by accident.", "Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+	priority_announce("Confirmed level 9 reality error event near [station_name()]. All personnel must try their best to carry on, as to not trigger more reality events by accident.", "Central Command Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
 
 /datum/anonymous_theme/station/anonymous_name(mob/target)
 	return new_station_name()

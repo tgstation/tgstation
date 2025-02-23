@@ -55,7 +55,7 @@
 	return data
 
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /obj/effect/fun_balloon/sentience/ui_status(mob/user, datum/ui_state/state)
 	if(popped)
@@ -64,7 +64,7 @@
 		return UI_INTERACTIVE
 	return ..()
 
-/obj/effect/fun_balloon/sentience/ui_act(action, list/params)
+/obj/effect/fun_balloon/sentience/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -47,11 +47,11 @@
 	if(can_hack_open)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
-		RegisterSignal(parent, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, PROC_REF(block_insert))
 
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
+	RegisterSignal(parent, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag))
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_interact))
@@ -63,12 +63,12 @@
 		UnregisterSignal(parent, list(
 			COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 			COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
-			COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT,
 		))
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_ICON_STATE,
+		COMSIG_ATOM_EMAG_ACT,
 	))
 
 	if(isitem(parent))
@@ -117,6 +117,7 @@
 		return NONE
 
 	panel_open = !panel_open
+	tool.play_tool_sound(source)
 	source.balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
 	return ITEM_INTERACT_SUCCESS
 
@@ -137,24 +138,38 @@
 
 ///Does a do_after to hack the storage open, takes a long time cause idk.
 /datum/component/lockable_storage/proc/hack_open(atom/source, mob/user, obj/item/tool)
-	if(!tool.use_tool(parent, user, 40 SECONDS))
+	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return
 	source.balloon_alert(user, "hacked")
 	lock_code = null
 
-/// Stops you from shoving your tools into the storage if you're trying to hack it
-/datum/component/lockable_storage/proc/block_insert(atom/source, obj/item/inserting, mob/living/user)
+/datum/component/lockable_storage/proc/on_emag(obj/source, mob/user, obj/item/card/emag/emag_card)
 	SIGNAL_HANDLER
-	if(!can_hack_open || !source.atom_storage.locked)
-		return NONE // allow insert
-	if(inserting.tool_behaviour == TOOL_MULTITOOL || inserting.tool_behaviour == TOOL_SCREWDRIVER)
-		return BLOCK_STORAGE_INSERT // block insert
-	return NONE
+
+	if(!source.atom_storage.locked)
+		return FALSE
+
+	if(source.obj_flags & EMAGGED)
+		return FALSE
+	source.obj_flags |= EMAGGED
+	can_hack_open = FALSE // since it's broken for good
+
+	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
+	source.balloon_alert(user, "lock destroyed")
+	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	lock_code = null
+	source.atom_storage.locked = STORAGE_NOT_LOCKED
+	source.update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)
 	SIGNAL_HANDLER
-	source.icon_state = "[source.base_icon_state][source.atom_storage.locked ? "_locked" : null]"
+
+	if(source.obj_flags & EMAGGED)
+		source.icon_state = "[source.base_icon_state]_broken"
+	else
+		source.icon_state = "[source.base_icon_state][source.atom_storage.locked ? "_locked" : null]"
 
 ///Called when interacted with in-hand or on attack, opens the UI.
 /datum/component/lockable_storage/proc/on_interact(atom/source, mob/user)
@@ -162,6 +177,11 @@
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /datum/component/lockable_storage/ui_interact(mob/user, datum/tgui/ui)
+	var/obj/source = parent
+	if(source.obj_flags & EMAGGED)
+		ui?.close()
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LockedSafe", parent)

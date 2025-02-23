@@ -20,7 +20,7 @@
 	/// Sound used upon closing.
 	var/door_close = 'sound/machines/blastdoor.ogg'
 	/// Sound used upon denying.
-	var/door_deny = 'sound/machines/buzz-sigh.ogg'
+	var/door_deny = 'sound/machines/buzz/buzz-sigh.ogg'
 
 /obj/machinery/door/password/voice
 	voice_activated = TRUE
@@ -62,26 +62,48 @@
 		if(access_bypass || ask_for_pass(user))
 			open()
 		else
-			do_animate("deny")
+			run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/password/update_icon_state()
 	. = ..()
-	icon_state = density ? "closed" : "open"
-
-/obj/machinery/door/password/do_animate(animation)
+	//Deny animation would be nice to have.
 	switch(animation)
-		if("opening")
-			flick("opening", src)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "closing"
+		else
+			icon_state = density ? "closed" : "open"
+
+/obj/machinery/door/password/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.1 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 1.1 SECONDS
+
+/obj/machinery/door/password/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.1 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 1.1 SECONDS
+
+/obj/machinery/door/password/animation_effects(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
 			playsound(src, door_open, 50, TRUE)
-		if("closing")
-			flick("closing", src)
+		if(DOOR_CLOSING_ANIMATION)
 			playsound(src, door_close, 50, TRUE)
-		if("deny")
-			//Deny animation would be nice to have.
+		if(DOOR_DENY_ANIMATION)
 			playsound(src, door_deny, 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
-	var/guess = tgui_input_text(user, "Enter the password", "Password")
+	var/guess = tgui_input_text(user, "Enter the password", "Password", max_length = MAX_MESSAGE_LEN)
 	if(guess == password)
 		return TRUE
 	return FALSE

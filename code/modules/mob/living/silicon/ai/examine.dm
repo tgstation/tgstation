@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/examine(mob/user)
-	. = list("<span class='info'>This is [icon2html(src, user)] <EM>[src]</EM>!")
+	. = list()
 	if(stat == DEAD)
 		. += span_deadsay("It appears to be powered-down.")
 	. += span_notice("Its floor <b>bolts</b> are [is_anchored ? "tightened" : "loose"].")
@@ -26,9 +26,5 @@
 			. += "The wireless networking light is blinking."
 		else if (!shunted && !client)
 			. += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem..."
-	. += "</span>"
 
 	. += ..()
-
-/mob/living/silicon/ai/get_examine_string(mob/user, thats = FALSE)
-	return null

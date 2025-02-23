@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Icon, ProgressBar, Tabs } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Icon, ProgressBar, Tabs } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -52,8 +52,8 @@ export const BluespaceLocator = (props) => {
             Teleporter Beacons
           </Tabs.Tab>
         </Tabs>
-        {(TAB.Beacon && <TeleporterBeacons />) ||
-          (TAB.Implant && <TrackingImplants />)}
+        {tab === TAB.Beacon && <TeleporterBeacons />}
+        {tab === TAB.Implant && <TrackingImplants />}
       </Window.Content>
     </Window>
   );

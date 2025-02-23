@@ -47,7 +47,7 @@
 
 /obj/item/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
-	desc = "<span class='alert'>Keep out of reach of children.</span>"
+	desc = span_alert("Keep out of reach of children.")
 	illustration = "mousetrap"
 
 /obj/item/storage/box/mousetraps/PopulateContents()
@@ -91,19 +91,11 @@
 	. = ..()
 	atom_storage.max_slots = 10
 	atom_storage.set_holdable(/obj/item/match)
-
-/obj/item/storage/box/matches/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	return !istype(inserted, /obj/item/match)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/storage/box/matches/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/match(src)
-
-/obj/item/storage/box/matches/item_interaction(mob/living/user, obj/item/match/match, list/modifiers)
-	if(istype(match))
-		match.matchignite()
-		return ITEM_INTERACT_SUCCESS
-	return NONE
 
 /obj/item/storage/box/matches/update_icon_state()
 	. = ..()
@@ -226,14 +218,35 @@
 		new /obj/item/toy/balloon/long(src)
 
 /obj/item/storage/box/stickers
-	name = "box of stickers"
-	desc = "A box full of random stickers. Do give to the clown."
+	name = "sticker pack"
+	desc = "A pack of removable stickers. Removable? What a rip off!<br>On the back, <b>DO NOT GIVE TO THE CLOWN!</b> is printed in large lettering."
+	icon = 'icons/obj/toys/stickers.dmi'
+	icon_state = "stickerpack"
+	illustration = null
+	w_class = WEIGHT_CLASS_TINY
+	var/static/list/pack_labels = list(
+		"smile",
+		"frown",
+		"heart",
+		"silentman",
+		"tider",
+		"star",
+	)
+
+/obj/item/storage/box/stickers/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+	atom_storage.set_holdable(list(/obj/item/sticker))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	if(isnull(illustration))
+		illustration = pick(pack_labels)
+		update_appearance()
 
 /obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
 	var/list/allowed_stickers = list()
 
 	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
-		if(!sticker_type::contraband)
+		if(!sticker_type::exclude_from_random)
 			allowed_stickers += sticker_type
 
 	return allowed_stickers
@@ -249,8 +262,9 @@
 		new type(src)
 
 /obj/item/storage/box/stickers/googly
-	name = "box of googly eye stickers"
+	name = "googly eye sticker pack"
 	desc = "Turn anything and everything into something vaguely alive!"
+	illustration = "googly-alt"
 
 /obj/item/storage/box/stickers/googly/PopulateContents()
 	for(var/i in 1 to 6)

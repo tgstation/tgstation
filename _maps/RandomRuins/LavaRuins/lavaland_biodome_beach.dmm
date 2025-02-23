@@ -406,6 +406,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
+"mv" = (
+/obj/effect/spawner/message_in_a_bottle/low_prob,
+/turf/open/misc/beach/coast,
+/area/ruin/powered/beach)
 "mw" = (
 /obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
@@ -549,9 +553,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "rU" = (
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5
-	},
+/obj/item/reagent_containers/condiment/enzyme,
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
@@ -920,9 +922,7 @@
 /area/ruin/powered/beach)
 "GA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/chair/stool/directional/south,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/red,
@@ -989,6 +989,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/spawner/message_in_a_bottle/low_prob,
 /turf/open/misc/beach/coast/corner{
 	dir = 8
 	},
@@ -1994,7 +1995,7 @@ bG
 bL
 VI
 VI
-yT
+mv
 pz
 Eu
 pz

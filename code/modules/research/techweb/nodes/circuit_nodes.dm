@@ -1,9 +1,9 @@
 /datum/techweb_node/programming
-	id = "programming"
+	id = TECHWEB_NODE_PROGRAMMING
 	starting_node = TRUE
 	display_name = "Programming"
 	description = "Dedicate an entire shift to program a fridge to greet you when opened."
-	prereq_ids = list("robotics")
+	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
 		"component_printer",
 		"module_duplicator",
@@ -59,6 +59,8 @@
 		"comp_ntnet_receive",
 		"comp_ntnet_send",
 		"comp_ntnet_send_list_literal",
+		"comp_nfc_send",
+		"comp_nfc_receive",
 		"comp_pinpointer",
 		"comp_pressuresensor",
 		"comp_radio",
@@ -84,13 +86,17 @@
 		"comp_typecast",
 		"comp_typecheck",
 		"comp_view_sensor",
+		"comp_wire_bundle",
+		"comp_wirenet_receive",
+		"comp_wirenet_send",
+		"comp_wirenet_send_literal",
 	)
 
 /datum/techweb_node/circuit_shells
-	id = "circuit_shells"
+	id = TECHWEB_NODE_CIRCUIT_SHELLS
 	display_name = "Advanced Circuit Shells"
 	description = "Adding brains to more things."
-	prereq_ids = list("programming")
+	prereq_ids = list(TECHWEB_NODE_PROGRAMMING)
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
@@ -103,15 +109,17 @@
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",
+		"undertile_shell",
+		"wallmount_shell",
 		"comp_equip_action",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/bci
-	id = "bci"
+	id = TECHWEB_NODE_BCI
 	display_name = "Brain-Computer Interface"
 	description = "Embedded brain circuits. May occasionally stream Nanotrasen ads in dreams."
-	prereq_ids = list("circuit_shells", "passive_implants")
+	prereq_ids = list(TECHWEB_NODE_CIRCUIT_SHELLS, TECHWEB_NODE_PASSIVE_IMPLANTS)
 	design_ids = list(
 		"bci_implanter",
 		"bci_shell",
@@ -129,10 +137,10 @@
 	discount_experiments = list(/datum/experiment/scanning/people/skillchip = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/programmed_robot
-	id = "programmed_robot"
+	id = TECHWEB_NODE_PROGRAMMED_ROBOT
 	display_name = "Programmed Robot"
 	description = "Grants access to movable shells, allowing for remote operations and pranks."
-	prereq_ids = list("circuit_shells")
+	prereq_ids = list(TECHWEB_NODE_CIRCUIT_SHELLS)
 	design_ids = list(
 		"drone_shell",
 		"comp_pathfind",
@@ -141,10 +149,10 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/programmed_server
-	id = "programmed_server"
+	id = TECHWEB_NODE_PROGRAMMED_SERVER
 	display_name = "Programmed Server"
 	description = "Grants access to a server shell that has a very high capacity for components."
-	prereq_ids = list("bci")
+	prereq_ids = list(TECHWEB_NODE_BCI)
 	design_ids = list(
 		"server_shell",
 	)

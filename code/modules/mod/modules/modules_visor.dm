@@ -8,27 +8,18 @@
 	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/visor)
-	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
-	/// The HUD type given by the visor.
-	var/hud_type
 	/// The traits given by the visor.
 	var/list/visor_traits = list()
 
 /obj/item/mod/module/visor/on_activation()
-	if(hud_type)
-		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.show_to(mod.wearer)
 	if(length(visor_traits))
-		mod.wearer.add_traits(visor_traits, MOD_TRAIT)
+		mod.wearer.add_traits(visor_traits, REF(src))
 	mod.wearer.update_sight()
 
 /obj/item/mod/module/visor/on_deactivation(display_message = TRUE, deleting = FALSE)
-	if(hud_type)
-		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.hide_from(mod.wearer)
 	if(length(visor_traits))
-		mod.wearer.remove_traits(visor_traits, MOD_TRAIT)
+		mod.wearer.remove_traits(visor_traits, REF(src))
 	mod.wearer.update_sight()
 
 //Medical Visor - Gives you a medical HUD.
@@ -38,7 +29,6 @@
 		biological scanning suite, allowing the user to visualize the current health of organic lifeforms, as well as \
 		access data such as patient files in a convenient readout. They say these also let you see behind you."
 	icon_state = "medhud_visor"
-	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	visor_traits = list(TRAIT_MEDICAL_HUD)
 
 //Diagnostic Visor - Gives you a diagnostic HUD.
@@ -48,8 +38,7 @@
 		from advanced machinery, exosuits, and other devices, allowing the user to visualize current power levels \
 		and integrity of such. They say these also let you see behind you."
 	icon_state = "diaghud_visor"
-	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
-	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
+	visor_traits = list(TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
 
 //Security Visor - Gives you a security HUD.
 /obj/item/mod/module/visor/sechud
@@ -58,7 +47,6 @@
 		plugged into various criminal databases to be able to view arrest records, command simple security-oriented robots, \
 		and generally know who to shoot. They say these also let you see behind you."
 	icon_state = "sechud_visor"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
 	visor_traits = list(TRAIT_SECURITY_HUD)
 
 //Meson Visor - Gives you meson vision.

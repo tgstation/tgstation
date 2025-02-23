@@ -4,12 +4,12 @@
 /datum/unit_test/full_heal_heals_organs/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
-	for(var/obj/item/organ/internal/organ in dummy.organs)
+	for(var/obj/item/organ/organ in dummy.organs)
 		organ.apply_organ_damage(50)
 
 	dummy.fully_heal(HEAL_ORGANS)
 
-	for(var/obj/item/organ/internal/organ in dummy.organs)
+	for(var/obj/item/organ/organ in dummy.organs)
 		if(organ.damage <= 0)
 			continue
 		TEST_FAIL("Organ [organ] did not get healed by fullyheal flag HEAL_ORGANS.")
@@ -22,7 +22,7 @@
 
 	var/list/we_started_with = list()
 
-	for(var/obj/item/organ/internal/organ in dummy.organs)
+	for(var/obj/item/organ/organ in dummy.organs)
 		if(organ.organ_flags & ORGAN_VITAL) // leave this for now
 			continue
 		we_started_with += organ.type

@@ -462,11 +462,11 @@
 /area/shuttle/syndicate/medical)
 "ce" = (
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/yellow{

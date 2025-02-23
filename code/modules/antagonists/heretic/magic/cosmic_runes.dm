@@ -7,7 +7,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cosmic_rune"
 
-	sound = 'sound/magic/forcewall.ogg'
+	sound = 'sound/effects/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
@@ -57,7 +57,8 @@
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	/// The other rune this rune is linked with
 	var/datum/weakref/linked_rune
 	/// Effect for when someone teleports
@@ -68,6 +69,7 @@
 	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /obj/effect/cosmic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -99,8 +101,8 @@
 		get_turf(linked_rune_resolved),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
-		asoundin = 'sound/magic/cosmic_energy.ogg',
-		asoundout = 'sound/magic/cosmic_energy.ogg',
+		asoundin = 'sound/effects/magic/cosmic_energy.ogg',
+		asoundout = 'sound/effects/magic/cosmic_energy.ogg',
 	)
 	for(var/mob/living/person_on_rune in get_turf(src))
 		if(person_on_rune.has_status_effect(/datum/status_effect/star_mark))
@@ -133,7 +135,8 @@
 	name = "cosmic rune"
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_fade"
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	anchored = TRUE
 	duration = 5
 
@@ -147,7 +150,8 @@
 	name = "cosmic rune"
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_light"
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	anchored = TRUE
 	duration = 5
 

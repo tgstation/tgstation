@@ -20,15 +20,23 @@
 
 	COOLDOWN_START(src, party_cooldown, rand(PARTY_COOLDOWN_LENGTH_MIN, PARTY_COOLDOWN_LENGTH_MAX))
 
-	var/area/area_to_spawn_in = pick(GLOB.bar_areas)
-	var/turf/T = pick(area_to_spawn_in.contents)
+	var/pizza_type_to_spawn = pick(list(
+		/obj/item/pizzabox/margherita,
+		/obj/item/pizzabox/mushroom,
+		/obj/item/pizzabox/meat,
+		/obj/item/pizzabox/vegetable,
+		/obj/item/pizzabox/pineapple
+	))
 
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-	var/obj/item/pizzabox/pizza_to_spawn = pick(list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/mushroom, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/pineapple))
-	new pizza_to_spawn(toLaunch)
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/cup/glass/bottle/beer(toLaunch)
-	new /obj/effect/pod_landingzone(T, toLaunch)
+	var/area/bar_area = pick(GLOB.bar_areas)
+	podspawn(list(
+		"target" = pick(bar_area.contents),
+		"path" = /obj/structure/closet/supplypod/centcompod,
+		"spawn" = list(
+			pizza_type_to_spawn,
+			/obj/item/reagent_containers/cup/glass/bottle/beer = 6
+		)
+	))
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
@@ -62,6 +70,54 @@
 
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
+
+///A positive station trait that scatters a bunch of lit glowsticks throughout maintenance
+/datum/station_trait/glowsticks
+	name = "Glowsticks party"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 2
+	show_in_report = TRUE
+	report_message = "We've glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
+
+/datum/station_trait/glowsticks/New()
+	..()
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(on_pregame))
+
+/datum/station_trait/glowsticks/proc/on_pregame(datum/source)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(light_up_the_night))
+
+/datum/station_trait/glowsticks/proc/light_up_the_night()
+	var/list/glowsticks = list(
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
+	)
+	for(var/area/station/maintenance/maint in GLOB.areas)
+		var/list/turfs = get_area_turfs(maint)
+		for(var/i in 1 to round(length(turfs) * 0.115))
+			CHECK_TICK
+			var/turf/open/chosen = pick_n_take(turfs)
+			if(!istype(chosen))
+				continue
+			var/skip_this = FALSE
+			for(var/atom/movable/mov as anything in chosen) //stop glowing sticks from spawning on windows
+				if(mov.density && !(mov.pass_flags_self & LETPASSTHROW))
+					skip_this = TRUE
+					break
+			if(skip_this)
+				continue
+			if(prob(3.4)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
+				new /obj/machinery/light/floor(chosen)
+				continue
+			var/stick_type = pick(glowsticks)
+			var/obj/item/flashlight/glowstick/stick = new stick_type(chosen, rand(10, 45))
+			///we want a wider range, otherwise they'd all burn out in about 20 minutes.
+			stick.turn_on()
 
 /datum/station_trait/strong_supply_lines
 	name = "Strong supply lines"
@@ -201,41 +257,42 @@
 	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
 	/// List of all job types with the cybernetics they should receive.
 	var/static/list/job_to_cybernetic = list(
-		/datum/job/assistant = /obj/item/organ/internal/heart/cybernetic, //real cardiac
-		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/mouth/breathing_tube,
-		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
-		/datum/job/bitrunner = /obj/item/organ/internal/eyes/robotic/thermals,
-		/datum/job/botanist = /obj/item/organ/internal/cyberimp/chest/nutriment,
-		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
-		/datum/job/cargo_technician = /obj/item/organ/internal/stomach/cybernetic/tier2,
-		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
-		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier2,
-		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
-		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/chest/reviver,
-		/datum/job/clown = /obj/item/organ/internal/cyberimp/brain/anti_stun, //HONK!
-		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
-		/datum/job/coroner = /obj/item/organ/internal/tongue/bone, //hes got a bone to pick with you
-		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
-		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
-		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/surgery,
-		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
-		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
-		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
-		/datum/job/human_ai = /obj/item/organ/internal/brain/cybernetic,
-		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
-		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
-		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
-		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/eyes/hud/medical,
-		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
-		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,
-		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
-		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
-		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
-		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
-		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
-		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
-		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
-		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
+		/datum/job/assistant = /obj/item/organ/heart/cybernetic, //real cardiac
+		/datum/job/atmospheric_technician = /obj/item/organ/cyberimp/mouth/breathing_tube,
+		/datum/job/bartender = /obj/item/organ/liver/cybernetic/tier3,
+		/datum/job/bitrunner = /obj/item/organ/eyes/robotic/thermals,
+		/datum/job/botanist = /obj/item/organ/cyberimp/chest/nutriment,
+		/datum/job/captain = /obj/item/organ/heart/cybernetic/tier3,
+		/datum/job/cargo_technician = /obj/item/organ/stomach/cybernetic/tier2,
+		/datum/job/chaplain = /obj/item/organ/cyberimp/brain/anti_drop,
+		/datum/job/chemist = /obj/item/organ/liver/cybernetic/tier2,
+		/datum/job/chief_engineer = /obj/item/organ/cyberimp/chest/thrusters,
+		/datum/job/chief_medical_officer = /obj/item/organ/cyberimp/chest/reviver,
+		/datum/job/clown = /obj/item/organ/cyberimp/brain/anti_stun, //HONK!
+		/datum/job/cook = /obj/item/organ/cyberimp/chest/nutriment/plus,
+		/datum/job/coroner = /obj/item/organ/tongue/bone, //hes got a bone to pick with you
+		/datum/job/curator = /obj/item/organ/cyberimp/brain/connector,
+		/datum/job/detective = /obj/item/organ/lungs/cybernetic/tier3,
+		/datum/job/doctor = /obj/item/organ/cyberimp/arm/surgery,
+		/datum/job/geneticist = /obj/item/organ/fly, //we don't care about implants, we have cancer.
+		/datum/job/head_of_personnel = /obj/item/organ/eyes/robotic,
+		/datum/job/head_of_security = /obj/item/organ/eyes/robotic/thermals,
+		/datum/job/human_ai = /obj/item/organ/brain/cybernetic,
+		/datum/job/janitor = /obj/item/organ/eyes/robotic/xray,
+		/datum/job/lawyer = /obj/item/organ/heart/cybernetic/tier2,
+		/datum/job/mime = /obj/item/organ/tongue/robot, //...
+		/datum/job/paramedic = /obj/item/organ/cyberimp/eyes/hud/medical,
+		/datum/job/prisoner = /obj/item/organ/eyes/robotic/shield,
+		/datum/job/psychologist = /obj/item/organ/ears/cybernetic/whisper,
+		/datum/job/pun_pun = /obj/item/organ/cyberimp/arm/strongarm,
+		/datum/job/quartermaster = /obj/item/organ/stomach/cybernetic/tier3,
+		/datum/job/research_director = /obj/item/organ/cyberimp/bci,
+		/datum/job/roboticist = /obj/item/organ/cyberimp/eyes/hud/diagnostic,
+		/datum/job/scientist = /obj/item/organ/ears/cybernetic,
+		/datum/job/security_officer = /obj/item/organ/cyberimp/arm/flash,
+		/datum/job/shaft_miner = /obj/item/organ/monster_core/rush_gland,
+		/datum/job/station_engineer = /obj/item/organ/cyberimp/arm/toolset,
+		/datum/job/warden = /obj/item/organ/cyberimp/eyes/hud/security,
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
@@ -254,7 +311,7 @@
 			var/mob/living/silicon/ai/ai = spawned
 			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
 		return
-	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
+	var/obj/item/organ/cybernetic = new cybernetic_type()
 	cybernetic.Insert(spawned, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/station_trait/luxury_escape_pods

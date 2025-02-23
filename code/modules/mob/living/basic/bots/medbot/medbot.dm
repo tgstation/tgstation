@@ -4,8 +4,8 @@
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "medibot0"
-	base_icon_state = "medibot"
+	icon_state = "medbot_generic_idle"
+	base_icon_state = "medbot"
 	health = 20
 	maxHealth = 20
 	speed = 2
@@ -29,73 +29,73 @@
 
 	///anouncements when we find a target to heal
 	var/static/list/wait_announcements = list(
-		MEDIBOT_VOICED_HOLD_ON = 'sound/voice/medbot/coming.ogg',
-		MEDIBOT_VOICED_WANT_TO_HELP = 'sound/voice/medbot/help.ogg',
-		MEDIBOT_VOICED_YOU_ARE_INJURED = 'sound/voice/medbot/injured.ogg',
+		MEDIBOT_VOICED_HOLD_ON = 'sound/mobs/non-humanoids/medbot/coming.ogg',
+		MEDIBOT_VOICED_WANT_TO_HELP = 'sound/mobs/non-humanoids/medbot/help.ogg',
+		MEDIBOT_VOICED_YOU_ARE_INJURED = 'sound/mobs/non-humanoids/medbot/injured.ogg',
 	)
 
 	///announcements after we heal someone
 	var/static/list/afterheal_announcements = list(
-		MEDIBOT_VOICED_ALL_PATCHED_UP = 'sound/voice/medbot/patchedup.ogg',
-		MEDIBOT_VOICED_APPLE_A_DAY = 'sound/voice/medbot/apple.ogg',
-		MEDIBOT_VOICED_FEEL_BETTER = 'sound/voice/medbot/feelbetter.ogg',
+		MEDIBOT_VOICED_ALL_PATCHED_UP = 'sound/mobs/non-humanoids/medbot/patchedup.ogg',
+		MEDIBOT_VOICED_APPLE_A_DAY = 'sound/mobs/non-humanoids/medbot/apple.ogg',
+		MEDIBOT_VOICED_FEEL_BETTER = 'sound/mobs/non-humanoids/medbot/feelbetter.ogg',
 	)
 
 	///announcements when we are healing someone near death
 	var/static/list/near_death_announcements = list(
-		MEDIBOT_VOICED_STAY_WITH_ME = 'sound/voice/medbot/no.ogg',
-		MEDIBOT_VOICED_LIVE = 'sound/voice/medbot/live.ogg',
-		MEDIBOT_VOICED_NEVER_LOST = 'sound/voice/medbot/lost.ogg',
+		MEDIBOT_VOICED_STAY_WITH_ME = 'sound/mobs/non-humanoids/medbot/no.ogg',
+		MEDIBOT_VOICED_LIVE = 'sound/mobs/non-humanoids/medbot/live.ogg',
+		MEDIBOT_VOICED_NEVER_LOST = 'sound/mobs/non-humanoids/medbot/lost.ogg',
 	)
 	///announcements when we are idle
 	var/static/list/idle_lines = list(
-		MEDIBOT_VOICED_DELICIOUS = 'sound/voice/medbot/delicious.ogg',
-		MEDIBOT_VOICED_PLASTIC_SURGEON = 'sound/voice/medbot/surgeon.ogg',
-		MEDIBOT_VOICED_MASK_ON = 'sound/voice/medbot/radar.ogg',
-		MEDIBOT_VOICED_ALWAYS_A_CATCH = 'sound/voice/medbot/catch.ogg',
-		MEDIBOT_VOICED_LIKE_FLIES = 'sound/voice/medbot/flies.ogg',
-		MEDIBOT_VOICED_SUFFER = 'sound/voice/medbot/why.ogg',
+		MEDIBOT_VOICED_DELICIOUS = 'sound/mobs/non-humanoids/medbot/delicious.ogg',
+		MEDIBOT_VOICED_PLASTIC_SURGEON = 'sound/mobs/non-humanoids/medbot/surgeon.ogg',
+		MEDIBOT_VOICED_MASK_ON = 'sound/mobs/non-humanoids/medbot/radar.ogg',
+		MEDIBOT_VOICED_ALWAYS_A_CATCH = 'sound/mobs/non-humanoids/medbot/catch.ogg',
+		MEDIBOT_VOICED_LIKE_FLIES = 'sound/mobs/non-humanoids/medbot/flies.ogg',
+		MEDIBOT_VOICED_SUFFER = 'sound/mobs/non-humanoids/medbot/why.ogg',
 	)
 	///announcements when we are emagged
 	var/static/list/emagged_announcements = list(
-		MEDIBOT_VOICED_FUCK_YOU = 'sound/voice/medbot/fuck_you.ogg',
-		MEDIBOT_VOICED_NOT_A_GAME = 'sound/voice/medbot/turn_off.ogg',
-		MEDIBOT_VOICED_IM_DIFFERENT = 'sound/voice/medbot/im_different.ogg',
-		MEDIBOT_VOICED_FOURTH_WALL = 'sound/voice/medbot/close.ogg',
-		MEDIBOT_VOICED_SHINDEMASHOU = 'sound/voice/medbot/shindemashou.ogg',
+		MEDIBOT_VOICED_FUCK_YOU = 'sound/mobs/non-humanoids/medbot/fuck_you.ogg',
+		MEDIBOT_VOICED_NOT_A_GAME = 'sound/mobs/non-humanoids/medbot/turn_off.ogg',
+		MEDIBOT_VOICED_IM_DIFFERENT = 'sound/mobs/non-humanoids/medbot/im_different.ogg',
+		MEDIBOT_VOICED_FOURTH_WALL = 'sound/mobs/non-humanoids/medbot/close.ogg',
+		MEDIBOT_VOICED_SHINDEMASHOU = 'sound/mobs/non-humanoids/medbot/shindemashou.ogg',
 	)
 	///announcements when we are being tipped
 	var/static/list/tipped_announcements = list(
-		MEDIBOT_VOICED_WAIT = 'sound/voice/medbot/hey_wait.ogg',
-		MEDIBOT_VOICED_DONT = 'sound/voice/medbot/please_dont.ogg',
-		MEDIBOT_VOICED_TRUSTED_YOU = 'sound/voice/medbot/i_trusted_you.ogg',
-		MEDIBOT_VOICED_NO_SAD = 'sound/voice/medbot/nooo.ogg',
-		MEDIBOT_VOICED_OH_FUCK = 'sound/voice/medbot/oh_fuck.ogg',
+		MEDIBOT_VOICED_WAIT = 'sound/mobs/non-humanoids/medbot/hey_wait.ogg',
+		MEDIBOT_VOICED_DONT = 'sound/mobs/non-humanoids/medbot/please_dont.ogg',
+		MEDIBOT_VOICED_TRUSTED_YOU = 'sound/mobs/non-humanoids/medbot/i_trusted_you.ogg',
+		MEDIBOT_VOICED_NO_SAD = 'sound/mobs/non-humanoids/medbot/nooo.ogg',
+		MEDIBOT_VOICED_OH_FUCK = 'sound/mobs/non-humanoids/medbot/oh_fuck.ogg',
 	)
 	///announcements when we are being untipped
 	var/static/list/untipped_announcements = list(
-		MEDIBOT_VOICED_FORGIVE = 'sound/voice/medbot/forgive.ogg',
-		MEDIBOT_VOICED_THANKS = 'sound/voice/medbot/thank_you.ogg',
-		MEDIBOT_VOICED_GOOD_PERSON = 'sound/voice/medbot/youre_good.ogg',
+		MEDIBOT_VOICED_FORGIVE = 'sound/mobs/non-humanoids/medbot/forgive.ogg',
+		MEDIBOT_VOICED_THANKS = 'sound/mobs/non-humanoids/medbot/thank_you.ogg',
+		MEDIBOT_VOICED_GOOD_PERSON = 'sound/mobs/non-humanoids/medbot/youre_good.ogg',
 	)
 	///announcements when we are worried
 	var/static/list/worried_announcements = list(
-		MEDIBOT_VOICED_PUT_BACK = 'sound/voice/medbot/please_put_me_back.ogg',
-		MEDIBOT_VOICED_IM_SCARED = 'sound/voice/medbot/please_im_scared.ogg',
-		MEDIBOT_VOICED_NEED_HELP = 'sound/voice/medbot/dont_like.ogg',
-		MEDIBOT_VOICED_THIS_HURTS = 'sound/voice/medbot/pain_is_real.ogg',
-		MEDIBOT_VOICED_THE_END = 'sound/voice/medbot/is_this_the_end.ogg',
-		MEDIBOT_VOICED_NOOO = 'sound/voice/medbot/nooo.ogg',
+		MEDIBOT_VOICED_PUT_BACK = 'sound/mobs/non-humanoids/medbot/please_put_me_back.ogg',
+		MEDIBOT_VOICED_IM_SCARED = 'sound/mobs/non-humanoids/medbot/please_im_scared.ogg',
+		MEDIBOT_VOICED_NEED_HELP = 'sound/mobs/non-humanoids/medbot/dont_like.ogg',
+		MEDIBOT_VOICED_THIS_HURTS = 'sound/mobs/non-humanoids/medbot/pain_is_real.ogg',
+		MEDIBOT_VOICED_THE_END = 'sound/mobs/non-humanoids/medbot/is_this_the_end.ogg',
+		MEDIBOT_VOICED_NOOO = 'sound/mobs/non-humanoids/medbot/nooo.ogg',
 	)
 	var/static/list/misc_announcements= list(
-		MEDIBOT_VOICED_CHICKEN = 'sound/voice/medbot/i_am_chicken.ogg',
+		MEDIBOT_VOICED_CHICKEN = 'sound/mobs/non-humanoids/medbot/i_am_chicken.ogg',
 	)
 	/// drop determining variable
 	var/health_analyzer = /obj/item/healthanalyzer
 	/// drop determining variable
 	var/medkit_type = /obj/item/storage/medkit
 	///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
-	var/skin
+	var/skin = "generic"
 	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
 	/// Start healing when they have this much damage in a category
@@ -128,7 +128,7 @@
 
 	if(!isnull(new_skin))
 		skin = new_skin
-	update_appearance()
+		update_appearance()
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
@@ -145,14 +145,13 @@
 		remove_hat_signals = remove_hat,\
 		traits_prevent_checks = prevent_checks,\
 	)
-
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
 		return INITIALIZE_HINT_LATELOAD
 
-	skin = "advanced"
-	update_appearance(UPDATE_OVERLAYS)
+	skin = "adv"
+	update_appearance()
 	damage_type_healer = HEAL_ALL_DAMAGE
 	if(prob(50))
 		name += ", PhD."
@@ -165,22 +164,23 @@
 
 /mob/living/basic/bot/medbot/update_icon_state()
 	. = ..()
-	if(!(bot_mode_flags & BOT_MODE_ON))
-		icon_state = "[base_icon_state]0"
-		return
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		icon_state = "[base_icon_state]a"
-		return
-	var/stationary_mode = !!(medical_mode_flags & MEDBOT_STATIONARY_MODE)
-	if(mode == BOT_HEALING)
-		icon_state = "[base_icon_state]s[stationary_mode]"
-		return
-	icon_state = "[base_icon_state][stationary_mode ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
+
+	var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
+	icon_state = "[base_icon_state]_[skin]_[mode_suffix]"
 
 /mob/living/basic/bot/medbot/update_overlays()
 	. = ..()
-	if(skin)
-		. += "medskin_[skin]"
+
+	if(!(medical_mode_flags & MEDBOT_STATIONARY_MODE))
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_wheels")
+
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated")
+		. += emissive_appearance(icon, "[base_icon_state]_overlay_incapacitated", src, alpha = src.alpha)
+	else if(bot_mode_flags & BOT_MODE_ON)
+		var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]")
+		. += emissive_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]", src, alpha = src.alpha)
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()
@@ -210,9 +210,9 @@
 // Actions received from TGUI
 /mob/living/basic/bot/medbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(ui.user))
+	var/mob/user = ui.user
+	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
-	var/mob/living/our_user = ui.user
 	switch(action)
 		if("heal_threshold")
 			var/adjust_num = round(text2num(params["threshold"]))
@@ -229,7 +229,7 @@
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 		if("sync_tech")
 			if(!linked_techweb)
-				to_chat(our_user, span_notice("No research techweb connected."))
+				to_chat(user, span_notice("No research techweb connected."))
 				return
 			var/oldheal_amount = heal_amount
 			var/tech_boosters
@@ -245,14 +245,11 @@
 
 	update_appearance()
 
-/mob/living/basic/bot/medbot/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	if(!(bot_access_flags & BOT_COVER_EMAGGED))
-		return
+/mob/living/basic/bot/medbot/emag_effects(mob/user)
 	medical_mode_flags &= ~MEDBOT_DECLARE_CRIT
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
-	flick("medibot_spark", src)
+	flick_overlay_view(mutable_appearance(icon, "[base_icon_state]_spark"), 1 SECONDS)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
@@ -388,9 +385,9 @@
 /mob/living/basic/bot/medbot/nukie
 	name = "Oppenheimer"
 	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
-	skin = "bezerk"
 	health = 40
 	maxHealth = 40
+	skin = "bezerk"
 	req_one_access = list(ACCESS_SYNDICATE)
 	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED
 	radio_key = /obj/item/encryptionkey/syndicate

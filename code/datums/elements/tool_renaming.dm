@@ -51,7 +51,6 @@
 				return
 			renamed_obj.AddComponent(/datum/component/rename, input, renamed_obj.desc)
 			to_chat(user, span_notice("You have successfully renamed \the [old_name] to [renamed_obj]."))
-			ADD_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, RENAMING_TOOL_LABEL_TRAIT)
 			renamed_obj.update_appearance(UPDATE_NAME)
 
 		if(OPTION_DESCRIPTION)
@@ -64,13 +63,11 @@
 				return
 			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.name, input)
 			to_chat(user, span_notice("You have successfully changed [renamed_obj]'s description."))
-			ADD_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, RENAMING_TOOL_LABEL_TRAIT)
 			renamed_obj.update_appearance(UPDATE_DESC)
 
 		if(OPTION_RESET)
 			qdel(renamed_obj.GetComponent(/datum/component/rename))
 			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name and description."))
-			REMOVE_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, RENAMING_TOOL_LABEL_TRAIT)
 			renamed_obj.update_appearance(UPDATE_NAME | UPDATE_DESC)
 
 #undef OPTION_RENAME

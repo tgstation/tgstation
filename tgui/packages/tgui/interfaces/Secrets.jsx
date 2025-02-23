@@ -1,7 +1,4 @@
-import { toFixed } from 'common/math';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Flex,
@@ -10,7 +7,10 @@ import {
   RoundGauge,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const TAB2NAME = [
@@ -301,13 +301,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="plus"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Mass Heal everyone"
+              onClick={() => act('mass_heal')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -354,13 +354,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="robot"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Triple AI mode"
+              onClick={() => act('tripleAI')}
+            />
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -425,13 +425,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="house"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Send Shuttle Back"
+              onClick={() => act('send_shuttle_back')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -456,13 +456,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="dollar-sign"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Dpt Order Cooldown"
+              onClick={() => act('department_cooldown_override')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>

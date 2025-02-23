@@ -554,7 +554,7 @@
 
 /datum/design/mech_thrusters
 	name = "RCS Thruster Package"
-	desc = "A thruster package for exosuits. Expells gas from the internal life-support air tank to generate thrust."
+	desc = "A thruster package for exosuits. Expels gas from the internal life-support air tank to generate thrust."
 	id = "mech_thrusters"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/thrusters/gas
@@ -750,7 +750,7 @@
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
 	id = "mech_sleeper"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
+	build_path = /obj/item/mecha_parts/mecha_equipment/sleeper/medical
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 10 SECONDS
 	category = list(

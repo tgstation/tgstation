@@ -43,7 +43,7 @@
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
 	/// The sound the guillotine makes when it successfully cuts off a head
-	var/drop_sound = 'sound/weapons/guillotine.ogg'
+	var/drop_sound = 'sound/items/weapons/guillotine.ogg'
 	/// The current state of the blade
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	/// How sharp the blade is

@@ -483,43 +483,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/circuit
-	name = "Blue Circuit Tile"
-	id = "circuit"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/tile/circuit
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
-
-/datum/design/circuitgreen
-	name = "Green Circuit Tile"
-	id = "circuitgreen"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/tile/circuit/green
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/circuitred
-	name = "Red Circuit Tile"
-	id = "circuitred"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/tile/circuit/red
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/conveyor_belt
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
@@ -571,7 +534,7 @@
 
 /datum/design/paper_biscuit
 	name = "Paper Biscuit"
-	desc = "An paper biscuit which can seal in itself paperwork. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permamently open. Not actually a biscuit."
+	desc = "A paper biscuit which can seal paperwork inside. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permanently open. Not actually a biscuit."
 	id = "biscuit"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*0.2)
@@ -584,7 +547,7 @@
 
 /datum/design/paper_biscuit_confidential
 	name = "Confidential Paper Biscuit"
-	desc = "An paper biscuit which can seal in itself paperwork, this one is used for confidential Nanotrasen documents. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permamently open. Not actually a biscuit."
+	desc = "A paper biscuit which can seal paperwork inside, this one is used for confidential Nanotrasen documents. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permanently open. Not actually a biscuit."
 	id = "confidential_biscuit"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*0.3)

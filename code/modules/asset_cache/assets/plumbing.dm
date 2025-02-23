@@ -17,7 +17,6 @@
 			"synthesizer",
 			"reaction_chamber",
 			"grinder_chemical",
-			"growing_vat",
 			"fermenter",
 			"pump",
 			"disposal",

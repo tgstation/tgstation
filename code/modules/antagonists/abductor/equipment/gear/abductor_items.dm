@@ -29,6 +29,7 @@
 	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon_state = "gizmo_scan"
 	inhand_icon_state = "silencer"
+	icon_angle = -45
 	var/mode = GIZMO_SCAN
 	var/datum/weakref/marked_target_weakref
 	var/obj/machinery/abductor/console/console
@@ -48,7 +49,7 @@
 		icon_state = "gizmo_scan"
 	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
-/obj/item/abductor/gizmo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/abductor/gizmo/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ScientistCheck(user))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 	if(!console)
@@ -63,8 +64,10 @@
 
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/abductor/gizmo/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
+/obj/item/abductor/gizmo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
@@ -103,16 +106,19 @@
 	desc = "A compact device used to shut down communications equipment."
 	icon_state = "silencer"
 	inhand_icon_state = "gizmo"
+	icon_angle = -45
 
-/obj/item/abductor/silencer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/abductor/silencer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!AbductorCheck(user))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 
 	radio_off(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/abductor/silencer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
+/obj/item/abductor/silencer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )
@@ -141,6 +147,7 @@
 			or to send a command to a test subject with a charged gland."
 	icon_state = "mind_device_message"
 	inhand_icon_state = "silencer"
+	icon_angle = -45
 	var/mode = MIND_DEVICE_MESSAGE
 
 /obj/item/abductor/mind_device/attack_self(mob/user)
@@ -155,10 +162,12 @@
 		icon_state = "mind_device_message"
 	to_chat(user, span_notice("You switch the device to [mode == MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
 
-/obj/item/abductor/mind_device/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/abductor/mind_device/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/abductor/mind_device/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ScientistCheck(user))
 		return ITEM_INTERACT_BLOCKING
 
@@ -172,7 +181,7 @@
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		var/obj/item/organ/internal/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
+		var/obj/item/organ/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
 		if(!istype(target_gland))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
@@ -183,8 +192,12 @@
 			to_chat(user, span_warning("Your target is already under a mind-controlling influence!"))
 			return
 
-		var/command = tgui_input_text(user, "Enter the command for your target to follow.\
-											Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]", "Enter command")
+		var/command = tgui_input_text(
+			user,
+			"Enter the command for your target to follow. Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]",
+			"Enter command",
+			max_length = MAX_MESSAGE_LEN,
+			)
 
 		if(!command)
 			return
@@ -209,14 +222,14 @@
 		if(living_target.stat == DEAD)
 			to_chat(user, span_warning("Your target is dead!"))
 			return
-		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message")
+		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message", max_length = MAX_MESSAGE_LEN)
 		if(!message)
 			return
 		if(QDELETED(living_target) || living_target.stat == DEAD)
 			return
 
 		living_target.balloon_alert(living_target, "you hear a voice")
-		to_chat(living_target, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
+		to_chat(living_target, span_hear("You hear a voice in your head saying: [span_abductor(message)]"))
 		to_chat(user, span_notice("You send the message to your target."))
 		log_directed_talk(user, living_target, message, LOG_SAY, "abductor whisper")
 
@@ -225,7 +238,7 @@
 	name = "alien firing pin"
 	icon_state = "firing_pin_ayy"
 	desc = "This firing pin is slimy and warm; you can swear you feel it constantly trying to mentally probe you."
-	fail_message = "<span class='abductor'>Firing error, please contact Command.</span>"
+	fail_message = span_abductor("Firing error, please contact Command.")
 
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
 	. = isabductor(user)
@@ -287,6 +300,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	icon_state = "wonderprodStun"
 	inhand_icon_state = "wonderprod"
+	icon_angle = -45
 
 	force = 7
 	wound_bonus = FALSE
@@ -296,7 +310,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	cooldown = 0 SECONDS
 	stamina_damage = 0
 	knockdown_time = 14 SECONDS
-	on_stun_sound = 'sound/weapons/egloves.ogg'
+	on_stun_sound = 'sound/items/weapons/egloves.ogg'
 	affect_cyborg = TRUE
 
 	var/mode = BATON_STUN
@@ -329,7 +343,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	affect_cyborg = is_stun_mode
 	log_stun_attack = is_stun_mode // other modes have their own log entries.
 	stun_animation = is_stun_or_sleep
-	on_stun_sound = is_stun_or_sleep ? 'sound/weapons/egloves.ogg' : null
+	on_stun_sound = is_stun_or_sleep ? 'sound/items/weapons/egloves.ogg' : null
 
 	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
 	update_appearance()
@@ -384,7 +398,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
-	if(target.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
+	if(INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
 			target.visible_message(span_danger("[user] tried to induced sleep in [target] with [src], but is unsuccessful!"), \
@@ -412,7 +426,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
-			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+			playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
@@ -438,7 +452,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		species = span_notice("[human_victim.dna.species.name]")
 		if(IS_CHANGELING(human_victim))
 			species = span_warning("Changeling lifeform")
-		var/obj/item/organ/internal/heart/gland/temp = locate() in human_victim.organs
+		var/obj/item/organ/heart/gland/temp = locate() in human_victim.organs
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else
@@ -512,7 +526,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	..()
 	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
 	user.dropItemToGround(src)
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50)
 	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 3 SECONDS)
 
 /obj/item/abductor_machine_beacon/proc/try_spawn_machine()
@@ -529,7 +543,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		visible_message(span_notice("[new_machine] warps on top of the beacon!"))
 		qdel(src)
 	else
-		playsound(src, 'sound/machines/buzz-two.ogg', 50)
+		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50)
 
 /obj/item/abductor_machine_beacon/chem_dispenser
 	name = "beacon - Reagent Synthesizer"
@@ -539,6 +553,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien scalpel"
 	desc = "It's a gleaming sharp knife made out of silvery-green metal."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 	surgical_tray_overlay = "scalpel_alien"
 	toolspeed = 0.25
 
@@ -547,6 +562,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "You've never seen this before."
 	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "hemostat_alien"
+	icon_angle = 180
 	toolspeed = 0.25
 
 /obj/item/retractor/alien
@@ -554,6 +570,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "You're not sure if you want the veil pulled back."
 	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "retractor_alien"
+	icon_angle = 180
 	toolspeed = 0.25
 
 /obj/item/circular_saw/alien
@@ -561,6 +578,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "saw_alien"
+	icon_angle = 180
 	toolspeed = 0.25
 
 /obj/item/surgicaldrill/alien
@@ -568,6 +586,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Maybe alien surgeons have finally found a use for the drill."
 	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "drill_alien"
+	icon_angle = 180
 	toolspeed = 0.25
 
 /obj/item/cautery/alien
@@ -576,6 +595,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		Unless..."
 	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "cautery_alien"
+	icon_angle = 180
 	toolspeed = 0.25
 
 /obj/item/clothing/head/helmet/abductor
@@ -584,6 +604,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alienhelmet"
 	inhand_icon_state = null
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
@@ -606,9 +630,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Right-click it to switch which toolset is active."
 	icon_state = "omnitool"
 	inhand_icon_state = "silencer"
+	icon_angle = -45
 	toolspeed = 0.25
 	tool_behaviour = null
-	usesound = 'sound/items/pshoom.ogg'
+	usesound = 'sound/items/pshoom/pshoom.ogg'
 	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
 	var/list/tool_list = list()
 	///Which toolset do we have active currently?
@@ -689,7 +714,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/abductor/alien_omnitool/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 

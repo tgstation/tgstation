@@ -73,8 +73,8 @@
 		return
 	if(user.transferItemToLoc(I, src, silent = FALSE))
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 		to_chat(user, span_notice("You place [I] on [src]."))
 		AddToGrill(I, user)
 	else

@@ -3,7 +3,7 @@
 	desc = "This spell conjures a construct which may be controlled by Shades."
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "artificer"
-	sound = 'sound/magic/summonitems_generic.ogg'
+	sound = 'sound/effects/magic/summonitems_generic.ogg'
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 1 MINUTES

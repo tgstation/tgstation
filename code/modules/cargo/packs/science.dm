@@ -61,7 +61,7 @@
 
 /datum/supply_pack/science/raw_ectoplasm_anomaly
 	name = "Raw Ectoplasm Anomaly"
-	desc = "Contains the raw core of a ectoplasm anomaly, ready to be implosion-compressed into a powerful artifact."
+	desc = "Contains the raw core of an ectoplasm anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
@@ -176,7 +176,8 @@
 					/obj/item/biopsy_tool,
 					/obj/item/storage/box/petridish = 2,
 					/obj/item/storage/box/swab,
-					/obj/item/construction/plumbing/research,
+					/obj/item/circuitboard/machine/vatgrower,
+					/obj/item/reagent_containers/condiment/protein,
 				)
 	crate_name = "cytology supplies crate"
 
@@ -188,4 +189,4 @@
 	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/mod/core/standard = 3)
 	crate_name = "\improper MOD core crate"
-	crate_type = /obj/structure/closet/crate/secure/science/robo
+	crate_type = /obj/structure/closet/crate/nakamura

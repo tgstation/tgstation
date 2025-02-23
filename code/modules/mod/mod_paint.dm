@@ -23,34 +23,6 @@
 	. += span_notice("<b>Left-click</b> a MODsuit to change skin.")
 	. += span_notice("<b>Right-click</b> a MODsuit to recolor.")
 
-/obj/item/mod/paint/pre_attack(atom/attacked_atom, mob/living/user, params)
-	if(!istype(attacked_atom, /obj/item/mod/control))
-		return ..()
-	var/obj/item/mod/control/mod = attacked_atom
-	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
-		return TRUE
-	paint_skin(mod, user)
-
-/obj/item/mod/paint/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
-	if(!istype(attacked_atom, /obj/item/mod/control))
-		return ..()
-	var/obj/item/mod/control/mod = attacked_atom
-	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(editing_mod)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	editing_mod = mod
-	proxy_view = new()
-	proxy_view.generate_view("color_matrix_proxy_[REF(user.client)]")
-
-	proxy_view.appearance = editing_mod.appearance
-	proxy_view.color = null
-	proxy_view.display_to(user)
-	ui_interact(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/mod/paint/ui_interact(mob/user, datum/tgui/ui)
 	if(!editing_mod)
 		return
@@ -83,7 +55,7 @@
 	data["currentColor"] = current_color
 	return data
 
-/obj/item/mod/paint/ui_act(action, list/params)
+/obj/item/mod/paint/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -154,7 +126,7 @@
 	mod.theme.set_skin(mod, pick)
 
 /obj/item/mod/paint/proc/check_menu(obj/item/mod/control/mod, mob/user)
-	if(user.incapacitated() || !user.is_holding(src) || !mod || mod.active || mod.activating)
+	if(user.incapacitated || !user.is_holding(src) || !mod || mod.active || mod.activating)
 		return FALSE
 	return TRUE
 
@@ -167,7 +139,7 @@
 
 /obj/item/mod/skin_applier
 	name = "MOD skin applier"
-	desc = "This one-use skin applier will add a skin to MODsuits of a specific type."
+	desc = "This one-use skin applier will add a skin to MODsuits of a specific type. Must be used on an inactive control unit."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "skinapplier"
 	var/skin = "civilian"
@@ -176,20 +148,27 @@
 	. = ..()
 	name = "MOD [skin] skin applier"
 
-/obj/item/mod/skin_applier/pre_attack(atom/attacked_atom, mob/living/user, params)
+/obj/item/mod/skin_applier/interact_with_atom(atom/attacked_atom, mob/living/user, params)
 	if(!istype(attacked_atom, /obj/item/mod/control))
-		return ..()
+		return NONE
 	var/obj/item/mod/control/mod = attacked_atom
 	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
-		return TRUE
+		balloon_alert(user, "unit active!")
+		return ITEM_INTERACT_BLOCKING
 	if(!(skin in mod.theme.variants))
-		balloon_alert(user, "incompatible theme!")
-		return TRUE
+		balloon_alert(user, "wrong theme for skin!")
+		return ITEM_INTERACT_BLOCKING
 	mod.theme.set_skin(mod, skin)
 	balloon_alert(user, "skin applied")
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/skin_applier/honkerative
+	desc = /obj/item/mod/skin_applier::desc + " Additionally, this kit attempts to install a waddling module. Honk!"
 	skin = "honkerative"
+
+/obj/item/mod/skin_applier/honkerative/interact_with_atom(obj/item/mod/control/controlunit, mob/living/user, params)
+	. = ..()
+	if(!(. & ITEM_INTERACT_SUCCESS))
+		return
+	controlunit.install(new /obj/item/mod/module/waddle(get_turf(user)), user)

@@ -12,8 +12,6 @@
 	var/taste_mult = 1
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
-	/// LIQUID, SOLID, GAS
-	var/reagent_state = LIQUID
 	/// Special data associated with the reagent that will be passed on upon transfer to a new holder.
 	var/list/data
 	/// increments everytime on_mob_life is called
@@ -24,7 +22,7 @@
 	var/ph = 7
 	///Purity of the reagent - for use with internal reaction mechanics only. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
 	var/purity = 1
-	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
+	///the purity of the reagent on creation (i.e. when it's added to a mob and its purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
 	///The molar mass of the reagent - if you're adding a reagent that doesn't have a recipe, just add a random number between 10 - 800. Higher numbers are "harder" but it's mostly arbitary.
 	var/mass
@@ -78,9 +76,11 @@
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
 	var/list/added_traits
+	/// Multiplier of the amount purged by reagents such as calomel, multiver, syniver etc.
+	var/purge_multiplier = 1
 
 	///The default reagent container for the reagent, used for icon generation
-	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
+	var/obj/default_container = /obj/item/reagent_containers/cup/bottle
 
 	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
@@ -121,16 +121,20 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection)
-	if((methods & penetrates_skin) && exposed_mob.reagents) //smoke, foam, spray
-		var/amount = round(reac_volume*clamp((1 - touch_protection), 0, 1), 0.1)
+
+	if(isnull(exposed_mob.reagents)) // lots of simple mobs do not have a reagents holder
+		return
+
+	if(penetrates_skin & methods) // models things like vapors which penetrate the skin
+		var/amount = round(reac_volume * clamp((1 - touch_protection), 0, 1), 0.1)
 		if(amount >= 0.5)
 			exposed_mob.reagents.add_reagent(type, amount, added_purity = purity)
 
 /// Applies this reagent to an [/obj]
-/datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_OBJ, exposed_obj, reac_volume)
+	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_OBJ, exposed_obj, reac_volume, methods, show_message)
 
 /// Applies this reagent to a [/turf]
 /datum/reagent/proc/expose_turf(turf/exposed_turf, reac_volume)
@@ -194,7 +198,8 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
-	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
+	// Scale the overdose threshold of the chem by the difference between the default and creation purity.
+	overdose_threshold += (src.creation_purity - initial(purity)) * overdose_threshold
 	if(added_traits)
 		affected_mob.add_traits(added_traits, "base:[type]")
 
@@ -250,7 +255,9 @@ Primarily used in reagents/reaction_agents
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
-	return list("[taste_description]" = 1)
+	if(isnull(taster) || !HAS_TRAIT(taster, TRAIT_DETECTIVES_TASTE))
+		return list("[taste_description]" = 1)
+	return list("[LOWER_TEXT(name)]" = 1)
 
 /**
  * Used when you want the default reagents purity to be equal to the normal effects
@@ -268,17 +275,21 @@ Primarily used in reagents/reaction_agents
 	return creation_purity / normalise_num_to
 
 /**
- * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to it's inverse one.
+ * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to its inverse one.
  *
  * Arguments
  * * purity - Overrides the purity used for determining the inverse purity.
  */
 /datum/reagent/proc/get_inverse_purity(purity)
 	if(!inverse_chem || !inverse_chem_val)
-		return
+		return 0
 	if(!purity)
 		purity = src.purity
 	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
+
+///Called when feeding a fish. If TRUE is returned, a portion of reagent will be consumed.
+/datum/reagent/proc/used_on_fish(obj/item/fish/fish)
+	return FALSE
 
 /**
  * Input a reagent_list, outputs pretty readable text!

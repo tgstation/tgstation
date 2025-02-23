@@ -66,12 +66,11 @@
 	bodyparts -= source
 
 /// Whenever a bodypart we're tracking has their health hud updated, override it with our fake overlay
-/datum/hallucination/fake_health_doll/proc/on_bodypart_hud_update(obj/item/bodypart/source, mob/living/carbon/human/owner)
+/datum/hallucination/fake_health_doll/proc/on_bodypart_hud_update(obj/item/bodypart/source, mob/living/carbon/human/owner, list/overridable_key)
 	SIGNAL_HANDLER
 
-	var/mutable_appearance/fake_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "[source.body_zone][bodyparts[source]]")
-	owner.hud_used.healthdoll.add_overlay(fake_overlay)
-	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
+	overridable_key[1] = bodyparts[source]
+	return OVERRIDE_BODYPART_HEALTH_HUD
 
 /// Signal proc for [COMSIG_BODYPART_CHECKED_FOR_INJURY]. Our bodyparts look a lot more wounded than they actually are.
 /datum/hallucination/fake_health_doll/proc/on_bodypart_checked(obj/item/bodypart/source, mob/living/carbon/examiner, list/check_list, list/limb_damage)

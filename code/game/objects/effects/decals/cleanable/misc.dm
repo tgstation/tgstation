@@ -10,6 +10,8 @@
 	desc = "Ashes to ashes, dust to dust, and into space."
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "ash"
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 	mergeable_decal = FALSE
 	beauty = -50
 	decal_reagent = /datum/reagent/ash
@@ -81,11 +83,11 @@
 	if(T.tiled_dirt)
 		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/effect/decal/cleanable/dirt/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
@@ -144,12 +146,14 @@
 	name = "cobweb"
 	desc = "Somebody should remove that."
 	gender = NEUTER
+	plane = GAME_PLANE
 	layer = WALL_OBJ_LAYER
 	icon = 'icons/effects/web.dmi'
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
 	clean_type = CLEAN_TYPE_HARD_DECAL
+	is_mopped = FALSE
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -160,6 +164,8 @@
 	gender = NEUTER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 	mergeable_decal = FALSE
 	beauty = -150
 	clean_type = CLEAN_TYPE_HARD_DECAL
@@ -245,6 +251,8 @@
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
 	gender = NEUTER
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "ash"
 
@@ -322,6 +330,8 @@
 	desc = "Torn pieces of cardboard and paper, left over from a package."
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "paper_shreds"
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 
 /obj/effect/decal/cleanable/wrapping/pinata
 	name = "pinata shreds"
@@ -331,13 +341,16 @@
 /obj/effect/decal/cleanable/wrapping/pinata/syndie
 	icon_state = "syndie_pinata_shreds"
 
+/obj/effect/decal/cleanable/wrapping/pinata/donk
+	icon_state = "donk_pinata_shreds"
+
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"
 	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "garbage"
 	plane = GAME_PLANE
-	layer = FLOOR_CLEAN_LAYER //To display the decal over wires.
+	layer = CLEANABLE_OBJECT_LAYER
 	beauty = -150
 	clean_type = CLEAN_TYPE_HARD_DECAL
 
@@ -356,7 +369,7 @@
 	decal_reagent = /datum/reagent/ants
 	reagent_amount = 5
 	/// Sound the ants make when biting
-	var/bite_sound = 'sound/weapons/bite.ogg'
+	var/bite_sound = 'sound/items/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
 	if(mapload && reagent_amount > 2)
@@ -440,7 +453,6 @@
 	name = "pool of fuel"
 	desc = "A pool of flammable fuel. Its probably wise to clean this off before something ignites it..."
 	icon_state = "fuel_pool"
-	layer = LOW_OBJ_LAYER
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -466,6 +478,15 @@
 
 	if(burn_stacks)
 		burn_amount = max(min(burn_stacks, 10), 1)
+
+	return INITIALIZE_HINT_LATELOAD
+
+// Just in case of fires, do this after mapload.
+/obj/effect/decal/cleanable/fuel_pool/LateInitialize()
+// We don't want to burn down the create_and_destroy test area
+#ifndef UNIT_TESTS
+	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(ignition_trigger))
+#endif
 
 /obj/effect/decal/cleanable/fuel_pool/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
@@ -532,6 +553,8 @@
 		var/mob/living/enflamed_liver = enflammable_atom
 		if(enflamed_liver.on_fire)
 			ignite()
+	else if(istype(enflammable_atom, /obj/effect/particle_effect/sparks))
+		ignite()
 
 
 /obj/effect/decal/cleanable/fuel_pool/hivis
@@ -544,6 +567,10 @@
 	icon_state = "rubble"
 	mergeable_decal = FALSE
 	beauty = -10
+	plane = GAME_PLANE
+	layer = GIB_LAYER
+	clean_type = CLEAN_TYPE_HARD_DECAL
+	is_mopped = FALSE
 
 /obj/effect/decal/cleanable/rubble/Initialize(mapload)
 	. = ..()

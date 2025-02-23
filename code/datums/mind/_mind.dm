@@ -64,7 +64,6 @@
 	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
 	var/datum/weakref/enslaved_to
 
-	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 	/// has this mind ever been an AI
 	var/has_ever_been_ai = FALSE
@@ -107,7 +106,7 @@
 /datum/mind/New(_key)
 	key = _key
 	init_known_skills()
-	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned)) // Unassigned by default.
+	set_assigned_role(SSjob.get_job_type(/datum/job/unassigned)) // Unassigned by default.
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
@@ -252,7 +251,7 @@
 		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)
 		if(isnull(new_role))
 			return
-		var/datum/job/new_job = SSjob.GetJob(new_role)
+		var/datum/job/new_job = SSjob.get_job(new_role)
 		if (!new_job)
 			to_chat(usr, span_warning("Job not found."))
 			return
@@ -409,41 +408,6 @@
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
-	else if(href_list["edit_obj_tc"])
-		var/datum/traitor_objective/objective = locate(href_list["edit_obj_tc"])
-		if(!istype(objective))
-			return
-		var/telecrystal = input("Set new telecrystal reward for [objective.name]","Syndicate uplink", objective.telecrystal_reward) as null | num
-		if(isnull(telecrystal))
-			return
-		objective.telecrystal_reward = telecrystal
-		message_admins("[key_name_admin(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
-		log_admin("[key_name(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
-	else if(href_list["edit_obj_pr"])
-		var/datum/traitor_objective/objective = locate(href_list["edit_obj_pr"])
-		if(!istype(objective))
-			return
-		var/progression = input("Set new progression reward for [objective.name]","Syndicate uplink", objective.progression_reward) as null | num
-		if(isnull(progression))
-			return
-		objective.progression_reward = progression
-		message_admins("[key_name_admin(usr)] changed [objective]'s progression reward count to [progression].")
-		log_admin("[key_name(usr)] changed [objective]'s progression reward count to [progression].")
-	else if(href_list["fail_objective"])
-		var/datum/traitor_objective/objective = locate(href_list["fail_objective"])
-		if(!istype(objective))
-			return
-		var/performed = objective.objective_state == OBJECTIVE_STATE_INACTIVE? "skipped" : "failed"
-		message_admins("[key_name_admin(usr)] forcefully [performed] [objective].")
-		log_admin("[key_name(usr)] forcefully [performed] [objective].")
-		objective.fail_objective()
-	else if(href_list["succeed_objective"])
-		var/datum/traitor_objective/objective = locate(href_list["succeed_objective"])
-		if(!istype(objective))
-			return
-		message_admins("[key_name_admin(usr)] forcefully succeeded [objective].")
-		log_admin("[key_name(usr)] forcefully succeeded [objective].")
-		objective.succeed_objective()
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -479,26 +443,6 @@
 				uplink.uplink_handler.progression_points = progression
 				message_admins("[key_name_admin(usr)] changed [current]'s progression point count to [progression].")
 				log_admin("[key_name(usr)] changed [current]'s progression point count to [progression].")
-				uplink.uplink_handler.update_objectives()
-				uplink.uplink_handler.generate_objectives()
-			if("give_objective")
-				if(!check_rights(R_FUN))
-					return
-				var/datum/component/uplink/uplink = find_syndicate_uplink()
-				if(!uplink || !uplink.uplink_handler)
-					return
-				var/list/all_objectives = subtypesof(/datum/traitor_objective)
-				var/objective_typepath = tgui_input_list(usr, "Select objective", "Select objective", all_objectives)
-				if(!objective_typepath)
-					return
-				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath, force = TRUE)
-				if(objective)
-					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective_typepath]).")
-					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective_typepath]).")
-				else
-					to_chat(usr, span_warning("Failed to generate the objective!"))
-					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
-					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 			if("uplink")
 				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 				if(!give_uplink(antag_datum = traitor_datum || null))
@@ -541,6 +485,15 @@
 	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
 	return affected_addiction.on_lose_addiction_points(src)
 
+/// Whether or not we can roll for midrounds, specifically checking if we have any major antag datums that should block it
+/datum/mind/proc/can_roll_midround(datum/antagonist/antag_type)
+	if(SEND_SIGNAL(current, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, antag_type) & CANCEL_ROLL)
+		return FALSE
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		if(antag.block_midrounds)
+			return FALSE
+
+	return TRUE
 
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)

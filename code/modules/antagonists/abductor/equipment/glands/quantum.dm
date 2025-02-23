@@ -1,4 +1,4 @@
-/obj/item/organ/internal/heart/gland/quantum
+/obj/item/organ/heart/gland/quantum
 	abductor_hint = "quantic de-observation matrix. Periodically links with a random person in view, then the abductee later swaps positions with that person."
 	cooldown_low = 150
 	cooldown_high = 150
@@ -8,7 +8,7 @@
 	mind_control_duration = 1200
 	var/mob/living/carbon/entangled_mob
 
-/obj/item/organ/internal/heart/gland/quantum/activate()
+/obj/item/organ/heart/gland/quantum/activate()
 	if(entangled_mob)
 		return
 	for(var/mob/M in oview(owner, 7))
@@ -18,7 +18,7 @@
 		addtimer(CALLBACK(src, PROC_REF(quantum_swap)), rand(1 MINUTES, 4 MINUTES))
 		return
 
-/obj/item/organ/internal/heart/gland/quantum/proc/quantum_swap()
+/obj/item/organ/heart/gland/quantum/proc/quantum_swap()
 	if(QDELETED(entangled_mob))
 		entangled_mob = null
 		return
@@ -30,7 +30,7 @@
 	if(!active_mind_control) //Do not reset entangled mob while mind control is active
 		entangled_mob = null
 
-/obj/item/organ/internal/heart/gland/quantum/mind_control(command, mob/living/user)
+/obj/item/organ/heart/gland/quantum/mind_control(command, mob/living/user)
 	if(..())
 		if(entangled_mob && ishuman(entangled_mob) && (entangled_mob.stat < DEAD))
 			to_chat(entangled_mob, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
@@ -41,7 +41,7 @@
 			user.log_message("mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]", LOG_GAME)
 			update_gland_hud()
 
-/obj/item/organ/internal/heart/gland/quantum/clear_mind_control()
+/obj/item/organ/heart/gland/quantum/clear_mind_control()
 	if(active_mind_control)
 		to_chat(entangled_mob, span_userdanger("You feel the compulsion fade, and you completely forget about your previous orders."))
 		entangled_mob.clear_alert(ALERT_MIND_CONTROL)

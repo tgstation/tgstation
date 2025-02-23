@@ -10,16 +10,23 @@
 	var/datum/weakref/old_mind_ref
 	///The old body we will be put back into when parent is being deleted.
 	var/datum/weakref/old_body_ref
+	/// Returns the mind if the parent dies by any means
+	var/delete_on_death = FALSE
 
-/datum/component/temporary_body/Initialize(datum/mind/old_mind, mob/living/old_body)
-	if(!isliving(parent) || !isliving(old_body))
+/datum/component/temporary_body/Initialize(datum/mind/old_mind, mob/living/old_body, delete_on_death = FALSE)
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	src.old_mind_ref = WEAKREF(old_mind)
-	src.old_body_ref = WEAKREF(old_body)
+	if(istype(old_body))
+		ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
+		src.old_body_ref = WEAKREF(old_body)
+	src.delete_on_death = delete_on_death
 
 /datum/component/temporary_body/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_destroy))
+
+	if(delete_on_death)
+		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_parent_destroy))
 
 /datum/component/temporary_body/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_QDELETING)
@@ -32,9 +39,9 @@
 /datum/component/temporary_body/proc/on_parent_destroy()
 	SIGNAL_HANDLER
 	var/datum/mind/old_mind = old_mind_ref?.resolve()
-	var/mob/living/old_body = old_body_ref?.resolve()
+	var/mob/living/old_body = old_body_ref?.resolve() || old_mind.current
 
-	if(!old_mind || !old_body)
+	if(!old_mind)
 		return
 
 	var/mob/living/living_parent = parent
@@ -44,12 +51,13 @@
 	if(!ghost)
 		CRASH("[src] belonging to [parent] was completely unable to find a ghost to put back into a body!")
 	ghost.mind = old_mind
-	if(old_body.stat != DEAD)
+	if(old_body?.stat != DEAD)
 		old_mind.transfer_to(old_body, force_key_move = TRUE)
 	else
 		old_mind.set_current(old_body)
 
-	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
+	if(old_body)
+		REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
 	old_mind = null
 	old_body = null

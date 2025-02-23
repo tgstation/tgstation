@@ -25,10 +25,10 @@
 
 	var/mob/living/basic/morph/corpus_accipientis = new(spawn_loc)
 	player_mind.transfer_to(corpus_accipientis)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
+	player_mind.set_assigned_role(SSjob.get_job_type(/datum/job/morph))
 	player_mind.special_role = ROLE_MORPH
 	player_mind.add_antag_datum(/datum/antagonist/morph)
-	SEND_SOUND(corpus_accipientis, sound('sound/magic/mutate.ogg'))
+	SEND_SOUND(corpus_accipientis, sound('sound/effects/magic/mutate.ogg'))
 	message_admins("[ADMIN_LOOKUPFLW(corpus_accipientis)] has been made into a morph by an event.")
 	corpus_accipientis.log_message("was spawned as a morph by an event.", LOG_GAME)
 	spawned_mobs += corpus_accipientis

@@ -147,8 +147,8 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
 "O" = (
-/mob/living/basic/cockroach,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
 "P" = (

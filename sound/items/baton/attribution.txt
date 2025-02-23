@@ -1,0 +1,12 @@
+stun_baton_inactive_drop.ogg - Fn P90 Submachine Gun 5.7Mm. Mechan; Empty Mag Inserted Into And Pulled Out Slow And Various 02 by PNMCarrieRailfan -- https://freesound.org/s/682041/ -- License: Attribution NonCommercial 4.0
+stun_baton_inactive_pickup.ogg - Fn P90 Submachine Gun 5.7Mm. Mechan; Empty Mag Inserted Into And Pulled Out Slow And Various 02 by PNMCarrieRailfan -- https://freesound.org/s/682041/ -- License: Attribution NonCommercial 4.0
+{
+telescopic_baton_folded_drop.ogg
+telescopic_baton_folded_pickup.ogg
+telescopic_baton_unfolded_drop.ogg
+telescopic_baton_unfolded_pickup.ogg
+} - made by sadboysuss, license: CC-BY-SA
+contractor_baton_unfolded_drop.ogg is spliced with Taser by JavierZumer -- https://freesound.org/s/257236/ -- License: Attribution 4.0
+contractor_baton_unfolded_pickup.ogg is spliced with Taser by JavierZumer -- https://freesound.org/s/257236/ -- License: Attribution 4.0
+stun_baton_active_drop.ogg is stun_baton_inactive_drop.ogg spliced with Taser by JavierZumer -- https://freesound.org/s/257236/ -- License: Attribution 4.0
+stun_baton_active_pickup.ogg is stun_baton_inactive_pickup.ogg spliced with Taser by JavierZumer -- https://freesound.org/s/257236/ -- License: Attribution 4.0

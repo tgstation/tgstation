@@ -34,7 +34,7 @@
 	var/eye_damage_threshold = owner.ai_controller.blackboard[BB_EYE_DAMAGE_THRESHOLD]
 	if(!eye_damage_threshold)
 		return TRUE
-	var/obj/item/organ/internal/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes.damage > eye_damage_threshold) //we dont attack people with bad vision
 		return FALSE
 
@@ -47,6 +47,6 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/carrot
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/carrot
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/carrot
 	hunt_targets = list(/obj/item/food/grown/carrot)
 	hunt_range = 6

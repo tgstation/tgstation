@@ -4,7 +4,8 @@
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/machines/kitchen.dmi'
-	icon_state = "processor1"
+	base_icon_state = "processor"
+	icon_state = "processor"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	pass_flags = PASSTABLE
@@ -91,7 +92,7 @@
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return TRUE
-	if(default_deconstruction_screwdriver(user, "processor", "processor1", attacking_item) || default_pry_open(attacking_item, close_after_pry = TRUE) || default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_screwdriver(user, base_icon_state + "_open", base_icon_state, attacking_item) || default_pry_open(attacking_item, close_after_pry = TRUE) || default_deconstruction_crowbar(attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/storage/bag/tray))
@@ -142,10 +143,14 @@
 	if(!LAZYLEN(processor_contents))
 		to_chat(user, span_warning("[src] is empty!"))
 		return TRUE
-	processing = TRUE
 	user.visible_message(span_notice("[user] turns on [src]."), \
 		span_notice("You turn on [src]."), \
 		span_hear("You hear a food processor."))
+	processing()
+
+
+/obj/machinery/processor/proc/processing()
+	processing = TRUE
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 	use_energy(active_power_usage)
 	var/total_time = 0
@@ -157,8 +162,10 @@
 		total_time += recipe.time
 
 	var/duration = (total_time / rating_speed)
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 2, 2, duration, max(duration*0.02, 0.01)) //initial values work out to duration 4 seconds, interval 0.8
-	sleep(duration)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 1, 0, duration)
+	addtimer(CALLBACK(src, PROC_REF(complete_processing)), duration)
+
+/obj/machinery/processor/proc/complete_processing()
 	for(var/atom/movable/content_item in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
 		if (!recipe)
@@ -189,8 +196,16 @@
 
 /obj/machinery/processor/slime
 	name = "slime processor"
+	base_icon_state = "processor_slime"
+	icon_state = "processor_slime"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime
+
+/obj/machinery/processor/slime/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/slime_processor,
+	))
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/atom_to_drop)
 	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
@@ -235,11 +250,51 @@
 		processed_slime.forceMove(drop_location())
 		processed_slime.balloon_alert_to_viewers("crawls free")
 		return
+
 	var/core_count = processed_slime.cores
-	for(var/i in 1 to (core_count+rating_amount-1))
+	var/extra_cores = rating_amount - 1 // 0-3 bonus cores above what slime already has with upgraded parts
+	for(var/i in 1 to (core_count + extra_cores))
 		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
 		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.slime_type.colour)
 	return ..()
+
+/obj/item/circuit_component/slime_processor
+	display_name = "Slime Processor"
+	desc = "Allows to activate process and get the amount of processor contents."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+	///Activate process
+	var/datum/port/input/active
+	///Amount of processor contents
+	var/datum/port/output/amount
+
+	var/obj/machinery/processor/slime/attached_processor
+
+/obj/item/circuit_component/slime_processor/populate_ports()
+	active = add_input_port("Activate", PORT_TYPE_SIGNAL, trigger = PROC_REF(activate))
+	amount = add_output_port("Amount", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/slime_processor/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/processor/slime))
+		attached_processor = parent
+
+/obj/item/circuit_component/slime_processor/unregister_usb_parent(atom/movable/parent)
+	attached_processor = null
+	return ..()
+
+/obj/item/circuit_component/slime_processor/proc/activate()
+	SIGNAL_HANDLER
+	input_received()
+	if(attached_processor.processing)
+		return
+	if(!LAZYLEN(attached_processor.processor_contents))
+		return
+	attached_processor.processing()
+
+/obj/item/circuit_component/slime_processor/input_received()
+	var/list/contents = attached_processor.processor_contents
+	amount.set_output(LAZYLEN(contents))
 
 #undef PROCESSOR_SELECT_RECIPE

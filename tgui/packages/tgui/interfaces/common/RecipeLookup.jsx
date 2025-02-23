@@ -1,4 +1,3 @@
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -7,7 +6,9 @@ import {
   Icon,
   LabeledList,
   Tooltip,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 
 export const RecipeLookup = (props) => {
   const { recipe, bookmarkedReactions } = props;

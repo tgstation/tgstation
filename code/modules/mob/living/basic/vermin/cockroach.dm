@@ -68,6 +68,10 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me waves its antennae in disapproval.",
+			"*me chitters sadly."
+		)
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -141,7 +145,7 @@
 	obj_damage = 10
 	melee_attack_cooldown = 1 SECONDS
 	gold_core_spawnable = HOSTILE_SPAWN
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	sharpness = SHARP_POINTY

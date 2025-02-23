@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Dropdown,
@@ -10,7 +7,10 @@ import {
   Stack,
   Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Lobby = {
@@ -133,20 +133,15 @@ function LobbyDisplay(props) {
       </Table.Cell>
       <Table.Cell collapsing>
         {!lobby.playing ? (
-          <>
-            <Button
-              disabled={isActive}
-              color="good"
-              onClick={() => act('join', { id: lobby.name })}
-            >
-              {playing === lobby.name ? 'View' : 'Join'}
-            </Button>
-            <Button
-              color="caution"
-              icon="eye"
-              onClick={() => act('spectate', { id: lobby.name })}
-            />
-          </>
+          <Button
+            disabled={isActive}
+            color="good"
+            onClick={() => act('join', { id: lobby.name })}
+            width="100%"
+            textAlign="center"
+          >
+            {playing === lobby.name ? 'View' : 'Join'}
+          </Button>
         ) : (
           <Button
             disabled={isActive}

@@ -32,7 +32,7 @@ jobs:
             npm install node-fetch
         - name: Check for test merges
           if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
-          uses: actions/github-script@v6
+          uses: actions/github-script@v7
           env:
             GET_TEST_MERGES_URL: ${{ secrets.GET_TEST_MERGES_URL }}
           with:

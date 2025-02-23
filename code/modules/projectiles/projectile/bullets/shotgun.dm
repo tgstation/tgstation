@@ -1,9 +1,16 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	icon_state = "pellet"
-	damage = 50
+	damage = 25
+	armour_penetration = 30
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
+	bare_wound_bonus = 15
+
+/obj/projectile/bullet/shotgun_slug/milspec
+	name = "12g shotgun milspec slug"
+	icon_state = "pellet"
+	damage = 50
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
@@ -22,7 +29,7 @@
 	stamina = 55
 	wound_bonus = 20
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/shotgun_beanbag/a40mm
 	name = "rubber slug"
@@ -55,7 +62,7 @@
 	range = 7
 	icon_state = "spark"
 	color = COLOR_YELLOW
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
@@ -70,22 +77,37 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	damage_falloff_tile = -0.45
+	damage_falloff_tile = -0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 7.5
+	damage = 5
 	wound_bonus = 5
 	bare_wound_bonus = 5
-	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
+	speed = 1.1
+	wound_falloff_tile = -0.5 //We would very much like this to cause wounds despite the low damage, so the drop off is relatively slow
+	sharpness = SHARP_EDGED
+
+/**
+ * A slightly weaker version of the buckshot, available from the blackmarket.
+ * The casings they're in have a very small chance to misfire and will gradually damage the firearm, making it weaker.
+ */
+/obj/projectile/bullet/pellet/shotgun_buckshot/old
+	damage_falloff_tile = -1
+	wound_bonus = -100
+	bare_wound_bonus = -100
+
+/obj/projectile/bullet/pellet/shotgun_buckshot/milspec
+	name = "milspec buckshot pellet"
+	damage = 7.5
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
 	damage = 3
 	stamina = 11
 	sharpness = NONE
-	embedding = null
-	speed = 1.2
+	embed_type = null
+	speed = 0.8
 	stamina_falloff_tile = -0.25
 	ricochets_max = 4
 	ricochet_chance = 120
@@ -97,7 +119,7 @@
 	/// Subtracted from the ricochet chance for each tile traveled
 	var/tile_dropoff_ricochet = 4
 
-/obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
+/obj/projectile/bullet/pellet/shotgun_rubbershot/reduce_range()
 	if(ricochet_chance > 0)
 		ricochet_chance -= tile_dropoff_ricochet
 	. = ..()
@@ -106,7 +128,22 @@
 	name = "incapacitating pellet"
 	damage = 1
 	stamina = 6
-	embedding = null
+	embed_type = null
+
+/obj/projectile/bullet/pellet/flechette
+	name = "flechette"
+	icon_state = "flechette"
+	damage = 3
+	wound_bonus = -25
+	bare_wound_bonus = 50
+	damage_falloff_tile = 0.1
+	wound_falloff_tile = -10
+	speed = 1.2
+	ricochet_decay_chance = 0.6
+	ricochet_decay_damage = 0.3
+	demolition_mod = 10
+	sharpness = SHARP_POINTY
+	weak_against_armour = TRUE
 
 // Mech Scattershot
 
@@ -119,6 +156,6 @@
 /obj/projectile/bullet/shotgun_breaching
 	name = "12g breaching round"
 	desc = "A breaching round designed to destroy airlocks and windows with only a few shots. Ineffective against other targets."
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	damage = 5 //does shit damage to everything except doors and windows
 	demolition_mod = 200 //one shot to break a window or grille, or two shots to breach an airlock door

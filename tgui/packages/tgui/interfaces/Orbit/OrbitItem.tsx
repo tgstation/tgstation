@@ -1,7 +1,7 @@
-import { capitalizeFirst } from 'common/string';
+import { Button, Flex, Icon, Stack } from 'tgui-core/components';
+import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { Button, Flex, Icon, Stack } from '../../components';
 import { getDisplayColor, getDisplayName } from './helpers';
 import { JobIcon } from './JobIcon';
 import { Antagonist, Observable, OrbitData, ViewMode } from './types';
@@ -9,13 +9,14 @@ import { Antagonist, Observable, OrbitData, ViewMode } from './types';
 type Props = {
   item: Observable | Antagonist;
   autoObserve: boolean;
+  realNameDisplay: boolean;
   viewMode: ViewMode;
   color: string | undefined;
 };
 
 /** Each button on the observable section */
 export function OrbitItem(props: Props) {
-  const { item, autoObserve, viewMode, color } = props;
+  const { item, autoObserve, realNameDisplay, viewMode, color } = props;
   const { full_name, icon, job, name, orbiters, ref } = item;
 
   const { act, data } = useBackend<OrbitData>();
@@ -33,7 +34,7 @@ export function OrbitItem(props: Props) {
         display: 'flex',
       }}
     >
-      {validIcon && <JobIcon item={item} />}
+      {validIcon && <JobIcon item={item} realNameDisplay={realNameDisplay} />}
 
       <Button
         color={getDisplayColor(item, viewMode, color)}
@@ -41,7 +42,9 @@ export function OrbitItem(props: Props) {
       >
         <Stack>
           <Stack.Item>
-            {capitalizeFirst(getDisplayName(full_name, name))}
+            {realNameDisplay
+              ? capitalizeFirst(name || full_name)
+              : capitalizeFirst(getDisplayName(full_name, name))}
           </Stack.Item>
           {!!orbiters && (
             <Stack.Item>

@@ -78,7 +78,7 @@
 			new /obj/item/jammer(src) // 5 tc
 
 		if(KIT_GUN)
-			new /obj/item/gun/ballistic/revolver/syndicate(src) // 13 tc
+			new /obj/item/gun/ballistic/revolver(src) // 13 tc
 			new /obj/item/ammo_box/a357(src) // 4tc
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/storage/belt/holster/chameleon(src) // 1 tc
@@ -267,7 +267,7 @@
 
 		if(KIT_MR_FREEZE)
 			new /obj/item/clothing/glasses/cold(src)
-			new /obj/item/clothing/gloves/color/black(src)
+			new /obj/item/clothing/gloves/color/black/security/blu(src)
 			new /obj/item/clothing/mask/chameleon(src)
 			new /obj/item/clothing/suit/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -300,7 +300,7 @@
 			new /obj/item/clothing/suit/armor/vest/marine/pmc(src) //The armor kit is comparable to the infiltrator, 6 TC
 			new /obj/item/clothing/head/helmet/marine/pmc(src)
 			new /obj/item/clothing/mask/gas/sechailer(src)
-			new /obj/item/clothing/glasses/night(src) // 3~ TC
+			new /obj/item/clothing/glasses/night/colorless(src) // 3~ TC
 			new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
 			new /obj/item/clothing/shoes/jackboots(src)
 			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC
@@ -341,11 +341,28 @@
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	name = "Boxed Rebar Crossbow"
-	desc = "A scoped weapon with low armor penetration, but devestating against flesh. Features instruction manual for making specialty ammo."
+	desc = "A scoped weapon with low armor penetration, but devastating against flesh. Features instruction manual for making specialty ammo."
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
 	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
 	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
+	new /obj/item/storage/bag/rebar_quiver/syndicate(src)
+
+/obj/item/paper/syndicate_forensics_spoofer
+	name = "Forensics Spoofer Guide"
+	default_raw_text = {"
+		<b>Forensics Spoofer Info:</b><br>
+		The spoofer has two modes: <b>SCAN</b> which scans for fingerprints and fibers, and <b>APPLY</b> which applies the currently chosen fingerprint/fiber to your target.<br>
+		The spoofer can only store 5 fingerprints and 5 fibers, and may not store or report fibers/prints already stored. Additionally, it taps into the stations network to associate scanned fingerprints with names.<br>
+		The spoofer will make the same sounds and sights as a forensics scanner, when <b>silent mode</b> is <b>off</b>.<br>
+		"}
+
+/obj/item/storage/box/syndie_kit/forensics_spoofer
+	name = "forensics spoofing kit"
+
+/obj/item/storage/box/syndie_kit/forensics_spoofer/PopulateContents()
+	new /obj/item/forensics_spoofer(src)
+	new /obj/item/paper/syndicate_forensics_spoofer(src)
 
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
@@ -449,7 +466,7 @@
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
-	desc = "A box full of mail counterfeit devices. Nothing stops the mail."
+	desc = "A GLA Postal Service branded box. It's emblazoned with the motto: *Nothing stops the mail*."
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit/PopulateContents()
 	for(var/i in 1 to 6)
@@ -460,7 +477,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 14
+	atom_storage.max_slots = 15
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
@@ -468,6 +485,7 @@
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
 	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
+	new /obj/item/reagent_containers/cup/bottle/syndol(src)
 	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
 	new /obj/item/reagent_containers/cup/bottle/histamine(src)
 	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
@@ -568,6 +586,11 @@
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
 	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
 	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
+
+/obj/item/storage/box/syndie_kit/moltobeso/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/moltobeso(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/dropper(src)
 
 /obj/item/storage/box/syndie_kit/combat_baking/PopulateContents()
 	new /obj/item/food/baguette/combat(src)
@@ -683,14 +706,7 @@
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
 
-/obj/item/storage/box/syndie_kit/stickers
-	name = "sticker kit"
-
-/obj/item/storage/box/syndie_kit/stickers/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 8
-
-/obj/item/storage/box/syndie_kit/stickers/PopulateContents()
+/obj/item/storage/box/stickers/syndie_kit/PopulateContents()
 	var/list/types = subtypesof(/obj/item/sticker/syndicate)
 
 	for(var/i in 1 to atom_storage.max_slots)

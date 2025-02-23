@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend, useSharedState } from '../backend';
 import {
   Button,
   Collapsible,
@@ -12,10 +9,12 @@ import {
   Table,
   Tabs,
   Tooltip,
-} from '../components';
-import { TableCell, TableRow } from '../components/Table';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
-import { LoadingScreen } from './common/LoadingToolbox';
+import { LoadingScreen } from './common/LoadingScreen';
 
 type Data =
   | {
@@ -47,6 +46,7 @@ type Avatar = {
 };
 
 type Domain = {
+  announce_ghosts: BooleanLike;
   cost: number;
   desc: string;
   difficulty: number;
@@ -74,10 +74,11 @@ enum Difficulty {
   High,
 }
 
-const isConnected = (data: Data): data is Data & { connected: 1 } =>
-  data.connected === 1;
+function isConnected(data: Data): data is Data & { connected: 1 } {
+  return data.connected === 1;
+}
 
-const getColor = (difficulty: number) => {
+function getColor(difficulty: number) {
   switch (difficulty) {
     case Difficulty.Low:
       return 'yellow';
@@ -88,9 +89,9 @@ const getColor = (difficulty: number) => {
     default:
       return 'green';
   }
-};
+}
 
-export const QuantumConsole = (props) => {
+export function QuantumConsole(props) {
   const { data } = useBackend<Data>();
 
   return (
@@ -101,9 +102,9 @@ export const QuantumConsole = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
 
-const AccessView = (props) => {
+function AccessView(props) {
   const { act, data } = useBackend<Data>();
   const [tab, setTab] = useSharedState('tab', 0);
 
@@ -228,22 +229,24 @@ const AccessView = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Button.Confirm
-                content="Stop Domain"
                 disabled={!ready || !generated_domain}
                 onClick={() => act('stop_domain')}
                 tooltip="Begins shutdown. Will notify anyone connected."
-              />
+              >
+                Stop Domain
+              </Button.Confirm>
             </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
     </Stack>
   );
-};
+}
 
-const DomainEntry = (props: DomainEntryProps) => {
+function DomainEntry(props: DomainEntryProps) {
   const {
     domain: {
+      announce_ghosts,
       cost,
       desc,
       difficulty,
@@ -275,6 +278,8 @@ const DomainEntry = (props: DomainEntryProps) => {
     buttonName = 'Deploy';
   }
 
+  const canView = name !== '???';
+
   return (
     <Collapsible
       buttons={
@@ -291,10 +296,9 @@ const DomainEntry = (props: DomainEntryProps) => {
       title={
         <>
           {name}
-          {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
-          {!!has_secondary_objectives && name !== '???' && (
-            <Icon name="gem" ml={1} />
-          )}
+          {!!is_modular && canView && <Icon name="cubes" ml={1} />}
+          {!!has_secondary_objectives && canView && <Icon name="gem" ml={1} />}
+          {!!announce_ghosts && canView && <Icon name="ghost" ml={1} />}
         </>
       }
     >
@@ -303,26 +307,27 @@ const DomainEntry = (props: DomainEntryProps) => {
           {desc}
           {!!is_modular && ' (Modular)'}
           {!!has_secondary_objectives && ' (Secondary Objective Available)'}
+          {!!announce_ghosts && ' (Ghost Interaction)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
           <Table>
-            <TableRow>
+            <Table.Row>
               <Tooltip content="Points cost for deploying domain.">
                 <DisplayDetails amount={cost} color="pink" icon="star" />
               </Tooltip>
-            </TableRow>
-            <TableRow>
+            </Table.Row>
+            <Table.Row>
               <Tooltip content="Reward for competing domain.">
                 <DisplayDetails amount={reward} color="gold" icon="coins" />
               </Tooltip>
-            </TableRow>
+            </Table.Row>
           </Table>
         </Stack.Item>
       </Stack>
     </Collapsible>
   );
-};
+}
 
 const AvatarDisplay = (props) => {
   const { act, data } = useBackend<Data>();
@@ -362,12 +367,12 @@ const AvatarDisplay = (props) => {
     >
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
-          <TableRow key={name}>
-            <TableCell color="label">
+          <Table.Row key={name}>
+            <Table.Cell color="label">
               {pilot} as{' '}
               <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
-            </TableCell>
-            <TableCell collapsing>
+            </Table.Cell>
+            <Table.Cell collapsing>
               <Stack>
                 {brute === 0 && burn === 0 && tox === 0 && oxy === 0 && (
                   <Stack.Item>
@@ -390,8 +395,8 @@ const AvatarDisplay = (props) => {
                   <Icon color={oxy > 50 ? 'blue' : 'gray'} name="lungs" />
                 </Stack.Item>
               </Stack>
-            </TableCell>
-            <TableCell>
+            </Table.Cell>
+            <Table.Cell>
               <ProgressBar
                 minValue={-100}
                 maxValue={100}
@@ -402,8 +407,8 @@ const AvatarDisplay = (props) => {
                 }}
                 value={health}
               />
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         ))}
       </Table>
     </Section>
@@ -414,28 +419,28 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <TableCell color="label">None</TableCell>;
+    return <Table.Cell color="label">None</Table.Cell>;
   }
 
   if (typeof amount === 'string') {
-    return <TableCell color="label">{String(amount)}</TableCell>; // don't ask
+    return <Table.Cell color="label">{String(amount)}</Table.Cell>; // don't ask
   }
 
   if (amount > 4) {
     return (
-      <TableCell>
+      <Table.Cell>
         <Stack>
           <Stack.Item>{amount}</Stack.Item>
           <Stack.Item>
             <Icon color={color} name={icon} />
           </Stack.Item>
         </Stack>
-      </TableCell>
+      </Table.Cell>
     );
   }
 
   return (
-    <TableCell>
+    <Table.Cell>
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
           <Stack.Item key={index}>
@@ -443,6 +448,6 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
           </Stack.Item>
         ))}
       </Stack>
-    </TableCell>
+    </Table.Cell>
   );
 };

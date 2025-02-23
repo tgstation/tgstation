@@ -53,7 +53,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 		to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
 
-	to_curse.apply_status_effect(/datum/status_effect/tower_of_babel/magical, INFINITE)
+	to_curse.apply_status_effect(/datum/status_effect/tower_of_babel/magical, INFINITY)
 	return TRUE
 
 /// Mainly so admin triggered tower of babel can be undone

@@ -87,7 +87,7 @@
 	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	icon_state = "fan_tiny"
 	plane = FLOOR_PLANE
-	layer = LOW_OBJ_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 
 /**
  * A variety of statue in disrepair; parts are broken off and a gemstone is missing

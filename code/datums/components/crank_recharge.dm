@@ -1,7 +1,7 @@
 // Cranking feature on the laser musket and smoothbore disabler, could probably be used on more than guns
 /datum/component/crank_recharge
 	/// Our cell to charge
-	var/obj/item/stock_parts/cell/charging_cell
+	var/obj/item/stock_parts/power_store/charging_cell
 	/// Whether we spin our gun to reload (and therefore need the relevant trait)
 	var/spin_to_win = FALSE
 	/// How much charge we give our cell on each crank
@@ -14,13 +14,15 @@
 	var/charge_sound_cooldown_time
 	/// Are we currently charging
 	var/is_charging = FALSE
+	/// Should you be able to move while charging, use IGNORE_USER_LOC_CHANGE if you want to move and crank
+	var/charge_move = NONE
 	COOLDOWN_DECLARE(charge_sound_cooldown)
 
-/datum/component/crank_recharge/Initialize(charging_cell, spin_to_win = FALSE, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS)
+/datum/component/crank_recharge/Initialize(charging_cell, spin_to_win = FALSE, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/items/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS, charge_move = NONE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/cell))
+	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/power_store))
 		return COMPONENT_INCOMPATIBLE
 	src.charging_cell = charging_cell
 	src.spin_to_win = spin_to_win
@@ -28,7 +30,7 @@
 	src.cooldown_time = cooldown_time
 	src.charge_sound = charge_sound
 	src.charge_sound_cooldown_time = charge_sound_cooldown_time
-
+	src.charge_move = charge_move
 /datum/component/crank_recharge/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
@@ -57,7 +59,7 @@
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
 		playsound(source, charge_sound, 40)
 	source.balloon_alert(user, "charging...")
-	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE))
+	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE, timed_action_flags = charge_move))
 		is_charging = FALSE
 		return
 	charging_cell.give(charge_amount)

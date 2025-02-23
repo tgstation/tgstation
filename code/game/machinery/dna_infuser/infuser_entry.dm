@@ -28,8 +28,16 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 	)
 	/// status effect type of the corresponding bonus, if it has one. tier zero won't ever set this.
 	var/status_effect_type
-	/// essentially how difficult it is to get this infusion, and if it will be locked behind some progression. see defines for more info
-	/// ...overwrite this, please
+	/**
+	 * This var clarifies that while the infuser entry has organs that contribute towards an organ set bonus
+	 * It cannot reach the organ threshold of the bonus on its own, meaning it relies on some other infuser entry for that.
+	 * This is mainly the case for fish organs from fish with specific traits, for example. We don't want the unit test to bith about it.
+	 */
+	var/unreachable_effect = FALSE
+	/**
+	 * essentially how difficult it is to get this infusion, and if it will be locked behind some progression. see defines for more info
+	 * ...overwrite this, please
+	 */
 	var/tier = DNA_MUTANT_UNOBTAINABLE
 
 	//-- Vars for DNA Infuser Machine --//
@@ -40,3 +48,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 	var/list/output_organs
 	///message the target gets while being infused
 	var/infusion_desc = "mutant-like"
+
+///Returns a list of organs that can be infused into the target human. Useful for custom behavior for certain entries
+/datum/infuser_entry/proc/get_output_organs(mob/living/carbon/human/target, atom/movable/infused_from)
+	return output_organs.Copy()

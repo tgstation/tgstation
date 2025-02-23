@@ -8,7 +8,7 @@
 	/**
 	  * back up of the real name during user possession
 	  *
-	  * When a user possesses an object it's real name is set to the user name and this
+	  * When a user possesses an object its real name is set to the user name and this
 	  * stores whatever the real name was previously. When possession ends, the real name
 	  * is reset to this value
 	  */
@@ -70,6 +70,7 @@
 	user.reset_perspective(target)
 
 	target.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	target.AddElement(/datum/element/weather_listener, /datum/weather/snow_storm, ZTRAIT_SNOWSTORM, GLOB.snowstorm_sounds)
 
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(end_possession))
 	return TRUE
@@ -82,6 +83,7 @@
 	var/mob/poltergeist = parent
 
 	possessed.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	possessed.RemoveElement(/datum/element/weather_listener, /datum/weather/snow_storm, ZTRAIT_SNOWSTORM, GLOB.snowstorm_sounds)
 	UnregisterSignal(possessed, COMSIG_QDELETING)
 
 	if(!isnull(stashed_name))

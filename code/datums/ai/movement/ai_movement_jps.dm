@@ -16,6 +16,7 @@
 		current_movement_target,
 		delay,
 		repath_delay = 0.5 SECONDS,
+		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
 		max_path_length = maximum_length,
 		minimum_distance = controller.get_minimum_distance(),
 		access = controller.get_access(),
@@ -51,7 +52,7 @@
 
 /datum/ai_movement/jps/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
-	max_pathing_attempts = 20
+	max_pathing_attempts = 10
 
 /datum/ai_movement/jps/modsuit
 	maximum_length = MOD_AI_RANGE

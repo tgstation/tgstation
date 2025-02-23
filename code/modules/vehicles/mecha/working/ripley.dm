@@ -25,8 +25,8 @@
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
 	/// Custom Ripley step and turning sounds (from TGMC)
-	stepsound = 'sound/mecha/powerloader_step.ogg'
-	turnsound = 'sound/mecha/powerloader_turn2.ogg'
+	stepsound = 'sound/vehicles/mecha/powerloader_step.ogg'
+	turnsound = 'sound/vehicles/mecha/powerloader_turn2.ogg'
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -181,6 +181,8 @@
 	button_icon_state = "mech_siren_[secmech?.siren ? "on" : "off"]"
 
 /datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
+	if(!..())
+		return
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
 	secmech.togglesiren()
 
@@ -257,10 +259,11 @@
 GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/vehicle/sealed/mecha/ripley/cargo
-	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	name = "\improper APLU \"Big Bess\""
+	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	icon_state = "hauler"
 	base_icon_state = "hauler"
+	silicon_icon_state = "hauler-empty"
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Initialize(mapload)
@@ -281,7 +284,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	return ..()
 
 /obj/vehicle/sealed/mecha/ripley/cargo/populate_parts()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	//No scanmod for Big Bess
 	capacitor = new /obj/item/stock_parts/capacitor(src)
 	servo = new /obj/item/stock_parts/servo(src)
@@ -301,6 +304,10 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
 	workmech.cargo_hold = src
 
+/obj/item/mecha_parts/mecha_equipment/ejector/detach()
+	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
+	workmech.cargo_hold = null
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/Destroy()
 	for(var/atom/stored in contents)
@@ -338,7 +345,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		))
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -350,7 +357,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		crate.forceMove(drop_location())
 		if(crate == chassis.ore_box)
 			chassis.ore_box = null
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [crate]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE
 
@@ -382,7 +389,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	to_chat(source, span_warning("You don't have the room to remove [cuffs]!"))
 	return COMSIG_MOB_BLOCK_CUFF_REMOVAL
 
-/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(action == "eject")
 		var/mob/passenger = locate(params["cargoref"]) in contents
 		if(!passenger)
@@ -390,7 +397,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
 		passenger.forceMove(drop_location())
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE
 	return ..()
@@ -405,7 +412,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	if(!do_after(user, breakout_time, target = chassis))
 		return
 	to_chat(user, span_notice("You break out of the [src]."))
-	playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)
+	playsound(chassis, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 	cheese_it(user)
 	for(var/mob/freebird in contents)
 		if(user != freebird)

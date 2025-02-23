@@ -52,12 +52,13 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	gold_core_spawnable = NO_SPAWN
 	greyscale_config = /datum/greyscale_config/carp_magic
 	ai_controller = /datum/ai_controller/basic_controller/carp/ranged
+	initial_language_holder = /datum/language_holder/carp/hear_common // its magic
 	tamed_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/use_ability/magicarp,
+		/datum/pet_command/attack,
+		/datum/pet_command/use_ability/magicarp,
 	)
 	/// List of all projectiles we can fire.
 	/// Non-static, because subtypes can have their own lists.

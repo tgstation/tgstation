@@ -12,8 +12,8 @@
 	var/icon/icons = GLOB.available_ui_styles[value]
 
 	var/icon/icon = icon(icons, "hand_r")
-	icon.Crop(1, 1, world.icon_size * 2, world.icon_size)
-	icon.Blend(icon(icons, "hand_l"), ICON_OVERLAY, world.icon_size)
+	icon.Crop(1, 1, ICON_SIZE_X * 2, ICON_SIZE_Y)
+	icon.Blend(icon(icons, "hand_l"), ICON_OVERLAY, ICON_SIZE_X)
 
 	return icon
 

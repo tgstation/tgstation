@@ -5,10 +5,7 @@
  * @license MIT
  */
 
-import { decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -21,7 +18,10 @@ import {
   Stack,
   Tabs,
   TextArea,
-} from '../components';
+} from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
+
+import { useBackend, useSharedState } from '../backend';
 import { processedText } from '../process';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
@@ -430,7 +430,7 @@ const NewscasterChannelBox = (props) => {
             {!!admin_mode && (
               <Button
                 icon="ban"
-                tooltip="Censor the whole channel and it's \
+                tooltip="Censor the whole channel and its \
                   contents as dangerous to the station. Cannot be undone."
                 disabled={!admin_mode || !viewing_channel}
                 onClick={() =>

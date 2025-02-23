@@ -686,7 +686,9 @@
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "hunter shuttle";
 	rechargeTime = 1800;
-	shuttle_id = "huntership"
+	shuttle_id = "huntership";
+	port_direction = 4;
+	preferred_direction = 4
 	},
 /obj/docking_port/stationary{
 	dwidth = 11;
@@ -724,8 +726,8 @@
 "Zu" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
-	x_offset = 0;
-	y_offset = 3
+	x_offset = -2;
+	y_offset = 6
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,

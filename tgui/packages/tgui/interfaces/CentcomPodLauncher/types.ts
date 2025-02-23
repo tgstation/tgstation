@@ -1,5 +1,5 @@
 import { Placement } from '@popperjs/core';
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 
 export type PodLauncherData = {
   bayNumber: string;
@@ -44,7 +44,8 @@ export type PodLauncherData = {
   shrapnelMagnitude: number;
   shrapnelType: string;
   soundVolume: number;
-  styleChoice: number;
+  styleChoice: string;
+  podStyles: Array<Record<string, string>>;
 };
 
 export type PodDelay = {

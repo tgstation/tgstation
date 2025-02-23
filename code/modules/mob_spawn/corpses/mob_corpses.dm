@@ -98,6 +98,15 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatepilot/lessenedgear
+	outfit = /datum/outfit/syndicatepilotcorpse/lessenedgear
+
+/datum/outfit/syndicatepilotcorpse/lessenedgear
+	name = "Syndicate Pilot Corpse (Less Antag Gear)"
+	gloves = /obj/item/clothing/gloves/color/black
+	id = /obj/item/card/id/advanced/black
+	id_trim = /datum/id_trim/syndicom
+
 /obj/effect/mob_spawn/corpse/human/tigercultist
 	name = "Tiger Cooperative Cultist"
 	outfit = /datum/outfit/tigercultcorpse
@@ -161,6 +170,16 @@
 	suit = /obj/item/clothing/suit/space/pirate
 	head = /obj/item/clothing/head/helmet/space/pirate
 	back = /obj/item/tank/jetpack/carbondioxide
+
+/obj/effect/mob_spawn/corpse/human/old_pirate_captain
+	name = "Pirate Captain Skeleton"
+	outfit = /datum/outfit/piratecorpse/captain
+	mob_species = /datum/species/skeleton
+
+/datum/outfit/piratecorpse/captain
+	glasses = /obj/item/clothing/glasses/eyepatch
+	head = /obj/item/clothing/head/costume/pirate
+	suit = /obj/item/clothing/suit/costume/pirate
 
 /obj/effect/mob_spawn/corpse/human/russian
 	name = "Russian"

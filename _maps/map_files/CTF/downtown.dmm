@@ -1831,7 +1831,6 @@
 "Ok" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "bottomdoor";
-	layer = 3;
 	resistance_flags = 64
 	},
 /obj/effect/turf_decal/siding/yellow,

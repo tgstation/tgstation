@@ -114,7 +114,7 @@
 		arguments += add_input_port(data["name"], data["datatype"])
 	return ..()
 
-/obj/item/circuit_component/proccall/ui_act(action, list/params)
+/obj/item/circuit_component/proccall/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

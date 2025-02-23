@@ -36,9 +36,11 @@ Buildable meters
 	icon_state_preview = "junction"
 	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/junction
 /obj/item/pipe/directional/vent
+	name = "air vent fitting"
 	icon_state_preview = "uvent"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
 /obj/item/pipe/directional/scrubber
+	name = "air scrubber fitting"
 	icon_state_preview = "scrubber"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
 /obj/item/pipe/directional/connector
@@ -53,6 +55,9 @@ Buildable meters
 /obj/item/pipe/directional/he_exchanger
 	icon_state_preview = "heunary"
 	pipe_type = /obj/machinery/atmospherics/components/unary/heat_exchanger
+/obj/item/pipe/directional/airlock_pump
+	icon_state_preview = "airlock_pump"
+	pipe_type = /obj/machinery/atmospherics/components/unary/airlock_pump
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
 /obj/item/pipe/binary/layer_adapter
@@ -75,6 +80,7 @@ Buildable meters
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
 /obj/item/pipe/trinary/flippable/filter
+	name = "gas filter fitting"
 	icon_state_preview = "filter"
 	pipe_type = /obj/machinery/atmospherics/components/trinary/filter
 /obj/item/pipe/trinary/flippable/mixer
@@ -120,15 +126,15 @@ Buildable meters
 		return ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack, /datum/crafting_recipe/pipegun, /datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/improvised_pneumatic_cannon)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 	return ..()
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
-	p_init_dir = make_from.initialize_directions
+	p_init_dir = make_from.get_init_directions()
 	setDir(make_from.dir)
 	pipename = make_from.name
 	add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
@@ -169,7 +175,7 @@ Buildable meters
 	set name = "Invert Pipe"
 	set src in view(1)
 
-	if ( usr.incapacitated() )
+	if ( usr.incapacitated )
 		return
 
 	do_a_flip()
@@ -442,7 +448,7 @@ Buildable meters
 
 	new /obj/machinery/meter/turf(loc, piping_layer)
 	S.play_tool_sound(src)
-	to_chat(user, span_notice("You fasten the meter to the [loc.name]."))
+	to_chat(user, span_notice("You fasten the meter to \the [loc]."))
 	qdel(src)
 
 /obj/item/pipe_meter/dropped()

@@ -1,6 +1,6 @@
 /// This component behaves similar to connect_loc_behalf, but working off clients and mobs instead of loc
 /// To be clear, we hook into a signal on a tracked client's mob
-/// We retain the ability to react to that signal on a seperate listener, which makes this quite powerful
+/// We retain the ability to react to that signal on a separate listener, which makes this quite powerful
 /datum/component/connect_mob_behalf
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 

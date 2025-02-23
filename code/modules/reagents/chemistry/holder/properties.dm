@@ -32,9 +32,9 @@
 
 		//short cut to break when we have found our one exact type
 		if(type_check == REAGENT_STRICT_TYPE)
-			return total_amount
+			break
 
-	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_amount
 
 
 //======================PH(clamped between 0->14)========================================
@@ -161,35 +161,4 @@
  * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
  */
 /datum/reagents/proc/generate_taste_message(mob/living/taster, minimum_percent)
-	var/list/out = list()
-	var/list/tastes = list() //descriptor = strength
-	if(minimum_percent <= 100)
-		for(var/datum/reagent/reagent as anything in reagent_list)
-			if(!reagent.taste_mult)
-				continue
-
-			var/list/taste_data = reagent.get_taste_description(taster)
-			for(var/taste in taste_data)
-				if(taste in tastes)
-					tastes[taste] += taste_data[taste] * reagent.volume * reagent.taste_mult
-				else
-					tastes[taste] = taste_data[taste] * reagent.volume * reagent.taste_mult
-		//deal with percentages
-		// TODO it would be great if we could sort these from strong to weak
-		var/total_taste = counterlist_sum(tastes)
-		if(total_taste > 0)
-			for(var/taste_desc in tastes)
-				var/percent = tastes[taste_desc]/total_taste * 100
-				if(percent < minimum_percent)
-					continue
-				var/intensity_desc = "a hint of"
-				if(percent > minimum_percent * 2 || percent == 100)
-					intensity_desc = ""
-				else if(percent > minimum_percent * 3)
-					intensity_desc = "the strong flavor of"
-				if(intensity_desc != "")
-					out += "[intensity_desc] [taste_desc]"
-				else
-					out += "[taste_desc]"
-
-	return english_list(out, "something indescribable")
+	return generate_reagents_taste_message(reagent_list, taster, minimum_percent)

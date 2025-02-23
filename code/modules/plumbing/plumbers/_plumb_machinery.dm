@@ -12,6 +12,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.75
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
+	reagents = /datum/reagents/plumbing
 
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50
@@ -24,6 +25,12 @@
 	create_reagents(buffer, reagent_flags)
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
+
+/obj/machinery/plumbing/create_reagents(max_vol, flags)
+	if(!ispath(reagents))
+		qdel(reagents)
+	reagents = new reagents(max_vol, flags)
+	reagents.my_atom = src
 
 /obj/machinery/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -58,7 +65,7 @@
 		. += span_warning("Needs to be [EXAMINE_HINT("anchored")] to start operations.")
 		. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
 
-	. += span_notice("An [EXAMINE_HINT("plunger")] can be used to flush out reagents.")
+	. += span_notice("A [EXAMINE_HINT("plunger")] can be used to flush out reagents.")
 
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -81,10 +88,10 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(I.tool_start_check(user, amount = 1))
-		to_chat(user, span_notice("You start slicing the [name] apart."))
+		to_chat(user, span_notice("You start slicing \the [src] apart."))
 		if(I.use_tool(src, user, 1.5 SECONDS, volume = 50))
 			deconstruct(TRUE)
-			to_chat(user, span_notice("You slice the [name] apart."))
+			to_chat(user, span_notice("You slice \the [src] apart."))
 			return ITEM_INTERACT_SUCCESS
 
 	return ITEM_INTERACT_BLOCKING
@@ -95,59 +102,3 @@
 		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
-
-///We can empty beakers in here and everything
-/obj/machinery/plumbing/input
-	name = "input gate"
-	desc = "Can be manually filled with reagents from containers."
-	icon_state = "pipe_input"
-	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
-	reagent_flags = TRANSPARENT | REFILLABLE
-
-
-/obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
-	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
-
-///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
-/obj/machinery/plumbing/output
-	name = "output gate"
-	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
-	icon_state = "pipe_output"
-	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
-	reagent_flags = TRANSPARENT | DRAINABLE
-
-/obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)
-	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
-
-/obj/machinery/plumbing/output/tap
-	name = "drinking tap"
-	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
-	icon_state = "tap_output"
-
-/obj/machinery/plumbing/tank
-	name = "chemical tank"
-	desc = "A massive chemical holding tank."
-	icon_state = "tank"
-	buffer = 400
-
-/obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
-	. = ..()
-	AddComponent(/datum/component/plumbing/tank, bolt, layer)
-
-///Layer manifold machine that connects a bunch of layers
-/obj/machinery/plumbing/layer_manifold
-	name = "layer manifold"
-	desc = "A plumbing manifold for layers."
-	icon_state = "manifold"
-	density = FALSE
-
-/obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
-	. = ..()
-
-	AddComponent(/datum/component/plumbing/manifold, bolt, FIRST_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, SECOND_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, THIRD_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, FOURTH_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, FIFTH_DUCT_LAYER)

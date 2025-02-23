@@ -25,7 +25,7 @@
 	melee_damage_upper = 83
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	melee_attack_cooldown = 1 SECONDS
 

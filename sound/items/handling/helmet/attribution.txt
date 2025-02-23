@@ -1,0 +1,8 @@
+visor_up and visor_down are:
+Bike helmet visor.wav by Didi0508 -- https://freesound.org/s/541921/ -- License: Attribution NonCommercial 4.0
+
+helmet drop and equip:
+helmet motorbike put on a head by cupido-1 -- https://freesound.org/s/614199/ -- License: Creative Commons 0
+
+helmet pickup:
+helmet_grabbing_and_handling_sound by Artninja -- https://freesound.org/s/725314/ -- License: Attribution 4.0
