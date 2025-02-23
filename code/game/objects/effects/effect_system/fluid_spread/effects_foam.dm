@@ -100,6 +100,8 @@
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
+		if (HAS_TRAIT(foamer, TRAIT_MOB_ELEVATED))
+			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
 		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
@@ -150,6 +152,8 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
+			if (HAS_TRAIT(foaming, TRAIT_MOB_ELEVATED))
+				continue
 			foam_mob(foaming, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
