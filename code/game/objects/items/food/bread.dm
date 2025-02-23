@@ -136,6 +136,7 @@
 	foodtypes = GRAIN | MEAT
 	slice_type = /obj/item/food/breadslice/sausage
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/breadslice/sausage
 	name = "sausagebread slice"

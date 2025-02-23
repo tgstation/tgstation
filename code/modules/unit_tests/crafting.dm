@@ -88,11 +88,11 @@
 	for(var/tooltype in needed_tools)
 		var/obj/item/tool = tools[tooltype]
 		if(!QDELETED(tool))
-			tool.forceMove(crafter.loc)
+			tool.forceMove(turf)
 		else
 			var/is_behaviour = istext(tooltype)
 			var/path_to_use = is_behaviour ? /obj/item : tooltype
-			tool = allocate(path_to_use, crafter.loc) //we shouldn't delete the tools and allocate and keep them between recipes
+			tool = allocate(path_to_use, turf) //we shouldn't delete the tools and allocate and keep them between recipes
 			if(is_behaviour)
 				tool.tool_behaviour = tooltype
 			tools[tooltype] = tool
@@ -118,7 +118,7 @@
 	if(!(recipe.crafting_flags & CRAFT_ENFORCE_MATERIALS_PARITY))
 		return
 
-	var/atom/copycat = new result.type
+	var/atom/copycat = new result.type(turf)
 	spawned_components += copycat
 
 	// SSmaterials caches the combinations so we don't have to run more complex checks
