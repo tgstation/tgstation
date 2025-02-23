@@ -382,7 +382,7 @@
 		for(var/datum/reagent/second_reagent as anything in affected_mob.reagents.reagent_list)
 			if(second_reagent == src)
 				continue
-			if(medibonus >= 3 && istype(second_reagent, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
+			if(medibonus >= 2 && istype(second_reagent, /datum/reagent/medicine))
 				continue
 			affected_mob.reagents.remove_reagent(second_reagent.type, 3 * second_reagent.purge_multiplier * REM * seconds_per_tick)
 	if(need_mob_update)
