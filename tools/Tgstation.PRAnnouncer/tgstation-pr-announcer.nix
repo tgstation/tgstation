@@ -76,11 +76,6 @@ in
     };
 
     environment.etc = {
-      "tgstation-pr-announcer.d/appsettings.json" = {
-        text = (builtins.readFile "${package}/bin/appsettings.json");
-        group = cfg.groupname;
-        mode = "0644";
-      };
       "tgstation-pr-announcer.d/appsettings.Production.json" = {
         source = cfg.production-appsettings;
         group = cfg.groupname;
@@ -94,8 +89,8 @@ in
         EnvironmentFile = lib.mkIf (cfg.environmentFile != null) cfg.environmentFile;
         User = cfg.username;
         Type = "notify";
-        WorkingDirectory = "${package}/bin";
-        ExecStart = "${package}/bin/tgstation-pr-announcer";
+        WorkingDirectory = "/etc/tgstation-pr-announcer.d";
+        ExecStart = "${package}/bin/Tgstation.PRAnnouncer";
         Restart = "always";
       };
       wantedBy = [ "multi-user.target" ];

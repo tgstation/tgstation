@@ -30,7 +30,7 @@ let
   };
   version = (builtins.readFile "${versionParse}/tgstation-pr-announcer-version.txt");
 in
-stdenv.mkDerivation {
+pkgs.buildDotnetModule  {
   pname = "tgstation-pr-announcer";
   version = (builtins.readFile "${versionParse}/tgstation-pr-announcer-version.txt");
 
@@ -41,23 +41,17 @@ stdenv.mkDerivation {
     platforms = platforms.x86_64;
   };
 
-  buildInputs = with pkgs; [
-		dotnetCorePackages.runtime_8_0
-  ];
   nativeBuildInputs = with pkgs; [
-    dotnetCorePackages.sdk_8_0
-    makeWrapper
     versionParse
   ];
 
   src = ./.;
 
-  buildPhase = ''
-		${pkgs.dotnetCorePackages.sdk_8_0}/bin/dotnet build -c Release
-  '';
+  projectFile = "Tgstation.PRAnnouncer.csproj";
+  nugetDeps = ./deps.json;
 
-  installPhase = ''
-    dotnet publish --no-build -o $out/bin
-    makeWrapper ${pkgs.dotnetCorePackages.runtime_8_0}/bin/dotnet $out/bin/tgstation-server
-  '';
+  dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
+  dotnet-runtime = pkgs.dotnetCorePackages.runtime_8_0;
+
+  executables = [ "Tgstation.PRAnnouncer" ];
 }
