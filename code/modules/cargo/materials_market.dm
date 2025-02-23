@@ -15,16 +15,7 @@
 	icon_state = "mat_market"
 	base_icon_state = "mat_market"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
-	/// What items can be converted into a stock block? Must be a stack subtype based on current implementation.
-	var/static/list/exportable_material_items = list(
-		/obj/item/stack/sheet/iron, //God why are we like this
-		/obj/item/stack/sheet/glass, //No really, God why are we like this
-		/obj/item/stack/sheet/mineral,
-		/obj/item/stack/tile/mineral,
-		/obj/item/stack/ore,
-		/obj/item/stack/sheet/bluespace_crystal,
-		/obj/item/stack/rods
-	)
+
 	/// Are we ordering sheets from our own card balance or the cargo budget?
 	var/ordering_private = TRUE
 
@@ -52,34 +43,6 @@
 	. = ..()
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/materials_market/attackby(obj/item/O, mob/user, params)
-	if(is_type_in_list(O, exportable_material_items))
-		var/amount = 0
-		var/value = 0
-		var/material_to_export
-		var/obj/item/stack/exportable = O
-		for(var/datum/material/mat as anything in SSstock_market.materials_prices)
-			if(exportable.has_material_type(mat))
-				amount = exportable.amount
-				value = SSstock_market.materials_prices[mat]
-				material_to_export = mat
-				break //This is only for trading non-alloys, so we can break here
-
-		if(!amount)
-			say("Not enough material. Aborting.")
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE)
-			return TRUE
-		qdel(exportable)
-
-		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
-		new_block.export_value = amount * value * MARKET_PROFIT_MODIFIER
-		new_block.export_mat = material_to_export
-		new_block.quantity = amount
-		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value] cr! Sell it before it becomes liquid!"))
-		playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
-		return TRUE
-	return ..()
 
 /**
  * Find the order purchased either privately or by cargo budget
@@ -334,48 +297,6 @@
 				SSshuttle.shopping_list -= current_order
 				qdel(current_order)
 				return TRUE
-
-/obj/item/stock_block
-	name = "stock block"
-	desc = "A block of stock. It's worth a certain amount of money, based on a sale on the materials market. Ship it on the cargo shuttle to claim your money."
-	icon = 'icons/obj/economy.dmi'
-	icon_state = "stock_block"
-	/// How many credits was this worth when created?
-	var/export_value = 0
-	/// What is the name of the material this was made from?
-	var/datum/material/export_mat
-	/// Quantity of export material
-	var/quantity = 0
-	/// Is this stock block currently updating its value with the market (aka fluid)?
-	var/fluid = FALSE
-
-/obj/item/stock_block/Initialize(mapload)
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(value_warning)), 1.5 MINUTES, TIMER_DELETE_ME)
-	addtimer(CALLBACK(src, PROC_REF(update_value)), 3 MINUTES, TIMER_DELETE_ME)
-
-/obj/item/stock_block/examine(mob/user)
-	. = ..()
-	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
-	if(fluid)
-		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
-	else
-		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before its value becomes liquid!")
-
-/obj/item/stock_block/proc/value_warning()
-	visible_message(span_warning("\The [src] is starting to become liquid!"))
-	icon_state = "stock_block_fluid"
-	update_appearance(UPDATE_ICON_STATE)
-
-/obj/item/stock_block/proc/update_value()
-	if(!export_mat)
-		return
-	if(!SSstock_market.materials_prices[export_mat])
-		return
-	export_value = quantity * SSstock_market.materials_prices[export_mat] * MARKET_PROFIT_MODIFIER
-	icon_state = "stock_block_liquid"
-	update_appearance(UPDATE_ICON_STATE)
-	visible_message(span_warning("\The [src] becomes liquid!"))
 
 #undef MAX_STACK_LIMIT
 #undef GALATIC_MATERIAL_ORDER

@@ -81,10 +81,9 @@ export const MatMarket = (props) => {
               Buy orders for material sheets placed here will be ordered on the
               next cargo shipment.
               <br /> <br />
-              To sell materials, please insert sheets or similar stacks of
-              materials. All minerals sold on the market directly are subject to
-              an 20% market fee. To prevent market manipulation, all registered
-              traders can buy a total of 10 full stacks of materials at a time.
+              Material purchases are subject to a <i>static sale value</i>,
+              independent of their purchase price as per nanotrasen insider
+              trading regulations.
               <br /> <br />
               All new purchases will include the cost of the shipped crate,
               which may be recycled afterwards.

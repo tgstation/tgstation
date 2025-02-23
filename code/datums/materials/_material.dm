@@ -44,7 +44,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
 
-	///This is the amount of value per 1 unit of the material
+	/***
+	 * This is the amount of credit value per 1 unit of the material.
+	 * A given sheet of material will multiply this number by 100.
+	 * Used in determining value of coins as well as materials exports.
+	 * Price fluxuations will range from 0.5 to 3x that of value per unit.
+	 */
 	var/value_per_unit = 0
 	///This is the minimum value of the material, used in the stock market for any mat that isn't set to null
 	var/minimum_value_override = null
