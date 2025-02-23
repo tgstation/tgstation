@@ -230,9 +230,15 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SHOULD_NOT_OVERRIDE(TRUE)
 	rewards += roll_reward(rod, fisherman, location)
 
-/// Returns a typepath or a special value which we use for spawning dispensing a reward later.
+/// Returns a typepath, instance or another special value which we use for dispensing a reward later.
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
 	return pick_weight(get_modified_fish_table(rod, fisherman, location)) || FISHING_DUD
+
+/// Version of roll_reward() that blacklists objects that shouldn't be caught by ai-controlled mobs.
+/datum/fish_source/proc/roll_mindless_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	var/list/final_table = get_modified_fish_table(rod, fisherman, location)
+	final_table -= profound_fisher_blacklist
+	return pick_weight(final_table) || FISHING_DUD
 
 /**
  * Used to register signals or add traits and the such right after conditions have been cleared
@@ -360,9 +366,6 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(HAS_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD))
 		final_table -= FISHING_DUD
 
-
-	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
-		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
 		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative

@@ -151,6 +151,8 @@
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction = new_friend.faction.Copy()
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)

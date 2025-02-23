@@ -27,7 +27,7 @@
 
 /datum/heretic_knowledge/ether
 	name = "Ether Of The Newborn"
-	desc = "Conjures a single use potion, drinking it will remove any sort of abnormality from your body including diseases, traumas and implants \
+	desc = "Transmutes a pool of vomit and a shard into a single use potion, drinking it will remove any sort of abnormality from your body including diseases, traumas and implants \
 		on top of restoring it to full health, at the cost of losing consciousness for an entire minute."
 	gain_text = "Vision and thought grow hazy as the fumes of this ichor swirl up to meet me. \
 		Through the haze, I find myself staring back in relief, or something grossly resembling my visage. \

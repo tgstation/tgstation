@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Moon amulet now properly turns insane people into converts and drains sanity of sane people, instead of doing the inverse"

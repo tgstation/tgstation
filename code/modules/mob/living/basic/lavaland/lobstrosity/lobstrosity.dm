@@ -88,6 +88,8 @@
 
 /mob/living/basic/mining/lobstrosity/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction |= new_friend.faction
 	faction -= FACTION_MINING
 

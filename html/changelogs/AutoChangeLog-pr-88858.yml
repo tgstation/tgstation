@@ -1,0 +1,7 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - qol: "ghost poll sound can now be disabled"
+  - qol: "ghost poll sound volume can now be tweaked"
+  - sound: "added new ghost poll sound."
+  - sound: "normalised volume of ghost poll sounds"
