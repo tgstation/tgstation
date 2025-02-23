@@ -56,9 +56,7 @@
 	if(!rain_reagent)
 		CRASH("Attempted to call rain_storm weather with no rain_reagent present!")
 
-	// water reagent color has an ugly transparent grey that looks nasty so it's skipped
-	if(!istype(rain_reagent, /datum/reagent/water))
-		weather_color = rain_reagent.color // other reagents get their colored applied
+	weather_color = rain_reagent.color
 
 /datum/weather/rain_storm/telegraph()
 	setup_weather_areas(impacted_areas)
