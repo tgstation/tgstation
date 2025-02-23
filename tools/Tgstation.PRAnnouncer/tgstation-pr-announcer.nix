@@ -4,13 +4,10 @@ inputs@{
   systemdUtils,
   nixpkgs,
   pkgs,
-  writeShellScriptBin,
   ...
 }:
 
 let
-  pkgs-i686 = nixpkgs.legacyPackages.i686-linux;
-
   cfg = config.services.tgstation-pr-announcer;
 
   package = import ./package.nix inputs;
@@ -19,7 +16,7 @@ in
   ##### interface. here we define the options that users of our service can specify
   options = {
     # the options for our service will be located under services.foo
-    services.tgstation-server = {
+    services.tgstation-pr-announcer = {
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;
