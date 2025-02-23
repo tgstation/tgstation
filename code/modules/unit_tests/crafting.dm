@@ -61,15 +61,12 @@
 				bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
 			continue
 
-		//it's a stack
-		if(ispath(req_path, /obj/item/stack))
-			if(QDELETED(stack) || (stack.type in recipe.blacklist) || stack.amount < amount)
-				spawned_components += new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+		if(ispath(req_path, /obj/item/stack)) //it's a stack
+			spawned_components += new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 
 		//it's any other item
-		var/to_spawn = amount - matches
-		for(var/iteration in 1 to to_spawn)
+		for(var/iteration in 1 to amount)
 			spawned_components += new req_path(turf)
 
 	for(var/req_path in recipe.chem_catalysts) // spawn catalysts
@@ -97,8 +94,8 @@
 			var/path_to_use = is_behaviour ? /obj/item : tooltype
 			tool = allocate(path_to_use, crafter.loc) //we shouldn't delete the tools and allocate and keep them between recipes
 			if(is_behaviour)
-				new_tool.tool_behaviour = tooltype
-			tools[tooltype] = new_tool
+				tool.tool_behaviour = tooltype
+			tools[tooltype] = tool
 		summoned_tools |= tool
 
 	var/atom/result = craft_comp.construct_item(crafter, recipe)
