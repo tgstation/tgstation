@@ -487,3 +487,61 @@
   - rscadd: Replaces the 10mm semi-automatic surplus rifle with the Sakhno SKS semi-automatic
       rifle.
   - rscadd: You can acquire a SKS parts kit from the black market.
+2025-02-23:
+  EnterTheJake:
+  - spellcheck: Updated the description on a few heretic knowledges to display the
+      crafting requirements.
+  Ghommie:
+  - bugfix: Fixed lobstrosities being able to fish other lobstrosities (and chests)
+      yet again.
+  Jacquerel:
+  - balance: Traitor reputation now advances at a fixed rate, not dependent on current
+      server population.
+  - balance: The dual esword, sleeping carp scroll, spider extract, and romerol vial
+      cannot be purchased if fewer than 20 players have joined the game.
+  Melbert:
+  - bugfix: Mirror reflections should be more accurate now
+  - bugfix: Becoming a Vampire while standing in front of a mirror correctly vanishes
+      you (rather than waiting to exit and enter the mirror's view)
+  - admin: Adds the Policy Panel verb, which shows you all the policy the server has
+      set.
+  SmArtKar:
+  - bugfix: Added a flatpacker flatpack to birdshot
+  - bugfix: Fixed scar overlays on eyes going out of sprite bounds
+  - bugfix: Fixes borgs not accepting encryption keys
+  - qol: Borg encryption key interactions now use balloon alerts, and popping out
+      a key puts it in your hands instead of dropping it on the ground.
+  - balance: Crusher marks now can be instantly detonated, but firing one puts you
+      on an attack cooldown again
+  - spellcheck: Added slightly more descriptive spellbook descriptions to Mjolnir
+      and Singulo Hammer
+  - bugfix: White canes need to be extended in order to allow you to examine faster
+      with them
+  - admin: Added better feedback to localhost Start Now button
+  - bugfix: AI uplink brain can no longer give you free ghost from which you can return
+      to your AI core
+  - bugfix: You can no longer dupe reagents or swap types mid-print with chemmaster
+  - bugfix: Spawn Debug Full Crew no longer runtimes
+  - admin: Spawn Debug Full Crew now explicitly warns you a second time if you're
+      attempting to use it as a non-localhost user.
+  - bugfix: Added BZ back to birdshot's xenobio
+  - balance: Gave space suits back half of their missing slowdown due to an oversight
+      in a prior change.
+  TealSeer:
+  - qol: air alarm wires are now labeled if you have the engineering skillchip
+  Xander3359:
+  - rscadd: Living heart can now track lost eldritch blades
+  jlsnow301:
+  - bugfix: Tgui menu component is fixed following tgui core v1.8.1
+  subject217:
+  - bugfix: Tramstation disposals now allow you to send mail to R&D.
+  timothymtorres:
+  - rscadd: Add irradiation to radioactive reagents uranium, radium, and polonium.
+  - balance: Radioactive reagents uranium, radium, and polonium now cause irradiate
+      effects when they come into contact with mobs or objects. This can be via several
+      means, ingestion, touch, or vapors. The more radioactive the reagent, the more
+      likely it is to irradiate. Polonium is the most radioactive with a x3 multiplier,
+      radium is next with a x2 multiplier, and uranium is the weakest with just a
+      x1 multiplier.
+  - balance: Polonium no longer guarantees instant irradiation when the reagent is
+      inside a mob.
