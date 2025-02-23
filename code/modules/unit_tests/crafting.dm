@@ -40,54 +40,63 @@
 	list/tools
 )
 	var/turf/turf = crafter.loc
-	for(var/req_path in recipe.reqs) //allocate items and reagents
-		var/amount = recipe.reqs[req_path]
+	if(length(recipe.unit_test_spawn_overrides))
+		for(var/spawn_path in recipe.unit_test_spawn_overrides)
+			var/amount = recipe.unit_test_spawn_overrides[spawn_path]
+			if(ispath(spawn_path, /obj/item/stack))
+				allocate(spawn_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+				continue
+			for(var/index in 1 to amount)
+				allocate(spawn_path)
+	else
+		for(var/req_path in recipe.reqs) //allocate items and reagents
+			var/amount = recipe.reqs[req_path]
 
-		if(ispath(req_path, /datum/reagent)) //it's a reagent
+			if(ispath(req_path, /datum/reagent)) //it's a reagent
+				if(!bottomless_cup.reagents.has_reagent(req_path, amount))
+					bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
+				continue
+
+			//it's a stack
+			if(ispath(req_path, /obj/item/stack))
+				var/obj/item/stack/stack = locate(req_path) in turf
+				if(QDELETED(stack) || (stack.type in recipe.blacklist) || stack.amount < amount)
+					allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+				continue
+			//it's any other item
+			var/matches = 0
+			for(var/atom/movable/movable as anything in turf)
+				if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in recipe.blacklist))
+					matches++
+			var/to_spawn = amount - matches
+			for(var/iteration in 1 to to_spawn)
+				allocate(req_path)
+
+		for(var/req_path in recipe.chem_catalysts) // allocate catalysts
+			var/amount = recipe.chem_catalysts[req_path]
 			if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 				bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
-			continue
 
-		//it's a stack
-		if(ispath(req_path, /obj/item/stack))
-			var/obj/item/stack/stack = locate(req_path) in turf
-			if(QDELETED(stack) || (stack.type in recipe.blacklist) || stack.amount < amount)
-				allocate(req_path, turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
-			continue
-		//it's any other item
-		var/matches = 0
-		for(var/atom/movable/movable as anything in turf)
-			if(!QDELING(movable) && istype(movable, req_path) && !(movable.type in recipe.blacklist))
-				matches++
-		var/to_spawn = amount - matches
-		for(var/iteration in 1 to to_spawn)
-			allocate(req_path)
+		var/list/bulky_objects = list()
+		bulky_objects += recipe.structures + recipe.machinery //either structures and machinery could be null
+		list_clear_nulls(bulky_objects) //so we clear the list
+		for(var/req_path in bulky_objects) //allocate required machinery or structures
+			var/atom/located = locate(req_path) in turf
+			if(QDELETED(located))
+				allocate(req_path)
 
-	for(var/req_path in recipe.chem_catalysts) // allocate catalysts
-		var/amount = recipe.chem_catalysts[req_path]
-		if(!bottomless_cup.reagents.has_reagent(req_path, amount))
-			bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
-
-	var/list/bulky_objects = list()
-	bulky_objects += recipe.structures + recipe.machinery //either structures and machinery could be null
-	list_clear_nulls(bulky_objects) //so we clear the list
-	for(var/req_path in bulky_objects) //allocate required machinery or structures
-		var/atom/located = locate(req_path) in turf
-		if(QDELETED(located))
-			allocate(req_path)
-
-	var/list/needed_tools = list()
-	needed_tools += recipe.tool_behaviors + recipe.tool_paths //either tool_behaviors and tool_paths could be null
-	list_clear_nulls(needed_tools) //so we clear the list
-	for(var/tooltype in needed_tools)
-		var/atom/tool = tools[tooltype]
-		if(!QDELETED(tool) && tool.loc == turf)
-			continue
-		var/is_behaviour = istext(tooltype)
-		var/obj/item/new_tool = allocate(is_behaviour ? /obj/item : tooltype)
-		if(is_behaviour)
-			new_tool.tool_behaviour = tooltype
-		tools[tooltype] = new_tool
+		var/list/needed_tools = list()
+		needed_tools += recipe.tool_behaviors + recipe.tool_paths //either tool_behaviors and tool_paths could be null
+		list_clear_nulls(needed_tools) //so we clear the list
+		for(var/tooltype in needed_tools)
+			var/atom/tool = tools[tooltype]
+			if(!QDELETED(tool) && tool.loc == turf)
+				continue
+			var/is_behaviour = istext(tooltype)
+			var/obj/item/new_tool = allocate(is_behaviour ? /obj/item : tooltype)
+			if(is_behaviour)
+				new_tool.tool_behaviour = tooltype
+			tools[tooltype] = new_tool
 
 	var/atom/result = craft_comp.construct_item(crafter, recipe)
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.

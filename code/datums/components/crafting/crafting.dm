@@ -151,18 +151,19 @@
 			LAZYADDASSOCLIST(.["structures"], object.type, object)
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
-/datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+/datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
 	if(!length(recipe.tool_behaviors) && !length(recipe.tool_paths))
 		return TRUE
 	var/list/available_tools = list()
 	var/list/present_qualities = list()
 
-	for(var/obj/item/contained_item in source.contents)
-		if(contained_item.atom_storage)
-			for(var/obj/item/subcontained_item in contained_item.contents)
-				available_tools[subcontained_item.type] = TRUE
-				if(subcontained_item.tool_behaviour)
-					present_qualities[subcontained_item.tool_behaviour] = TRUE
+	var/list/all_contained = list() //collect the contents of source, and in turn their contents if they are storages.
+	for(var/atom/movable/movable as anything in source.contents)
+		all_contained += movable
+		if(movable.atom_storage)
+			all_contained += movable.contents
+
+	for(var/obj/item/contained_item in all_contained) //fill the available tools list with available tool types and behaviours
 		available_tools[contained_item.type] = TRUE
 		if(contained_item.tool_behaviour)
 			present_qualities[contained_item.tool_behaviour] = TRUE
@@ -189,7 +190,7 @@
 			continue
 		return FALSE
 
-	return TRUE
+	return recipe.check_tools(source, all_contained, final_check)
 
 
 /datum/component/personal_crafting/proc/construct_item(atom/crafter, datum/crafting_recipe/recipe)
@@ -257,7 +258,7 @@
 	contents = get_surroundings(crafter, recipe.blacklist)
 	if(!check_contents(crafter, recipe, contents))
 		return ", missing component."
-	if(!check_tools(crafter, recipe, contents))
+	if(!check_tools(crafter, recipe, contents, TRUE)) //This should be the last check before we proceed and spawn the result.
 		return ", missing tool."
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()

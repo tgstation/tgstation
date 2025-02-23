@@ -15,6 +15,11 @@
 	var/list/tool_behaviors
 	/// Type paths of items needed but not consumed. Lazy list.
 	var/list/tool_paths
+	/**
+	 * If defined, it'll spawn paths in this list instead of requirements, tools, machinery and structures.
+	 * This is an assoc list, with the key being the paths and the value being the amount (e.g. list(/obj/item = 2))
+	 */
+	var/list/unit_test_spawn_overrides
 	///time in seconds. Remember to use the SECONDS define!
 	var/time = 3 SECONDS
 	///type paths of items that will be forceMoved() into the result instead of being deleted
@@ -102,6 +107,10 @@
  * collected_requirements: A list of lists of /obj/item instances that satisfy reqs. Top level list is keyed by requirement path.
  */
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
+	return TRUE
+
+///Run custom pre-craft checks for this recipe for tools, rather than consumed requirements.
+/datum/crafting_recipe/proc/check_tools(atom/source, list/collected_tools, final_check = FALSE)
 	return TRUE
 
 ///Check if the pipe used for atmospheric device crafting is the proper one

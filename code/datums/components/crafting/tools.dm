@@ -84,7 +84,12 @@
 	result = /obj/item/shuttle_blueprints/crude
 	reqs = list(
 		/obj/item/paper = 1,
-		/obj/item/toy/crayon = CRAFTING_INGREDIENT_USE,
+	)
+	tool_paths = list(/obj/item/toy/crayon)
+	//we can't use any crayon so we spawn a blue one
+	unit_test_spawn_overrides = list(
+		/obj/item/paper = 1,
+		/obj/item/toy/crayon/blue = 1,
 	)
 	steps = list(
 		"You must use either a a blue crayon, a rainbow crayon, or a spray can.",
@@ -92,20 +97,16 @@
 	)
 	time = 10 SECONDS
 	category = CAT_TOOLS
+	var/static/list/valid_types = typecacheof(list(
+		/obj/item/toy/crayon/blue,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/toy/crayon/spraycan,
+	))
 
-/datum/crafting_recipe/shuttle_blueprints/check_requirements(mob/user, list/collected_requirements)
-	var/list/crayons = collected_requirements[/obj/item/toy/crayon]
-	for(var/obj/item/toy/crayon/crayon as anything in crayons)
-		if(!is_type_in_list(crayon, list(/obj/item/toy/crayon/blue, /obj/item/toy/crayon/rainbow, /obj/item/toy/crayon/spraycan)))
+/datum/crafting_recipe/shuttle_blueprints/check_tools(atom/user, list/collected_tools, final_check = FALSE)
+	for(var/obj/item/toy/crayon/crayon as anything in collected_tools)
+		if(!is_type_in_typecache(crayon, valid_types))
 			continue
-		if(!crayon.check_empty(user, 10))
+		if(final_check ? crayon.use_charges(user, 10) : crayon.check_empty(user, 10))
 			return TRUE
-
-/datum/crafting_recipe/shuttle_blueprints/on_craft_completion(mob/user, atom/result)
-	var/static/list/valid_types = list(/obj/item/toy/crayon/blue, /obj/item/toy/crayon/rainbow, /obj/item/toy/crayon/spraycan)
-	for(var/valid_type in valid_types)
-		var/obj/item/toy/crayon/crayon = locate(valid_type) in range(1)
-		if(!crayon)
-			continue
-		if(crayon.use_charges(user, 10))
-			return
+	return FALSE
