@@ -16,10 +16,10 @@
 	/// Type paths of items needed but not consumed. Lazy list.
 	var/list/tool_paths
 	/**
-	 * If defined, it'll spawn paths in this list instead of requirements, tools, machinery and structures.
+	 * If defined, it'll spawn paths in this list first during the unit test.
 	 * This is an assoc list, with the key being the paths and the value being the amount (e.g. list(/obj/item = 2))
 	 */
-	var/list/unit_test_spawn_overrides
+	var/list/unit_test_spawn_extras
 	///time in seconds. Remember to use the SECONDS define!
 	var/time = 3 SECONDS
 	///type paths of items that will be forceMoved() into the result instead of being deleted

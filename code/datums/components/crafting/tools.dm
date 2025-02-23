@@ -86,11 +86,8 @@
 		/obj/item/paper = 1,
 	)
 	tool_paths = list(/obj/item/toy/crayon)
-	//we can't use any crayon so we spawn a blue one
-	unit_test_spawn_overrides = list(
-		/obj/item/paper = 1,
-		/obj/item/toy/crayon/blue = 1,
-	)
+	//we can't use a generic crayon so we spawn a blue one
+	unit_test_spawn_extras = list(/obj/item/toy/crayon/blue = 1)
 	steps = list(
 		"You must use either a a blue crayon, a rainbow crayon, or a spray can.",
 		"The crayon or spray can you use must have at least 10 uses remaining."
@@ -104,7 +101,7 @@
 	))
 
 /datum/crafting_recipe/shuttle_blueprints/check_tools(atom/user, list/collected_tools, final_check = FALSE)
-	for(var/obj/item/toy/crayon/crayon as anything in collected_tools)
+	for(var/obj/item/toy/crayon/crayon in collected_tools)
 		if(!is_type_in_typecache(crayon, valid_types))
 			continue
 		if(final_check ? crayon.use_charges(user, 10) : crayon.check_empty(user, 10))
