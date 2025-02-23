@@ -41,7 +41,7 @@
 	var/sawn_off = FALSE
 	var/burst_size = 1 //how large a burst is
 	/// Delay between shots in a burst.
-	var/burst_delay = 0
+	var/burst_delay = 2
 	/// Delay between bursts (if burst-firing) or individual shots (if weapon is single-fire).
 	var/fire_delay = 0
 	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
