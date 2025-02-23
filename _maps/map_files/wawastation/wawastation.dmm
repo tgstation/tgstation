@@ -9189,6 +9189,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "dog" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/medical)
 "doh" = (
@@ -13790,7 +13792,7 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/plating,
-/area/station/medical/medbay/central)
+/area/station/maintenance/department/medical)
 "eSR" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -38348,9 +38350,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nzk" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/turf/closed/wall/r_wall,
+/area/station/maintenance/central/greater)
 "nzn" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -41951,7 +41952,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "oTe" = (
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "oTv" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -50450,8 +50452,6 @@
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "rNJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/medical)
 "rOq" = (
@@ -65317,9 +65317,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "wWJ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/maintenance/central/greater)
+/area/station/maintenance/department/medical)
 "wWY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
@@ -146993,8 +146993,8 @@ qlE
 hXL
 kYT
 cGs
-nzk
-nzk
+wWJ
+wWJ
 aCv
 hvw
 fXo
@@ -147249,9 +147249,9 @@ fLe
 xRj
 dWl
 ygc
-nzk
-nzk
-nzk
+wWJ
+wWJ
+wWJ
 fvF
 duU
 hmA
@@ -147510,7 +147510,7 @@ qoN
 qoN
 qoN
 aCv
-nzk
+wWJ
 qoN
 aCv
 ygt
@@ -147767,7 +147767,7 @@ wOU
 wOU
 kYT
 qoN
-nzk
+wWJ
 qoN
 bGk
 bGk
@@ -148280,8 +148280,8 @@ tMu
 fxF
 fxF
 kYT
-nzk
-nzk
+wWJ
+wWJ
 qoN
 bGk
 sHo
@@ -148537,7 +148537,7 @@ bHg
 mYd
 uUP
 kYT
-nzk
+wWJ
 qoN
 qoN
 bGk
@@ -148794,7 +148794,7 @@ eqv
 udi
 oTW
 kYT
-nzk
+wWJ
 kYT
 bGk
 bGk
@@ -149308,7 +149308,7 @@ wOU
 vxX
 vxX
 qoN
-nzk
+wWJ
 kYT
 auB
 waT
@@ -149565,7 +149565,7 @@ wOU
 vxX
 vxX
 qoN
-nzk
+wWJ
 kYT
 xtb
 fwJ
@@ -149822,7 +149822,7 @@ wOU
 vxX
 vxX
 qoN
-nzk
+wWJ
 kYT
 auB
 auB
@@ -150335,8 +150335,8 @@ xMY
 aDW
 fnh
 qoN
-dog
-dog
+rNJ
+rNJ
 kYT
 kYT
 bGk
@@ -150596,7 +150596,7 @@ bgY
 bgY
 bgY
 qoN
-igq
+fnh
 wnL
 oFa
 wnL
@@ -150849,11 +150849,11 @@ jpx
 aLE
 fnh
 qoN
-dog
+rNJ
 koX
 bgY
 qoN
-igq
+fnh
 igq
 igq
 igq
@@ -151108,9 +151108,9 @@ fnh
 aCv
 cGs
 vFq
-rNJ
+dog
 qoN
-igq
+fnh
 evQ
 evQ
 evQ
@@ -151363,11 +151363,11 @@ xeA
 otY
 fnh
 qoN
-dog
-blM
 rNJ
+blM
+dog
 qoN
-igq
+fnh
 evQ
 evQ
 evQ
@@ -151621,10 +151621,10 @@ otY
 fnh
 qoN
 qoN
-dog
+rNJ
 kpx
 qoN
-igq
+fnh
 gWX
 bAV
 nnj
@@ -151878,10 +151878,10 @@ vOu
 fnh
 qoN
 qoN
-dog
+rNJ
 kpx
 qcU
-igq
+fnh
 jbG
 ubo
 cXd
@@ -152134,10 +152134,10 @@ vxX
 vxX
 vxX
 qoN
-dog
-dog
+rNJ
+rNJ
 kpx
-dog
+rNJ
 eSL
 mDT
 cyw
@@ -152395,7 +152395,7 @@ qcU
 kpx
 kpx
 qoN
-igq
+fnh
 sxa
 mpp
 iac
@@ -152652,7 +152652,7 @@ kpx
 bzu
 qcU
 qoN
-igq
+fnh
 igq
 igq
 igq
@@ -152906,7 +152906,7 @@ bMl
 uJA
 fnh
 qoN
-dog
+rNJ
 doZ
 qoN
 vxX
@@ -155973,7 +155973,7 @@ gYW
 gYW
 gYW
 wjI
-wWJ
+oTe
 aLN
 aLN
 aLN
@@ -156230,7 +156230,7 @@ jVk
 fuk
 tFf
 xiM
-wWJ
+oTe
 aLN
 aLN
 aLN
@@ -156487,7 +156487,7 @@ gYW
 gYW
 gYW
 wjI
-wWJ
+oTe
 aLN
 aLN
 aLN
@@ -157261,7 +157261,7 @@ vFg
 gYW
 gYW
 gYW
-oTe
+nzk
 jJb
 jJb
 jJb
@@ -157518,7 +157518,7 @@ wjI
 wjI
 wjI
 eHU
-oTe
+nzk
 dRq
 bfN
 uhi
@@ -157775,7 +157775,7 @@ wPn
 gYW
 cjp
 wjI
-oTe
+nzk
 qAh
 mwx
 ktr
@@ -158032,7 +158032,7 @@ sbp
 wPn
 xJd
 xiM
-oTe
+nzk
 pDs
 wFZ
 uhi
@@ -158289,7 +158289,7 @@ gYW
 gYW
 sKs
 jBh
-oTe
+nzk
 lIp
 jAR
 tZL
@@ -158546,11 +158546,11 @@ tAa
 gYW
 gYW
 wjI
-oTe
-oTe
-oTe
-oTe
-oTe
+nzk
+nzk
+nzk
+nzk
+nzk
 rMj
 jIK
 sDd
