@@ -99,7 +99,18 @@
 		return .
 	return try_lighting(interacting_with, user)
 
+/**
+ * Try to place/remove a light or throw a glowstick
+ * Arguments
+ *
+ * * atom/interacting_with - the target atom to light or throw glowsticks at
+ * * mob/user - the player doing this action
+ */
 /obj/item/construction/rld/proc/try_lighting(atom/interacting_with, mob/user)
+	PRIVATE_PROC(TRUE)
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
 	var/turf/start = get_turf(src)
 	switch(mode)
@@ -187,7 +198,20 @@
 			if(!useResource(GLOW_STICK_COST, user))
 				return ITEM_INTERACT_BLOCKING
 			activate()
-			var/obj/item/flashlight/glowstick/new_stick = new /obj/item/flashlight/glowstick(start)
+			// Picks the closest fitting color for the fluid by hue
+			var/closest_diff = null
+			var/closest_fluid = null
+			var/list/unwrapped_color = rgb2num(color_choice, COLORSPACE_HSV)
+			var/chosen_hue = unwrapped_color[1]
+			for (var/datum/reagent/luminescent_fluid/glowstick_fluid as anything in typesof(/datum/reagent/luminescent_fluid))
+				unwrapped_color = rgb2num(glowstick_fluid::color, COLORSPACE_HSV)
+				var/hue_diff = abs(chosen_hue - unwrapped_color[1])
+				if (hue_diff > 180)
+					hue_diff = 360 - hue_diff
+				if (isnull(closest_diff) || hue_diff < closest_diff)
+					closest_diff = hue_diff
+					closest_fluid = glowstick_fluid
+			var/obj/item/flashlight/glowstick/new_stick = new /obj/item/flashlight/glowstick(start, null, closest_fluid)
 			new_stick.color = color_choice
 			new_stick.set_light_color(new_stick.color)
 			new_stick.throw_at(interacting_with, 9, 3, user)

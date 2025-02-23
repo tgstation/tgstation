@@ -106,7 +106,7 @@
 
 	var/has_watchers = FALSE
 	for(var/mob/viewer in viewers(our_guy, world.view))
-		if(viewer.client)
+		if(viewer.client && !viewer.client.is_afk())
 			has_watchers = TRUE
 			break
 	if(!has_watchers)
@@ -115,7 +115,9 @@
 	if(!prob(8 * effective_luck))
 		return
 
-	var/our_guy_pos = get_turf(living_guy)
+	var/turf/open/our_guy_pos = living_guy.loc
+	if(!isopenturf(our_guy_pos))
+		return
 	for(var/obj/machinery/door/airlock/darth_airlock in our_guy_pos)
 		if(darth_airlock.locked || !darth_airlock.hasPower())
 			continue
@@ -143,12 +145,12 @@
 			return
 
 		for(var/obj/machinery/light/evil_light in the_turf)
-			if((evil_light.status == LIGHT_BURNED || evil_light.status == LIGHT_BROKEN) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // we cant do anything :( // Why in the world is there no get_siemens_coeff proc???
+			if((evil_light.status == LIGHT_BURNED || evil_light.status == LIGHT_BROKEN) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // we can't do anything :( // Why in the world is there no get_siemens_coeff proc???
 				to_chat(living_guy, span_warning("[evil_light] sparks weakly for a second."))
 				do_sparks(2, FALSE, evil_light) // hey maybe it'll ignite them
 				return
 
-			to_chat(living_guy, span_warning("[evil_light] glows ominously...")) // omenously
+			to_chat(living_guy, span_warning("[evil_light] glows ominously...")) // ominously
 			evil_light.visible_message(span_boldwarning("[evil_light] suddenly flares brightly and sparks!"))
 			evil_light.break_light_tube(skip_sound_and_sparks = FALSE)
 			do_sparks(number = 4, cardinal_only = FALSE, source = evil_light)
@@ -206,14 +208,11 @@
 		INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
 		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
 
-	if(prob(30 * luck_mod)) /// Bonk!
-		var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
-		if(!the_head)
-			return
-		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
+	if(prob(30 * luck_mod) && our_guy.get_bodypart(BODY_ZONE_HEAD)) /// Bonk!
+		playsound(our_guy, 'sound/effects/tableheadsmash.ogg', 90, TRUE)
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-		the_head.receive_damage(75 * damage_mod, damage_source = "slipping")
-		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * damage_mod)
+		our_guy.apply_damage(75 * damage_mod, BRUTE, BODY_ZONE_HEAD, attacking_item = "slipping")
+		our_guy.apply_damage(100 * damage_mod, BRAIN)
 		consume_omen()
 
 	return

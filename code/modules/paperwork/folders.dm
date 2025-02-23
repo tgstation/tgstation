@@ -17,6 +17,8 @@
 	))
 	/// Do we hide the contents on examine?
 	var/contents_hidden = FALSE
+	/// icon_state of overlay for papers inside of this folder
+	var/paper_overlay_state = "folder_paper"
 
 /obj/item/folder/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -49,6 +51,7 @@
 
 	if(user.can_perform_action(src))
 		name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)
 	if(istype(Item))
@@ -66,7 +69,14 @@
 /obj/item/folder/update_overlays()
 	. = ..()
 	if(contents.len)
-		. += "folder_paper"
+		var/to_add = get_paper_overlay()
+		if (to_add)
+			. += to_add
+
+/obj/item/folder/proc/get_paper_overlay()
+	var/mutable_appearance/paper_overlay = mutable_appearance(icon, paper_overlay_state, offset_spokesman = src, appearance_flags = KEEP_APART)
+	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
+	return paper_overlay
 
 /obj/item/folder/attackby(obj/item/weapon, mob/user, params)
 	if(burn_paper_product_attackby_check(weapon, user))
@@ -77,7 +87,7 @@
 			return
 		to_chat(user, span_notice("You put [weapon] into [src]."))
 		update_appearance()
-	else if(istype(weapon, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(weapon))
 		rename(user, weapon)
 
 /obj/item/folder/attack_self(mob/user)
@@ -106,7 +116,7 @@
 
 	return data
 
-/obj/item/folder/ui_act(action, params)
+/obj/item/folder/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

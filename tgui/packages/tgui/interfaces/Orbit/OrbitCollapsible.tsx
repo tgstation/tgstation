@@ -1,10 +1,10 @@
 import { useContext } from 'react';
+import { Collapsible, Flex, Tooltip } from 'tgui-core/components';
 
-import { Collapsible, Flex, Tooltip } from '../../components';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import {
-  isJobOrNameMatch,
+  isJobCkeyOrNameMatch,
   sortByDepartment,
   sortByDisplayName,
 } from './helpers';
@@ -25,10 +25,11 @@ type Props = {
 export function OrbitCollapsible(props: Props) {
   const { color, section = [], title } = props;
 
-  const { autoObserve, searchQuery, viewMode } = useContext(OrbitContext);
+  const { autoObserve, realNameDisplay, searchQuery, viewMode } =
+    useContext(OrbitContext);
 
   const filteredSection = section.filter((observable) =>
-    isJobOrNameMatch(observable, searchQuery),
+    isJobCkeyOrNameMatch(observable, searchQuery),
   );
 
   if (viewMode === VIEWMODE.Department) {
@@ -53,6 +54,7 @@ export function OrbitCollapsible(props: Props) {
           const content = (
             <OrbitItem
               autoObserve={autoObserve}
+              realNameDisplay={realNameDisplay}
               color={color}
               item={item}
               key={item.ref}
@@ -66,7 +68,7 @@ export function OrbitCollapsible(props: Props) {
 
           return (
             <Tooltip
-              content={<OrbitTooltip item={item} />}
+              content={<OrbitTooltip item={item} realNameDisplay={false} />}
               key={item.ref}
               position="bottom-start"
             >

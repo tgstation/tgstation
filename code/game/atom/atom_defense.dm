@@ -63,7 +63,7 @@
 /atom/proc/update_integrity(new_value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!uses_integrity)
-		CRASH("/atom/proc/update_integrity() was called on [src] when it doesnt use integrity!")
+		CRASH("/atom/proc/update_integrity() was called on [src] when it doesn't use integrity!")
 	var/old_value = atom_integrity
 	new_value = max(0, new_value)
 	if(atom_integrity == new_value)
@@ -108,11 +108,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/weapons/smash.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/smash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 ///Called to get the damage that hulks will deal to the atom.
 /atom/proc/hulk_damage()
@@ -143,7 +143,7 @@
 ///changes max_integrity while retaining current health percentage, returns TRUE if the atom got broken.
 /atom/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE)
 	if(!uses_integrity)
-		CRASH("/atom/proc/modify_max_integrity() was called on [src] when it doesnt use integrity!")
+		CRASH("/atom/proc/modify_max_integrity() was called on [src] when it doesn't use integrity!")
 	var/current_integrity = atom_integrity
 	var/current_max = max_integrity
 

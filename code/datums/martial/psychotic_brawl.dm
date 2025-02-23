@@ -67,7 +67,7 @@
 				attacker,
 			)
 			to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
-			playsound(defender, 'sound/weapons/punch1.ogg', 40, TRUE, -1)
+			playsound(defender, 'sound/items/weapons/punch1.ogg', 40, TRUE, -1)
 			defender.apply_damage(defender_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
 			attacker.apply_damage(rand(5, 10), attacker.get_attack_type(), BODY_ZONE_HEAD)
 			if(iscarbon(defender))

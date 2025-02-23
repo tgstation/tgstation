@@ -52,7 +52,7 @@
 
 /datum/dynamic_ruleset/latejoin/infiltrator
 	name = "Syndicate Infiltrator"
-	antag_datum = /datum/antagonist/traitor/infiltrator
+	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
 	antag_flag_override = ROLE_TRAITOR
 	protected_roles = list(
@@ -167,7 +167,7 @@
 /// Checks for revhead loss conditions and other antag datums.
 /datum/dynamic_ruleset/latejoin/provocateur/proc/check_eligible(datum/mind/M)
 	var/turf/T = get_turf(M.current)
-	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_TRAIT(M, TRAIT_MINDSHIELD))
+	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_MIND_TRAIT(M.current, TRAIT_UNCONVERTABLE))
 		return TRUE
 	return FALSE
 

@@ -154,7 +154,7 @@
 /area/shuttle/pirate)
 "aD" = (
 /obj/machinery/power/apc/auto_name/directional/north{
-	cell_type = /obj/item/stock_parts/cell/bluespace;
+	cell_type = /obj/item/stock_parts/power_store/battery/bluespace;
 	start_charge = 100
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
@@ -169,7 +169,7 @@
 "aF" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 4;
-	x_offset = -3;
+	x_offset = 0;
 	y_offset = 7
 	},
 /turf/open/floor/iron/dark,
@@ -291,9 +291,9 @@
 /area/shuttle/pirate)
 "aS" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/structure/closet/crate/freezer/blood,
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/machinery/iv_drip,
+/obj/structure/closet/crate/secure/freezer/interdyne/blood,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aW" = (
@@ -775,7 +775,7 @@
 /area/shuttle/pirate)
 "OL" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Po" = (

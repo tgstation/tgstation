@@ -25,7 +25,7 @@
 	AddComponent(/datum/component/blob_minion, on_strain_changed = CALLBACK(src, PROC_REF(on_strain_updated)))
 
 /// Called when our blob overmind changes their variant, update some of our mob properties
-/mob/living/basic/blob_minion/proc/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/mob/living/basic/blob_minion/proc/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
 	return
 
 /// Associates this mob with a specific blob factory node

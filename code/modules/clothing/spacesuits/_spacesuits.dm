@@ -24,6 +24,26 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	dog_fashion = null
+	slowdown = 0.5
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	///How much this helmet affects fishing difficulty
+	var/fishing_modifier = 3
+	///Icon state applied when we get spraypainted/peppersprayed. If null, does not add the dirt component
+	var/visor_dirt = "helm_dirt"
+
+/obj/item/clothing/head/helmet/space/Initialize(mapload)
+	. = ..()
+	if(visor_dirt)
+		AddComponent(/datum/component/clothing_dirt, visor_dirt)
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+	add_stabilizer()
+
+/obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = loose_hat)
 
 /datum/armor/helmet_space
 	bio = 100
@@ -62,13 +82,15 @@
 	/// The default temperature setting
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// If this is a path, this gets created as an object in Initialize.
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high
 	/// Status of the cell cover on the suit
 	var/cell_cover_open = FALSE
 	/// Status of the thermal regulator
 	var/thermal_on = FALSE
 	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
+	///How much this suit affects fishing difficulty
+	var/fishing_modifier = 5
 
 /datum/armor/suit_space
 	bio = 100
@@ -79,6 +101,15 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+
+/obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
+	if(isnull(cell))
+		return
+	toggle_spacesuit(toggler = null, manual_toggle = FALSE) //turn on the thermal regulator by default.
 
 /// Start Processing on the space suit when it is worn to heat the wearer
 /obj/item/clothing/suit/space/equipped(mob/living/user, slot)
@@ -148,7 +179,10 @@
 		thermal_on = FALSE
 
 // support for items that interact with the cell
-/obj/item/clothing/suit/space/get_cell()
+/obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 // Show the status of the suit and the cell
@@ -185,7 +219,7 @@
 
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/cell))
+	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(cell)
 		to_chat(user, span_warning("[src] already has a cell installed."))

@@ -73,7 +73,7 @@
 ///consume food!
 /datum/ai_planning_subtree/find_and_hunt_target/food_trough
 	target_key = BB_TROUGH_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/food_trough
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/food_trough
 	finding_behavior = /datum/ai_behavior/find_hunt_target/food_trough
 	hunt_targets = list(/obj/structure/ore_container/food_trough/gutlunch_trough)
 	hunt_chance = 75
@@ -96,16 +96,17 @@
 
 	return can_see(source, target, radius)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/food_trough
+/datum/ai_behavior/hunt_target/interact_with_target/food_trough
 	always_reset_target = TRUE
-	switch_combat_mode = TRUE
+	behavior_combat_mode = FALSE
 
 /datum/pet_command/mine_walls
 	command_name = "Mine"
+	radial_icon_state = "mine"
 	command_desc = "Command your pet to mine down walls."
 	speech_commands = list("mine", "smash")
 
-/datum/pet_command/mine_walls/try_activate_command(mob/living/commander)
+/datum/pet_command/mine_walls/try_activate_command(mob/living/commander, radial_command)
 	var/mob/living/parent = weak_parent.resolve()
 	if(isnull(parent))
 		return
@@ -121,13 +122,16 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_CURRENT_PET_TARGET)
 
-//pet commands
-/datum/pet_command/point_targeting/breed/gutlunch
+/datum/pet_command/mine_walls/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to start mining!"
 
-/datum/pet_command/point_targeting/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
+//pet commands
+/datum/pet_command/breed/gutlunch
+
+/datum/pet_command/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
 	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
 		parent.balloon_alert_to_viewers("can't reproduce anymore!")
-		return
+		return FALSE
 	return ..()
 
 #undef MAXIMUM_GUTLUNCH_POP

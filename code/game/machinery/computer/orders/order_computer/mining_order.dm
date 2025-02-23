@@ -24,6 +24,7 @@
 		CATEGORY_PKA,
 	)
 	blackbox_key = "mining"
+	announcement_line = "A shaft miner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
 
 /obj/machinery/computer/order_console/mining/subtract_points(final_cost, obj/item/card/id/card)
 	if(final_cost <= card.registered_account.mining_points)
@@ -34,7 +35,7 @@
 /obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	var/list/things_to_order = list()
 	for(var/datum/orderable_item/item as anything in groceries)
-		things_to_order[item.item_path] = groceries[item]
+		things_to_order[item.purchase_path] = groceries[item]
 
 	var/datum/supply_pack/custom/mining_pack = new(
 		purchaser = purchaser, \
@@ -56,13 +57,13 @@
 		can_be_cancelled = FALSE,
 	)
 	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
-	radio.talk_into(src, "A shaft miner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
+	aas_config_announce(/datum/aas_config_entry/order_console, list(), src, list(radio_channel), capitalize(blackbox_key))
 	SSshuttle.shopping_list += new_order
 
 /obj/machinery/computer/order_console/mining/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account.mining_points)
 
-/obj/machinery/computer/order_console/mining/ui_act(action, params)
+/obj/machinery/computer/order_console/mining/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
@@ -121,7 +122,7 @@
 /obj/machinery/computer/order_console/mining/proc/check_menu(obj/item/mining_voucher/voucher, mob/living/redeemer)
 	if(!istype(redeemer))
 		return FALSE
-	if(redeemer.incapacitated())
+	if(redeemer.incapacitated)
 		return FALSE
 	if(QDELETED(voucher))
 		return FALSE

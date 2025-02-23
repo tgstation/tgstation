@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 27
+#define DB_MINOR_VERSION 29
 
 
 //! ## Timing subsystem
@@ -39,7 +39,7 @@
  * Timing should be based on how timing progresses on clients, not the server.
  *
  * Tracking this is more expensive,
- * should only be used in conjuction with things that have to progress client side, such as
+ * should only be used in conjunction with things that have to progress client side, such as
  * animate() or sound()
  */
 #define TIMER_CLIENT_TIME (1<<2)
@@ -81,15 +81,15 @@
 ///Nothing happens
 #define INITIALIZE_HINT_NORMAL 0
 /**
- * call LateInitialize at the end of all atom Initalization
+ * call LateInitialize at the end of all atom Initialization
  *
  * The item will be added to the late_loaders list, this is iterated over after
- * initalization of subsystems is complete and calls LateInitalize on the atom
+ * initialization of subsystems is complete and calls LateInitalize on the atom
  * see [this file for the LateIntialize proc](atom.html#proc/LateInitialize)
  */
 #define INITIALIZE_HINT_LATELOAD 1
 
-///Call qdel on the atom after intialization
+///Call qdel on the atom after initialization
 #define INITIALIZE_HINT_QDEL 2
 
 ///type and all subtypes should always immediately call Initialize in New()
@@ -106,23 +106,23 @@
 
 //! ### SS initialization hints
 /**
- * Negative values incidate a failure or warning of some kind, positive are good.
- * 0 and 1 are unused so that TRUE and FALSE are guarenteed to be invalid values.
+ * Negative values indicate a failure or warning of some kind, positive are good.
+ * 0 and 1 are unused so that TRUE and FALSE are guaranteed to be invalid values.
  */
 
 /// Subsystem failed to initialize entirely. Print a warning, log, and disable firing.
 #define SS_INIT_FAILURE -2
 
-/// The default return value which must be overriden. Will succeed with a warning.
+/// The default return value which must be overridden. Will succeed with a warning.
 #define SS_INIT_NONE -1
 
-/// Subsystem initialized sucessfully.
+/// Subsystem initialized successfully.
 #define SS_INIT_SUCCESS 2
 
 /// If your system doesn't need to be initialized (by being disabled or something)
 #define SS_INIT_NO_NEED 3
 
-/// Succesfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
+/// Successfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
 #define SS_INIT_NO_MESSAGE 4
 
 //! ### SS initialization load orders
@@ -137,7 +137,7 @@
 #define INIT_ORDER_BLACKBOX 94
 #define INIT_ORDER_SERVER_MAINT 93
 #define INIT_ORDER_INPUT 85
-#define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins cant do much without it
+#define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins can't do much without it
 #define INIT_ORDER_SOUNDS 83
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
@@ -156,6 +156,7 @@
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
+#define INIT_ORDER_AI_IDLE_CONTROLLERS 50
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_RESEARCH 47
 #define INIT_ORDER_TIMETRACK 46
@@ -164,6 +165,7 @@
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_TTS 33
+#define INIT_ORDER_FLUIDS 32 // Needs to be above atoms, as some atoms may want to start fluids/gases on init
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
@@ -192,7 +194,8 @@
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
-
+#define FIRE_PRIORITY_UNPLANNED_NPC 3
+#define FIRE_PRIORITY_IDLE_NPC 5
 #define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10
@@ -221,6 +224,7 @@
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
 #define FIRE_PRIORITY_FLUIDS 80
+#define FIRE_PRIORITY_PRIORITY_EFFECTS 90
 #define FIRE_PRIORITY_MOBS 100
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
@@ -298,9 +302,14 @@
 #define SSEXPLOSIONS_THROWS 3
 
 // Machines subsystem subtasks.
-#define SSMACHINES_APCS_EARLY 1
-#define SSMACHINES_MACHINES 2
-#define SSMACHINES_APCS_LATE 3
+#define SSMACHINES_MACHINES_EARLY 1
+#define SSMACHINES_APCS_EARLY 2
+#define SSMACHINES_APCS_ENVIRONMENT 3
+#define SSMACHINES_APCS_LIGHTS 4
+#define SSMACHINES_APCS_EQUIPMENT 5
+#define SSMACHINES_APCS_LATE 6
+#define SSMACHINES_MACHINES 7
+#define SSMACHINES_MACHINES_LATE 8
 
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1

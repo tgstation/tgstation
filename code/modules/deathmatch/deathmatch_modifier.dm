@@ -82,7 +82,7 @@
 	description = "Unaffected by critical condition and pain"
 
 /datum/deathmatch_modifier/tenacity/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	player.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), DEATHMATCH_TRAIT)
+	player.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA, TRAIT_NO_DAMAGE_OVERLAY), DEATHMATCH_TRAIT)
 
 /datum/deathmatch_modifier/no_wounds
 	name = "No Wounds"
@@ -232,7 +232,7 @@
 	projectile.ricochets_max += 2
 	projectile.min_ricochets += 2
 	projectile.ricochet_incidence_leeway = 0
-	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, DEATHMATCH_TRAIT)
+	projectile.accuracy_falloff = 0
 
 /datum/deathmatch_modifier/stormtrooper
 	name = "Stormtrooper Aim"
@@ -388,8 +388,10 @@
 	contents = list(
 		/mob/living/basic/ant = 2,
 		/mob/living/basic/construct/proteon = 2,
+		/mob/living/basic/dark_wizard = 2,
 		/mob/living/basic/flesh_spider = 2,
 		/mob/living/basic/garden_gnome = 2,
+		/mob/living/basic/goose = 2,
 		/mob/living/basic/killer_tomato = 2,
 		/mob/living/basic/leaper = 1,
 		/mob/living/basic/mega_arachnid = 1,
@@ -399,13 +401,11 @@
 		/mob/living/basic/mining/lobstrosity = 1,
 		/mob/living/basic/mining/mook = 2,
 		/mob/living/basic/mouse/rat = 2,
+		/mob/living/basic/vatbeast = 1,
 		/mob/living/basic/spider/giant/nurse/scrawny = 2,
 		/mob/living/basic/spider/giant/tarantula/scrawny = 2,
 		/mob/living/basic/spider/giant/hunter/scrawny = 2,
-		/mob/living/simple_animal/hostile/dark_wizard = 2,
-		/mob/living/simple_animal/hostile/retaliate/goose = 2,
 		/mob/living/simple_animal/hostile/ooze = 1,
-		/mob/living/simple_animal/hostile/vatbeast = 1,
 	)
 
 /datum/deathmatch_modifier/drop_pod/missiles
@@ -519,7 +519,7 @@
 			modifiers_pool -= modpath
 
 	///Pick global modifiers at random.
-	for(var/iteration in rand(3, 5))
+	for(var/iteration in 1 to rand(3, 5))
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
 		modifier.on_select(lobby)
 		modifier.on_start_game(lobby)

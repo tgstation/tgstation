@@ -106,9 +106,6 @@
 	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
 		return FALSE
 
-	if(is_muzzled())
-		return FALSE
-
 	return ..()
 
 ///Speak as a dead person (ghost etc)
@@ -181,7 +178,7 @@
 	var/customsaypos = findtext(message, "*")
 	if(!customsaypos)
 		return message
-	if (is_banned_from(ckey, "Emote"))
+	if (!isnull(ckey) && is_banned_from(ckey, "Emote"))
 		return copytext(message, customsaypos + 1)
 	mods[MODE_CUSTOM_SAY_EMOTE] = copytext(message, 1, customsaypos)
 	message = copytext(message, customsaypos + 1)

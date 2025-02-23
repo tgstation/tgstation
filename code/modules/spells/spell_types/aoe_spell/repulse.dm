@@ -73,7 +73,7 @@
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
 	button_icon_state = "repulse"
-	sound = 'sound/magic/repulse.ogg'
+	sound = 'sound/effects/magic/repulse.ogg'
 
 	school = SCHOOL_EVOCATION
 	invocation = "GITTAH WEIGH"
@@ -91,7 +91,7 @@
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "tailsweep"
 	panel = "Alien"
-	sound = 'sound/magic/tail_swing.ogg'
+	sound = 'sound/effects/magic/tail_swing.ogg'
 
 	cooldown_time = 15 SECONDS
 	spell_requirements = NONE
@@ -106,7 +106,7 @@
 /datum/action/cooldown/spell/aoe/repulse/xeno/cast(atom/cast_on)
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_caster = cast_on
-		playsound(get_turf(carbon_caster), 'sound/voice/hiss5.ogg', 80, TRUE, TRUE)
+		playsound(get_turf(carbon_caster), 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 80, TRUE, TRUE)
 		carbon_caster.spin(6, 1)
 
 	return ..()

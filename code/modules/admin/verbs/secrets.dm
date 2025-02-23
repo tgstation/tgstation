@@ -22,7 +22,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 	is_funmin = check_rights(R_FUN)
 
 /datum/secrets_menu/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_NONE)
 
 /datum/secrets_menu/ui_close()
 	qdel(src)
@@ -41,7 +41,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 
 #define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
 #define HIGHLANDER_DELAY_TEXT "40 seconds (crush the hope of a normal shift)"
-/datum/secrets_menu/ui_act(action, params)
+/datum/secrets_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -51,19 +51,23 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")
-			var/dat = "<meta charset='UTF-8'><B>Admin Log<HR></B>"
+			var/dat
 			for(var/l in GLOB.admin_activities)
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_activities.len)
 				dat += "No-one has done anything this round!"
-			holder << browse(dat, "window=admin_log")
+			var/datum/browser/browser = new(holder, "admin_log", "Admin Logs", 600, 500)
+			browser.set_content(dat)
+			browser.open()
 		if("show_admins")
-			var/dat = "<meta charset='UTF-8'><B>Current admins:</B><HR>"
+			var/dat
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank_names()]<br>"
-				holder << browse(dat, "window=showadmins;size=600x500")
+				var/datum/browser/browser = new(holder, "showadmins", "Current admins", 600, 500)
+				browser.set_content(dat)
+				browser.open()
 		//Buttons for debug.
 		if("maint_access_engiebrig")
 			if(!is_debugger)
@@ -84,7 +88,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		if("infinite_sec")
 			if(!is_debugger)
 				return
-			var/datum/job/sec_job = SSjob.GetJobType(/datum/job/security_officer)
+			var/datum/job/sec_job = SSjob.get_job_type(/datum/job/security_officer)
 			sec_job.total_positions = -1
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
@@ -257,6 +261,11 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
+		if("tripleAI")
+			if(!is_funmin)
+				return
+			holder.triple_ai()
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("onlyone")
 			if(!is_funmin)
 				return
@@ -343,6 +352,34 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				priority_announce("The NAP is now in full effect.", null, SSstation.announcer.get_rand_report_sound())
 			else
 				priority_announce("The NAP has been revoked.", null, SSstation.announcer.get_rand_report_sound())
+		if("send_shuttle_back")
+			if (!is_funmin)
+				return
+			if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
+				to_chat(usr, span_warning("Emergency shuttle not currently in transit!"), confidential = TRUE)
+				return
+			var/make_announcement = tgui_alert(usr, "Make a CentCom announcement?", "Emergency shuttle return", list("Yes", "Custom Text", "No")) || "No"
+			var/announcement_text = "Emergency shuttle trajectory overriden, rerouting course back to [station_name()]."
+			if (make_announcement == "Custom Text")
+				announcement_text = tgui_input_text(usr, "Custom CentCom announcement", "Emergency shuttle return", multiline = TRUE) || announcement_text
+			var/new_timer = tgui_input_number(usr, "How long should the shuttle remain in transit?", "When are we droppin' boys?", 180, 600)
+			if (isnull(new_timer) || SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Shuttle Back"))
+			message_admins("[key_name_admin(holder)] sent the escape shuttle back to the station")
+			if (make_announcement != "No")
+				priority_announce(
+					text = announcement_text,
+					title = "Shuttle Trajectory Override",
+					sound =  'sound/announcer/announcement/announce_dig.ogg',
+					sender_override = "Emergency Shuttle Uplink Alert",
+					color_override = "grey",
+				)
+			SSshuttle.emergency.timer = INFINITY
+			if (new_timer > 0)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement), new_timer SECONDS)
+			else
+				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement)
 		if("blackout")
 			if(!is_funmin)
 				return
@@ -444,6 +481,26 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 
 			message_admins(span_boldannounce("[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]"))
 			log_admin("[key_name(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
+		if("department_cooldown_override") //Happens when the button is clicked, creates a value for GLOB.department_cd_override in dept_order.dm
+			if(!is_debugger)
+				return
+			if(isnull(GLOB.department_cd_override))
+				var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?","Cooldown Override", 5)
+				if(isnull(set_override))
+					return //user clicked cancel
+				GLOB.department_cd_override = set_override
+			else
+				var/choice = tgui_alert(usr, "Override is active. You can change the cooldown or end the override.", "You were trying to override...", list("Override", "End Override", "Cancel"))
+				if(choice == "Override")
+					var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?", "Title", 5)
+					GLOB.department_cd_override = set_override
+					return
+				if(choice == "End Override")
+					var/set_override = null
+					GLOB.department_cd_override = set_override
+					return
+				if(!choice || choice == "Cancel")
+					return
 		//buttons that are fun for exactly you and nobody else.
 		if("monkey")
 			if(!is_funmin)
@@ -488,7 +545,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				to_chat(H, span_boldannounce("You suddenly feel stupid."), confidential = TRUE)
+				to_chat(H, span_bolddanger("You suddenly feel stupid."), confidential = TRUE)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(holder)] made everybody brain damaged")
 		if("floorlava")
@@ -512,8 +569,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 
 				if(H.dna.species.id == SPECIES_HUMAN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						var/obj/item/organ/internal/ears/cat/ears = new
-						var/obj/item/organ/external/tail/cat/tail = new
+						var/obj/item/organ/ears/cat/ears = new
+						var/obj/item/organ/tail/cat/tail = new
 						ears.Insert(H, movement_flags = DELETE_IF_REPLACED)
 						tail.Insert(H, movement_flags = DELETE_IF_REPLACED)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
@@ -521,7 +578,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.update_mutant_bodyparts()
+					H.update_body_parts()
 					if(animetype == "Yes")
 						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/schoolgirl))
 						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
@@ -604,6 +661,25 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
 			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
 
+		if("mass_heal")
+			if(!is_funmin)
+				return
+			var/heal_mobs = tgui_alert(usr, "Heal all mobs and return ghosts to their bodies?", "Mass Healing", list("Yes", "No"))
+			if(!heal_mobs || heal_mobs != "Yes")
+				return
+
+			for(var/mob/dead/observer/ghost in GLOB.player_list) //Return all ghosts if possible
+				if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
+					continue
+				ghost.reenter_corpse()
+
+			for(var/mob/living/player in GLOB.player_list)
+				player.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+
+			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
+			message_admins("[key_name_admin(holder)] healed everyone.")
+			log_admin("[key_name(holder)] healed everyone.")
+
 	if(E)
 		E.processing = FALSE
 		if(E.announce_when>0)
@@ -624,12 +700,12 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE
 	if (playlightning)
-		sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
+		sound_to_playing_players('sound/effects/magic/lightning_chargeup.ogg')
 		sleep(8 SECONDS)
 	priority_announce(replacetext(announcement, "%STATION%", station_name()))
 	if (playlightning)
 		sleep(2 SECONDS)
-		sound_to_playing_players('sound/magic/lightningbolt.ogg')
+		sound_to_playing_players('sound/effects/magic/lightningbolt.ogg')
 
 /// Spawns a portal storm that spawns in sentient/non sentient mobs
 /// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use
@@ -647,7 +723,28 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			H.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
 	T.flick_overlay_static(portal_appearance[GET_TURF_PLANE_OFFSET(T) + 1], 15)
-	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+	playsound(T, 'sound/effects/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+
+/// Docks the emergency shuttle back to the station and resets its state
+/proc/return_escape_shuttle(make_announcement)
+	if (SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"), force = TRUE) != DOCKING_SUCCESS)
+		message_admins("Emergency shuttle was unable to dock back to the station!")
+		SSshuttle.emergency.timer = 1 // Prevents softlocks
+		return
+	if (make_announcement != "No")
+		priority_announce(
+			text = "[SSshuttle.emergency] has returned to the station.",
+			title = "Emergency Shuttle Override",
+			sound = ANNOUNCER_SHUTTLEDOCK,
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "grey",
+		)
+	SSshuttle.emergency.mode = SHUTTLE_IDLE
+	SSshuttle.emergency.timer = 0
+	// Docks the pods back (don't ask about physics)
+	for (var/obj/docking_port/mobile/pod/pod in SSshuttle.mobile_docking_ports)
+		if (pod.previous)
+			pod.initiate_docking(pod.previous, force = TRUE)
 
 /datum/everyone_is_an_antag_controller
 	var/chosen_antag = ""
@@ -688,7 +785,6 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				assign_admin_objective_and_antag(player, antag_datum)
 				var/datum/uplink_handler/uplink = antag_datum.uplink_handler
 				uplink.has_progression = FALSE
-				uplink.has_objectives = FALSE
 			if(ROLE_CHANGELING)
 				var/datum/antagonist/changeling/antag_datum = new
 				antag_datum.give_objectives = keep_generic_objecives

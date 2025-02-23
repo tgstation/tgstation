@@ -8,6 +8,7 @@
 	resistance_flags = NONE
 	custom_premium_price = PAYCHECK_COMMAND * 3.5
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH,TRAIT_FAST_CUFFING)
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]
@@ -22,6 +23,12 @@
 	var/tackle_speed = 1
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 1
+	///How much these gloves affect fishing difficulty
+	var/fishing_modifier = -7
+
+/obj/item/clothing/gloves/tackler/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier) //fishing tackle equipment (ba dum tsh)
 
 /obj/item/clothing/gloves/tackler/Destroy()
 	tackler = null
@@ -55,13 +62,13 @@
 	tackle_speed = 2
 	min_distance = 2
 	skill_mod = -2
+	fishing_modifier = -10
 
 /obj/item/clothing/gloves/tackler/combat
 	name = "gorilla gloves"
 	desc = "Premium quality combative gloves, heavily reinforced to give the user an edge in close combat tackles, though they are more taxing to use than normal gripper gloves. Fireproof to boot!"
-	icon_state = "black"
-	inhand_icon_state = "greyscale_gloves"
-	greyscale_colors = "#2f2e31"
+	icon_state = "gorilla"
+	inhand_icon_state = null
 
 	tackle_stam_cost = 30
 	base_knockdown = 1.25 SECONDS
@@ -77,6 +84,7 @@
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerrilla gloves"
 	desc = "Superior quality combative gloves, good for performing tackle takedowns as well as absorbing electrical shocks."
+	icon_state = "guerrilla"
 	siemens_coefficient = 0
 	armor_type = /datum/armor/combat_insulated
 
@@ -101,14 +109,16 @@
 	desc = "Ratty looking fingerless gloves wrapped with sticky tape. Beware anyone wearing these, for they clearly have no shame and nothing to lose."
 	icon_state = "fingerless"
 	inhand_icon_state = null
-
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 	tackle_stam_cost = 30
 	base_knockdown = 1.75 SECONDS
 	min_distance = 2
 	skill_mod = -1
+	fishing_modifier = -5
 
 /obj/item/clothing/gloves/tackler/football
 	name = "football gloves"
 	desc = "Gloves for football players! Teaches them how to tackle like a pro."
 	icon_state = "tackle_gloves"
 	inhand_icon_state = null
+	fishing_modifier = -4

@@ -13,6 +13,7 @@
 
 	/// The result from the output
 	var/datum/port/output/output
+	var/datum/port/output/distance
 
 	// Directions outputs
 	var/datum/port/output/north
@@ -30,9 +31,10 @@
 	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
 /obj/item/circuit_component/direction/populate_ports()
-	input_port = add_input_port("Organism", PORT_TYPE_ATOM)
+	input_port = add_input_port("Targeted Entity", PORT_TYPE_ATOM)
 
 	output = add_output_port("Direction", PORT_TYPE_STRING)
+	distance = add_output_port("Distance", PORT_TYPE_NUMBER)
 
 	north = add_output_port("North", PORT_TYPE_SIGNAL)
 	east = add_output_port("East", PORT_TYPE_SIGNAL)
@@ -45,8 +47,9 @@
 	if(!object)
 		return
 	var/turf/location = get_location()
+	var/measured_distance = get_dist(location, object)
 
-	if(object.z != location.z || get_dist(location, object) > max_range)
+	if(object.z != location.z || measured_distance > max_range)
 		output.set_output(null)
 		return
 
@@ -61,3 +64,6 @@
 		east.set_output(COMPONENT_SIGNAL)
 	if(direction & WEST)
 		west.set_output(COMPONENT_SIGNAL)
+
+	distance.set_output(measured_distance)
+

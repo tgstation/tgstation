@@ -9,6 +9,10 @@
 	category = LOG_CATEGORY_DEBUG_LUA
 	master_category = /datum/log_category/debug
 
+/datum/log_category/debug_tts
+	category = LOG_CATEGORY_DEBUG_TTS
+	master_category = /datum/log_category/debug
+
 // This is not in the debug master category on purpose, do not add it
 /datum/log_category/debug_runtime
 	category = LOG_CATEGORY_RUNTIME

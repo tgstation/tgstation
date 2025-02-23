@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/conjure/cheese
 	name = "Summon Cheese"
 	desc = "This spell conjures a bunch of cheese wheels. What the hell?"
-	sound = 'sound/magic/summonitems_generic.ogg'
+	sound = 'sound/effects/magic/summonitems_generic.ogg'
 	button_icon_state = "cheese"
 
 	school = SCHOOL_CONJURATION

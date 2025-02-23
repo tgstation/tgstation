@@ -76,23 +76,29 @@
 		return FALSE
 	if(!inserted_scan_id)
 		status_report = "Please insert your ID first."
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	if(!inserted_scan_id.registered_account.civilian_bounty)
 		status_report = "Please accept a new civilian bounty first."
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	status_report = "Civilian Bounty: "
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
-	for(var/atom/movable/AM in get_turf(pad))
-		if(AM == pad)
+	for(var/atom/movable/possible_shippable in get_turf(pad))
+		if(possible_shippable == pad)
 			continue
-		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(AM))
+		if(possible_shippable.flags_1 & HOLOGRAM_1)
+			continue
+		if(isitem(possible_shippable))
+			var/obj/item/possible_shippable_item = possible_shippable
+			if(possible_shippable_item.item_flags & ABSTRACT)
+				continue
+		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(possible_shippable))
 			status_report += "Target Applicable."
-			playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
+			playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 			return
 	status_report += "Not Applicable."
-	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+	playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 
 /**
  * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
@@ -110,13 +116,19 @@
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
-	for(var/atom/movable/AM in get_turf(pad))
-		if(AM == pad)
+	for(var/atom/movable/possible_shippable in get_turf(pad))
+		if(possible_shippable == pad)
 			continue
-		if(curr_bounty.applies_to(AM))
+		if(possible_shippable.flags_1 & HOLOGRAM_1)
+			continue
+		if(isitem(possible_shippable))
+			var/obj/item/possible_shippable_item = possible_shippable
+			if(possible_shippable_item.item_flags & ABSTRACT)
+				continue
+		if(curr_bounty.applies_to(possible_shippable))
 			active_stack ++
-			curr_bounty.ship(AM)
-			qdel(AM)
+			curr_bounty.ship(possible_shippable)
+			qdel(possible_shippable)
 	if(active_stack >= 1)
 		status_report += "Bounty Target Found x[active_stack]. "
 	else
@@ -135,7 +147,7 @@
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
-	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
+	playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
@@ -151,7 +163,7 @@
 		say("Requesting ID card has no job assignment registered!")
 		return FALSE
 	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
-										random_bounty(pot_acc.account_job.bounty_types), // and 1 guarenteed assistant bounty if the other 2 suck.
+										random_bounty(pot_acc.account_job.bounty_types), // and 1 guaranteed assistant bounty if the other 2 suck.
 										random_bounty(CIV_JOB_BASIC))
 	COOLDOWN_START(pot_acc, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	pot_acc.bounties = crumbs
@@ -164,7 +176,7 @@
  */
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
 	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
-		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null
@@ -203,7 +215,7 @@
 
 	return data
 
-/obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/civilian/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -242,13 +254,13 @@
 
 	if(target)
 		if(holder_item && inserting_item.InsertID(target))
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		else
 			id_eject(user, target)
 
 	user.visible_message(span_notice("[user] inserts \the [card_to_insert] into \the [src]."),
 						span_notice("You insert \the [card_to_insert] into \the [src]."))
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	ui_interact(user)
 	return TRUE
 
@@ -263,7 +275,7 @@
 			user.put_in_hands(target)
 		user.visible_message(span_notice("[user] gets \the [target] from \the [src]."), \
 							span_notice("You get \the [target] from \the [src]."))
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		inserted_scan_id = null
 		return TRUE
 
@@ -297,25 +309,10 @@
 	var/datum/bank_account/bounty_holder_account
 	///Bank account of the person who receives the handling tip.
 	var/datum/bank_account/bounty_handler_account
-	///Our internal radio.
-	var/obj/item/radio/radio
-	///The key our internal radio uses.
-	var/radio_key = /obj/item/encryptionkey/headset_cargo
 
 /obj/item/bounty_cube/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_BARCODES, INNATE_TRAIT) // Don't allow anyone to override our pricetag component with a barcode
-	radio = new(src)
-	radio.keyslot = new radio_key
-	radio.set_listening(FALSE)
-	radio.recalculateChannels()
-	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, PROC_REF(on_export))
-
-/obj/item/bounty_cube/Destroy()
-	if(radio)
-		UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
-		QDEL_NULL(radio)
-	return ..()
 
 /obj/item/bounty_cube/examine()
 	. = ..()
@@ -324,29 +321,20 @@
 	if(handler_tip && !bounty_handler_account)
 		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.")
 
-/*
- * Signal proc for [COMSIG_ITEM_EXPORTED], registered on the internal radio.
- *
- * Deletes the internal radio before being exported,
- * to stop it from bring counted as an export.
- *
- * No 4 free credits for you!
- */
-/obj/item/bounty_cube/proc/on_export(datum/source)
-	SIGNAL_HANDLER
-
-	QDEL_NULL(radio)
-	return COMPONENT_STOP_EXPORT // stops the radio from exporting, not the cube
-
 /obj/item/bounty_cube/process(seconds_per_tick)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
 	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
-		//set up our nag message
+		//set up our fallback message, in case of AAS being broken it will be sent to card holders
 		var/nag_message = "[src] is unsent in [get_area(src)]."
 
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
-		var/speed_bonus_lost = "[speed_bonus ? " Speedy delivery bonus of [bounty_value * speed_bonus] credit\s lost." : ""]"
-		radio.talk_into(src, "[nag_message][speed_bonus_lost]", RADIO_CHANNEL_SUPPLY)
+		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src)
+		if (aas)
+			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value), "Regular Message")
+			if (speed_bonus)
+				aas.announce(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value, "BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
+			else
+				aas.broadcast("[nag_message]", list(RADIO_CHANNEL_SUPPLY))
 		speed_bonus = 0
 
 		//alert the holder
@@ -371,7 +359,13 @@
 	AddComponent(/datum/component/gps, "[src]")
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
-	radio.talk_into(src,"Created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Speedy delivery bonus lost in [time2text(next_nag_time - world.time,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
+	aas_config_announce(/datum/aas_config_entry/bounty_cube_created, list(
+		"LOCATION" = get_area_name(src),
+		"PERSON" = bounty_holder,
+		"RANK" = bounty_holder_job,
+		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss"),
+		"COST" = bounty_value
+	), src, list(RADIO_CHANNEL_SUPPLY))
 
 //for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
 /obj/item/bounty_cube/debug_cube
@@ -416,5 +410,28 @@
 			new /obj/machinery/computer/piratepad_control/civilian(drop_location())
 			qdel(src)
 	uses--
+
+/datum/aas_config_entry/bounty_cube_created
+	name = "Cargo Alert: Bounty Cube Created"
+	announcement_lines_map = list(
+		"Message" = "A %COST cr bounty cube has been created in %LOCATION by %PERSON (%RANK). Speedy delivery bonus lost in %BONUSTIME.")
+	vars_and_tooltips_map = list(
+		"LOCATION" = "will be replaced with the location of the cube.",
+		"PERSON" = "with who created the cube.",
+		"RANK" = "with their job.",
+		"BONUSTIME" = "with the time left for speedy delivery tip.",
+		"COST" = "with the cost of the cube.",
+	)
+
+/datum/aas_config_entry/bounty_cube_unsent
+	name = "Cargo Alert: Bounty Cube Unsent"
+	announcement_lines_map = list(
+		"Regular Message" = "The %COST cr bounty cube is unsent in %LOCATION.",
+		"When Bonus Lost" = "The %COST cr bounty cube is unsent in %LOCATION. Speedy delivery bonus of %BONUSLOST credits lost.")
+	vars_and_tooltips_map = list(
+		"LOCATION" = "will be replaced with the location of the cube.",
+		"COST" = "with the cost of the cube.",
+		"BONUSLOST" = "with the lost bonus tip, it will be sent just for When Bonus Lost message!",
+	)
 
 #undef CIV_BOUNTY_SPLIT

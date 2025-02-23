@@ -34,6 +34,8 @@
 	var/delta_t
 	///How pure our step is
 	var/delta_ph
+	///Min reaction rate possible below which rounding errors occur
+	VAR_PRIVATE/min_rate
 	///Modifiers from catalysts, do not use negative numbers.
 	///I should write a better handiler for modifying these
 	///Speed mod
@@ -67,7 +69,6 @@
 	LAZYADD(holder.reaction_list, src)
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 
-
 /datum/equilibrium/Destroy()
 	if(reacted_vol < target_vol) //We did NOT finish from reagents - so we can restart this reaction given property changes in the beaker. (i.e. if it stops due to low temp, this will allow it to fast restart when heated up again)
 		LAZYADD(holder.failed_but_capable_reactions, reaction) //Consider replacing check with calculate_yield()
@@ -87,10 +88,10 @@
 	PRIVATE_PROC(TRUE)
 
 	if(QDELETED(holder))
-		stack_trace("an equilibrium is missing it's holder.")
+		stack_trace("an equilibrium is missing its holder.")
 		return FALSE
 	if(QDELETED(reaction))
-		stack_trace("an equilibrium is missing it's reaction.")
+		stack_trace("an equilibrium is missing its reaction.")
 		return FALSE
 	if(!length(reaction.required_reagents))
 		stack_trace("an equilibrium is missing required reagents.")
@@ -114,6 +115,8 @@
 			product_ratio += reaction.results[product]
 	else
 		product_ratio = 1
+	min_rate = product_ratio * (CHEMICAL_VOLUME_ROUNDING / 2)
+
 	return TRUE
 
 /**
@@ -321,10 +324,13 @@
 	purity *= purity_modifier
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/delta_chem_factor = reaction.rate_up_lim * delta_t * seconds_per_tick//add/remove factor
+	var/delta_chem_factor = reaction.rate_up_lim * delta_t * seconds_per_tick
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
+	//ensure its above minimum rate below which rounding errors occur
+	else if(delta_chem_factor < min_rate)
+		delta_chem_factor = min_rate
 	//Normalise to multiproducts
 	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_VOLUME_ROUNDING)
 	if(delta_chem_factor <= 0)
@@ -368,9 +374,9 @@
 
 	#ifdef REAGENTS_TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
 	if(GLOB.Debug2) //I want my spans for my sanity
-		message_admins("<span class='green'>Reaction step active for:[reaction.type]</span>")
-		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]</span>")
-		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [seconds_per_tick]</span>")
+		message_admins(span_green("Reaction step active for:[reaction.type]"))
+		message_admins(span_notice("|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]"))
+		message_admins(span_warning("Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [seconds_per_tick]"))
 	#endif
 
 	//Apply thermal output of reaction to beaker
@@ -381,7 +387,7 @@
 		holder.adjust_thermal_energy(heat_energy * SPECIFIC_HEAT_DEFAULT, 0, CHEMICAL_MAXIMUM_TEMPERATURE)
 
 	//Give a chance of sounds
-	if(prob(5))
+	if(prob(5) && !HAS_TRAIT(holder.my_atom, TRAIT_SILENT_REACTIONS))
 		holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]"))
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)

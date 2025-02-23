@@ -41,7 +41,7 @@
 	if(isnull(contained_frog))
 		. += span_notice("There are currently no frogs linked to this statue!")
 	else
-		. += span_notice("Using it will [contained_frog in src ? "release" : "recall"] the beast!")
+		. += span_notice("Using it will [(contained_frog in src) ? "release" : "recall"] the beast!")
 
 ///resummon the frog into its home
 /obj/item/frog_statue/proc/recall_frog(mob/user)
@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 
 	contained_frog = null
-	playsound(src, 'sound/magic/demon_dies.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', 50, TRUE)
 	UnregisterSignal(source, COMSIG_QDELETING)
 
 /obj/item/frog_statue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

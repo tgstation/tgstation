@@ -22,7 +22,7 @@
 	var/datum/outfit/outfit
 	// How long until we respawn them after their death.
 	var/respawn_time = 50
-	var/respawn_sound = 'sound/magic/staff_animation.ogg'
+	var/respawn_sound = 'sound/effects/magic/staff_animation.ogg'
 
 /obj/structure/life_candle/Initialize(mapload)
 	. = ..()

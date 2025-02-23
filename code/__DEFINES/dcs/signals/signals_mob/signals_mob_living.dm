@@ -21,6 +21,8 @@
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
+/// from /datum/status_effect/incapacitating/stamcrit/on_apply()
+#define COMSIG_LIVING_ENTER_STAMCRIT "living_enter_stamcrit"
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 ///from base of mob/living/resist() (/mob/living)
@@ -41,7 +43,7 @@
 #define COMSIG_LIVING_REVIVE "living_revive"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
-///from base of mob/living/set_body_position()
+///from base of mob/living/set_body_position(): (new_position, old_position)
 #define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
 /// Sent to a mob being injected with a syringe when the do_after initiates
 #define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
@@ -139,6 +141,8 @@
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
+///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
+#define COMSIG_LIVING_SLAPPED "living_slapped"
 /// from /mob/living/*/UnarmedAttack(), before sending [COMSIG_LIVING_UNARMED_ATTACK]: (mob/living/source, atom/target, proximity, modifiers)
 /// The only reason this exists is so hulk can fire before Fists of the North Star.
 /// Note that this is called before [/mob/living/proc/can_unarmed_attack] is called, so be wary of that.
@@ -178,6 +182,7 @@
 	#define TREAT_MESSAGE_ARG 1
 	#define TREAT_TTS_MESSAGE_ARG 2
 	#define TREAT_TTS_FILTER_ARG 3
+	#define TREAT_CAPITALIZE_MESSAGE 4
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
@@ -203,6 +208,10 @@
 	#define STOP_SACRIFICE (1<<0)
 	/// Don't send a message for sacrificing this thing, we have our own
 	#define SILENCE_SACRIFICE_MESSAGE (1<<1)
+	/// Don't send a message for sacrificing this thing UNLESS it's the cult target
+	#define SILENCE_NONTARGET_SACRIFICE_MESSAGE (1<<2)
+	/// Dusts the target instead of gibbing them (no soulstone)
+	#define DUST_SACRIFICE (1<<3)
 
 /// From /mob/living/befriend() : (mob/living/new_friend)
 #define COMSIG_LIVING_BEFRIENDED "living_befriended"
@@ -215,11 +224,6 @@
 
 /// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
 #define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
-
-/// From /obj/projectile/attempt_parry() : (obj/projectile/parried_projectile)
-#define COMSIG_LIVING_PROJECTILE_PARRYING "living_projectile_parrying"
-	/// Return to allow the parry to happen
-	#define ALLOW_PARRY (1<<0)
 
 /// From /obj/projectile/on_parry() : (obj/projectile/parried_projectile)
 #define COMSIG_LIVING_PROJECTILE_PARRIED "living_projectile_parried"
@@ -240,6 +244,7 @@
 
 ///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
 #define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define FAILED_BLOCK NONE
 	#define SUCCESSFUL_BLOCK (1<<0)
 
 ///Hit by successful disarm attack (mob/living/attacker, zone_targeted, item/weapon)
@@ -270,6 +275,12 @@
 #define COMSIG_LIVING_GRAB "living_grab"
 	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
 
+/// From /datum/component/edible/get_perceived_food_quality(): (datum/component/edible/edible, list/extra_quality)
+#define COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY "get_perceived_food_quality"
+
+///Called when living finish eat (/datum/component/edible/proc/On_Consume)
+#define COMSIG_LIVING_FINISH_EAT "living_finish_eat"
+
 /// From /datum/element/basic_eating/try_eating()
 #define COMSIG_MOB_PRE_EAT "mob_pre_eat"
 	///cancel eating attempt
@@ -277,10 +288,24 @@
 
 /// From /datum/element/basic_eating/finish_eating()
 #define COMSIG_MOB_ATE "mob_ate"
+	///cancel post eating
+	#define COMSIG_MOB_TERMINATE_EAT (1<<0)
 
 ///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
 #define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
+/// From mob/living/proc/on_fall
+#define COMSIG_LIVING_THUD "living_thud"
 ///From /datum/component/happiness()
 #define COMSIG_MOB_HAPPINESS_CHANGE "happiness_change"
 /// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
 #define COMSIG_MOB_BATONED "mob_batoned"
+
+/// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
+#define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
+
+/// Sent to the mob when their mind is slaved
+#define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
+/// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked)
+#define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
+/// From /mob/living/proc/stop_leaning()
+#define COMSIG_LIVING_STOPPED_LEANING "living_stopped_leaning"

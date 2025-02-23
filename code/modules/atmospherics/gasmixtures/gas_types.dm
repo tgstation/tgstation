@@ -45,7 +45,7 @@
 |||| only by meta_gas_list().            ||||
 \*||||||||||||||||||||||||||||||||||||||||*/
 
-//This is a plot created using the values for gas exports. Each gas has a value that works as it's kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
+//This is a plot created using the values for gas exports. Each gas has a value that works as its kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
 /datum/gas
 	var/id = ""
 	var/specific_heat = 0
@@ -85,7 +85,7 @@
 	rarity = 1000
 	purchaseable = TRUE
 	base_value = 0.1
-	desc = "A very common gas that used to pad artifical atmospheres to habitable pressure."
+	desc = "A very common gas that used to pad artificial atmospheres to habitable pressure."
 	primary_color = "#ffff00"
 
 /datum/gas/carbon_dioxide //what the fuck is this?
@@ -108,7 +108,7 @@
 	dangerous = TRUE
 	rarity = 800
 	base_value = 1.5
-	desc = "A flammable gas with many other curious properties. It's research is one of NT's primary objective."
+	desc = "A flammable gas with many other curious properties. Its research is one of NT's primary objective."
 	primary_color = "#ffc0cb"
 
 /datum/gas/water_vapor
@@ -133,7 +133,7 @@
 	fusion_power = 10
 	rarity = 50
 	base_value = 2.5
-	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
+	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occurring."
 	primary_color = COLOR_TEAL
 
 /datum/gas/nitrous_oxide
@@ -173,7 +173,7 @@
 	fusion_power = 5
 	rarity = 300
 	base_value = 2.5
-	desc = "A highly flammable and radioctive gas."
+	desc = "A highly flammable and radioactive gas."
 	primary_color = "#32cd32"
 
 /datum/gas/bz
@@ -220,7 +220,7 @@
 	fusion_power = -5
 	rarity = 10
 	base_value = 5
-	desc = "A coolant gas. Mainly used for it's endothermic reaction with oxygen."
+	desc = "A coolant gas. Mainly used for its endothermic reaction with oxygen."
 	primary_color = "#afeeee"
 
 /datum/gas/hydrogen
@@ -267,7 +267,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 1
 	base_value = 7
-	desc = "A highly toxic gas, it's production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
+	desc = "A highly toxic gas, its production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
 	primary_color = "#006400"
 
 /datum/gas/halon
@@ -279,7 +279,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 	base_value = 4
-	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
+	desc = "A potent fire suppressant. Removes oxygen from high temperature fires and cools down the area"
 	primary_color = COLOR_PURPLE
 
 /datum/gas/helium
@@ -289,7 +289,7 @@
 	fusion_power = 7
 	rarity = 50
 	base_value = 3.5
-	desc = "A very inert gas produced by the fusion of hydrogen and it's derivatives."
+	desc = "A very inert gas produced by the fusion of hydrogen and its derivatives."
 	primary_color = "#f0f8ff"
 
 /datum/gas/antinoblium
@@ -314,7 +314,7 @@
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
 	// The visual offset we are "on".
-	// Can't use the tradtional loc because we are stored in nullspace, and we can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
+	// Can't use the traditional loc because we are stored in nullspace, and we can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
 	var/plane_offset = 0
 
 /obj/effect/overlay/gas/New(state, alph, offset)

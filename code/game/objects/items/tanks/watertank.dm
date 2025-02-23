@@ -1,7 +1,7 @@
 //Hydroponics tank and base code
 /obj/item/watertank
 	name = "backpack water tank"
-	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
+	desc = "A S.U.N.S.H.I.N.E. brand water tank backpack with a nozzle to water plants."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	inhand_icon_state = "waterbackpack"
@@ -47,7 +47,7 @@
 	if(user.get_item_by_slot(user.getBackSlot()) != src)
 		to_chat(user, span_warning("The watertank must be worn properly to use!"))
 		return
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 
 	if(QDELETED(noz))
@@ -290,13 +290,16 @@
 /obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AttemptRefill(interacting_with, user))
 		return NONE
+	return ..()
+
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(nozzle_mode == EXTINGUISHER)
 		return ..()
 
 	var/Adj = user.Adjacent(interacting_with)
 	if(nozzle_mode == RESIN_LAUNCHER)
-		if(Adj)
-			return ITEM_INTERACT_BLOCKING //Safety check so you don't blast yourself trying to refill your tank
+		if(Adj && user.combat_mode)
+			return ITEM_INTERACT_SKIP_TO_ATTACK
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
 			balloon_alert(user, "not enough water!")
@@ -316,7 +319,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj || !isturf(interacting_with))
+		if(!isturf(interacting_with))
+			return NONE
+		if(!Adj)
 			balloon_alert(user, "too far!")
 			return ITEM_INTERACT_BLOCKING
 		for(var/thing in interacting_with)
@@ -369,7 +374,7 @@
 	qdel(src)
 
 // Please don't spacedrift thanks
-/obj/effect/resin_container/newtonian_move(direction, instant = FALSE, start_delay = 0)
+/obj/effect/resin_container/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)
 	return TRUE
 
 #undef EXTINGUISHER

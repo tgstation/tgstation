@@ -56,13 +56,13 @@
 
 
 /datum/lootpanel/ui_status(mob/user, datum/ui_state/state)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return UI_DISABLED
 
 	return UI_INTERACTIVE
 
 
-/datum/lootpanel/ui_act(action, list/params)
+/datum/lootpanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

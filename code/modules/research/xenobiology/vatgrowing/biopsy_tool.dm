@@ -1,7 +1,7 @@
 ///Tool capable of taking biological samples from mobs
 /obj/item/biopsy_tool
 	name = "biopsy tool"
-	desc = "Don't worry, it won't sting."
+	desc = "Used to retrieve cell lines from organisms. Don't worry, it won't sting."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "biopsy"
 	worn_icon_state = "biopsy"

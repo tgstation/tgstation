@@ -32,6 +32,27 @@
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/c38/match/bouncy)
 
+/datum/supply_pack/goody/dumdum38br
+	name = ".38 DumDum Magazine Single-Pack"
+	desc = "Contains one magazine of .38 DumDum ammunition, good for embedding in soft targets."
+	cost = PAYCHECK_CREW * 2
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/ammo_box/magazine/m38/dumdum)
+
+/datum/supply_pack/goody/match38br
+	name = ".38 Match Grade Magazine Single-Pack"
+	desc = "Contains one magazine of match grade .38 ammunition, perfect for showing off trickshots."
+	cost = PAYCHECK_CREW * 2
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/ammo_box/magazine/m38/match)
+
+/datum/supply_pack/goody/rubber
+	name = ".38 Rubber Magazine Single-Pack"
+	desc = "Contains one magazine of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
+	cost = PAYCHECK_CREW * 1.5
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/ammo_box/magazine/m38/match/bouncy)
+
 /datum/supply_pack/goody/mars_single
 	name = "Colt Detective Special Single-Pack"
 	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
@@ -57,11 +78,14 @@
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
+	contains = list(
+		/obj/item/gun/ballistic/shotgun/automatic/combat,
+		/obj/item/storage/belt/bandolier
+	)
 
 /datum/supply_pack/goody/disabler_single
 	name = "Disabler Single-Pack"
-	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in a energy holster, just in case you happen to have an extra disabler."
+	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in an energy holster, just in case you happen to have an extra disabler."
 	cost = PAYCHECK_COMMAND * 3
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/storage/belt/holster/energy/disabler)
@@ -193,7 +217,10 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(
+		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/hypospray/medipen/ekit
+	)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"
@@ -221,7 +248,7 @@
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing Toolbox"
-	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
+	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separately."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
 
@@ -236,6 +263,12 @@
 	desc = "Set of various fishing lines."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/storage/box/fishing_lines)
+
+/datum/supply_pack/goody/fishing_lure_set
+	name = "Fishing Lures Set"
+	desc = "A set of bite-resistant fishing lures to fish all (most) sort of fish. Beat randomness to a curb today!"
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/storage/box/fishing_lures)
 
 /datum/supply_pack/goody/fishing_hook_rescue
 	name = "Rescue Fishing Hook Single-Pack"
@@ -252,8 +285,8 @@
 /datum/supply_pack/goody/fish_feed
 	name = "Can of Fish Food Single-Pack"
 	desc = "For keeping your little friends fed and alive."
-	cost = PAYCHECK_CREW * 1
-	contains = list(/obj/item/fish_feed)
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/reagent_containers/cup/fish_feed)
 
 /datum/supply_pack/goody/naturalbait
 	name = "Freshness Jars full of Natural Bait Single-Pack"
@@ -311,7 +344,7 @@
 
 /datum/supply_pack/goody/climbing_hook
 	name = "Climbing Hook Single-Pack"
-	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
+	desc = "A less cheap imported climbing hook. Absolutely no use outside of multi-floor stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
 
@@ -321,3 +354,15 @@
 	cost = PAYCHECK_COMMAND * 18
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
+
+/datum/supply_pack/goody/experimental_medication
+	name = "Experimental Medication Single-Pack"
+	desc = "A single bottle of Interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease."
+	cost = PAYCHECK_CREW * 6.5
+	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)
+
+/datum/supply_pack/goody/pet_mouse
+	name = "Pet Mouse"
+	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
+	cost = PAYCHECK_CREW * 1.5
+	contains = list(/obj/item/pet_carrier/small/mouse)

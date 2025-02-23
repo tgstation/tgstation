@@ -11,7 +11,6 @@
 	cooldown_time = 20 SECONDS
 	click_to_activate = FALSE
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	/// At what range do we check for vision?
 	var/effect_radius = 7
 	/// How long does it take to play our various animation stages
@@ -28,7 +27,7 @@
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(show_indicator_overlay), "eye_pulse"), animation_time, TIMER_STOPPABLE)
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	owner.visible_message(span_warning("[owner]'s eye glows ominously!"))
-	if (do_after(owner, delay = wait_delay, target = owner))
+	if (do_after(owner, delay = wait_delay, target = owner, hidden = TRUE))
 		trigger_effect()
 	else
 		deltimer(stage_timer)

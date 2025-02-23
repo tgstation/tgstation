@@ -1,9 +1,9 @@
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g buckshot slugs)"
-	desc = "A drum magazine."
+	name = "shotgun magazine (12g buckshot shells)"
+	desc = "A drum magazine of shotgun shells, suitable for the Bulldog combat shotgun."
 	icon_state = "m12gb"
 	base_icon_state = "m12gb"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/milspec
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 8
 	casing_phrasing = "shell"
@@ -14,25 +14,30 @@
 
 /obj/item/ammo_box/magazine/m12g/stun
 	name = "shotgun magazine (12g taser slugs)"
+	icon_state = "m12gs"
 	base_icon_state = "m12gs"
 	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
 
 /obj/item/ammo_box/magazine/m12g/slug
 	name = "shotgun magazine (12g slugs)"
+	icon_state = "m12gsl"
 	base_icon_state = "m12gsl"
-	ammo_type = /obj/item/ammo_casing/shotgun
+	ammo_type = /obj/item/ammo_casing/shotgun/milspec
 
 /obj/item/ammo_box/magazine/m12g/dragon
 	name = "shotgun magazine (12g dragon's breath)"
+	icon_state = "m12gf"
 	base_icon_state = "m12gf"
 	ammo_type = /obj/item/ammo_casing/shotgun/dragonsbreath
 
 /obj/item/ammo_box/magazine/m12g/bioterror
 	name = "shotgun magazine (12g bioterror)"
+	icon_state = "m12gt"
 	base_icon_state = "m12gt"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart/bioterror
 
 /obj/item/ammo_box/magazine/m12g/meteor
 	name = "shotgun magazine (12g meteor slugs)"
+	icon_state = "m12gbc"
 	base_icon_state = "m12gbc"
 	ammo_type = /obj/item/ammo_casing/shotgun/meteorslug

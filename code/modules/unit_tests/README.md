@@ -39,7 +39,14 @@ Open `code/_compile_options.dm` and uncomment the following line.
 //#define UNIT_TESTS			//If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 ```
 
-Then, run tgstation.dmb in Dream Daemon. Don't bother trying to connect, you won't need to. You'll be able to see the outputs of all the tests. You'll get to see which tests failed and for what reason. If they all pass, you're set!
+There are 3 ways to run unit tests
+
+- Run tgstation.dmb in Dream Daemon. Don't bother trying to connect, you won't need to. You'll be able to see the outputs of all the tests. You'll get to see which tests failed and for what reason. If they all pass, you're set!
+
+- Launch game from VS Code. Launch the game as normal & you will see the output of your unit tests in your fancy chat window. This is preferred as you can use the debugger to step through each line of your unit test & can use the games inbuilt debugging tools to further aid in testing
+
+- Use VS Code Tgstation Test Explorer Extension. This allows you to run tests without launching the game & can also run focused tests(either a single or a selected group)
+
 
 ## How to think about tests
 

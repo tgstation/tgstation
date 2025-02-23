@@ -4,6 +4,7 @@
 #define GRADE_A "A"
 #define GRADE_S "S"
 
+
 /// Handles calculating rewards based on number of players, parts, threats, etc
 /obj/machinery/quantum_server/proc/calculate_rewards()
 	var/rewards_base = 0.8
@@ -20,6 +21,7 @@
 
 	return rewards_base
 
+
 /// Handles spawning the (new) crate and deleting the former
 /obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
 	SSblackbox.record_feedback("tally", "bitrunning_domain_primary_completed", 1, generated_domain.key)
@@ -31,7 +33,7 @@
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, cache, generated_domain.reward_points)
 
 	points += generated_domain.reward_points
-	playsound(src, 'sound/machines/terminal_success.ogg', 30, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 30, vary = TRUE)
 
 	var/bonus = calculate_rewards()
 
@@ -55,6 +57,8 @@
 	chosen_forge.start_to_spawn(reward_cache)
 	return TRUE
 
+
+/// Builds secondary loot if the achievements were met
 /obj/machinery/quantum_server/proc/generate_secondary_loot(obj/curiosity, obj/machinery/byteforge/chosen_forge)
 	SSblackbox.record_feedback("tally", "bitrunning_domain_secondary_completed", 1, generated_domain.key)
 	spark_at_location(curiosity) // abracadabra!
@@ -64,6 +68,7 @@
 
 	chosen_forge.start_to_spawn(reward_curiosity)
 	return TRUE
+
 
 /// Returns the markdown text containing domain completion information
 /obj/machinery/quantum_server/proc/get_completion_certificate(time_difference, grade)
@@ -125,6 +130,7 @@
 		passing_grades = list(GRADE_A,GRADE_S)
 
 	return  generated_domain.difficulty >= BITRUNNER_DIFFICULTY_MEDIUM && (grade in passing_grades)
+
 
 /// Grades the player's run based on several factors
 /obj/machinery/quantum_server/proc/grade_completion(completion_time)

@@ -1,6 +1,6 @@
 // Tomato
 /obj/item/seeds/tomato
-	name = "pack of tomato seeds"
+	name = "tomato seed pack"
 	desc = "These seeds grow into tomato plants."
 	icon_state = "seed-tomato"
 	species = "tomato"
@@ -29,7 +29,7 @@
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
-	name = "pack of blood-tomato seeds"
+	name = "blood-tomato seed pack"
 	desc = "These seeds grow into blood-tomato plants."
 	icon_state = "seed-bloodtomato"
 	species = "bloodtomato"
@@ -52,7 +52,7 @@
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
-	name = "pack of blue-tomato seeds"
+	name = "blue-tomato seed pack"
 	desc = "These seeds grow into blue-tomato plants."
 	icon_state = "seed-bluetomato"
 	species = "bluetomato"
@@ -77,7 +77,7 @@
 
 // Bluespace Tomato
 /obj/item/seeds/tomato/blue/bluespace
-	name = "pack of bluespace tomato seeds"
+	name = "bluespace tomato seed pack"
 	desc = "These seeds grow into bluespace tomato plants."
 	icon_state = "seed-bluespacetomato"
 	species = "bluespacetomato"
@@ -101,7 +101,7 @@
 
 // Killer Tomato
 /obj/item/seeds/tomato/killer
-	name = "pack of killer-tomato seeds"
+	name = "killer-tomato seed pack"
 	desc = "These seeds grow into killer-tomato plants."
 	icon_state = "seed-killertomato"
 	species = "killertomato"

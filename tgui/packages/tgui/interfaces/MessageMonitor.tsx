@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { Dispatch, SetStateAction, useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,7 +7,10 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 enum Screen {
@@ -133,7 +133,12 @@ const MessageLogsScreen = (props) => {
                 </Table.Cell>
                 <Table.Cell>{message.sender}</Table.Cell>
                 <Table.Cell>{message.recipient}</Table.Cell>
-                <Table.Cell>{message.message}</Table.Cell>
+                <Table.Cell>
+                  <Box
+                    as="span"
+                    dangerouslySetInnerHTML={{ __html: message.message }}
+                  />
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table>

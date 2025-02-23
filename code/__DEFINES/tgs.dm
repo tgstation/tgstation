@@ -1,18 +1,19 @@
 // tgstation-server DMAPI
+// The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in IETF RFC 2119.
 
-#define TGS_DMAPI_VERSION "7.1.2"
+#define TGS_DMAPI_VERSION "7.3.1"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
 // CONFIGURATION
 
-/// Create this define if you want to do TGS configuration outside of this file.
+/// Consumers SHOULD create this define if you want to do TGS configuration outside of this file.
 #ifndef TGS_EXTERNAL_CONFIGURATION
 
-// Comment this out once you've filled in the below.
+// Consumers MUST comment this out once you've filled in the below and are not using [TGS_EXTERNAL_CONFIGURATION].
 #error TGS API unconfigured
 
-// Uncomment this if you wish to allow the game to interact with TGS 3..
+// Consumers MUST uncomment this if you wish to allow the game to interact with TGS version 3.
 // This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()().
 //#define TGS_V3_API
 
@@ -52,9 +53,14 @@
 
 #ifndef TGS_FILE2TEXT_NATIVE
 #ifdef file2text
-#error Your codebase is re-defining the BYOND proc file2text. The DMAPI requires the native version to read the result of world.Export(). You can fix this by adding "#define TGS_FILE2TEXT_NATIVE file2text" before your override of file2text to allow the DMAPI to use the native version. This will only be used for world.Export(), not regular file accesses
+#error Your codebase is re-defining the BYOND proc file2text. The DMAPI requires the native version to read the result of world.Export(). You SHOULD fix this by adding "#define TGS_FILE2TEXT_NATIVE file2text" before your override of file2text to allow the DMAPI to use the native version. This will only be used for world.Export(), not regular file accesses
 #endif
 #define TGS_FILE2TEXT_NATIVE file2text
+#endif
+
+// SpacemanDMM compatibility
+#ifndef CAN_BE_REDEFINED
+#define CAN_BE_REDEFINED(X)
 #endif
 
 // EVENT CODES
@@ -152,31 +158,33 @@
 //REQUIRED HOOKS
 
 /**
- * Call this somewhere in [/world/proc/New] that is always run. This function may sleep!
+ * Consumers MUST call this somewhere in [/world/proc/New] that is always run. This function may sleep!
  *
  * * event_handler - Optional user defined [/datum/tgs_event_handler].
  * * minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated. Can be one of [TGS_SECURITY_ULTRASAFE], [TGS_SECURITY_SAFE], or [TGS_SECURITY_TRUSTED].
+ * * http_handler - Optional user defined [/datum/tgs_http_handler].
  */
-/world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
+/world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE, datum/tgs_http_handler/http_handler)
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /**
- * Call this when your initializations are complete and your game is ready to play before any player interactions happen.
+ * Consumers MUST call this when world initializations are complete and the game is ready to play before any player interactions happen.
  *
  * This may use [/world/var/sleep_offline] to make this happen so ensure no changes are made to it while this call is running.
  * Afterwards, consider explicitly setting it to what you want to avoid this BYOND bug: http://www.byond.com/forum/post/2575184
  * This function should not be called before ..() in [/world/proc/New].
  */
 /world/proc/TgsInitializationComplete()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Put this at the start of [/world/proc/Topic].
+/// Consumers MUST run this macro at the start of [/world/proc/Topic].
 #define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
-/**
- * Call this as late as possible in [world/proc/Reboot] (BEFORE ..()).
- */
+/// Consumers MUST call this as late as possible in [world/proc/Reboot] (BEFORE ..()).
 /world/proc/TgsReboot()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 // DATUM DEFINITIONS
@@ -214,6 +222,7 @@
  * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] contains wildcards.
  */
 /datum/tgs_version/proc/Wildcard()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /**
@@ -222,6 +231,7 @@
  * other_version - The [/datum/tgs_version] to compare against.
  */
 /datum/tgs_version/proc/Equals(datum/tgs_version/other_version)
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Represents a merge of a GitHub pull request.
@@ -269,7 +279,7 @@
 	/// The [/datum/tgs_chat_channel] the user was from.
 	var/datum/tgs_chat_channel/channel
 
-/// User definable handler for TGS events.
+/// User definable handler for TGS events This abstract version SHOULD be overridden to be used.
 /datum/tgs_event_handler
 	/// If the handler receieves [TGS_EVENT_HEALTH_CHECK] events.
 	var/receive_health_checks = FALSE
@@ -283,7 +293,41 @@
 	set waitfor = FALSE
 	return
 
-/// User definable chat command.
+/// User definable handler for HTTP calls. This abstract version MUST be overridden to be used.
+/datum/tgs_http_handler
+
+/**
+ * User definable callback for executing HTTP GET requests.
+ * MUST perform BYOND sleeps while the request is in flight.
+ * MUST return a [/datum/tgs_http_result].
+ * SHOULD log its own errors
+ *
+ * url - The full URL to execute the GET request for including query parameters.
+ */
+/datum/tgs_http_handler/proc/PerformGet(url)
+	CRASH("[type]/PerformGet not implemented!")
+
+/// Result of a [/datum/tgs_http_handler] call. MUST NOT be overridden.
+/datum/tgs_http_result
+	/// HTTP response as text
+	var/response_text
+	/// Boolean request success flag. Set for any 2XX response code.
+	var/success
+
+/**
+ * Create a [/datum/tgs_http_result].
+ *
+ * * response_text - HTTP response as text. Must be provided in New().
+ * * success - Boolean request success flag. Set for any 2XX response code. Must be provided in New().
+ */
+/datum/tgs_http_result/New(response_text, success)
+	if(response_text && !istext(response_text))
+		CRASH("response_text was not text!")
+
+	src.response_text = response_text
+	src.success = success
+
+/// User definable chat command. This abstract version MUST be overridden to be used.
 /datum/tgs_chat_command
 	/// The string to trigger this command on a chat bot. e.g `@bot name ...` or `!tgs name ...`.
 	var/name = ""
@@ -296,21 +340,27 @@
 
 /**
  * Process command activation. Should return a [/datum/tgs_message_content] to respond to the issuer with.
+ * MUST be implemented
  *
- * sender - The [/datum/tgs_chat_user] who issued the command.
- * params - The trimmed string following the command `/datum/tgs_chat_command/var/name].
+ * * sender - The [/datum/tgs_chat_user] who issued the command.
+ * * params - The trimmed string following the command `/datum/tgs_chat_command/var/name].
  */
 /datum/tgs_chat_command/proc/Run(datum/tgs_chat_user/sender, params)
 	CRASH("[type] has no implementation for Run()")
 
-/// User definable chat message.
+/// User definable chat message. MUST NOT be overridden.
 /datum/tgs_message_content
-	/// The tring content of the message. Must be provided in New().
+	/// The string content of the message. Must be provided in New().
 	var/text
 
 	/// The [/datum/tgs_chat_embed] to embed in the message. Not supported on all chat providers.
 	var/datum/tgs_chat_embed/structure/embed
 
+/**
+ * Create a [/datum/tgs_message_content].
+ *
+ * * text - The string content of the message.
+ */
 /datum/tgs_message_content/New(text)
 	..()
 	if(!istext(text))
@@ -319,7 +369,7 @@
 
 	src.text = text
 
-/// User definable chat embed. Currently mirrors Discord chat embeds. See https://discord.com/developers/docs/resources/channel#embed-object-embed-structure for details.
+/// User definable chat embed. Currently mirrors Discord chat embeds. See https://discord.com/developers/docs/resources/message#embed-object for details.
 /datum/tgs_chat_embed/structure
 	var/title
 	var/description
@@ -331,13 +381,13 @@
 	/// Colour must be #AARRGGBB or #RRGGBB hex string.
 	var/colour
 
-	/// See https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure for details.
+	/// See https://discord.com/developers/docs/resources/message#embed-object-embed-image-structure for details.
 	var/datum/tgs_chat_embed/media/image
 
-	/// See https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure for details.
+	/// See https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure for details.
 	var/datum/tgs_chat_embed/media/thumbnail
 
-	/// See https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure for details.
+	/// See https://discord.com/developers/docs/resources/message#embed-object-embed-video-structure for details.
 	var/datum/tgs_chat_embed/media/video
 
 	var/datum/tgs_chat_embed/footer/footer
@@ -346,7 +396,7 @@
 
 	var/list/datum/tgs_chat_embed/field/fields
 
-/// Common datum for similar discord embed medias.
+/// Common datum for similar Discord embed medias.
 /datum/tgs_chat_embed/media
 	/// Must be set in New().
 	var/url
@@ -354,6 +404,7 @@
 	var/height
 	var/proxy_url
 
+/// Create a [/datum/tgs_chat_embed].
 /datum/tgs_chat_embed/media/New(url)
 	..()
 	if(!istext(url))
@@ -361,13 +412,14 @@
 
 	src.url = url
 
-/// See https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure for details.
+/// See https://discord.com/developers/docs/resources/message#embed-object-embed-footer-structure for details.
 /datum/tgs_chat_embed/footer
 	/// Must be set in New().
 	var/text
 	var/icon_url
 	var/proxy_icon_url
 
+/// Create a [/datum/tgs_chat_embed/footer].
 /datum/tgs_chat_embed/footer/New(text)
 	..()
 	if(!istext(text))
@@ -375,16 +427,17 @@
 
 	src.text = text
 
-/// See https://discord.com/developers/docs/resources/channel#embed-object-embed-provider-structure for details.
+/// See https://discord.com/developers/docs/resources/message#embed-object-embed-provider-structure for details.
 /datum/tgs_chat_embed/provider
 	var/name
 	var/url
 
-/// See https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure for details. Must have name set in New().
+/// See https://discord.com/developers/docs/resources/message#embed-object-embed-author-structure for details. Must have name set in New().
 /datum/tgs_chat_embed/provider/author
 	var/icon_url
 	var/proxy_icon_url
 
+/// Create a [/datum/tgs_chat_embed/footer].
 /datum/tgs_chat_embed/provider/author/New(name)
 	..()
 	if(!istext(name))
@@ -392,12 +445,15 @@
 
 	src.name = name
 
-/// See https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure for details. Must have name and value set in New().
+/// See https://discord.com/developers/docs/resources/message#embed-object-embed-field-structure for details.
 /datum/tgs_chat_embed/field
+	/// Must be set in New().
 	var/name
+	/// Must be set in New().
 	var/value
 	var/is_inline
 
+/// Create a [/datum/tgs_chat_embed/field].
 /datum/tgs_chat_embed/field/New(name, value)
 	..()
 	if(!istext(name))
@@ -413,16 +469,19 @@
 
 /// Returns the maximum supported [/datum/tgs_version] of the DMAPI.
 /world/proc/TgsMaximumApiVersion()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns the minimum supported [/datum/tgs_version] of the DMAPI.
 /world/proc/TgsMinimumApiVersion()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /**
  * Returns [TRUE] if DreamDaemon was launched under TGS, the API matches, and was properly initialized. [FALSE] will be returned otherwise.
  */
 /world/proc/TgsAvailable()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 // No function below this succeeds if it TgsAvailable() returns FALSE or if TgsNew() has yet to be called.
@@ -434,6 +493,7 @@
  * If TGS has not requested a [TGS_REBOOT_MODE_SHUTDOWN] DreamDaemon will be launched again.
  */
 /world/proc/TgsEndProcess()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /**
@@ -444,6 +504,7 @@
  * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
  */
 /world/proc/TgsTargetedChatBroadcast(datum/tgs_message_content/message, admin_only = FALSE)
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /**
@@ -454,6 +515,7 @@
  * user: The [/datum/tgs_chat_user] to PM.
  */
 /world/proc/TgsChatPrivateMessage(datum/tgs_message_content/message, datum/tgs_chat_user/user)
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /**
@@ -464,42 +526,52 @@
  * channels - Optional list of [/datum/tgs_chat_channel]s to restrict the message to.
  */
 /world/proc/TgsChatBroadcast(datum/tgs_message_content/message, list/channels = null)
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns the current [/datum/tgs_version] of TGS if it is running the server, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsVersion()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns the running engine type
 /world/proc/TgsEngine()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns the current [/datum/tgs_version] of the DMAPI being used if it was activated, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsApiVersion()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns the name of the TGS instance running the game if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsInstanceName()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Return the current [/datum/tgs_revision_information] of the running server if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsRevision()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns the current BYOND security level as a TGS_SECURITY_ define if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsSecurityLevel()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns the current BYOND visibility level as a TGS_VISIBILITY_ define if TGS is present, null otherwise. Requires TGS to be using interop API version 5 or higher otherwise the string "___unimplemented" wil be returned. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsVisibility()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns a list of active [/datum/tgs_revision_information/test_merge]s if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsTestMerges()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /// Returns a list of connected [/datum/tgs_chat_channel]s if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsChatChannelInfo()
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /**
@@ -510,6 +582,7 @@
  * wait_for_completion - If set, this function will not return until the event has run to completion.
  */
 /world/proc/TgsTriggerEvent(event_name, list/parameters, wait_for_completion = FALSE)
+	CAN_BE_REDEFINED(TRUE)
 	return
 
 /*

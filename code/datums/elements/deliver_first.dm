@@ -80,7 +80,7 @@
 	if(user)
 		target.balloon_alert(user, "access denied until delivery!")
 	if(COOLDOWN_FINISHED(src, deny_cooldown))
-		playsound(target, 'sound/machines/buzz-two.ogg', 30, TRUE)
+		playsound(target, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 		COOLDOWN_START(src, deny_cooldown, DENY_SOUND_COOLDOWN)
 	return BLOCK_OPEN
 
@@ -90,7 +90,8 @@
 	if(area_check(target))
 		//noice, delivered!
 		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		cargo_account.adjust_money(payment)
+
+		cargo_account.adjust_money(DEPARTMENTAL_ORDER_REWARD_COEFFICIENT * (log(10, payment) ** DEPARTMENTAL_ORDER_REWARD_EXPONENT))
 	remove_lock(target)
 
 ///called to remove the element in a flavorful way, either from delivery or from emagging/breaking open the crate

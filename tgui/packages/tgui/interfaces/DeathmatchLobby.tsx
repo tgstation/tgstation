@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -14,8 +11,10 @@ import {
   Stack,
   Table,
   Tooltip,
-} from '../components';
-import { ButtonCheckbox } from '../components/Button';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Player = {
@@ -223,7 +222,7 @@ function PlayerColumn(props) {
 
               <Table.Cell align="center" verticalAlign="middle">
                 {isSelf ? (
-                  <ButtonCheckbox
+                  <Button.Checkbox
                     disabled={!isSelf}
                     checked={player.ready}
                     onClick={() => act('ready')}

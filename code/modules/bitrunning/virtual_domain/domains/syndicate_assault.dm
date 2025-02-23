@@ -1,5 +1,6 @@
 /datum/lazy_template/virtual_domain/syndicate_assault
 	name = "Syndicate Assault"
+	announce_to_ghosts = TRUE
 	cost = BITRUNNER_COST_MEDIUM
 	desc = "Board the enemy ship and recover the stolen cargo."
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM

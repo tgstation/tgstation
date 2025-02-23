@@ -18,6 +18,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
+	drop_sound = 'sound/items/handling/medkit/medkit_drop.ogg'
+	pickup_sound = 'sound/items/handling/medkit/medkit_pick_up.ogg'
+	sound_vary = TRUE
 	var/empty = FALSE
 	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 	var/damagetype_healed
@@ -79,6 +82,9 @@
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.open_sound = 'sound/items/handling/medkit/medkit_open.ogg'
+	atom_storage.open_sound_vary = TRUE
+	atom_storage.rustle_sound = 'sound/items/handling/medkit/medkit_rustle.ogg'
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
@@ -102,6 +108,7 @@
 
 /obj/item/storage/medkit/emergency
 	icon_state = "medbriefcase"
+	inhand_icon_state = "medkit-emergency"
 	name = "emergency medkit"
 	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
 
@@ -121,7 +128,7 @@
 /obj/item/storage/medkit/surgery
 	name = "surgical medkit"
 	icon_state = "medkit_surgery"
-	inhand_icon_state = "medkit"
+	inhand_icon_state = "medkit-surgical"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment."
 
 /obj/item/storage/medkit/surgery/Initialize(mapload)
@@ -171,6 +178,9 @@
 	inhand_icon_state = "medkit-ointment"
 	damagetype_healed = BURN
 
+/obj/item/storage/medkit/fire/get_medbot_skin()
+	return "burn"
+
 /obj/item/storage/medkit/fire/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!"))
 	return FIRELOSS
@@ -191,6 +201,9 @@
 	icon_state = "medkit_toxin"
 	inhand_icon_state = "medkit-toxin"
 	damagetype_healed = TOX
+
+/obj/item/storage/medkit/toxin/get_medbot_skin()
+	return "tox"
 
 /obj/item/storage/medkit/toxin/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -216,6 +229,9 @@
 	inhand_icon_state = "medkit-o2"
 	damagetype_healed = OXY
 
+/obj/item/storage/medkit/o2/get_medbot_skin()
+	return "oxy"
+
 /obj/item/storage/medkit/o2/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
@@ -237,6 +253,9 @@
 	inhand_icon_state = "medkit-brute"
 	damagetype_healed = BRUTE
 
+/obj/item/storage/medkit/brute/get_medbot_skin()
+	return "brute"
+
 /obj/item/storage/medkit/brute/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
@@ -257,9 +276,12 @@
 	name = "advanced first aid kit"
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "medkit_advanced"
-	inhand_icon_state = "medkit-rad"
+	inhand_icon_state = "medkit-advanced"
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/advanced/get_medbot_skin()
+	return "adv"
 
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
@@ -273,9 +295,12 @@
 
 /obj/item/storage/medkit/tactical_lite
 	name = "combat first aid kit"
-	icon_state = "medkit_tactical"
-	inhand_icon_state = "medkit-tactical"
+	icon_state = "medkit_tactical_lite"
+	inhand_icon_state = "medkit-tactical-lite"
 	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/tactical_lite/get_medbot_skin()
+	return "bezerk"
 
 /obj/item/storage/medkit/tactical_lite/PopulateContents()
 	if(empty)
@@ -326,6 +351,8 @@
 /obj/item/storage/medkit/tactical/premium
 	name = "premium combat medical kit"
 	desc = "May or may not contain traces of lead."
+	icon_state = "medkit_tactical_premium"
+	inhand_icon_state = "medkit-tactical-premium"
 	grind_results = list(/datum/reagent/lead = 10)
 
 /obj/item/storage/medkit/tactical/premium/Initialize(mapload)
@@ -399,35 +426,27 @@
 	generate_items_inside(items_inside,src)
 
 //medibot assembly
-/obj/item/storage/medkit/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(!istype(inserted, /obj/item/bodypart/arm/left/robot) && !istype(inserted, /obj/item/bodypart/arm/right/robot))
-		return TRUE
+/obj/item/storage/medkit/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
+		return ..()
 	//Making a medibot!
 	if(contents.len >= 1)
 		balloon_alert(user, "items inside!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
-	///if you add a new one don't forget to update /datum/crafting_recipe/medbot/on_craft_completion()
-	var/obj/item/bot_assembly/medbot/medbot_assembly = new
-	if (istype(src, /obj/item/storage/medkit/fire))
-		medbot_assembly.set_skin("ointment")
-	else if (istype(src, /obj/item/storage/medkit/toxin))
-		medbot_assembly.set_skin("tox")
-	else if (istype(src, /obj/item/storage/medkit/o2))
-		medbot_assembly.set_skin("o2")
-	else if (istype(src, /obj/item/storage/medkit/brute))
-		medbot_assembly.set_skin("brute")
-	else if (istype(src, /obj/item/storage/medkit/advanced))
-		medbot_assembly.set_skin("advanced")
-	else if (istype(src, /obj/item/storage/medkit/tactical))
-		medbot_assembly.set_skin("bezerk")
+	var/obj/item/bot_assembly/medbot/medbot_assembly = new()
+	medbot_assembly.set_skin(get_medbot_skin())
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
-	medbot_assembly.robot_arm = inserted.type
+	medbot_assembly.robot_arm = tool.type
 	medbot_assembly.medkit_type = type
-	qdel(inserted)
+	qdel(tool)
 	qdel(src)
-	return FALSE
+	return ITEM_INTERACT_SUCCESS
+
+/// Gets what skin (icon_state) this medkit uses for a medbot
+/obj/item/storage/medkit/proc/get_medbot_skin()
+	return "generic"
 
 /*
  * Pill Bottles
@@ -443,6 +462,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	pickup_sound = 'sound/items/handling/pill_bottle_pickup.ogg'
+	drop_sound = 'sound/items/handling/pill_bottle_place.ogg'
 
 /obj/item/storage/pill_bottle/Initialize(mapload)
 	. = ..()
@@ -451,6 +472,8 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/food/bait/natural,
 	))
+	atom_storage.open_sound = 'sound/items/handling/pill_bottle_open.ogg'
+	atom_storage.open_sound_vary = FALSE
 
 /obj/item/storage/pill_bottle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -669,7 +692,7 @@
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
-	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
+	desc = "An advanced box with a cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
 	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "organbox"
 	base_icon_state = "organbox"
@@ -733,14 +756,7 @@
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
 
-/obj/item/storage/organbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(is_reagent_container(inserted) && inserted.is_open_container())
-		return FALSE
-	if(istype(inserted, /obj/item/plunger))
-		return FALSE
-	return TRUE
-
-/obj/item/storage/organbox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/storage/organbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_reagent_container(tool) && tool.is_open_container())
 		var/obj/item/reagent_containers/RC = tool
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
@@ -754,7 +770,7 @@
 			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
 		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
@@ -789,18 +805,14 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/test_tube_rack/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.max_slots = 8
-	atom_storage.screen_max_columns = 4
-	atom_storage.screen_max_rows = 2
-	atom_storage.set_holdable(/obj/item/reagent_containers/cup/tube)
-
-/obj/item/storage/test_tube_rack/attack_self(mob/user)
-	emptyStorage()
+	storage_type = /datum/storage/test_tube_rack
 
 /obj/item/storage/test_tube_rack/update_icon_state()
 	icon_state = "[base_icon_state][contents.len > 0 ? contents.len : null]"
 	return ..()
+
+/obj/item/storage/test_tube_rack/full/PopulateContents()
+	for(var/i in 1 to atom_storage.max_slots)
+		new /obj/item/reagent_containers/cup/tube(src)
+	update_appearance(UPDATE_ICON_STATE)
+

@@ -29,11 +29,11 @@
 // Increases perceptual color lightness.
 @function lighten($color, $percent) {
   $scaled: hsl(
-    color.hue($color),
-    color.saturation($color),
-    color.lightness($color) * (1 + num($percent))
+    color.channel($color, 'hue', $space: hsl),
+    color.channel($color, 'saturation', $space: hsl),
+    color.channel($color, 'lightness', $space: hsl) * (1 + num($percent))
   );
-  $mixed: color.mix(#ffffff, $color, 100% * num($percent));
+  $mixed: color.mix(hsl(0, 0%, 100%), $color, 100% * num($percent));
   @return color.mix($scaled, $mixed, 75%);
 }
 
@@ -41,9 +41,9 @@
 // 1 is pure white, 0 is pure black.
 @function luminance($color) {
   $colors: (
-    'red': color.red($color),
-    'green': color.green($color),
-    'blue': color.blue($color),
+    'red': color.channel($color, 'red', $space: rgb),
+    'green': color.channel($color, 'green', $space: rgb),
+    'blue': color.channel($color, 'blue', $space: rgb),
   );
 
   @each $name, $value in $colors {

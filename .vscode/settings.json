@@ -18,27 +18,7 @@
 	"git.branchProtection": ["master"],
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
-	"[javascript]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[javascriptreact]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[typescript]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[typescriptreact]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[scss]": {
+	"[javascript][typescript][typescriptreact][javascriptreact][html][scss][css][json][jsonc][markdown][yaml]": {
 		"editor.rulers": [80],
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true

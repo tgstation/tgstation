@@ -82,7 +82,7 @@
 
 /datum/experiment/ordnance/explosive/hydrogenbomb
 	name = "Hydrogen Explosives"
-	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
+	description = "Combustion of Hydrogen and its derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
 	gain = list(15,40,60)
 	target_amount = list(50,75,150)
 	experiment_proper = TRUE
@@ -144,7 +144,7 @@
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"
-	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those nay-sayers wrong."
+	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those naysayers wrong."
 	possible_material_types = list(/datum/material/meat)
 
 /datum/experiment/scanning/random/material/easy
@@ -305,7 +305,7 @@
 		/obj/machinery/chem_dispenser/drinks/beer = 1,
 		/obj/machinery/power/smes = 2
 	)
-	required_stock_part = /obj/item/stock_parts/cell/hyper
+	required_stock_part = /obj/item/stock_parts/power_store/cell/hyper
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser
 	name = "Ultra-high-power Micro-lasers Calibration"
@@ -326,8 +326,8 @@
 	name = "Exosuit Materials: Stress Failure Test"
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
+	total_requirement = 2
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 1
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
@@ -335,7 +335,22 @@
 	name = "Exosuit Materials: Load Strain Test"
 	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 2
+	total_requirement = 1
+
+/// Scan a person with any mutation
+/datum/experiment/scanning/people/mutant
+	name = "Human Field Research: Genetic Mutations"
+	description = "Our new research assistants have been drinking random chemicals for science, when one of them mastered telekinesis and another started shooting lasers from the eyes. This could be useful for our studies. Repeat the experiment by making assistants drink unstable mutagen, scan them and report the results."
+	performance_hint = "Scan a person with a random mutation."
+	required_traits_desc = "random mutation"
+
+/datum/experiment/scanning/people/mutant/is_valid_scan_target(mob/living/carbon/human/check, datum/component/experiment_handler/experiment_handler)
+	. = ..()
+	if (!.)
+		return
+	if(!check.dna.mutations.len)
+		return FALSE
+	return TRUE
 
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs
@@ -372,7 +387,7 @@
 			if (organ.type == target_species.get_mutant_organ_type_for_slot(organ.slot))
 				continue
 		else
-			if ((organ.type in target_species.mutant_organs) || (organ.type in target_species.external_organs))
+			if ((organ.type in target_species.mutant_organs))
 				continue
 		return TRUE
 	return FALSE
@@ -380,9 +395,10 @@
 /// Scan for cybernetic organs
 /datum/experiment/scanning/people/augmented_organs
 	name = "Human Field Research: Augmented Organs"
-	description = "We need to gather data on how cybernetic vital organs integrate with human biology. Conduct a scan on a human with these implants to help us understand their compatibility"
+	description = "We need to gather data on how cybernetic vital organs integrate with human biology. Conduct a scan on a human with these implants to help us understand their compatibility."
 	performance_hint = "Perform an organ manipulation surgery to replace one of the vital organs with a cybernetic variant."
 	required_traits_desc = "augmented vital organs"
+	required_count = 1
 
 /datum/experiment/scanning/people/augmented_organs/is_valid_scan_target(mob/living/carbon/human/check)
 	. = ..()
@@ -398,11 +414,8 @@
 	)
 
 	for (var/obj/item/organ/organ as anything in check.organs)
-		if (IS_ORGANIC_ORGAN(organ))
-			continue
-		if (!(organ.slot in vital_organ_slots))
-			continue
-		return TRUE
+		if ((organ.slot in vital_organ_slots) && IS_ROBOTIC_ORGAN(organ))
+			return TRUE
 	return FALSE
 
 /// Scan for skillchips
@@ -416,7 +429,7 @@
 	. = ..()
 	if (!.)
 		return
-	var/obj/item/organ/internal/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if (isnull(scanned_brain))
 		experiment_handler.announce_message("Subject is brainless!")
 		return FALSE
@@ -425,21 +438,74 @@
 		return FALSE
 	return TRUE
 
+/// Scan an android
+/datum/experiment/scanning/people/android
+	name = "Human Field Research: Full Augmentation"
+	description = "Perform a full cybernetic augmentation on a crewmate then scan them to test their newfound capabilities and new sensory and cognitive functions."
+	performance_hint = "Achieve full augmentation by performing a set of surgery operations."
+	required_traits_desc = "fully augmented android"
+	required_count = 1
+
+/datum/experiment/scanning/people/android/is_valid_scan_target(mob/living/carbon/human/check, datum/component/experiment_handler/experiment_handler)
+	. = ..()
+	if (!.)
+		return
+	if (isandroid(check))
+		return TRUE
+	if (length(check.organs) < 6 || length(check.bodyparts) < 6)
+		return FALSE
+
+	var/static/list/augmented_organ_slots = list(
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+	for (var/obj/item/organ/organ as anything in check.organs)
+		if (!(organ.slot in augmented_organ_slots))
+			continue
+		if (!IS_ROBOTIC_ORGAN(organ))
+			return FALSE
+	for (var/obj/item/bodypart/bodypart as anything in check.bodyparts)
+		if (bodypart.bodytype != BODYTYPE_ROBOTIC)
+			return FALSE
+	return TRUE
+
 /datum/experiment/scanning/reagent/cryostylane
 	name = "Pure Cryostylane Scan"
 	description = "It appears that the Cryostylane reagent can potentially halt all physiological processes in the human body. Produce Cryostylane with at least 99% purity and scan the beaker."
+	performance_hint = "Keep the temperature as high as possible during the reaction."
 	required_reagent = /datum/reagent/cryostylane
 	min_purity = 0.99
 
-/datum/experiment/scanning/bluespace_crystal
+/datum/experiment/scanning/reagent/haloperidol
+	name = "Pure Haloperidol Scan"
+	description = "We require testing related to the long-term treatment of chronic psychiatric disorders. Produce Haloperidol with at least 98% purity and scan the beaker."
+	performance_hint = "Exothermic and consumes hydrogen during reaction."
+	required_reagent = /datum/reagent/medicine/haloperidol
+	min_purity = 0.98
+
+/datum/experiment/scanning/points/bluespace_crystal
 	name = "Bluespace Crystal Sampling"
 	description = "Investigate the properties of bluespace crystals by scanning either an artificial or naturally occurring variant. This will help us deepen our understanding of bluespace phenomena."
-	required_atoms = list(/obj/item/stack/ore/bluespace_crystal = 1)
+	required_points = 1
+	required_atoms = list(
+		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/sheet/bluespace_crystal = 1
+	)
+
+/datum/experiment/scanning/points/anomalies
+	name = "Neutralized Anomaly Analysis"
+	description = "We have the power to deal with the anomalies now. Neutralize them with an anomaly neutralizer or refine the raw cores in the refinery and scan the results."
+	required_points = 4
+	required_atoms = list(/obj/item/assembly/signaler/anomaly = 1)
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier2_any
 	name = "Upgraded Stock Parts Benchmark"
 	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Upgraded Parts and report the results."
-	required_points = 8
+	required_points = 6
 	required_atoms = list(
 		/obj/machinery = 1
 	)
@@ -448,7 +514,7 @@
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_any
 	name = "Advanced Stock Parts Benchmark"
 	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Advanced Parts and report the results."
-	required_points = 8
+	required_points = 6
 	required_atoms = list(
 		/obj/machinery = 1
 	)

@@ -10,6 +10,7 @@
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
+	wound_clothing = TRUE,
 )
 	// Spread damage should always have def zone be null
 	if(spread_damage)
@@ -46,6 +47,7 @@
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
+	wound_clothing = TRUE,
 )
 
 	// Add relevant DR modifiers into blocked value to pass to parent
@@ -103,7 +105,7 @@
 		. = heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
 /mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	var/current = getBruteLoss()
 	var/diff = amount - current
@@ -120,7 +122,7 @@
 		. = heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
 /mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	var/current = getFireLoss()
 	var/diff = amount - current
@@ -150,7 +152,7 @@
 		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**
- * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
+ * If an organ exists in the slot requested, and we are capable of taking damage (we don't have TRAIT_GODMODE), call the damage proc on that organ.
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
@@ -162,14 +164,14 @@
  */
 /mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(!affected_organ || (status_flags & GODMODE))
+	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return FALSE
 	return affected_organ.apply_organ_damage(amount, maximum)
 
 /**
- * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the set damage proc on that organ, which can
+ * If an organ exists in the slot requested, and we are capable of taking damage (we don't have TRAIT_GODMODE), call the set damage proc on that organ, which can
  * set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
  *
  * Arguments:
@@ -181,7 +183,7 @@
  */
 /mob/living/carbon/setOrganLoss(slot, amount, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(!affected_organ || (status_flags & GODMODE))
+	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return FALSE
@@ -267,7 +269,7 @@
  */
 /mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
 	. = FALSE
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
 	if(!parts.len)
@@ -314,7 +316,7 @@
 
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, forced = FALSE, required_bodytype)
 	. = FALSE
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	// treat negative args as positive
 	brute = abs(brute)

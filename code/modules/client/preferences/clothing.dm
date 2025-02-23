@@ -33,6 +33,9 @@
 		DMESSENGER,
 	)
 
+/datum/preference/choiced/backpack/create_default_value()
+	return DBACKPACK
+
 /datum/preference/choiced/backpack/icon_for(value)
 	switch (value)
 		if (GBACKPACK)
@@ -66,6 +69,7 @@
 /datum/preference/choiced/jumpsuit
 	savefile_key = "jumpsuit_style"
 	savefile_identifier = PREFERENCE_CHARACTER
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	main_feature_name = "Jumpsuit"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
@@ -75,6 +79,9 @@
 		PREF_SUIT,
 		PREF_SKIRT,
 	)
+
+/datum/preference/choiced/jumpsuit/create_default_value()
+	return PREF_SUIT
 
 /datum/preference/choiced/jumpsuit/icon_for(value)
 	switch (value)
@@ -93,9 +100,13 @@
 	main_feature_name = "Socks"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	can_randomize = FALSE
 
 /datum/preference/choiced/socks/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.socks_list)
+
+/datum/preference/choiced/socks/create_default_value()
+	return /datum/sprite_accessory/socks/nude::name
 
 /datum/preference/choiced/socks/icon_for(value)
 	var/static/icon/lower_half
@@ -114,12 +125,26 @@
 /datum/preference/choiced/undershirt
 	savefile_key = "undershirt"
 	savefile_identifier = PREFERENCE_CHARACTER
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	main_feature_name = "Undershirt"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	can_randomize = FALSE
 
 /datum/preference/choiced/undershirt/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.undershirt_list)
+
+/datum/preference/choiced/undershirt/create_default_value()
+	return /datum/sprite_accessory/undershirt/nude::name
+
+/datum/preference/choiced/undershirt/create_informed_default_value(datum/preferences/preferences)
+	switch(preferences.read_preference(/datum/preference/choiced/gender))
+		if(MALE)
+			return /datum/sprite_accessory/undershirt/nude::name
+		if(FEMALE)
+			return /datum/sprite_accessory/undershirt/sports_bra::name
+
+	return ..()
 
 /datum/preference/choiced/undershirt/icon_for(value)
 	var/static/icon/body
@@ -152,9 +177,13 @@
 	main_feature_name = "Underwear"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	can_randomize = FALSE
 
 /datum/preference/choiced/underwear/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.underwear_list)
+
+/datum/preference/choiced/underwear/create_default_value()
+	return /datum/sprite_accessory/underwear/male_hearts::name
 
 /datum/preference/choiced/underwear/icon_for(value)
 	var/static/icon/lower_half

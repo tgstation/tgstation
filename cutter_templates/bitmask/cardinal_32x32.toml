@@ -10,7 +10,7 @@ smooth_diagonally = false
 x = 32
 y = 32
 
-# Output our stuff at the same level as it's input
+# Output our stuff at the same level as its input
 [output_icon_pos]
 x = 0
 y = 0

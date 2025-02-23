@@ -215,6 +215,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo, 32)
 
+/obj/structure/sign/departments/exodrone
+	name = "\improper Exodrone sign"
+	sign_change_name = "Department - Cargo: exodrone"
+	desc = "A sign labelling an area where exodrones are used."
+	icon_state = "exodrone"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone, 32)
+
 ///////SECURITY
 
 /obj/structure/sign/departments/security

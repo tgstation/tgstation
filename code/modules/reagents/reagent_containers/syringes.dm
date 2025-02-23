@@ -138,7 +138,7 @@
  */
 /obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(source_item)
-		to_chat(victim, span_boldwarning("There's a [src] in [source_item]!!"))
+		to_chat(victim, span_boldwarning("There's \a [src] in [source_item]!!"))
 	else
 		to_chat(victim, span_boldwarning("[src] injects you!"))
 
@@ -315,6 +315,10 @@
 /obj/item/reagent_containers/syringe/contraband
 	name = "unlabeled syringe"
 	desc = "A syringe containing some sort of unknown chemical cocktail."
+
+/obj/item/reagent_containers/syringe/contraband/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/reagent_containers/syringe/contraband/space_drugs
 	list_reagents = list(/datum/reagent/drug/space_drugs = 15)

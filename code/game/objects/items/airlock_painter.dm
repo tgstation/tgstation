@@ -73,7 +73,7 @@
 		return TRUE
 
 /obj/item/airlock_painter/suicide_act(mob/living/user)
-	var/obj/item/organ/internal/lungs/L = user.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/L = user.get_organ_slot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
 		user.visible_message(span_suicide("[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -160,7 +160,7 @@
 
 /obj/item/airlock_painter/decal
 	name = "decal painter"
-	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
+	desc = "An airlock painter, reprogrammed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
 	desc_controls = "Alt-Click to remove the ink cartridge."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "decal_sprayer"
@@ -229,7 +229,7 @@
  * Actually add current decal to the floor.
  *
  * Responsible for actually adding the element to the turf for maximum flexibility.area
- * Can be overriden for different decal behaviors.
+ * Can be overridden for different decal behaviors.
  * Arguments:
  * * target - The turf being painted to
 */
@@ -298,7 +298,7 @@
 	.["current_dir"] = stored_dir
 	.["current_custom_color"] = stored_custom_color
 
-/obj/item/airlock_painter/decal/ui_act(action, list/params)
+/obj/item/airlock_painter/decal/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -306,16 +306,24 @@
 	switch(action)
 		//Lists of decals and designs
 		if("select decal")
-			var/selected_decal = params["decal"]
-			var/selected_dir = text2num(params["dir"])
-			stored_decal = selected_decal
-			stored_dir = selected_dir
+			. = TRUE
+			for(var/decal_set in decal_list)
+				if(decal_set[2] == params["decal"])
+					stored_decal = params["decal"]
+					break
+			for(var/dir_set in dir_list)
+				if(dir_set[2] == text2num(params["dir"]))
+					stored_dir = text2num(params["dir"])
+					break
+
 		if("select color")
-			var/selected_color = params["color"]
-			stored_color = selected_color
+			. = TRUE
+			stored_color = params["color"]
+
 		if("pick custom color")
 			if(supports_custom_color)
 				pick_painting_tool_color(usr, stored_custom_color)
+
 	update_decal_path()
 	. = TRUE
 
@@ -380,7 +388,7 @@
 
 /obj/item/airlock_painter/decal/tile
 	name = "tile sprayer"
-	desc = "An airlock painter, reprogramed to use a different style of paint in order to spray colors on floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
+	desc = "An airlock painter, reprogrammed to use a different style of paint in order to spray colors on floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
 	desc_controls = "Alt-Click to remove the ink cartridge."
 	icon_state = "tile_sprayer"
 	stored_dir = 2

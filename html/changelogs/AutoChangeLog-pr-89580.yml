@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed lobstrosities being able to fish other lobstrosities (and chests) yet again."

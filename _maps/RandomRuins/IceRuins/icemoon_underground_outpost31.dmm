@@ -1,0 +1,4310 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/table,
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"ai" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"an" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/fleshblob,
+/turf/open/floor/iron/white,
+/area/ruin/outpost31/medical)
+"aq" = (
+/turf/closed/wall,
+/area/ruin/outpost31/recroom)
+"au" = (
+/obj/machinery/light/small/dim/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+"aM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"aP" = (
+/obj/machinery/vending/boozeomat{
+	onstation = 0
+	},
+/obj/effect/mapping_helpers/broken_machine,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/recroom)
+"aV" = (
+/turf/closed/wall,
+/area/ruin/outpost31/kitchendiningroom)
+"bb" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"bg" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/drinkingglasses,
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/recroom)
+"bp" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"by" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/barricade/wooden/crude/snow{
+	opacity = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/outpost31/commander_room)
+"bE" = (
+/obj/structure/cable,
+/obj/effect/mob_spawn/corpse/human/damaged{
+	husk = 1;
+	burn_damage = 1000;
+	brute_damage = 0
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/light_switch/directional/south,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"bW" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/status_display{
+	pixel_x = 32;
+	current_mode = 3;
+	current_picture = "biohazard"
+	},
+/turf/open/floor/iron/white{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"bX" = (
+/obj/structure/sink/kitchen/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"cd" = (
+/obj/item/reagent_containers/blood{
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"ce" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"cf" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/frame/machine/secured,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"ch" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/blood,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/smooth_corner,
+/area/ruin/outpost31/medical)
+"ck" = (
+/obj/structure/closet,
+/obj/item/tank/internals/plasma/full,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"cm" = (
+/obj/machinery/power/rtg/advanced{
+	power_gen = 25000
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"cp" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"cu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"cw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"cy" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/outpost31/medical)
+"cz" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance/no_decals,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"db" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"dm" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/status_display{
+	pixel_x = -32;
+	current_mode = 3;
+	current_picture = "biohazard"
+	},
+/turf/open/floor/iron/white{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"dt" = (
+/obj/effect/puzzle_poddoor_open{
+	id = "thingbosslootroom";
+	queue_id = "thingbosslootroom"
+	},
+/turf/closed/indestructible/reinforced,
+/area/ruin/outpost31/lootroom)
+"dH" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"dK" = (
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/obj/machinery/duct,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"dP" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/textured_half,
+/area/ruin/outpost31)
+"dV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/rglass/fifty,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"dW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"dZ" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/end{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+"eb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"eg" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full{
+	pixel_x = -3;
+	pixel_y = 16
+	},
+/obj/item/cigarette/cigar/premium,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/recroom)
+"ep" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"eu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"eI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"eL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/recroom)
+"eS" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"eT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/white{
+	dir = 9
+	},
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"fb" = (
+/obj/machinery/shower/directional/west,
+/obj/structure/curtain,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"fC" = (
+/obj/structure/chair/stool/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"fH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/recroom)
+"fI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"fL" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"fM" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"fW" = (
+/obj/structure/chair,
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
+/area/ruin/outpost31)
+"ge" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"gi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white,
+/area/ruin/outpost31/medical)
+"gu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"gC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/item/organ/brain/cybernetic/ai,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"gM" = (
+/turf/open/floor/iron/white,
+/area/ruin/outpost31/medical)
+"gO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"gZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"he" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31/medical)
+"hi" = (
+/obj/item/ammo_casing/spent,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/underground/explored)
+"ho" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/flamethrower,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"hs" = (
+/obj/structure/table,
+/obj/machinery/processor,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"ht" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"hD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"hN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"hT" = (
+/obj/machinery/light/warm/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"ih" = (
+/obj/structure/closet{
+	name = "winter gear closet"
+	},
+/obj/item/clothing/suit/hooded/wintercoat/eva,
+/obj/item/clothing/shoes/winterboots/ice_boots/eva,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"in" = (
+/mob/living/basic/boss/thing{
+	dir = 1
+	},
+/turf/open/indestructible/vault{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"iA" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"iH" = (
+/obj/structure/window/spawner/directional/west,
+/obj/machinery/shower/directional/north,
+/obj/structure/curtain,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"jl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/item/paper,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"jv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"jL" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"jM" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
+/area/ruin/outpost31)
+"jN" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"jP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"kh" = (
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"ko" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"ks" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"kA" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/recroom)
+"kF" = (
+/obj/effect/mob_spawn/corpse{
+	mob_type = /mob/living/basic/mining/wolf
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"kP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"kX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/mob/living/basic/fleshblob,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"lr" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/paperwork{
+	desc = "Whatever nerd stuff they did down here.";
+	name = "map scraps";
+	pixel_x = -5;
+	pixel_y = 15
+	},
+/obj/item/pen/fountain{
+	pixel_x = -5;
+	pixel_y = -8
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 9;
+	pixel_y = 0
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"lz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"lF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"lM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"lO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"lR" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"lT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/barricade/wooden/crude/snow{
+	opacity = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/outpost31/kitchendiningroom)
+"lU" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"lW" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/underground/explored)
+"me" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/vending/snack,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"mq" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"mO" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"mU" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron/dark,
+/area/ruin/outpost31)
+"mV" = (
+/obj/machinery/light/warm/directional/north,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"mW" = (
+/turf/open/floor/circuit/red/off{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"ne" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31/commander_room)
+"nj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/puzzle/keycardpad/directional/north{
+	late_initialize_pop = 1;
+	id = "thingbossentry"
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"no" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/crewquarters)
+"nr" = (
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"nH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"nJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"nP" = (
+/obj/structure/cable,
+/turf/closed/indestructible/reinforced,
+/area/ruin/outpost31/lab)
+"nT" = (
+/obj/structure/fence/cut,
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"nV" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"oa" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31/recroom)
+"ob" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"og" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/maintenance/no_decals,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"oj" = (
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"op" = (
+/obj/machinery/shower/directional/north,
+/obj/structure/curtain,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"ov" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/barricade/wooden/crude/snow{
+	opacity = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"oz" = (
+/obj/machinery/door/airlock,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/wood,
+/area/ruin/outpost31/crewquarters)
+"oF" = (
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"oJ" = (
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"oN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"oV" = (
+/obj/structure/table/wood,
+/obj/item/storage/cans/sixbeer,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"pa" = (
+/obj/item/keycard{
+	puzzle_id = "thingbossentry";
+	name = "lab keycard";
+	color = "blue"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"pd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/machinery/coffeemaker,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"pe" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"pj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/structure/table,
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"pw" = (
+/obj/structure/closet/cabinet,
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/wood,
+/area/ruin/outpost31/crewquarters)
+"py" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"pQ" = (
+/obj/item/knife,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"qa" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"qt" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31a"
+	},
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"qz" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31/kennel)
+"qH" = (
+/obj/structure/closet/preopen{
+	name = "winter gear closet"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"qI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/item/flashlight/lantern,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"qK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"rb" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/outpost31)
+"rf" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"rk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"rm" = (
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"ru" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"rx" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"rB" = (
+/obj/machinery/door/airlock/grunge,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+"rO" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"sd" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_machine,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/recroom)
+"sg" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"si" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/east,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"sk" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"sm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/textured_half,
+/area/ruin/outpost31)
+"sB" = (
+/obj/structure/window/spawner/directional/west,
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"sF" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"sK" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"sL" = (
+/obj/structure/window/spawner/directional/east,
+/obj/machinery/shower/directional/north,
+/obj/structure/curtain,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"sP" = (
+/turf/closed/wall,
+/area/ruin/outpost31/kennel)
+"sQ" = (
+/obj/machinery/door/airlock,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/wood,
+/area/ruin/outpost31/crewquarters)
+"tj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"to" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"tx" = (
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/broken/directional/west,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"tC" = (
+/obj/structure/closet/secure_closet/freezer/fridge/preopen,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"tG" = (
+/turf/open/floor/iron/textured_half,
+/area/ruin/outpost31)
+"tJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"tS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/ammo_casing/spent,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"tV" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron/dark,
+/area/ruin/outpost31)
+"tX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"tZ" = (
+/obj/structure/table,
+/obj/item/storage/medkit,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/ruin/outpost31/medical)
+"ub" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"uj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"uA" = (
+/obj/structure/cable,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"uB" = (
+/turf/closed/mineral/random/snow/underground,
+/area/template_noop)
+"uI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"uN" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31a"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"uR" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"vn" = (
+/obj/structure/closet/preopen{
+	name = "winter gear closet"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"vU" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+"vX" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"wb" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"wc" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"wp" = (
+/obj/structure/fence/door/opened{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"wq" = (
+/obj/structure/cable,
+/obj/machinery/light/small/broken/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+"wr" = (
+/obj/machinery/smartfridge/petri/preloaded,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/ruin/outpost31/medical)
+"wt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"wu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/girder,
+/obj/structure/barricade/wooden,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"wx" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/iron/textured_half,
+/area/ruin/outpost31)
+"wE" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/pen,
+/obj/item/pen/blue{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/pen/red{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/pen/fourcolor{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"wO" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"wP" = (
+/obj/structure/fence/cut/large,
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"xc" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31/radiomap)
+"xk" = (
+/turf/closed/wall,
+/area/ruin/outpost31/medical)
+"xo" = (
+/obj/effect/gibspawner/generic/animal{
+	virusProb = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"xP" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31B"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"yo" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/outpost31/lootroom)
+"yp" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"yx" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"yO" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"yQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"yW" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/indestructible/reinforced,
+/area/ruin/outpost31/lab)
+"za" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"zd" = (
+/obj/machinery/door/airlock/grunge,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"ze" = (
+/obj/structure/table/optable,
+/obj/machinery/light/broken/directional/south,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/bodypart/arm/left{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/bodypart/arm/right{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"zu" = (
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 10
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"zv" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31/crewquarters)
+"zw" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/ruin/outpost31/crewquarters)
+"zy" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"zz" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"zF" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"zN" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"zO" = (
+/obj/effect/turf_decal/siding/white,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"zY" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/welded,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31d"
+	},
+/obj/structure/barricade/wooden/crude/snow{
+	opacity = 1
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"Ae" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/vending/cigarette{
+	onstation = 0
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"Ai" = (
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 1
+	},
+/area/ruin/outpost31/medical)
+"Al" = (
+/obj/machinery/light/broken/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Au" = (
+/obj/machinery/iv_drip,
+/obj/structure/bed/medical/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"Aw" = (
+/obj/structure/closet/secure_closet{
+	req_access = list("noopen")
+	},
+/obj/item/ammo_box/c9mm,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"AE" = (
+/obj/machinery/door/airlock/grunge,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"AG" = (
+/obj/machinery/door/airlock/grunge,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"AR" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/paper_bin,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"Bb" = (
+/obj/machinery/light/warm/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Bc" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_white{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"Bg" = (
+/obj/machinery/light/broken/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"Bj" = (
+/obj/structure/cable,
+/obj/structure/grille/broken,
+/obj/item/shard/plastitanium,
+/obj/item/shard/plastitanium,
+/turf/open/indestructible/plating{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"Bu" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Bz" = (
+/obj/structure/tank_dispenser/oxygen{
+	oxygentanks = 5
+	},
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"BI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/recroom)
+"BM" = (
+/obj/structure/table,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/ruin/outpost31/medical)
+"BP" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"BQ" = (
+/obj/structure/flora/rock/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/underground/explored)
+"BU" = (
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"BZ" = (
+/obj/structure/closet/preopen{
+	name = "winter gear closet"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"Ca" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"Cb" = (
+/obj/machinery/light/warm/directional/south,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"Cc" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/crowbar,
+/turf/open/floor/pod,
+/area/ruin/outpost31)
+"Ce" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"CA" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/table,
+/obj/item/broken_bottle,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"CC" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"CM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"CS" = (
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/recroom)
+"Db" = (
+/obj/machinery/door/airlock/grunge,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"Dg" = (
+/obj/structure/cable,
+/obj/structure/grille/broken,
+/obj/item/shard/plastitanium,
+/obj/item/shard/plastitanium,
+/obj/effect/mob_spawn/corpse/human/damaged{
+	husk = 1
+	},
+/turf/open/indestructible/plating{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"Dz" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/climbing_hook,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"DF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/warm/directional/west,
+/obj/structure/table,
+/obj/item/mod/module/flamethrower,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"DM" = (
+/obj/structure/table/wood,
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"DU" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/turf_decal/siding/blue/end{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron/white/textured_large,
+/area/ruin/outpost31/crewquarters)
+"DW" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"Ea" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/paperwork{
+	desc = "Whatever nerd stuff they did down here.";
+	name = "map scraps"
+	},
+/obj/item/paperwork{
+	desc = "Whatever nerd stuff they did down here.";
+	name = "map scraps";
+	pixel_x = 17;
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"Ei" = (
+/obj/structure/bed/pod,
+/turf/open/floor/wood,
+/area/ruin/outpost31/crewquarters)
+"EH" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"EL" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"ES" = (
+/obj/item/kirbyplants/random/dead,
+/obj/effect/turf_decal/siding/white{
+	dir = 10
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"EY" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Fb" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron/white,
+/area/ruin/outpost31/medical)
+"Fo" = (
+/obj/structure/closet/preopen{
+	name = "winter gear closet"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Fu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/structure/table,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"FH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"FK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"FP" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"FQ" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/turf_decal/siding/blue/end,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/welded,
+/turf/open/floor/iron/white/textured_large,
+/area/ruin/outpost31/crewquarters)
+"FW" = (
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"FY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Gg" = (
+/turf/closed/wall,
+/area/ruin/outpost31)
+"Gh" = (
+/turf/open/floor/wood,
+/area/ruin/outpost31/crewquarters)
+"Gz" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31/kitchendiningroom)
+"GR" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/textured_half,
+/area/ruin/outpost31)
+"GW" = (
+/obj/machinery/puzzle/keycardpad/directional/west{
+	id = "thingbosslootroom";
+	late_initialize_pop = 1
+	},
+/obj/item/paper{
+	can_become_message_in_bottle = 0;
+	default_raw_text = "Research was promising. We managed to stream an artificial intelligence into an organic host via this brain. Too bad it needs all robotic organs because apparently the human biology hates not having a properly functional nervous system."
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"Hk" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"Hm" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/structure/aggro_gate,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"Hq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"Ht" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"HC" = (
+/obj/machinery/atmospherics/components/unary/airlock_pump{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"HF" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"HL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"HP" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_machine,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"HW" = (
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Id" = (
+/obj/structure/table,
+/obj/item/food/icecreamsandwich,
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"Ie" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31d"
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Ij" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/item/food/waffles,
+/obj/machinery/microwave,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"Il" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/plate/large,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"Io" = (
+/obj/structure/chair/stool/bar/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"ID" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/paperwork{
+	desc = "A map of the outpost.";
+	name = "outpost map"
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"IG" = (
+/turf/open/floor/catwalk_floor/iron_white{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"IL" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"IT" = (
+/obj/structure/sign/poster/random/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"Jd" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/outpost31/lab)
+"Jl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"Jq" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/turf_decal/siding/white{
+	dir = 9
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"JG" = (
+/obj/machinery/door/poddoor/preopen,
+/obj/machinery/door/airlock/vault,
+/obj/structure/fans/tiny/invisible,
+/obj/structure/puzzle_blockade{
+	id = "thingbossentry"
+	},
+/turf/open/floor/iron/white{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"JP" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 4
+	},
+/area/ruin/outpost31/medical)
+"Kh" = (
+/obj/structure/thing_boss_phase_depleter,
+/turf/open/floor/circuit/red/off{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"KU" = (
+/obj/effect/spawner/random/decoration/glowstick/on,
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"KW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"Lf" = (
+/obj/structure/closet/preopen{
+	name = "winter gear closet"
+	},
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"Lk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"Lx" = (
+/turf/closed/wall,
+/area/ruin/outpost31/commander_room)
+"Ly" = (
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"Lz" = (
+/obj/structure/closet/preopen{
+	name = "winter gear closet"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/broken/directional/south,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"LA" = (
+/turf/closed/wall,
+/area/ruin/outpost31/crewquarters)
+"LQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"LW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Ma" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/spacecash/c500,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Mf" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Ml" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"Mn" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"Ms" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Mw" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"ME" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"MK" = (
+/obj/structure/tank_dispenser/oxygen{
+	oxygentanks = 5
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"MO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"MQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"MT" = (
+/obj/structure/tank_dispenser/oxygen{
+	oxygentanks = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"MW" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/storage/card_binder,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Nc" = (
+/obj/structure/sink/directional/south,
+/obj/structure/mirror/directional/north{
+	pixel_y = 33
+	},
+/mob/living/basic/fleshblob,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"Nk" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/welded,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31c"
+	},
+/obj/structure/barricade/wooden/crude/snow{
+	opacity = 1
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"Nl" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"Nw" = (
+/obj/structure/reagent_dispensers/plumbed,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"NP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Ob" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"Oe" = (
+/obj/structure/sink/kitchen/directional/west,
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/recroom)
+"Ol" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Oo" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"Or" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/recroom)
+"Ov" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"Oz" = (
+/obj/item/reagent_containers/blood{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white,
+/area/ruin/outpost31/medical)
+"OW" = (
+/obj/machinery/griddle,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"Pb" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"Pd" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron/dark,
+/area/ruin/outpost31)
+"Pw" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"PG" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"PR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"PS" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/table,
+/obj/item/storage/fancy/egg_box,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"PT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"PW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/girder,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Qj" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/maintenance/no_decals,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"Qy" = (
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"QA" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/chair/office,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"QU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Rc" = (
+/turf/closed/wall,
+/area/ruin/outpost31/radiomap)
+"Rf" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"Rm" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"RD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"RK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/crowbar,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"RL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"RO" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"RQ" = (
+/obj/machinery/door/poddoor{
+	id = "thingbosslootroom";
+	name = "Storage Room 2"
+	},
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"RR" = (
+/obj/structure/closet/cabinet,
+/obj/machinery/light/small/broken/directional/west,
+/turf/open/floor/wood,
+/area/ruin/outpost31/crewquarters)
+"Sa" = (
+/obj/machinery/atmospherics/components/tank/air/layer2,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"Sg" = (
+/turf/closed/wall/r_wall,
+/area/ruin/outpost31)
+"Sm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Sq" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Sy" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"SB" = (
+/obj/item/surgery_tray/deployed,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/white/smooth_half,
+/area/ruin/outpost31/medical)
+"SJ" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31c"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"SN" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"SW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"Td" = (
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
+"Tm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Tq" = (
+/obj/machinery/power/rtg/advanced{
+	power_gen = 25000
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"Tr" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/structure/table,
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/item/trash/chips{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
+/area/ruin/outpost31)
+"Tv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"Tx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/girder,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"TP" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/underground/explored)
+"TX" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/food/waffles,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"Ui" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/gibspawner/generic/animal{
+	virusProb = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"Uv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"Uy" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"UA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/outpost31/medical)
+"UH" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"UI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"Vc" = (
+/obj/machinery/light/broken/directional/north,
+/obj/item/storage/cans,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Vd" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/outpost31)
+"Vg" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/recroom)
+"Vm" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"Vx" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Vz" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/south,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"VA" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"VG" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"VK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate,
+/obj/item/vending_refill/cola,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/boozeomat,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
+"VM" = (
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/closet{
+	name = "winter gear closet"
+	},
+/obj/item/clothing/shoes/winterboots/ice_boots/eva,
+/obj/item/clothing/suit/hooded/wintercoat/eva,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"VR" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron/textured_half,
+/area/ruin/outpost31)
+"VU" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white/herringbone{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"VV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/outpost31/kennel)
+"Wc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"Wd" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31B"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"Wu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/kitchendiningroom)
+"Wy" = (
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"WD" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "o31c"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"WQ" = (
+/turf/template_noop,
+/area/template_noop)
+"Xa" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"Xf" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/oven/range,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/outpost31/kitchendiningroom)
+"Xk" = (
+/obj/machinery/light_switch/directional/north,
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 8
+	},
+/area/ruin/outpost31/medical)
+"XD" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/floor/iron/white{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/ruin/outpost31/lab)
+"XI" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
+"XJ" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"XN" = (
+/turf/open/floor/wood,
+/area/ruin/outpost31/kennel)
+"XQ" = (
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/fluff/shower_drain,
+/obj/item/food/candy_trash{
+	desc = "Tooth fillings.";
+	name = "tooth fillings"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"Yh" = (
+/obj/structure/chair/stool/bar/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/outpost31/recroom)
+"Yk" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/white/textured_large,
+/area/ruin/outpost31/crewquarters)
+"Yo" = (
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/underground/explored)
+"YG" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+"YK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
+"YT" = (
+/obj/structure/closet/preopen{
+	name = "winter gear closet"
+	},
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"Zq" = (
+/obj/structure/window/spawner/directional/east,
+/obj/structure/table,
+/obj/item/soap/homemade,
+/turf/open/floor/iron/freezer,
+/area/ruin/outpost31/crewquarters)
+"ZA" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+"ZB" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"ZL" = (
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/structure/curtain,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"ZM" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/grenade/iedcasing/spawned,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"ZT" = (
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
+"ZX" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron,
+/area/ruin/outpost31/radiomap)
+"ZY" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron,
+/area/ruin/outpost31/crewquarters)
+
+(1,1,1) = {"
+WQ
+WQ
+WQ
+WQ
+WQ
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+lW
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+WQ
+WQ
+"}
+(2,1,1) = {"
+WQ
+WQ
+WQ
+WQ
+WQ
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+BQ
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+WQ
+"}
+(3,1,1) = {"
+WQ
+WQ
+WQ
+WQ
+WQ
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+BQ
+Yo
+Yo
+Yo
+Yo
+BQ
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+TP
+IL
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uB
+"}
+(4,1,1) = {"
+WQ
+WQ
+WQ
+WQ
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+Yo
+hi
+lW
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+TP
+IL
+yo
+ce
+dV
+aM
+DF
+gC
+jl
+nH
+yo
+uB
+"}
+(5,1,1) = {"
+WQ
+WQ
+WQ
+WQ
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+IL
+yo
+SW
+SW
+SW
+SW
+SW
+SW
+ht
+yo
+uB
+"}
+(6,1,1) = {"
+WQ
+WQ
+WQ
+WQ
+uB
+uB
+uB
+uB
+Sg
+Sg
+Sg
+Sg
+Sg
+sK
+Yo
+BQ
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+BQ
+Yo
+Yo
+Yo
+Yo
+Yo
+sK
+yo
+ME
+aM
+aM
+SW
+SW
+SW
+VK
+yo
+uB
+"}
+(7,1,1) = {"
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Sg
+Lf
+oF
+Lf
+Sg
+Wy
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+sK
+yo
+yo
+yo
+yo
+dt
+RQ
+RQ
+yo
+yo
+Vd
+"}
+(8,1,1) = {"
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Sg
+YT
+Jl
+lM
+uN
+RL
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+rm
+Vd
+VM
+Bz
+Sg
+GW
+Ov
+rx
+Ov
+CM
+Vd
+"}
+(9,1,1) = {"
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Sg
+Lf
+yQ
+qI
+Sg
+SN
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+sK
+Nk
+oF
+HC
+SJ
+Ov
+Ov
+Ov
+jv
+CM
+ov
+"}
+(10,1,1) = {"
+uB
+uB
+oa
+oa
+oa
+oa
+oa
+oa
+oa
+Sg
+qt
+Sg
+Gz
+Gz
+lT
+lT
+Gz
+Jd
+Jd
+Jd
+Jd
+nP
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
+Vd
+Sg
+WD
+Sg
+Gg
+mq
+si
+CM
+CM
+Vd
+"}
+(11,1,1) = {"
+uB
+oa
+oa
+eT
+IT
+py
+yp
+ES
+aq
+Ht
+QU
+lO
+aV
+Wu
+gu
+Tv
+Tv
+Jd
+XD
+dm
+EH
+Bc
+mW
+mW
+mW
+MO
+ob
+dm
+XD
+Jd
+sm
+Ht
+QU
+lO
+xk
+xk
+xk
+xk
+xk
+cy
+"}
+(12,1,1) = {"
+uB
+oa
+Jq
+CC
+oJ
+oJ
+kh
+UH
+Ml
+vX
+ge
+oN
+rO
+gu
+gu
+Rf
+Fu
+Jd
+XD
+wt
+Hk
+Bc
+mW
+Kh
+mW
+MO
+VU
+dW
+XD
+Jd
+tG
+Ht
+lF
+oN
+xk
+ch
+wr
+tZ
+JP
+cy
+"}
+(13,1,1) = {"
+uB
+oa
+uR
+Oo
+oV
+og
+FP
+bE
+aq
+MQ
+ge
+FY
+aV
+nJ
+gu
+Rf
+pj
+Jd
+XD
+MO
+ob
+Bc
+mW
+mW
+mW
+MO
+IG
+ob
+XD
+Jd
+wx
+Ht
+ub
+oN
+xk
+cd
+Oz
+gM
+Id
+cy
+"}
+(14,1,1) = {"
+uB
+oa
+cu
+Oo
+DM
+qa
+Mn
+Nl
+aq
+Ht
+ge
+oN
+aV
+Ij
+gu
+tj
+tj
+Jd
+XD
+zy
+eu
+Bc
+nV
+hD
+uI
+dH
+ai
+ob
+XD
+Jd
+Jd
+cp
+qK
+Uy
+xk
+Au
+UA
+gM
+SB
+cy
+"}
+(15,1,1) = {"
+uB
+oa
+mV
+Oo
+lR
+lR
+Mn
+Cb
+aq
+cp
+LQ
+oN
+aV
+pd
+gu
+gu
+fI
+Jd
+eb
+PT
+Bj
+Bj
+Bj
+MO
+ai
+FW
+FW
+ob
+XD
+Hm
+Jd
+nj
+ub
+oN
+xk
+Au
+gM
+an
+ze
+cy
+"}
+(16,1,1) = {"
+uB
+oa
+uR
+fC
+og
+qa
+Mn
+zO
+aq
+cp
+YK
+Ms
+aV
+Ae
+gu
+gu
+me
+nP
+Bc
+Bc
+Dg
+in
+Bj
+zu
+IG
+IG
+IG
+ob
+XD
+Hm
+JG
+cp
+qK
+Bb
+xk
+lU
+gi
+gM
+HP
+cy
+"}
+(17,1,1) = {"
+uB
+oa
+uR
+kh
+sg
+sg
+kh
+Qy
+aq
+FH
+YK
+Uy
+aV
+aV
+TX
+Il
+aV
+Jd
+jP
+Uv
+Bj
+Bj
+Bj
+MO
+FW
+FW
+FW
+za
+XD
+Hm
+yW
+cp
+YK
+Vx
+Fb
+Lk
+gM
+gM
+eS
+cy
+"}
+(18,1,1) = {"
+uB
+oa
+Yh
+Io
+Rm
+Rm
+Rm
+XJ
+aq
+cp
+YK
+oN
+aV
+OW
+HL
+jL
+tC
+Jd
+XD
+zN
+dW
+Bc
+nV
+Hq
+eI
+mO
+FW
+ob
+XD
+Jd
+Jd
+cp
+YK
+Uy
+xk
+Xk
+BM
+BM
+Ai
+cy
+"}
+(19,1,1) = {"
+uB
+oa
+Or
+eg
+eL
+aq
+aq
+aq
+aq
+cp
+YK
+Uy
+aV
+Xf
+jL
+pQ
+PS
+Jd
+XD
+rk
+ob
+Bc
+mW
+mW
+mW
+MO
+IG
+ob
+XD
+Jd
+dP
+Ht
+YK
+Uy
+xk
+xk
+xk
+xk
+xk
+he
+"}
+(20,1,1) = {"
+uB
+oa
+BI
+BI
+BI
+aq
+fH
+CS
+Vg
+Ht
+YK
+BP
+RO
+Xa
+yx
+jL
+Vz
+Jd
+XD
+gO
+yO
+Bc
+mW
+Kh
+mW
+MO
+ru
+RD
+XD
+Jd
+GR
+cp
+KW
+oN
+Rc
+Ea
+lr
+wE
+AR
+xc
+"}
+(21,1,1) = {"
+uB
+oa
+sd
+bg
+aP
+aq
+kA
+Oe
+aq
+cp
+YK
+Uy
+aV
+hs
+PG
+bX
+Ob
+Jd
+XD
+bW
+EH
+Bc
+mW
+mW
+mW
+MO
+ob
+bW
+XD
+Jd
+VR
+Ht
+YK
+Uy
+Rc
+ID
+Pw
+QA
+ho
+xc
+"}
+(22,1,1) = {"
+qz
+oa
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+cp
+YK
+oN
+aV
+aV
+aV
+aV
+aV
+Jd
+Jd
+Jd
+Jd
+nP
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
+Sg
+cp
+YK
+Uy
+Rc
+ZX
+Pw
+Pw
+ks
+xc
+"}
+(23,1,1) = {"
+qz
+Sa
+cw
+gZ
+cm
+sP
+Ht
+cp
+Ht
+cp
+YK
+FK
+cp
+VG
+cp
+cp
+Ht
+Pd
+tX
+cp
+cp
+vX
+pe
+cp
+Ht
+Ht
+Tx
+cp
+Ht
+cp
+Sy
+cp
+YK
+Uy
+fL
+bb
+Pw
+Pw
+CA
+xc
+"}
+(24,1,1) = {"
+qz
+to
+ko
+VV
+lz
+AG
+LW
+YK
+YK
+YK
+YK
+YK
+YK
+ge
+YK
+YK
+YK
+tV
+YK
+YK
+YK
+YK
+ge
+YK
+YK
+YK
+wu
+YK
+YK
+ge
+YK
+YK
+YK
+XI
+Db
+bb
+Pw
+QA
+Dz
+xc
+"}
+(25,1,1) = {"
+qz
+Mw
+Pb
+tJ
+Tq
+sP
+PR
+wc
+Bu
+wO
+hT
+Tm
+Uy
+Uy
+Uy
+Uy
+Uy
+mU
+oN
+Al
+bp
+Uy
+wO
+EL
+RK
+db
+PW
+Uy
+oN
+Uy
+Uy
+HW
+YK
+Uy
+Rc
+Pw
+Pw
+ah
+cz
+xc
+"}
+(26,1,1) = {"
+qz
+sk
+Mw
+tS
+sP
+sP
+zd
+Gg
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+LA
+fW
+Tr
+jM
+Lx
+Lx
+Lx
+iA
+Lx
+Lx
+cp
+YK
+oN
+Rc
+Qj
+DW
+wb
+ZM
+xc
+"}
+(27,1,1) = {"
+qz
+wP
+wp
+nT
+sP
+qH
+kP
+Lz
+LA
+RR
+no
+LA
+RR
+no
+LA
+RR
+no
+LA
+Nw
+dK
+rf
+LA
+LA
+LA
+Lx
+Lx
+ck
+tx
+Ly
+nr
+Lx
+Ht
+LQ
+Uy
+Rc
+cf
+VA
+VA
+cf
+xc
+"}
+(28,1,1) = {"
+qz
+UI
+UI
+xo
+sP
+vn
+uj
+vn
+LA
+Gh
+Gh
+LA
+Gh
+Gh
+LA
+Gh
+Gh
+LA
+Nc
+zF
+oj
+zF
+op
+LA
+Ca
+Ly
+Ly
+Ly
+Ly
+Td
+Lx
+Ol
+YK
+Wc
+Rc
+cf
+cf
+cf
+cf
+xc
+"}
+(29,1,1) = {"
+qz
+xo
+KU
+xo
+sP
+vn
+uj
+BZ
+LA
+sQ
+LA
+LA
+sQ
+LA
+LA
+sQ
+LA
+LA
+Zq
+Ce
+oj
+Ce
+sL
+LA
+Aw
+Ly
+Ly
+Ly
+Ly
+uA
+AE
+vX
+YK
+Uy
+xc
+xc
+xc
+xc
+xc
+xc
+"}
+(30,1,1) = {"
+qz
+xo
+xo
+Ui
+sP
+qH
+kP
+Cc
+rB
+dZ
+ZY
+wq
+vU
+YG
+au
+ZA
+ZA
+DU
+zw
+Yk
+zw
+Yk
+zw
+FQ
+Ly
+Ly
+fM
+Ly
+Ly
+uA
+iA
+Ht
+qK
+Uy
+xc
+uB
+uB
+uB
+uB
+uB
+"}
+(31,1,1) = {"
+qz
+kF
+xo
+XN
+qz
+Sg
+xP
+Sg
+zv
+oz
+LA
+LA
+oz
+LA
+LA
+oz
+LA
+LA
+sB
+zF
+HF
+zF
+iH
+LA
+Sm
+ep
+ZB
+Ma
+kX
+MW
+Lx
+Fo
+NP
+ih
+xc
+uB
+uB
+uB
+uB
+uB
+"}
+(32,1,1) = {"
+qz
+qz
+qz
+qz
+qz
+MT
+jN
+hN
+zv
+Gh
+Gh
+LA
+Gh
+Gh
+LA
+Gh
+Gh
+LA
+BU
+Ce
+zF
+zF
+op
+LA
+Vc
+ZT
+Sq
+Mf
+ZT
+Vm
+ne
+Sg
+Ie
+Sg
+xc
+uB
+uB
+uB
+uB
+uB
+"}
+(33,1,1) = {"
+uB
+uB
+uB
+uB
+Sg
+Sg
+Wd
+Sg
+zv
+pw
+Ei
+LA
+pw
+Ei
+LA
+pw
+Ei
+LA
+XQ
+fb
+Bg
+fb
+op
+LA
+ZL
+ZT
+pa
+EY
+ZT
+sF
+ne
+MK
+zz
+oF
+xc
+uB
+uB
+uB
+uB
+uB
+"}
+(34,1,1) = {"
+WQ
+uB
+uB
+uB
+Sg
+rb
+sK
+rb
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+zv
+by
+by
+by
+ne
+ne
+ne
+ne
+Sg
+zY
+Sg
+xc
+uB
+uB
+uB
+uB
+uB
+"}
+(35,1,1) = {"
+WQ
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+sK
+sK
+sK
+uB
+uB
+uB
+sK
+rb
+sK
+rb
+sK
+uB
+uB
+uB
+uB
+uB
+"}
+(36,1,1) = {"
+WQ
+WQ
+uB
+BQ
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+uB
+uB
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+WQ
+"}
+(37,1,1) = {"
+WQ
+WQ
+uB
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+BQ
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+WQ
+"}
+(38,1,1) = {"
+WQ
+WQ
+WQ
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+WQ
+"}
+(39,1,1) = {"
+WQ
+WQ
+WQ
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+BQ
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+WQ
+"}
+(40,1,1) = {"
+WQ
+WQ
+WQ
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+uB
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+Yo
+uB
+uB
+uB
+WQ
+WQ
+"}

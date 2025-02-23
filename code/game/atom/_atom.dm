@@ -5,7 +5,7 @@
  * as much as possible to the components/elements system
  */
 /atom
-	layer = TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
 
@@ -166,6 +166,9 @@
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
 
+	if(wires)
+		QDEL_NULL(wires)
+
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	// Checking length(overlays) before cutting has significant speed benefits
@@ -183,13 +186,22 @@
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
 
+#ifndef DISABLE_DREAMLUAU
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(contents)
+		DREAMLUAU_CLEAR_REF_USERDATA(filters)
+		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+#endif
+
 	return ..()
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.angle + 180))
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
@@ -680,15 +692,18 @@
 			created_atoms.Add(created_atom)
 		to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
-		UsedforProcessing(user, process_item, chosen_option)
+		UsedforProcessing(user, process_item, chosen_option, created_atoms)
 		return
 
-/atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option)
+/atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
 	qdel(src)
 	return
 
 /atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(HAS_TRAIT(original_atom, TRAIT_FOOD_SILVER))
+		ADD_TRAIT(src, TRAIT_FOOD_SILVER, INNATE_TRAIT) // stinky food always stinky
 
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
 	if(user.mind)
@@ -709,7 +724,7 @@
 		return
 	. = density
 	density = new_value
-
+	SEND_SIGNAL(src, COMSIG_ATOM_DENSITY_CHANGED)
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
@@ -719,7 +734,6 @@
 	base_pixel_x = new_value
 
 	pixel_x = pixel_x + base_pixel_x - .
-
 
 ///Setter for the `base_pixel_y` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_y(new_value)
@@ -750,6 +764,7 @@
  * Gravity situations:
  * * No gravity if you're not in a turf
  * * No gravity if this atom is in is a space turf
+ * * No gravity if the area has NO_GRAVITY flag (space, ordnance bomb site, nearstation, solars)
  * * Gravity if the area it's in always has gravity
  * * Gravity if there's a gravity generator on the z level
  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
@@ -777,7 +792,7 @@
 
 	var/area/turf_area = gravity_turf.loc
 
-	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.has_gravity)
+	return (!gravity_turf.force_no_gravity && !(turf_area.area_flags & NO_GRAVITY)) && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.default_gravity)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -850,6 +865,8 @@
 	if (isnull(user))
 		return
 
+	SEND_SIGNAL(user, COMSIG_ATOM_MOUSE_ENTERED, src)
+
 	// Screentips
 	var/datum/hud/active_hud = user.hud_used
 	if(!active_hud)
@@ -860,16 +877,23 @@
 		active_hud.screentip_text.maptext = ""
 		return
 
-	active_hud.screentip_text.maptext_y = 10 // 10px lines us up with the action buttons top left corner
 	var/lmb_rmb_line = ""
 	var/ctrl_lmb_ctrl_rmb_line = ""
 	var/alt_lmb_alt_rmb_line = ""
 	var/shift_lmb_ctrl_shift_lmb_line = ""
 	var/extra_lines = 0
 	var/extra_context = ""
+	var/used_name = name
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
+	if(isliving(user) || isovermind(user) || iscameramob(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
+
+		if (user.mob_flags & MOB_HAS_SCREENTIPS_NAME_OVERRIDE)
+			var/list/returned_name = list(used_name)
+
+			var/name_override_returns = SEND_SIGNAL(user, COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, returned_name, held_item, src)
+			if (name_override_returns & SCREENTIP_NAME_SET)
+				used_name = returned_name[1]
 
 		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
 			var/list/context = list()
@@ -930,14 +954,26 @@
 
 				if(extra_lines)
 					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
-					//first extra line pushes atom name line up 11px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
-					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -9
 
+	var/new_maptext
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
-		active_hud.screentip_text.maptext = ""
+		new_maptext = ""
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
+		new_maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[used_name][extra_context]</span>"
+
+	if (length(used_name) * 10 > active_hud.screentip_text.maptext_width)
+		INVOKE_ASYNC(src, PROC_REF(set_hover_maptext), client, active_hud, new_maptext)
+		return
+
+	active_hud.screentip_text.maptext = new_maptext
+	active_hud.screentip_text.maptext_y = 10 - (extra_lines > 0 ? 11 + 9 * (extra_lines - 1): 0)
+
+/atom/proc/set_hover_maptext(client/client, datum/hud/active_hud, new_maptext)
+	var/map_height
+	WXH_TO_HEIGHT(client.MeasureText(new_maptext, null, active_hud.screentip_text.maptext_width), map_height)
+	active_hud.screentip_text.maptext = new_maptext
+	active_hud.screentip_text.maptext_y = 26 - map_height
 
 /**
  * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.

@@ -19,7 +19,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
-	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
+	var/load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
 	var/max_syringes = 1 ///The number of syringes it can store.
 	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.

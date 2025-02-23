@@ -4,7 +4,7 @@
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "ai-slipper0"
 	base_icon_state = "ai-slipper"
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	max_integrity = 200
 	armor_type = /datum/armor/machinery_ai_slipper

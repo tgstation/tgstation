@@ -57,10 +57,10 @@
 			return
 
 		// If there was a previous map vote, we revert the change.
-		if(!isnull(SSmapping.next_map_config))
+		if(!isnull(SSmap_vote.next_map_config))
 			log_game("The next map has been reset due to successful restart vote.")
 			send_to_playing_players(span_boldannounce("The next map has been reset due to successful restart vote."))
-			revert_map_vote()
+			SSmap_vote.revert_next_map()
 
 		SSticker.force_ending = FORCE_END_ROUND
 		log_game("End round forced by successful restart vote.")

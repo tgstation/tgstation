@@ -46,6 +46,7 @@
 	desc = "The strange technology of this large club allows various nigh-magical teleportation feats. It used to beat you, but now you can set the beat."
 	icon_state = "hierophant_club_ready_beacon"
 	inhand_icon_state = "hierophant_club_ready_beacon"
+	icon_angle = -135
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -56,7 +57,7 @@
 	force = 15
 	attack_verb_continuous = list("clubs", "beats", "pummels")
 	attack_verb_simple = list("club", "beat", "pummel")
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/vortex_recall)
 	/// Linked teleport beacon for the group teleport functionality.
@@ -85,7 +86,7 @@
 	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
 	user.visible_message(span_suicide("[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!"))
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
-	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
+	playsound(user,'sound/machines/airlock/airlockopen.ogg', 75, TRUE)
 	user.visible_message(span_hierophant_warning("[user] fades out, leaving [user.p_their()] belongings behind!"))
 	for(var/obj/item/user_item in user)
 		if(user_item != src)
@@ -128,7 +129,7 @@
 			span_notice("You start detaching the hierophant beacon..."))
 			if(do_after(user, 5 SECONDS, target = user) && !beacon)
 				var/turf/user_turf = get_turf(user)
-				playsound(user_turf,'sound/magic/blind.ogg', 200, TRUE, -4)
+				playsound(user_turf,'sound/effects/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(user_turf, user)
 				beacon = new/obj/effect/hierophant(user_turf)
 				user.update_mob_action_buttons()
@@ -166,8 +167,8 @@
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(destination, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
-		playsound(destination,'sound/magic/wand_teleport.ogg', 200, TRUE)
-		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
+		playsound(destination,'sound/effects/magic/wand_teleport.ogg', 200, TRUE)
+		playsound(source,'sound/machines/airlock/airlockopen.ogg', 200, TRUE)
 		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
@@ -248,10 +249,14 @@
 	icon_state = "vial"
 
 /obj/item/mayhem/attack_self(mob/user)
+	if(tgui_alert(user, "Breaking the bottle will cause nearby crewmembers to go into a murderous frenzy. Be sure you know what you are doing...","Break the bottle?",list("Break it!","DON'T")) != "Break it!")
+		return
+	if(QDELETED(src) || !user.is_holding(src) || user.incapacitated)
+		return
 	for(var/mob/living/carbon/human/target in range(7,user))
 		target.apply_status_effect(/datum/status_effect/mayhem)
 	to_chat(user, span_notice("You shatter the bottle!"))
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
+	playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
 	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!"))
 	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
 	qdel(src)
@@ -368,7 +373,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	force = 20
@@ -553,11 +558,11 @@
 		return
 	COOLDOWN_START(src, attack_cooldown, 3 SECONDS)
 	var/obj/projectile/projectile = new /obj/projectile/soulscythe(get_turf(src))
-	projectile.preparePixelProjectile(attacked_atom, src)
+	projectile.aim_projectile(attacked_atom, src)
 	projectile.firer = src
 	projectile.fire(null, attacked_atom)
 	visible_message(span_danger("[src] fires at [attacked_atom]!"), span_notice("You fire at [attacked_atom]!"))
-	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 
 /obj/item/soulscythe/proc/slash_target(atom/attacked_atom)
 	if(isliving(attacked_atom) && use_blood(10))
@@ -576,7 +581,7 @@
 	SpinAnimation(5)
 	addtimer(CALLBACK(src, PROC_REF(reset_spin)), 1 SECONDS)
 	visible_message(span_danger("[src] slashes [attacked_atom]!"), span_notice("You slash [attacked_atom]!"))
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
 	do_attack_animation(attacked_atom, ATTACK_EFFECT_SLASH)
 
 /obj/item/soulscythe/proc/charge_target(atom/attacked_atom)
@@ -592,7 +597,7 @@
 		return
 	visible_message(span_danger("[src] charges at [attacked_atom]!"), span_notice("You charge at [attacked_atom]!"))
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
-	playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE)
 	SpinAnimation(1)
 	throwforce *= 2
 	throw_at(attacked_atom, 10, 3, soul, FALSE)
@@ -601,6 +606,10 @@
 	animate(src)
 	SpinAnimation(15)
 
+/obj/item/soulscythe/Destroy(force)
+	soul.ghostize()
+	QDEL_NULL(soul)
+	. = ..()
 /mob/living/simple_animal/soulscythe
 	name = "mysterious spirit"
 	maxHealth = 200
@@ -645,6 +654,7 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "spectral"
 	inhand_icon_state = "spectral"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -653,18 +663,23 @@
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	block_sound = 'sound/items/weapons/parry.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /obj/item/melee/ghost_sword/Initialize(mapload)
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 	AddComponent(\
 		/datum/component/butchering, \
 		speed = 15 SECONDS, \
@@ -780,6 +795,7 @@
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "lavastaff"
 	inhand_icon_state = "lavastaff"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/weapons/guns/magic.dmi'
@@ -790,7 +806,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	attack_verb_continuous = list("sears", "clubs", "burn")
 	attack_verb_simple = list("sear", "club", "burn")
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/misc/asteroid/basalt
@@ -801,10 +817,12 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space, /turf/closed))
 
-/obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with.atom_storage || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(timer > world.time)
 		return NONE
 	if(is_type_in_typecache(interacting_with, banned_turfs))
@@ -827,7 +845,7 @@
 				message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
 				user.log_message("fired the lava staff at [AREACOORD(T)].", LOG_ATTACK)
 				timer = world.time + create_cooldown
-				playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
+				playsound(T,'sound/effects/magic/fireball.ogg', 200, TRUE)
 		else
 			timer = world.time
 		qdel(L)
@@ -836,7 +854,7 @@
 		if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
 			user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
 			timer = world.time + reset_cooldown
-			playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
+			playsound(T,'sound/effects/magic/fireball.ogg', 200, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/lavastaff
@@ -867,7 +885,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	/// List of factions we deal bonus damage to
@@ -969,7 +987,7 @@
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 	if(user)
 		balloon_alert(user, "[active ? "opened" : "closed"] [src]")
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
+	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 //Legion: Staff of Storms
@@ -979,6 +997,7 @@
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
 	inhand_icon_state = "staffofstorms"
+	icon_angle = -45
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -986,7 +1005,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 20
 	damtype = BURN
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	wound_bonus = -30
 	bare_wound_bonus = 20
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -1028,7 +1047,7 @@
 		return
 	user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
 	span_notice("You hold [src] skyward, dispelling the storm!"))
-	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
+	playsound(user, 'sound/effects/magic/staff_change.ogg', 200, FALSE)
 	var/old_color = user.color
 	user.color = list(340/255, 240/255, 0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	var/old_transform = user.transform
@@ -1065,7 +1084,7 @@
 		if((target_turf.z in weather.impacted_z_levels) && ispath(target_area.type, weather.area_type))
 			power_boosted = TRUE
 			break
-	playsound(src, 'sound/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	targeted_turfs += target_turf
 	balloon_alert(user, "you aim at [target_turf]...")
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
@@ -1077,7 +1096,7 @@
 
 /obj/item/storm_staff/proc/recharge(mob/user)
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)
-	playsound(src, 'sound/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	playsound(src, 'sound/effects/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted)
 	targeted_turfs -= target
@@ -1097,6 +1116,176 @@
 
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
-	playsound(target, 'sound/magic/lightningbolt.ogg', 100, TRUE)
+	playsound(target, 'sound/effects/magic/lightningbolt.ogg', 100, TRUE)
 	target.visible_message(span_danger("A thunderbolt strikes [target]!"))
 	explosion(target, light_impact_range = (boosted ? 1 : 0), flame_range = (boosted ? 2 : 1), silent = TRUE)
+
+
+/datum/action/innate/brain_undeployment
+	name = "Disconnect from shell"
+	desc = "Stop controlling your shell and resume normal core operations."
+	button_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon_state = "ai_core"
+
+/datum/action/innate/brain_undeployment/Trigger(trigger_flags)
+	if(!..())
+		return FALSE
+	var/obj/item/organ/brain/cybernetic/ai/shell_to_disconnect = owner.get_organ_by_type(/obj/item/organ/brain/cybernetic/ai)
+
+	shell_to_disconnect.undeploy()
+	return TRUE
+
+/obj/item/organ/brain/cybernetic/ai
+	name = "AI-uplink brain"
+	desc = "Can be inserted into a body with NO ORGANIC INTERNAL ORGANS (robotic organs only) to allow AIs to control it. Comes with its own health sensors beacon. MUST be a humanoid or bad things happen to the consciousness."
+	can_smoothen_out = FALSE
+	/// if connected, our AI
+	var/mob/living/silicon/ai/mainframe
+	/// action for undeployment
+	var/datum/action/innate/brain_undeployment/undeployment_action = new
+
+/obj/item/organ/brain/cybernetic/ai/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes move with machine precision, their expression completely blank.")
+
+/obj/item/organ/brain/cybernetic/ai/Destroy()
+	. = ..()
+	undeploy()
+	mainframe = null
+	QDEL_NULL(undeployment_action)
+
+/obj/item/organ/brain/cybernetic/ai/on_mob_insert(mob/living/carbon/brain_owner, special, movement_flags)
+	. = ..()
+	brain_owner.add_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
+	update_med_hud_status(brain_owner)
+	RegisterSignal(brain_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
+	RegisterSignal(brain_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
+	RegisterSignal(brain_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignal(brain_owner, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, PROC_REF(cancel_rolls))
+	RegisterSignals(brain_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
+	RegisterSignal(brain_owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
+
+/obj/item/organ/brain/cybernetic/ai/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	undeploy()
+	. = ..()
+	organ_owner.remove_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
+	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
+
+/obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
+	SIGNAL_HANDLER
+	if(ispath(antagonist, /datum/antagonist/malf_ai))
+		return
+	return CANCEL_ROLL
+
+/obj/item/organ/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	if(!mainframe)
+		return
+	items += mainframe.get_status_tab_items()
+
+/obj/item/organ/brain/cybernetic/ai/proc/update_med_hud_status(mob/living/mob_parent)
+	SIGNAL_HANDLER
+	var/image/holder = mob_parent.hud_list?[STATUS_HUD]
+	if(isnull(holder))
+		return
+	var/icon/size_check = icon(mob_parent.icon, mob_parent.icon_state, mob_parent.dir)
+	holder.pixel_y = size_check.Height() - ICON_SIZE_Y
+	if(mob_parent.stat == DEAD || HAS_TRAIT(mob_parent, TRAIT_FAKEDEATH) || isnull(mainframe))
+		holder.icon_state = "huddead2"
+		holder.pixel_x = -8 // new icon states? nuh uh
+	else
+		holder.icon_state = "hudtrackingai"
+		holder.pixel_x = -16
+
+// no thoughts only wifi
+/obj/item/organ/brain/cybernetic/ai/can_gain_trauma(datum/brain_trauma/trauma, resilience, natural_gain = FALSE)
+	return FALSE
+
+/obj/item/organ/brain/cybernetic/ai/proc/owner_clicked(datum/source, atom/location, control, params, mob/user)
+	SIGNAL_HANDLER
+	if(!isAI(user))
+		return
+	var/list/lines = list()
+	lines += span_bold("[owner]")
+	lines += "Target is currently [!HAS_TRAIT(owner, TRAIT_INCAPACITATED) ? "functional" : "incapacitated"]"
+	lines += "Estimated organic/inorganic integrity: [owner.health]"
+	if(is_sufficiently_augmented())
+		lines += "<a href='byond://?src=[REF(src)];ai_take_control=[REF(user)]'>[span_boldnotice("Take control?")]</a><br>"
+	else
+		lines += span_warning("Organic organs detected. Robotic organs only, cannot take over.")
+
+	to_chat(user, boxed_message(jointext(lines, "\n")), type = MESSAGE_TYPE_INFO)
+
+/obj/item/organ/brain/cybernetic/ai/Topic(href, href_list)
+	..()
+	if(!href_list["ai_take_control"] || !is_sufficiently_augmented())
+		return
+	var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"]) in GLOB.silicon_mobs
+	if(isnull(AI))
+		return
+	if(AI.controlled_equipment)
+		to_chat(AI, span_warning("You are already loaded into an onboard computer!"))
+		return
+	if(!GLOB.cameranet.checkCameraVis(owner))
+		to_chat(AI, span_warning("Target is no longer near active cameras."))
+		return
+	if(!isturf(AI.loc))
+		to_chat(AI, span_warning("You aren't in your core!"))
+		return
+
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(undeploy))
+	AI.deployed_shell = owner
+	deploy_init(AI)
+	ADD_TRAIT(AI.mind, TRAIT_UNCONVERTABLE, REF(src))
+	ADD_TRAIT(AI, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
+	AI.mind.transfer_to(owner)
+
+/obj/item/organ/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
+	//todo camera maybe
+	mainframe = AI
+	RegisterSignal(AI, COMSIG_QDELETING, PROC_REF(ai_deleted))
+	undeployment_action.Grant(owner)
+	update_med_hud_status(owner)
+	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
+
+/obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
+	SIGNAL_HANDLER
+	if(!owner?.mind || !mainframe)
+		return
+	UnregisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
+	UnregisterSignal(mainframe, COMSIG_QDELETING)
+	mainframe.redeploy_action.Remove(mainframe)
+	mainframe.redeploy_action.last_used_shell = null
+	owner.mind.transfer_to(mainframe)
+	mainframe.deployed_shell = null
+	undeployment_action.Remove(owner)
+	if(mainframe.laws)
+		mainframe.laws.show_laws(mainframe)
+	if(mainframe.eyeobj)
+		mainframe.eyeobj.setLoc(loc)
+	REMOVE_TRAIT(mainframe.mind, TRAIT_UNCONVERTABLE, REF(src))
+	REMOVE_TRAIT(mainframe, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
+	mainframe = null
+	update_med_hud_status(owner)
+
+/obj/item/organ/brain/cybernetic/ai/proc/is_sufficiently_augmented()
+	var/mob/living/carbon/carb_owner = owner
+	. = TRUE
+	if(!istype(carb_owner))
+		return
+	for(var/obj/item/organ/organ as anything in carb_owner.organs)
+		if(organ.organ_flags & ORGAN_EXTERNAL)
+			continue
+		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
+			return FALSE
+
+/obj/item/organ/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
+	SIGNAL_HANDLER
+	if(!is_sufficiently_augmented())
+		to_chat(owner, span_danger("Connection failure. Organics detected."))
+		undeploy()
+
+/obj/item/organ/brain/cybernetic/ai/proc/ai_deleted(datum/source)
+	SIGNAL_HANDLER
+	to_chat(owner, span_danger("Your core has been rendered inoperable..."))
+	undeploy()

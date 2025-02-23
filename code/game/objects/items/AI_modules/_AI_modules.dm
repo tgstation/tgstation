@@ -36,7 +36,7 @@
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
-	to_chat(user, examine_block(display_laws()))
+	to_chat(user, boxed_message(display_laws()))
 
 /// Returns a text display of the laws for the module.
 /obj/item/ai_module/proc/display_laws()

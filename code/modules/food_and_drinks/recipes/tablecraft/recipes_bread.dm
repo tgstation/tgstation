@@ -155,8 +155,8 @@
 /datum/crafting_recipe/food/breaddog
 	name = "Living dog/bread hybrid"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/bread/plain = 2,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,
@@ -216,8 +216,8 @@
 	name = "Bread cat/bread hybrid"
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
-		/obj/item/organ/internal/ears/cat = 1,
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 50,
 		/datum/reagent/medicine/strange_reagent = 5

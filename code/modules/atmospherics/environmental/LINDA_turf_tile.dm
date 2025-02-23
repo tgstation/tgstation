@@ -37,7 +37,7 @@
 	///Are we active?
 	var/excited = FALSE
 	///Our gas mix
-	var/datum/gas_mixture/turf/air
+	var/datum/gas_mixture/air
 
 	///If there is an active hotspot on us store a reference to it here
 	var/obj/effect/hotspot/active_hotspot
@@ -50,6 +50,8 @@
 	///gas IDs of current active gas overlays
 	var/list/atmos_overlay_types
 	var/significant_share_ticker = 0
+	///the cooldown on playing a fire starting sound each time a tile is ignited
+	COOLDOWN_DECLARE(fire_puff_cooldown)
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
 	#endif
@@ -271,6 +273,12 @@
 	#endif
 
 	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
+		#ifdef UNIT_TESTS
+		if(!istype(enemy_tile))
+			stack_trace("closed turf inside of adjacent turfs")
+			continue
+		#endif
+
 		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
 		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s
 		if(enemy_tile.run_later)
@@ -298,7 +306,7 @@
 				our_excited_group = excited_group //update our cache
 		if(our_excited_group && enemy_excited_group && enemy_tile.excited) //If you're both excited, no need to compare right?
 			should_share_air = TRUE
-		else if(our_air.compare(enemy_air)) //Lets see if you're up for it
+		else if(our_air.compare(enemy_air, ARCHIVE)) //Lets see if you're up for it
 			SSair.add_to_active(enemy_tile) //Add yourself young man
 			var/datum/excited_group/existing_group = our_excited_group || enemy_excited_group || new
 			if(!our_excited_group)
@@ -326,7 +334,7 @@
 		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
 		// archive ourself again so we don't accidentally share more gas than we currently have
 		LINDA_CYCLE_ARCHIVE(src)
-		if(our_air.compare(planetary_mix))
+		if(our_air.compare(planetary_mix, ARCHIVE))
 			if(!our_excited_group)
 				var/datum/excited_group/new_group = new
 				new_group.add_turf(src)
@@ -686,6 +694,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/heat = conduction_coefficient * CALCULATE_CONDUCTION_ENERGY(delta_temperature, heat_capacity, sharer.heat_capacity)
 	temperature += heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
 	sharer.temperature -= heat / sharer.heat_capacity
+
 
 #undef LAST_SHARE_CHECK
 #undef PLANET_SHARE_CHECK

@@ -78,7 +78,8 @@ SUBSYSTEM_DEF(achievements)
 		cheevos_to_save += PD.achievements.get_changed_data()
 	if(!length(cheevos_to_save))
 		return
-	SSdbcore.MassInsert(format_table_name("achievements"),cheevos_to_save,duplicate_key = TRUE)
+	SSdbcore.MassInsert(format_table_name("achievements"), cheevos_to_save, duplicate_key = TRUE)
+	SEND_SIGNAL(src, COMSIG_ACHIEVEMENTS_SAVED_TO_DB)
 
 //Update the metadata if any are behind
 /datum/controller/subsystem/achievements/proc/update_metadata()

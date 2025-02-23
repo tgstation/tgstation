@@ -15,7 +15,7 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/wormhole_jaunter/attack_self(mob/user)
-	user.visible_message(span_notice("[user.name] activates the [src.name]!"))
+	user.visible_message(span_notice("[user.name] activates \the [src]!"))
 	SSblackbox.record_feedback("tally", "jaunter", 1, "User") // user activated
 	activate(user, TRUE)
 
@@ -23,7 +23,7 @@
 	var/turf/device_turf = get_turf(src)
 	if(!device_turf || is_centcom_level(device_turf.z) || is_reserved_level(device_turf.z))
 		if(user)
-			to_chat(user, span_notice("You're having difficulties getting the [src.name] to work."))
+			to_chat(user, span_notice("You're having difficulties getting \the [src] to work."))
 		return FALSE
 	return TRUE
 
@@ -103,11 +103,11 @@
 	light_on = FALSE
 	wibbles = FALSE
 
-/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M, force = FALSE)
 	. = ..()
 	if(.)
 		// KERPLUNK
-		playsound(M,'sound/weapons/resonator_blast.ogg',50,TRUE)
+		playsound(M,'sound/items/weapons/resonator_blast.ogg',50,TRUE)
 		if(iscarbon(M))
 			var/mob/living/carbon/L = M
 			L.Paralyze(60)

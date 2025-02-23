@@ -95,7 +95,7 @@
 			var/blood_type = scanned.dna.blood_type
 			if(blood_id != /datum/reagent/blood)
 				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
-				blood_type = reagents ? reagents.name : blood_id
+				blood_type = reagents?.name || blood_id
 			autopsy_information += "Blood Type: [blood_type]<br>"
 			autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
@@ -108,10 +108,11 @@
 		for(var/datum/symptom/symptom as anything in advanced_disease.symptoms)
 			autopsy_information += "[symptom.name] - [symptom.desc]<br>"
 
-	var/obj/item/paper/autopsy_report = new(user.loc)
-	autopsy_report.name = "Autopsy Report ([scanned.name])"
+	var/obj/item/paper/autopsy_report = new(user.drop_location())
+	autopsy_report.name = "autopsy report of [scanned] - [station_time_timestamp()])"
 	autopsy_report.add_raw_text(autopsy_information.Join("\n"))
-	autopsy_report.update_appearance(UPDATE_ICON)
+	autopsy_report.color = "#99ccff"
+	autopsy_report.update_appearance()
 	user.put_in_hands(autopsy_report)
 	user.balloon_alert(user, "report printed")
 	return TRUE

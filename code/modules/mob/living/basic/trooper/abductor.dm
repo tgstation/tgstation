@@ -12,7 +12,7 @@
 	loot = list(/obj/effect/gibspawner/human)
 	attack_verb_continuous = "beats"
 	attack_verb_simple = "beat"
-	attack_sound = 'sound/weapons/egloves.ogg'
+	attack_sound = 'sound/items/weapons/egloves.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	r_hand = /obj/item/melee/baton/abductor
 	var/projectile_deflect_chance = 0
@@ -24,7 +24,7 @@
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/energy/lasergun
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/laser2.ogg'
+	var/projectilesound = 'sound/items/weapons/laser2.ogg'
 	/// number of burst shots
 	var/burst_shots = 1
 	/// Time between taking shots

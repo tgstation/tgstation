@@ -11,6 +11,7 @@
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
 	complexity = 1
+	module_type = MODULE_USABLE
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
@@ -56,6 +57,21 @@
 	else
 		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+	module_type = MODULE_PASSIVE
+
+/obj/item/mod/module/pathfinder/on_use()
+	. = ..()
+	if (!ishuman(mod.wearer) || !implant)
+		return
+	if(!implant.implant(mod.wearer, mod.wearer))
+		balloon_alert(mod.wearer, "can't implant!")
+		return
+	balloon_alert(mod.wearer, "implanted")
+	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+	module_type = MODULE_PASSIVE
+	var/datum/action/item_action/mod/pinnable/module/existing_action = pinned_to[REF(mod.wearer)]
+	if(existing_action)
+		mod.remove_item_action(existing_action)
 
 /obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
 	if(!ishuman(user))
@@ -101,19 +117,19 @@
 
 /obj/item/implant/mod/proc/recall()
 	if(!module?.mod)
-		balloon_alert(imp_in, "no connected suit!")
+		balloon_alert(imp_in, "no connected unit!")
 		return FALSE
 	if(module.mod.open)
-		balloon_alert(imp_in, "suit is open!")
+		balloon_alert(imp_in, "cover open!")
 		return FALSE
 	if(module.mod.ai_controller)
-		balloon_alert(imp_in, "already in transit!")
+		balloon_alert(imp_in, "already moving!")
 		return FALSE
 	if(ismob(get_atom_on_turf(module.mod)))
 		balloon_alert(imp_in, "already on someone!")
 		return FALSE
 	if(module.z != z || get_dist(imp_in, module.mod) > MOD_AI_RANGE)
-		balloon_alert(imp_in, "too far away!")
+		balloon_alert(imp_in, "too far!")
 		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai

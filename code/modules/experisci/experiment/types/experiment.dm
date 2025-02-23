@@ -77,10 +77,11 @@
  * Proc that tries to perform the experiment, and then checks if its completed.
  */
 /datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
-	var/action_succesful = perform_experiment_actions(arglist(args))
+	var/action_successful = perform_experiment_actions(arglist(args))
+	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	if(is_complete())
 		finish_experiment(experiment_handler)
-	return action_succesful
+	return action_successful
 
 /**
  * Attempts to perform the experiment provided some arguments
@@ -99,3 +100,9 @@
 	experiment_handler.selected_experiment = null
 	var/announcetext = experiment_handler.linked_web.complete_experiment(src)
 	experiment_handler.announce_message_to_all(announcetext)
+
+/datum/experiment/proc/get_points_reward_text()
+	var/list/english_list_keys = list()
+	for(var/points_type in points_reward)
+		english_list_keys += "[points_reward[points_type]] [points_type]"
+	return "[english_list(english_list_keys)] points"

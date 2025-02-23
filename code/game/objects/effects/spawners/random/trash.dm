@@ -53,6 +53,12 @@
 		/obj/effect/spawner/random/entertainment/cigar = 1,
 		/obj/item/stack/ore/gold = 1,
 	)
+/obj/effect/spawner/random/trash/deluxe_garbage/Initialize(mapload)
+	if(mapload)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+			loot -= /mob/living/basic/mouse
+	return ..()
 
 /obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
@@ -89,7 +95,6 @@
 		/obj/item/trash/cnds = 1,
 		/obj/item/trash/syndi_cakes = 1,
 		/obj/item/trash/shrimp_chips = 1,
-		/obj/item/trash/waffles = 1,
 		/obj/item/trash/tray = 1,
 	)
 
@@ -325,3 +330,18 @@
 	if(istype(crushed_can))
 		crushed_can.icon_state = pick(soda_icons)
 	return crushed_can
+
+/obj/effect/spawner/random/trash/ghetto_containers
+	name = "ghetto container spawner"
+	loot = list(
+		/obj/item/reagent_containers/cup/bucket = 5,
+		/obj/item/reagent_containers/cup/glass/bottle = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/small = 5,
+		/obj/item/reagent_containers/cup/glass/mug = 5,
+		/obj/item/reagent_containers/cup/glass/shaker = 5,
+		/obj/item/reagent_containers/cup/watering_can/wood = 5,
+		/obj/item/reagent_containers/cup/mortar = 2,
+		/obj/item/reagent_containers/cup/soup_pot = 2,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 1,
+		/obj/item/reagent_containers/cup/maunamug = 1,
+	)

@@ -24,6 +24,18 @@
 	bug_appearance = mutable_appearance('icons/effects/effects.dmi', "fly-surrounding", ABOVE_WINDOW_LAYER)
 	register_context()
 
+/obj/item/machine_remote/equipped(mob/user, slot, initial)
+	. = ..()
+	if(user.get_active_held_item() == src)
+		ADD_TRAIT(user, TRAIT_AI_ACCESS, HELD_ITEM_TRAIT)
+		ADD_TRAIT(user, TRAIT_SILICON_ACCESS, HELD_ITEM_TRAIT)
+
+/obj/item/machine_remote/dropped(mob/user, silent)
+	. = ..()
+	if(user.get_active_held_item() != src)
+		REMOVE_TRAIT(user, TRAIT_AI_ACCESS, HELD_ITEM_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_SILICON_ACCESS, HELD_ITEM_TRAIT)
+
 /obj/item/machine_remote/Destroy(force)
 	. = ..()
 	if(controlling_machine_or_bot)
@@ -49,7 +61,7 @@
 
 /obj/item/machine_remote/ui_interact(mob/user, datum/tgui/ui)
 	if(!COOLDOWN_FINISHED(src, timeout_time))
-		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
 		return FALSE
 	if(!controlling_machine_or_bot)
@@ -73,12 +85,14 @@
 	remove_old_machine()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/machine_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/machine_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || (!ismachinery(interacting_with) && !isbot(interacting_with)))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/machine_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, timeout_time))
-		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
 		return ITEM_INTERACT_BLOCKING
 	if(!ismachinery(interacting_with) && !isbot(interacting_with))

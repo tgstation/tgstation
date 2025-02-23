@@ -124,8 +124,8 @@
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
-	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return FALSE
+	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+		return
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
 	return
 
@@ -173,8 +173,8 @@
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
-	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return FALSE
+	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+		return
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
 	return
 
@@ -212,10 +212,10 @@
 
 	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
-	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
+	wing_types = list(/obj/item/organ/wings/functional/robotic)
 
 	var/wired = FALSE
-	var/obj/item/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/power_store/cell = null
 
 /obj/item/bodypart/chest/robot/emp_effect(severity, protection)
 	. = ..()
@@ -291,7 +291,7 @@
 			), AUGMENTATION_TRAIT)
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/stock_parts/cell))
+	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("You have already inserted a cell!"))
 			return
@@ -574,7 +574,7 @@
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 
 /obj/item/bodypart/leg/right/robot/advanced
-	name = "heavy robotic right leg"
+	name = "advanced robotic right leg"
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'

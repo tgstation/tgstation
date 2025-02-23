@@ -278,7 +278,7 @@
 /datum/map_template/ruin/lavaland/lava_phonebooth
 	name = "Lava-Ruin Phonebooth"
 	id = "lava_phonebooth"
-	description = "A venture by nanotrasen to help popularize the use of holopads. This one somehow made its way here."
+	description = "A venture by Nanotrasen to help popularize the use of holopads. This one somehow made its way here."
 	suffix = "lavaland_surface_phonebooth.dmm"
 	allow_duplicates = FALSE
 	cost = 5
@@ -322,4 +322,11 @@
 	id = "shuttle_wreckage"
 	description = "Not every shuttle makes it back to CentCom."
 	suffix = "lavaland_surface_shuttle_wreckage.dmm"
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/crashsite
+	name = "Lava-Ruin Pod Crashsite"
+	id = "crashsite"
+	description = "They launched too early"
+	suffix = "lavaland_surface_crashsite.dmm"
 	allow_duplicates = FALSE

@@ -14,6 +14,10 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 	/// Are we crafted?
 	var/crafted = FALSE
+	/// Should we contain an escape hook on maps with z-levels?
+	var/give_hook = TRUE
+	/// Do we get to benefit from Nanotrasen's largesse?
+	var/give_premium_goods = TRUE
 
 /obj/item/storage/box/survival/Initialize(mapload)
 	. = ..()
@@ -36,14 +40,14 @@
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+	if(give_premium_goods && HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
 		new /obj/item/storage/pill_bottle/potassiodide(src)
 
-	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
+	if(give_hook && length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1)
 		new /obj/item/climbing_hook/emergency(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
@@ -58,6 +62,11 @@
 	new /obj/item/tank/internals/plasmaman/belt(src)
 	qdel(mask) // Get rid of the items that shouldn't be
 	qdel(internals)
+
+// Prisoners don't get an escape hook
+/obj/item/storage/box/survival/prisoner
+	give_hook = FALSE
+	give_premium_goods = FALSE
 
 // Mining survival box
 /obj/item/storage/box/survival/mining
@@ -171,20 +180,20 @@
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
 
-/obj/item/storage/box/clown/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/bodypart/arm/left/robot) || istype(inserted, /obj/item/bodypart/arm/right/robot))
-		if(contents.len) //prevent accidently deleting contents
-			balloon_alert(user, "items inside!")
-			return FALSE
-		if(!user.temporarilyRemoveItemFromInventory(inserted))
-			return FALSE
-		qdel(inserted)
-		loc.balloon_alert(user, "wheels added, honk!")
-		var/obj/item/bot_assembly/honkbot/A = new
-		qdel(src)
-		user.put_in_hands(A)
-		return FALSE
-	return TRUE
+/obj/item/storage/box/clown/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
+		return ..()
+	if(contents.len) //prevent accidently deleting contents
+		balloon_alert(user, "items inside!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+	qdel(tool)
+	loc.balloon_alert(user, "wheels added, honk!")
+	var/obj/item/bot_assembly/honkbot/A = new
+	qdel(src)
+	user.put_in_hands(A)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/box/clown/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))

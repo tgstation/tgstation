@@ -1,6 +1,6 @@
 // Wheat
 /obj/item/seeds/wheat
-	name = "pack of wheat seeds"
+	name = "wheat seed pack"
 	desc = "These may, or may not, grow into wheat."
 	icon_state = "seed-wheat"
 	species = "wheat"
@@ -30,7 +30,7 @@
 
 // Oat
 /obj/item/seeds/wheat/oat
-	name = "pack of oat seeds"
+	name = "oat seed pack"
 	desc = "These may, or may not, grow into oat."
 	icon_state = "seed-oat"
 	species = "oat"
@@ -52,7 +52,7 @@
 
 // Rice
 /obj/item/seeds/wheat/rice
-	name = "pack of rice seeds"
+	name = "rice seed pack"
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
 	species = "rice"
@@ -76,7 +76,7 @@
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
-	name = "pack of meatwheat seeds"
+	name = "meatwheat seed pack"
 	desc = "If you ever wanted to drive a vegetarian to insanity, here's how."
 	icon_state = "seed-meatwheat"
 	species = "meatwheat"
@@ -100,7 +100,7 @@
 
 /obj/item/food/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into meat."), span_notice("You crush [src] into something that resembles meat."))
-	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/blob/blobattack.ogg', 50, TRUE)
 	var/obj/item/food/meat/slab/meatwheat/meaties = new(null)
 	meaties.reagents.set_all_reagents_purity(seed.get_reagent_purity())
 	qdel(src)

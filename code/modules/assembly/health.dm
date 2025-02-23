@@ -3,7 +3,7 @@
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*8, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 2)
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_TOGGLEABLE_INPUT
 
 	var/scanning = FALSE
 	var/health_scan
@@ -58,8 +58,8 @@
 
 	//do the pulse & the scan
 	pulse()
-	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
-	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
+	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	toggle_scan()
 
 /obj/item/assembly/health/proc/toggle_scan()
@@ -100,7 +100,7 @@
 	data["target"] = health_target
 	return data
 
-/obj/item/assembly/health/ui_act(action, params)
+/obj/item/assembly/health/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .

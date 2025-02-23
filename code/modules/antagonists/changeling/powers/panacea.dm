@@ -1,6 +1,6 @@
 /datum/action/changeling/panacea
 	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, purging toxins and radiation, curing traumas and brain damage, and resetting our genetic code completely. Costs 20 chemicals."
+	desc = "Expels impurities from our form: curing diseases, removing parasites, sobering us, purging toxins and radiation, curing traumas and brain damage, and resetting our genetic code completely. Costs 20 chemicals."
 	helptext = "Can be used while unconscious."
 	button_icon_state = "panacea"
 	chemical_cost = 20
@@ -12,9 +12,9 @@
 	to_chat(user, span_notice("We cleanse impurities from our form."))
 	..()
 	var/list/bad_organs = list(
-		user.get_organ_by_type(/obj/item/organ/internal/body_egg),
-		user.get_organ_by_type(/obj/item/organ/internal/legion_tumour),
-		user.get_organ_by_type(/obj/item/organ/internal/zombie_infection),
+		user.get_organ_by_type(/obj/item/organ/body_egg),
+		user.get_organ_by_type(/obj/item/organ/legion_tumour),
+		user.get_organ_by_type(/obj/item/organ/zombie_infection),
 	)
 
 	for(var/o in bad_organs)

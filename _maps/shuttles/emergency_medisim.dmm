@@ -693,17 +693,7 @@
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "Cv" = (
-/obj/machinery/drone_dispenser{
-	desc = "A hefty machine that periodically creates a pair of binoculars. Really, Nanotrasen? We're getting this lazy?";
-	dispense_type = /obj/item/binoculars;
-	end_create_message = "dispenses a pair of binoculars.";
-	glass_cost = 0;
-	iron_cost = 0;
-	maximum_idle = 1;
-	name = "binoculars fabricator";
-	energy_used = 0;
-	starting_amount = 25000
-	},
+/obj/machinery/drone_dispenser/binoculars,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Cy" = (

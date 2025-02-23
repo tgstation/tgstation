@@ -82,17 +82,17 @@
 			else
 				. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
-			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
+			. += span_warning("\A [circuit] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			. += span_warning("Its requires [EXAMINE_HINT("5 cable")] pieces to wire it.")
+			. += span_warning("It can be [EXAMINE_HINT("wired")] with some cable.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("screwed")] loose.")
 		if(FRAME_COMPUTER_STATE_WIRED)
-			. += span_notice("The wires can be cut out with [EXAMINE_HINT("wire cutters")].")
-			. += span_warning("Its requires [EXAMINE_HINT("2 glass")] sheets to complete the screen.")
+			. += span_notice("The wires can be cut with [EXAMINE_HINT("wirecutters")].")
+			. += span_warning("There is a slot for 2 [EXAMINE_HINT("glass panels")].")
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			. += span_notice("The screen can be [EXAMINE_HINT("pried")] out.")
-			. += span_notice("The moniter can be [EXAMINE_HINT("screwed")] to complete it")
+			. += span_notice("The monitor can be [EXAMINE_HINT("screwed")] on to complete it")
 
 /obj/structure/frame/computer/circuit_added(obj/item/circuitboard/added)
 	state = FRAME_COMPUTER_STATE_BOARD_INSTALLED
@@ -125,8 +125,6 @@
 			if(add_cabling(user, cable, time = 0))
 				if(!no_sound)
 					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 					no_sound = TRUE
 				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
 
@@ -140,8 +138,6 @@
 			if(add_glass(user, glass_sheets, time = 0))
 				if(!no_sound)
 					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 				return TRUE
 
 			return FALSE

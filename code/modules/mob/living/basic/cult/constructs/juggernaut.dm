@@ -14,7 +14,7 @@
 	attack_verb_continuous = "smashes their armored gauntlet into"
 	attack_verb_simple = "smash your armored gauntlet into"
 	speed = 2.5
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/items/weapons/punch3.ogg'
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	construct_spells = list(
@@ -44,8 +44,8 @@
 
 	apply_damage(bullet.damage * 0.5, bullet.damage_type)
 	visible_message(
-		span_danger("The [bullet.name] is reflected by [src]'s armored shell!"),
-		span_userdanger("The [bullet.name] is reflected by your armored shell!"),
+		span_danger("\The [bullet] is reflected by [src]'s armored shell!"),
+		span_userdanger("\The [bullet] is reflected by your armored shell!"),
 	)
 
 	bullet.reflect(src)

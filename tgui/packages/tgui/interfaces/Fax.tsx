@@ -1,6 +1,7 @@
+import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
+
 import { sortBy } from '../../common/collections';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type FaxData = {
@@ -61,7 +62,7 @@ export const Fax = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
           <LabeledList.Item label="Visible to Network">
-            {data.visible ? true : false}
+            {data.visible ? 'true' : 'false'}
           </LabeledList.Item>
         </Section>
         <Section

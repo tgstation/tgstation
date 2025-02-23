@@ -1,7 +1,13 @@
-import { toTitleCase } from 'common/string';
+import {
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
+import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { NoticeBox, Section, Stack, Table, Tooltip } from '../../components';
 import { ANTAG2COLOR } from './constants';
 import { getAntagCategories } from './helpers';
 import { OrbitCollapsible } from './OrbitCollapsible';
@@ -15,7 +21,7 @@ type ContentSection = {
 
 /**
  * The primary content display for points of interest.
- * Renders a scrollable section replete collapsibles for each
+ * Renders a scrollable section replete with collapsibles for each
  * observable group.
  */
 export function OrbitContent(props) {

@@ -39,7 +39,7 @@
 	///Base icon state for the customer
 	var/base_icon_state = "amerifat"
 	///Sound to use when this robot type speaks
-	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
+	var/speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk.ogg'
 
 	/// Is this unique once per venue?
 	var/is_unique = FALSE
@@ -47,6 +47,10 @@
 /datum/customer_data/New()
 	. = ..()
 	name_prefixes = world.file2list(prefix_file)
+	if(check_holidays(ICE_CREAM_DAY)) ///customers are more likely to order ice cream on this holiday
+		var/list/orderable_restaurant = orderable_objects[VENUE_RESTAURANT]
+		if(orderable_restaurant?[/datum/custom_order/icecream])
+			orderable_restaurant[/datum/custom_order/icecream] *= 3
 
 /// Can this customer be chosen for this venue?
 /datum/customer_data/proc/can_use(datum/venue/venue)
@@ -155,7 +159,7 @@
 	first_warning_line = "Get your hands off of me!"
 	second_warning_line = "Do not touch me you filthy animal, last warning!"
 	self_defense_line = "I will break you like a baguette!"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/obj/item/food/baguette = 20,
@@ -199,7 +203,7 @@
 	first_warning_line = "Don't touch me you pervert!"
 	second_warning_line = "I'm going to go super saiyan if you touch me again! Last warning!"
 	self_defense_line = "OMAE WA MO, SHINDEROU!"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese1.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese1.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/datum/custom_order/icecream = 4,
@@ -243,7 +247,7 @@
 	first_warning_line = "Hey, only my employer gets to mess with me like that."
 	second_warning_line = "Leave me be, I'm trying to focus. Last warning!"
 	self_defense_line = "I didn't want it to end up like this."
-	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese2.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/datum/reagent/consumable/nutriment/soup/miso = 6,
@@ -278,7 +282,7 @@
 	second_warning_line = "Last warning! I'll destroy you!"
 	self_defense_line = "Flap attack!"
 
-	speech_sound = 'sound/creatures/tourist/tourist_talk_moth.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_moth.ogg'
 
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
@@ -338,7 +342,7 @@
 /datum/customer_data/mexican
 	base_icon_state = "mexican"
 	prefix_file = "strings/names/mexican_prefix.txt"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_mexican.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_mexican.ogg'
 	clothing_sets = list("mexican_poncho")
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
@@ -378,7 +382,7 @@
 /datum/customer_data/british
 	base_icon_state = "british"
 	prefix_file = "strings/names/british_prefix.txt"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_british.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_british.ogg'
 
 	friendly_pull_line = "I don't enjoy being pulled around like this."
 	first_warning_line = "Our sovereign lord the Queen chargeth and commandeth all persons, being assembled, immediately to disperse themselves."

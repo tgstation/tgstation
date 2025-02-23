@@ -75,7 +75,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	var/obj/item/organ/internal/tongue/tongue = carbon_parent.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = carbon_parent.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue)
 		tongue.temp_say_mod = "signs"
 	//this speech relies on hands, which we have our own way of garbling speech when they're occupied, so we can have this always on
@@ -102,7 +102,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	var/obj/item/organ/internal/tongue/tongue = carbon_parent.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = carbon_parent.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue)
 		tongue.temp_say_mod = ""
 	REMOVE_TRAIT(carbon_parent, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_HANDS)
@@ -128,9 +128,9 @@
 /datum/component/sign_language/proc/on_added_organ(mob/living/source, obj/item/organ/new_organ)
 	SIGNAL_HANDLER
 
-	if(!istype(new_organ, /obj/item/organ/internal/tongue))
+	if(!istype(new_organ, /obj/item/organ/tongue))
 		return
-	var/obj/item/organ/internal/tongue/new_tongue = new_organ
+	var/obj/item/organ/tongue/new_tongue = new_organ
 	new_tongue.temp_say_mod = "signs"
 
 /// Signal proc for [COMSIG_MOB_TRY_SPEECH]
@@ -238,7 +238,7 @@
 	return SPELL_INVOCATION_ALWAYS_SUCCEED
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
-/// Changes our message based on conditions that limit or alter our ability to communicate 
+/// Changes our message based on conditions that limit or alter our ability to communicate
 /datum/component/sign_language/proc/on_treat_living_message(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 

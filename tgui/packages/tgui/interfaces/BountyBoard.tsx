@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -9,8 +8,10 @@ import {
   Section,
   Stack,
   TextArea,
-} from '../components';
-import { formatMoney } from '../format';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { UserDetails } from './Vending';
 

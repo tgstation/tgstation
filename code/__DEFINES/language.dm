@@ -27,6 +27,7 @@
 #define LANGUAGE_GLAND "gland"
 #define LANGUAGE_HAT "hat"
 #define LANGUAGE_QUIRK "quirk"
+#define LANGUAGE_DRINK "drink"
 #define LANGUAGE_MALF "malf"
 #define LANGUAGE_PIRATE "pirate"
 #define LANGUAGE_MASTER "master"

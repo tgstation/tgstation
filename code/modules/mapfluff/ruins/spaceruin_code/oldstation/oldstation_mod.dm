@@ -35,7 +35,7 @@
 	update_appearance()
 
 /obj/machinery/mod_installer/proc/play_install_sound()
-	playsound(src, 'sound/items/rped.ogg', 30, FALSE)
+	playsound(src, 'sound/items/tools/rped.ogg', 30, FALSE)
 
 /obj/machinery/mod_installer/update_icon_state()
 	icon_state = busy ? busy_icon_state : "[base_icon_state][state_open ? "_open" : null]"
@@ -64,7 +64,7 @@
 	var/mob/living/carbon/human/human_occupant = occupant
 	if(!istype(human_occupant))
 		return
-	if(!human_occupant.dropItemToGround(human_occupant.back))
+	if(!isnull(human_occupant.back) && !human_occupant.dropItemToGround(human_occupant.back))
 		return
 	if(!human_occupant.equip_to_slot_if_possible(mod_unit, mod_unit.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
@@ -86,7 +86,7 @@
 	..()
 	return TRUE
 
-/obj/machinery/mod_installer/close_machine(mob/living/carbon/user, density_to_set = TRUE)
+/obj/machinery/mod_installer/close_machine(atom/movable/target, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 	..()
@@ -108,7 +108,7 @@
 
 /obj/machinery/mod_installer/interact(mob/user)
 	if(state_open)
-		close_machine(null, user)
+		close_machine()
 		return
 	else if(busy)
 		balloon_alert(user, "it's locked!")

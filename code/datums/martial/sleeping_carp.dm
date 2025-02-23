@@ -9,7 +9,7 @@
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 	/// List of traits applied to users of this martial art.
-	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
+	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
 
 /datum/martial_art/the_sleeping_carp/on_teach(mob/living/new_holder)
 	. = ..()
@@ -17,11 +17,13 @@
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_holder, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	new_holder.faction |= FACTION_CARP //:D
+	new_holder.grant_language(/datum/language/carptongue, ALL, type)
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
 	remove_from.faction -= FACTION_CARP //:(
+	remove_from.remove_language(/datum/language/carptongue, ALL, type)
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
@@ -53,7 +55,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "strong punched (Sleeping Carp)")
 	defender.apply_damage(20, attacker.get_attack_type(), affecting)
 	return TRUE
@@ -106,7 +108,7 @@
 
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
@@ -161,7 +163,7 @@
 	)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 	defender.apply_damage(final_damage, attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "punched (Sleeping Carp)")
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -176,7 +178,7 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	defender.apply_damage(20, STAMINA)
 	log_combat(attacker, defender, "disarmed (Sleeping Carp)")
 	return MARTIAL_ATTACK_INVALID // normal disarm
@@ -184,12 +186,11 @@
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)
 	if(!can_use(carp_user) || !carp_user.combat_mode)
 		return FALSE
-	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
+	if(INCAPACITATED_IGNORING(carp_user, INCAPABLE_GRAB)) //NO STUN
 		return FALSE
 	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
-	var/datum/dna/dna = carp_user.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(HAS_TRAIT(carp_user, TRAIT_HULK)) //NO HULK
 		return FALSE
 	if(!isturf(carp_user.loc)) //NO MOTHERFLIPPIN MECHS!
 		return FALSE
@@ -205,7 +206,7 @@
 		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
 		span_userdanger("You deflect [hitting_projectile]!"),
 	)
-	playsound(carp_user, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	playsound(carp_user, SFX_BULLET_MISS, 75, TRUE)
 	hitting_projectile.firer = carp_user
 	hitting_projectile.set_angle(rand(0, 360))//SHING
 	return COMPONENT_BULLET_PIERCED
@@ -255,6 +256,7 @@
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
 	base_icon_state = "bostaff"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
@@ -264,11 +266,10 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 24, \
-		icon_wielded = "[base_icon_state]1", \
 	)
 
 /obj/item/staff/bostaff/update_icon_state()
-	icon_state = "[base_icon_state]0"
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user, params)

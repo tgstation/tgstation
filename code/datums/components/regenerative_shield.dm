@@ -59,7 +59,7 @@
 	if(damage >= damage_threshold || number_of_hits <= 0)
 		return NONE
 
-	playsound(get_turf(parent), 'sound/weapons/tap.ogg', 20)
+	playsound(get_turf(parent), 'sound/items/weapons/tap.ogg', 20)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(parent))
 	number_of_hits = max(0, number_of_hits - 1)
 	if(number_of_hits <= 0)
@@ -71,14 +71,14 @@
 	for(var/obj/effect/my_effect as anything in shield_overlays)
 		animate(my_effect, alpha = 0, time = 3 SECONDS)
 		my_effect.remove_filter(SHIELD_FILTER)
-	playsound(parent, 'sound/mecha/mech_shield_drop.ogg', 20)
+	playsound(parent, 'sound/vehicles/mecha/mech_shield_drop.ogg', 20)
 
 /datum/component/regenerative_shield/proc/enable_shield()
 	number_of_hits = initial(number_of_hits)
 	for(var/obj/effect/my_effect as anything in shield_overlays)
 		animate(my_effect, alpha = 255, time = 3 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(apply_filter_effects), my_effect), 5 SECONDS)
-	playsound(parent, 'sound/mecha/mech_shield_raise.ogg', 20)
+	playsound(parent, 'sound/vehicles/mecha/mech_shield_raise.ogg', 20)
 
 /datum/component/regenerative_shield/proc/apply_filter_effects(obj/effect/new_effect)
 	if(isnull(new_effect))

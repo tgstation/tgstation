@@ -1,7 +1,7 @@
 
 // aloe
 /obj/item/seeds/aloe
-	name = "pack of aloe seeds"
+	name = "aloe seed pack"
 	desc = "These seeds grow into aloe."
 	icon_state = "seed-aloe"
 	species = "aloe"

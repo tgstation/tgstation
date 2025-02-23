@@ -8,7 +8,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/wendigo
 	name = "wendigo"
-	desc = "A mythological man-eating legendary creature, the sockets of it's eyes track you with an unsatiated hunger."
+	desc = "A mythological man-eating legendary creature, the sockets of its eyes track you with an unsatiated hunger."
 	health = 2500
 	maxHealth = 2500
 	icon_state = "wendigo"
@@ -17,7 +17,7 @@ Difficulty: Hard
 	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
@@ -149,7 +149,7 @@ Difficulty: Hard
 
 /proc/wendigo_scream(mob/owner)
 	SLEEP_CHECK_DEATH(5, owner)
-	playsound(owner.loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
+	playsound(owner.loc, 'sound/effects/magic/demon_dies.ogg', 600, FALSE, 10)
 	var/pixel_shift = rand(5, 15)
 	animate(owner, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)
@@ -187,19 +187,21 @@ Difficulty: Hard
 	if(!true_spawn)
 		return ..()
 
+	create_portal()
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/create_portal()
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
 	exit.id = "wendigo arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
 	exit.set_light(20, 1, COLOR_SOFT_RED)
-	return ..()
 
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
-	speed = 2
-	/// If wave movement is enabled
-	var/wave_movement = FALSE
+	speed = 0.5
+
 	/// Amount the angle changes every pixel move
-	var/wave_speed = 15
+	var/wave_speed = 0.5
 	/// Amount of movements this projectile has made
 	var/pixel_moves = 0
 
@@ -207,18 +209,18 @@ Difficulty: Hard
 	damage = 15
 
 /obj/projectile/colossus/wendigo_shockwave/wave
-	speed = 8
-	wave_movement = TRUE
-	wave_speed = 10
+	speed = 0.125
+	wave_speed = 0.3
 
 /obj/projectile/colossus/wendigo_shockwave/wave/alternate
-	wave_speed = -10
+	wave_speed = -0.3
 
-/obj/projectile/colossus/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
+/obj/projectile/colossus/wendigo_shockwave/process_movement(pixels_to_move, hitscan, tile_limit)
 	. = ..()
-	if(wave_movement)
-		pixel_moves++
-		set_angle(original_angle + pixel_moves * wave_speed)
+	if (QDELETED(src))
+		return
+	pixel_moves += .
+	set_angle(original_angle + pixel_moves * wave_speed)
 
 /obj/item/wendigo_blood
 	name = "bottle of wendigo blood"
@@ -238,25 +240,6 @@ Difficulty: Hard
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
 
-/obj/item/crusher_trophy/wendigo_horn
-	name = "wendigo horn"
-	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
-	icon_state = "wendigo_horn"
-	denied_type = /obj/item/crusher_trophy/wendigo_horn
-
-/obj/item/crusher_trophy/wendigo_horn/effect_desc()
-	return "melee hits inflict twice as much damage"
-
-/obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
-
-/obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
-
 /obj/item/wendigo_skull
 	name = "wendigo skull"
 	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
@@ -264,5 +247,8 @@ Difficulty: Hard
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/noportal/create_portal()
+	return
 
 #undef WENDIGO_ENRAGED

@@ -1,5 +1,5 @@
 /datum/component/squeak
-	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
+	var/static/list/default_squeak_sounds = list('sound/items/toy_squeak/toysqueak1.ogg'=1, 'sound/items/toy_squeak/toysqueak2.ogg'=1, 'sound/items/toy_squeak/toysqueak3.ogg'=1)
 	var/list/override_squeak_sounds
 	var/mob/holder
 
@@ -11,8 +11,8 @@
 	var/step_delay = 1
 
 	// This is to stop squeak spam from inhand usage
-	var/last_use = 0
-	var/use_delay = 20
+	COOLDOWN_DECLARE(spam_cooldown)
+	var/use_delay = 2 SECONDS
 
 	///extra-range for this component's sound
 	var/sound_extra_range = -1
@@ -46,7 +46,7 @@
 		else if(isstructure(parent))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(use_squeak))
 
-	if(istype(parent, /obj/item/organ/internal/liver))
+	if(istype(parent, /obj/item/organ/liver))
 		// Liver squeaking is depending on them functioning like a clown's liver
 		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_comedy_metabolism_removal))
 
@@ -102,6 +102,10 @@
 		return
 	if(ismob(arrived) && !arrived.density) // Prevents 10 overlapping mice from making an unholy sound while moving
 		return
+	if(isliving(arrived))
+		var/mob/living/living_arrived = arrived
+		if(living_arrived.mob_size < MOB_SIZE_HUMAN)
+			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent?.loc))
 		play_squeak()
@@ -109,8 +113,8 @@
 /datum/component/squeak/proc/use_squeak()
 	SIGNAL_HANDLER
 
-	if(last_use + use_delay < world.time)
-		last_use = world.time
+	if(COOLDOWN_FINISHED(src, spam_cooldown))
+		COOLDOWN_START(src, spam_cooldown, use_delay)
 		play_squeak()
 
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
@@ -128,7 +132,7 @@
 	UnregisterSignal(user, COMSIG_QDELETING)
 	holder = null
 
-///just gets rid of the reference to holder in the case that theyre qdeleted
+///just gets rid of the reference to holder in the case that they're qdeleted
 /datum/component/squeak/proc/holder_deleted(datum/source, datum/possible_holder)
 	SIGNAL_HANDLER
 	if(possible_holder == holder)
@@ -138,7 +142,7 @@
 /datum/component/squeak/proc/disposing_react(datum/source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_source)
 	SIGNAL_HANDLER
 
-	//We don't need to worry about unregistering this signal as it will happen for us automaticaly when the holder is qdeleted
+	//We don't need to worry about unregistering this signal as it will happen for us automatically when the holder is qdeleted
 	RegisterSignal(disposal_holder, COMSIG_ATOM_DIR_CHANGE, PROC_REF(holder_dir_change))
 
 /datum/component/squeak/proc/holder_dir_change(datum/source, old_dir, new_dir)

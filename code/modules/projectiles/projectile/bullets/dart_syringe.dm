@@ -2,7 +2,7 @@
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	var/inject_flags = null
 

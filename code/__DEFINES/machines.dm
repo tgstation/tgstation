@@ -23,8 +23,12 @@
 #define STATIC_TO_DYNAMIC_CHANNEL(static_channel) (static_channel - (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
 
 //Power use
+
+/// dont use power
 #define NO_POWER_USE 0
+/// use idle_power_usage i.e. the power needed just to keep the machine on
 #define IDLE_POWER_USE 1
+/// use active_power_usage i.e. the power the machine consumes to perform a specific task
 #define ACTIVE_POWER_USE 2
 
 ///Base global power consumption for idling machines
@@ -33,7 +37,7 @@
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
 
 /// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
-#define START_PROCESSING_ON_INIT (1<<0) /// Indicates the machine will automatically start processing right after it's `Initialize()` is ran.
+#define START_PROCESSING_ON_INIT (1<<0) /// Indicates the machine will automatically start processing right after its `Initialize()` is ran.
 #define START_PROCESSING_MANUALLY (1<<1) /// Machines with this flag will not start processing when it's spawned. Use this if you want to manually control when a machine starts processing.
 
 //bitflags for door switches.
@@ -52,7 +56,7 @@
 #define BYPASS_DOOR_CHECKS 2
 
 //used in design to specify which machine can build it
-//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
+//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatible.
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
 #define PROTOLATHE (1<<1) //New stuff. Uses various minerals
 #define AUTOLATHE (1<<2) //Prints basic designs without research
@@ -143,3 +147,5 @@
 #define SD_MESSAGE 2
 /// Shows an alert picture (e.g. red alert, radiation, etc.)
 #define SD_PICTURE 3
+/// Shows whoever or whatever is on the green screen in the captain's office
+#define SD_GREENSCREEN 4

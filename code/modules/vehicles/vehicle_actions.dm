@@ -252,7 +252,7 @@
 	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
 	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
 	vehicle_entered_target.update_appearance()
-	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
+	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
@@ -357,8 +357,10 @@
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
 	rider.spin(spintime = 4, speed = 1)
-	animate(rider, pixel_y = -6, time = 4)
-	animate(vehicle, pixel_y = -6, time = 3)
+	animate(rider, pixel_z = 6, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_z = -6, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(vehicle, pixel_z = 6, time = 0.3 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_z = -6, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
 	passtable_on(rider, VEHICLE_TRAIT)
 	passtable_on(vehicle, VEHICLE_TRAIT)
@@ -401,10 +403,12 @@
 	)
 	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, vary = TRUE)
 	rider.spin(spintime = 4, speed = 1)
-	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
-	animate(board, pixel_y = -6, time = 0.3 SECONDS)
+	animate(rider, pixel_z = 6, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_z = -6, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(board, pixel_z = 6, time = 0.3 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_z = -6, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	board.unbuckle_mob(rider)
-	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider), 1 SECONDS)  // so the board can still handle "picking it up"
+	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider), 0.5 SECONDS)  // so the board can still handle "picking it up"
 
 
 
@@ -444,7 +448,7 @@
 	name = "Buzz."
 	desc = "Negative!"
 	button_icon_state = "vim_buzz"
-	sound_path = 'sound/machines/buzz-sigh.ogg'
+	sound_path = 'sound/machines/buzz/buzz-sigh.ogg'
 	sound_message = "buzzes."
 
 /datum/action/vehicle/sealed/noise/buzz/Trigger(trigger_flags)

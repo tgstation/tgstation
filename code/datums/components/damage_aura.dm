@@ -36,6 +36,12 @@
 	/// Which factions are immune to the damage aura
 	var/list/immune_factions = null
 
+	/// If set, gives a message when damaged
+	var/damage_message = null
+
+	/// Probability for above.
+	var/message_probability = 0
+
 	/// Sets a special set of conditions for the owner
 	var/datum/weakref/current_owner = null
 
@@ -54,6 +60,8 @@
 	organ_damage = null,
 	simple_damage = 0,
 	immune_factions = null,
+	damage_message = null,
+	message_probability = 0,
 	mob/living/current_owner = null,
 )
 	if (!isatom(parent))
@@ -72,6 +80,8 @@
 	src.organ_damage = organ_damage
 	src.simple_damage = simple_damage
 	src.immune_factions = immune_factions
+	src.damage_message = damage_message
+	src.message_probability = message_probability
 	src.current_owner = WEAKREF(current_owner)
 
 /datum/component/damage_aura/Destroy(force)
@@ -119,6 +129,9 @@
 			continue
 		if (candidate.health < candidate.maxHealth)
 			new /obj/effect/temp_visual/cosmic_gem(get_turf(candidate))
+
+		if(damage_message && prob(message_probability))
+			to_chat(candidate, damage_message)
 
 		if (iscarbon(candidate) || issilicon(candidate) || isbasicmob(candidate))
 			candidate.adjustBruteLoss(brute_damage * seconds_per_tick, updating_health = FALSE)

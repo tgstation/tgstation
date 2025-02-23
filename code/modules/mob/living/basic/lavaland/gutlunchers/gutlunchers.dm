@@ -34,37 +34,28 @@
 /mob/living/basic/mining/gutlunch/Initialize(mapload)
 	. = ..()
 	GLOB.gutlunch_count++
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	if(greyscale_config)
 		set_greyscale(colors = list(pick(possible_colors)))
 	AddElement(/datum/element/ai_retaliate)
-	if(!can_breed)
-		return
-	AddComponent(\
-		/datum/component/breed,\
-		can_breed_with = typecacheof(list(/mob/living/basic/mining/gutlunch)),\
-		baby_path = /mob/living/basic/mining/gutlunch/grub,\
-		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
-		breed_timer = 3 MINUTES,\
-	)
+	if(can_breed)
+		add_breeding_component()
 
 /mob/living/basic/mining/gutlunch/Destroy()
 	GLOB.gutlunch_count--
 	return ..()
 
-/mob/living/basic/mining/gutlunch/proc/pre_attack(mob/living/puncher, atom/target)
-	SIGNAL_HANDLER
-
-	if(!istype(target, /obj/structure/ore_container/food_trough/gutlunch_trough))
+/mob/living/basic/mining/gutlunch/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
 		return
-
+	if(!istype(target, /obj/structure/ore_container/food_trough/gutlunch_trough))
+		return TRUE
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
-
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
-		melee_attack(ore_food)
-	return COMPONENT_HOSTILE_NO_ATTACK
+		UnarmedAttack(ore_food, TRUE, modifiers)
+	return FALSE
 
 /mob/living/basic/mining/gutlunch/proc/after_birth(mob/living/basic/mining/gutlunch/grub/baby, mob/living/partner)
 	var/our_color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_GRAY
@@ -79,6 +70,20 @@
 	speed = rand(MINIMUM_POSSIBLE_SPEED, input_speed)
 	maxHealth = rand(input_health, MAX_POSSIBLE_HEALTH)
 	health = maxHealth
+
+/mob/living/basic/mining/gutlunch/proc/add_breeding_component()
+	var/static/list/partner_paths = typecacheof(list(/mob/living/basic/mining/gutlunch))
+	var/static/list/baby_paths = list(
+		/mob/living/basic/mining/gutlunch/grub = 1,
+	)
+
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = partner_paths,\
+		baby_paths = baby_paths,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+		breed_timer = 3 MINUTES,\
+	)
 
 /mob/living/basic/mining/gutlunch/milk
 	name = "gubbuck"
@@ -113,11 +118,12 @@
 	//pet commands when we tame the gutluncher
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/breed/gutlunch,
+		/datum/pet_command/attack,
+		/datum/pet_command/breed/gutlunch,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 		/datum/pet_command/mine_walls,
 	)
 
@@ -139,12 +145,12 @@
 	can_breed = FALSE
 	gender = NEUTER
 	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
+	initial_size = 0.6
 	///list of stats we inherited
 	var/datum/gutlunch_inherited_stats/inherited_stats
 
 /mob/living/basic/mining/gutlunch/grub/Initialize(mapload)
 	. = ..()
-	transform = transform.Scale(0.6, 0.6)
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_time = 3 MINUTES,\

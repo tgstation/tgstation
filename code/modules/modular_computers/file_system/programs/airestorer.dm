@@ -57,22 +57,22 @@
 
 	return TRUE
 
-/datum/computer_file/program/ai_restorer/application_attackby(obj/item/attacking_item, mob/living/user)
+/datum/computer_file/program/ai_restorer/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/aicard))
+		return aicard_act(user, tool)
+
+/datum/computer_file/program/ai_restorer/proc/aicard_act(mob/living/user, obj/item/aicard/used_aicard)
 	if(!computer)
-		return FALSE
-	if(!istype(attacking_item, /obj/item/aicard))
-		return FALSE
-
+		return NONE
 	if(stored_card)
-		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [computer.name], but the slot is occupied."))
-		return FALSE
-	if(user && !user.transferItemToLoc(attacking_item, computer))
-		return FALSE
+		to_chat(user, span_warning("You try to insert \the [used_aicard] into \the [computer.name], but the slot is occupied."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(used_aicard, computer))
+		return ITEM_INTERACT_BLOCKING
 
-	stored_card = attacking_item
-	to_chat(user, span_notice("You insert \the [attacking_item] into \the [computer.name]."))
-
-	return TRUE
+	stored_card = used_aicard
+	to_chat(user, span_notice("You insert \the [used_aicard] into \the [computer.name]."))
+	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
 	if(!stored_card)

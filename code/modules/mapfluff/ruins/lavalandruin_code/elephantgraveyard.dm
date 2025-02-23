@@ -209,7 +209,7 @@
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses/big(src)
-			new /obj/item/clothing/mask/cigarette/rollie(src)
+			new /obj/item/cigarette/rollie(src)
 		else
 			//empty grave
 			return
@@ -289,7 +289,7 @@
 		deconstruct(TRUE)
 		return TRUE
 
-/obj/structure/closet/crate/grave/container_resist_act(mob/living/user)
+/obj/structure/closet/crate/grave/container_resist_act(mob/living/user, loc_required = TRUE)
 	if(opened)
 		return
 	// The player is trying to dig themselves out of an early grave
@@ -322,7 +322,7 @@
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
-	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
+	desc = "Even in a place filled to the brim with graves, this one shows a level of preparation and planning that fills you with dread."
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave_lead"
 	lead_tomb = TRUE

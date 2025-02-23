@@ -44,6 +44,20 @@
 	name = "Atmospheric Alert"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/atmos_alert
+	var/station_only = FALSE
+
+/obj/item/circuitboard/computer/atmos_alert/station_only
+	station_only = TRUE
+
+/obj/item/circuitboard/computer/atmos_alert/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/atmos_alert/multitool_act(mob/living/user)
+	station_only = !station_only
+	balloon_alert(user, "tracking set to [station_only ? "station" : "z-level"]")
+	return TRUE
 
 /obj/item/circuitboard/computer/atmos_control
 	name = "Atmospheric Control"
@@ -223,10 +237,24 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/solar_control
 
-/obj/item/circuitboard/computer/stationalert
+/obj/item/circuitboard/computer/station_alert
 	name = "Station Alerts"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/station_alert
+	var/station_only = FALSE
+
+/obj/item/circuitboard/computer/station_alert/station_only
+	station_only = TRUE
+
+/obj/item/circuitboard/computer/station_alert/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/station_alert/multitool_act(mob/living/user)
+	station_only = !station_only
+	balloon_alert(user, "tracking set to [station_only ? "station" : "z-level"]")
+	return TRUE
 
 /obj/item/circuitboard/computer/turbine_computer
 	name = "Turbine Computer"
@@ -403,6 +431,29 @@
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/rdconsole
+	var/silence_announcements = FALSE
+
+/obj/item/circuitboard/computer/rdconsole/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured to [silence_announcements ? "silence" : "announce"] researched nodes on radio.")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "board mode is broken!")
+		return
+	silence_announcements = !silence_announcements
+	balloon_alert(user, "announcements [silence_announcements ? "enabled" : "disabled"]")
+
+/obj/item/circuitboard/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	silence_announcements = FALSE
+	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
+	return TRUE
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"

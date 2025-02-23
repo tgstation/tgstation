@@ -2,7 +2,6 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/bilk
 	name = "glass of bilk"
 	desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
-	icon_state = "glass_brown"
 
 /datum/glass_style/drinking_glass/threemileisland
 	required_drink_type = /datum/reagent/consumable/ethanol/threemileisland
@@ -400,7 +399,6 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/bacchus_blessing
 	name = "Bacchus' Blessing"
 	desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
-	icon_state = "glass_brown2"
 
 /datum/glass_style/drinking_glass/atomicbomb
 	required_drink_type = /datum/reagent/consumable/ethanol/atomicbomb
@@ -434,7 +432,6 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "eggnog"
 	desc = "For enjoying the most wonderful time of the year."
-	icon_state = "glass_yellow"
 	drink_type = FRUIT
 
 /datum/glass_style/has_foodtype/juicebox/eggnog
@@ -461,25 +458,21 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/triple_sec
 	name = "Triple Sec"
 	desc = "A glass of straight Triple Sec."
-	icon_state = "glass_orange"
 
 /datum/glass_style/drinking_glass/creme_de_menthe
 	required_drink_type = /datum/reagent/consumable/ethanol/creme_de_menthe
 	name = "Creme de Menthe"
 	desc = "You can almost feel the first breath of spring just looking at it."
-	icon_state = "glass_green"
 
 /datum/glass_style/drinking_glass/creme_de_cacao
 	required_drink_type = /datum/reagent/consumable/ethanol/creme_de_cacao
 	name = "Creme de Cacao"
 	desc = "A million hazing lawsuits and alcohol poisonings have started with this humble ingredient."
-	icon_state = "glass_brown"
 
 /datum/glass_style/drinking_glass/creme_de_coconut
 	required_drink_type = /datum/reagent/consumable/ethanol/creme_de_coconut
 	name = "Creme de Coconut"
 	desc = "An unintimidating glass of coconut liqueur."
-	icon_state = "glass_white"
 
 /datum/glass_style/drinking_glass/quadruple_sec
 	required_drink_type = /datum/reagent/consumable/ethanol/quadruple_sec
@@ -643,7 +636,7 @@
 /datum/glass_style/drinking_glass/applejack
 	required_drink_type = /datum/reagent/consumable/ethanol/applejack
 	name = "Applejack"
-	desc = "You feel like you could drink this all neight."
+	desc = "You feel like you could drink this all neigh-t."
 	icon_state = "applejack_glass"
 
 /datum/glass_style/drinking_glass/jack_rose
@@ -739,7 +732,7 @@
 /datum/glass_style/drinking_glass/godfather
 	required_drink_type = /datum/reagent/consumable/ethanol/godfather
 	name = "Godfather"
-	desc = "A classic from old Italy and enjoyed by gangsters, pray the orange peel doesnt end up in your mouth."
+	desc = "A classic from old Italy and enjoyed by gangsters, pray the orange peel doesn't end up in your mouth."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "godfather"
 
@@ -787,7 +780,6 @@
 /datum/glass_style/drinking_glass/mushi_kombucha
 	required_drink_type = /datum/reagent/consumable/ethanol/mushi_kombucha
 	name = "glass of mushi kombucha"
-	icon_state = "glass_orange"
 
 /datum/glass_style/drinking_glass/triumphal_arch
 	required_drink_type = /datum/reagent/consumable/ethanol/triumphal_arch

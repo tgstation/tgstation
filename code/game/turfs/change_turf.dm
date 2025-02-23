@@ -25,9 +25,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
 		copy_to_turf.icon = icon
-	if(color)
+	if(LAZYLEN(atom_colours))
 		copy_to_turf.atom_colours = atom_colours.Copy()
 		copy_to_turf.update_atom_colour()
+	// New atom_colours system overrides color, but in rare cases its still used
+	else if(color)
+		copy_to_turf.color = color
 	if(copy_to_turf.dir != dir)
 		copy_to_turf.setDir(dir)
 	return copy_to_turf
@@ -191,6 +194,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(flags_1 & INITIALIZED_1)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
+
+	// we need to update gravity for any mob on a tile that is being created or destroyed
+	for(var/mob/living/target in new_turf.contents)
+		target.refresh_gravity()
 
 	return new_turf
 

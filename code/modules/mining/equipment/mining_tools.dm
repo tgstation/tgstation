@@ -4,6 +4,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	inhand_icon_state = "pickaxe"
+	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 15
@@ -15,7 +16,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
-	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
+	usesound = list('sound/effects/pickaxe/picaxe1.ogg', 'sound/effects/pickaxe/picaxe2.ogg', 'sound/effects/pickaxe/picaxe3.ogg')
 	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
@@ -65,10 +66,11 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	inhand_icon_state = "handdrill"
+	icon_angle = 0
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
-	usesound = 'sound/weapons/drill.ogg'
-	hitsound = 'sound/weapons/drill.ogg'
+	usesound = 'sound/items/weapons/drill.ogg'
+	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/pickaxe/drill/cyborg
@@ -98,8 +100,8 @@
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
-	usesound = 'sound/weapons/sonic_jackhammer.ogg'
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts."
 
 /obj/item/pickaxe/improvised
@@ -121,6 +123,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
 	inhand_icon_state = "shovel"
+	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -157,11 +160,20 @@
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	inhand_icon_state = "spade"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/shovel/spade/cyborg
+	name = "cyborg spade"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_shovel"
+	icon_angle = 0
+	toolspeed = 0.6
+	worn_icon_state = null
 
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
@@ -205,6 +217,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "trench_tool"
 	inhand_icon_state = "trench_tool"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -213,7 +226,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 0.75
-	usesound = 'sound/items/ratchet.ogg'
+	usesound = 'sound/items/tools/ratchet.ogg'
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	wound_bonus = 10
@@ -260,7 +273,7 @@
 			sharpness = NONE
 			toolspeed = 0.75
 			update_weight_class(WEIGHT_CLASS_SMALL)
-			usesound = 'sound/items/ratchet.ogg'
+			usesound = 'sound/items/tools/ratchet.ogg'
 			attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 			attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 		if("Shovel")
@@ -276,16 +289,16 @@
 			sharpness = SHARP_POINTY
 			toolspeed = 0.5
 			update_weight_class(WEIGHT_CLASS_NORMAL)
-			usesound = 'sound/effects/picaxe1.ogg'
+			usesound = 'sound/effects/pickaxe/picaxe1.ogg'
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
-	playsound(src, 'sound/items/ratchet.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -294,6 +307,7 @@
 	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
 	icon_state = "giant_wrench"
 	icon = 'icons/obj/weapons/giant_wrench.dmi'
+	icon_angle = 0
 	inhand_icon_state = null
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -312,10 +326,10 @@
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
 	attack_verb_simple = list("bonk", "bludgeon", "pound")
-	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	drop_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	pickup_sound = 'sound/items/handling/tools/crowbar_pickup.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	block_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
@@ -355,7 +369,7 @@
 /obj/item/shovel/giant_wrench/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	usesound = (active ? 'sound/items/ratchet.ogg' : initial(usesound))
+	usesound = (active ? 'sound/items/tools/ratchet.ogg' : initial(usesound))
 	block_chance = (active ? 0 : initial(block_chance))
 	recoil_factor = (active ? 2 : initial(recoil_factor))
 	do_launch = (active ? FALSE : initial(do_launch))
@@ -363,7 +377,7 @@
 	armour_penetration = (active ? 30 : initial(armour_penetration))
 	if(user)
 		balloon_alert(user, "folded Big Slappy [active ? "open" : "closed"]")
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shovel/giant_wrench/attack(mob/living/target_mob, mob/living/user)

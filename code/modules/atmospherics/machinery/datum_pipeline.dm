@@ -131,7 +131,7 @@
 
 	/**
 	 *  For a machine to properly "connect" to a pipeline and share gases,
-	 *  the pipeline needs to acknowledge a gas mixture as it's member.
+	 *  the pipeline needs to acknowledge a gas mixture as its member.
 	 *  This is currently handled by the other_airs list in the pipeline datum.
 	 *
 	 *	Other_airs itself is populated by gas mixtures through the parents list that each machineries have.
@@ -360,7 +360,7 @@
 
 /obj/effect/abstract/gas_visual/Initialize(mapload)
 	. = ..()
-	color_filter = filter(type="color", color=matrix())
+	color_filter = filter(type="color", color="white")
 	filters += color_filter
 	color_filter = filters[filters.len]
 	if(current_color)

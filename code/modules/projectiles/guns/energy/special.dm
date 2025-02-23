@@ -52,7 +52,7 @@
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = /obj/item/stock_parts/cell/potato
+	cell_type = /obj/item/stock_parts/power_store/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 	automatic_charge_overlays = FALSE
@@ -95,7 +95,7 @@
 	can_charge = FALSE
 	gun_flags = NOT_A_REAL_GUN
 	heat = 3800
-	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
+	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 
@@ -106,7 +106,7 @@
 		speed = 2.5 SECONDS, \
 		effectiveness = 105, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/plasma_cutter.ogg', \
+		butcher_sound = 'sound/items/weapons/plasma_cutter.ogg', \
 	)
 	AddElement(/datum/element/tool_flash, 1)
 
@@ -141,7 +141,7 @@
 
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
-/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
+/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount, heat_required)
 	if(QDELETED(cell))
 		balloon_alert(user, "no cell inserted!")
 		return FALSE
@@ -150,6 +150,9 @@
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
 	if(amount ? cell.charge < PLASMA_CUTTER_CHARGE_WELD * amount : cell.charge < PLASMA_CUTTER_CHARGE_WELD)
 		balloon_alert(user, "not enough charge!")
+		return FALSE
+	if(heat < heat_required)
+		to_chat(user, span_warning("[src] is not hot enough to complete this task!"))
 		return FALSE
 
 	return TRUE
@@ -168,6 +171,9 @@
 		target.cut_overlay(sparks)
 	else
 		. = ..(amount=1)
+
+/obj/item/gun/energy/plasmacutter/try_fire_gun(atom/target, mob/living/user, params)
+	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
 
 #undef PLASMA_CUTTER_CHARGE_WELD
 
@@ -297,7 +303,7 @@
 	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
 	icon_state = "l6_cyborg"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	cell_type = /obj/item/stock_parts/cell/secborg
+	cell_type = /obj/item/stock_parts/power_store/cell/secborg
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
@@ -314,7 +320,7 @@
 	desc = "A gun that changes temperatures. Comes with a collapsible stock."
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
-	cell_type = /obj/item/stock_parts/cell/high
+	cell_type = /obj/item/stock_parts/power_store/cell/high
 	pin = null
 
 /obj/item/gun/energy/temperature/security
@@ -358,7 +364,7 @@
 	name = "tesla cannon"
 	icon_state = "tesla"
 	inhand_icon_state = "tesla"
-	desc = "A gun that shoots balls of \"tesla\", whatever that is."
+	desc = "A gun powered by a flux anomaly that shoots lightning bolts. Electrically insulating clothing may protect from some of the damage."
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY
@@ -373,7 +379,7 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	automatic_charge_overlays = FALSE
 	/// How many coins we can have at a time. Set to 0 for infinite
 	var/max_coins = 4
@@ -425,6 +431,24 @@
 	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
-	new_coin.preparePixelProjectile(target_turf, user)
+	new_coin.aim_projectile(target_turf, user)
 	new_coin.fire()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/gun/energy/photon
+	name = "photon cannon"
+	desc = "A competitive design to the tesla cannon, that instead of charging latent electrons, releases energy into photons. Eye protection is recommended."
+	icon_state = "photon"
+	inhand_icon_state = "tesla"
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+	ammo_type = list(/obj/item/ammo_casing/energy/photon)
+	shaded_charge = TRUE
+	weapon_weight = WEAPON_HEAVY
+	light_color = LIGHT_COLOR_DEFAULT
+	light_system = OVERLAY_LIGHT
+	light_power = 2
+	light_range = 1
+
+/obj/item/gun/energy/photon/Initialize(mapload)
+	. = ..()
+	set_light_on(TRUE) // The gun quite literally shoots mini-suns.

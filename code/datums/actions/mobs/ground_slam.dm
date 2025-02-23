@@ -6,7 +6,7 @@
 	cooldown_time = 10 SECONDS
 	/// The range of the slam
 	var/range = 5
-	/// The delay before the shockwave expands it's range
+	/// The delay before the shockwave expands its range
 	var/delay = 3
 	/// How far hit targets are thrown
 	var/throw_range = 8

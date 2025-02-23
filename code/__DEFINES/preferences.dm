@@ -17,7 +17,8 @@
 #define ADMIN_IGNORE_CULT_GHOST (1<<21)
 #define SPLIT_ADMIN_TABS (1<<23)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS)
+#define TOGGLES_DEADMIN_DEFAULT (DEADMIN_ANTAGONIST|DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY|DEADMIN_POSITION_SILICON)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS|TOGGLES_DEADMIN_DEFAULT)
 
 // Legacy chat toggles.
 // !!! DO NOT ADD ANY NEW ONES HERE !!!
@@ -74,12 +75,20 @@
 #define EXP_TYPE_ADMIN "Admin"
 
 //Flags in the players table in the db
-#define DB_FLAG_EXEMPT 1
+#define DB_FLAG_EXEMPT (1<<0)
 
 #define DEFAULT_CYBORG_NAME "Default Cyborg Name"
 
+// Choose grid or list TGUI layouts for UI's, when possible.
+/// Default layout will be used. It can be either a grid or a list
+#define TGUI_LAYOUT_DEFAULT "default"
+/// Force grid layout, even if default is a list.
+#define TGUI_LAYOUT_GRID "grid"
+/// Force list layout, even if default is a grid.
+#define TGUI_LAYOUT_LIST "list"
 
 //Job preferences levels
+#define JP_ANY 0
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3

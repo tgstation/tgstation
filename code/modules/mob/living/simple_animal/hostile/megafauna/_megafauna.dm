@@ -56,15 +56,24 @@
 	var/list/attack_action_types = list()
 	/// Summoning line, said when summoned via megafauna vents.
 	var/summon_line = "I'll kick your ass!"
+	///any delay before we start attacking something near us
+	var/attack_delay = 0.25 SECONDS
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
+
+	AddComponent(\
+		/datum/component/basic_mob_attack_telegraph,\
+		display_telegraph_overlay = FALSE,\
+		telegraph_duration = attack_delay,\
+	)
+
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE), MEGAFAUNA_TRAIT)
+	add_traits(list(TRAIT_NO_TELEPORT), MEGAFAUNA_TRAIT)
 	grant_actions_by_list(attack_action_types)
 
 /mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -122,7 +131,7 @@
 	if(recovery_time >= world.time)
 		return
 	. = ..()
-	if(!.)
+	if(target && !CanAttack(target))
 		LoseTarget()
 		return
 	if(!isliving(target))
@@ -158,8 +167,6 @@
 		span_danger("[src] disembowels [L]!"),
 		span_userdanger("You feast on [L]'s organs, restoring your health!"))
 
-
-
 /mob/living/simple_animal/hostile/megafauna/CanAttack(atom/the_target)
 	. = ..()
 	if (!.)
@@ -168,7 +175,6 @@
 		return TRUE
 	var/mob/living/living_target = the_target
 	return !living_target.has_status_effect(/datum/status_effect/gutted)
-
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)

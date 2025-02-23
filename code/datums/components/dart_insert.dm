@@ -133,20 +133,15 @@
 	new_overlays += mutable_appearance(projectile_overlay_icon, projectile_overlay_icon_state)
 
 /datum/component/dart_insert/proc/apply_var_modifiers(obj/projectile/projectile)
-	var_modifiers = istype(modifier_getter) ? modifier_getter.Invoke() : list()
+	var_modifiers = istype(modifier_getter) ? modifier_getter.Invoke(projectile) : list()
 	projectile.damage += var_modifiers["damage"]
-	if(var_modifiers["speed"])
-		var_modifiers["speed"] = reciprocal_add(projectile.speed, var_modifiers["speed"]) - projectile.speed
 	projectile.speed += var_modifiers["speed"]
 	projectile.armour_penetration += var_modifiers["armour_penetration"]
 	projectile.wound_bonus += var_modifiers["wound_bonus"]
 	projectile.bare_wound_bonus += var_modifiers["bare_wound_bonus"]
 	projectile.demolition_mod += var_modifiers["demolition_mod"]
-	if(islist(var_modifiers["embedding"]))
-		var/list/embed_params = var_modifiers["embedding"]
-		for(var/embed_param in embed_params - "ignore_throwspeed_threshold")
-			LAZYADDASSOC(projectile.embedding, embed_param, embed_params[embed_param])
-		projectile.updateEmbedding()
+	if(var_modifiers["embedding"])
+		projectile.set_embed(var_modifiers["embedding"])
 
 /datum/component/dart_insert/proc/remove_var_modifiers(obj/projectile/projectile)
 	projectile.damage -= var_modifiers["damage"]
@@ -155,9 +150,6 @@
 	projectile.wound_bonus -= var_modifiers["wound_bonus"]
 	projectile.bare_wound_bonus -= var_modifiers["bare_wound_bonus"]
 	projectile.demolition_mod -= var_modifiers["demolition_mod"]
-	if(islist(var_modifiers["embedding"]))
-		var/list/embed_params = var_modifiers["embedding"]
-		for(var/embed_param in embed_params - "ignore_throwspeed_threshold")
-			LAZYADDASSOC(projectile.embedding, embed_param, -embed_params[embed_param])
-		projectile.updateEmbedding()
+	if(var_modifiers["embedding"])
+		projectile.set_embed(initial(projectile.embed_type))
 	var_modifiers.Cut()

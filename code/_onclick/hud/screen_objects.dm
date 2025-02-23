@@ -45,8 +45,9 @@
 
 /atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	if(hud_owner && istype(hud_owner))
-		hud = hud_owner
+	if(isnull(hud_owner)) //some screens set their hud owners on /new, this prevents overriding them with null post atoms init
+		return
+	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
 	master_ref = null
@@ -72,9 +73,24 @@
 /atom/movable/screen/proc/component_click(atom/movable/screen/component_button/component, params)
 	return
 
+///setter used to set our new hud
+/atom/movable/screen/proc/set_new_hud(datum/hud/hud_owner)
+	if(hud)
+		UnregisterSignal(hud, COMSIG_QDELETING)
+	if(isnull(hud_owner))
+		hud = null
+		return
+	hud = hud_owner
+	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
+
 /// Returns the mob this is being displayed to, if any
 /atom/movable/screen/proc/get_mob()
 	return hud?.mymob
+
+/atom/movable/screen/proc/on_hud_delete(datum/source)
+	SIGNAL_HANDLER
+
+	set_new_hud(hud_owner = null)
 
 /atom/movable/screen/text
 	icon = null
@@ -87,6 +103,7 @@
 /atom/movable/screen/swap_hand
 	plane = HUD_PLANE
 	name = "swap hand"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/swap_hand/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -94,7 +111,7 @@
 	if(world.time <= usr.next_move)
 		return 1
 
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return 1
 
 	if(ismob(usr))
@@ -107,6 +124,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "navigate"
 	screen_loc = ui_navigate_menu
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/navigate/Click()
 	if(!isliving(usr))
@@ -119,15 +137,17 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/area_creator
 	name = "create new area"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/area_creator/Click()
-	if(usr.incapacitated() || (isobserver(usr) && !isAdminGhostAI(usr)))
+	if(usr.incapacitated || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
@@ -140,36 +160,10 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "talk_wheel"
 	screen_loc = ui_language_menu
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/language_menu/Click()
 	usr.get_language_holder().open_language_menu(usr)
-
-/atom/movable/screen/floor_menu
-	name = "change floor"
-	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "floor_change"
-	screen_loc = ui_floor_menu
-
-/atom/movable/screen/floor_menu/Initialize(mapload)
-	. = ..()
-	register_context()
-
-/atom/movable/screen/floor_menu/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	context[SCREENTIP_CONTEXT_LMB] = "Go up a floor"
-	context[SCREENTIP_CONTEXT_RMB] = "Go down a floor"
-	return CONTEXTUAL_SCREENTIP_SET
-
-/atom/movable/screen/floor_menu/Click(location,control,params)
-	var/list/modifiers = params2list(params)
-
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
-		usr.down()
-		return
-
-	usr.up()
-	return
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -188,7 +182,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(usr, INCAPABLE_STASIS))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -252,7 +246,7 @@
 	. = ..()
 
 	if(!handcuff_overlay)
-		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
+		var/state = IS_RIGHT_INDEX(held_index) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
 
 	if(!hud?.mymob)
@@ -268,7 +262,7 @@
 				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		. += (held_index % 2) ? "lhandactive" : "rhandactive"
+		. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -278,7 +272,7 @@
 		return TRUE
 	if(world.time <= user.next_move)
 		return TRUE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return TRUE
 	if (ismecha(user.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -294,7 +288,9 @@
 /atom/movable/screen/close
 	name = "close"
 	plane = ABOVE_HUD_PLANE
-	icon_state = "backpack_close"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "storage_close"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
@@ -312,6 +308,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
 	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/drop/Click()
 	if(usr.stat == CONSCIOUS)
@@ -322,6 +319,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -363,6 +361,35 @@
 	icon = 'icons/hud/screen_cyborg.dmi'
 	screen_loc = ui_borg_intents
 
+/atom/movable/screen/floor_changer
+	name = "change floor"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "floor_change"
+	screen_loc = ui_above_intent
+	mouse_over_pointer = MOUSE_HAND_POINTER
+	var/vertical = FALSE
+
+/atom/movable/screen/floor_changer/Click(location,control,params)
+	var/list/modifiers = params2list(params)
+
+	var/mouse_position
+
+	if(vertical)
+		mouse_position = text2num(LAZYACCESS(modifiers, ICON_Y))
+	else
+		mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
+
+	if(mouse_position > 16)
+		usr.up()
+		return
+
+	usr.down()
+	return
+
+/atom/movable/screen/floor_changer/vertical
+	icon_state = "floor_change_v"
+	vertical = TRUE
+
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"
 	icon_state = "spacesuit_0"
@@ -372,6 +399,7 @@
 	name = "run/walk toggle"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "running"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/mov_intent/Click()
 	toggle(usr)
@@ -397,6 +425,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "pull"
 	base_icon_state = "pull"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/pull/Click()
 	if(isobserver(usr))
@@ -411,9 +440,12 @@
 	name = "resist"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
+	base_icon_state = "act_resist"
 	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/resist/Click()
+	flick("[base_icon_state]_on", src)
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.resist()
@@ -424,6 +456,7 @@
 	icon_state = "act_rest"
 	base_icon_state = "act_rest"
 	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/rest/Click()
 	if(isliving(usr))
@@ -434,13 +467,13 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return ..()
-	icon_state = "[base_icon_state][user.resting ? 0 : null]"
+	icon_state = "[base_icon_state][user.resting ? "_on" : null]"
 	return ..()
 
 /atom/movable/screen/storage
 	name = "storage"
-	icon_state = "block"
-	screen_loc = "7,7 to 10,8"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "storage_cell"
 	plane = HUD_PLANE
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
@@ -454,7 +487,7 @@
 
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -465,10 +498,50 @@
 
 	return TRUE
 
+/atom/movable/screen/storage/cell
+
+/atom/movable/screen/storage/cell/mouse_drop_receive(atom/target, mob/living/user, params)
+	var/datum/storage/storage = master_ref?.resolve()
+
+	if (isnull(storage) || !istype(user) || storage != user.active_storage)
+		return
+
+	if (!user.can_perform_action(storage.parent, FORBID_TELEKINESIS_REACH))
+		return
+
+	if (target.loc != storage.real_location)
+		return
+
+	/// Due to items in storage ignoring transparency for click hitboxes, this only can happen if we drag onto a free cell - aka after all current contents
+	storage.real_location.contents -= target
+	storage.real_location.contents += target
+	storage.refresh_views()
+
+/atom/movable/screen/storage/corner
+	icon_state = "storage_corner_topleft"
+
+/atom/movable/screen/storage/corner/top_right
+	icon_state = "storage_corner_topright"
+
+/atom/movable/screen/storage/corner/bottom_left
+	icon_state = "storage_corner_bottomleft"
+
+/atom/movable/screen/storage/corner/bottom_right
+	icon_state = "storage_corner_bottomright"
+
+/atom/movable/screen/storage/rowjoin
+	name = "storage"
+	icon_state = "storage_rowjoin_left"
+	alpha = 0
+
+/atom/movable/screen/storage/rowjoin/right
+	icon_state = "storage_rowjoin_right"
+
 /atom/movable/screen/throw_catch
 	name = "throw/catch"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "act_throw_off"
+	icon_state = "act_throw"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/throw_catch/Click()
 	if(iscarbon(usr))
@@ -479,6 +552,7 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
@@ -656,6 +730,7 @@
 /atom/movable/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/healthdoll/Click()
 	if (iscarbon(usr))
@@ -667,10 +742,93 @@
 	screen_loc = ui_living_healthdoll
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
+/atom/movable/screen/healthdoll/human
+	/// Tracks components of our doll, each limb is a separate atom in our vis_contents
+	VAR_PRIVATE/list/atom/movable/screen/limbs
+	/// Lazylist, tracks all body zones that are wounded currently
+	/// Used so we can sync animations should the list be updated
+	VAR_PRIVATE/list/animated_zones
+
+/atom/movable/screen/healthdoll/human/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	limbs = list()
+	for(var/i in GLOB.all_body_zones)
+		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
+		// layer chest above other limbs, it's the center after all
+		limb.layer = i == BODY_ZONE_CHEST ? layer + 0.05 : layer
+		limbs[i] = limb
+		// why viscontents? why not overlays? - because i want to animate filters
+		vis_contents += limb
+	update_appearance()
+
+/atom/movable/screen/healthdoll/human/Destroy()
+	QDEL_LIST_ASSOC_VAL(limbs)
+	vis_contents.Cut()
+	return ..()
+
+/atom/movable/screen/healthdoll/human/update_icon_state()
+	. = ..()
+	var/mob/living/carbon/human/owner = hud?.mymob
+	if(isnull(owner))
+		return
+	if(owner.stat == DEAD)
+		for(var/limb in limbs)
+			limbs[limb].icon_state = "[limb]DEAD"
+		return
+
+	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
+
+	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
+		var/icon_key = 0
+		var/part_zone = body_part.body_zone
+
+		var/list/overridable_key = list(icon_key)
+		if(body_part.bodypart_disabled)
+			icon_key = 7
+		else if(owner.stat == DEAD)
+			icon_key = "DEAD"
+		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
+			icon_key = overridable_key[1] // thanks i hate it
+		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+			var/damage = body_part.get_damage() / body_part.max_damage
+			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
+			icon_key = clamp(ceil(damage * 5), 0, 5)
+
+		if(length(body_part.wounds))
+			LAZYSET(animated_zones, part_zone, TRUE)
+		else
+			LAZYREMOVE(animated_zones, part_zone)
+		limbs[part_zone].icon_state = "[part_zone][icon_key]"
+	// handle leftovers
+	for(var/missing_zone in owner.get_missing_limbs())
+		limbs[missing_zone].icon_state = "[missing_zone]6"
+		LAZYREMOVE(animated_zones, missing_zone)
+	// time to re-sync animations, something changed
+	if(animated_zones ~! current_animated)
+		for(var/animated_zone in animated_zones)
+			var/atom/wounded_zone = limbs[animated_zone]
+			var/existing_filter = wounded_zone.get_filter("wound_outline")
+			if(existing_filter)
+				animate(existing_filter) // stop animation so we can resync
+			else
+				wounded_zone.add_filter("wound_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 0, "size" = 1.2))
+				existing_filter = wounded_zone.get_filter("wound_outline")
+			animate(existing_filter, alpha = 200, time = 1.5 SECONDS, loop = -1)
+			animate(alpha = 0, time = 1.5 SECONDS)
+		if(LAZYLEN(current_animated)) // avoid null - list() runtimes please
+			for(var/lost_zone in current_animated - animated_zones)
+				limbs[lost_zone].remove_filter("wound_outline")
+
+// Basically just holds an icon we can put a filter on
+/atom/movable/screen/healthdoll_limb
+	screen_loc = ui_living_healthdoll
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE
+
 /atom/movable/screen/mood
 	name = "mood"
 	icon_state = "mood5"
 	screen_loc = ui_mood
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/splash
 	icon = 'icons/blanks/blank_title.png'
@@ -720,6 +878,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 
 /atom/movable/screen/component_button
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/atom/movable/screen/parent
 
 /atom/movable/screen/component_button/Initialize(mapload, atom/movable/screen/parent)
@@ -818,6 +977,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		state = HUNGER_STATE_FAT
 		return
 
+	if(HAS_TRAIT(hungry, TRAIT_GLUTTON))
+		state = HUNGER_STATE_HUNGRY // Can't get enough
+		return
+
 	switch(hungry.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			state = HUNGER_STATE_FULL
@@ -831,9 +994,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 /atom/movable/screen/hunger/update_appearance(updates)
 	var/old_state = state
 	update_hunger_state() // Do this before we call all the other update procs
-	. = ..()
 	if(state == old_state) // Let's not be wasteful
 		return
+	. = ..()
 	if(state == HUNGER_STATE_FINE)
 		SetInvisibility(INVISIBILITY_ABSTRACT, name)
 		return
@@ -847,13 +1010,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 			animate(get_filter("hunger_outline"), alpha = 200, time = 1.5 SECONDS, loop = -1)
 			animate(alpha = 0, time = 1.5 SECONDS)
 
-	else if(get_filter("hunger_outline"))
+	else
 		remove_filter("hunger_outline")
 
 	// Update color of the food
-	underlays -= food_image
-	food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
-	underlays += food_image
+	if((state == HUNGER_STATE_FAT) != (old_state == HUNGER_STATE_FAT))
+		underlays -= food_image
+		food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
+		underlays += food_image
 
 /atom/movable/screen/hunger/update_icon_state()
 	. = ..()

@@ -167,6 +167,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/trappist = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/rum/aged = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/pizzaparty

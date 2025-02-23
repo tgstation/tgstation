@@ -1,12 +1,12 @@
 import { sortBy } from 'common/collections';
-import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'common/keycodes';
-import { BooleanLike } from 'common/react';
 import { Component } from 'react';
+import { Button, KeyListener, Stack } from 'tgui-core/components';
+import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'tgui-core/keycodes';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Button, KeyListener, Stack } from '../components';
-import { BodyZone, BodyZoneSelector } from '../components/BodyZoneSelector';
 import { Window } from '../layouts';
+import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
 
 type Surgery = {
   name: string;

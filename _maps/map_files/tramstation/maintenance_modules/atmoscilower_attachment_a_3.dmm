@@ -177,7 +177,7 @@
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
-/obj/item/stock_parts/cell/empty,
+/obj/item/stock_parts/power_store/cell/empty,
 /obj/item/screwdriver{
 	pixel_y = -10;
 	pixel_x = 7

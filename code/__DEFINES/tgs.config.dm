@@ -1,5 +1,4 @@
 #define TGS_EXTERNAL_CONFIGURATION
-#define TGS_V3_API
 #define TGS_DEFINE_AND_SET_GLOBAL(Name, Value) GLOBAL_VAR_INIT(##Name, ##Value); GLOBAL_PROTECT(##Name)
 #define TGS_READ_GLOBAL(Name) GLOB.##Name
 #define TGS_WRITE_GLOBAL(Name, Value) GLOB.##Name = ##Value

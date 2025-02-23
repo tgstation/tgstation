@@ -4,6 +4,7 @@
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	base_icon_state = "nothingwand"
@@ -65,7 +66,7 @@
 	name = "wand of death"
 	desc = "This deadly wand overwhelms the victim's body with pure energy, slaying them without fail."
 	school = SCHOOL_NECROMANCY
-	fire_sound = 'sound/magic/wandodeath.ogg'
+	fire_sound = 'sound/effects/magic/wandodeath.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/death
 	icon_state = "deathwand"
 	base_icon_state = "deathwand"
@@ -83,9 +84,8 @@
 			user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
 			to_chat(user, span_notice("You feel great!"))
 			return
-	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
-	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
-	</span>")
+	to_chat(user, span_warning("You irradiate yourself with pure negative energy! \
+	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]"))
 	user.death(FALSE)
 
 /obj/item/gun/magic/wand/death/debug
@@ -105,7 +105,7 @@
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
 	school = SCHOOL_RESTORATION
 	ammo_type = /obj/item/ammo_casing/magic/heal
-	fire_sound = 'sound/magic/staff_healing.ogg'
+	fire_sound = 'sound/effects/magic/staff_healing.ogg'
 	icon_state = "revivewand"
 	base_icon_state = "revivewand"
 	max_charges = 10 //10, 5, 5, 4
@@ -119,9 +119,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
-			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
-			</span>")
+			to_chat(user, span_warning("You irradiate yourself with pure positive energy! \
+			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]"))
 			user.investigate_log("has been killed by a bolt of resurrection.", INVESTIGATE_DEATHS)
 			user.death(FALSE)
 			return
@@ -146,7 +145,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "polywand"
 	base_icon_state = "polywand"
-	fire_sound = 'sound/magic/staff_change.ogg'
+	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
@@ -164,7 +163,7 @@
 	desc = "This wand will wrench targets through space and time to move them somewhere else."
 	school = SCHOOL_TRANSLOCATION
 	ammo_type = /obj/item/ammo_casing/magic/teleport
-	fire_sound = 'sound/magic/wand_teleport.ogg'
+	fire_sound = 'sound/effects/magic/wand_teleport.ogg'
 	icon_state = "telewand"
 	base_icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
@@ -183,7 +182,7 @@
 	desc = "This wand will use the lightest of bluespace currents to gently place the target somewhere safe."
 	school = SCHOOL_TRANSLOCATION
 	ammo_type = /obj/item/ammo_casing/magic/safety
-	fire_sound = 'sound/magic/wand_teleport.ogg'
+	fire_sound = 'sound/effects/magic/wand_teleport.ogg'
 	icon_state = "telewand"
 	base_icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
@@ -219,7 +218,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "doorwand"
 	base_icon_state = "doorwand"
-	fire_sound = 'sound/magic/staff_door.ogg'
+	fire_sound = 'sound/effects/magic/staff_door.ogg'
 	max_charges = 20 //20, 10, 10, 7
 	no_den_usage = 1
 
@@ -236,7 +235,7 @@
 	name = "wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames."
 	school = SCHOOL_EVOCATION
-	fire_sound = 'sound/magic/fireball.ogg'
+	fire_sound = 'sound/effects/magic/fireball.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/fireball
 	icon_state = "firewand"
 	base_icon_state = "firewand"
@@ -267,7 +266,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/shrink/wand
 	icon_state = "shrinkwand"
 	base_icon_state = "shrinkwand"
-	fire_sound = 'sound/magic/staff_shrink.ogg'
+	fire_sound = 'sound/effects/magic/staff_shrink.ogg'
 	max_charges = 10 //10, 5, 5, 4
 	no_den_usage = TRUE
 	w_class = WEIGHT_CLASS_TINY
@@ -277,3 +276,78 @@
 	charges--
 	user.AddComponent(/datum/component/shrink, -1) // small forever
 	return ..()
+
+// Wand of debugging
+
+#ifdef TESTING
+
+/obj/item/gun/magic/wand/antag
+	name = "wand of antag"
+	desc = "This wand uses the powers of bullshit to turn anyone it hits into an antag"
+	school = SCHOOL_FORBIDDEN
+	ammo_type = /obj/item/ammo_casing/magic/antag
+	icon_state = "revivewand"
+	base_icon_state = "revivewand"
+	color = COLOR_ADMIN_PINK
+	max_charges = 99999
+
+/obj/item/gun/magic/wand/antag/zap_self(mob/living/user)
+	. = ..()
+	var/obj/item/ammo_casing/magic/antag/casing = new ammo_type()
+	var/obj/projectile/magic/magic_proj = casing.projectile_type
+	magic_proj = new magic_proj(src)
+	magic_proj.on_hit(user)
+	QDEL_NULL(casing)
+
+/obj/item/ammo_casing/magic/antag
+	projectile_type = /obj/projectile/magic/antag
+	harmful = FALSE
+
+/obj/projectile/magic/antag
+	name = "bolt of antag"
+	icon_state = "ion"
+	var/antag = /datum/antagonist/traitor
+
+/obj/projectile/magic/antag/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+
+	if(isliving(target))
+		var/mob/living/victim = target
+		if(isnull(victim.mind))
+			victim.mind_initialize()
+		if(victim.mind.has_antag_datum(antag))
+			victim.mind.remove_antag_datum(antag)
+			to_chat(world, "removed")
+		else
+			victim.mind.add_antag_datum(antag)
+			to_chat(world, "added")
+
+/obj/item/gun/magic/wand/antag/heretic
+	name = "wand of antag heretic"
+	desc = "This wand uses the powers of bullshit to turn anyone it hits into an antag heretic"
+	color = COLOR_GREEN
+	ammo_type = /obj/item/ammo_casing/magic/antag/heretic
+
+/obj/item/ammo_casing/magic/antag/heretic
+	projectile_type = /obj/projectile/magic/antag/heretic
+
+/obj/projectile/magic/antag/heretic
+	name = "bolt of antag heretic"
+	icon_state = "ion"
+	antag = /datum/antagonist/heretic
+
+/obj/item/gun/magic/wand/antag/cult
+	name = "wand of antag cultist"
+	desc = "This wand uses the powers of bullshit to turn anyone it hits into an antag cultist"
+	color = COLOR_CULT_RED
+	ammo_type = /obj/item/ammo_casing/magic/antag/cult
+
+/obj/item/ammo_casing/magic/antag/cult
+	projectile_type = /obj/projectile/magic/antag/cult
+
+/obj/projectile/magic/antag/cult
+	name = "bolt of antag cult"
+	icon_state = "ion"
+	antag = /datum/antagonist/cult
+
+#endif

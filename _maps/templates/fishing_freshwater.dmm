@@ -1,0 +1,98 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/siding/blue,
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/structure/chair/plastic,
+/obj/item/reagent_containers/cup/soda_cans/beer{
+	pixel_x = 12;
+	pixel_y = -5
+	},
+/obj/effect/turf_decal/siding/blue/inner_corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"i" = (
+/turf/open/water/no_planet_atmos,
+/area/template_noop)
+"j" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"m" = (
+/obj/effect/turf_decal/siding/blue/corner,
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+m
+f
+f
+f
+g
+"}
+(2,1,1) = {"
+b
+i
+i
+i
+o
+"}
+(3,1,1) = {"
+b
+i
+i
+i
+o
+"}
+(4,1,1) = {"
+a
+e
+i
+i
+o
+"}
+(5,1,1) = {"
+d
+a
+j
+j
+c
+"}

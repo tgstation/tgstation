@@ -14,8 +14,8 @@
 
 	/// Spam alert prevention
 	var/alert_cooldown
-	/// The emotion icon displayed.
-	var/emotion_icon = "off"
+	/// The icon displayed on the card's screen.
+	var/datum/pai_screen_image/screen_image = /datum/pai_screen_image/off
 	/// Any pAI personalities inserted
 	var/mob/living/silicon/pai/pai
 	/// Prevents a crew member from hitting "request pAI" repeatedly
@@ -27,7 +27,6 @@
 	update_appearance()
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
@@ -68,11 +67,11 @@
 	if(QDELETED(src))
 		return
 	pai = null
-	emotion_icon = initial(emotion_icon)
+	screen_image = initial(screen_image)
 	update_appearance()
 
-/obj/item/pai_card/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(pai)
 		return pai.on_saboteur(source, disrupt_duration)
 
@@ -82,13 +81,13 @@
 
 /obj/item/pai_card/update_overlays()
 	. = ..()
-	. += "pai-[emotion_icon]"
+	. += image(icon = screen_image.icon, icon_state = screen_image.icon_state)
 	if(pai?.hacking_cable)
 		. += "[initial(icon_state)]-connector"
 
 /obj/item/pai_card/vv_edit_var(vname, vval)
 	. = ..()
-	if(vname == NAMEOF(src, emotion_icon))
+	if(vname == NAMEOF(src, screen_image))
 		update_appearance()
 
 /obj/item/pai_card/ui_interact(mob/user, datum/tgui/ui)
@@ -284,7 +283,7 @@
 		return FALSE
 	pai = downloaded
 	RegisterSignal(pai, COMSIG_QDELETING, PROC_REF(on_pai_del))
-	emotion_icon = "null"
+	screen_image = /datum/pai_screen_image/neutral
 	update_appearance()
 	playsound(src, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("[src] plays a cheerful startup noise!")

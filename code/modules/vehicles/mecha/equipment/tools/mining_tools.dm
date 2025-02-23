@@ -9,6 +9,8 @@
 	name = "exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is the drill that'll pierce the heavens!"
 	icon_state = "mecha_drill"
+	equipment_slot = MECHA_UTILITY
+	can_be_toggled = TRUE
 	equip_cooldown = 15
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
@@ -31,6 +33,17 @@
 	)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
+
+/obj/item/mecha_parts/mecha_equipment/drill/handle_ui_act(action, list/params)
+	if(action != "toggle")
+		return
+	if(active)
+		RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(on_mech_click))
+		log_message("Activated.", LOG_MECHA)
+	else
+		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
+		log_message("Deactivated.", LOG_MECHA)
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
@@ -64,6 +77,14 @@
 		return FALSE
 	return ..()
 
+///Redirects clicks to use the drill if possible when enabled
+/obj/item/mecha_parts/mecha_equipment/drill/proc/on_mech_click(atom/mech, mob/source, atom/target, on_cooldown, adjacent)
+	SIGNAL_HANDLER
+	if(on_cooldown || !adjacent)
+		return
+	INVOKE_ASYNC(src, PROC_REF(action), source, target, null, FALSE)
+	return COMPONENT_CANCEL_MELEE_CLICK
+
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers, bumped)
 	//If bumped, only bother drilling mineral turfs
 	if(bumped)
@@ -74,7 +95,7 @@
 		if(istype(target, /turf/closed/mineral/gibtonite))
 			var/turf/closed/mineral/gibtonite/giberal_turf = target
 			if(giberal_turf.stage != GIBTONITE_UNSTRUCK)
-				playsound(chassis, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+				playsound(chassis, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 				to_chat(source, span_warning("[icon2html(src, source)] Active gibtonite ore deposit detected! Safety protocols preventing continued drilling."))
 				return
 
@@ -90,6 +111,10 @@
 			if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
 				return
 
+	// Check if we can even use the equipment to begin with.
+	if(!action_checks(target))
+		return
+
 	// You can't drill harder by clicking more.
 	if(DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 		return
@@ -102,10 +127,6 @@
 
 	// Drilling a turf is a one-and-done procedure.
 	if(isturf(target))
-		// Check if we can even use the equipment to begin with.
-		if(!action_checks(target))
-			return
-
 		var/turf/T = target
 		T.drill_act(src, source)
 
@@ -115,15 +136,15 @@
 	while(do_after_mecha(target, source, drill_delay))
 		if(isliving(target))
 			drill_mob(target, source)
-			playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+			playsound(src,'sound/items/weapons/drill.ogg',40,TRUE)
 		else if(isobj(target))
-			var/obj/O = target
-			if(istype(O, /obj/item/boulder))
-				var/obj/item/boulder/nu_boulder = O
+			var/obj/obj_target = target
+			if(istype(obj_target, /obj/item/boulder))
+				var/obj/item/boulder/nu_boulder = obj_target
 				nu_boulder.manual_process(src, source)
 			else
-				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-			playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
+				obj_target.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
+			playsound(src,'sound/items/weapons/drill.ogg', 40, TRUE)
 
 		// If we caused a qdel drilling the target, we can stop drilling them.
 		// Prevents starting a do_after on a qdeleted target.
@@ -149,24 +170,21 @@
 		to_chat(user, "[icon2html(src, user)][span_danger("[src] is too durable to drill through.")]")
 
 /turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
-	for(var/turf/closed/mineral/M in range(drill.chassis,1))
-		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			M.gets_drilled()
+	for(var/turf/closed/mineral/wall in range(drill.chassis, 1))
+		if(get_dir(drill.chassis, wall) & drill.chassis.dir)
+			wall.gets_drilled()
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
 /turf/open/misc/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/open/misc/asteroid/M in range(1, drill.chassis))
-		if((get_dir(drill.chassis,M) & drill.chassis.dir) && !M.dug)
-			M.getDug()
+	for(var/turf/open/misc/asteroid/floor in range(1, drill.chassis))
+		if((get_dir(drill.chassis, floor) & drill.chassis.dir) && !floor.dug)
+			floor.getDug()
 	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
-
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley) && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment))
-		var/obj/vehicle/sealed/mecha/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
-		R.collect_ore()
+	chassis.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
 	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
@@ -179,21 +197,20 @@
 		else
 			target.investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
 			target.gib(DROP_ALL_REMAINS)
-	else
-		//drill makes a hole
-		var/obj/item/bodypart/target_part = target.get_bodypart(target.get_random_valid_zone(BODY_ZONE_CHEST))
-		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, MELEE))
+		return
 
-		//blood splatters
-		var/splatter_dir = get_dir(chassis, target)
-		if(isalien(target))
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir)
-		else
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir)
+	//drill makes a hole
+	var/def_zone = target.get_random_valid_zone(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/target_part = target.get_bodypart(def_zone)
+	var/blocked = target.run_armor_check(def_zone, MELEE)
+	target.apply_damage(10, BRUTE, def_zone, blocked)
 
-		//organs go everywhere
-		if(target_part && prob(10 * drill_level))
-			target_part.dismember(BRUTE)
+	//blood splatters
+	target.create_splatter(get_dir(chassis, target))
+
+	//organs go everywhere
+	if(target_part && blocked < 100 && prob(10 * drill_level))
+		target_part.dismember(BRUTE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"
@@ -204,7 +221,6 @@
 	drill_level = DRILL_HARDENED
 	force = 15
 	toolspeed = 0.7
-
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"

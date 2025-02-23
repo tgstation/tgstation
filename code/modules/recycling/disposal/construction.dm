@@ -109,7 +109,7 @@
 
 		var/turf/T = get_turf(src)
 		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && isfloorturf(T))
-			var/obj/item/crowbar/held_crowbar = user.is_holding_item_of_type(/obj/item/crowbar)
+			var/obj/item/crowbar/held_crowbar = user.is_holding_tool_quality(TOOL_CROWBAR)
 			if(!held_crowbar || !T.crowbar_act(user, held_crowbar))
 				to_chat(user, span_warning("You can only attach the [pipename] if the floor plating is removed!"))
 				return TRUE
@@ -152,7 +152,7 @@
 			to_chat(user, span_warning("A disposals machine already exists here!"))
 			return TRUE
 
-		if(!I.tool_start_check(user, amount=1))
+		if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return TRUE
 
 		to_chat(user, span_notice("You start welding the [pipename] in place..."))

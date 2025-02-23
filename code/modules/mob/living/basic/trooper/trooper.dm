@@ -10,7 +10,7 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	melee_attack_cooldown = 1.2 SECONDS
 	combat_mode = TRUE
 	unsuitable_atmos_damage = 7.5

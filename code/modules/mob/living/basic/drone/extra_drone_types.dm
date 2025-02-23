@@ -126,7 +126,7 @@
 	"<span class='notice'>     - Going to the main station in search of materials.</span>\n"+\
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
-	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	span_warning("<u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u>")
 	shy = FALSE
 
 /mob/living/basic/drone/derelict/Initialize(mapload)

@@ -80,7 +80,7 @@ Slimecrossing Items
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
 
 //Hypercharged slime cell - Charged Yellow
-/obj/item/stock_parts/cell/high/slime_hypercharged
+/obj/item/stock_parts/power_store/cell/high/slime_hypercharged
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
 	icon = 'icons/mob/simple/slimes.dmi'
@@ -154,12 +154,12 @@ Slimecrossing Items
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE)
 
 /obj/structure/ice_stasis/Destroy()
 	for(var/atom/movable/M in contents)
 		M.forceMove(loc)
-	playsound(src, 'sound/effects/glassbr3.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr3.ogg', 50, TRUE)
 	return ..()
 
 //Gold capture device - Chilling Gold

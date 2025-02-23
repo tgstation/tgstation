@@ -216,7 +216,7 @@
 	var/mob/living/living_target = target
 	if(ishuman(living_target))
 		var/mob/living/carbon/human/human_target = living_target
-		if(human_target.check_block(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
+		if(human_target.check_block(source, 0, "\the [source]", attack_type = LEAP_ATTACK) && living_source)
 			living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 			return
 
@@ -227,14 +227,19 @@
 	id = "tired_post_charge"
 	duration = 1 SECONDS
 	alert_type = null
+	var/tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge
 
 /datum/status_effect/tired_post_charge/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
+	owner.add_movespeed_modifier(tired_movespeed)
 
 /datum/status_effect/tired_post_charge/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
+	owner.remove_movespeed_modifier(tired_movespeed)
+
+/datum/status_effect/tired_post_charge/lesser
+	id = "tired_post_charge_easy"
+	tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge/lesser
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"

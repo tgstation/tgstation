@@ -98,7 +98,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	// We've made it this far, tram is physically fine so let's trip plan
 	// This is based on the destination nav beacon, the logical location
 	// If Something Happens and the location the controller thinks it's at
-	// gets out of sync with it's actual physical location, it can be reset
+	// gets out of sync with its actual physical location, it can be reset
 
 	// Since players can set the platform ID themselves, make sure it's a valid platform we're aware of
 	var/network = LAZYACCESS(nav_beacons, transport_id)

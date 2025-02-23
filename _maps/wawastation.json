@@ -7,16 +7,14 @@
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
 		"whiteship": "whiteship_meta",
-		"emergency": "emergency_tram"
+		"emergency": "emergency_wawa"
 	},
 	"traits": [
 		{
-			"Up": true,
 			"Baseturf": "/turf/open/misc/asteroid/airless",
 			"Linkage": "Cross"
 		},
 		{
-			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		}

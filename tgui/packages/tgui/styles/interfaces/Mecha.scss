@@ -2,21 +2,21 @@
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
-$color-danger: #c92020 !default;
+$color-danger: hsl(0, 74%, 45%) !default;
 
 .Mecha__displayBox {
-  background-color: #002003;
-  border: 0.167em inset #e8e4c9;
-  color: #03e017;
+  background-color: hsl(150, 100%, 1%);
+  border: 0.167em inset hsl(50, 33%, 91%);
+  color: hsl(132, 100%, 45%);
   font-size: 2em;
   font-family: monospace;
   padding: 0.25em;
 }
 
 .Mecha__displayBoxRed {
-  background-color: #002003;
-  border: 0.167em inset #e8e4c9;
-  color: #f54b4b;
+  background-color: hsl(150, 100%, 1%);
+  border: 0.167em inset hsl(50, 33%, 91%);
+  color: hsl(0, 89%, 64%);
   font-size: 2em;
   font-family: monospace;
   padding: 0.25em;

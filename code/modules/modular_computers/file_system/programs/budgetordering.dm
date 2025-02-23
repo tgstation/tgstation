@@ -94,13 +94,18 @@
 			)
 		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
 			continue
+
+		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.get_cost(),
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = P.goody,
-			"access" = P.access
+			"access" = P.access,
+			"contains" = P.get_contents_ui_data(),
 		))
 
 	//Data regarding the User's capability to buy things.
@@ -240,17 +245,17 @@
 
 			var/reason = ""
 			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
-				reason = tgui_input_text(usr, "Reason", name)
+				reason = tgui_input_text(usr, "Reason", name, max_length = MAX_MESSAGE_LEN)
 				if(isnull(reason) || ..())
 					return
 
 			if(pack.goody && !self_paid)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
 			if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 				return
 
