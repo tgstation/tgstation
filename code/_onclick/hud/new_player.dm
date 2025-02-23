@@ -634,6 +634,8 @@
 		return
 	SEND_SOUND(hud.mymob, sound('sound/effects/splat.ogg', volume = 50))
 	SSticker.start_immediately = TRUE
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION

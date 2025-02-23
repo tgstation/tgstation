@@ -875,7 +875,14 @@
 /area/station/asteroid)
 "add" = (
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/mail_sorting/science/genetics,
+/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
+/obj/effect/mapping_helpers/mail_sorting/science/research,
+/obj/effect/mapping_helpers/mail_sorting/science/robotics,
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ade" = (
@@ -13560,6 +13567,9 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "dEv" = (
@@ -27090,12 +27100,12 @@
 	pixel_y = -22
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/tram/filled/line,
 /obj/effect/turf_decal/trimline/tram/filled/warning,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "iJd" = (
@@ -46254,14 +46264,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
-/obj/structure/disposalpipe/sorting/mail{
+/obj/structure/disposalpipe/junction{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/mail_sorting/science/genetics,
-/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
-/obj/effect/mapping_helpers/mail_sorting/science/research,
-/obj/effect/mapping_helpers/mail_sorting/science/robotics,
-/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "psU" = (
@@ -49252,6 +49257,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "qrI" = (
@@ -51220,12 +51228,14 @@
 	c_tag = "Hallway - Starboard Tram Platform North-East"
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -54011,7 +54021,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 10
+	dir = 2
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -66251,9 +66261,6 @@
 "wiX" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/cable,
-/obj/structure/disposalpipe/junction/yjunction{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -66262,6 +66269,9 @@
 	},
 /obj/effect/turf_decal/trimline/tram/corner{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -184673,7 +184683,7 @@ uCO
 aDI
 aDV
 qrx
-yeB
+aYA
 hZc
 seR
 seR
