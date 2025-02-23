@@ -6,8 +6,6 @@
 /datum/unit_test/crafting
 
 /datum/unit_test/crafting/Run()
-	var/static/list/blacklisted_recipes = list()
-
 	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
 	var/turf/turf = crafter.loc
 	var/old_turf_type = turf.type
@@ -16,9 +14,8 @@
 
 	var/list/tools = list()
 
-	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
-		if(recipe.type in blacklisted_recipes)
-			continue
+	var/list/all_recipes = GLOB.crafting_recipes + GLOB.cooking_recipes
+	for(var/datum/crafting_recipe/recipe as anything in all_recipes)
 		//split into a different proc, so if something fails it's both easier to track and doesn't halt the loop.
 		process_recipe(crafter, craft_comp, recipe, bottomless_cup, tools)
 		if(QDELETED(bottomless_cup) || bottomless_cup.loc != turf) //The cup itself was used in a recipe, rather than its contents.
