@@ -342,6 +342,7 @@
 	icon_state = "mailbag"
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
+	custom_premium_price = PAYCHECK_LOWER
 
 /obj/item/storage/bag/mail/Initialize(mapload)
 	. = ..()

@@ -22,7 +22,7 @@
 
 	set_teleport_target(M.buffer)
 
-	to_chat(user, span_green("You succesfully link [src] to the [M.buffer]."))
+	to_chat(user, span_green("You successfully link [src] to the [M.buffer]."))
 	return ITEM_INTERACT_SUCCESS
 
 ///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again

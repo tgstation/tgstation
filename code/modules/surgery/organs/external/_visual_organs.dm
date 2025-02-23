@@ -83,10 +83,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	bodypart_overlay.set_appearance(typed_accessory)
 
-	if(bodypart_owner) //are we in a limb?
-		bodypart_owner.update_icon_dropped()
-	else if(owner && !(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS)) //are we a person?
+	if(owner && !(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS)) //are we a person?
 		owner.update_body_parts()
+	else
+		bodypart_owner?.update_icon_dropped() //are we in a limb?
 
 /obj/item/organ/update_overlays()
 	. = ..()
@@ -133,7 +133,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/frills
 	name = "frills"
-	desc = "Ear-like external organs often seen on aquatic reptillians."
+	desc = "Ear-like external organs often seen on aquatic reptilians."
 	icon_state = "frills"
 
 	zone = BODY_ZONE_HEAD

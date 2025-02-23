@@ -23,7 +23,7 @@
 		if(M.can_block_magic())
 			return BULLET_ACT_BLOCK
 		else
-			M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+			M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE)
 
 // Mime
 
@@ -44,6 +44,7 @@
 /// Marksman Shot
 /obj/projectile/bullet/marksman
 	name = "marksman nanoshot"
+	icon_state = null
 	hitscan = TRUE
 	damage = 30
 	tracer_type = /obj/effect/projectile/tracer/solar

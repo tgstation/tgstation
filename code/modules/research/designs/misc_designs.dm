@@ -635,7 +635,7 @@
 
 /datum/design/holosign
 	name = "Holographic Sign Projector"
-	desc = "A holograpic projector used to project various warning signs."
+	desc = "A holographic projector used to project various warning signs."
 	id = "holosign"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
@@ -647,7 +647,7 @@
 
 /datum/design/holobarrier_jani
 	name = "Custodial Holobarrier Projector"
-	desc = "A holograpic projector used to project hard light wet floor barriers."
+	desc = "A holographic projector used to project hard light wet floor barriers."
 	id = "holobarrier_jani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT)
@@ -1116,6 +1116,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/shuttle_rods
+	name = "Shuttle Frame Rods"
+	id = "shuttlerods"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/rods/shuttle
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
 // Experimental designs
 
 /datum/design/polymorph_belt
@@ -1137,7 +1148,7 @@
 /datum/design/perceptomatrix
 	name = "Perceptomatrix Helm"
 	id = "perceptomatrix"
-	desc = "This helm harnesses hallucinative energies to shield its owner from perceptual anomalies. It requires a Hallucination Anomaly Core in order to function."
+	desc = "This helm harnesses hallucinatory energies to shield its owner from perceptual anomalies. It requires a Hallucination Anomaly Core in order to function."
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/clothing/head/helmet/perceptomatrix
 	materials = list(

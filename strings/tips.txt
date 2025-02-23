@@ -44,6 +44,7 @@ As a Geneticist, T goes to A, and G goes to C.
 As a Ghost, you can both start and join capture the flag games through the minigames menu, or by clicking on one of the team spawners, which can be found under the "Misc" section of the orbit menu.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
+As a Heretic, you can locate an influence by dreaming about random objects around it when you sleep.
 As a Heretic, the Path of Ash focuses on stealth and disorientation, but as you progress, sheds this playstyle in favor of a more aggressive, fiery finale.
 As a Heretic, the Path of Moon will literally drive people around you crazy - perhaps crazy enough to become your allies should you succeed.
 As a Heretic, the Path of Lock is an Assistant's best friend, and can open many pathways. Including ones beyond the veil...
@@ -291,7 +292,6 @@ Modular computers are compatible with integrated circuits, but most of the progr
 You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.
 As a Bitrunner, upgrading your quantum server will increase rewards and reduce downtime.
 As a Bitrunner, your avatar has a domain info ability which will give you clues to help complete virtual domains.
-Bitrunning is a crime.
 You can right click someone with wire cutters, jaws of life, and box cutters to instantly snap cablecuffs or zipties. The jaws can even instantly break handcuffs!
 You can alt-click tank transfer valves to remove a tank from them.
 You can use a multitool in your hand to track the area's local APC.

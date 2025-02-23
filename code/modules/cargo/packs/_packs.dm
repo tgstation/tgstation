@@ -45,6 +45,20 @@
 /datum/supply_pack/New()
 	id = type
 
+/// Returns data used for cargo purchasing UI
+/datum/supply_pack/proc/get_contents_ui_data()
+	var/list/data = list()
+	for(var/obj/item/item as anything in contains)
+		var/list/item_data = list(
+			"name" = item.name,
+			"icon" = item.greyscale_config ? null : item.icon,
+			"icon_state" = item.greyscale_config ? null : item.icon_state,
+			"amount" = contains[item]
+		)
+		UNTYPED_LIST_ADD(data, item_data)
+
+	return data
+
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)

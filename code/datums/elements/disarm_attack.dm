@@ -27,7 +27,7 @@
 	SIGNAL_HANDLER
 	if(!user.can_disarm(victim) || !can_disarm_attack(source, victim, user))
 		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
-	if(victim.check_block(source, 0, "the [source.name]", MELEE_ATTACK, 0))
+	if(victim.check_block(source, 0, "\the [source]", MELEE_ATTACK, 0))
 		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 	user.disarm(victim, source)
 	user.changeNext_move(source.secondary_attack_speed || source.attack_speed)

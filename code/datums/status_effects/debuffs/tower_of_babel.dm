@@ -2,10 +2,12 @@
 	id = "tower_of_babel"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/tower_of_babel
-	var/trait_source = STATUS_EFFECT_TRAIT
+	var/trait_source
 
 /datum/status_effect/tower_of_babel/on_creation(mob/living/new_owner, duration = 15 SECONDS)
 	src.duration = duration
+	if(isnull(trait_source))
+		trait_source = TRAIT_STATUS_EFFECT(id)
 	return ..()
 
 /datum/status_effect/tower_of_babel/on_apply()

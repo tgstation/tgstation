@@ -16,7 +16,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)
-	embed_type = /datum/embed_data/rune_carver
+	embed_type = /datum/embedding/rune_carver
 
 	/// Whether we're currently drawing a rune
 	var/drawing = FALSE
@@ -35,7 +35,7 @@
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
-/datum/embed_data/rune_carver
+/datum/embedding/rune_carver
 	ignore_throwspeed_threshold = TRUE
 	embed_chance = 75
 	jostle_chance = 2

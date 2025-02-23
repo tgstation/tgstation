@@ -76,22 +76,29 @@
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
 		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
-		if(design_structure == /turf/open/floor/plating)
+		if(design_structure == /turf/open/floor/plating/rcd)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
 				T.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 				qdel(src)
 				return TRUE
 		if(design_structure == /obj/structure/lattice/catwalk)
-			var/turf/turf = loc
-			qdel(src)
-			new /obj/structure/lattice/catwalk(turf)
+			replace_with_catwalk()
 			return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
+
+/obj/structure/lattice/proc/replace_with_catwalk()
+	var/list/post_replacement_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_LATTICE_PRE_REPLACE_WITH_CATWALK, post_replacement_callbacks)
+	var/turf/turf = loc
+	qdel(src)
+	var/new_catwalk = new /obj/structure/lattice/catwalk(turf)
+	for(var/datum/callback/callback as anything in post_replacement_callbacks)
+		callback.Invoke(new_catwalk)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -162,7 +169,7 @@
 
 /obj/structure/lattice/lava/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(!istype(attacking_item, /obj/item/stack/tile/iron))
+	if(!ismetaltile(attacking_item))
 		return
 	var/obj/item/stack/tile/iron/attacking_tiles = attacking_item
 	if(!attacking_tiles.use(1))

@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - bugfix: "The \"Move Up\" and \"Move Down\" verbs properly respect multi-z connectivity when operating a remote camera."

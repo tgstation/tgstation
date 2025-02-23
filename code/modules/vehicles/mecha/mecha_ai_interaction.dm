@@ -40,7 +40,7 @@
 			for(var/mob/living/silicon/ai/aipilot in occupants)
 				ai_pilots += aipilot
 			if(!length(ai_pilots)) //Mech does not have an AI for a pilot
-				to_chat(user, span_warning("No AI detected in the [name] onboard computer."))
+				to_chat(user, span_warning("No AI detected in \the [src]'s onboard computer."))
 				return
 			if(length(ai_pilots) > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
 				AI = tgui_input_list(user, "Which AI do you wish to card?", "AI Selection", sort_list(ai_pilots))
@@ -66,7 +66,9 @@
 			return
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
-			AI.linked_core = new /obj/structure/ai_core/deactivated(AI.loc)
+			var/obj/structure/ai_core/deactivated/deactivated_core = new(AI.loc, FALSE, FALSE, AI)
+			AI.linked_core = deactivated_core
+			AI.linked_core.RegisterSignal(deactivated_core, COMSIG_ATOM_DESTRUCTION, TYPE_PROC_REF(/obj/structure/ai_core/deactivated, disable_doomsday)) //Protect that core! The structure goes bye-bye when we re-shunt back in so no need for cleanup.
 			AI.linked_core.remote_ai = AI
 			if(AI.can_dominate_mechs && LAZYLEN(occupants)) //Oh, I am sorry, were you using that?
 				to_chat(AI, span_warning("Occupants detected! Forced ejection initiated!"))

@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	name = "Furious Steel"
 	desc = "Summon three silver blades which orbit you. \
-		While orbiting you, these blades will protect you from from attacks, but will be consumed on use. \
+		While orbiting you, these blades will protect you from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
@@ -45,12 +45,12 @@
 
 	unset_click_ability(source, refund_cooldown = TRUE)
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/clicker, params, atom/target)
 	// Let the caster prioritize using items like guns over blade casts
-	if(caller.get_active_held_item())
+	if(clicker.get_active_held_item())
 		return FALSE
 	// Let the caster prioritize melee attacks like punches and shoves over blade casts
-	if(get_dist(caller, target) <= 1)
+	if(get_dist(clicker, target) <= 1)
 		return FALSE
 
 	return ..()
@@ -151,7 +151,7 @@
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
 	name = "Cursed Steel"
 	desc = "Summon two cursed blades which orbit you. \
-		While orbiting you, these blades will protect you from from attacks, but will be consumed on use. \
+		While orbiting you, these blades will protect you from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
 	background_icon_state = "bg_heretic" // kept intentionally
 	overlay_icon_state = "bg_cult_border"

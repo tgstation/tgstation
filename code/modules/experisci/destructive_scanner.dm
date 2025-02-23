@@ -46,6 +46,8 @@
 		return
 	var/atom/pickup_zone = drop_location()
 	for(var/atom/movable/to_pickup in pickup_zone)
+		if(to_pickup == src)
+			continue
 		to_pickup.forceMove(src)
 	flick("tube_down", src)
 	scanning = TRUE

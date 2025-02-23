@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Produce, bitrunning, and mining order consoles no longer have broken icons when swapping tabs."
-  - bugfix: "Items in produce, bitrunning, and mining order consoles with especially long names no longer make the information tooltip and item order buttons wonky."
-  - qol: "The information tooltip button for items in produce, bitrunning, and mining order consoles no longer moves with the item name, and instead sits next to the item order buttons."

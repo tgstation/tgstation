@@ -1,18 +1,18 @@
 /datum/looping_sound/showering
 	start_sound = 'sound/machines/shower/shower_start.ogg'
-	start_length = 2
+	start_length = 0.2 SECONDS
 	mid_sounds = list(
 		'sound/machines/shower/shower_mid1.ogg',
 		'sound/machines/shower/shower_mid2.ogg',
 		'sound/machines/shower/shower_mid3.ogg',
 	)
-	mid_length = 10
+	mid_length = 1 SECONDS
 	end_sound = 'sound/machines/shower/shower_end.ogg'
 	volume = 20
 
 /datum/looping_sound/supermatter
 	mid_sounds = list('sound/machines/sm/loops/calm.ogg')
-	mid_length = 60
+	mid_length = 6 SECONDS
 	volume = 40
 	extra_range = 25
 	falloff_exponent = 10
@@ -21,44 +21,44 @@
 
 /datum/looping_sound/destabilized_crystal
 	mid_sounds = list('sound/machines/sm/loops/delamming.ogg')
-	mid_length = 60
+	mid_length = 6 SECONDS
 	volume = 55
 	extra_range = 15
 	vary = TRUE
 
 /datum/looping_sound/hypertorus
 	mid_sounds = list('sound/machines/hypertorus/loops/hypertorus_nominal.ogg')
-	mid_length = 60
+	mid_length = 6 SECONDS
 	volume = 55
 	extra_range = 15
 	vary = TRUE
 
 /datum/looping_sound/generator
 	start_sound = 'sound/machines/generator/generator_start.ogg'
-	start_length = 4
+	start_length = 0.4 SECONDS
 	mid_sounds = list(
 		'sound/machines/generator/generator_mid1.ogg',
 		'sound/machines/generator/generator_mid2.ogg',
 		'sound/machines/generator/generator_mid3.ogg',
 	)
-	mid_length = 4
+	mid_length = 0.4 SECONDS
 	end_sound = 'sound/machines/generator/generator_end.ogg'
 	volume = 40
 
 /datum/looping_sound/deep_fryer
 	start_sound = 'sound/machines/fryer/deep_fryer_immerse.ogg' //my immersions
-	start_length = 10
+	start_length = 1 SECONDS
 	mid_sounds = list(
 		'sound/machines/fryer/deep_fryer_1.ogg',
 		'sound/machines/fryer/deep_fryer_2.ogg',
 	)
-	mid_length = 2
+	mid_length = 0.2 SECONDS
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
 	volume = 15
 
 /datum/looping_sound/clock
 	mid_sounds = list('sound/ambience/misc/ticking_clock.ogg')
-	mid_length = 40
+	mid_length = 4 SECONDS
 	volume = 50
 	ignore_walls = FALSE
 
@@ -69,15 +69,15 @@
 
 /datum/looping_sound/oven
 	start_sound = 'sound/machines/oven/oven_loop_start.ogg' //my immersions
-	start_length = 12
+	start_length = 1.2 SECONDS
 	mid_sounds = list('sound/machines/oven/oven_loop_mid.ogg')
-	mid_length = 13
+	mid_length = 1.3 SECONDS
 	end_sound = 'sound/machines/oven/oven_loop_end.ogg'
 	volume = 100
 	falloff_exponent = 4
 
 /datum/looping_sound/deep_fryer
-	mid_length = 2
+	mid_length = 0.2 SECONDS
 	mid_sounds = list(
 		'sound/machines/fryer/deep_fryer_1.ogg',
 		'sound/machines/fryer/deep_fryer_2.ogg',
@@ -86,26 +86,26 @@
 
 /datum/looping_sound/microwave
 	start_sound = 'sound/machines/microwave/microwave-start.ogg'
-	start_length = 10
+	start_length = 1 SECONDS
 	mid_sounds = list(
 		'sound/machines/microwave/microwave-mid1.ogg' = 10,
 		'sound/machines/microwave/microwave-mid2.ogg' = 1,
 	)
-	mid_length = 10
+	mid_length = 1 SECONDS
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
 
 /datum/looping_sound/lathe_print
 	mid_sounds = list('sound/machines/lathe/lathe_print.ogg')
-	mid_length = 20
+	mid_length = 2 SECONDS
 	volume = 50
 	vary = TRUE
 	ignore_walls = FALSE
 	falloff_distance = 1
-	mid_length_vary = 10
+	mid_length_vary = 1 SECONDS
 
 /datum/looping_sound/jackpot
-	mid_length = 11
+	mid_length = 1.1 SECONDS
 	mid_sounds = list('sound/machines/roulette/roulettejackpot.ogg')
 	volume = 85
 	vary = TRUE
@@ -138,7 +138,7 @@
 	)
 	mid_length = 1.8 SECONDS
 	end_sound = 'sound/machines/computer/computer_end.ogg'
-	end_volume = 10
+	end_volume = 1 SECONDS
 	volume = 2
 	falloff_exponent = 5 //Ultra quiet very fast
 	extra_range = -12

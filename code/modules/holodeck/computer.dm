@@ -365,6 +365,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			if(SPT_PROB(2.5, seconds_per_tick))
 				do_sparks(2, 1, holo_turf)
 				return
+	if(spawning_simulation)
+		return // putting it here because updating power would be pointless we are only loading it
 	. = ..()
 	if(!. || program == offline_program)//we dont need to scan the holodeck if the holodeck is offline
 		update_use_power(IDLE_POWER_USE)

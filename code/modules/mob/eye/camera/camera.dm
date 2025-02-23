@@ -13,7 +13,7 @@
 	var/use_visibility = TRUE
 	/// List of [camera chunks][/datum/camerachunk] visible to this camera.
 	/// Please don't interface with this directly. Use the [cameranet][/datum/cameranet].
-	var/final/list/datum/camerachunk/visibleCameraChunks = list()
+	VAR_FINAL/list/datum/camerachunk/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
 

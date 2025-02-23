@@ -43,7 +43,7 @@ Consuming extracts:
 /obj/item/slimecross/consuming/proc/spawncookie()
 	return new cookietype(get_turf(src))
 
-/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its' own type.
+/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its own type.
 	name = "error cookie"
 	desc = "A weird slime cookie. You shouldn't see this."
 	icon = 'icons/obj/food/slimecookies.dmi'
@@ -227,11 +227,6 @@ Consuming extracts:
 	taste = "sugar and starlight"
 
 /obj/item/slime_cookie/bluespace/do_effect(mob/living/eater, mob/user)
-	var/area/eater_area = get_area(eater)
-	if (eater_area.area_flags & NOTELEPORT)
-		fail_effect(eater)
-		return
-
 	var/list/area_turfs = get_area_turfs(get_area(get_turf(eater)))
 	var/turf/target
 

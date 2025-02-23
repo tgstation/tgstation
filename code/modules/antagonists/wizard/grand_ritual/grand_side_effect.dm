@@ -109,7 +109,8 @@
 		if (can_create[create_path] == 0)
 			continue
 		can_create[create_path] = can_create[create_path] - 1
-		new create_path(pick(anomaly_positions), /*new_lifespan = */rand(15 SECONDS, 30 SECONDS), /*drops_core = */FALSE)
+		var/obj/effect/anomaly/target = new create_path(pick(anomaly_positions), /*new_lifespan = */rand(15 SECONDS, 30 SECONDS))
+		QDEL_NULL(target.anomaly_core)
 		to_create--
 
 #undef MIN_ANOMALIES_CREATED

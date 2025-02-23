@@ -326,7 +326,6 @@
 	// pretend like this mob has a mind. they should be fished up first
 	no_brain.mind_initialize()
 
-	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
 	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
 	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
 	var/obj/item/fishing_hook/rescue/the_hook = allocate(/obj/item/fishing_hook/rescue, run_loc_floor_top_right)
@@ -456,10 +455,8 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))

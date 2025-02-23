@@ -588,7 +588,7 @@
 
 /obj/item/clothing/suit/coordinator
 	name = "coordinator jacket"
-	desc = "A jacket for a party ooordinator, stylish!."
+	desc = "A jacket for a party coordinator, stylish!."
 	icon_state = "capformal"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'

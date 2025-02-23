@@ -43,6 +43,9 @@ SUBSYSTEM_DEF(persistence)
 	/// List of persistene ids which piggy banks.
 	var/list/queued_broken_piggy_ids
 
+	/// json database linking to data/trophy_fishes.json, for persistent trophy fish mount.
+	var/datum/json_database/trophy_fishes_database
+
 	var/rounds_since_engine_exploded = 0
 	var/delam_highscore = 0
 	var/tram_hits_this_round = 0

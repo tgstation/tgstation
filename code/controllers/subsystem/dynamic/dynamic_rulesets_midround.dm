@@ -230,7 +230,7 @@
 /datum/dynamic_ruleset/midround/from_living/autotraitor
 	name = "Syndicate Sleeper Agent"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
-	antag_datum = /datum/antagonist/traitor/infiltrator/sleeper_agent
+	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_flag_override = ROLE_TRAITOR
 	protected_roles = list(
@@ -261,14 +261,14 @@
 			candidates -= player
 		else if(is_centcom_level(player.z))
 			candidates -= player // We don't autotator people in CentCom
-		else if(player.mind && (player.mind.special_role || !player.mind.can_roll_midround()))
+		else if(player.mind && (player.mind.special_role || !player.mind.can_roll_midround(antag_datum)))
 			candidates -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/execute()
 	var/mob/M = pick(candidates)
 	assigned += M
 	candidates -= M
-	var/datum/antagonist/traitor/infiltrator/sleeper_agent/newTraitor = new
+	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
 	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	log_dynamic("[key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
@@ -310,7 +310,7 @@
 			continue
 		if(isnull(player.mind))
 			continue
-		if(player.mind.special_role || !player.mind.can_roll_midround())
+		if(player.mind.special_role || !player.mind.can_roll_midround(antag_datum))
 			continue
 		candidates += player
 
@@ -479,7 +479,7 @@
 			candidates -= player
 			continue
 
-		if(player.mind && (player.mind.special_role || !player.mind.can_roll_midround()))
+		if(player.mind && (player.mind.special_role || !player.mind.can_roll_midround(antag_datum)))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/from_living/blob_infection/execute()
@@ -973,7 +973,7 @@
 	cost = 5
 	minimum_players = 40
 	repeatable = TRUE
-	signup_item_path = /obj/item/cosmic_skull
+	signup_item_path = /obj/item/clothing/head/helmet/skull/cosmic
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	/// The space turf we find in acceptable(), cached for ease
 	var/space_turf

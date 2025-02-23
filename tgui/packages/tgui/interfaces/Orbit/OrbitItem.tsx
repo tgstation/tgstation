@@ -1,7 +1,7 @@
-import { capitalizeFirst } from 'common/string';
+import { Button, Flex, Icon, Stack } from 'tgui-core/components';
+import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { Button, Flex, Icon, Stack } from '../../components';
 import { getDisplayColor, getDisplayName } from './helpers';
 import { JobIcon } from './JobIcon';
 import { Antagonist, Observable, OrbitData, ViewMode } from './types';

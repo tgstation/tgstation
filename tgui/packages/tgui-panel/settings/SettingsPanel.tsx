@@ -5,7 +5,7 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-import { Section, Stack, Tabs } from 'tgui/components';
+import { Section, Stack, Tabs } from 'tgui-core/components';
 
 import { ChatPageSettings } from '../chat';
 import { changeSettingsTab } from './actions';

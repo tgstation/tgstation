@@ -237,12 +237,12 @@
 	var/head_color
 
 /obj/projectile/bullet/lollipop/harmful
-	embed_type = /datum/embed_data/lollipop
+	embed_type = /datum/embedding/lollipop
 	damage = 10
 	shrapnel_type = /obj/item/food/lollipop/cyborg
 	embed_falloff_tile = 0
 
-/datum/embed_data/lollipop
+/datum/embedding/lollipop
 	embed_chance = 35
 	fall_chance = 2
 	jostle_chance = 0

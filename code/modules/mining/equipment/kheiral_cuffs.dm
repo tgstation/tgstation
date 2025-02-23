@@ -93,7 +93,6 @@
 		if(isliving(loc))
 			connect_kheiral_network(loc)
 
-// LEMON AND HERE
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)

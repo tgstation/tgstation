@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "crowbars can be recycled in lathes only when the panel is closed"

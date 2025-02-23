@@ -1,4 +1,3 @@
-import { useBackend } from '../../backend';
 import {
   Button,
   Icon,
@@ -8,9 +7,10 @@ import {
   Section,
   Stack,
   Table,
-} from '../../components';
-import { formatMoney } from '../../format';
-import { CargoCartButtons } from './CargoButtons';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
+import { useBackend } from '../../backend';
 import { CargoData } from './types';
 
 export function CargoCart(props) {
@@ -22,16 +22,18 @@ export function CargoCart(props) {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <Section fill scrollable title="Cart" buttons={<CargoCartButtons />}>
+        <Section fill scrollable>
           <CheckoutItems />
         </Section>
       </Stack.Item>
       {cart.length > 0 && !!can_send && (
-        <Stack.Item>
-          <Section align="right">
+        <Stack.Item m={0}>
+          <Section textAlign="right">
             <Stack fill align="center">
               <Stack.Item grow>
-                {!sendable && <Icon color="blue" name="toolbox" spin />}
+                {!sendable && (
+                  <Icon mr={0.5} size={1.5} color="blue" name="toolbox" spin />
+                )}
               </Stack.Item>
               <Stack.Item>
                 <Button
@@ -81,25 +83,24 @@ function CheckoutItems(props) {
           <Table.Cell>{entry.object}</Table.Cell>
 
           <Table.Cell width={11}>
-            {can_send && entry.can_be_cancelled ? (
-              <RestrictedInput
-                width={5}
-                minValue={0}
-                maxValue={max_order}
-                value={entry.amount}
-                onEnter={(e, value) =>
-                  act('modify', {
-                    order_name: entry.object,
-                    amount: value,
-                  })
-                }
-              />
-            ) : (
-              <Input width="40px" value={entry.amount} disabled />
-            )}
-
-            {!!can_send && !!entry.can_be_cancelled && (
+            {!!can_send && !!entry.can_be_cancelled ? (
               <>
+                <Button
+                  icon="minus"
+                  onClick={() => act('remove', { order_name: entry.object })}
+                />
+                <RestrictedInput
+                  width={5}
+                  minValue={0}
+                  maxValue={max_order}
+                  value={entry.amount}
+                  onEnter={(e, value) =>
+                    act('modify', {
+                      order_name: entry.object,
+                      amount: value,
+                    })
+                  }
+                />
                 <Button
                   icon="plus"
                   disabled={amount_by_name[entry.object] >= max_order}
@@ -107,11 +108,9 @@ function CheckoutItems(props) {
                     act('add_by_name', { order_name: entry.object })
                   }
                 />
-                <Button
-                  icon="minus"
-                  onClick={() => act('remove', { order_name: entry.object })}
-                />
               </>
+            ) : (
+              <Input width="40px" value={entry.amount} disabled />
             )}
           </Table.Cell>
 

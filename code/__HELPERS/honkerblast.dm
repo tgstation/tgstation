@@ -27,7 +27,7 @@
 		ears?.adjustEarDamage(10, 15)
 		to_chat(victim, "<font color='red' size='8'>HONK</font>")
 		var/obj/item/clothing/shoes/victim_shoes = victim.get_item_by_slot(ITEM_SLOT_FEET)
-		if(!victim_shoes?.can_be_tied)
+		if(!victim_shoes || victim_shoes.fastening_type == SHOES_SLIPON)
 			continue
 		victim_shoes.adjust_laces(SHOES_KNOTTED)
 
