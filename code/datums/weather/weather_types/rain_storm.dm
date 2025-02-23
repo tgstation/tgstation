@@ -15,8 +15,8 @@
 
 	weather_duration_lower = 3 MINUTES
 	weather_duration_upper = 5 MINUTES
-	// the default rain color when weather is aesethic otherwise gets overriden by reagent color
-	weather_color = "#516a91ff"
+
+	weather_color = null
 	thunder_color = null
 
 	area_type = /area
