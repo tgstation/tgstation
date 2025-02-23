@@ -353,6 +353,7 @@
 #include "code\__DEFINES\dcs\signals\signals_powernet.dm"
 #include "code\__DEFINES\dcs\signals\signals_proxmonitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_radiation.dm"
+#include "code\__DEFINES\dcs\signals\signals_radio.dm"
 #include "code\__DEFINES\dcs\signals\signals_reagent.dm"
 #include "code\__DEFINES\dcs\signals\signals_restaurant.dm"
 #include "code\__DEFINES\dcs\signals\signals_scangate.dm"

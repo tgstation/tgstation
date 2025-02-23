@@ -19,16 +19,20 @@
 	 * A static overlay put onto any clothing item that has the camera installed.
 	 */
 	var/static/mutable_appearance/equipped_overlay = mutable_appearance('icons/mob/clothing/neck.dmi', "bodycamera")
-
-/obj/item/bodycam_upgrade/examine_more(mob/user)
-	. = ..()
-	. += list(span_notice("You can use [name] on any outerwear to install it, automatically turning on if the outerwear is equipped."))
-	. += list(span_notice("Once installed, you can use an [EXAMINE_HINT("ID card")] to turn the camera on and off."))
+	///Signals we register to connect_loc to ensure the radio jammer always follows the person wearing the body camera.
+	var/static/list/loc_connections = list(
+		COMSIG_RADIO_JAMMED = PROC_REF(on_jammed),
+	)
 
 /obj/item/bodycam_upgrade/Destroy(force)
 	if(!isnull(builtin_bodycamera))
 		QDEL_NULL(builtin_bodycamera)
 	return ..()
+
+/obj/item/bodycam_upgrade/examine_more(mob/user)
+	. = ..()
+	. += span_notice("You can use [name] on any outerwear to install it, automatically turning on if the outerwear is equipped.")
+	. += span_notice("Once installed, you can use an [EXAMINE_HINT("ID card")] to turn the camera on and off.")
 
 /obj/item/bodycam_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isitem(interacting_with))
@@ -57,6 +61,7 @@
 	RegisterSignal(installing_into, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 	RegisterSignal(installing_into, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(on_checked_overlays))
 	RegisterSignal(installing_into, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+	AddComponent(/datum/component/connect_loc_behalf, installing_into, loc_connections)
 	if(user.get_item_by_slot(ITEM_SLOT_OCLOTHING) == installing_into)
 		user.update_worn_oversuit(update_obscured = FALSE)
 		turn_on(user)
@@ -70,6 +75,7 @@
 		COMSIG_ITEM_GET_WORN_OVERLAYS,
 		COMSIG_ATOM_EMP_ACT,
 	))
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 	if(builtin_bodycamera) //retract the camera back in.
 		builtin_bodycamera.forceMove(src)
 		builtin_bodycamera.network = list()
@@ -170,3 +176,12 @@
 	if(isinhands)
 		return
 	overlays += equipped_overlay
+
+///Called when the body camera has been jammed.
+/obj/item/bodycam_upgrade/proc/on_jammed(datum/source, ignore_syndie)
+	SIGNAL_HANDLER
+	if(isnull(builtin_bodycamera))
+		return
+	if(ignore_syndie && (OPERATIVE_CAMERA_NET in network))
+		return
+	turn_off()
