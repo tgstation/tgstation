@@ -264,9 +264,9 @@
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check_atom(L)
+			if(!L.has_status_effect(/datum/status_effect/shapechange_mob))
+				faction_check = FALSE
 			if(robust_searching)
-				if(L.has_status_effect(/datum/status_effect/shapechange_mob)) // Prevents polymorph belt cheese
-					return TRUE
 				if(faction_check && !attack_same)
 					return FALSE
 				if(L.stat > stat_attack)
