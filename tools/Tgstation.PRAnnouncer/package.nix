@@ -25,7 +25,7 @@ let
 
     installPhase = ''
       mkdir -p $out
-      xmlstarlet sel --template --value-of /X:Project/X:PropertyGroup/X:Version ./Tgstation.PRAnnouncer.csproj > $out/tgstation-pr-announcer-version.txt
+      xmlstarlet sel --template --value-of /Project/PropertyGroup/Version ./Tgstation.PRAnnouncer.csproj > $out/tgstation-pr-announcer-version.txt
     '';
   };
   version = (builtins.readFile "${versionParse}/tgstation-pr-announcer-version.txt");
