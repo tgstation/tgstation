@@ -86,7 +86,7 @@
 	///tool instances which have been moved to the crafter loc, which are moved back to nullspace once the recipe is done
 	var/list/summoned_tools = list()
 	for(var/tooltype in needed_tools)
-		var/atom/movable/tool = tools[tooltype]
+		var/obj/item/tool = tools[tooltype]
 		if(!QDELETED(tool))
 			tool.forceMove(crafter.loc)
 		else
