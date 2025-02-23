@@ -34,6 +34,8 @@ export function MalfAiModules(props) {
         icon: item.icon,
         id: item.name,
         name: item.name,
+        population_tooltip: '',
+        insufficient_population: false,
       });
     }
   }

@@ -455,10 +455,8 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))
