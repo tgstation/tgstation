@@ -13,6 +13,8 @@
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
+	ADD_TRAIT(target, TRAIT_ELEVATING_OBJECT, ref(src))
+
 	src.pixel_shift = pixel_shift
 
 	if(ismovable(target))
@@ -29,6 +31,7 @@
 
 /datum/element/elevation/Detach(atom/movable/source)
 	unregister_turf(source, source.loc)
+	REMOVE_TRAIT(source, TRAIT_ELEVATING_OBJECT, ref(src))
 	return ..()
 
 /datum/element/elevation/proc/reset_elevation(turf/target)

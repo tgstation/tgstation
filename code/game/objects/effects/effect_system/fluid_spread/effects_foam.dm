@@ -98,6 +98,8 @@
 				continue
 			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
 				continue
+			if (HAS_TRAIT(loc, TRAIT_ELEVATED_TURF) && !HAS_TRAIT(object, TRAIT_ELEVATING_OBJECT))
+				continue // Do expose tables, don't expose items on tables
 			reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
