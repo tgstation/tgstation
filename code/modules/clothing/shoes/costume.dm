@@ -6,7 +6,7 @@
 	strip_delay = 100
 	equip_delay_other = 100
 	armor_type = /datum/armor/shoes_roman
-	can_be_tied = FALSE
+	fastening_type = SHOES_STRAPS
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -40,7 +40,7 @@
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
@@ -52,7 +52,7 @@
 	name = "grilling sandals"
 	icon_state = "cookflops"
 	inhand_icon_state = "cookflops"
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/shoes/jackbros
@@ -90,12 +90,6 @@
 /obj/item/clothing/shoes/glow/update_overlays()
 	. = ..()
 	. += emissive_appearance('icons/obj/clothing/shoes.dmi', "glow_shoes_emissive", offset_spokesman = src, alpha = src.alpha)
-
-/obj/item/clothing/shoes/jackbros
-	name = "frosty boots"
-	desc = "For when you're stepping on up to the plate."
-	icon_state = "JackFrostShoes"
-	inhand_icon_state = null
 
 /obj/item/clothing/shoes/saints
 	name = "saints sneakers"

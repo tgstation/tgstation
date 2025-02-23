@@ -368,8 +368,11 @@ AUTOADMIN_RANK Game Master
 #AUTOADMIN
 
 
-## Uncomment to automatically deadmin players when the game starts.
-#AUTO_DEADMIN_PLAYERS
+## Uncomment to automatically deadmin players whenever they are controlling a mob.
+#AUTO_DEADMIN_ALWAYS
+
+## Uncomment to automatically deadmin players when they click to ready up or join game. For latejoining, does it before they pick a role because it's best done early to limit metainfo.
+#AUTO_DEADMIN_ON_READY_OR_LATEJOIN
 
 ## Uncomment to automatically deadmin antagonists when they gain the role.
 #AUTO_DEADMIN_ANTAGONISTS
