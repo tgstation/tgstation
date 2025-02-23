@@ -9,10 +9,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	icon_keyboard = "generic_key"
 	light_color = LIGHT_COLOR_ORANGE
 	///Tooltip for the autodelivery button in TGUI
-	var/autodelivery_tooltip = @{"Sends your purchases without cargo! Will take 2 minutes to arrive, and lock the console for longer."}
+	var/autodelivery_tooltip = @{"Sends your purchases without cargo! Will take time to arrive, and lock the console for longer."}
 	///Tooltip for the purchase button in TGUI
 	var/purchase_tooltip = @{"Your purchases will arrive at cargo,
-	and hopefully get delivered by them. 50% cheaper than autodelivery."}
+	and hopefully get delivered by them. Always cheaper than autodelivery."}
 
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	///Whether the console can only use autodelivery mode ONLY
 	var/forced_autodelivery = FALSE
 	///How long the autodelivery takes to arrive
-	var/autodelivery_delay_time = 1 MINUTES
+	var/autodelivery_delay_time = 2 MINUTES
 	///Multiplied cost to use for cargo mode
 	var/cargo_cost_multiplier = 1
 	///Multiplied cost to use for autodelivery mode

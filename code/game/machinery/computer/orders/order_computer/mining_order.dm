@@ -9,6 +9,7 @@
 	icon_screen = null
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
+	autodelivery_delay_time = 30 SECONDS
 	cargo_cost_multiplier = 0.65
 	autodelivery_cost_multiplier = 1
 	purchase_tooltip = @{"Your purchases will arrive at cargo,
