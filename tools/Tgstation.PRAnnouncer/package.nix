@@ -42,7 +42,7 @@ stdenv.mkDerivation {
   };
 
   buildInputs = with pkgs; [
-	dotnetCorePackages.runtime_8_0
+		dotnetCorePackages.runtime_8_0
   ];
   nativeBuildInputs = with pkgs; [
     dotnetCorePackages.sdk_8_0
@@ -53,7 +53,7 @@ stdenv.mkDerivation {
   src = ./.;
 
   buildPhase = ''
-	${dotnetCorePackages.sdk_8_0}/bin/dotnet build -c Release
+		${pkgs.dotnetCorePackages.sdk_8_0}/bin/dotnet build -c Release
   '';
 
   installPhase = ''
