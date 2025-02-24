@@ -83,16 +83,17 @@
 
 /obj/item/cain_and_abel/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(get_dist(interacting_with, user) > 9 || interacting_with.z != user.z)
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	if(!length(current_wisps))
 		user.balloon_alert(user, "no wisps!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	for(var/index in 0 to (length(current_wisps) - 1))
 		addtimer(CALLBACK(src, PROC_REF(fire_wisp), user, interacting_with), index * 0.15 SECONDS)
 
 	set_combo(new_value = 0, user = user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/cain_and_abel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!istype(target) || target.mob_size < MOB_SIZE_LARGE || target.stat == DEAD)

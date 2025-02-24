@@ -4,6 +4,8 @@
 	tick_interval = 0.25 SECONDS
 	duration = 1.75 SECONDS
 	alert_type = null
+	///base damage we apply to mobs near us
+	var/base_damage = 5
 
 /datum/status_effect/dagger_swinging/on_apply()
 	. = ..()
@@ -21,9 +23,7 @@
 
 	var/mob_hit = FALSE
 	for(var/mob/living/target_mob in oview(owner, 1))
-		if(target_mob.mob_size < MOB_SIZE_LARGE)
-			continue
-		target_mob.apply_damage(25, BRUTE)
+		target_mob.apply_damage(target_mob.mob_size < MOB_SIZE_LARGE ? base_damage : base_damage * 5, BRUTE)
 		mob_hit = TRUE
 
 	if(mob_hit)
