@@ -197,7 +197,7 @@
 			continue
 		return FALSE
 
-	return recipe.check_tools(source, surroundings[CONTENTS_INSTANCES] + all_contained, final_check)
+	return recipe.check_tools(source, flatten_list(surroundings[CONTENTS_INSTANCES]) + all_contained, final_check)
 
 /datum/component/personal_crafting/proc/construct_item(atom/crafter, datum/crafting_recipe/recipe)
 	if(!crafter)

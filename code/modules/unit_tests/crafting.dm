@@ -15,6 +15,11 @@
 
 /datum/unit_test/crafting/Run()
 	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
+
+	///Clear the area around our crafting movable of objects that may mess with the unit test
+	for(var/atom/movable/trash in (view(1, crafter) - crafter))
+		qdel(trash)
+
 	var/turf/turf = crafter.loc
 	var/old_turf_type = turf.type
 	var/datum/component/personal_crafting/unit_test/craft_comp = crafter.AddComponent(__IMPLIED_TYPE__)
