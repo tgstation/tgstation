@@ -111,20 +111,20 @@
 /mob/living/carbon/human/petrify(statue_timer, save_brain, colorlist)
 	if(!isturf(loc))
 		return FALSE
-	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
-	S.name = "statue of [name]"
-	S.icon = 'icons/blanks/32x32.dmi'
-	S.icon_state = "nothing"
-	S.appearance_flags |= KEEP_TOGETHER
-	S.copy_overlays(src, cut_old = TRUE)
-	S.add_atom_colour(colorlist || list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
+	var/obj/structure/statue/petrified/new_statue = new(loc, src, statue_timer, save_brain)
+	new_statue.name = "statue of [name]"
+	new_statue.icon = 'icons/blanks/32x32.dmi'
+	new_statue.icon_state = "nothing"
+	new_statue.appearance_flags |= KEEP_TOGETHER
+	new_statue.copy_overlays(src, cut_old = TRUE)
+	new_statue.add_atom_colour(colorlist || list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
 	return TRUE
 
 /mob/living/basic/pet/dog/corgi/petrify(statue_timer)
 	if(!isturf(loc))
 		return FALSE
-	var/obj/structure/statue/petrified/S = new (loc, src, statue_timer)
-	S.name = "statue of a corgi"
-	S.icon_state = "corgi"
-	S.desc = "If it takes forever, I will wait for you..."
+	var/obj/structure/statue/petrified/new_statue = new (loc, src, statue_timer)
+	new_statue.name = "statue of a corgi"
+	new_statue.icon_state = "corgi"
+	new_statue.desc = "If it takes forever, I will wait for you..."
 	return TRUE
