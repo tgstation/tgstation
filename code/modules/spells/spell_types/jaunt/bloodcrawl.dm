@@ -162,8 +162,6 @@
 		they will be consumed by you, fully healing you."
 	/// The sound played when someone's consumed.
 	var/consume_sound = 'sound/effects/magic/demon_consume.ogg'
-	/// consume count (statistics and stuff)
-	var/consume_count = 0
 	/// Apply damage every 20 seconds if we bloodcrawling
 	var/jaunt_damage_timer
 	/// When demon first appears, it does not take damage while in Jaunt. He also doesn't take damage while he's eating someone.
