@@ -741,7 +741,9 @@
 /area/shuttle/personally_bought/mothership)
 "rt" = (
 /obj/structure/railing/eva_handhold/directional/south,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/mothership)
 "rA" = (
@@ -755,7 +757,9 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/personally_bought/mothership)
 "rR" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/mothership)
 "tp" = (
@@ -902,7 +906,9 @@
 /area/shuttle/personally_bought/mothership)
 "wO" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/mothership)
 "wS" = (

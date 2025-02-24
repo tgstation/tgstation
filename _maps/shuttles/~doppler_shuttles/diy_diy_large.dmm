@@ -169,7 +169,9 @@
 /area/shuttle/personally_bought/do_it_yourself_large)
 "kA" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_large)
 "lf" = (
@@ -447,7 +449,9 @@
 /turf/open/floor/iron/smooth,
 /area/shuttle/personally_bought/do_it_yourself_large)
 "DJ" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_large)
 "DU" = (
@@ -538,6 +542,9 @@
 /obj/structure/railing,
 /obj/effect/turf_decal/tile/dark/half/contrasted,
 /obj/machinery/light/cold/directional/west,
+/obj/structure/closet/crate/science/robo,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun,
 /turf/open/floor/iron/smooth,
 /area/shuttle/personally_bought/do_it_yourself_large)
 "Iu" = (
@@ -576,6 +583,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/structure/rack,
 /obj/effect/turf_decal/bot_white,
+/obj/item/mecha_parts/mecha_equipment/thrusters/ion,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/do_it_yourself_large)
 "KV" = (

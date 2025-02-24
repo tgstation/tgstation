@@ -1,0 +1,62 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/teal,
+/turf/template_noop,
+/area/template_noop)
+"p" = (
+/obj/machinery/spaceship_navigation_beacon{
+	pixel_y = 23;
+	pixel_x = -7
+	},
+/obj/item/gps/computer/beacon{
+	pixel_y = 22;
+	pixel_x = 7;
+	gpstag = "ANCHOR-BUOY"
+	},
+/obj/structure/fluff{
+	icon = 'icons/mob/simple/hivebot.dmi';
+	icon_state = "def_radar-off";
+	name = "radio dish component";
+	desc = "Remarkable Nanotrasen technology. This does... something to make the radio dish work."
+	},
+/obj/structure/fluff/sat_dish{
+	dir = 1;
+	pixel_x = -11;
+	pixel_y = -14
+	},
+/obj/structure/fluff/sat_dish{
+	dir = 4;
+	pixel_y = 1;
+	pixel_x = 17
+	},
+/obj/structure/fluff/sat_dish{
+	pixel_y = 6;
+	pixel_x = -11
+	},
+/obj/machinery/power/rtg/portable{
+	pixel_y = -12;
+	pixel_x = 5
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Z" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+Z
+a
+Z
+"}
+(2,1,1) = {"
+a
+p
+a
+"}
+(3,1,1) = {"
+Z
+a
+Z
+"}

@@ -1,7 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ar" = (
 /obj/structure/railing/eva_handhold/directional/south,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/mining_hub)
 "bp" = (
@@ -59,7 +61,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/personally_bought/mining_hub)
 "cu" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/mining_hub)
 "cv" = (
@@ -213,6 +217,7 @@
 /obj/machinery/button/door/personal_shuttle_bay_one/directional/north,
 /obj/item/storage/toolbox/mechanical,
 /obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/thrusters/ion,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/mining_hub)
 "je" = (
@@ -898,7 +903,9 @@
 /area/shuttle/personally_bought/mining_hub)
 "Gs" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/mining_hub)
 "GD" = (
@@ -1025,10 +1032,10 @@
 "LX" = (
 /obj/effect/turf_decal/bot_white,
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-/obj/item/mecha_parts/mecha_equipment/extinguisher,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/mining_hub)
 "Ma" = (
@@ -1174,7 +1181,9 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/mining_hub)
 "QB" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/personally_bought/mining_hub)
 "QJ" = (

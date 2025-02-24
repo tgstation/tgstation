@@ -191,7 +191,9 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "Ev" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "Ew" = (
@@ -432,7 +434,9 @@
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "Yj" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "YC" = (

@@ -76,7 +76,9 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/do_it_yourself_small)
 "tC" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_small)
 "tG" = (
@@ -115,7 +117,9 @@
 /area/shuttle/personally_bought/do_it_yourself_small)
 "zu" = (
 /obj/structure/railing/eva_handhold/directional/south,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_small)
 "Av" = (
@@ -196,7 +200,9 @@
 /area/shuttle/personally_bought/do_it_yourself_small)
 "HU" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_small)
 "Im" = (
