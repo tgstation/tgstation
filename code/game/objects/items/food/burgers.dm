@@ -522,6 +522,7 @@
 	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = /obj/item/melee/baseball_bat::custom_materials
 
 /obj/item/food/burger/baconburger
 	name = "bacon burger"
