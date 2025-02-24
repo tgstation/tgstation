@@ -164,13 +164,13 @@
 	var/list/available_tools = list()
 	var/list/present_qualities = list()
 
-	var/list/all_contained = list() //collect the contents of source, and in turn their contents if they are storages.
+	var/list/instances = list()
 	for(var/atom/movable/movable as anything in source.contents)
-		all_contained += movable
+		instances += movable
 		if(movable.atom_storage)
-			all_contained += movable.contents
+			instances += movable.contents
 
-	for(var/obj/item/contained_item in all_contained) //fill the available tools list with available tool types and behaviours
+	for(var/obj/item/contained_item in instances) //fill the available tools list with available tool types and behaviours
 		available_tools[contained_item.type] = TRUE
 		if(contained_item.tool_behaviour)
 			present_qualities[contained_item.tool_behaviour] = TRUE
@@ -197,7 +197,10 @@
 			continue
 		return FALSE
 
-	return recipe.check_tools(source, flatten_list(surroundings[CONTENTS_INSTANCES]) + all_contained, final_check)
+	for(var/list/type_list as anything in surroundings[CONTENTS_INSTANCES])
+		instances += type_list //add the contents of the list to the instances for the recipe.check_tools() call
+
+	return recipe.check_tools(source, instances, final_check)
 
 /datum/component/personal_crafting/proc/construct_item(atom/crafter, datum/crafting_recipe/recipe)
 	if(!crafter)

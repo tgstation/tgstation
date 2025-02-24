@@ -142,8 +142,8 @@
 
 	spawned_components += result
 
-
 	if(!(recipe.crafting_flags & CRAFT_ENFORCE_MATERIALS_PARITY))
+		delete_components(spawned_components)
 		return
 
 	var/atom/copycat = new result.type(turf)
@@ -189,7 +189,7 @@
  * so they don't mess up with recipes that come after it.
  */
 /datum/unit_test/crafting/proc/delete_components(list/comps)
-	for(var/atom/movable/used in comps)
+	for(var/atom/movable/used as anything in comps)
 		if(!QDELETED(used))
 			qdel(used)
 
