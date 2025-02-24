@@ -80,7 +80,7 @@
 		tool_paths = string_list(tool_paths)
 	for(var/key in parts)
 		if(!parts[key])
-			//ensure every unit of the part used for the recipe will be transferred if the value is otherwise not specified
+			//ensure every single, same-type part used for the recipe will be transferred if the value is otherwise not specified
 			parts[key] = INFINITY
 
 /datum/crafting_recipe/stack/New(obj/item/stack/material, datum/stack_recipe/stack_recipe)

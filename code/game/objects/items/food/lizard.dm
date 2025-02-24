@@ -252,6 +252,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/// i need to figure out why it has iron and glass, i hope this isn't merged oh god oh frick
+/obj/item/food/brain_pate/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	for(var/atom/movable/stuff in components)
+		if(stuff.custom_materials)
+			stack_trace("[stuff.type] has mats in the brain pate, nani!")
+
 /obj/item/food/crispy_headcheese
 	name = "crispy breaded headcheese"
 	desc = "A delicious snack from the streets of Zagoskeld, consisting of headcheese coated in rootbread breadcrumbs. Commonly served with fries."
