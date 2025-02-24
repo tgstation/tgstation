@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - rscadd: "Taking plant or shadow limbs will now behave as expected! Take a plant arm, and it will heal in light! Or take plant and shadow limbs and be in constant agony as you realize this world was not made for you"
-  - refactor: "Refactors how we handle photosynthesis/nyxosynthesis by moving it into a new status_effect framework controlled by podyparts"
