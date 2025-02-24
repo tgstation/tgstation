@@ -211,6 +211,7 @@
 	tastes = list("peanut butter" = 1, "jelly" = 1, "bread" = 2)
 	foodtypes = GRAIN | FRUIT | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = null
 
 /obj/item/food/sandwich/peanut_butter_banana
 	name = "peanut butter and banana sandwich"
@@ -225,6 +226,7 @@
 	tastes = list("peanut butter" = 1, "banana" = 1, "bread" = 2)
 	foodtypes = GRAIN | FRUIT | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = null
 
 /obj/item/food/sandwich/philly_cheesesteak
 	name = "Philly cheesesteak"
@@ -252,6 +254,7 @@
 	tastes = list("bread" = 2, "Britain" = 1, "butter" = 1, "toast" = 1)
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = null
 
 /obj/item/food/sandwich/death
 	name = "death sandwich"

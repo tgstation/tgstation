@@ -1,3 +1,10 @@
+//list key declarations used in check_contents(), get_surroundings() and check_tools()
+#define CONTENTS_INSTANCES "instances"
+#define CONTENTS_MACHINERY "machinery"
+#define CONTENTS_STRUCTURES "structures"
+#define CONTENTS_REAGENTS "reagents"
+#define CONTENTS_TOOL_BEHAVIOUR "tool_behaviour"
+
 /datum/component/personal_crafting
 	/// Custom screen_loc for our element
 	var/screen_loc_override
@@ -48,10 +55,10 @@
  * contents: List of items to search for the recipe's reqs.
  */
 /datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/recipe, list/contents)
-	var/list/item_instances = contents["instances"]
-	var/list/machines = contents["machinery"]
-	var/list/structures = contents["structures"]
-	contents = contents["other"]
+	var/list/item_instances = contents[CONTENTS_INSTANCES]
+	var/list/machines = contents[CONTENTS_MACHINERY]
+	var/list/structures = contents[CONTENTS_STRUCTURES]
+	contents = contents[CONTENTS_REAGENTS]
 
 
 	var/list/requirements_list = list()
@@ -124,31 +131,31 @@
 
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
-	.["tool_behaviour"] = list()
-	.["other"] = list()
-	.["instances"] = list()
-	.["machinery"] = list()
-	.["structures"] = list()
+	.[CONTENTS_TOOL_BEHAVIOURS] = list()
+	.[CONTENTS_REAGENTS] = list()
+	.[CONTENTS_INSTANCES] = list()
+	.[CONTENTS_MACHINERY] = list()
+	.[CONTENTS_STRUCTURES] = list()
 	for(var/obj/object in get_environment(a, blacklist))
 		if(isitem(object))
 			var/obj/item/item = object
-			LAZYADDASSOCLIST(.["instances"], item.type, item)
+			LAZYADDASSOCLIST(.[CONTENTS_INSTANCES], item.type, item)
 			if(isstack(item))
 				var/obj/item/stack/stack = item
-				.["other"][item.type] += stack.amount
+				.[CONTENTS_REAGENTS][item.type] += stack.amount
 			else
-				.["other"][item.type] += 1
+				.[CONTENTS_REAGENTS][item.type] += 1
 				if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
 					var/obj/item/reagent_containers/container = item
 					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
-						.["other"][reagent.type] += reagent.volume
+						.[CONTENTS_REAGENTS][reagent.type] += reagent.volume
 				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
 					if(item.tool_behaviour)
-						.["tool_behaviour"] += item.tool_behaviour
+						.[CONTENTS_TOOL_BEHAVIOURS] += item.tool_behaviour
 		else if (ismachinery(object))
-			LAZYADDASSOCLIST(.["machinery"], object.type, object)
+			LAZYADDASSOCLIST(.[CONTENTS_MACHINERY], object.type, object)
 		else if (isstructure(object))
-			LAZYADDASSOCLIST(.["structures"], object.type, object)
+			LAZYADDASSOCLIST(.[CONTENTS_STRUCTURES], object.type, object)
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
 /datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
@@ -168,10 +175,10 @@
 		if(contained_item.tool_behaviour)
 			present_qualities[contained_item.tool_behaviour] = TRUE
 
-	for(var/quality in surroundings["tool_behaviour"])
+	for(var/quality in surroundings[CONTENTS_TOOL_BEHAVIOURS])
 		present_qualities[quality] = TRUE
 
-	for(var/path in surroundings["other"])
+	for(var/path in surroundings[CONTENTS_REAGENTS])
 		available_tools[path] = TRUE
 
 	for(var/required_quality in recipe.tool_behaviors)
@@ -190,8 +197,7 @@
 			continue
 		return FALSE
 
-	return recipe.check_tools(source, all_contained, final_check)
-
+	return recipe.check_tools(source, surroundings[CONTENTS_INSTANCES] + all_contained, final_check)
 
 /datum/component/personal_crafting/proc/construct_item(atom/crafter, datum/crafting_recipe/recipe)
 	if(!crafter)
@@ -201,13 +207,17 @@
 		return ", invalid recipe!" // This can happen, I can't really explain why, but it can. Better safe than sorry.
 
 	var/list/contents = get_surroundings(crafter, recipe.blacklist)
-	var/send_feedback = 1
-	var/turf/dest_turf = get_turf(crafter)
 
 	if(!check_contents(crafter, recipe, contents))
 		return ", missing component."
 
-	if(!check_tools(crafter, recipe, contents))
+	var/mob_crafter = ismob(crafter)
+	var/turf/dest_turf = get_turf(crafter)
+
+	//Tools are the most fundamental aspect of crafting after the components
+	//However this call is redundant during unit tests. There's another one right before we go on
+	//and spawn the object, and that's the only one we need to call anyway.
+	if(!PERFORM_ALL_TESTS(crafting) && !check_tools(crafter, recipe, contents))
 		return ", missing tool."
 
 	var/considered_flags = recipe.crafting_flags & ~(ignored_flags)
@@ -253,11 +263,12 @@
 			return ", must be made on a tram!"
 
 	//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-	if(ismob(crafter) && !do_after(crafter, recipe.time, target = crafter))
-		return "."
-	contents = get_surroundings(crafter, recipe.blacklist)
-	if(!check_contents(crafter, recipe, contents))
-		return ", missing component."
+	if(ismob(crafter))
+		if(!do_after(crafter, recipe.time, target = crafter))
+			return "."
+		contents = get_surroundings(crafter, recipe.blacklist)
+		if(!check_contents(crafter, recipe, contents))
+			return ", missing component."
 	if(!check_tools(crafter, recipe, contents, TRUE)) //This should be the last check before we proceed and spawn the result.
 		return ", missing tool."
 	//used to gather the material composition of the utilized requirements to transfer to the result
@@ -285,7 +296,6 @@
 				result.reagents.clear_reagents()
 			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
 				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
-		stuff_to_use -= holder
 		qdel(holder)
 	result.on_craft_completion(stuff_to_use, recipe, crafter)
 	if(set_materials)
@@ -293,7 +303,7 @@
 	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
 		if(component.loc != result || isturf(result))
 			qdel(component)
-	if(send_feedback)
+	if(!PERFORM_ALL_TESTS(crafting))
 		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
 	return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 
@@ -692,3 +702,9 @@
 
 /datum/component/personal_crafting/machine/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
 	return TRUE
+
+#undef CONTENTS_INSTANCES
+#undef CONTENTS_MACHINERY
+#undef CONTENTS_STRUCTURES
+#undef CONTENTS_REAGENTS
+#undef CONTENTS_TOOL_BEHAVIOUR

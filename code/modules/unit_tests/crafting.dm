@@ -127,7 +127,7 @@
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
 		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason!"]")
 		if(uncreatables_found)
-			TEST_FAIL("The following objects that shouldn't initialize during unit tests were found in the recipe: [english_list(uncreatables_found)]")
+			TEST_FAIL("The following objects that shouldn't initialize during unit tests were found in [recipe]: [english_list(uncreatables_found)]")
 		delete_components(spawned_components)
 		return
 	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
@@ -174,7 +174,7 @@
 				index++
 			what_it_should_be += ")\] (you can round values a bit)"
 		TEST_FAIL("[warning]. custom_materials should be [what_it_should_be]. \
-			You can otherwise set the requirements_mats_blacklist variable for the recipe \
+			Otherwise set the requirements_mats_blacklist variable for [recipe] \
 			or remove the CRAFT_ENFORCE_MATERIALS_PARITY crafting flag from it")
 
 	delete_components(spawned_components)
