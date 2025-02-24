@@ -126,9 +126,9 @@
 
 	if(weather_flags & (WEATHER_MOBS))
 		subsystem_tasks += SSWEATHER_MOBS
-	else if(weather_flags & (WEATHER_TURFS))
+	if(weather_flags & (WEATHER_TURFS))
 		subsystem_tasks += SSWEATHER_TURFS
-	else if(weather_flags & (WEATHER_THUNDER))
+	if(weather_flags & (WEATHER_THUNDER))
 		subsystem_tasks += SSWEATHER_THUNDER
 
 	currentpart = subsystem_tasks[1]
