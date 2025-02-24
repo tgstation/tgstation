@@ -131,7 +131,7 @@
 
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
-	.[CONTENTS_TOOL_BEHAVIOURS] = list()
+	.[CONTENTS_TOOL_BEHAVIOUR] = list()
 	.[CONTENTS_REAGENTS] = list()
 	.[CONTENTS_INSTANCES] = list()
 	.[CONTENTS_MACHINERY] = list()
@@ -151,7 +151,7 @@
 						.[CONTENTS_REAGENTS][reagent.type] += reagent.volume
 				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
 					if(item.tool_behaviour)
-						.[CONTENTS_TOOL_BEHAVIOURS] += item.tool_behaviour
+						.[CONTENTS_TOOL_BEHAVIOUR] += item.tool_behaviour
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.[CONTENTS_MACHINERY], object.type, object)
 		else if (isstructure(object))
@@ -175,7 +175,7 @@
 		if(contained_item.tool_behaviour)
 			present_qualities[contained_item.tool_behaviour] = TRUE
 
-	for(var/quality in surroundings[CONTENTS_TOOL_BEHAVIOURS])
+	for(var/quality in surroundings[CONTENTS_TOOL_BEHAVIOUR])
 		present_qualities[quality] = TRUE
 
 	for(var/path in surroundings[CONTENTS_REAGENTS])
@@ -211,7 +211,6 @@
 	if(!check_contents(crafter, recipe, contents))
 		return ", missing component."
 
-	var/mob_crafter = ismob(crafter)
 	var/turf/dest_turf = get_turf(crafter)
 
 	//Tools are the most fundamental aspect of crafting after the components
