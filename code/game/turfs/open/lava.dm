@@ -279,17 +279,24 @@
 
 	if(HAS_TRAIT(burn_target, immunity_trait))
 		return LAVA_BE_PROCESSING
+
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
-	if(burn_buckled)
+	while(burn_buckled)
 		if((burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || burn_buckled.throwing || !burn_buckled.has_gravity())
 			return LAVA_BE_PROCESSING
+
 		if(isobj(burn_buckled))
 			var/obj/burn_buckled_obj = burn_buckled
 			if(burn_buckled_obj.resistance_flags & immunity_resistance_flags)
 				return LAVA_BE_PROCESSING
+
 		else if(HAS_TRAIT(burn_buckled, immunity_trait))
 			return LAVA_BE_PROCESSING
+
+		if (isliving(burn_buckled))
+			var/mob/living/living_buckled = burn_buckled
+			burn_buckled = living_buckled.buckled
 
 	if(iscarbon(burn_living))
 		var/mob/living/carbon/burn_carbon = burn_living
