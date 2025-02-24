@@ -162,8 +162,9 @@
 	if(comparison_failed)
 		var/warning = "custom_materials of [result.type] when crafted and spawned don't match"
 		var/what_it_should_be = "null"
-		if(result.custom_materials) //compose a text string containing the syntax and paths to use for editing the custom_materials var
-			what_it_should_be = "list("
+		//compose a text string containing the syntax and paths to use for editing the custom_materials var
+		if(result.custom_materials)
+			what_it_should_be = "\[list("
 			var/index = 1
 			var/mats_len = length(result.custom_materials)
 			for(var/datum/material/mat as anything in result.custom_materials)
@@ -171,8 +172,8 @@
 				if(index < mats_len)
 					what_it_should_be += ", "
 				index++
-			what_it_should_be += ")"
-		TEST_FAIL("[warning]. custom_materials should be \[[what_it_should_be]\] (you can round values a bit). \
+			what_it_should_be += ")\] (you can round values a bit)"
+		TEST_FAIL("[warning]. custom_materials should be [what_it_should_be]. \
 			You can otherwise set the requirements_mats_blacklist variable for the recipe \
 			or remove the CRAFT_ENFORCE_MATERIALS_PARITY crafting flag from it")
 

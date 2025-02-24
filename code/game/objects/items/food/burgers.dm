@@ -426,7 +426,7 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/jelly
 	name = "jelly burger"
@@ -469,7 +469,7 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_5
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 6)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/burger/superbite/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to eat [src] in one bite, it looks like [user.p_theyre()] trying to commit suicide!"))
@@ -537,7 +537,7 @@
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/empoweredburger
 	name = "empowered burger"
@@ -612,6 +612,7 @@
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/burger/mcguffin
 	name = "mcguffin"
@@ -680,7 +681,7 @@
 	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 2, "beef soaked in chili" = 3, "a smoking flare" = 2)
 	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2, /datum/material/plastic= SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/food/burger/crazy/Initialize(mapload)
 	. = ..()

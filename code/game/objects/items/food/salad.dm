@@ -37,6 +37,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/doctor_delight = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
 	foodtypes = VEGETABLES | MEAT | FRIED | FRUIT
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/fruit
 	name = "fruit salad"
@@ -332,3 +333,4 @@
 	tastes = list("lettuce" = 2, "salami" = 2, "mozzarella cheese" = 2, "tomatoes" = 2, "dressing" = 1)
 	foodtypes = VEGETABLES | DAIRY | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)

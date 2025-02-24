@@ -103,7 +103,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 		/datum/reagent/consumable/nutriment/protein = 12,
 	)
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_CHEAP
@@ -136,7 +136,7 @@
 	foodtypes = GRAIN | MEAT
 	slice_type = /obj/item/food/breadslice/sausage
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 6)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/breadslice/sausage
 	name = "sausagebread slice"
@@ -155,7 +155,7 @@
 	name = "xenomeatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,
 		/datum/reagent/consumable/nutriment/vitamin = 10,
@@ -183,7 +183,7 @@
 	name = "spider meat loaf"
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,
 		/datum/reagent/toxin = 15,

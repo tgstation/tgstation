@@ -231,6 +231,7 @@
 	foodtypes = MEAT | GRAIN | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/hawaiian_fried_rice
 	name = "\improper Hawaiian fried rice"
@@ -262,6 +263,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/mediterranean_fried_rice
 	name = "mediterranean fried rice"
@@ -277,6 +279,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/egg_fried_rice
 	name = "egg fried rice"
@@ -418,7 +421,7 @@
 	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //It's THE big blue, Baby!
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/chappy
 	name = "\improper Chappy patty"
@@ -449,7 +452,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/marte_cubano_sandwich
 	name = "\improper Marte Cubano sandwich"
@@ -597,6 +600,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/tonkatsuwurst
 	name = "tonkatsuwurst"
@@ -612,6 +616,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Cargo ingredients and a few steps.
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/kebab/ti_hoeh_koe
 	name = "ti hoeh koe skewer"
@@ -672,7 +677,7 @@
 	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/izakaya_fries
 	name = "izakaya fries"
@@ -704,6 +709,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/loco_moco
 	name = "loco moco"
@@ -922,6 +928,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/beef_bowl
 	name = "beef bowl"

@@ -113,7 +113,6 @@
 		/obj/item/stock_parts/power_store/cell/super =1,
 		/obj/item/melee/sabre = 1
 	)
-	requirements_mats_blacklist = list(/obj/item/stock_parts/power_store/cell/super)
 	result = /obj/item/food/powercrepe
 	category = CAT_MISCFOOD
 

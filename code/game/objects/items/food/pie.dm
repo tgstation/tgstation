@@ -470,7 +470,7 @@
 	slice_type = /obj/item/food/pieslice/shepherds_pie
 	yield = 4
 	crafting_complexity = FOOD_COMPLEXITY_5
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pieslice/shepherds_pie
 	name = "shepherds pie slice"

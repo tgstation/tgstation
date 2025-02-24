@@ -217,7 +217,7 @@
 	slice_type = /obj/item/food/pizzaslice/donkpocket
 	boxtag = "Bangin' Donk"
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
@@ -282,6 +282,7 @@
 	slice_type = /obj/item/food/pizzaslice/sassysage
 	boxtag = "Sausage Lovers"
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/sassysage/raw
 	name = "raw sassysage pizza"
@@ -316,6 +317,7 @@
 	slice_type = /obj/item/food/pizzaslice/pineapple
 	boxtag = "Honolulu Chew"
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/pizza/pineapple/raw
 	name = "raw Hawaiian pizza"
@@ -376,7 +378,7 @@
 	slice_type = /obj/item/food/pizzaslice/arnold
 	boxtag = "9mm Pepperoni"
 	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/arnold/raw
 	name = "raw Arnold pizza"
@@ -460,6 +462,7 @@
 	foodtypes = TOXIC
 	boxtag = "24 Hour Energy"
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.4, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/energy/raw
 	name = "raw energy pizza"
@@ -491,6 +494,7 @@
 	foodtypes = GRAIN | RAW | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/raw_meat_calzone/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meat_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -508,6 +512,7 @@
 	foodtypes = GRAIN | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/raw_vegetarian_calzone
 	name = "raw vegetarian calzone"
