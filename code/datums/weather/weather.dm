@@ -108,7 +108,7 @@
 	var/list/current_mobs = list()
 	/// The weather turf counter to keep track of how many turfs we have processed so far
 	var/turf_iteration = 0
-	// The weather thunder counter to keep track of how much thunder we have processed so far
+	/// The weather thunder counter to keep track of how much thunder we have processed so far
 	var/thunder_iteration = 0
 	/// The current section our weather subsystem is processing
 	var/currentpart
