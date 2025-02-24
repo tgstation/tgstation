@@ -7,40 +7,58 @@ SUBSYSTEM_DEF(weather)
 	var/list/processing = list()
 	var/list/eligible_zlevels = list()
 	var/list/next_hit_by_zlevel = list() //Used by barometers to know when the next storm is coming
+	var/list/current_mobs = list()
+	var/current_weather_turf_iteration = 0
+	var/current_thunder_turf_iteration = 0
 
-/datum/controller/subsystem/weather/fire()
+/datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
-	for(var/V in processing)
-		var/datum/weather/our_event = V
-		if(IS_WEATHER_AESTHETIC(our_event.weather_flags) || our_event.stage != MAIN_STAGE)
+	for(var/datum/weather/weather_event as ANYTHING in processing)
+		if(IS_WEATHER_AESTHETIC(weather_event.weather_flags) || weather_event.stage != MAIN_STAGE)
 			continue
 
-		if(our_event.weather_flags & WEATHER_MOBS)
-			for(var/mob/act_on as anything in GLOB.mob_living_list)
-				if(our_event.can_weather_act_mob(act_on))
-					our_event.weather_act_mob(act_on)
-				CHECK_TICK
+		if(weather_event.weather_flags & WEATHER_MOBS)
+			if(!resumed)
+				current_mobs = GLOB.mob_living_list.Copy()
+			var/list/current_mobs_cache = current_mobs // cache for performance
+			while(current_mobs_cache.len)
+				var/mob/living/target == current_mobs_cache[current_mobs_cache.len]
+				current_mobs_cache.len--
+				if(QDELETED(target))
+					continue
+				if(weather_event.can_weather_act_mob(target))
+					weather_event.weather_act_mob(target)
+				if(MC_TICK_CHECK)
+					return
 
-		if(our_event.weather_flags & (WEATHER_TURFS))
-			for(var/i in 1 to our_event.weather_turfs_per_tick)
-				var/turf/open/selected_turf = pick(our_event.weather_turfs)
-				our_event.weather_act_turf(selected_turf)
-				CHECK_TICK
+		if(weather_event.weather_flags & (WEATHER_TURFS))
+			if(!resumed)
+				current_weather_turf_iteration = weather_event.weather_turfs_per_tick
+			while(current_weather_turf_iteration)
+				current_weather_turf_iteration--
+				var/turf/open/selected_turf = pick(weather_event.weather_turfs)
+				weather_event.weather_act_turf(selected_turf)
+				if(MC_TICK_CHECK)
+					return
 
-		if(our_event.weather_flags & (WEATHER_THUNDER))
-			for(var/i in 1 to our_event.thunder_turfs_per_tick)
-				var/turf/open/selected_turf = pick(our_event.weather_turfs)
-				our_event.thunder_act_turf(selected_turf)
-				CHECK_TICK
+		if(weather_event.weather_flags & (WEATHER_THUNDER))
+			if(!resumed)
+				current_thunder_turf_iteration = weather_event.thunder_turfs_per_tick
+			while(current_thunder_turf_iteration)
+				current_thunder_turf_iteration--
+				var/turf/open/selected_turf = pick(weather_event.weather_turfs)
+				weather_event.thunder_act_turf(selected_turf)
+				if(MC_TICK_CHECK)
+					return
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
 		var/possible_weather = eligible_zlevels[z]
-		var/datum/weather/our_event = pick_weight(possible_weather)
-		run_weather(our_event, list(text2num(z)))
+		var/datum/weather/weather_event = pick_weight(possible_weather)
+		run_weather(weather_event, list(text2num(z)))
 		eligible_zlevels -= z
 		var/randTime = rand(3000, 6000)
-		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(our_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
+		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(weather_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize()
 	for(var/V in subtypesof(/datum/weather))
