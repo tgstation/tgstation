@@ -26,7 +26,7 @@
 	turf_weather_chance = 0.01
 	turf_thunder_chance = 0.001
 
-	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)
+	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
 
 	/// A weighted list of possible reagents that will rain down from the sky.
 	/// Only one of these will be selected to be used as the reagent
@@ -88,10 +88,10 @@
 /datum/weather/rain_storm/weather_act_mob(mob/living/living)
 	if(istype(rain_reagent, /datum/reagent/water))
 		living.wash()
-	rain_reagent.expose_mob(living, TOUCH, 5)
+	rain_reagent.expose_mob(living, TOUCH, RAIN_REAGENT_VOLUME)
 
 	var/rain_type = LOWER_TEXT(rain_reagent.name)
-	if(prob(5))
+	if((weather_flags & WEATHER_NOTIFICATION) && prob(5))
 		var/wetmessage = pick( "You're drenched in [rain_type]!",
 		"You're completely soaked by the [rain_type] rainfall!",
 		"You become soaked by the heavy [rain_type] rainfall!",
@@ -105,12 +105,25 @@
 /datum/weather/rain_storm/weather_act_turf(turf/open/weather_turf)
 	for(var/obj/thing as anything in weather_turf.contents)
 		if(!thing.IsObscured())
-			rain_reagent.expose_obj(thing, 5, TOUCH)
+			rain_reagent.expose_obj(thing, RAIN_REAGENT_VOLUME, TOUCH)
+
+/*
+			// Time for the sophisticated art of catching sky-booze
+			if(!is_reagent_container(thing))
+				continue
+
+			var/obj/item/reagent_containers/container = thing
+			if(!container.is_open_container() || container.reagents.holder_full())
+				continue
+
+			var/amount_to_add = min(container.volume - container.reagents.total_volume, RAIN_REAGENT_VOLUME)
+			container.reagents.add_reagent(rain_reagent, amount_to_add)
+*/
 
 	if(istype(rain_reagent, /datum/reagent/water))
 		weather_turf.wash(CLEAN_ALL, TRUE)
 
-	rain_reagent.expose_turf(weather_turf, 5)
+	rain_reagent.expose_turf(weather_turf, RAIN_REAGENT_VOLUME)
 
 /datum/weather/rain_storm/blood
 	whitelist_weather_reagents = list(/datum/reagent/blood)

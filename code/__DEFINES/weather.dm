@@ -10,6 +10,9 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 #define WIND_DOWN_STAGE 3
 #define END_STAGE 4
 
+/// The amount of reagent units that is applied when an object comes into contact with rain
+#define RAIN_REAGENT_VOLUME 5
+
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
 #define IS_WEATHER_AESTHETIC(flags) (!(flags & (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)))
 
@@ -26,3 +29,5 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 #define WEATHER_ENDLESS (1<<4)
 /// If weather will be detected by a barometer
 #define WEATHER_BAROMETER (1<<5)
+/// If weather provides a notification message to mobs
+#define WEATHER_NOTIFICATION (1<<6)

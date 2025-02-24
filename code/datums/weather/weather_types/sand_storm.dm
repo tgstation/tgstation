@@ -22,7 +22,7 @@
 	immunity_type = TRAIT_SANDSTORM_IMMUNE
 	probability = 0
 
-	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
+	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
 
 /datum/weather/sand_storm/telegraph()
 	GLOB.sand_storm_sounds.Cut()
@@ -48,7 +48,7 @@
 
 /datum/weather/sand_storm/weather_act_mob(mob/living/victim)
 	victim.adjustBruteLoss(5, required_bodytype = BODYTYPE_ORGANIC)
-	if(prob(5))
+	if((weather_flags & WEATHER_NOTIFICATION) && prob(5))
 		to_chat(victim, span_danger("You are battered by the coarse sand!"))
 
 /datum/weather/sand_storm/harmless
