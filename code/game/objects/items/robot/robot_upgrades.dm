@@ -666,7 +666,7 @@
 		return .
 	crew_monitor = new /datum/action/item_action/crew_monitor(src)
 	crew_monitor.Grant(borg)
-	icon_state = "scanner"
+	icon_state = "crew_monitor"
 
 
 /obj/item/borg/upgrade/pinpointer/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
