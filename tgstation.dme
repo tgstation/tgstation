@@ -4539,6 +4539,7 @@
 #include "code\modules\language\piratespeak.dm"
 #include "code\modules\language\shadowtongue.dm"
 #include "code\modules\language\slime.dm"
+#include "code\modules\language\spinwarder.dm"
 #include "code\modules\language\sylvan.dm"
 #include "code\modules\language\terrum.dm"
 #include "code\modules\language\uncommon.dm"
