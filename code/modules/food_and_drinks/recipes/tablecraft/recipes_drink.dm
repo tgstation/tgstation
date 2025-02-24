@@ -138,8 +138,11 @@
 	result = /obj/item/reagent_containers/cup/glass/bottle/pruno
 	time = 30
 	reqs = list(/obj/item/storage/bag/trash = 1,
-	            /obj/item/food/breadslice/moldy = 1,
-	            /obj/item/food/grown = 4,
-	            /obj/item/food/candy_corn = 2,
-	            /datum/reagent/water = 15)
+		/obj/item/food/breadslice/moldy = 1,
+		/obj/item/food/grown = 4,
+		/obj/item/food/candy_corn = 2,
+		/datum/reagent/water = 15,
+	)
+	//We can't spawn the abstract food/grown path
+	unit_test_spawn_extras = list(/obj/item/food/grown/banana = 4)
 	category = CAT_DRINK

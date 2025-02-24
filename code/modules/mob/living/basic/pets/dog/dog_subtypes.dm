@@ -99,7 +99,7 @@
 	held_state = "breaddog"
 	worn_slot_flags = ITEM_SLOT_HEAD
 	//just ensuring the mats contained by the dog when spawned are the same of when crafted
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 3)
 
 /mob/living/basic/pet/dog/breaddog/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()

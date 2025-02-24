@@ -1,4 +1,12 @@
 /**
+ * The accepted discrepancy between the amount of material between an item when crafted and the same item when spawned
+ * so we don't have to be obnoxious about small portion of mats being lost for items that are processed in multiple other
+ * results (eg. a slab of meat being cut in three cutlets, and each cutlet can be used to craft different things)
+ * right now it's around 3 points per 100 units of a material.
+ */
+#define ACCEPTABLE_MATERIAL_DEVIATION 0.034
+
+/**
  * Check if a generic atom (because both mobs and the crafter machinery can do it) can potentially craft all recipes,
  * with the exact same types required in the recipe, and also compare the materials of crafted result with one of the same type
  * to ansure they match if the recipe has the CRAFT_ENFORCE_MATERIALS_PARITY flag.
@@ -44,6 +52,9 @@
 	var/turf/turf = crafter.loc
 	//Components that have to be deleted later so they don't mess up with other recipes
 	var/list/spawned_components = list()
+	//Warn if uncreatables were found in the recipe if it fails
+	//If it doesn't fail, then it was already handled, maybe through `unit_test_spawn_extras`
+	var/list/uncreatables_found
 
 	for(var/spawn_path in recipe.unit_test_spawn_extras)
 		var/amount = recipe.unit_test_spawn_extras[spawn_path]
@@ -59,6 +70,10 @@
 		if(ispath(req_path, /datum/reagent)) //it's a reagent
 			if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 				bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
+			continue
+
+		if(req_path in uncreatables)
+			LAZYADD(uncreatables_found, req_path)
 			continue
 
 		if(ispath(req_path, /obj/item/stack)) //it's a stack
@@ -78,6 +93,9 @@
 	bulky_objects += recipe.structures + recipe.machinery //either structures and machinery could be null
 	list_clear_nulls(bulky_objects) //so we clear the list
 	for(var/req_path in bulky_objects) //spawn required machinery or structures
+		if(req_path in uncreatables)
+			LAZYADD(uncreatables_found, req_path)
+			continue
 		spawned_components += new req_path(turf)
 
 	var/list/needed_tools = list()
@@ -95,6 +113,9 @@
 			tool = allocate(path_to_use, turf) //we shouldn't delete the tools and allocate and keep them between recipes
 			if(is_behaviour)
 				tool.tool_behaviour = tooltype
+			else if(tooltype in uncreatables)
+				LAZYADD(uncreatables_found, tooltype)
+				continue
 			tools[tooltype] = tool
 		summoned_tools |= tool
 
@@ -105,6 +126,8 @@
 
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
 		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason!"]")
+		if(uncreatables_found)
+			TEST_FAIL("The following objects that shouldn't initialize during unit tests were found in the recipe: [english_list(uncreatables_found)]")
 		delete_components(spawned_components)
 		return
 	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
@@ -123,20 +146,35 @@
 
 	// SSmaterials caches the combinations so we don't have to run more complex checks
 	if(result.custom_materials == copycat.custom_materials)
+		delete_components(spawned_components)
 		return
-	var/warning = "custom_materials of [result.type] when crafted and spawned don't match."
-	var/what_it_should_be = "null"
-	if(result.custom_materials) //compose a text string containing the syntax and paths to use for editing the custom_materials var
-		what_it_should_be = "list("
-		var/index = 1
-		var/mats_len = length(result.custom_materials)
-		for(var/datum/material/mat as anything in result.custom_materials)
-			what_it_should_be += "[mat.type] = [result.custom_materials[mat]]"
-			if(index < mats_len)
-				what_it_should_be += ", "
-			index++
-		what_it_should_be += ")"
-	TEST_FAIL("[warning] Set custom_materials to \[[what_it_should_be]\] or remove the CRAFT_ENFORCE_MATERIALS_PARITY flag from [recipe.type]")
+	var/comparison_failed = TRUE
+	if(length(result.custom_materials) == length(copycat.custom_materials))
+		comparison_failed = FALSE
+		for(var/mat in result.custom_materials)
+			var/enemy_amount = copycat.custom_materials[mat]
+			if(!enemy_amount) //break the loop early, we cannot perform a division by zero anyway
+				comparison_failed = TRUE
+				break
+			var/ratio_difference = abs((result.custom_materials[mat] / enemy_amount) - 1)
+			if(ratio_difference > ACCEPTABLE_MATERIAL_DEVIATION)
+				comparison_failed = TRUE
+	if(comparison_failed)
+		var/warning = "custom_materials of [result.type] when crafted and spawned don't match"
+		var/what_it_should_be = "null"
+		if(result.custom_materials) //compose a text string containing the syntax and paths to use for editing the custom_materials var
+			what_it_should_be = "list("
+			var/index = 1
+			var/mats_len = length(result.custom_materials)
+			for(var/datum/material/mat as anything in result.custom_materials)
+				what_it_should_be += "[mat.type] = [result.custom_materials[mat]]"
+				if(index < mats_len)
+					what_it_should_be += ", "
+				index++
+			what_it_should_be += ")"
+		TEST_FAIL("[warning]. custom_materials should be \[[what_it_should_be]\] (you can round up values a bit). \
+			You can otherwise set the requirements_mats_blacklist variable for the recipe \
+			or remove the CRAFT_ENFORCE_MATERIALS_PARITY crafting flag from it")
 
 	delete_components(spawned_components)
 
@@ -151,3 +189,5 @@
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND
+
+#undef ACCEPTABLE_MATERIAL_DEVIATION
