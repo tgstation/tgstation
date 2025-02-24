@@ -4,6 +4,12 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { NTOSData } from '../layouts/NtosWindow';
 
+export enum alert_relevancies {
+  ALERT_RELEVANCY_SAFE,
+  ALERT_RELEVANCY_WARN,
+  ALERT_RELEVANCY_PERTINENT,
+}
+
 export const NtosMain = (props) => {
   const { act, data } = useBackend<NTOSData>();
   const {
@@ -58,12 +64,20 @@ export const NtosMain = (props) => {
               <Stack.Item right={0}>
                 <Button
                   className={
-                    alert_style == 2
+                    alert_style === alert_relevancies.ALERT_RELEVANCY_PERTINENT
                       ? 'alertIndicator alertBlink'
                       : 'alertIndicator'
                   }
-                  textColor={alert_style == 0 ? alert_color : '#000000'}
-                  backgroundColor={alert_style == 0 ? '#0000000' : alert_color}
+                  textColor={
+                    alert_style === alert_relevancies.ALERT_RELEVANCY_SAFE
+                      ? alert_color
+                      : '#000000'
+                  }
+                  backgroundColor={
+                    alert_style === alert_relevancies.ALERT_RELEVANCY_SAFE
+                      ? '#0000000'
+                      : alert_color
+                  }
                   tooltip="The current alert level. Indicator becomes more intense when there is a threat, moreso if your department is responsible for handling it."
                 >
                   {alert_name}
