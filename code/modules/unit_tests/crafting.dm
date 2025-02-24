@@ -4,7 +4,7 @@
  * results (eg. a slab of meat being cut in three cutlets, and each cutlet can be used to craft different things)
  * right now it's around 3 points per 100 units of a material.
  */
-#define ACCEPTABLE_MATERIAL_DEVIATION 0.034
+#define ACCEPTABLE_MATERIAL_DEVIATION 0.033
 
 /**
  * Check if a generic atom (because both mobs and the crafter machinery can do it) can potentially craft all recipes,
@@ -172,7 +172,7 @@
 					what_it_should_be += ", "
 				index++
 			what_it_should_be += ")"
-		TEST_FAIL("[warning]. custom_materials should be \[[what_it_should_be]\] (you can round up values a bit). \
+		TEST_FAIL("[warning]. custom_materials should be \[[what_it_should_be]\] (you can round values a bit). \
 			You can otherwise set the requirements_mats_blacklist variable for the recipe \
 			or remove the CRAFT_ENFORCE_MATERIALS_PARITY crafting flag from it")
 

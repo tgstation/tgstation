@@ -276,8 +276,5 @@ DEFINE_BITFIELD(food_flags, list(
 #define MEATSLAB_MATERIAL_AMOUNT SHEET_MATERIAL_AMOUNT * 4
 /// How many cutlets or meatballs one slab gives when processed
 #define MEATSLAB_PROCESSED_AMOUNT 3
-/**
- * This should be 1/3 of the amount found in a slab (when processed it yields 3 cutlets/balls)
- * minus a 0.333 which would be lost when rounded down anyway
- */
-#define MEATDISH_MATERIAL_AMOUNT ((MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_PROCESSED_AMOUNT) - ((MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_PROCESSED_AMOUNT) %% 1))
+/// This should be 1/3 of the amount found in a slab (a portion will be lost when rounding but it's negligible)
+#define MEATDISH_MATERIAL_AMOUNT (MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_PROCESSED_AMOUNT)
