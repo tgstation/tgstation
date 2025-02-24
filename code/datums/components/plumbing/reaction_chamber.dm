@@ -66,22 +66,4 @@
 	if(chamber.emptying) //if we are still emptying then keep checking for reagents until we are emptied out
 		chamber.RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, TYPE_PROC_REF(/obj/machinery/plumbing/reaction_chamber, on_reagent_change))
 
-///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal acid container
-/datum/component/plumbing/acidic_input
-	demand_connects = WEST
-	demand_color = COLOR_YELLOW
-	ducting_layer = SECOND_DUCT_LAYER
-
-/datum/component/plumbing/acidic_input/send_request(dir)
-	process_request(reagent = /datum/reagent/reaction_agent/acidic_buffer, dir = dir)
-
-///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal base container
-/datum/component/plumbing/alkaline_input
-	demand_connects = EAST
-	demand_color = COLOR_VIBRANT_LIME
-	ducting_layer = FOURTH_DUCT_LAYER
-
-/datum/component/plumbing/alkaline_input/send_request(dir)
-	process_request(reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)
-
 

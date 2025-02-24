@@ -7544,7 +7544,7 @@
 /area/station/command/heads_quarters/qm)
 "cJv" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cJx" = (
@@ -12336,14 +12336,6 @@
 /area/station/engineering/atmos)
 "ett" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/cup/bottle/acidic_buffer{
-	pixel_x = 7;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/bottle/basic_buffer{
-	pixel_x = -5;
-	pixel_y = 3
-	},
 /obj/item/reagent_containers/cup/bottle/formaldehyde{
 	pixel_x = 1
 	},
@@ -12382,7 +12374,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white,
@@ -21352,7 +21344,7 @@
 /area/station/medical/surgery/aft)
 "hIJ" = (
 /obj/structure/cable,
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -39751,7 +39743,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "ocQ" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/button/door/directional/south{
 	id = "pharmacy_shutters_2";

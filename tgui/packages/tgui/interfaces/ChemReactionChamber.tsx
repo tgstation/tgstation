@@ -17,8 +17,6 @@ import { MixingData, Reagent } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {
   ph: number;
-  reagentAcidic: number;
-  reagentAlkaline: number;
   catalysts: Reagent[];
 };
 
@@ -27,15 +25,7 @@ export const ChemReactionChamber = (props) => {
 
   const [reagentQuantity, setReagentQuantity] = useState(1);
 
-  const {
-    emptying,
-    temperature,
-    ph,
-    targetTemp,
-    isReacting,
-    reagentAcidic,
-    reagentAlkaline,
-  } = data;
+  const { emptying, temperature, ph, targetTemp, isReacting } = data;
   const reagents = data.reagents || [];
   const catalysts = data.catalysts || [];
   return (
@@ -114,13 +104,7 @@ export const ChemReactionChamber = (props) => {
                         color="transparent"
                         icon="question"
                         tooltip={`
-                        In chemistry, pH is a scale used to specify
-                        the acidity or basicity of an aqueous solution.
-                        Acidic solutions are measured to have lower
-                        pH values than basic or alkaline solutions.
-                        The pH scale is logarithmic and inversely
-                        indicates the concentration of hydrogen ions
-                        in the solution.`}
+                        allan please add details`}
                         tooltipPosition="bottom-start"
                       />
                     </Stack.Item>
@@ -153,41 +137,6 @@ export const ChemReactionChamber = (props) => {
               }
             >
               <Stack vertical fill>
-                <Stack.Item>
-                  <LabeledList>
-                    <LabeledList.Item label="Acidic pH limit">
-                      <NumberInput
-                        value={reagentAcidic}
-                        minValue={0}
-                        maxValue={14}
-                        step={1}
-                        stepPixelSize={3}
-                        width="39px"
-                        onDrag={(value) =>
-                          act('acidic', {
-                            target: value,
-                          })
-                        }
-                      />
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Alkaline pH limit">
-                      <NumberInput
-                        value={reagentAlkaline}
-                        minValue={0}
-                        maxValue={14}
-                        step={1}
-                        stepPixelSize={3}
-                        width="39px"
-                        onDrag={(value) =>
-                          act('alkaline', {
-                            target: value,
-                          })
-                        }
-                      />
-                      <Box inline mr={1} />
-                    </LabeledList.Item>
-                  </LabeledList>
-                </Stack.Item>
                 <Stack.Item>
                   <Stack fill>
                     <Stack.Item grow>

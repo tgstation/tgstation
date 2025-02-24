@@ -38,8 +38,6 @@ type Data = {
   currentTemp: number;
   activeReactions: ActiveReaction[];
   isFlashing: number;
-  acidicBufferVol: number;
-  basicBufferVol: number;
   dispenseVolume: number;
 };
 
@@ -187,8 +185,6 @@ export const ChemHeater = (props) => {
     isFlashing,
     beaker,
     currentTemp,
-    acidicBufferVol,
-    basicBufferVol,
     dispenseVolume,
     upgradeLevel,
     activeReactions = [],
@@ -217,27 +213,6 @@ export const ChemHeater = (props) => {
               <Table.Cell bold collapsing color="label">
                 Heat
               </Table.Cell>
-              <Table.Cell />
-              <Table.Cell bold collapsing color="label">
-                Buffers
-              </Table.Cell>
-              <Table.Cell />
-              <Table.Cell>
-                <NumberInput
-                  width="45px"
-                  unit="u"
-                  step={1}
-                  stepPixelSize={3}
-                  value={dispenseVolume}
-                  minValue={1}
-                  maxValue={10}
-                  onDrag={(value) =>
-                    act('disp_vol', {
-                      target: value,
-                    })
-                  }
-                />
-              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing color="label">
@@ -259,41 +234,6 @@ export const ChemHeater = (props) => {
                   }
                 />
               </Table.Cell>
-              <Table.Cell collapsing color="label">
-                Acidic:
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  icon={'syringe'}
-                  disabled={!acidicBufferVol}
-                  tooltip={'Inject'}
-                  tooltipPosition={'left'}
-                  onClick={() =>
-                    act('acidBuffer', {
-                      target: 1,
-                    })
-                  }
-                />
-              </Table.Cell>
-              <Table.Cell
-                color={COLORS.reagent.acidicbuffer}
-                textAlign="center"
-              >
-                {acidicBufferVol + 'u'}
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  icon={'upload'}
-                  tooltip={'Draw all'}
-                  tooltipPosition={'top'}
-                  disabled={acidicBufferVol === 100}
-                  onClick={() =>
-                    act('acidBuffer', {
-                      target: -100,
-                    })
-                  }
-                />
-              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing color="label">
@@ -309,37 +249,6 @@ export const ChemHeater = (props) => {
                   )) ||
                     '—'}
                 </Box>
-              </Table.Cell>
-              <Table.Cell collapsing color="label">
-                Basic:
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  icon={'syringe'}
-                  tooltip={'Inject'}
-                  tooltipPosition={'left'}
-                  disabled={!basicBufferVol}
-                  onClick={() =>
-                    act('basicBuffer', {
-                      target: 1,
-                    })
-                  }
-                />
-              </Table.Cell>
-              <Table.Cell color={COLORS.reagent.basicbuffer} textAlign="center">
-                {basicBufferVol + 'u'}
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  icon={'upload'}
-                  tooltip={'Draw all'}
-                  disabled={basicBufferVol === 100}
-                  onClick={() =>
-                    act('basicBuffer', {
-                      target: -100,
-                    })
-                  }
-                />
               </Table.Cell>
             </Table.Row>
           </Table>

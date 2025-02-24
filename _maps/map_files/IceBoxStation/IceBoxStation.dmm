@@ -15856,7 +15856,7 @@
 	},
 /area/station/commons/storage/mining)
 "etv" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/white/smooth_large,
@@ -22332,7 +22332,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "goa" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/white/smooth_large,
@@ -60202,7 +60202,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "qZv" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -82334,14 +82334,6 @@
 /area/station/medical/medbay/lobby)
 "xxi" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/cup/bottle/acidic_buffer{
-	pixel_x = 7;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/bottle/basic_buffer{
-	pixel_x = -5;
-	pixel_y = 3
-	},
 /obj/item/reagent_containers/cup/bottle/formaldehyde{
 	pixel_x = 1
 	},

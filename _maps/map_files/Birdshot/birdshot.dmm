@@ -607,7 +607,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
 "anX" = (
@@ -4495,7 +4495,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "bHp" = (
@@ -5137,7 +5137,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bXi" = (
@@ -20606,8 +20606,6 @@
 /obj/item/reagent_containers/cup/bottle/multiver,
 /obj/item/reagent_containers/cup/bottle/epinephrine,
 /obj/item/reagent_containers/cup/bottle/formaldehyde,
-/obj/item/reagent_containers/cup/bottle/acidic_buffer,
-/obj/item/reagent_containers/cup/bottle/basic_buffer,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "hdT" = (
@@ -35846,7 +35844,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "lTa" = (

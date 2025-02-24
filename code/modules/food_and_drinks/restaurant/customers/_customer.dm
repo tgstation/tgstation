@@ -453,8 +453,6 @@
 		VENUE_BAR = list(
 			/datum/reagent/consumable/failed_reaction = 1,
 			/datum/reagent/spraytan = 1,
-			/datum/reagent/reaction_agent/basic_buffer = 1,
-			/datum/reagent/reaction_agent/acidic_buffer = 1,
 		),
 	)
 

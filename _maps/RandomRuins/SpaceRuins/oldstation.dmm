@@ -1977,7 +1977,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "iF" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,

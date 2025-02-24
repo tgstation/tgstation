@@ -594,7 +594,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "iw" = (
 /obj/effect/turf_decal/trimline/purple/line,
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)

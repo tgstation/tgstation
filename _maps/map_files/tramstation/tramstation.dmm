@@ -5604,14 +5604,6 @@
 /area/station/medical/virology)
 "aPI" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/cup/bottle/acidic_buffer{
-	pixel_x = 7;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/bottle/basic_buffer{
-	pixel_x = -5;
-	pixel_y = 3
-	},
 /obj/item/reagent_containers/cup/bottle/formaldehyde{
 	pixel_x = -5;
 	pixel_y = -2
@@ -5683,7 +5675,7 @@
 /area/station/command/heads_quarters/cmo)
 "aQi" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
@@ -15877,7 +15869,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "ewt" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
@@ -40279,7 +40271,7 @@
 /turf/closed/wall,
 /area/station/security/prison/shower)
 "nho" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
@@ -69236,7 +69228,7 @@
 /area/station/medical/treatment_center)
 "xqO" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
