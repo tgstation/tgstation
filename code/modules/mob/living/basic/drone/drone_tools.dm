@@ -51,10 +51,7 @@
 	. = ..()
 	if(!isinhands)
 		return
-
-	var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
-	head.appearance_flags = RESET_COLOR
-	. += head
+	. += mutable_appearance(icon_file, "screwdriver_head", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/item/wrench/drone
 	name = "built-in wrench"

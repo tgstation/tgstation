@@ -845,8 +845,7 @@
 	if(!.)
 		return
 
-	googly = mutable_appearance('icons/obj/service/hydroponics/harvest.dmi', "eyes")
-	googly.appearance_flags = RESET_COLOR
+	googly = mutable_appearance('icons/obj/service/hydroponics/harvest.dmi', "eyes", appearance_flags = RESET_COLOR|KEEP_APART)
 	our_plant.add_overlay(googly)
 
 /// Makes the plant embed on thrown impact.

@@ -84,7 +84,7 @@
 			pixel_x = stamp_offset_x,
 			pixel_y = stamp_offset_y + bonus_stamp_offset
 		)
-		stamp_image.appearance_flags |= RESET_COLOR
+		stamp_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		bonus_stamp_offset -= 5
 		. += stamp_image
 
@@ -95,7 +95,7 @@
 			pixel_x = stamp_offset_x + rand(-3, 1),
 			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
 		)
-		postmark_image.appearance_flags |= RESET_COLOR
+		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)

@@ -151,7 +151,7 @@
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	var/mutable_appearance/visor_overlay = mod.get_visor_overlay(standing)
-	visor_overlay.appearance_flags |= RESET_COLOR
+	visor_overlay.appearance_flags |= RESET_COLOR|KEEP_APART
 	if (!isnull(music_player.active_song_sound))
 		visor_overlay.color = rainbow_order[rave_number]
 	return list(visor_overlay)

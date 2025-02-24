@@ -35,7 +35,6 @@
 	atom_colours[colour_priority] = list(coloration, color_type)
 	update_atom_colour()
 
-
 ///Removes an instance of colour_type from the atom's atom_colours list
 /atom/proc/remove_atom_colour(colour_priority, coloration)
 	if(!atom_colours)
@@ -124,3 +123,14 @@
 	if (!cached_color_filter)
 		return overlay
 	return filter_appearance_recursive(overlay, cached_color_filter)
+
+/// Directly applies color or filter of a specific index to an image
+/// Use for when you want to copy base color of an object onto an overlay - does not copy the object, be careful!
+/atom/proc/color_by_index(image/overlay, index)
+	var/list/color_data = atom_colours[index]
+	if (!color_data)
+		return
+	if (color_data[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
+		overlay.add_filter("index_color_filter", 1, color_data[ATOM_COLOR_VALUE_INDEX])
+	else
+		overlay.color = color_data[ATOM_COLOR_VALUE_INDEX]
