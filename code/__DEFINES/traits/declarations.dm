@@ -582,6 +582,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Does the mob ignore elevation? (e.g. xeno larvas on hiding)
 #define TRAIT_IGNORE_ELEVATION "ignore_elevation"
+/// Is the mob currently elevated? (eg standing on a table)
+#define TRAIT_MOB_ELEVATED "mob_elevated"
 
 /// Prevents you from twohanding weapons.
 #define TRAIT_NO_TWOHANDING "no_twohanding"
@@ -1096,6 +1098,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_MIRROR_REFLECTION "no_mirror_reflection"
 /// If this movable is currently treading in a turf with the immerse element.
 #define TRAIT_IMMERSED "immersed"
+/// From [/datum/element/elevation] for purpose of checking if the object causes things in its turf to become elevated
+#define TRAIT_ELEVATING_OBJECT "elevating_object"
 /// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
 #define TRAIT_ELEVATED_TURF "elevated_turf"
 /**
@@ -1437,5 +1441,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that is added to fishes that someone already caught, be it in-game or just theoretically, such as when they're bought
 /// Prevents fishing achievement from being granted by catching one of these
 #define TRAIT_NO_FISHING_ACHIEVEMENT "no_fishing_achievement"
+
+/**
+ * This trait is given to turfs that have had shuttle frame parts built on them, but are not yet part of a shuttle.
+ * When attempting custom shuttle creation, a flood fill algorithm
+ * checks for turfs with this trait to determine the turfs
+ * that will constitute the created shuttle.
+ */
+#define TRAIT_SHUTTLE_CONSTRUCTION_TURF "shuttle_construction_turf"
+
+// Trait given to areas with a shuttle construction turf in them
+#define TRAIT_HAS_SHUTTLE_CONSTRUCTION_TURF "has_shuttle_construction_turf"
+
+///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
+#define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
 
 // END TRAIT DEFINES
