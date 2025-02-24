@@ -21,6 +21,7 @@
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/abductor_vest
 	actions_types = list(/datum/action/item_action/hands_free/activate)
+	action_slots = ITEM_SLOT_OCLOTHING
 	allowed = list(
 		/obj/item/abductor,
 		/obj/item/melee/baton,
@@ -79,10 +80,6 @@
 		var/mob/living/carbon/human/human_target = loc
 		human_target.update_worn_oversuit()
 	update_item_action_buttons()
-
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return TRUE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry

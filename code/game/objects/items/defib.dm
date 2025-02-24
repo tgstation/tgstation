@@ -16,6 +16,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
+	action_slots = ITEM_SLOT_BACK
 	armor_type = /datum/armor/item_defibrillator
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
@@ -222,10 +223,6 @@
 		remove_paddles(user)
 		update_power()
 
-/obj/item/defibrillator/item_action_slot_check(slot, mob/user)
-	if(slot_flags & slot)
-		return TRUE
-
 /obj/item/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
 		var/mob/M = paddles.loc
@@ -280,15 +277,12 @@
 	worn_icon_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
+	action_slots = ITEM_SLOT_BELT
 	paddle_state = "defibcompact-paddles"
 	powered_state = "defibcompact-powered"
 	charge_state = "defibcompact-charge"
 	nocell_state = "defibcompact-nocell"
 	emagged_state = "defibcompact-emagged"
-
-/obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBeltSlot())
-		return TRUE
 
 /obj/item/defibrillator/compact/loaded/Initialize(mapload)
 	. = ..()

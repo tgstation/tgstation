@@ -80,16 +80,14 @@
 		return FALSE
 	return ..()
 
-/datum/action/item_action/toggle_hud
+/datum/action/item_action/organ_action/toggle_hud
 	name = "Toggle Implant HUD"
 	desc = "Disables your HUD implant's visuals. You can still access examine information."
 
-/datum/action/item_action/toggle_hud/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
+/datum/action/item_action/organ_action/toggle_hud/do_effect(trigger_flags)
 	var/obj/item/organ/cyberimp/eyes/hud/hud_implant = target
 	hud_implant.toggle_hud(owner)
+	return TRUE
 
 /datum/action/item_action/wheelys
 	name = "Toggle Wheels"
@@ -120,12 +118,12 @@
 	name = "Toggle Wearable HUD"
 	desc = "Toggles your wearable HUD. You can still access examine information while it's off."
 
-/datum/action/item_action/toggle_wearable_hud/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
+/datum/action/item_action/toggle_wearable_hud/do_effect(trigger_flags)
+	if(owner.get_slot_by_item(target) != ITEM_SLOT_EYES)
+		return FALSE
 	var/obj/item/clothing/glasses/hud/hud_display = target
 	hud_display.toggle_hud_display(owner)
+	return TRUE
 
 /datum/action/item_action/toggle_nv
 	name = "Toggle Night Vision"
@@ -136,7 +134,7 @@
 	. = ..()
 	target.AddElement(/datum/element/update_icon_updates_onmob)
 
-/datum/action/item_action/toggle_nv/Trigger(trigger_flags)
+/datum/action/item_action/toggle_nv/do_effect(trigger_flags)
 	if(!istype(target, /obj/item/clothing/glasses))
 		return ..()
 	var/obj/item/clothing/glasses/goggles = target
@@ -160,3 +158,4 @@
 		playsound(goggles, 'sound/machines/click.ogg', 30, TRUE, -3)
 	holder?.update_sight()
 	goggles.update_appearance()
+	return TRUE

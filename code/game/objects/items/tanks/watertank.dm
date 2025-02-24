@@ -9,6 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	action_slots = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
@@ -36,10 +37,6 @@
 
 /obj/item/watertank/ui_action_click(mob/user)
 	toggle_mister(user)
-
-/obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBackSlot())
-		return 1
 
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
@@ -391,6 +388,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	action_slots = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
 
@@ -408,10 +406,6 @@
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
-
-/obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_BACK)
-		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr

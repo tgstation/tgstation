@@ -4,6 +4,7 @@
 	icon_state = "kindleKicks"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/kindle_kicks)
+	action_slots = ITEM_SLOT_FEET
 	light_system = OVERLAY_LIGHT
 	light_range = 2
 	light_power = 3

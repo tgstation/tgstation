@@ -223,12 +223,12 @@
 	name = "Use Instrument"
 	desc = "Use the instrument specified"
 
-/datum/action/item_action/instrument/Trigger(trigger_flags)
-	if(istype(target, /obj/item/instrument))
-		var/obj/item/instrument/I = target
-		I.interact(usr)
-		return
-	return ..()
+/datum/action/item_action/instrument/do_effect(trigger_flags)
+	if(!istype(target, /obj/item/instrument))
+		return FALSE
+	var/obj/item/instrument/instrument = target
+	instrument.interact(usr)
+	return TRUE
 
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"

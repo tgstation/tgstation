@@ -123,13 +123,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		aggressiveness = AGGR_BROKEN
 		return
 
-/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/halt))
-		halt()
-	else
-		adjust_visor(user)
-
-/obj/item/clothing/mask/gas/sechailer/attack_self()
+/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, actiontype)
 	halt()
 
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user, obj/item/card/emag/emag_card)

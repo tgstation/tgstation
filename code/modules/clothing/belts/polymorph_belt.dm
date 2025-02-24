@@ -3,6 +3,7 @@
 	name = "polymorphic field inverter"
 	desc = "This device can scan and store DNA from other life forms."
 	slot_flags = ITEM_SLOT_BELT
+	action_slots = ITEM_SLOT_BELT
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "polybelt_inactive"
 	worn_icon_state = "polybelt_inactive"
@@ -30,9 +31,6 @@
 		. += span_notice("It contains digitised [initial(will_become.name)] DNA.")
 	if (!active)
 		. += span_warning("It requires a Bioscrambler Anomaly Core in order to function.")
-
-/obj/item/polymorph_belt/item_action_slot_check(slot, mob/user, datum/action/action)
-	return slot & ITEM_SLOT_BELT
 
 /obj/item/polymorph_belt/update_icon_state()
 	icon_state = base_icon_state + (active ? "" : "_inactive")

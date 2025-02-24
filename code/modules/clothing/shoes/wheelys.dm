@@ -13,6 +13,7 @@
 	worn_y_dimension = 64
 	clothing_flags = LARGE_WORN_ICON
 	actions_types = list(/datum/action/item_action/wheelys)
+	action_slots = ITEM_SLOT_FEET
 	///False means wheels are not popped out
 	var/wheelToggle = FALSE
 	///The vehicle associated with the shoes

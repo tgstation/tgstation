@@ -156,11 +156,7 @@
 	if(!length(target_sword.current_runes))
 		return FALSE
 
-/datum/action/item_action/rune_shatter/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
+/datum/action/item_action/rune_shatter/do_effect(trigger_flags)
 	owner.playsound_local(get_turf(owner), 'sound/effects/magic/blind.ogg', 50, TRUE)
 	var/obj/item/melee/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)

@@ -7,6 +7,7 @@
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
 	slot_flags = ITEM_SLOT_GLOVES
+	action_slots = ITEM_SLOT_GLOVES
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	gender = PLURAL
@@ -33,9 +34,6 @@
 	. = ..()
 	if(gps_enabled)
 		. += span_notice("The cuff's GPS signal is on.")
-
-/obj/item/kheiral_cuffs/item_action_slot_check(slot)
-	return (slot & ITEM_SLOT_GLOVES)
 
 /obj/item/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()

@@ -6,6 +6,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_EYES
+	action_slots = ITEM_SLOT_EYES
 	strip_delay = 20
 	equip_delay_other = 25
 	resistance_flags = NONE
@@ -129,10 +130,6 @@
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
-
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return 1
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))

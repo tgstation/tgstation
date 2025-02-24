@@ -144,6 +144,7 @@
 	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device. Essentially a video necklace."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
+	action_slots = ITEM_SLOT_NECK
 	/// The installed power cell.
 	var/obj/item/stock_parts/power_store/cell
 	/// The MODlink datum we operate.
