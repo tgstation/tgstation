@@ -7691,10 +7691,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/cardboard,
 /obj/item/food/donkpocket/pizza,
-/obj/machinery/camera/directional/east{
-	network = list("ss13","medbay");
-	c_tag = "Medical - Virology Break Room"
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "bHb" = (
@@ -43399,10 +43395,6 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Break Room"
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "okn" = (
