@@ -6,8 +6,7 @@
 	ui_bgr = "node_rust"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
-	tier1 = /datum/heretic_knowledge/rust_regen
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/rust
+	tier1 = /datum/heretic_knowledge/spell/rust_charge
 	unique_ability = /datum/heretic_knowledge/spell/rust_construction
 	tier2 = /datum/heretic_knowledge/spell/area_conversion
 	blade = /datum/heretic_knowledge/blade_upgrade/rust
@@ -58,6 +57,15 @@
 	source.do_rust_heretic_act(target)
 	return COMPONENT_USE_HAND
 
+/datum/heretic_knowledge/spell/rust_charge
+	name = "Rust Charge"
+	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
+	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
+
+	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
+	cost = 1
+
+// XANTODO - Add this to the heretic passive somehow
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
@@ -79,8 +87,6 @@
 		When triggered, your victim will suffer heavy disgust and confusion. \
 		Allows you to rust reinforced walls and floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
-
-/datum/heretic_knowledge/knowledge_ritual/rust
 
 /datum/heretic_knowledge/spell/rust_construction
 	name = "Rust Construction"

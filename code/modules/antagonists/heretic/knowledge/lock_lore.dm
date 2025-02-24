@@ -7,7 +7,6 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
 	tier1 = /datum/heretic_knowledge/key_ring
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/lock
 	unique_ability = /datum/heretic_knowledge/limited_amount/concierge_rite
 	tier2 = /datum/heretic_knowledge/spell/burglar_finesse
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
@@ -92,8 +91,6 @@
 	cost = 1
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "card_gold"
-
-/datum/heretic_knowledge/knowledge_ritual/lock
 
 /datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Concierge's Rite"

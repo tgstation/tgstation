@@ -26,8 +26,6 @@ GLOBAL_LIST(heretic_research_tree)
 
 	///Starting knowledge - first thing you pick
 	var/start
-	///Unique ritual of knoweldge
-	var/ritual_of_knowledge
 	///Path specific unique ability
 	var/unique_ability
 	///Blade upgrade
@@ -128,9 +126,8 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[main_column.start][HKT_NEXT] += main_column.tier1
 		//t1 handling
 		for(var/t1_knowledge in tier1)
-			heretic_research_tree[t1_knowledge][HKT_NEXT] += main_column.ritual_of_knowledge
+			heretic_research_tree[t1_knowledge][HKT_NEXT] += main_column.unique_ability
 
-		heretic_research_tree[main_column.ritual_of_knowledge][HKT_NEXT] += main_column.unique_ability
 		heretic_research_tree[main_column.unique_ability][HKT_NEXT] += main_column.tier2
 		//t2 handling
 		for(var/t2_knowledge in tier2)
@@ -147,19 +144,16 @@ GLOBAL_LIST(heretic_research_tree)
 
 		//route stuff
 		heretic_research_tree[main_column.start][HKT_ROUTE] = main_column.route
-		heretic_research_tree[main_column.ritual_of_knowledge][HKT_ROUTE] = main_column.route
 		heretic_research_tree[main_column.unique_ability][HKT_ROUTE] = main_column.route
 		heretic_research_tree[main_column.blade][HKT_ROUTE] = main_column.route
 		heretic_research_tree[main_column.ascension][HKT_ROUTE] = main_column.route
 
 		heretic_research_tree[main_column.start][HKT_UI_BGR] = main_column.ui_bgr
-		heretic_research_tree[main_column.ritual_of_knowledge][HKT_UI_BGR] = main_column.ui_bgr
 		heretic_research_tree[main_column.unique_ability][HKT_UI_BGR] = main_column.ui_bgr
 		heretic_research_tree[main_column.blade][HKT_UI_BGR] = main_column.ui_bgr
 		heretic_research_tree[main_column.ascension][HKT_UI_BGR] = main_column.ui_bgr
 		//depth stuff
 		heretic_research_tree[main_column.start][HKT_DEPTH] = 2
-		heretic_research_tree[main_column.ritual_of_knowledge][HKT_DEPTH] = 6
 		heretic_research_tree[main_column.unique_ability][HKT_DEPTH] = 7
 		heretic_research_tree[main_column.blade][HKT_DEPTH] = 9
 		heretic_research_tree[main_column.ascension][HKT_DEPTH] = 11

@@ -6,7 +6,7 @@
 
 	tier1 = /datum/heretic_knowledge/void_cloak
 	tier2 = /datum/heretic_knowledge/spell/blood_siphon
-	tier3 = list(/datum/heretic_knowledge/spell/void_prison, /datum/heretic_knowledge/spell/cleave)
+	tier3 = /datum/heretic_knowledge/spell/cleave
 
 // Sidepaths for knowledge between Flesh and Void.
 
@@ -36,18 +36,6 @@
 	gain_text = "\"No matter the man, we bleed all the same.\" That's what the Marshal told me."
 
 	action_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
-	cost = 1
-
-/datum/heretic_knowledge/spell/void_prison
-	name = "Void Prison"
-	desc = "Grants you Void Prison, a spell that places your victim into ball, making them unable to do anything or speak. \
-		Applies void chill afterwards."
-	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
-		I try to yell, grab hold of this fool and tell them to run. \
-		But the only welts made are on my own beating fist. \
-		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
-
-	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 1
 
 /datum/heretic_knowledge/spell/cleave

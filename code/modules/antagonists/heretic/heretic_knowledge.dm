@@ -433,6 +433,8 @@
 /// The amount of knowledge points the knowledge ritual gives on success.
 #define KNOWLEDGE_RITUAL_POINTS 4
 
+// XANTODO Don't forget to include knowledge ritual as a part of each path's respective passive
+
 /**
  * A subtype of knowledge that generates random ritual components.
  */

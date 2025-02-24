@@ -7,7 +7,6 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/flesh
 	unique_ability = /datum/heretic_knowledge/spell/flesh_surgery
 	tier2 = /datum/heretic_knowledge/summon/raw_prophet
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh
@@ -173,8 +172,6 @@
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
 	LAZYREMOVE(created_items, WEAKREF(ghoul))
 	REMOVE_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
-
-/datum/heretic_knowledge/knowledge_ritual/flesh
 
 /datum/heretic_knowledge/spell/flesh_surgery
 	name = "Knitting of Flesh"

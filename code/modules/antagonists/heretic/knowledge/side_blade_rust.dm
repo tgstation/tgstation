@@ -6,7 +6,7 @@
 
 	tier1 = /datum/heretic_knowledge/armor
 	tier2 = list(/datum/heretic_knowledge/crucible, /datum/heretic_knowledge/rifle)
-	tier3 = list(/datum/heretic_knowledge/spell/rust_charge, /datum/heretic_knowledge/greaves_of_the_prophet)
+	tier3 = /datum/heretic_knowledge/greaves_of_the_prophet
 
 // Sidepaths for knowledge between Rust and Blade.
 /datum/heretic_knowledge/armor
@@ -106,14 +106,6 @@
 	// We removed any invalid casings from the atoms list,
 	// return to allow the ritual to fill out selected atoms with the new list
 	return TRUE
-
-/datum/heretic_knowledge/spell/rust_charge
-	name = "Rust Charge"
-	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
-	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
-
-	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
-	cost = 1
 
 /datum/heretic_knowledge/greaves_of_the_prophet
 	name = "Greaves Of The Prophet"

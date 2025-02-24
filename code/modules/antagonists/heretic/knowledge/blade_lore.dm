@@ -7,7 +7,6 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
 	tier1 = /datum/heretic_knowledge/blade_dance
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/blade
 	unique_ability = /datum/heretic_knowledge/spell/realignment
 	tier2 = /datum/heretic_knowledge/spell/furious_steel
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
@@ -147,8 +146,6 @@
 	source.balloon_alert(source, "riposte ready")
 
 #undef BLADE_DANCE_COOLDOWN
-
-/datum/heretic_knowledge/knowledge_ritual/blade
 
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"

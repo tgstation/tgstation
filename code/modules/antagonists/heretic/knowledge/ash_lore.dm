@@ -7,7 +7,6 @@
 	ui_bgr = "node_ash"
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
 	tier1 = /datum/heretic_knowledge/spell/ash_passage
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/ash
 	unique_ability = /datum/heretic_knowledge/spell/fire_blast
 	tier2 = /datum/heretic_knowledge/mad_mask
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
@@ -60,10 +59,6 @@
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
-
-/datum/heretic_knowledge/knowledge_ritual/ash
-
-
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"

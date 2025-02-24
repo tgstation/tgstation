@@ -7,7 +7,6 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
 	tier1 = /datum/heretic_knowledge/spell/moon_smile
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/moon
 	unique_ability = /datum/heretic_knowledge/spell/moon_parade
 	tier2 = /datum/heretic_knowledge/moon_amulet
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
@@ -57,8 +56,6 @@
 
 	action_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
-
-/datum/heretic_knowledge/knowledge_ritual/moon
 
 /datum/heretic_knowledge/spell/moon_parade
 	name = "Lunar Parade"

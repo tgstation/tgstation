@@ -7,7 +7,6 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	tier1 = /datum/heretic_knowledge/spell/cosmic_runes
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/cosmic
 	unique_ability = /datum/heretic_knowledge/spell/star_touch
 	tier2 = /datum/heretic_knowledge/spell/star_blast
 	blade = /datum/heretic_knowledge/blade_upgrade/cosmic
@@ -46,8 +45,6 @@
 		I spoke, and heard my own words echoed back."
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
-
-/datum/heretic_knowledge/knowledge_ritual/cosmic
 
 /datum/heretic_knowledge/spell/star_touch
 	name = "Star Touch"

@@ -6,8 +6,7 @@
 	ui_bgr = "node_void"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
-	tier1 = /datum/heretic_knowledge/cold_snap
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/void
+	tier1 = /datum/heretic_knowledge/spell/void_prison
 	unique_ability = /datum/heretic_knowledge/spell/void_conduit
 	tier2 = /datum/heretic_knowledge/spell/void_phase
 	blade = /datum/heretic_knowledge/blade_upgrade/void
@@ -49,6 +48,20 @@
 	carbon_target.adjust_silence(10 SECONDS)
 	carbon_target.apply_status_effect(/datum/status_effect/void_chill, 2)
 
+/datum/heretic_knowledge/spell/void_prison
+	name = "Void Prison"
+	desc = "Grants you Void Prison, a spell that places your victim into ball, making them unable to do anything or speak. \
+		Applies void chill afterwards."
+	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
+		I try to yell, grab hold of this fool and tell them to run. \
+		But the only welts made are on my own beating fist. \
+		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
+
+	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
+	cost = 1
+
+
+// XANTODO - Add this to the new heretic passive later on
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
 	desc = "Grants you immunity to cold temperatures, and removes your need to breathe. \
@@ -82,8 +95,6 @@
 			user.add_traits(gain_traits, type)
 		else
 			user.remove_traits(gain_traits, type)
-
-/datum/heretic_knowledge/knowledge_ritual/void
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
