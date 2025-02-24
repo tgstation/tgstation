@@ -12928,6 +12928,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/south,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/engine_access,
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eFk" = (

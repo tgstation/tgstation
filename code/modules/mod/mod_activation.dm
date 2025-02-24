@@ -310,7 +310,6 @@
 			if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
 				continue
 			module.deactivate(display_message = FALSE)
-	update_speed()
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)
 	generate_suit_mask()

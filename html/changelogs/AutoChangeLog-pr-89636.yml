@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Foam now passes through tables, grilles, computers, and several other dense structures. You can still escape foam by mantling onto tables and such."
