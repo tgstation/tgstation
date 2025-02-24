@@ -370,4 +370,11 @@
 	to_chat(new_player, span_info("Lobby Menu HUD reset. You may reset the HUD again in <b>[DisplayTimeText(RESET_HUD_INTERVAL)]</b>."))
 	hud_used.show_hud(hud_used.hud_version)
 
+///Auto deadmins an admin when they click to toggle the ready button or join game button in the menu
+/mob/dead/new_player/proc/auto_deadmin_on_ready_or_latejoin()
+	if(!client?.holder) //If they aren't an admin we dont care
+		return TRUE
+	if(CONFIG_GET(flag/auto_deadmin_on_ready_or_latejoin) || (client.prefs.read_preference(/datum/preference/toggle/auto_deadmin_on_ready_or_latejoin)) || (client.prefs?.toggles & DEADMIN_ALWAYS))
+		return client.holder.auto_deadmin()
+
 #undef RESET_HUD_INTERVAL

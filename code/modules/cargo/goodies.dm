@@ -78,7 +78,10 @@
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
+	contains = list(
+		/obj/item/gun/ballistic/shotgun/automatic/combat,
+		/obj/item/storage/belt/bandolier
+	)
 
 /datum/supply_pack/goody/disabler_single
 	name = "Disabler Single-Pack"
@@ -214,7 +217,10 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(
+		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/hypospray/medipen/ekit
+	)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"
@@ -360,3 +366,16 @@
 	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
 	cost = PAYCHECK_CREW * 1.5
 	contains = list(/obj/item/pet_carrier/small/mouse)
+
+/datum/supply_pack/goody/shuttle_construction_kit
+	name = "Shuttle Construction Starter Kit"
+	desc = "Contains a set of shuttle blueprints, and the circuitboards necessary for constructing your own shuttle. \
+			Well at least the ones you can't source yourself without Science's help."
+	cost = PAYCHECK_COMMAND * 12 //You assistants with shipwrighting ambitions can do a couple bounties, can't you?
+	access_view = ACCESS_AUX_BASE //Engineers have it, QM can give it to whoever, and scientists can just research the tech.
+	contains = list(
+		/obj/item/shuttle_blueprints,
+		/obj/item/circuitboard/computer/shuttle/flight_control,
+		/obj/item/circuitboard/computer/shuttle/docker,
+		/obj/item/circuitboard/machine/engine/propulsion = 2,
+	)

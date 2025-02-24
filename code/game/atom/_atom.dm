@@ -186,12 +186,14 @@
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
 
+#ifndef DISABLE_DREAMLUAU
 	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
 	if(!(datum_flags & DF_STATIC_OBJECT))
 		DREAMLUAU_CLEAR_REF_USERDATA(contents)
 		DREAMLUAU_CLEAR_REF_USERDATA(filters)
 		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
 		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+#endif
 
 	return ..()
 
@@ -732,7 +734,6 @@
 	base_pixel_x = new_value
 
 	pixel_x = pixel_x + base_pixel_x - .
-
 
 ///Setter for the `base_pixel_y` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_y(new_value)

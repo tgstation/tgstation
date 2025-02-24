@@ -35,7 +35,7 @@
   );
   @include meta.load-css(
     '~tgui-core/styles/components/NumberInput',
-    $with: ('border-color': #fff)
+    $with: ('border-color': hsl(0, 0%, 100%))
   );
   @include meta.load-css(
     '~tgui-core/styles/components/ProgressBar',
@@ -52,6 +52,6 @@
   );
 
   .Button {
-    border: base.em(2px) solid #fff;
+    border: base.em(2px) solid hsl(0, 0%, 100%);
   }
 }

@@ -6,13 +6,25 @@
 	/// How many seconds between each gas release
 	var/releasedelay = 10
 	anomaly_core = /obj/item/assembly/signaler/anomaly/pyro
+	/// Observer chosen to become a pyro slime
+	var/mob/chosen_one
+	/// Has a poll started
+	var/already_polling = FALSE
+	/// Delay before spawning a slime
+	var/poll_time = 10 SECONDS
 
 /obj/effect/anomaly/pyro/Initialize(mapload, new_lifespan)
 	. = ..()
 	apply_wibbly_filters(src)
 
+/obj/effect/anomaly/pyro/Destroy()
+	chosen_one = null
+	return ..()
+
 /obj/effect/anomaly/pyro/anomalyEffect(seconds_per_tick)
 	..()
+	if(!already_polling && death_time < (world.time - poll_time))
+		start_poll()
 	ticks += seconds_per_tick
 	if(ticks < releasedelay)
 		return FALSE
@@ -26,6 +38,10 @@
 /obj/effect/anomaly/pyro/detonate()
 	INVOKE_ASYNC(src, PROC_REF(makepyroslime))
 
+/obj/effect/anomaly/pyro/proc/start_poll()
+	already_polling = TRUE
+	chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, poll_time = poll_time, checked_target = src, ignore_category = POLL_IGNORE_PYROSLIME, alert_pic = src, role_name_text = "pyroclastic anomaly slime")
+
 /obj/effect/anomaly/pyro/proc/makepyroslime()
 	var/turf/open/tile = get_turf(src)
 	if(istype(tile))
@@ -34,14 +50,14 @@
 	var/new_colour = pick(/datum/slime_type/red, /datum/slime_type/orange)
 	var/mob/living/basic/slime/pyro = new(tile, new_colour, SLIME_LIFE_STAGE_ADULT)
 	pyro.set_enraged_behaviour()
-
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, checked_target = pyro, ignore_category = POLL_IGNORE_PYROSLIME, alert_pic = pyro, role_name_text = "pyroclastic anomaly slime")
+	// Failed to find a player, or somehow detonated prematurely
 	if(isnull(chosen_one))
 		return
 	pyro.key = chosen_one.key
 	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME
 	pyro.mind.add_antag_datum(/datum/antagonist/pyro_slime)
 	pyro.log_message("was made into a slime by pyroclastic anomaly", LOG_GAME)
+	chosen_one = null
 
 ///Bigger, meaner, immortal pyro anomaly
 /obj/effect/anomaly/pyro/big

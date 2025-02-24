@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/light_amount = our_turf.get_lumcount()
 
 	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		mob.apply_status_effect(/datum/status_effect/shadow_regeneration)
+		mob.apply_status_effect(/datum/status_effect/shadow/regeneration)
 
 /datum/fish_trait/heavy
 	name = "Demersal"
@@ -669,7 +669,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(cooked_time >= FISH_SAFE_COOKING_DURATION)
 		fish.reagents.del_reagent(/datum/reagent/consumable/liquidelectricity)
 	else
-		fish.reagents.multiply_single_reagent(/datum/reagent/consumable/liquidelectricity, 0.66)
+		fish.reagents.multiply(0.66, /datum/reagent/consumable/liquidelectricity)
 
 /datum/fish_trait/electrogenesis/add_reagents(obj/item/fish/fish, list/reagents)
 	. = ..()

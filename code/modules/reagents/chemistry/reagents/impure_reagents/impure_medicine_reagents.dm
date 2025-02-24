@@ -247,7 +247,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
 	var/datum/reagents/mob_reagents = affected_mob.reagents
 	if(mob_reagents)
-		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating)
+		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating, 1)
 	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if(!ishuman(affected_mob))
 		return

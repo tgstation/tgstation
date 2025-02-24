@@ -55,6 +55,8 @@
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
 	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
+	///If this limb should have emissive overlays
+	var/is_emissive = FALSE
 
 	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/body_zone
@@ -203,6 +205,8 @@
 	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
 	/// A potential texturing overlay to put on the limb
 	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
+	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
+	var/list/bodypart_effects
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -264,7 +268,6 @@
 	if(owner) //trust me bro you dont want this
 		return FALSE
 	return  ..()
-
 
 /obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
@@ -1058,7 +1061,7 @@
 	else
 		limb.icon_state = "[limb_id]_[body_zone]"
 
-	icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
+	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
 	. += limb
 
@@ -1078,13 +1081,13 @@
 		if(aux_zone)
 			aux.color = "[draw_color]"
 
-		//EMISSIVE CODE START
-		// For some reason this was applied as an overlay on the aux image and limb image before.
-		// I am very sure that this is unnecessary, and i need to treat it as part of the return list
-		// to be able to mask it proper in case this limb is a leg.
+	//EMISSIVE CODE START
+	// For some reason this was applied as an overlay on the aux image and limb image before.
+	// I am very sure that this is unnecessary, and i need to treat it as part of the return list
+	// to be able to mask it proper in case this limb is a leg.
 	if(!is_husked)
+		var/atom/location = loc || owner || src
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-			var/atom/location = loc || owner || src
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
 			. += limb_em_block
@@ -1093,7 +1096,16 @@
 				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 				aux_em_block.dir = image_dir
 				. += aux_em_block
-		//EMISSIVE CODE END
+		if(is_emissive)
+			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
+			limb_em.dir = image_dir
+			. += limb_em
+
+			if(aux_zone)
+				var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
+				aux_em.dir = image_dir
+				. += aux_em
+	//EMISSIVE CODE END
 
 	//No need to handle leg layering if dropped, we only face south anyways
 	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
