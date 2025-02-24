@@ -295,6 +295,7 @@
 				result.reagents.clear_reagents()
 			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
 				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		stuff_to_use -= holder //This is the only non-movable in our list, we need to remove it.
 		qdel(holder)
 	result.on_craft_completion(stuff_to_use, recipe, crafter)
 	if(set_materials)
