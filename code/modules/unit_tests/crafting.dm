@@ -17,7 +17,7 @@
 	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
 
 	///Clear the area around our crafting movable of objects that may mess with the unit test
-	for(var/atom/movable/trash in (view(1, crafter) - crafter))
+	for(var/atom/movable/trash in (range(1, crafter) - crafter))
 		qdel(trash)
 
 	var/turf/turf = crafter.loc
