@@ -28,7 +28,7 @@
 		return FALSE
 	override_client = override_client == "Yes"
 
-	idle_chance = tgui_input_number(user, "How likely should this mob be to move to another tile when it's not doing anything else?", "Walk Chance", max_value = 100, min_value = 0)
+	idle_chance = tgui_input_number(user, "How likely (% chance per second) should this mob be to move to another tile when it's not doing anything else?", "Walk Chance", max_value = 100, min_value = 0)
 	if (isnull(idle_chance))
 		return FALSE
 

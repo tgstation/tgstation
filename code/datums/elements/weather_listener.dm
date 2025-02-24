@@ -30,6 +30,9 @@
 	var/mob/target_mob = target
 	handle_z_level_change(target_mob, null, target_mob.loc)
 
+	var/mob/target_mob = target
+	handle_z_level_change(target_mob, null, target_mob.loc)
+
 /datum/element/weather_listener/Detach(datum/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGOUT))

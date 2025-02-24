@@ -2,6 +2,8 @@
 GLOBAL_LIST_EMPTY(ash_storm_sounds)
 GLOBAL_LIST_EMPTY(rain_storm_sounds)
 GLOBAL_LIST_EMPTY(sand_storm_sounds)
+/// Tracks where we should play snowstorm sounds for the area sound listener
+GLOBAL_LIST_EMPTY(snowstorm_sounds)
 
 #define STARTUP_STAGE 1
 #define MAIN_STAGE 2

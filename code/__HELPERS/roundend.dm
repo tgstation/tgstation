@@ -289,6 +289,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 
+	world.TgsTriggerEvent("tg-Roundend", wait_for_completion = TRUE)
+
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	standard_reboot()
@@ -615,12 +617,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/datum/team/active_teams as anything in all_teams)
 		//check if we should show the team
 		if(!active_teams.show_roundend_report)
+			all_teams -= active_teams
 			continue
-
-		//remove the team's individual antag reports, if the team actually shows up in the report.
-		for(var/datum/mind/team_minds as anything in active_teams.members)
-			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
-				all_antagonists -= team_minds.antag_datums
 
 		result += active_teams.roundend_report()
 		result += " "//newline between teams
@@ -633,6 +631,10 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 	for(var/datum/antagonist/antagonists in all_antagonists)
 		if(!antagonists.show_in_roundend)
+			continue
+		// if the antag datum is associated with a team that appeared in the report, skip it.
+		var/datum/team/antag_team = antagonists.get_team()
+		if(!isnull(antag_team) && (antag_team in all_teams))
 			continue
 		if(antagonists.roundend_category != currrent_category)
 			if(previous_category)

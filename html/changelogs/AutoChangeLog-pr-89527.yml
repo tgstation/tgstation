@@ -1,5 +1,0 @@
-author: "LePiromano"
-delete-after: True
-changes:
-  - balance: "nerfed Icebox's \"The Thing\" boss"
-  - bugfix: "fixed \"The Thing\" 's spike walls destroying items on the floor when summoned"
