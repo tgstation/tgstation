@@ -119,8 +119,6 @@
 	desc = "Toggles your wearable HUD. You can still access examine information while it's off."
 
 /datum/action/item_action/toggle_wearable_hud/do_effect(trigger_flags)
-	if(owner.get_slot_by_item(target) != ITEM_SLOT_EYES)
-		return FALSE
 	var/obj/item/clothing/glasses/hud/hud_display = target
 	hud_display.toggle_hud_display(owner)
 	return TRUE
