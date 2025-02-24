@@ -545,3 +545,64 @@
       x1 multiplier.
   - balance: Polonium no longer guarantees instant irradiation when the reagent is
       inside a mob.
+2025-02-24:
+  DaCoolBoss:
+  - map: '[Birdshot] Deleted some badly-placed resin tiles in eastern maints.'
+  - map: '[Birdshot] Shuffled the items inside the Gold Standard Law Firm room to
+      look better.'
+  Ghommie:
+  - bugfix: cult slurring/stuttering now removed before the april fools punch line
+      upon conversion, thus untarnishing the Rick and Morty reference.
+  - bugfix: Fixing loaded trophy fishes possibly not having materials.
+  Hatterhat:
+  - rscadd: Glaive retool kits for proto-kinetic crushers are now in mining vendors'
+      ordering lists.
+  - code_imp: Proto-kinetic crusher retool kits now have support for alternate inhand
+      icon files with alternate dimensions.
+  K4rlox:
+  - rscadd: Human plushie has been added to the game, Obtainable thru Cargo, Loadouts
+      and Spawners.
+  Likteer:
+  - rscadd: Grown grass can be dryed (rack/dehumidifier) to make hay tiles.
+  SmArtKar:
+  - bugfix: Hitscan projectiles like emitter beams should look less weird during extreme
+      lag spikes
+  - bugfix: Moon amulet now properly turns insane people into converts and drains
+      sanity of sane people, instead of doing the inverse
+  StrangeWeirdKitten:
+  - bugfix: You can no longer be immune to megafauna with a polybelt as a mining mob.
+  Time-Green:
+  - rscadd: Taking plant or shadow limbs will now behave as expected! Take a plant
+      arm, and it will heal in light! Or take plant and shadow limbs and be in constant
+      agony as you realize this world was not made for you
+  - refactor: Refactors how we handle photosynthesis/nyxosynthesis by moving it into
+      a new status_effect framework controlled by podyparts
+  Y0SH1_M4S73R (with special thanks to Vect0r, whose original PR inspired the implementation of these changes):
+  - rscadd: Shuttle blueprints, the tool used to construct and modify custom shuttles.
+      Print a set at a science, engineering, or cargo techfab after researching Shuttle
+      Engineering, or craft a crude set from the crafting menu.
+  - rscadd: Shuttle blueprint database upgrade for engineering cyborgs, printable
+      from the Exosuit Fabricator after researching Shuttle Engineering. A version
+      of shuttle blueprints designed for use by cyborgs.
+  - rscadd: Shuttle frame rods, usable to construct custom shuttles. Hand-craft by
+      using 5 rods on 1 titanium sheet, or by printing them at a science, engineering,
+      or cargo techfab after researching Shuttle Engineering.
+  - rscadd: Custom shuttle flight control and navigation boards, printable from a
+      science, engineering, or cargo techfab after researching Shuttle Engineering.
+  - rscadd: Shuttle engine boards can be printed from a science, engineering, or cargo
+      techfab after researching shuttle engineering.
+  - rscadd: The shuttle engine supply pack is no longer locked behind the purchase
+      of the Build Your Own Shuttle kit.
+  - rscadd: Shuttle Construction Starter Kit goodie pack, containing a set of shuttle
+      blueprints, flight control and navigation console boards, and two engine boards,
+      can be purchased from cargo for 1200 credits. Requires aux base access to purchase.
+  - refactor: Shuttles now keep track of what areas are underneath each of their individual
+      turfs, so that the areas left behind on movement are consistent with what they
+      were beforehand.
+  - refactor: Shuttle ceilings now place themselves down as baseturfs, instead of
+      only appearing if the turf above is open space.
+  grungussuss:
+  - qol: ghost poll sound can now be disabled
+  - qol: ghost poll sound volume can now be tweaked
+  - sound: added new ghost poll sound.
+  - sound: normalised volume of ghost poll sounds
