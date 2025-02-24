@@ -7,22 +7,19 @@ SUBSYSTEM_DEF(weather)
 	var/list/processing = list()
 	var/list/eligible_zlevels = list()
 	var/list/next_hit_by_zlevel = list() //Used by barometers to know when the next storm is coming
-	var/list/current_mobs = list()
-	var/current_weather_turf_iteration = 0
-	var/current_thunder_turf_iteration = 0
 
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
-	for(var/datum/weather/weather_event as ANYTHING in processing)
+	for(var/datum/weather/weather_event in processing)
 		if(IS_WEATHER_AESTHETIC(weather_event.weather_flags) || weather_event.stage != MAIN_STAGE)
 			continue
 
-		if(weather_event.weather_flags & WEATHER_MOBS)
+		if(weather_event.currentpart == SSWEATHER_MOBS)
 			if(!resumed)
-				current_mobs = GLOB.mob_living_list.Copy()
-			var/list/current_mobs_cache = current_mobs // cache for performance
+				weather_event.current_mobs = GLOB.mob_living_list.Copy()
+			var/list/current_mobs_cache = weather_event.current_mobs // cache for performance
 			while(current_mobs_cache.len)
-				var/mob/living/target == current_mobs_cache[current_mobs_cache.len]
+				var/mob/living/target = current_mobs_cache[current_mobs_cache.len]
 				current_mobs_cache.len--
 				if(QDELETED(target))
 					continue
@@ -30,26 +27,34 @@ SUBSYSTEM_DEF(weather)
 					weather_event.weather_act_mob(target)
 				if(MC_TICK_CHECK)
 					return
+			resumed = FALSE
+			weather_event.next_subsystem_task()
 
-		if(weather_event.weather_flags & (WEATHER_TURFS))
+		if(weather_event.currentpart == SSWEATHER_TURFS)
 			if(!resumed)
-				current_weather_turf_iteration = weather_event.weather_turfs_per_tick
-			while(current_weather_turf_iteration)
-				current_weather_turf_iteration--
-				var/turf/open/selected_turf = pick(weather_event.weather_turfs)
+				weather_event.turf_iteration = weather_event.weather_turfs_per_tick
+			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
+			while(weather_event.turf_iteration)
+				weather_event.turf_iteration--
+				var/turf/open/selected_turf = pick(weather_turfs)
 				weather_event.weather_act_turf(selected_turf)
 				if(MC_TICK_CHECK)
 					return
+			resumed = FALSE
+			weather_event.next_subsystem_task()
 
-		if(weather_event.weather_flags & (WEATHER_THUNDER))
+		if(weather_event.currentpart == SSWEATHER_THUNDER)
 			if(!resumed)
-				current_thunder_turf_iteration = weather_event.thunder_turfs_per_tick
-			while(current_thunder_turf_iteration)
-				current_thunder_turf_iteration--
-				var/turf/open/selected_turf = pick(weather_event.weather_turfs)
+				weather_event.thunder_iteration = weather_event.thunder_turfs_per_tick
+			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
+			while(weather_event.thunder_iteration)
+				weather_event.thunder_iteration--
+				var/turf/open/selected_turf = pick(weather_turfs)
 				weather_event.thunder_act_turf(selected_turf)
 				if(MC_TICK_CHECK)
 					return
+			resumed = FALSE
+			weather_event.next_subsystem_task()
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)

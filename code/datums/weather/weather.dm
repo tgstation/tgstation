@@ -104,6 +104,16 @@
 	/// List of weather bitflags that determines effects (see \code\__DEFINES\weather.dm)
 	var/weather_flags = NONE
 
+	/// List of current mobs being processed by weather
+	var/list/current_mobs = list()
+	/// The weather turf counter to keep track of how many turfs we have processed so far
+	var/turf_iteration = 0
+	// The weather thunder counter to keep track of how much thunder we have processed so far
+	var/thunder_iteration = 0
+	/// The current section our weather subsystem is processing
+	var/currentpart
+	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
+	var/list/subsystem_tasks = list()
 
 /datum/weather/New(z_levels, area_override, weather_flags_override, datum/reagent/custom_reagent)
 	..()
@@ -111,6 +121,17 @@
 	area_type = area_override || area_type
 	weather_flags = weather_flags_override || weather_flags
 
+	if(IS_WEATHER_AESTHETIC(weather_flags))
+		return
+
+	if(weather_flags & (WEATHER_MOBS))
+		subsystem_tasks += SSWEATHER_MOBS
+	else if(weather_flags & (WEATHER_TURFS))
+		subsystem_tasks += SSWEATHER_TURFS
+	else if(weather_flags & (WEATHER_THUNDER))
+		subsystem_tasks += SSWEATHER_THUNDER
+
+	currentpart = subsystem_tasks[1]
 /**
  * Telegraphs the beginning of the weather on the impacted z levels
  *
@@ -358,3 +379,9 @@
 		gen_overlay_cache += new_weather_overlay
 
 	return gen_overlay_cache
+
+/// Updates the currentpart with the subsystem task that is next in line
+/datum/weather/proc/next_subsystem_task()
+	// loops back to the start of the list once it reaches the end
+	var/next_part = (currentpart++) % length(subsystem_tasks)
+	currentpart = subsystem_tasks[next_part]
