@@ -688,9 +688,9 @@
 	wearer.update_spacesuit_hud_icon(state_to_use || "0")
 
 /obj/item/mod/control/proc/update_speed()
+	var/datum/mod_part/part_datum = get_part_datum(src)
 	for(var/obj/item/part as anything in get_parts(all = TRUE))
 		part.slowdown = slowdown_deployed / length(mod_parts)
-		var/datum/mod_part/part_datum = get_part_datum(part)
 		if (!part_datum.sealed)
 			part.slowdown = max(part.slowdown, 0)
 	wearer?.update_equipment_speed_mods()
