@@ -43,7 +43,8 @@
 #define TRAIT_ATYPICAL_TASTER "atypical_taster"
 /// This person is space-acclimated and can "spacer-swim" on zero gravity turfs inside light atmosphere.
 #define TRAIT_SPACER_SWIM "spacer_swim"
-
+/// This person has criminal connections and is able to benefit from whatever those entail (allows viewing of exploitables upon examine)
+#define TRAIT_CRIMINAL_CONNECTIONS "criminal_connections"
 ////
 // Jobs
 ////

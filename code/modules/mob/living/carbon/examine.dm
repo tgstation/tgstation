@@ -26,6 +26,8 @@
 	// DOPPLER EDIT BEGIN - flavor text
 	if (dna.features["flavor_short_desc"])
 		. += "[dna.features["flavor_short_desc"]] [get_extended_description_href("\[👁️\]")]"
+	if (HAS_TRAIT(user, TRAIT_CRIMINAL_CONNECTIONS) && dna.features["exploitables"])
+		. += " [get_exploitables_href("\[🗝️\]")]"
 	ADD_NEWLINE_IF_NECESSARY(.)
 	if (dna.features["custom_species_name"])
 		. += "[t_He] [t_is] [prefix_a_or_an(dna.features["custom_species_name"])] <em>[get_species_description_href(dna.features["custom_species_name"])]</em> of [LOWER_TEXT(dna.species.name)] physiology."
