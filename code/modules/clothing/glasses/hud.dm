@@ -2,6 +2,9 @@
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
+	actions_types = list(/datum/action/item_action/toggle_wearable_hud)
+	/// Whether the HUD info is on or off
+	var/display_active = TRUE
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	. = ..()
@@ -31,6 +34,23 @@
 		else
 			user.say("WHY IS THERE A BAR ON MY HEAD?!!")
 	return OXYLOSS
+
+/obj/item/clothing/glasses/hud/equipped(mob/living/user, slot)
+	. = ..()
+	display_active = TRUE
+
+/obj/item/clothing/glasses/hud/proc/toggle_hud_display(mob/living/carbon/eye_owner)
+	if(display_active)
+		display_active = FALSE
+		for(var/hud_trait as anything in clothing_traits)
+			REMOVE_CLOTHING_TRAIT(eye_owner, hud_trait)
+		balloon_alert(eye_owner, "hud disabled")
+		return
+
+	display_active = TRUE
+	for(var/hud_trait as anything in clothing_traits)
+		ADD_CLOTHING_TRAIT(eye_owner, hud_trait)
+	balloon_alert(eye_owner, "hud enabled")
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
@@ -69,8 +89,8 @@
 
 /obj/item/clothing/glasses/hud/health/night/science
 	name = "night vision medical science scanner HUD"
-	desc = "An clandestine medical science heads-up display that allows operatives to find \
-		dying captains and the perfect poison to finish them off in complete darkness."
+	desc = "A clandestine medical science heads-up display that allows operatives to find \
+		both dying captains and the perfect poison to finish them off, all in complete darkness."
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MEDICAL_HUD)
 	forced_glass_color = FALSE
 

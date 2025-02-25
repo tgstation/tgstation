@@ -84,7 +84,7 @@
 
 // EXPLORATION_SITE_RUINS 2/2
 /datum/exploration_event/simple/resource/remnants
-	name = "dessicated corpse"
+	name = "desiccated corpse"
 	required_site_traits = list(EXPLORATION_SITE_RUINS)
 	required_tool = EXODRONE_TOOL_MULTITOOL
 	discovery_log = "Discovered a corpse of a humanoid."

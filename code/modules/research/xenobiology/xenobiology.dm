@@ -736,7 +736,7 @@
 		being_used = FALSE
 		return
 
-	dumb_mob.key = ghost.key
+	dumb_mob.PossessByPlayer(ghost.key)
 	dumb_mob.mind.enslave_mind_to_creator(user)
 	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
 
@@ -987,7 +987,7 @@
 
 /obj/item/slimepotion/slime/renaming
 	name = "renaming potion"
-	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
+	desc = "A potion that allows a self-aware being to change what name it subconsciously presents to the world."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potbrown"
 

@@ -1,5 +1,6 @@
+import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, ColorBox, Section, Stack, Table } from '../components';
 import { NtosWindow } from '../layouts';
 import { NTOSData } from '../layouts/NtosWindow';
 

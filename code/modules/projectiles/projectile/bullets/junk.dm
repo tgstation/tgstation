@@ -91,6 +91,7 @@
 
 /obj/projectile/bullet/junk/reaper
 	name = "junk reaper bullet"
+	icon_state = null
 	tracer_type = /obj/effect/projectile/tracer/sniper
 	impact_type = /obj/effect/projectile/impact/sniper
 	muzzle_type = /obj/effect/projectile/muzzle/sniper

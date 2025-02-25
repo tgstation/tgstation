@@ -18,8 +18,34 @@ GLOBAL_LIST_INIT(ai_status_display_emotes, list(
 	AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
 ))
 
+GLOBAL_LIST_INIT(ai_hologram_category_options, list(
+	AI_HOLOGRAM_CATEGORY_ANIMAL = list(
+		AI_HOLOGRAM_BEAR,
+		AI_HOLOGRAM_CARP,
+		AI_HOLOGRAM_CAT,
+		AI_HOLOGRAM_CAT_2,
+		AI_HOLOGRAM_CHICKEN,
+		AI_HOLOGRAM_CORGI,
+		AI_HOLOGRAM_COW,
+		AI_HOLOGRAM_CRAB,
+		AI_HOLOGRAM_FOX,
+		AI_HOLOGRAM_GOAT,
+		AI_HOLOGRAM_PARROT,
+		AI_HOLOGRAM_PUG,
+		AI_HOLOGRAM_SPIDER,
+	),
+	AI_HOLOGRAM_CATEGORY_UNIQUE = list(
+		AI_HOLOGRAM_DEFAULT,
+		AI_HOLOGRAM_FACE,
+		AI_HOLOGRAM_NARSIE,
+		AI_HOLOGRAM_RATVAR,
+		AI_HOLOGRAM_XENO,
+	),
+))
+
 // New items need to also be added to ai_hologram_icon_state list
 GLOBAL_LIST_INIT(ai_hologram_icons, list(
+	/* Animal */
 	AI_HOLOGRAM_BEAR = 'icons/mob/simple/animal.dmi',
 	AI_HOLOGRAM_CARP = 'icons/mob/simple/carp.dmi',
 	AI_HOLOGRAM_CAT = 'icons/mob/simple/pets.dmi',
@@ -28,20 +54,22 @@ GLOBAL_LIST_INIT(ai_hologram_icons, list(
 	AI_HOLOGRAM_CORGI = 'icons/mob/simple/pets.dmi',
 	AI_HOLOGRAM_COW = 'icons/mob/simple/cows.dmi',
 	AI_HOLOGRAM_CRAB = 'icons/mob/simple/animal.dmi',
-	AI_HOLOGRAM_DEFAULT = 'icons/mob/silicon/ai.dmi',
-	AI_HOLOGRAM_FACE = 'icons/mob/silicon/ai.dmi',
 	AI_HOLOGRAM_FOX = 'icons/mob/simple/pets.dmi',
 	AI_HOLOGRAM_GOAT = 'icons/mob/simple/animal.dmi',
-	AI_HOLOGRAM_NARSIE = 'icons/mob/silicon/ai.dmi',
 	AI_HOLOGRAM_PARROT = 'icons/mob/simple/animal.dmi',
 	AI_HOLOGRAM_PUG = 'icons/mob/simple/pets.dmi',
-	AI_HOLOGRAM_RATVAR = 'icons/mob/silicon/ai.dmi',
 	AI_HOLOGRAM_SPIDER = 'icons/mob/simple/arachnoid.dmi',
+	/* Unique */
+	AI_HOLOGRAM_DEFAULT = 'icons/mob/silicon/ai.dmi',
+	AI_HOLOGRAM_FACE = 'icons/mob/silicon/ai.dmi',
+	AI_HOLOGRAM_NARSIE = 'icons/mob/silicon/ai.dmi',
+	AI_HOLOGRAM_RATVAR = 'icons/mob/silicon/ai.dmi',
 	AI_HOLOGRAM_XENO = 'icons/mob/nonhuman-player/alien.dmi',
 ))
 
 // New items need to also be added to ai_hologram_icons list
 GLOBAL_LIST_INIT(ai_hologram_icon_state, list(
+	/* Animal */
 	AI_HOLOGRAM_BEAR = "bear",
 	AI_HOLOGRAM_CARP = "carp",
 	AI_HOLOGRAM_CAT = "cat",
@@ -50,15 +78,16 @@ GLOBAL_LIST_INIT(ai_hologram_icon_state, list(
 	AI_HOLOGRAM_CORGI = "corgi",
 	AI_HOLOGRAM_COW = "cow",
 	AI_HOLOGRAM_CRAB = "crab",
-	AI_HOLOGRAM_DEFAULT = "default",
-	AI_HOLOGRAM_FACE = "floating face",
 	AI_HOLOGRAM_FOX = "fox",
 	AI_HOLOGRAM_GOAT = "goat",
-	AI_HOLOGRAM_NARSIE = "horror",
 	AI_HOLOGRAM_PARROT = "parrot_fly",
 	AI_HOLOGRAM_PUG = "pug",
-	AI_HOLOGRAM_RATVAR = "clock",
 	AI_HOLOGRAM_SPIDER = "guard",
+	/* Unique */
+	AI_HOLOGRAM_DEFAULT = "default",
+	AI_HOLOGRAM_FACE = "floating face",
+	AI_HOLOGRAM_NARSIE = "horror",
+	AI_HOLOGRAM_RATVAR = "clock",
 	AI_HOLOGRAM_XENO = "alienq",
 ))
 

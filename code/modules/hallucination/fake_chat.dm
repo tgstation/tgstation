@@ -48,9 +48,11 @@
 	if(!chosen)
 		if(is_radio)
 			chosen = pick(list("Help!",
+				"Help [pick_list_replacements(HALLUCINATION_FILE, "location")][prob(50)?"!":"!!"]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "people")] is [pick_list_replacements(HALLUCINATION_FILE, "accusations")]!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "people")] has [pick_list_replacements(HALLUCINATION_FILE, "contraband")]!",
 				"[pick_list_replacements(HALLUCINATION_FILE, "threat")] in [pick_list_replacements(HALLUCINATION_FILE, "location")][prob(50)?"!":"!!"]",
-				"[pick("Where's [hallucinator.first_name()]?", "Set [hallucinator.first_name()] to arrest!")]",
+				"[pick("Where's [first_name(hallucinator.name)]?", "Set [first_name(hallucinator.name)] to arrest!")]",
 				"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!",
 				"AI [pick("rogue", "is dead")]!!",
 				"Borgs rogue!",
@@ -58,7 +60,7 @@
 		else
 			chosen = pick(list("[pick_list_replacements(HALLUCINATION_FILE, "suspicion")]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "conversation")]",
-				"[pick_list_replacements(HALLUCINATION_FILE, "greetings")][hallucinator.first_name()]!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "greetings")][first_name(hallucinator.name)]!",
 				"[pick_list_replacements(HALLUCINATION_FILE, "getout")]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "weird")]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "didyouhearthat")]",
@@ -71,7 +73,7 @@
 
 		chosen = capitalize(chosen)
 
-	chosen = replacetext(chosen, "%TARGETNAME%", hallucinator.first_name())
+	chosen = replacetext(chosen, "%TARGETNAME%", first_name(hallucinator.name))
 
 	// Log the message
 	feedback_details += "Type: [is_radio ? "Radio" : "Talk"], Source: [speaker.real_name], Message: [chosen]"

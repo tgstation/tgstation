@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/space/openspace/LateInitialize()
-	AddElement(/datum/element/turf_z_transparency)
+	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
 
 /turf/open/space/openspace/Destroy()
 	// Signals persist through destroy, GO HOME

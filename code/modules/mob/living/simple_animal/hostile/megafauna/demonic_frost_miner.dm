@@ -18,7 +18,7 @@ Difficulty: Extremely Hard
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
 	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL|MOB_MINING
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
@@ -140,12 +140,12 @@ Difficulty: Extremely Hard
 	adjustHealth(-maxHealth)
 	enraged = TRUE
 	enraging = TRUE
-	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
+	animate(src, pixel_z = 96, time = 100, easing = ELASTIC_EASING, flags = ANIMATION_RELATIVE)
 	spin(100, 10)
 	SLEEP_CHECK_DEATH(60, src)
 	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100, TRUE)
 	icon_state = "demonic_miner_phase2"
-	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
+	animate(src, pixel_z = -96, time = 8, flags = ANIMATION_END_NOW, flags = ANIMATION_RELATIVE)
 	spin(8, 2)
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_PURPLE, 5)

@@ -792,20 +792,23 @@
 	/// The timer id powering our burning
 	var/timer_id = TIMER_ID_NULL
 
-/obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null)
-	. = ..()
+/obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null, fuel_type_override = null)
 	max_fuel = isnull(fuel_override) ? rand(20, 25) : fuel_override
+	if (fuel_type_override)
+		fuel_type = fuel_type_override
 	create_reagents(max_fuel + oxygen_added, DRAWABLE | INJECTABLE)
 	reagents.add_reagent(fuel_type, max_fuel)
+	. = ..()
 	set_light_color(color)
 	AddComponent(/datum/component/edible,\
 		food_flags = FOOD_NO_EXAMINE,\
 		volume = reagents.total_volume,\
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
 	)
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
-	return reagents?.get_reagent_amount(fuel_type)
+	return reagents.get_reagent_amount(fuel_type)
 
 /// Burns down the glowstick by the specified time
 /// Returns the amount of time we need to burn before a visual change will occur
@@ -849,19 +852,23 @@
 	// No sense having a toggle light action that we don't use eh?
 	if(toggle)
 		remove_item_action(toggle)
-	burn_loop()
+	burn_loop(round(reagents.total_volume * 0.1))
 
 /obj/item/flashlight/glowstick/proc/turn_off()
 	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
 	if(get_fuel() && !toggle)
 		add_item_action(/datum/action/item_action/toggle_light)
 	if(timer_id != TIMER_ID_NULL)
-		var/expected_burn_time = burn_down(0) // This is dumb I'm sorry
-		burn_down(expected_burn_time - timeleft(timer_id))
 		deltimer(timer_id)
 		timer_id = TIMER_ID_NULL
 	set_light_on(FALSE)
 	update_appearance(UPDATE_ICON)
+
+/obj/item/flashlight/glowstick/proc/on_reagent_change(datum/source)
+	SIGNAL_HANDLER
+
+	if (!get_fuel() && light_on)
+		turn_off()
 
 /obj/item/flashlight/glowstick/update_icon_state()
 	. = ..()

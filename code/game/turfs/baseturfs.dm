@@ -34,13 +34,15 @@
 	new_baseturfs.Add(baseturfs)
 	if(isopenturf(src))
 		new_baseturfs.Add(type)
+	var/area/our_area = get_area(src)
+	flags = our_area.place_on_top_react(new_baseturfs, added_layer, flags)
 
 	return ChangeTurf(added_layer, new_baseturfs, flags)
 
 /// Places a turf on top - for map loading
 /turf/proc/load_on_top(turf/added_layer, flags)
 	var/area/our_area = get_area(src)
-	flags = our_area.PlaceOnTopReact(list(baseturfs), added_layer, flags)
+	flags = our_area.place_on_top_react(list(baseturfs), added_layer, flags)
 
 	if(flags & CHANGETURF_SKIP) // We haven't been initialized
 		if(flags_1 & INITIALIZED_1)
@@ -169,3 +171,13 @@
 	var/floor_position = baseturfs.Find(floor)
 	if(floor_position != 0)
 		insert_baseturf(floor_position + 1, roof)
+
+/// Places a baseturf below a searched for baseturf.
+/turf/proc/stack_below_baseturf(search_type, stack_type)
+	if(!islist(baseturfs))
+		baseturfs = list(baseturfs)
+	var/search_position = baseturfs.Find(search_type)
+	if(search_position != 0)
+		insert_baseturf(search_position, stack_type)
+	else if(type == search_type)
+		insert_baseturf(turf_type = stack_type)

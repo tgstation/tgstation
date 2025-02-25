@@ -88,15 +88,19 @@
 	dryname = "dried tracks"
 	drydesc = "Some old bloody tracks left by wheels. Machines are evil, perhaps."
 
-/obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
+/obj/effect/decal/cleanable/blood/trail_holder
 	name = "blood"
-	icon = 'icons/effects/blood.dmi'
 	desc = "Your instincts say you shouldn't be following these."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = null
+	random_icon_states = null
 	beauty = -50
 	var/list/existing_dirs = list()
 
-/obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
-	return TRUE
+/obj/effect/decal/cleanable/blood/trail_holder/replace_decal(obj/effect/decal/cleanable/blood/trail_holder/blood_decal)
+	if(blood_state != blood_decal.blood_state)
+		return FALSE
+	return ..()
 
 // normal version of the above trail holder object for use in less convoluted things
 /obj/effect/decal/cleanable/blood/trails
@@ -326,7 +330,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
 	if((shoe_types.len + species_types.len) > 0)
-		. += "You recognise the [name] as belonging to:"
+		. += "You recognise \the [src] as belonging to:"
 		for(var/sole in shoe_types)
 			var/obj/item/clothing/item = sole
 			var/article = initial(item.gender) == PLURAL ? "Some" : "A"

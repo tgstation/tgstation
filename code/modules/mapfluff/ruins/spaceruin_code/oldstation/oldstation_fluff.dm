@@ -70,7 +70,7 @@
 
 /obj/item/paper/fluff/ruins/oldstation/protoinv
 	name = "Laboratory Inventory"
-	default_raw_text = "<b>*Inventory*</b><br><br>(1) Prototype MODsuit<br><br>(1)Health Analyser<br><br>(1)Prototype Energy Gun<br><br>(1)Singularity Generation Disk<br><br><b>DO NOT REMOVE WITHOUT \
+	default_raw_text = "<b>*Inventory*</b><br><br>(1)Prototype MODsuit<br><br>(1)Health Analyser<br><br>(1)Prototype Energy Gun<br><br>(1)Supermatter Crystal Shard<br><br><b>DO NOT REMOVE WITHOUT \
 	THE CAPTAIN AND RESEARCH DIRECTOR'S AUTHORISATION</b>"
 
 /obj/item/paper/fluff/ruins/oldstation/generator_manual

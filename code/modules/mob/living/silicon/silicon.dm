@@ -309,13 +309,13 @@
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
 	laws_sanity_check()
-	var/list = "<meta charset='UTF-8'><b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	var/law_display = "Yes"
 	if (laws.zeroth)
 		if (!(laws.zeroth in lawcheck))
 			law_display = "No"
-		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
+		list += {"<a href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</a> <font color='#ff0000'><b>[laws.zeroth]</b></font><br>"}
 
 	for (var/index in 1 to length(laws.hacked))
 		law_display = "Yes"
@@ -323,7 +323,7 @@
 		if (length(law) > 0)
 			if (!(law in hackedcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</a> <font color='#660000'>[law]</font><br>"}
 
 	for (var/index in 1 to length(laws.ion))
 		law_display = "Yes"
@@ -331,7 +331,7 @@
 		if (length(law) > 0)
 			if(!(law in ioncheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</A> <font color='#547DFE'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</a> <font color='#547DFE'>[law]</font><br>"}
 
 	var/number = 1
 	for (var/index in 1 to length(laws.inherent))
@@ -340,7 +340,7 @@
 		if (length(law) > 0)
 			if (!(law in lawcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</A> [law]<BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</a> [law]<br>"}
 			number++
 
 	for (var/index in 1 to length(laws.supplied))
@@ -349,11 +349,13 @@
 		if (length(law) > 0)
 			if (!(law in lawcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</A> <font color='#990099'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</a> <font color='#990099'>[law]</font><br>"}
 			number++
-	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
+	list += {"<br><br><a href='byond://?src=[REF(src)];laws=1'>State Laws</a>"}
 
-	usr << browse(list, "window=laws")
+	var/datum/browser/browser = new(usr, "laws")
+	browser.set_content(list)
+	browser.open()
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)

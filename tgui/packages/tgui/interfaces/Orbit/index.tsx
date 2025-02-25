@@ -1,6 +1,6 @@
 import { createContext, Dispatch, SetStateAction, useState } from 'react';
-import { Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+import { Stack } from 'tgui-core/components';
 
 import { VIEWMODE } from './constants';
 import { OrbitBlade } from './OrbitBlade';

@@ -79,7 +79,7 @@
 
 /datum/lazy_template/deathmatch/mech_madness
 	name = "Mech Madness"
-	desc = "Do you hate mechs? Yeah? Dont care! Go fight eachother!"
+	desc = "Do you hate mechs? Yeah? Don't care! Go fight each other!"
 	max_players = 4
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/operative)
 	map_name = "mech_madness"

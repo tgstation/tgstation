@@ -200,7 +200,7 @@
 	SIGNAL_HANDLER
 
 	travel_remaining = 0
-	bumped_atom.visible_message(span_userdanger("The [bumped_atom.name] crashes into the field violently!"))
+	bumped_atom.visible_message(span_userdanger("\The [bumped_atom] crashes into the field violently!"))
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules)
 		transport_module.set_travelling(FALSE)
 		for(var/explosive_target in transport_module.transport_contents)
@@ -1152,7 +1152,7 @@
 /// Controller that sits in the telecoms room
 /obj/machinery/transport/tram_controller/tcomms
 	name = "tram central controller"
-	desc = "This semi-conductor is half of the brains controlling the tram and its auxillary equipment."
+	desc = "This semiconductor is half of the brains controlling the tram and its auxiliary equipment."
 	icon_state = "home-controller"
 	base_icon_state = "home"
 	density = TRUE

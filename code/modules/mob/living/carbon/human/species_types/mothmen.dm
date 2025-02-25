@@ -3,8 +3,13 @@
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	body_markings = list(/datum/bodypart_overlay/simple/body_marking/moth = "None")
-	mutant_organs = list(/obj/item/organ/wings/moth = "Plain", /obj/item/organ/antennae = "Plain")
+	body_markings = list(
+		/datum/bodypart_overlay/simple/body_marking/moth = SPRITE_ACCESSORY_NONE,
+	)
+	mutant_organs = list(
+		/obj/item/organ/wings/moth = "Plain",
+		/obj/item/organ/antennae = "Plain",
+	)
 	meat = /obj/item/food/meat/slab/human/mutant/moth
 	mutanttongue = /obj/item/organ/tongue/moth
 	mutanteyes = /obj/item/organ/eyes/moth

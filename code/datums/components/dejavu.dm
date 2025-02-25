@@ -81,8 +81,7 @@
 
 	//comes after healing so new limbs comically drop to the floor
 	if(starting_turf)
-		var/area/destination_area = starting_turf.loc
-		if(destination_area.area_flags & NOTELEPORT)
+		if(!check_teleport_valid(parent, starting_turf))
 			to_chat(parent, span_warning("For some reason, your head aches and fills with mental fog when you try to think of where you were... It feels like you're now going against some dull, unstoppable universal force."))
 		else
 			var/atom/movable/master = parent

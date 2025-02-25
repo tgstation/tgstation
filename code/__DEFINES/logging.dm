@@ -129,6 +129,7 @@
 #define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
 #define LOG_CATEGORY_DEBUG_JOB "debug-job"
 #define LOG_CATEGORY_DEBUG_LUA "debug-lua"
+#define LOG_CATEGORY_DEBUG_TTS "debug-tts"
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"

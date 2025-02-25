@@ -239,6 +239,8 @@
 	var/current_skin
 	/// List of options to reskin.
 	var/list/unique_reskin
+	/// If reskins change base icon state as well
+	var/unique_reskin_changes_base_icon_state = FALSE
 	/// If reskins change inhands as well
 	var/unique_reskin_changes_inhand = FALSE
 	/// Do we apply a click cooldown when resisting this object if it is restraining them?
@@ -518,10 +520,6 @@
 	add_fingerprint(usr)
 	return ..()
 
-/obj/item/vv_get_dropdown()
-	. = ..()
-	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
-
 /obj/item/vv_do_topic(list/href_list)
 	. = ..()
 
@@ -694,6 +692,7 @@
 	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
+	UnregisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)))
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
@@ -758,6 +757,7 @@
 		give_item_action(action, user, slot)
 
 	item_flags |= IN_INVENTORY
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)), PROC_REF(update_slot_icon), override = TRUE)
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
@@ -843,6 +843,7 @@
 	do_drop_animation(master_storage.parent)
 
 /obj/item/pre_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	get_embed() // Ensure that embedding is lazyloaded before we impact the target, if we can have it
 	var/impact_flags = ..()
 	if(w_class < WEIGHT_CLASS_BULKY)
 		impact_flags |= COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
@@ -921,6 +922,7 @@
 	return null
 
 /obj/item/proc/update_slot_icon()
+	SIGNAL_HANDLER
 	if(!ismob(loc))
 		return
 	var/mob/owner = loc
@@ -1399,7 +1401,7 @@
 		return discover_after
 
 	if(w_class > WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
-		to_chat(victim, span_warning("[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] "))
+		to_chat(victim, span_warning("[source_item? "Something strange was in \the [source_item]..." : "I just bit something strange..."] "))
 		return discover_after
 
 	// victim's chest (for cavity implanting the item)
@@ -1839,7 +1841,7 @@
 	return null
 
 /obj/item/animate_atom_living(mob/living/owner)
-	new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
+	new /mob/living/basic/mimic/copy(drop_location(), src, owner)
 
 /**
  * Used to update the weight class of the item in a way that other atoms can react to the change.

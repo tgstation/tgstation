@@ -104,7 +104,7 @@
 	return FALSE
 
 // List version of above proc
-// Returns ret_item, which is either the succesfully located item or null
+// Returns ret_item, which is either the successfully located item or null
 /mob/proc/is_holding_item_of_types(list/typepaths)
 	for(var/typepath in typepaths)
 		var/ret_item = is_holding_item_of_type(typepath)
@@ -367,7 +367,7 @@
 													//Use no_move if the item is just gonna be immediately moved afterward
 													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
 	PROTECTED_PROC(TRUE)
-	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for TRAIT_NODROP.
+	if(!I) //If there's nothing to drop, the drop is automatically successful. If(unEquip) should generally be used to check for TRAIT_NODROP.
 		return TRUE
 
 	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
@@ -413,7 +413,7 @@
 	return items
 
 /**
- * Returns the items that were succesfully unequipped.
+ * Returns the items that were successfully unequipped.
  */
 /mob/living/proc/unequip_everything()
 	var/list/items = list()

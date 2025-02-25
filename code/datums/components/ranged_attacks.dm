@@ -47,6 +47,7 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_RANGED, PROC_REF(fire_ranged_attack))
 	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+	RegisterSignal(parent, COMSIG_MOB_TROPHY_ACTIVATED(TROPHY_WATCHER), PROC_REF(disable_attack))
 
 /datum/component/ranged_attacks/UnregisterFromParent()
 	. = ..()
@@ -88,3 +89,7 @@
 	SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
 	return
 
+/datum/component/ranged_attacks/proc/disable_attack(obj/item/crusher_trophy/used_trophy, mob/living/user)
+	SIGNAL_HANDLER
+	var/stun_duration = (used_trophy.bonus_value * 0.1) SECONDS
+	COOLDOWN_INCREMENT(src, fire_cooldown, stun_duration)
