@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "MODSuit parts now slow you only when deployed, regardless of whether they are sealed."
-  - balance: "MODSuit parts no longer slow you when they aren't deployed."

@@ -606,3 +606,22 @@
   - qol: ghost poll sound volume can now be tweaked
   - sound: added new ghost poll sound.
   - sound: normalised volume of ghost poll sounds
+2025-02-25:
+  EOBGames:
+  - rscadd: 'No longer content to speak purely in Galactic Common, the Space Russians
+      have begun to use their own language: Spinwarder Russian. Best of luck in understanding
+      them; we sure don''t!'
+  Jacquerel:
+  - balance: Foam now passes through tables, grilles, computers, and several other
+      dense structures. You can still escape foam by mantling onto tables and such.
+  - balance: MODSuit parts now slow you only when deployed, regardless of whether
+      they are sealed.
+  - balance: MODSuit parts no longer slow you when they aren't deployed.
+  Melbert, Absolucy:
+  - qol: Touches up the language menu
+  SmArtKar:
+  - image: Resprited advanced robotic limbs
+  SmArtKar, PiotrTheTchaikowsky:
+  - image: Resprited boxing gloves
+  combustor:
+  - map: Added an air alarm to birdshot's engine room
