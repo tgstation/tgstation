@@ -87,7 +87,7 @@
 		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 		new_block.export_value = price
 		new_block.export_mat = material_to_export
-		new_block.quantity = export_quantity
+		new_block.quantity = amount
 		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value] cr! Sell it before it becomes liquid!"))
 		playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 		return TRUE
