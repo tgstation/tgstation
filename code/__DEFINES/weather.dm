@@ -13,15 +13,15 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 /// The amount of reagent units that is applied when an object comes into contact with rain
 #define RAIN_REAGENT_VOLUME 5
 
-/// 1 / 400 chance for a turf to get a lighting strike per tick
+/// 1 / 400 chance for a turf to get a lighting strike per tick (death and destruction to mobs/equipment in area)
 #define THUNDER_CHANCE_INSANE 0.0025
-/// 1 / 1,000 chance for a turf to get a lighting strike per tick
+/// 1 / 1,000 chance for a turf to get a lighting strike per tick (damage to mobs/equipment in area)
 #define THUNDER_CHANCE_HIGH 0.001
-/// 1 / 5,000 chance for a turf to get a lighting strike per tick
+/// 1 / 5,000 chance for a turf to get a lighting strike per tick (sporadic damage to mobs/equipment in area)
 #define THUNDER_CHANCE_AVERAGE 0.0002
-/// 1 / 20,000 chance for a turf to get a lighting strike per tick
+/// 1 / 20,000 chance for a turf to get a lighting strike per tick (rare damage to mobs/equipment in area)
 #define THUNDER_CHANCE_RARE 0.00005
-/// 1 / 50,000 chance for a turf to get a lighting strike per tick
+/// 1 / 50,000 chance for a turf to get a lighting strike per tick (almost no damage to mobs/equipment in area)
 #define THUNDER_CHANCE_VERY_RARE 0.00002
 
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
