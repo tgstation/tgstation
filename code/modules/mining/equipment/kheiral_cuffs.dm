@@ -7,7 +7,6 @@
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
 	slot_flags = ITEM_SLOT_GLOVES
-	action_slots = ITEM_SLOT_GLOVES
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	gender = PLURAL

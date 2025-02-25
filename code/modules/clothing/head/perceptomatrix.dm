@@ -28,7 +28,6 @@
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	armor_type = /datum/armor/head_helmet_matrix
 	actions_types = list(/datum/action/cooldown/spell/pointed/percept_hallucination)
-	action_slots = ITEM_SLOT_HEAD
 
 	/// If we have a core or not
 	var/core_installed = FALSE

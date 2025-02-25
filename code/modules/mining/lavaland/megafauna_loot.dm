@@ -60,6 +60,7 @@
 	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/vortex_recall)
+	action_slots = ALL
 	/// Linked teleport beacon for the group teleport functionality.
 	var/obj/effect/hierophant/beacon
 	/// TRUE if currently doing a teleport to the beacon, FALSE otherwise.

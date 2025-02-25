@@ -6,7 +6,6 @@
 	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_EYES
-	action_slots = ITEM_SLOT_EYES
 	strip_delay = 20
 	equip_delay_other = 25
 	resistance_flags = NONE

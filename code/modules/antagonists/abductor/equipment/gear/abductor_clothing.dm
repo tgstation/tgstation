@@ -21,7 +21,6 @@
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/abductor_vest
 	actions_types = list(/datum/action/item_action/hands_free/activate)
-	action_slots = ITEM_SLOT_OCLOTHING
 	allowed = list(
 		/obj/item/abductor,
 		/obj/item/melee/baton,

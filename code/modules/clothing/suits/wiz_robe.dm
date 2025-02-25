@@ -232,8 +232,6 @@
 	inhand_icon_state = null
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
-	action_slots = ITEM_SLOT_OCLOTHING
-
 
 /obj/item/clothing/suit/wizrobe/durathread
 	name = "durathread robe"

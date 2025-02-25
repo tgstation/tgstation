@@ -197,6 +197,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	custom_price = PAYCHECK_COMMAND * 1.5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/halt)
+	action_slots = ALL
 	COOLDOWN_DECLARE(whistle_cooldown)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)

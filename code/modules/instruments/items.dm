@@ -199,6 +199,7 @@
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
+	action_slots = ALL
 
 /obj/item/instrument/harmonica/equipped(mob/user, slot, initial = FALSE)
 	. = ..()

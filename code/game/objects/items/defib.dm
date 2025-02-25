@@ -16,7 +16,6 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	action_slots = ITEM_SLOT_BACK
 	armor_type = /datum/armor/item_defibrillator
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
@@ -277,7 +276,6 @@
 	worn_icon_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
-	action_slots = ITEM_SLOT_BELT
 	paddle_state = "defibcompact-paddles"
 	powered_state = "defibcompact-powered"
 	charge_state = "defibcompact-charge"

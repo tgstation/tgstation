@@ -3,7 +3,6 @@
 	name = "polymorphic field inverter"
 	desc = "This device can scan and store DNA from other life forms."
 	slot_flags = ITEM_SLOT_BELT
-	action_slots = ITEM_SLOT_BELT
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "polybelt_inactive"
 	worn_icon_state = "polybelt_inactive"

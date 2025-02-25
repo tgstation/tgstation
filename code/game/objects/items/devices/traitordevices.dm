@@ -304,7 +304,6 @@ effective or pretty fucking useless.
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	worn_icon_state = "utility"
 	slot_flags = ITEM_SLOT_BELT
-	action_slots = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
 	attack_verb_simple = list("whip", "lash", "discipline")
 	actions_types = list(/datum/action/item_action/stealth_mode)

@@ -5,7 +5,6 @@
 	inhand_icon_state = null
 	resistance_flags = FIRE_PROOF
 	actions_types = list(/datum/action/item_action/bhop)
-	action_slots = ITEM_SLOT_FEET
 	armor_type = /datum/armor/shoes_bhop
 	strip_delay = 30
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles

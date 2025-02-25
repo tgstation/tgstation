@@ -7,7 +7,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/jetpacks_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
-	action_slots = ITEM_SLOT_BACK
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	/// What gas our jetpack is filled with on initialize
 	var/gas_type = /datum/gas/oxygen
