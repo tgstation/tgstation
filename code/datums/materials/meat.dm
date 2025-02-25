@@ -45,7 +45,7 @@
 		SOURCE_EDIBLE_MEAT_MAT, \
 		/datum/component/edible, \
 		initial_reagents = list(/datum/reagent/consumable/nutriment/protein = protein_count, /datum/reagent/consumable/nutriment/fat = fat_count), \
-		foodtypes = RAW | MEAT | GROSS, \
+		foodtypes = RAW | MEAT, \
 		eat_time = 3 SECONDS, \
 		tastes = list("meat"))
 
