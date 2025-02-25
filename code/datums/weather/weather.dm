@@ -89,7 +89,7 @@
 	var/turf_weather_chance = 0
 	/// The chance, per tick, a turf will have a thunder strike applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
 	/// Recommend setting this really low near 0.001 (results in 1 in 1000 affected turfs having thunder strikes applied per tick)
-	var/turf_thunder_chance = 0.001 // does nothing without the WEATHER_THUNDER weather_flag
+	var/turf_thunder_chance = THUNDER_CHANCE_AVERAGE // does nothing without the WEATHER_THUNDER weather_flag
 	/// The maximum amount of turfs that can be processed in a single tick regardless of
 	/// the number of turfs determined by turf_weather_chance and turf_thunder_chance
 	/// increasing this too high can result in severe lag so please be careful
@@ -115,11 +115,12 @@
 	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
 	var/list/subsystem_tasks = list()
 
-/datum/weather/New(z_levels, area_override, weather_flags_override, datum/reagent/custom_reagent)
+/datum/weather/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
 	..()
 	impacted_z_levels = z_levels
 	area_type = area_override || area_type
 	weather_flags = weather_flags_override || weather_flags
+	turf_thunder_chance = thunder_chance_override || turf_thunder_chance
 
 	if(IS_WEATHER_AESTHETIC(weather_flags))
 		return

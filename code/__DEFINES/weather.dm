@@ -13,16 +13,26 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 /// The amount of reagent units that is applied when an object comes into contact with rain
 #define RAIN_REAGENT_VOLUME 5
 
-/// 1 / 400 chance for a turf to get a lighting strike per tick (death and destruction to mobs/equipment in area)
+/// 1 / 400 chance for a turf to get a thunder strike per tick (death and destruction to mobs/equipment in area)
 #define THUNDER_CHANCE_INSANE 0.0025
-/// 1 / 1,000 chance for a turf to get a lighting strike per tick (damage to mobs/equipment in area)
+/// 1 / 1,000 chance for a turf to get a thunder strike per tick (damage to mobs/equipment in area)
 #define THUNDER_CHANCE_HIGH 0.001
-/// 1 / 5,000 chance for a turf to get a lighting strike per tick (sporadic damage to mobs/equipment in area)
+/// 1 / 5,000 chance for a turf to get a thunder strike per tick (sporadic damage to mobs/equipment in area)
 #define THUNDER_CHANCE_AVERAGE 0.0002
-/// 1 / 20,000 chance for a turf to get a lighting strike per tick (rare damage to mobs/equipment in area)
+/// 1 / 20,000 chance for a turf to get a thunder strike per tick (rare damage to mobs/equipment in area)
 #define THUNDER_CHANCE_RARE 0.00005
-/// 1 / 50,000 chance for a turf to get a lighting strike per tick (almost no damage to mobs/equipment in area)
+/// 1 / 50,000 chance for a turf to get a thunder strike per tick (almost no damage to mobs/equipment in area)
 #define THUNDER_CHANCE_VERY_RARE 0.00002
+
+/// admin verb to control thunder via the run_weather command
+GLOBAL_LIST_INIT(thunder_chance_options, list(
+	"Relentless - The Sky is Angry, Very Angry" = THUNDER_CHANCE_INSANE,
+	"Abundant - A shocking amount of thunder" = THUNDER_CHANCE_HIGH,
+	"Regular - Standard Storm Activity" = THUNDER_CHANCE_AVERAGE,
+	"Occasional - A polite amount of thunder" = THUNDER_CHANCE_RARE,
+	"Rare - Like finding a four-leaf clover, but in the sky" = THUNDER_CHANCE_VERY_RARE,
+	"None - Admin Safe Space (Thunder Disabled)" = NONE,
+))
 
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
 #define IS_WEATHER_AESTHETIC(flags) (!(flags & (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)))

@@ -37,7 +37,7 @@
 	/// The selected reagent that will be rained down
 	var/datum/reagent/rain_reagent
 
-/datum/weather/rain_storm/New(z_levels, area_override, weather_flags_override, datum/reagent/custom_reagent)
+/datum/weather/rain_storm/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
 	..()
 
 	if(IS_WEATHER_AESTHETIC(weather_flags))
@@ -151,3 +151,18 @@
 		/datum/reagent/toxin/acid/fluacid = 1,
 	)
 
+/datum/weather/rain_storm/thunder
+	weather_flags = (WEATHER_THUNDER | WEATHER_INDOORS)
+	turf_thunder_chance = THUNDER_CHANCE_AVERAGE
+
+/datum/weather/rain_storm/thunder/high
+	turf_thunder_chance = THUNDER_CHANCE_HIGH
+
+/datum/weather/rain_storm/thunder/insane
+	turf_thunder_chance = THUNDER_CHANCE_INSANE
+
+/datum/weather/rain_storm/thunder/rare
+	turf_thunder_chance = THUNDER_CHANCE_RARE
+
+/datum/weather/rain_storm/thunder/very_rare
+	turf_thunder_chance = THUNDER_CHANCE_VERY_RARE
