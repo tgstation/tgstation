@@ -62,10 +62,6 @@
 			return FALSE
 		var/material_to_export
 		var/obj/item/stack/exportable = markable_object
-		var/export_quantity = exportable.amount
-		if(export_quantity <= 1)
-			balloon_alert(user, "not enough refined material!")
-			return FALSE
 		for(var/datum/material/mat as anything in SSstock_market.materials_prices)
 			if(exportable.has_material_type(mat))
 				material_to_export = mat
@@ -74,11 +70,17 @@
 
 		var/datum/export_report/report = export_item_and_contents(exportable, apply_elastic = FALSE, dry_run = TRUE) // We'll apply elastic price reduction when fully sold.
 		var/price = 0
+		var/amount = 0
 		for(var/exported_datum in report.total_amount)
 			price += report.total_value[exported_datum]
+			amount += report.total_amount[exported_datum]
+
+		if(amount <= 1)
+			balloon_alert(user, "stack too small!")
+			return FALSE
 
 		if(price <= 0)
-			balloon_alert(user, "not enough material to sell!")
+			balloon_alert(user, "not valuable enough to sell!")
 			return FALSE
 
 		qdel(markable_object)
