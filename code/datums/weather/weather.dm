@@ -191,10 +191,10 @@
 		return
 
 	if(weather_flags & (WEATHER_TURFS))
-		weather_turfs_per_tick = round(total_turfs * turf_weather_chance)
+		weather_turfs_per_tick = total_turfs * turf_weather_chance
 		weather_turfs_per_tick = min(weather_turfs_per_tick, max_turfs_per_tick)
 	if(weather_flags & (WEATHER_THUNDER))
-		thunder_turfs_per_tick = round(total_turfs * turf_thunder_chance)
+		thunder_turfs_per_tick = total_turfs * turf_thunder_chance
 		thunder_turfs_per_tick = min(thunder_turfs_per_tick, max_turfs_per_tick)
 
 /**
