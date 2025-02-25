@@ -3917,6 +3917,7 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "bwz" = (
@@ -13458,7 +13459,10 @@
 "eOZ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "ePk" = (
 /obj/structure/disposalpipe/segment{
@@ -18797,7 +18801,9 @@
 /obj/structure/cable,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "gCg" = (
 /obj/machinery/computer/records/medical,
@@ -21883,6 +21889,7 @@
 	cycle_id = "comms-entrance-south"
 	},
 /obj/structure/cable,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "hAu" = (
@@ -28078,6 +28085,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "juo" = (
@@ -33331,6 +33339,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "lfa" = (
@@ -33651,6 +33660,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "liP" = (
@@ -34942,6 +34952,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "lDo" = (
@@ -37294,6 +37305,7 @@
 	name = "Telecommunications Server Room"
 	},
 /obj/structure/cable,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "mrt" = (
@@ -38443,7 +38455,7 @@
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/east,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "mLM" = (
 /obj/effect/turf_decal/siding/wood{
@@ -46478,6 +46490,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 1
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen)
 "pFk" = (
@@ -46778,6 +46791,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 1
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "pJv" = (
@@ -47432,7 +47446,13 @@
 "pUx" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/machinery/camera/autoname/directional/east,
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "pUy" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta,
@@ -54828,6 +54848,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "srH" = (
@@ -55781,6 +55802,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/science/server)
 "sJi" = (
@@ -56464,6 +56486,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical Cold Room"
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/white/small,
 /area/station/medical/coldroom)
 "sUe" = (
@@ -63599,6 +63622,7 @@
 	cycle_id = "comms-entrance-south"
 	},
 /obj/structure/cable,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "vhI" = (
@@ -64294,6 +64318,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "vrf" = (
@@ -64553,6 +64578,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/science/xenobiology)
 "vuD" = (
@@ -66070,6 +66096,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "vSW" = (
@@ -66102,6 +66129,7 @@
 	cycle_id = "comms-entrance-north"
 	},
 /obj/structure/cable,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "vTj" = (
@@ -69193,7 +69221,13 @@
 /area/station/security/prison)
 "wOn" = (
 /obj/structure/closet/crate/freezer/blood,
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "wOp" = (
 /turf/closed/wall,
@@ -69741,7 +69775,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "wWz" = (
 /obj/effect/decal/cleanable/dirt,

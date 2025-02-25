@@ -5873,6 +5873,7 @@
 	},
 /obj/machinery/light/small/dim/directional/north,
 /obj/structure/cable/layer3,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cdI" = (
@@ -10422,7 +10423,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "dHW" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
@@ -12997,7 +12999,7 @@
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "eCp" = (
 /obj/machinery/power/terminal{
@@ -13626,7 +13628,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/machinery/light_switch/directional/east,
-/turf/open/floor/iron,
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "ePC" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -15432,6 +15434,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /obj/structure/cable,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "fyS" = (
@@ -22718,6 +22721,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/surgery,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/plating,
 /area/station/medical/coldroom)
 "hXu" = (
@@ -23045,7 +23049,7 @@
 /obj/item/wrench/medical,
 /obj/item/food/strawberryicecreamsandwich,
 /obj/machinery/light/dim/directional/south,
-/turf/open/floor/iron,
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "iel" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on,
@@ -23500,6 +23504,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "inC" = (
@@ -31463,6 +31468,8 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/plasticflaps/kitchen,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "laf" = (
@@ -39342,7 +39349,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/item/radio/intercom/directional/south,
-/turf/open/floor/iron,
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "nTT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44818,6 +44825,7 @@
 /obj/machinery/camera/autoname/directional/south{
 	network = list("aicore")
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/ai)
 "pRq" = (
@@ -48146,6 +48154,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "rbw" = (
@@ -50250,7 +50259,7 @@
 	dir = 8
 	},
 /obj/machinery/duct,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "rIJ" = (
 /obj/machinery/light/small/directional/south,
@@ -51215,6 +51224,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/white,
 /area/station/medical/coldroom)
 "rYy" = (
@@ -53944,6 +53954,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "sUM" = (
@@ -62369,7 +62380,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "vTt" = (
 /obj/structure/marker_beacon/burgundy,
@@ -64316,7 +64327,7 @@
 	},
 /obj/structure/closet/crate/freezer/blood,
 /obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron,
+/turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "wDo" = (
 /obj/structure/cable,
