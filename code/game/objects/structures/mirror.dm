@@ -95,7 +95,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	return display_radial_menu(user)
 
 /obj/structure/mirror/wrench_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
 	if(!deconstructable)
 		balloon_alert(user, "magic prevents detaching!")
 		return NONE
