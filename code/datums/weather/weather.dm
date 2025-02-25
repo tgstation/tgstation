@@ -179,9 +179,12 @@
 	for(var/area/weather_area as anything in impacted_areas)
 		for(var/z in impacted_z_levels)
 			for(var/valid_weather_turf in weather_area.get_turfs_by_zlevel(z))
+				// applying weather effects to solid walls is a waste since nothing will happen
 				if(isclosedturf(valid_weather_turf))
 					continue
-				if(isopenspaceturf(valid_weather_turf))
+				// same logic for space and openspace turfs which should boost performance a ton
+				// note - mobs in space/openspace turfs still have weather affects applied to them if they are in a affected area
+				if(is_space_or_openspace(valid_weather_turf))
 					continue
 				weather_turfs += valid_weather_turf
 
