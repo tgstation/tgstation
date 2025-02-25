@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - qol: "The RCD examine text now lists any upgrades it has installed."
