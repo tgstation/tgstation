@@ -98,14 +98,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	. = ..()
 	if(!deconstructable)
 		balloon_alert(user, "magic prevents detaching!")
-		return
+		return NONE
 	user.visible_message(span_notice("[user] starts detaching [src]..."), span_notice("You start detaching [src]..."))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 3 SECONDS))
 		user.visible_message(span_notice("[user] detaches [src]!"), span_notice("You detach [src] from the wall."))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct()
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/mirror/atom_deconstruct()
 	new /obj/item/wallframe/mirror(loc, 1)
