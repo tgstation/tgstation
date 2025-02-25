@@ -65,13 +65,7 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
-		end_processing()
-		detonation_timer = null
-		next_beep = null
-		countdown.stop()
-		if(payload in src)
-			payload.defuse()
-		return
+		return PROCESS_KILL
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
@@ -226,7 +220,31 @@
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	// 2 booms, 0 duds at lowest timer
+	// 12 booms, 6 duds at ~9 minutes
+	var/datum/wires/syndicatebomb/bomb_wires = wires
+	var/boom_wires = clamp(round(timer_set / 45, 1), 2, 12)
+	var/dud_wires = 0
+	if(boom_wires >= 3)
+		dud_wires = floor(boom_wires / 2)
+		boom_wires -= dud_wires
+	bomb_wires.setup_wires(num_booms = boom_wires, num_duds = dud_wires)
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	update_appearance()
+
+/obj/machinery/syndicatebomb/proc/defuse()
+	active = FALSE
+	delayedlittle = FALSE
+	delayedbig = FALSE
+	examinable_countdown = TRUE
+	end_processing()
+	detonation_timer = null
+	next_beep = null
+	countdown.stop()
+	if(payload in src)
+		payload.defuse()
+	var/datum/wires/syndicatebomb/bomb_wires = wires
+	bomb_wires.setup_wires(num_booms = 2)
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
@@ -236,9 +254,9 @@
 	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
-	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
+	visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
-	if(choice != "Yes")
+	if(choice != "Yes" || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(active)
 		to_chat(user, span_warning("The bomb is already active!"))
