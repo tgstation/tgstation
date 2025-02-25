@@ -1,0 +1,4 @@
+author: "Dmeto"
+delete-after: True
+changes:
+  - bugfix: "Nebulastation Supermatter is no longer hotwired roundstart."

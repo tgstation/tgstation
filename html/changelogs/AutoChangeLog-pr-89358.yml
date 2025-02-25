@@ -1,5 +1,0 @@
-author: "Melbert, Wallem"
-delete-after: True
-changes:
-  - rscadd: "Adds recording setups to the Captain's office on all maps, allowing them to project their face to all status displays on the station"
-  - rscadd: "Centcom now has a soundstage for broadcasting to the station. It's besides the Thunderdome."

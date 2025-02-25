@@ -11,6 +11,7 @@
 	armour_penetration = 40
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_MINING
 	sharpness = SHARP_EDGED
 	melee_attack_cooldown = CLICK_CD_SLOW
 	attack_verb_continuous = "eviscerates"
