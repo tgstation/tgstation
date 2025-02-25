@@ -148,18 +148,163 @@
 /obj/item/paper/fluff/jobs/medical/blood_types
 	name = "blood type compatibility reference"
 	default_raw_text = {"<h2>Blood Type Compatibility</h2>
-	<b>A-</b> can receive: A-, O-</br>
-	<b>A+</b> can receive: A-, A+, O-, O+</br>
-	<b>B-</b> can receive: B-, O-</br>
-	<b>B+</b> can receive: B-, B+, O-, O+</br>
-	<b>AB-</b> can receive: A-, B-, O-, AB-</br>
-	<b>AB+</b> can receive: A-, A+, B-, B+, O-, O+, AB-, AB+</br>
-	<b>O-</b> can receive: O-</br>
-	<b>O+</b> can receive: O-, O+</br>
-	<b>L</b> can receive: L</br>
-	<b>U</b> can receive: all of the above and U</br>
-	</br>
+<table style="text-align:center;" border="1" width="100%">
+		<tbody>
+			<tr>
+				<td width="25px" height="25px"></td>
+				<td></td>
+				<td colspan="10" style="background-color: red; color: white;">Donor</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td style="background-color: red; color: white;">A+</td>
+				<td style="background-color: red; color: white;">A-</td>
+				<td style="background-color: red; color: white;">B+</td>
+				<td style="background-color: red; color: white;">B-</td>
+				<td style="background-color: red; color: white;">AB+</td>
+				<td style="background-color: red; color: white;">AB-</td>
+				<td style="background-color: red; color: white;">O+</td>
+				<td style="background-color: red; color: white;">O-</td>
+				<td style="background-color: red; color: white;">L</td>
+				<td style="background-color: red; color: white;">U</td>
+			</tr>
+			<tr>
+				<td rowspan="10" style="margin: 0; padding-left:6px; writing-mode: sideways-rl; background-color: blue; color: white;">Receiver</td>
+				<td style="background-color: blue; color: white;">A+</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">A-</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">B+</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">B-</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">AB+</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">AB-</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">O+</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">O-</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">L</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>N</td>
+				<td>Y</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<td style="background-color: blue; color: white;">U</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+				<td>Y</td>
+			</tr>
+		</tbody>
+	</table>
+	<br/>
 	Blood types not written above can only receive from the same blood type.
+	Certain species do not have blood.
 	"}
 
 	/*
