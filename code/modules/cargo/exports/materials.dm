@@ -78,7 +78,6 @@
 
 /datum/export/material/market
 	cost = 1
-	k_elasticity = 1/60
 	export_types = list(
 		/obj/item/stack/sheet/mineral,
 		/obj/item/stack/tile/mineral,
