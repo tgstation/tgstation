@@ -172,133 +172,133 @@
 			<tr>
 				<td rowspan="10" style="margin: 0; padding-left:6px; writing-mode: sideways-rl; background-color: blue; color: white;">Receiver</td>
 				<td style="background-color: blue; color: white;">A+</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">A-</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">B+</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">B-</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">AB+</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">AB-</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">O+</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">O-</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
-				<td>N</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">L</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>N</td>
-				<td>Y</td>
-				<td>N</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>✓</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td style="background-color: blue; color: white;">U</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
-				<td>Y</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
+				<td>✓</td>
 			</tr>
 		</tbody>
 	</table>
