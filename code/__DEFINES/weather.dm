@@ -13,8 +13,8 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 /// The amount of reagent units that is applied when an object comes into contact with rain
 #define RAIN_REAGENT_VOLUME 5
 
-/// 1 / 500 chance for a turf to get a lighting strike per tick
-#define THUNDER_CHANCE_INSANE 0.002
+/// 1 / 400 chance for a turf to get a lighting strike per tick
+#define THUNDER_CHANCE_INSANE 0.0025
 /// 1 / 1,000 chance for a turf to get a lighting strike per tick
 #define THUNDER_CHANCE_HIGH 0.001
 /// 1 / 5,000 chance for a turf to get a lighting strike per tick
