@@ -110,7 +110,7 @@ namespace Tgstation.PRAnnouncer
 			{
 				var exception = new AggregateException(failedTasks.Select(kvp => kvp.Value.Result!));
 				if (failedTasks.Length == servers.Count)
-					return HealthCheckResult.Unhealthy("All servers have failed the ping test!", exception, data);
+					return HealthCheckResult.Degraded("All servers have failed the ping test!", exception, data);
 
 				return HealthCheckResult.Degraded("Some servers have failed the ping test!", exception, data);
 			}
