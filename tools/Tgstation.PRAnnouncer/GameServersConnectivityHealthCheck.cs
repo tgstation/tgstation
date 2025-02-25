@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Byond.TopicSender;
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Tgstation.PRAnnouncer
@@ -31,6 +32,11 @@ namespace Tgstation.PRAnnouncer
 		readonly IOptionsMonitor<Settings> settings;
 
 		/// <summary>
+		/// The <see cref="ILogger"/> to write to.
+		/// </summary>
+		readonly ILogger<GameServersConnectivityHealthCheck> logger;
+
+		/// <summary>
 		/// The <see cref="IDisposable"/> returned from <see cref="IOptionsMonitor{TOptions}.OnChange(Action{TOptions, string?})"/> for <see cref="settings"/>.
 		/// </summary>
 		readonly IDisposable? optionsMonitorRegistration;
@@ -50,10 +56,15 @@ namespace Tgstation.PRAnnouncer
 		/// </summary>
 		/// <param name="topicClient">The value of <see cref="topicClient"/>.</param>
 		/// <param name="settings">The value of <see cref="settings"/>.</param>
-		public GameServersConnectivityHealthCheck(ITopicClient topicClient, IOptionsMonitor<Settings> settings)
+		/// <param name="logger">The value of <see cref="logger"/>.</param>
+		public GameServersConnectivityHealthCheck(
+			ITopicClient topicClient,
+			IOptionsMonitor<Settings> settings,
+			ILogger<GameServersConnectivityHealthCheck> logger)
 		{
 			this.topicClient = topicClient ?? throw new ArgumentNullException(nameof(topicClient));
 			this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
+			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
 			optionsMonitorRegistration = settings.OnChange(_ => lastCheck = DateTimeOffset.MinValue);
 		}
@@ -116,20 +127,19 @@ namespace Tgstation.PRAnnouncer
 		async Task<Exception?> CheckServer(ServerConfig server, CancellationToken cancellationToken)
 		{
 			var address = server.Address;
-			if (address == null)
-				return new Exception($"A server has a null {nameof(ServerConfig.Address)}!");
-
 			try
 			{
-				var result = await topicClient.SendTopic(address, "ping", server.Port, cancellationToken);
-				if (result == null)
-					throw new Exception("Topic client returned null!");
+				if (address == null)
+					throw new Exception($"A server has a null {nameof(ServerConfig.Address)}!");
 
+				var result = await topicClient.SendTopic(address, "ping", server.Port, cancellationToken)
+					?? throw new Exception("Topic client returned null!");
 				if (result.ResponseType != TopicResponseType.FloatResponse)
 					throw new Exception("Response was not a float!");
 			}
 			catch (Exception ex)
 			{
+				logger.LogWarning(ex, "Server \"{address}:{port}\" failed health check!", address, server.Port);
 				return ex;
 			}
 
