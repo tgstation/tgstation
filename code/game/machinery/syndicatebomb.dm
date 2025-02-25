@@ -40,6 +40,8 @@
 	var/detonation_timer
 	/// When do we beep next?
 	var/next_beep
+	/// If TRUE, more boom wires are added based on the timer set.
+	var/add_boom_wires = TRUE
 	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
 	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
@@ -223,12 +225,15 @@
 	// 2 booms, 0 duds at lowest timer
 	// 12 booms, 6 duds at ~9 minutes
 	var/datum/wires/syndicatebomb/bomb_wires = wires
-	var/boom_wires = clamp(round(timer_set / 45, 1), 2, 12)
-	var/dud_wires = 0
-	if(boom_wires >= 3)
-		dud_wires = floor(boom_wires / 2)
-		boom_wires -= dud_wires
-	bomb_wires.setup_wires(num_booms = boom_wires, num_duds = dud_wires)
+	if(add_boom_wires)
+		var/boom_wires = clamp(round(timer_set / 45, 1), 2, 12)
+		var/dud_wires = 0
+		if(boom_wires >= 3)
+			dud_wires = floor(boom_wires / 2)
+			boom_wires -= dud_wires
+		bomb_wires.setup_wires(num_booms = boom_wires, num_duds = dud_wires)
+	else
+		bomb_wires.setup_wires(num_booms = 2, num_duds = 0)
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	update_appearance()
 
