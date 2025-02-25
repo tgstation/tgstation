@@ -51,7 +51,7 @@ pkgs.buildDotnetModule  {
   nugetDeps = ./deps.json;
 
   dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
-  dotnet-runtime = pkgs.dotnetCorePackages.runtime_8_0;
+  dotnet-runtime = pkgs.dotnetCorePackages.aspnetcore_8_0;
 
   executables = [ "Tgstation.PRAnnouncer" ];
 }
