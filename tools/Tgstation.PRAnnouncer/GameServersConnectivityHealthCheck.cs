@@ -67,7 +67,7 @@ namespace Tgstation.PRAnnouncer
 		{
 			var now = DateTimeOffset.UtcNow;
 			var nextCheck = lastCheck + TimeSpan.FromSeconds(settings.CurrentValue.GameServerHealthCheckSeconds);
-			if (now >= nextCheck || cachedResult.Status != HealthStatus.Healthy)
+			if (now >= nextCheck)
 			{
 				cachedResult = await LiveHealthCheck(cancellationToken);
 				lastCheck = now;
