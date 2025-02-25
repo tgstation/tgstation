@@ -63,6 +63,9 @@
 		var/material_to_export
 		var/obj/item/stack/exportable = markable_object
 		var/export_quantity = exportable.amount
+		if(export_quantity <= 1)
+			balloon_alert(user, "not enough refined material!")
+			return FALSE
 		for(var/datum/material/mat as anything in SSstock_market.materials_prices)
 			if(exportable.has_material_type(mat))
 				material_to_export = mat
