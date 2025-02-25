@@ -105,7 +105,7 @@ Behavior that's still missing from this component that original food items had t
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ATOM_ON_CRAFT,
+		COMSIG_ATOM_CHECKPARTS,
 		COMSIG_ATOM_CREATEDBY_PROCESSING,
 		COMSIG_ATOM_ENTERED,
 		COMSIG_FOOD_INGREDIENT_ADDED,
@@ -337,7 +337,7 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 
 	var/atom/this_food = parent
-	for(var/obj/item/food/crafted_part in components)
+	for(var/obj/item/food/crafted_part in parts_list)
 		if(!crafted_part.reagents)
 			continue
 		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume
