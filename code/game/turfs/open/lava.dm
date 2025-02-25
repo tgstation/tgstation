@@ -279,6 +279,8 @@
 
 	if(HAS_TRAIT(burn_target, immunity_trait))
 		return LAVA_BE_PROCESSING
+	if(HAS_TRAIT(burn_target, TRAIT_MOB_ELEVATED))
+		return LAVA_BE_PROCESSING
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
 	if(burn_buckled)
