@@ -187,7 +187,8 @@
 				if(is_space_or_openspace(valid_weather_turf))
 					continue
 				// solid windows are also worth skipping
-				if(locate(/obj/structure/window/fulltile) in valid_weather_turf)
+				var/obj/structure/window/window = locate() in valid_weather_turf
+				if(window?.fulltile)
 					continue
 
 				weather_turfs += valid_weather_turf
