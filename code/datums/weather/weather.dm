@@ -178,7 +178,7 @@
 /datum/weather/proc/setup_weather_turfs()
 	for(var/area/weather_area as anything in impacted_areas)
 		for(var/z in impacted_z_levels)
-			for(var/valid_weather_turf in weather_area.get_turfs_by_zlevel(z))
+			for(var/turf/valid_weather_turf as anything in weather_area.get_turfs_by_zlevel(z))
 				// applying weather effects to solid walls is a waste since nothing will happen
 				if(isclosedturf(valid_weather_turf))
 					continue
@@ -186,6 +186,10 @@
 				// note - mobs in space/openspace turfs still have weather affects applied to them if they are in a affected area
 				if(is_space_or_openspace(valid_weather_turf))
 					continue
+				// solid windows are also worth skipping
+				if(locate(/obj/structure/window/fulltile) in valid_weather_turf)
+					continue
+
 				weather_turfs += valid_weather_turf
 
 	var/total_turfs = length(weather_turfs)
