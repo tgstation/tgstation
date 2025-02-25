@@ -15,6 +15,7 @@
 	var/mode = WAND_OPEN
 	var/datum/id_trim/job/owner_trim = null
 	var/list/access_list
+	var/listening = FALSE
 	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department_name head's id_trim/job
 	var/response_name = null
 	/// A bitfield to represent regions this remote is listening to requests for
@@ -23,22 +24,13 @@
 	var/listening_regions = null
 	/// When the remote gets dropped, start a 5 minute timer before we stop listening for requests
 	var/list/setting_callbacks = list()
-	// Areas that, unless command lifts it, are restricted from other remotes working in
-	var/static/list/departmental_areas = list(
-		/area/station/cargo,
-		/area/station/engineering,
-		/area/station/construction,
-		/area/station/medical,
-		/area/station/science,
-		/area/station/ai_monitored,
-		/area/station/service,
-		/area/station/security,
-		/area/station/comms,
-		/area/station/tcommsat,
-		/area/station/server,
-	)
 	// Areas this remote has unfettered access to
 	var/list/our_departmental_areas = null
+	// Assoclist of ID -> door they want opened
+	var/list/open_requests
+	// A simple lists of IDs that have had their requests resolved recently
+	// so we can make sure our timers are expiring (or not) the correct requests
+	var/list/recently_resolved_requests
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
@@ -136,8 +128,12 @@
 	"T" = CALLBACK(src, PROC_REF(toggle_listen)),
 	)
 	// For cases where it spawns on somebody
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/door_remote/LateInitialize()
+	. = ..()
 	if(get(loc, /mob/living))
-		toggle_listen(loc)
+		toggle_listen()
 	else
 		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 
@@ -162,18 +158,23 @@
 	return resolved_options
 
 /obj/item/door_remote/proc/resolve_response_radial_options()
-//	for(var/radial_option in )
+	var/list/resolved_options = list()
+	var/is_emagged = obj_flags & EMAGGED
+	var/static/list/request_handling_options = GLOB.door_remote_radial_images[REQUEST_RESPONSES]
+	for(var/option in request_handling_options)
+		resolved_options[option] = request_handling_options[option]
+	if(!is_emagged)
+		resolved_options -= REMOTE_RESPONSE_SHOCK
+	return resolved_options
 
 /obj/item/door_remote/proc/on_pickup(datum/source, atom/new_hand_touches_the_beacon)
 	SIGNAL_HANDLER
-	if(listening)
-		deltimer(stop_listening_timer)
-	else
-		toggle_listen(new_hand_touches_the_beacon)
+	if(!listening)
+		toggle_listen()
 	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
 
 /obj/item/door_remote/attack_self(mob/user)
-	var/list/radial_options = resolve_radial_options()
+	var/list/radial_options = resolve_mode_radial_options()
 	var/choice = show_radial_menu(user, user, radial_options, radius = 40)
 	switch(choice)
 		if(WAND_OPEN)
@@ -211,7 +212,7 @@
 		if (isnull(door))
 			return ITEM_INTERACT_BLOCKING
 
-	if (!door.check_access_list(access_list) || !door.requiresID())
+	if ((!door.check_access_list(access_list) && !in_our_area(get_area(door))) || !door.requiresID())
 		interacting_with.balloon_alert(user, "can't access!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -261,5 +262,3 @@
 	return ..()
 
 
-#undef RESOLVE_OPERATION_RADIALS
-#undef RESOLVE_RESPONSE_RADIALS

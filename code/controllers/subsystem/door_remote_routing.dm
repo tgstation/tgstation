@@ -11,17 +11,6 @@ SUBSYSTEM_DEF(door_remote_routing)
 	setup_remote_request_action_lists()
 	setup_door_remote_radials()
 
-/datum/controller/subsystem/door_remote_routing/proc/setup_remote_request_action_lists()
-
-/datum/controller/subsystem/door_remote_routing/proc/add_listening_remote(region_listened_to, obj/item/door_remote/remote_added)
-	LAZYADD(remotes_listening_by_region[region_listened_to], remote_added)
-
-/datum/controller/subsystem/door_remote_routing/proc/remove_listening_remote(region_listened_to, obj/item/door_remote/remote_removed)
-	LAZYREMOVE(remotes_listening_by_region[region_listened_to], remote_removed)
-	if(LAZYLEN(remotes_listening_by_region[region_listened_to]))
-		return // return if there's other remotes listening for that region
-	LAZYNULL(remotes_listening_by_region[region_listened_to]) // otherwise null it out
-
 /* When someone bops a door with the alternate action of their ID, they will request the door be opened by the door remote.
  * First, we deduce the appropriate region(s) for the access request.
  * If we find an appropriate region, then we add it to the list of regions we're gonna send a signal for.
