@@ -294,7 +294,7 @@
 #include "code\__DEFINES\construction\material.dm"
 #include "code\__DEFINES\construction\rcd.dm"
 #include "code\__DEFINES\construction\structures.dm"
-#include "code\__DEFINES\dcs\flags.dm"
+#include "code\__DEFINES\dcs\declarations.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals\mapping.dm"
 #include "code\__DEFINES\dcs\signals\signals_action.dm"
