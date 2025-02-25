@@ -76,8 +76,12 @@
 		var/price = 0
 		for(var/exported_datum in report.total_amount)
 			price += report.total_value[exported_datum]
-		qdel(markable_object)
 
+		if(price <= 0)
+			balloon_alert(user, "not enough material to sell!")
+			return FALSE
+
+		qdel(markable_object)
 		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 		new_block.export_value = price
 		new_block.export_mat = material_to_export
