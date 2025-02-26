@@ -1,6 +1,4 @@
-/////////////////////
-//RIGHT HANDED BOTS//
-/////////////////////
+//Right Handed Bots
 
 /datum/crafting_recipe/secbot
 	name = "Secbot (Right Handed)"
@@ -88,10 +86,8 @@
 	)
 	time = 4 SECONDS
 	category = CAT_ROBOT
-	
-////////////////////
-//LEFT HANDED BOTS//
-////////////////////
+
+//Left Handed Bots
 
 /datum/crafting_recipe/secbot/left
 	name = "Secbot (Left Handed)"
@@ -172,9 +168,8 @@
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
-//////////////
-//OTHER BOTS//
-//////////////
+//Other Bots
+
 /datum/crafting_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/secbot/ed209
