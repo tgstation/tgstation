@@ -1,5 +1,4 @@
 //Right Handed Bots
-
 /datum/crafting_recipe/secbot
 	name = "Secbot (Right Handed)"
 	result = /mob/living/simple_animal/bot/secbot
