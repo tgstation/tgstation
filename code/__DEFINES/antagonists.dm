@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define GET_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 
 /// Check if the given mob is a heretic monster.
-#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+#define IS_HERETIC_MONSTER(mob) (HAS_TRAIT(mob, TRAIT_HERETIC_SUMMON))
 /// Check if the given mob is a  lunatic
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
