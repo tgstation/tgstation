@@ -1,34 +1,35 @@
 // All the procs that admins can use to view something like a global list in a cleaner manner than just View Variables are contained in this file.
 
-/datum/admins/proc/list_bombers()
+
+/datum/admins/proc/list_investigate_log(list/log, name)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr, "The game hasn't started yet!")
 		return
-	var/data = "<b>Bombing List</b><hr>"
-	for(var/entry in GLOB.bombers)
-		data += "[entry]<br>"
-	usr << browse(data, "window=bombers;size=800x500")
+
+	var/title = "[full_capitalize(name)] Log"
+	var/parts = list()
+	if(length(log))
+		parts += "<b>Showing last [length(log)] [name]s.</b>"
+		parts += "<hr>"
+		parts += "<ul>"
+		for(var/entry in log)
+			parts += "<li>[entry]</li>"
+		parts += "</ul>"
+	else
+		parts += "<i>The [name] log is empty.</i>"
+
+	var/datum/browser/browser = new(usr, ckey(title), title, 800, 500)
+	browser.set_content(jointext(parts, ""))
+	browser.open()
+
+/datum/admins/proc/list_bombers()
+	list_investigate_log(GLOB.bombers, "bomber")
 
 /datum/admins/proc/list_signalers()
-	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "The game hasn't started yet!")
-		return
-	var/data = "<b>Showing last [length(GLOB.investigate_signaler)] signalers.</b><hr>"
-	for(var/entry in GLOB.investigate_signaler)
-		data += "[entry]<BR>"
-	usr << browse(data, "window=lastsignalers;size=800x500")
+	list_investigate_log(GLOB.investigate_signaler, "signaler")
 
 /datum/admins/proc/list_law_changes()
-	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "The game hasn't started yet!")
-		return
-	var/data = "<b>Showing last [length(GLOB.lawchanges)] law changes.</b><hr>"
-	for(var/entry in GLOB.lawchanges)
-		data += "[entry]<BR>"
-
-	var/datum/browser/browser = new(usr, "lawchanges", "Law Changes", 800, 500)
-	browser.set_content(data)
-	browser.open()
+	list_investigate_log(GLOB.lawchanges, "law change")
 
 /datum/admins/proc/list_dna()
 	var/data = "<b>Showing DNA from blood.</b><hr>"

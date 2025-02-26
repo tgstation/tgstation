@@ -380,21 +380,15 @@
 		return
 	var/list/bans = sticky_banned_ckeys()
 	var/list/banhtml = list()
+	banhtml += "<h2>All Sticky Bans:</h2> <a href='byond://?_src_=holder;[HrefToken()];stickyban=add'>\[+\]</a><br>"
 	for(var/key in bans)
 		var/ckey = ckey(key)
 		banhtml += "<br /><hr />\n"
 		banhtml += stickyban_gethtml(ckey)
 
-	var/html = {"
-	<head>
-		<title>Sticky Bans</title>
-	</head>
-	<body>
-		<h2>All Sticky Bans:</h2> <a href='byond://?_src_=holder;[HrefToken()];stickyban=add'>\[+\]</a><br>
-		[banhtml.Join("")]
-	</body>
-	"}
-	usr << browse(html,"window=stickybans;size=700x400")
+	var/datum/browser/browser = new(usr, "stickybans", "Sticky Bans", 800, 500)
+	browser.set_content(jointext(banhtml, ""))
+	browser.open()
 
 /proc/sticky_banned_ckeys()
 	if (SSdbcore.Connect() || length(SSstickyban.dbcache))
