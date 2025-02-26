@@ -446,9 +446,9 @@
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
 
-//Overlays for the worn overlay so you can overlay while you overlay
-//eg: ammo counters, primed grenade flashing, etc.
-//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+/// Overlays for the worn overlay so you can overlay while you overlay
+/// eg: ammo counters, primed grenade flashing, etc.
+/// "icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
 /obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
@@ -457,6 +457,12 @@
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
+
+/// worn_overlays to use when you'd want to use KEEP_APART. Don't use KEEP_APART neither there nor here, as it would break floating overlays
+/obj/item/proc/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+	. = list()
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 ///Returns an integer representing the number of limbs that were updated.

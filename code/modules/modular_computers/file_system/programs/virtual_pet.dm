@@ -214,7 +214,10 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/proc/alter_profile_picture()
 	var/image/pet_preview = image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview")
-	pet.color_by_index(pet_preview, FIXED_COLOUR_PRIORITY)
+	if(pet.cached_color_filter)
+		pet_preview.color = apply_matrix_to_color(COLOR_WHITE, pet.cached_color_filter["color"], pet.cached_color_filter["space"] || COLORSPACE_RGB)
+	else if (pet.color)
+		pet_preview.color = pet.color
 
 	if(length(selected_hat))
 		var/mutable_appearance/our_selected_hat = selected_hat["appearance"]

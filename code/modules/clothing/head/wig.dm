@@ -41,8 +41,7 @@
 	if(!hair)
 		return
 
-	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER, appearance_flags = RESET_COLOR|KEEP_APART)
-	color_atom_overlay(hair_overlay)
+	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER)
 	hair_overlay.pixel_y = hair.y_offset
 	. += hair_overlay
 

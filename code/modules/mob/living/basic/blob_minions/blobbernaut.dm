@@ -73,7 +73,7 @@
 	// take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 	apply_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damage_sources * seconds_per_tick, damagetype = TOX) // We reduce brute damage
 	var/mutable_appearance/harming = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "nautdamage", MOB_LAYER + 0.01, appearance_flags = RESET_COLOR|KEEP_APART)
-	color_by_index(harming, FIXED_COLOUR_PRIORITY)
+	harming = color_atom_overlay(harming)
 	harming.dir = dir
 	flick_overlay_view(harming, 0.8 SECONDS)
 	return TRUE
