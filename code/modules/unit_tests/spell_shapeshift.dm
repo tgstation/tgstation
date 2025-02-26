@@ -134,6 +134,7 @@
 
 		if (istype(shift_spell, /datum/action/cooldown/spell/shapeshift/polymorph_belt))
 			var/datum/action/cooldown/spell/shapeshift/polymorph_belt/belt_spell = shift_spell
+			belt_spell.possible_shapes = list(/mob/living/basic/mouse) // I hate cockroaches. A maxhealth of 1 rounds down to 0 in this unit test.
 			belt_spell.channel_time = 0 SECONDS // No do-afters
 
 		if(shift_spell.convert_damage)
