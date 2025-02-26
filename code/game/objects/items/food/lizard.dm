@@ -898,7 +898,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("dead rat" = 4, "bun" = 2)
-	foodtypes = NUTS | MEAT | GORE
+	foodtypes = NUTS | MEAT | GORE | VEGETABLES | RAW
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/rootguffin
@@ -913,7 +913,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("muffin" = 2, "bacon" = 3)
-	foodtypes = NUTS | MEAT | BREAKFAST
+	foodtypes = NUTS | MEAT | BREAKFAST | VEGETABLES | FRIED
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -929,7 +929,7 @@
 		/datum/reagent/consumable/bbqsauce = 1,
 	)
 	tastes = list("bun" = 2, "pork patty" = 4)
-	foodtypes = NUTS | MEAT
+	foodtypes = NUTS | MEAT | VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -946,7 +946,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
-	foodtypes = NUTS | MEAT | FRIED
+	foodtypes = NUTS | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -961,7 +961,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("bun" = 4, "fish" = 4)
-	foodtypes = NUTS | SEAFOOD
+	foodtypes = VEGETABLES | NUTS | SEAFOOD
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
 

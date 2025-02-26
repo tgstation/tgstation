@@ -130,7 +130,7 @@
 		/datum/reagent/consumable/nutriment/protein = 5,
 	)
 	tastes = list("cake" = 4, "cream cheese" = 3)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN | DAIRY | SUGAR
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/cakeslice/cheese
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -371,7 +371,7 @@
 	desc = "A hollow cake with real pumpkin."
 	icon_state = "pumpkinspicecake"
 	tastes = list("cake" = 5, "sweetness" = 1, "pumpkin" = 1)
-	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR
+	foodtypes = VEGETABLES | GRAIN | DAIRY | VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/cakeslice/pumpkinspice
 	crafting_complexity = FOOD_COMPLEXITY_3

@@ -75,6 +75,7 @@
 		/datum/reagent/consumable/caramel = 2
 	)
 	result = /obj/item/food/cake/birthday
+	added_foodtypes = JUNKFOOD
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/energycake
@@ -94,6 +95,7 @@
 		/obj/item/food/cake/plain = 1
 	)
 	result = /obj/item/food/cake/brain
+	added_foodtypes = MEAT | GORE
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/slimecake

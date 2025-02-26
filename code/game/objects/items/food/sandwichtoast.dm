@@ -96,7 +96,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("butter" = 1, "toast" = 1)
-	foodtypes = GRAIN | BREAKFAST
+	foodtypes = GRAIN | BREAKFAST | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -119,7 +119,7 @@
 
 /obj/item/food/jelliedtoast/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/slimejelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
-	foodtypes = GRAIN | TOXIC | SUGAR | BREAKFAST
+	foodtypes = GRAIN | TOXIC | BREAKFAST
 
 /obj/item/food/twobread
 	name = "two bread"
