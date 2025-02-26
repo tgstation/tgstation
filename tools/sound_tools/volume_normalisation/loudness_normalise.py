@@ -100,7 +100,7 @@ def normalize_loudness(file_path, target_lufs=-23):
         # Replace the original file with the normalized version using shutil.move
         shutil.move(temp_file.name, file_path)
 
-        print(f"Normalized {file_path} to {target_lufs} LUFS with sample rate {sample_rate} Hz and preserved metadata.")
+        print(f"Normalized {file_path} to {target_lufs} LUFS with sample rate {sample_rate} Hz.")
         return True
 
     except Exception as e:

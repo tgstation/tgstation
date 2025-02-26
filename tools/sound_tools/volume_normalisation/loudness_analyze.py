@@ -1,5 +1,3 @@
-# Runs through the files in a folder to check if the loudness normalization is up to standard
-
 import os
 import subprocess
 import re
@@ -7,12 +5,15 @@ import re
 def get_lufs(file_path):
     """Gets the LUFS of an audio file using ffmpeg loudnorm filter."""
     try:
+        # Ensure the file_path is an absolute path
+        file_path = os.path.abspath(file_path)
+
         # Run the ffmpeg loudnorm filter and capture the output in stderr
         command = [
             'ffmpeg',
             '-i', file_path,
             '-filter_complex', 'loudnorm=print_format=summary',
-            '-f', 'null', '/dev/null'
+            '-f', 'null', 'NUL'  # On Windows, use 'NUL' instead of '/dev/null'
         ]
         result = subprocess.run(command, capture_output=True, text=True)
 
@@ -50,9 +51,12 @@ def check_folder_loudness(folder_path):
     for root, dirs, files in os.walk(folder_path):
         for file in files:
             file_path = os.path.join(root, file)
+            file_path = os.path.abspath(file_path)  # Convert relative path to absolute path
+            print("File path after join is now:", file_path)
 
             # Process only audio files (you can modify this list to include more formats)
             if file.lower().endswith(('.mp3', '.wav', '.flac', '.ogg')):
+                print("Now checking:", file_path)
                 check_loudness(file_path)
 
 if __name__ == "__main__":
