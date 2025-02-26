@@ -103,6 +103,16 @@
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
 
+/obj/item/stock_parts/power_store/cell/high/Initialize(mapload)
+	. = ..()
+
+/obj/item/stock_parts/power_store/cell/high/Destroy(force)
+	. = ..()
+
+/obj/item/stock_parts/power_store/cell/high/Move(atom/newloc, direct, glide_size_override, update_dir)
+	. = ..()
+	
+
 /obj/item/stock_parts/power_store/cell/high/empty
 	empty = TRUE
 
