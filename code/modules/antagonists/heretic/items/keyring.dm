@@ -220,8 +220,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/heretic/Destroy()
-	for(var/I in fused_ids)
-		log_world("[I] is in fusedids, value [fused_ids[I]]")
 	QDEL_LIST(fused_ids)
 	link = null
 	clear_portals()
