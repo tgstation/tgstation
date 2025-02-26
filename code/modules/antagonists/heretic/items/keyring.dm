@@ -124,9 +124,6 @@
 	if(!cardname)
 		balloon_alert(user, "no options!")
 		return ..()
-	if(!user.is_holding(src))
-		to_chat(user, span_warning("You must be holding \the [src] to continue!"))
-		return
 	var/obj/item/card/id/card = fused_ids[cardname]
 	shapeshift(card)
 
