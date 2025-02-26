@@ -137,7 +137,7 @@
 ///Changes our appearance to the passed ID card
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
 	trim = card.trim
-	if(!trim && ishuman(loc))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/wearing = loc
 		wearing.sec_hud_set_ID()
 	assignment = card.assignment
