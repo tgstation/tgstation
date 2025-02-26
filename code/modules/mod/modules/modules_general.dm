@@ -667,7 +667,7 @@
 
 /obj/item/mod/module/plasma_stabilizer/generate_worn_overlay(mutable_appearance/standing)
 	var/mutable_appearance/visor_overlay = mod.get_visor_overlay(standing)
-	visor_overlay.appearance_flags |= RESET_COLOR|KEEP_APART
+	visor_overlay.appearance_flags |= RESET_COLOR
 	visor_overlay.color = COLOR_VIOLET
 	return list(visor_overlay)
 
