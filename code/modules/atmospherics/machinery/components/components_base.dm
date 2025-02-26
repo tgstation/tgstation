@@ -79,7 +79,7 @@
 		var/obj/machinery/atmospherics/node = nodes[i]
 		var/node_dir = get_dir(src, node)
 		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]", appearance_flags = RESET_COLOR|KEEP_APART)
-		pipe_appearance.color = node.pipe_color
+		pipe_appearance.color = (node.pipe_color == ATMOS_COLOR_OMNI || istype(node, /obj/machinery/atmospherics/pipe/color_adapter)) ? pipe_color : node.pipe_color
 		underlays += pipe_appearance
 		connected |= node_dir
 

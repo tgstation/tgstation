@@ -63,14 +63,14 @@
 
 	if(istype(machine_check, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-			. += get_attached_image(get_dir(src, machine_check), i, COLOR_VERY_LIGHT_GRAY)
+			. += get_attached_image(get_dir(src, machine_check), i, machine_check.pipe_color == pipe_color ? pipe_color : ATMOS_COLOR_OMNI)
 		return
 	if(istype(machine_check, /obj/machinery/atmospherics/components/unary/airlock_pump))
 		. += get_attached_image(get_dir(src, machine_check), 4, COLOR_BLUE)
 		//. += get_attached_image(get_dir(src, machine_check), 2, COLOR_RED) // Only the distro node is added currently to the pipenet, it doesn't merge the pipenet with the waste node
 		return
 	var/passed_color = machine_check.pipe_color
-	if(istype(machine_check, /obj/machinery/atmospherics/pipe/color_adapter))
+	if(istype(machine_check, /obj/machinery/atmospherics/pipe/color_adapter) || machine_check.pipe_color == ATMOS_COLOR_OMNI)
 		passed_color = pipe_color
 	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, passed_color)
 
