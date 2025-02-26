@@ -220,7 +220,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/heretic/Destroy()
-	QDEL_LIST_ASSOC(fused_ids)
+	QDEL_LIST(fused_ids)
 	link = null
 	clear_portals()
 	return ..()
