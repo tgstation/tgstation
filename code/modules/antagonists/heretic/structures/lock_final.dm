@@ -75,7 +75,7 @@
 	var/mob/living/monster = new monster_type(loc)
 	monster.key = user.key
 	monster.set_name()
-	ADD_TRAIT(monser, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)
+	ADD_TRAIT(monster, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)
 	var/datum/antagonist/heretic_monster/woohoo_free_antag = new(src)
 	monster.mind.add_antag_datum(woohoo_free_antag)
 	if(ascendee)
