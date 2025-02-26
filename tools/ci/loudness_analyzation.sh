@@ -22,19 +22,29 @@ find "$DIRECTORY" -type f -name "*.ogg" -print0 | while IFS= read -r -d '' file;
   echo "Checking LUFS for $file..."
 
   # Extract LUFS value using ffmpeg
-  lufs_value=$(ffmpeg -i "$file" -filter_complex ebur128 -f null - 2>&1 | awk '/I:/{print $2; exit}')
+  lufs_output=$(ffmpeg -i "$file" -filter_complex ebur128 -f null - 2>&1)
+
+  # Check if ffmpeg failed
+  if [[ "$lufs_output" == *"error"* ]]; then
+    echo "Error: Could not analyze LUFS for $file."
+    RETRIEVAL_ERRORS+=("$file")
+    continue
+  fi
+
+  # Extract LUFS value
+  lufs_value=$(echo "$lufs_output" | awk '/I:/{print $2; exit}')
 
   # Debugging output
   echo "Extracted LUFS: $lufs_value"
 
   # Check if LUFS retrieval was successful
-  if [ -z "$lufs_value" ]; then
-    echo "Error: Could not retrieve LUFS for $file."
+  if [ -z "$lufs_value" ] || [ "$lufs_value" == "-70.0" ]; then
+    echo "Error: Invalid LUFS value for $file."
     RETRIEVAL_ERRORS+=("$file")
     continue
   fi
 
-  # Compare LUFS value with the required range using awk for precision
+  # Compare LUFS value with the required range
   if awk "BEGIN {exit !($lufs_value < $MIN_LUFS || $lufs_value > $MAX_LUFS)}"; then
     echo "ERROR: LUFS for $file is $lufs_value, outside the acceptable range ($MIN_LUFS to $MAX_LUFS)."
     BAD_FILES+=("$file")
