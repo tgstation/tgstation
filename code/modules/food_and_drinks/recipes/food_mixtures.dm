@@ -37,8 +37,8 @@
 	var/obj/item/food/result_path = result
 	var/result_foodtypes = initial(result_path.foodtypes)
 	if(result_foodtypes != actual_foodtypes)
-		var/text_flags = jointext(bitfield_to_list(result_foodtypes, FOOD_FLAGS_IC),"|")
-		var/text_craft_flags = jointext(bitfield_to_list(actual_foodtypes, FOOD_FLAGS_IC),"|")
+		var/text_flags = jointext(bitfield_to_list(result_foodtypes, FOOD_FLAGS),"|")
+		var/text_craft_flags = jointext(bitfield_to_list(actual_foodtypes, FOOD_FLAGS),"|")
 		stack_trace("the foodtypes of [result_path] are [text_flags] when spawned but [text_craft_flags] when crafted.")
 
 /datum/crafting_recipe/food/crafting_ui_data()
