@@ -1,23 +1,9 @@
-/datum/crafting_recipe/ed209
-	name = "ED209"
-	result = /mob/living/simple_animal/bot/secbot/ed209
-	reqs = list(
-		/obj/item/robot_suit = 1,
-		/obj/item/clothing/head/helmet/sec = 1,
-		/obj/item/clothing/suit/armor/vest = 1,
-		/obj/item/bodypart/leg/left/robot = 1,
-		/obj/item/bodypart/leg/right/robot = 1,
-		/obj/item/stack/sheet/iron = 1,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/gun/energy/disabler = 1,
-		/obj/item/assembly/prox_sensor = 1,
-	)
-	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
-	time = 6 SECONDS
-	category = CAT_ROBOT
+/////////////////////
+//RIGHT HANDED BOTS//
+/////////////////////
 
 /datum/crafting_recipe/secbot
-	name = "Secbot"
+	name = "Secbot (Right Handed)"
 	result = /mob/living/simple_animal/bot/secbot
 	reqs = list(
 		/obj/item/assembly/signaler = 1,
@@ -31,7 +17,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/cleanbot
-	name = "Cleanbot"
+	name = "Cleanbot (Right Handed)"
 	result = /mob/living/basic/bot/cleanbot
 	reqs = list(
 		/obj/item/reagent_containers/cup/bucket = 1,
@@ -43,7 +29,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/repairbot
-	name = "Repairbot"
+	name = "Repairbot (Right Handed)"
 	result = /mob/living/basic/bot/repairbot
 	reqs = list(
 		/obj/item/storage/toolbox = 1,
@@ -55,7 +41,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/medbot
-	name = "Medbot"
+	name = "Medbot (Right Handed)"
 	result = /mob/living/basic/bot/medbot
 	reqs = list(
 		/obj/item/healthanalyzer = 1,
@@ -80,7 +66,7 @@
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
-	name = "Honkbot"
+	name = "Honkbot (Right Handed)"
 	result = /mob/living/basic/bot/honkbot
 	reqs = list(
 		/obj/item/storage/box/clown = 1,
@@ -92,7 +78,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/firebot
-	name = "Firebot"
+	name = "Firebot (Right Handed)"
 	result = /mob/living/basic/bot/firebot
 	reqs = list(
 		/obj/item/extinguisher = 1,
@@ -101,6 +87,110 @@
 		/obj/item/clothing/head/utility/hardhat/red = 1,
 	)
 	time = 4 SECONDS
+	category = CAT_ROBOT
+	
+////////////////////
+//LEFT HANDED BOTS//
+////////////////////
+
+/datum/crafting_recipe/secbot/left
+	name = "Secbot (Left Handed)"
+	result = /mob/living/simple_animal/bot/secbot
+	reqs = list(
+		/obj/item/assembly/signaler = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
+		/obj/item/melee/baton/security/ = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	time = 6 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/cleanbot/left
+	name = "Cleanbot (Left Handed)"
+	result = /mob/living/basic/bot/cleanbot
+	reqs = list(
+		/obj/item/reagent_containers/cup/bucket = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
+	parts = list(/obj/item/reagent_containers/cup/bucket = 1)
+	time = 4 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/repairbot/left
+	name = "Repairbot (Left Handed)"
+	result = /mob/living/basic/bot/repairbot
+	reqs = list(
+		/obj/item/storage/toolbox = 1,
+		/obj/item/stack/conveyor = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
+	time = 4 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/medbot/left
+	name = "Medbot (Left Handed)"
+	result = /mob/living/basic/bot/medbot
+	reqs = list(
+		/obj/item/healthanalyzer = 1,
+		/obj/item/storage/medkit = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
+	parts = list(
+		/obj/item/storage/medkit = 1,
+		/obj/item/healthanalyzer = 1,
+	)
+	time = 4 SECONDS
+	category = CAT_ROBOT
+
+
+/datum/crafting_recipe/honkbot/left
+	name = "Honkbot (Left Handed)"
+	result = /mob/living/basic/bot/honkbot
+	reqs = list(
+		/obj/item/storage/box/clown = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bikehorn = 1,
+	)
+	time = 4 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/firebot/left
+	name = "Firebot (Left Handed)"
+	result = /mob/living/basic/bot/firebot
+	reqs = list(
+		/obj/item/extinguisher = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/clothing/head/utility/hardhat/red = 1,
+	)
+	time = 4 SECONDS
+	category = CAT_ROBOT
+
+//////////////
+//OTHER BOTS//
+//////////////
+/datum/crafting_recipe/ed209
+	name = "ED209"
+	result = /mob/living/simple_animal/bot/secbot/ed209
+	reqs = list(
+		/obj/item/robot_suit = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
+		/obj/item/clothing/suit/armor/vest = 1,
+		/obj/item/bodypart/leg/left/robot = 1,
+		/obj/item/bodypart/leg/right/robot = 1,
+		/obj/item/stack/sheet/iron = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/gun/energy/disabler = 1,
+		/obj/item/assembly/prox_sensor = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
+	time = 6 SECONDS
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/vibebot
