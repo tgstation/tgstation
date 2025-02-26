@@ -655,9 +655,9 @@
 		if(!theme_to_use.can_convert(affected))
 			continue
 		num_affected++
-		var/skip_sound = TRUE
+		var/skip_sound = FALSE
 		if(num_affected % 5) //makes it play the sound more sparingly
-			skip_sound = FALSE
+			skip_sound = TRUE
 		var/time_mult = round(get_dist_euclidean(get_turf(src), affected)) + 1
 		addtimer(CALLBACK(theme_to_use, TYPE_PROC_REF(/datum/dimension_theme, apply_theme), affected, skip_sound, TRUE), 0.1 SECONDS * time_mult)
 	qdel(src)
