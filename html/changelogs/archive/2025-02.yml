@@ -625,3 +625,47 @@
   - image: Resprited boxing gloves
   combustor:
   - map: Added an air alarm to birdshot's engine room
+2025-02-26:
+  Dmeto:
+  - bugfix: Nebulastation Supermatter is no longer hotwired roundstart.
+  Jacquerel:
+  - balance: The part of a MODsuit that the other parts deploy from always counts
+      as deployed for the purposes of speed calculation.
+  KingkumaArt:
+  - image: Cooked bacon resprited to be more visually clear that it's cooked
+  Melbert:
+  - rscadd: The Kitchen Coldroom, RND Server Room, Xenobio Kill Room, and Telecomms
+      on all maps now come equipped with walkable, transparent airtight plastic flaps.
+  - rscadd: Medbay Coldrooms are now consistently cold across all maps that has one.
+      They, too, now have plastic flaps.
+  - rscadd: Plastic flaps will now melt in hot environments / active fires. Cargo
+      flaps are more resilient to fire than kitchen flaps.
+  - qol: Open doors no longer layer beneath plastic flaps, in other words you can
+      actually click on them to shut them.
+  - qol: Plastic flaps may be less irritating to traverse for things which can already
+      pass through glass
+  - sound: Walking out of plastic flaps now has sfx. Crawling out is still silent.
+  SmArtKar:
+  - image: Resprited tinkerer gloves
+  - rscadd: You can use tables as makeshift lava bridges
+  - bugfix: Fixed crusher retool kits turning crushers invisible
+  SmArtKar, CoiledLamb:
+  - image: Resprited the handheld crew monitor
+  TealSeer:
+  - qol: The RCD examine text now lists any upgrades it has installed.
+  TiviPlus:
+  - code_imp: The Discord Announcer for PRs is back
+  necromanceranne:
+  - balance: Mech PKA low-pressure damage has been reduced to 50, from 80. Increased
+      the attack cooldown to match the standard PKA.
+  - balance: Mech PKA AOE blast does not mine turfs, and only does 30% of the main
+      projectiles damage to mining mobs in the AOE effect.
+  - bugfix: The mech PKA AOE blast visual effect now properly appears when hitting
+      a mob directly.
+  - code_imp: MOB_MINING and MOB_CRUSTACEAN are now defined biotypes.
+  - code_imp: Audits some mining mob biotypes to make more sense based on what kind
+      of creature they are and to include MOB_MINING in their defines.
+  possiblepossibility:
+  - bugfix: fixes slaughter demon roundend report
+  - bugfix: Fixes (most) emergency access on maintenance airlocks on WawaStation
+  - bugfix: wizard statues are gray
