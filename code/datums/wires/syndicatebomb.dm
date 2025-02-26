@@ -26,7 +26,7 @@
 
 /// Adds a number of wires which will explode the bomb if pulse/cut
 /datum/wires/syndicatebomb/proc/add_booms(booms = 2)
-	for(var/i in 1 to num_booms)
+	for(var/i in 1 to booms)
 		wires += "[WIRE_BOOM] [i]"
 
 /datum/wires/syndicatebomb/interactable(mob/user)
