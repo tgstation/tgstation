@@ -151,8 +151,10 @@
 
 ///Deletes and nulls our portal pair
 /obj/item/card/id/advanced/heretic/proc/clear_portals()
-	QDEL_NULL(portal_one)
-	QDEL_NULL(portal_two)
+	if(!isnull(portal_one))
+		QDEL_NULL(portal_one)
+	if(!isnull(portal_two))
+		QDEL_NULL(portal_two)
 
 ///Clears portal references
 /obj/item/card/id/advanced/heretic/proc/clear_portal_refs()
