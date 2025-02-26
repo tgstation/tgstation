@@ -88,6 +88,7 @@
 	LAZYCLEARLIST(assemblies)
 	return ..()
 
+/// Adds a number of wires which do absolutely nothing.
 /datum/wires/proc/add_duds(duds)
 	while(duds)
 		var/dud = WIRE_DUD_PREFIX + "[--duds]"

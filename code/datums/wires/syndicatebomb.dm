@@ -7,6 +7,12 @@
 	setup_wires()
 	return ..()
 
+/**
+ * Handles setting up the wires list.
+ *
+ * * num_booms: The number of boom wires to add.
+ * * num_duds: The number of dud wires to add.
+ */
 /datum/wires/syndicatebomb/proc/setup_wires(num_booms = 2, num_duds = 0)
 	wires = list(
 		WIRE_ACTIVATE,
@@ -14,18 +20,24 @@
 		WIRE_PROCEED,
 		WIRE_UNBOLT,
 	)
-	for(var/i in 1 to num_booms)
-		wires += "[WIRE_BOOM] [i]"
+	add_booms(num_booms)
 	add_duds(num_duds)
 	shuffle_wires()
+
+/// Adds a number of wires which will explode the bomb if pulse/cut
+/datum/wires/syndicatebomb/proc/add_booms(booms = 2)
+	for(var/i in 1 to num_booms)
+		wires += "[WIRE_BOOM] [i]"
 
 /datum/wires/syndicatebomb/interactable(mob/user)
 	var/obj/machinery/syndicatebomb/bomb = holder
 	return ..() && bomb.open_panel
 
+/// Translates numbered boom wires into WIRE_BOOM.
 /datum/wires/syndicatebomb/proc/parse_wire(wire)
 	return findtext(wire, WIRE_BOOM) ? WIRE_BOOM : wire
 
+/// Checks if the bomb, if detonated, is dangerous to the user.
 /datum/wires/syndicatebomb/proc/is_dangerous()
 	var/obj/machinery/syndicatebomb/bomb = holder
 	if(isnull(bomb.payload))
