@@ -116,13 +116,13 @@
  * Adds the playing_mafia trait so people examining them will know why they're currently lacking a soul.
  */
 /datum/mafia_role/proc/put_player_in_body(client/player)
-	if(player.mob.mind && player.mob.mind.current)
+	if(player.mob.mind)
 		body.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = player.mob.mind, \
 			old_body = player.mob.mind.current, \
 		)
-	body.key = player.key
+	body.PossessByPlayer(player.key)
 
 /**
  * Tests kill immunities, if nothing prevents the kill, kills this role.

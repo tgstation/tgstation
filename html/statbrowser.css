@@ -104,6 +104,11 @@ img {
 	background-color: #eeeeee;
 }
 
+#under-content {
+	height: calc(0.5em - 4px);
+	background-color: #eeeeee;
+}
+
 #statcontent {
 	flex: 1;
 	padding: 0.75em 0.5em;
@@ -145,6 +150,7 @@ img {
 }
 
 .grid-item:hover .grid-item-text {
+	height: 100%;
 	overflow: visible;
 	white-space: normal;
 	background-color: #ececec;
@@ -239,7 +245,8 @@ body.dark {
 	border-bottom-color: #d4dfec;
 }
 
-.dark #under-menu {
+.dark #under-menu,
+.dark #under-content {
 	background-color: #202020;
 }
 

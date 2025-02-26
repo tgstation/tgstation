@@ -25,7 +25,9 @@
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 	//signal that checks for dishonorable attacks
-	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(attack_honor))
+	RegisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(unarmed_attack_honor))
+	RegisterSignal(owner, COMSIG_MOB_ITEM_ATTACK, PROC_REF(attack_honor))
+	RegisterSignal(owner, COMSIG_MOB_TRYING_TO_FIRE_GUN, PROC_REF(fire_gun_honor))
 	var/datum/action/cooldown/spell/pointed/declare_evil/declare = new(owner)
 	declare.Grant(owner)
 	return ..()
@@ -33,35 +35,67 @@
 /datum/brain_trauma/special/honorbound/on_lose(silent)
 	owner.clear_mood_event("honorbound")
 	UnregisterSignal(owner, list(
-		COMSIG_ATOM_WAS_ATTACKED,
-		COMSIG_MOB_CLICKON,
+		COMSIG_LIVING_EARLY_UNARMED_ATTACK,
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOB_TRYING_TO_FIRE_GUN,
 		COMSIG_MOB_CAST_SPELL,
 		COMSIG_MOB_FIRED_GUN,
 	))
 	return ..()
 
-/// Signal to see if the trauma allows us to attack a target
-/datum/brain_trauma/special/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, list/modifiers)
+/datum/brain_trauma/special/honorbound/proc/unarmed_attack_honor(mob/living/carbon/human/honorbound, atom/target, proximity_flag, modifiers)
 	SIGNAL_HANDLER
 
 	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
-	if(!isliving(clickingon))
+
+	if(!proximity_flag || !isliving(target))
+		return NONE
+
+	var/mob/living/punched_mob = target
+
+	if(!(punched_mob in guilty))
+		check_visible_guilt(punched_mob)
+
+	if((honorbound.combat_mode || modifiers[RIGHT_CLICK]) && !is_honorable(honorbound, punched_mob))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// Signal to see if the trauma allows us to attack a target with a weapon
+/datum/brain_trauma/special/honorbound/proc/attack_honor(mob/living/honorbound, atom/attacked, params)
+	SIGNAL_HANDLER
+
+	if(!isliving(attacked))
 		return
 
-	var/mob/living/clicked_mob = clickingon
+	var/mob/living/attacked_mob = attacked
 	var/obj/item/weapon = honorbound.get_active_held_item()
 
-	if(!honorbound.DirectAccess(clicked_mob) && !isgun(weapon))
-		return
 	if(weapon?.item_flags & NOBLUDGEON)
 		return
-	if(!honorbound.combat_mode && (HAS_TRAIT(clicked_mob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
+
+	if(!(attacked_mob in guilty))
+		check_visible_guilt(attacked_mob)
+
+	if(((weapon?.item_flags & NEEDS_PERMIT) || honorbound.combat_mode || weapon?.force > 0) && !is_honorable(honorbound, attacked_mob))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// Signal to see if we're targeting a mob that is guilty or not.
+/datum/brain_trauma/special/honorbound/proc/fire_gun_honor(mob/living/honorbound, obj/item/gun/the_gun_in_question, atom/target, flag, params)
+	SIGNAL_HANDLER
+
+	if(istype(the_gun_in_question, /obj/item/gun/magic))
 		return
-	if(!(clicked_mob in guilty))
-		check_visible_guilt(clicked_mob)
-	if(!is_honorable(honorbound, clicked_mob))
-		return (COMSIG_MOB_CANCEL_CLICKON)
+
+	if(!isliving(target)) //No shooting an innocent you weren't aiming at to get around this. Aim true or go home, honor-dork
+		return COMPONENT_CANCEL_GUN_FIRE
+
+	var/mob/living/shot_mob = target
+
+	if(!(shot_mob in guilty))
+		check_visible_guilt(shot_mob)
+
+	if(!is_honorable(honorbound, shot_mob))
+		return COMPONENT_CANCEL_GUN_FIRE
 
 /// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
 /datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
@@ -74,7 +108,7 @@
 	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
 		guilty(attacked_mob, "for blasphemous worship!")
 	if(HAS_TRAIT(attacked_mob, TRAIT_EVIL))
-		guilty(attacked_mob, "an almost fanatical commitment to EEEEVIL!")
+		guilty(attacked_mob, "for an almost fanatical commitment to EEEEVIL!")
 	if(attacked_mob.mind)
 		var/datum/mind/guilty_conscience = attacked_mob.mind
 		if(guilty_conscience.has_antag_datum(/datum/antagonist/abductor))
@@ -167,7 +201,7 @@
  */
 /datum/brain_trauma/special/honorbound/proc/punishment(mob/living/carbon/human/user, school)
 	switch(school)
-		if(SCHOOL_UNSET, SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION, SCHOOL_PSYCHIC)
+		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION, SCHOOL_PSYCHIC)
 			return
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN, SCHOOL_SANGUINE)
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
@@ -177,7 +211,7 @@
 			owner.add_mood_event("honorbound", /datum/mood_event/banished) //add mood event after we already cleared our events
 			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		else
-			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school] magic!"))
+			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school == SCHOOL_UNSET ? "strange" : school] magic!"))
 			lightningbolt(user)
 			owner.add_mood_event("honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 

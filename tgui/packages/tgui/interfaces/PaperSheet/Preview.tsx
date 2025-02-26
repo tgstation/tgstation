@@ -1,8 +1,8 @@
 import { marked } from 'marked';
 import { Component, RefObject } from 'react';
+import { Box, Section } from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Section } from '../../components';
 import { sanitizeText } from '../../sanitize';
 import { canEdit, tokenizer, walkTokens } from './helpers';
 import { StampView } from './StampView';

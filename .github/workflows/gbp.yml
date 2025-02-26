@@ -1,10 +1,34 @@
-name: GBP
+name: Label and GBP
 on:
   pull_request_target:
-    types: [closed, opened]
+    types: [closed, opened, synchronize]
 jobs:
+  # labeler must run before gbp because gbp calculates itself based on labels
+  labeler:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' || github.event.action == 'synchronize'
+    permissions:
+      pull-requests: write # to apply labels
+      issues: write # to apply labels
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Run Auto Labeler
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { get_updated_label_set } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoLabel.js');
+          const new_labels = await get_updated_label_set({ github, context });
+          github.rest.issues.setLabels({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: new_labels,
+          });
+          console.log(`Labels updated: ${new_labels}`);
   gbp:
     runs-on: ubuntu-latest
+    if: github.event.action == 'opened' || github.event.action == 'closed'
     steps:
     - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
       id: value_holder

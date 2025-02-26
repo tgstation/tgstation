@@ -9,6 +9,8 @@
 	icon_state = "tail_spike"
 	/// if it has a bonus effect, this is how much that effect is
 	var/bonus_value = 10
+	/// id of the trophy to be sent by the signal
+	var/trophy_id
 	/// what type of trophies will block this trophy from being added, must be overriden
 	var/denied_type = /obj/item/crusher_trophy
 
@@ -60,4 +62,6 @@
 
 /// Does an effect when you hit a mob that is marked via the projectile
 /obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	//if we dont have a set id, use the typepath as identifier
+	SEND_SIGNAL(target, COMSIG_MOB_TROPHY_ACTIVATED(trophy_id || type), src, user)

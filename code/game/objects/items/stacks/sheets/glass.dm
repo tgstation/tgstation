@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			return
 		CC.use(5)
 		use(1)
-		to_chat(user, span_notice("You attach wire to the [name]."))
+		to_chat(user, span_notice("You attach wire to \the [src]."))
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
@@ -306,12 +306,12 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/shiv_type = /obj/item/knife/shiv
 	var/craft_time = 3.5 SECONDS
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
-	embed_type = /datum/embed_data/shard
+	embed_type = /datum/embedding/shard
 
-/datum/embed_data/shard
+/datum/embedding/shard
 	embed_chance = 65
 
-/datum/embed_data/glass_candy
+/datum/embedding/glass_candy
 	embed_chance = 100
 	ignore_throwspeed_threshold = TRUE
 	impact_pain_mult = 1

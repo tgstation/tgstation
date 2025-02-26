@@ -2,7 +2,7 @@
 	name = "Deathmatch Arena"
 	requires_power = FALSE
 	default_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT | EVENT_PROTECTED | QUIET_LOGS | NO_DEATH_MESSAGE | BINARY_JAMMING
+	area_flags = UNIQUE_AREA | LOCAL_TELEPORT | EVENT_PROTECTED | QUIET_LOGS | NO_DEATH_MESSAGE | BINARY_JAMMING
 
 /area/deathmatch/fullbright
 	static_lighting = FALSE
@@ -14,7 +14,7 @@
 // for the illusion of a moving train
 /turf/open/chasm/true/no_smooth/fake_motion_sand
 	name = "air"
-	desc = "Dont jump off, unless you want to fall a really long distance."
+	desc = "Don't jump off, unless you want to fall a really long distance."
 	icon_state = "sandmoving"
 	base_icon_state = "sandmoving"
 	icon = 'icons/turf/floors.dmi'

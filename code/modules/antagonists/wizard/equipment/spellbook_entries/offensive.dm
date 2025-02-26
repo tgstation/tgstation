@@ -116,7 +116,7 @@
 
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
-	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
+	desc = "A capricious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/gun/magic/staff/chaos
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
@@ -128,13 +128,13 @@
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
-	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
+	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power. Requires wielding it in both hands to unleash its true potential."
 	item_path = /obj/item/mjollnir
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
-	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
+	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact. Requires wielding it in both hands to unleash its true potential."
 	item_path = /obj/item/singularityhammer
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 

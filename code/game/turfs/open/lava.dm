@@ -225,7 +225,7 @@
 	if(istype(C, /obj/item/cigarette))
 		var/obj/item/cigarette/ciggie = C
 		if(ciggie.lit)
-			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
+			to_chat(user, span_warning("\The [ciggie] is already lit!"))
 			return TRUE
 		var/clumsy_modifier = HAS_TRAIT(user, TRAIT_CLUMSY) ? 2 : 1
 		if(prob(25 * clumsy_modifier) && isliving(user))
@@ -278,6 +278,8 @@
 		return LAVA_BE_IGNORING
 
 	if(HAS_TRAIT(burn_target, immunity_trait))
+		return LAVA_BE_PROCESSING
+	if(HAS_TRAIT(burn_target, TRAIT_MOB_ELEVATED))
 		return LAVA_BE_PROCESSING
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled

@@ -53,12 +53,10 @@
 	item_path = /obj/item/lipstick/blue
 	additional_displayed_text = list("Blue")
 
-
 /datum/loadout_item/pocket_items/lipstick_green
 	name = "Lipstick (Green)"
 	item_path = /obj/item/lipstick/green
 	additional_displayed_text = list("Green")
-
 
 /datum/loadout_item/pocket_items/lipstick_jade
 	name = "Lipstick (Jade)"
@@ -117,6 +115,10 @@
 /datum/loadout_item/pocket_items/plush/plasmaman
 	name = "Plush (Plasmaman)"
 	item_path = /obj/item/toy/plush/plasmamanplushie
+
+/datum/loadout_item/pocket_items/plush/human
+	name = "Plush (human)"
+	item_path = /obj/item/toy/plush/human
 
 /datum/loadout_item/pocket_items/plush/rouny
 	name = "Plush (Rouny)"
@@ -193,3 +195,31 @@
 /datum/loadout_item/pocket_items/d00
 	name = "D00"
 	item_path = /obj/item/dice/d00
+
+/datum/loadout_item/pocket_items/lighter
+	name = "Zippo Lighter"
+	item_path = /obj/item/lighter
+
+/datum/loadout_item/pocket_items/flask
+	name = "Pocket Flask"
+	item_path = /obj/item/reagent_containers/cup/glass/flask
+
+/datum/loadout_item/pocket_items/clipboard
+	name = "Clipboard"
+	item_path = /obj/item/clipboard
+
+/datum/loadout_item/pocket_items/dye
+	name = "Hair Dye"
+	item_path = /obj/item/dyespray
+
+/datum/loadout_item/pocket_items/poster
+	name = "Poster (Contraband)"
+	item_path = /obj/item/poster/random_contraband
+
+/datum/loadout_item/pocket_items/poster_pinup
+	name = "Poster (Pinup)"
+	item_path = /obj/item/poster/random_contraband/pinup
+
+/datum/loadout_item/pocket_items/wallet
+	name = "Wallet"
+	item_path = /obj/item/storage/wallet

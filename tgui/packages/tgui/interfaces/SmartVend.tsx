@@ -1,19 +1,19 @@
-import { BooleanLike } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-import { DmIcon, Icon } from 'tgui-core/components';
-
-import { useBackend } from '../backend';
 import {
-  Box,
   Button,
+  ImageButton,
   Input,
   NoticeBox,
   NumberInput,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
 type Item = {
   path: string;
@@ -31,16 +31,15 @@ type Data = {
   default_list_view: BooleanLike;
 };
 
-enum MODE {
-  tile,
-  list,
-}
-
 export const SmartVend = (props) => {
   const { act, data } = useBackend<Data>();
   const [searchText, setSearchText] = useState('');
   const [displayMode, setDisplayMode] = useState(
-    data.default_list_view ? MODE.list : MODE.tile,
+    getLayoutState() === LAYOUT.Default
+      ? data.default_list_view
+        ? LAYOUT.List
+        : LAYOUT.Grid
+      : getLayoutState(),
   );
   const search = createSearch(searchText, (item: Item) => item.name);
   const contents =
@@ -48,51 +47,57 @@ export const SmartVend = (props) => {
       ? Object.values(data.contents).filter(search)
       : Object.values(data.contents);
   return (
-    <Window width={498} height={550}>
+    <Window width={431} height={575}>
       <Window.Content>
         <Section
           fill
           scrollable
           title="Storage"
           buttons={
-            data.isdryer ? (
-              <Button
-                icon={data.drying ? 'stop' : 'tint'}
-                onClick={() => act('Dry')}
-              >
-                {data.drying ? 'Stop drying' : 'Dry'}
-              </Button>
-            ) : (
-              <>
-                <Input
-                  autoFocus
-                  placeholder={'Search...'}
-                  value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
-                />
+            <Stack>
+              {data.isdryer ? (
+                <Stack.Item>
+                  <Button
+                    icon={data.drying ? 'stop' : 'tint'}
+                    onClick={() => act('Dry')}
+                  >
+                    {data.drying ? 'Stop drying' : 'Dry'}
+                  </Button>
+                </Stack.Item>
+              ) : (
+                <>
+                  <Stack.Item>
+                    <Input
+                      autoFocus
+                      placeholder={'Search...'}
+                      value={searchText}
+                      onInput={(e, value) => setSearchText(value)}
+                    />
+                  </Stack.Item>
+                  <LayoutToggle state={displayMode} setState={setDisplayMode} />
+                </>
+              )}
+              <Stack.Item>
                 <Button
-                  icon={displayMode === MODE.tile ? 'list' : 'border-all'}
+                  icon="question"
                   tooltip={
-                    displayMode === MODE.tile
-                      ? 'Display as a list'
-                      : 'Display as a grid'
+                    <>
+                      LMB - Vend selected amount
+                      <br />
+                      RMB - Vend all
+                    </>
                   }
-                  tooltipPosition="bottom"
-                  onClick={() =>
-                    setDisplayMode(
-                      displayMode === MODE.tile ? MODE.list : MODE.tile,
-                    )
-                  }
+                  tooltipPosition={'bottom-end'}
                 />
-              </>
-            )
+              </Stack.Item>
+            </Stack>
           }
         >
           {!contents.length ? (
             <NoticeBox>Nothing found.</NoticeBox>
           ) : (
             contents.map((item) =>
-              displayMode === MODE.tile ? (
+              displayMode === LAYOUT.Grid ? (
                 <ItemTile key={item.path} item={item} />
               ) : (
                 <ItemList key={item.path} item={item} />
@@ -107,173 +112,107 @@ export const SmartVend = (props) => {
 
 const ItemTile = ({ item }) => {
   const { act } = useBackend<Data>();
-  const [itemCount, setItemCount] = useState(1);
-  const fallback = (
-    <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
-  );
   return (
-    <Box m={1} p={0} inline width="64px">
-      <Button
-        p={0}
-        height="64px"
-        width="64px"
-        tooltip={item.name}
-        tooltipPosition="bottom"
-        textAlign="right"
-        disabled={item.amount < 1}
-      >
-        <Box
-          position="absolute"
-          right="2px"
-          // in case you click on this instead, let it work as a regular click.
-          onClick={() =>
-            act('Release', {
-              path: item.path,
-              amount: itemCount,
-            })
-          }
-        >
-          x{item.amount}
-        </Box>
-        <DmIcon
-          fallback={fallback}
-          icon={item.icon}
-          icon_state={item.icon_state}
-          height="64px"
-          width="64px"
-          onClick={() =>
-            act('Release', {
-              path: item.path,
-              amount: itemCount,
-            })
-          }
-        />
-        {item.amount > 1 && (
-          <Box
-            color="transparent"
-            minWidth="24px"
-            height="24px"
-            lineHeight="24px"
-            textAlign="center"
-            position="absolute"
-            left="0"
-            bottom="0"
-            fontWeight="bold"
-            fontSize="14px"
-          >
-            <NumberInput
-              width="25px"
-              minValue={1}
-              maxValue={item.amount}
-              step={1}
-              value={itemCount}
-              onChange={(value) => setItemCount(value)}
-            />
-          </Box>
-        )}
-      </Button>
-      <Box
-        style={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          textAlign: 'center',
-        }}
-      >
-        {item.name}
-      </Box>
-    </Box>
+    <ImageButton
+      key={item.path}
+      dmIcon={item.icon}
+      dmIconState={item.icon_state}
+      disabled={item.amount < 1}
+      tooltip={item.name}
+      tooltipPosition={'bottom'}
+      buttons={
+        item.amount > 1 && (
+          <NumberInput
+            minValue={1}
+            maxValue={item.amount}
+            step={1}
+            value={1}
+            onChange={(value) => {
+              act('Release', {
+                path: item.path,
+                amount: value,
+              });
+            }}
+          />
+        )
+      }
+      buttonsAlt={
+        <Stack bold color="rgb(185, 185, 185)" fontSize={0.8}>
+          <Stack.Item grow />
+          <Stack.Item style={{ textShadow: '0 1px 1px black' }}>
+            x{item.amount}
+          </Stack.Item>
+        </Stack>
+      }
+      onClick={() =>
+        act('Release', {
+          path: item.path,
+          amount: 1,
+        })
+      }
+      onRightClick={() =>
+        act('Release', {
+          path: item.path,
+          amount: item.amount,
+        })
+      }
+    >
+      {item.name}
+    </ImageButton>
   ) as any;
 };
 
 const ItemList = ({ item }) => {
   const { act } = useBackend<Data>();
-  const fallback = (
-    <Icon name="spinner" lineHeight="32px" size={3} spin color="gray" />
-  );
-  const [itemCount, setItemCount] = useState(1);
+  const disabled = item.amount <= 1;
   return (
-    <Stack>
-      <Stack.Item>
-        <Button
-          p={0}
-          m={0}
-          color="transparent"
-          width="32px"
-          height="32px"
-          onClick={() =>
-            act('Release', {
-              path: item.path,
-              amount: 1,
-            })
-          }
+    <ImageButton
+      key={item.path}
+      fluid
+      imageSize={32}
+      dmIcon={item.icon}
+      dmIconState={item.icon_state}
+      disabled={item.amount < 1}
+      buttons={
+        <Stack
+          opacity={disabled && 0.5}
+          backgroundColor={'rgba(175, 175, 175, 0.1)'}
+          style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         >
-          <DmIcon
-            fallback={fallback}
-            icon={item.icon}
-            icon_state={item.icon_state}
+          <NumberInput
+            width="40px"
+            minValue={1}
+            maxValue={item.amount}
+            step={1}
+            value={1}
+            onChange={(value) => {
+              act('Release', {
+                path: item.path,
+                amount: value,
+              });
+            }}
           />
-        </Button>
-      </Stack.Item>
-      <Stack.Item
-        style={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          lineHeight: '32px',
-        }}
-      >
-        {item.name}
-      </Stack.Item>
-      <Stack.Item
-        grow
-        style={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          lineHeight: '32px',
-        }}
-      >
-        <Box
-          style={{
-            marginTop: '20px',
-            borderBottom: '1px dotted gray',
-          }}
-        />
-      </Stack.Item>
-      {item.amount > 1 && (
-        <Stack.Item
-          style={{
-            lineHeight: '32px',
-          }}
-        >
-          {`x${item.amount}`}
+        </Stack>
+      }
+      onClick={() =>
+        act('Release', {
+          path: item.path,
+          amount: 1,
+        })
+      }
+      onRightClick={() =>
+        act('Release', {
+          path: item.path,
+          amount: item.amount,
+        })
+      }
+    >
+      <Stack textAlign="left">
+        <Stack.Item grow>{item.name}</Stack.Item>
+        <Stack.Item opacity={0.5} fontSize={0.8}>
+          x{item.amount}
         </Stack.Item>
-      )}
-      <Stack.Item>
-        <Button
-          py="4px"
-          mt="4px"
-          height="24px"
-          lineHeight="16px"
-          onClick={() =>
-            act('Release', {
-              path: item.path,
-              amount: itemCount,
-            })
-          }
-        >
-          Vend
-        </Button>
-        <NumberInput
-          width="25px"
-          minValue={1}
-          maxValue={item.amount}
-          step={1}
-          value={itemCount}
-          onChange={(value) => setItemCount(value)}
-        />
-      </Stack.Item>
-    </Stack>
+      </Stack>
+    </ImageButton>
   ) as any;
 };

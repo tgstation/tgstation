@@ -1,3 +1,3 @@
 #comment Repaths instances of a357 with c357, so as to acknowledge that it is consistent with other casings.
 
-/obj/item/ammo_casing/c357 : /obj/item/ammo_casing/a357{@OLD}
+/obj/item/ammo_casing/a357 : /obj/item/ammo_casing/c357{@OLD}

@@ -48,12 +48,6 @@
 /obj/structure/flora/bush/grassy,
 /turf/open/floor/grass,
 /area/station/asteroid)
-"ds" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/flora/bush/grassy,
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
-/area/station/asteroid)
 "ec" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -390,10 +384,6 @@
 "LI" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/department/security)
-"LX" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
-/area/station/asteroid)
 "Mt" = (
 /obj/modular_map_root/tramstation{
 	key = "secbarupper_attachment_a"
@@ -777,7 +767,7 @@ Sc
 Sc
 Sc
 Sc
-Sc
+Py
 Py
 Py
 Py
@@ -817,7 +807,7 @@ Sc
 Sc
 Sc
 Sc
-Sc
+Py
 Py
 Py
 Py
@@ -857,11 +847,11 @@ Sc
 Sc
 Sc
 Sc
-Sc
-Sc
-Sc
-Sc
-Sc
+Py
+Py
+Py
+Py
+Py
 Sc
 Sc
 Py
@@ -897,15 +887,15 @@ Sc
 Sc
 Sc
 Sc
+Py
+Py
+Py
+Py
+Py
 Sc
 Sc
 Sc
-tn
-JT
-bE
-tn
-Rr
-tn
+Sc
 Py
 Py
 Py
@@ -936,16 +926,16 @@ Sc
 Sc
 Sc
 Sc
+Sc
+Py
+Py
+Py
+Py
+Py
+Sc
 KS
-KS
-tn
-bE
-bE
-tn
-ds
-JT
-LX
-tn
+Sc
+Sc
 Py
 Py
 Py
@@ -976,13 +966,13 @@ Sc
 Sc
 Sc
 Sc
-tn
-tn
-Rr
-JT
-tn
-tn
-tn
+Sc
+Py
+Py
+Py
+Py
+Py
+Sc
 Py
 Py
 Py

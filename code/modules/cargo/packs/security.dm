@@ -113,6 +113,14 @@
 				)
 	crate_name = "security supply crate"
 
+/datum/supply_pack/security/maintenance_kits
+	name = "Gun Maintenance Kits"
+	desc = "Three gun maintenance kits for the repair and maintenance of a firearm."
+	access_view = ACCESS_BRIG
+	contains = list(/obj/item/gun_maintenance_supplies = 3)
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "gun maintenance kit crate"
+
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	desc = "Upgrade your arsenal with 10 standard firing pins."
@@ -250,7 +258,7 @@
 
 /datum/supply_pack/security/armory/battle_rifle
 	name = "NT BR-38 Crate"
-	desc = "An experimental energy-based ballistc battle rifle. Only available to \
+	desc = "An experimental energy-based ballistic battle rifle. Only available to \
 		Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE COMPANIES. \
 		Contains three NT BR-38 rifles and three magazines containing .38 Standard."
 	cost = CARGO_CRATE_VALUE * 100

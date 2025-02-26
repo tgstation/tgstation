@@ -317,7 +317,7 @@
 	on_user_set_dir_generic(mod_link, newdir || SOUTH)
 
 /obj/item/clothing/neck/link_scryer/loaded
-	starting_frequency = "NT"
+	starting_frequency = MODLINK_FREQ_NANOTRASEN
 
 /obj/item/clothing/neck/link_scryer/loaded/Initialize(mapload)
 	. = ..()

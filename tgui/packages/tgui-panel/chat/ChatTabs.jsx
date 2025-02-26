@@ -5,7 +5,7 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-import { Box, Button, Flex, Tabs } from 'tgui/components';
+import { Box, Button, Flex, Tabs } from 'tgui-core/components';
 
 import { openChatSettings } from '../settings/actions';
 import { addChatPage, changeChatPage } from './actions';

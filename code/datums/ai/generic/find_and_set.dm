@@ -17,7 +17,7 @@
 	controller.set_blackboard_key(set_key, find_this_thing)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range = 3)
 	return locate(locate_path) in oview(search_range, controller.pawn)
 
 /**

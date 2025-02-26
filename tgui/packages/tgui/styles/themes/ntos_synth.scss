@@ -32,7 +32,7 @@ $purple: hsl(248, 47%, 37%);
 
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': $cyan,
       'color-transparent-text': hsla(210, 100%, 94%, 0.75),
@@ -42,15 +42,15 @@ $purple: hsl(248, 47%, 37%);
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
+    '~tgui-core/styles/components/ProgressBar',
     $with: ('color-default-fill': hsla(300, 91%, 52%, 0.75))
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
+    '~tgui-core/styles/components/Section',
     $with: ('background-color': hsla(0, 0%, 0%, 0.3))
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Tooltip',
+    '~tgui-core/styles/components/Tooltip',
     $with: ('background-color': hsla(36, 100%, 50%, 0.75))
   );
 

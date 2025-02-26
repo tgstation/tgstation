@@ -5,14 +5,24 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 28);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 29);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 28);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 29);
 ```
 In any query remember to add a prefix to the table names if you use one.
+-----------------------------------------------------
+Version 5.29, 4 February 2024, by Tiviplus
+Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)
+
+```sql
+ALTER TABLE `admin_ranks`
+	MODIFY COLUMN `flags` mediumint(5) unsigned NOT NULL,
+	MODIFY COLUMN `exclude_flags` mediumint(5) unsigned NOT NULL,
+	MODIFY COLUMN `can_edit_flags` mediumint(5) unsigned NOT NULL;
+```
 -----------------------------------------------------
 Version 5.28, 1 November 2024, by Ghommie
 Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
