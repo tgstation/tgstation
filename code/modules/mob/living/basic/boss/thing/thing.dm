@@ -90,7 +90,7 @@
 	if(!maploaded || client)
 		phase_successfully_depleted()
 		return
-	if(maploaded && !client && istype(get_area(src), /area/station)) //retreat to station if AI controlled
+	if(!client && istype(get_area(src), /area/station)) //retreat to station if AI controlled
 		return_to_spawnloc()
 		return
 	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
