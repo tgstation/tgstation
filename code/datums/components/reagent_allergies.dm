@@ -1,5 +1,5 @@
 
-/// Component used by plasmeme limbs. Ignites the owner and prevents fire armor from working if they're exposed to oxygen
+/// Component used to make a person allergic to a list of reagents
 /datum/component/reagent_allergies
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	
