@@ -3,11 +3,11 @@
 	ui_bgr = "node_void"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
-	tier1 = /datum/heretic_knowledge/spell/void_prison
-	unique_ability = /datum/heretic_knowledge/spell/void_conduit
-	tier2 = /datum/heretic_knowledge/spell/void_phase
+	tier1 = /datum/heretic_knowledge/spell/void_phase
+	unique_ability = /datum/heretic_knowledge/spell/void_prison
+	tier2 = /datum/heretic_knowledge/spell/void_pull
 	blade = /datum/heretic_knowledge/blade_upgrade/void
-	tier3 =	/datum/heretic_knowledge/spell/void_pull
+	tier3 =	/datum/heretic_knowledge/spell/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void

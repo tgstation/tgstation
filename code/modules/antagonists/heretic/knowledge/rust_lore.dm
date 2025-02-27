@@ -3,11 +3,11 @@
 	ui_bgr = "node_rust"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
-	tier1 = /datum/heretic_knowledge/spell/rust_charge
+	tier1 = /datum/heretic_knowledge/spell/area_conversion
 	unique_ability = /datum/heretic_knowledge/spell/rust_construction
-	tier2 = /datum/heretic_knowledge/spell/area_conversion
+	tier2 = /datum/heretic_knowledge/spell/entropic_plume
 	blade = /datum/heretic_knowledge/blade_upgrade/rust
-	tier3 =	/datum/heretic_knowledge/spell/entropic_plume
+	tier3 =	/datum/heretic_knowledge/spell/rust_charge
 	ascension = /datum/heretic_knowledge/ultimate/rust_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust
