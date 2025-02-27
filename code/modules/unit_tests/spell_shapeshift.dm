@@ -170,12 +170,6 @@
 	if(isnull(status_effect))
 		return TEST_FAIL("Shapeshift spell: Failed to return /datum/status_effect/shapechange_mob/from_spell on [shifted.owner]")
 	return shifted.owner.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
-/*
-/datum/unit_test/shapeshift_health/proc/health_sanity(mob/to_check) // Prevents rounding errors
-	var/mob/living/checked_mob = to_check
-	if(checked_mob.maxHealth <= 1)
-		checked_mob.maxHealth = checked_mob.maxHealth + 1
-		checked
-*/
+
 #undef EXPECTED_HEALTH_RATIO
 #undef TRIGGER_RESET_COOLDOWN

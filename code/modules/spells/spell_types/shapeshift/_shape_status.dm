@@ -173,9 +173,8 @@
 
 		if(source_spell.convert_damage)
 			var/damage_to_apply = owner.maxHealth * (caster_mob.get_total_damage() / caster_mob.maxHealth)
-			var/clamp_damage = clamp(damage_to_apply, -1, owner.maxHealth - 1) // Barely alive
 
-			owner.apply_damage(clamp_damage, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
+			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 			// Only transfer blood if both mobs are supposed to have a blood volume
 			if (initial(owner.blood_volume) > 0 && initial(caster_mob.blood_volume) > 0 && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && !HAS_TRAIT(caster_mob, TRAIT_NOBLOOD))
 				owner.blood_volume = caster_mob.blood_volume
