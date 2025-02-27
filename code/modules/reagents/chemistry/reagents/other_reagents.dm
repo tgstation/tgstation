@@ -3158,7 +3158,7 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-//gives 15 seconds of haunting effect for every unit of it that touches an object
+//gives 20 seconds of haunting effect for every unit of it that touches an object
 /datum/reagent/hauntium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(!isitem(exposed_obj))
