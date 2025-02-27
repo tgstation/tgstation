@@ -23,7 +23,7 @@
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
 	bite_consumption_mod = 2
-	foodtypes = FRUIT
+	foodtypes = FRUIT|VEGETABLES
 	juice_typepath = /datum/reagent/consumable/pumpkinjuice
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.

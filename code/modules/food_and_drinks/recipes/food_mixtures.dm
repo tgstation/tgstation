@@ -17,7 +17,7 @@
 	parts |= reqs
 
 	//rarely, but a few cooking recipes (cake cat & co) don't result food items.
-	if(!PERFORM_ALL_TESTS(focus_only/check_foodtypes) || !ispath(result, /obj/item/food))
+	if(!PERFORM_ALL_TESTS(focus_only/check_foodtypes) || non_craftable || !ispath(result, /obj/item/food))
 		return
 
 	// Food made from these recipes should inherit the food types of the food ingredients used in it

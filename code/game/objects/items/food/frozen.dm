@@ -62,7 +62,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("ice cream" = 1, "banana" = 1)
-	foodtypes = FRUIT | DAIRY | SUGAR
+	foodtypes = FRUIT|DAIRY|SUGAR|GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
 
@@ -82,7 +82,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
-	foodtypes = FRUIT | DAIRY | SUGAR
+	foodtypes = FRUIT|DAIRY|SUGAR|GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_4
 	crafted_food_buff = /datum/status_effect/food/chilling
 

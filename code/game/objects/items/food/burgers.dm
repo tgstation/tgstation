@@ -688,6 +688,6 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("juicy meat" = 4, "BBQ sauce" = 3, "onions" = 2, "bun" = 2)
-	foodtypes = GRAIN | MEAT
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3

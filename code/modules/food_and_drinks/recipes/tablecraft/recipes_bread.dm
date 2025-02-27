@@ -216,7 +216,8 @@
 		/obj/item/food/grown/mushroom/amanita = 1
 		)
 	result = /obj/item/food/breadslice/moldy
-	removed_foodtypes = VEGETABLES
+	removed_foodtypes = VEGETABLES|GRAIN
+	added_foodtypes = GROSS
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/breadcat

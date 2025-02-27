@@ -143,7 +143,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("rice" = 1, "egg" = 1)
-	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/edensalad

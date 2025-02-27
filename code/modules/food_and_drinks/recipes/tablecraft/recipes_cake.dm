@@ -131,6 +131,7 @@
 		/obj/item/food/cake/plain = 4
 	)
 	result = /obj/item/food/cake/pound_cake
+	added_foodtypes = JUNKFOOD
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/hardwarecake
@@ -141,6 +142,7 @@
 		/datum/reagent/toxin/acid = 5
 	)
 	result = /obj/item/food/cake/hardware_cake
+	added_foodtypes = GROSS
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/berry_chocolate_cake
@@ -151,6 +153,7 @@
 		/obj/item/food/grown/berries = 5
 	)
 	result = /obj/item/food/cake/berry_chocolate_cake
+	removed_foodtypes = JUNKFOOD
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/pavlovacream
@@ -162,6 +165,7 @@
 		/obj/item/food/grown/berries = 5
 	)
 	result = /obj/item/food/cake/pavlova
+	added_foodtypes = SUGAR|DAIRY
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/pavlovakorta
@@ -173,6 +177,7 @@
 		/obj/item/food/grown/berries = 5
 	)
 	result = /obj/item/food/cake/pavlova/nuts
+	added_foodtypes = SUGAR|NUTS
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/berry_vanilla_cake
@@ -214,6 +219,7 @@
 		/datum/reagent/consumable/berryjuice = 5
 	)
 	result = /obj/item/food/cake/trumpet
+	added_foodtypes = FRUIT
 	category = CAT_CAKE
 
 
@@ -240,6 +246,7 @@
 		/datum/reagent/consumable/ethanol/rum = 5
 	)
 	result = /obj/item/food/cake/fruit
+	removed_foodtypes = JUNKFOOD
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/plumcake

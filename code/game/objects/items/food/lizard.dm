@@ -884,7 +884,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
-	foodtypes = NUTS | MEAT
+	foodtypes = MEAT|VEGETABLES|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3 //Gotta make the dough, +1
 
 /obj/item/food/burger/rat/korta

@@ -372,7 +372,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cream" = 2, "waffle" = 1)
 	bite_consumption = 4
-	foodtypes = DAIRY | SUGAR
+	foodtypes = DAIRY | SUGAR | GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_2
 	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
