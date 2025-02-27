@@ -1907,6 +1907,7 @@
 #include "code\datums\status_effects\drug_effects.dm"
 #include "code\datums\status_effects\gas.dm"
 #include "code\datums\status_effects\grouped_effect.dm"
+#include "code\datums\status_effects\heart_attack.dm"
 #include "code\datums\status_effects\limited_effect.dm"
 #include "code\datums\status_effects\neutral.dm"
 #include "code\datums\status_effects\song_effects.dm"
