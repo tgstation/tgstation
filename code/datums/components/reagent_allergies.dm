@@ -14,6 +14,9 @@
 /datum/component/reagent_allergies/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
+/datum/component/reagent_allergies/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_LIVING_LIFE)
+
 /datum/component/reagent_allergies/proc/on_life(mob/living/carbon/human/owner, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
