@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/main/lock
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/moon_to_lock
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/lock_to_flesh
-
 	route = PATH_LOCK
 	ui_bgr = "node_lock"
 

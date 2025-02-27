@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/ash_to_moon
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/ash
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/moon
-
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/medallion

@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/blade_to_rust
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/blade
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/rust
-
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/armor

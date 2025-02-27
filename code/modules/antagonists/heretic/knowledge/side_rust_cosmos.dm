@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/rust_to_cosmic
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/rust
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/cosmic
-
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/essence

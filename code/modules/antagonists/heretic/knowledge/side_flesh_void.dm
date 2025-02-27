@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/flesh_to_void
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/flesh
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/void
-
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/void_cloak

@@ -1,9 +1,6 @@
 // Sidepaths for knowledge between Void and Blade.
 
 /datum/heretic_knowledge_tree_column/void_to_blade
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/void
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/blade
-
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/limited_amount/risen_corpse

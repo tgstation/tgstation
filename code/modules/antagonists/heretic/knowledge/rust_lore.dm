@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/main/rust
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/blade_to_rust
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/rust_to_cosmic
-
 	route = PATH_RUST
 	ui_bgr = "node_rust"
 

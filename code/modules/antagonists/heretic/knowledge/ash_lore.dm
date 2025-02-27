@@ -1,8 +1,5 @@
 
 /datum/heretic_knowledge_tree_column/main/ash
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/cosmic_to_ash
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/ash_to_moon
-
 	route = PATH_ASH
 	ui_bgr = "node_ash"
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash

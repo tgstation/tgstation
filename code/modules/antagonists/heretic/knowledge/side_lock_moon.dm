@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/moon_to_lock
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/moon
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/lock
-
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/spell/mind_gate

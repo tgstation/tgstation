@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/main/void
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/flesh_to_void
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/void_to_blade
-
 	route = PATH_VOID
 	ui_bgr = "node_void"
 

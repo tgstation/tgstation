@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/main/cosmic
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/rust_to_cosmic
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/cosmic_to_ash
-
 	route = PATH_COSMIC
 	ui_bgr = "node_cosmos"
 

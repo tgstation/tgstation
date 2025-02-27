@@ -9,9 +9,6 @@ GLOBAL_LIST(heretic_research_tree)
 	var/route
 	///Used to determine if this is a side path or a main path
 	var/abstract_parent_type = /datum/heretic_knowledge_tree_column
-	///IDs od neighbours (to left and right)
-	var/neighbour_type_left
-	var/neighbour_type_right
 	///Tier1 knowledge (or knowledges)
 	var/tier1
 	///Tier2 knowledge (or knowledges)
@@ -77,8 +74,6 @@ GLOBAL_LIST(heretic_research_tree)
 
 	for(var/id in paths)
 		var/datum/heretic_knowledge_tree_column/this_column = paths[id]
-		var/datum/heretic_knowledge_tree_column/neighbour_0 = paths[this_column.neighbour_type_left]
-		var/datum/heretic_knowledge_tree_column/neighbour_1 = paths[this_column.neighbour_type_right]
 		//horizontal (two way)
 		var/list/tier1 = this_column.tier1
 		var/list/tier2 = this_column.tier2
@@ -95,22 +90,16 @@ GLOBAL_LIST(heretic_research_tree)
 			tier3 = list(this_column.tier3)
 
 		for(var/t1_knowledge in tier1)
-			heretic_research_tree[t1_knowledge][HKT_NEXT] += neighbour_0.tier1
-			heretic_research_tree[t1_knowledge][HKT_NEXT] += neighbour_1.tier1
 			heretic_research_tree[t1_knowledge][HKT_ROUTE] = this_column.route
 			heretic_research_tree[t1_knowledge][HKT_UI_BGR] = this_column.ui_bgr
 			heretic_research_tree[t1_knowledge][HKT_DEPTH] = 4
 
 		for(var/t2_knowledge in tier2)
-			heretic_research_tree[t2_knowledge][HKT_NEXT] += neighbour_0.tier2
-			heretic_research_tree[t2_knowledge][HKT_NEXT] += neighbour_1.tier2
 			heretic_research_tree[t2_knowledge][HKT_ROUTE] = this_column.route
 			heretic_research_tree[t2_knowledge][HKT_UI_BGR] = this_column.ui_bgr
 			heretic_research_tree[t2_knowledge][HKT_DEPTH] = 8
 
 		for(var/t3_knowledge in tier3)
-			heretic_research_tree[t3_knowledge][HKT_NEXT] += neighbour_0.tier3
-			heretic_research_tree[t3_knowledge][HKT_NEXT] += neighbour_1.tier3
 			heretic_research_tree[t3_knowledge][HKT_ROUTE] = this_column.route
 			heretic_research_tree[t3_knowledge][HKT_UI_BGR] = this_column.ui_bgr
 			heretic_research_tree[t3_knowledge][HKT_DEPTH] = 10

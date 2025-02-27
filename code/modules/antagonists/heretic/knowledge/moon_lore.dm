@@ -1,7 +1,4 @@
 /datum/heretic_knowledge_tree_column/main/moon
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/ash_to_moon
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/moon_to_lock
-
 	route = PATH_MOON
 	ui_bgr = "node_moon"
 
