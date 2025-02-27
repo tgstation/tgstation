@@ -80,6 +80,9 @@
 /datum/unit_test/quirk_validity
 
 /datum/unit_test/quirk_validity/Run()
+	// Required for language quirks to function properly
+	generate_selectable_species_and_languages()
+
 	for (var/datum/quirk/quirk_type as anything in subtypesof(/datum/quirk))
 		if (initial(quirk_type.abstract_parent_type) == quirk_type)
 			continue
