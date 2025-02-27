@@ -24,7 +24,7 @@
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
 	probability = 0
 	turf_weather_chance = 0.01
-	turf_thunder_chance = 0.001
+	turf_thunder_chance = THUNDER_CHANCE_AVERAGE
 
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
 
@@ -33,7 +33,7 @@
 	var/list/whitelist_weather_reagents = list(/datum/reagent/water)
 	/// A list of reagents that are forbidden from being selected when there is no
 	/// whitelist and the reagents are randomized
-	var/list/blacklist_weather_reagents
+	var/list/blacklist_weather_reagents = list()
 	/// The selected reagent that will be rained down
 	var/datum/reagent/rain_reagent
 
@@ -107,6 +107,15 @@
 		if(!thing.IsObscured())
 			rain_reagent.expose_obj(thing, RAIN_REAGENT_VOLUME, TOUCH)
 
+			if(istype(thing, /obj/machinery/hydroponics))
+				var/obj/machinery/hydroponics/plant_tray = thing
+				if(plant_tray.reagents.holder_full())
+					continue
+
+				var/amount_to_add = min(plant_tray.reagents.maximum_volume - plant_tray.reagents.total_volume, RAIN_REAGENT_VOLUME)
+				plant_tray.reagents.add_reagent(rain_reagent.type, amount_to_add)
+				continue
+
 			// Time for the sophisticated art of catching sky-booze
 			if(!is_reagent_container(thing))
 				continue
@@ -151,18 +160,3 @@
 		/datum/reagent/toxin/acid/fluacid = 1,
 	)
 
-/datum/weather/rain_storm/thunder
-	weather_flags = (WEATHER_THUNDER | WEATHER_INDOORS)
-	turf_thunder_chance = THUNDER_CHANCE_AVERAGE
-
-/datum/weather/rain_storm/thunder/high
-	turf_thunder_chance = THUNDER_CHANCE_HIGH
-
-/datum/weather/rain_storm/thunder/insane
-	turf_thunder_chance = THUNDER_CHANCE_INSANE
-
-/datum/weather/rain_storm/thunder/rare
-	turf_thunder_chance = THUNDER_CHANCE_RARE
-
-/datum/weather/rain_storm/thunder/very_rare
-	turf_thunder_chance = THUNDER_CHANCE_VERY_RARE
