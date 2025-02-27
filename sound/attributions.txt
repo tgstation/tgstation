@@ -223,4 +223,7 @@ sound/items/handling/materials/snow_drop.ogg and sound/items/handling/materials/
 
 sound/items/hair-clippers.ogg -- https://freesound.org/people/VIPERSTRONG/sounds/655747/ -- by VIPERSTRONG (CC0)
 
+sound/effect/plasticflaps.ogg -- door_plastic_tapes.wav by estupe -- https://freesound.org/s/186357/ -- License: Creative Commons 0
+
+
 sound/effects/siren.ogg -- siren.wav by IFartInUrGeneralDirection -- https://freesound.org/s/46092/ -- License: Attribution 4.0

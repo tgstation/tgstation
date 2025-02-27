@@ -328,7 +328,7 @@
 	projectile_damage_multiplier = 0.50
 	spread = 15 //kinda inaccurate
 	burst_size = 3 //but it empties the entire magazine when it fires
-	fire_delay = 0.3 // and by empties, I mean it does it all at once
+	burst_delay = 0.3 // and by empties, I mean it does it all at once
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
