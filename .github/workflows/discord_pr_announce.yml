@@ -16,7 +16,7 @@ jobs:
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Send Discord notification
-        uses: tgstation/discord-notify@v2
+        uses: tgstation/discord-notify@v3
         if: >
           steps.secrets_set.outputs.SECRETS_ENABLED &&
           (github.event.pull_request.merged == true || github.event.action == 'opened') &&
