@@ -19,6 +19,9 @@
 #define COMSIG_PRE_BATON_FINALIZE_ATTACK "pre_baton_finalize_attack"
 // For after a user has sent a say message
 #define COMSIG_MOB_POST_SAY "mob_post_say"
-
+/// Whenever we need to check if a mob is currently inside of soulcatcher.
+#define COMSIG_SOULCATCHER_CHECK_SOUL "soulcatcher_check_soul"
+/// Whenever we need to get the soul of the mob inside of the soulcatcher.
+#define COMSIG_SOULCATCHER_SCAN_BODY "soulcatcher_scan_body"
 /// For modifying a mob holder based on what it's holding
 #define COMSIG_ADDING_MOB_HOLDER_SPECIALS "adding_mob_holder_specials"
