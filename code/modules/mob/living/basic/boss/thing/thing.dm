@@ -33,7 +33,7 @@
 
 	// ruin logic
 
-	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight. Turn off if admin shitspawn. May be damaged if has a client regardless
+	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight.
 	var/maploaded = TRUE
 	/// where we spawned. not set if not maploaded
 	var/turf/spawn_loc
