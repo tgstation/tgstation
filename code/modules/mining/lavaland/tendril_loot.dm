@@ -324,7 +324,7 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
-	if(!linked || !check_teleport_valid(src, current_location))
+	if(!linked || isnull(get_turf(linked)) || !check_teleport_valid(src, current_location))
 		to_chat(user, span_warning("[src] fizzles uselessly."))
 		return
 	if(teleporting)
@@ -341,7 +341,7 @@
 	if(QDELETED(user))
 		qdel(link_holder)
 		return
-	if(QDELETED(linked))
+	if(QDELETED(linked) || isnull(get_turf(linked)))
 		user.forceMove(get_turf(link_holder))
 		qdel(link_holder)
 		return
