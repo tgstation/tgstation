@@ -81,7 +81,8 @@
 
 /datum/unit_test/quirk_validity/Run()
 	// Required for language quirks to function properly
-	generate_selectable_species_and_languages()
+	// Assigning this manually as config is empty
+	GLOB.uncommon_roundstart_languages = list(/datum/language/uncommon)
 
 	for (var/datum/quirk/quirk_type as anything in subtypesof(/datum/quirk))
 		if (initial(quirk_type.abstract_parent_type) == quirk_type)
@@ -104,3 +105,6 @@
 		latejoin_character.mind_initialize()
 		if (!latejoin_character.add_quirk(quirk_type, latejoin_mock_client))
 			TEST_FAIL("Failed to initialize quirk [quirk_type] on a latejoin character!")
+
+	// Clean up after ourselves
+	GLOB.uncommon_roundstart_languages.Cut()
