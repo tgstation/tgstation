@@ -571,7 +571,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
+	send_alert(user)
 	user.add_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
@@ -632,11 +632,16 @@
 	description = "The by-product of one's parasympathetic nervous system releasing everything it can. Rarely found in living patients, as this particular chemical mix is only released when your body knows it's about to shut down."
 	color = "#F5F5F5"
 
-/datum/reagent/medicine/c2/penthrite/heart_attack/throw_alert(mob/living/affected_mob)
+/datum/reagent/medicine/c2/penthrite/heart_attack/send_alert(mob/living/affected_mob)
 	affected_mob.throw_alert("heart_stop", /atom/movable/screen/alert/heart_desperation)
 
-/datum/reagent/medicine/c2/penthrite/heart_attack/throw_alert(mob/living/affected_mob)
+/datum/reagent/medicine/c2/penthrite/heart_attack/remove_alert(mob/living/affected_mob)
 	affected_mob.clear_alert("heart_stop")
+
+/datum/reagent/medicine/c2/penthrite/heart_attack/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.Knockdown(2 SECONDS, 2 SECONDS)
+	affected_mob.adjust_silence_up_to(2 SECONDS, 2 SECONDS)
 
 /atom/movable/screen/alert/heart_desperation
 	name = "Last Chance!"

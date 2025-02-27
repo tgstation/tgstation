@@ -42,22 +42,24 @@
 			owner.adjustStaminaLoss(20, FALSE)
 
 	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)
-		owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+		owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 35, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		if(prob(10))
 			owner.emote("cough")
 			owner.adjustStaminaLoss(10)
+			owner.losebreath += 4
 
 	if(time_until_stoppage <= ATTACK_STAGE_THREE && time_until_stoppage > ATTACK_STAGE_FOUR) //At this point, we start with chat messages and make it clear that something is very wrong.
-		if(prob(10))
+		if(prob(15))
 			to_chat(owner, span_danger("You feel a sharp pain in your chest!"))
 			if(prob(25))
 				human_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
 			owner.emote("cough")
-		if(prob(5))
+		if(prob(10))
 			to_chat(owner, span_danger("You feel very weak and dizzy..."))
 			owner.adjust_confusion_up_to(6 SECONDS, 10 SECONDS)
 			owner.adjustStaminaLoss(40)
 			owner.emote("cough")
+			owner.losebreath += 8
 
 	if(time_until_stoppage <= ATTACK_STAGE_FOUR)
 		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -66,7 +68,7 @@
 
 		if(prob(10))
 			to_chat(owner, span_userdanger("It feels like you're shutting down..."))
-			owner.adjust_dizzy_up_to(2 SECONDS, 20 SECONDS)
+			owner.adjust_dizzy_up_to(4 SECONDS, 20 SECONDS)
 			owner.adjust_eye_blur_up_to(1.5 SECONDS, 6 SECONDS)
 
 		if(prob(5))
@@ -81,6 +83,7 @@
 			owner.losebreath += 8
 			owner.adjustStaminaLoss(20)
 			owner.Paralyze(30)
+		owner.losebreath += 3
 
 	if(time_until_stoppage <= 0)
 		if(owner.stat == CONSCIOUS)
@@ -90,6 +93,7 @@
 		owner.adjust_eye_blur(20 SECONDS)
 		human_owner.set_heartattack(TRUE)
 		owner.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite/heart_attack, 2) // To give the victim a final chance to shock their heart before losing consciousness
+		owner.flash_act(intensity = 1, override_blindness_check = TRUE, length = 1.5 SECONDS)
 		qdel(src)
 		return FALSE
 
