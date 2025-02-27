@@ -121,7 +121,7 @@
 	var/list/datum/action/actions
 	///list of paths of action datums to give to the item on New().
 	var/list/actions_types
-	///Slot flags in which this item grants actions.
+	///Slot flags in which this item grants actions. If null, defaults to the item's slot flags (so actions are granted when worn)
 	var/action_slots = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
@@ -783,7 +783,7 @@
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/action)
 	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
 		return FALSE
-	if(action_slots)
+	if(!isnull(action_slots))
 		return (slot & action_slots)
 	else if (slot_flags)
 		return (slot & slot_flags)
