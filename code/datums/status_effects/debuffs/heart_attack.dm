@@ -107,7 +107,6 @@
 	if(istype(organ, /obj/item/organ/heart))
 		qdel(src)
 
-#undef HEART_ATTACK_VISIBILITY
 #undef ATTACK_STAGE_ONE
 #undef ATTACK_STAGE_TWO
 #undef ATTACK_STAGE_THREE

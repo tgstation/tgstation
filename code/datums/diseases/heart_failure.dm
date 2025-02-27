@@ -1,3 +1,4 @@
+/*
 /datum/disease/heart_failure
 	form = "Condition"
 	name = "Myocardial Infarction"
@@ -68,3 +69,4 @@
 			affected_mob.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite, 3) // To give the victim a final chance to shock their heart before losing consciousness
 			cure()
 			return FALSE
+*/
