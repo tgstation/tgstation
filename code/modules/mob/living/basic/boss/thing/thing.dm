@@ -33,8 +33,10 @@
 
 	// ruin logic
 
-	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight. Turn off if admin shitspawn
+	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight. Turn off if admin shitspawn. May be damaged if has a client regardless
 	var/maploaded = TRUE
+	/// where we spawned. not set if not maploaded
+	var/turf/spawn_loc
 
 /mob/living/basic/boss/thing/Initialize(mapload)
 	. = ..()
@@ -48,8 +50,11 @@
 	)
 	grant_actions_by_list(innate_actions)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.4 SECONDS)
+	AddElement(/datum/element/relay_attackers) // used to immediately aggro if shot from outside aggro range
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(immediate_aggro))
 	maploaded = mapload
 	if(maploaded)
+		spawn_loc = loc
 		SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
 		return INITIALIZE_HINT_LATELOAD
 
@@ -77,8 +82,16 @@
 /mob/living/basic/boss/thing/proc/phase_health_depleted()
 	if(phase_invulnerability_timer)
 		return //wtf?
-	if(!maploaded)
+
+	if(!maploaded || client)
 		phase_successfully_depleted()
+		return
+	if(maploaded && !client && istype(get_area(src), /area/station)) //retreat to station if AI controlled
+		for(var/turf/open/target in RANGE_TURFS(1, loc))
+			new /obj/effect/temp_visual/mook_dust(target)
+		playsound(loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+		visible_message(span_danger("[src] retreats through the ground back to where it came from!"))
+		forceMove(spawn_loc)
 		return
 	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
 	balloon_alert_to_viewers("invulnerable! overload the machines!")
@@ -121,14 +134,25 @@
 	emote("roar")
 	SEND_SIGNAL(src, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED)
 
+/// Immediately set out blackboard target key (if empty) to whoever attacks us; this is primarily because it has a lowered aggro range and a high sight range
+/mob/living/basic/boss/thing/proc/immediate_aggro(datum/source, mob/attacker, flags)
+	SIGNAL_HANDLER
+	if(stat || !istype(attacker) || ai_controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		return
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
+
 /mob/living/basic/boss/thing/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname == NAMEOF(src, phase))
 		ai_controller?.set_blackboard_key(BB_THETHING_NOAOE, phase > 1 ? FALSE : TRUE)
 		update_appearance()
 
+/mob/living/basic/boss/thing/Destroy()
+	spawn_loc = null
+	return ..()
+
 /mob/living/basic/boss/thing/with_ruin_loot
-	loot = list(/obj/item/organ/brain/cybernetic/ai) // the main loot of the ruin, but if admin spawned the keycard is useless
+	loot = list(/obj/item/organ/brain/cybernetic/ai) // the only, relevant main loot of the ruin, but if admin spawned the keycard is useless
 	crusher_loot = list(/obj/item/organ/brain/cybernetic/ai, /obj/item/crusher_trophy/flesh_glob)
 
 // special stuff for our ruin to make a cooler bossfight
