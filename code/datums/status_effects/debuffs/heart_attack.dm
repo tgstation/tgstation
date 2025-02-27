@@ -1,13 +1,11 @@
 ///Stage one of the heart attack, begins effects when the timer ticks down to it.
 #define ATTACK_STAGE_ONE 110
 ///Stage two of the heart attack.
-#define ATTACK_STAGE_TWO 90
+#define ATTACK_STAGE_TWO 80
 ///Stage three of the heart attack.
-#define ATTACK_STAGE_THREE 60
+#define ATTACK_STAGE_THREE 50
 ///Stage four of the heart attack.
 #define ATTACK_STAGE_FOUR 30
-///When will a heart attack be visible to others on examine?
-#define HEART_ATTACK_VISIBILITY 60
 ///If we reduce heart damage enough, it will recover on its own.
 #define ATTACK_CURE_THRESHOLD 200
 
@@ -68,8 +66,8 @@
 
 		if(prob(10))
 			to_chat(owner, span_userdanger("It feels like you're shutting down..."))
-			owner.adjust_dizzy_up_to(4 SECONDS, 20 SECONDS)
-			owner.adjust_eye_blur_up_to(1.5 SECONDS, 6 SECONDS)
+			owner.adjust_dizzy_up_to(4 SECONDS, 10 SECONDS)
+			owner.adjust_eye_blur_up_to(4 SECONDS, 20 SECONDS)
 
 		if(prob(5))
 			owner.emote("cough")
@@ -100,7 +98,7 @@
 	time_until_stoppage--
 
 /datum/status_effect/heart_attack/get_examine_text()
-	if(time_until_stoppage <= HEART_ATTACK_VISIBILITY)
+	if(time_until_stoppage <= ATTACK_STAGE_THREE)
 		return span_warning("[owner.p_they()] looks to be doubling over, clutching [owner.p_their()] chest in pain!")
 
 ///End the heart attack.
