@@ -15,6 +15,8 @@
 	RegisterSignal(parent, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/component/reagent_allergies/proc/on_life(mob/living/carbon/human/owner, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
 	if(HAS_TRAIT(owner, TRAIT_STASIS))
 		return
 	if(owner.stat == DEAD)
