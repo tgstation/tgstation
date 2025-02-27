@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "The Cytology Vatbeast now uses the basic mob framework, please report any unusual behaviour."

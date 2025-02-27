@@ -110,6 +110,7 @@
 /obj/item/organ/ears/cybernetic
 	preference = "feature_synth_ears"
 	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/cybernetic
+	restyle_flags = NONE
 
 /datum/bodypart_overlay/mutant/ears/cybernetic/get_global_feature_list()
 	return SSaccessories.ears_list_synthetic

@@ -8,6 +8,7 @@
 	medical_record_text = "Patient records may have been tampered with in the past."
 	quirk_flags = QUIRK_HIDE_FROM_SCAN
 	mail_goodies = list(/obj/item/storage/briefcase/secure)
+	mob_trait = TRAIT_CRIMINAL_CONNECTIONS
 
 /datum/quirk/item_quirk/underworld_connections/add_unique(client/client_source)
 	if (ishuman(quirk_holder))

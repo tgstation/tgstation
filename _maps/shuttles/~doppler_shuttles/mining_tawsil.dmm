@@ -63,7 +63,9 @@
 /area/shuttle/personally_bought/private_liner)
 "cP" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/private_liner)
 "dc" = (
@@ -475,7 +477,9 @@
 /area/shuttle/personally_bought/private_liner)
 "KO" = (
 /obj/structure/railing/eva_handhold/directional/south,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/private_liner)
 "KY" = (
@@ -557,7 +561,9 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/personally_bought/private_liner)
 "OX" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/private_liner)
 "Po" = (

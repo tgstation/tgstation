@@ -24,7 +24,7 @@
 	/// Resistance against loud noises
 	var/bang_protect = 0
 	/// Multiplier for both long term and short term ear damage
-	var/damage_multiplier = 1
+	var/damage_multiplier = 0.125 // DOPPLER EDIT, makes deafness last less long - old code: var/damage_multiplier = 1
 
 /obj/item/organ/ears/on_life(seconds_per_tick, times_fired)
 	// only inform when things got worse, needs to happen before we heal
@@ -151,9 +151,10 @@
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "kitty"
 	visual = TRUE
-	damage_multiplier = 2
+	damage_multiplier = parent_type::damage_multiplier // DOPPLER EDIT, old code: damage_multiplier = 2
 
 	preference = "feature_human_ears"
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	dna_block = DNA_EARS_BLOCK
 
@@ -211,7 +212,7 @@
 	name = "basic cybernetic ears"
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
-	damage_multiplier = 0.9
+	damage_multiplier = parent_type::damage_multiplier // DOPPLER EDIT, old code: damage_multiplier = 0.9
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
 
@@ -219,14 +220,14 @@
 	name = "cybernetic ears"
 	icon_state = "ears-c-u"
 	desc =  "An advanced cybernetic ear, surpassing the performance of organic ears."
-	damage_multiplier = 0.5
+	damage_multiplier = 0.085 // DOPPLER EDIT, old code: damage_multiplier = 0.5
 
 /obj/item/organ/ears/cybernetic/whisper
 	name = "whisper-sensitive cybernetic ears"
 	icon_state = "ears-c-u"
 	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
 	// Same sensitivity as felinid ears
-	damage_multiplier = 2
+	damage_multiplier = 0.35 // DOPPLER EDIT, old code: damage_multiplier = 2
 
 // The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
 // This seems like the least invasive solution
@@ -244,7 +245,7 @@
 	icon_state = "ears-c-u"
 	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
 	// Same sensitivity as felinid ears
-	damage_multiplier = 2
+	damage_multiplier = 0.35 // DOPPLER EDIT, old code: damage_multiplier = 2
 
 /obj/item/organ/ears/cybernetic/xray/on_mob_insert(mob/living/carbon/ear_owner)
 	. = ..()

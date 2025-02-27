@@ -2168,19 +2168,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"aNN" = (
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/service/kitchen)
 "aNQ" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
@@ -14360,10 +14347,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"fgn" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-/turf/open/floor/wood,
-/area/station/maintenance/port/aft)
 "fgu" = (
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/vending/colavend,
@@ -18721,6 +18704,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"gLL" = (
+/mob/living/basic/goose/vomit,
+/turf/open/floor/wood,
+/area/station/maintenance/port/aft)
 "gLU" = (
 /obj/structure/table,
 /obj/effect/turf_decal/siding{
@@ -21447,6 +21434,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"hKX" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/airlock/freezer{
+	name = "Freezer"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen/coldroom)
 "hLs" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -31086,6 +31085,22 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"kXB" = (
+/obj/structure/table,
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/obj/item/toy/figure/geneticist,
+/obj/item/radio/intercom/directional/west,
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_x = -9
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/flesh_shears{
+	pixel_x = 15
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/genetics)
 "kXD" = (
 /obj/structure/bed/medical/emergency,
 /obj/item/radio/intercom/directional/south,
@@ -31309,18 +31324,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
-"laT" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
-/obj/machinery/door/airlock{
-	name = "Kitchen Cold Room"
-	},
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
-/turf/open/floor/iron/cafeteria,
-/area/station/service/kitchen/coldroom)
 "lbh" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -62046,6 +62049,20 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"vOQ" = (
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "vOZ" = (
 /obj/machinery/duct,
 /turf/closed/wall,
@@ -64296,19 +64313,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"wBq" = (
-/obj/structure/table,
-/obj/effect/turf_decal/siding/purple{
-	dir = 9
-	},
-/obj/item/toy/figure/geneticist,
-/obj/item/radio/intercom/directional/west,
-/obj/item/storage/pill_bottle/mutadone{
-	pixel_x = -9
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/science/genetics)
 "wBs" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
@@ -82564,7 +82568,7 @@ bLm
 cXW
 uxS
 uxS
-fgn
+gLL
 ehv
 ehn
 bIO
@@ -97234,7 +97238,7 @@ oIg
 cId
 rQl
 oIg
-wBq
+kXB
 bEC
 lsV
 aXW
@@ -105933,7 +105937,7 @@ jzT
 ivy
 ebK
 sLp
-laT
+hKX
 mSS
 ebY
 hiM
@@ -106189,7 +106193,7 @@ sEx
 gIm
 sbM
 qKD
-aNN
+vOQ
 huG
 rzk
 leP

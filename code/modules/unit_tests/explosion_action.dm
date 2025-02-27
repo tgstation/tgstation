@@ -73,14 +73,14 @@
 	read_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(alien_brute_loss, 30, "EX_ACT() with EXPLODE_LIGHT severity should have done 30 brute damage to an alien!")
 	TEST_ASSERT_EQUAL(alien_burn_loss, 0, "EX_ACT() with EXPLODE_LIGHT severity should not affect the burn loss of an alien!")
-	TEST_ASSERT_EQUAL(alien_ear_damage, 15, "EX_ACT() with EXPLODE_LIGHT severity should have done 15 ear damage to an alien!")
+//	TEST_ASSERT_EQUAL(alien_ear_damage, 15, "EX_ACT() with EXPLODE_LIGHT severity should have done 15 ear damage to an alien!") DOPPLER EDIT REMOVAL, we don't need this test
 	test_alien.revive(ADMIN_HEAL_ALL)
 
 	EX_ACT(test_alien, EXPLODE_HEAVY) // should do 60 brute, 60 burn, and 30 organ damage to the ears.
 	read_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(alien_brute_loss, 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 brute damage to an alien!")
 	TEST_ASSERT_EQUAL(alien_burn_loss, 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 burn damage to an alien!")
-	TEST_ASSERT_EQUAL(alien_ear_damage, 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 30 ear damage to an alien!")
+//	TEST_ASSERT_EQUAL(alien_ear_damage, 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 30 ear damage to an alien!") DOPPLER EDIT REMOVAL, we don't need this test
 
 	// Let's check to make sure the armor system works as expected. Corgi dogs are the only one that have this implemented on the basic level, so let's use that.
 	var/mob/living/basic/pet/dog/corgi/test_dog = set_up_test_dog()

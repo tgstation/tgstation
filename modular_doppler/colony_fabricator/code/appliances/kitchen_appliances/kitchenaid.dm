@@ -107,3 +107,17 @@
 /obj/machinery/chem_dispenser/kitchenaid_stand/display_beaker()
 	var/mutable_appearance/overlayed_beaker = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	return overlayed_beaker
+
+// Super version with an infinite cell and good reagent quality
+
+/obj/machinery/chem_dispenser/kitchenaid_stand/infinity
+	name = "Ultimate KitchenMage 9000 Super NEO NEXT"
+	desc = "Promoted by the top celebrity chefs across the coalition, used by not one of them. \
+		A towering machine capable of synthesizing common kitchen ingredients at extremely poor quality \
+		for practically free. 'KitchenMage', every kitchen could use a wizard. This one has a red stripe, \
+		and nothing else seems too much different with it."
+	icon_state = "dispenser_super"
+	base_icon_state = "dispenser_super"
+	anchored = TRUE
+	base_reagent_purity = 1
+	cell_we_spawn_with = /obj/item/stock_parts/power_store/cell/infinite

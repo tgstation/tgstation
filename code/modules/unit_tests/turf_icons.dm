@@ -9,7 +9,7 @@
 		var/icon_file = initial(turf_path.icon)
 		if(isnull(icon_state) || isnull(icon_file))
 			continue
-		if(!(icon_state in icon_states(icon_file)))
+		if(!icon_exists(icon_file, icon_state))
 			TEST_FAIL("[turf_path] using invalid icon_state - \"[icon_state]\" in icon file, '[icon_file]")
 
 	for(var/turf/closed/mineral/turf_path as anything in typesof(/turf/closed/mineral)) //minerals use a special (read: snowflake) MAP_SWITCH definition that changes their icon based on if we're just compiling or if we're actually PLAYING the game.
@@ -18,7 +18,7 @@
 		var/icon_file = initial(turf_path.icon)
 		if(isnull(icon_state) || isnull(icon_file))
 			continue
-		if(!(icon_state in icon_states(icon_file)))
+		if(!icon_exists(icon_file, icon_state))
 			if(modular_mineral_turf_file && (icon_state in icon_states(modular_mineral_turf_file, 1)))
 				continue
 			if(!(icon_state in icon_states('icons/turf/mining.dmi', 1)))
@@ -45,13 +45,13 @@
 
 		var/list/burnt_states = instanced_turf.burnt_states()
 		for(var/state in burnt_states)
-			if(!(state in icon_states(damaged_dmi)))
+			if(!icon_exists(damaged_dmi, state))
 				TEST_FAIL("[open_turf_path] has an invalid icon in burnt_states - \"[state]\", in '[damaged_dmi]'")
 
 
 		var/list/broken_states = instanced_turf.broken_states()
 		for(var/state in broken_states)
-			if(!(state in icon_states(damaged_dmi)))
+			if(!icon_exists(damaged_dmi, state))
 				TEST_FAIL("[open_turf_path] has an invalid icon in broken_states - \"[state]\", in '[damaged_dmi]'")
 
 	run_loc_floor_bottom_left = run_loc_floor_bottom_left.ChangeTurf(initial_turf_type) //cleanup.

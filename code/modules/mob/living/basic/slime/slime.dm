@@ -134,7 +134,7 @@
 	AddElement(/datum/element/soft_landing)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-	add_traits(list(TRAIT_CANT_RIDE, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+	add_traits(list(TRAIT_CANT_RIDE, TRAIT_CAN_MOUNT_HUMANS, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_slime_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand) )
@@ -226,10 +226,6 @@
 /mob/living/basic/slime/start_pulling(atom/movable/moveable_atom, state, force = move_force, supress_message = FALSE)
 	return
 
-/mob/living/basic/slime/get_mob_buckling_height(mob/seat)
-	if(..() != 0)
-		return 3
-
 /mob/living/basic/slime/examine(mob/user)
 	. = ..()
 
@@ -312,9 +308,9 @@
 		if(prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
 			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
 			borg_target.apply_damage(our_slime.powerlevel * rand(6, 10), BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
-			borg_target.visible_message(span_danger("The [our_slime.name] shocks [borg_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+			borg_target.visible_message(span_danger("\The [our_slime] shocks [borg_target]!"), span_userdanger("\The [our_slime] shocks you!"))
 		else
-			borg_target.visible_message(span_danger("The [our_slime.name] fails to hurt [borg_target]!"), span_userdanger("The [our_slime.name] failed to hurt you!"))
+			borg_target.visible_message(span_danger("\The [our_slime] fails to hurt [borg_target]!"), span_userdanger("\The [our_slime] failed to hurt you!"))
 
 		return COMPONENT_HOSTILE_NO_ATTACK
 
@@ -324,7 +320,7 @@
 		if(!prob(stunprob))
 			return NONE // normal attack
 
-		carbon_target.visible_message(span_danger("The [our_slime.name] shocks [carbon_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+		carbon_target.visible_message(span_danger("\The [our_slime] shocks [carbon_target]!"), span_userdanger("\The [our_slime] shocks you!"))
 
 		do_sparks(5, TRUE, carbon_target)
 		var/power = our_slime.powerlevel + rand(0,3)

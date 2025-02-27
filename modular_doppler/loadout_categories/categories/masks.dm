@@ -91,3 +91,11 @@
 /datum/loadout_item/mask/respirator
 	name = "Half-Mask Respirator"
 	item_path = /obj/item/clothing/mask/gas/respirator
+
+/datum/loadout_item/mask/mantis
+	name = "Composite Gas Mask"
+	item_path = /obj/item/clothing/mask/gas/mantis
+
+/datum/loadout_item/mask/half_face
+	name = "Half-Face Rebreather"
+	item_path = /obj/item/clothing/mask/gas/nightlight

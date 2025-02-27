@@ -3,7 +3,7 @@
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = WEIGHT_CLASS_NORMAL * 4
 	screen_max_columns = 2
-	opening_sound = 'sound/items/handling/cloth_pickup.ogg'
+	opening_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 
 /obj/structure/maintenance_loot_structure/wall_jacket
 	name = "hanging jacket"

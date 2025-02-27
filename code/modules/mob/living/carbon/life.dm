@@ -771,7 +771,7 @@
 /*
  * The mob is having a heart attack
  *
- * NOTE: this is true if the mob has no heart and needs one, which can be suprising,
+ * NOTE: this is true if the mob has no heart and needs one, which can be surprising,
  * you are meant to use it in combination with can_heartattack for heart attack
  * related situations (i.e not just cardiac arrest)
  */

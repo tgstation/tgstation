@@ -133,6 +133,8 @@
 /obj/item/clothing/glasses/hud/eyepatch/sec
 	name = "security HUD eyepatch"
 	desc = "Lost your eye beating an innocent clown? Incompatible with cybernetics? Thankfully, modern technology has a replacement. Protects against flashes 50% of the time, none of the time."
+	icon_state = "security_eyepatch"
+	base_icon_state = "security_eyepatch"
 	clothing_traits = list(TRAIT_SECURITY_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 

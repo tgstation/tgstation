@@ -10,6 +10,9 @@
 	// Provides a href link with the `species_info` arg, to be consumed by a Topic override (intended for species/model descriptions)
 	return "<a href='?src=[REF(src)];species_info=1;examine_time=[world.time]'>[input_text]</a>"
 
+/mob/living/proc/get_exploitables_href(input_text)
+	return "<a href='?src=[REF(src)];exploitables=1;examine_time=[world.time]'>[input_text]</a>"
+
 /mob/living/proc/compile_examined_text(short_desc, extended_desc, headshot, ooc_notes)
 	// Compiles the full examined description because I HATE code duplication
 	var/full_examine = span_slightly_larger(separator_hr("<em>[src]</em>"))
@@ -96,6 +99,14 @@
 		to_chat(viewer, boxed_message(span_info(full_examine)))
 		return
 
+	else if (href_list["exploitables"])
+		// show the vulnerable information ENCODED INTO THEIR VERY DNA!!!!
+		var/mob/viewer = usr
+
+		var/the_goss = src.dna.features["exploitables"] ? src.dna.features["exploitables"] : "Your contacts are unaware of anything involving this person."
+
+		to_chat(viewer, boxed_message(span_orange(the_goss)))
+		return
 /*
 	SILICONS (AKA HORRIBLE RUSTBUCKETS)
 */

@@ -508,7 +508,7 @@
 		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 
 	if(!instant)
-		to_chat(user, span_notice("You start drawing a [temp] on the [target.name]..."))
+		to_chat(user, span_notice("You start drawing a [temp] on \the [target]..."))
 
 	if(pre_noise)
 		audible_message(span_notice("You hear spraying."))
@@ -793,6 +793,7 @@
 	var/static/list/direct_color_types = typecacheof(list(
 		/obj/item/paper, // Uses color for TGUI backgrounds, doesn't look very good either
 		/obj/item/fish, // Used for aquarium sprites
+		/obj/structure/window, // Does not play nice with window tint
 	))
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)

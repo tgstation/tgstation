@@ -140,7 +140,7 @@
 
 /obj/item/organ/brain/primate //Ook Ook
 	name = "Primate Brain"
-	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
+	desc = "This wad of meat is small, but has enlarged occipital lobes for spotting bananas."
 	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
 	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.

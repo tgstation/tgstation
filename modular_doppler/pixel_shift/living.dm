@@ -1,4 +1,4 @@
-/mob/living/set_pull_offsets(mob/living/pull_target, grab_state)
+/mob/living/set_pull_offsets(mob/living/pull_target, grab_state, animate = FALSE)
 	. = ..()
 	SEND_SIGNAL(pull_target, COMSIG_LIVING_SET_PULL_OFFSET)
 

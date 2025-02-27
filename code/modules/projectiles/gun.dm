@@ -317,6 +317,10 @@
 		return
 	if(firing_burst)
 		return
+
+	if(SEND_SIGNAL(user, COMSIG_MOB_TRYING_TO_FIRE_GUN, src, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
+		return
+
 	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person

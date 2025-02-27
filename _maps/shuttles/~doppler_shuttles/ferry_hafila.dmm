@@ -117,7 +117,9 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/people_mover)
 "oI" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/people_mover)
 "pf" = (
@@ -388,7 +390,9 @@
 /area/shuttle/personally_bought/people_mover)
 "LJ" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/people_mover)
 "MF" = (

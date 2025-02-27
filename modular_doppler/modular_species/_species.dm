@@ -67,6 +67,16 @@
 	if(tongue) // text2path nulls if it can't find a matching subtype, so don't worry adding an organ for every single trait value
 		mutanttongue = tongue.type
 
+	// brain
+	var/obj/item/organ/brain = text2path("/obj/item/organ/brain/[animal_trait]")
+	if(brain)
+		mutantbrain = brain.type
+
+	// eyes
+	var/obj/item/organ/eyes = text2path("/obj/item/organ/eyes/[animal_trait]")
+	if(eyes)
+		mutanteyes = eyes.type
+
 	// lungs
 	var/obj/item/organ/lungs = text2path("/obj/item/organ/lungs/[animal_trait]")
 	if(lungs)
@@ -75,6 +85,11 @@
 		switch(animal_trait)
 			if(FROG)
 				mutantlungs = /obj/item/organ/lungs/fish/amphibious
+
+	// heart
+	var/obj/item/organ/heart = text2path("/obj/item/organ/heart/[animal_trait]")
+	if(heart)
+		mutantheart = heart.type
 
 	// liver
 	var/obj/item/organ/liver = text2path("/obj/item/organ/liver/[animal_trait]")
@@ -116,6 +131,9 @@
 			ADD_TRAIT(target, TRAIT_CATLIKE_GRACE, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_HATED_BY_DOGS, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_WATER_HATER, SPECIES_TRAIT)
+		if(CARP)
+			target.faction += FACTION_CARP
+			ADD_TRAIT(target, TRAIT_FREE_HYPERSPACE_MOVEMENT, SPECIES_TRAIT)
 		if(DEER)
 			target.AddElement(/datum/element/cliff_walking)
 		if(FISH)
@@ -123,6 +141,8 @@
 			target.add_quirk(/datum/quirk/item_quirk/breather/water_breather) // this trait necessitates you get this 'item_quirk'
 		if(FROG)
 			ADD_TRAIT(target, TRAIT_WATER_ADAPTATION, SPECIES_TRAIT)
+		if(ROACH)
+			inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 
 /// spec_revival logic
 /datum/species/proc/spec_revival(mob/living/carbon/human/target)

@@ -18,7 +18,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Food } from './PreferencesMenu/data';
+import { Food } from './PreferencesMenu/types';
 
 const TYPE_ICONS = {
   'Can Make': 'utensils',

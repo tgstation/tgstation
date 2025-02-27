@@ -65,6 +65,8 @@
 	maximum_value_length = 4096
 
 /datum/preference/text/exploitable_records/apply_to_human(mob/living/carbon/human/target, value)
+	// lazy lazy LAZY LAZY
+	target.dna.features["exploitables"] = value
 	return
 
 /datum/preference/text/ooc_notes

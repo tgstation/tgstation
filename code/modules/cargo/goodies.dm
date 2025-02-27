@@ -78,11 +78,14 @@
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
+	contains = list(
+		/obj/item/gun/ballistic/shotgun/automatic/combat,
+		/obj/item/storage/belt/bandolier
+	)
 
 /datum/supply_pack/goody/disabler_single
 	name = "Disabler Single-Pack"
-	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in a energy holster, just in case you happen to have an extra disabler."
+	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in an energy holster, just in case you happen to have an extra disabler."
 	cost = PAYCHECK_COMMAND * 3
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/storage/belt/holster/energy/disabler)
@@ -214,7 +217,10 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(
+		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/hypospray/medipen/ekit
+	)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"
@@ -242,7 +248,7 @@
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing Toolbox"
-	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separetely."
+	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separately."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
 
@@ -354,3 +360,9 @@
 	desc = "A single bottle of Interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease."
 	cost = PAYCHECK_CREW * 6.5
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)
+
+/datum/supply_pack/goody/pet_mouse
+	name = "Pet Mouse"
+	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
+	cost = PAYCHECK_CREW * 1.5
+	contains = list(/obj/item/pet_carrier/small/mouse)

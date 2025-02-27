@@ -68,7 +68,9 @@
 /area/shuttle/personally_bought/private_liner)
 "cP" = (
 /obj/structure/railing/eva_handhold/directional/south,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/private_liner)
 "dc" = (
@@ -327,7 +329,9 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "yv" = (
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/private_liner)
 "zu" = (
@@ -533,7 +537,9 @@
 /area/shuttle/personally_bought/private_liner)
 "NC" = (
 /obj/structure/railing/eva_handhold/directional/north,
-/obj/item/tether_anchor,
+/obj/item/tether_anchor{
+	anchored = 1
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/private_liner)
 "Oi" = (

@@ -11,7 +11,7 @@
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
 	bonus_biotype = MOB_AQUATIC
-	limb_overlay = /datum/bodypart_overlay/texture/carpskin
+	//limb_overlay = /datum/bodypart_overlay/texture/carpskin -- DOPPLER EDIT CHANGE: No thanks on the really pretty gradient, Smartkar.
 	color_overlay_priority = LIMB_COLOR_CARP_INFUSION
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
@@ -85,14 +85,16 @@
 	head.unarmed_effectiveness = initial(head.unarmed_effectiveness)
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
 
-/obj/item/organ/tongue/carp/on_life(seconds_per_tick, times_fired)
+// DOPPLER REMOVAL START: carp infusion changes (don't cough up random carp teeth)
+/*/obj/item/organ/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(owner.stat != CONSCIOUS || !prob(0.1))
 		return
 	owner.emote("cough")
 	var/turf/tooth_fairy = get_turf(owner)
 	if(tooth_fairy)
-		new /obj/item/knife/carp(tooth_fairy)
+		new /obj/item/knife/carp(tooth_fairy)*/
+// DOPPLER REMOVAL END
 
 /obj/item/organ/tongue/carp/get_possible_languages()
 	. = ..()
@@ -123,7 +125,7 @@
 /obj/item/organ/brain/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_They seem%PRONOUN_s unable to stay still.")
+	//DOPPLER REMOVAL: noticable carp ADHD (original: AddElement(/datum/element/noticable_organ, "%PRONOUN_They seem%PRONOUN_s unable to stay still."))
 
 /obj/item/organ/brain/carp/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
@@ -136,8 +138,10 @@
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)
 
-/obj/item/organ/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
-	return owner.get_bodypart(BODY_ZONE_HEAD)
+// DOPPLER REMOVAL: carp infusion rework
+/*/obj/item/organ/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
+	return owner.get_bodypart(BODY_ZONE_HEAD)*/
+// DOPPLER REMOVAL END
 
 /obj/item/organ/brain/carp/proc/unsatisfied_nomad()
 	owner.add_mood_event("nomad", /datum/mood_event/unsatisfied_nomad)

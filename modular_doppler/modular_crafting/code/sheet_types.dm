@@ -85,6 +85,7 @@ GLOBAL_LIST_INIT(doppler_wood_recipes, list(
 // Cardboard
 
 GLOBAL_LIST_INIT(doppler_cardboard_recipes, list(
+	new/datum/stack_recipe("coffee holder", /obj/item/storage/coffee, 2, category = CAT_CONTAINERS),
 ))
 
 /obj/item/stack/sheet/cardboard/get_main_recipes()

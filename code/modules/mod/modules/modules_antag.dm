@@ -526,10 +526,10 @@
 	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
-	mod.item_flags |= EXAMINE_SKIP
+	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
-	mod.item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_part_activation()
 	mod.wearer.add_traits(traits_to_add, REF(src))

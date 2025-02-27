@@ -267,3 +267,33 @@
 /datum/loadout_item/pocket_items/pocket_medpens_evil
 	name = "Colonial Medipen Pouch"
 	item_path = /obj/item/storage/pouch/cin_medipens
+
+// Job equipment straps
+
+/datum/loadout_item/pocket_items/generic_suit_strap
+	name = "Generic Equipment Strap"
+	item_path = /obj/item/job_equipment_strap
+
+/datum/loadout_item/pocket_items/service_suit_strap
+	name = "Service Equipment Strap"
+	item_path = /obj/item/job_equipment_strap/service
+
+/datum/loadout_item/pocket_items/medical_suit_strap
+	name = "Medical Equipment Strap"
+	item_path = /obj/item/job_equipment_strap/medical
+
+/datum/loadout_item/pocket_items/engineering_suit_strap
+	name = "Engineering Equipment Strap"
+	item_path = /obj/item/job_equipment_strap/engineering
+
+/datum/loadout_item/pocket_items/science_suit_strap
+	name = "Science Equipment Strap"
+	item_path = /obj/item/job_equipment_strap/science
+
+/datum/loadout_item/pocket_items/supply_suit_strap
+	name = "Supply Equipment Strap"
+	item_path = /obj/item/job_equipment_strap/supply
+
+/datum/loadout_item/pocket_items/security_suit_strap
+	name = "Security Equipment Strap"
+	item_path = /obj/item/job_equipment_strap/security
