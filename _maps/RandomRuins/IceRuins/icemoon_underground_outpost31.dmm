@@ -217,7 +217,7 @@
 /obj/item/stack/sheet/rglass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/obj/structure/broken_flooring/corner/directional/west,
+/obj/structure/broken_flooring/corner/always_floorplane/directional/west,
 /turf/open/indestructible,
 /area/ruin/outpost31/lootroom)
 "dW" = (
@@ -319,7 +319,7 @@
 /area/ruin/outpost31/crewquarters)
 "fd" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/broken_flooring/corner/directional/west,
+/obj/structure/broken_flooring/corner/always_floorplane/directional/west,
 /turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "fC" = (
