@@ -621,6 +621,20 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/medicine/c2/penthrite/heart_attack
+	name = "Desperation"
+	description = "The by-product of one's parasympathetic nervous system releasing everything it can. Rarely found in living patients, as this particular chemical mix is only released when your body knows it's about to shut down..."
+	color = "#F5F5F5"
+
+/atom/movable/screen/alert/heart_desperation
+	name = "Heart Stoppage"
+	desc = "You can't feel your pulse!"
+	icon_state = "heart_stop"
+
+/datum/reagent/medicine/c2/penthrite/heart_attack/on_mob_metabolize(mob/living/user)
+	. = ..()
+	user.throw_alert("heart_stop", /atom/movable/screen/alert/heart_desperation)
+	user.add_traits(subject_traits, type)
 
 /******NICHE******/
 //todo

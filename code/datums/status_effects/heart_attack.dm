@@ -15,6 +15,7 @@
 	id = "heart_attack"
 	status_type = STATUS_EFFECT_UNIQUE
 	remove_on_fullheal = TRUE
+	alert_type = null
 	///A timer that ticks down until the heart fully stops
 	var/time_until_stoppage = 150 //a little over 2 minutes until the ticker hits zero.
 	///Does the victim hear their own heartbeat?
@@ -83,7 +84,7 @@
 			span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		owner.adjustStaminaLoss(60, FALSE)
 		human_owner.set_heartattack(TRUE)
-		owner.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite, 3) // To give the victim a final chance to shock their heart before losing consciousness
+		owner.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite/heart_attack, 3) // To give the victim a final chance to shock their heart before losing consciousness
 		qdel(src)
 		return FALSE
 
