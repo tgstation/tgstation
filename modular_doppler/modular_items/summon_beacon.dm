@@ -36,6 +36,8 @@
 	new /obj/item/reagent_containers/cup/glass/mug (src)
 	new /obj/item/reagent_containers/cup/glass/mug (src)
 	new /obj/item/reagent_containers/cup/glass/mug (src)
+	new /obj/item/storage/coffee (src)
+	new /obj/item/storage/coffee (src)
 
 /obj/structure/closet/crate/silvercrate/coffeemaker/nanotrasen
 	name = "Impressa Modello 5 Coffeemaker - NanoTrasen Corporate Package"
@@ -59,6 +61,8 @@
 	new /obj/item/reagent_containers/condiment/soymilk(src)
 	new /obj/item/reagent_containers/condiment/sugar(src)
 	new /obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel(src)
+	new /obj/item/storage/coffee (src)
+	new /obj/item/storage/coffee (src)
 
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen
 	desc = "Look at this shit. A cobalt monument to mid-level managerial despair, slathered in NT's signature 'corporate pacification blue' guaranteed to drain the soul 12% faster. Note the ergonomic handle designed by someone who's definitely never held hands with another sapient being. The rim's perfectly calibrated to burn your lips while you choke down overpriced synthcaf, because even your breaks belong to NanoTrasen. The bottom of the cup's got that subtle 'ethical violations' stain pattern that never quite scrubs out. Freedom of choice sold separately."
