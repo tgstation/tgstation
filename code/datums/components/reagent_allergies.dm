@@ -7,7 +7,7 @@
 	var/list/allergies
 
 /datum/component/reagent_allergies/Initialize(list/allergy_types)
-	if(!isliving(parent))
+	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	allergies = string_list(allergy_types)
 
