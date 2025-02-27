@@ -873,6 +873,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
 
+	if(grappled)
+		var/pummel_bonus = attacking_bodypart.unarmed_pummeling_bonus
+		damage = floor(damage * pummel_bonus)
+		limb_accuracy = floor(limb_accuracy * pummel_bonus)
+
 	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
 	// But god is it going to make you sick moving too much while drunk
 	var/user_drunkenness = user.get_drunk_amount()
