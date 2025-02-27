@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Armsy (aka Lord Of The Night (aka flesh snek (aka heretic ascention))) no longer affects itself with its own spells"
