@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - code_imp: "Guns now have burst delay and fire delay variables instead of fire delay affecting both. If a weapon's burst feels off, please submit an issue report."

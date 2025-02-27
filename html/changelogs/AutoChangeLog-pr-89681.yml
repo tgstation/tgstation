@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "You can no longer activate anomalock heart's voltaic overdrive/tenacity trauma by pulling off some surgery shenanigans"
-  - bugfix: "You no longer lose tenacity trauma gained via lobotomy after losing voltaic override"

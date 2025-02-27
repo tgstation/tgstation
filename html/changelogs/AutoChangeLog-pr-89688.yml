@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "The charging defib mount no longer runtimes when there's no defib"
