@@ -40,7 +40,7 @@
 	if (isnull(liver_organ))
 		return
 	if (HAS_TRAIT(liver_organ, TRAIT_MEDICAL_METABOLISM))
-		einstein.apply_damage(2, BRUTE, throwingdatum.target_zone, throwingdatum.blocked)
+		einstein.apply_damage(2, BRUTE, throwingdatum.target_zone)
 	else if (HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && throwingdatum.target_zone == BODY_ZONE_HEAD && prob(2))
 		gravity_reminder(einstein)
 
