@@ -108,7 +108,7 @@
 		/datum/reagent/consumable/capsaicin = 2
 	)
 	tastes = list("chilli heat" = 1, "umami" = 1)
-	foodtypes = SEAFOOD | VEGETABLES
+	foodtypes = VEGETABLES|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -123,7 +123,7 @@
 		/datum/reagent/consumable/nutriment = 2
 	)
 	tastes = list("meat" = 1, "breadcrumbs" = 1)
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT|FRIED|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -194,7 +194,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3
 	)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 // Fried Rice

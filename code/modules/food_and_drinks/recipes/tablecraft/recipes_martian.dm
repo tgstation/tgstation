@@ -48,6 +48,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/sambal
+	added_foodtypes = SEAFOOD //Until we have easy to get shrimp to add to the recipe
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/katsu_fillet
@@ -57,6 +58,7 @@
 		/obj/item/food/breadslice/reispan = 1,
 	)
 	result = /obj/item/food/katsu_fillet
+	removed_foodtypes = RAW
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/rice_dough
@@ -83,6 +85,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/hurricane_rice
+	removed_foodtypes = RAW|BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/ikareis
@@ -97,6 +100,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/ikareis
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/hawaiian_fried_rice
@@ -111,6 +115,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/hawaiian_fried_rice
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/ketchup_fried_rice
@@ -126,6 +131,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/ketchup_fried_rice
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/mediterranean_fried_rice
@@ -140,6 +146,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/mediterranean_fried_rice
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/egg_fried_rice
@@ -151,6 +158,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/egg_fried_rice
+	removed_foodtypes = BREAKFAST|RAW
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/bibimbap
@@ -165,6 +173,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/bibimbap
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/bulgogi_noodles
@@ -208,6 +217,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/martian_fried_noodles
+	removed_foodtypes = RAW
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/simple_fried_noodles
@@ -238,6 +248,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/setagaya_curry
+	removed_foodtypes = RAW|JUNKFOOD|BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/big_blue_burger
@@ -252,6 +263,7 @@
 		/datum/reagent/consumable/nutriment/soup/teriyaki = 4,
 	)
 	result = /obj/item/food/burger/big_blue
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/chappy_patty

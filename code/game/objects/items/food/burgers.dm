@@ -452,7 +452,7 @@
 	bite_consumption = 7
 	max_volume = 100
 	tastes = list("bun" = 4, "type two diabetes" = 10)
-	foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES | FRUIT
+	foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_5
 
@@ -474,7 +474,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("extreme heat" = 4, "bun" = 2)
-	foodtypes = GRAIN | MEAT | FRUIT | VEGETABLES
+	foodtypes = GRAIN | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -657,7 +657,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 2, "beef soaked in chili" = 3, "a smoking flare" = 2)
-	foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES | FRUIT
+	foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/burger/crazy/Initialize(mapload)
