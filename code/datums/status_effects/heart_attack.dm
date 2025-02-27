@@ -1,15 +1,15 @@
 ///Stage one of the heart attack, begins effects when the timer ticks down to it.
-#define ATTACK_STAGE_ONE (140 SECONDS)
+#define ATTACK_STAGE_ONE 140
 ///Stage two of the heart attack.
-#define ATTACK_STAGE_TWO (110 SECONDS)
+#define ATTACK_STAGE_TWO 110
 ///Stage three of the heart attack.
-#define ATTACK_STAGE_THREE (90 SECONDS)
+#define ATTACK_STAGE_THREE 90
 ///Stage four of the heart attack.
-#define ATTACK_STAGE_FOUR (45 SECONDS)
+#define ATTACK_STAGE_FOUR 45
 ///Stage five of the heart attack.
-#define ATTACK_STAGE_FIVE (10 SECONDS)
+#define ATTACK_STAGE_FIVE 10
 ///When will a heart attack be visible to others on examine?
-#define HEART_ATTACK_VISIBILITY (60 SECONDS)
+#define HEART_ATTACK_VISIBILITY 60
 ///If we reduce heart damage enough, it will recover on its own.
 #define ATTACK_CURE_THRESHOLD 200
 
@@ -19,7 +19,7 @@
 	remove_on_fullheal = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/heart_attack
 	///A timer that ticks down until the heart fully stops
-	var/time_until_attack = 2 MINUTES
+	var/time_until_stoppage = 180 //Two minutes until the ticker hits zero.
 	///Does the victim hear their own heartbeat?
 	var/sound = FALSE
 
@@ -37,28 +37,27 @@
 	var/mob/living/carbon/human/human_owner = owner
 	if(!istype(human_owner) || !human_owner.can_heartattack())
 		qdel(src) //No heart? No effects.
-	if(time_until_attack <= ATTACK_STAGE_ONE) //Minor, untelegraphed problems
-			owner.adjust_confusion(6 SECONDS)
-		if(SPT_PROB(1.5, 100))
+	if(time_until_stoppage <= ATTACK_STAGE_ONE) //Minor, untelegraphed problems
+		owner.adjust_confusion(6 SECONDS)
+		if(SPT_PROB_RATE(0.1, 1))
 			to_chat(owner, span_warning("You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short of breath", "uneasy")]."))
-	if(time_until_attack <= ATTACK_STAGE_TWO)
+	if(time_until_stoppage <= ATTACK_STAGE_TWO)
 		if(!sound)
 			owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			sound = TRUE
-		if(SPT_PROB(1.5, 100))
+		if(SPT_PROB_RATE(0.1, 1))
 			to_chat(owner, span_danger("You feel a sharp pain in your chest!"))
 			if(prob(25))
-				to_chat(owner, "blah")
 				human_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
 			owner.emote("cough")
 			owner.Paralyze(40)
 			owner.losebreath += 4
-		if(SPT_PROB(1.5, 100))
+		if(SPT_PROB_RATE(0.1, 1))
 			to_chat(owner, span_danger("You feel very weak and dizzy..."))
 			owner.adjust_confusion(8 SECONDS)
 			owner.adjustStaminaLoss(40, FALSE)
 			owner.emote("cough")
-	if(time_until_attack <= ATTACK_STAGE_THREE)
+	if(time_until_stoppage <= ATTACK_STAGE_THREE)
 		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 		owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 100, FALSE, use_reverb = FALSE)
 		if(owner.stat == CONSCIOUS)
@@ -68,9 +67,10 @@
 		human_owner.set_heartattack(TRUE)
 		owner.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite, 3) // To give the victim a final chance to shock their heart before losing consciousness
 		return FALSE
+	time_until_stoppage--
 
 /datum/status_effect/heart_attack/get_examine_text()
-	if(time_until_attack <= HEART_ATTACK_VISIBILITY)
+	if(time_until_stoppage <= HEART_ATTACK_VISIBILITY)
 		return span_warning("[owner.p_they()] looks to be doubling over, clutching [owner.p_their()] chest in pain!")
 
 ///End the heart attack.
