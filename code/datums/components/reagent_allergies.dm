@@ -24,14 +24,14 @@
 	if(owner.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 		for(var/allergy in allergies)
 			var/datum/reagent/instantiated_med = owner.reagents.has_reagent(allergy)
-			if(isnull(instantiated_med))
+			if(!instantiated_med)
 				continue
 			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
 		return //block damage so long as epinephrine exists
 
 	for(var/allergy in allergies)
 		var/datum/reagent/instantiated_med = owner.reagents.has_reagent(allergy)
-		if(isnull(instantiated_med))
+		if(!instantiated_med)
 			continue
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
 		owner.adjustToxLoss(3 * seconds_per_tick)
