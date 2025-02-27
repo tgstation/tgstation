@@ -431,6 +431,7 @@
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
+	ADD_TRAIT(heretic_monster, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)
 
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++
