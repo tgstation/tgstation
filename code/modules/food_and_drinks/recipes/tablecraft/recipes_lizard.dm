@@ -34,7 +34,7 @@
 	)
 
 	result = /obj/item/food/shredded_lungs
-	added_foodtypes = GORE
+	added_foodtypes = MEAT|GORE
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/tsatsikh
@@ -93,6 +93,7 @@
 	)
 	result = /obj/item/food/fried_blood_sausage
 	added_foodtypes = FRIED|NUTS
+	removed_foodtypes = RAW
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/lizard_fries
@@ -397,6 +398,7 @@
 	)
 	result = /obj/item/food/patzikula
 	removed_foodtypes = RAW
+	added_foodtypes = BREAKFAST
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/korta_brittle
