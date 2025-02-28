@@ -333,11 +333,12 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	return TRUE
 
 /turf/closed/indestructible/riveted/hierophant
-	name = "wall"
-	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
+	name = "runic wall"
+	desc = "A wall made out of strange stone, runes on its sides pulsating in a rythmic pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
-	icon_state = "wall"
-	smoothing_flags = SMOOTH_CORNERS
+	icon_state = "hierophant_wall-0"
+	base_icon_state = "hierophant_wall"
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_HIERO_WALL
 	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
 
