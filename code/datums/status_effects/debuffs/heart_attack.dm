@@ -18,6 +18,8 @@
 	var/time_until_stoppage = 120
 	///Does the victim hear their own heartbeat?
 	var/sound = FALSE
+	///Does this show up on medhuds?
+	var/visible = FALSE
 
 /datum/status_effect/heart_attack/on_apply()
 	var/mob/living/carbon/human/human_owner = owner
@@ -29,7 +31,7 @@
 	return TRUE
 
 /datum/status_effect/heart_attack/on_remove()
-	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(owner, list(COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_MINOR_SHOCK, COMSIG_DEFIBRILLATOR_SUCCESS))
 
 /datum/status_effect/heart_attack/tick()
 	var/mob/living/carbon/human/human_owner = owner
@@ -49,6 +51,10 @@
 			owner.losebreath += 4
 
 	if(time_until_stoppage <= ATTACK_STAGE_THREE) //At this point, we start with chat messages and make it clear that something is very wrong.
+		if(!visible)
+			ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+			owner.med_hud_set_status()
+			visible = TRUE //We do not reset this status until it's fully cured. Once it's been made apparent, there's no reason to hide it again until it is resolved. It will only confuse players.
 		if(prob(15))
 			to_chat(owner, span_danger("You feel a sharp pain in your chest!"))
 			if(prob(25))
@@ -70,6 +76,7 @@
 			to_chat(owner, span_userdanger("It feels like you're shutting down..."))
 			owner.adjust_dizzy_up_to(4 SECONDS, 10 SECONDS)
 			owner.adjust_eye_blur_up_to(4 SECONDS, 20 SECONDS)
+			owner.adjustStaminaLoss(20)
 
 		if(prob(5))
 			owner.emote("cough")
@@ -107,9 +114,16 @@
 /datum/status_effect/heart_attack/proc/end_attack(datum/source, obj/item/organ)
 	SIGNAL_HANDLER
 	if(istype(organ, /obj/item/organ/heart))
+		REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+		owner.med_hud_set_status()
 		qdel(src)
 
-///Slightly reduces your
+/datum/status_effect/heart_attack/Destroy()
+	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+	. = ..()
+	owner.med_hud_set_status()
+
+///Slightly reduces your timer. Can cure you if you really really want.
 /datum/status_effect/heart_attack/proc/minor_shock()
 	SIGNAL_HANDLER
 	time_until_stoppage -= 10 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
