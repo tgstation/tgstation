@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Request consoles once again enter emergency mode when you hit an emergency button"
