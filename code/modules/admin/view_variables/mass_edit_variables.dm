@@ -5,14 +5,15 @@
 	if(!check_rights(R_VAREDIT))
 		return
 
-	var/method = 0 //0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
+	/// if false get only the strict type, get all subtypes too otherwise
+	var/strict_type = FALSE
 	if(target?.type)
-		method = vv_subtype_prompt(target.type)
+		strict_type = vv_subtype_prompt(target.type)
 
-	massmodify_variables(target, var_name, method)
+	massmodify_variables(target, var_name, strict_type)
 	BLACKBOX_LOG_ADMIN_VERB("Mass Edit Variables")
 
-/client/proc/massmodify_variables(datum/target, var_name = "", method = 0)
+/client/proc/massmodify_variables(datum/target, var_name = "", strict_type = FALSE)
 	if(!check_rights(R_VAREDIT))
 		return
 	if(!istype(target))
@@ -96,7 +97,7 @@
 	switch(class)
 		if(VV_RESTORE_DEFAULT)
 			to_chat(src, "Finding items...", confidential = TRUE)
-			var/list/items = get_all_of_type(target.type, method)
+			var/list/items = get_all_of_type(target.type, strict_type)
 			to_chat(src, "Changing [items.len] items...", confidential = TRUE)
 			for(var/thing in items)
 				if (!thing)
@@ -122,7 +123,7 @@
 						new_value = replacetext(new_value,"\[[V]]","[target.vars[V]]")
 
 			to_chat(src, "Finding items...", confidential = TRUE)
-			var/list/items = get_all_of_type(target.type, method)
+			var/list/items = get_all_of_type(target.type, strict_type)
 			to_chat(src, "Changing [items.len] items...", confidential = TRUE)
 			for(var/thing in items)
 				if (!thing)
@@ -150,7 +151,7 @@
 
 			var/type = value["type"]
 			to_chat(src, "Finding items...", confidential = TRUE)
-			var/list/items = get_all_of_type(target.type, method)
+			var/list/items = get_all_of_type(target.type, strict_type)
 			to_chat(src, "Changing [items.len] items...", confidential = TRUE)
 			for(var/thing in items)
 				if (!thing)
@@ -168,7 +169,7 @@
 
 		else
 			to_chat(src, "Finding items...", confidential = TRUE)
-			var/list/items = get_all_of_type(target.type, method)
+			var/list/items = get_all_of_type(target.type, strict_type)
 			to_chat(src, "Changing [items.len] items...", confidential = TRUE)
 			for(var/thing in items)
 				if (!thing)
