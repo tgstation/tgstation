@@ -877,7 +877,7 @@
 		else
 			playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
 	else
-		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', 1, volume, -1)
+		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', volume, TRUE, -1)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
