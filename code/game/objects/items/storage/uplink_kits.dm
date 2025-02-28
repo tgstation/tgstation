@@ -60,7 +60,7 @@
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
-			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
+			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //basically 1 tc as it can be bought from BM kits
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
@@ -579,6 +579,11 @@
 /obj/item/storage/box/syndie_kit/ez_clean/PopulateContents()
 	for(var/i in 1 to 3)
 		new/obj/item/grenade/chem_grenade/ez_clean(src)
+
+/obj/item/storage/box/syndie_kit/mulligan/PopulateContents()
+	. = ..()
+	new /obj/item/reagent_containers/syringe/mulligan(src)
+	new /obj/item/fake_identity_kit(src)
 
 /obj/item/storage/box/hug/reverse_revolver/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/reverse(src)
