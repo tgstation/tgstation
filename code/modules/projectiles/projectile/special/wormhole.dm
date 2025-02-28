@@ -1,6 +1,6 @@
 /obj/projectile/beam/wormhole
 	name = "bluespace beam"
-	icon_state = "spark"
+	icon_state = null
 	hitsound = SFX_SPARKS
 	damage = 0
 	pass_flags = PASSGLASS | PASSTABLE | PASSGRILLE | PASSMOB

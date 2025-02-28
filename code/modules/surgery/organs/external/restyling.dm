@@ -112,7 +112,7 @@
 
 ///Catch right clicks so we can stylize!
 /obj/item/flesh_shears/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(user.combat_mode)
+	if(user.combat_mode || !iscarbon(interacting_with))
 		return NONE
 
 	restyle(interacting_with, user)
