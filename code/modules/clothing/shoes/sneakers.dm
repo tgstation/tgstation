@@ -180,7 +180,7 @@
 	greyscale_config_worn = /datum/greyscale_config/sneakers_marisa/worn
 	strip_delay = 5
 	equip_delay_other = 50
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/sneakers/cyborg

@@ -10,7 +10,7 @@
 	basic_mob_flags = DEL_ON_DEATH
 	mob_size = MOB_SIZE_SMALL
 	pass_flags = PASSTABLE | PASSMOB
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_MINING
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0

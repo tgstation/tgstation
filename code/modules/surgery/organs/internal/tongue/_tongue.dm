@@ -77,6 +77,7 @@
 	return list(
 		/datum/language/common,
 		/datum/language/uncommon,
+		/datum/language/spinwarder,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
@@ -644,6 +645,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "whistles"
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
 	disliked_foodtypes = GORE | MEAT | DAIRY | SEAFOOD | BUGS
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME
 
 /obj/item/organ/tongue/golem
 	name = "golem tongue"

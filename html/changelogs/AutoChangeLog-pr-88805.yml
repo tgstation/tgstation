@@ -1,6 +1,0 @@
-author: "Xackii"
-delete-after: True
-changes:
-  - rscadd: "Big Manipulator now has use mode once again. You need buckle monkey to unlock this future."
-  - rscadd: "Big Manipulator now has wires."
-  - bugfix: "Big Manipualtor now sees objects that appeared on the tile using spawn or any other means in which the object is not considered to have moved"

@@ -55,13 +55,16 @@
 /mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 
+	if(!.) //dead or deleted
+		return
+
 	if(!mind && stat != DEAD)//no mind no change
 		return
 
 	var/nutrition_change = ooze_nutrition_loss
 
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
-	for(var/i in reagents.reagent_list)
+	for(var/i in reagents?.reagent_list)
 		var/datum/reagent/reagent = i
 		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * seconds_per_tick)
 		if(istype(reagent, /datum/reagent/consumable))
