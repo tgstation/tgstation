@@ -27,7 +27,7 @@
 	if (QDELETED(src) || !user.can_perform_action(src, interaction_flags_click))
 		return
 
-	moveToNullspace()
+	user.temporarilyRemoveItemFromInventory(src)
 	user.playsound_local(user, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 
 	var/obj/item/card/id/advanced/original_id = user.get_idcard(hand_first = FALSE)
