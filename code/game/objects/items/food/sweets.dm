@@ -128,7 +128,7 @@
 		/datum/reagent/consumable/sugar = 1,
 	)
 	tastes = list("chocolate" = 3, "oranges" = 1)
-	foodtypes = JUNKFOOD | SUGAR | ORANGES
+	foodtypes = JUNKFOOD|FRUIT|SUGAR|ORANGES
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -342,7 +342,7 @@
 		/datum/reagent/medicine/omnizine = 2,
 	) //lollipop, but vitamins = toxins
 	tastes = list("cobwebs" = 1, "sugar" = 2)
-	foodtypes = JUNKFOOD | SUGAR | BUGS
+	foodtypes = JUNKFOOD|SUGAR|MEAT|BUGS
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	crafting_complexity = FOOD_COMPLEXITY_1

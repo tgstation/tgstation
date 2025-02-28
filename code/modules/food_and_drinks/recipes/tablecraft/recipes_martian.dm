@@ -426,7 +426,8 @@
 		/datum/reagent/blood = 5,
 	)
 	result = /obj/item/food/kebab/ti_hoeh_koe
-	removed_foodtypes = JUNKFOOD|BREAKFAST
+	removed_foodtypes = JUNKFOOD|VEGETABLES|BREAKFAST
+	added_foodtypes = MEAT|FRIED
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/kitzushi
@@ -676,6 +677,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/salt_chilli_bowl
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/kansai_bowl
@@ -899,6 +901,7 @@
 		/datum/reagent/consumable/red_bay = 1,
 	)
 	result = /obj/item/food/frickles
+	added_foodtypes = GRAIN|FRIED
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/raw_ballpark_pretzel
@@ -908,6 +911,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/raw_ballpark_pretzel
+	added_foodtypes = RAW
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/raw_ballpark_tsukune
@@ -930,6 +934,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/sprout_bowl
+	removed_foodtypes = BREAKFAST
 	category = CAT_MARTIAN
 
 // Soups

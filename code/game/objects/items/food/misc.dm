@@ -353,7 +353,7 @@
 		/datum/reagent/consumable/salt = 8,
 	)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
-	foodtypes = GRAIN | FRUIT | BREAKFAST
+	foodtypes = SUGAR|GRAIN|FRUIT|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 

@@ -129,7 +129,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("rice" = 1, "cheese" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN|DAIRY|VEGETABLES
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
 

@@ -655,7 +655,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -675,7 +675,7 @@
 	)
 	bite_consumption = 3
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -735,7 +735,7 @@
 	)
 	bite_consumption = 4
 	tastes = list("meat" = 1, "the colour green" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT|BUGS
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -853,7 +853,7 @@
 		/datum/reagent/consumable/tomatojuice = 10,
 	)
 	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
-	foodtypes = MEAT | DAIRY | GRAIN
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -920,7 +920,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("rat meat" = 1, "metal" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT|RAW|GORE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/rat/double
@@ -1156,7 +1156,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("sausage" = 1, "bacon" = 1, "egg" = 1, "tomato" = 1, "mushrooms" = 1, "bread" = 1, "beans" = 1)
-	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_5

@@ -10,6 +10,7 @@
 		/obj/item/food/grown/apple = 1
 	)
 	result = /obj/item/food/candiedapple
+	added_foodtypes = JUNKFOOD|SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/spiderlollipop
@@ -20,6 +21,8 @@
 		/obj/item/food/spiderling = 1
 	)
 	result = /obj/item/food/spiderlollipop
+	added_foodtypes = JUNKFOOD|SUGAR
+	removed_foodtypes = TOXIC
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
@@ -66,6 +69,7 @@
 		/datum/reagent/consumable/gravy = 3
 	)
 	result = /obj/item/food/poutine
+	added_foodtypes = MEAT
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/beans
@@ -95,6 +99,7 @@
 	)
 	parts = list(/obj/item/reagent_containers/cup/glass/bottle/vodka = 1)
 	result = /obj/item/food/melonkeg
+	added_foodtypes = ALCOHOL
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/honeybar
@@ -104,6 +109,7 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/honeybar
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/powercrepe
@@ -117,6 +123,7 @@
 		/obj/item/melee/sabre = 1
 	)
 	result = /obj/item/food/powercrepe
+	added_foodtypes = FRUIT|SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/branrequests
@@ -126,6 +133,8 @@
 		/obj/item/food/no_raisin = 1,
 	)
 	result = /obj/item/food/branrequests
+	removed_foodtypes = JUNKFOOD
+	added_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/ricepudding
@@ -137,6 +146,8 @@
 		/obj/item/food/boiledrice = 1
 	)
 	result = /obj/item/food/salad/ricepudding
+	added_foodtypes = DAIRY|SUGAR
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/risotto

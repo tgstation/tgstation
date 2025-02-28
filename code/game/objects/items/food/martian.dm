@@ -610,7 +610,7 @@
 		/datum/reagent/consumable/peanut_butter = 1,
 	)
 	tastes = list("blood" = 1, "nuts" = 1, "herbs" = 1)
-	foodtypes = MEAT | NUTS | GRAIN
+	foodtypes = MEAT|FRIED|NUTS|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -761,7 +761,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/char = 2)
 	tastes = list("octopus" = 1)
-	foodtypes = SEAFOOD | FRIED
+	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -837,7 +837,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("chicken" = 1, "coconut" = 1, "curry" = 1)
-	foodtypes = MEAT | FRUIT
+	foodtypes = MEAT|GRAIN|FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -929,7 +929,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("seafood" = 1, "rice" = 1, "garlic" = 1, "ginger" = 1, "numbing heat" = 1, "salt" = 1)
-	foodtypes = SEAFOOD | VEGETABLES | GRAIN
+	foodtypes = VEGETABLES|GRAIN|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //A few Cargo ingredients
 
@@ -1051,7 +1051,7 @@
 		/datum/reagent/consumable/sugar = 4,
 	)
 	tastes = list("custard" = 1, "vanilla" = 1, "sweet pastry" = 1)
-	foodtypes = MEAT|RAW|GRAIN|FRUIT|DAIRY
+	foodtypes = GRAIN|FRUIT|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -1210,7 +1210,7 @@
 		/datum/reagent/consumable/nutriment = 6
 	)
 	tastes = list("sausage" = 1, "relish" = 1, "onion" = 1, "fruity salsa" = 1)
-	foodtypes = FRUIT | MEAT | PINEAPPLE | VEGETABLES | GRAIN
+	foodtypes = MEAT|VEGETABLES|GRAIN|FRUIT|PINEAPPLE|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Uses Sambal
 	custom_price = PAYCHECK_CREW * 2
@@ -1226,7 +1226,7 @@
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("frickles" = 1)
-	foodtypes = VEGETABLES | GRAIN
+	foodtypes = VEGETABLES|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3 //batter and cargo stuff.
 
