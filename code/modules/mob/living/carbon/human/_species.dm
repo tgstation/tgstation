@@ -884,13 +884,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/drunken_martial_descriptor = pick("Drunken", "Intoxicated", "Tipsy", "Inebriated", "Delirious", "Day-Drinker's", "Firegut", "Blackout")
 			atk_verb = "[drunken_martial_descriptor] [atk_verb]"
 
-		else if(user_drunkenness > 30 && user_drunkenness < 60)
-			limb_accuracy *= 1.2
-			user.adjust_disgust(2)
-
 		else if(user_drunkenness >= 60)
 			limb_accuracy = -limb_accuracy // good luck landing a punch now, you drunk fuck
 			user.adjust_disgust(5)
+
+		else if(user_drunkenness >= 30)
+			limb_accuracy *= 1.2
+			user.adjust_disgust(2)
 
 	var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
@@ -919,13 +919,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(HAS_TRAIT(target, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
 			armor_block += 20
 
-		else if(target_drunkenness > 30 && target_drunkenness < 60)
-			armor_block += 10
-			target.adjust_disgust(2)
-
 		else if(target_drunkenness >= 60)
 			armor_block *= 0.5
 			target.adjust_disgust(5)
+
+		else if(target_drunkenness >= 30)
+			armor_block += 10
+			target.adjust_disgust(2)
 
 	playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
 
