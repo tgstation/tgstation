@@ -5,9 +5,9 @@
 ///Stage three of the heart attack.
 #define ATTACK_STAGE_THREE 50
 ///Stage four of the heart attack.
-#define ATTACK_STAGE_FOUR 30
+#define ATTACK_STAGE_FOUR 20
 ///If we reduce heart damage enough, it will recover on its own.
-#define ATTACK_CURE_THRESHOLD 200
+#define ATTACK_CURE_THRESHOLD 130
 
 /datum/status_effect/heart_attack
 	id = "heart_attack"
@@ -24,6 +24,8 @@
 	if(!istype(human_owner) || !human_owner.can_heartattack())
 		return FALSE
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(end_attack))
+	RegisterSignal(owner, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(minor_shock))
+	RegisterSignal(owner, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(defib_shock))
 	return TRUE
 
 /datum/status_effect/heart_attack/on_remove()
@@ -46,7 +48,7 @@
 			owner.adjustStaminaLoss(10)
 			owner.losebreath += 4
 
-	if(time_until_stoppage <= ATTACK_STAGE_THREE && time_until_stoppage > ATTACK_STAGE_FOUR) //At this point, we start with chat messages and make it clear that something is very wrong.
+	if(time_until_stoppage <= ATTACK_STAGE_THREE) //At this point, we start with chat messages and make it clear that something is very wrong.
 		if(prob(15))
 			to_chat(owner, span_danger("You feel a sharp pain in your chest!"))
 			if(prob(25))
@@ -59,7 +61,7 @@
 			owner.emote("cough")
 			owner.losebreath += 8
 
-	if(time_until_stoppage <= ATTACK_STAGE_FOUR)
+	if(time_until_stoppage <= ATTACK_STAGE_FOUR) //And now we compound it with even worse effects.
 		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 		sound = FALSE
 		owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 100, FALSE, use_reverb = FALSE)
@@ -106,6 +108,17 @@
 	SIGNAL_HANDLER
 	if(istype(organ, /obj/item/organ/heart))
 		qdel(src)
+
+///Slightly reduces your
+/datum/status_effect/heart_attack/proc/minor_shock()
+	SIGNAL_HANDLER
+	time_until_stoppage -= 10 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
+
+///Makes major progress towards curing the attack.
+/datum/status_effect/heart_attack/proc/defib_shock(obj/item/shockpaddles/source)
+	SIGNAL_HANDLER
+	time_until_stoppage -= 50 //Three shocks should save pretty much anyone.
+	owner.visible_message(span_nicegreen("[owner] seems to relax [owner.p_their()] body as they're shocked by the [source]!"))
 
 #undef ATTACK_STAGE_ONE
 #undef ATTACK_STAGE_TWO
