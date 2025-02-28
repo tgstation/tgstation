@@ -113,7 +113,7 @@
 
 	var/turf/beacon_turf = get_turf(beacon)
 	if (!beacon_turf || beacon_turf.is_blocked_turf(TRUE))
-		balloon_alert("the beacon is blocked!")
+		balloon_alert(user, "the beacon is blocked!")
 		return
 
 	if (!isturf(user.loc))
