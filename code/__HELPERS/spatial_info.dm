@@ -211,7 +211,7 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
-		. |= get_hearers_in_LOS(radio.canhear_range, radio, FALSE)
+		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
 //Used when converting pixels to tiles to make them accurate
 #define OFFSET_X (0.5 / ICON_SIZE_X)
