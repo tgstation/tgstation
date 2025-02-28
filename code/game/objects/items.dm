@@ -859,7 +859,8 @@
 		if(throw_drop_sound)
 			playsound(src, throw_drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
 			return
-		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
+		else if(drop_sound)
+			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
 		return
 
 	if(.) //it's been caught.
