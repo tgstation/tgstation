@@ -31,7 +31,6 @@
 		"[remembered_id]. The numbers mason, what do they mean!?",
 	)
 
-
 /// The code to the captain's spare ID, ONLY give to the real captain.
 /datum/memory/key/captains_spare_code
 	var/safe_code
