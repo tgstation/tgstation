@@ -24,6 +24,9 @@
 	loot = list(/obj/item/keycard/thing_boss)
 	crusher_loot = list(/obj/item/keycard/thing_boss, /obj/item/crusher_trophy/flesh_glob)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	achievement_type = /datum/award/achievement/boss/thething_kill
+	crusher_achievement_type = /datum/award/achievement/boss/thething_crusher
+	score_achievement_type = /datum/award/score/thething_score
 	/// Current phase of the boss fight
 	var/phase = 1
 	/// Time the Thing will be invulnerable between phases
