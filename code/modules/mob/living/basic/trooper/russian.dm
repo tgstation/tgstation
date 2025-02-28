@@ -12,6 +12,7 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
+	initial_language_holder = /datum/language_holder/spinwarder_exclusive
 
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/russian
 	r_hand = /obj/item/knife/kitchen
