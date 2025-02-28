@@ -176,23 +176,13 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/big_manipulator/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!panel_open)
-		return ITEM_INTERACT_BLOCKING
+/obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	if(!panel_open || !is_wire_tool(tool))
+		return NONE
 	wires.interact(user)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/big_manipulator/multitool_act_secondary(mob/living/user, obj/item/tool)
-	return multitool_act(user, tool)
-
-/obj/machinery/big_manipulator/wirecutter_act(mob/living/user, obj/item/tool)
-	if(!panel_open)
-		return ITEM_INTERACT_BLOCKING
-	wires.interact(user)
-	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/big_manipulator/wirecutter_act_secondary(mob/living/user, obj/item/tool)
-	return wirecutter_act(user, tool)
 
 /obj/machinery/big_manipulator/RefreshParts()
 	. = ..()
