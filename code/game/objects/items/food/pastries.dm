@@ -44,7 +44,7 @@
 	base_icon_state = "moffin"
 	desc = "A delicious and spongy little cake."
 	tastes = list("muffin" = 3, "dust" = 1, "lint" = 1)
-	foodtypes = CLOTH | GRAIN | SUGAR | BREAKFAST
+	foodtypes = CLOTH|DAIRY|GRAIN|SUGAR|BREAKFAST
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/muffin/moffin/Initialize(mapload)
@@ -72,7 +72,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("waffles" = 1)
-	foodtypes = GRAIN | SUGAR | BREAKFAST
+	foodtypes = GRAIN|DAIRY|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -90,7 +90,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("waffles" = 7, "people" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = MEAT|GRAIN|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -104,7 +104,7 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("waffles" = 7, "the colour green" = 1)
-	foodtypes = GRAIN
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -119,7 +119,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("waffles" = 1, "mushrooms" = 1)
-	foodtypes = GRAIN | VEGETABLES | SUGAR | BREAKFAST
+	foodtypes = GRAIN|DAIRY|VEGETABLES|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 

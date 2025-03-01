@@ -160,6 +160,7 @@
 		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/food/salad/risotto
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
@@ -184,6 +185,7 @@
 		/obj/item/food/meat/slab/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
+	removed_foodtypes = RAW
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/royalcheese
@@ -239,6 +241,7 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/bechamel_sauce
+	added_foodtypes = GRAIN
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/pierogi
@@ -260,6 +263,7 @@
 		/obj/item/food/grown/tomato = 1,
 	)
 	result = /obj/item/food/stuffed_cabbage
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/granola_bar
@@ -271,6 +275,7 @@
 		/obj/item/food/no_raisin = 1,
 	)
 	result = /obj/item/food/granola_bar
+	removed_foodtypes = JUNKFOOD
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/onigiri
@@ -280,6 +285,7 @@
 		/obj/item/food/seaweedsheet = 1,
 	)
 	result = /obj/item/food/onigiri
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/mashed_potatoes
@@ -300,6 +306,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/pacoca
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/springroll
@@ -321,6 +328,7 @@
 		/datum/reagent/consumable/caramel = 3,
 	)
 	result = /obj/item/food/popcorn/caramel
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/salty_popcorn
@@ -350,6 +358,7 @@
 		/obj/item/food/grown/mushroom/amanita = 3
 	)
 	result = /obj/item/food/bowled/amanitajelly
+	added_foodtypes = TOXIC
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/buttered_baked_potato
@@ -370,6 +379,7 @@
 		/obj/item/food/grown/cabbage = 1,
 	)
 	result = /obj/item/food/loaded_baked_potato
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/cheese_pierogi
@@ -505,6 +515,7 @@
 		/datum/reagent/water = 2,
 	)
 	result = /obj/item/food/candied_pineapple
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/tzatziki_sauce

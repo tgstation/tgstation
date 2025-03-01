@@ -168,4 +168,5 @@
 		/datum/reagent/consumable/blackpepper = 2,
 	)
 	result = /obj/item/food/spaghetti/carbonara
+	removed_foodtypes = BREAKFAST|RAW
 	category = CAT_SPAGHETTI

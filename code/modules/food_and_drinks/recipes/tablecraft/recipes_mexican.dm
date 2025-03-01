@@ -127,6 +127,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/chipsandsalsa
+	removed_foodtypes = JUNKFOOD
 	category = CAT_MEXICAN
 
 /datum/crafting_recipe/food/classic_chimichanga

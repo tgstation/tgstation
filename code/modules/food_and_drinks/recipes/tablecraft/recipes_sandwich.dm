@@ -84,6 +84,7 @@
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/sandwich/blt
+	removed_foodtypes = BREAKFAST
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/peanut_butter_jelly_sandwich

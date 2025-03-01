@@ -67,6 +67,7 @@
 		/obj/item/food/grown/potato = 1
 	)
 	result = /obj/item/food/vegetariansushiroll
+	removed_foodtypes = BREAKFAST
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/spicyfiletroll
@@ -79,6 +80,7 @@
 		/obj/item/food/grown/onion = 1
 	)
 	result = /obj/item/food/spicyfiletsushiroll
+	removed_foodtypes = BREAKFAST
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/nigiri_sushi
@@ -90,6 +92,7 @@
 		/datum/reagent/consumable/soysauce = 2
 	)
 	result = /obj/item/food/nigiri_sushi
+	removed_foodtypes = BREAKFAST
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/meat_poke
@@ -105,6 +108,7 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/meat_poke
+	removed_foodtypes = BREAKFAST
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/fish_poke
@@ -120,6 +124,7 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/fish_poke
+	removed_foodtypes = BREAKFAST
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/futomaki_sushi_roll
@@ -132,6 +137,7 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/futomaki_sushi_roll
+	removed_foodtypes = BREAKFAST
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/philadelphia_sushi_roll
@@ -144,4 +150,5 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/philadelphia_sushi_roll
+	removed_foodtypes = BREAKFAST
 	category = CAT_SEAFOOD
