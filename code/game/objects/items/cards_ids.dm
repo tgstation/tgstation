@@ -1621,7 +1621,7 @@
 	var/datum/weakref/theft_target
 
 /obj/item/card/id/advanced/chameleon/crummy
-	desc = "A surplus version of a chameleon ID card. Can only hold a limited number of access codes.
+	desc = "A surplus version of a chameleon ID card. Can only hold a limited number of access codes."
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
 
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
