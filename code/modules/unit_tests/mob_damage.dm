@@ -451,13 +451,13 @@
 	test_sanity_complex(gusgus)
 
 	// Simplemobs
-	var/mob/living/simple_animal/testsky = allocate(/mob/living/simple_animal/bot/secbot)
-	// give beepsky a damage_coeff of 1 for this test
-	testsky.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
-	testsky.maxHealth = 200
+	var/mob/living/simple_animal/abstract_thing = allocate(/mob/living/simple_animal)
+	// give the mob a damage_coeff of 1 for this test
+	abstract_thing.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
+	abstract_thing.maxHealth = 200
 
-	test_sanity_simple(testsky)
-	test_sanity_complex(testsky)
+	test_sanity_simple(abstract_thing)
+	test_sanity_complex(abstract_thing)
 
 /**
  * Check that the mob has a specific amount of damage. Note: basic mobs have all incoming damage types besides stam converted into brute damage.
