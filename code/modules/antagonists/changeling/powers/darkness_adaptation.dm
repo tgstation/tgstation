@@ -13,7 +13,7 @@
 /datum/action/changeling/darkness_adaptation/sting_action(mob/living/carbon/human/cling) //SHOULD always be human, because req_human = TRUE
 	if(cling.has_status_effect(/datum/status_effect/darkness_adapted))
 		disable_ability(cling)
-		user.changeNext_move(CLICK_CD_MELEE * 0.5)
+		cling.changeNext_move(CLICK_CD_MELEE * 0.5)
 		chemical_cost = initial(chemical_cost)
 		return FALSE
 
