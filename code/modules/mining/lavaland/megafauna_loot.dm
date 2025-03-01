@@ -456,7 +456,7 @@
 		using = FALSE
 		return
 
-	soul.ckey = ghost.ckey
+	soul.PossessByPlayer(ghost.ckey)
 	soul.copy_languages(master, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the master.
 	soul.faction = list("[REF(master)]")
 	balloon_alert(master, "the scythe glows")
@@ -1209,16 +1209,18 @@
 	lines += span_bold("[owner]")
 	lines += "Target is currently [!HAS_TRAIT(owner, TRAIT_INCAPACITATED) ? "functional" : "incapacitated"]"
 	lines += "Estimated organic/inorganic integrity: [owner.health]"
-	if(is_sufficiently_augmented())
-		lines += "<a href='byond://?src=[REF(src)];ai_take_control=[REF(user)]'>[span_boldnotice("Take control?")]</a><br>"
-	else
+	if(mainframe)
+		lines += span_warning("Already occupied by another digital entity.")
+	else if(!is_sufficiently_augmented())
 		lines += span_warning("Organic organs detected. Robotic organs only, cannot take over.")
+	else
+		lines += "<a href='byond://?src=[REF(src)];ai_take_control=[REF(user)]'>[span_boldnotice("Take control?")]</a><br>"
 
 	to_chat(user, boxed_message(jointext(lines, "\n")), type = MESSAGE_TYPE_INFO)
 
 /obj/item/organ/brain/cybernetic/ai/Topic(href, href_list)
 	..()
-	if(!href_list["ai_take_control"] || !is_sufficiently_augmented())
+	if(!href_list["ai_take_control"] || !is_sufficiently_augmented() || mainframe)
 		return
 	var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"]) in GLOB.silicon_mobs
 	if(isnull(AI))

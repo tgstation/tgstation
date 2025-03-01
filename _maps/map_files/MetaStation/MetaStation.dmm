@@ -11650,6 +11650,7 @@
 "ehY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/server)
 "ehZ" = (
@@ -16038,6 +16039,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fLo" = (
@@ -27971,6 +27973,7 @@
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jSk" = (
@@ -31369,6 +31372,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen/coldroom)
 "lbh" = (
@@ -54006,6 +54010,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "tbI" = (
@@ -60143,6 +60148,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/surgery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark,
 /area/station/medical/coldroom)
 "vif" = (
@@ -65970,6 +65976,7 @@
 "xgL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/east,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "xgN" = (

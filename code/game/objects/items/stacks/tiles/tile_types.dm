@@ -100,6 +100,17 @@
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/grass
 
+//Hay
+/obj/item/stack/tile/hay
+	name = "hay tile"
+	singular_name = "hay floor tile"
+	desc = "Man, I'm so hungry I could eat a-"
+	icon_state = "tile_hay"
+	inhand_icon_state = "tile-hay"
+	turf_type = /turf/open/floor/hay
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/hay
+
 //Fairygrass
 /obj/item/stack/tile/fairygrass
 	name = "fairygrass tile"

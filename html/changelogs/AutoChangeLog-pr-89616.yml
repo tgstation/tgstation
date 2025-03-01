@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Hitscan projectiles like emitter beams should look less weird during extreme lag spikes"
