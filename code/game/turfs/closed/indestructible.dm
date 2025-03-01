@@ -342,6 +342,14 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_groups = SMOOTH_GROUP_HIERO_WALL
 	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
 
+/turf/closed/indestructible/riveted/hierophant/set_smoothed_icon_state(new_junction)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/turf/closed/indestructible/riveted/hierophant/update_overlays()
+	. = ..()
+	. += emissive_appearance('icons/turf/walls/hierophant_wall_e.dmi', icon_state, src)
+
 /turf/closed/indestructible/resin
 	name = "resin wall"
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'

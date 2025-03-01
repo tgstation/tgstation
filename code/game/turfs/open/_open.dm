@@ -239,7 +239,14 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_HIEROPHANT
 	canSmoothWith = SMOOTH_GROUP_HIEROPHANT
-	tiled_dirt = FALSE
+
+/turf/open/indestructible/hierophant/set_smoothed_icon_state(new_junction)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/turf/open/indestructible/hierophant/update_overlays()
+	. = ..()
+	. += emissive_appearance('icons/turf/floors/hierophant_floor.dmi', icon_state, src)
 
 /turf/open/indestructible/hierophant/two
 	name = "runic palestone floor"
