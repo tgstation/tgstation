@@ -56,6 +56,6 @@
 	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
 	var/datum/bounty/new_chore = text2path("[choice]")
 	id.registered_account.civilian_bounty = new new_chore
-	user.balloon_alert("New bounty acquired!")
+	balloon_alert(user, "New bounty acquired!")
 	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
 	qdel(src)
