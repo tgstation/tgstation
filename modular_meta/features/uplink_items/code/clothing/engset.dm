@@ -66,9 +66,6 @@
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
-/obj/item/storage/belt/syndieeng
-	preload = FALSE
-
 /obj/item/storage/belt/utility/syndieeng/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/gun/ballistic/automatic/pistol, src)
 	SSwardrobe.provide_type(/obj/item/wrench, src)
