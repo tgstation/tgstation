@@ -1,0 +1,8 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Foam darts now stick to people when they have their cap on, riot foam darts also can passively deal a bit of stamina damage when you move with one."
+  - rscadd: "Syringes can be inserted into foam darts, making them embed and slowly leak their reagents into their victim."
+  - rscadd: "Syringe guns can be toggled (with right click) between high power and low power modes, former being their normal functionality and latter making syringes embed and slowly leak their contents."
+  - bugfix: "Fixed projectiles sometimes not embedding when they should've"
+  - code_imp: "Cleaned embedding code up"

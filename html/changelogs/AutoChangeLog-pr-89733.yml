@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "The Warp Cube will now fail if it tries to teleport you to nowhere, instead of turning you blue and then failing"

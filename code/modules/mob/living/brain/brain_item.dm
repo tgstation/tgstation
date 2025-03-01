@@ -77,7 +77,7 @@
 			if(brainmob.mind)
 				brainmob.mind.transfer_to(brain_owner)
 			else
-				brain_owner.key = brainmob.key
+				brain_owner.PossessByPlayer(brainmob.key)
 
 			brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
@@ -635,3 +635,9 @@
 	old_brain.Remove(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	return Insert(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER | DELETE_IF_REPLACED)
+
+/obj/item/organ/brain/pod
+	name = "pod nucleus"
+	desc = "The brain of a pod person, it's a bit more plant-like than a human brain."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME

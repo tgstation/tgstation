@@ -32,7 +32,6 @@
 		var/atom/new_item = new typepath(src)
 		items_list += WEAKREF(new_item)
 
-	update_appearance()
 	SetSlotFromZone()
 
 /obj/item/organ/cyberimp/arm/Destroy()
@@ -57,28 +56,19 @@
 			slot = right_arm_organ_slot
 		else
 			CRASH("Invalid zone for [type]")
-
-/obj/item/organ/cyberimp/arm/update_icon()
-	. = ..()
-	transform = (zone == BODY_ZONE_R_ARM) ? null : matrix(-1, 0, 0, 0, 1, 0)
-
-/obj/item/organ/cyberimp/arm/examine(mob/user)
-	. = ..()
-	if(IS_ROBOTIC_ORGAN(src))
-		. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
-
-/obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)
-	. = ..()
-	if(.)
-		return TRUE
-	screwtool.play_tool_sound(src)
-	if(zone == BODY_ZONE_R_ARM)
-		zone = BODY_ZONE_L_ARM
-	else
-		zone = BODY_ZONE_R_ARM
-	SetSlotFromZone()
-	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."))
 	update_appearance()
+
+/obj/item/organ/cyberimp/arm/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
+	// Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
+	if (target_zone != BODY_ZONE_R_ARM && target_zone != BODY_ZONE_L_ARM)
+		return FALSE
+
+	zone = target_zone
+	SetSlotFromZone()
+	return ..()
+
+/obj/item/organ/cyberimp/arm/zones_tip()
+	return span_notice("It should be inserted in the [parse_zone(right_arm_organ_slot)] or [parse_zone(left_arm_organ_slot)].")
 
 /obj/item/organ/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
@@ -405,9 +395,14 @@
 		/obj/item/knife/combat/cyborg,
 	)
 
+#define DOAFTER_SOURCE_STRONGARM_INTERACTION "strongarm interaction"
+
+// Strong-Arm Implant //
+
 /obj/item/organ/cyberimp/arm/strongarm
 	name = "\proper Strong-Arm empowered musculature implant"
-	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action."
+	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action. Install one in each arm \
+		to pry open doors with your bare hands!"
 	icon_state = "muscle_implant"
 
 	zone = BODY_ZONE_R_ARM
@@ -440,6 +435,10 @@
 
 /obj/item/organ/cyberimp/arm/strongarm/l
 	zone = BODY_ZONE_L_ARM
+
+/obj/item/organ/cyberimp/arm/strongarm/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/strongarm)
 
 /obj/item/organ/cyberimp/arm/strongarm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
@@ -534,3 +533,21 @@
 	COOLDOWN_START(src, slam_cooldown, slam_cooldown_duration)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/status_effect/organ_set_bonus/strongarm
+	id = "organ_set_bonus_strongarm"
+	organs_needed = 2
+	bonus_activate_text = span_notice("Your improved arms allow you to open airlocks by force with your bare hands!")
+	bonus_deactivate_text = span_notice("You can no longer force open airlocks with your bare hands.")
+
+/datum/status_effect/organ_set_bonus/strongarm/enable_bonus()
+	. = ..()
+	if(!.)
+		return
+	owner.AddElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
+
+/datum/status_effect/organ_set_bonus/strongarm/disable_bonus()
+	. = ..()
+	owner.RemoveElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
+
+#undef DOAFTER_SOURCE_STRONGARM_INTERACTION

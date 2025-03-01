@@ -19,7 +19,17 @@
 	exotic_blood = /datum/reagent/water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
+
+	mutantappendix = /obj/item/organ/appendix/pod
+	mutantbrain = /obj/item/organ/brain/pod
+	mutantears = /obj/item/organ/ears/pod
+	mutanteyes = /obj/item/organ/eyes/pod
+	mutantheart = /obj/item/organ/heart/pod
+	mutantliver = /obj/item/organ/liver/pod
+	mutantlungs = /obj/item/organ/lungs/pod
+	mutantstomach = /obj/item/organ/stomach/pod
 	mutanttongue = /obj/item/organ/tongue/pod
+
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/pod,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/pod,
@@ -28,30 +38,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/pod,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
 	)
-
-/datum/species/pod/spec_life(mob/living/carbon/human/podperson, seconds_per_tick, times_fired)
-	. = ..()
-	if(podperson.stat == DEAD)
-		return
-
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(podperson.loc)) //else, there's considered to be no light
-		var/turf/turf_loc = podperson.loc
-		light_amount = min(1, turf_loc.get_lumcount()) - 0.5
-		podperson.adjust_nutrition(5 * light_amount * seconds_per_tick)
-		if(light_amount > 0.2) //if there's enough light, heal
-			var/need_mob_update = FALSE
-			need_mob_update += podperson.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-			need_mob_update += podperson.adjustToxLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
-			need_mob_update += podperson.adjustOxyLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
-			if(need_mob_update)
-				podperson.updatehealth()
-
-	if(podperson.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
-		podperson.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
-
-	if(podperson.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		podperson.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/species/pod/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	. = ..()

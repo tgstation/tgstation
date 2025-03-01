@@ -249,6 +249,7 @@
 		/obj/item/toy/plush/lizard_plushie,
 		/obj/item/toy/plush/snakeplushie,
 		/obj/item/toy/plush/plasmamanplushie,
+		/obj/item/toy/plush/human,
 		/obj/item/toy/plush/beeplushie,
 		/obj/item/toy/plush/moth,
 		/obj/item/toy/plush/pkplush,
@@ -266,6 +267,7 @@
 		/obj/item/toy/plush/beeplushie = 5,
 		/obj/item/toy/plush/moth = 5,
 		/obj/item/toy/plush/pkplush = 5,
+		/obj/item/toy/plush/human = 5,
 		// rare plushies
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,

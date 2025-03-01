@@ -11,6 +11,7 @@
 	armour_penetration = 40
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_MINING
 	sharpness = SHARP_EDGED
 	melee_attack_cooldown = CLICK_CD_SLOW
 	attack_verb_continuous = "eviscerates"
@@ -46,7 +47,7 @@
 		/datum/action/cooldown/mob_cooldown/the_thing/acid_spit = BB_THETHING_ACIDSPIT,
 	)
 	grant_actions_by_list(innate_actions)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.3 SECONDS)
+	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.4 SECONDS)
 	maploaded = mapload
 	if(maploaded)
 		SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)

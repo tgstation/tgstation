@@ -102,7 +102,7 @@
 	return ..()
 
 /datum/quirk/item_quirk/addict/remove()
-	if(quirk_holder && reagent_instance)
+	if(!QDELETED(quirk_holder) && reagent_instance)
 		for(var/addiction_type in subtypesof(/datum/addiction))
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 

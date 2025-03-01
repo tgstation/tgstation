@@ -343,7 +343,7 @@
 	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, radio_message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
-	if (special_channels & RADIO_SPECIAL_CENTCOM && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
+	if ((special_channels & RADIO_SPECIAL_CENTCOM) && (freq == FREQ_CENTCOM || freq == FREQ_STATUS_DISPLAYS))
 		signal.data["compression"] = 0
 		signal.transmission_method = TRANSMISSION_SUPERSPACE
 		signal.levels = list(0)
@@ -352,7 +352,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
+		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 		if(radio_noise && talking_living.can_hear() && volume_modifier && signal.frequency != FREQ_COMMON && !LAZYACCESS(message_mods, MODE_SEQUENTIAL) && COOLDOWN_FINISHED(src, audio_cooldown))
 			COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
 			var/sound/radio_noise = sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier)
@@ -434,8 +434,8 @@
 		return
 
 	var/mob/living/holder = loc
-	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
-	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
+	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
+	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 		return
 	var/list/spans = data["spans"]
 	if(COOLDOWN_FINISHED(src, audio_cooldown))
@@ -603,11 +603,11 @@
 
 /obj/item/radio/borg/resetChannels()
 	. = ..()
-
-	var/mob/living/silicon/robot/R = loc
-	if(istype(R))
-		for(var/ch_name in R.model.radio_channels)
-			channels[ch_name] = TRUE
+	if (!iscyborg(loc))
+		return
+	var/mob/living/silicon/robot/borg = loc
+	for(var/ch_name in borg.model.radio_channels)
+		channels[ch_name] = TRUE
 
 /obj/item/radio/borg/syndicate
 	special_channels = RADIO_SPECIAL_SYNDIE
@@ -619,37 +619,38 @@
 
 /obj/item/radio/borg/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!keyslot)
-		to_chat(user, span_warning("This radio doesn't have any encryption keys!"))
+		loc.balloon_alert(user, "no encryption keys!")
 		return
 
 	for(var/ch_name in channels)
 		SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 		secure_radio_connections[ch_name] = null
 
-	if(keyslot)
-		var/turf/user_turf = get_turf(user)
-		if(user_turf)
-			keyslot.forceMove(user_turf)
-			keyslot = null
+	if (!user.put_in_hands(keyslot))
+		keyslot.forceMove(drop_location())
 
+	keyslot = null
 	recalculateChannels()
-	to_chat(user, span_notice("You pop out the encryption key in the radio."))
+	loc.balloon_alert(user, "encryption key removed")
 	return ..()
 
-/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/radio/borg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/encryptionkey))
+		return NONE
 
-	if(istype(attacking_item, /obj/item/encryptionkey))
-		if(keyslot)
-			to_chat(user, span_warning("The radio can't hold another key!"))
-			return
+	if(keyslot)
+		loc.balloon_alert(user, "cannot hold another key!")
+		return ITEM_INTERACT_BLOCKING
 
-		if(!keyslot)
-			if(!user.transferItemToLoc(attacking_item, src))
-				return
-			keyslot = attacking_item
+	if(!user.transferItemToLoc(tool, src))
+		loc.balloon_alert(user, "cannot install!")
+		return ITEM_INTERACT_BLOCKING
 
-		recalculateChannels()
-
+	keyslot = tool
+	recalculateChannels()
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	loc.balloon_alert(user, "encryption key installed")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/off // Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	dog_fashion = /datum/dog_fashion/back

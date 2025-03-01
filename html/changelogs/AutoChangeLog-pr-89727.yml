@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes:
+  - bugfix: "AI will no longer deathloop after being revived with 0 backup power."

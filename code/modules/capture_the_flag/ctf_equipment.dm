@@ -112,6 +112,7 @@
 
 /obj/projectile/beam/ctf/marksman
 	damage = 30
+	icon_state = null
 	hitscan = TRUE
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue

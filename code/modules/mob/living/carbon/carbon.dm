@@ -588,7 +588,7 @@
 /mob/living/carbon/update_sight()
 	if(!client)
 		return
-	if(stat == DEAD)
+	if(stat == DEAD && !HAS_TRAIT(src, TRAIT_CORPSELOCKED))
 		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 			set_sight(null)
 		else if(is_secret_level(z))
@@ -1049,6 +1049,11 @@
 	bodyparts += new_bodypart
 	new_bodypart.update_owner(src)
 
+	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
+	for(var/datum/status_effect/grouped/bodypart_effect/effect_type as anything in new_bodypart.bodypart_effects)
+		apply_status_effect(effect_type, type, new_bodypart)
+
+	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
 		organ.mob_insert(src)
 
