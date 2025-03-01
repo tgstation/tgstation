@@ -148,9 +148,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
 
-/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return (slot & ITEM_SLOT_NECK)
-
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
 	if(active_owner)
@@ -216,12 +213,13 @@
 	name = "Memento Mori"
 	desc = "Bind your life to the pendant."
 
-/datum/action/item_action/hands_free/memento_mori/Trigger(trigger_flags)
-	var/obj/item/clothing/neck/necklace/memento_mori/MM = target
-	if(!MM.active_owner)
-		if(ishuman(owner))
-			MM.memento(owner)
-			Remove(MM.active_owner) //Remove the action button, since there's no real use in having it now.
+/datum/action/item_action/hands_free/memento_mori/do_effect(trigger_flags)
+	var/obj/item/clothing/neck/necklace/memento_mori/memento = target
+	if(memento.active_owner || !ishuman(owner))
+		return FALSE
+	memento.memento(owner)
+	Remove(memento.active_owner) //Remove the action button, since there's no real use in having it now.
+	return TRUE
 
 //Wisp Lantern
 /obj/item/wisp_lantern
