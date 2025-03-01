@@ -9,10 +9,11 @@
 /mob/living/simple_animal/proc/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = FALSE
 	if(forced || !HAS_TRAIT(src, TRAIT_GODMODE))
+		var/old_loss = bruteloss
 		bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
 		if(updating_health)
 			updatehealth()
-		. = amount
+		. = old_loss - bruteloss
 	if(ckey || stat)
 		return
 	if(AIStatus == AI_IDLE)
