@@ -45,6 +45,8 @@
 	var/immerse_overlay_color = "#a15e1b"
 	/// Whether the immerse element has been added yet or not
 	var/immerse_added = FALSE
+	/// Lazy list of atoms that we've checked that can/cannot burn
+	var/list/checked_atoms = null
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -58,6 +60,7 @@
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
 
 /turf/open/lava/Destroy()
+	checked_atoms = null
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	for(var/mob/living/leaving_mob in contents)
 		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
@@ -179,6 +182,7 @@
 
 /turf/open/lava/process(seconds_per_tick)
 	if(!burn_stuff(null, seconds_per_tick))
+		checked_atoms = null
 		return PROCESS_KILL
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -251,17 +255,26 @@
 	if(is_safe())
 		return FALSE
 
+	LAZYSETLEN(checked_atoms, 0)
 	var/thing_to_check = src
 	if (to_burn)
 		thing_to_check = list(to_burn)
 	for(var/atom/movable/burn_target as anything in thing_to_check)
-		switch(can_burn_stuff(burn_target))
+		switch(cache_burn_check(burn_target))
 			if(LAVA_BE_IGNORING)
 				continue
 			if(LAVA_BE_BURNING)
 				if(!do_burn(burn_target, seconds_per_tick))
 					continue
 		. = TRUE
+
+/// Wrapper for can_burn_stuff that checks if something can be burnt and caches the result
+/turf/open/lava/proc/cache_burn_check(atom/movable/burn_target)
+	var/check_result = checked_atoms[burn_target.weak_reference]
+	if(isnull(check_result))
+		check_result = can_burn_stuff(burn_target)
+		checked_atoms[WEAKREF(burn_target)] = check_result
+	return check_result
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
 	if(QDELETED(burn_target))
@@ -279,19 +292,19 @@
 
 	if(HAS_TRAIT(burn_target, immunity_trait))
 		return LAVA_BE_PROCESSING
+
 	if(HAS_TRAIT(burn_target, TRAIT_MOB_ELEVATED))
 		return LAVA_BE_PROCESSING
+
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
-	if(burn_buckled)
-		if((burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || burn_buckled.throwing || !burn_buckled.has_gravity())
+	while(burn_buckled)
+		if (cache_burn_check(burn_buckled) == LAVA_BE_PROCESSING)
 			return LAVA_BE_PROCESSING
-		if(isobj(burn_buckled))
-			var/obj/burn_buckled_obj = burn_buckled
-			if(burn_buckled_obj.resistance_flags & immunity_resistance_flags)
-				return LAVA_BE_PROCESSING
-		else if(HAS_TRAIT(burn_buckled, immunity_trait))
-			return LAVA_BE_PROCESSING
+
+		if (isliving(burn_buckled))
+			var/mob/living/living_buckled = burn_buckled
+			burn_buckled = living_buckled.buckled
 
 	if(iscarbon(burn_living))
 		var/mob/living/carbon/burn_carbon = burn_living
