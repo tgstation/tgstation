@@ -319,6 +319,7 @@
 		/datum/reagent/water = 10,
 	)
 	result = /obj/item/food/springroll
+	added_foodtypes = GRAIN
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/caramel_popcorn
@@ -436,6 +437,7 @@
 		/datum/reagent/consumable/peanut_butter = 2,
 	)
 	result = /obj/item/food/bonbon/peanut_butter_cup
+	added_foodtypes = NUTS
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/pickles_jar

@@ -112,6 +112,7 @@
 		/datum/reagent/consumable/blumpkinjuice = 3,
 		/obj/item/food/donut/plain = 1
 	)
+	added_foodtypes = VEGETABLES
 	result = /obj/item/food/donut/blumpkin
 
 /datum/crafting_recipe/food/donut/bungo
@@ -472,6 +473,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/food/pastrybase = 1
 	)
+	added_foodtypes = BREAKFAST|SUGAR|DAIRY
 	result = /obj/item/food/muffin
 	category = CAT_PASTRY
 
@@ -483,6 +485,7 @@
 		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/muffin/berry
+	added_foodtypes = BREAKFAST|SUGAR|FRUIT|DAIRY
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/booberrymuffin
@@ -494,6 +497,7 @@
 		/obj/item/ectoplasm = 1
 	)
 	result = /obj/item/food/muffin/booberry
+	added_foodtypes = BREAKFAST|SUGAR|DAIRY
 	category = CAT_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
@@ -508,6 +512,7 @@
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
+	added_foodtypes = MEAT
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/sugarcookie
@@ -518,6 +523,7 @@
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/cookie/sugar
+	added_foodtypes = JUNKFOOD|SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/spookyskull
@@ -529,6 +535,7 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/cookie/sugar/spookyskull
+	added_foodtypes = JUNKFOOD|SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/spookycoffin
@@ -540,6 +547,7 @@
 		/datum/reagent/consumable/coffee = 5
 	)
 	result = /obj/item/food/cookie/sugar/spookycoffin
+	added_foodtypes = JUNKFOOD|SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/fortunecookie
@@ -563,6 +571,7 @@
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/poppypretzel
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/plumphelmetbiscuit
@@ -580,7 +589,7 @@
 	name = "Cracker"
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 	)
 	result = /obj/item/food/cracker
 	category = CAT_PASTRY
@@ -612,6 +621,7 @@
 		/obj/item/food/grown/oat = 1
 	)
 	result = /obj/item/food/cookie/raisin
+	removed_foodtypes = JUNKFOOD
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/cherrycupcake
@@ -621,6 +631,7 @@
 		/obj/item/food/grown/cherries = 1
 	)
 	result = /obj/item/food/cherrycupcake
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/bluecherrycupcake
@@ -630,6 +641,7 @@
 		/obj/item/food/grown/bluecherries = 1
 	)
 	result = /obj/item/food/cherrycupcake/blue
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/jupitercupcake
@@ -640,6 +652,7 @@
 		/datum/reagent/consumable/caramel = 3,
 	)
 	result = /obj/item/food/jupitercupcake
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/honeybun
@@ -649,6 +662,7 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/honeybun
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/cannoli
@@ -659,6 +673,7 @@
 		/datum/reagent/consumable/sugar = 3
 	)
 	result = /obj/item/food/cannoli
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/peanut_butter_cookie
@@ -668,6 +683,7 @@
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/cookie/peanut_butter
+	added_foodtypes = JUNKFOOD|NUTS
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/raw_brownie_batter
@@ -680,6 +696,8 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/raw_brownie_batter
+	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR
+	removed_foodtypes = MEAT|RAW
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/peanut_butter_brownie_batter
@@ -693,6 +711,7 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/peanut_butter_brownie_batter
+	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR|NUTS
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/crunchy_peanut_butter_tart
@@ -704,6 +723,7 @@
 		/datum/reagent/consumable/cream = 5,
 	)
 	result = /obj/item/food/crunchy_peanut_butter_tart
+	added_foodtypes = JUNKFOOD|SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/chocolate_chip_cookie
@@ -713,6 +733,7 @@
 		/obj/item/food/chocolatebar = 1,
 	)
 	result = /obj/item/food/cookie/chocolate_chip_cookie
+	removed_foodtypes = JUNKFOOD
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/snickerdoodle
@@ -722,6 +743,7 @@
 		/datum/reagent/consumable/vanilla = 5,
 	)
 	result = /obj/item/food/cookie/snickerdoodle
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/thumbprint_cookie
@@ -731,6 +753,7 @@
 		/datum/reagent/consumable/cherryjelly = 5,
 	)
 	result = /obj/item/food/cookie/thumbprint_cookie
+	added_foodtypes = FRUIT|SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/macaron
