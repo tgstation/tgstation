@@ -53,10 +53,12 @@
 	id = "darkness_adapted"
 	tick_interval = 0.5 SECONDS
 	alert_type = null
+	/// Threshold before the dark color is applied
+	var/dark_color_threshold = 70
 	/// Tracks last eye strength to avoid unnecessary updates / eye nerfs
-	var/last_eye_strength = 0
+	VAR_FINAL/last_eye_strength = 0
 	/// Tracks last alpha to avoid unnecessary updates
-	var/last_alpha = 255
+	VAR_FINAL/last_alpha = 255
 	/// When we're moving around, skip any constant tick updates
 	COOLDOWN_DECLARE(skip_tick_update)
 
@@ -84,7 +86,7 @@
 /datum/status_effect/darkness_adapted/proc/examine_mob(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(last_alpha > 80)
+	if(last_alpha > dark_color_threshold)
 		examine_list += span_warning("[owner.p_Their()] skin is shimmering unnaturally in the light.")
 
 /datum/status_effect/darkness_adapted/proc/get_darkness()
@@ -126,10 +128,11 @@
 	if(last_alpha == new_alpha)
 		return
 	animate(owner, alpha = new_alpha, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL)
-	if(new_alpha <= 80)
+	if(new_alpha <= dark_color_threshold)
 		owner.add_atom_colour(COLOR_DARK, TEMPORARY_COLOUR_PRIORITY)
 	else
 		owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK)
+	last_alpha = new_alpha
 
 /datum/status_effect/darkness_adapted/proc/nerf_invis()
 	animate(owner, alpha = 255, time = 1 SECONDS)
