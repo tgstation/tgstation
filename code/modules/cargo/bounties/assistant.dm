@@ -164,7 +164,10 @@
 	description = "Central Command is looking to commission a new BirdBoat-class station. You've been ordered to supply the potted plants."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 3
-	wanted_types = list(/obj/item/kirbyplants = TRUE)
+	wanted_types = list(
+		/obj/item/kirbyplants = TRUE,
+		/obj/item/kirbyplants/synthetic = FALSE
+		)
 
 /datum/bounty/item/assistant/monkey_cubes
 	name = "Monkey Cubes"
