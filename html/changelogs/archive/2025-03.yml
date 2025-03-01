@@ -1,0 +1,10 @@
+2025-03-01:
+  SmArtKar:
+  - bugfix: Cyborg pre-screening dogtags should once again be given to crew with the
+      quirk of the same name.
+  TiviPlus:
+  - code_imp: cleaned up some mass var edit code
+  necromanceranne:
+  - code_imp: Cleans up a bit of human punch code.
+  - bugfix: Stagger combos occur at the correct threshold, and properly utilize armor
+      or a threshold minimum, adjusted for puncher limb accuracy.
