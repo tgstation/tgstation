@@ -239,6 +239,8 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_HIEROPHANT
 	canSmoothWith = SMOOTH_GROUP_HIEROPHANT
+	/// Icon for the emissive overlay
+	var/emissive_icon = 'icons/turf/floors/hierophant_floor_e.dmi'
 
 /turf/open/indestructible/hierophant/set_smoothed_icon_state(new_junction)
 	. = ..()
@@ -246,7 +248,7 @@
 
 /turf/open/indestructible/hierophant/update_overlays()
 	. = ..()
-	. += emissive_appearance('icons/turf/floors/hierophant_floor.dmi', icon_state, src)
+	. += emissive_appearance(emissive_icon, icon_state, src)
 
 /turf/open/indestructible/hierophant/two
 	name = "runic palestone floor"
@@ -254,6 +256,7 @@
 	icon = 'icons/turf/floors/hierophant_floor_alt.dmi'
 	icon_state = "hierophant_floor_alt-255"
 	base_icon_state = "hierophant_floor_alt"
+	emissive_icon = 'icons/turf/floors/hierophant_floor_alt_e.dmi'
 
 /turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
