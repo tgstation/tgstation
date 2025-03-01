@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored item action handling"
+  - bugfix: "You should no longer be able to get med/sec/diag HUDs by toggling a hud in your pocket, or use jump boots from your hands."
+  - qol: "Welding/breathing masks, hardhats and other glasses/helmets no longer show their actions in your top bar while you're holding them in your hands."

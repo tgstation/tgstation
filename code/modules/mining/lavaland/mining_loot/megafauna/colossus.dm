@@ -38,16 +38,14 @@
 			return FALSE
 	return TRUE
 
-/datum/action/item_action/organ_action/colossus/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
+/datum/action/item_action/organ_action/colossus/do_effect(trigger_flags)
 	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command", max_length = MAX_MESSAGE_LEN)
 	if(!command)
-		return
+		return FALSE
 	if(QDELETED(src) || QDELETED(owner))
-		return
+		return FALSE
 	owner.say(".x[command]")
+	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/can_speak_with()
 	if(!owner)

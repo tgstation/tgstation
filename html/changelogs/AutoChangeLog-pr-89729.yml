@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "The Thing (Outpost 31) will aggro if shot from outside aggro range, has achievement"
+  - balance: "the loot room in outpost 31 now contains a freezer with a set of T2 robotic organs, and a set of advanced medical tools. Also The Thing returns to its spawn location if not aggroed"
