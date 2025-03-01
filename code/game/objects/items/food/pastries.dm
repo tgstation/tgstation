@@ -21,7 +21,7 @@
 	icon_state = "berrymuffin"
 	desc = "A delicious and spongy little cake, with berries."
 	tastes = list("muffin" = 3, "berry" = 1)
-	foodtypes = GRAIN|DAIRY|SUGAR|BREAKFAST|BREAKFAST
+	foodtypes = GRAIN|DAIRY|SUGAR|BREAKFAST|FRUIT
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -349,7 +349,7 @@
 		/datum/reagent/consumable/honey = 6,
 	)
 	tastes = list("pastry" = 1, "sweetness" = 1)
-	foodtypes = GRAIN | SUGAR
+	foodtypes = GRAIN|DAIRY|SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 

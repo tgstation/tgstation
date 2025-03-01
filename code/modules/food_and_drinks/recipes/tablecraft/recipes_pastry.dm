@@ -561,6 +561,7 @@
 		/obj/item/paper = 1
 	)
 	result = /obj/item/food/fortunecookie
+	added_foodtypes = SUGAR
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/poppypretzel
@@ -712,6 +713,7 @@
 	)
 	result = /obj/item/food/peanut_butter_brownie_batter
 	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR|NUTS
+	removed_foodtypes = MEAT|RAW
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/crunchy_peanut_butter_tart

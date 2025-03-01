@@ -92,6 +92,7 @@
 		/obj/item/food/grown/onion = 1,
 	)
 	result = /obj/item/food/spaghetti/shoyu_tonkotsu_ramen
+	removed_foodtypes = BREAKFAST
 	category = CAT_SPAGHETTI
 
 /datum/crafting_recipe/food/kitakata_ramen

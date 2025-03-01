@@ -177,6 +177,7 @@
 	result = /obj/item/food/pie/cocolavatart
 	category = CAT_PIE
 	added_foodtypes = SUGAR
+	removed_foodtypes = JUNKFOOD
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/blumpkinpie
