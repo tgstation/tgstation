@@ -14,10 +14,12 @@
 	if(cling.has_status_effect(/datum/status_effect/darkness_adapted))
 		disable_ability(cling)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5)
+		chemical_cost = initial(chemical_cost)
 		return FALSE
 
 	..()
 	enable_ability(cling)
+	chemical_cost = 0
 	return TRUE
 
 /datum/action/changeling/darkness_adaptation/Remove(mob/living/carbon/human/cling)
