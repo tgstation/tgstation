@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Roundend title music will play at half volume again"
+  - bugfix: "April Fools lobby music will correctly always be clown music"
+  - bugfix: "Lobby Music will repeat across sequential rounds less often"
