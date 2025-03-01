@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - qol: "Mirrors now have context tips, and can now be unmounted from walls with a Wrench. (Magic ones can't be removed though. Because magic.)"
