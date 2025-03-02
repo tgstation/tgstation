@@ -1635,7 +1635,7 @@
 
 /obj/item/card/id/advanced/chameleon/equipped(mob/user, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_ID)
+	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 
 /obj/item/card/id/advanced/chameleon/dropped(mob/user)
