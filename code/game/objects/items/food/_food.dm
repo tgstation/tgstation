@@ -136,8 +136,5 @@
 	if(!made_with_food)
 		return
 	final_foodtypes &= ~current_recipe.removed_foodtypes
-	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
-	//unset the flags so that we can properly replace them with the ones from the ingredients used.
-	edible.foodtypes = NONE
-	REMOVE_TRAIT(src, TRAIT_VALID_DNA_INFUSION, REF(edible))
-	AddComponent(/datum/component/edible, foodtypes = final_foodtypes)
+	///Update the foodtypes
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = final_foodtypes)
