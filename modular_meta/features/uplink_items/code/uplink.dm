@@ -13,10 +13,10 @@
 //РНД
 /datum/uplink_item/device_tools/ultdoorjack
 	name = "Syndicate Ultimate authentication override card"
-	desc = "This is greater version of a doorjack. \
-			Have 6 charges, and have longer reload time. \
+	desc = "Greater version of a doorjack. \
+			Have six charges, and have longer reload time. \
 			Thanks to the scientists from the syndicate for creating \
-			experimental version for the elite gorlex fighters and scientists of the enemy station."
+			experimental version for the syndicate agents of the enemy station."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/card/emag/doorjack/ultjacker
 	cost = 10
