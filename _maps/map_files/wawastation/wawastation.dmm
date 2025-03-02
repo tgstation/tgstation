@@ -23267,6 +23267,10 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"iiq" = (
+/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/plating,
+/area/station/engineering/storage)
 "iiB" = (
 /obj/structure/lattice,
 /obj/structure/cable,
@@ -68007,6 +68011,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -111576,7 +111581,7 @@ dTb
 aTv
 aYf
 aYf
-aYf
+iiq
 eRD
 lPp
 cpG

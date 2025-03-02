@@ -7070,6 +7070,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "bSH" = (
@@ -22775,6 +22776,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
+"guq" = (
+/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "guA" = (
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
@@ -242319,7 +242324,7 @@ xYI
 mNY
 oXX
 mNY
-hpd
+guq
 hpd
 hpd
 wkw

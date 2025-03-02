@@ -55741,6 +55741,7 @@
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/trimline/blue/end,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "tJL" = (
@@ -66546,7 +66547,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "xrS" = (
-/obj/structure/closet/firecloset,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "xrW" = (
