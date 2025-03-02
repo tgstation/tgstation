@@ -13,7 +13,7 @@
 #define COMSIG_DEFIBRILLATOR_SUCCESS "defib_success"
 	// #define COMPONENT_DEFIB_STOP (1<<0) // Same return, to stop default defib handling
 
-/// From /obj/item/shockpaddles/proc/do_disarm(): (obj/item/shockpaddles/source)
+/// From /obj/item/shockpaddles/proc/do_disarm(), sent to the shock-ee in non-revival scenarios: (obj/item/shockpaddles/source)
 #define COMSIG_DEFIBRILLATOR_SHOCKED "defib_shock"
 
 /// From /datum/surgery/can_start(): (mob/source, datum/surgery/surgery, mob/living/patient)

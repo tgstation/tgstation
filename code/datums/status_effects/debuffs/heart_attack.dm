@@ -42,7 +42,7 @@
 		qdel(src) //No heart? No effects.
 
 	if(time_until_stoppage > ATTACK_CURE_THRESHOLD)
-		owner.visible_message(span_nicegreen("[owner] relaxes their body and stops clutching at [owner.p_their()] chest!"), span_nicegreen("The pain in your chest has subsided. You're cured!"))
+		owner.visible_message(span_nicegreen("[owner] relaxes [owner.p_their()] body and stops clutching at [owner.p_their()] chest!"), span_nicegreen("The pain in your chest has subsided. You're cured!"))
 		qdel(src)
 		return
 
@@ -51,7 +51,7 @@
 	if(time_until_stoppage <= ATTACK_STAGE_ONE && time_until_stoppage > ATTACK_STAGE_TWO) //Minor, untelegraphed problems. Stage three is where real symptoms hit.
 		if(prob(5))
 			owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 25, FALSE, use_reverb = FALSE)
-			owner.adjustStaminaLoss(20, FALSE)
+			owner.adjustStaminaLoss(5, FALSE)
 
 	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)
 		owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 25, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
