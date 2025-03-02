@@ -9,7 +9,7 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
-	foodtypes = MEAT|GRAIN|DAIRY
+	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
