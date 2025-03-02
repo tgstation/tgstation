@@ -47,9 +47,13 @@
 	. = ..()
 	if(isinhands)
 		return
-
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
+
+/obj/item/clothing/gloves/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		. += mutable_appearance('icons/effects/blood.dmi', "gloveblood")
 
