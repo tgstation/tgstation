@@ -2,13 +2,13 @@
 	"cross": [
 		{
 			"type": "icon_state",
-			"icon_state": "cross_mob",
+			"icon_state": "thin_collar_mob",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "cross_tag_mob",
+			"icon_state": "cross_mob",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		}

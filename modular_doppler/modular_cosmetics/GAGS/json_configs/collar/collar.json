@@ -1,8 +1,8 @@
 {
-	"thinchoker": [
+	"thin_collar": [
 		{
 			"type": "icon_state",
-			"icon_state": "thinchoker_mob",
+			"icon_state": "thin_collar",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}

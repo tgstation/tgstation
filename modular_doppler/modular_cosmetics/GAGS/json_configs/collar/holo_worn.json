@@ -2,7 +2,7 @@
 	"holo": [
 		{
 			"type": "icon_state",
-			"icon_state": "holo_mob",
+			"icon_state": "thin_collar_mob",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},

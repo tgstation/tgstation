@@ -2,15 +2,9 @@
 	"spike": [
 		{
 			"type": "icon_state",
-			"icon_state": "spike_obj",
+			"icon_state": "spiked_collar",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "spike_tag_obj",
-			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
 		}
 	]
 }
