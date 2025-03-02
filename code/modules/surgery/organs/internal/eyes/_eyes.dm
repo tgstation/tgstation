@@ -238,6 +238,10 @@
 	// Always show if we have an appendix
 	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
 
+// Stupid hack to get the iris to render underneath the eyelids.
+/obj/item/organ/eyes/proc/generate_body_overlay_before_eyelids(mob/living/carbon/human/parent)
+	return list()
+
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/eyes) != src)
@@ -260,6 +264,10 @@
 	if(!my_head)
 		return overlays
 
+	var/list/before_eyelids = generate_body_overlay_before_eyelids(parent)
+	if(LAZYLEN(before_eyelids))
+		overlays += before_eyelids
+
 	if(my_head.head_flags & HEAD_EYECOLOR)
 		eye_right.color = parent.get_right_eye_color()
 		eye_left.color = parent.get_left_eye_color()
@@ -277,9 +285,9 @@
 		left_scar.color = my_head.draw_color
 		overlays += left_scar
 
-	if(my_head.worn_face_offset)
-		my_head.worn_face_offset.apply_offset(eye_left)
-		my_head.worn_face_offset.apply_offset(eye_right)
+	if(my_head.eye_offset)
+		my_head.eye_offset.apply_offset(eye_left)
+		my_head.eye_offset.apply_offset(eye_right)
 
 	return overlays
 

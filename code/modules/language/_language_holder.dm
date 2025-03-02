@@ -306,6 +306,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/draconic = list(LANGUAGE_ATOM),
 	)
 
+/datum/language_holder/pony
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/ponish = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/ponish = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/lizard/ash
 	selected_language = /datum/language/draconic
 

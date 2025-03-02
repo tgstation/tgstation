@@ -29,7 +29,10 @@
 		return // We don't need to do any extra signal handling
 
 	if (!isnull(owner))
-		changed_owner(owner)
+		changed_owner(src, owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/new_human = owner
+			new_human.update_features(feature_key)
 	RegisterSignal(attached_part, COMSIG_BODYPART_CHANGED_OWNER, PROC_REF(changed_owner))
 
 /// Returns the current offset which should be used for this feature
@@ -55,6 +58,9 @@
 	if (!isnull(new_owner))
 		RegisterSignal(new_owner, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 		RegisterSignal(new_owner, COMSIG_QDELETING, PROC_REF(on_owner_deleted))
+		if(ishuman(new_owner))
+			var/mob/living/carbon/human/new_human = new_owner
+			new_human.update_features(feature_key)
 
 /// If the owner is deleted, stop updating
 /datum/worn_feature_offset/proc/on_owner_deleted(mob/living/host)
