@@ -1,4 +1,4 @@
-#define ASSET_CROSS_ROUND_CACHE_DIRECTORY "cache/spritesheets/legacy_cache"
+#define ASSET_CROSS_ROUND_CACHE_DIRECTORY "cache/assets"
 #define ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY "data/spritesheets/smart_cache"
 
 /// When sending mutiple assets, how many before we give the client a quaint little sending resources message
