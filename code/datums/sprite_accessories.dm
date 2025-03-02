@@ -1822,6 +1822,21 @@
 	icon_state = "default"
 	color_src = FALSE
 
+/datum/sprite_accessory/tails/xeno
+	icon_state = "default"
+	color_src = FALSE
+	center = TRUE
+
+/datum/sprite_accessory/tails/xeno/default
+	name = "Xeno"
+	icon = 'icons/mob/human/species/alien/tail_xenomorph.dmi'
+	dimension_x = 40
+
+/datum/sprite_accessory/tails/xeno/queen
+	name = "Xeno Queen"
+	icon = 'icons/mob/human/species/alien/tail_xenomorph_queen.dmi'
+	dimension_x = 64
+
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/human/species/podperson_hair.dmi'
 	em_block = TRUE

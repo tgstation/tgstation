@@ -72,7 +72,9 @@
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/make_edible()
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		initial_reagents = food_reagents,\
 		food_flags = food_flags,\
 		foodtypes = foodtypes,\

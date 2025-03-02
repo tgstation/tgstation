@@ -78,3 +78,12 @@
 #define CUSTOM_INGREDIENT_ICON_STACK 3
 #define CUSTOM_INGREDIENT_ICON_LINE 4
 #define CUSTOM_INGREDIENT_ICON_STACKPLUSTOP 5
+
+//declarations for various sources of the edible component.
+
+//The standard source of the edible component which is not expected to e removable
+#define SOURCE_EDIBLE_INNATE "innate"
+#define SOURCE_EDIBLE_FRIED "fried"
+#define SOURCE_EDIBLE_GRILLED "grilled"
+#define SOURCE_EDIBLE_MEAT_MAT "meat"
+#define SOURCE_EDIBLE_PIZZA_MAT "pizza"
