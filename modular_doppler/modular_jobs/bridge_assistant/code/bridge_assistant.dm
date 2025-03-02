@@ -50,7 +50,7 @@
 	)
 
 	uniform = /obj/item/clothing/under/misc/doppler_uniform/command
-	ears = /obj/item/radio/headset/headset_srv
+	ears = /obj/item/radio/headset/heads/hop
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/beret/doppler_command/light
 	belt = /obj/item/modular_computer/pda/bridge_assistant
