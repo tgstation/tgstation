@@ -1017,6 +1017,10 @@
 			actual_color = apply_matrix_to_color(COLOR_WHITE, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
 		add_color_override(actual_color, LIMB_COLOR_ATOM_COLOR + i)
 	update_limb()
+	// Recolors mutant overlays to match new mutant colors
+	for(var/datum/bodypart_overlay/mutant/overlay in bodypart_overlays)
+		overlay.inherit_color(src, force = TRUE)
+	// Update either owner's bodyparts or our icon if we don't have one
 	if (owner)
 		owner.update_body_parts()
 	else
