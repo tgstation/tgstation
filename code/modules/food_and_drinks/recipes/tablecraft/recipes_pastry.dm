@@ -355,7 +355,7 @@
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/grown/cannabis = 1
 	)
-	result = /obj/item/food/dankpocket
+	result = /obj/item/food/donkpocket/dank
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/spicy
