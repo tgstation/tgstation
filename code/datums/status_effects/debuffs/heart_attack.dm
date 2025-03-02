@@ -38,6 +38,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	if(!istype(human_owner) || !human_owner.can_heartattack())
 		qdel(src) //No heart? No effects.
+		return
 
 	if(time_until_stoppage > ATTACK_CURE_THRESHOLD)
 		owner.visible_message(span_nicegreen("[owner] relaxes [owner.p_their()] body and stops clutching at [owner.p_their()] chest!"), span_nicegreen("The pain in your chest has subsided. You're cured!"))
