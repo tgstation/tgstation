@@ -473,6 +473,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
+	action_slots = ALL
 	storage_type = /datum/storage/bag/rebar_quiver/syndicate
 
 /obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()

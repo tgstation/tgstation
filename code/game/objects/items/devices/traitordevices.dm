@@ -234,15 +234,12 @@ effective or pretty fucking useless.
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/datum/action/item_action/stealth_mode/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
+/datum/action/item_action/stealth_mode/do_effect(trigger_flags)
 	if(stealth_engaged)
 		stealth_off()
 	else
 		stealth_on()
+	return TRUE
 
 /datum/action/item_action/stealth_mode/proc/stealth_on()
 	animate(owner, alpha = get_alpha(), time = 0.5 SECONDS)
@@ -310,9 +307,6 @@ effective or pretty fucking useless.
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
 	attack_verb_simple = list("whip", "lash", "discipline")
 	actions_types = list(/datum/action/item_action/stealth_mode)
-
-/obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	return slot & slot_flags
 
 /obj/item/shadowcloak/weaker
 	name = "stealth belt"

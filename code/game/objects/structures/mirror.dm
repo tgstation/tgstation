@@ -25,6 +25,8 @@
 	anchored = TRUE
 	integrity_failure = 0.5
 	max_integrity = 200
+	///Can this mirror be removed from walls with tools?
+	var/deconstructable = TRUE
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
 
 	///Flags this race must have to be selectable with this type of mirror.
@@ -70,6 +72,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+	register_context()
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
@@ -90,6 +93,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return TRUE //no tele-grooming (if nonmagical)
 
 	return display_radial_menu(user)
+
+/obj/structure/mirror/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(!deconstructable)
+		balloon_alert(user, "magic prevents detaching!")
+		return NONE
+	user.visible_message(span_notice("[user] starts detaching [src]..."), span_notice("You start detaching [src]..."))
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 3 SECONDS))
+		user.visible_message(span_notice("[user] detaches [src]!"), span_notice("You detach [src] from the wall."))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/structure/mirror/atom_deconstruct()
+	new /obj/item/wallframe/mirror(loc, 1)
 
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
 	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
@@ -238,10 +257,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	user.update_body()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
+/obj/structure/mirror/examine(mob/user)
+	. = ..()
+	if(deconstructable)
+		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
+
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)
 		return list()// no message spam
 	return ..()
+
+/obj/structure/mirror/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Open Customize Radial"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH && deconstructable)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
 	if(broken || !istype(user) || !I.force)
@@ -323,6 +357,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
+	deconstructable = FALSE
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()

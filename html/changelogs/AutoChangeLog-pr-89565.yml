@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - code_imp: "Cleans up a bit of human punch code."
-  - bugfix: "Stagger combos occur at the correct threshold, and properly utilize armor or a threshold minimum, adjusted for puncher limb accuracy."
