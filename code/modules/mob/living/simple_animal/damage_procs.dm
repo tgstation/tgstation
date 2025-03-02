@@ -9,10 +9,11 @@
 /mob/living/simple_animal/proc/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = FALSE
 	if(forced || !HAS_TRAIT(src, TRAIT_GODMODE))
+		var/old_loss = bruteloss
 		bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
 		if(updating_health)
 			updatehealth()
-		. = amount
+		. = old_loss - bruteloss
 	if(ckey || stat)
 		return
 	if(AIStatus == AI_IDLE)
@@ -59,12 +60,14 @@
 /mob/living/simple_animal/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
+	var/old_stamloss = staminaloss
 	if(forced)
 		staminaloss = max(0, min(max_staminaloss, staminaloss + amount))
 	else
 		staminaloss = max(0, min(max_staminaloss, staminaloss + (amount * damage_coeff[STAMINA])))
 	if(updating_stamina)
 		update_stamina()
+	return old_stamloss - staminaloss
 
 /mob/living/simple_animal/received_stamina_damage(current_level, amount_actual, amount)
 	return
