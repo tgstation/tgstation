@@ -8,7 +8,7 @@
 		/datum/reagent/consumable/nutriment = 3,
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
-	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
+	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = MEAT|GRAIN|DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
@@ -39,13 +39,22 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/medicine/omnizine = 6,
 	)
-	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
-	foodtypes = MEAT|GRAIN|DAIRY
+	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
+	foodtypes = GRAIN
 
 	// Warmed donk pockets will burn if you leave them in the oven or microwave.
 	warm_type = /obj/item/food/badrecipe
 	baking_time_short = 10 SECONDS
 	baking_time_long = 15 SECONDS
+
+/obj/item/food/donkpocket/homemade
+	foodtypes = MEAT|GRAIN|DAIRY
+	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
+	warm_type = /obj/item/food/donkpocket/warm/homemade
+
+/obj/item/food/donkpocket/warm/homemade
+	foodtypes = MEAT|GRAIN|DAIRY
+	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
 
 /obj/item/food/dankpocket
 	name = "\improper Dank-pocket"
@@ -56,7 +65,22 @@
 		/datum/reagent/drug/space_drugs = 3,
 		/datum/reagent/consumable/nutriment = 4,
 	)
-	tastes = list("meat" = 2, "dough" = 2)
+	tastes = list("weed" = 2, "dough" = 2)
+	foodtypes = GRAIN|DAIRY|VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_2
+	warm_type = /obj/item/food/donkpocket/warm/dank
+
+/obj/item/food/donkpocket/warm/dank
+	name = "warm Dank-pocket"
+	desc = "The food of choice for the seasoned botanist."
+	icon_state = "dankpocket"
+	food_reagents = list(
+		/datum/reagent/toxin/lipolicide = 4,
+		/datum/reagent/drug/space_drugs = 4,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/medicine/omnizine = 2,
+	)
+	tastes = list("weed" = 2, "dough" = 2)
 	foodtypes = GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -308,7 +332,7 @@
 		/datum/reagent/medicine/omnizine = 2,
 	)
 	tastes = list("raw meat" = 2, "more meat" = 2, "no carbs" = 1)
-	foodtypes = MEAT|RAW|VEGETABLES
+	foodtypes = MEAT|RAW
 	crafting_complexity = FOOD_COMPLEXITY_4
 	warm_type = /obj/item/food/donkpocket/warm/deluxe/nocarb
 
@@ -328,7 +352,7 @@
 		/datum/reagent/medicine/omnizine = 10,
 	)
 	tastes = list("meat" = 2, "more meat" = 2, "no carbs" = 1)
-	foodtypes = MEAT|VEGETABLES
+	foodtypes = MEAT
 
 /obj/item/food/donkpocket/deluxe/vegan
 	name = "\improper Donk-roll"

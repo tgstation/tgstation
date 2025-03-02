@@ -345,7 +345,7 @@
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1
 	)
-	result = /obj/item/food/donkpocket
+	result = /obj/item/food/donkpocket/homemade
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/dankpocket
@@ -449,6 +449,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/donkpocket/deluxe/nocarb
+	removed_foodtypes = VEGETABLES //The herbs are only to enhance the flavor
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/deluxe/vegan
