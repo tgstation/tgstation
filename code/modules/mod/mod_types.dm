@@ -82,9 +82,11 @@
 		/obj/item/mod/module/t_ray,
 		/obj/item/mod/module/quick_carry,
 		/obj/item/mod/module/headprotector,
+		/obj/item/mod/module/mister/atmos,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/mister/atmos,
 		/obj/item/mod/module/flashlight,
 	)
 

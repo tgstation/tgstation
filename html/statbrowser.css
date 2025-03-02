@@ -150,6 +150,7 @@ img {
 }
 
 .grid-item:hover .grid-item-text {
+	height: 100%;
 	overflow: visible;
 	white-space: normal;
 	background-color: #ececec;

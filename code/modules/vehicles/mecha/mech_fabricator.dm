@@ -476,7 +476,7 @@
 			return
 
 		if("del_queue_part")
-			// Delete a specific from from the queue
+			// Delete a specific from the queue
 			var/index = text2num(params["index"])
 			remove_from_queue(index)
 

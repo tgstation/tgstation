@@ -57,7 +57,7 @@ Key procs
 /datum/language_holder/New(atom/new_owner)
 	if(new_owner)
 		if(QDELETED(new_owner))
-			CRASH("Langauge holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
+			CRASH("Language holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
 		if(!ismovable(new_owner))
 			CRASH("Language holder being added to a non-movable thing, this is invalid (was: [new_owner] / [new_owner.type])")
 
@@ -321,6 +321,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	)
 	selected_language = /datum/language/uncommon
 
+/datum/language_holder/lizard/hear_common
+	selected_language = /datum/language/draconic
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/monkey
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
@@ -480,6 +490,26 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	)
 	selected_language = /datum/language/beachbum
 
+/datum/language_holder/spinwarder
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
+
+/datum/language_holder/spinwarder_exclusive
+	understood_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
+
 // Vending machines are extremely well-educated
 /datum/language_holder/speaking_machine
 	understood_languages = list(
@@ -501,6 +531,35 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/calcic = list(LANGUAGE_ATOM),
 		/datum/language/voltaic = list(LANGUAGE_ATOM),
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/carp
+	selected_language = /datum/language/carptongue
+	understood_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/carp/dragon
+	understood_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+		/datum/language/common = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/carp/hear_common
+	understood_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/common = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
 	)
 
 // Given to atoms by default

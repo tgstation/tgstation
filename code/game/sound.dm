@@ -202,13 +202,13 @@
 	S.status = SOUND_UPDATE
 	SEND_SOUND(src, S)
 
-/client/proc/playtitlemusic(vol = 85)
+/client/proc/playtitlemusic(volume_multiplier = 1)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
-	var/volume_modifier = prefs.read_preference(/datum/preference/numeric/sound_lobby_volume)
-	if((prefs && volume_modifier) && !CONFIG_GET(flag/disallow_title_music))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = volume_modifier, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+	var/music_volume = prefs.read_preference(/datum/preference/numeric/volume/sound_lobby_volume) * volume_multiplier
+	if((prefs && music_volume) && !CONFIG_GET(flag/disallow_title_music))
+		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = music_volume, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
 ///get a random frequency.
 /proc/get_rand_frequency()
@@ -787,5 +787,73 @@
 				'sound/machines/buckle/unbuckle1.ogg',
 				'sound/machines/buckle/unbuckle2.ogg',
 				'sound/machines/buckle/unbuckle3.ogg',
+			)
+		if(SFX_HEADSET_EQUIP)
+			soundin = pick(
+				'sound/items/equip/headset_equip1.ogg',
+				'sound/items/equip/headset_equip2.ogg',
+			)
+		if(SFX_HEADSET_PICKUP)
+			soundin = pick(
+				'sound/items/handling/headset/headset_pickup1.ogg',
+				'sound/items/handling/headset/headset_pickup2.ogg',
+				'sound/items/handling/headset/headset_pickup3.ogg',
+			)
+		if(SFX_BANDAGE_BEGIN)
+			soundin = pick(
+				'sound/items/gauze/bandage_begin1.ogg',
+				'sound/items/gauze/bandage_begin2.ogg',
+				'sound/items/gauze/bandage_begin3.ogg',
+				'sound/items/gauze/bandage_begin4.ogg',
+			)
+		if(SFX_BANDAGE_END)
+			soundin = pick(
+				'sound/items/gauze/bandage_end1.ogg',
+				'sound/items/gauze/bandage_end2.ogg',
+				'sound/items/gauze/bandage_end3.ogg',
+				'sound/items/gauze/bandage_end4.ogg',
+			)
+		// Old cloth sounds are named cloth_...1.ogg, I wanted to keep them so these new ones go further down the line.
+		if(SFX_CLOTH_DROP)
+			soundin = pick(
+				'sound/items/handling/cloth/cloth_drop2.ogg',
+				'sound/items/handling/cloth/cloth_drop3.ogg',
+				'sound/items/handling/cloth/cloth_drop4.ogg',
+				'sound/items/handling/cloth/cloth_drop5.ogg',
+			)
+		if(SFX_CLOTH_PICKUP)
+			soundin = pick(
+				'sound/items/handling/cloth/cloth_pickup2.ogg',
+				'sound/items/handling/cloth/cloth_pickup3.ogg',
+				'sound/items/handling/cloth/cloth_pickup4.ogg',
+				'sound/items/handling/cloth/cloth_pickup5.ogg',
+			)
+		if(SFX_SUTURE_BEGIN)
+			soundin = pick(
+				'sound/items/suture/suture_begin1.ogg',
+			)
+		if(SFX_SUTURE_CONTINUOUS)
+			soundin = pick(
+				'sound/items/suture/suture_continuous1.ogg',
+				'sound/items/suture/suture_continuous2.ogg',
+				'sound/items/suture/suture_continuous3.ogg',
+			)
+		if(SFX_SUTURE_END)
+			soundin = pick(
+				'sound/items/suture/suture_end1.ogg',
+				'sound/items/suture/suture_end2.ogg',
+				'sound/items/suture/suture_end3.ogg',
+			)
+		if(SFX_SUTURE_PICKUP)
+			soundin = pick(
+				'sound/items/handling/suture/needle_pickup1.ogg',
+				'sound/items/handling/suture/needle_pickup2.ogg',
+			)
+		if(SFX_SUTURE_DROP)
+			soundin = pick(
+
+				'sound/items/handling/suture/needle_drop1.ogg',
+				'sound/items/handling/suture/needle_drop2.ogg',
+				'sound/items/handling/suture/needle_drop3.ogg',
 			)
 	return soundin

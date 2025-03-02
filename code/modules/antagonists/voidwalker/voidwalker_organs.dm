@@ -95,8 +95,8 @@
 	. = ..()
 
 	var/turf/spawn_loc = get_turf(owner)
-	new /obj/effect/spawner/random/glass_shards (spawn_loc)
-	new /obj/item/cosmic_skull (spawn_loc)
+	new /obj/effect/spawner/random/glass_shards(spawn_loc)
+	new /obj/item/clothing/head/helmet/skull/cosmic(spawn_loc)
 	playsound(get_turf(owner), SFX_SHATTER, 100)
 
 	qdel(owner)

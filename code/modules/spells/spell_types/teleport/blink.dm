@@ -17,3 +17,8 @@
 	outer_tele_radius = 6
 
 	post_teleport_sound = 'sound/effects/magic/blink.ogg'
+
+/datum/action/cooldown/spell/teleport/radius_turf/blink/slow
+	name = "Minor Blink"
+	desc = "This spell randomly teleports you a short distance, you're still practising doing it quickly."
+	cooldown_time = 8 SECONDS

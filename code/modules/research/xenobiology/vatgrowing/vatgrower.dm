@@ -36,14 +36,7 @@
 
 /obj/machinery/vatgrower/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
-/// Handles properly detaching signal hooks.
-/obj/machinery/vatgrower/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
-	return NONE
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
 /obj/machinery/vatgrower/process(seconds_per_tick)
@@ -132,10 +125,9 @@
 		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
 
 /// Call update icon when reagents change to update the reagent content icons. Eats signal args.
-/obj/machinery/vatgrower/proc/on_reagent_change(datum/reagents/holder, ...)
+/obj/machinery/vatgrower/proc/on_reagent_change(datum/reagents/holder)
 	SIGNAL_HANDLER
 	update_appearance()
-	return NONE
 
 ///Adds overlays to show the reagent contents
 /obj/machinery/vatgrower/update_overlays()

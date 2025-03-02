@@ -124,7 +124,7 @@
 
 /obj/item/food/bread/sausage
 	name = "sausagebread loaf"
-	desc = "Dont think too much about it."
+	desc = "Don't think too much about it."
 	icon_state = "sausagebread"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,

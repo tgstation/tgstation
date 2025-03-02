@@ -24,7 +24,8 @@
 
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
-	volume = 35 * device_type
+	if (!volume) // Pipes can have specific volumes or have it determined by their device_type.
+		volume = UNARY_PIPE_VOLUME * device_type
 	. = ..()
 
 /obj/machinery/atmospherics/pipe/setup_hiding()
