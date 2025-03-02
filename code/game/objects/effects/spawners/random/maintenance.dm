@@ -19,7 +19,7 @@
 	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
 
 /obj/effect/spawner/random/maintenance/Initialize(mapload)
-	if(is_space_or_openspace(loc))
+	if(!istype(src, /obj/effect/spawner/random/maintenance/no_decals) && is_space_or_openspace(loc))
 		if(mapload)
 			stack_trace("[src] at [AREACOORD(src)] tried to spawn in a space or openspace tile! Mappers please use /obj/effect/spawner/random/maintenance/no_decals instead!")
 		else
