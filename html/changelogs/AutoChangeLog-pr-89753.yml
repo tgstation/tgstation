@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Harvesting botany plants actually uses the right drop location. Botany plants harvested by monkey hardworkers on big manipulators harvesting using a full plant bag no longer puts the resulting items inside of the big manipulator."

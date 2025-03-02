@@ -114,17 +114,17 @@
 
 	return ..()
 
-/datum/action/item_action/mod/pinnable/circuit/Trigger(trigger_flags)
+/datum/action/item_action/mod/pinnable/circuit/do_effect(trigger_flags)
 	. = ..()
 	if(!.)
 		return
 	var/obj/item/mod/control/mod = module.mod
 	if(!istype(mod))
-		return
+		return FALSE
 	if(!mod.active || mod.activating)
 		if(mod.wearer)
 			module.balloon_alert(mod.wearer, "not active!")
-		return
+		return FALSE
 	circuit_component.user.set_output(owner)
 	circuit_component.signal.set_output(COMPONENT_SIGNAL)
 
