@@ -218,7 +218,12 @@
 
 	refill()
 	if(edible)
-		AddComponent(/datum/component/edible, bite_consumption = reagents.total_volume / (charges_left / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
+		AddComponentFrom(
+			SOURCE_EDIBLE_INNATE, \
+			/datum/component/edible, \
+			bite_consumption = reagents.total_volume / (charges_left / 5), \
+			after_eat = CALLBACK(src, PROC_REF(after_eat)), \
+		)
 
 /// Used for edible component to reduce charges_left on bite.
 /obj/item/toy/crayon/proc/after_eat(mob/user)
@@ -316,7 +321,7 @@
 		ui = new(user, src, "Crayon", name)
 		ui.open()
 
-/obj/item/toy/crayon/proc/staticDrawables()
+/obj/item/toy/crayon/proc/staticDrawables(is_literate_user)
 	. = list()
 
 	var/list/g_items = list()
@@ -352,20 +357,23 @@
 	var/list/rand_items = list()
 	. += list(list(name = "Random", "items" = rand_items))
 	for(var/i in randoms)
+		if(!is_literate_user) // no spelling allowed
+			if(i == RANDOM_LETTER || i == RANDOM_NUMBER || i == RANDOM_PUNCTUATION)
+				continue
 		rand_items += list(list("item" = i))
 
+/obj/item/toy/crayon/ui_data(mob/user)
+	var/list/crayon_drawables
+	var/is_literate_user = user.is_literate()
 
-/obj/item/toy/crayon/ui_data()
-	var/static/list/crayon_drawables
-
-	if (!crayon_drawables)
-		crayon_drawables = staticDrawables()
+	if(!crayon_drawables)
+		crayon_drawables = staticDrawables(is_literate_user)
 
 	. = list()
 	.["drawables"] = crayon_drawables
 	.["selected_stencil"] = drawtype
 	.["text_buffer"] = text_buffer
-
+	.["is_literate_user"] = is_literate_user
 	.["has_cap"] = has_cap
 	.["is_capped"] = is_capped
 	.["can_change_colour"] = can_change_colour

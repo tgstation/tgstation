@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "objects made out of meat are no longer classified as gross food on top of being raw and meaty, and actually contain protein and fat instead of standard nutriment and oil."
+  - balance: "the pizza material stacks, crafted with margherita pizza and rollig pin mind you, no longer magically contain pepperoni."

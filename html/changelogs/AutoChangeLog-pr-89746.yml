@@ -1,0 +1,5 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - code_imp: "previously silent failures due to empty sounds or too low volumes will now create a runtime in the runtime log"
+  - bugfix: "some footstep sounds like robotic or slimes are no longer silent"
