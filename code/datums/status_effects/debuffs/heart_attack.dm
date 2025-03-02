@@ -1,5 +1,3 @@
-///Stage one of the heart attack, begins effects when the timer ticks down to it.
-#define ATTACK_STAGE_ONE 120
 ///Stage two of the heart attack.
 #define ATTACK_STAGE_TWO 90
 ///Stage three of the heart attack.
@@ -48,12 +46,12 @@
 
 	var/oxyloss_sum = 0 //A sum of the oxyloss we will inflict by the end of this cycle.
 
-	if(time_until_stoppage <= ATTACK_STAGE_ONE && time_until_stoppage > ATTACK_STAGE_TWO) //Minor, untelegraphed problems. Stage three is where real symptoms hit.
+	if(time_until_stoppage > ATTACK_STAGE_THREE)
 		if(prob(5))
 			owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 25, FALSE, use_reverb = FALSE)
 			owner.adjustStaminaLoss(5, FALSE)
 
-	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)
+	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)	//This coughing gets replaced with worse coughing, no need to stack it.
 		owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 25, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		if(prob(10))
 			owner.emote("cough")
@@ -139,8 +137,8 @@
 ///Slightly reduces your timer. Can cure you if you really really want.
 /datum/status_effect/heart_attack/proc/minor_shock()
 	SIGNAL_HANDLER
-	time_until_stoppage += 10 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
-	if(prob(50))
+	time_until_stoppage += 15 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
+	if(prob(50))			//Also good for crafty solos who want to stunbaton themselves back to health. Timing will be key.
 		to_chat(owner, span_nicegreen("Something about being shocked makes the pain in your chest ease up!"))
 
 ///Makes major progress towards curing the attack.
@@ -152,11 +150,10 @@
 ///Slightly reduces your timer, just like the minor shock signal. Slightly more relief because these use cases are generally more dangerous.
 /datum/status_effect/heart_attack/proc/electrocuted()
 	SIGNAL_HANDLER
-	time_until_stoppage += 15
+	time_until_stoppage += 18
 	if(prob(50))
 		to_chat(owner, span_nicegreen("Something about being electrocuted makes the pain in your chest ease up!"))
 
-#undef ATTACK_STAGE_ONE
 #undef ATTACK_STAGE_TWO
 #undef ATTACK_STAGE_THREE
 #undef ATTACK_STAGE_FOUR
