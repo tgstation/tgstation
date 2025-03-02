@@ -497,4 +497,4 @@
 		. += borg_laws
 
 /mob/living/silicon/get_access()
-	return REGION_ACCESS_ALL_GLOBAL
+	return REGION_ACCESS_ALL_STATION
