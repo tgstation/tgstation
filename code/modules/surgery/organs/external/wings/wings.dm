@@ -24,7 +24,7 @@
 	layers = ALL_EXTERNAL_OVERLAYS
 	feature_key = "wings"
 
-/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
 	if(!human.wear_suit)
 		return TRUE
 	if(!(human.wear_suit.flags_inv & HIDEJUMPSUIT))
