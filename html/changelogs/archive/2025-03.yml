@@ -8,3 +8,45 @@
   - code_imp: Cleans up a bit of human punch code.
   - bugfix: Stagger combos occur at the correct threshold, and properly utilize armor
       or a threshold minimum, adjusted for puncher limb accuracy.
+2025-03-02:
+  Jackraxxus:
+  - bugfix: AI will no longer deathloop after being revived with 0 backup power.
+  Jacquerel:
+  - rscadd: You can transplant xenomorph tails onto people.
+  - bugfix: The Warp Cube will now fail if it tries to teleport you to nowhere, instead
+      of turning you blue and then failing
+  Melbert:
+  - bugfix: Ion Storms should be far far far less likely to purge ais and far far
+      far more likely to replace the ai's lawset with a new set
+  - rscadd: Battle arcades get funny names again
+  - bugfix: Roundend title music will play at half volume again
+  - bugfix: April Fools lobby music will correctly always be clown music
+  - bugfix: Lobby Music will repeat across sequential rounds less often
+  OrionTheFox:
+  - qol: Mirrors now have context tips, and can now be unmounted from walls with a
+      Wrench. (Magic ones can't be removed though. Because magic.)
+  SmArtKar:
+  - rscadd: Foam darts now stick to people when they have their cap on, riot foam
+      darts also can passively deal a bit of stamina damage when you move with one.
+  - rscadd: Syringes can be inserted into foam darts, making them embed and slowly
+      leak their reagents into their victim.
+  - rscadd: Syringe guns can be toggled (with right click) between high power and
+      low power modes, former being their normal functionality and latter making syringes
+      embed and slowly leak their contents.
+  - bugfix: Fixed projectiles sometimes not embedding when they should've
+  - code_imp: Cleaned embedding code up
+  - bugfix: You no longer get set ablaze by a person you're fireman carrying through
+      lava while riding a raptor
+  - refactor: Refactored item action handling
+  - bugfix: You should no longer be able to get med/sec/diag HUDs by toggling a hud
+      in your pocket, or use jump boots from your hands.
+  - qol: Welding/breathing masks, hardhats and other glasses/helmets no longer show
+      their actions in your top bar while you're holding them in your hands.
+  mc-oofert:
+  - bugfix: The Thing (Outpost 31) will aggro if shot from outside aggro range, has
+      achievement
+  - balance: the loot room in outpost 31 now contains a freezer with a set of T2 robotic
+      organs, and a set of advanced medical tools. Also The Thing returns to its spawn
+      location if not aggroed
+  timothymtorres:
+  - bugfix: Fix illiterate people writing messages with crayons and spraycans.
