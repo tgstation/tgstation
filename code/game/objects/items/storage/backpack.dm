@@ -414,6 +414,7 @@
 	icon_state = "duffel"
 	inhand_icon_state = "duffel"
 	actions_types = list(/datum/action/item_action/zipper)
+	action_slots = ALL
 	storage_type = /datum/storage/duffel
 	// How much to slow you down if your bag isn't zipped up
 	var/zip_slowdown = 1
