@@ -56,7 +56,7 @@
 	foodtypes = MEAT|GRAIN|DAIRY
 	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
 
-/obj/item/food/dankpocket
+/obj/item/food/donkpocket/dank
 	name = "\improper Dank-pocket"
 	desc = "The food of choice for the seasoned botanist."
 	icon_state = "dankpocket"
@@ -70,13 +70,19 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 	warm_type = /obj/item/food/donkpocket/warm/dank
 
+/obj/item/food/donkpocket/dank/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, child_added_reagents)
+
+/obj/item/food/donkpocket/dank/make_microwaveable()
+	AddElement(/datum/element/microwavable, warm_type, child_added_reagents)
+
 /obj/item/food/donkpocket/warm/dank
 	name = "warm Dank-pocket"
 	desc = "The food of choice for the seasoned botanist."
 	icon_state = "dankpocket"
 	food_reagents = list(
-		/datum/reagent/toxin/lipolicide = 4,
-		/datum/reagent/drug/space_drugs = 4,
+		/datum/reagent/toxin/lipolicide = 3,
+		/datum/reagent/drug/space_drugs = 3,
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/medicine/omnizine = 2,
 	)
