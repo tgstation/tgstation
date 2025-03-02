@@ -495,3 +495,6 @@
 	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 	for(var/borg_laws in law_list)
 		. += borg_laws
+
+/mob/living/silicon/get_access()
+	return REGION_ACCESS_ALL_STATION
