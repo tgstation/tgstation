@@ -2392,7 +2392,7 @@
 /area/awaymission/cabin/caves)
 "my" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/gun/ballistic/automatic/sks/chekhov,
+/obj/item/gun/ballistic/rifle/sks/chekhov,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
