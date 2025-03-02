@@ -39,7 +39,7 @@
 
 /obj/item/food/candy/bronx/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)))
 
 /obj/item/food/candy/bronx/proc/on_consume(mob/living/eater)
 	if(ishuman(eater))
@@ -71,6 +71,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = JUNKFOOD | MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_1
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/sosjerky/healthy
 	name = "homemade beef jerky"

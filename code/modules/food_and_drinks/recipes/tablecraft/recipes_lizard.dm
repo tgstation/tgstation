@@ -31,7 +31,6 @@
 	blacklist = list(
 		/obj/item/organ/lungs/cybernetic,
 	)
-
 	result = /obj/item/food/shredded_lungs
 	category = CAT_LIZARD
 

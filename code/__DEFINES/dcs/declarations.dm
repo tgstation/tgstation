@@ -67,14 +67,23 @@
 #define CALTROP_NOSTUN (1 << 3)
 #define CALTROP_NOCRAWL (1 << 4)
 
-//Ingredient type in datum/component/customizable_reagent_holder
+//Ingredient type in datum/component/ingredients_holder
 #define CUSTOM_INGREDIENT_TYPE_EDIBLE 1
 #define CUSTOM_INGREDIENT_TYPE_DRYABLE 2
 
-//Icon overlay type in datum/component/customizable_reagent_holder
+//Icon overlay type in datum/component/ingredients_holder
 #define CUSTOM_INGREDIENT_ICON_NOCHANGE 0
 #define CUSTOM_INGREDIENT_ICON_FILL 1
 #define CUSTOM_INGREDIENT_ICON_SCATTER 2
 #define CUSTOM_INGREDIENT_ICON_STACK 3
 #define CUSTOM_INGREDIENT_ICON_LINE 4
 #define CUSTOM_INGREDIENT_ICON_STACKPLUSTOP 5
+
+//declarations for various sources of the edible component.
+
+//The standard source of the edible component which is not expected to e removable
+#define SOURCE_EDIBLE_INNATE "innate"
+#define SOURCE_EDIBLE_FRIED "fried"
+#define SOURCE_EDIBLE_GRILLED "grilled"
+#define SOURCE_EDIBLE_MEAT_MAT "meat"
+#define SOURCE_EDIBLE_PIZZA_MAT "pizza"

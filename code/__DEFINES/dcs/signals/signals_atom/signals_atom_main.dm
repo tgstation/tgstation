@@ -151,3 +151,8 @@
 
 /// From /datum/component/tether/UnregisterFromParent()
 #define COMSIG_ATOM_TETHER_SNAPPED "atom_tether_snapped"
+
+/// From /atom/finalize_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS "atom_finalize_material_effects"
+/// From /atom/finalize_remove_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS "atom_finalize_remove_material_effects"

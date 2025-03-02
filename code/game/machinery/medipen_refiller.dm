@@ -26,7 +26,7 @@
 	AddComponent(/datum/component/plumbing/simple_demand)
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
-	CheckParts()
+	RefreshParts()
 
 /obj/machinery/medipen_refiller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

@@ -43,13 +43,13 @@
 	ADD_TRAIT(this_food, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
 	// Already edible items will inherent these parameters
 	// Otherwise, we will become edible.
-	this_food.AddComponent( \
+	this_food.AddComponentFrom( \
+		SOURCE_EDIBLE_FRIED, \
 		/datum/component/edible, \
 		bite_consumption = 2, \
 		food_flags = FOOD_FINGER_FOOD, \
 		junkiness = 10, \
 		foodtypes = FRIED, \
-		volume = this_food.reagents?.maximum_volume, \
 	)
 	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 
@@ -59,5 +59,5 @@
 	source.name = initial(source.name)
 	source.desc = initial(source.desc)
 	REMOVE_TRAIT(source, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
-	qdel(source.GetComponent(/datum/component/edible)) // Don't care if it was initially edible
+	source.RemoveComponentSource(SOURCE_EDIBLE_FRIED, /datum/component/edible)
 	return ..()

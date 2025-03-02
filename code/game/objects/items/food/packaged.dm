@@ -106,6 +106,7 @@
 	tastes = list("dog food" = 5, "狗肉" = 3)
 	foodtypes = MEAT | GROSS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/canned/envirochow/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!check_buffability(user))
@@ -372,7 +373,7 @@
 ///Override for checkliked callback
 /obj/item/food/rationpack/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/rationpack/proc/check_liked(mob/mob) //Nobody likes rationpacks. Nobody.
 	return FOOD_DISLIKED
