@@ -262,7 +262,6 @@
 	offset_change(hud?.current_plane_offset || 0)
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
-
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
 	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
@@ -299,6 +298,11 @@
 	var/blue = color_cutoffs[3] / 100
 	add_filter("light_cutdown", 3, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, -(ratio + red),-(ratio+green),-(ratio+blue),0)))
 	add_filter("light_cutup", 4, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, ratio+red,ratio+green,ratio+blue,0)))
+
+/atom/movable/screen/plane_master/rendering_plate/overlay_cutoff
+	name = "Overlay Lighting Cutoff Plate"
+	documentation = "A plate used to mask out a slight portion of turf lighting in order to fake light weight for overlay lights.\
+		Multiplied by a constant and then applied to the turf lighting plane."
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_slate
 	name = "Emissive Plate"

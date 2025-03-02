@@ -289,24 +289,8 @@
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(O_LIGHTING_CUTOFF_PLANE, RENDER_PLANE_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
-
-/*
-/atom/movable/screen/plane_master/light_mask_visual
-	name = "Light mask visual"
-	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
-		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
-		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
-	plane = O_LIGHTING_VISUAL_PLANE
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
-	critical = PLANE_CRITICAL_DISPLAY
-
-*/
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
