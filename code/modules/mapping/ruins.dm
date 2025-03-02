@@ -206,7 +206,7 @@
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
 
-			log_mapping("Successfully placed [current_pick.name] ruin at [COORD(placed_turf)].")
+			log_mapping("Successfully placed [current_pick.name] ruin.")
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
