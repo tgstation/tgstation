@@ -43,6 +43,16 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		CRASH("Invalid colors were given to `GetColoredIconByType()`: [colors]")
 	return configurations[type].Generate(colors)
 
+/datum/controller/subsystem/processing/greyscale/proc/GetColoredIconByTypeUniversalIcon(type, list/colors, target_icon_state)
+	if(!ispath(type, /datum/greyscale_config))
+		CRASH("An invalid greyscale configuration was given to `GetColoredIconByTypeUniversalIcon()`: [type]")
+	type = "[type]"
+	if(istype(colors)) // It's the color list format
+		colors = colors.Join()
+	else if(!istext(colors))
+		CRASH("Invalid colors were given to `GetColoredIconByTypeUniversalIcon()`: [colors]")
+	return configurations[type].GenerateUniversalIcon(colors, target_icon_state)
+
 /datum/controller/subsystem/processing/greyscale/proc/ParseColorString(color_string)
 	. = list()
 	var/list/split_colors = splittext(color_string, "#")
