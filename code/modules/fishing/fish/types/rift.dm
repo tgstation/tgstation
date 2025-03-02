@@ -716,7 +716,7 @@
 /datum/bodypart_overlay/simple/babbearfish
 	icon_state = "babbearfish"
 
-/datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
 	if(!human?.head)
 		return FALSE
 	if((human.head.flags_inv & HIDEEARS) || (human.wear_mask.flags_inv & HIDEEARS))
