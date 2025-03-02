@@ -1240,7 +1240,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Dh" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Dk" = (
