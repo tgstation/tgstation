@@ -16,7 +16,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
-	foodtypes = VEGETABLES|SEAFOOD|FRIED
+	foodtypes = VEGETABLES|GRAIN|SEAFOOD|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -1280,7 +1280,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
-	foodtypes = VEGETABLES | SEAFOOD | DAIRY
+	foodtypes = VEGETABLES|GRAIN|SEAFOOD|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -1297,6 +1297,6 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
-	foodtypes = VEGETABLES | SEAFOOD | DAIRY
+	foodtypes = VEGETABLES|GRAIN|SEAFOOD|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3

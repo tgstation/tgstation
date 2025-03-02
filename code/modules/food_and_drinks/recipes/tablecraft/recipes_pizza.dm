@@ -49,6 +49,7 @@
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/corn = 1,
 		/obj/item/food/grown/tomato = 1
+		/obj/item/food/cheese/wedge = 1,
 	)
 	result = /obj/item/food/pizza/vegetable/raw
 
