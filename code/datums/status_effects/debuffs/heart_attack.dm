@@ -1,11 +1,11 @@
 ///Stage two of the heart attack.
-#define ATTACK_STAGE_TWO 90
+#define ATTACK_STAGE_TWO 100
 ///Stage three of the heart attack.
 #define ATTACK_STAGE_THREE 70
 ///Stage four of the heart attack.
-#define ATTACK_STAGE_FOUR 25
+#define ATTACK_STAGE_FOUR 35
 ///If we reduce heart damage enough, it will recover on its own.
-#define ATTACK_CURE_THRESHOLD 130
+#define ATTACK_CURE_THRESHOLD 160
 ///What is the max oxyloss we're willing to deal, to prevent people from passing out early.
 #define OXYLOSS_MAXIMUM 40
 
@@ -15,7 +15,7 @@
 	remove_on_fullheal = TRUE
 	alert_type = null
 	///A timer that ticks down until the heart fully stops
-	var/time_until_stoppage = 120
+	var/time_until_stoppage = 150
 	///Does the victim hear their own heartbeat?
 	var/sound = FALSE
 	///Does this show up on medhuds?
