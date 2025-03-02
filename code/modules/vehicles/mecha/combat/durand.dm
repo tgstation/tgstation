@@ -18,7 +18,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 1,
 	)
 	var/obj/durand_shield/shield
 
@@ -143,7 +143,9 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	button_icon_state = "mech_defense_mode_off"
 
 /datum/action/vehicle/sealed/mecha/mech_defense_mode/Trigger(trigger_flags, forced_state = FALSE)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	SEND_SIGNAL(chassis, COMSIG_MECHA_ACTION_TRIGGER, owner, args) //Signal sent to the mech, to be handed to the shield. See durand.dm for more details
 

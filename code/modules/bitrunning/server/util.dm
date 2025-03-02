@@ -5,7 +5,7 @@
 /obj/machinery/quantum_server/proc/cool_off()
 	is_ready = TRUE
 	update_appearance()
-	radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", radio_channel_to_use)
+	aas_config_announce(/datum/aas_config_entry/bitrunning_QS_ready_announcement, list(), src, list(radio_channel_to_use))
 
 
 /// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals

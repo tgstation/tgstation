@@ -95,7 +95,6 @@
 	var/static/list/cleanable_blood = typecacheof(list(
 		/obj/effect/decal/cleanable/xenoblood,
 		/obj/effect/decal/cleanable/blood,
-		/obj/effect/decal/cleanable/trail_holder,
 	))
 	///pests we hunt
 	var/static/list/huntable_pests = typecacheof(list(

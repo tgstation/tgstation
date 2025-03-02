@@ -43,7 +43,7 @@ Then the player gets the profit from selling his own wasted time.
 	* Arguments:
 	** apply_elastic: if the price will change based on amount sold, where applicable
 	** delete_unsold: if the items that were not sold should be deleted
-	** dry_run: if the item should be actually sold, or if its just a pirce test
+	** dry_run: if the item should be actually sold, or if it's just a pirce test
 	** external_report: works as "transaction" object, pass same one in if you're doing more than one export in single go
 	** ignore_typecache: typecache containing types that should be completely ignored
 */

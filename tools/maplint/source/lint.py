@@ -365,7 +365,7 @@ class Rules:
                 if not banned_neighbor.matches(identified, neighbor):
                     continue
 
-                failures.append(fail_content(identified, f"Typepath {identified.path} has a banned neighbor{when_text}: {neighbor.path}"))
+                failures.append(fail_content(identified, f"Typepath {identified.path} has a banned path on the same tile{when_text}: {neighbor.path}"))
 
         for required_neighbor in self.required_neighbors:
             found = False

@@ -86,7 +86,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Can by synced with a DRAGnet beacon to set a teleport destination for snare rounds."
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Can be synced with a DRAGnet beacon to set a teleport destination for snare rounds."
 	icon_state = "dragnet"
 	inhand_icon_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'

@@ -60,6 +60,7 @@
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
+	initial_language_holder = /datum/language_holder/lizard/hear_common
 	var/swooping = NONE
 	var/player_cooldown = 0
 	gps_name = "Fiery Signal"

@@ -25,7 +25,7 @@
 
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
-	desc = "Neither sandy nor stoney, these thirty blocks will still get the job done."
+	desc = "Neither sandy nor stony, these thirty blocks will still get the job done."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"

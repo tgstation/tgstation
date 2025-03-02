@@ -472,7 +472,7 @@
 
 /turf/open/floor/carpet/neon
 	name = "neon carpet"
-	desc = "A rubbery pad inset with a phsophorescent pattern."
+	desc = "A rubbery pad inset with a phosphorescent pattern."
 	icon = 'icons/turf/floors/carpet_black.dmi'
 	icon_state = "carpet_black-255"
 	base_icon_state = "carpet_black"

@@ -234,7 +234,7 @@
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue
-			if(!check_teleport_valid(src, teleport_location))
+			if(!check_teleport_valid(src, dangerous_turf))
 				continue
 			dangerous_turfs += dangerous_turf
 
@@ -285,7 +285,7 @@
 ///Is, for some reason, separate from the teleport target's check in try_create_portal_to()
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
-	if (!current_location || check_teleport_valid(src, current_location) || is_away_level(current_location.z) || !isturf(user.loc))
+	if (!current_location || !check_teleport_valid(src, current_location) || is_away_level(current_location.z) || !isturf(user.loc))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return FALSE
 

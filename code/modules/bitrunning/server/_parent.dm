@@ -28,8 +28,6 @@
 	var/list/datum/weakref/spawned_threat_refs = list()
 	/// Scales loot with extra players
 	var/multiplayer_bonus = 1.1
-	///The radio the console can speak into
-	var/obj/item/radio/radio
 	/// What radio channel should we be using?
 	var/radio_channel_to_use = RADIO_CHANNEL_SUPPLY
 	/// The amount of points in the system, used to purchase maps
@@ -58,6 +56,8 @@
 	var/skip_requirements = FALSE
 	/// Should glitches be enabled on this server
 	var/has_glitches = TRUE
+	/// The radio for the server.
+	var/obj/item/radio/radio
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
@@ -83,7 +83,6 @@
 	spawned_threat_refs.Cut()
 	QDEL_NULL(exit_turfs)
 	QDEL_NULL(generated_domain)
-	QDEL_NULL(radio)
 
 /obj/machinery/quantum_server/examine(mob/user)
 	. = ..()
@@ -192,6 +191,12 @@
 
 	return ..()
 
+/datum/aas_config_entry/bitrunning_QS_ready_announcement
+	name = "Cargo Alert: Bitrunning QS Ready"
+	general_tooltip = "Announces when the quantum server is ready to be used. No variables provided"
+	announcement_lines_map = list(
+		"Message" = "Quantum Server report: Thermal systems within operational parameters. Proceeding to domain configuration."
+	)
 /obj/machinery/quantum_server/prisoner
 	name = "torment nexus"
 	desc = "The backbone of the Torment Nexus, purchased from a failed startup that wanted to revolutionize working remote, hastily repurposed for \

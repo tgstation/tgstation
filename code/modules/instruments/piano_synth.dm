@@ -26,6 +26,9 @@
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 2.5
+	equip_sound = SFX_HEADSET_EQUIP
+	pickup_sound = SFX_HEADSET_PICKUP
+	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
 	instrument_range = 1
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY

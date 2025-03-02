@@ -15,7 +15,7 @@
 	name = "Activate Camouflage"
 	desc = "Activate your camouflage implant, and blend into your surroundings..."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "invisibility"
+	button_icon_state = "deploy_box"
 	/// The alpha we move to when activating this action.
 	var/camouflage_alpha = 35
 	/// Are we currently cloaking ourself?

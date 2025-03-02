@@ -218,3 +218,7 @@ cryo_1.ogg, cryo_2.ogg, cryo_3.ogg, cryo_4.ogg, cryo_5.ogg, cryo_6.ogg, cryo_7.o
 converted to OGG / split apart (but is otherwise unchanged) -- original from https://freesound.org/people/DudeAwesome/sounds/386023/ by DudeAwesome -- License: CC BY 4.0
 
 sound/items/dice_roll.ogg -- https://freesound.org/people/Crovic/sounds/661935/ -- by Crovic (CC0)
+
+sound/items/handling/materials/snow_drop.ogg and sound/items/handling/materials/snow_pick_up.ogg -- https://freesound.org/people/Vrymaa/sounds/775014/ by Vrymaa (CC0)
+
+sound/items/hair-clippers.ogg -- https://freesound.org/people/VIPERSTRONG/sounds/655747/ -- by VIPERSTRONG (CC0)

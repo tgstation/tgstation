@@ -17,7 +17,7 @@
 
 /datum/mutation/human/quick
 	name = "Quick"
-	desc = "A mution within the leg muscles that allows it to operate at 20% more than the usual capacity."
+	desc = "A mutation within the leg muscles that allows it to operate at 20% more than the usual capacity."
 	text_gain_indication = span_notice("Your legs feel faster and stronger.")
 	text_lose_indication = span_warning("Your legs feel weaker and slower.")
 	locked = TRUE
@@ -85,7 +85,7 @@
 
 /datum/mutation/human/quick_recovery
 	name = "Quick Recovery"
-	desc = "A mutation within the nervouse system that allows it to recover from being knocked down."
+	desc = "A mutation within the nervous system that allows it to recover from being knocked down."
 	text_gain_indication = span_notice("You feel like you can recover from a fall easier.")
 	text_lose_indication = span_warning("You feel like recovering from a fall is a challenge again.")
 	locked = TRUE

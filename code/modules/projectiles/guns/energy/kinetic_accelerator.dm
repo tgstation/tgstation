@@ -386,14 +386,27 @@
 	modifier = 3.2
 	minebot_upgrade = FALSE
 
+// Recalculate recharge time after adding or removing cooldown mods.
+/obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	
+	var/new_recharge_time = initial(KA.recharge_time)
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+		if(istype(modkit_upgrade, src))	
+			new_recharge_time -= modifier
+
+	return new_recharge_time
+
+
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-		KA.recharge_time -= modifier
+		KA.recharge_time = get_recharge_time(KA)
+
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-	KA.recharge_time += modifier
 	..()
+	KA.recharge_time = get_recharge_time(KA)
+
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot
 	name = "minebot cooldown decrease"

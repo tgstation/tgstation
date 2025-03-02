@@ -114,7 +114,7 @@
 	button_icon_state = "blood_effect_falling"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
-	desc = "Rain down poisonous dropplets of blood!"
+	desc = "Rain down poisonous droplets of blood!"
 	cooldown_time = 10 SECONDS
 	click_to_activate = FALSE
 	shared_cooldown = NONE

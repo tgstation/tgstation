@@ -15,6 +15,7 @@
 	)
 	crusher_loot = /obj/item/crusher_trophy/tail_spike
 	speed = 12
+	initial_language_holder = /datum/language_holder/lizard/hear_common
 
 	maxHealth = 300
 	health = 300

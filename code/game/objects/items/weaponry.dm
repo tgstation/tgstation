@@ -1025,7 +1025,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		angle = 180
 	if(target.dir & target_to_user)
 		angle = 360
-	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, round(target.throw_range * 1.5, 1), offset = angle + (rand(-1, 1) * 10))
+	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, max(3, round(target.throw_range * 1.5, 1)), offset = angle + (rand(-1, 1) * 10))
 	throw_datum.finalize(hit = FALSE)
 	target.mouse_opacity = MOUSE_OPACITY_TRANSPARENT //dont mess with our ball
 	target.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
@@ -1359,7 +1359,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	animate(src, duration*0.5, color = slash_color, transform = scaled_transform, alpha = 255)
 
 /obj/item/highfrequencyblade/wizard
-	desc = "A blade that was mastercrafted by a legendary blacksmith. Its' enchantments let it slash through anything."
+	desc = "A blade that was mastercrafted by a legendary blacksmith. Its enchantments let it slash through anything."
 	force = 8
 	throwforce = 20
 	wound_bonus = 20

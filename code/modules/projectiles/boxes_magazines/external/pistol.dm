@@ -1,6 +1,3 @@
-#define FIRE_BULLETS " Carries rounds which ignite targets and leave flaming trails, but inflict less damage."
-#define HP_BULLETS " Carries hollow-point rounds which are effective against unarmored targets, but suffer greatly against armor."
-#define AP_BULLETS " Carries armor-piercing rounds which are effective against armored targets, but less effective against unarmored targets."
 
 // Makarov (9mm) //
 
@@ -9,6 +6,8 @@
 	icon_state = "9x19p"
 	base_icon_state = "9x19p"
 	desc = "A 9mm handgun magazine, suitable for the Makarov pistol."
+	ammo_band_icon = "+9x19ab"
+	ammo_band_color = null
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
 	max_ammo = 12
@@ -17,23 +16,17 @@
 
 /obj/item/ammo_box/magazine/m9mm/fire
 	name = "pistol magazine (9mm incendiary)"
-	icon_state = "9x19pI"
-	base_icon_state = "9x19pI"
-	desc = parent_type::desc + FIRE_BULLETS
+	MAGAZINE_TYPE_INCENDIARY
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/m9mm/hp
 	name = "pistol magazine (9mm HP)"
-	icon_state = "9x19pH"
-	base_icon_state = "9x19pH"
-	desc = parent_type::desc + HP_BULLETS
+	MAGAZINE_TYPE_HOLLOWPOINT
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 
 /obj/item/ammo_box/magazine/m9mm/ap
 	name = "pistol magazine (9mm AP)"
-	icon_state = "9x19pA"
-	base_icon_state = "9x19pA"
-	desc = parent_type::desc + AP_BULLETS
+	MAGAZINE_TYPE_ARMORPIERCE
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 
 // Stechkin APS (9mm) //
@@ -43,6 +36,8 @@
 	desc = "A 9mm handgun magazine, suitable for the Stechkin APS machine pistol."
 	icon_state = "9mmaps-15"
 	base_icon_state = "9mmaps"
+	ammo_band_icon = "+9mmapsab"
+	ammo_band_color = null
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
 	max_ammo = 15
@@ -53,17 +48,17 @@
 
 /obj/item/ammo_box/magazine/m9mm_aps/fire
 	name = "stechkin pistol magazine (9mm incendiary)"
-	desc = parent_type::desc + FIRE_BULLETS
+	MAGAZINE_TYPE_INCENDIARY
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/m9mm_aps/hp
 	name = "stechkin pistol magazine (9mm HP)"
-	desc = parent_type::desc + HP_BULLETS
+	MAGAZINE_TYPE_HOLLOWPOINT
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 
 /obj/item/ammo_box/magazine/m9mm_aps/ap
 	name = "stechkin pistol magazine (9mm AP)"
-	desc = parent_type::desc + AP_BULLETS
+	MAGAZINE_TYPE_ARMORPIERCE
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 
 // Ansem (10mm) //
@@ -73,6 +68,9 @@
 	desc = "A 10mm handgun magazine, suitable for the Ansem pistol."
 	icon_state = "9x19p"
 	base_icon_state = "9x19p"
+	ammo_band_icon = "+9x19ab"
+	ammo_band_color = null
+
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = CALIBER_10MM
 	max_ammo = 8
@@ -81,23 +79,17 @@
 
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
-	icon_state = "9x19pI"
-	base_icon_state = "9x19pI"
-	desc = parent_type::desc + FIRE_BULLETS
+	MAGAZINE_TYPE_INCENDIARY
 	ammo_type = /obj/item/ammo_casing/c10mm/fire
 
 /obj/item/ammo_box/magazine/m10mm/hp
 	name = "pistol magazine (10mm HP)"
-	icon_state = "9x19pH"
-	base_icon_state = "9x19pH"
-	desc = parent_type::desc + HP_BULLETS
+	MAGAZINE_TYPE_HOLLOWPOINT
 	ammo_type = /obj/item/ammo_casing/c10mm/hp
 
 /obj/item/ammo_box/magazine/m10mm/ap
 	name = "pistol magazine (10mm AP)"
-	icon_state = "9x19pA"
-	base_icon_state = "9x19pA"
-	desc = parent_type::desc + AP_BULLETS
+	MAGAZINE_TYPE_ARMORPIERCE
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
 // Regal Condor (10mm) //
@@ -136,7 +128,3 @@
 	caliber = CALIBER_50AE
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_PER_BULLET
-
-#undef FIRE_BULLETS
-#undef HP_BULLETS
-#undef AP_BULLETS
