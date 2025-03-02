@@ -149,7 +149,7 @@
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
 	if(!human)
-		return FALSE
+		return TRUE
 	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
 	return TRUE
@@ -283,7 +283,7 @@
 
 /datum/bodypart_overlay/mutant/tail_spines/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
 	if(!human)
-		return FALSE
+		return TRUE
 	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
 	return TRUE

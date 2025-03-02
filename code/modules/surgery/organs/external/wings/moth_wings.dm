@@ -113,7 +113,7 @@
 
 /datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
 	if(!human)
-		return FALSE
+		return TRUE
 	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)
 		return FALSE
 	return TRUE
