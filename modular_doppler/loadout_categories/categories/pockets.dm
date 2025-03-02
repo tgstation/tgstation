@@ -117,8 +117,8 @@
 	item_path = /obj/item/computer_disk/all_of_them
 
 /datum/loadout_item/pocket_items/london
-	name = "Switchblade"
-	item_path = /obj/item/switchblade
+	name = "Hunting Knife"
+	item_path = /obj/item/knife/hunting
 
 /datum/loadout_item/pocket_items/london_two
 	name = "Survival Knife"
