@@ -149,7 +149,7 @@
 	owner.visible_message(span_nicegreen("[owner] seems to be relieved of their pain as they're shocked by the [source]!"), span_nicegreen("The [source] shocks your heart awake, and you feel the pain in your chest ease up!"))
 
 ///Slightly reduces your timer, just like the minor shock signal. Slightly more relief because these use cases are generally more dangerous.
-/datum/status_effect/heart_attack/proc/electrocuted(datum/source, shock_damage, source, siemens_coeff, flags)
+/datum/status_effect/heart_attack/proc/electrocuted(datum/source, shock_damage)
 	SIGNAL_HANDLER
 	time_until_stoppage += (20 + shock_damage * 1.15)
 	if(prob(50))
