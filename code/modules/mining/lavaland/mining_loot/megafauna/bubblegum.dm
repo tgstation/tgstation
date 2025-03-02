@@ -406,8 +406,10 @@
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
 /obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(ismining(target))
-		damage *= 2
+	if (isliving(target))
+		var/mob/living/as_living = target
+		if (ismining(as_living))
+			damage *= 2
 	return ..()
 
 #undef MAX_BLOOD_LEVEL
