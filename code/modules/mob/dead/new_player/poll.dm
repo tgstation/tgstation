@@ -20,7 +20,7 @@ GLOBAL_PROTECT(poll_options)
 			continue
 		output += "<tr bgcolor='#e2e2e2'><td><a href='byond://?src=[rs];viewpoll=[REF(poll)]'><b>[poll.question]</b></a></td></tr>"
 	output += "</table>"
-	src << browse(jointext(output, ""),"window=playerpolllist;size=500x300")
+	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpolllist;size=500x300")
 
 /**
  * Redirects a player to the correct poll window based on poll type.
@@ -86,7 +86,7 @@ GLOBAL_PROTECT(poll_options)
 	if(!voted_option_id || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"
 	output += "</div>"
-	src << browse(jointext(output, ""),"window=playerpoll;size=500x250")
+	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x250")
 
 /**
  * Shows voting window for a text response type poll, listing its relevant details.
@@ -123,7 +123,7 @@ GLOBAL_PROTECT(poll_options)
 	else
 		output += "[reply_text]"
 	output += "</div>"
-	src << browse(jointext(output, ""),"window=playerpoll;size=500x500")
+	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x500")
 
 /**
  * Shows voting window for a rating type poll, listing its options and relevant details.
@@ -178,7 +178,7 @@ GLOBAL_PROTECT(poll_options)
 	if(!length(voted_ratings) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Submit'></form>"
 	output += "</div>"
-	src << browse(jointext(output, ""),"window=playerpoll;size=500x500")
+	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x500")
 
 /**
  * Shows voting window for a multiple choice type poll, listing its options and relevant details.
@@ -222,7 +222,7 @@ GLOBAL_PROTECT(poll_options)
 	if(!length(voted_for) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"
 	output += "</div>"
-	src << browse(jointext(output, ""),"window=playerpoll;size=500x300")
+	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x300")
 
 /**
  * Shows voting window for an IRV type poll, listing its options and relevant details.
@@ -307,7 +307,7 @@ GLOBAL_PROTECT(poll_options)
 	output += "</ol><b><center>Least Preferred</center></b><br>"
 	if(!length(voted_for) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"
-	output += "</div>"
+	output += "</div></html>"
 	src << browse(jointext(output, ""),"window=playerpoll;size=500x500")
 
 /**

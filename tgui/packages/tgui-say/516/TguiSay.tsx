@@ -42,6 +42,7 @@ export function TguiSay() {
   const [size, setSize] = useState(WindowSize.Small);
   const [maxLength, setMaxLength] = useState(1024);
   const [lightMode, setLightMode] = useState(false);
+  const [position, setPosition] = useState([window.screenX, window.screenY]);
   const [value, setValue] = useState('');
 
   function handleArrowKeys(direction: KEY.Up | KEY.Down): void {
@@ -128,6 +129,9 @@ export function TguiSay() {
   }
 
   function handleIncrementChannel(): void {
+    const xPos = window.screenX;
+    const yPos = window.screenY;
+    if (JSON.stringify(position) !== JSON.stringify([xPos, yPos])) return;
     const iterator = channelIterator.current;
 
     iterator.next();
@@ -137,6 +141,7 @@ export function TguiSay() {
   }
 
   function handleInput(event: FormEvent<HTMLTextAreaElement>): void {
+    const iterator = channelIterator.current;
     let newValue = event.currentTarget.value;
 
     let newPrefix = getPrefix(newValue) || currentPrefix;
@@ -145,6 +150,7 @@ export function TguiSay() {
       setButtonContent(RADIO_PREFIXES[newPrefix]);
       setCurrentPrefix(newPrefix);
       newValue = newValue.slice(3);
+      iterator.set('Say');
 
       if (newPrefix === ':b ') {
         Byond.sendMessage('thinking', { visible: false });
@@ -189,6 +195,13 @@ export function TguiSay() {
           handleClose();
         }
     }
+  }
+
+  function handleButtonDrag(e: React.MouseEvent<Element, MouseEvent>): void {
+    const xPos = window.screenX;
+    const yPos = window.screenY;
+    setPosition([xPos, yPos]);
+    dragStartHandler(e);
   }
 
   function handleOpen(data: ByondOpen): void {
@@ -261,7 +274,7 @@ export function TguiSay() {
         <button
           className={`button button-${theme}`}
           onClick={handleIncrementChannel}
-          onMouseDown={dragStartHandler}
+          onMouseDown={handleButtonDrag}
           type="button"
         >
           {buttonContent}

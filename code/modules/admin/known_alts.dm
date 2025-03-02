@@ -171,21 +171,15 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 		known_alts_html += "<a href='byond://?src=[REF(src)];[HrefToken()];action=delete;id=[known_alt[4]]'>\[-\] Delete</a> <b>[known_alt[1]]</b> is an alt of <b>[known_alt[2]]</b> (added by <b>[known_alt[3]]</b>)."
 
 	var/html = {"
-		<head>
-			<title>Known Alts</title>
-		</head>
-
-		<body>
 			<p>Any two ckeys in this panel will not show in "banned connection history".</p>
 			<p>Sometimes players switch account, and it's customary to perma-ban the old one.</p>
 
 			<h2>All Known Alts:</h2> <a href='byond://?src=[REF(src)];[HrefToken()];action=add'>\[+\] Add</a><hr>
 
 			[known_alts_html.Join("<br />")]
-		</body>
 	"}
 
-	client << browse(html, "window=known_alts;size=700x400")
+	client << browse(HTML_SKELETON_TITLE("Known Alts", html), "window=known_alts;size=700x400")
 
 ADMIN_VERB(known_alts_panel, R_ADMIN, "Known Alts Panel", "View a panel of known alts.", ADMIN_CATEGORY_MAIN)
 	GLOB.known_alts.show_panel(user)

@@ -218,13 +218,16 @@
 
 			// When choosing to update the remaining time we have to be careful not to update the
 			// scheduled time once the EOL has been executed.
+			var/continuing = 0
 			if (time_spent >= time_before_fade)
 				if(m.message.pixel_y < starting_height)
 					var/max_height = m.message.pixel_y + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
 					if(max_height > 0)
-						animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+						animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+						continuing |= ANIMATION_CONTINUE
 				else if(mheight + starting_height >= m.message.pixel_y)
-					animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+					animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+					continuing |= ANIMATION_CONTINUE
 				continue
 
 			var/remaining_time = time_before_fade * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
@@ -233,23 +236,29 @@
 			if(remaining_time > 0)
 				if(time_spent < CHAT_MESSAGE_SPAWN_TIME)
 					// We haven't even had the time to fade in yet!
-					animate(m.message, alpha = 255, CHAT_MESSAGE_SPAWN_TIME - time_spent)
+					animate(m.message, alpha = 255, CHAT_MESSAGE_SPAWN_TIME - time_spent, flags=continuing)
+					continuing |= ANIMATION_CONTINUE
 				// Stay faded in for a while, then
-				animate(m.message, alpha = 255, remaining_time, flags=ANIMATION_CONTINUE)
+				animate(m.message, alpha = 255, time = remaining_time, flags=continuing)
+				continuing |= ANIMATION_CONTINUE
 				// Fade out
-				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+				animate(m.message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE, flags=continuing)
+				continuing |= ANIMATION_CONTINUE
 				m.animate_lifespan = remaining_time + CHAT_MESSAGE_EOL_FADE
 			else
 				// Your time has come my son
-				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+				animate(m.message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE, flags=continuing)
+				continuing |= ANIMATION_CONTINUE
 			// We run this after the alpha animate, because we don't want to interrup it, but also don't want to block it by running first
 			// Sooo instead we do this. bit messy but it fuckin works
 			if(m.message.pixel_y < starting_height)
 				var/max_height = m.message.pixel_y + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
 				if(max_height > 0)
-					animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+					animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+					continuing |= ANIMATION_CONTINUE
 			else if(mheight + starting_height >= m.message.pixel_y)
-				animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+				animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+				continuing |= ANIMATION_CONTINUE
 
 	// Reset z index if relevant
 	if (current_z_idx >= CHAT_LAYER_MAX_Z)
