@@ -1,5 +1,5 @@
 #define UNDERSIZED_SPEED_SLOWDOWN 0.5
-#define UNDERSIZED_HUNGER_MOD 1.0
+#define UNDERSIZED_HUNGER_MOD 0.5
 #define UNDERSIZED_HARM_DAMAGE_BONUS -10
 #define UNDERSIZED_KICK_EFFECTIVENESS_BONUS -5
 #define UNDERSIZED_SQUASH_CHANCE 100
@@ -22,23 +22,26 @@
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_UNDENSE,
 		TRAIT_EASILY_WOUNDED,
+		TRAIT_GRABWEAKNESS,
 	)
 
 /datum/quirk/undersized/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	human_holder.add_traits(undersized_traits, QUIRK_TRAIT)
-
 	human_holder.mob_size = MOB_SIZE_TINY
 	human_holder.held_w_class = WEIGHT_CLASS_TINY
 	human_holder.can_be_held = TRUE //makes u scoopable
 	human_holder.worn_slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_BACKPACK
 
+	passtable_on(human_holder, QUIRK_TRAIT)
+
 	human_holder.max_grab = GRAB_AGGRESSIVE //you are too weak to neck slam or strangle
-	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD // This does nothing but I left it incase anyone wants to fuck with it
+	human_holder.physiology.hunger_mod *= UNDERSIZED_HUNGER_MOD
 	human_holder.add_movespeed_modifier(/datum/movespeed_modifier/undersized)
 
 	RegisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_gain_limb))
+	RegisterSignal(human_holder, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
 	for(var/obj/item/bodypart/bodypart as anything in human_holder.bodyparts)
 		on_gain_limb(src, bodypart, special = FALSE)
@@ -47,7 +50,7 @@
 	human_holder.maptext_height = 24
 
 	human_holder.AddComponent( \
-		/datum/component/squashable, \
+		/datum/component/squashable_carbons, \
 		squash_chance = UNDERSIZED_SQUASH_CHANCE, \
 		squash_damage = UNDERSIZED_SQUASH_DAMAGE, \
 		squash_flags = UNDERSIZED_SHOULD_GIB, \
@@ -83,6 +86,7 @@
 		bodypart.name = replacetext(bodypart.name, "tiny ", "")
 
 	UnregisterSignal(human_holder, COMSIG_CARBON_POST_ATTACH_LIMB)
+	UnregisterSignal(human_holder, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
 
 	human_holder.remove_traits(undersized_traits)
 
@@ -90,6 +94,8 @@
 	human_holder.held_w_class = WEIGHT_CLASS_NORMAL
 	human_holder.can_be_held = FALSE
 	human_holder.worn_slot_flags = null
+
+	passtable_off(human_holder, QUIRK_TRAIT)
 
 	human_holder.max_grab = GRAB_KILL
 	human_holder.physiology.hunger_mod /= UNDERSIZED_HUNGER_MOD
@@ -130,6 +136,10 @@
 
 /datum/movespeed_modifier/undersized
 	multiplicative_slowdown = UNDERSIZED_SPEED_SLOWDOWN
+
+/datum/quirk/undersized/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	if(istype(attacking_item, /obj/item/melee/flyswatter))
+		damage_mods += 50 // :)
 
 //ensmallening spell begin
 
