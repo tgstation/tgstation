@@ -73,7 +73,7 @@
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
 
-/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam)
+/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, plane_override)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -84,16 +84,19 @@
 
 	. = ..()
 
+	var/used_plane = plane_override || O_LIGHTING_VISUAL_PLANE
 	visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
-	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, movable_parent)
+	SET_PLANE_EXPLICIT(visible_mask, used_plane, movable_parent)
 	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	visible_mask.alpha = 0
+	visible_mask.blend_mode = BLEND_ADD
 	if(is_directional)
 		directional = TRUE
 		cone = image('icons/effects/light_overlays/light_cone.dmi', icon_state = "light")
-		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, movable_parent)
+		SET_PLANE_EXPLICIT(cone, used_plane, movable_parent)
 		cone.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		cone.alpha = 110
+		cone.blend_mode = BLEND_ADD
 		cone.transform = cone.transform.Translate(-32, -32)
 		set_direction(movable_parent.dir)
 	if(is_beam)
