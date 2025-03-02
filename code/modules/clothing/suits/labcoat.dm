@@ -19,7 +19,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/gun/syringe,
 		/obj/item/sensor_device,

@@ -208,7 +208,7 @@
 			new /obj/item/implanter/freedom(src) // 5 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/grenade/c4/x4(src) // 1ish tc
-			new /obj/item/reagent_containers/pill/cyanide(src)
+			new /obj/item/reagent_containers/applicator/pill/cyanide(src)
 			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
@@ -318,7 +318,7 @@
 	new /obj/item/card/emag(src) // 4 tc
 	new /obj/item/card/emag/doorjack(src) //emag used to do both. 3 tc
 	new /obj/item/pen/sleepy(src) // 4 tc
-	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do. 8 tc
 	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
 	new /obj/item/implanter/freedom(src) // 5 tc
