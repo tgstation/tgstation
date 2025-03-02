@@ -136,7 +136,7 @@
 		qdel(src)
 
 ///Slightly reduces your timer. Can cure you if you really really want.
-/datum/status_effect/heart_attack/proc/minor_shock()
+/datum/status_effect/heart_attack/proc/minor_shock(datum/source)
 	SIGNAL_HANDLER
 	time_until_stoppage += 18 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
 	if(prob(50))			//Also good for crafty solos who want to stunbaton themselves back to health. Timing will be key.
@@ -149,9 +149,9 @@
 	owner.visible_message(span_nicegreen("[owner] seems to be relieved of their pain as they're shocked by the [source]!"), span_nicegreen("The [source] shocks your heart awake, and you feel the pain in your chest ease up!"))
 
 ///Slightly reduces your timer, just like the minor shock signal. Slightly more relief because these use cases are generally more dangerous.
-/datum/status_effect/heart_attack/proc/electrocuted()
+/datum/status_effect/heart_attack/proc/electrocuted(datum/source, shock_damage, source, siemens_coeff, flags)
 	SIGNAL_HANDLER
-	time_until_stoppage += 20
+	time_until_stoppage += (20 + shock_damage * 1.15)
 	if(prob(50))
 		to_chat(owner, span_nicegreen("Something about being electrocuted makes the pain in your chest ease up!"))
 
