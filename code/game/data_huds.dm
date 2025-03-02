@@ -101,6 +101,10 @@ Medical HUD! Basic mode needs suit sensors on.
 		severity = DISEASE_SEVERITY_MEDIUM
 		threat = get_disease_severity_value(severity)
 
+	if(HAS_TRAIT(src, TRAIT_DISEASELIKE_SEVERITY_HIGH))
+		severity = DISEASE_SEVERITY_DANGEROUS
+		threat = get_disease_severity_value(severity)
+
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))

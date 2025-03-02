@@ -531,6 +531,7 @@
 	if(HAS_TRAIT(M,MOB_ORGANIC))
 		M.emote("gasp")
 	log_combat(user, M, "zapped", src)
+	SEND_SIGNAL(M, COMSIG_DEFIBRILLATOR_SHOCKED)
 	do_success()
 
 /obj/item/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
