@@ -137,7 +137,7 @@
 ///Slightly reduces your timer. Can cure you if you really really want.
 /datum/status_effect/heart_attack/proc/minor_shock()
 	SIGNAL_HANDLER
-	time_until_stoppage += 15 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
+	time_until_stoppage += 18 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
 	if(prob(50))			//Also good for crafty solos who want to stunbaton themselves back to health. Timing will be key.
 		to_chat(owner, span_nicegreen("Something about being shocked makes the pain in your chest ease up!"))
 
@@ -150,7 +150,7 @@
 ///Slightly reduces your timer, just like the minor shock signal. Slightly more relief because these use cases are generally more dangerous.
 /datum/status_effect/heart_attack/proc/electrocuted()
 	SIGNAL_HANDLER
-	time_until_stoppage += 18
+	time_until_stoppage += 20
 	if(prob(50))
 		to_chat(owner, span_nicegreen("Something about being electrocuted makes the pain in your chest ease up!"))
 
