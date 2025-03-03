@@ -1,5 +1,5 @@
 /obj/item/card/emag/doorjack/ultjacker
-	desc = "That ultimate \"doorjack\" better than the regular version, have six charges, but it has a longer recharge time."
+	desc = "That ultimate \"doorjack\" better than the regular version, has six charges, but comes with a small drawback, having more cooldown time"
 	name = "ultimate airlock authentication override card"
 	icon = 'modular_meta/features/uplink_items/icons/ultdoorjack.dmi'
 	icon_state = "ultdoorjack"
