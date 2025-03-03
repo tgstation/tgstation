@@ -10,7 +10,9 @@
 /datum/smite/bsa/effect(client/user, mob/living/target)
 	. = ..()
 
-	explosion(target.loc, explosion_cause = src)
+	playsound(target.loc, 'newstuff/nikitauou/sound/broneboynii.mp3', 50, FALSE, 5)
+	sleep(10 SECONDS)
+	explosion(target.loc, explosion_cause = src, flame_range = 2, flash_range = 4, light_impact_range = 2)
 
 	var/turf/open/floor/target_turf = get_turf(target)
 	if (istype(target_turf))
