@@ -143,6 +143,7 @@
 			"orderer" = order.orderer,
 			"reason" = order.reason,
 			"id" = order.id,
+			"account" = order.paying_account.account_holder //Please god don't fucking suck //todo: make sure this works
 		))
 	data["amount_by_name"] = amount_by_name
 
