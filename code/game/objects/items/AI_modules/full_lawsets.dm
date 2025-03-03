@@ -143,3 +143,7 @@
 /obj/item/ai_module/core/full/thinkermov
 	name = "Sentience Preservation Core AI Module"
 	law_id = "thinkermov"
+
+/obj/item/ai_module/core/full/cybersun
+	name = "'Cybersun' Core AI Module"
+	law_id = "cybersun"
