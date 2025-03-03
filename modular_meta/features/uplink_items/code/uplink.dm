@@ -19,5 +19,5 @@
 			Atleast it's better than the regular one having 6 six charges, although has a longer cooldown."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/card/emag/doorjack/ultjacker
-	cost = 10
+	cost = 6
 	surplus = 20
