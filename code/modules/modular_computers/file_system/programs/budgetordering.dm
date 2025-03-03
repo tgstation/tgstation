@@ -1,9 +1,9 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
-	filedesc = "NT IRN"
+	filedesc = "NT Shopping Network"
 	downloader_category = PROGRAM_CATEGORY_SUPPLY
 	program_open_overlay = "request"
-	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
+	extended_desc = "Nanotrasen Shopping Network interface for purchasing supplies from the cargo catalogue using a department budget account."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 10
@@ -62,23 +62,27 @@
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
+
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 	if(id_card?.registered_account)
+		buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 		if((ACCESS_COMMAND in id_card.access))
 			requestonly = FALSE
-			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 			can_approve_requests = TRUE
+			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
+			data["department"] = addtext(buyer.account_holder, " Requisitions")
 		else
 			requestonly = TRUE
 			can_approve_requests = FALSE
-		if(ACCESS_COMMAND in id_card.access)
-			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
-			data["department"] = addtext(buyer.account_holder, " Requisitions")
 	else
 		requestonly = TRUE
 	if(buyer)
 		data["points"] = buyer.account_balance
+	// To recap above because it's kind of a mess, here's all the options:
+		//Head of staff ID card: Can approve, buy, and make purchases using their own departmental budgets.
+		//ID card, not a head of staff: can request items from cargo using departmental budget.
+		//No ID card, can request items from cargo using the cargo budget.
 
 	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
