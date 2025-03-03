@@ -21,6 +21,10 @@
 	/// The key for this mock interface
 	var/key = "mockclient"
 
+	/// Mock ban cache to avoid runtimes when testing bans
+	var/ban_cache = null
+	var/ban_cache_start = 0
+
 	/// client prefs
 	var/fps
 	var/hotkeys
@@ -51,3 +55,6 @@
 
 /datum/client_interface/proc/update_ambience_pref()
 	return
+
+/datum/client_interface/proc/get_award_status(achievement_type, mob/user, value = 1)
+	return FALSE

@@ -112,3 +112,28 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ai_vox"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/// Choice of which ghost poll prompt to use
+/datum/preference/choiced/sound_ghost_poll_prompt
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_ghost_poll_prompt"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/choiced/sound_ghost_poll_prompt/create_default_value()
+	return GHOST_POLL_PROMPT_1
+
+/datum/preference/choiced/sound_ghost_poll_prompt/init_possible_values()
+	return list(GHOST_POLL_PROMPT_DISABLED, GHOST_POLL_PROMPT_1, GHOST_POLL_PROMPT_2)
+
+/// Volume which ghost poll prompts are played at
+/datum/preference/numeric/sound_ghost_poll_prompt_volume
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_ghost_poll_prompt_volume"
+	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 200
+
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/sound_ghost_poll_prompt_volume/create_default_value()
+	return maximum/2

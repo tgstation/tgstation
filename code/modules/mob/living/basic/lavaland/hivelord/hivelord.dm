@@ -8,7 +8,7 @@
 	// icon_aggro = "hivelord_alert"
 	icon_dead = "hivelord_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = MOB_ORGANIC
+	mob_biotypes = MOB_ORGANIC|MOB_MINING
 	speed = 2
 	maxHealth = 75
 	health = 75

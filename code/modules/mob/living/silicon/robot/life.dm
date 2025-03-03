@@ -2,7 +2,7 @@
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
-	..()
+	. = ..()
 	handle_robot_hud_updates()
 	handle_robot_cell(seconds_per_tick, times_fired)
 

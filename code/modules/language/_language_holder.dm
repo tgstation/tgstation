@@ -490,6 +490,26 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	)
 	selected_language = /datum/language/beachbum
 
+/datum/language_holder/spinwarder
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
+
+/datum/language_holder/spinwarder_exclusive
+	understood_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
+
 // Vending machines are extremely well-educated
 /datum/language_holder/speaking_machine
 	understood_languages = list(
