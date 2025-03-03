@@ -56,7 +56,7 @@
 
 /obj/item/storage/belt/utility/syndieeng
 	name = "toolbelt"
-	desc = "I wonder that this is exactly a toolbelt."
+	desc = "I wonder if that is exactly a toolbelt."
 	icon_state = "belt_syndieeng"
 	worn_icon_state = "belt_syndieeng"
 	inhand_icon_state = null
