@@ -50,3 +50,32 @@
       location if not aggroed
   timothymtorres:
   - bugfix: Fix illiterate people writing messages with crayons and spraycans.
+2025-03-03:
+  00-Steven:
+  - bugfix: Harvesting botany plants actually uses the right drop location. Botany
+      plants harvested by monkey hardworkers on big manipulators harvesting using
+      a full plant bag no longer puts the resulting items inside of the big manipulator.
+  Ghommie:
+  - balance: objects made out of meat are no longer classified as gross food on top
+      of being raw and meaty, and actually contain protein and fat instead of standard
+      nutriment and oil.
+  - balance: the pizza material stacks, crafted with margherita pizza and rollig pin
+      mind you, no longer magically contain pepperoni.
+  Melbert:
+  - qol: '[Icebox] Botany''s Holofirelocks are now walkable plastic flaps'
+  SmArtKar:
+  - code_imp: Split and cleaned up mining loot's code
+  - refactor: Refactored the hierophant club.
+  - bugfix: Hierophant club's beacon no longer can go missing (until you try using
+      it)
+  - image: Resprited the hierophant arena
+  TheRyeGuyWhoWillNowDie:
+  - balance: wildcard limits have been removed from Agent ID cards
+  - balance: the specops crate gets a variation of the agent ID card which can only
+      hold limited access (same as it is now)
+  TiviPlus:
+  - code_imp: previously silent failures due to empty sounds or too low volumes will
+      now create a runtime in the runtime log
+  - bugfix: some footstep sounds like robotic or slimes are no longer silent
+  subject217:
+  - balance: Contractor Kit is no longer available in lowpop.
