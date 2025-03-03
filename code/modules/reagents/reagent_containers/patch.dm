@@ -82,6 +82,7 @@
 		UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_ATOM_DIR_CHANGE))
 		if (patch_overlay)
 			owner.cut_overlay(patch_overlay)
+	QDEL_NULL(patch_overlay)
 	return ..()
 
 /datum/embedding/med_patch/can_embed(atom/movable/source, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
