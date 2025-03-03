@@ -80,7 +80,7 @@
 
 /// Move in a direction
 /obj/effect/anomaly/proc/move_anomaly()
-#ifndef UNIT_TESTS
+#ifndef UNIT_TESTS // These might move away during a CI run and cause a flaky mapping nearstation errors
 	step(src, pick(GLOB.alldirs))
 #endif
 
