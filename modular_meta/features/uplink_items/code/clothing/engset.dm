@@ -1,6 +1,6 @@
 /obj/item/clothing/under/syndicate/engineer
 	name = "tactical engineering jumpsuit"
-	desc = "A suspicious looking jumpsuit with a white shirt underneath and impressive fire and acid resistant components. Suitable for skirmishes like in Texas."
+	desc = "A suspicious looking jumpsuit with a white shirt underneath, is made of fire and acid resistant materials. Suitable for skirmishes somewhere, like in Space-Texas region."
 	icon_state = "under_syndieeng"
 	inhand_icon_state = null
 	has_sensor = NO_SENSORS
