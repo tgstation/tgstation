@@ -334,7 +334,8 @@
 		var/datum/universal_icon/layer_icon
 		if(islist(layer))
 			layer_icon = GenerateLayerGroupUniversalIcon(colors, layer, new_icon || last_external_icon)
-			layer = layer[1] // When there are multiple layers in a group like this we use the first one's blend mode
+			var/list/layer_list = layer
+			layer = layer_list[1] // When there are multiple layers in a group like this we use the first one's blend mode
 		else
 			layer_icon = layer.GenerateUniversalIcon(colors, new_icon || last_external_icon)
 

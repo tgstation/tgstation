@@ -7,7 +7,7 @@
 	var/static/list/items = list(/obj/item/binoculars, /obj/item/camera, /obj/item/clothing/under/color/blue, /obj/item/clothing/under/color/black)
 
 /datum/asset/spritesheet_batched/test/create_spritesheets()
-	for(var/atom/item as() in items)
+	for(var/atom/item as anything in items)
 		if (!ispath(item, /atom))
 			return FALSE
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")

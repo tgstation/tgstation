@@ -24,9 +24,8 @@
 	/// If this asset should be fully loaded on new
 	/// Defaults to false so we can process this stuff nicely
 	var/load_immediately = FALSE
-	VAR_PRIVATE
-		// Kept in state so that the result is the same, even when the files are created, for this run
-		should_refresh = null
+	// Kept in state so that the result is the same, even when the files are created, for this run
+	VAR_PRIVATE/should_refresh = null
 
 /datum/asset/spritesheet/proc/should_load_immediately()
 #ifdef DO_NOT_DEFER_ASSETS
@@ -187,8 +186,8 @@
 
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
-		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background-image:url('[get_background_url("[name]_[size_id].png")]');background-repeat:no-repeat;}"
+		var/list/dimensions = get_icon_dimensions(size[SPRSZ_ICON])
+		out += ".[name][size_id]{display:inline-block;width:[dimensions["width"]]px;height:[dimensions["height"]]px;background-image:url('[get_background_url("[name]_[size_id].png")]');background-repeat:no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
@@ -196,11 +195,12 @@
 		var/idx = sprite[SPR_IDX]
 		var/size = sizes[size_id]
 
-		var/icon/tiny = size[SPRSZ_ICON]
+		var/list/tiny_dimensions = get_icon_dimensions(size[SPRSZ_ICON])
 		var/icon/big = size[SPRSZ_STRIPPED]
-		var/per_line = big.Width() / tiny.Width()
-		var/x = (idx % per_line) * tiny.Width()
-		var/y = round(idx / per_line) * tiny.Height()
+		// big width won't be cached ever
+		var/per_line = big.Width() / tiny_dimensions["width"]
+		var/x = (idx % per_line) * tiny_dimensions["width"]
+		var/y = round(idx / per_line) * tiny_dimensions["height"]
 
 		out += ".[name][size_id].[sprite_id]{background-position:-[x]px -[y]px;}"
 
@@ -295,30 +295,30 @@
 /// Override this in order to start the creation of the spritehseet.
 /// This is where all your Insert, InsertAll, etc calls should be inside.
 /datum/asset/spritesheet/proc/create_spritesheets()
-	SHOULD_CALL_PARENT(FALSE)
 	CRASH("create_spritesheets() not implemented for [type]!")
 
-/datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+/datum/asset/spritesheet/proc/Insert(sprite_name, icon/inserted_icon, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	if(should_load_immediately())
-		queuedInsert(sprite_name, I, icon_state, dir, frame, moving)
+		queuedInsert(sprite_name, inserted_icon, icon_state, dir, frame, moving)
 	else
 		to_generate += list(args.Copy())
 
-/datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+/datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/inserted_icon, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 #ifdef UNIT_TESTS
-	if (I && icon_state && !icon_exists(I, icon_state)) // check the base icon prior to extracting the state we want
-		stack_trace("Tried to insert nonexistent icon_state '[icon_state]' from [I] into spritesheet [name] ([type])")
+	if (inserted_icon && icon_state && !icon_exists(inserted_icon, icon_state)) // check the base icon prior to extracting the state we want
+		stack_trace("Tried to insert nonexistent icon_state '[icon_state]' from [inserted_icon] into spritesheet [name] ([type])")
 		return
 #endif
-	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
-	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
+	inserted_icon = icon(inserted_icon, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
+	if (!inserted_icon || !length(icon_states(inserted_icon)))  // that direction or state doesn't exist
 		return
 
 	var/start_usage = world.tick_usage
 
 	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
-	I = ModifyInserted(I)
-	var/size_id = "[I.Width()]x[I.Height()]"
+	inserted_icon = ModifyInserted(inserted_icon)
+	var/list/dimensions = get_icon_dimensions(inserted_icon)
+	var/size_id = "[dimensions["width"]]x[dimensions["height"]]"
 	var/size = sizes[size_id]
 
 	if (sprites[sprite_name])
@@ -335,12 +335,12 @@
 		var/icon/sheet = size[SPRSZ_ICON]
 		var/icon/sheet_copy = icon(sheet)
 		size[SPRSZ_STRIPPED] = null
-		sheet_copy.Insert(I, icon_state=sprite_name)
+		sheet_copy.Insert(inserted_icon, icon_state=sprite_name)
 		size[SPRSZ_ICON] = sheet_copy
 
 		sprites[sprite_name] = list(size_id, position)
 	else
-		sizes[size_id] = size = list(1, I, null)
+		sizes[size_id] = size = list(1, inserted_icon, null)
 		sprites[sprite_name] = list(size_id, 0)
 
 	SSblackbox.record_feedback("tally", "spritesheet_queued_insert_time", TICK_USAGE_TO_MS(start_usage), name)
@@ -354,17 +354,17 @@
 /datum/asset/spritesheet/proc/ModifyInserted(icon/pre_asset)
 	return pre_asset
 
-/datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
+/datum/asset/spritesheet/proc/InsertAll(prefix, icon/inserted_icon, list/directions)
 	if (length(prefix))
 		prefix = "[prefix]-"
 
 	if (!directions)
 		directions = list(SOUTH)
 
-	for (var/icon_state_name in icon_states(I))
+	for (var/icon_state_name in icon_states(inserted_icon))
 		for (var/direction in directions)
 			var/prefix2 = (directions.len > 1) ? "[dir2text(direction)]-" : ""
-			Insert("[prefix][prefix2][icon_state_name]", I, icon_state=icon_state_name, dir=direction)
+			Insert("[prefix][prefix2][icon_state_name]", inserted_icon, icon_state=icon_state_name, dir=direction)
 
 /datum/asset/spritesheet/proc/css_tag()
 	return {"<link rel="stylesheet" href="[css_filename()]" />"}

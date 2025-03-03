@@ -63,7 +63,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /// Immediately regenerate the asset, overwriting any cache.
 /datum/asset/proc/regenerate()
-	SHOULD_CALL_PARENT(FALSE)
 	unregister()
 	cached_serialized_url_mappings = null
 	cached_serialized_url_mappings_transport_type = null
@@ -71,7 +70,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /// Unregisters any assets from the transport.
 /datum/asset/proc/unregister()
-	SHOULD_CALL_PARENT(FALSE)
 	CRASH("unregister() not implemented for asset [type]!")
 
 /// Simply takes any generated file and saves it to the round-specific /logs folder. Useful for debugging potential issues with spritesheet generation/display.
@@ -271,7 +269,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /// Returns the data that will be JSON encoded
 /datum/asset/json/proc/generate()
-	SHOULD_CALL_PARENT(FALSE)
 	CRASH("generate() not implemented for [type]!")
 
 /datum/asset/json/unregister()

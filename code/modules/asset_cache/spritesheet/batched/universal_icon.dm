@@ -210,23 +210,23 @@
 		CRASH("gags_to_universal_icon() received an invalid path of \"[path]\"!")
 	var/datum/greyscale_config/config = initial(path.greyscale_config)
 	var/colors = initial(path.greyscale_colors)
-	var/datum/universal_icon/entry = SSgreyscale.GetColoredIconByType_universal_icon(config, colors, initial(path.icon_state))
+	var/datum/universal_icon/entry = SSgreyscale.GetColoredIconByTypeUniversalIcon(config, colors, initial(path.icon_state))
 	return entry
 
 /// Gets the relevant universal icon for an atom, when displayed in TGUI. (see: icon_state_preview)
 /// Supports GAGS items and colored items.
-/proc/get_display_icon_for(atom/A)
-	if (!ispath(A, /atom))
+/proc/get_display_icon_for(atom/atom_path)
+	if (!ispath(atom_path, /atom))
 		return FALSE
-	var/icon_file = initial(A.icon)
-	var/icon_state = initial(A.icon_state)
-	if(initial(A.greyscale_config) && initial(A.greyscale_colors))
-		return gags_to_universal_icon(A)
-	if(ispath(A, /obj))
-		var/obj/I = A
-		if(initial(I.icon_state_preview))
-			icon_state = initial(I.icon_state_preview)
-	return uni_icon(icon_file, icon_state, color=initial(A.color))
+	var/icon_file = initial(atom_path.icon)
+	var/icon_state = initial(atom_path.icon_state)
+	if(initial(atom_path.greyscale_config) && initial(atom_path.greyscale_colors))
+		return gags_to_universal_icon(atom_path)
+	if(ispath(atom_path, /obj))
+		var/obj/obj_path = atom_path
+		if(initial(obj_path.icon_state_preview))
+			icon_state = initial(obj_path.icon_state_preview)
+	return uni_icon(icon_file, icon_state, color=initial(atom_path.color))
 
 /// getFlatIcon for [/datum/universal_icon]s
 /// Only supports 32x32 icons facing south

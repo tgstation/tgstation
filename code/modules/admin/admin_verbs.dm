@@ -685,7 +685,7 @@ ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, "Clear Legacy Asset Cache", "Clear
 		to_chat(user, span_warning("Asset caching is disabled in the config!"))
 		return
 	var/regenerated = 0
-	for(var/datum/asset/target_spritesheet as() in subtypesof(/datum/asset))
+	for(var/datum/asset/target_spritesheet as anything in subtypesof(/datum/asset))
 		if(!initial(target_spritesheet.cross_round_cachable))
 			continue
 		if(target_spritesheet == initial(target_spritesheet._abstract))
@@ -700,7 +700,7 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "Clear Smart Asset Cache", "Clear t
 		to_chat(user, span_warning("Smart asset caching is disabled in the config!"))
 		return
 	var/cleared = 0
-	for(var/datum/asset/spritesheet_batched/target_spritesheet as() in subtypesof(/datum/asset/spritesheet_batched))
+	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in subtypesof(/datum/asset/spritesheet_batched))
 		if(target_spritesheet == initial(target_spritesheet._abstract))
 			continue
 		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")

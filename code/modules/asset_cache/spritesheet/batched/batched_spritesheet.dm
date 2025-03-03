@@ -148,7 +148,6 @@
 
 /// Call insert_icon or insert_all_icons here, building a spritesheet!
 /datum/asset/spritesheet_batched/proc/create_spritesheets()
-	SHOULD_CALL_PARENT(FALSE)
 	CRASH("create_spritesheets() not implemented for [type]!")
 
 /datum/asset/spritesheet_batched/proc/insert_all_icons(prefix, icon/I, list/directions, prefix_with_dirs = TRUE)
