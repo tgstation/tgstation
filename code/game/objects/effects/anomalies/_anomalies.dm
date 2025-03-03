@@ -80,7 +80,9 @@
 
 /// Move in a direction
 /obj/effect/anomaly/proc/move_anomaly()
+#ifndef UNIT_TESTS
 	step(src, pick(GLOB.alldirs))
+#endif
 
 /obj/effect/anomaly/proc/detonate()
 	return
