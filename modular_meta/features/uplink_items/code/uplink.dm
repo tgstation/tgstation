@@ -16,7 +16,7 @@
 	desc = "Pinnacle of syndicate technical revolution. \
 			A ultimate doorjack..? \
 			Did the Cybersun scientists spent their research grant money on this? \
-			Atleast it's better than the regular one having 6 six charges, although has a longer cooldown."
+			Atleast it's better than the regular one having six charges, although has a longer cooldown."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/card/emag/doorjack/ultjacker
 	cost = 6
