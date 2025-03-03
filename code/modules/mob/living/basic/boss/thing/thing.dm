@@ -11,6 +11,7 @@
 	armour_penetration = 40
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_MINING
 	sharpness = SHARP_EDGED
 	melee_attack_cooldown = CLICK_CD_SLOW
 	attack_verb_continuous = "eviscerates"
@@ -23,6 +24,9 @@
 	loot = list(/obj/item/keycard/thing_boss)
 	crusher_loot = list(/obj/item/keycard/thing_boss, /obj/item/crusher_trophy/flesh_glob)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	achievement_type = /datum/award/achievement/boss/thething_kill
+	crusher_achievement_type = /datum/award/achievement/boss/thething_crusher
+	score_achievement_type = /datum/award/score/thething_score
 	/// Current phase of the boss fight
 	var/phase = 1
 	/// Time the Thing will be invulnerable between phases
@@ -32,8 +36,12 @@
 
 	// ruin logic
 
-	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight. Turn off if admin shitspawn
+	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight.
 	var/maploaded = TRUE
+	/// where we spawned. not set if not maploaded
+	var/turf/spawn_loc
+	/// return timer
+	var/return_timer
 
 /mob/living/basic/boss/thing/Initialize(mapload)
 	. = ..()
@@ -47,8 +55,13 @@
 	)
 	grant_actions_by_list(innate_actions)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.4 SECONDS)
+	AddElement(/datum/element/relay_attackers) // used to immediately aggro if shot from outside aggro range
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(immediate_aggro))
 	maploaded = mapload
 	if(maploaded)
+		spawn_loc = loc
+		RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_gained))
+		RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_lost))
 		SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
 		return INITIALIZE_HINT_LATELOAD
 
@@ -76,8 +89,12 @@
 /mob/living/basic/boss/thing/proc/phase_health_depleted()
 	if(phase_invulnerability_timer)
 		return //wtf?
-	if(!maploaded)
+
+	if(!maploaded || client)
 		phase_successfully_depleted()
+		return
+	if(!client && istype(get_area(src), /area/station)) //retreat to station if AI controlled
+		return_to_spawnloc()
 		return
 	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
 	balloon_alert_to_viewers("invulnerable! overload the machines!")
@@ -88,6 +105,36 @@
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
 	SEND_SIGNAL(src, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED)
+
+/// Delete our return timer when we gain a target if we started premapped
+/mob/living/basic/boss/thing/proc/target_gained(datum/source)
+	SIGNAL_HANDLER
+	if(!return_timer)
+		return
+	deltimer(return_timer)
+	return_timer = null
+
+/// If we started premapped, and we lost our target, start a 3 minute timer to return to spawn turf unless we gain aggro again
+/mob/living/basic/boss/thing/proc/target_lost(datum/source)
+	SIGNAL_HANDLER
+	if(stat || client || loc == spawn_loc || return_timer)
+		return
+	return_timer = addtimer(CALLBACK(src, PROC_REF(return_to_spawn_check)), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/// Return us to our spawn loc (ruin boss only) if we are alive and have an ai controller and our loc isnt the spawn loc
+/mob/living/basic/boss/thing/proc/return_to_spawn_check()
+	if(isnull(ai_controller) || QDELETED(src) || loc == spawn_loc || stat || client)
+		return
+	return_to_spawnloc()
+
+/mob/living/basic/boss/thing/proc/return_to_spawnloc()
+	if(isnull(spawn_loc))
+		CRASH("The Thing tried to return to spawn_loc but it was null! This shouldnt happen")
+	for(var/turf/open/target in RANGE_TURFS(1, loc))
+		new /obj/effect/temp_visual/mook_dust(target)
+	playsound(loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+	visible_message(span_danger("[src] retreats through the ground back to where it came from!"))
+	forceMove(spawn_loc)
 
 /// The Thing is successfully hit by incendiary fire while downed by damage (alternatively takes too much damage if not ruin spawned)
 /mob/living/basic/boss/thing/proc/phase_successfully_depleted()
@@ -120,14 +167,25 @@
 	emote("roar")
 	SEND_SIGNAL(src, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED)
 
+/// Immediately set out blackboard target key (if empty) to whoever attacks us; this is primarily because it has a lowered aggro range and a high sight range
+/mob/living/basic/boss/thing/proc/immediate_aggro(datum/source, mob/attacker, flags)
+	SIGNAL_HANDLER
+	if(isnull(ai_controller) || stat || !istype(attacker) || ai_controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		return
+	ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
+
 /mob/living/basic/boss/thing/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname == NAMEOF(src, phase))
 		ai_controller?.set_blackboard_key(BB_THETHING_NOAOE, phase > 1 ? FALSE : TRUE)
 		update_appearance()
 
+/mob/living/basic/boss/thing/Destroy()
+	spawn_loc = null
+	return ..()
+
 /mob/living/basic/boss/thing/with_ruin_loot
-	loot = list(/obj/item/organ/brain/cybernetic/ai) // the main loot of the ruin, but if admin spawned the keycard is useless
+	loot = list(/obj/item/organ/brain/cybernetic/ai) // the only, relevant main loot of the ruin, but if admin spawned the keycard is useless
 	crusher_loot = list(/obj/item/organ/brain/cybernetic/ai, /obj/item/crusher_trophy/flesh_glob)
 
 // special stuff for our ruin to make a cooler bossfight

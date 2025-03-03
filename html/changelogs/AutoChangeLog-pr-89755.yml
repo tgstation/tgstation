@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - qol: "Added screentips to the big manipulator."
+  - bugfix: "You can actually open the big manipulator's wires UI while holding an assembly."

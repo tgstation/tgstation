@@ -1,0 +1,8 @@
+author: "itsmeow"
+delete-after: True
+changes:
+  - bugfix: "Fixed lizard body markings and ethereal feature previews in the preference menu missing some overlays."
+  - refactor: "Optimized spritesheet asset generation greatly using rustg IconForge, greatly reducing post-initialization lag as well as reducing init times and saving server computation."
+  - config: "Added 'smart' asset caching, for batched rustg IconForge spritesheets. It is persistent and suitable for use on local, with automatic invalidation."
+  - rscadd: "Added admin verbs - Debug -> Clear Smart/Legacy Asset Cache for spritesheets."
+  - bugfix: "Fixed R&D console icons breaking on WebView2/516"

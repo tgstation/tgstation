@@ -77,6 +77,7 @@
 	return list(
 		/datum/language/common,
 		/datum/language/uncommon,
+		/datum/language/spinwarder,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
