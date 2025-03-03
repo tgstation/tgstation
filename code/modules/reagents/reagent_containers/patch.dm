@@ -59,22 +59,29 @@
 	rip_time = 0.25 SECONDS
 	ignore_throwspeed_threshold = TRUE
 	immune_traits = null
+	/// How many units are transferred per second
+	var/transfer_per_second = 0.75
+	/// Cooldown for reagent messages, prevents spam
+	COOLDOWN_DECLARE(reagent_message_cd)
 	// pixel_x and pixel_y for our overlay
 	var/overlay_x = 0
 	var/overlay_y = 0
-	/// How many units are transferred per second
-	var/transfer_per_second = 0.75 // 30u patch will fully apply in ~40 seconds, must be higher than REAGENT_METABOLISM
+	/// Direction in which mob was facing when the patch was applied, used for layering and positional adjustments
+	var/applied_dir = NONE
+	/// Patch overlay applied to the mob
+	var/mutable_appearance/patch_overlay
 
 /datum/embedding/med_patch/set_owner(mob/living/carbon/victim, obj/item/bodypart/target_limb)
 	. = ..()
+	overlay_setup()
 	RegisterSignal(owner, COMSIG_LIVING_IGNITED, PROC_REF(on_ignited))
-	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
-	owner.update_appearance()
+	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 
 /datum/embedding/med_patch/stop_embedding()
 	if (owner)
-		UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_ATOM_UPDATE_OVERLAYS))
-		owner.update_appearance()
+		UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_ATOM_DIR_CHANGE))
+		if (patch_overlay)
+			owner.cut_overlay(patch_overlay)
 	return ..()
 
 /datum/embedding/med_patch/can_embed(atom/movable/source, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
@@ -97,25 +104,67 @@
 	INVOKE_ASYNC(src, PROC_REF(fall_out))
 	qdel(parent)
 
-/datum/embedding/med_patch/proc/on_update_overlays(datum/source, list/overlays)
-	SIGNAL_HANDLER
-	var/mutable_appearance/patch_overlay = mutable_appearance(parent.icon, parent.icon_state, appearance_flags = KEEP_APART|RESET_COLOR)
+/// Create a patch overlay and add it to the mob
+/datum/embedding/med_patch/proc/overlay_setup()
+	applied_dir = owner.dir
+	patch_overlay = mutable_appearance(parent.icon, parent.icon_state, FLOAT_LAYER, parent, appearance_flags = KEEP_APART|RESET_COLOR)
 	patch_overlay.color = parent.color
 	if (parent.cached_color_filter)
 		patch_overlay = filter_appearance_recursive(patch_overlay, parent.cached_color_filter)
 	patch_overlay.transform *= 0.5
-	patch_overlay.pixel_w += overlay_x
-	patch_overlay.pixel_z += overlay_y
-	overlays += patch_overlay
+	patch_overlay.pixel_w = overlay_x
+	patch_overlay.pixel_z = overlay_y
+	owner.add_overlay(patch_overlay)
+
+/datum/embedding/med_patch/proc/on_dir_change(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
+	owner.cut_overlay(patch_overlay)
+	if (new_dir == applied_dir)
+		patch_overlay.pixel_w = overlay_x
+		patch_overlay.layer = FLOAT_LAYER
+		owner.add_overlay(patch_overlay)
+		return
+
+	if (new_dir == REVERSE_DIR(applied_dir))
+		patch_overlay.pixel_w = -overlay_x
+		patch_overlay.layer = BELOW_MOB_LAYER
+		owner.add_overlay(patch_overlay)
+		return
+
+	var/check_dir = EAST
+	var/check_new_dir = SOUTH
+	if (applied_dir & (NORTH|SOUTH))
+		check_dir = NORTH
+		check_new_dir = EAST
+
+	var/dir_sign = (applied_dir & check_dir)
+	if (overlay_x >= 0)
+		dir_sign = !dir_sign
+	if (new_dir & check_new_dir)
+		dir_sign = !dir_sign
+
+	// 0.5 multiplier to fake perspective
+	patch_overlay.pixel_w = overlay_x * (dir_sign ? 0.5 : -0.5)
+	patch_overlay.layer = dir_sign ? FLOAT_LAYER : BELOW_MOB_LAYER
+	owner.add_overlay(patch_overlay)
+	return
 
 /datum/embedding/med_patch/process_effect(seconds_per_tick)
-	if (owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_STASIS))
+	if (HAS_TRAIT(owner, TRAIT_STASIS))
 		return
+
 	if (!parent.reagents.total_volume)
 		fall_out()
 		qdel(parent)
 		return TRUE
-	parent.reagents.trans_to(owner, transfer_per_second, methods = PATCH)
+
+	var/show_message = FALSE
+	if (COOLDOWN_FINISHED(src, reagent_message_cd))
+		show_message = TRUE
+		COOLDOWN_START(src, reagent_message_cd, PATCH_MESSAGE_COOLDOWN)
+
+	parent.reagents.trans_to(owner, transfer_per_second, methods = PATCH, show_message = show_message)
 
 /obj/item/reagent_containers/applicator/patch/libital
 	name = "libital patch (brute)"

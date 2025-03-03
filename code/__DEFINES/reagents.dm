@@ -249,3 +249,5 @@
 /// Maximum amount of layers that a ChemMaster can produce
 #define PILL_MAX_PRINTABLE_LAYERS 30
 
+/// Cooldown between patch reagent messages
+#define PATCH_MESSAGE_COOLDOWN 10 SECONDS
