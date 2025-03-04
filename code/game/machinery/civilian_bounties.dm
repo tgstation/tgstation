@@ -156,7 +156,8 @@
 	if(!pot_acc)
 		return
 	if((pot_acc.civilian_bounty || pot_acc.bounties) && !COOLDOWN_FINISHED(pot_acc, bounty_timer))
-		balloon_alert(user, "try again in [DisplayTimeText(COOLDOWN_TIMELEFT(pot_acc, bounty_timer))]!")
+		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(pot_acc, bounty_timer), round_seconds_to = 1)
+		balloon_alert(user, "try again in [time_left]!")
 		return FALSE
 	if(!pot_acc.account_job)
 		say("Requesting ID card has no job assignment registered!")
