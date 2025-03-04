@@ -1633,6 +1633,20 @@
 	theft_target = null
 	return ..()
 
+/obj/item/card/id/advanced/chameleon/equipped(mob/user, slot)
+	. = ..()
+	if (slot & ITEM_SLOT_ID)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+
+/obj/item/card/id/advanced/chameleon/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+	return ..()
+
+/obj/item/card/id/advanced/chameleon/proc/can_track(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	return COMPONENT_CANT_TRACK
+
 /obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isidcard(interacting_with))
 		theft_target = WEAKREF(interacting_with)
