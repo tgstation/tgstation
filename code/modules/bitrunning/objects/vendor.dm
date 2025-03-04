@@ -10,11 +10,11 @@
 	circuit = /obj/item/circuitboard/computer/order_console/bitrunning
 	cooldown_time = 10 SECONDS
 	cargo_cost_multiplier = 0.65
-	express_cost_multiplier = 1
+	autodelivery_cost_multiplier = 1
 	purchase_tooltip = @{"Your purchases will arrive at cargo,
 	and hopefully get delivered by them.
-	35% cheaper than express delivery."}
-	express_tooltip = @{"Sends your purchases instantly."}
+	35% cheaper than autodelivery."}
+	autodelivery_tooltip = @{"Sends your purchases without anyone else involved."}
 	credit_type = CREDIT_TYPE_BITRUNNING
 
 	order_categories = list(
