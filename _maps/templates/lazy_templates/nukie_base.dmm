@@ -1941,7 +1941,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "vV" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "vX" = (
