@@ -93,8 +93,8 @@ export function settingsMiddleware(store) {
       });
     }
     if (type === exportSettings.type) {
-      const settings = selectSettings(store.getState());
       const state = store.getState();
+      const settings = selectSettings(state);
       exportChatSettings(settings, state.chat.pageById);
       return;
     }
