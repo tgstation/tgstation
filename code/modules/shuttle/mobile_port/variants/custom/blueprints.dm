@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/lavaland, /area/icemoon, /area/station/asteroid))
-
 /obj/effect/client_image_holder/shuttle_construction_visualization
 	image_icon = 'icons/effects/alphacolors.dmi'
 	image_state = "transparent"
@@ -102,15 +100,25 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 /datum/proximity_monitor/advanced/shuttle_construction_visualizer/proc/evaluate_turf_overlay(obj/effect/client_image_holder/holder, turf/target)
 	var/area/turf_area = target.loc
 	if(HAS_TRAIT(target, TRAIT_SHUTTLE_CONSTRUCTION_TURF))
-		if(is_type_in_list(turf_area, GLOB.shuttle_construction_area_whitelist) || GLOB.custom_areas[turf_area])
-			holder.image_state = "green"
+		holder.image_state = "green"
+		if(turf_area.allow_shuttle_docking)
+			if(!GLOB.custom_areas[turf_area] && turf_area.apc)
+				var/obj/machinery/power/apc/apc = turf_area.apc
+				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
+				var/turf/apc_turf = get_turf(apc)
+				if(target == apc_turf || target == wallmount_comp.hanging_wall_turf)
+					holder.image_state = "red"
 		else
 			holder.image_state = "red"
 	else
+		holder.image_state = "transparent"
 		if(GLOB.custom_areas[turf_area] && HAS_TRAIT(turf_area, TRAIT_HAS_SHUTTLE_CONSTRUCTION_TURF))
-			holder.image_state = "red"
-		else
-			holder.image_state = "transparent"
+			if(turf_area.apc)
+				var/obj/machinery/power/apc/apc = turf_area.apc
+				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
+				var/turf/apc_turf = get_turf(apc)
+				if(HAS_TRAIT(apc_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF) || HAS_TRAIT(wallmount_comp.hanging_wall_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF))
+					holder.image_state = "red"
 	holder.regenerate_image()
 
 /obj/item/shuttle_blueprints
@@ -490,6 +498,9 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 			if(check_status & INTERSECTS_NON_WHITELISTED_AREA)
 				balloon_alert(usr, "frame overlaps disallowed areas!")
 				return TRUE
+			if(check_status & CONTAINS_APC_OF_NON_CUSTOM_AREA)
+				balloon_alert(usr, "frame contains apc of non-custom area!")
+				return TRUE
 			var/obj/docking_port/mobile/custom/shuttle = create_shuttle(
 				usr,
 				shuttle_origin,
@@ -656,6 +667,9 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 				return TRUE
 			if(check_status & INTERSECTS_NON_WHITELISTED_AREA)
 				balloon_alert(usr, "frame overlaps disallowed areas!")
+				return TRUE
+			if(check_status & CONTAINS_APC_OF_NON_CUSTOM_AREA)
+				balloon_alert(usr, "frame includes apc of non-custom area!")
 				return TRUE
 			expand_shuttle(usr, shuttle, turfs, areas)
 			return TRUE
@@ -881,8 +895,9 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 
 /*
  * Check to see if the following conditions are met:
- * 1. Any custom areas that overlap with the the region defined by `turf` are contained entirely within that region
- * 2. All other turfs in the region are within whitelisted areas
+ * 1. All turfs in the region are within whitelisted areas
+ * 2. The region does not contain the APC of a non-custom area
+ * 3. If the region contains the APC of a custom area, it contains the entire area
  */
 /proc/shuttle_area_check(list/turfs, list/areas, z)
 	for(var/area/custom_area as anything in GLOB.custom_areas)
@@ -894,16 +909,26 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 		var/turfs_not_in_frame_count = length(turfs_not_in_frame)
 		if(turfs_not_in_frame_count == turf_count)
 			continue
-		areas[custom_area] = area_turfs - turfs_not_in_frame
 		if(turfs_not_in_frame_count)
-			. |= CUSTOM_AREA_NOT_COMPLETELY_CONTAINED
+			if(custom_area.apc)
+				var/obj/machinery/power/apc/apc = custom_area.apc
+				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
+				if(turfs[get_turf(apc)] || turfs[wallmount_comp.hanging_wall_turf])
+					. |= CUSTOM_AREA_NOT_COMPLETELY_CONTAINED
+		else
+			areas[custom_area] = area_turfs - turfs_not_in_frame
 		turfs -= area_turfs
 	while(length(turfs))
 		var/turf/checked_turf = pick(turfs)
 		var/area/checked_area = checked_turf.loc
 		var/list/area_turfs = checked_area.get_turfs_by_zlevel(z)
-		if(!is_type_in_list(checked_area, GLOB.shuttle_construction_area_whitelist))
+		if(!checked_area.allow_shuttle_docking)
 			. |= INTERSECTS_NON_WHITELISTED_AREA
+		if(checked_area.apc)
+			var/obj/machinery/power/apc/apc = checked_area.apc
+			var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
+			if(turfs[get_turf(apc)] || turfs[wallmount_comp.hanging_wall_turf])
+				. |= CONTAINS_APC_OF_NON_CUSTOM_AREA
 		turfs -= area_turfs
 
 /proc/convert_areas_to_shuttle_areas(list/turfs, list/in_areas, list/out_areas, list/underlying_areas, area_type = /area/shuttle/custom)
