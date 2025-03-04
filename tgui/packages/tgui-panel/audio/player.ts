@@ -29,11 +29,11 @@ export class AudioPlayer {
     this.onStopSubscribers = [];
   }
 
-  destroy() {
+  destroy(): void {
     this.element = null;
   }
 
-  play(url: string, options: AudioOptions = {}) {
+  play(url: string, options: AudioOptions = {}): void {
     if (this.element) {
       this.stop();
     }
@@ -72,7 +72,7 @@ export class AudioPlayer {
     this.onPlaySubscribers.forEach((subscriber) => subscriber());
   }
 
-  stop() {
+  stop(): void {
     if (!this.element) return;
 
     logger.log('stopping');
