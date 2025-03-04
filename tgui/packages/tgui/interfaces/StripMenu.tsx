@@ -179,6 +179,12 @@ const SLOTS: Record<
     image: 'inventory-shoes.png',
   },
 
+  back_alt: {
+    displayName: 'back alt',
+    gridSpot: getGridSpotKey([3, 3]),
+    image: 'inventory-back.png',
+  },
+
   suit_storage: {
     displayName: 'suit storage item',
     gridSpot: getGridSpotKey([4, 0]),

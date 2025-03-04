@@ -56,6 +56,9 @@
 	// such that you never actually cared about checking if something is *edible*.
 	var/obj/item/food/clothing/moth_snack
 
+	/// Where should we sample from for pony clothes, if applicable?
+	var/list/pony_clothing_sample_pixels = list()
+
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += list(/datum/action/item_action/toggle_voice_box)
@@ -628,3 +631,14 @@ BLIND     // can't see anything
 /obj/item/clothing/remove_fantasy_bonuses(bonus)
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
+
+/obj/item/clothing/under/get_key_colors(icon/base_icon)
+	var/list/found_colors = list()
+	if(!pony_clothing_sample_pixels)
+		return ..()
+	for(var/list/pixel in pony_clothing_sample_pixels)
+		found_colors += base_icon.GetPixel(pixel[1], pixel[2])
+	if(!length(found_colors))
+		return ..()
+	else
+		return found_colors

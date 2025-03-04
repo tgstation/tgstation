@@ -610,6 +610,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			excused = TRUE
 		else if(slot & (ITEM_SLOT_SUITSTORE|ITEM_SLOT_BACKPACK|ITEM_SLOT_BELTPACK|ITEM_SLOT_HANDS))
 			excused = TRUE
+		else if(slot & (ITEM_SLOT_BACK_ALT) && I.slot_flags & (ITEM_SLOT_BACK)) // let us put back items in BACK_ALT if we have it
+			excused = TRUE
 		if(!excused)
 			return FALSE
 
@@ -624,7 +626,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_NECK)
 			return TRUE
-		if(ITEM_SLOT_BACK)
+		if(ITEM_SLOT_BACK, ITEM_SLOT_BACK_ALT)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_OCLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)

@@ -9,6 +9,8 @@
 /mob/proc/update_clothing(slot_flags)
 	if(slot_flags & ITEM_SLOT_BACK)
 		update_worn_back()
+	if(slot_flags & ITEM_SLOT_BACK_ALT)
+		update_worn_back()
 	if(slot_flags & ITEM_SLOT_MASK)
 		update_worn_mask()
 	if(slot_flags & ITEM_SLOT_NECK)

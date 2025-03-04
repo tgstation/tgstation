@@ -291,7 +291,7 @@
 	parent_item.update_appearance()
 
 	if(istype(user)) // tk showed that we might not have a mob here
-		if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
+		if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent || user.get_item_by_slot(ITEM_SLOT_BACK_ALT) == parent)
 			user.update_worn_back()
 		else
 			user.update_held_items()

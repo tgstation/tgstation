@@ -629,6 +629,10 @@
 	icon_file = 'icons/mob/clothing/digi_template.dmi'
 	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
 
+/datum/greyscale_config/pony_clothes
+	name = "Pony Clothes"
+	icon_file = 'icons/mob/clothing/pony_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pony_clothing.json'
 
 //
 // SUIT + HEAD

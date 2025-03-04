@@ -336,21 +336,29 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
+		var/mutable_appearance/front_shoes_overlay
+		if(is_species(src, /datum/species/pony) && num_hands >= 2)
+			front_shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
 		if(!shoes_overlay)
 			return
 
-		var/feature_y_offset = 0
 		for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 			var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
 			if(isnull(my_leg))
 				continue
-			var/list/foot_offset = my_leg.worn_foot_offset?.get_offset()
-			if (foot_offset && foot_offset["y"] > feature_y_offset)
-				feature_y_offset = foot_offset["y"]
+			my_leg?.worn_foot_offset?.apply_offset(shoes_overlay) // apply the first one then break
+			break
 
-		shoes_overlay.pixel_y += feature_y_offset
-		overlays_standing[SHOES_LAYER] = shoes_overlay
-
+		if(front_shoes_overlay)
+			for (var/arm_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+				var/obj/item/bodypart/arm/my_arm = get_bodypart(arm_zone)
+				if(isnull(my_arm))
+					continue
+				my_arm?.worn_glove_offset?.apply_offset(front_shoes_overlay)
+				break
+			overlays_standing[SHOES_LAYER] = list(shoes_overlay, front_shoes_overlay)
+		else
+			overlays_standing[SHOES_LAYER] = shoes_overlay
 	apply_overlay(SHOES_LAYER)
 	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_FEET)
 
@@ -514,9 +522,14 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1]
 		inv.update_icon()
 
+	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK_ALT) + 1])
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK_ALT) + 1]
+		inv.update_icon()
+	var/mutable_appearance/back_overlay
+	var/mutable_appearance/back_alt_overlay
 	if(back)
 		var/obj/item/worn_item = back
-		var/mutable_appearance/back_overlay
+
 		update_hud_back(worn_item)
 
 		if(update_obscured)
@@ -526,13 +539,56 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
-
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
+		if(is_species(src, /datum/species/pony))
+			var/icon/new_south = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, WEST)
+			var/icon/new_north = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, EAST)
+			var/icon/new_east = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, SOUTH)
+			var/icon/new_west = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, NORTH)
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, back.worn_icon_state ? back.worn_icon_state : back.icon_state, SOUTH)
+			final_icon.Insert(new_north, back.worn_icon_state ? back.worn_icon_state : back.icon_state, NORTH)
+			final_icon.Insert(new_east, back.worn_icon_state ? back.worn_icon_state : back.icon_state, EAST)
+			final_icon.Insert(new_west, back.worn_icon_state ? back.worn_icon_state : back.icon_state, WEST)
+			back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
 
 		if(!back_overlay)
 			return
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_back_offset?.apply_offset(back_overlay)
+
+	if(back_alt)
+		var/obj/item/worn_item = back_alt
+		update_hud_back_alt(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+			return
+
+		var/icon_file = 'icons/mob/clothing/back.dmi'
+		if(is_species(src, /datum/species/pony))
+			var/icon/new_south = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, EAST)
+			var/icon/new_north = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, WEST)
+			var/icon/new_east = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, NORTH)
+			var/icon/new_west = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, SOUTH)
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, SOUTH)
+			final_icon.Insert(new_north, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, NORTH)
+			final_icon.Insert(new_east, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, EAST)
+			final_icon.Insert(new_west, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, WEST)
+			back_alt_overlay = back_alt.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			back_alt_overlay = back_alt.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
+
+		if(!back_alt_overlay)
+			return
+		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
+		my_chest?.worn_back_offset?.apply_offset(back_alt_overlay)
+		overlays_standing[BACK_LAYER] = list(back_overlay, back_alt_overlay)
+	else if (back_overlay)
 		overlays_standing[BACK_LAYER] = back_overlay
 	apply_overlay(BACK_LAYER)
 
@@ -601,6 +657,31 @@ There are several things that need to be remembered:
 
 	return icon(resulting_icon)
 
+/// Modifies a sprite to conform to pony body shapes
+/proc/wear_pony_version(icon/base_icon, obj/item/item, key, greyscale_colors)
+	ASSERT(istype(item), "wear_pony_version: no item passed")
+	ASSERT(istext(key), "wear_pony_version: no key passed")
+	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
+		greyscale_colors = item.get_key_colors(base_icon)
+		if(!greyscale_colors)
+			greyscale_colors = item.get_general_color(base_icon)
+	var/color_key
+	if(islist(greyscale_colors))
+		color_key = jointext(greyscale_colors, "")
+	else
+		color_key = greyscale_colors
+	var/index = "[key]-[item.type]-[color_key]"
+	var/static/list/pony_clothing_cache = list()
+	var/icon/resulting_icon = pony_clothing_cache[index]
+	if(!resulting_icon)
+		resulting_icon = item.generate_pony_icons(base_icon, color_key)
+		if(!resulting_icon)
+			stack_trace("[item.type] is set to generate a masked pony icon, but generate_pony_icons was not implemented (or error'd).")
+			return base_icon
+		pony_clothing_cache[index] = fcopy_rsc(resulting_icon)
+
+	return icon(resulting_icon)
+
 /// Modifies a sprite to replace the legs with a new version
 /proc/replace_icon_legs(icon/base_icon, icon/new_legs)
 	var/static/icon/leg_mask
@@ -626,6 +707,9 @@ There are several things that need to be remembered:
 /obj/item/proc/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	return null
 
+/obj/item/proc/generate_pony_icons(icon/base_icon, greyscale_colors)
+	return null
+
 /**
  * Get what color the item is on "average"
  * Can be used to approximate what color this item is/should be
@@ -635,6 +719,11 @@ There are several things that need to be remembered:
  */
 /obj/item/proc/get_general_color(icon/base_icon)
 	if(greyscale_colors && length(SSgreyscale.ParseColorString(greyscale_colors)) == 1)
+		return greyscale_colors
+	return color
+
+/obj/item/proc/get_key_colors(icon/base_icon)
+	if(greyscale_colors)
 		return greyscale_colors
 	return color
 
@@ -766,6 +855,14 @@ There are several things that need to be remembered:
 		client.screen += worn_item
 	update_observer_view(worn_item, inventory = TRUE)
 
+//update whether our back alt item appears on our hud.
+/mob/living/carbon/human/update_hud_back_alt(obj/item/worn_item)
+	worn_item.screen_loc = ui_back_alt
+	if(client && hud_used?.hud_shown)
+		client.screen += worn_item
+	update_observer_view(worn_item, inventory = TRUE)
+
+
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
 covers:
@@ -809,6 +906,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/mob/living/carbon/wearer = loc
 	var/is_digi = istype(wearer) && (wearer.bodyshape & BODYSHAPE_DIGITIGRADE) && !wearer.is_digitigrade_squished()
+	var/is_pony = is_species(wearer, /datum/species/pony)
 
 	var/mutable_appearance/standing // this is the actual resulting MA
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
@@ -821,6 +919,13 @@ generate/load female uniform sprites matching all previously decided variables
 		)
 	if(!isinhands && is_digi && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		building_icon = wear_digi_version(
+			base_icon = building_icon || icon(file2use, t_state),
+			item = src,
+			key = "[t_state]-[file2use]-[female_uniform]",
+			greyscale_colors = greyscale_colors,
+		)
+	if(!isinhands && is_pony && (supports_variations_flags & CLOTHING_PONY_MASK))
+		building_icon = wear_pony_version(
 			base_icon = building_icon || icon(file2use, t_state),
 			item = src,
 			key = "[t_state]-[file2use]-[female_uniform]",

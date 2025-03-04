@@ -1244,7 +1244,7 @@
 		if(held_thing.wash(clean_types))
 			. = TRUE
 
-	if(back?.wash(clean_types))
+	if(back?.wash(clean_types) || back_alt?.wash(clean_types))
 		update_worn_back(0)
 		. = TRUE
 

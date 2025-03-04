@@ -434,6 +434,8 @@
 	switch(slot_id)
 		if(ITEM_SLOT_BACK)
 			return /obj/item/storage/backpack
+		if(ITEM_SLOT_BACK_ALT)
+			return /obj/item/storage/backpack
 		if(ITEM_SLOT_MASK)
 			return /obj/item/clothing/mask
 		if(ITEM_SLOT_NECK)

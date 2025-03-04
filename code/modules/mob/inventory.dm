@@ -495,7 +495,7 @@
 
 	if(!slot_priority)
 		slot_priority = list( \
-			ITEM_SLOT_BACK, ITEM_SLOT_ID,\
+			ITEM_SLOT_BACK, ITEM_SLOT_BACK_ALT, ITEM_SLOT_ID,\
 			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
 			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
 			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
@@ -530,6 +530,7 @@
 		user.get_item_by_slot(ITEM_SLOT_BELT),
 		user.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
 		user.get_item_by_slot(ITEM_SLOT_BACK),
+		user.get_item_by_slot(ITEM_SLOT_BACK_ALT),
 	)
 	for(var/thing in possible)
 		if(isnull(thing))

@@ -446,6 +446,11 @@
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
 
+//update whether our back alt item appears on our hud.
+/mob/living/carbon/proc/update_hud_back_alt(obj/item/I)
+	return
+
+
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file

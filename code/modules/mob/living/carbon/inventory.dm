@@ -34,6 +34,8 @@
 	switch(slot_id)
 		if(ITEM_SLOT_BACK)
 			return back
+		if(ITEM_SLOT_BACK_ALT)
+			return back_alt
 		if(ITEM_SLOT_MASK)
 			return wear_mask
 		if(ITEM_SLOT_NECK)
@@ -51,7 +53,13 @@
 	if(looking_for == back)
 		return ITEM_SLOT_BACK
 
+	if(looking_for == back_alt)
+		return ITEM_SLOT_BACK_ALT
+
 	if(back && (looking_for in back))
+		return ITEM_SLOT_BACKPACK
+
+	if(back_alt && (looking_for in back_alt))
 		return ITEM_SLOT_BACKPACK
 
 	if(looking_for == wear_mask)
@@ -90,7 +98,7 @@
 		ITEM_SLOT_BACKPACK,
 		ITEM_SLOT_SUITSTORE,
 		ITEM_SLOT_HANDCUFFED,
-		ITEM_SLOT_LEGCUFFED,
+		ITEM_SLOT_LEGCUFFED
 	)
 	var/list/obscured = check_obscured_slots()
 	var/list/visible_items = list()
@@ -143,6 +151,11 @@
 			if(back)
 				return
 			back = equipping
+			update_worn_back()
+		if(ITEM_SLOT_BACK_ALT)
+			if(back_alt)
+				return
+			back_alt = equipping
 			update_worn_back()
 		if(ITEM_SLOT_MASK)
 			if(wear_mask)
@@ -204,6 +217,10 @@
 			update_worn_head()
 	else if(I == back)
 		back = null
+		if(!QDELETED(src))
+			update_worn_back()
+	else if(I == back_alt)
+		back_alt = null
 		if(!QDELETED(src))
 			update_worn_back()
 	else if(I == wear_mask)
