@@ -56,3 +56,6 @@
 
 /// Checks icon states generated at runtime are valid
 /datum/unit_test/focus_only/runtime_icon_states
+
+/// Checks that foodtypes are the same for food whether it's spawned or crafted (with the exact required types)
+/datum/unit_test/focus_only/check_foodtypes

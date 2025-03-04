@@ -67,7 +67,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("seeds" = 1, "nuts" = 1, "chocolate" = 1, "salt" = 1, "popcorn" = 1, "potato" = 1)
-	foodtypes = GRAIN | NUTS | VEGETABLES | SUGAR
+	foodtypes = JUNKFOOD|GRAIN|FRIED|NUTS|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -94,7 +94,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("cheese" = 1, "tofu" = 1, "veggies" = 1)
-	foodtypes = DAIRY | VEGETABLES
+	foodtypes = DAIRY|VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -126,7 +126,7 @@
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("cheese" = 1, "oil" = 1, "chili" = 1, "fries" = 1)
-	foodtypes = DAIRY | VEGETABLES
+	foodtypes = VEGETABLES|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_5
 
@@ -172,7 +172,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
-	foodtypes = VEGETABLES | GRAIN | NUTS | RAW
+	foodtypes = VEGETABLES|GRAIN|DAIRY|NUTS|RAW
 	w_class = WEIGHT_CLASS_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
 
@@ -189,7 +189,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 18,
 	)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
-	foodtypes = VEGETABLES | GRAIN | NUTS
+	foodtypes = VEGETABLES|GRAIN|DAIRY|NUTS
 	w_class = WEIGHT_CLASS_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
 
@@ -206,7 +206,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
-	foodtypes = VEGETABLES | GRAIN | NUTS
+	foodtypes = VEGETABLES|GRAIN|DAIRY|NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_5
 
@@ -300,7 +300,7 @@
 		/datum/reagent/consumable/char = 1,
 	)
 	tastes = list("corn" = 1, "chili" = 1, "char" = 1)
-	foodtypes = VEGETABLES | DAIRY
+	foodtypes = VEGETABLES|JUNKFOOD|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -347,7 +347,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("creamy cheese" = 1, "breading" = 1, "oil" = 1)
-	foodtypes = DAIRY | GRAIN | FRIED
+	foodtypes = GRAIN|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -469,7 +469,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("bacon" = 1, "eggs" = 1)
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -485,7 +485,7 @@
 		/datum/reagent/consumable/nutriment = 10,
 	)
 	tastes = list("cornmeal" = 1, "cheese" = 1, "eggplant" = 1, "tomato sauce" = 1)
-	foodtypes = DAIRY | GRAIN
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_5
 
@@ -786,7 +786,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("dough" = 1, "garlic" = 1, "butter" = 1)
-	foodtypes = GRAIN | VEGETABLES | RAW
+	foodtypes = GRAIN|VEGETABLES|RAW|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/raw_mothic_garlic/make_bakeable()
@@ -804,7 +804,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("crust" = 1, "garlic" = 1, "butter" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
+	foodtypes = GRAIN|VEGETABLES|DAIRY
 	slice_type = /obj/item/food/pizzaslice/mothic_garlic
 	boxtag = "Garlic Bread alla Moffuchi"
 	crafting_complexity = FOOD_COMPLEXITY_4
@@ -815,7 +815,7 @@
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "garlic_slice"
 	tastes = list("dough" = 1, "garlic" = 1, "butter" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|VEGETABLES|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 //Bread
