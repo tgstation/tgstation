@@ -269,7 +269,7 @@
 	visuals_only = FALSE,
 )
 	// Do this at the very end of the setup process so we can insert quirk items and such
-	if(!visuals_only || isdummy(equipper))
+	if(!visuals_only && !isdummy(equipper))
 		RegisterSignal(equipper, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED, PROC_REF(apply_after_setup), override = TRUE)
 	return NONE
 
