@@ -8,9 +8,8 @@
 	name = "Uncanny cat"
 
 /proc/uncanny_cat(mob/living/target)
-	var/screamer_sound = 'newstuff/nikitauou/sound/stalkerscream.mp3'
 	target.overlay_fullscreen("uncanny_cat", /atom/movable/screen/fullscreen/uncanny_cat)
-	target << screamer_sound
+	SEND_SOUND(target, sound('newstuff/nikitauou/sound/stalkerscream.mp3'))
 	sleep(5)
 	target.clear_fullscreen("uncanny_cat", animated = 5)
 
