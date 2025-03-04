@@ -258,7 +258,7 @@
 	name = "Wallet"
 	item_path = /obj/item/storage/wallet
 
-/datum/loadout_item/pocket_items/wallet/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, job_equipping_step = FALSE)
+/datum/loadout_item/pocket_items/wallet/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	return
 
 /datum/loadout_item/pocket_items/wallet/on_equip_item(
