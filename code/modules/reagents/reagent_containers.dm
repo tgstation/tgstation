@@ -174,11 +174,11 @@
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
 		return FALSE
-	var/mob/living/carbon/C = eater
+	var/mob/living/carbon/as_carbon = eater
 	var/covered = ""
-	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
+	if(as_carbon.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"
-	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
+	else if(as_carbon.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
