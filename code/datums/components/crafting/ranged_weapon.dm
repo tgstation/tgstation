@@ -430,7 +430,7 @@
 
 /datum/crafting_recipe/sks
 	name = "Sakhno SKS semi-automatic rifle"
-	result = /obj/item/gun/ballistic/automatic/sks/empty
+	result = /obj/item/gun/ballistic/rifle/sks/empty
 	reqs = list(
 		/obj/item/weaponcrafting/stock = 1,
 		/obj/item/weaponcrafting/receiver = 1,
