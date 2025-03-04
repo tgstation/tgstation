@@ -176,7 +176,7 @@
  */
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
 	if(!inserted_scan_id?.registered_account?.bounties?[choice])
-		playsound(loc, 'sound/machines/synth/synth_no.ogg', vol = 40, vary = TRUE)
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null
