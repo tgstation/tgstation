@@ -151,13 +151,12 @@
 	sending = FALSE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
-/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(cooldown_reduction = 0)
-	if(!inserted_scan_id || !inserted_scan_id.registered_account)
+/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(mob/user, cooldown_reduction = 0)
+	var/datum/bank_account/pot_acc = inserted_scan_id?.registered_account
+	if(!pot_acc)
 		return
-	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
 	if((pot_acc.civilian_bounty || pot_acc.bounties) && !COOLDOWN_FINISHED(pot_acc, bounty_timer))
-		var/curr_time = round((COOLDOWN_TIMELEFT(pot_acc, bounty_timer)) / (1 MINUTES), 0.01)
-		say("Internal ID network spools coiling, try again in [curr_time] minutes!")
+		balloon_alert(user, "try again in [DisplayTimeText(COOLDOWN_TIMELEFT(pot_acc, bounty_timer))]!")
 		return FALSE
 	if(!pot_acc.account_job)
 		say("Requesting ID card has no job assignment registered!")
@@ -175,8 +174,8 @@
  * @param choice The index of the bounty in the list of bounties that the player can choose from.
  */
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
-	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
-		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
+	if(!inserted_scan_id?.registered_account?.bounties?[choice])
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', vol = 40, vary = TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null
@@ -222,7 +221,8 @@
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	if(!pad)
 		return
-	if(!usr.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
+	var/mob/user = ui.user
+	if(!user.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")
@@ -234,9 +234,9 @@
 		if("pick")
 			pick_bounty(params["value"])
 		if("bounty")
-			add_bounties(pad.get_cooldown_reduction())
+			add_bounties(user, pad.get_cooldown_reduction())
 		if("eject")
-			id_eject(usr, inserted_scan_id)
+			id_eject(user, inserted_scan_id)
 			inserted_scan_id = null
 	. = TRUE
 
