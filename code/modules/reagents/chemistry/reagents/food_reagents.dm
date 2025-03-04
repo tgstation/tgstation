@@ -182,7 +182,7 @@
 	var/burn_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
 	if(methods & TOUCH)
 		burn_damage *= max(1 - touch_protection, 0)
-	var/FryLoss = round(min(0, burn_damage * reac_volume))
+	var/FryLoss = round(min(38, burn_damage * reac_volume))
 	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
 		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
 		span_userdanger("You're covered in boiling oil!"))
