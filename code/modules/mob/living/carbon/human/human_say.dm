@@ -65,9 +65,14 @@
 	return special_voice
 
 /mob/living/carbon/human/binarycheck()
-	if(stat >= SOFT_CRIT || !ears)
+	if(stat >= SOFT_CRIT)
 		return FALSE
-	var/obj/item/radio/headset/dongle = ears
+	var/obj/item/radio/dongle = ears
+	for(var/obj/item/implant/radio/implant in src.implants)
+		if(implant.radio.special_channels & RADIO_SPECIAL_BINARY)
+			dongle = implant.radio
+			break
+
 	if(!istype(dongle))
 		return FALSE
 	var/area/our_area = get_area(src)

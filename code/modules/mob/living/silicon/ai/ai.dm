@@ -238,6 +238,16 @@
 		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"
 	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
 
+	var/connected_assimilated_amt = LAZYLEN(connected_assimilated_carbons)
+	if(connected_assimilated_amt)
+		. += "Connected assimilated carbons: [connected_assimilated_amt]"
+		for(var/mob/living/carbon/human/assimilated_carbon as anything in connected_assimilated_carbons)
+			var/robot_status = "Nominal"
+			if(assimilated_carbon.stat != CONSCIOUS || !assimilated_carbon.client)
+				robot_status = "OFFLINE"
+			//Name. Area, and Status! Everything an AI wants to know about its androids!
+			. += "[assimilated_carbon.name] | S.Integrity: [assimilated_carbon.health]% | Loc: [get_area_name(assimilated_carbon, TRUE)] | Status: [robot_status]"
+
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
 		to_chat(usr, span_warning("Wireless control is disabled!"))

@@ -66,6 +66,10 @@
 	radio_key = /obj/item/encryptionkey/syndicate
 	subspace_transmission = TRUE
 
+/obj/item/implant/radio/assimilated_carbon
+	radio_key = /obj/item/encryptionkey/binary
+	subspace_transmission = TRUE
+
 /obj/item/implant/radio/slime
 	name = "slime radio"
 	icon = 'icons/obj/medical/organs/organs.dmi'
