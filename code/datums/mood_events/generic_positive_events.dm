@@ -125,6 +125,11 @@
 	mood_change = 10 //maybe being a heretic isnt that bad after all
 	hidden = TRUE
 
+/datum/mood_event/assimilation
+	description = "SSmood.setmood(10);"
+	mood_change = 10 //maybe being assimilated SHODAN style isnt that bad after all
+	hidden = TRUE
+
 /datum/mood_event/rift_fishing
 	description = "THE MORE I FISH, THE HIGHER I RISE."
 	mood_change = 7
