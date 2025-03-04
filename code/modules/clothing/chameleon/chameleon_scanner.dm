@@ -6,6 +6,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_TINY
 	actions_types = list(/datum/action/item_action/chameleon/change/scanner)
+	action_slots = ALL
 	throw_speed = 3
 	/// Range that we can scan people
 	var/scan_range = 5

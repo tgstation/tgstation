@@ -331,6 +331,7 @@
 			also give them a bit of sentience though."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/reagent_containers/syringe/spider_extract
+	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 10
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
 	surplus = 10

@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../colors.scss';
 @use '../base.scss';
 
@@ -128,7 +129,7 @@ $category-colors: (
 
 @each $category-name, $values in $category-colors {
   .ObjectComponent__Category__#{$category-name} {
-    background-color: map-get($values, bg);
-    color: map-get($values, contrast);
+    background-color: map.get($values, bg);
+    color: map.get($values, contrast);
   }
 }

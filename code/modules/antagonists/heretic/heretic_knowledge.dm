@@ -424,13 +424,14 @@
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = chosen_one.key
+	summoned.PossessByPlayer(chosen_one.key)
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
+	ADD_TRAIT(heretic_monster, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)
 
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++
