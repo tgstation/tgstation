@@ -116,6 +116,11 @@
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
+	var/static/list/loc_connections = list(
+		COMSIG_RADIO_JAMMED = PROC_REF(on_jammed),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 	// No subtypes
 	if(type != /obj/item/radio)
 		return
@@ -448,6 +453,13 @@
 		var/sound/radio_important = sound('sound/items/radio/radio_important.ogg', volume = volume_modifier)
 		radio_important.frequency = get_rand_frequency_low_range()
 		SEND_SOUND(holder, radio_important)
+
+///Called when the radio has been jammed.
+/obj/item/radio/proc/on_jammed(datum/source, ignore_syndie)
+	SIGNAL_HANDLER
+	if(ignore_syndie && (special_channels & RADIO_SPECIAL_SYNDIE))
+		return
+	set_broadcasting(FALSE)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
