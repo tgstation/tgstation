@@ -26,6 +26,7 @@
 	alerts = null
 	screens = null
 	client_colours = null
+	color_filter_store = null
 	hud_possible = null
 	/// references to everything "on" the turf we are assigned to, that we care about. populated in assign() and cleared in unassign().
 	/// movables iside of other movables count as being "on" if they have get_turf(them) == our turf. intentionally not a lazylist
