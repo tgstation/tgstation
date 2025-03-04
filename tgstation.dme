@@ -6560,5 +6560,5 @@
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
 #include "newstuff\nikitauou\code\crossbow.dm"
-#include "newstuff\nikitauou\code\smite.dm"
+#include "newstuff\nikitauou\code\uncanny.dm"
 // END_INCLUDE
