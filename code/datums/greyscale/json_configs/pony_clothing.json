@@ -1,10 +1,35 @@
 {
-	"jumpsuit_temp": [
+	"jumpsuit_worn": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "security_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "security_mult",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "security_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "security_sub",
+				"blend_mode": "multiply"
+			}
+		],
 		{
 			"type": "icon_state",
-			"icon_state": "jumpsuit_temp",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "security_highlight",
+			"blend_mode": "overlay"
 		}
 	]
 }

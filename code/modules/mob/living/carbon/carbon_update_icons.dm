@@ -478,6 +478,11 @@
 
 		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
+		// This is a stupid hack for making hair properly adjust with offsets.
+		if(istype(limb, /obj/item/bodypart/head))
+			var/obj/item/bodypart/head/my_head = limb
+			if(my_head.worn_face_offset)
+				needs_update += my_head
 
 	limb_count_update += length(needs_update)
 	var/list/missing_bodyparts = get_missing_limbs()

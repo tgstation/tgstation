@@ -379,7 +379,22 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE))
 			return
 
-		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+		var/mutable_appearance/s_store_overlay
+		var/icon_file = 'icons/mob/clothing/belt_mirror.dmi'
+		if(is_species(src, /datum/species/pony))
+			var/icon/new_south = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_north = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_east = icon(worn_item.worn_icon ? worn_item.worn_icon : icon_file, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, SOUTH) // we aren't using the side sprites
+			var/icon/new_west = icon(worn_item.worn_icon ? worn_item.worn_icon : icon_file, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, NORTH) // we aren't using the side sprites
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, SOUTH)
+			final_icon.Insert(new_north, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, NORTH)
+			final_icon.Insert(new_east, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, EAST)
+			final_icon.Insert(new_west, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, WEST)
+			s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = icon_file)
+
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_storage_offset?.apply_offset(s_store_overlay)
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
@@ -427,10 +442,21 @@ There are several things that need to be remembered:
 
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_BELT))
 			return
-
+		var/mutable_appearance/belt_overlay
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
-
-		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
+		if(is_species(src, /datum/species/pony))
+			var/icon/new_south = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_north = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_east = icon(belt.worn_icon ? belt.worn_icon : icon_file, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, SOUTH) // we aren't using the side sprites
+			var/icon/new_west = icon(belt.worn_icon ? belt.worn_icon : icon_file, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, NORTH) // we aren't using the side sprites
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, SOUTH)
+			final_icon.Insert(new_north, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, NORTH)
+			final_icon.Insert(new_east, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, EAST)
+			final_icon.Insert(new_west, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, WEST)
+			belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(belt_overlay)
 		overlays_standing[BELT_LAYER] = belt_overlay
@@ -454,9 +480,29 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
 			return
 
+		var/mutable_appearance/suit_overlay
 		var/icon_file = DEFAULT_SUIT_FILE
+		if(is_species(src, /datum/species/pony))
+			var/icon/new_south = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, SOUTH)
+			var/icon/new_north = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, NORTH)
+			var/icon/new_east = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, EAST)
+			var/icon/new_west = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, WEST)
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			var/static/icon/north_mask
+			if(!north_mask)
+				north_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "north_suit_mask")
 
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
+			// Cut out the back of the armor.
+			new_north.Blend(north_mask, ICON_SUBTRACT)
+
+			final_icon.Insert(new_south, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, SOUTH)
+			final_icon.Insert(new_north, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, NORTH)
+			final_icon.Insert(new_east, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, EAST)
+			final_icon.Insert(new_west, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, WEST)
+			suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
+
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay

@@ -157,7 +157,7 @@
 	return replace_icon_legs(base_icon, legs)
 
 /obj/item/clothing/under/generate_pony_icons(icon/base_icon, greyscale_colors)
-	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/pony_clothes, greyscale_colors), "jumpsuit_temp")
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/pony_clothes, greyscale_colors), "jumpsuit_worn")
 	return ponysuit
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
