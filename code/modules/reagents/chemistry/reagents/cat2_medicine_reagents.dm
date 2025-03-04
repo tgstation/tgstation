@@ -571,7 +571,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
+	send_alert(user)
 	user.add_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
@@ -608,7 +608,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.clear_alert("penthrite")
+	remove_alert(affected_mob)
 	affected_mob.remove_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
@@ -621,6 +621,33 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/medicine/c2/penthrite/proc/send_alert(mob/living/affected_mob)
+	affected_mob.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
+
+/datum/reagent/medicine/c2/penthrite/proc/remove_alert(mob/living/affected_mob)
+	affected_mob.clear_alert("penthrite")
+
+///Alternative to penthrite that keeps you up for a few seconds after having a heart attack. Gives a bit of time to call for help regardless of when/where you've collapsed.
+/datum/reagent/medicine/c2/penthrite/heart_attack
+	name = "Desperation"
+	description = "The by-product of one's parasympathetic nervous system releasing everything it can. Rarely found in living patients, as this particular chemical mix is only released when your body knows it's about to shut down."
+	color = "#F5F5F5"
+
+/datum/reagent/medicine/c2/penthrite/heart_attack/send_alert(mob/living/affected_mob)
+	affected_mob.throw_alert("heart_stop", /atom/movable/screen/alert/heart_desperation)
+
+/datum/reagent/medicine/c2/penthrite/heart_attack/remove_alert(mob/living/affected_mob)
+	affected_mob.clear_alert("heart_stop")
+
+/datum/reagent/medicine/c2/penthrite/heart_attack/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.Knockdown(2 SECONDS, 2 SECONDS)
+	affected_mob.adjust_silence_up_to(2 SECONDS, 2 SECONDS)
+
+/atom/movable/screen/alert/heart_desperation
+	name = "Last Chance!"
+	desc = "You're having a heart attack! Get to a doctor ASAP!"
+	icon_state = "heart_stop"
 
 /******NICHE******/
 //todo
