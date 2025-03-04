@@ -152,21 +152,21 @@
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 /obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(mob/user, cooldown_reduction = 0)
-	var/datum/bank_account/pot_acc = inserted_scan_id?.registered_account
-	if(!pot_acc)
+	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	if(!id_account)
 		return
-	if((pot_acc.civilian_bounty || pot_acc.bounties) && !COOLDOWN_FINISHED(pot_acc, bounty_timer))
-		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(pot_acc, bounty_timer), round_seconds_to = 1)
+	if((id_account.civilian_bounty || id_account.bounties) && !COOLDOWN_FINISHED(id_account, bounty_timer))
+		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(id_account, bounty_timer), round_seconds_to = 1)
 		balloon_alert(user, "try again in [time_left]!")
 		return FALSE
-	if(!pot_acc.account_job)
+	if(!id_account.account_job)
 		say("Requesting ID card has no job assignment registered!")
 		return FALSE
-	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
-										random_bounty(pot_acc.account_job.bounty_types), // and 1 guaranteed assistant bounty if the other 2 suck.
+	var/list/datum/bounty/crumbs = list(random_bounty(id_account.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
+										random_bounty(id_account.account_job.bounty_types), // and 1 guaranteed assistant bounty if the other 2 suck.
 										random_bounty(CIV_JOB_BASIC))
-	COOLDOWN_START(pot_acc, bounty_timer, (5 MINUTES) - cooldown_reduction)
-	pot_acc.bounties = crumbs
+	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
+	id_account.bounties = crumbs
 
 /**
  * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
@@ -175,13 +175,14 @@
  * @param choice The index of the bounty in the list of bounties that the player can choose from.
  */
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
-	if(!inserted_scan_id?.registered_account?.bounties?[choice])
+	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	if(!id_account?.bounties?[choice])
 		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
-	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
-	inserted_scan_id.registered_account.bounties = null
-	SSblackbox.record_feedback("tally", "bounties_assigned", 1, inserted_scan_id.registered_account.civilian_bounty.type)
-	return inserted_scan_id.registered_account.civilian_bounty
+	id_account.civilian_bounty = id_account.bounties[choice]
+	id_account.bounties = null
+	SSblackbox.record_feedback("tally", "bounties_assigned", 1, id_account.civilian_bounty.type)
+	return id_account.civilian_bounty
 
 /obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)
 	id_eject(user, inserted_scan_id)
