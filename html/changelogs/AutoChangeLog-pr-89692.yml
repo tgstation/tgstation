@@ -1,4 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - bugfix: "The cleaning AI behavior (generally used by cleanbots) will no longer return early if the list of emagged phrases is empty."

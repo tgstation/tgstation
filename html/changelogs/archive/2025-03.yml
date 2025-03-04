@@ -79,3 +79,47 @@
   - bugfix: some footstep sounds like robotic or slimes are no longer silent
   subject217:
   - balance: Contractor Kit is no longer available in lowpop.
+2025-03-04:
+  00-Steven:
+  - qol: Added screentips to the big manipulator.
+  - bugfix: You can actually open the big manipulator's wires UI while holding an
+      assembly.
+  Absolucy:
+  - bugfix: Fixed more advanced regex-based chat highlights not working.
+  AyIong:
+  - bugfix: Fixed random chat BSOD on Byond 516
+  Holoo-1:
+  - qol: cult spells no longer overlap with second row of inventory
+  Kashargul:
+  - bugfix: tgui say 516 will no longer change channels when the button is used to
+      drag it
+  - bugfix: tgui say 516 will no longer leak radio messages into the wrong channel
+  - bugfix: runechat flickering when faded up messages fade out
+  MichiRecRoom:
+  - bugfix: The component printer now shows icons for the items in its UI.
+  - bugfix: Nukes will now always be deleted upon exploding, no matter if they have
+      a valid cutscene to play.
+  - bugfix: The cleaning AI behavior (generally used by cleanbots) will no longer
+      return early if the list of emagged phrases is empty.
+  Rhials:
+  - spellcheck: Fixes grammar in autosurgeon use message.
+  SmArtKar:
+  - bugfix: Fixed external organs not being colored by colorful reagent
+  - bugfix: Fixed inconsistent crusher trophy droprates
+  adamsong:
+  - rscadd: Added the ability for borgs to pathfind into and through restricted areas.
+  itsmeow:
+  - bugfix: Fixed lizard body markings and ethereal feature previews in the preference
+      menu missing some overlays.
+  - refactor: Optimized spritesheet asset generation greatly using rustg IconForge,
+      greatly reducing post-initialization lag as well as reducing init times and
+      saving server computation.
+  - config: Added 'smart' asset caching, for batched rustg IconForge spritesheets.
+      It is persistent and suitable for use on local, with automatic invalidation.
+  - rscadd: Added admin verbs - Debug -> Clear Smart/Legacy Asset Cache for spritesheets.
+  - bugfix: Fixed R&D console icons breaking on WebView2/516
+  mc-oofert:
+  - bugfix: prevents stripping in caretakers last refuge
+  - bugfix: the eldritch id (Lock path) now preserves the ID used.
+  timothymtorres:
+  - bugfix: Fix hauntinum reagent to work when it is exposed to item objects.

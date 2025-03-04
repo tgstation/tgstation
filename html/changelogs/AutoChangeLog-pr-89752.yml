@@ -1,4 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - bugfix: "Nukes will now always be deleted upon exploding, no matter if they have a valid cutscene to play."

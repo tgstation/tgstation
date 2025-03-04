@@ -1,6 +1,0 @@
-author: "Kashargul"
-delete-after: True
-changes:
-  - bugfix: "tgui say 516 will no longer change channels when the button is used to drag it"
-  - bugfix: "tgui say 516 will no longer leak radio messages into the wrong channel"
-  - bugfix: "runechat flickering when faded up messages fade out"
