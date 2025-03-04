@@ -17,14 +17,12 @@
 	end_overlay = "light_ash"
 
 	area_type = /area
-	protect_indoors = TRUE
 	target_trait = ZTRAIT_ASHSTORM
-
 	immunity_type = TRAIT_ASHSTORM_IMMUNE
-
 	probability = 90
 
-	barometer_predictable = TRUE
+	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
+
 	var/list/weak_sounds = list()
 	var/list/strong_sounds = list()
 
@@ -57,7 +55,7 @@
 	GLOB.ash_storm_sounds += weak_sounds
 	return ..()
 
-/datum/weather/ash_storm/can_weather_act(mob/living/mob_to_check)
+/datum/weather/ash_storm/can_weather_act_mob(mob/living/mob_to_check)
 	. = ..()
 	if(!. || !ishuman(mob_to_check))
 		return
@@ -65,7 +63,7 @@
 	if(human_to_check.get_thermal_protection() >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 		return FALSE
 
-/datum/weather/ash_storm/weather_act(mob/living/victim)
+/datum/weather/ash_storm/weather_act_mob(mob/living/victim)
 	victim.adjustFireLoss(4, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/weather/ash_storm/end()
@@ -87,6 +85,6 @@
 	end_message = span_notice("The emberfall slows, stops. Another layer of hardened soot to the basalt beneath your feet.")
 	end_sound = null
 
-	aesthetic = TRUE
+	weather_flags = parent_type::weather_flags & ~WEATHER_MOBS
 
 	probability = 10
