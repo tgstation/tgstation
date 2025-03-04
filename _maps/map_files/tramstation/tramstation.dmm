@@ -7086,6 +7086,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
 "bvB" = (
@@ -7693,10 +7694,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/cardboard,
 /obj/item/food/donkpocket/pizza,
-/obj/machinery/camera/directional/east{
-	network = list("ss13","medbay");
-	c_tag = "Medical - Virology Break Room"
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "bHb" = (
@@ -22771,6 +22768,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "gZB" = (
@@ -38393,6 +38391,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "muK" = (
@@ -43409,10 +43408,6 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Break Room"
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "okn" = (
@@ -49187,10 +49182,6 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/obj/machinery/camera{
-	dir = 9;
-	c_tag = "Civilian - Vacant Office"
-	},
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "qpZ" = (
