@@ -107,13 +107,11 @@
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
-	if(!inserted_scan_id)
+	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	var/datum/bounty/current_bounty = id_account?.civilian_bounty
+	if(!current_bounty)
 		stop_sending()
 		return FALSE
-	if(!inserted_scan_id.registered_account.civilian_bounty)
-		stop_sending()
-		return FALSE
-	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	for(var/atom/movable/possible_shippable in get_turf(pad))
@@ -125,24 +123,24 @@
 			var/obj/item/possible_shippable_item = possible_shippable
 			if(possible_shippable_item.item_flags & ABSTRACT)
 				continue
-		if(curr_bounty.applies_to(possible_shippable))
+		if(current_bounty.applies_to(possible_shippable))
 			active_stack ++
-			curr_bounty.ship(possible_shippable)
+			current_bounty.ship(possible_shippable)
 			qdel(possible_shippable)
 	if(active_stack >= 1)
 		status_report += "Bounty Target Found x[active_stack]. "
 	else
 		status_report = "No applicable targets found. Aborting."
 		stop_sending()
-	if(curr_bounty.can_claim())
+	if(current_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
-		SSblackbox.record_feedback("tally", "bounties_completed", 1, curr_bounty.type)
-		inserted_scan_id.registered_account.reset_bounty()
+		SSblackbox.record_feedback("tally", "bounties_completed", 1, current_bounty.type)
+		id_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
 
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
-		reward.set_up(curr_bounty, inserted_scan_id)
+		reward.set_up(current_bounty, inserted_scan_id)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
