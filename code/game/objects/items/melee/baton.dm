@@ -997,6 +997,7 @@
 	worn_icon_state = "nunchaku"
 	attack_verb_continuous = list("beats", "whips", "smashes", "punishes")
 	attack_verb_simple = list("beat", "whip", "smash", "punish")
+	hitsound = 'sound/items/weapons/chainhit.ogg'
 	slot_flags = ITEM_SLOT_BELT
 	cooldown = CLICK_CD_MELEE
 	knockdown_time = 250 MILLISECONDS
