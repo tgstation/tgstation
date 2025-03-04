@@ -15,9 +15,10 @@ import { capitalize } from 'tgui-core/string';
 
 import { clearChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import { updateSettings } from './actions';
+import { exportSettings, updateSettings } from './actions';
 import { FONTS } from './constants';
 import { selectSettings } from './selectors';
+import { importChatSettings } from './settingsImExport';
 
 export function SettingsGeneral(props) {
   const { theme, fontFamily, fontSize, lineHeight } =
@@ -148,6 +149,25 @@ export function SettingsGeneral(props) {
       </LabeledList>
       <Divider />
       <Stack fill>
+        <Stack.Item mt={0.15}>
+          <Button
+            icon="compact-disc"
+            tooltip="Export chat settings"
+            onClick={() => dispatch(exportSettings())}
+          >
+            Export settings
+          </Button>
+        </Stack.Item>
+        <Stack.Item mt={0.15}>
+          <Button.File
+            accept=".json"
+            tooltip="Import chat settings"
+            icon="arrow-up-from-bracket"
+            onSelectFiles={(files) => importChatSettings(files)}
+          >
+            Import settings
+          </Button.File>
+        </Stack.Item>
         <Stack.Item grow mt={0.15}>
           <Button
             icon="save"
