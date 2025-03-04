@@ -264,8 +264,6 @@
 /obj/projectile/kinetic/mech
 	range = 5
 	damage = 50
-	//the multiplier we apply to our PKa's AOE effect.
-	var/aoe_damage_multiplier = 0.3
 
 /obj/projectile/kinetic/mech/strike_thing(atom/target)
 	. = ..()
@@ -277,7 +275,7 @@
 			continue
 
 		var/armor = living_mob.run_armor_check(def_zone, armor_flag, armour_penetration = armour_penetration)
-		living_mob.apply_damage(damage*aoe_damage_multiplier, damage_type, def_zone, armor)
+		living_mob.apply_damage(damage, damage_type, def_zone, armor)
 		to_chat(living_mob, span_userdanger("You're struck by a [name]!"))
 
 //Modkits
