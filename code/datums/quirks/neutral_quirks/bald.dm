@@ -20,7 +20,7 @@
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 
 /datum/quirk/item_quirk/bald/add_unique(client/client_source)
-	var/obj/item/clothing/head/wig/natural/baldie_wig = SSwardrobe.provide_type(__IMPLIED_TYPE__)
+	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
 	if(old_hair == "Bald")
 		baldie_wig.hairstyle = pick(SSaccessories.hairstyles_list - "Bald")
 	else
@@ -47,7 +47,7 @@
 	// check if their job / loadout has a hat
 	var/obj/item/existing = quirk_holder.get_item_by_slot(ITEM_SLOT_HEAD)
 	// no hat -> try equipping like normal (via parent)
-	if(isnull(existing))
+	if(isnull(existing) || (existing.item_flags & STACKABLE_HELMET_EXEMPT))
 		return ..()
 	// try removing the existing hat. if fail -> try equipping like normal
 	if(!quirk_holder.temporarilyRemoveItemFromInventory(existing))
@@ -59,7 +59,7 @@
 	// now that the wig is properly equipped, try attaching the old job / loadout hat via the component
 	var/datum/component/hat_stabilizer/comp = quirk_item.GetComponent(/datum/component/hat_stabilizer)
 	// nvm i guess someone removed that feature (futureproofed comment)
-	if(!isnull(comp))
+	if(isnull(comp))
 		return ..()
 
 	comp.attach_hat(existing)
