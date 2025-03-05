@@ -60,6 +60,10 @@
 	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
+
+	if(vary && !frequency)
+		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
+
 	var/list/listeners
 
 	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
