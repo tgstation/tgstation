@@ -78,7 +78,8 @@
 
 /mob/proc/get_client_colour_filters()
 	. = list()
-	var/list/used_colors = reverse_range(sortTim(client_colours, GLOBAL_PROC_REF(cmp_client_colours)))
+	// sortTim sorts the passed list instead of making the copy, and so does reverse_range
+	var/list/used_colors = reverse_range(sortTim(client_colours.Copy(), GLOBAL_PROC_REF(cmp_client_colours)))
 	var/current_color = null
 	var/color_num = 0
 	var/color_prio = 1
@@ -266,6 +267,7 @@
 
 /datum/client_colour/glass_colour/nightmare
 	color = list(/*R*/ 255,0,0,0, /*G*/ 0,0,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ -130,0,0,0) //every color is either red or black
+	split_filters = TRUE
 
 #undef CLIENT_COLOR_VALUE_INDEX
 #undef CLIENT_COLOR_PRIORITY_INDEX
