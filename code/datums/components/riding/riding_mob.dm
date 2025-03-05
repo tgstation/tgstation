@@ -210,7 +210,8 @@
 	var/mob/living/ridden = parent
 	if(!require_minigame || ridden.faction.Find(REF(rider)))
 		return
-	ridden.Shake(duration = 2 SECONDS)
+	ridden.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 1 SECONDS)
+	ridden.spin(spintime = 1 SECONDS, speed = 1)
 	ridden.balloon_alert(rider, "tries to shake you off!")
 	new /datum/riding_minigame(ridden, rider)
 
@@ -741,9 +742,11 @@
 	if(current_attempts >= maximum_attempts)
 		lose_minigame()
 		return
-	if(prob(30)) //we shake and move uncontrollably!
-		var/mob/living/living_host = host?.resolve()
-		living_host?.Shake(duration = 2 SECONDS)
+	if(prob(25)) //we shake and move uncontrollably!
+		var/mob/living/living_host = host.resolve()
+		living_host.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 0.75 SECONDS)
+		living_host.spin(spintime = 0.75 SECONDS, speed = 1)
+
 
 
 	for(var/index in 0 to 1)
