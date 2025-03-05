@@ -1009,22 +1009,25 @@
 
 /obj/item/melee/baton/nunchaku/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, list(COMSIG_MOVABLE_POST_THROW, COMSIG_ITEM_AFTERATTACK), PROC_REF(randomize_state))
+	// change icon state after throw/attacks
+	RegisterSignals(src, list(COMSIG_MOVABLE_POST_THROW, COMSIG_ITEM_AFTERATTACK), PROC_REF(randomize_state))
 
 /obj/item/melee/baton/nunchaku/proc/randomize_state()
 	icon_state = pick(list("nunchaku", "nunchaku_x", "nunchaku_y"))
 	update_icon_state()
 
 /obj/item/melee/baton/nunchaku/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
-	// block melee attacks if owner at throw mode, and counter attack
-	if(attack_type in list(MELEE_ATTACK, UNARMED_ATTACK, THROWN_PROJECTILE_ATTACK, LEAP_ATTACK))
-		if(owner.throw_mode)
-			owner.toggle_throw_mode()
-			final_block_chance = 100
+	if(attack_type == PROJECTILE_ATTACK || !owner.throw_mode)
+		return FALSE
 
-			if(attack_type in list(MELEE_ATTACK, UNARMED_ATTACK, LEAP_ATTACK))
-				var/mob/living/attacker = GET_ASSAILANT(hitby)
-				playsound(src, 'sound/items/weapons/cqchit2.ogg', 100, FALSE)
-				attack(attacker, owner, BATON_DO_NORMAL_ATTACK)
+	// blocks any melee/throwable attacks
+	owner.toggle_throw_mode()
+	final_block_chance = 100
+
+	// counterattack at melee
+	if(attack_type in list(MELEE_ATTACK, UNARMED_ATTACK, LEAP_ATTACK))
+		var/mob/living/attacker = GET_ASSAILANT(hitby)
+		playsound(src, 'sound/items/weapons/cqchit2.ogg', 100, FALSE)
+		attack(attacker, owner, BATON_DO_NORMAL_ATTACK)
 
 	. = ..()
