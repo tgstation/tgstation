@@ -573,7 +573,7 @@
 
 /obj/structure/table/wood/proc/table_shatter(mob/living/victim)
 	visible_message(span_warning("[src] smashes into bits!"),
-		span_danger("You hear breaking glass."))
+		span_danger("You hear the loud cracking of wood being split."))
 
 	playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
 
