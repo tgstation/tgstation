@@ -17,9 +17,6 @@
 	VAR_PRIVATE/mob/living/holder
 	/// Weakref to the last mob we attacked, for determining when to reset streaks
 	VAR_PRIVATE/datum/weakref/current_target
-	/// Used for temporary martial arts.
-	/// This is a reference to the last martial art that was replaced by this one.
-	VAR_PRIVATE/datum/martial_art/base
 
 	/// Path to verb to display help text for this martial art.
 	var/help_verb
