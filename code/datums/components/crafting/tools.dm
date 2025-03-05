@@ -110,9 +110,9 @@
 		if(crayon.use_charges(user, 10))
 			return
 
-/datum/crafting_recipe/radio_jammer
-	name = "Radio Jammer"
-	result = /obj/item/jammer
+/datum/crafting_recipe/makeshift_radio_jammer
+	name = "Makeshift Radio Jammer"
+	result = /obj/item/jammer/makeshift
 	reqs = list(
 		/obj/item/universal_scanner = 1,
 		/obj/item/encryptionkey = 1,
