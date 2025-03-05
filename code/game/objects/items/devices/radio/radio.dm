@@ -116,9 +116,9 @@
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
-	RegisterSignal(src, COMSIG_RADIO_JAMMED, PROC_REF(on_jammed))
+	RegisterSignal(src, COMSIG_ATOM_JAMMER_ACT, PROC_REF(radio_jam_act))
 	var/static/list/containers_connections = list(
-		COMSIG_RADIO_JAMMED = PROC_REF(on_jammed),
+		COMSIG_ATOM_JAMMER_ACT = PROC_REF(radio_jam_act),
 	)
 	AddComponent(/datum/component/connect_containers, src, containers_connections)
 
@@ -456,7 +456,7 @@
 		SEND_SOUND(holder, radio_important)
 
 ///Called when the radio has been jammed.
-/obj/item/radio/proc/on_jammed(datum/source, ignore_syndie)
+/obj/item/radio/proc/radio_jam_act(datum/source, ignore_syndie)
 	SIGNAL_HANDLER
 	if(ignore_syndie && (special_channels & RADIO_SPECIAL_SYNDIE))
 		return
