@@ -5,6 +5,10 @@
 	main_feature_name = "Ethereal color"
 	should_generate_icons = TRUE
 
+/datum/preference/choiced/ethereal_color/has_relevant_feature(datum/preferences/preferences)
+	// Skips checks for relevant_organ, relevant trait etc. because ethereal color is tied directly to species (atm)
+	return current_species_has_savekey(preferences)
+
 /datum/preference/choiced/ethereal_color/init_possible_values()
 	return assoc_to_keys(GLOB.color_list_ethereal)
 
