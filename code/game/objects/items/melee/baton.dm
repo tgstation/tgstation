@@ -1021,7 +1021,7 @@
 		return ..()
 
 	// blocks any melee/throwable attacks
-	owner.toggle_throw_mode()
+	owner.adjustStaminaLoss(5)
 	final_block_chance = 100
 
 	// counterattack at melee
