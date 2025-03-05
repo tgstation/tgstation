@@ -67,7 +67,7 @@
 /obj/projectile/bullet/junk/hunter
 	name = "junk hunter bullet"
 	icon_state = "gauss"
-	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL
+	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL | MOB_MINING
 	extra_damage_multiplier = 0
 	extra_damage_added_damage = 50
 
