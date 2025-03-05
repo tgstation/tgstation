@@ -1,0 +1,4 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - bugfix: "chameleon IDs actually prevent AI tracking now"

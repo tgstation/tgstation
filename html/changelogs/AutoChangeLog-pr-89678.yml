@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Messages from blood cult communion, abductor telepathy, xeno hivemind, golem resonator, blob telepathy, changeling hivemind, and binary chat are now considered \"radio\" messages by the chat, so they can properly be sorted via chat tabs."
+  - qol: "Your own messages in blood cult communion, abductor/xenomorph/changeling hivemind, or golem telepathy will no longer be highlighted in chat (to prevent highlight spam whenever you talk if you highlight your own name, mainly)"

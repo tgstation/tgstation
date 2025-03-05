@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
-		C?.playtitlemusic(40)
+		C?.playtitlemusic(volume_multiplier = 0.5)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
@@ -661,7 +661,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 /datum/controller/subsystem/ticker/proc/give_show_report_button(client/C)
 	var/datum/action/report/R = new
-	C.player_details.player_actions += R
+	C.persistent_client.player_actions += R
 	R.Grant(C.mob)
 	to_chat(C,span_infoplain("<a href='byond://?src=[REF(R)];report=1'>Show roundend report again</a>"))
 

@@ -550,6 +550,7 @@
 	unarmed_effectiveness = 20
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
 
 /obj/item/bodypart/arm/right/robot/advanced
 	name = "advanced robotic right arm"
@@ -561,6 +562,7 @@
 	unarmed_effectiveness = 20
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
 
 /obj/item/bodypart/leg/left/robot/advanced
 	name = "advanced robotic left leg"
@@ -572,6 +574,7 @@
 	unarmed_effectiveness = 20
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
 
 /obj/item/bodypart/leg/right/robot/advanced
 	name = "advanced robotic right leg"
@@ -583,6 +586,7 @@
 	unarmed_effectiveness = 20
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

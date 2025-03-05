@@ -4,7 +4,7 @@
 	combat_mode = TRUE
 	status_flags = NONE //don't inherit standard basicmob flags
 	mob_size = MOB_SIZE_LARGE
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
