@@ -331,8 +331,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/show_hud(version = 0, mob/viewmob)
 	if(!ismob(mymob))
 		return FALSE
+
 	var/mob/screenmob = viewmob || mymob
+	message_admins("screenmob:[screenmob] = [viewmob] || [mymob], [screenmob.client]")
 	if(!screenmob.client)
+		message_admins("early ret:[screenmob], [screenmob.client]")
 		return FALSE
 
 	// This code is the absolute fucking worst, I want it to go die in a fire
@@ -407,15 +410,19 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// Handles alerts - the things on the right side of the screen
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
+	message_admins("update_parallax_pref([screenmob])")
 	update_parallax_pref(screenmob)
 	update_reuse(screenmob)
 
 	// ensure observers get an accurate and up-to-date view
 	if (!viewmob)
+		message_admins("_viewmob:[viewmob]")
 		plane_masters_update()
 		for(var/M in mymob.observers)
+			message_admins("_show_hud([hud_version], [M])")
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
+		message_admins("_viewmob.hud_used:[viewmob.hud_used]")
 		viewmob.hud_used.plane_masters_update()
 		viewmob.show_other_mob_action_buttons(mymob)
 
