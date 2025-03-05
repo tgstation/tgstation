@@ -30,7 +30,7 @@
 	/// amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	var/ammo_sections = 10
 	/// bitflags for upgrades
-	var/upgrade = NONE
+	var/construction_upgrades = NONE
 	/// bitflags for banned upgrades
 	var/banned_upgrades = NONE
 	/// remote connection to the silo
@@ -49,7 +49,7 @@
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	if(upgrade & RCD_UPGRADE_SILO_LINK)
+	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
 	update_appearance()
 
@@ -63,6 +63,8 @@
 	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(blueprint_change)))
 
 /obj/item/construction/proc/blueprint_change()
+	PRIVATE_PROC(TRUE)
+
 	return !blueprint_changed
 
 ///used for examining the RCD and for its UI
@@ -71,14 +73,14 @@
 		return silo_mats.mat_container.get_material_amount(/datum/material/iron) / SILO_USE_AMOUNT
 	return 0
 
-///returns local matter units available. overriden by rcd borg to return power units available
+///returns local matter units available. overridden by rcd borg to return power units available
 /obj/item/construction/proc/get_matter(mob/user)
 	return matter
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
 	. += "It currently holds [get_matter(user)]/[max_matter] matter-units."
-	if(upgrade & RCD_UPGRADE_SILO_LINK)
+	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		var/iron = get_silo_iron()
 		if(iron)
@@ -91,6 +93,7 @@
 
 /obj/item/construction/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(istype(interacting_with, /obj/item/rcd_upgrade))
 		install_upgrade(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
@@ -100,6 +103,7 @@
 
 /obj/item/construction/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(istype(tool, /obj/item/rcd_upgrade))
 		install_upgrade(tool, user)
 		return ITEM_INTERACT_SUCCESS
@@ -109,13 +113,13 @@
 
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
 /obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/design_disk, mob/user)
-	if(design_disk.upgrade & upgrade)
+	if(design_disk.upgrade & construction_upgrades)
 		balloon_alert(user, "already installed!")
 		return FALSE
 	if(design_disk.upgrade & banned_upgrades)
 		balloon_alert(user, "cannot install upgrade!")
 		return FALSE
-	upgrade |= design_disk.upgrade
+	construction_upgrades |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -205,14 +209,14 @@
 /obj/item/construction/ui_static_data(mob/user)
 	. = list()
 
-	.["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
+	.["silo_upgraded"] = !!(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 
 ///shared data for rcd,rld & plumbing
 /obj/item/construction/ui_data(mob/user)
 	var/list/data = list()
 
 	//matter in the rcd
-	var/total_matter = ((upgrade & RCD_UPGRADE_SILO_LINK) && silo_link) ? get_silo_iron() : get_matter(user)
+	var/total_matter = ((construction_upgrades & RCD_UPGRADE_SILO_LINK) && silo_link) ? get_silo_iron() : get_matter(user)
 	if(!total_matter)
 		total_matter = 0
 	data["matterLeft"] = total_matter
@@ -240,7 +244,7 @@
 	if(.)
 		return
 
-	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
+	if(action == "toggle_silo" && (construction_upgrades & RCD_UPGRADE_SILO_LINK))
 		toggle_silo(ui.user)
 		return TRUE
 
@@ -292,7 +296,7 @@
 /obj/item/construction/proc/check_menu(mob/living/user, remote_anchor)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(remote_anchor && user.remote_control != remote_anchor)
 		return FALSE
@@ -313,7 +317,7 @@
 
 /obj/item/rcd_upgrade/simple_circuits
 	name = "RCD advanced upgrade: simple circuits"
-	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
+	desc = "It contains the design for firelock, air alarm, fire alarm, APC circuits and crap power cells."
 	icon_state = "datadisk4"
 	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
 

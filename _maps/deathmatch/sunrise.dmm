@@ -721,7 +721,7 @@
 /area/deathmatch)
 "Uk" = (
 /obj/structure/closet/crate/coffin,
-/obj/item/organ/internal/cyberimp/arm/shard/katana,
+/obj/item/organ/cyberimp/arm/shard/katana,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,

@@ -24,6 +24,9 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
+	sound_vary = TRUE
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -31,10 +34,11 @@
 	var/design_category = "Standard"
 	/// design selected by player
 	var/datum/tile_info/selected_design
-	/// temp var to store an single design from GLOB.floor_design while iterating through this list
-	var/datum/tile_info/tile_design
+	/// direction currently selected
+	var/selected_direction = SOUTH
 	/// overlays on a tile
 	var/list/design_overlays = list()
+	var/ranged = TRUE
 
 /// stores the name, type, icon & cost for each tile type
 /datum/tile_info
@@ -42,75 +46,57 @@
 	var/name
 	/// path to create this tile type
 	var/obj/item/stack/tile/tile_type
-	/// icon for this tile to display for ui
+	/// path for the turf
+	var/turf/open/floor/turf_type
+	/// icon file used by the turf
+	var/icon_file
+	/// icon_state for this tile to display for ui
 	var/icon_state
 	/// rcd units to consume for this tile creation
 	var/cost
 
 	///directions this tile can be placed on the turf
-	var/list/tile_directions
-	/// user friendly names of the tile_directions to be sent to ui
-	var/list/ui_directional_data
-	/// current direction this tile should be rotated in before being placed on the plating
-	var/selected_direction
+	var/list/tile_directions_text
+	var/list/tile_directions_numbers
+
+	/// CSS selector for the icon in TGUI
+	var/icon_css_class
 
 /// decompress a single tile design list element from GLOB.floor_designs into its individual variables
-/datum/tile_info/proc/set_info(list/design)
+/datum/tile_info/New(list/design)
 	name = design["name"]
 	tile_type = design["type"]
-	icon_state = initial(tile_type.icon_state)
+	turf_type = initial(tile_type.turf_type)
+	icon_file = initial(turf_type.icon)
+	icon_state = initial(turf_type.icon_state)
+	icon_css_class = sanitize_css_class_name("[icon_file]-[icon_state]")
+	var/obj/item/stack/tile/tile_obj = new tile_type  // lists stored on types compile to be inside New()
+	tile_directions_text = assoc_to_keys(tile_obj.tile_rotate_dirs)
+	tile_directions_numbers = tile_obj.tile_rotate_dirs_number
+	qdel(tile_obj)
 	cost = design["tile_cost"]
 
-	tile_directions = design["tile_rotate_dirs"]
-	if(!tile_directions)
-		selected_direction = null
-		ui_directional_data = null
-		return
-
-	ui_directional_data = list()
-	for(var/tile_direction in tile_directions)
-		ui_directional_data += dir2text(tile_direction)
-	selected_direction = tile_directions[1]
-
 /// fill all information to be sent to the UI
-/datum/tile_info/proc/fill_ui_data(list/data)
+/datum/tile_info/proc/fill_ui_data(list/data, selected_direction)
 	data["selected_recipe"] = name
-	data["selected_icon"] = get_icon_state()
+	data["selected_icon"] = icon_css_class
 
-	if(!tile_directions)
+	if(!tile_directions_text)
 		data["selected_direction"] = null
 		return
 
-	data["tile_dirs"] = ui_directional_data
+	data["tile_dirs"] = tile_directions_text
 	data["selected_direction"] = dir2text(selected_direction)
 
-/// change the direction the tile is laid on the turf
-/datum/tile_info/proc/set_direction(direction)
-	if(tile_directions == null || !(direction in tile_directions))
-		return
-	selected_direction = direction
-
-/**
- * retrieve the icon for this tile design based on its direction
- * for complex directions like NORTHSOUTH etc we create an seperated blended icon in the asset file for example floor-northsouth
- * so we check which icons we want to retrieve based on its direction
- * for basic directions its rotated with CSS so there is no need for icon
- */
-/datum/tile_info/proc/get_icon_state()
-	var/prefix = ""
-	if(selected_direction)
-		prefix = (selected_direction in GLOB.tile_dont_rotate) ? "" : "-[dir2text(selected_direction)]"
-	return icon_state + prefix
-
 ///convinience proc to quickly convert the tile design into an physical tile to lay on the plating
-/datum/tile_info/proc/new_tile(loc)
+/datum/tile_info/proc/new_tile(loc, selected_direction)
 	var/obj/item/stack/tile/final_tile = new tile_type(loc, 1)
 	final_tile.turf_dir = selected_direction
 	return final_tile
 
 /**
  * Stores the decal & overlays on the floor to preserve texture of the design
- * in short its just an wrapper for mutable appearance where we retrieve the nessassary information
+ * in short it's just an wrapper for mutable appearance where we retrieve the nessassary information
  * to recreate an mutable appearance
  */
 /datum/overlay_info
@@ -139,15 +125,15 @@
 
 /obj/item/construction/rtd/Initialize(mapload)
 	. = ..()
-	selected_design = new
-	tile_design = new
-	selected_design.set_info(GLOB.floor_designs[root_category][design_category][1])
+	var/list/design = GLOB.floor_designs[root_category][design_category][1]
+	if(!design["datum"])
+		populate_rtd_datums()
+	selected_design = design["datum"]
 
 /obj/item/construction/rtd/Destroy()
-	QDEL_NULL(selected_design)
-	QDEL_NULL(tile_design)
+	selected_design = null
 	QDEL_LIST(design_overlays)
-	. = ..()
+	return ..()
 
 /obj/item/construction/rtd/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -158,7 +144,7 @@
 
 /obj/item/construction/rtd/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/rtd),
+		get_asset_datum(/datum/asset/spritesheet_batched/rtd),
 	)
 
 /obj/item/construction/rtd/attack_self(mob/user)
@@ -179,8 +165,11 @@
 
 		var/list/designs = list() //initialize all designs under this category
 		for(var/list/design as anything in target_category)
-			tile_design.set_info(design)
-			designs += list(list("name" = tile_design.name, "icon" = tile_design.get_icon_state()))
+			var/datum/tile_info/tile_design = design["datum"]
+			if(!istype(tile_design))
+				populate_rtd_datums()
+				tile_design = design["datum"]
+			designs += list(list("name" = tile_design.name, "icon" = tile_design.icon_css_class))
 
 		data["categories"] += list(list("category_name" = sub_category, "recipes" = designs))
 
@@ -190,11 +179,12 @@
 	var/list/data = ..()
 
 	data["selected_category"] = design_category
-	selected_design.fill_ui_data(data)
+	selected_design.fill_ui_data(data, selected_direction)
 
 	return data
 
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
@@ -207,29 +197,32 @@
 		if("set_dir")
 			var/direction = text2dir(params["dir"])
 			if(!direction)
-				return TRUE
-			selected_design.set_direction(direction)
+				return FALSE
+			selected_direction = direction
 
 		if("recipe")
 			var/list/main_root = floor_designs[root_category]
 			if(main_root == null)
-				return TRUE
+				return FALSE
 			var/list/sub_category = main_root[params["category_name"]]
 			if(sub_category == null)
-				return TRUE
+				return FALSE
 			var/list/target_design = sub_category[text2num(params["id"])]
 			if(target_design == null)
-				return
+				return FALSE
 
 			QDEL_LIST(design_overlays)
 			design_category = params["category_name"]
-			selected_design.set_info(target_design)
+			if(!target_design["datum"])
+				populate_rtd_datums()
+			selected_design = target_design["datum"]
+			selected_direction = SOUTH
 			blueprint_changed = TRUE
 
 	return TRUE
 
 /obj/item/construction/rtd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!range_check(interacting_with, user))
+	if(!ranged || !range_check(interacting_with, user))
 		return NONE
 	return try_tiling(interacting_with, user)
 
@@ -240,14 +233,27 @@
 
 	return try_tiling(interacting_with, user)
 
+/**
+ * put plating on the turf
+ * Arguments
+ *
+ * * turf/open/floor/floor - the turf we are trying to put plating on
+ * * mob/living/user - the mob trying to do the plating
+ */
 /obj/item/construction/rtd/proc/try_tiling(atom/interacting_with, mob/living/user)
+	PRIVATE_PROC(TRUE)
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+
 	var/turf/open/floor/floor = interacting_with
 	if(!istype(floor))
 		return NONE
 
 	var/floor_designs = GLOB.floor_designs
 	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if its not the usual plating
-		user.Beam(floor, icon_state = "light_beam", time = 5)
+		if(ranged)
+			user.Beam(floor, icon_state = "light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
 				for(var/list/design_info in floor_designs[main_root][sub_category])
@@ -268,8 +274,8 @@
 					//store all information about this tile
 					root_category = main_root
 					design_category = sub_category
-					selected_design.set_info(design_info)
-					selected_design.set_direction(floor.dir)
+					selected_design = design_info["datum"]
+					selected_direction = floor.dir
 					balloon_alert(user, "tile changed to [selected_design.name]")
 
 					return ITEM_INTERACT_SUCCESS
@@ -278,15 +284,17 @@
 		balloon_alert(user, "design not supported!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/delay = CONSTRUCTION_TIME(selected_design.cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
-
 	//resource sanity check before & after delay along with special effects
 	if(!checkResource(selected_design.cost, user))
-		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	var/delay = CONSTRUCTION_TIME(selected_design.cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
+	var/beam
+	if(ranged)
+		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	else
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -295,16 +303,17 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
+	//do the tilling
 	if(!useResource(selected_design.cost, user))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	activate()
 	//step 1 create tile
-	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location())
+	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location(), selected_direction)
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
 		qdel(rcd_effect)
 		balloon_alert(user, "tile got merged with the stack beneath you!")
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	//step 2 lay tile
 	var/turf/open/new_turf = final_tile.place_tile(floor, user)
 	if(new_turf) //apply infered overlays
@@ -315,7 +324,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/construction/rtd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!range_check(interacting_with, user))
+	if(!ranged || !range_check(interacting_with, user))
 		return NONE
 	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
@@ -347,15 +356,17 @@
 		balloon_alert(user, "can't deconstruct this type!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/delay = DECONSTRUCTION_TIME(cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_DECONSTRUCT)
-
 	//resource sanity check before & after delay along with beam effects
 	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
-		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	var/delay = DECONSTRUCTION_TIME(cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_DECONSTRUCT)
+	var/beam
+	if(ranged)
+		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	else
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -364,7 +375,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
-	//do the tiling
+	//begin deconstruction
 	if(!useResource(cost * 0.7, user))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
@@ -384,6 +395,49 @@
 	rcd_effect.end_animation()
 
 	return ITEM_INTERACT_SUCCESS
+
+///Converting tile cost into joules
+#define RTD_BORG_ENERGY_FACTOR (0.03 * STANDARD_CELL_CHARGE)
+
+/obj/item/construction/rtd/borg
+	ranged = FALSE
+
+///Cannot deconstruct floors
+/obj/item/construction/rtd/borg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
+/obj/item/construction/rtd/borg/get_matter(mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		return 0
+	max_matter = borgy.cell.maxcharge
+	return borgy.cell.charge
+
+/obj/item/construction/rtd/borg/useResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		balloon_alert(user, "no cell found!")
+		return 0
+	. = borgy.cell.use(amount * RTD_BORG_ENERGY_FACTOR)
+	if(!.)
+		balloon_alert(user, "insufficient charge!")
+
+/obj/item/construction/rtd/borg/checkResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		balloon_alert(user, "no cell found!")
+		return 0
+	. = borgy.cell.charge >= (amount * RTD_BORG_ENERGY_FACTOR)
+	if(!.)
+		balloon_alert(user, "insufficient charge!")
+
+#undef RTD_BORG_ENERGY_FACTOR
 
 /obj/item/construction/rtd/loaded
 	matter = 350

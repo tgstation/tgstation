@@ -17,6 +17,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/gun/ballistic/shotgun/toy = 8)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/imports/foamforce/bonus
@@ -30,6 +31,7 @@
 		/obj/item/ammo_box/magazine/toy/pistol = 2,
 	)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 
 /datum/supply_pack/imports/meatmeatmeatmeat // MEAT MEAT MEAT MEAT
 	name = "MEAT MEAT MEAT MEAT MEAT"
@@ -95,6 +97,21 @@
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
+/datum/supply_pack/imports/shells
+	name = "Lethal Shotgun Shell Box Crate"
+	desc = "Contains three boxes of buckshot shotgun shells. \
+		Due to Nanotrasen's failure to secure exclusive manufacturing rights \
+		during the Spinward Hunting and Shooting policy hearings, this import \
+		is heavily taxed, despite being 'legal'. I hope the price tag is worth it."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ARMORY
+	access_view = ACCESS_ARMORY
+	contains = list(
+		/obj/item/storage/box/lethalshot = 3,
+	)
+	crate_name = "shotgun shell crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
 	desc = "(*!&@#OKAY, OPERATIVE, WE SEE HOW MUCH MONEY YOU'RE FLAUNTING. FINE. HAVE THIS, AND GOOD LUCK PUTTING IT TOGETHER!#@*$"
@@ -141,6 +158,7 @@
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/wt550ammo
 	name = "Smuggled WT-550 Ammo Crate"
@@ -153,7 +171,7 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
@@ -169,6 +187,7 @@
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/head/helmet,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
@@ -180,10 +199,11 @@
 		/obj/item/clothing/mask/chameleon,
 		/obj/item/clothing/under/chameleon,
 		/obj/item/storage/belt/chameleon,
-		/obj/item/card/id/advanced/chameleon,
+		/obj/item/card/id/advanced/chameleon/crummy,
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"
@@ -196,9 +216,8 @@
 		/obj/item/food/rationpack,
 		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_box/strilka310/surplus,
-		/obj/item/storage/toolbox/ammobox/strilka310,
-		/obj/item/storage/toolbox/ammobox/strilka310/surplus,
-		/obj/item/storage/toolbox/maint_kit,
+		/obj/effect/spawner/random/armory/strilka,
+		/obj/item/gun_maintenance_supplies,
 		/obj/item/clothing/suit/armor/vest/russian,
 		/obj/item/clothing/head/helmet/rus_helmet,
 		/obj/item/clothing/shoes/russian,

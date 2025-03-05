@@ -19,10 +19,10 @@ $msgpadding: 0.7rem;
 
     border-radius: 0;
 
-    background-color: lighten($msgcolor-incoming, 10%);
+    background-color: color.adjust($msgcolor-incoming, $lightness: 10%);
     &_outgoing {
-      border-color: lighten($msgcolor-outgoing, 20%);
-      background-color: lighten($msgcolor-outgoing, 30%);
+      border-color: color.adjust($msgcolor-outgoing, $lightness: 20%);
+      background-color: color.adjust($msgcolor-outgoing, $lightness: 30%);
     }
   }
 

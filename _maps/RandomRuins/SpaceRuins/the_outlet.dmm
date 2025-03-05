@@ -251,14 +251,14 @@
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gU" = (
 /obj/structure/closet/secure_closet/freezer/empty,
-/obj/item/organ/internal/tongue/lizard,
+/obj/item/organ/tongue/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
-/obj/item/organ/external/tail/lizard,
-/obj/item/organ/internal/heart,
-/obj/item/organ/internal/brain,
-/obj/item/organ/internal/liver,
-/obj/item/organ/internal/lungs,
-/obj/item/organ/internal/stomach,
+/obj/item/organ/tail/lizard,
+/obj/item/organ/heart,
+/obj/item/organ/brain,
+/obj/item/organ/liver,
+/obj/item/organ/lungs,
+/obj/item/organ/stomach,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gX" = (
@@ -701,7 +701,7 @@
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "rF" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/item/reagent_containers/syringe/lethal/execution,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)

@@ -126,7 +126,7 @@
 /obj/item/storage/box/papersack/proc/check_menu(mob/user, obj/item/pen/P)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(contents.len)
 		balloon_alert(user, "items inside!")
@@ -301,7 +301,7 @@
 		new /obj/item/food/fishmeat/armorfish(src)
 		new /obj/item/food/fishmeat/carp(src)
 		new /obj/item/food/fishmeat/moonfish(src)
-	new /obj/item/food/fishmeat/gunner_jellyfish(src)
+	new /obj/item/food/fishmeat/gunner_jellyfish/supply(src)
 
 /obj/item/storage/box/ingredients/salads
 	theme_name = "salads"

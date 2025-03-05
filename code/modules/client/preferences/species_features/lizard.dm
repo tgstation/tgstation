@@ -1,25 +1,25 @@
 /proc/generate_lizard_side_shot(datum/sprite_accessory/sprite_accessory, key, include_snout = TRUE)
-	var/static/icon/lizard
-	var/static/icon/lizard_with_snout
+	var/static/datum/universal_icon/lizard
+	var/static/datum/universal_icon/lizard_with_snout
 
 	if (isnull(lizard))
-		lizard = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-		var/icon/eyes = icon('icons/mob/human/human_face.dmi', "eyes", EAST)
-		eyes.Blend(COLOR_GRAY, ICON_MULTIPLY)
-		lizard.Blend(eyes, ICON_OVERLAY)
+		lizard = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head", EAST)
+		var/datum/universal_icon/eyes = uni_icon('icons/mob/human/human_face.dmi', "eyes_l", EAST)
+		eyes.blend_color(COLOR_GRAY, ICON_MULTIPLY)
+		lizard.blend_icon(eyes, ICON_OVERLAY)
 
-		lizard_with_snout = icon(lizard)
-		lizard_with_snout.Blend(icon('icons/mob/human/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
+		lizard_with_snout = lizard.copy()
+		lizard_with_snout.blend_icon(uni_icon('icons/mob/human/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
 
-	var/icon/final_icon = include_snout ? icon(lizard_with_snout) : icon(lizard)
+	var/datum/universal_icon/final_icon = include_snout ? lizard_with_snout.copy() : lizard.copy()
 
-	if (!isnull(sprite_accessory))
-		var/icon/accessory_icon = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
-		final_icon.Blend(accessory_icon, ICON_OVERLAY)
+	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
-	final_icon.Crop(11, 20, 23, 32)
-	final_icon.Scale(32, 32)
-	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+	final_icon.crop(11, 20, 23, 32)
+	final_icon.scale(32, 32)
+	final_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
 
 	return final_icon
 
@@ -37,20 +37,20 @@
 /datum/preference/choiced/lizard_body_markings/icon_for(value)
 	var/datum/sprite_accessory/sprite_accessory = SSaccessories.lizard_markings_list[value]
 
-	var/icon/final_icon = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
+	var/datum/universal_icon/final_icon = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
-	if (sprite_accessory.icon_state != "none")
-		var/icon/body_markings_icon = icon(
-			'icons/mob/human/species/lizard/lizard_misc.dmi',
+	if (sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/body_markings_icon = uni_icon(
+			sprite_accessory.icon,
 			"male_[sprite_accessory.icon_state]_chest",
 		)
 
-		final_icon.Blend(body_markings_icon, ICON_OVERLAY)
+		final_icon.blend_icon(body_markings_icon, ICON_OVERLAY)
 
-	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-	final_icon.Crop(10, 8, 22, 23)
-	final_icon.Scale(26, 32)
-	final_icon.Crop(-2, 1, 29, 32)
+	final_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+	final_icon.crop(10, 8, 22, 23)
+	final_icon.scale(26, 32)
+	final_icon.crop(-2, 1, 29, 32)
 
 	return final_icon
 
@@ -93,13 +93,40 @@
 	savefile_key = "feature_lizard_legs"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_mutant_bodypart = "legs"
 
 /datum/preference/choiced/lizard_legs/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.legs_list)
+	return list(NORMAL_LEGS, DIGITIGRADE_LEGS)
 
 /datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["legs"] = value
+	// Hack to update the dummy in the preference menu
+	// (Because digi legs are ONLY handled on species change)
+	if(!isdummy(target) || target.dna.species.digitigrade_customization == DIGITIGRADE_NEVER)
+		return
+
+	var/list/correct_legs = target.dna.species.bodypart_overrides.Copy() & list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+
+	if(value == DIGITIGRADE_LEGS)
+		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+
+	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
+		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
+			continue
+
+		var/path = correct_legs[old_part.body_zone]
+		if(!path)
+			continue
+		var/obj/item/bodypart/new_part = new path()
+		new_part.replace_limb(target, TRUE)
+		new_part.update_limb(is_creating = TRUE)
+		qdel(old_part)
+
+/datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
+	if(!..())
+		return FALSE
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	return initial(species_type.digitigrade_customization) == DIGITIGRADE_OPTIONAL
 
 /datum/preference/choiced/lizard_snout
 	savefile_key = "feature_lizard_snout"
@@ -121,7 +148,7 @@
 	savefile_key = "feature_lizard_spines"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_mutant_bodypart = "spines"
+	relevant_external_organ = /obj/item/organ/spines
 
 /datum/preference/choiced/lizard_spines/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.spines_list)
@@ -133,7 +160,7 @@
 	savefile_key = "feature_lizard_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_external_organ = /obj/item/organ/external/tail/lizard
+	relevant_external_organ = /obj/item/organ/tail/lizard
 
 /datum/preference/choiced/lizard_tail/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.tails_list_lizard)

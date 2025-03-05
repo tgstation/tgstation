@@ -25,6 +25,8 @@
 	anchored = TRUE
 	integrity_failure = 0.5
 	max_integrity = 200
+	///Can this mirror be removed from walls with tools?
+	var/deconstructable = TRUE
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
 
 	///Flags this race must have to be selectable with this type of mirror.
@@ -49,9 +51,13 @@
 	. = ..()
 	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('icons/obj/watercloset.dmi', "mirror_mask"))
 	var/static/matrix/reflection_matrix = matrix(0.75, 0, 0, 0, 0.75, 0)
-	var/datum/callback/can_reflect = CALLBACK(src, PROC_REF(can_reflect))
-	var/list/update_signals = list(COMSIG_ATOM_BREAK)
-	AddComponent(/datum/component/reflection, reflection_filter = reflection_filter, reflection_matrix = reflection_matrix, can_reflect = can_reflect, update_signals = update_signals)
+	AddComponent(/datum/component/reflection, \
+		reflection_filter = reflection_filter, \
+		reflection_matrix = reflection_matrix, \
+		can_reflect = CALLBACK(src, PROC_REF(can_reflect)), \
+		update_signals = list(COMSIG_ATOM_BREAK), \
+		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
+	)
 
 /obj/structure/mirror/proc/can_reflect(atom/movable/target)
 	///I'm doing it this way too, because the signal is sent before the broken variable is set to TRUE.
@@ -66,6 +72,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+	register_context()
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
@@ -87,8 +94,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	return display_radial_menu(user)
 
+/obj/structure/mirror/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(!deconstructable)
+		balloon_alert(user, "magic prevents detaching!")
+		return NONE
+	user.visible_message(span_notice("[user] starts detaching [src]..."), span_notice("You start detaching [src]..."))
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 3 SECONDS))
+		user.visible_message(span_notice("[user] detaches [src]!"), span_notice("You detach [src] from the wall."))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/structure/mirror/atom_deconstruct()
+	new /obj/item/wallframe/mirror(loc, 1)
+
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
-	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return TRUE //get out
 
@@ -234,10 +257,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	user.update_body()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
+/obj/structure/mirror/examine(mob/user)
+	. = ..()
+	if(deconstructable)
+		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
+
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)
 		return list()// no message spam
 	return ..()
+
+/obj/structure/mirror/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Open Customize Radial"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH && deconstructable)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
 	if(broken || !istype(user) || !I.force)
@@ -248,13 +286,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
 		user.AddComponent(/datum/component/omen, incidents_left = 7)
 
-/obj/structure/mirror/bullet_act(obj/projectile/P)
-	if(broken || !isliving(P.firer) || !P.damage)
+/obj/structure/mirror/bullet_act(obj/projectile/proj)
+	if(broken || !isliving(proj.firer) || !proj.damage)
 		return ..()
 
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
-		var/mob/living/unlucky_dude = P.firer
+		var/mob/living/unlucky_dude = proj.firer
 		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
 		unlucky_dude.AddComponent(/datum/component/omen, incidents_left = 7)
 
@@ -319,6 +357,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
+	deconstructable = FALSE
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
@@ -346,14 +385,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/new_hair_color = input(user, "Choose your hair color", "Hair Color", user.hair_color) as color|null
 
 	if(new_hair_color)
-		user.set_haircolor(sanitize_hexcolor(new_hair_color), update = FALSE)
+		user.set_haircolor(sanitize_hexcolor(new_hair_color))
 		user.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 	if(user.physique == MALE)
 		var/new_face_color = input(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color) as color|null
 		if(new_face_color)
-			user.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
+			user.set_facial_haircolor(sanitize_hexcolor(new_face_color))
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
-	user.update_body_parts()
 
 /obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
 	. = ..()
@@ -382,12 +420,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "Pride cometh before the..."
 	race_flags = MIRROR_PRIDE
 	mirror_options = PRIDE_MIRROR_OPTIONS
+	/// If the last user has altered anything about themselves
+	var/changed = FALSE
+
+/obj/structure/mirror/magic/pride/display_radial_menu(mob/living/carbon/human/user)
+	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
+	if(!pick)
+		return TRUE //get out
+
+	changed = TRUE
+	switch(pick)
+		if(CHANGE_HAIR)
+			change_hair(user)
+		if(CHANGE_BEARD)
+			change_beard(user)
+		if(CHANGE_RACE)
+			change_race(user)
+		if(CHANGE_SEX) // sex: yes
+			change_sex(user)
+		if(CHANGE_NAME)
+			change_name(user)
+		if(CHANGE_EYES)
+			change_eyes(user)
+
+	return display_radial_menu(user)
 
 /obj/structure/mirror/magic/pride/attack_hand(mob/living/carbon/human/user)
+	changed = FALSE
 	. = ..()
-	if(.)
-		return TRUE
-
+	if (!changed)
+		return
 	user.visible_message(
 		span_bolddanger("The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!"),
 		span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"),

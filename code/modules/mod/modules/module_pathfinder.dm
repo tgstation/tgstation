@@ -117,19 +117,19 @@
 
 /obj/item/implant/mod/proc/recall()
 	if(!module?.mod)
-		balloon_alert(imp_in, "no connected suit!")
+		balloon_alert(imp_in, "no connected unit!")
 		return FALSE
 	if(module.mod.open)
-		balloon_alert(imp_in, "suit is open!")
+		balloon_alert(imp_in, "cover open!")
 		return FALSE
 	if(module.mod.ai_controller)
-		balloon_alert(imp_in, "already in transit!")
+		balloon_alert(imp_in, "already moving!")
 		return FALSE
 	if(ismob(get_atom_on_turf(module.mod)))
 		balloon_alert(imp_in, "already on someone!")
 		return FALSE
 	if(module.z != z || get_dist(imp_in, module.mod) > MOD_AI_RANGE)
-		balloon_alert(imp_in, "too far away!")
+		balloon_alert(imp_in, "too far!")
 		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai
@@ -182,10 +182,7 @@
 		qdel(src)
 		return
 
-/datum/action/item_action/mod_recall/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
+/datum/action/item_action/mod_recall/do_effect(trigger_flags)
 	var/obj/item/implant/mod/implant = target
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
 		implant.balloon_alert(implant.imp_in, "on cooldown!")

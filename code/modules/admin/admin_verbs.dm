@@ -34,7 +34,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		log_admin("[key_name(user)] admin ghosted.")
 		message_admins("[key_name_admin(user)] admin ghosted.")
 		var/mob/body = user.mob
-		body.ghostize(TRUE)
+		body.ghostize(TRUE, TRUE)
 		user.init_verbs()
 		if(body && !body.key)
 			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
@@ -320,7 +320,7 @@ ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION,
 		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
-		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability", max_length = MAX_NAME_LEN)
 		add_ability.create_sequence_actions()
 	else
 		add_ability = new ability_type(ability_recipient)
@@ -478,18 +478,20 @@ ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY
 
 ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG, amount = 50 as num)
 	for (var/i in 1 to amount)
-		var/turf/tile = get_safe_random_station_turf()
+		var/turf/tile = get_safe_random_station_turf_equal_weight()
 		var/mob/living/carbon/human/hooman = new(tile)
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
 ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_GAME)
-	user.AI_Interact = !user.AI_Interact
-	if(user.mob && isAdminGhostAI(user.mob))
-		user.mob.has_unlimited_silicon_privilege = user.AI_Interact
+	var/doesnt_have_silicon_access = !HAS_TRAIT_FROM(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
+	if(doesnt_have_silicon_access)
+		ADD_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
+	else
+		REMOVE_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
 
-	log_admin("[key_name(user)] has [user.AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
-	message_admins("[key_name_admin(user)] has [user.AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	log_admin("[key_name(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] their AI interaction")
 
 ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
 	user.stat_panel.send_message("create_debug")
@@ -506,7 +508,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 	if(tgui_alert(user, "This command will create a bunch of dummy crewmembers with minds, job, and datacore entries, which will take a while and fill the manifest.", "Spawn Crew", list("Yes", "Cancel")) != "Yes")
 		return
 
-	if(tgui_alert(user, "I sure hope you aren't doing this on live. Are you sure?", "Spawn Crew (Be certain)", list("Yes", "Cancel")) != "Yes")
+	if(!user.is_localhost() && tgui_alert(user, "You are not on localhost! Are you sure?", "Spawn Crew (Be certain)", list("Yes", "Cancel")) != "Yes")
 		return
 
 	// Find the observer spawn, so we have a place to dump the dummies.
@@ -521,7 +523,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 	// Then, spawn a human and slap a person into it.
 	var/number_made = 0
 	for(var/rank in SSjob.name_occupations)
-		var/datum/job/job = SSjob.GetJob(rank)
+		var/datum/job/job = SSjob.get_job(rank)
 
 		// JOB_CREW_MEMBER is all jobs that pretty much aren't silicon
 		if(!(job.job_flags & JOB_CREW_MEMBER))
@@ -533,7 +535,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		new_guy.mind.name = "[rank] Dummy"
 
 		// Assign the rank to the new player dummy.
-		if(!SSjob.AssignRole(new_guy, job, do_eligibility_checks = FALSE))
+		if(!SSjob.assign_role(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
 			to_chat(user, "[rank] wasn't able to be spawned.")
 			continue
@@ -545,7 +547,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		qdel(new_guy)
 
 		// Then equip up the human with job gear.
-		SSjob.EquipRank(character, job)
+		SSjob.equip_rank(character, job)
 		job.after_latejoin_spawn(character)
 
 		// Finally, ensure the minds are tracked and in the manifest.
@@ -662,3 +664,145 @@ ADMIN_VERB(create_mob_worm, R_FUN, "Create Mob Worm", "Attach a linked list of m
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
+
+ADMIN_VERB(give_ai_controller, R_FUN, "Give AI Controller", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
+	var/static/list/controllers = subtypesof(/datum/admin_ai_template)
+	var/static/list/controllers_by_name = list()
+	if (!length(controllers_by_name))
+		for (var/datum/admin_ai_template/template as anything in controllers)
+			controllers_by_name["[initial(template.name)]"] = template
+
+	var/chosen = tgui_input_list(user, "Which template should we apply?", "Select Template", controllers_by_name)
+	if (isnull(chosen))
+		return
+
+	var/chosen_type = controllers_by_name[chosen]
+	var/datum/admin_ai_template/using_template = new chosen_type
+	using_template.apply(my_guy, user)
+
+ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, "Clear Legacy Asset Cache", "Clears the legacy asset cache, regenerating it immediately (may cause lag).", ADMIN_CATEGORY_DEBUG)
+	if(!CONFIG_GET(flag/cache_assets))
+		to_chat(user, span_warning("Asset caching is disabled in the config!"))
+		return
+	var/regenerated = 0
+	for(var/datum/asset/target_spritesheet as anything in subtypesof(/datum/asset))
+		if(!initial(target_spritesheet.cross_round_cachable))
+			continue
+		if(target_spritesheet == initial(target_spritesheet._abstract))
+			continue
+		var/datum/asset/asset_datum = GLOB.asset_datums[target_spritesheet]
+		asset_datum.regenerate()
+		regenerated++
+	to_chat(user, span_notice("Regenerated [regenerated] asset\s."))
+
+ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "Clear Smart Asset Cache", "Clear the smart asset cache, causing it to regenerate next round.", ADMIN_CATEGORY_DEBUG)
+	if(!CONFIG_GET(flag/smart_cache_assets))
+		to_chat(user, span_warning("Smart asset caching is disabled in the config!"))
+		return
+	var/cleared = 0
+	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in subtypesof(/datum/asset/spritesheet_batched))
+		if(target_spritesheet == initial(target_spritesheet._abstract))
+			continue
+		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")
+		cleared++
+	to_chat(user, span_notice("Cleared [cleared] asset\s."))
+
+ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
+	if (isnull(my_guy.ai_controller))
+		var/create_controller = tgui_alert(user, "Target has no AI controller, add one?", "Give AI?", list("Yes", "No")) == "Yes"
+		if (!create_controller)
+			return
+		var/run_with_mind = tgui_alert(user, "Run AI controller while the target has a client?", "Override Client?", list("Yes", "No"))
+		if (isnull(run_with_mind))
+			return
+		if (QDELETED(my_guy))
+			to_chat(user, span_warning("Target ceased to exist."))
+			return
+		my_guy.ai_controller = new /datum/ai_controller/basic_controller/talk(my_guy)
+		if (run_with_mind == "Yes")
+			var/datum/ai_controller/guy_controller = my_guy.ai_controller
+			guy_controller.continue_processing_when_client = TRUE
+			guy_controller.reset_ai_status()
+
+	var/speech_chance
+	var/list/spoken_lines
+	var/list/audible_emotes
+	var/list/visible_emotes
+	var/list/sounds
+
+	speech_chance = tgui_input_number(user, "Enter chance per second to say something", "Speech Chance", default = 2, min_value = 0, max_value = 100, round_value = FALSE)
+	if (isnull(speech_chance))
+		return
+
+	var/add_another
+	var/next_line
+
+	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] spoken line?", "Spoken Lines", list("Yes", "No"))
+	while (add_another  == "Yes")
+		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "a"] thing spoken out loud.", "Spoken Lines")
+		if (isnull(next_line))
+			return
+		LAZYADD(spoken_lines, next_line)
+		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] spoken line?", "Spoken Lines", list("Yes", "No"))
+	if (isnull(add_another))
+		return
+
+	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can hear?", "Audible Emotes", list("Yes", "No"))
+	while (add_another == "Yes")
+		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "an"] emote which people can hear.", "Audible Emotes")
+		if (isnull(next_line))
+			return
+		LAZYADD(audible_emotes, next_line)
+		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can hear?", "Audible Emotes", list("Yes", "No"))
+	if (isnull(add_another))
+		return
+
+	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can see?", "Visible Emotes", list("Yes", "No"))
+	while (add_another == "Yes")
+		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "an"] emote which people can see.", "Visible Emotes")
+		if (isnull(next_line))
+			return
+		LAZYADD(visible_emotes, next_line)
+		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can see?", "Visible Emotes", list("Yes", "No"))
+	if (isnull(add_another))
+		return
+
+	if (!length(spoken_lines) && !length(audible_emotes) && !length(visible_emotes))
+		return // Well you didn't tell it to say anything...
+
+	if (length(spoken_lines) || length(audible_emotes))
+		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] sound to play when doing something audible?", "Sounds", list("Yes", "No"))
+		while (add_another == "Yes")
+			next_line = input("", "Select sound",) as null|sound
+			if (isnull(next_line))
+				return
+			LAZYADD(sounds, next_line)
+			add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] sound to play when doing something audible?", "Sounds", list("Yes", "No"))
+		if (isnull(add_another))
+			return
+
+	if (QDELETED(my_guy))
+		to_chat(user, span_warning("Target stopped existing."))
+		return
+
+	var/datum/ai_controller/our_controller = my_guy.ai_controller
+	if (length(spoken_lines))
+		spoken_lines = string_list(spoken_lines)
+	if (length(audible_emotes))
+		audible_emotes = string_list(audible_emotes)
+	if (length(visible_emotes))
+		visible_emotes = string_list(visible_emotes)
+
+	var/list/emotes = list(
+		BB_EMOTE_SAY = spoken_lines,
+		BB_EMOTE_HEAR = audible_emotes,
+		BB_EMOTE_SEE = visible_emotes,
+		BB_EMOTE_SOUND = sounds,
+		BB_SPEAK_CHANCE = speech_chance,
+	)
+	our_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
+
+	var/behaviour_exists = !!(locate(/datum/ai_planning_subtree/random_speech/blackboard) in our_controller.planning_subtrees)
+	if (behaviour_exists)
+		return
+	our_controller.planning_subtrees = list(GLOB.ai_subtrees[/datum/ai_planning_subtree/random_speech/blackboard]) + our_controller.planning_subtrees

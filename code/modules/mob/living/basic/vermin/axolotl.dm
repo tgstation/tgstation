@@ -12,7 +12,7 @@
 	density = FALSE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	response_help_continuous = "pets"

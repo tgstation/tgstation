@@ -167,15 +167,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/board/bioelec_gen
+/datum/design/bioelec_gen
 	name = "Aquarium Bioelectricity Kit"
 	desc = "The required components to convert an aquarium into a bioelectricity generator."
 	id = "bioelec_gen"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/gold = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/aquarium_upgrade/bioelec_gen
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING,
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/turbine_part_compressor
 	name = "Turbine Compressor"

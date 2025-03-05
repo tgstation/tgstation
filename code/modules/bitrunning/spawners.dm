@@ -1,5 +1,5 @@
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain
-	outfit = /datum/outfit/pirate
+	outfit = /datum/outfit/virtual_pirate
 	prompt_name = "a virtual domain debug entity"
 	flavour_text = "You probably shouldn't be seeing this, contact a coder!"
 	you_are_text = "You are NOT supposed to be here. How did you let this happen?"
@@ -9,7 +9,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/special(mob/living/spawned_mob, mob/mob_possessor)
 	var/datum/mind/ghost_mind = mob_possessor.mind
-	if(ghost_mind?.current) // Preserves any previous bodies before making the switch
+	if(ghost_mind) // Preserves any previous bodies before making the switch
 		spawned_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
 
 	..()
@@ -31,6 +31,16 @@
 	prompt_name = "a virtual skeleton pirate"
 	you_are_text = "You are a virtual pirate. Yarrr!"
 	flavour_text = " There's a LANDLUBBER after yer booty. Stop them!"
+
+/datum/outfit/virtual_pirate
+	name = "Virtual Pirate"
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/pirate
+	uniform = /obj/item/clothing/under/costume/pirate
+	suit = /obj/item/clothing/suit/costume/pirate/armored
+	glasses = /obj/item/clothing/glasses/eyepatch
+	head = /obj/item/clothing/head/costume/pirate/bandana/armored
+	shoes = /obj/item/clothing/shoes/pirate/armored
 
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate/special(mob/living/spawned_mob, mob/mob_possessor)
@@ -60,5 +70,5 @@
 	implants = list(/obj/item/implant/weapons_auth)
 
 
-/datum/outfit/virtual_syndicate/post_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/virtual_syndicate/post_equip(mob/living/carbon/human/user, visuals_only)
 	user.faction |= ROLE_SYNDICATE

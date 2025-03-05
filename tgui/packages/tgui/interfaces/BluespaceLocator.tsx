@@ -52,8 +52,8 @@ export const BluespaceLocator = (props) => {
             Teleporter Beacons
           </Tabs.Tab>
         </Tabs>
-        {(TAB.Beacon && <TeleporterBeacons />) ||
-          (TAB.Implant && <TrackingImplants />)}
+        {tab === TAB.Beacon && <TeleporterBeacons />}
+        {tab === TAB.Implant && <TrackingImplants />}
       </Window.Content>
     </Window>
   );

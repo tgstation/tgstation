@@ -132,7 +132,7 @@
 		return
 
 	obj_flags |= EMAGGED
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, vary = FALSE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, vary = FALSE)
 	say("ERROR: Unauthorized firmware access.")
 	return TRUE
 
@@ -315,7 +315,7 @@
 		ui = new(user, src, "AnomalyRefinery")
 		ui.open()
 
-/obj/machinery/research/anomaly_refinery/ui_act(action, list/params)
+/obj/machinery/research/anomaly_refinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

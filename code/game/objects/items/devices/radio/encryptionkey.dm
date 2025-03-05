@@ -4,26 +4,22 @@
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cypherkey_basic"
 	w_class = WEIGHT_CLASS_TINY
-	/// Can this radio key access the binary radio channel?
-	var/translate_binary = FALSE
-	/// Decrypts Syndicate radio transmissions.
-	var/syndie = FALSE
-	/// If true, the radio can say/hear on the special CentCom channel.
-	var/independent = FALSE
 	/// What channels does this encryption key grant to the parent headset.
 	var/list/channels = list()
+	/// Flags for which "special" radio networks should be accessible
+	var/special_channels = NONE
 	var/datum/language/translated_language
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#820a16#3758c4"
 
 /obj/item/encryptionkey/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(channels) || translate_binary)
+	if(LAZYLEN(channels) || special_channels & RADIO_SPECIAL_BINARY)
 		var/list/examine_text_list = list()
 		for(var/i in channels)
 			examine_text_list += "[GLOB.channel_tokens[i]] - [LOWER_TEXT(i)]"
 
-		if(translate_binary)
+		if(special_channels & RADIO_SPECIAL_BINARY)
 			examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
 
 		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
@@ -34,14 +30,14 @@
 	name = "syndicate encryption key"
 	icon_state = "cypherkey_syndicate"
 	channels = list(RADIO_CHANNEL_SYNDICATE = 1)
-	syndie = TRUE
+	special_channels = RADIO_SPECIAL_SYNDIE
 	greyscale_config = /datum/greyscale_config/encryptionkey_syndicate
 	greyscale_colors = "#171717#990000"
 
 /obj/item/encryptionkey/binary
 	name = "binary translator key"
 	icon_state = "cypherkey_basic"
-	translate_binary = TRUE
+	special_channels = RADIO_SPECIAL_BINARY
 	translated_language = /datum/language/machine
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#24a157#3758c4"
@@ -101,6 +97,13 @@
 	channels = list(RADIO_CHANNEL_MEDICAL = 1, RADIO_CHANNEL_SERVICE = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_service
 	greyscale_colors = "#ebebeb#3bca5a"
+
+/obj/item/encryptionkey/headset_srvent
+	name = "press radio encryption key"
+	icon_state = "cypherkey_service"
+	channels = list(RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_ENTERTAINMENT = 0)
+	greyscale_config = /datum/greyscale_config/encryptionkey_service
+	greyscale_colors = "#83eb8f#3bca5a"
 
 /obj/item/encryptionkey/headset_com
 	name = "command radio encryption key"
@@ -182,7 +185,7 @@
 /obj/item/encryptionkey/headset_cent
 	name = "\improper CentCom radio encryption key"
 	icon_state = "cypherkey_centcom"
-	independent = TRUE
+	special_channels = RADIO_SPECIAL_CENTCOM
 	channels = list(RADIO_CHANNEL_CENTCOM = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_centcom
 	greyscale_colors = "#24a157#dca01b"
@@ -197,6 +200,7 @@
 		RADIO_CHANNEL_SUPPLY = 1,
 		RADIO_CHANNEL_SERVICE = 1,
 		RADIO_CHANNEL_AI_PRIVATE = 1,
+		RADIO_CHANNEL_ENTERTAINMENT = 1,
 	)
 
 /obj/item/encryptionkey/ai_with_binary
@@ -210,15 +214,16 @@
 		RADIO_CHANNEL_SUPPLY = 1,
 		RADIO_CHANNEL_SERVICE = 1,
 		RADIO_CHANNEL_AI_PRIVATE = 1,
+		RADIO_CHANNEL_ENTERTAINMENT = 1,
 	)
-	translate_binary = TRUE
+	special_channels = RADIO_SPECIAL_BINARY
 	translated_language = /datum/language/machine
 
 /obj/item/encryptionkey/ai/evil //ported from NT, this goes 'inside' the AI.
 	name = "syndicate binary encryption key"
 	icon_state = "cypherkey_syndicate"
 	channels = list(RADIO_CHANNEL_SYNDICATE = 1)
-	syndie = TRUE
+	special_channels = RADIO_SPECIAL_SYNDIE
 	greyscale_config = /datum/greyscale_config/encryptionkey_syndicate
 	greyscale_colors = "#171717#990000"
 

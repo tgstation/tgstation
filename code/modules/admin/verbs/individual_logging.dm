@@ -48,10 +48,9 @@
 	dat += "<hr style='background:#000000; border:0; height:1px'>"
 
 	var/log_source = M.logging
-	if(source == LOGSRC_CKEY && M.ckey)
-		var/datum/player_details/details = GLOB.player_details[M.ckey]
-		if(details) //we dont want to runtime if an admin aghosted
-			log_source = details.logging
+	if(source == LOGSRC_CKEY && M.persistent_client)
+		log_source = M.persistent_client.logging
+
 	var/list/concatenated_logs = list()
 	for(var/log_type in log_source)
 		var/nlog_type = text2num(log_type)
@@ -59,6 +58,7 @@
 			var/list/all_the_entrys = log_source[log_type]
 			for(var/entry in all_the_entrys)
 				concatenated_logs += "<b>[entry]</b><br>[all_the_entrys[entry]]"
+
 	if(length(concatenated_logs))
 		sortTim(concatenated_logs, cmp = GLOBAL_PROC_REF(cmp_text_dsc)) //Sort by timestamp.
 		dat += "<font size=2px>"
@@ -75,4 +75,4 @@
 		slabel = "<b>\[[label]\]</b>"
 	//This is necessary because num2text drops digits and rounds on big numbers. If more defines get added in the future it could break again.
 	log_type = num2text(log_type, MAX_BITFLAG_DIGITS)
-	return "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"
+	return "<a href='byond://?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"

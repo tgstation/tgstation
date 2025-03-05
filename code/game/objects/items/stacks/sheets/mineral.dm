@@ -41,6 +41,8 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
 	material_type = /datum/material/sandstone
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
 
 /obj/item/stack/sheet/mineral/sandstone/get_main_recipes()
 	. = ..()
@@ -294,6 +296,26 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	. = ..()
 	. += GLOB.titanium_recipes
 
+/obj/item/stack/sheet/mineral/titanium/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/old_rods = W
+		if(old_rods.merge_type != /obj/item/stack/rods)
+			to_chat(user, span_warning("You can't craft shuttle frame rods with this type of rod!"))
+		if (old_rods.get_amount() >= 5 && get_amount() >= 1)
+			var/obj/item/stack/rods/shuttle/five/new_rods = new (get_turf(user))
+			if(!QDELETED(new_rods))
+				new_rods.add_fingerprint(user)
+			var/replace = user.get_inactive_held_item() == src
+			old_rods.use(5)
+			use(1)
+			if(QDELETED(src) && replace && !QDELETED(new_rods))
+				user.put_in_hands(new_rods)
+		else
+			to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
+		return
+	return ..()
+
 /obj/item/stack/sheet/mineral/titanium/fifty
 	amount = 50
 
@@ -343,6 +365,8 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/snow
 	walltype = /turf/closed/wall/mineral/snow
 	material_type = /datum/material/snow
+	pickup_sound = 'sound/items/handling/materials/snow_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/snow_drop.ogg'
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
 	new/datum/stack_recipe("snow wall", /turf/closed/wall/mineral/snow, 5, time = 4 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \

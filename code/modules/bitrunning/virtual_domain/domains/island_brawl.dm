@@ -13,15 +13,23 @@
 		/obj/item/toy/beach_ball = 2,
 		/obj/item/clothing/shoes/sandal = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
-		/obj/item/gun/ballistic/automatic/mini_uzi = 1,
+		/obj/item/gun/energy/laser/chameleon/ballistic_only = 1,
+		/obj/item/bitrunning_disk/item/mini_uzi = 1,
 	)
-
 
 /datum/lazy_template/virtual_domain/island_brawl/setup_domain(list/created_atoms)
 	for(var/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander/spawner in created_atoms)
 		custom_spawns += spawner
 
+		RegisterSignal(spawner, COMSIG_QDELETING, PROC_REF(on_spawner_qdeleted))
 		RegisterSignals(spawner, list(COMSIG_GHOSTROLE_SPAWNED, COMSIG_BITRUNNER_SPAWNED), PROC_REF(on_spawn))
+
+
+/datum/lazy_template/virtual_domain/island_brawl/proc/on_spawner_qdeleted(obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander/source)
+	SIGNAL_HANDLER
+
+	custom_spawns -= source
+	UnregisterSignal(source, COMSIG_QDELETING)
 
 
 /// Someone has spawned in, so we check for their death

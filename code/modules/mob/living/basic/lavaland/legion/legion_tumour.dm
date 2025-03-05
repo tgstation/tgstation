@@ -1,5 +1,5 @@
 /// Left behind when a legion infects you, for medical enrichment
-/obj/item/organ/internal/legion_tumour
+/obj/item/organ/legion_tumour
 	name = "legion tumour"
 	desc = "A mass of pulsing flesh and dark tendrils, containing the power to regenerate flesh at a terrible cost."
 	failing_desc = "pulses and writhes with horrible life, reaching towards you with its tendrils!"
@@ -7,7 +7,7 @@
 	icon_state = "legion_remains"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
-	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	decay_factor = STANDARD_ORGAN_DECAY * 3 // About 5 minutes outside of a host
 	/// What stage of growth the corruption has reached.
 	var/stage = 0
@@ -21,28 +21,28 @@
 	var/spawn_type = /mob/living/basic/mining/legion
 	/// Spooky sounds to play as you start to turn
 	var/static/list/spooky_sounds = list(
-		'sound/voice/lowHiss1.ogg',
-		'sound/voice/lowHiss2.ogg',
-		'sound/voice/lowHiss3.ogg',
-		'sound/voice/lowHiss4.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss1.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss4.ogg',
 	)
 
-/obj/item/organ/internal/legion_tumour/Initialize(mapload)
+/obj/item/organ/legion_tumour/Initialize(mapload)
 	. = ..()
 	animate_pulse()
 
-/obj/item/organ/internal/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organ_flag)
+/obj/item/organ/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	var/was_failing = organ_flags & ORGAN_FAILING
 	. = ..()
 	if (was_failing != (organ_flags & ORGAN_FAILING))
 		animate_pulse()
 
-/obj/item/organ/internal/legion_tumour/set_organ_damage(damage_amount, required_organ_flag)
+/obj/item/organ/legion_tumour/set_organ_damage(damage_amount, required_organ_flag)
 	. = ..()
 	animate_pulse()
 
 /// Do a heartbeat animation depending on if we're failing or not
-/obj/item/organ/internal/legion_tumour/proc/animate_pulse()
+/obj/item/organ/legion_tumour/proc/animate_pulse()
 	animate(src, transform = matrix()) // Stop any current animation
 
 	var/speed_divider = organ_flags & ORGAN_FAILING ? 2 : 1
@@ -51,23 +51,23 @@
 	animate(transform = matrix(), time = 0.5 SECONDS / speed_divider, easing = SINE_EASING | EASE_IN)
 	animate(transform = matrix(), time = 2 SECONDS / speed_divider)
 
-/obj/item/organ/internal/legion_tumour/Remove(mob/living/carbon/egg_owner, special, movement_flags)
+/obj/item/organ/legion_tumour/Remove(mob/living/carbon/egg_owner, special, movement_flags)
 	. = ..()
 	stage = 0
 	elapsed_time = 0
 
-/obj/item/organ/internal/legion_tumour/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/legion_tumour/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	owner.log_message("has received [src] which will eventually turn them into a Legion.", LOG_VICTIM)
 
-/obj/item/organ/internal/legion_tumour/attack(mob/living/target, mob/living/user, params)
+/obj/item/organ/legion_tumour/attack(mob/living/target, mob/living/user, params)
 	if (try_apply(target, user))
 		qdel(src)
 		return
 	return ..()
 
 /// Smear it on someone like a regen core, why not. Make sure they're alive though.
-/obj/item/organ/internal/legion_tumour/proc/try_apply(mob/living/target, mob/user)
+/obj/item/organ/legion_tumour/proc/try_apply(mob/living/target, mob/user)
 	if(!user.Adjacent(target) || !isliving(target))
 		return FALSE
 
@@ -90,7 +90,7 @@
 	skull.melee_attack(target)
 	return TRUE
 
-/obj/item/organ/internal/legion_tumour/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/legion_tumour/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if (QDELETED(src) || QDELETED(owner))
 		return
@@ -117,7 +117,7 @@
 				to_chat(owner, span_danger("Something flexes under your skin."))
 			if(SPT_PROB(2, seconds_per_tick))
 				if (prob(40))
-					SEND_SOUND(owner, sound('sound/voice/ghost_whisper.ogg'))
+					SEND_SOUND(owner, sound('sound/music/antag/bloodcult/ghost_whisper.ogg'))
 				else
 					SEND_SOUND(owner, sound(pick(spooky_sounds)))
 			if(SPT_PROB(3, seconds_per_tick))
@@ -146,7 +146,7 @@
 		to_chat(owner, span_bolddanger("Something is moving under your skin!"))
 
 /// Consume our host
-/obj/item/organ/internal/legion_tumour/proc/infest()
+/obj/item/organ/legion_tumour/proc/infest()
 	if (QDELETED(src) || QDELETED(owner))
 		return
 	owner.log_message("has been turned into a Legion by their tumour.", LOG_VICTIM)
@@ -155,7 +155,7 @@
 	new_legion.consume(owner)
 	qdel(src)
 
-/obj/item/organ/internal/legion_tumour/on_find(mob/living/finder)
+/obj/item/organ/legion_tumour/on_find(mob/living/finder)
 	. = ..()
 	to_chat(finder, span_warning("There's an enormous tumour in [owner]'s [zone]!"))
 	if(stage < 4)

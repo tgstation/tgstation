@@ -15,6 +15,10 @@
 /proc/log_job_debug(text, list/data)
 	logger.Log(LOG_CATEGORY_DEBUG_JOB, text, data)
 
+/// Logging for TTS
+/proc/log_tts(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_TTS, text, data)
+
 /// Logging for lua scripting
 /proc/log_lua(text, list/data)
 	logger.Log(LOG_CATEGORY_DEBUG_LUA, text, data)

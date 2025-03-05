@@ -59,7 +59,7 @@
 				"FUCK",
 				"git gud",
 				"god damn it",
-				"hey [hallucinator.first_name()]",
+				"hey [first_name(hallucinator.name)]",
 				"i[prob(50) ? " fucking" : ""] hate [pick(things_to_hate)]",
 				"is the AI rogue?",
 				"rip",
@@ -101,41 +101,55 @@
 	return ..()
 
 /datum/hallucination/death/dust/start()
-
-	if(!ishuman(hallucinator))
-		return FALSE
-
-	var/mob/living/carbon/human/hallucinating_human = hallucinator
-	var/dust_icon_state = hallucinating_human.dna?.species?.dust_anim
-	if(!dust_icon_state)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
 
-	created_images = list()
-	var/turf/below_hallucinating = get_turf(hallucinator)
-
-	// Apply a blank / empty image to make them look invisible to themselves
+	LAZYINITLIST(created_images)
+	// Makes hallucinator invisible, we create a clone image to animate on
 	var/image/make_them_invisible = image(loc = hallucinator)
 	make_them_invisible.override = TRUE
 	created_images += make_them_invisible
-
-	// Grab the typepath of the dust animation visual so we can steal its icon (for consistency and futureproofing)
-	var/obj/effect/temp_visual/dust_animation/dust_source = /obj/effect/temp_visual/dust_animation
-	var/image/fake_dust_animation = image(initial(dust_source.icon), below_hallucinating, dust_icon_state, layer = ABOVE_MOB_LAYER)
-	created_images += fake_dust_animation
-
-	// Grab the typepath of remains so we can steal its icon and state (futureproofing)
-	var/obj/effect/decal/remains/human/remains_source = /obj/effect/decal/remains/human
-	var/image/fake_remains_image = image(initial(remains_source.icon), below_hallucinating, initial(remains_source.icon_state))
-	created_images += fake_remains_image
-
-	// Grab the typepath of an observer so we can steal its icon and state (futureproofing)
-	var/mob/dead/observer/observer_source = /mob/dead/observer
-	var/image/fake_ghost = image(initial(observer_source.icon), below_hallucinating, initial(observer_source.icon_state))
+	// Makes remains, only visible if on a turf
+	if(isturf(hallucinator.loc))
+		created_images += image(/obj/effect/decal/remains/human, hallucinator.loc)
+	// Makes a ghost
+	var/image/fake_ghost = image(/mob/dead/observer, get_turf(hallucinator))
 	DO_FLOATING_ANIM(fake_ghost)
 	created_images += fake_ghost
 
 	hallucinator.client?.images |= created_images
+
+	// Does the actual animation here
+	if(isturf(hallucinator.loc))
+		new /obj/effect/temp_visual/dust_hallucination(hallucinator.loc, hallucinator)
+
+/obj/effect/temp_visual/dust_hallucination
+	// duration doesn't really matter - it just needs to be longer than the dust animation
+	// for all non-hallucinating mobs, we're invisible
+	// for the hallucinating mob, we animate into invisibility
+	duration = 10 SECONDS
+	randomdir = FALSE
+
+/obj/effect/temp_visual/dust_hallucination/Initialize(mapload, mob/hallucinator)
+	. = ..()
+	if(isnull(hallucinator))
+		return INITIALIZE_HINT_QDEL
+
+	dir = hallucinator.dir
+	appearance = hallucinator.appearance
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	// make it invisible to everyone else
+	var/image/invisible = image(loc = src)
+	invisible.override = TRUE
+	add_alt_appearance(
+		/* type = *//datum/atom_hud/alternate_appearance/basic/one_person/reversed,
+		/* key = */"[REF(src)]",
+		/* image = */invisible,
+		/* options = */null,
+		/* non-seer = */hallucinator,
+	)
+
+	// do the dust animation, only the hallucinator can see it now
+	dust_animation()

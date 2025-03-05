@@ -1,4 +1,4 @@
-#define MULTIPLY_PIXELSPEED 0.8
+#define MULTIPLY_SPEED 0.8
 
 /obj/projectile/energy/photon
 	name = "photon bolt"
@@ -9,7 +9,6 @@
 	damage = 5 //It's literally a weaker tesla bolt, which is already weak. Don't worry, we'll fix that.
 	range = 20
 	speed = 1
-	pixel_speed_multiplier = 1
 	projectile_piercing = PASSMOB
 	light_color = LIGHT_COLOR_DEFAULT
 	light_system = OVERLAY_LIGHT
@@ -44,15 +43,15 @@
 	if(prob(40))
 		new /obj/effect/hotspot(arrived)
 
-/obj/projectile/energy/photon/Range()
+/obj/projectile/energy/photon/reduce_range()
 	. = ..()
-	pixel_speed_multiplier *= MULTIPLY_PIXELSPEED
+	speed *= MULTIPLY_SPEED
 
 /obj/projectile/energy/photon/on_range()
 	do_sparks(rand(4, 9), FALSE, src)
-	playsound(loc, 'sound/weapons/solarflare.ogg', 100, FALSE, 8, 0.9)
+	playsound(loc, 'sound/items/weapons/solarflare.ogg', 100, FALSE, 8, 0.9)
 	for(var/mob/living/flashed_mob in viewers(5, loc))
 		flashed_mob.flash_act()
 	return ..()
 
-#undef MULTIPLY_PIXELSPEED
+#undef MULTIPLY_SPEED

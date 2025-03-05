@@ -5,11 +5,13 @@
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	obj_flags = CONDUCTS_ELECTRICITY
+	slot_flags = ITEM_SLOT_BELT
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
@@ -18,11 +20,15 @@
 	bare_wound_bonus = 15
 	toolspeed = 0.375
 	demolition_mod = 0.8
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	armour_penetration = 35
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
+	/// Tracks how many times attack_self() is called so that breaking a blade while in an arena has to be intentional
+	var/escape_attempts = 0
+	/// Timer that resets your escape_attempts back to 0
+	var/escape_timer
 
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()
@@ -48,8 +54,27 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
+		user.balloon_alert(user, "can't escape!")
+		if(escape_attempts > 2)
+			to_chat(user, span_hypnophrase(span_big("Cowardly sheep will be slaughtered!")))
+			playsound(src, SFX_SHATTER, 70, TRUE)
+			var/obj/item/bodypart/to_remove = user.get_active_hand()
+			to_remove.dismember()
+			deltimer(escape_timer)
+			qdel(src)
+			return
+		escape_attempts++
+		escape_timer = addtimer(CALLBACK(src, PROC_REF(reset_attempts)), 2 SECONDS, TIMER_STOPPABLE)
+		return
+	if(HAS_TRAIT(user, TRAIT_NO_TELEPORT))
+		user.balloon_alert(user, "can't break!")
+		return
 	seek_safety(user)
-	return ..()
+
+/obj/item/melee/sickly_blade/proc/reset_attempts()
+	escape_attempts = 0
+	deltimer(escape_timer)
 
 /// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
@@ -65,13 +90,11 @@
 	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
-	if(isliving(target))
-		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
+	SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(isliving(interacting_with))
-		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
-		return ITEM_INTERACT_BLOCKING
+	SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
+	return ITEM_INTERACT_BLOCKING
 
 // Path of Rust's blade
 /obj/item/melee/sickly_blade/rust
@@ -134,8 +157,55 @@
 	desc = "A galliant blade, sundered and torn. \
 		Furiously, the blade cuts. Silver scars bind it forever to its dark purpose."
 	icon_state = "dark_blade"
+	base_icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
 	after_use_message = "The Torn Champion hears your call..."
+	///If our blade is currently infused with the mansus grasp
+	var/infused = FALSE
+
+/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	if(!infused || target == user || !isliving(target))
+		return
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/mob/living/living_target = target
+	if(!heretic_datum)
+		return
+
+	//Apply our heretic mark
+	var/datum/heretic_knowledge/mark/blade_mark/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/mark/blade_mark)
+	if(!mark_to_apply)
+		return
+	mark_to_apply.create_mark(user, living_target)
+
+	//Remove the infusion from any blades we own (and update their sprite)
+	for(var/obj/item/melee/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/melee/sickly_blade/dark))
+		to_infuse.infused = FALSE
+		to_infuse.update_appearance(UPDATE_ICON)
+	user.update_held_items()
+
+	if(!check_behind(user, living_target))
+		return
+	// We're officially behind them, apply effects
+	living_target.AdjustParalyzed(1.5 SECONDS)
+	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
+	living_target.balloon_alert(user, "backstab!")
+	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+
+/obj/item/melee/sickly_blade/dark/dropped(mob/user, silent)
+	. = ..()
+	if(infused)
+		infused = FALSE
+		update_appearance(UPDATE_ICON)
+
+/obj/item/melee/sickly_blade/dark/update_icon_state()
+	. = ..()
+	if(infused)
+		icon_state = base_icon_state + "_infused"
+		inhand_icon_state = base_icon_state + "_infused"
+	else
+		icon_state = base_icon_state
+		inhand_icon_state = base_icon_state
 
 // Path of Cosmos's blade
 /obj/item/melee/sickly_blade/cosmic
@@ -205,10 +275,7 @@
 		return TRUE
 	if(prob(15))
 		to_chat(user, span_cult_large(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
-		var/obj/item/bodypart/affecting = user.get_active_hand()
-		if(!affecting)
-			return
-		affecting.receive_damage(burn = 5)
+		user.apply_damage(5, BURN, user.get_active_hand())
 		playsound(src, SFX_SEAR, 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))
@@ -229,7 +296,7 @@
 /obj/item/melee/sickly_blade/cursed/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	. = ..()
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	if(!heretic_datum)
 		return NONE
 
@@ -238,3 +305,14 @@
 		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
 		return ITEM_INTERACT_BLOCKING
 	return NONE
+
+// Weaker blade variant given to people so they can participate in the heretic arena spell
+/obj/item/melee/sickly_blade/training
+	name = "\improper imperfect blade"
+	desc = "A blade given to those who cannot accept the truth, out of pity. \
+		May it act as a blessing in the short time it remains alongside you."
+	force = 17
+	armour_penetration = 0
+
+/obj/item/melee/sickly_blade/training/check_usability(mob/living/user)
+	return TRUE // If you can hold this, you can use it

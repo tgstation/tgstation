@@ -1,3 +1,4 @@
+#ifndef DISABLE_DREAMLUAU
 #define MAX_LOG_REPEAT_LOOKBACK 5
 
 GLOBAL_DATUM(lua_usr, /mob)
@@ -41,7 +42,10 @@ GLOBAL_PROTECT(lua_state_stack)
 		return
 	display_name = _name
 	internal_id = DREAMLUAU_NEW_STATE()
-	if(!isnum(internal_id))
+	if(isnull(internal_id))
+		stack_trace("dreamluau is not loaded")
+		qdel(src)
+	else if(!isnum(internal_id))
 		stack_trace(internal_id)
 		qdel(src)
 
@@ -229,3 +233,4 @@ GLOBAL_PROTECT(lua_state_stack)
 			SStgui.update_uis(editor)
 
 #undef MAX_LOG_REPEAT_LOOKBACK
+#endif

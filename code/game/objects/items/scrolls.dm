@@ -10,6 +10,7 @@
 	throw_range = 7
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll)
+	action_slots = ITEM_SLOT_HANDS
 	/// Number of uses the scroll gets.
 	var/uses = 4
 
@@ -33,9 +34,6 @@
 	to_chat(cast_on, span_warning("[src] runs out of uses and crumbles to dust!"))
 	qdel(src)
 
-/obj/item/teleportation_scroll/item_action_slot_check(slot, mob/user)
-	return (slot & ITEM_SLOT_HANDS)
-
 /obj/item/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
 	uses = 1
@@ -55,7 +53,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	if(human_user.incapacitated() || !human_user.is_holding(src))
+	if(human_user.incapacitated || !human_user.is_holding(src))
 		return
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
 	if(!teleport)

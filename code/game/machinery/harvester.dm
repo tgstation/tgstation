@@ -76,15 +76,15 @@
 		for(var/obj/item/abiotic_item in carbon_occupant.held_items + carbon_occupant.get_equipped_items())
 			if(!(HAS_TRAIT(abiotic_item, TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 				return
 	if(!(carbon_occupant.mob_biotypes & MOB_ORGANIC))
 		say("Subject is not organic.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	if(!allow_living && !(carbon_occupant.stat == DEAD || HAS_TRAIT(carbon_occupant, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
 		say("Subject is still alive.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	return TRUE
 
@@ -104,7 +104,7 @@
 	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
-	visible_message(span_notice("The [name] begins warming up!"))
+	visible_message(span_notice("\The [src] begins warming up!"))
 	say("Initializing harvest protocol.")
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
@@ -141,7 +141,7 @@
 	open_machine()
 	if (!success)
 		say("Protocol interrupted. Aborting harvest.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 	else
 		say("Subject has been successfully harvested.")
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
@@ -179,7 +179,7 @@
 	obj_flags |= EMAGGED
 	allow_living = TRUE
 	allow_clothing = TRUE
-	balloon_alert(!user, "lifesign scanners overloaded")
+	balloon_alert(user, "lifesign scanners overloaded")
 	return TRUE
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)

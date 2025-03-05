@@ -181,11 +181,11 @@
 		indicator_icon = "launchpad_pull"
 	update_indicator()
 
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/items/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
 	if(!hidden)
-		playsound(target, 'sound/weapons/flash.ogg', 25, TRUE)
+		playsound(target, 'sound/items/weapons/flash.ogg', 25, TRUE)
 		var/datum/effect_system/spark_spread/quantum/spark_system = new /datum/effect_system/spark_spread/quantum()
 		spark_system.set_up(5, TRUE, target)
 		spark_system.start()
@@ -203,7 +203,7 @@
 	if(!hidden)
 		// Takes twice as long to make sure it properly fades out.
 		Beam(target, icon_state = teleport_beam, time = BEAM_FADE_TIME*2, beam_type = /obj/effect/ebeam/launchpad)
-		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
+		playsound(target, 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
 	use_energy(active_power_usage)
@@ -216,12 +216,12 @@
 		source = dest
 		dest = target
 
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	var/first = TRUE
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
-		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
+		if(!istype(ROI) || isdead(ROI) || iseyemob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
 			continue//don't teleport these
 		var/on_chair = ""
 		if(ROI.anchored)// if it's anchored, don't teleport
@@ -417,7 +417,7 @@
 		return
 	pad.doteleport(user, sending)
 
-/obj/item/launchpad_remote/ui_act(action, params)
+/obj/item/launchpad_remote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -429,11 +429,13 @@
 		if("set_pos")
 			var/new_x = text2num(params["x"])
 			var/new_y = text2num(params["y"])
+			// sanitizes our ranges for us
 			our_pad.set_offset(new_x, new_y)
 			. = TRUE
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
+			// sanitizes our ranges for us
 			our_pad.set_offset(
 				x = our_pad.x_offset + plus_x,
 				y = our_pad.y_offset + plus_y
@@ -441,7 +443,7 @@
 			. = TRUE
 		if("rename")
 			. = TRUE
-			var/new_name = params["name"]
+			var/new_name = reject_bad_name(params["name"], allow_numbers = TRUE, max_length = MAX_NAME_LEN, cap_after_symbols = FALSE)
 			if(!new_name)
 				return
 			our_pad.display_name = new_name

@@ -60,7 +60,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/keycard_auth/ui_act(action, params)
+/obj/machinery/keycard_auth/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || waiting || !allowed(usr))
 		return

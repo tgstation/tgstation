@@ -159,14 +159,14 @@
 	for(var/i in time_left_list)
 		. |= text2num(i)
 
-/datum/component/wet_floor/PreTransfer()
+/datum/component/wet_floor/PreTransfer(datum/new_parent)
 	var/turf/O = parent
 	O.cut_overlay(current_overlay)
 	//That turf is no longer slippery, we're out of here
 	//Slippery components don't transfer due to callbacks
 	qdel(O.GetComponent(/datum/component/slippery))
 
-/datum/component/wet_floor/PostTransfer()
+/datum/component/wet_floor/PostTransfer(datum/new_parent)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/turf/T = parent

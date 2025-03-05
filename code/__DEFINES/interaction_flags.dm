@@ -48,3 +48,5 @@
 #define INTERACT_MACHINE_REQUIRES_SIGHT (1<<6)
 /// the user must be able to read to interact
 #define INTERACT_MACHINE_REQUIRES_LITERACY (1<<7)
+/// user must be standing up in order to interact
+#define INTERACT_MACHINE_REQUIRES_STANDING (1<<8)

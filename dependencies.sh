@@ -3,20 +3,18 @@
 #Project dependencies file
 #Final authority on what's required to fully build the project
 
-# byond version
+# byond version. Also must be updated in .tgs.yml
 export BYOND_MAJOR=515
-export BYOND_MINOR=1637
+export BYOND_MINOR=1647
 
 #rust_g git tag
-export RUST_G_VERSION=3.3.0
+export RUST_G_VERSION=3.6.0
 
 #node version
-export NODE_VERSION_LTS=20.13.0
-# compatiblility mode MUST work with windows 7
-export NODE_VERSION_COMPAT=20.2.0
+export NODE_VERSION_LTS=22.11.0
 
 # SpacemanDMM git tag
-export SPACEMAN_DMM_VERSION=suite-1.8
+export SPACEMAN_DMM_VERSION=suite-1.9
 
 # Python version for mapmerge and other tools
 export PYTHON_VERSION=3.9.0
@@ -25,10 +23,10 @@ export PYTHON_VERSION=3.9.0
 export DREAMLUAU_REPO="tgstation/dreamluau"
 
 #dreamluau git tag
-export DREAMLUAU_VERSION=0.1.0
+export DREAMLUAU_VERSION=0.1.2
 
 #hypnagogic repo
 export CUTTER_REPO=spacestation13/hypnagogic
 
 #hypnagogic git tag
-export CUTTER_VERSION=v3.1.0
+export CUTTER_VERSION=v4.0.0

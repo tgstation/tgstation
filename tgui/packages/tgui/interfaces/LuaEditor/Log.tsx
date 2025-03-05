@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -8,7 +6,9 @@ import {
   Divider,
   LabeledList,
   Stack,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { logger } from '../../logging';
 import { ListMapper } from './ListMapper';
 import { LuaEditorData, LuaEditorModal } from './types';

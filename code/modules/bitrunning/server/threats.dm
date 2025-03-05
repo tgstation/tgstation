@@ -111,17 +111,17 @@
 	mutation_target.gib(DROP_ALL_REMAINS)
 
 	var/datum/mind/ghost_mind = ghost.mind
-	new_mob.key = ghost.key
+	new_mob.PossessByPlayer(ghost.key)
 
-	if(ghost_mind?.current)
+	if(ghost_mind)
 		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
 
 	var/datum/mind/antag_mind = new_mob.mind
 	antag_mind.add_antag_datum(chosen_role)
 	antag_mind.special_role = ROLE_GLITCH
-	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
+	antag_mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
-	playsound(new_mob, 'sound/magic/ethereal_exit.ogg', 50, vary = TRUE)
+	playsound(new_mob, 'sound/effects/magic/ethereal_exit.ogg', 50, vary = TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into virtual antagonist by an event.")
 	new_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
 
@@ -132,12 +132,15 @@
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)
 	antag.balloon_alert(antag, "scanning...")
 	chosen_forge.setup_particles(angry = TRUE)
-	radio.talk_into(src, "SECURITY BREACH: Unauthorized entry sequence detected.", RADIO_CHANNEL_SUPPLY)
+	var/obj/machinery/announcement_system/aas = get_announcement_system(source = src)
+	if (aas)
+		aas.broadcast("QUANTUM SERVER ALERT: Security breach detected. Unauthorized entry sequence in progress...", list(RADIO_CHANNEL_SUPPLY))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_STATION_SPAWN)
 
 	var/timeout = 2 SECONDS
 	if(!ishuman(antag))
-		radio.talk_into(src, "Fabrication protocols have crashed unexpectedly. Please evacuate the area.", RADIO_CHANNEL_SUPPLY)
+		if (aas)
+			aas.broadcast("QUANTUM SERVER ALERT: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", list(RADIO_CHANNEL_SUPPLY))
 		timeout = 10 SECONDS
 
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)
@@ -159,8 +162,8 @@
 
 	if(ishuman(antag))
 		reset_equipment(antag)
-	else
-		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.")
+	else if (aas)
+		aas.broadcast("QUANTUM SERVER CRITICAL ALERT: Unregistered mechanical entity deployed.", list())
 
 	var/datum/antagonist/antag_datum = antag.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)
 	if(istype(antag_datum))
@@ -170,13 +173,13 @@
 	if(temp_body)
 		qdel(temp_body)
 
-	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/magic/ethereal_enter.ogg', asoundout = 'sound/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/effects/magic/ethereal_enter.ogg', asoundout = 'sound/effects/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
 
 
 /// Removes any invalid candidates from the list
 /obj/machinery/quantum_server/proc/validate_mutation_candidates()
 	for(var/datum/weakref/creature_ref as anything in mutation_candidate_refs)
-		var/mob/living/creature = creature_ref.resolve()
+		var/mob/living/creature = creature_ref?.resolve()
 		if(isnull(creature) || creature.mind)
 			mutation_candidate_refs.Remove(creature_ref)
 

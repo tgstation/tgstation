@@ -1,3 +1,13 @@
+.light:root {
+	--scrollbar-base: #f2f2f2;
+	--scrollbar-thumb: #a7a7a7;
+}
+
+html,
+body {
+	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-base);
+}
+
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 12px;
@@ -16,7 +26,7 @@ a:hover {
 }
 
 h3 {
-	margin: 0 -0.5em 0.25em;
+	margin: 0 -0.5em 0.5em;
 	padding: 1em 0.66em 0.5em;
 	border-bottom: 0.1667em solid;
 }
@@ -41,6 +51,27 @@ img {
 	background-color: #ffffff;
 }
 
+.menu-wrap {
+	flex-wrap: wrap-reverse;
+}
+
+#menu.tabs-classic {
+	padding: 0.15em;
+}
+
+#menu.tabs-classic .button {
+	min-width: 2em;
+	margin: 0.1em;
+	padding: 0.25em 0.4em;
+	border: 0;
+	border-radius: 0.25em;
+}
+
+#menu.tabs-classic .button.active {
+	background-color: #0668b8;
+	color: white;
+}
+
 .button {
 	display: inline-table;
 	cursor: pointer;
@@ -62,6 +93,7 @@ img {
 }
 
 .button.active {
+	cursor: default;
 	background-color: #dfdfdf;
 	color: black;
 	border-bottom-color: #000000;
@@ -69,6 +101,11 @@ img {
 
 #under-menu {
 	height: 0.5em;
+	background-color: #eeeeee;
+}
+
+#under-content {
+	height: calc(0.5em - 4px);
 	background-color: #eeeeee;
 }
 
@@ -80,7 +117,7 @@ img {
 }
 
 .grid-container {
-	margin: 0;
+	margin: -0.25em;
 }
 
 .grid-item {
@@ -89,13 +126,14 @@ img {
 	user-select: none;
 	-ms-user-select: none; /* Remove after Byond 516 */
 	width: 100%;
-	box-sizing: border-box;
+	max-height: 1.85em;
 	text-decoration: none;
 	background-color: transparent;
 	color: black;
 }
 
-.grid-item:hover {
+.grid-item:hover,
+.grid-item:active {
 	color: #003399;
 	z-index: 1;
 }
@@ -104,21 +142,21 @@ img {
 	display: inline-block;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	box-sizing: border-box;
 	white-space: nowrap;
+	pointer-events: none;
 	width: 100%;
 	padding: 0.33em 0.5em;
 	border-radius: 0.25em;
 }
 
-.grid-item-text:hover {
-	position: absolute;
-	top: -1.33em;
+.grid-item:hover .grid-item-text {
+	height: 100%;
+	overflow: visible;
 	white-space: normal;
 	background-color: #ececec;
 }
 
-.grid-item-text:active {
+.grid-item:active .grid-item-text  {
 	background-color: #dfdfdf;
 }
 
@@ -155,9 +193,16 @@ img {
 	margin-bottom: 1em;
 }
 
-/* Dark theme colors */
+/**
+ * MARK: Dark theme colors
+ */
+.dark:root {
+	--scrollbar-base: #151515;
+	--scrollbar-thumb: #363636;
+}
+
 body.dark {
-	background-color: #131313;
+	background-color: #151515;
 	color: #b2c4dd;
 	scrollbar-base-color: #1c1c1c;
 	scrollbar-face-color: #3b3b3b;
@@ -173,12 +218,17 @@ body.dark {
 }
 
 .dark a:hover,
-.dark .grid-item:hover {
+.dark .grid-item:hover,
+.dark .grid-item:active {
 	color: #80bfff;
 }
 
 .dark #menu {
-	background-color: #131313;
+	background-color: #151515;
+}
+
+.dark #menu.tabs-classic .button.active {
+	background-color: #20b142;
 }
 
 .dark .button {
@@ -195,7 +245,8 @@ body.dark {
 	border-bottom-color: #d4dfec;
 }
 
-.dark #under-menu {
+.dark #under-menu,
+.dark #under-content {
 	background-color: #202020;
 }
 
@@ -203,10 +254,10 @@ body.dark {
 	color: #b2c4dd;
 }
 
-.dark .grid-item-text:hover {
+.dark .grid-item:hover .grid-item-text {
 	background-color: #252525;
 }
 
-.dark  .grid-item-text:active {
+.dark .grid-item:active .grid-item-text {
 	background-color: #313131;
 }

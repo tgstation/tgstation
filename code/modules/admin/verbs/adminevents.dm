@@ -121,106 +121,15 @@ ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a c
 
 	BLACKBOX_LOG_ADMIN_VERB("Add Custom AI Law")
 
-ADMIN_VERB(call_shuttle, R_ADMIN, "Call Shuttle", "Force a shuttle call with additional modifiers.", ADMIN_CATEGORY_EVENTS)
-	if(EMERGENCY_AT_LEAST_DOCKED)
+ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS)
+	var/list/nukes = list()
+	for (var/obj/machinery/nuclearbomb/bomb in world)
+		nukes += bomb
+	var/obj/machinery/nuclearbomb/nuke = tgui_input_list(user, "", "Toggle Nuke", nukes)
+	if (isnull(nuke))
 		return
-
-	var/confirm = tgui_alert(user, "You sure?", "Confirm", list("Yes", "Yes (No Recall)", "No"))
-	switch(confirm)
-		if(null, "No")
-			return
-		if("Yes (No Recall)")
-			SSshuttle.admin_emergency_no_recall = TRUE
-			SSshuttle.emergency.mode = SHUTTLE_IDLE
-
-	SSshuttle.emergency.request()
-	BLACKBOX_LOG_ADMIN_VERB("Call Shuttle")
-	log_admin("[key_name(user)] admin-called the emergency shuttle.")
-	message_admins(span_adminnotice("[key_name_admin(user)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""]."))
-
-ADMIN_VERB(cancel_shuttle, R_ADMIN, "Cancel Shuttle", "Recall the shuttle, regardless of circumstances.", ADMIN_CATEGORY_EVENTS)
-	if(EMERGENCY_AT_LEAST_DOCKED)
-		return
-
-	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
-		return
-	SSshuttle.admin_emergency_no_recall = FALSE
-	SSshuttle.emergency.cancel()
-	BLACKBOX_LOG_ADMIN_VERB("Cancel Shuttle")
-	log_admin("[key_name(user)] admin-recalled the emergency shuttle.")
-	message_admins(span_adminnotice("[key_name_admin(user)] admin-recalled the emergency shuttle."))
-
-ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't getting out.", ADMIN_CATEGORY_EVENTS)
-	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
-		to_chat(user, span_warning("Error, shuttle is already disabled."))
-		return
-
-	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
-		return
-
-	message_admins(span_adminnotice("[key_name_admin(user)] disabled the shuttle."))
-
-	SSshuttle.last_mode = SSshuttle.emergency.mode
-	SSshuttle.last_call_time = SSshuttle.emergency.timeLeft(1)
-	SSshuttle.admin_emergency_no_recall = TRUE
-	SSshuttle.emergency.setTimer(0)
-	SSshuttle.emergency.mode = SHUTTLE_DISABLED
-	priority_announce(
-		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
-		title = "Uplink Failure",
-		sound = 'sound/misc/announce_dig.ogg',
-		sender_override = "Emergency Shuttle Uplink Alert",
-		color_override = "grey",
-	)
-
-ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting out.", ADMIN_CATEGORY_EVENTS)
-	if(SSshuttle.emergency.mode != SHUTTLE_DISABLED)
-		to_chat(user, span_warning("Error, shuttle not disabled."))
-		return
-
-	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
-		return
-
-	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
-	SSshuttle.admin_emergency_no_recall = FALSE
-	SSshuttle.emergency_no_recall = FALSE
-	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
-		SSshuttle.last_mode = SHUTTLE_IDLE
-
-	SSshuttle.emergency.mode = SSshuttle.last_mode
-	if(SSshuttle.last_call_time < 10 SECONDS && SSshuttle.last_mode != SHUTTLE_IDLE)
-		SSshuttle.last_call_time = 10 SECONDS //Make sure no insta departures.
-	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
-	priority_announce(
-		text = "Emergency Shuttle uplink reestablished, shuttle enabled.",
-		title = "Uplink Restored",
-		sound = 'sound/misc/announce_dig.ogg',
-		sender_override = "Emergency Shuttle Uplink Alert",
-		color_override = "green",
-	)
-
-ADMIN_VERB(hostile_environment, R_ADMIN, "Hostile Environment", "Disable the shuttle, naturally.", ADMIN_CATEGORY_EVENTS)
-	switch(tgui_alert(user, "Select an Option", "Hostile Environment Manager", list("Enable", "Disable", "Clear All")))
-		if("Enable")
-			if (SSshuttle.hostile_environments["Admin"] == TRUE)
-				to_chat(user, span_warning("Error, admin hostile environment already enabled."))
-			else
-				message_admins(span_adminnotice("[key_name_admin(user)] Enabled an admin hostile environment"))
-				SSshuttle.registerHostileEnvironment("Admin")
-		if("Disable")
-			if (!SSshuttle.hostile_environments["Admin"])
-				to_chat(user, span_warning("Error, no admin hostile environment found."))
-			else
-				message_admins(span_adminnotice("[key_name_admin(user)] Disabled the admin hostile environment"))
-				SSshuttle.clearHostileEnvironment("Admin")
-		if("Clear All")
-			message_admins(span_adminnotice("[key_name_admin(user)] Disabled all current hostile environment sources"))
-			SSshuttle.hostile_environments.Cut()
-			SSshuttle.checkHostileEnvironment()
-
-ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS, obj/machinery/nuclearbomb/nuke in world)
 	if(!nuke.timing)
-		var/newtime = input(user, "Set activation timer.", "Activate Nuke", "[nuke.timer_set]") as num|null
+		var/newtime = tgui_input_number(user, "Set activation timer.", "Activate Nuke", nuke.timer_set)
 		if(!newtime)
 			return
 		nuke.timer_set = newtime
@@ -263,13 +172,21 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, "Command Report Footnote", "Adds a 
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	GLOB.communications_controller.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
 
-	command_report_footnote.message = tgui_input_text(user, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
+	command_report_footnote.message = tgui_input_text(
+		user,
+		"This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.",
+		"P.S.",
+	)
 	if(!command_report_footnote.message)
 		GLOB.communications_controller.block_command_report -= 1
 		qdel(command_report_footnote)
 		return
 
-	command_report_footnote.signature = tgui_input_text(user, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
+	command_report_footnote.signature = tgui_input_text(
+		user,
+		"Whose signature will appear on this footnote?",
+		"Also sign here, here, aaand here.",
+	)
 
 	if(!command_report_footnote.signature)
 		command_report_footnote.signature = "Classified"

@@ -35,6 +35,11 @@
 		return
 	. += span_notice("It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.")
 
+/obj/item/holosign_creator/check_allowed_items(atom/target, not_inside, target_self)
+	if(HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return FALSE
+	return ..()
+
 /obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE

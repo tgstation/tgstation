@@ -6,18 +6,28 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY, PROC_REF(secondary_attack))
-	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+	var/obj/item/item = target
+	RegisterSignal(item, COMSIG_ITEM_ATTACK_SECONDARY, PROC_REF(secondary_attack))
+	RegisterSignal(item, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+	item.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	RegisterSignal(item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/element/disarm_attack/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
+	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 	return ..()
+
+/datum/element/disarm_attack/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!isliving(target) || !can_disarm_attack(source, target, user, FALSE))
+		return NONE
+	context[SCREENTIP_CONTEXT_RMB] = "Shove"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /datum/element/disarm_attack/proc/secondary_attack(obj/item/source, mob/living/victim, mob/living/user, params)
 	SIGNAL_HANDLER
 	if(!user.can_disarm(victim) || !can_disarm_attack(source, victim, user))
 		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
-	if(victim.check_block(source, 0, "the [source.name]", MELEE_ATTACK, 0))
+	if(victim.check_block(source, 0, "\the [source]", MELEE_ATTACK, 0))
 		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 	user.disarm(victim, source)
 	user.changeNext_move(source.secondary_attack_speed || source.attack_speed)

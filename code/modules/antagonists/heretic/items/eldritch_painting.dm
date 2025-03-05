@@ -44,7 +44,7 @@
 		return
 	if(IS_HERETIC(viewer))
 		return
-	if(viewer.can_block_magic(MAGIC_RESISTANCE))
+	if(viewer.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		return
 	to_chat(viewer, span_notice(text_to_display))
 	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_SURGERY)
@@ -129,14 +129,14 @@
 
 	// A list made of the organs and bodyparts the heretic can get
 	var/static/list/random_bodypart_or_organ = list(
-		/obj/item/organ/internal/brain,
-		/obj/item/organ/internal/lungs,
-		/obj/item/organ/internal/eyes,
-		/obj/item/organ/internal/ears,
-		/obj/item/organ/internal/heart,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/appendix,
+		/obj/item/organ/brain,
+		/obj/item/organ/lungs,
+		/obj/item/organ/eyes,
+		/obj/item/organ/ears,
+		/obj/item/organ/heart,
+		/obj/item/organ/liver,
+		/obj/item/organ/stomach,
+		/obj/item/organ/appendix,
 		/obj/item/bodypart/arm/left,
 		/obj/item/bodypart/arm/right,
 		/obj/item/bodypart/leg/left,
@@ -197,13 +197,13 @@
 // Lady out of gates, gives a brain trauma causing the person to scratch themselves
 /obj/item/wallframe/painting/eldritch/beauty
 	name = "\improper Lady of the Gate"
-	desc = "A painting of an otherworldly being. Its thin, porceline-coloured skin is stretched tight over its strange bone structure. It has an odd beauty."
+	desc = "A painting of an otherworldly being. Its thin, porcelain-coloured skin is stretched tight over its strange bone structure. It has an odd beauty."
 	icon_state = "eldritch_painting_beauty"
 	result_path = /obj/structure/sign/painting/eldritch/beauty
 
 /obj/structure/sign/painting/eldritch/beauty
 	name = "\improper Lady of the Gate"
-	desc = "A painting of an otherworldly being. Its thin, porceline-coloured skin is stretched tight over its strange bone structure. It has an odd beauty. Removable with wirecutters."
+	desc = "A painting of an otherworldly being. Its thin, porcelain-coloured skin is stretched tight over its strange bone structure. It has an odd beauty. Removable with wirecutters."
 	icon_state = "eldritch_painting_beauty"
 	applied_trauma = /datum/brain_trauma/severe/eldritch_beauty
 	text_to_display = "A beacon of purity, the real world seems so mundane and imperfect in comparison..."

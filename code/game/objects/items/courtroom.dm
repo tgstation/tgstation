@@ -7,6 +7,7 @@
 	desc = "Order, order! No bombs in my courthouse."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "gavelhammer"
+	icon_angle = -135
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL

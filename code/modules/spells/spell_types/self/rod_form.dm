@@ -138,8 +138,7 @@
 	our_wizard = WEAKREF(wizard)
 
 	wizard.forceMove(src)
-	wizard.status_flags |= GODMODE
-	wizard.add_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
+	wizard.add_traits(list(TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
 
 /**
  * Eject our current wizard, removing them from the rod
@@ -150,8 +149,7 @@
 	if(QDELETED(wizard))
 		return
 
-	wizard.status_flags &= ~GODMODE
-	wizard.remove_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
+	wizard.remove_traits(list(TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
 	wizard.forceMove(get_turf(src))
 	our_wizard = null
 

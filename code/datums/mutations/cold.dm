@@ -37,6 +37,7 @@
 	button_icon_state = "icebeam"
 	base_icon_state = "icebeam"
 	active_overlay_icon_state = "bg_spell_border_active_blue"
+	cast_range = 9
 	cooldown_time = 16 SECONDS
 	spell_requirements = NONE
 	antimagic_flags = NONE

@@ -37,10 +37,19 @@
 	allow_bureaucratic_error = FALSE
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
 
-/datum/job/veteran_advisor/get_roundstart_spawn_point() //Spawning at Brig where Officers spawn
-	if (length(GLOB.start_landmarks_list["Security Officer"]))
-		return pick(GLOB.start_landmarks_list["Security Officer"])
-	return ..()
+/datum/job/veteran_advisor/get_default_roundstart_spawn_point()
+	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
+		if(spawn_point.name != "Security Officer")
+			continue
+		. = spawn_point
+		if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
+			continue
+		spawn_point.used = TRUE
+		break
+	if(!.) // Try to fall back to "our" landmark
+		. = ..()
+	if(!.)
+		log_mapping("Job [title] ([type]) couldn't find a round start spawn point.")
 
 /datum/job/veteran_advisor/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

@@ -50,7 +50,7 @@
 /mob/living/basic/wizard_worm/has_gravity(turf/gravity_turf)
 	return TRUE
 
-/mob/living/basic/wizard_worm/can_be_pulled()
+/mob/living/basic/wizard_worm/can_be_pulled(user, force)
 	return FALSE
 
 /mob/living/basic/wizard_worm/Initialize(mapload, spawn_bodyparts = TRUE)

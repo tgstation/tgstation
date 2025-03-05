@@ -62,7 +62,7 @@
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_MASK) != src)
 		return
-	playsound(user, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
+	playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
 	if(harmful_strip)
 		user.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
@@ -86,7 +86,7 @@
 
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
-	desc = "A piece of tape that can be put over someone's mouth. This one has extra strengh."
+	desc = "A piece of tape that can be put over someone's mouth. This one has extra strength."
 	greyscale_colors = "#4D4D4D"
 	strip_delay = 80
 

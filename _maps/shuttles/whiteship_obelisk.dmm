@@ -732,9 +732,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
 "Qp" = (
-/obj/machinery/vending/medical{
-	req_access = null
-	},
+/obj/machinery/vending/medical,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
 "RG" = (

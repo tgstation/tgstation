@@ -257,7 +257,7 @@
 	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
 	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
-	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+	payload.adminlog = "\The [src] that [key_name(user)] had primed detonated!"
 	user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///
@@ -501,7 +501,7 @@
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
-		playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
 	if(adminlog)
@@ -621,7 +621,7 @@
 	balloon_alert(user, "set to [chosen_theme?.name || DIMENSION_CHOICE_RANDOM]")
 
 /obj/item/bombcore/dimensional/proc/check_menu(mob/user)
-	if(!user.is_holding(src) || user.incapacitated())
+	if(!user.is_holding(src) || user.incapacitated)
 		return FALSE
 	return TRUE
 

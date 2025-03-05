@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(bitrunning)
 		var/can_view_reward = domain.difficulty < (scanner_tier + 1) && domain.cost <= points + 3
 
 		UNTYPED_LIST_ADD(levels, list(
-			"announce_ghosts"= domain.announce_to_ghosts,
+			"announce_ghosts" = domain.announce_to_ghosts,
 			"cost" = domain.cost,
 			"desc" = can_view ? domain.desc : "Limited scanning capabilities. Cannot infer domain details.",
 			"difficulty" = domain.difficulty,

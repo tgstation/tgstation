@@ -43,7 +43,6 @@
 	button_icon_state = "default"
 	desc = "Secrete a slippery acid!"
 	cooldown_time = 15 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/secrete_acid/Activate(atom/target_atom)

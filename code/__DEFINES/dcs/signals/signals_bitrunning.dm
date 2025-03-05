@@ -41,6 +41,9 @@
 /// from /obj/machienry/quantum_server/station_spawn()
 #define COMSIG_BITRUNNER_STATION_SPAWN "bitrunner_station_spawn"
 
+/// from /obj/machinery/quantum_server/stock_gear(): (mob/living/carbon/human/avatar, external_load_flags)
+#define COMSIG_BITRUNNER_STOCKING_GEAR "bitrunner_stocking_gear"
+
 // Ladder
 
 /// from /obj/structure/hololadder/disconnect()
@@ -53,3 +56,6 @@
 
 /// from /obj/effect/mob_spawn/ghost_role/human/virtual_domain/proc/artificial_spawn() : (mob/living/runner)
 #define COMSIG_BITRUNNER_SPAWNED "bitrunner_spawned"
+
+/// from /obj/effect/landmark/bitrunning/mob_segment/proc/spawn_mobs() : (list/mob/living)
+#define COMSIG_BITRUNNING_MOB_SEGMENT_SPAWNED "bitrunner_mob_segment_spawned"

@@ -39,6 +39,10 @@
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
 
+/area/station/security/brig/lower
+	name = "\improper Lower Brig"
+	icon_state = "lower_brig"
+
 /area/station/security/brig/entrance
 	name = "\improper Brig Entrance"
 	icon_state = "brigentry"
@@ -79,8 +83,8 @@
 	name = "\improper Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list(
-		'sound/ambience/ambidet1.ogg',
-		'sound/ambience/ambidet2.ogg',
+		'sound/ambience/security/ambidet1.ogg',
+		'sound/ambience/security/ambidet2.ogg',
 		)
 
 /area/station/security/detectives_office/private_investigators_office

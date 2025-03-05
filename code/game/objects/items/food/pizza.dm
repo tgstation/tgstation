@@ -169,7 +169,7 @@
 
 /obj/item/food/pizza/vegetable
 	name = "vegetable pizza"
-	desc = "No one of Tomatos Sapiens were harmed during making this pizza."
+	desc = "No one of Tomatoes Sapiens were harmed during making this pizza."
 	icon_state = "vegetablepizza"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 25,

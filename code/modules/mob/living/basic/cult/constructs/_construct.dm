@@ -106,7 +106,7 @@
 		return FALSE
 	to_chat(src, span_bold(playstyle_string))
 
-/mob/living/basic/construct/examine(mob/user)
+/mob/living/basic/construct/get_examine_name(mob/user)
 	var/text_span
 	switch(theme)
 		if(THEME_CULT)
@@ -115,13 +115,20 @@
 			text_span = "purple"
 		if(THEME_HOLY)
 			text_span = "blue"
-	. = list("<span class='[text_span]'>This is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
+
+	if(!text_span)
+		return ..()
+
+	return "<span class='[text_span]'>[..()]</span>"
+
+/mob/living/basic/construct/examine(mob/user)
+	. = list()
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
 			. += span_warning("[p_They()] look[p_s()] slightly dented.")
 		else
 			. += span_warning(span_bold("[p_They()] look[p_s()] severely dented!"))
-	. += "</span>"
+
 	return .
 
 /mob/living/basic/construct/narsie_act()

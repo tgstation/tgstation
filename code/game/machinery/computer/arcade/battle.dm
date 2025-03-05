@@ -118,6 +118,8 @@
 			all_gear[template::name] = new template
 		battle_arcade_gear_list = all_gear
 
+	name = make_boss_name_with_verb()
+
 /obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
@@ -144,37 +146,49 @@
 	equipped_gear = list(WEAPON_SLOT = null, ARMOR_SLOT = null)
 	return ..()
 
+/obj/machinery/computer/arcade/battle/proc/make_boss_name_with_verb(boss_verb)
+	if(check_holidays(HALLOWEEN))
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_halloween")
+	else if(check_holidays(CHRISTMAS))
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_xmas")
+	else if(check_holidays(VALENTINES))
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_valentines")
+	else
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action")
+
+	return "[boss_verb] [make_boss_name()]"
+
+/obj/machinery/computer/arcade/battle/proc/make_boss_name(boss_name, boss_adjective)
+	if(check_holidays(HALLOWEEN))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_halloween")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+	else if(check_holidays(CHRISTMAS))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_xmas")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+	else if(check_holidays(VALENTINES))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+	else
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy")
+
+	return "The [boss_adjective] [boss_name]"
+
 ///Sets up a new opponent depending on what stage they are at.
 /obj/machinery/computer/arcade/battle/proc/setup_new_opponent(enemy_gets_first_move = FALSE)
-	var/name_adjective
-	var/new_name
-
-	if(check_holidays(HALLOWEEN))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
-	else if(check_holidays(CHRISTMAS))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
-	else if(check_holidays(VALENTINES))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
-	else
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy")
-
 	enemy_hp = round(rand(90, 125) * all_worlds[player_current_world], 1)
 	enemy_mp = round(rand(20, 30) * all_worlds[player_current_world], 1)
 	enemy_gold_reward = rand((DEFAULT_ITEM_PRICE / 2), DEFAULT_ITEM_PRICE)
 
 	// there's only one boss in each stage (except the last)
-	if((player_current_world == latest_unlocked_world) && enemies_defeated == WORLD_ENEMY_BOSS)
+	var/boss = (player_current_world == latest_unlocked_world) && enemies_defeated == WORLD_ENEMY_BOSS
+	if(boss)
 		enemy_mp *= 1.25
 		enemy_hp *= 1.25
 		enemy_gold_reward *= 1.5
-		name_adjective = "Big Boss"
 
 	enemy_icon_id = rand(1,6)
-	enemy_name = "The [name_adjective] [new_name]"
+	enemy_name = make_boss_name(boss_adjective = (boss ? "Big Boss" : null))
 	feedback_message = "New game started against [enemy_name]"
 
 	if(obj_flags & EMAGGED)
@@ -226,7 +240,7 @@
 		user.mind?.adjust_experience(/datum/skill/gaming, exp_gained)
 		user.won_game()
 	SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
-	playsound(loc, 'sound/arcade/win.ogg', 40)
+	playsound(loc, 'sound/machines/arcade/win.ogg', 40)
 	if(ui_panel != UI_PANEL_WORLD_MAP) //we havent been booted to world map, we're still going.
 		ui_panel = UI_PANEL_BETWEEN_FIGHTS
 
@@ -250,11 +264,11 @@
 		ui_panel = UI_PANEL_GAMEOVER
 		feedback_message = "GAME OVER."
 		say("You have been crushed! GAME OVER.")
-		playsound(loc, 'sound/arcade/lose.ogg', 40, TRUE)
+		playsound(loc, 'sound/machines/arcade/lose.ogg', 40, TRUE)
 		lose_game(user)
 	else
 		feedback_message = "User took [damage_taken] damage!"
-		playsound(loc, 'sound/arcade/hit.ogg', 40, TRUE, extrarange = -3)
+		playsound(loc, 'sound/machines/arcade/hit.ogg', 40, TRUE, extrarange = -3)
 		SStgui.update_uis(src)
 
 ///Called when you attack the enemy.
@@ -270,17 +284,17 @@
 		if(BATTLE_ARCADE_PLAYER_COUNTERATTACK)
 			feedback_message = "User prepares to counterattack!"
 			process_enemy_turn(user, defending_flags = BATTLE_ATTACK_FLAG_COUNTERATTACK)
-			playsound(loc, 'sound/arcade/mana.ogg', 40, TRUE, extrarange = -3)
+			playsound(loc, 'sound/machines/arcade/mana.ogg', 40, TRUE, extrarange = -3)
 		if(BATTLE_ARCADE_PLAYER_DEFEND)
 			feedback_message = "User pulls up their shield!"
 			process_enemy_turn(user, defending_flags = BATTLE_ATTACK_FLAG_DEFEND)
-			playsound(loc, 'sound/arcade/mana.ogg', 40, TRUE, extrarange = -3)
+			playsound(loc, 'sound/machines/arcade/mana.ogg', 40, TRUE, extrarange = -3)
 
 	if(!damage_dealt)
 		return
 	enemy_hp -= round(max(0, damage_dealt), 1)
 	feedback_message = "[enemy_name] took [damage_dealt] damage!"
-	playsound(loc, 'sound/arcade/hit.ogg', 40, TRUE, extrarange = -3)
+	playsound(loc, 'sound/machines/arcade/hit.ogg', 40, TRUE, extrarange = -3)
 	process_enemy_turn(user)
 
 ///Called when you successfully counterattack the enemy.
@@ -289,7 +303,7 @@
 	var/damage_dealt = (rand(20, 30) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
 	enemy_hp -= round(max(0, damage_dealt), 1)
 	feedback_message = "User counterattacked for [damage_dealt] damage!"
-	playsound(loc, 'sound/arcade/boom.ogg', 40, TRUE, extrarange = -3)
+	playsound(loc, 'sound/machines/arcade/boom.ogg', 40, TRUE, extrarange = -3)
 	if(enemy_hp <= 0)
 		on_battle_win(user)
 	SStgui.update_uis(src)
@@ -334,7 +348,7 @@
 			enemy_hp = round(min(enemy_max_hp, enemy_hp + healed_amount), 1)
 			enemy_mp -= round(max(0, 10), 1)
 			feedback_message = "[enemy_name] healed for [healed_amount] health points!"
-			playsound(loc, 'sound/arcade/heal.ogg', 40, TRUE, extrarange = -3)
+			playsound(loc, 'sound/machines/arcade/heal.ogg', 40, TRUE, extrarange = -3)
 			SStgui.update_uis(src)
 			return
 		if(player_current_mp >= 5) //minimum to steal
@@ -342,7 +356,7 @@
 			player_current_mp -= round(max(0, healed_amount), 1)
 			enemy_mp += healed_amount
 			feedback_message = "[enemy_name] stole [healed_amount] MP from you!"
-			playsound(loc, 'sound/arcade/steal.ogg', 40, TRUE)
+			playsound(loc, 'sound/machines/arcade/steal.ogg', 40, TRUE)
 			SStgui.update_uis(src)
 			return
 		//we couldn't heal ourselves or steal MP, we'll just attack instead.
@@ -437,7 +451,7 @@
 						say("You don't have enough gold to rest!")
 						return TRUE
 					player_gold -= DEFAULT_ITEM_PRICE / 2
-					playsound(loc, 'sound/mecha/skyfall_power_up.ogg', 40)
+					playsound(loc, 'sound/vehicles/mecha/skyfall_power_up.ogg', 40)
 					player_current_hp = PLAYER_MAX_HP
 					player_current_mp = PLAYER_MAX_MP
 					return TRUE
@@ -476,11 +490,11 @@
 					return TRUE
 				if("continue_with_rest")
 					if(prob(60))
-						playsound(loc, 'sound/mecha/skyfall_power_up.ogg', 40)
+						playsound(loc, 'sound/vehicles/mecha/skyfall_power_up.ogg', 40)
 						player_current_hp = PLAYER_MAX_HP
 						player_current_mp = PLAYER_MAX_MP
 					else
-						playsound(loc, 'sound/machines/defib_zap.ogg', 40)
+						playsound(loc, 'sound/machines/defib/defib_zap.ogg', 40)
 						if(prob(40))
 							//You got robbed, and now have to go to your next fight.
 							player_gold /= 2

@@ -156,6 +156,7 @@
 				)
 
 		item_target.flags_inv = initial(picked_item.flags_inv)
+		item_target.hair_mask = initial(picked_item.hair_mask)
 		item_target.transparent_protection = initial(picked_item.transparent_protection)
 		if(isclothing(item_target) && ispath(picked_item, /obj/item/clothing))
 			var/obj/item/clothing/clothing_target = item_target
@@ -172,10 +173,7 @@
 	else
 		atom_target.icon = initial(picked_item.icon)
 
-/datum/action/item_action/chameleon/change/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return FALSE
-
+/datum/action/item_action/chameleon/change/do_effect(trigger_flags)
 	select_look(owner)
 	return TRUE
 
@@ -208,7 +206,7 @@
 
 	if(istype(applying_from, /datum/outfit/job))
 		var/datum/outfit/job/job_outfit = applying_from
-		var/datum/job/job_datum = SSjob.GetJobType(job_outfit.jobtype)
+		var/datum/job/job_datum = SSjob.get_job_type(job_outfit.jobtype)
 		apply_job_data(job_datum)
 
 	update_look(using_item_type)

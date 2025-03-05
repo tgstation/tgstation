@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 	for(var/antag_key in GLOB.non_ruleset_antagonists)
 		var/datum/antagonist/antag = GLOB.non_ruleset_antagonists[antag_key]
 		var/antag_flag = initial(antag.job_rank)
-		
+
 		var/days_needed = preferences.parent?.get_remaining_days(
 			GLOB.special_roles[antag_flag]
 		)

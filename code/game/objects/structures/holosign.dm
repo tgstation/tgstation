@@ -52,9 +52,9 @@
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/holosign/proc/create_vis_overlay()
 	var/turf/our_turf = get_turf(src)
@@ -135,11 +135,11 @@
 	if(!opened)
 		density = FALSE
 		opened = TRUE
-		playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/door/door_open.ogg', 50, TRUE)
 	else
 		density = TRUE
 		opened = FALSE
-		playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/door/door_close.ogg', 50, TRUE)
 
 	update_icon_state()
 	COOLDOWN_START(src, cooldown_open, 1 SECONDS)
@@ -262,7 +262,7 @@
 	if(!COOLDOWN_FINISHED(src, virus_detected))
 		return
 
-	playsound(get_turf(src),'sound/machines/buzz-sigh.ogg', 65, TRUE, 4)
+	playsound(get_turf(src),'sound/machines/buzz/buzz-sigh.ogg', 65, TRUE, 4)
 	COOLDOWN_START(src, virus_detected, 1 SECONDS)
 	icon_state = "holo_medical-deny"
 	update_icon_state()

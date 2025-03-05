@@ -33,6 +33,11 @@
 	mood_change = -2
 	timeout = 3 MINUTES
 
+/datum/mood_event/inked
+	description = "I've been splashed with squid ink. Tastes like salt."
+	mood_change = -3
+	timeout = 3 MINUTES
+
 /datum/mood_event/slipped
 	description = "I slipped. I should be more careful next time..."
 	mood_change = -2
@@ -196,6 +201,16 @@
 		qdel(src)
 		return
 	return ..()
+
+/datum/mood_event/startled
+	description = "Hearing that word made me think about something scary."
+	mood_change = -1
+	timeout = 1 MINUTES
+
+/datum/mood_event/phobia
+	description = "I saw something very frightening."
+	mood_change = -4
+	timeout = 4 MINUTES
 
 /datum/mood_event/spooked
 	description = "The rattling of those bones... It still haunts me."
@@ -476,7 +491,7 @@
 
 //Used by the Veteran Advisor trait job
 /datum/mood_event/desentized
-	description = "Nothing will ever rival with what I seen in the past..."
+	description = "Nothing will ever rival what I've seen in the past..."
 	mood_change = -3
 	special_screen_obj = "mood_desentized"
 
@@ -485,3 +500,19 @@
 	description = "I DIDN'T MEAN TO HURT THEM!"
 	mood_change = -20
 	timeout = 10 MINUTES
+
+//Gained when you're hit over the head with wrapping paper or cardboard roll
+/datum/mood_event/bapped
+	description = "Ow.. my head, I feel a bit foolish now!"
+	mood_change = -1
+	timeout = 3 MINUTES
+
+/datum/mood_event/bapped/add_effects()
+	// Felinids apparently hate being hit over the head with cardboard
+	if(isfelinid(owner))
+		mood_change = -2
+
+/datum/mood_event/encountered_evil
+	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
+	mood_change = -4
+	timeout = 1 MINUTES

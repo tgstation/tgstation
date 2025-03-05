@@ -127,20 +127,20 @@
 	else if(isorgan(new_part))
 		var/obj/item/organ/new_organ = new_part
 		old_part = human_holder.get_organ_slot(new_organ.slot)
-		if(new_organ.Insert(human_holder, special = TRUE))
-			old_part.moveToNullspace()
-			STOP_PROCESSING(SSobj, old_part)
-			slot_string = new_organ.name
+		new_organ.Insert(human_holder, special = TRUE)
+		old_part.moveToNullspace()
+		STOP_PROCESSING(SSobj, old_part)
+		slot_string = new_organ.name
 
 /datum/quirk/transhumanist/post_add()
 	if(!slot_string)
 		return
 	if(isbodypart(old_part))
-		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		to_chat(quirk_holder, span_bolddanger("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 	else if (old_part.name == "eyes")
-		to_chat(quirk_holder, span_boldannounce("You replaced your eyes with flashlights, not cameras. You can't see a thing!"))
+		to_chat(quirk_holder, span_bolddanger("You replaced your eyes with flashlights, not cameras. You can't see a thing!"))
 	else if (isorgan(old_part))
-		to_chat(quirk_holder, span_boldannounce("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
+		to_chat(quirk_holder, span_bolddanger("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
 
 /datum/quirk/transhumanist/remove()
 	if(isnull(old_part))

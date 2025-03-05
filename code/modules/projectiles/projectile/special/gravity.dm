@@ -2,7 +2,7 @@
 	name = "repulsion bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = 'sound/weapons/wave.ogg'
+	hitsound = 'sound/items/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	color = COLOR_BLUE_LIGHT
@@ -36,7 +36,7 @@
 	name = "attraction bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = 'sound/weapons/wave.ogg'
+	hitsound = 'sound/items/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	color = "#FF6600"
@@ -69,7 +69,7 @@
 	name = "gravitational blast"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = 'sound/weapons/wave.ogg'
+	hitsound = 'sound/items/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	color = COLOR_FULL_TONER_BLACK

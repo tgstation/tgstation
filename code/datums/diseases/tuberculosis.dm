@@ -51,7 +51,7 @@
 			if(SPT_PROB(5, seconds_per_tick))
 				need_mob_update += affected_mob.adjustStaminaLoss(100, updating_stamina = FALSE)
 				affected_mob.visible_message(span_warning("[affected_mob] faints!"), span_userdanger("You surrender yourself and feel at peace..."))
-				affected_mob.AdjustSleeping(100)
+				affected_mob.AdjustSleeping(10 SECONDS)
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger("You feel your mind relax and your thoughts drift!"))
 				affected_mob.adjust_confusion_up_to(8 SECONDS, 100 SECONDS)

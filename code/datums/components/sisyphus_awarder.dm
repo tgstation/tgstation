@@ -65,4 +65,4 @@
 		"reverse_dropoff_coords" = list(bottom_of_the_hill.x, bottom_of_the_hill.y, bottom_of_the_hill.z),
 	))
 
-	SEND_SOUND(sisyphus, 'sound/ambience/music/sisyphus/sisyphus.ogg')
+	SEND_SOUND(sisyphus, 'sound/music/sisyphus/sisyphus.ogg')

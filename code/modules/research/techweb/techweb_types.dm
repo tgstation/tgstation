@@ -6,10 +6,10 @@
 	organization = "Nanotrasen"
 	should_generate_points = TRUE
 
-/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
+/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
 	. = ..()
 	if(.)
-		node.on_station_research()
+		node.on_station_research(research_source)
 
 /datum/techweb/oldstation
 	id = "CHARLIE"

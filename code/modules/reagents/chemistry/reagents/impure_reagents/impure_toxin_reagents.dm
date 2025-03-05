@@ -1,4 +1,4 @@
-//Reagents produced by metabolising/reacting fermichems inoptimally these specifically are for toxins
+//Reagents produced by metabolising/reacting fermichems suboptimally these specifically are for toxins
 //Inverse = Splitting
 //Invert = Whole conversion
 //Failed = End reaction below purity_min
@@ -22,14 +22,13 @@
 /datum/reagent/impurity/methanol
 	name = "Methanol"
 	description = "A light, colourless liquid with a distinct smell. Ingestion can lead to blindness. It is a byproduct of organisms processing impure Formaldehyde."
-	reagent_state = LIQUID
 	color = "#aae7e4"
 	ph = 7
 	liver_damage = 0
 
 /datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes?.apply_organ_damage(0.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
@@ -37,7 +36,6 @@
 /datum/reagent/impurity/chloralax
 	name = "Chloralax"
 	description = "An oily, colorless and slightly toxic liquid. It is produced when impure choral hydrate is broken down inside an organism."
-	reagent_state = LIQUID
 	color = "#387774"
 	ph = 7
 	liver_damage = 0
@@ -51,7 +49,6 @@
 /datum/reagent/impurity/rosenol
 	name = "Rosenol"
 	description = "A strange, blue liquid that is produced during impure mindbreaker toxin reactions. Historically it has been abused to write poetry."
-	reagent_state = LIQUID
 	color = "#0963ad"
 	ph = 7
 	liver_damage = 0
@@ -59,7 +56,7 @@
 
 /datum/reagent/impurity/rosenol/on_mob_life(mob/living/carbon/owner, seconds_per_tick)
 	. = ..()
-	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	if(SPT_PROB(4.0, seconds_per_tick))

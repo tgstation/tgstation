@@ -10,6 +10,7 @@
 	icon_state = "bone_blade"
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -17,7 +18,7 @@
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	var/charges = 1
 	var/spawn_type = /obj/tear_in_reality
 	var/spawn_amt = 1
@@ -29,7 +30,7 @@
 	if(charges > 0)
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
-		user.visible_message(span_boldannounce("[src] hums with power as [user] deals a blow to [activate_descriptor] itself!"))
+		user.visible_message(span_bolddanger("[src] hums with power as [user] deals a blow to [activate_descriptor] itself!"))
 	else
 		to_chat(user, span_danger("The unearthly energies that powered the blade are now dormant."))
 
@@ -73,7 +74,7 @@
 /obj/effect/rend/singularity_act()
 	return
 
-/obj/effect/rend/singularity_pull()
+/obj/effect/rend/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/item/veilrender/vealrender
@@ -171,7 +172,7 @@
 	throwforce = 15
 	damtype = BURN
 	force = 15
-	hitsound = 'sound/items/welder2.ogg'
+	hitsound = 'sound/items/tools/welder2.ogg'
 
 	var/mob/current_owner
 
@@ -306,12 +307,12 @@
 	r_hand = /obj/item/claymore
 	l_hand = /obj/item/shield/roman
 
-/datum/outfit/roman/pre_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/roman/pre_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
 	head = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 
 //Provides a decent heal, need to pump every 6 seconds
-/obj/item/organ/internal/heart/cursed/wizard
+/obj/item/organ/heart/cursed/wizard
 	pump_delay = 6 SECONDS
 	heal_brute = 25
 	heal_burn = 25
@@ -335,7 +336,7 @@
 	whistler = user
 	var/turf/current_turf = get_turf(user)
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
-	playsound(current_turf,'sound/magic/warpwhistle.ogg', 200, TRUE)
+	playsound(current_turf,'sound/effects/magic/warpwhistle.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.
@@ -378,7 +379,7 @@
 	addtimer(CALLBACK(src, PROC_REF(send_away)), 2 SECONDS)
 
 /obj/effect/temp_visual/teleporting_tornado/proc/send_away()
-	var/turf/ending_turfs = get_safe_random_station_turf()
+	var/turf/ending_turfs = get_safe_random_station_turf_equal_weight()
 	for(var/mob/stored_mobs as anything in pickedup_mobs)
 		do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
 		animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
@@ -401,6 +402,7 @@
 	desc = "This scepter allows you to conjure, force push and detonate Runic Vendors. It can hold up to 3 charges that can be recovered with a simple magical channeling. A modern spin on the old Geomancy spells."
 	icon_state = "vendor_staff"
 	inhand_icon_state = "vendor_staff"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/weapons/guns/magic.dmi'
@@ -410,7 +412,7 @@
 	damtype = BRUTE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	attack_verb_continuous = list("smacks", "clubs", "wacks")
-	attack_verb_simple = list("smack", "club", "wacks")
+	attack_verb_simple = list("smack", "club", "wack")
 
 	/// Range cap on where you can summon vendors.
 	var/max_summon_range = RUNIC_SCEPTER_MAX_RANGE
@@ -431,10 +433,10 @@
 		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
 	)
 
-/obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/runic_vendor_scepter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(scepter_is_busy_recharging)
 		user.balloon_alert(user, "busy!")
 		return ITEM_INTERACT_BLOCKING
@@ -472,7 +474,7 @@
 			return ITEM_INTERACT_BLOCKING
 		scepter_is_busy_summoning = FALSE
 	if(summon_vendor_charges)
-		playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+		playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
 		user.visible_message(span_warning("[user] summons a runic vendor!"))
 		new /obj/machinery/vending/runic_vendor(afterattack_turf)
 		summon_vendor_charges--

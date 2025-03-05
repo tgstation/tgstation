@@ -21,7 +21,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/corpses/ice_whelp
 	target_key = BB_TARGET_CANNIBAL
 	finding_behavior = /datum/ai_behavior/find_hunt_target/corpses/dragon_corpse
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/dragon_cannibalise
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/dragon_cannibalise
 	hunt_targets = list(/mob/living/basic/mining/ice_whelp)
 	hunt_range = 10
 
@@ -32,10 +32,10 @@
 		return FALSE
 	return ..()
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/dragon_cannibalise
+/datum/ai_behavior/hunt_target/interact_with_target/dragon_cannibalise
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/dragon_cannibalise/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
+/datum/ai_behavior/hunt_target/interact_with_target/dragon_cannibalise/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.stat != DEAD || target.pulledby) //we were too slow
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -66,19 +66,13 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/sculpt_statue/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/atom/target = controller.blackboard[target_key]
-	var/mob/living/basic/living_pawn = controller.pawn
-
-	if(QDELETED(target))
+	if(!controller.ai_interact(target = target_key, combat_mode = FALSE))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	living_pawn.melee_attack(target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/sculpt_statue/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-
 
 //subtree to use our attacks on the victim
 /datum/ai_planning_subtree/targeted_mob_ability/ice_whelp

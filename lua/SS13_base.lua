@@ -39,6 +39,13 @@ function SS13.is_valid(datum)
 	return dm.is_valid_ref(datum) and not datum.gc_destroyed
 end
 
+function SS13.check_tick(high_priority)
+	local tick_limit = if high_priority then 95 else dm.global_vars.Master.current_ticklimit
+	if dm.world.tick_usage > tick_limit then
+		sleep()
+	end
+end
+
 function SS13.await(thing_to_call, proc_to_call, ...)
 	if not SS13.istype(thing_to_call, "/datum") then
 		thing_to_call = SS13.global_proc
@@ -56,7 +63,10 @@ end
 local function signal_handler(data, ...)
 	local output = 0
 	for func, _ in data.functions do
-		output = bit32.bor(output, func(...))
+		local result = func(...)
+		if type(result) == "number" then
+			output = bit32.bor(output, math.floor(result))
+		end
 	end
 	return output
 end

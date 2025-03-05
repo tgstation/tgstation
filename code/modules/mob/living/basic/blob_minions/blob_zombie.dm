@@ -18,7 +18,7 @@
 	obj_damage = 20
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = 'sound/items/weapons/genhit1.ogg'
 	death_message = "collapses to the ground!"
 	gold_core_spawnable = NO_SPAWN
 	basic_mob_flags = DEL_ON_DEATH

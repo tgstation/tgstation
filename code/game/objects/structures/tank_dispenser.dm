@@ -71,7 +71,7 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(!user.combat_mode)
+	else if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
 		balloon_alert(user, "can't insert!")
 		return
 	else

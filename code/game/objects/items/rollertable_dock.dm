@@ -9,23 +9,6 @@
 	. = ..()
 	loaded = new(src)
 
-/obj/structure/table/rolling/attackby(obj/item/wtable, mob/user, params)
-	if(!istype(wtable, /obj/item/rolling_table_dock))
-		return ..()
-	var/obj/item/rolling_table_dock/rable = wtable
-	var/turf/target_table = get_turf(src)
-	if(rable.loaded)
-		to_chat(user, span_warning("You already have a roller table docked!"))
-		return
-	if(locate(/mob/living) in target_table)
-		to_chat(user, span_warning("You can't collect the table with that much on top!"))
-		return
-	else
-		rable.loaded = src
-		forceMove(rable)
-		user.visible_message(span_notice("[user] collects [src]."), balloon_alert(user, "you collect the [src]."))
-	return TRUE
-
 /obj/item/rolling_table_dock/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/turf/target_turf = get_turf(interacting_with)
 	if(target_turf.is_blocked_turf(TRUE) || (locate(/mob/living) in target_turf))

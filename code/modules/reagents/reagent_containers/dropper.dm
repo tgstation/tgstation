@@ -37,12 +37,12 @@
 					if(!safe_thing.reagents)
 						safe_thing.create_reagents(100)
 
-					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this, transferred_by = user, methods = TOUCH)
+					trans = round(reagents.trans_to(safe_thing, amount_per_transfer_from_this, transferred_by = user, methods = TOUCH), CHEMICAL_VOLUME_ROUNDING)
 
 					target.visible_message(span_danger("[user] tries to squirt something into [target]'s eyes, but fails!"), \
 											span_userdanger("[user] tries to squirt something into your eyes, but fails!"))
-
-					to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+					if(trans)
+						to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 					update_appearance()
 					return ITEM_INTERACT_BLOCKING
 			else if(isalien(target)) //hiss-hiss has no eyes!
@@ -52,6 +52,7 @@
 			target.visible_message(span_danger("[user] squirts something into [target]'s eyes!"), \
 									span_userdanger("[user] squirts something into your eyes!"))
 
+			SEND_SIGNAL(target, COMSIG_MOB_REAGENTS_DROPPED_INTO_EYES, user, src, reagents, fraction)
 			reagents.expose(target, TOUCH, fraction)
 			var/mob/M = target
 			var/R
@@ -61,7 +62,7 @@
 
 			log_combat(user, M, "squirted", R)
 
-		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
+		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
 		target.update_appearance()
@@ -75,7 +76,7 @@
 		to_chat(user, span_warning("[target] is empty!"))
 		return ITEM_INTERACT_BLOCKING
 
-	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 
 	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 

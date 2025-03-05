@@ -1,6 +1,13 @@
-#define DREAMLUAU (world.system_type == MS_WINDOWS ? "dreamluau.dll" : "libdreamluau.so")
+#ifndef DISABLE_DREAMLUAU
+/* This comment bypasses grep checks */ /var/__dreamluau
 
-#define DREAMLUAU_CALL(func) call_ext(DREAMLUAU, "byond:[#func]")
+/* This comment also bypasses grep checks */ /var/__dreamluau_exists
+
+#define DREAMLUAU_EXISTS (__dreamluau_exists ||= fexists(DREAMLUAU))
+
+#define DREAMLUAU (world.system_type == MS_WINDOWS ? "dreamluau.dll" : (__dreamluau ||= __detect_auxtools("dreamluau")))
+
+#define DREAMLUAU_CALL(func) (!DREAMLUAU_EXISTS) ? null : call_ext(DREAMLUAU, "byond:" + #func)
 
 /**
  * All of the following functions will return a string if the underlying rust code returns an error or a wrapped panic.
@@ -293,3 +300,4 @@
  */
 #define DREAMLUAU_CLEAR_REF_USERDATA(object) DREAMLUAU_CALL(clear_ref_userdata)((object))
 
+#endif

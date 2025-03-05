@@ -200,94 +200,6 @@ function get_labels($payload){
 	return $existing;
 }
 
-function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_label_to){
-	$title = $payload['pull_request']['title'];
-	if(stripos($title, $title_tag) !== FALSE){
-		$array_to_add_label_to[] = $label;
-		return true;
-	}
-	return false;
-}
-
-function set_labels($payload, $labels, $remove) {
-	global $repoAutoTaggerWhitelist;
-	if(!in_array($payload['repository']['name'], $repoAutoTaggerWhitelist)) {
-		return;
-	}
-
-	$existing = get_labels($payload);
-	$tags = array();
-
-	$tags = array_merge($labels, $existing);
-	$tags = array_unique($tags);
-	if($remove) {
-		$tags = array_diff($tags, $remove);
-	}
-
-	$final = array();
-	foreach($tags as $t)
-		$final[] = $t;
-
-	$url = $payload['pull_request']['issue_url'] . '/labels';
-	echo github_apisend($url, 'PUT', $final);
-}
-
-//rip bs-12
-function tag_pr($payload, $opened) {
-	//get the mergeable state
-	$url = $payload['pull_request']['url'];
-	$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
-	if (isset($new_pull_request_payload['id']))
-		$payload['pull_request'] = $new_pull_request_payload;
-	if($payload['pull_request']['mergeable'] == null) {
-		//STILL not ready. Give it a bit, then try one more time
-		sleep(10);
-		$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
-		if (isset($new_pull_request_payload['id']))
-			$payload['pull_request'] = $new_pull_request_payload;
-	}
-
-	$tags = array();
-	$title = $payload['pull_request']['title'];
-	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
-		$tags = checkchangelog($payload);
-
-		if(strpos(strtolower($title), 'logs') !== FALSE || strpos(strtolower($title), 'logging') !== FALSE)
-			$tags[] = 'Logging';
-		if(strpos(strtolower($title), 'refactor') !== FALSE)
-			$tags[] = 'Refactor';
-		if(strpos(strtolower($title), 'revert') !== FALSE)
-			$tags[] = 'Revert';
-		if(strpos(strtolower($title), 'removes') !== FALSE)
-			$tags[] = 'Removal';
-	}
-
-	$remove = array('Test Merge Candidate');
-
-	$mergeable = $payload['pull_request']['mergeable'];
-	if($mergeable === TRUE)	//only look for the false value
-		$remove[] = 'Merge Conflict';
-	else if ($mergeable === FALSE)
-		$tags[] = 'Merge Conflict';
-
-	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', '.github' => 'GitHub');
-	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
-	foreach($treetags as $tree => $tag)
-		if(has_tree_been_edited($payload, $tree))
-			$tags[] = $tag;
-		else
-			$remove[] = $tag;
-	foreach($addonlytags as $tree => $tag)
-		if(has_tree_been_edited($payload, $tree))
-			$tags[] = $tag;
-
-	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	check_tag_and_replace($payload, '[no gbp]', 'GBP: No Update', $tags);
-	check_tag_and_replace($payload, '[april fools]', 'April Fools', $tags);
-
-	return array($tags, $remove);
-}
-
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
@@ -354,16 +266,12 @@ function handle_pr($payload) {
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
-			list($labels, $remove) = tag_pr($payload, true);
-			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
 			break;
 		case 'edited':
 			check_dismiss_changelog_review($payload);
 		case 'synchronize':
-			list($labels, $remove) = tag_pr($payload, false);
-			set_labels($payload, $labels, $remove);
 			return;
 		case 'reopened':
 			$action = $payload['action'];
@@ -393,12 +301,12 @@ function handle_pr($payload) {
 
 	$repo_name = $payload['repository']['name'];
 
-	if (in_array($repo_name, $game_announce_whitelist)) {
-		game_announce($action, $payload, $pr_flags);
-	}
-
 	if (!is_blacklisted($discord_announce_blacklist, $repo_name)) {
 		discord_announce($action, $payload, $pr_flags);
+	}
+
+	if (in_array($repo_name, $game_announce_whitelist)) {
+		game_announce($action, $payload, $pr_flags);
 	}
 }
 
@@ -482,14 +390,21 @@ function game_announce($action, $payload, $pr_flags) {
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 
 	$game_servers = filter_announce_targets($servers, $payload['pull_request']['base']['repo']['owner']['login'], $payload['pull_request']['base']['repo']['name'], $action, $pr_flags);
-
-	$msg = '?announce='.urlencode($msg).'&payload='.urlencode(json_encode($payload));
+	$game_payload = array();
+	$game_payload['pull_request'] = array();
+	$game_payload['pull_request']['id'] = $payload['pull_request']['id'];
+	$msg = '?announce='.urlencode($msg).'&payload='.urlencode(json_encode($game_payload));
 
 	foreach ($game_servers as $serverid => $server) {
-		$server_message = $msg;
-		if (isset($server['comskey']))
-			$server_message .= '&key='.urlencode($server['comskey']);
-		game_server_send($server['address'], $server['port'], $server_message);
+		try {
+			$server_message = $msg;
+			if (isset($server['comskey']))
+				$server_message .= '&key='.urlencode($server['comskey']);
+			game_server_send($server['address'], $server['port'], $server_message);
+		} catch (exception $e) {
+			log_error('Error on line ' . $e->getLine() . ': ' . $e->getMessage());
+			continue;
+		}
 	}
 
 }
@@ -569,16 +484,6 @@ function discord_sanitize($text, $flags = S_MENTIONS|S_LINK_EMBED|S_MARKDOWN) {
 //creates a comment on the payload issue
 function create_comment($payload, $comment){
 	github_apisend($payload['pull_request']['comments_url'], 'POST', json_encode(array('body' => $comment)));
-}
-
-//returns the payload issue's labels as a flat array
-function get_pr_labels_array($payload){
-	$url = $payload['pull_request']['issue_url'] . '/labels';
-	$issue = json_decode(github_apisend($url), true);
-	$result = array();
-	foreach($issue as $l)
-		$result[] = $l['name'];
-	return $result;
 }
 
 function is_maintainer($payload, $author){
@@ -786,7 +691,7 @@ function game_server_send($addr, $port, $str) {
 	/* --- Create a socket and connect it to the server --- */
 	$server = socket_create(AF_INET,SOCK_STREAM,SOL_TCP) or exit("ERROR");
 	socket_set_option($server, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0)); //sets connect and send timeout to 2 seconds
-	if(!socket_connect($server,$addr,$port)) {
+	if(!@socket_connect($server,$addr,$port)) {
 		return "ERROR: Connection failed";
 	}
 
@@ -804,8 +709,8 @@ function game_server_send($addr, $port, $str) {
 	}
 
 	/* --- Idle for a while until received bytes from game server --- */
-	$result = socket_read($server, 10000, PHP_BINARY_READ);
-	socket_close($server); // we don't need this anymore
+	$result = @socket_read($server, 10000, PHP_BINARY_READ);
+	@socket_close($server); // we don't need this anymore
 
 	if($result != "") {
 		if($result[0] == "\x00" || $result[1] == "\x83") { // make sure it's the right packet format

@@ -87,4 +87,13 @@
 					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE, indirect_action = TRUE))
 						TEST_FAIL("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
 
+		if (outfit.belt_contents)
+			var/list/belt_contents = outfit.belt_contents?.Copy()
+			for (var/path in belt_contents)
+				var/number = belt_contents[path] || 1
+				for (var/_ in 1 to number)
+					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BELTPACK, TRUE, indirect_action = TRUE))
+						TEST_FAIL("[outfit.name]'s belt_contents are invalid! Couldn't add [path] to backpack.")
+
+
 #undef CHECK_OUTFIT_SLOT

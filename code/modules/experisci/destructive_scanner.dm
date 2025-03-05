@@ -33,7 +33,7 @@
 	var/aggressive = FALSE
 	for(var/mob/living/living_mob in pickup_zone)
 		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emagged.
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 			say("Cannot scan with humans inside.")
 			return
 		aggressive = TRUE
@@ -46,6 +46,8 @@
 		return
 	var/atom/pickup_zone = drop_location()
 	for(var/atom/movable/to_pickup in pickup_zone)
+		if(to_pickup == src)
+			continue
 		to_pickup.forceMove(src)
 	flick("tube_down", src)
 	scanning = TRUE

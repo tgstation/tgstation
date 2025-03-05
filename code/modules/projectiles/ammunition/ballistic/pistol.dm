@@ -5,6 +5,7 @@
 	desc = "A 10mm bullet casing."
 	caliber = CALIBER_10MM
 	projectile_type = /obj/projectile/bullet/c10mm
+	newtonian_force = 0.75
 
 /obj/item/ammo_casing/c10mm/ap
 	name = "10mm armor-piercing bullet casing"
@@ -33,6 +34,7 @@
 	desc = "A 9mm bullet casing."
 	caliber = CALIBER_9MM
 	projectile_type = /obj/projectile/bullet/c9mm
+	newtonian_force = 0.75
 
 /obj/item/ammo_casing/c9mm/ap
 	name = "9mm armor-piercing bullet casing"

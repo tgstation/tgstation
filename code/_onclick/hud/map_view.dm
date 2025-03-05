@@ -16,10 +16,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 /atom/movable/screen/map_view/Destroy()
 	for(var/datum/weakref/client_ref in viewers_to_huds)
-		var/client/our_client = client_ref.resolve()
-		if(!our_client)
-			continue
-		hide_from(our_client.mob)
+		hide_from_client(client_ref.resolve())
 
 	return ..()
 
@@ -55,12 +52,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	return pop_planes
 
 /atom/movable/screen/map_view/proc/hide_from(mob/hide_from)
-	hide_from?.canon_client.clear_map(assigned_map)
-	var/client_ref = WEAKREF(hide_from?.canon_client)
+	hide_from_client(hide_from?.canon_client)
 
+/atom/movable/screen/map_view/proc/hide_from_client(client/hide_from)
+	if(!hide_from)
+		return
+	hide_from.clear_map(assigned_map)
+
+	var/datum/weakref/client_ref = WEAKREF(hide_from)
 	// Make sure we clear the *right* hud
 	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
 	viewers_to_huds -= client_ref
+
 	var/datum/hud/clear_from = hud_ref?.resolve()
 	if(!clear_from)
 		return

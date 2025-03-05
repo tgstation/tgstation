@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(materials)
 	///A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
 	var/list/datum/dimension_theme/dimensional_themes
 
-///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
+///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropriate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()
 	materials = list()
 	materials_by_type = list()
@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(materials)
 
 /** Creates and caches a material datum.
  *
- * Arugments:
+ * Arguments:
  * - [arguments][/list]: The arguments to use to create the material datum
  *   - The first element is the type of material to initialize.
  */
@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(materials)
 			value = arguments[key]
 		if(!(istext(key) || isnum(key)))
 			key = REF(key)
-		key = "[key]" // Key is stringified so numbers dont break things
+		key = "[key]" // Key is stringified so numbers don't break things
 		if(!isnull(value))
 			if(!(istext(value) || isnum(value)))
 				value = REF(value)
@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(materials)
 
 
 /// Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
-/datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
+/datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier = 1)
 	if(!LAZYLEN(materials_declaration))
 		return null // If we get a null we pass it right back, we don't want to generate stack traces just because something is clearing out its materials list.
 

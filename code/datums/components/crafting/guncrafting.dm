@@ -65,7 +65,7 @@
 
 /obj/item/weaponcrafting/gunkit/nuclear
 	name = "advanced energy gun parts kit (lethal/nonlethal)"
-	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into an advanced energy gun."
+	desc = "A suitcase containing the necessary gun parts to transform a standard energy gun into an advanced energy gun."
 
 /obj/item/weaponcrafting/gunkit/tesla
 	name = "tesla cannon parts kit (lethal)"
@@ -81,7 +81,7 @@
 
 /obj/item/weaponcrafting/gunkit/temperature
 	name = "temperature gun parts kit (less lethal/very lethal (lizardpeople))"
-	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
+	desc = "A suitcase containing the necessary gun parts to transform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenous populations of lizardpeople."
 
 /obj/item/weaponcrafting/gunkit/beam_rifle
 	name = "\improper Event Horizon anti-existential beam rifle part kit (DOOMSDAY DEVICE, DO NOT CONSTRUCT)"
@@ -98,3 +98,7 @@
 /obj/item/weaponcrafting/gunkit/photon
 	name = "photon cannon parts kit (nonlethal)"
 	desc = "A suitcase containing the necessary gun parts to construct a photon cannon around a stabilized flux anomaly. Harness the power of the sun, in the palms of your hands."
+
+/obj/item/weaponcrafting/gunkit/sks
+	name = "\improper Sakhno SKS semi-automatic rifle parts kit (lethal)"
+	desc = "A suitcase containing the necessary gun parts to construct a Sakhno SKS semi-automatic rifle. These things are all over the frontier worlds."

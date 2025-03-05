@@ -22,11 +22,13 @@
 // Only ever goes away when dismissed directly.
 #define LANGUAGE_ABSORB "absorb"
 #define LANGUAGE_APHASIA "aphasia"
+#define LANGUAGE_BOUNTYHUNTER "bountyhunter"
 #define LANGUAGE_CULTIST "cultist"
 #define LANGUAGE_CURATOR "curator"
 #define LANGUAGE_GLAND "gland"
 #define LANGUAGE_HAT "hat"
 #define LANGUAGE_QUIRK "quirk"
+#define LANGUAGE_DRINK "drink"
 #define LANGUAGE_MALF "malf"
 #define LANGUAGE_PIRATE "pirate"
 #define LANGUAGE_MASTER "master"

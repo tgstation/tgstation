@@ -79,7 +79,7 @@
 /obj/structure/closet/crate/cardboard,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/item/mail/junkmail,
-/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/c357,
 /obj/item/reagent_containers/syringe/plasma,
 /turf/open/indestructible,
 /area/deathmatch)

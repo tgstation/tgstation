@@ -13,24 +13,24 @@
 /obj/structure/statue/petrified/relaymove()
 	return
 
-/obj/structure/statue/petrified/Initialize(mapload, mob/living/L, statue_timer, save_brain)
+/obj/structure/statue/petrified/Initialize(mapload, mob/living/living, statue_timer, save_brain)
 	. = ..()
 	if(statue_timer)
 		timer = statue_timer
 	if(save_brain)
 		brain = save_brain
-	if(L)
-		petrified_mob = L
-		if(L.buckled)
-			L.buckled.unbuckle_mob(L,force=1)
-		L.visible_message(span_warning("[L]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
-		L.forceMove(src)
-		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
-		L.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
-		L.status_flags |= GODMODE
-		atom_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
-		max_integrity = atom_integrity
-		START_PROCESSING(SSobj, src)
+	if(!living)
+		return
+	petrified_mob = living
+	if(living.buckled)
+		living.buckled.unbuckle_mob(living, force = TRUE)
+	living.visible_message(span_warning("[living]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
+	living.forceMove(src)
+	living.add_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
+	living.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
+	atom_integrity = living.health + 100 //stoning damaged mobs will result in easier to shatter statues
+	max_integrity = atom_integrity
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/statue/petrified/process(seconds_per_tick)
 	if(!petrified_mob)
@@ -47,6 +47,9 @@
 /obj/structure/statue/petrified/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == petrified_mob)
+		petrified_mob.remove_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
+		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
+		petrified_mob.faction -= FACTION_MIMIC
 		petrified_mob = null
 
 /obj/structure/statue/petrified/Destroy()
@@ -64,13 +67,7 @@
 	for(var/obj/O in src)
 		O.forceMove(loc)
 
-	if(petrified_mob)
-		petrified_mob.status_flags &= ~GODMODE
-		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
-		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLOOD, MAGIC_TRAIT)
-		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
-		petrified_mob.faction -= FACTION_MIMIC
-		petrified_mob.forceMove(loc)
+	petrified_mob?.forceMove(loc)
 	return ..()
 
 /obj/structure/statue/petrified/atom_deconstruct(disassembled = TRUE)
@@ -80,7 +77,7 @@
 			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
 			if(iscarbon(petrified_mob) && brain)
 				var/mob/living/carbon/petrified_carbon = petrified_mob
-				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
 				carbon_brain.Remove(petrified_carbon)
 				carbon_brain.forceMove(get_turf(src))
 				carbon_brain.name = "petrified [carbon_brain.name]"
@@ -97,10 +94,12 @@
 	new_statue.name = "statue of [petrified_mob.name]"
 	if(owner)
 		new_statue.befriend(owner)
-	new_statue.icon = icon
-	new_statue.icon_state = icon_state
-	new_statue.copy_overlays(src, TRUE)
+	new_statue.icon = 'icons/blanks/32x32.dmi'
+	new_statue.icon_state = "nothing"
+	new_statue.appearance_flags |= KEEP_TOGETHER
+	new_statue.copy_overlays(src, cut_old = TRUE)
 	new_statue.atom_colours = atom_colours.Copy()
+	new_statue.update_atom_colour()
 	petrified_mob.mind?.transfer_to(new_statue)
 	to_chat(new_statue, span_userdanger("You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! [owner ? "Do not harm [owner], your creator" : ""]."))
 	forceMove(new_statue)
@@ -112,21 +111,20 @@
 /mob/living/carbon/human/petrify(statue_timer, save_brain, colorlist)
 	if(!isturf(loc))
 		return FALSE
-	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
-	S.name = "statue of [name]"
-	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
-	S.copy_overlays(src)
-	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-	if(colorlist)
-		newcolor = colorlist
-	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	var/obj/structure/statue/petrified/new_statue = new(loc, src, statue_timer, save_brain)
+	new_statue.name = "statue of [name]"
+	new_statue.icon = 'icons/blanks/32x32.dmi'
+	new_statue.icon_state = "nothing"
+	new_statue.appearance_flags |= KEEP_TOGETHER
+	new_statue.copy_overlays(src, cut_old = TRUE)
+	new_statue.add_atom_colour(colorlist || list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
 	return TRUE
 
 /mob/living/basic/pet/dog/corgi/petrify(statue_timer)
 	if(!isturf(loc))
 		return FALSE
-	var/obj/structure/statue/petrified/S = new (loc, src, statue_timer)
-	S.name = "statue of a corgi"
-	S.icon_state = "corgi"
-	S.desc = "If it takes forever, I will wait for you..."
+	var/obj/structure/statue/petrified/new_statue = new (loc, src, statue_timer)
+	new_statue.name = "statue of a corgi"
+	new_statue.icon_state = "corgi"
+	new_statue.desc = "If it takes forever, I will wait for you..."
 	return TRUE

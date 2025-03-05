@@ -195,10 +195,10 @@
 	var/atom/atom_parent = parent
 	if(HAS_TRAIT(user, TRAIT_NO_TWOHANDING))
 		if(require_twohands)
-			atom_parent.balloon_alert(user, "too weak to wield!")
+			atom_parent.balloon_alert(user, "can't wield!")
 			user.dropItemToGround(parent, force = TRUE)
 		else
-			atom_parent.balloon_alert(user, "too weak to wield with both hands!")
+			atom_parent.balloon_alert(user, "can't wield with both hands!")
 		return COMPONENT_EQUIPPED_FAILED
 	if(user.get_inactive_held_item())
 		if(require_twohands)

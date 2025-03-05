@@ -122,7 +122,7 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-	if(!blood_volume || (status_flags & GODMODE))
+	if(!blood_volume || HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	blood_volume = max(blood_volume - amt, 0)
 

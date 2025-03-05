@@ -35,7 +35,7 @@
 		src.armor_mod = armor_mod
 	if(upgrade_prefix)
 		src.upgrade_prefix = upgrade_prefix
-	var/obj/item/typecast = upgrade_item
+	var/obj/item/typecast = src.upgrade_item
 	src.upgrade_name = initial(typecast.name)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)

@@ -24,9 +24,8 @@
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/turf/closed/mineral/target = controller.blackboard[target_key]
 	var/is_gibtonite_turf = istype(target, /turf/closed/mineral/gibtonite)
-	if(QDELETED(target))
+	if(!controller.ai_interact(target = target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	living_pawn.melee_attack(target)
 	if(is_gibtonite_turf)
 		living_pawn.manual_emote("sighs...") //accept whats about to happen to us
 

@@ -98,7 +98,7 @@
 
 /obj/machinery/ore_silo/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials)
 	)
 
 /obj/machinery/ore_silo/ui_interact(mob/user, datum/tgui/ui)
@@ -143,7 +143,7 @@
 
 	return data
 
-/obj/machinery/ore_silo/ui_act(action, list/params)
+/obj/machinery/ore_silo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

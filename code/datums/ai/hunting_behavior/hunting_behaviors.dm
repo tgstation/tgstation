@@ -26,16 +26,11 @@
 /datum/ai_planning_subtree/find_and_hunt_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!SPT_PROB(hunt_chance, seconds_per_tick))
 		return
-	if(controller.blackboard[BB_HUNTING_COOLDOWN] >= world.time)
-		return
-	var/mob/living/living_pawn = controller.pawn
-	// We can't hunt if we're indisposed
-	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED) || living_pawn.stat != CONSCIOUS)
+
+	if(controller.blackboard[BB_HUNTING_COOLDOWN(type)] >= world.time)
 		return
 
-	var/atom/hunted = controller.blackboard[target_key]
-	// We're not hunting anything, look around for something
-	if(isnull(hunted))
+	if(!controller.blackboard_key_exists(target_key))
 		controller.queue_behavior(finding_behavior, target_key, hunt_targets, hunt_range)
 		return
 
@@ -44,17 +39,19 @@
 	// we may accidentally be executing another tree's hunt - not ideal,
 	// try to set a unique target key if you have multiple
 
-	controller.queue_behavior(hunting_behavior, target_key, BB_HUNTING_COOLDOWN)
+	controller.queue_behavior(hunting_behavior, target_key, BB_HUNTING_COOLDOWN(type))
 	if(finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING //If we're hunting we're too busy for anything else
 
 /// Finds a specific atom type to hunt.
 /datum/ai_behavior/find_hunt_target
+	///is this only meant to search for turf types?
+	var/search_turf_types = FALSE
 
 /datum/ai_behavior/find_hunt_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
 	var/mob/living/living_mob = controller.pawn
-
-	for(var/atom/possible_dinner as anything in typecache_filter_list(range(hunt_range, living_mob), types_to_hunt))
+	var/list/interesting_objects = search_turf_types ? RANGE_TURFS(hunt_range, living_mob) : oview(hunt_range, living_mob)
+	for(var/atom/possible_dinner as anything in typecache_filter_list(interesting_objects, types_to_hunt))
 		if(!valid_dinner(living_mob, possible_dinner, hunt_range, controller, seconds_per_tick))
 			continue
 		controller.set_blackboard_key(hunting_target_key, possible_dinner)
@@ -68,6 +65,9 @@
 			return FALSE
 
 	return can_see(source, dinner, radius)
+
+/datum/ai_behavior/find_hunt_target/search_turf_types
+	search_turf_types = TRUE
 
 /// Hunts down a specific atom type.
 /datum/ai_behavior/hunt_target
@@ -110,38 +110,30 @@
 
 /datum/ai_behavior/hunt_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	. = ..()
-	if(succeeded)
+	if(succeeded && hunting_cooldown_key)
 		controller.set_blackboard_key(hunting_cooldown_key, world.time + hunt_cooldown)
 	else if(hunting_target_key)
 		controller.clear_blackboard_key(hunting_target_key)
 	if(always_reset_target && hunting_target_key)
 		controller.clear_blackboard_key(hunting_target_key)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target
-	///do we toggle combat mode before interacting with the object?
-	var/switch_combat_mode = FALSE
+/datum/ai_behavior/hunt_target/interact_with_target
+	///what combat mode should we use to interact with
+	var/behavior_combat_mode = TRUE
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
-	if(switch_combat_mode)
-		hunter.combat_mode = !(hunter.combat_mode)
-	hunter.UnarmedAttack(hunted, TRUE)
+/datum/ai_behavior/hunt_target/interact_with_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
+	var/datum/ai_controller/controller = hunter.ai_controller
+	controller.ai_interact(target = hunted, combat_mode = behavior_combat_mode)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
-	. = ..()
-	if(!switch_combat_mode)
-		return
-	var/mob/living/living_pawn = controller.pawn
-	living_pawn.combat_mode = initial(living_pawn.combat_mode)
+/datum/ai_behavior/hunt_target/interact_with_target/combat_mode_off
+	behavior_combat_mode = FALSE
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/switch_combat_mode
-	switch_combat_mode = TRUE
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+/datum/ai_behavior/hunt_target/interact_with_target/reset_target
 	always_reset_target = TRUE
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode
+/datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off
 	always_reset_target = TRUE
-	switch_combat_mode = TRUE
+	behavior_combat_mode = FALSE
 
 /datum/ai_behavior/hunt_target/use_ability_on_target
 	always_reset_target = TRUE

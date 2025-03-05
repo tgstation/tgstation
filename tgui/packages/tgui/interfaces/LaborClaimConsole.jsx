@@ -1,7 +1,6 @@
-import { toTitleCase } from 'common/string';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 export const LaborClaimConsole = (props) => {
@@ -40,8 +39,8 @@ export const LaborClaimConsole = (props) => {
           materials, points will be calculated based on volume of delivered
           materials.
           <br />
-          Please note that only sheets printed with our manufacturer's seal of
-          quality, such as those produced from the work camp furnace, will be
+          Please note that only sheets printed with our manufacturer&apos;s seal
+          of quality, such as those produced from the work camp furnace, will be
           accepted as proof of labour.
         </Section>
       </Window.Content>

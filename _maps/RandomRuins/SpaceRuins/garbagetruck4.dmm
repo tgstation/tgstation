@@ -118,11 +118,10 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lg" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lm" = (
 /obj/structure/spider/stickyweb,
-/obj/structure/spider/stickyweb/very_sticky,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "mf" = (
@@ -182,7 +181,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "qX" = (
-/obj/structure/spider/stickyweb/very_sticky,
 /obj/item/food/badrecipe/moldy,
 /obj/structure/spider/stickyweb,
 /obj/item/food/spidereggs{
@@ -210,7 +208,7 @@
 "ri" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "rr" = (
 /obj/structure/floodlight_frame,
@@ -222,7 +220,7 @@
 "rI" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "sh" = (
 /obj/item/food/badrecipe/moldy/bacteria,
@@ -492,7 +490,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "yS" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -585,7 +583,7 @@
 "Hj" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Hv" = (
 /obj/effect/decal/cleanable/glass/plastitanium/screws,
@@ -812,8 +810,8 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Wl" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
@@ -879,8 +877,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Zi" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ZM" = (
 /obj/item/papercutter,
 /obj/item/paper_bin,

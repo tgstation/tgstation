@@ -8,10 +8,10 @@
 		/mob/dview,
 		/mob/oranges_ear
 	)
-	ignored += typesof(/mob/camera/imaginary_friend)
+	ignored += typesof(/mob/eye/imaginary_friend)
 	ignored += typesof(/mob/living/silicon/robot/model)
-	ignored += typesof(/mob/camera/ai_eye/remote/base_construction)
-	ignored += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	ignored += typesof(/mob/eye/camera/remote/base_construction)
+	ignored += typesof(/mob/eye/camera/remote/shuttle_docker)
 	for (var/mob_type in typesof(/mob) - ignored)
 		var/mob/mob_instance = allocate(mob_type)
 		if(!islist(mob_instance.faction))

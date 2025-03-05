@@ -11,12 +11,28 @@
 	icon_state = "wrap_paper"
 	inhand_icon_state = "wrap_paper"
 	greyscale_config = /datum/greyscale_config/wrap_paper
-	item_flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
 	singular_name = "wrapping paper"
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 5
+	hitsound = 'sound/effects/bonk.ogg'
+
+/obj/item/stack/wrapping_paper/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
+
+/obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	user.visible_message(
+		span_warning("[user] baps [target_mob] on the head with [src]!"),
+		span_warning("You bap [target_mob] on the head with [src]!"),
+	)
+	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
 /obj/item/stack/wrapping_paper/Initialize(mapload)
 	. = ..()
@@ -102,13 +118,6 @@
 /obj/item/delivery/can_be_package_wrapped()
 	return FALSE
 
-/obj/item/stack/package_wrap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	if(isitem(storage_holder))
-		// Don't insert if the target can be wrapped
-		var/obj/item/item = storage_holder
-		return !item.can_be_package_wrapped()
-	return TRUE
-
 /obj/item/stack/package_wrap/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	if(!isobj(interacting_with))
 		return NONE
@@ -118,6 +127,8 @@
 	if(isitem(interacting_with))
 		var/obj/item/item = interacting_with
 		if(!item.can_be_package_wrapped())
+			if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+				return NONE // put it in the bag instead of yelling
 			balloon_alert(user, "can't be wrapped!")
 			return ITEM_INTERACT_BLOCKING
 		if(user.is_holding(item))
@@ -160,7 +171,6 @@
 		else
 			balloon_alert(user, "not enough paper!")
 			return ITEM_INTERACT_BLOCKING
-
 	else if(istype(interacting_with,  /obj/machinery/portable_atmospherics))
 		var/obj/machinery/portable_atmospherics/portable_atmospherics = interacting_with
 		if(portable_atmospherics.anchored)
@@ -208,3 +218,17 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
+	hitsound = 'sound/effects/bonk.ogg'
+
+/obj/item/c_tube/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
+
+/obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	user.visible_message(
+		span_warning("[user] baps [target_mob] on the head with [src]!"),
+		span_warning("You bap [target_mob] on the head with [src]!"),
+	)
+	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
+

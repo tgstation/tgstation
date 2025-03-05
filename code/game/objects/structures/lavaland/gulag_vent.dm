@@ -33,7 +33,7 @@
 
 	var/boulder_lift_speed = 8 SECONDS
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = living_user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = living_user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		boulder_lift_speed *= potential_spine.athletics_boost_multiplier
 
@@ -47,4 +47,4 @@
 	new spawned_boulder(get_turf(living_user))
 	living_user.visible_message(span_notice("[living_user] hauls a boulder out of [src]."))
 	living_user.apply_damage(stamina_damage_to_inflict, STAMINA)
-	playsound(src, 'sound/weapons/genhit.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', vol = 50, vary = TRUE)

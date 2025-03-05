@@ -14,7 +14,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	///How much we shift the user's pixel y when using the weight machine.
-	var/pixel_shift_y = -3
+	var/pixel_shift_z = -3
 
 	///The weight action we give to people that buckle themselves to us.
 	var/datum/action/push_weights/weight_action
@@ -112,7 +112,7 @@
 		var/clumsy_chance = 30 - (user.mind.get_skill_level(/datum/skill/athletics) * 5)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(clumsy_chance))
 			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-			to_chat(user, span_warning("Your hand slips, causing the [name] to smash you!"))
+			to_chat(user, span_warning("Your hand slips, causing \the [src] to smash you!"))
 			user.take_bodypart_damage(rand(2, 5))
 			end_workout()
 			return
@@ -152,13 +152,14 @@
 	if(!has_buckled_mobs())
 		end_workout()
 		return FALSE
-	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER)
+	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER, src, appearance_flags = KEEP_APART)
+	workout = color_atom_overlay(workout)
 	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
-	animate(user, pixel_y = pixel_shift_y, time = WORKOUT_LENGTH * 0.5)
+	animate(user, pixel_z = pixel_shift_z, time = WORKOUT_LENGTH * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_z = -pixel_shift_z, time = WORKOUT_LENGTH * 0.5, flags = ANIMATION_PARALLEL)
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
-	animate(pixel_y = user.base_pixel_y, time = WORKOUT_LENGTH * 0.5)
 
 	if(!iscarbon(user) || isnull(user.mind))
 		return TRUE
@@ -172,7 +173,7 @@
 	// total stamina drain of 1 workout calculated based on the workout length
 	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
 
@@ -193,7 +194,7 @@
 	icon_state = "benchpress"
 	base_icon_state = "benchpress"
 
-	pixel_shift_y = 5
+	pixel_shift_z = 5
 
 	drunk_message = "You raise the bar over you trying to balance it with one hand, keyword tried."
 

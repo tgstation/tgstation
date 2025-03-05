@@ -142,7 +142,7 @@
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "sp" = (
-/obj/item/organ/internal/monster_core/regenerative_core/legion{
+/obj/item/organ/monster_core/regenerative_core/legion{
 	time_to_decay = 0;
 	pixel_x = 11;
 	pixel_y = 4;
@@ -273,7 +273,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "JP" = (
-/obj/item/organ/internal/monster_core/regenerative_core/legion{
+/obj/item/organ/monster_core/regenerative_core/legion{
 	time_to_decay = 0;
 	pixel_x = -12;
 	pixel_y = -4;
@@ -365,7 +365,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "VT" = (
-/obj/item/organ/internal/monster_core/regenerative_core/legion{
+/obj/item/organ/monster_core/regenerative_core/legion{
 	time_to_decay = 0;
 	pixel_x = 4;
 	pixel_y = 3;

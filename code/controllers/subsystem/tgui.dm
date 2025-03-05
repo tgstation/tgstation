@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(tgui)
  * Returns null if pool was exhausted.
  *
  * required user mob
- * return datum/tgui
+ * return datum/tgui_window
  */
 /datum/controller/subsystem/tgui/proc/request_pooled_window(mob/user)
 	if(!user.client)

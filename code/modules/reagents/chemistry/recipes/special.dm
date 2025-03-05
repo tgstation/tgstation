@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	///Highest pH value possible
 	var/max_ph = 14
 	///How much the range can deviate, and also affects impure range
-	var/inoptimal_range_ph = 3
+	var/suboptimal_range_ph = 3
 
 	///If the impurity failure threshold is randomized between 0 - 0.4
 	var/randomize_impurity_minimum = FALSE
@@ -113,9 +113,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 				thermic_constant = (rand(-200, 200))
 
 	if(randomize_req_ph)
-		optimal_ph_min = min_ph + rand(0, inoptimal_range_ph)
-		optimal_ph_max = max((max_ph + rand(0, inoptimal_range_ph)), (min_ph + 1)) //Always ensure we've a window of 1
-		determin_ph_range = inoptimal_range_ph
+		optimal_ph_min = min_ph + rand(0, suboptimal_range_ph)
+		optimal_ph_max = max((max_ph + rand(0, suboptimal_range_ph)), (min_ph + 1)) //Always ensure we've a window of 1
+		determin_ph_range = suboptimal_range_ph
 		H_ion_release = (rand(0, 25)/100)// 0 - 0.25
 
 	if(randomize_impurity_minimum)

@@ -48,6 +48,7 @@
 		"mesons",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/low_pressure_excavation
 	id = TECHWEB_NODE_LOW_PRESSURE_EXCAVATION
@@ -55,7 +56,6 @@
 	description = "Research of Proto-Kinetic Accelerators (PKAs), pneumatic guns renowned for their exceptional performance in low-pressure environments."
 	prereq_ids = list(TECHWEB_NODE_MINING, TECHWEB_NODE_GAS_COMPRESSION)
 	design_ids = list(
-		"mecha_kineticgun",
 		"damagemod",
 		"rangemod",
 		"cooldownmod",
@@ -67,6 +67,7 @@
 		"borg_upgrade_hypermod",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/plasma_mining
 	id = TECHWEB_NODE_PLASMA_MINING
@@ -78,6 +79,7 @@
 		"plasmacutter_adv",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/bitrunning
 	id = TECHWEB_NODE_BITRUNNING
@@ -90,6 +92,7 @@
 		"netpod",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/mining_adv
 	id = TECHWEB_NODE_MINING_ADV
@@ -102,3 +105,4 @@
 		"mech_diamond_drill",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)

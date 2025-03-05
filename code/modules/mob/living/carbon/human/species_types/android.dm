@@ -26,15 +26,15 @@
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
-	mutantbrain = /obj/item/organ/internal/brain/cybernetic
-	mutanttongue = /obj/item/organ/internal/tongue/robot
+	mutantbrain = /obj/item/organ/brain/cybernetic
+	mutanttongue = /obj/item/organ/tongue/robot
 	mutantstomach = null
 	mutantappendix = null
 	mutantheart = null
 	mutantliver = null
 	mutantlungs = null
-	mutanteyes = /obj/item/organ/internal/eyes/robotic
-	mutantears = /obj/item/organ/internal/ears/cybernetic
+	mutanteyes = /obj/item/organ/eyes/robotic
+	mutantears = /obj/item/organ/ears/cybernetic
 	species_language_holder = /datum/language_holder/synthetic
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 

@@ -66,6 +66,10 @@
 	if(!isliving(user))
 		return NONE
 
+	if(HAS_TRAIT(target, TRAIT_ILLUSORY_EFFECT))
+		to_chat(user, span_notice("You pass [parent] through the [target], but nothing seems to happen. Is it really even there?"))
+		return NONE
+
 	if(is_type_in_typecache(target, effects_we_clear)) // Make sure we get all subtypes and everything
 		INVOKE_ASYNC(src, PROC_REF(do_remove_effect), target, user)
 		return ITEM_INTERACT_SUCCESS

@@ -39,8 +39,9 @@
 	var/datum/pod_style/style = /datum/pod_style //Style is a variable that keeps track of what the pod is supposed to look like. Only stores a path, type is set for ease of var access
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/list/reverse_dropoff_coords //Turf that the reverse pod will drop off its newly-acquired cargo to
+	var/create_sparks = TRUE // If true, the pod will create sparks before being deleted.
 	var/fallingSoundLength = 11
-	var/fallingSound = 'sound/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
+	var/fallingSound = 'sound/items/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
 	var/landingSound //Admin sound to play when the pod lands
 	var/openingSound //Admin sound to play when the pod opens
 	var/leavingSound //Admin sound to play when the pod leaves
@@ -81,7 +82,7 @@
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
-	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
+	desc = "A specialised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
 	specialised = TRUE
 	style = /datum/pod_style/syndicate
 	bluespace = TRUE
@@ -258,7 +259,10 @@
 	return
 
 ///Called by the drop pods that return captured crewmembers from the ninja den.
-/obj/structure/closet/supplypod/proc/return_from_capture(mob/living/victim, turf/destination = get_safe_random_station_turf())
+/obj/structure/closet/supplypod/proc/return_from_capture(
+	mob/living/victim,
+	turf/destination = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
+)
 	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
 		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
 			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
@@ -399,7 +403,7 @@
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
 		deleteRubble()
-		if (!effectQuiet && !ispath(style, /datum/pod_style/invisible) && !ispath(style, /datum/pod_style/seethrough))
+		if (!effectQuiet && create_sparks && !ispath(style, /datum/pod_style/invisible) && !ispath(style, /datum/pod_style/seethrough))
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
@@ -443,7 +447,7 @@
 	if(ismob(to_insert))
 		if(!reverse_option_list["Mobs"])
 			return FALSE
-		if(!isliving(to_insert)) //let's not put ghosts or camera mobs inside
+		if(!isliving(to_insert)) //let's not put ghosts or eye mobs inside
 			return FALSE
 		var/mob/living/mob_to_insert = to_insert
 		if(mob_to_insert.anchored || mob_to_insert.incorporeal_move)
@@ -673,7 +677,7 @@
 		stack_trace("Pod landingzone created with no pod")
 		return INITIALIZE_HINT_QDEL
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
-		podParam = new podParam() //If its just a path, instantiate it
+		podParam = new podParam() //If it's just a path, instantiate it
 	pod = podParam
 	pod.resistance_flags |= (INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF)
 	if (!pod.effectStealth)
@@ -695,7 +699,7 @@
 			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
 	if (pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING] < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
-		pod.fallingSound = 'sound/weapons/mortar_whistle.ogg'
+		pod.fallingSound = 'sound/items/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
 	if (soundStartTime < 0)
 		soundStartTime = 1

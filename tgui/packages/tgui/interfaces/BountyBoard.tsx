@@ -9,9 +9,9 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
-import { formatMoney } from '../format';
 import { Window } from '../layouts';
 import { UserDetails } from './Vending';
 

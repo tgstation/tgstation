@@ -114,7 +114,7 @@
 		attacking_item.use(1)
 		return
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
 		to_chat(user, span_notice("You start washing [attacking_item]..."))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
@@ -165,7 +165,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	icon_state = "[base_icon_state]-splash"
 	balloon_alert(user, "scooping tadpoles...")
-	if(do_after(user, src, 5 SECONDS))
+	if(do_after(user, 5 SECONDS, src))
 		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
 		balloon_alert(user, "got a tadpole")
 		var/obj/item/fish/tadpole/tadpole = new(loc)

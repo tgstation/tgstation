@@ -62,7 +62,7 @@
 	data["init_directions"] = init_directions
 	return data
 
-/obj/machinery/pipedispenser/ui_act(action, params)
+/obj/machinery/pipedispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	switch(action)
@@ -171,10 +171,8 @@
 
 /obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
-		user << browse(null, "window=pipedispenser")
-
-	return TRUE
+	default_unfasten_wrench(user, tool, time = 4 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/machinery/pipedispenser/disposal

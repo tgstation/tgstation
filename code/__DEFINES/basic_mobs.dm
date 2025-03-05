@@ -24,6 +24,9 @@
 /// Above this speed we stop gliding because it looks silly
 #define END_GLIDE_SPEED 10
 
+///hunger cooldown for basic mobs
+#define EAT_FOOD_COOLDOWN 45 SECONDS
+
 ///mook attack status flags
 #define MOOK_ATTACK_NEUTRAL 0
 #define MOOK_ATTACK_WARMUP 1
@@ -32,6 +35,9 @@
 
 ///keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)
+
+///Pet customization settings saved for every client
+GLOBAL_LIST_EMPTY(customized_pets)
 
 //raptor defines
 
@@ -54,16 +60,10 @@ GLOBAL_VAR_INIT(gutlunch_count, 0)
 #define BB_RAPTOR_PLAYFUL "raptor_playful"
 ///this mob will flee combat when it feels threatened
 #define BB_RAPTOR_COWARD "raptor_coward"
-///this mob will go out seeking trouble against its kind
-#define BB_RAPTOR_TROUBLE_MAKER "raptor_trouble_maker"
-///cooldown till we go out cause trouble again
-#define BB_RAPTOR_TROUBLE_COOLDOWN "raptor_trouble_maker_cooldown"
 ///our raptor baby target we will take care of
 #define BB_RAPTOR_BABY "raptor_baby"
 ///the raptor we will heal up
 #define BB_INJURED_RAPTOR "injured_raptor"
-///the raptor we will bully
-#define BB_RAPTOR_VICTIM "raptor_victim"
 ///the cooldown for next time we eat
 #define BB_RAPTOR_EAT_COOLDOWN "raptor_eat_cooldown"
 ///our trough target

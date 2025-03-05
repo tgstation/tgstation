@@ -123,7 +123,7 @@ Nothing else in the console has ID requirements.
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = ISOtime()))
-		if(stored_research.research_node_id(id))
+		if(stored_research.research_node_id(id, research_source = src))
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(HAS_AI_ACCESS(user))
@@ -161,6 +161,9 @@ Nothing else in the console has ID requirements.
 	balloon_alert(user, "security protocols disabled")
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
+	var/obj/item/circuitboard/computer/rdconsole/board = circuit
+	if(!(board.obj_flags & EMAGGED))
+		board.silence_announcements = TRUE
 	locked = FALSE
 	return TRUE
 
@@ -173,7 +176,7 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 // heavy data from this proc should be moved to static data when possible
@@ -297,7 +300,7 @@ Nothing else in the console has ID requirements.
 
 	// Build design cache
 	var/design_cache = list()
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 	for (var/design_id in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_designs[design_id] || SSresearch.error_design
@@ -319,7 +322,7 @@ Nothing else in the console has ID requirements.
 		"id_cache" = flat_id_cache,
 	)
 
-/obj/machinery/computer/rdconsole/ui_act(action, list/params)
+/obj/machinery/computer/rdconsole/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -362,7 +365,7 @@ Nothing else in the console has ID requirements.
 					if(D)
 						stored_research.add_design(D, TRUE)
 				say("Uploading blueprints from disk.")
-				d_disk.on_upload(stored_research)
+				d_disk.on_upload(stored_research, src)
 				return TRUE
 			if (params["type"] == RND_TECH_DISK)
 				if (QDELETED(t_disk))

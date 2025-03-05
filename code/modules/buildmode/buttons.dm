@@ -1,5 +1,6 @@
 /atom/movable/screen/buildmode
 	icon = 'icons/hud/buildmode.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/buildmode/bd
 	// If we don't do this, we get occluded by item action buttons
 	plane = ABOVE_HUD_PLANE

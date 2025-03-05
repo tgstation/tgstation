@@ -23,6 +23,8 @@
 	var/knockdown_time = 0
 	/// How long the slip paralyzes (prevents the crossing mob doing anything) for.
 	var/paralyze_time = 0
+	/// How long the slip dazes (makes the crossing mob vulnerable to shove stuns) for.
+	var/daze_time = 3 SECONDS
 	/// Flags for how slippery the parent is. See [__DEFINES/mobs.dm]
 	var/lube_flags
 	/// Optional callback allowing you to define custom conditions for slipping
@@ -38,13 +40,10 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(Slip),
 	)
 
-	///what we give to connect_loc if we're an item and get equipped by a mob. makes slippable mobs moving over our holder slip
-	var/static/list/holder_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(Slip_on_wearer),
+	///what we give to connect_loc if we're an item and get equipped by a mob, or if we're a mob. makes slippable mobs moving over the mob slip
+	var/static/list/mob_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(slip_on_mob),
 	)
-
-	/// The connect_loc_behalf component for the holder_connections list.
-	var/datum/weakref/holder_connect_loc_behalf
 
 /**
  * Initialize the slippery component behaviour
@@ -56,6 +55,7 @@
  * * lube_flags - Controls the slip behaviour, they are listed starting [here][SLIDE]
  * * datum/callback/on_slip_callback - Callback to define further custom controls on when slipping is applied
  * * paralyze - length of time to paralyze the crossing mob for (Deciseconds)
+ * * daze - length of time to daze the crossing mob for (Deciseconds), default 3 seconds
  * * force_drop - should the crossing mob drop items in its hands or not
  * * slot_whitelist - flags controlling where on a mob this item can be equipped to make the parent mob slippery full list [here][ITEM_SLOT_OCLOTHING]
  * * datum/callback/on_slip_callback - Callback to add custom behaviours as the crossing mob is slipped
@@ -65,12 +65,14 @@
 	lube_flags = NONE,
 	datum/callback/on_slip_callback,
 	paralyze,
+	daze = 3 SECONDS,
 	force_drop = FALSE,
 	slot_whitelist,
 	datum/callback/can_slip_callback,
 )
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
+	src.daze_time = max(daze, 0)
 	src.force_drop_items = force_drop
 	src.lube_flags = lube_flags
 	src.can_slip_callback = can_slip_callback
@@ -79,14 +81,14 @@
 		src.slot_whitelist = slot_whitelist
 
 	add_connect_loc_behalf_to_parent()
-	if(ismovable(parent))
-		if(isitem(parent))
-			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
-			RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-			RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
-			RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
-	else
+	if(!ismovable(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Slip))
+	else if(isitem(parent))
+		src.lube_flags |= SLIPPERY_WHEN_LYING_DOWN
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
+		RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
 
 /datum/component/slippery/Destroy(force)
 	can_slip_callback = null
@@ -114,8 +116,13 @@
 		lube_flags = previous_lube_flags
 
 /datum/component/slippery/proc/add_connect_loc_behalf_to_parent()
-	if(ismovable(parent))
-		AddComponent(/datum/component/connect_loc_behalf, parent, default_connections)
+	var/list/connections_to_use
+	if(isliving(parent))
+		connections_to_use = mob_connections
+	else if(ismovable(parent))
+		connections_to_use = default_connections
+	if(connections_to_use)
+		AddComponent(/datum/component/connect_loc_behalf, parent, connections_to_use)
 
 /datum/component/slippery/InheritComponent(
 	datum/component/slippery/component,
@@ -124,6 +131,7 @@
 	lube_flags = NONE,
 	datum/callback/on_slip_callback,
 	paralyze,
+	daze,
 	force_drop = FALSE,
 	slot_whitelist,
 	datum/callback/can_slip_callback,
@@ -134,11 +142,13 @@
 		on_slip_callback = component.on_slip_callback
 		can_slip_callback = component.on_slip_callback
 		paralyze = component.paralyze_time
+		daze = component.daze_time
 		force_drop = component.force_drop_items
 		slot_whitelist = component.slot_whitelist
 
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
+	src.daze_time = max(daze, 0)
 	src.force_drop_items = force_drop
 	src.lube_flags = lube_flags
 	src.on_slip_callback = on_slip_callback
@@ -165,7 +175,7 @@
 		return
 	if(can_slip_callback && !can_slip_callback.Invoke(holder, victim))
 		return
-	if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items))
+	if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, daze_time, force_drop_items))
 		on_slip_callback?.Invoke(victim)
 
 /**
@@ -184,7 +194,7 @@
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
 		qdel(GetComponent(/datum/component/connect_loc_behalf))
-		AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
+		AddComponent(/datum/component/connect_loc_behalf, holder, mob_connections)
 		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(holder_deleted))
 
 /**
@@ -227,10 +237,11 @@
  * * source - the source of the signal
  * * arrived - the atom/movable that slipped on us.
  */
-/datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/slippery/proc/slip_on_mob(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(holder.body_position == LYING_DOWN && !holder.buckled)
+	var/mob/living/living = holder || parent
+	if(!(lube_flags & SLIPPERY_WHEN_LYING_DOWN) || (living.body_position == LYING_DOWN && !living.buckled))
 		Slip(source, arrived)
 
 /datum/component/slippery/UnregisterFromParent()

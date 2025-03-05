@@ -1,3 +1,4 @@
+#ifndef DISABLE_DREAMLUAU
 /datum/lua_editor
 	var/datum/lua_state/current_state
 
@@ -41,7 +42,7 @@
 		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_state(mob/user)
-	return GLOB.debug_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
@@ -129,14 +130,15 @@
 		last_error = result["message"]
 	message_admins("[key_name(usr)] executed [length(code)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(current_state, index_with_result)]")
 
-/datum/lua_editor/ui_act(action, list/params)
+/datum/lua_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	if(!check_rights_for(usr.client, R_DEBUG))
+	var/mob/user = ui.user
+	if(!check_rights_for(user.client, R_DEBUG))
 		return
 	if(action == "runCodeFile")
-		params["code"] = file2text(input(usr, "Input File") as null|file)
+		params["code"] = file2text(input(user, "Input File") as null|file)
 		if(isnull(params["code"]))
 			return
 		action = "runCode"
@@ -165,7 +167,7 @@
 			run_code(params["code"])
 			return TRUE
 		if("runFile")
-			var/code_file = input(usr, "Select a script to run.", "Lua") as file|null
+			var/code_file = input(user, "Select a script to run.", "Lua") as file|null
 			if(!code_file)
 				return TRUE
 			var/code = file2text(code_file)
@@ -193,9 +195,9 @@
 			var/list/path = params["path"]
 			var/list/target_list = traverse_list(path, arguments)
 			if(target_list != arguments)
-				usr?.client?.mod_list_add(target_list, null, "a lua editor", "arguments")
+				user?.client?.mod_list_add(target_list, null, "a lua editor", "arguments")
 			else
-				var/list/vv_val = usr?.client?.vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
+				var/list/vv_val = user?.client?.vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 				var/class = vv_val["class"]
 				if(!class)
 					return
@@ -214,7 +216,7 @@
 				var/list/variant_pair = current_variants[index]
 				var/key_variant = variant_pair["key"]
 				if(key_variant == "function" || key_variant == "thread" || key_variant == "userdata" || key_variant == "error_as_value")
-					to_chat(usr, span_warning("invalid table key \[[key]] for function call (expected text, num, path, list, or ref, got [key_variant])"))
+					to_chat(user, span_warning("invalid table key \[[key]] for function call (expected text, num, path, list, or ref, got [key_variant])"))
 					return
 				function += key
 				if(islist(value))
@@ -222,7 +224,7 @@
 					current_variants = variant_pair["value"]
 				else
 					if(variant_pair["value"] != "function")
-						to_chat(usr, span_warning("invalid value \[[value]] for function call (expected list or function)"))
+						to_chat(user, span_warning("invalid value \[[value]] for function call (expected list or function)"))
 						return
 			var/result = current_state.call_function(arglist(list(function) + arguments))
 			current_state.log_result(result)
@@ -247,14 +249,14 @@
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
+			INVOKE_ASYNC(user.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals["values"])
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
+			INVOKE_ASYNC(user.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("clearArgs")
 			arguments.Cut()
@@ -278,7 +280,12 @@
 /datum/lua_editor/ui_close(mob/user)
 	. = ..()
 	qdel(src)
+#endif
 
 ADMIN_VERB(lua_editor, R_DEBUG, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
+#ifndef DISABLE_DREAMLUAU
 	var/datum/lua_editor/editor = new
 	editor.ui_interact(user.mob)
+#else
+	to_chat(user, span_warning("Lua support has been disabled at compile-time."), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE) // doing this instead of just disabling the verb entirely so it's clear WHY it doesn't work.
+#endif

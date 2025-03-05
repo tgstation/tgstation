@@ -57,7 +57,7 @@
 		/datum/pet_command/beehive/enter,
 		/datum/pet_command/beehive/exit,
 		/datum/pet_command/follow/bee,
-		/datum/pet_command/point_targeting/attack/swirl,
+		/datum/pet_command/attack/swirl,
 		/datum/pet_command/scatter,
 	)
 
@@ -70,7 +70,7 @@
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 33, histamine_add = 5)
 
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
 	if(flags_1 & HOLOGRAM_1)
@@ -79,7 +79,7 @@
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
 		reee[beegent.type] = 5
-	holder.AddComponent(/datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
+	holder.AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	picker.visible_message(span_warning("[picker] scoops up [src]!"))
 	picker.put_in_hands(holder)
 
@@ -100,31 +100,28 @@
 	return ..()
 
 /mob/living/basic/bee/death(gibbed)
-	if(beehome)
-		beehome.bees -= src
-		beehome = null
-	beegent = null
-	if(flags_1 & HOLOGRAM_1 || gibbed)
-		return ..()
-	spawn_corpse()
+	if(!(flags_1 & HOLOGRAM_1) && !gibbed)
+		spawn_corpse()
 	return ..()
 
 /// Leave something to remember us by
 /mob/living/basic/bee/proc/spawn_corpse()
 	new /obj/item/trash/bee(loc, src)
 
-/mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/bee/early_melee_attack(atom/target, list/modifiers)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro = target
 		pollinate(hydro)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(istype(target, /obj/structure/beebox))
 		var/obj/structure/beebox/hive = target
 		handle_habitation(hive)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 /mob/living/basic/bee/proc/handle_habitation(obj/structure/beebox/hive)
 	if(hive == beehome) //if its our home, we enter or exit it
@@ -316,7 +313,7 @@
 
 /obj/item/trash/bee/Initialize(mapload, mob/living/basic/bee/dead_bee)
 	. = ..()
-	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(isnull(dead_bee))

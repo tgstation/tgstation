@@ -12,7 +12,7 @@
 	icon_state = "tomealtar"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_FIRE
-	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
+	break_message = span_warning("The books and tomes of the archives burn into ash as the desk shatters!")
 	mansus_conversion_path = /obj/item/codex_cicatrix
 
 /obj/structure/destructible/cult/item_dispenser/archives/setup_options()
@@ -49,8 +49,9 @@
 /obj/structure/destructible/cult/item_dispenser/archives/succcess_message(mob/living/user, obj/item/spawned_item)
 	to_chat(user, span_cult_italic("You summon [spawned_item] from [src]!"))
 
-// Preset for the library that doesn't spawn runed metal on destruction.
+// Preset for the library that doesn't spawn runed metal on destruction, or glow.
 /obj/structure/destructible/cult/item_dispenser/archives/library
+	icon_state = "tomealtar_off"
 	debris = list()
 
 #undef CULT_BLINDFOLD

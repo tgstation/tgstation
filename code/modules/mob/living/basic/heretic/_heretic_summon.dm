@@ -13,7 +13,7 @@
 	speed = 0
 	melee_attack_cooldown = CLICK_CD_MELEE
 
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	response_help_continuous = "thinks better of touching"
 	response_help_simple = "think better of touching"
 	response_disarm_continuous = "flails at"
@@ -34,3 +34,4 @@
 /mob/living/basic/heretic_summon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	ADD_TRAIT(src, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)

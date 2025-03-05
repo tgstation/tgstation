@@ -45,7 +45,7 @@
 	var/static/list/droppable_loot = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/blood/innards,
-		/obj/item/organ/internal/heart/demon,
+		/obj/item/organ/heart/demon,
 	)
 
 	return droppable_loot

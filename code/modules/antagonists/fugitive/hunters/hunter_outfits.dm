@@ -14,8 +14,8 @@
 	id = /obj/item/card/id/advanced/bountyhunter
 	id_trim = /datum/id_trim/bounty_hunter/police
 
-/datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -72,8 +72,8 @@
 	if(prob(50))
 		head = pick(alt_helmets)
 
-/datum/outfit/russian_hunter/post_equip(mob/living/carbon/human/equip_to, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/russian_hunter/post_equip(mob/living/carbon/human/equip_to, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	if(istype(equip_to.wear_id, /obj/item/card/id))
@@ -118,8 +118,8 @@
 		/obj/item/ammo_casing/shotgun/incendiary/no_trail = 4,
 	)
 
-/datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -143,8 +143,8 @@
 		/obj/item/ammo_casing/shotgun/incapacitate = 6
 		)
 
-/datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -231,7 +231,7 @@
 	box = /obj/item/storage/box/survival/syndie
 	implants = list(/obj/item/implant/explosive)
 
-/datum/outfit/mi13_hunter/pre_equip(mob/living/carbon/human/agent, visualsOnly = FALSE)
+/datum/outfit/mi13_hunter/pre_equip(mob/living/carbon/human/agent, visuals_only = FALSE)
 	backpack_contents = list()
 	backpack_contents += pick_weight(list(/obj/item/ammo_box/magazine/m9mm = 80,
 	/obj/item/ammo_box/magazine/m9mm/hp = 10,
@@ -249,12 +249,12 @@
 		/obj/item/clothing/mask/chameleon = 20,
 		/obj/item/language_manual/codespeak_manual/unlimited = 10,
 		/obj/item/storage/mail_counterfeit_device = 10,
-		/obj/item/traitor_machine_trapper = 10,
+		/obj/item/clothing/glasses/thermal = 10,
 		/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher = 10,
 	))
 
-/datum/outfit/mi13_hunter/post_equip(mob/living/carbon/human/agent, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/mi13_hunter/post_equip(mob/living/carbon/human/agent, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/card/id/wearing = agent.wear_id
 	wearing.registered_name = agent.real_name

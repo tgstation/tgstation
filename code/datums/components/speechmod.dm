@@ -1,6 +1,7 @@
 /// Used to apply certain speech patterns
 /// Can be used on organs, wearables, mutations and mobs
 /datum/component/speechmod
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// Assoc list for strings/regexes and their replacements. Should be lowercase, as case will be automatically changed
 	var/list/replacements = list()
 	/// String added to the end of the message
@@ -34,6 +35,12 @@
 
 	var/atom/owner = parent
 
+	if (istype(parent, /datum/status_effect))
+		var/datum/status_effect/effect = parent
+		targeted = effect.owner
+		RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+		return
+
 	if (ismob(parent))
 		targeted = parent
 		RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
@@ -53,6 +60,8 @@
 
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] == "*")
+		return
+	if(SEND_SIGNAL(source, COMSIG_TRY_MODIFY_SPEECH) & PREVENT_MODIFY_SPEECH)
 		return
 	if(!isnull(should_modify_speech) && !should_modify_speech.Invoke(source, speech_args))
 		return

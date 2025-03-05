@@ -23,7 +23,7 @@
 	)
 
 /datum/surgery/stomach_pump/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		return FALSE
 	if(!target_stomach)
@@ -36,7 +36,7 @@
 	accept_hand = TRUE
 	repeatable = TRUE
 	time = 20
-	success_sound = 'sound/surgery/organ2.ogg'
+	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
 /datum/surgery_step/stomach_pump/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

@@ -173,7 +173,7 @@
 					return
 				bomb_defused = FALSE
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
-				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
+				bomb.adminlog = "\The [bomb] in [src.name] that [key_name(user)] activated has detonated!"
 				balloon_alert(user, "bomb set")
 				update_appearance()
 	else if(length(boxes))
@@ -237,6 +237,7 @@
 			if(!user.can_perform_action(src))
 				return
 			balloon_alert(user, "writing box tag...")
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			boxtag_set = TRUE
 			update_appearance()
 			return
