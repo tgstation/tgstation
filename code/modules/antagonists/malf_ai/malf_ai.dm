@@ -260,6 +260,16 @@
 		result += span_redtext("The [special_role_text] has failed!")
 		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
+	if(istype(owner?.current, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/master_ai = owner.current
+		var/list/assimilation_results = list()
+		var/connected_assimilated_carbons_amt = LAZYLEN(master_ai.connected_assimilated_carbons)
+		if(connected_assimilated_carbons_amt)
+			assimilation_results += span_bold("The Malfunctioning AI had [connected_assimilated_carbons_amt] Assimilated Carbons under their command: ")
+			for(var/mob/living/carbon/human/connected_assimilated_carbon as anything in master_ai.connected_assimilated_carbons)
+				assimilation_results += connected_assimilated_carbon
+		result += assimilation_results
+
 	return result.Join("<br>")
 
 /datum/antagonist/malf_ai/get_preview_icon()

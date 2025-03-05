@@ -45,6 +45,8 @@
 	/* ROBOTS */
 	/// List of robots currently synced to the AI
 	VAR_FINAL/list/mob/living/silicon/robot/connected_robots = list()
+	/// List of assimilated carbons currently synced to the AI
+	VAR_FINAL/list/mob/living/carbon/human/connected_assimilated_carbons = list ()
 
 
 	/* POWER */
