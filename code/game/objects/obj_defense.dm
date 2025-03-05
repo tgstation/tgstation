@@ -134,10 +134,14 @@
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
-		AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
+		AddComponent(/datum/component/burning, custom_fire_overlay() || GLOB.fire_overlay, burning_particles)
 		SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 		return TRUE
 	return ..()
+
+/// Returns a custom fire overlay, if any
+/obj/proc/custom_fire_overlay()
+	return custom_fire_overlay
 
 /// Should be called when the atom is destroyed by fire, comparable to acid_melt() proc
 /obj/proc/burn()

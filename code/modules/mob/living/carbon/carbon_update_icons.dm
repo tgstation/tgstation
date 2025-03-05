@@ -463,6 +463,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 	. = list()
+	SEND_SIGNAL(src, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, ., standing, draw_target, isinhands, icon_file)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 ///Returns an integer representing the number of limbs that were updated.
