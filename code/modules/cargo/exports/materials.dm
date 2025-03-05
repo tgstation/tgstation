@@ -103,7 +103,7 @@
 	return ..()
 
 /datum/export/material/market/get_cost(obj/exported_obj, apply_elastic = TRUE)
-	var/elastic_cost = ..()
+	. = ..()
 	if(!material_id)
 		return 0
 
