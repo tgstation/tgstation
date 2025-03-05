@@ -2,7 +2,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	can_suppress = TRUE
 	burst_size = 3
-	fire_delay = 2
+	burst_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
 	fire_sound = 'sound/items/weapons/gun/smg/shot.ogg'
@@ -40,7 +40,7 @@
 	inhand_icon_state = "c20r"
 	selector_switch_icon = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45
-	fire_delay = 2
+	burst_delay = 2
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
@@ -73,7 +73,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wt550m9
-	fire_delay = 2
+	burst_delay = 2
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
@@ -96,7 +96,7 @@
 	inhand_icon_state = "smartgun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smartgun
 	burst_size = 4
-	fire_delay = 1
+	burst_delay = 1
 	spread = 40
 	dual_wield_spread = 20
 	actions_types = list()
@@ -150,7 +150,7 @@
 	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
-	fire_delay = 2
+	burst_delay = 2
 	spread = 5
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
@@ -199,7 +199,7 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
-	fire_delay = 1
+	burst_delay = 1
 	bolt_type = BOLT_TYPE_OPEN
 	empty_indicator = TRUE
 	show_bolt_icon = FALSE
@@ -217,7 +217,7 @@
 /obj/item/gun/ballistic/automatic/tommygun/chimpgun
 	name = "\improper Typewriter"
 	desc = "It was the best of times, it was the BLURST of times!? You stupid monkeys!"
-	fire_delay = 2
+	burst_delay = 2
 	rof = 0.2 SECONDS
 	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
@@ -232,7 +232,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m223
 	can_suppress = FALSE
 	burst_size = 3
-	fire_delay = 1
+	burst_delay = 1
 
 // L6 SAW //
 
@@ -331,7 +331,6 @@
 	worn_icon_state = "sks"
 	inhand_icon_state = "sks"
 	burst_size = 1
-	fire_delay = 0
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/sks
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT

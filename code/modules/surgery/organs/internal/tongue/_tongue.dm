@@ -77,6 +77,7 @@
 	return list(
 		/datum/language/common,
 		/datum/language/uncommon,
+		/datum/language/spinwarder,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
@@ -395,11 +396,11 @@
 		if(!istype(tongue))
 			continue
 		if(mothership == tongue.mothership)
-			to_chat(living_mob, rendered)
+			to_chat(living_mob, rendered, type = MESSAGE_TYPE_RADIO, avoid_highlighting = user == living_mob)
 
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, user)
-		to_chat(dead_mob, "[link] [rendered]")
+		to_chat(dead_mob, "[link] [rendered]", type = MESSAGE_TYPE_RADIO)
 
 	speech_args[SPEECH_MESSAGE] = ""
 

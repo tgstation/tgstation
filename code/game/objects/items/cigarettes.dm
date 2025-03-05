@@ -238,7 +238,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_state = inhand_icon_off
 
 	// "It is called a cigarette"
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		initial_reagents = list_reagents,\
 		food_flags = FOOD_NO_EXAMINE,\
 		foodtypes = JUNKFOOD,\

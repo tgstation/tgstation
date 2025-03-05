@@ -21,6 +21,7 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
+	action_slots = ALL
 
 	var/gun_flags = NONE
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
@@ -40,7 +41,10 @@
 	var/sawn_desc = null //description change if weapon is sawn-off
 	var/sawn_off = FALSE
 	var/burst_size = 1 //how large a burst is
-	var/fire_delay = 0 //rate of fire for burst firing and semi auto
+	/// Delay between shots in a burst.
+	var/burst_delay = 2
+	/// Delay between bursts (if burst-firing) or individual shots (if weapon is single-fire).
+	var/fire_delay = 0
 	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
 	var/semicd = 0 //cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
@@ -97,10 +101,12 @@
 /obj/item/gun/apply_fantasy_bonuses(bonus)
 	. = ..()
 	fire_delay = modify_fantasy_variable("fire_delay", fire_delay, -bonus, 0)
+	burst_delay = modify_fantasy_variable("burst_delay", burst_delay, -bonus, 0)
 	projectile_damage_multiplier = modify_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier, bonus/10, 0.1)
 
 /obj/item/gun/remove_fantasy_bonuses(bonus)
 	fire_delay = reset_fantasy_variable("fire_delay", fire_delay)
+	burst_delay = reset_fantasy_variable("burst_delay", burst_delay)
 	projectile_damage_multiplier = reset_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier)
 	return ..()
 
@@ -470,14 +476,16 @@
 	var/total_random_spread = max(0, randomized_bonus_spread + randomized_gun_spread)
 	var/burst_spread_mult = rand()
 
-	var/modified_delay = fire_delay
+	var/modified_burst_delay = burst_delay
+	var/modified_fire_delay = fire_delay
 	if(user && HAS_TRAIT(user, TRAIT_DOUBLE_TAP))
-		modified_delay = ROUND_UP(fire_delay * 0.5)
+		modified_burst_delay = ROUND_UP(burst_delay * 0.5)
+		modified_fire_delay = ROUND_UP(fire_delay * 0.5)
 
 	if(burst_size > 1)
 		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, total_random_spread, burst_spread_mult, i), modified_delay * (i - 1))
+			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, total_random_spread, burst_spread_mult, i), modified_burst_delay * (i - 1))
 	else
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
@@ -502,7 +510,7 @@
 			process_chamber()
 			update_appearance()
 			semicd = TRUE
-			addtimer(CALLBACK(src, PROC_REF(reset_semicd)), modified_delay)
+			addtimer(CALLBACK(src, PROC_REF(reset_semicd)), modified_fire_delay)
 
 	if(user)
 		user.update_held_items()
