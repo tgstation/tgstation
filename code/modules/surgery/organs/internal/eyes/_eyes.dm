@@ -590,8 +590,8 @@
 	desc = "A pair of basic cybernetic eyes that restore vision, but at some vulnerability to light."
 	icon_state = "eyes_cyber_basic"
 	iris_overlay = null
-	eye_color_left = "2f3032"
-	eye_color_right = "2f3032"
+	eye_color_left = "#2f3032"
+	eye_color_right = "#2f3032"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/basic/emp_act(severity)
@@ -609,8 +609,8 @@
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	icon_state = "eyes_cyber_xray"
 	iris_overlay = null
-	eye_color_left = "3cb8a5"
-	eye_color_right = "3cb8a5"
+	eye_color_left = "#3cb8a5"
+	eye_color_right = "#3cb8a5"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
 /obj/item/organ/eyes/robotic/xray/on_mob_insert(mob/living/carbon/eye_owner)
@@ -626,8 +626,8 @@
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 	icon_state = "eyes_cyber_thermal"
 	iris_overlay = null
-	eye_color_left = "ce2525"
-	eye_color_right = "ce2525"
+	eye_color_left = "#ce2525"
+	eye_color_right = "#ce2525"
 	// We're gonna downshift green and blue a bit so darkness looks yellow
 	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
@@ -670,8 +670,8 @@
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	icon_state = "eyes_cyber_shield"
 	iris_overlay = null
-	eye_color_left = "353845"
-	eye_color_right = "353845"
+	eye_color_left = "#353845"
+	eye_color_right = "#353845"
 	flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/organ/eyes/robotic/shield/Initialize(mapload)
@@ -689,8 +689,8 @@
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
 	icon_state = "eyes_cyber_glow"
 	iris_overlay = "eyes_cyber_glow_iris"
-	eye_color_left = "000"
-	eye_color_right = "000"
+	eye_color_left = "#19191a"
+	eye_color_right = "#19191a"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/max_light_beam_distance = 5
 	var/obj/item/flashlight/eyelight/glow/eye
@@ -965,8 +965,8 @@
 	name = "basic robotic moth eyes"
 	icon_state = "eyes_moth_cyber_basic"
 	eye_icon_state = "motheyes_white"
-	eye_color_left = "65686f"
-	eye_color_right = "65686f"
+	eye_color_left = "#65686f"
+	eye_color_right = "#65686f"
 	blink_animation = FALSE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
@@ -975,8 +975,8 @@
 	desc = "These cybernetic imitation moth eyes will give you X-ray vision. Blinking is futile. Much like actual moth eyes, very sensitive to bright lights."
 	icon_state = "eyes_moth_cyber_xray"
 	eye_icon_state = "motheyes_white"
-	eye_color_left = "3c4e52"
-	eye_color_right = "3c4e52"
+	eye_color_left = "#3c4e52"
+	eye_color_right = "#3c4e52"
 	blink_animation = FALSE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
@@ -984,8 +984,8 @@
 	name = "shielded robotic moth eyes"
 	icon_state = "eyes_moth_cyber_shield"
 	eye_icon_state = "motheyes_white"
-	eye_color_left = "353845"
-	eye_color_right = "353845"
+	eye_color_left = "#353845"
+	eye_color_right = "#353845"
 	blink_animation = FALSE
 
 /obj/item/organ/eyes/robotic/glow/moth
@@ -1002,8 +1002,8 @@
 	name = "thermal moth eyes"
 	icon_state = "eyes_moth_cyber_thermal"
 	eye_icon_state = "motheyes_white"
-	eye_color_left = "901f38"
-	eye_color_right = "901f38"
+	eye_color_left = "#901f38"
+	eye_color_right = "#901f38"
 	blink_animation = FALSE
 
 /obj/item/organ/eyes/snail
@@ -1031,8 +1031,8 @@
 	name = "adapted eyes"
 	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."
 	icon_state = "eyes_adapted"
-	eye_color_left = "f74a4d"
-	eye_color_right = "f74a4d"
+	eye_color_left = "#f74a4d"
+	eye_color_right = "#f74a4d"
 	eye_icon_state = "eyes_glow"
 	iris_overlay = null
 	overlay_ignore_lighting = TRUE
@@ -1062,7 +1062,7 @@
 	name = "pod eyes"
 	desc = "Strangest salad you've ever seen."
 	icon_state = "eyes_pod"
-	eye_color_left = "375846"
-	eye_color_right = "375846"
+	eye_color_left = "#375846"
+	eye_color_right = "#375846"
 	iris_overlay = null
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
