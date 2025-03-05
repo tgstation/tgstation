@@ -125,7 +125,6 @@
 		market_price = material_value / amount
 	else
 		material_value = market_price * amount
-	to_chat(world, "Final sale breakdown: [elastic_cost] e/c, [cost] cost, [material_value] mat val, [market_price] market price, [amount] amount")
 	return cost * material_value
 
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
