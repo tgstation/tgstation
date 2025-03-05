@@ -497,4 +497,4 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define CLIENT_COLOR_FILTER_PRIORITY 4 // Filters which should go ontop of previous ones
 #define CLIENT_COLOR_TEMPORARY_PRIORITY 5 // Temporary flashing effects
 #define CLIENT_COLOR_IMPORTANT_PRIORITY 6 // Gameplay important hints signifying antag status or near-death, should be always shown
-#define CLIENT_COLOR_OVERRIDE_PRIORITY 7 // For effects that are meant to mask all others
+#define CLIENT_COLOR_OVERRIDE_PRIORITY 7 // For effects that are meant to mask all others for technical reasons

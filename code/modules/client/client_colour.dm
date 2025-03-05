@@ -116,6 +116,7 @@
 
 		for (var/i in 1 to 20)
 			color_list[i] = (color_list[i] * (color_num - 1) + cur_list[i]) / color_num
+		current_color = color_list
 
 		if (client_color.override)
 			break
