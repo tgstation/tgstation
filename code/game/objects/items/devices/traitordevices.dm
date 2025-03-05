@@ -327,8 +327,14 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
+
+	/// The range of devices to disable while active
 	var/range = 12
+
+	/// The range of the disruptor wave, disabling radios
 	var/disruptor_range = 7
+
+	/// The delay between using the disruptor wave
 	var/jam_cooldown_duration = 15 SECONDS
 	COOLDOWN_DECLARE(jam_cooldown)
 
