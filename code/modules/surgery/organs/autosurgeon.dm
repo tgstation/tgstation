@@ -93,10 +93,10 @@
 	if (stored_organ.valid_zones)
 		var/hand_index = user.get_held_index_of_item(src)
 		if (hand_index)
-			var/checked_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_L_LEG)
+			var/list/checked_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_L_LEG)
 			if (IS_RIGHT_INDEX(hand_index))
 				checked_zones = list(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG)
-			checked_zones |= user.zone_selected
+			checked_zones.Insert(1, user.zone_selected)
 			for (var/check_zone in checked_zones)
 				if (stored_organ.valid_zones[check_zone])
 					stored_organ.swap_zone(check_zone)
