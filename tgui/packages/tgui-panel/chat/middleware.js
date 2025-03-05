@@ -183,9 +183,10 @@ export const chatMiddleware = (store) => {
       type === importSettings.type
     ) {
       next(action);
+      const nextSettings = selectSettings(store.getState());
       chatRenderer.setHighlight(
-        settings.highlightSettings,
-        settings.highlightSettingById,
+        nextSettings.highlightSettings,
+        nextSettings.highlightSettingById,
       );
 
       return;
