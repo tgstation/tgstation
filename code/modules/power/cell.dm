@@ -102,6 +102,7 @@
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
+	
 
 /obj/item/stock_parts/power_store/cell/high/empty
 	empty = TRUE
