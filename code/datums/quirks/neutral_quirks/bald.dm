@@ -47,7 +47,7 @@
 	// check if their job / loadout has a hat
 	var/obj/item/existing = quirk_holder.get_item_by_slot(ITEM_SLOT_HEAD)
 	// no hat -> try equipping like normal (via parent)
-	if(isnull(existing) || (existing.item_flags & STACKABLE_HELMET_EXEMPT))
+	if(isnull(existing) || (existing.clothing_flags & STACKABLE_HELMET_EXEMPT))
 		return ..()
 	// try removing the existing hat. if fail -> try equipping like normal
 	if(!quirk_holder.temporarilyRemoveItemFromInventory(existing))
