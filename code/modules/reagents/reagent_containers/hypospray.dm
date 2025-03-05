@@ -186,7 +186,7 @@
 	amount_per_transfer_from_this = 50
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
-/obj/item/reagent_containers/hypospray/medipen/final_fortune
+/obj/item/reagent_containers/hypospray/medipen/final_fortuna
 	name = "fortune medipen"
 	desc = "A highly illegal cocktail of drugs designed to keep you alive for up to a minute, however once it leaves your system it causes massive brain damage."
 	icon_state = "syndipen"
@@ -194,7 +194,7 @@
 	base_icon_state = "syndipen"
 	volume = 50
 	amount_per_transfer_from_this = 50
-	list_reagents = list(/datum/reagent/medicine/final_fortune = 50)
+	list_reagents = list(/datum/reagent/medicine/final_fortuna = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/methamphetamine
 	name = "methamphetamine medipen"

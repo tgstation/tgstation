@@ -272,10 +272,10 @@
 	item = /obj/item/climbing_hook/syndicate
 	cost = 1
 
-/datum/uplink_item/device_tools/final_fortune
-	name = "Final Fortune"
+/datum/uplink_item/device_tools/final_fortuna
+	name = "Final Fortuna"
 	desc = "A highly illegal cocktail of drugs designed to keep you alive for up to a minute, however once it leaves your system it causes massive brain damage."
-	item = /obj/item/reagent_containers/hypospray/medipen/final_fortune
+	item = /obj/item/reagent_containers/hypospray/medipen/final_fortuna
 	cost = 10
 	purchasable_from = UPLINK_TRAITORS
 	progression_minimum = 20 MINUTES
