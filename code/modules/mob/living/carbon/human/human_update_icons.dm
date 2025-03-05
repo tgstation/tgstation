@@ -333,32 +333,88 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET))
 			return
 
+		var/mutable_appearance/shoes_overlay
 		var/icon_file = DEFAULT_SHOES_FILE
+		if(is_species(src, /datum/species/pony))
+			var/static/icon/toe_mask
+			if(!toe_mask)
+				toe_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "toe_removal")
+			var/static/icon/darken_mask
+			if(!darken_mask)
+				darken_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "darken_back_shoe")
 
-		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
-		var/mutable_appearance/front_shoes_overlay
-		if(is_species(src, /datum/species/pony) && num_hands >= 2)
-			front_shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
-		if(!shoes_overlay)
-			return
+			var/icon/shoes_icon = icon(shoes.worn_icon ? shoes.worn_icon : icon_file, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state)
 
-		for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-			var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
-			if(isnull(my_leg))
-				continue
-			my_leg?.worn_foot_offset?.apply_offset(shoes_overlay) // apply the first one then break
-			break
+			//fcopy(shoes_icon, "TEST_shoes_icon.dmi")
+			shoes_icon.Blend(toe_mask, ICON_SUBTRACT)
 
-		if(front_shoes_overlay)
-			for (var/arm_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-				var/obj/item/bodypart/arm/my_arm = get_bodypart(arm_zone)
-				if(isnull(my_arm))
-					continue
-				my_arm?.worn_glove_offset?.apply_offset(front_shoes_overlay)
-				break
-			overlays_standing[SHOES_LAYER] = list(shoes_overlay, front_shoes_overlay)
+			//fcopy(shoes_icon, "TEST_toe_mask.dmi")
+
+			var/icon/new_south = icon(shoes_icon, dir=SOUTH)
+			var/icon/new_north = icon(shoes_icon, dir=NORTH)
+			var/pixel_height
+			for(var/i in 1 to 32)
+				var/color_to_check = shoes_icon.GetPixel(17, i, SOUTH)
+				if(!color_to_check)
+					break // we have hit transparent pixels
+				pixel_height = i
+			var/color_to_use = shoes_icon.GetPixel(shoes.pony_clothing_sample_pixels[1][1], shoes.pony_clothing_sample_pixels[1][2])
+			new_south.DrawBox(color_to_use, 16, 1, 16, pixel_height) // todo: make this use the adjacent pixels instead to match color better
+			new_north.DrawBox(color_to_use, 16, 1, 16, pixel_height)
+
+			//fcopy(new_south, "TEST_new_south.dmi")
+			//fcopy(new_north, "TEST_new_north.dmi")
+
+			var/icon/blank_east = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/blank_west = icon('icons/blanks/32x32.dmi', "nothing")
+
+			var/icon/new_east_back = icon(shoes_icon, dir=EAST)
+			var/icon/new_west_back = icon(shoes_icon, dir=WEST)
+
+			new_east_back.Blend(darken_mask, ICON_MULTIPLY)
+			new_west_back.Blend(darken_mask, ICON_MULTIPLY)
+
+			//fcopy(new_east_back, "TEST_new_east_back.dmi")
+			//fcopy(new_west_back, "TEST_new_west_back.dmi")
+
+			var/icon/new_east_front = icon(shoes_icon, dir=EAST)
+			var/icon/new_west_front = icon(shoes_icon, dir=WEST)
+
+			blank_east.Blend(new_east_back, ICON_OVERLAY, -3, 0)
+			blank_east.Blend(new_east_front, ICON_OVERLAY, -5, 0)
+			blank_east.Blend(new_east_back, ICON_OVERLAY, 7, 0)
+			blank_east.Blend(new_east_front, ICON_OVERLAY, 5, 0)
+			//fcopy(blank_east, "TEST_blank_east.dmi")
+			blank_west.Blend(new_west_back, ICON_OVERLAY, -3, 0)
+			blank_west.Blend(new_west_front, ICON_OVERLAY, -5, 0)
+			blank_west.Blend(new_west_back, ICON_OVERLAY, 7, 0)
+			blank_west.Blend(new_west_front, ICON_OVERLAY, 5, 0)
+
+			//fcopy(blank_east, "TEST_blank_west.dmi")
+
+			var/icon/final_icon = icon()
+
+			final_icon.Insert(new_south, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, SOUTH)
+			final_icon.Insert(new_north, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, NORTH)
+			final_icon.Insert(blank_east, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, EAST)
+			final_icon.Insert(blank_west, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, WEST)
+
+			//fcopy(final_icon, "TEST_final_icon.dmi")
+			shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = final_icon)
 		else
-			overlays_standing[SHOES_LAYER] = shoes_overlay
+			shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
+			if(!shoes_overlay)
+				return
+
+			for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+				var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
+				if(isnull(my_leg))
+					continue
+				my_leg?.worn_foot_offset?.apply_offset(shoes_overlay) // apply the first one then break
+				break
+
+		overlays_standing[SHOES_LAYER] = shoes_overlay
+
 	apply_overlay(SHOES_LAYER)
 	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_FEET)
 

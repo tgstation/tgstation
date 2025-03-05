@@ -82,8 +82,9 @@
 	worn_face_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_FACE,
-		offset_x = list("north" = 0, "south" = 0, "east" = 8, "west" = -8),
-		offset_y = list("north" = -1, "south" = -2, "east" = -2, "west" = -2),
+		offset_x = list("north" = 0, "south" = 0, "east" = 5, "west" = -5),
+		offset_y = list("north" = -5, "south" = -6, "east" = -6, "west" = -6),
+		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
 	)
 
 /obj/item/bodypart/chest/pony

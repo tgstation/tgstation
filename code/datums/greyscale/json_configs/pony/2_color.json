@@ -1,0 +1,282 @@
+{
+	"shirt_and_pants": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suit_shirt_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suit_shirt_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suit_shirt_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suit_shirt_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suit_pants_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suit_pants_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suit_pants_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suit_pants_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"engine": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer1_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer1_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer2_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_layer2_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "belt_highlight",
+			"blend_mode": "overlay"
+		}
+	],
+	"engine_skirt": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer1_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer1_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer2_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "engine_skirt_layer2_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "belt_highlight",
+			"blend_mode": "overlay"
+		}
+	],
+	"cargotech": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer2_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer2_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer1_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargotech_layer1_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"cargo_skirt": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer2_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer2_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer1_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "cargo_skirt_layer1_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	]
+}

@@ -58,6 +58,10 @@
 
 	/// Where should we sample from for pony clothes, if applicable?
 	var/list/pony_clothing_sample_pixels = list()
+	/// What icon state should we pull from the config?
+	var/pony_icon_state = "jumpsuit"
+	/// Which config should we be looking for the jumpsuit in?
+	var/pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
@@ -632,7 +636,7 @@ BLIND     // can't see anything
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
 
-/obj/item/clothing/under/get_key_colors(icon/base_icon)
+/obj/item/clothing/get_key_colors(icon/base_icon)
 	var/list/found_colors = list()
 	if(!pony_clothing_sample_pixels)
 		return ..()
