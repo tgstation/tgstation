@@ -31,6 +31,7 @@
 	/// If TRUE, this style allows you to punch people despite being a pacifist (IE: Boxing, which does no damage)
 	var/pacifist_style = FALSE
 	/// If TRUE, the user is locked to using this martial art, and can't swap to other ones they know.
+	/// If the mob has two locked martial arts, it's first come first serve.
 	var/locked_to_use = FALSE
 
 /datum/martial_art/serialize_list(list/options, list/semvers)
@@ -270,10 +271,16 @@
 	holder = new_holder
 	if(origin != new_holder)
 		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(clear_holder))
-	LAZYADD(new_holder.martial_arts, src)
+	// locked martial arts always get inserted as the next up
+	// (so if you learn two locked martial arts, and you get rid of the first, the second will slot itself in)
+	if(locked_to_use && LAZYLEN(new_holder.martial_arts) >= 2)
+		LAZYINSERT(new_holder.martial_arts, 2, src)
+	else
+		LAZYADD(new_holder.martial_arts, src)
 	if(LAZYLEN(new_holder.martial_arts) >= 2)
 		// newly learned martials are preferred to be the active one
 		add_verb(new_holder, /mob/living/proc/verb_switch_style)
+		// if the active one is locked, this will no-op, which is fine
 		new_holder.switch_style(GET_ACTIVE_MARTIAL_ART(new_holder), src)
 	else if(!active)
 		activate_style(new_holder)

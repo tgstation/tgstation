@@ -42,6 +42,7 @@
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	mush = new(src)
+	mush.locked_to_use = TRUE
 	mush.teach(C)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
