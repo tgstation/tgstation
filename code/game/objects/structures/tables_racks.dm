@@ -544,6 +544,44 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
+/obj/structure/table/wood/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/table/wood/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
+	if(!isliving(AM))
+		return
+	// Don't break if they're just flying past
+	if(AM.throwing)
+		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 0.5 SECONDS)
+	else
+		check_break(AM)
+
+/obj/structure/table/wood/proc/throw_check(mob/living/M)
+	if(M.loc == get_turf(src))
+		check_break(M)
+
+/obj/structure/table/wood/proc/check_break(mob/living/M)
+	var/breakroll = rand(1,5)
+	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && breakroll == 5)
+		table_shatter(M)
+
+/obj/structure/table/wood/proc/table_shatter(mob/living/victim)
+	visible_message(span_warning("[src] smashes into bits!"),
+		span_danger("You hear breaking glass."))
+
+	playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
+
+	new frame(loc)
+
+	victim.Paralyze(200)
+	qdel(src)
+
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
 		..()
