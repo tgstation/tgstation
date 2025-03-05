@@ -1829,7 +1829,7 @@
 
 /datum/reagent/medicine/final_fortune
 	name = "Final Fortune"
-	description = "Prevents death but weakens tendons and kills once it leaves your system"
+	description = "Prevents death but weakens tendons and kills once it leaves your system."
 	color = "#ad0a0a"
 	metabolization_rate = REAGENTS_METABOLISM * 5
 	overdose_threshold = 51
