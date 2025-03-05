@@ -1,0 +1,4 @@
+author: "hry-gh"
+delete-after: True
+changes:
+  - bugfix: "the admin music player works again on 516"
