@@ -117,6 +117,10 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 	RegisterSignal(src, COMSIG_RADIO_JAMMED, PROC_REF(on_jammed))
+	var/static/list/containers_connections = list(
+		COMSIG_RADIO_JAMMED = PROC_REF(on_jammed),
+	)
+	AddComponent(/datum/component/connect_containers, src, containers_connections)
 
 	// No subtypes
 	if(type != /obj/item/radio)
