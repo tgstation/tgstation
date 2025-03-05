@@ -1,4 +1,0 @@
-author: "Aniantan"
-delete-after: True
-changes:
-  - bugfix: "You can no longer \"use\" can of bait on non-bait slots in fishing rod"

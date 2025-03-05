@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - config: "the config loader now supports relatively pathed imports (importing a file inside a subfolder now acts as if you were IN that subfolder)"
