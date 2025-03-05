@@ -23,6 +23,8 @@
 /code/modules/tgs/ @Cyberboss
 /code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
+/tools/Tgstation.DiscordDiscussions/ @Cyberboss
+/tools/Tgstation.PRAnnouncer/ @Cyberboss
 
 # Cobby
 
@@ -213,8 +215,6 @@
 
 /tools/build/ @scriptis @stylemistake
 /tools/tgs_scripts/ @Cyberboss @scriptis
-
-/tools/WebhookProcessor/ @BraveMole @TiviPlus
 
 # Host Hell
 
