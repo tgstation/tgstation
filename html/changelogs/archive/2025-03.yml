@@ -123,3 +123,12 @@
   - bugfix: the eldritch id (Lock path) now preserves the ID used.
   timothymtorres:
   - bugfix: Fix hauntinum reagent to work when it is exposed to item objects.
+2025-03-05:
+  Jacquerel:
+  - rscadd: Apples now react appropriately if they impact doctors or scientists under
+      the expected circumstances.
+  StrangeWeirdKitten:
+  - bugfix: Megafauna should no longer attack eachother.
+  TJatPBnJ:
+  - balance: French fries are now immune to the effects of the floor. I miss floor
+      fries
