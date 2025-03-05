@@ -11,13 +11,13 @@
 
 /obj/item/skillchip/job/chef/Initialize(mapload)
 	. = ..()
-	style = new
+	style = new(src)
 	style.refresh_valid_areas()
 
 /obj/item/skillchip/job/chef/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()
-	style.teach(user, make_temporary = TRUE)
+	style.teach(user)
 
 /obj/item/skillchip/job/chef/on_deactivate(mob/living/carbon/user, silent = FALSE)
-	style.fully_remove(user)
+	style.unlearn(user)
 	return ..()

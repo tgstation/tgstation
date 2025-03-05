@@ -1192,7 +1192,7 @@
 			return
 		if(result)
 			var/chosenart = artnames[result]
-			var/datum/martial_art/MA = new chosenart
+			var/datum/martial_art/MA = new chosenart(src)
 			MA.teach(src)
 			log_admin("[key_name(usr)] has taught [MA] to [key_name(src)].")
 			message_admins(span_notice("[key_name_admin(usr)] has taught [MA] to [key_name_admin(src)]."))
