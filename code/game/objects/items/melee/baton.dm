@@ -998,6 +998,7 @@
 	attack_verb_continuous = list("beats", "whips", "smashes", "punishes")
 	attack_verb_simple = list("beat", "whip", "smash", "punish")
 	hitsound = 'sound/items/weapons/chainhit.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
 	slot_flags = ITEM_SLOT_BELT
 	cooldown = CLICK_CD_MELEE
 	knockdown_time = 250 MILLISECONDS
@@ -1027,7 +1028,7 @@
 	// counterattack at melee
 	if(attack_type in list(MELEE_ATTACK, UNARMED_ATTACK, LEAP_ATTACK))
 		var/mob/living/attacker = GET_ASSAILANT(hitby)
-		playsound(src, 'sound/items/weapons/cqchit2.ogg', 100, FALSE)
+		playsound(src, pick(list('sound/items/weapons/cqchit2.ogg', 'sound/items/weapons/cqchit1.ogg')), 100, FALSE)
 		attack(attacker, owner, BATON_DO_NORMAL_ATTACK)
 
 	. = ..()
