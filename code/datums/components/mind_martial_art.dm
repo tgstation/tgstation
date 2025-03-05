@@ -1,4 +1,6 @@
+/// A martial art that is owned by this mind and will transfer as mind moves
 /datum/component/mindbound_martial_arts
+	dupe_mode = COMPONENT_DUPE_SELECTIVE
 	/// The style transferred between minds
 	var/datum/martial_art/style
 
@@ -7,6 +9,9 @@
 		return COMPONENT_INCOMPATIBLE
 
 	style = new style_type(src)
+
+/datum/component/mindbound_martial_arts/CheckDupeComponent(datum/component/new_comp, new_style_type)
+	return style.type == new_style_type
 
 /datum/component/mindbound_martial_arts/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MIND_TRANSFERRED, PROC_REF(mind_transferred))
