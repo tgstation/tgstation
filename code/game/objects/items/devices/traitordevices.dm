@@ -405,6 +405,10 @@ effective or pretty fucking useless.
 	range = 5
 	disruptor_range = 3
 
+/obj/item/jammer/makeshift/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
 
