@@ -36,7 +36,7 @@ export function CargoRequests(props) {
               <Table.Cell color="lightgray" width="25%">
                 <i>{decodeHtmlEntities(request.reason)}</i>
               </Table.Cell>
-              <Table.Cell collapsing color="gold">
+              <Table.Cell collapsing>
                 {request.account}
               </Table.Cell>
               <Table.Cell collapsing color="gold">

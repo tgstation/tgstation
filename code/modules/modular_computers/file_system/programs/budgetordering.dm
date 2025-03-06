@@ -165,7 +165,8 @@
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
 			"reason" = order.reason,
-			"id" = order.id
+			"id" = order.id,
+			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))
 	data["amount_by_name"] = amount_by_name
 
@@ -224,18 +225,23 @@
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
 			var/ckey = usr.ckey
+			var/mob/living/carbon/human/H
 			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				name = H.get_authentification_name()
+				H = usr
 				rank = H.get_assignment(hand_first = TRUE)
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"
 
-			var/datum/bank_account/account
+			// Our account that we want to end up paying with. Defaults to the cargo budget!
+			var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			// Our ID card that we want to pull from for identification. Modifies either name, account, or neither depending on function.
+			var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
+			if(!id_card)
+				id_card = H?.get_idcard(TRUE) //Grab from hands/mob if there's no id_card slot to prioritize.
+			name = id_card?.registered_account.account_holder
+
 			if(self_paid)
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
 				if(!istype(id_card))
 					computer.say("No ID card detected.")
 					return
@@ -243,15 +249,26 @@
 					computer.say("[id_card] cannot be used to make purchases.")
 					return
 				account = id_card.registered_account
+				name = id_card.registered_account.account_holder
 				if(!istype(account))
 					computer.say("Invalid bank account.")
 					return
 
 			var/reason = ""
 			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
-				reason = tgui_input_text(usr, "Reason", name, max_length = MAX_MESSAGE_LEN)
+				reason = tgui_input_text(usr, "Reason", "Cargo Request", max_length = MAX_MESSAGE_LEN)
 				if(isnull(reason) || ..())
 					return
+
+			if(id_card)
+				if(id_card.registered_account && id_card.registered_account?.account_job && )
+					var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
+					var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Department", "[personal_department.account_holder]"))
+					if(!choice)
+						return
+					if(choice != "Cargo Department")
+						account = personal_department
+					name = id_card.registered_account?.account_holder
 
 			if(pack.goody && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -264,7 +281,6 @@
 				return
 
 			if(!requestonly && !self_paid && ishuman(usr) && !account)
-				var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(computer)
@@ -276,6 +292,7 @@
 				SSshuttle.shopping_list += SO
 				if(self_paid)
 					computer.say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
+			playsound(computer, 'sound/effects/coin2.ogg', 40, TRUE)
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
