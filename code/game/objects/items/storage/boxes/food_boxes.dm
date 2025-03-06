@@ -362,7 +362,8 @@
 	var/gum_to_spawn = /obj/item/food/bubblegum
 
 /obj/item/storage/bubblegum_wrapper/Initialize(mapload, spawning_gum_type)
-	gum_to_spawn = spawning_gum_type
+	if(!isnull(spawning_gum_type))
+		gum_to_spawn = spawning_gum_type
 	. = ..()
 	atom_storage.set_holdable(/obj/item/food/bubblegum)
 	atom_storage.max_slots = 1
