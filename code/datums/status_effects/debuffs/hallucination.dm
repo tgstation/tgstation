@@ -163,6 +163,7 @@
 	id = "perceptomatrix_hallucination"
 	status_type = STATUS_EFFECT_REFRESH
 	strict_tier = TRUE
+	variable_tier = FALSE
 
 /datum/status_effect/hallucination/perceptomatrix/refresh(mob/living/refresh_owner, new_duration)
 	src.duration += new_duration
