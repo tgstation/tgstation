@@ -391,10 +391,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
+/obj/item/radio/headset/headset_cent/alt/leader
+	command = TRUE
+
 /obj/item/radio/headset/silicon/pai
 	name = "\proper mini Integrated Subspace Transceiver"
 	subspace_transmission = FALSE
-
 
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver"
