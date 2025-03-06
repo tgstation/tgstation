@@ -301,6 +301,17 @@
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	var/implant_message = "You don't remember anything between the start of the shift and now"
+
+/obj/item/assembly/flash/memorizer/interact_with_atom(mob/living/victim, mob/user)
+	if(issilicon(victim))
+		//act as a normal flash
+		return ..()
+	victim.mind.wipe_memory() // I was gonna...
+	to_chat(victim, "<br/><br/<br/<br/<br/<br/<br/<br/<br/>")
+	to_chat(victim, span_hypnophrase(implant_message))
+	return ..()
+
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 
