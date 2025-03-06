@@ -100,7 +100,7 @@
 				lower_tick_interval *= 1.2
 				upper_tick_interval *= 1.2
 			if(20 to 60)
-				max_hallucination_tier = HALLUCINATION_TIER_UNCOMMON
+				max_hallucination_tier = prob(10) ? HALLUCINATION_TIER_RARE : HALLUCINATION_TIER_UNCOMMON
 			if(60 to 120)
 				max_hallucination_tier = HALLUCINATION_TIER_RARE
 				lower_cd *= 0.75
