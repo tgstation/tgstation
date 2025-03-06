@@ -107,15 +107,6 @@
 		if(!thing.IsObscured())
 			rain_reagent.expose_obj(thing, RAIN_REAGENT_VOLUME, TOUCH)
 
-			if(istype(thing, /obj/machinery/hydroponics))
-				var/obj/machinery/hydroponics/plant_tray = thing
-				if(plant_tray.reagents.holder_full())
-					continue
-
-				var/amount_to_add = min(plant_tray.reagents.maximum_volume - plant_tray.reagents.total_volume, RAIN_REAGENT_VOLUME)
-				plant_tray.reagents.add_reagent(rain_reagent.type, amount_to_add)
-				continue
-
 			// Time for the sophisticated art of catching sky-booze
 			if(!is_reagent_container(thing))
 				continue
