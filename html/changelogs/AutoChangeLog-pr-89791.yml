@@ -1,4 +1,0 @@
-author: "StrangeWeirdKitten"
-delete-after: True
-changes:
-  - bugfix: "Megafauna should no longer attack eachother."

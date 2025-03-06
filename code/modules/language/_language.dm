@@ -61,7 +61,7 @@
 
 /// Simple helper for getting a default firstname lastname
 /datum/language/proc/default_name(gender = NEUTER)
-	if(gender != MALE)
+	if(gender != MALE && gender != FEMALE)
 		gender = pick(MALE, FEMALE)
 	if(gender == FEMALE)
 		return capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))

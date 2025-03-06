@@ -271,6 +271,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/organ/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
+		//The abstract grown item expects a seed, but doesn't have one
+
+		/obj/item/food/grown,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -286,8 +289,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	returnable_list += typesof(/obj/item/poster/wanted)
-	//This expects a seed, we can't pass it
-	returnable_list += typesof(/obj/item/food/grown)
 	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
 	returnable_list += typesof(/obj/effect/client_image_holder)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.

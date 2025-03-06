@@ -123,3 +123,37 @@
   - bugfix: the eldritch id (Lock path) now preserves the ID used.
   timothymtorres:
   - bugfix: Fix hauntinum reagent to work when it is exposed to item objects.
+2025-03-05:
+  Jacquerel:
+  - rscadd: Apples now react appropriately if they impact doctors or scientists under
+      the expected circumstances.
+  StrangeWeirdKitten:
+  - bugfix: Megafauna should no longer attack eachother.
+  TJatPBnJ:
+  - balance: French fries are now immune to the effects of the floor. I miss floor
+      fries
+2025-03-06:
+  Absolucy:
+  - qol: Messages from blood cult communion, abductor telepathy, xeno hivemind, golem
+      resonator, blob telepathy, changeling hivemind, and binary chat are now considered
+      "radio" messages by the chat, so they can properly be sorted via chat tabs.
+  - qol: Your own messages in blood cult communion, abductor/xenomorph/changeling
+      hivemind, or golem telepathy will no longer be highlighted in chat (to prevent
+      highlight spam whenever you talk if you highlight your own name, mainly)
+  Ghommie:
+  - bugfix: Follower hoodies can now be crafted.
+  Kashargul:
+  - bugfix: TG chat can no longer initialize before the settings loading was called
+  - qol: chat settings can be exported and imported
+  LemonInTheDark:
+  - config: the config loader now supports relatively pathed imports (importing a
+      file inside a subfolder now acts as if you were IN that subfolder)
+  Melbert:
+  - bugfix: Fixed random names always giving male names
+  Singul0:
+  - balance: Buffs the energy cells borg factory-spawned cyborgs spawn with (They
+      are now T2 cells)
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: chameleon IDs actually prevent AI tracking now
+  hry-gh:
+  - bugfix: the admin music player works again on 516
