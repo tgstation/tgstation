@@ -391,6 +391,10 @@
 
 	damaged = TRUE
 
+/obj/item/organ/eyes/feel_for_damage(self_aware)
+	// Eye damage has visual effects, so we don't really need to "feel" it when self-examining
+	return ""
+
 #define BASE_BLINKING_DELAY 5 SECONDS
 #define RAND_BLINKING_DELAY 1 SECONDS
 #define BLINK_DURATION 0.15 SECONDS

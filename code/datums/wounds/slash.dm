@@ -5,6 +5,7 @@
 
 /datum/wound/slash
 	name = "Slashing (Cut) Wound"
+	undiagnosed_name = "Cut"
 	sound_effect = 'sound/items/weapons/slice.ogg'
 
 /datum/wound_pregen_data/flesh_slash

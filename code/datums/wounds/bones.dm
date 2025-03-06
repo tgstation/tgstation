@@ -108,7 +108,7 @@
 		if(!victim || !limb)
 			qdel(src)
 			return
-		to_chat(victim, span_green("Your [limb.plaintext_zone] has recovered from its [name]!"))
+		to_chat(victim, span_green("Your [limb.plaintext_zone] has recovered from its [LOWER_TEXT(undiagnosed_name || name)]!"))
 		remove_wound()
 
 /// If we're a human who's punching something with a broken arm, we might hurt ourselves doing so
@@ -229,6 +229,7 @@
 /// Joint Dislocation (Moderate Blunt)
 /datum/wound/blunt/bone/moderate
 	name = "Joint Dislocation"
+	undiagnosed_name = "Dislocation"
 	desc = "Patient's limb has been unset from socket, causing pain and reduced motor function."
 	treat_text = "Apply Bonesetter to the affected limb. \
 		Manual relocation by via an aggressive grab and a tight hug to the affected limb may also suffice."
@@ -271,6 +272,9 @@
 
 	return ..()
 
+/datum/wound/blunt/bone/moderate/get_self_check_description(mob/user)
+	return span_warning("It feels dislocated!")
+
 /// Getting smushed in an airlock/firelock is a last-ditch attempt to try relocating your limb
 /datum/wound/blunt/bone/moderate/proc/door_crush()
 	SIGNAL_HANDLER
@@ -285,7 +289,7 @@
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)
-		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [LOWER_TEXT(name)]!"))
+		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [LOWER_TEXT(undiagnosed_name || name)]!"))
 		return TRUE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -402,6 +406,7 @@
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/bone/critical
 	name = "Compound Fracture"
+	undiagnosed_name = null // you can tell it's a compound fracture at a glance because of a skin breakage
 	desc = "Patient's bones have suffered multiple fractures, \
 		couped with a break in the skin, causing significant pain and near uselessness of limb."
 	treat_text = "Immediately bind the affected limb with gauze or a splint. Repair surgically. \

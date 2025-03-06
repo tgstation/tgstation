@@ -62,6 +62,8 @@
 			disabled += body_part
 		missing -= body_part.body_zone
 		for(var/obj/item/embedded as anything in body_part.embedded_objects)
+			if(embedded.get_embed().stealthy_embed)
+				continue
 			var/harmless = embedded.get_embed().is_harmless()
 			var/stuck_wordage = harmless ? "stuck to" : "embedded in"
 			var/embed_line = "\a [embedded]"
