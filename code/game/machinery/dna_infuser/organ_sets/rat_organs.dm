@@ -21,7 +21,7 @@
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "eyes"
-	iris_overlays = FALSE
+	iris_overlay = null
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 	low_light_cutoff = list(16, 11, 0)

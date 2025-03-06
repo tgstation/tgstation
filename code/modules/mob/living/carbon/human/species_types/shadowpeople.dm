@@ -93,7 +93,7 @@
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
-	iris_overlays = FALSE
+	iris_overlay = null
 	color_cutoffs = list(20, 10, 40)
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
