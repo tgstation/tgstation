@@ -335,72 +335,77 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/shoes_overlay
 		var/icon_file = DEFAULT_SHOES_FILE
-		if(is_species(src, /datum/species/pony))
-			var/static/icon/toe_mask
-			if(!toe_mask)
-				toe_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "toe_removal")
-			var/static/icon/darken_mask
-			if(!darken_mask)
-				darken_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "darken_back_shoe")
+		if(bodyshape & BODYSHAPE_PONY)
+			var/static/list/pony_shoe_cache = list()
+			var/index = "[shoes.icon]-[shoes.icon_state]"
+			var/icon/resulting_icon = pony_shoe_cache[index]
+			if(!resulting_icon)
+				var/static/icon/toe_mask
+				if(!toe_mask)
+					toe_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "toe_removal")
+				var/static/icon/darken_mask
+				if(!darken_mask)
+					darken_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "darken_back_shoe")
 
-			var/icon/shoes_icon = icon(shoes.worn_icon ? shoes.worn_icon : icon_file, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state)
+				var/icon/shoes_icon = icon(shoes.worn_icon ? shoes.worn_icon : icon_file, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state)
 
-			//fcopy(shoes_icon, "TEST_shoes_icon.dmi")
-			shoes_icon.Blend(toe_mask, ICON_SUBTRACT)
+				//fcopy(shoes_icon, "TEST_shoes_icon.dmi")
+				shoes_icon.Blend(toe_mask, ICON_SUBTRACT)
 
-			//fcopy(shoes_icon, "TEST_toe_mask.dmi")
+				//fcopy(shoes_icon, "TEST_toe_mask.dmi")
 
-			var/icon/new_south = icon(shoes_icon, dir=SOUTH)
-			var/icon/new_north = icon(shoes_icon, dir=NORTH)
-			var/pixel_height
-			for(var/i in 1 to 32)
-				var/color_to_check = shoes_icon.GetPixel(17, i, SOUTH)
-				if(!color_to_check)
-					break // we have hit transparent pixels
-				pixel_height = i
-			var/color_to_use = shoes_icon.GetPixel(shoes.pony_clothing_sample_pixels[1][1], shoes.pony_clothing_sample_pixels[1][2])
-			new_south.DrawBox(color_to_use, 16, 1, 16, pixel_height) // todo: make this use the adjacent pixels instead to match color better
-			new_north.DrawBox(color_to_use, 16, 1, 16, pixel_height)
+				var/icon/new_south = icon(shoes_icon, dir=SOUTH)
+				var/icon/new_north = icon(shoes_icon, dir=NORTH)
+				var/pixel_height
+				for(var/i in 1 to 32)
+					var/color_to_check = shoes_icon.GetPixel(17, i, SOUTH)
+					if(!color_to_check)
+						break // we have hit transparent pixels
+					pixel_height = i
+					var/color_to_use = shoes_icon.GetPixel(17, pixel_height)
+					new_south.DrawBox(color_to_use, 16, pixel_height, 16, pixel_height)
+					new_north.DrawBox(color_to_use, 16, pixel_height, 16, pixel_height)
 
-			//fcopy(new_south, "TEST_new_south.dmi")
-			//fcopy(new_north, "TEST_new_north.dmi")
+				//fcopy(new_south, "TEST_new_south.dmi")
+				//fcopy(new_north, "TEST_new_north.dmi")
 
-			var/icon/blank_east = icon('icons/blanks/32x32.dmi', "nothing")
-			var/icon/blank_west = icon('icons/blanks/32x32.dmi', "nothing")
+				var/icon/blank_east = icon('icons/blanks/32x32.dmi', "nothing")
+				var/icon/blank_west = icon('icons/blanks/32x32.dmi', "nothing")
 
-			var/icon/new_east_back = icon(shoes_icon, dir=EAST)
-			var/icon/new_west_back = icon(shoes_icon, dir=WEST)
+				var/icon/new_east_back = icon(shoes_icon, dir=EAST)
+				var/icon/new_west_back = icon(shoes_icon, dir=WEST)
 
-			new_east_back.Blend(darken_mask, ICON_MULTIPLY)
-			new_west_back.Blend(darken_mask, ICON_MULTIPLY)
+				new_east_back.Blend(darken_mask, ICON_MULTIPLY)
+				new_west_back.Blend(darken_mask, ICON_MULTIPLY)
 
-			//fcopy(new_east_back, "TEST_new_east_back.dmi")
-			//fcopy(new_west_back, "TEST_new_west_back.dmi")
+				//fcopy(new_east_back, "TEST_new_east_back.dmi")
+				//fcopy(new_west_back, "TEST_new_west_back.dmi")
 
-			var/icon/new_east_front = icon(shoes_icon, dir=EAST)
-			var/icon/new_west_front = icon(shoes_icon, dir=WEST)
+				var/icon/new_east_front = icon(shoes_icon, dir=EAST)
+				var/icon/new_west_front = icon(shoes_icon, dir=WEST)
 
-			blank_east.Blend(new_east_back, ICON_OVERLAY, -3, 0)
-			blank_east.Blend(new_east_front, ICON_OVERLAY, -5, 0)
-			blank_east.Blend(new_east_back, ICON_OVERLAY, 7, 0)
-			blank_east.Blend(new_east_front, ICON_OVERLAY, 5, 0)
-			//fcopy(blank_east, "TEST_blank_east.dmi")
-			blank_west.Blend(new_west_back, ICON_OVERLAY, -3, 0)
-			blank_west.Blend(new_west_front, ICON_OVERLAY, -5, 0)
-			blank_west.Blend(new_west_back, ICON_OVERLAY, 7, 0)
-			blank_west.Blend(new_west_front, ICON_OVERLAY, 5, 0)
+				blank_east.Blend(new_east_back, ICON_OVERLAY, -1, 0)
+				blank_east.Blend(new_east_front, ICON_OVERLAY, -3, 0)
+				blank_east.Blend(new_east_back, ICON_OVERLAY, 7, 0)
+				blank_east.Blend(new_east_front, ICON_OVERLAY, 5, 0)
+				//fcopy(blank_east, "TEST_blank_east.dmi")
+				blank_west.Blend(new_west_back, ICON_OVERLAY, 2, 0)
+				blank_west.Blend(new_west_front, ICON_OVERLAY, 4, 0)
+				blank_west.Blend(new_west_back, ICON_OVERLAY, -6, 0)
+				blank_west.Blend(new_west_front, ICON_OVERLAY, -4, 0)
 
-			//fcopy(blank_east, "TEST_blank_west.dmi")
+				//fcopy(blank_east, "TEST_blank_west.dmi")
 
-			var/icon/final_icon = icon()
+				var/icon/final_icon = icon()
 
-			final_icon.Insert(new_south, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, SOUTH)
-			final_icon.Insert(new_north, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, NORTH)
-			final_icon.Insert(blank_east, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, EAST)
-			final_icon.Insert(blank_west, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, WEST)
-
+				final_icon.Insert(new_south, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, SOUTH)
+				final_icon.Insert(new_north, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, NORTH)
+				final_icon.Insert(blank_east, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, EAST)
+				final_icon.Insert(blank_west, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, WEST)
+				resulting_icon = fcopy_rsc(final_icon)
+				pony_shoe_cache[index] = resulting_icon
 			//fcopy(final_icon, "TEST_final_icon.dmi")
-			shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = final_icon)
+			shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = resulting_icon)
 		else
 			shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
 			if(!shoes_overlay)
@@ -437,7 +442,7 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/s_store_overlay
 		var/icon_file = 'icons/mob/clothing/belt_mirror.dmi'
-		if(is_species(src, /datum/species/pony))
+		if(bodyshape & BODYSHAPE_PONY)
 			var/icon/new_south = icon('icons/blanks/32x32.dmi', "nothing")
 			var/icon/new_north = icon('icons/blanks/32x32.dmi', "nothing")
 			var/icon/new_east = icon(worn_item.worn_icon ? worn_item.worn_icon : icon_file, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, SOUTH) // we aren't using the side sprites
@@ -500,7 +505,7 @@ There are several things that need to be remembered:
 			return
 		var/mutable_appearance/belt_overlay
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
-		if(is_species(src, /datum/species/pony))
+		if(bodyshape & BODYSHAPE_PONY)
 			var/icon/new_south = icon('icons/blanks/32x32.dmi', "nothing")
 			var/icon/new_north = icon('icons/blanks/32x32.dmi', "nothing")
 			var/icon/new_east = icon(belt.worn_icon ? belt.worn_icon : icon_file, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, SOUTH) // we aren't using the side sprites
@@ -538,7 +543,7 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/suit_overlay
 		var/icon_file = DEFAULT_SUIT_FILE
-		if(is_species(src, /datum/species/pony))
+		if(bodyshape & BODYSHAPE_PONY)
 			var/icon/new_south = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, SOUTH)
 			var/icon/new_north = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, NORTH)
 			var/icon/new_east = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, EAST)
@@ -641,7 +646,7 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
-		if(is_species(src, /datum/species/pony))
+		if(bodyshape & BODYSHAPE_PONY)
 			var/icon/new_south = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, WEST)
 			var/icon/new_north = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, EAST)
 			var/icon/new_east = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, SOUTH)
@@ -671,7 +676,7 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
-		if(is_species(src, /datum/species/pony))
+		if(bodyshape & BODYSHAPE_PONY)
 			var/icon/new_south = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, EAST)
 			var/icon/new_north = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, WEST)
 			var/icon/new_east = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, NORTH)
@@ -1008,7 +1013,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/mob/living/carbon/wearer = loc
 	var/is_digi = istype(wearer) && (wearer.bodyshape & BODYSHAPE_DIGITIGRADE) && !wearer.is_digitigrade_squished()
-	var/is_pony = is_species(wearer, /datum/species/pony)
+	var/is_pony = istype(wearer) && (wearer.bodyshape & BODYSHAPE_PONY)
+
 
 	var/mutable_appearance/standing // this is the actual resulting MA
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA

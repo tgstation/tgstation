@@ -4,12 +4,17 @@
 	id = SPECIES_PONY
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
+		TRAIT_NO_UNDERWEAR_ONLY,
+		TRAIT_NO_UNDERSHIRT_ONLY,
+		TRAIT_PONY_PREFS, // provides access to the preference for selecting what organ to have
 	)
 	inherent_biotypes = MOB_ORGANIC
-	mutant_organs = list( // TODO: SET THIS UP FOR THE HORN/WING/NONE CHOICE
-		///obj/item/organ/horns = SPRITE_ACCESSORY_NONE,
+	mutant_organs = list(
+		/obj/item/organ/ears/pony = "Pony",
+		/obj/item/organ/tail/pony = "Pony",
 	)
 	mutanteyes = /obj/item/organ/eyes/pony
+	mutantears = /obj/item/organ/ears/pony
 	sexes = FALSE // todo: get them to only be women
 	payday_modifier = 0.8
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT

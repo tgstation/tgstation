@@ -3,6 +3,7 @@
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
 	limb_id = SPECIES_PONY
 	is_dimorphic = FALSE
+	bodyshape = BODYSHAPE_PONY
 	head_flags = HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_DEBRAIN|HEAD_HAIR
 	teeth_count = 24
 	/// Offset to apply to equipment held in the mouth.
@@ -91,6 +92,7 @@
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
 	limb_id = SPECIES_PONY
 	is_dimorphic = FALSE
+	bodyshape = BODYSHAPE_PONY
 
 /obj/item/bodypart/chest/pony/Initialize(mapload)
 	. = ..()
@@ -132,6 +134,7 @@
 	limb_id = SPECIES_PONY
 	unarmed_attack_verbs = list("kicks", "hoofs", "stomps")
 	grappled_attack_verb = "stomps"
+	bodyshape = BODYSHAPE_PONY
 
 /obj/item/bodypart/arm/left/pony/Initialize(mapload)
 	. = ..()
@@ -148,6 +151,7 @@
 	limb_id = SPECIES_PONY
 	unarmed_attack_verbs = list("kicks", "hoofs", "stomps")
 	grappled_attack_verb = "stomps"
+	bodyshape = BODYSHAPE_PONY
 
 /obj/item/bodypart/arm/right/pony/Initialize(mapload)
 	. = ..()
@@ -161,6 +165,7 @@
 /obj/item/bodypart/leg/left/pony
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
 	limb_id = SPECIES_PONY
+	bodyshape = BODYSHAPE_PONY
 
 /obj/item/bodypart/leg/left/pony/Initialize(mapload)
 	. = ..()
@@ -174,6 +179,7 @@
 /obj/item/bodypart/leg/right/pony
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
 	limb_id = SPECIES_PONY
+	bodyshape = BODYSHAPE_PONY
 
 /obj/item/bodypart/leg/right/pony/Initialize(mapload)
 	. = ..()
@@ -193,4 +199,99 @@
 	return list(eyelashes)
 
 /obj/item/organ/ears/pony
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "m_pony_ears_pony_FRONT"
+	worn_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	worn_icon_state = "m_pony_ears_pony_FRONT"
+	visual = TRUE
 	damage_multiplier = 2 // pony ears are big and sensitive to loud noises
+
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
+
+	dna_block = DNA_EARS_BLOCK
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_ears
+
+/datum/bodypart_overlay/mutant/pony_ears
+	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	color_source = ORGAN_COLOR_INHERIT
+	feature_key = "pony_ears"
+	dyable = TRUE
+
+/datum/bodypart_overlay/mutant/pony_ears/get_global_feature_list()
+	return SSaccessories.pony_ears_list
+
+/datum/bodypart_overlay/mutant/pony_ears/can_draw_on_bodypart(mob/living/carbon/human/human)
+	//if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+	//	return FALSE
+	return TRUE
+
+/obj/item/organ/tail/pony
+	name = "pony tail"
+	preference = "feature_pony_tail"
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_tail
+
+	wag_flags = NONE
+	dna_block = DNA_PONY_TAIL_BLOCK
+
+/datum/bodypart_overlay/mutant/pony_tail
+	dyable = TRUE
+	color_source = ORGAN_COLOR_HAIR
+	feature_key = "pony_tail"
+	layers = EXTERNAL_FRONT
+
+/datum/bodypart_overlay/mutant/pony_tail/get_global_feature_list()
+	return SSaccessories.pony_tail_list
+
+/datum/preference/choiced/pony_tail
+	savefile_key = "feature_pony_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_external_organ = /obj/item/organ/tail/pony
+
+/datum/preference/choiced/pony_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.pony_tail_list)
+
+/datum/preference/choiced/pony_tail/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["pony_tail"] = value
+
+/datum/preference/choiced/pony_tail/create_default_value()
+	return /datum/sprite_accessory/pony_tail/pony::name
+
+/datum/preference/choiced/pony_choice
+	savefile_key = "feature_pony_choice"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_inherent_trait = TRAIT_PONY_PREFS
+
+/datum/preference/choiced/pony_tail/init_possible_values()
+	return list("Unicorn", "Pegasus", "Earth")
+
+/datum/preference/choiced/pony_choice/apply_to_human(mob/living/carbon/human/target, value)
+	switch(value)
+		if("Unicorn")
+		if("Pegasus")
+		if("Earth")
+
+/datum/preference/choiced/pony_tail/create_default_value()
+	return /datum/sprite_accessory/pony_tail/pony::name
+
+/obj/item/organ/pony_horn
+	name = "unicorn horn"
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "m_pony_horn_pony_FRONT"
+	worn_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	worn_icon_state = "m_pony_horn_pony_FRONT"
+	visual = TRUE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_horn
+	slot = ORGAN_SLOT_PONY_HORN
+
+/datum/bodypart_overlay/mutant/pony_horn
+	dyable = TRUE
+	color_source = ORGAN_COLOR_INHERIT
+	feature_key = "pony_horn"
+	layers = EXTERNAL_FRONT
+
+/datum/bodypart_overlay/mutant/pony_horn/get_global_feature_list()
+	return SSaccessories.pony_tail_list

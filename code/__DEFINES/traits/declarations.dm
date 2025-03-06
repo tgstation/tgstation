@@ -161,6 +161,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
 #define TRAIT_NO_UNDERWEAR "no_underwear"
+/// Humans with this trait cannot have underwear only
+#define TRAIT_NO_UNDERWEAR_ONLY "no_underwear_only"
+/// Humans with this trait cannot have underwear
+#define TRAIT_NO_UNDERSHIRT_ONLY "no_undershirt_only"
+/// Humans with this trait cannot have underwear
+#define TRAIT_NO_SOCKS_ONLY "no_socks_only"
+/// Species with this trait have access to the pony horn/wings/earth preference
+#define TRAIT_PONY_PREFS "pony_prefs"
 /// This carbon doesn't show an overlay when they have no brain
 #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 /// Humans with this trait cannot get augmentation surgery

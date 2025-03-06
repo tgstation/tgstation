@@ -1954,6 +1954,42 @@
 	name = "Round"
 	icon_state = "round"
 
+/datum/sprite_accessory/pony_ears
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	em_block = TRUE
+
+/datum/sprite_accessory/pony_ears/pony
+	name = "Pony"
+	icon_state = "pony"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/pony_tail
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	em_block = TRUE
+
+/datum/sprite_accessory/pony_tail/pony
+	name = "Pony"
+	icon_state = "pony"
+	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/pony_horn
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	em_block = TRUE
+
+/datum/sprite_accessory/pony_horn/pony
+	name = "Pony"
+	icon_state = "pony"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/pony_wings
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	em_block = TRUE
+
+/datum/sprite_accessory/pony_wings/pony
+	name = "Pony"
+	icon_state = "pony"
+	color_src = MUTANT_COLOR
+
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
