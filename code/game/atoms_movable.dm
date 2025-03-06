@@ -641,7 +641,7 @@
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
-
+	SEND_SIGNAL(src, COMSIG_MOVABLE_ATTEMPTED_MOVE, newloc, direction)
 	// A mid-movement... movement... occurred, resolve that first.
 	RESOLVE_ACTIVE_MOVEMENT
 
