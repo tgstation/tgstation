@@ -620,7 +620,20 @@
 
 	return get_desc_intensity(desc)
 
-/datum/wound/proc/get_self_check_description()
+/**
+ * Used when a mob is examining themselves / their limbs
+ *
+ * Reports what this wound looks like to them
+ *
+ * It should be formatted as an extension of the limb:
+ * Input is something like "Your chest is bruised.",
+ * you would add something like "It is bleeding."
+ *
+ * * self_aware - if TRUE, the examiner is more aware of themselves and thus may get more detailed information
+ *
+ * Return a string, to be concatenated with other organ / limb status strings. Include spans and punctuation.
+ */
+/datum/wound/proc/get_self_check_description(self_aware)
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return span_danger("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")

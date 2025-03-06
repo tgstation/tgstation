@@ -413,7 +413,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * Input is something like "Your chest is bruised. It is bleeding.",
  * you would add something like "It hurts a little, and your stomach cramps."
  *
- * * Self
+ * * self_aware - if TRUE, the examiner is more aware of themselves and thus may get more detailed information
  *
  * Return a string, to be concatenated with other organ / limb status strings. Include spans and punctuation.
  */

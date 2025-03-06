@@ -360,7 +360,7 @@
 			check_list += "\t[feeling]"
 
 	for(var/datum/wound/wound as anything in wounds)
-		var/wound_desc = wound.get_self_check_description()
+		var/wound_desc = wound.get_self_check_description(adept_organ_feeler)
 		if(wound_desc)
 			check_list += "\t[wound_desc]"
 
