@@ -116,6 +116,12 @@
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
+	RegisterSignal(src, COMSIG_ATOM_JAMMER_ACT, PROC_REF(radio_jam_act))
+	var/static/list/containers_connections = list(
+		COMSIG_ATOM_JAMMER_ACT = PROC_REF(radio_jam_act),
+	)
+	AddComponent(/datum/component/connect_containers, src, containers_connections)
+
 	// No subtypes
 	if(type != /obj/item/radio)
 		return
@@ -448,6 +454,13 @@
 		var/sound/radio_important = sound('sound/items/radio/radio_important.ogg', volume = volume_modifier)
 		radio_important.frequency = get_rand_frequency_low_range()
 		SEND_SOUND(holder, radio_important)
+
+///Called when the radio has been jammed.
+/obj/item/radio/proc/radio_jam_act(datum/source, ignore_syndie)
+	SIGNAL_HANDLER
+	if(ignore_syndie && (special_channels & RADIO_SPECIAL_SYNDIE))
+		return
+	set_broadcasting(FALSE)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
