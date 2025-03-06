@@ -1851,7 +1851,7 @@
 /datum/reagent/medicine/final_fortuna/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
-	if(prob(33))
+	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote("scream")
 
 /datum/reagent/medicine/final_fortuna/on_mob_end_metabolize(mob/living/affected_mob)
