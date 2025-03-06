@@ -38,6 +38,7 @@
 
 /datum/hallucination/fire/start()
 	fire_overlay = image(fire_icon, hallucinator, fire_icon_state, ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(fire_overlay, ABOVE_GAME_PLANE, hallucinator)
 	hallucinator.client?.images |= fire_overlay
 	to_chat(hallucinator, span_userdanger("You're set on fire!"))
 	hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire, override = TRUE)

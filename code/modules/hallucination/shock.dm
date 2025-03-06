@@ -30,6 +30,9 @@
 	electrocution_skeleton_anim = image(electrocution_icon, hallucinator, icon_state = electrocution_icon_state, layer = ABOVE_MOB_LAYER)
 	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 
+	SET_PLANE_EXPLICIT(shock_image, ABOVE_GAME_PLANE, hallucinator)
+	SET_PLANE_EXPLICIT(electrocution_skeleton_anim, ABOVE_GAME_PLANE, hallucinator)
+
 	to_chat(hallucinator, span_userdanger("You feel a powerful shock course through your body!"))
 	hallucinator.visible_message(span_warning("[hallucinator] falls to the ground, shaking!"), ignored_mobs = hallucinator)
 	hallucinator.client?.images |= shock_image

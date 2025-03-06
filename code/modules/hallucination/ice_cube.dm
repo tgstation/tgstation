@@ -20,6 +20,7 @@
 
 /datum/hallucination/ice/start()
 	ice_overlay = image(ice_icon, hallucinator, ice_icon_state, ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(ice_overlay, ABOVE_GAME_PLANE, hallucinator)
 	hallucinator.client?.images |= ice_overlay
 	ADD_TRAIT(hallucinator, TRAIT_IMMOBILIZED, HALLUCINATION_TRAIT)
 	to_chat(hallucinator, span_userdanger("You become frozen in a cube!"))
