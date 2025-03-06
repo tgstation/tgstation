@@ -995,9 +995,13 @@
 	light_range = 0
 	light_color = COLOR_WHITE
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
-	var/dark_light_range = 2.5
+	var/dark_light_range = 3.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_power = -3
+
+/obj/item/flashlight/flashdark/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/overlay_lighting, dark_light_range, dark_light_power, force = TRUE)
 
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()

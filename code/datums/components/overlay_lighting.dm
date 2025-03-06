@@ -73,12 +73,12 @@
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
 
-/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam)
+/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	var/atom/movable/movable_parent = parent
-	if(movable_parent.light_system != OVERLAY_LIGHT && movable_parent.light_system != OVERLAY_LIGHT_DIRECTIONAL && movable_parent.light_system != OVERLAY_LIGHT_BEAM)
+	if(!force && movable_parent.light_system != OVERLAY_LIGHT && movable_parent.light_system != OVERLAY_LIGHT_DIRECTIONAL && movable_parent.light_system != OVERLAY_LIGHT_BEAM)
 		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use [OVERLAY_LIGHT], [OVERLAY_LIGHT_DIRECTIONAL] or [OVERLAY_LIGHT_BEAM] instead.")
 		return COMPONENT_INCOMPATIBLE
 
@@ -391,6 +391,9 @@
 	var/new_power = source.light_power
 	set_lum_power(new_power >= 0 ? 0.5 : -0.5)
 	set_alpha = min(230, (abs(new_power) * 120) + 30)
+	visible_mask.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
+	if(directional)
+		cone.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= visible_mask
 	visible_mask.alpha = set_alpha
