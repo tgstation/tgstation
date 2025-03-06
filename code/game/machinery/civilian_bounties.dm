@@ -107,13 +107,11 @@
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
-	if(!inserted_scan_id)
+	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	var/datum/bounty/current_bounty = id_account?.civilian_bounty
+	if(!current_bounty)
 		stop_sending()
 		return FALSE
-	if(!inserted_scan_id.registered_account.civilian_bounty)
-		stop_sending()
-		return FALSE
-	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	for(var/atom/movable/possible_shippable in get_turf(pad))
@@ -125,24 +123,24 @@
 			var/obj/item/possible_shippable_item = possible_shippable
 			if(possible_shippable_item.item_flags & ABSTRACT)
 				continue
-		if(curr_bounty.applies_to(possible_shippable))
+		if(current_bounty.applies_to(possible_shippable))
 			active_stack ++
-			curr_bounty.ship(possible_shippable)
+			current_bounty.ship(possible_shippable)
 			qdel(possible_shippable)
 	if(active_stack >= 1)
 		status_report += "Bounty Target Found x[active_stack]. "
 	else
 		status_report = "No applicable targets found. Aborting."
 		stop_sending()
-	if(curr_bounty.can_claim())
+	if(current_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
-		SSblackbox.record_feedback("tally", "bounties_completed", 1, curr_bounty.type)
-		inserted_scan_id.registered_account.reset_bounty()
+		SSblackbox.record_feedback("tally", "bounties_completed", 1, current_bounty.type)
+		id_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
 
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
-		reward.set_up(curr_bounty, inserted_scan_id)
+		reward.set_up(current_bounty, inserted_scan_id)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
@@ -151,22 +149,22 @@
 	sending = FALSE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
-/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(cooldown_reduction = 0)
-	if(!inserted_scan_id || !inserted_scan_id.registered_account)
+/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(mob/user, cooldown_reduction = 0)
+	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	if(!id_account)
 		return
-	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
-	if((pot_acc.civilian_bounty || pot_acc.bounties) && !COOLDOWN_FINISHED(pot_acc, bounty_timer))
-		var/curr_time = round((COOLDOWN_TIMELEFT(pot_acc, bounty_timer)) / (1 MINUTES), 0.01)
-		say("Internal ID network spools coiling, try again in [curr_time] minutes!")
+	if((id_account.civilian_bounty || id_account.bounties) && !COOLDOWN_FINISHED(id_account, bounty_timer))
+		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(id_account, bounty_timer), round_seconds_to = 1)
+		balloon_alert(user, "try again in [time_left]!")
 		return FALSE
-	if(!pot_acc.account_job)
+	if(!id_account.account_job)
 		say("Requesting ID card has no job assignment registered!")
 		return FALSE
-	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
-										random_bounty(pot_acc.account_job.bounty_types), // and 1 guaranteed assistant bounty if the other 2 suck.
+	var/list/datum/bounty/crumbs = list(random_bounty(id_account.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
+										random_bounty(id_account.account_job.bounty_types), // and 1 guaranteed assistant bounty if the other 2 suck.
 										random_bounty(CIV_JOB_BASIC))
-	COOLDOWN_START(pot_acc, bounty_timer, (5 MINUTES) - cooldown_reduction)
-	pot_acc.bounties = crumbs
+	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
+	id_account.bounties = crumbs
 
 /**
  * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
@@ -175,13 +173,14 @@
  * @param choice The index of the bounty in the list of bounties that the player can choose from.
  */
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
-	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
+	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	if(!id_account?.bounties?[choice])
 		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
-	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
-	inserted_scan_id.registered_account.bounties = null
-	SSblackbox.record_feedback("tally", "bounties_assigned", 1, inserted_scan_id.registered_account.civilian_bounty.type)
-	return inserted_scan_id.registered_account.civilian_bounty
+	id_account.civilian_bounty = id_account.bounties[choice]
+	id_account.bounties = null
+	SSblackbox.record_feedback("tally", "bounties_assigned", 1, id_account.civilian_bounty.type)
+	return id_account.civilian_bounty
 
 /obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)
 	id_eject(user, inserted_scan_id)
@@ -222,7 +221,8 @@
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	if(!pad)
 		return
-	if(!usr.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
+	var/mob/user = ui.user
+	if(!user.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")
@@ -234,9 +234,9 @@
 		if("pick")
 			pick_bounty(params["value"])
 		if("bounty")
-			add_bounties(pad.get_cooldown_reduction())
+			add_bounties(user, pad.get_cooldown_reduction())
 		if("eject")
-			id_eject(usr, inserted_scan_id)
+			id_eject(user, inserted_scan_id)
 			inserted_scan_id = null
 	. = TRUE
 
