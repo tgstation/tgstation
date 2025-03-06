@@ -93,7 +93,7 @@
 	max_slots = 5
 	open_sound = 'sound/items/handling/holster_open.ogg'
 	open_sound_vary = TRUE
-	rustle_sound = FALSE
+	rustle_sound = null
 
 /datum/storage/security_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
