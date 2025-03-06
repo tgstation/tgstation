@@ -321,6 +321,7 @@
  */
 /datum/weather/proc/thunder_act_turf(turf/open/weather_turf)
 	var/obj/effect/temp_visual/thunderbolt/thunder = new(weather_turf)
+	thunder.flash_lighting_fx(6, 2, duration = thunder.duration)
 
 	if(thunder_color)
 		thunder.color = thunder_color
@@ -331,7 +332,7 @@
 
 	for(var/obj/hit_thing in weather_turf)
 		hit_thing.take_damage(20, BURN, ENERGY, FALSE)
-	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, TRUE)
+	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, extrarange = 10, falloff_distance = 10)
 	weather_turf.visible_message(span_danger("A thunderbolt strikes [weather_turf]!"))
 	explosion(weather_turf, light_impact_range = 1, flame_range = 1, silent = TRUE, adminlog = FALSE)
 
