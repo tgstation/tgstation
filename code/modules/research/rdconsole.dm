@@ -35,6 +35,8 @@ Nothing else in the console has ID requirements.
 	var/id_cache = list()
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
+	/// Cooldown that prevents hanging the MC when tech disks are copied
+	COOLDOWN_DECLARE(cooldowncopy)
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
@@ -356,6 +358,9 @@ Nothing else in the console has ID requirements.
 		if ("ejectDisk")
 			eject_disk(params["type"])
 			return TRUE
+		if(!COOLDOWN_FINISHED(src, cooldowncopy))
+			say("Servers busy!")
+			return
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
@@ -373,6 +378,7 @@ Nothing else in the console has ID requirements.
 					return TRUE
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
+				COOLDOWN_START(src, cooldowncopy, 3 SECONDS)
 			return TRUE
 		//Tech disk-only action.
 		if ("loadTech")
@@ -381,6 +387,7 @@ Nothing else in the console has ID requirements.
 				return
 			stored_research.copy_research_to(t_disk.stored_research)
 			say("Downloading to technology disk.")
+			COOLDOWN_START(src, cooldowncopy, 3 SECONDS)
 			return TRUE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)
