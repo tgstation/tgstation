@@ -68,6 +68,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/blackbox/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE)
 
 /**
  * The equivalent of the server, for PDA and request console messages.

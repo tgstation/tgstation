@@ -78,6 +78,11 @@
 	var/obj/item/warp_cube/linked
 	var/teleporting = FALSE
 
+/obj/item/warp_cube/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE)
+
 /obj/item/warp_cube/Destroy()
 	if(!QDELETED(linked))
 		qdel(linked)

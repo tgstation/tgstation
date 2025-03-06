@@ -162,6 +162,11 @@
 /obj/item/dice/d6
 	name = "d6"
 
+/obj/item/dice/d6/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE)
+
 /obj/item/dice/d6/ebony
 	name = "ebony die"
 	desc = "A die with six sides made of dense black wood. It feels cold and heavy in your hand."

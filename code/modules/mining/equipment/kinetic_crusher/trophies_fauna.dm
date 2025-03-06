@@ -197,6 +197,11 @@
 	///cooldown to summon demons upon the target
 	COOLDOWN_DECLARE(summon_cooldown)
 
+/obj/item/crusher_trophy/ice_demon_cube/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
+
 /obj/item/crusher_trophy/ice_demon_cube/effect_desc()
 	return "mark detonation to unleash demonic ice clones upon the target"
 

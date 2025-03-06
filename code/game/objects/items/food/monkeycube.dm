@@ -13,6 +13,11 @@
 	/// Whether we've been wetted and are expanding
 	var/expanding = FALSE
 
+/obj/item/food/monkeycube/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE)
+
 /obj/item/food/monkeycube/attempt_pickup(mob/user)
 	if(expanding)
 		return FALSE

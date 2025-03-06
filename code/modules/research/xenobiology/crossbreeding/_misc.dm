@@ -100,6 +100,11 @@ Slimecrossing Items
 	icon_state = "barriercube"
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/barriercube/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
+
 /obj/item/barriercube/attack_self(mob/user)
 	if(locate(/obj/structure/barricade/slime) in get_turf(loc))
 		to_chat(user, span_warning("You can't fit more than one barrier in the same space!"))

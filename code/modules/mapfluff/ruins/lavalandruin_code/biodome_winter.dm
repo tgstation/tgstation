@@ -14,6 +14,11 @@
 	var/cooldown_time = 5 SECONDS
 	COOLDOWN_DECLARE(freeze_cooldown)
 
+/obj/item/freeze_cube/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = EPIC_CUBE)
+
 /obj/item/freeze_cube/examine(mob/user)
 	. = ..()
 	. += span_notice("Throw this at objects or creatures to freeze them, it will boomerang back so be cautious!")
