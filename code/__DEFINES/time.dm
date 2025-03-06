@@ -11,7 +11,7 @@
 #define CURRENT_STATION_YEAR (GLOB.year_integer + STATION_YEAR_OFFSET)
 
 /// In-universe, SS13 is set 540 years in the future from the real-world day, hence this number for determining the year-offset for the in-game year.
-#define STATION_YEAR_OFFSET 540
+#define STATION_YEAR_OFFSET 500 //doppler edit - 500 years in the ~future~
 
 #define JANUARY 1
 #define FEBRUARY 2
