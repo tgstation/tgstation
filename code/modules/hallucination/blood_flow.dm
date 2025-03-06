@@ -31,7 +31,7 @@
 	addtimer(CALLBACK(src, PROC_REF(stop_bleeding), picked), bleed_duration)
 	if(prob(25))
 		addtimer(CALLBACK(src, PROC_REF(by_god), picked), bleed_duration * pick(0.5, 0.66))
-	INVOKE_ASYNC(src, PROC_REF(stamina_loop))
+	stamina_loop()
 
 	hallucinator.playsound_local(get_turf(hallucinator), pick('sound/effects/wounds/blood1.ogg', 'sound/effects/wounds/blood2.ogg', 'sound/effects/wounds/blood3.ogg'), 50, TRUE)
 	bleeding = image(
@@ -63,6 +63,7 @@
 		qdel(src)
 
 /datum/hallucination/blood_flow/proc/stamina_loop()
+	set waitfor = FALSE
 	while(!QDELETED(src) && !QDELETED(hallucinator))
 		hallucinator.adjustStaminaLoss(5)
 		sleep(4 SECONDS)

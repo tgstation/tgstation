@@ -143,12 +143,10 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 /proc/get_random_hallucination(tier = HALLUCINATION_TIER_COMMON, strict = FALSE)
 	var/list/pool = GLOB.random_hallucination_weighted_list["[tier]"]
 	if(!strict)
-		while(tier)
+		tier -= 1
+		while(tier >= HALLUCINATION_TIER_COMMON)
 			pool += GLOB.random_hallucination_weighted_list["[tier]"]
 			tier -= 1
-
-	if(length(pool) > 999999)
-		CRASH("get_random_hallucination - pool is too large, something went wrong.")
 
 	return pick_weight(pool)
 

@@ -48,6 +48,7 @@
 
 /obj/effect/abstract/floating_eyes
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	// Who sees the eyes?
 	var/datum/weakref/seer_ref
 
 /obj/effect/abstract/floating_eyes/Initialize(mapload, mob/seer)
@@ -80,11 +81,11 @@
 
 /obj/effect/abstract/floating_eyes/process(seconds_per_tick)
 	var/turf/below_us = get_turf(src)
-	if(below_us.get_lumcount() < LIGHTING_TILE_IS_DARK)
-		qdel(src)
-		return
-
 	var/mob/seer = seer_ref?.resolve()
-	if(seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
-		qdel(src)
-		return
+	if(below_us.get_lumcount() < LIGHTING_TILE_IS_DARK || seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
+		graceful_delete()
+
+/obj/effect/abstract/floating_eyes/proc/graceful_delete()
+	STOP_PROCESSING(SSfastprocess, src)
+	animate(src, alpha = 0, time = 0.5 SECONDS)
+	QDEL_IN(src, 0.75 SECONDS)
