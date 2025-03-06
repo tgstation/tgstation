@@ -16,25 +16,25 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	resistance_flags = FLAMMABLE
 	max_integrity = 150
-	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
+	storage_type = /datum/storage/briefcase
 
-/obj/item/storage/briefcase/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 21
+	///this is the path of the folder that gets spawned in New()
+	var/folder_path = /obj/item/folder
 
 /obj/item/storage/briefcase/PopulateContents()
-	new /obj/item/pen(src)
-	var/obj/item/folder/folder = new folder_path(src)
+	. = list(/obj/item/pen)
+
+	var/obj/item/folder/folder = new folder_path(null)
 	for(var/i in 1 to 6)
 		new /obj/item/paper(folder)
+	. += folder
 
 /obj/item/storage/briefcase/lawyer
 	folder_path = /obj/item/folder/blue
 
 /obj/item/storage/briefcase/lawyer/PopulateContents()
-	new /obj/item/stamp/law(src)
-	..()
+	. = ..()
+	. += /obj/item/stamp/law
 
 /obj/item/storage/briefcase/suicide_act(mob/living/user)
 	var/list/papers_found = list()
@@ -63,15 +63,16 @@
 /obj/item/storage/briefcase/sniper
 	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	force = 10
+	storage_type = /datum/storage/briefcase/sniper
 
 /obj/item/storage/briefcase/sniper/PopulateContents()
-	..() // in case you need any paperwork done after your rampage
-	new /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate(src)
-	new /obj/item/clothing/neck/tie/red/hitman(src)
-	new /obj/item/clothing/under/syndicate/sniper(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
+	. = ..() // in case you need any paperwork done after your rampage
+	. += /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
+	. += /obj/item/clothing/neck/tie/red/hitman
+	. += /obj/item/clothing/under/syndicate/sniper
+	. += /obj/item/ammo_box/magazine/sniper_rounds
+	. += /obj/item/ammo_box/magazine/sniper_rounds
+	. += /obj/item/ammo_box/magazine/sniper_rounds/disruptor
 
 /**
  * Secure briefcase
@@ -86,8 +87,7 @@
 
 /obj/item/storage/briefcase/secure/Initialize(mapload)
 	. = ..()
-	atom_storage.max_total_storage = 21
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+
 	AddComponent(/datum/component/lockable_storage)
 
 ///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
@@ -96,26 +96,28 @@
 
 /obj/item/storage/briefcase/secure/syndie/PopulateContents()
 	. = ..()
-	for(var/iterator in 1 to 5)
-		new /obj/item/stack/spacecash/c1000(src)
+	for(var/_ in 1 to 5)
+		. += /obj/item/stack/spacecash/c1000
 
 /// A briefcase that contains various sought-after spoils
-/obj/item/storage/briefcase/secure/riches
-
 /obj/item/storage/briefcase/secure/riches/PopulateContents()
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/gun/ballistic/automatic/pistol(src)
-	new /obj/item/suppressor(src)
-	new /obj/item/melee/baton/telescopic(src)
-	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/soap/nanotrasen(src)
+	return list(
+		/obj/item/clothing/suit/armor/vest,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/suppressor,
+		/obj/item/melee/baton/telescopic,
+		/obj/item/clothing/mask/balaclava,
+		/obj/item/bodybag,
+		/obj/item/soap/nanotrasen,
+	)
 
 /obj/item/storage/briefcase/hitchiker/PopulateContents()
-	new /obj/item/food/sandwich/peanut_butter_jelly(src)
-	new /obj/item/food/sandwich/peanut_butter_jelly(src)
-	new /obj/item/reagent_containers/cup/glass/waterbottle/large(src)
-	new /obj/item/soap(src)
-	new /obj/item/pillow/random(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
+	return list(
+		/obj/item/clothing/suit/armor/vest,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/suppressor,
+		/obj/item/melee/baton/telescopic,
+		/obj/item/clothing/mask/balaclava,
+		/obj/item/bodybag,
+		/obj/item/soap/nanotrasen,
+	)

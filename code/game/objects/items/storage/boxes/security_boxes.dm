@@ -7,8 +7,9 @@
 	illustration = "flashbang"
 
 /obj/item/storage/box/flashbangs/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/grenade/flashbang(src)
+		. += /obj/item/grenade/flashbang
 
 /obj/item/storage/box/stingbangs
 	name = "box of stingbangs (WARNING)"
@@ -17,8 +18,9 @@
 	illustration = "flashbang"
 
 /obj/item/storage/box/stingbangs/PopulateContents()
+	. = list()
 	for(var/i in 1 to 5)
-		new /obj/item/grenade/stingbang(src)
+		. += /obj/item/grenade/stingbang
 
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
@@ -27,8 +29,9 @@
 	illustration = "flash"
 
 /obj/item/storage/box/flashes/PopulateContents()
+	. = list()
 	for(var/i in 1 to 6)
-		new /obj/item/assembly/flash/handheld(src)
+		. += /obj/item/assembly/flash/handheld
 
 /obj/item/storage/box/wall_flash
 	name = "wall-mounted flash kit"
@@ -40,15 +43,19 @@
 	var/id = rand(1000, 9999)
 	// FIXME what if this conflicts with an existing one?
 
-	new /obj/item/wallframe/button(src)
-	new /obj/item/electronics/airlock(src)
-	var/obj/item/assembly/control/flasher/remote = new(src)
+	var/obj/item/assembly/control/flasher/remote = new(null)
 	remote.id = id
-	var/obj/item/wallframe/flasher/frame = new(src)
+	var/obj/item/wallframe/flasher/frame = new(null)
 	frame.id = id
-	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/screwdriver(src)
 
+	return list(
+		/obj/item/wallframe/button,
+		/obj/item/electronics/airlock,
+		/obj/item/assembly/flash/handheld,
+		/obj/item/screwdriver,
+		remote,
+		frame,
+	)
 
 /obj/item/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -57,8 +64,9 @@
 	illustration = "grenade"
 
 /obj/item/storage/box/teargas/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/grenade/chem_grenade/teargas(src)
+		. += /obj/item/grenade/chem_grenade/teargas
 
 /obj/item/storage/box/emps
 	name = "box of emp grenades"
@@ -66,8 +74,9 @@
 	illustration = "emp"
 
 /obj/item/storage/box/emps/PopulateContents()
+	. = list()
 	for(var/i in 1 to 5)
-		new /obj/item/grenade/empgrenade(src)
+		. += /obj/item/grenade/empgrenade
 
 /obj/item/storage/box/prisoner
 	name = "box of prisoner IDs"
@@ -76,14 +85,15 @@
 	illustration = "id"
 
 /obj/item/storage/box/prisoner/PopulateContents()
-	..()
-	new /obj/item/card/id/advanced/prisoner/one(src)
-	new /obj/item/card/id/advanced/prisoner/two(src)
-	new /obj/item/card/id/advanced/prisoner/three(src)
-	new /obj/item/card/id/advanced/prisoner/four(src)
-	new /obj/item/card/id/advanced/prisoner/five(src)
-	new /obj/item/card/id/advanced/prisoner/six(src)
-	new /obj/item/card/id/advanced/prisoner/seven(src)
+	return list(
+		/obj/item/card/id/advanced/prisoner/one,
+		/obj/item/card/id/advanced/prisoner/two,
+		/obj/item/card/id/advanced/prisoner/three,
+		/obj/item/card/id/advanced/prisoner/four,
+		/obj/item/card/id/advanced/prisoner/five,
+		/obj/item/card/id/advanced/prisoner/six,
+		/obj/item/card/id/advanced/prisoner/seven,
+	)
 
 /obj/item/storage/box/seccarts
 	name = "box of PDA security cartridges"
@@ -92,8 +102,9 @@
 	illustration = "pda"
 
 /obj/item/storage/box/seccarts/PopulateContents()
+	. = list()
 	for(var/i in 1 to 6)
-		new /obj/item/computer_disk/security(src)
+		. += /obj/item/computer_disk/security
 
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
@@ -102,8 +113,9 @@
 	illustration = "firingpin"
 
 /obj/item/storage/box/firingpins/PopulateContents()
+	. = list()
 	for(var/i in 1 to 5)
-		new /obj/item/firing_pin(src)
+		. += /obj/item/firing_pin
 
 /obj/item/storage/box/firingpins/paywall
 	name = "box of paywall firing pins"
@@ -111,8 +123,9 @@
 	illustration = "firingpin"
 
 /obj/item/storage/box/firingpins/paywall/PopulateContents()
+	. = list()
 	for(var/i in 1 to 5)
-		new /obj/item/firing_pin/paywall(src)
+		. += /obj/item/firing_pin/paywall
 
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
@@ -120,9 +133,10 @@
 	illustration = "firingpin"
 
 /obj/item/storage/box/lasertagpins/PopulateContents()
+	. = list()
 	for(var/i in 1 to 3)
-		new /obj/item/firing_pin/tag/red(src)
-		new /obj/item/firing_pin/tag/blue(src)
+		. += /obj/item/firing_pin/tag/red
+		. += /obj/item/firing_pin/tag/blue
 
 /obj/item/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -131,8 +145,9 @@
 	illustration = "handcuff"
 
 /obj/item/storage/box/handcuffs/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/restraints/handcuffs(src)
+		. += /obj/item/restraints/handcuffs
 
 /obj/item/storage/box/zipties
 	name = "box of spare zipties"
@@ -141,8 +156,9 @@
 	illustration = "handcuff"
 
 /obj/item/storage/box/zipties/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/restraints/handcuffs/cable/zipties(src)
+		. += /obj/item/restraints/handcuffs/cable/zipties
 
 /obj/item/storage/box/alienhandcuffs
 	name = "box of spare handcuffs"
@@ -151,8 +167,9 @@
 	illustration = "handcuff"
 
 /obj/item/storage/box/alienhandcuffs/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/restraints/handcuffs/alien(src)
+		. += /obj/item/restraints/handcuffs/alien
 
 /obj/item/storage/box/rubbershot
 	name = "box of shotgun shells (Less Lethal - Rubber Shot)"
@@ -161,8 +178,9 @@
 	illustration = null
 
 /obj/item/storage/box/rubbershot/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/rubbershot(src)
+		. += /obj/item/ammo_casing/shotgun/rubbershot
 
 /obj/item/storage/box/lethalshot
 	name = "box of shotgun shells (Lethal)"
@@ -171,14 +189,16 @@
 	illustration = null
 
 /obj/item/storage/box/lethalshot/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/buckshot(src)
+		. += /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/storage/box/lethalshot/old
 
 /obj/item/storage/box/lethalshot/old/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/buckshot/old(src)
+		. += /obj/item/ammo_casing/shotgun/buckshot/old
 
 /obj/item/storage/box/slugs
 	name = "box of shotgun shells (Lethal - Slugs)"
@@ -187,8 +207,9 @@
 	illustration = null
 
 /obj/item/storage/box/slugs/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun(src)
+		. += /obj/item/ammo_casing/shotgun
 
 /obj/item/storage/box/beanbag
 	name = "box of shotgun shells (Less Lethal - Beanbag)"
@@ -197,8 +218,9 @@
 	illustration = null
 
 /obj/item/storage/box/beanbag/PopulateContents()
+	. = list()
 	for(var/i in 1 to 6)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		. += /obj/item/ammo_casing/shotgun/beanbag
 
 /obj/item/storage/box/breacherslug
 	name = "box of breaching shotgun shells"
@@ -207,8 +229,9 @@
 	illustration = null
 
 /obj/item/storage/box/breacherslug/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/breacher(src)
+		. += /obj/item/ammo_casing/shotgun/breacher
 
 /obj/item/storage/box/large_dart
 	name = "box of XL shotgun darts"
@@ -217,16 +240,18 @@
 	illustration = null
 
 /obj/item/storage/box/large_dart/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/dart/large(src)
+		. += /obj/item/ammo_casing/shotgun/dart/large
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"
 	illustration = "sandbag"
 
 /obj/item/storage/box/emptysandbags/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/emptysandbag(src)
+		. += /obj/item/emptysandbag
 
 /obj/item/storage/box/holy_grenades
 	name = "box of holy hand grenades"
@@ -234,8 +259,9 @@
 	illustration = "grenade"
 
 /obj/item/storage/box/holy_grenades/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new/obj/item/grenade/chem_grenade/holy(src)
+		. += /obj/item/grenade/chem_grenade/holy
 
 /obj/item/storage/box/fireworks
 	name = "box of fireworks"
@@ -243,22 +269,25 @@
 	illustration = "sparkler"
 
 /obj/item/storage/box/fireworks/PopulateContents()
-	for(var/i in 1 to 3)
-		new/obj/item/sparkler(src)
-		new/obj/item/grenade/firecracker(src)
-	new /obj/item/toy/snappop(src)
+	return flatten_quantified_list(list(
+		/obj/item/sparkler = 3,
+		/obj/item/grenade/firecracker = 3,
+		/obj/item/toy/snappop = 1,
+	))
 
 /obj/item/storage/box/fireworks/dangerous
 	desc = "This box has a small label on it stating that it's from the Gorlex Marauders. Contains an assortment of \"fireworks\"."
 
 /obj/item/storage/box/fireworks/dangerous/PopulateContents()
+	. = list()
 	for(var/i in 1 to 3)
-		new/obj/item/sparkler(src)
-		new/obj/item/grenade/firecracker(src)
+		. += /obj/item/sparkler
+		. += /obj/item/grenade/firecracker
+
 	if(prob(20))
-		new /obj/item/grenade/frag(src)
+		. += /obj/item/grenade/frag
 	else
-		new /obj/item/toy/snappop(src)
+		. += /obj/item/toy/snappop
 
 /obj/item/storage/box/firecrackers
 	name = "box of firecrackers"
@@ -267,8 +296,9 @@
 	illustration = "firecracker"
 
 /obj/item/storage/box/firecrackers/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new/obj/item/grenade/firecracker(src)
+		. += /obj/item/grenade/firecracker
 
 /obj/item/storage/box/sparklers
 	name = "box of sparklers"
@@ -276,5 +306,6 @@
 	illustration = "sparkler"
 
 /obj/item/storage/box/sparklers/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new/obj/item/sparkler(src)
+		. += /obj/item/sparkler
