@@ -31,7 +31,7 @@
 	var/weather_duration_lower = 2 MINUTES
 	/// See above - this is the highest possible duration
 	var/weather_duration_upper = 2.5 MINUTES
-	/// Looping sound while weather is occuring
+	/// The sound played to everyone on an affected z-level when weather is occuring (does not loop)
 	var/weather_sound
 	/// Area overlay while the weather is occuring
 	var/weather_overlay
@@ -51,8 +51,6 @@
 
 	/// Types of area to affect
 	var/area_type = /area/space
-	/// TRUE value protects areas with outdoors marked as false, regardless of area type
-	var/protect_indoors = FALSE
 	/// Areas to be affected by the weather, calculated when the weather begins
 	var/list/impacted_areas = list()
 	/// Areas affected by weather have their blend modes changed
@@ -66,8 +64,6 @@
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
 	var/overlay_plane = WEATHER_PLANE
-	/// If the weather has no purpose other than looks
-	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
 	var/immunity_type
 	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
@@ -83,18 +79,63 @@
 	var/probability = 0
 	/// The z-level trait to affect when run randomly or when not overridden.
 	var/target_trait = ZTRAIT_STATION
-
-	/// Whether a barometer can predict when the weather will happen
-	var/barometer_predictable = FALSE
 	/// For barometers to know when the next storm will hit
 	var/next_hit_time = 0
-	/// This causes the weather to only end if forced to
-	var/perpetual = FALSE
+	/// The list of turfs (only /turf/open/ subtypes) that the weather event is being applied to.
+	/// If WEATHER_TURFS or WEATHER_THUNDER weather_flags are not applied this will be an empty list
+	var/list/weather_turfs = list()
+	/// The chance, per tick, a turf will have weather effects applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
+	/// Recommend setting this low near 0.01 (results in 1 in 100 affected turfs having weather reagents applied per tick)
+	var/turf_weather_chance = 0
+	/// The chance, per tick, a turf will have a thunder strike applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
+	/// Recommend setting this really low near 0.001 (results in 1 in 1000 affected turfs having thunder strikes applied per tick)
+	var/turf_thunder_chance = THUNDER_CHANCE_AVERAGE // does nothing without the WEATHER_THUNDER weather_flag
+	/// The maximum amount of turfs that can be processed in a single tick regardless of
+	/// the number of turfs determined by turf_weather_chance and turf_thunder_chance
+	/// increasing this too high can result in severe lag so please be careful
+	var/max_turfs_per_tick = 500
+	/// The calculated amount of turfs that get weather effects processed each tick (this gets calculated do not manually set this var)
+	var/weather_turfs_per_tick = 0
+	/// The calculated amount of turfs that get thunder effects processed each tick (this gets calculated do not manually set this var)
+	var/thunder_turfs_per_tick = 0
+	/// Color to apply to thunder while weather is occuring
+	var/thunder_color = null
 
-/datum/weather/New(z_levels)
+	/// List of weather bitflags that determines effects (see \code\__DEFINES\weather.dm)
+	var/weather_flags = NONE
+
+	/// List of current mobs being processed by weather
+	var/list/current_mobs = list()
+	/// The weather turf counter to keep track of how many turfs we have processed so far
+	var/turf_iteration = 0
+	/// The weather thunder counter to keep track of how much thunder we have processed so far
+	var/thunder_iteration = 0
+	/// The current section our weather subsystem is processing
+	var/currentpart
+	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
+	var/list/subsystem_tasks = list()
+
+/datum/weather/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
 	..()
 	impacted_z_levels = z_levels
+	area_type = area_override || area_type
+	weather_flags = weather_flags_override || weather_flags
 
+	// turf_thunder_chance = thunder_chance_override || turf_thunder_chance
+	// this breaks when thunder_chance_override is 0 (aka FALSE), so we need to null check
+	turf_thunder_chance = !isnull(thunder_chance_override) ? thunder_chance_override : turf_thunder_chance
+
+	if(IS_WEATHER_AESTHETIC(weather_flags))
+		return
+
+	if(weather_flags & (WEATHER_MOBS))
+		subsystem_tasks += SSWEATHER_MOBS
+	if(weather_flags & (WEATHER_TURFS))
+		subsystem_tasks += SSWEATHER_TURFS
+	if(weather_flags & (WEATHER_THUNDER))
+		subsystem_tasks += SSWEATHER_THUNDER
+
+	currentpart = subsystem_tasks[1]
 /**
  * Telegraphs the beginning of the weather on the impacted z levels
  *
@@ -105,21 +146,13 @@
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
 	stage = STARTUP_STAGE
-	var/list/affectareas = list()
-	for(var/area/selected_area as anything in get_areas(area_type))
-		affectareas += selected_area
-	for(var/area/protected_area as anything in protected_areas)
-		affectareas -= get_areas(protected_area)
-	for(var/area/affected_area as anything in affectareas)
-		if(protect_indoors && !affected_area.outdoors)
-			continue
+	setup_weather_areas(impacted_areas)
 
-		for(var/z in impacted_z_levels)
-			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
-				impacted_areas |= affected_area
-				continue
+	if(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER))
+		setup_weather_turfs()
+
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
 
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
@@ -127,6 +160,54 @@
 	if(telegraph_duration)
 		send_alert(telegraph_message, telegraph_sound, telegraph_sound_vol)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
+
+/datum/weather/proc/setup_weather_areas(list/selected_areas)
+	if(length(selected_areas))
+		return // impacted areas already been setup
+
+	var/list/affectareas = list()
+	for(var/area/selected_area as anything in get_areas(area_type))
+		affectareas += selected_area
+	for(var/area/protected_area as anything in protected_areas)
+		affectareas -= get_areas(protected_area)
+	for(var/area/affected_area as anything in affectareas)
+		if(!(weather_flags & WEATHER_INDOORS) && !affected_area.outdoors)
+			continue
+
+		for(var/z in impacted_z_levels)
+			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
+				selected_areas |= affected_area
+				continue
+
+/datum/weather/proc/setup_weather_turfs()
+	for(var/area/weather_area as anything in impacted_areas)
+		for(var/z in impacted_z_levels)
+			for(var/turf/valid_weather_turf as anything in weather_area.get_turfs_by_zlevel(z))
+				// applying weather effects to solid walls is a waste since nothing will happen
+				if(isclosedturf(valid_weather_turf))
+					continue
+				// same logic for space and openspace turfs which should boost performance a ton
+				// note - mobs in space/openspace turfs still have weather affects applied to them if they are in a affected area
+				if(is_space_or_openspace(valid_weather_turf))
+					continue
+				// solid windows are also worth skipping
+				var/obj/structure/window/window = locate() in valid_weather_turf
+				if(window?.fulltile)
+					continue
+
+				weather_turfs += valid_weather_turf
+
+	var/total_turfs = length(weather_turfs)
+
+	if(!total_turfs || !(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER)))
+		return
+
+	if(weather_flags & (WEATHER_TURFS))
+		weather_turfs_per_tick = total_turfs * turf_weather_chance
+		weather_turfs_per_tick = min(weather_turfs_per_tick, max_turfs_per_tick)
+	if(weather_flags & (WEATHER_THUNDER))
+		thunder_turfs_per_tick = total_turfs * turf_thunder_chance
+		thunder_turfs_per_tick = min(thunder_turfs_per_tick, max_turfs_per_tick)
 
 /**
  * Starts the actual weather and effects from it
@@ -142,7 +223,7 @@
 	stage = MAIN_STAGE
 	update_areas()
 	send_alert(weather_message, weather_sound)
-	if(!perpetual)
+	if(!(weather_flags & (WEATHER_ENDLESS)))
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 	for(var/area/impacted_area as anything in impacted_areas)
 		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type), src)
@@ -199,9 +280,8 @@
 
 /**
  * Returns TRUE if the living mob can be affected by the weather
- *
  */
-/datum/weather/proc/can_weather_act(mob/living/mob_to_check)
+/datum/weather/proc/can_weather_act_mob(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
 
 	if(!mob_turf)
@@ -226,14 +306,37 @@
 
 /**
  * Affects the mob with whatever the weather does
- *
  */
-/datum/weather/proc/weather_act(mob/living/L)
+/datum/weather/proc/weather_act_mob(mob/living/L)
 	return
 
 /**
+ * Affects the turf with whatever the weather does
+ */
+/datum/weather/proc/weather_act_turf(turf/open/weather_turf)
+	return
+
+/**
+ * Affects the turf with thunder
+ */
+/datum/weather/proc/thunder_act_turf(turf/open/weather_turf)
+	var/obj/effect/temp_visual/thunderbolt/thunder = new(weather_turf)
+
+	if(thunder_color)
+		thunder.color = thunder_color
+
+	for(var/mob/living/hit_mob in weather_turf)
+		to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
+		hit_mob.electrocute_act(50, "thunder", flags = SHOCK_TESLA|SHOCK_NOGLOVES)
+
+	for(var/obj/hit_thing in weather_turf)
+		hit_thing.take_damage(20, BURN, ENERGY, FALSE)
+	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, TRUE)
+	weather_turf.visible_message(span_danger("A thunderbolt strikes [weather_turf]!"))
+	explosion(weather_turf, light_impact_range = 1, flame_range = 1, silent = TRUE, adminlog = FALSE)
+
+/**
  * Updates the overlays on impacted areas
- *
  */
 /datum/weather/proc/update_areas()
 	var/list/new_overlay_cache = generate_overlay_cache()
@@ -288,3 +391,9 @@
 		gen_overlay_cache += new_weather_overlay
 
 	return gen_overlay_cache
+
+/// Updates the currentpart with the subsystem task that is next in line
+/datum/weather/proc/next_subsystem_task()
+	// loops back to the start of the list once it reaches the end
+	var/next_part = currentpart % length(subsystem_tasks) + 1
+	currentpart = subsystem_tasks[next_part]
