@@ -230,6 +230,7 @@
 /datum/wound/blunt/bone/moderate
 	name = "Joint Dislocation"
 	undiagnosed_name = "Dislocation"
+	a_or_from = "a"
 	desc = "Patient's limb has been unset from socket, causing pain and reduced motor function."
 	treat_text = "Apply Bonesetter to the affected limb. \
 		Manual relocation by via an aggressive grab and a tight hug to the affected limb may also suffice."
@@ -407,6 +408,7 @@
 /datum/wound/blunt/bone/critical
 	name = "Compound Fracture"
 	undiagnosed_name = null // you can tell it's a compound fracture at a glance because of a skin breakage
+	a_or_from = "a"
 	desc = "Patient's bones have suffered multiple fractures, \
 		couped with a break in the skin, causing significant pain and near uselessness of limb."
 	treat_text = "Immediately bind the affected limb with gauze or a splint. Repair surgically. \

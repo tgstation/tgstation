@@ -585,14 +585,14 @@
 		if(40 to INFINITY)
 			combined_msg += span_danger("You feel very unwell!")
 
-	var/oxy = getOxyLoss() + (losebreath * 4) + (blood_volume < BLOOD_VOLUME_NORMAL ? ((BLOOD_VOLUME_NORMAL - blood_volume) * 10) : 0) + (HAS_TRAIT(src, TRAIT_SELF_AWARE) ? 0 : (rand(-3, 0) * 5))
+	var/oxy = getOxyLoss() + (losebreath * 4) + (blood_volume < BLOOD_VOLUME_NORMAL ? ((BLOOD_VOLUME_NORMAL - blood_volume) * 0.1) : 0) + (HAS_TRAIT(src, TRAIT_SELF_AWARE) ? 0 : (rand(-3, 0) * 5))
 	switch(oxy)
 		if(10 to 20)
 			combined_msg += span_danger("You feel lightheaded.")
 		if(20 to 40)
-			combined_msg += span_danger("Your thinking is clouded and distant.")
+			combined_msg += losebreath ? span_danger("You're choking!") : span_danger("Your thinking is clouded and distant.")
 		if(40 to INFINITY)
-			combined_msg += losebreath ? span_danger("You're choking!") : span_danger("It's getting hard to breathe!")
+			combined_msg += span_danger("You feel like you're about to pass out!")
 
 	if(getStaminaLoss())
 		if(getStaminaLoss() > 30)
