@@ -271,3 +271,12 @@
 	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
 	item = /obj/item/climbing_hook/syndicate
 	cost = 1
+
+/datum/uplink_item/device_tools/final_fortuna
+	name = "Final Fortuna"
+	desc = "A highly illegal cocktail of drugs designed to keep you alive for up to a minute, however once it leaves your system it causes massive brain damage."
+	item = /obj/item/reagent_containers/hypospray/medipen/final_fortuna
+	cost = 5
+	purchasable_from = UPLINK_TRAITORS
+	progression_minimum = 20 MINUTES
+	limited_stock = 1
