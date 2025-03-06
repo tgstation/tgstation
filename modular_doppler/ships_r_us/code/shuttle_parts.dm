@@ -76,7 +76,7 @@
 	desc = "Used to control the ship its currently in, ideally."
 	circuit = /obj/item/circuitboard/computer/personally_bought
 	shuttleId = "shuttle_personal"
-	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_waystation;whiteship_lavaland;personal_ship_custom"
+	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_waystation;whiteship_lavaland;personal_ship_custom;monestary_dock"
 	/// What our GPS tag name is
 	var/shuttle_gps_tag = "Shuttle Homing Beacon"
 
@@ -122,7 +122,7 @@
 	shuttleId = "shuttle_personal"
 	lock_override = NONE
 	shuttlePortId = "personal_ship_custom"
-	jump_to_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "whiteship_waystation" = 1)
+	jump_to_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "whiteship_waystation" = 1, "monestary_dock" = 1)
 	designate_time = 5 SECONDS
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought/mothership
