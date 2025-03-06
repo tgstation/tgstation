@@ -69,10 +69,10 @@
 	tick_interval_lowerbound = 5 SECONDS
 	tick_interval_upperbound = 10 MINUTES
 	alert_type = null
-	///lower damage we apply to our itchy owner
-	var/minimum_damage = 1
-	///upper damage we apply to our itchy owner
-	var/maximum_damage = 5
+	///lower damage we apply to our itchy owner //DOPPLER EDIT KILL: Chipped no longer does brain damage.
+	var/minimum_damage = 0
+	///upper damage we apply to our itchy owner //DOPPLER EDIT KILL: Chipped no longer does brain damage.
+	var/maximum_damage = 0
 
 /datum/status_effect/itchy_skillchip_quirk/tick(seconds_between_ticks)
 	var/mob/living/carbon/carbon_owner = owner

@@ -221,6 +221,11 @@
 
 /obj/item/organ/cyberimp/brain/connector/proc/remove_skillchip(obj/item/organ/brain/chippy_brain)
 	var/obj/item/skillchip/skillchip = show_radial_menu(owner, owner, chippy_brain.skillchips)
+	//DOPPLER EDIT CHANGE
+	if(!skillchip.can_be_removed)
+		to_chat(owner, span_warning("The lockchip refuses to latch with your connector's actuators!"))
+		return
+	//DOPPLER EDIT CHANGE
 	if(skillchip)
 		owner.remove_skillchip(skillchip, silent = FALSE)
 		skillchip.forceMove(owner.drop_location())

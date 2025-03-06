@@ -121,4 +121,7 @@ GLOBAL_LIST_INIT(quirk_chipped_choice, list(
 	"\"Space Station 13: The Musical\"" = /obj/item/skillchip/musical,
 	"Mast-Angl-Er" = /obj/item/skillchip/master_angler,
 	"Kommand" = /obj/item/skillchip/big_pointer,
+	"old F058UR7" = /obj/item/skillchip/acrobatics, //DOPPLER EDIT ADDITION
+	"pacification chip" = /obj/item/skillchip/pacification, //DOPPLER EDIT ADDITION
+	"Matrix Taunt" = /obj/item/skillchip/matrix_taunt, //DOPPLER EDIT ADDITION
 ))

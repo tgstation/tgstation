@@ -75,6 +75,7 @@
 				/obj/item/skillchip/useless_adapter = 5,
 				/obj/item/skillchip/wine_taster = 2,
 				/obj/item/skillchip/big_pointer = 2,
+				/obj/item/skillchip/pacification = 2, //DOPPLER EDIT ADDITION - Just throws a couple of these in there.
 			),
 		),
 		list(

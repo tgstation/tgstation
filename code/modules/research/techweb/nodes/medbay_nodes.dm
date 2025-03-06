@@ -78,6 +78,8 @@
 		"defibmount",
 		"medicalbed_emergency",
 		"piercesyringe",
+		"pacification_chip", //DOPPLER EDIT ADDITION
+		"pacification_lockchip", //DOPPLER EDIT ADDITION
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/reagent/haloperidol)

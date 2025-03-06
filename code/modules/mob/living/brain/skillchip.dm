@@ -7,6 +7,11 @@
  * * skillchip - The skillchip you'd like to remove.
  */
 /obj/item/organ/brain/proc/remove_skillchip(obj/item/skillchip/skillchip, silent = FALSE)
+	// DOPPLER EDIT START
+	if(!skillchip.can_be_removed)
+		to_chat(owner, span_warning("The chip refuses to budge- it looks like this one is a lockchip."))
+		return FALSE
+	// DOPPLER EDIT END
 	// Check this skillchip is in the brain.
 	if(!(skillchip in skillchips))
 		stack_trace("Attempted to remove skillchip [skillchip] that wasn't in [src] skillchip list.")

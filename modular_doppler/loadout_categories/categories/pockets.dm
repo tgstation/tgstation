@@ -204,6 +204,10 @@
 	name = "Gromit mug"
 	item_path = /obj/item/reagent_containers/cup/glass/mug/gromitmug
 
+/datum/loadout_item/pocket_items/pacification_chip
+	name = "Meditative Assistance pacification skillchip"
+	item_path = /obj/item/skillchip/pacification
+
 /*
 *	UTILITY
 */
