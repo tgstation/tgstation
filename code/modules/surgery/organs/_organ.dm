@@ -76,7 +76,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/Initialize(mapload)
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
-		AddComponent(/datum/component/edible,\
+		AddComponentFrom(
+			SOURCE_EDIBLE_INNATE, \
+			/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			foodtypes = foodtype_flags,\
 			volume = reagent_vol,\

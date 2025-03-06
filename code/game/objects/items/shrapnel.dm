@@ -93,7 +93,7 @@
 	pain_stam_pct = 0.7
 	pain_mult = 3
 	jostle_pain_mult = 3
-	rip_time = 15
+	rip_time = 1.5 SECONDS
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
@@ -127,7 +127,7 @@
 	pain_stam_pct = 0.7
 	pain_mult = 5
 	jostle_pain_mult = 6
-	rip_time = 15
+	rip_time = 1.5 SECONDS
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"

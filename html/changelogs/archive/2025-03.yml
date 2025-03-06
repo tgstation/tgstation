@@ -1,0 +1,159 @@
+2025-03-01:
+  SmArtKar:
+  - bugfix: Cyborg pre-screening dogtags should once again be given to crew with the
+      quirk of the same name.
+  TiviPlus:
+  - code_imp: cleaned up some mass var edit code
+  necromanceranne:
+  - code_imp: Cleans up a bit of human punch code.
+  - bugfix: Stagger combos occur at the correct threshold, and properly utilize armor
+      or a threshold minimum, adjusted for puncher limb accuracy.
+2025-03-02:
+  Jackraxxus:
+  - bugfix: AI will no longer deathloop after being revived with 0 backup power.
+  Jacquerel:
+  - rscadd: You can transplant xenomorph tails onto people.
+  - bugfix: The Warp Cube will now fail if it tries to teleport you to nowhere, instead
+      of turning you blue and then failing
+  Melbert:
+  - bugfix: Ion Storms should be far far far less likely to purge ais and far far
+      far more likely to replace the ai's lawset with a new set
+  - rscadd: Battle arcades get funny names again
+  - bugfix: Roundend title music will play at half volume again
+  - bugfix: April Fools lobby music will correctly always be clown music
+  - bugfix: Lobby Music will repeat across sequential rounds less often
+  OrionTheFox:
+  - qol: Mirrors now have context tips, and can now be unmounted from walls with a
+      Wrench. (Magic ones can't be removed though. Because magic.)
+  SmArtKar:
+  - rscadd: Foam darts now stick to people when they have their cap on, riot foam
+      darts also can passively deal a bit of stamina damage when you move with one.
+  - rscadd: Syringes can be inserted into foam darts, making them embed and slowly
+      leak their reagents into their victim.
+  - rscadd: Syringe guns can be toggled (with right click) between high power and
+      low power modes, former being their normal functionality and latter making syringes
+      embed and slowly leak their contents.
+  - bugfix: Fixed projectiles sometimes not embedding when they should've
+  - code_imp: Cleaned embedding code up
+  - bugfix: You no longer get set ablaze by a person you're fireman carrying through
+      lava while riding a raptor
+  - refactor: Refactored item action handling
+  - bugfix: You should no longer be able to get med/sec/diag HUDs by toggling a hud
+      in your pocket, or use jump boots from your hands.
+  - qol: Welding/breathing masks, hardhats and other glasses/helmets no longer show
+      their actions in your top bar while you're holding them in your hands.
+  mc-oofert:
+  - bugfix: The Thing (Outpost 31) will aggro if shot from outside aggro range, has
+      achievement
+  - balance: the loot room in outpost 31 now contains a freezer with a set of T2 robotic
+      organs, and a set of advanced medical tools. Also The Thing returns to its spawn
+      location if not aggroed
+  timothymtorres:
+  - bugfix: Fix illiterate people writing messages with crayons and spraycans.
+2025-03-03:
+  00-Steven:
+  - bugfix: Harvesting botany plants actually uses the right drop location. Botany
+      plants harvested by monkey hardworkers on big manipulators harvesting using
+      a full plant bag no longer puts the resulting items inside of the big manipulator.
+  Ghommie:
+  - balance: objects made out of meat are no longer classified as gross food on top
+      of being raw and meaty, and actually contain protein and fat instead of standard
+      nutriment and oil.
+  - balance: the pizza material stacks, crafted with margherita pizza and rollig pin
+      mind you, no longer magically contain pepperoni.
+  Melbert:
+  - qol: '[Icebox] Botany''s Holofirelocks are now walkable plastic flaps'
+  SmArtKar:
+  - code_imp: Split and cleaned up mining loot's code
+  - refactor: Refactored the hierophant club.
+  - bugfix: Hierophant club's beacon no longer can go missing (until you try using
+      it)
+  - image: Resprited the hierophant arena
+  TheRyeGuyWhoWillNowDie:
+  - balance: wildcard limits have been removed from Agent ID cards
+  - balance: the specops crate gets a variation of the agent ID card which can only
+      hold limited access (same as it is now)
+  TiviPlus:
+  - code_imp: previously silent failures due to empty sounds or too low volumes will
+      now create a runtime in the runtime log
+  - bugfix: some footstep sounds like robotic or slimes are no longer silent
+  subject217:
+  - balance: Contractor Kit is no longer available in lowpop.
+2025-03-04:
+  00-Steven:
+  - qol: Added screentips to the big manipulator.
+  - bugfix: You can actually open the big manipulator's wires UI while holding an
+      assembly.
+  Absolucy:
+  - bugfix: Fixed more advanced regex-based chat highlights not working.
+  AyIong:
+  - bugfix: Fixed random chat BSOD on Byond 516
+  Holoo-1:
+  - qol: cult spells no longer overlap with second row of inventory
+  Kashargul:
+  - bugfix: tgui say 516 will no longer change channels when the button is used to
+      drag it
+  - bugfix: tgui say 516 will no longer leak radio messages into the wrong channel
+  - bugfix: runechat flickering when faded up messages fade out
+  MichiRecRoom:
+  - bugfix: The component printer now shows icons for the items in its UI.
+  - bugfix: Nukes will now always be deleted upon exploding, no matter if they have
+      a valid cutscene to play.
+  - bugfix: The cleaning AI behavior (generally used by cleanbots) will no longer
+      return early if the list of emagged phrases is empty.
+  Rhials:
+  - spellcheck: Fixes grammar in autosurgeon use message.
+  SmArtKar:
+  - bugfix: Fixed external organs not being colored by colorful reagent
+  - bugfix: Fixed inconsistent crusher trophy droprates
+  adamsong:
+  - rscadd: Added the ability for borgs to pathfind into and through restricted areas.
+  itsmeow:
+  - bugfix: Fixed lizard body markings and ethereal feature previews in the preference
+      menu missing some overlays.
+  - refactor: Optimized spritesheet asset generation greatly using rustg IconForge,
+      greatly reducing post-initialization lag as well as reducing init times and
+      saving server computation.
+  - config: Added 'smart' asset caching, for batched rustg IconForge spritesheets.
+      It is persistent and suitable for use on local, with automatic invalidation.
+  - rscadd: Added admin verbs - Debug -> Clear Smart/Legacy Asset Cache for spritesheets.
+  - bugfix: Fixed R&D console icons breaking on WebView2/516
+  mc-oofert:
+  - bugfix: prevents stripping in caretakers last refuge
+  - bugfix: the eldritch id (Lock path) now preserves the ID used.
+  timothymtorres:
+  - bugfix: Fix hauntinum reagent to work when it is exposed to item objects.
+2025-03-05:
+  Jacquerel:
+  - rscadd: Apples now react appropriately if they impact doctors or scientists under
+      the expected circumstances.
+  StrangeWeirdKitten:
+  - bugfix: Megafauna should no longer attack eachother.
+  TJatPBnJ:
+  - balance: French fries are now immune to the effects of the floor. I miss floor
+      fries
+2025-03-06:
+  Absolucy:
+  - qol: Messages from blood cult communion, abductor telepathy, xeno hivemind, golem
+      resonator, blob telepathy, changeling hivemind, and binary chat are now considered
+      "radio" messages by the chat, so they can properly be sorted via chat tabs.
+  - qol: Your own messages in blood cult communion, abductor/xenomorph/changeling
+      hivemind, or golem telepathy will no longer be highlighted in chat (to prevent
+      highlight spam whenever you talk if you highlight your own name, mainly)
+  Ghommie:
+  - bugfix: Follower hoodies can now be crafted.
+  Kashargul:
+  - bugfix: TG chat can no longer initialize before the settings loading was called
+  - qol: chat settings can be exported and imported
+  LemonInTheDark:
+  - config: the config loader now supports relatively pathed imports (importing a
+      file inside a subfolder now acts as if you were IN that subfolder)
+  Melbert:
+  - bugfix: Fixed random names always giving male names
+  Singul0:
+  - balance: Buffs the energy cells borg factory-spawned cyborgs spawn with (They
+      are now T2 cells)
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: chameleon IDs actually prevent AI tracking now
+  hry-gh:
+  - bugfix: the admin music player works again on 516

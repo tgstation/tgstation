@@ -561,9 +561,6 @@
 /mob/proc/getBackSlot()
 	return ITEM_SLOT_BACK
 
-/mob/proc/getBeltSlot()
-	return ITEM_SLOT_BELT
-
 //Inventory.dm is -kind of- an ok place for this I guess
 
 //This is NOT for dismemberment, as the user still technically has 2 "hands"
