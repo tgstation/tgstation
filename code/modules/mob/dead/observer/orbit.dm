@@ -37,7 +37,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			user.ManualFollow(poi)
 			user.reset_perspective(null)
 			user.orbiting_ref = ref
+			message_admins("auto_observe:[auto_observe]")
 			if (auto_observe)
+				message_admins("user:[user].do_observe([poi])")
 				user.do_observe(poi)
 			return TRUE
 		if ("refresh")
