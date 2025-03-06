@@ -1,0 +1,5 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - qol: "the raptor minigame now no longer opens up a new window"
+  - rscadd: "the raptor minigame has been reworked"
