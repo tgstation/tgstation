@@ -36,7 +36,7 @@ Nothing else in the console has ID requirements.
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
 	/// Cooldown that prevents hanging the MC when tech disks are copied
-	COOLDOWN_DECLARE(cooldowncopy)
+	STATIC_COOLDOWN_DECLARE(cooldowncopy)
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
