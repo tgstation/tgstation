@@ -357,8 +357,9 @@
 	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
 	grind_results = list(/datum/reagent/aluminium = 1)
 
-	///The typepath of the type of gum that will spawn in our PopulateContents, this is set in Initialize.
-	var/gum_to_spawn
+	///The typepath of the type of gum that will spawn in our PopulateContents,
+	///this is set in Initialize by the gum box if there is one.
+	var/gum_to_spawn = /obj/item/food/bubblegum
 
 /obj/item/storage/bubblegum_wrapper/Initialize(mapload, spawning_gum_type)
 	gum_to_spawn = spawning_gum_type
