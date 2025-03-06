@@ -140,6 +140,10 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 	return weighted_list
 
+/// Select a random hallucination from the hallucination pool
+///
+/// * tier - the tier of hallucination to select from
+/// * strict - if true, only select from the passed tier. If false, select from the passed tier and all tiers below it.
 /proc/get_random_hallucination(tier = HALLUCINATION_TIER_COMMON, strict = FALSE)
 	var/list/pool = GLOB.random_hallucination_weighted_list["[tier]"]
 	if(!strict)
