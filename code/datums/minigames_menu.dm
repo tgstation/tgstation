@@ -34,8 +34,10 @@
 			ctf()
 			return TRUE
 		if("basketball")
-			ui.close()
-			basketball()
+			var/mob/user = ui.user
+			to_chat(user, span_warning("The basketball minigame has been temporarily disabled."))
+			// ui.close()
+			// basketball()
 			return TRUE
 		if("deathmatch")
 			ui.close()
