@@ -7,7 +7,6 @@
 		"rdserver",
 		"rdservercontrol",
 		"rdconsole",
-		"tech_disk",
 		"doppler_array",
 		"experimentor",
 		"destructive_analyzer",

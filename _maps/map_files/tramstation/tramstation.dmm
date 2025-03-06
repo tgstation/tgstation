@@ -13630,10 +13630,6 @@
 	name = "component design disk";
 	pixel_y = 6
 	},
-/obj/item/disk/tech_disk{
-	pixel_x = -2;
-	pixel_y = -3
-	},
 /obj/machinery/light/warm/directional/east,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
