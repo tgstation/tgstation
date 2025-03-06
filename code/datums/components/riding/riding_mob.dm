@@ -698,7 +698,7 @@
 	host = WEAKREF(ridden)
 	mounter = WEAKREF(rider)
 	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_minigame))
-	RegisterSignal(ridden, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_ridden_moved))
+	RegisterSignal(ridden, COMSIG_MOVABLE_ATTEMPTED_MOVE, PROC_REF(on_ridden_moved))
 	minigame_holder = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0, pixel_x = 32, pixel_y = 0)
 	heart_counter = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0, pixel_x = 0, pixel_y = -32)
 	SET_PLANE_EXPLICIT(minigame_holder, ABOVE_HUD_PLANE, rider)
@@ -742,7 +742,7 @@
 	if(current_attempts >= maximum_attempts)
 		lose_minigame()
 		return
-	if(prob(25)) //we shake and move uncontrollably!
+	if(prob(30)) //we shake and move uncontrollably!
 		var/mob/living/living_host = host.resolve()
 		living_host.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 0.75 SECONDS)
 		living_host.spin(spintime = 0.75 SECONDS, speed = 1)
@@ -796,13 +796,12 @@
 			continue
 		arrow_details["is_active"] = null
 
-/datum/riding_minigame/proc/on_ridden_moved(atom/movable/source, atom/new_loc)
+/datum/riding_minigame/proc/on_ridden_moved(atom/movable/source, atom/new_loc, direction)
 	SIGNAL_HANDLER
 	. = NONE
 	if(new_loc.z != source.z || !COOLDOWN_FINISHED(src, failure_cooldown))
 		return
-	var/direction = dir2text(get_dir(source, new_loc))
-	var/list/arrow_data = cached_arrows[direction]
+	var/list/arrow_data = cached_arrows[dir2text(direction)]
 	var/atom/existing_arrow = arrow_data["is_active"]
 
 	if(!QDELETED(existing_arrow))
