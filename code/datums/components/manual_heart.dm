@@ -69,7 +69,7 @@
 	to_chat(parent, span_userdanger("You feel your heart start beating normally again!"))
 	var/mob/living/carbon/carbon_parent = parent
 	if(istype(carbon_parent))
-		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood)
+		carbon_parent.remove_client_colour(REF(src))
 
 /datum/component/manual_heart/proc/restart()
 	SIGNAL_HANDLER
@@ -85,7 +85,7 @@
 	pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	var/mob/living/carbon/carbon_parent = parent
 	if(istype(carbon_parent))
-		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood) //prevents red overlay from getting stuck
+		carbon_parent.remove_client_colour(REF(src)) //prevents red overlay from getting stuck
 	STOP_PROCESSING(SSdcs, src)
 
 /// Worker proc that checks logic for if a pump can happen, and applies effects from doing so
@@ -98,7 +98,7 @@
 	if(HAS_TRAIT(carbon_owner, TRAIT_NOBLOOD))
 		return
 	carbon_owner.blood_volume = min(carbon_owner.blood_volume + (blood_loss * 0.5), BLOOD_VOLUME_MAXIMUM)
-	carbon_owner.remove_client_colour(/datum/client_colour/manual_heart_blood)
+	carbon_owner.remove_client_colour(REF(src))
 	add_colour = TRUE
 	carbon_owner.adjustBruteLoss(-heal_brute)
 	carbon_owner.adjustFireLoss(-heal_burn)
@@ -119,7 +119,7 @@
 	to_chat(carbon_parent, span_userdanger("You have to keep pumping your blood!"))
 	COOLDOWN_START(src, heart_timer, MANUAL_HEART_GRACE_PERIOD) //give two full seconds before losing more blood
 	if(add_colour)
-		carbon_parent.add_client_colour(/datum/client_colour/manual_heart_blood)
+		carbon_parent.add_client_colour(/datum/client_colour/manual_heart_blood, REF(src))
 		add_colour = FALSE
 
 ///If a new heart is added, start processing.
@@ -134,7 +134,7 @@
 	pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	var/mob/living/carbon/carbon_parent = parent
 	if(istype(carbon_parent))
-		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood) //prevents red overlay from getting stuck
+		carbon_parent.remove_client_colour(REF(src)) //prevents red overlay from getting stuck
 	START_PROCESSING(SSdcs, src)
 
 ///If the heart is removed, stop processing.

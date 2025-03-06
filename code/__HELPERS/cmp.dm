@@ -231,3 +231,7 @@
 /// Orders cameras by their `c_tag` ascending
 /proc/cmp_camera_ctag_asc(obj/machinery/camera/a, obj/machinery/camera/b)
 	return sorttext(b.c_tag, a.c_tag)
+
+/// Sorts client colors based on their priority
+/proc/cmp_client_colours(datum/client_colour/first_color, datum/client_colour/second_color)
+	return second_color.priority - first_color.priority
