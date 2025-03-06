@@ -991,14 +991,9 @@
 	desc = "A powerful antiphoton projector, capable of projecting a bubble of darkness around the user."
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
-	/*
-	light_range = 2.5
-	light_power = 3
-	light_plane_override = LIGHT_MASK_PLANE
-	*/
-
 	light_system = COMPLEX_LIGHT //The overlay light component is not yet ready to produce darkness.
 	light_range = 0
+	light_color = COLOR_WHITE
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_range = 2.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
