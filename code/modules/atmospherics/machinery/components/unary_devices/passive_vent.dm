@@ -19,6 +19,7 @@
 	cut_overlays()
 	if(showpipe)
 		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions, pipe_color)
+		cap.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(cap)
 	else
 		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
