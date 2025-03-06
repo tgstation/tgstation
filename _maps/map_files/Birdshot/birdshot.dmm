@@ -68165,15 +68165,6 @@
 /obj/structure/table,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/disk/tech_disk{
-	pixel_x = -6
-	},
-/obj/item/disk/tech_disk{
-	pixel_x = 6
-	},
-/obj/item/disk/tech_disk{
-	pixel_y = 6
-	},
 /obj/item/stack/cable_coil,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white/small,
