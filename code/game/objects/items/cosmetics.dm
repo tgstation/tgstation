@@ -1,7 +1,3 @@
-#define UPPER_LIP "Upper"
-#define MIDDLE_LIP "Middle"
-#define LOWER_LIP "Lower"
-
 /obj/item/lipstick
 	gender = PLURAL
 	name = "red lipstick"
@@ -343,7 +339,3 @@
 
 /obj/item/razor/surgery/get_surgery_tool_overlay(tray_extended)
 	return "razor"
-
-#undef UPPER_LIP
-#undef MIDDLE_LIP
-#undef LOWER_LIP
