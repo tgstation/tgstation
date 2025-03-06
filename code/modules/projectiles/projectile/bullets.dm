@@ -25,3 +25,4 @@
 	pain_stam_pct=0.5
 	pain_mult=3
 	rip_time=10
+	stealthy_embed = TRUE

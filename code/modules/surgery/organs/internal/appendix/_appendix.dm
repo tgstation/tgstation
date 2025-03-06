@@ -43,14 +43,17 @@
 /obj/item/organ/appendix/proc/become_inflamed()
 	inflamation_stage = 1
 	update_appearance()
-	if(owner)
-		ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
-		owner.med_hud_set_status()
-		notify_ghosts(
-			"[owner] has developed spontaneous appendicitis!",
-			source = owner,
-			header = "Whoa, Sick!",
-		)
+	if(isnull(owner))
+		return
+	ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+	owner.med_hud_set_status()
+	if(isnull(owner.client))
+		return
+	notify_ghosts(
+		"[owner] has developed spontaneous appendicitis!",
+		source = owner,
+		header = "Whoa, Sick!",
+	)
 
 /obj/item/organ/appendix/proc/inflamation(seconds_per_tick)
 	var/mob/living/carbon/organ_owner = owner
@@ -72,6 +75,15 @@
 				organ_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
 
+/obj/item/organ/appendix/feel_for_damage(self_aware)
+	var/effective_stage = floor(inflamation_stage + (damage / maxHealth))
+	switch(effective_stage)
+		if(1)
+			return span_warning("Your [self_aware ? "appendix" : "lower abdomen"] feels a little off.")
+		if(2)
+			return span_warning("Your [self_aware ? "appendix" : "lower right abdomen"] feels sore.")
+		if(3 to INFINITY)
+			return span_boldwarning("Your [self_aware ? "appendix" : "lower right abdomen"] feels like it's on fire!")
 
 /obj/item/organ/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantappendix

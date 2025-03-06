@@ -138,6 +138,15 @@
 /obj/item/organ/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantheart
 
+/obj/item/organ/heart/feel_for_damage(self_aware)
+	if(owner.needs_heart() && (!beating || (organ_flags & ORGAN_FAILING)))
+		return span_boldwarning("[self_aware ? "Your heart is not beating!" : "You don't feel your heart beating."]")
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		return span_warning("[self_aware ? "Your heart hurts." : "It hurts, and your heart rate feels irregular."]")
+	return span_boldwarning("[self_aware ? "Your heart seriously hurts!" : "It seriously hurts, and your heart rate is all over the place."]")
+
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
