@@ -13,11 +13,12 @@
 	/// The upper range of when the next hallucination will trigger after one occurs.
 	var/upper_tick_interval = 80 SECONDS
 	/// The maximum hallucination tier that can be picked.
-	/// Changes depending on the duration of the hallucination, unless strict_tier is set.
 	var/max_hallucination_tier = HALLUCINATION_TIER_COMMON
 	/// If TRUE, we only select hallucinations from the hallucination_tier.
 	/// If FALSE, it will also include anything below the hallucination_tier.
 	var/strict_tier = FALSE
+	/// Tier can be variable, based on the duration of the hallucination.
+	var/variable_tier = TRUE
 	/// The cooldown for when the next hallucination can occur
 	COOLDOWN_DECLARE(hallucination_cooldown)
 
@@ -91,7 +92,7 @@
 
 	var/lower_cd = lower_tick_interval
 	var/upper_cd = upper_tick_interval
-	if(!strict_tier)
+	if(!variable_tier)
 		var/seconds_left = (duration - world.time) / 10
 		switch(seconds_left)
 			if(0 to 20)
@@ -120,6 +121,8 @@
 	id = "low sanity"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = STATUS_EFFECT_PERMANENT // This lasts "forever", only goes away with sanity gain
+	max_hallucination_tier = HALLUCINATION_TIER_UNCOMMON
+	variable_tier = FALSE
 
 /datum/status_effect/hallucination/sanity/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
 	return
