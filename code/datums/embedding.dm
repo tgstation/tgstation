@@ -513,8 +513,8 @@
 /// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls remove_embedding()
 /datum/embedding/proc/fall_out()
 	if(is_harmless())
-		owner.visible_message(span_danger("[parent] falls off of [owner.name]'s [owner_limb.plaintext_zone]!"),
-			span_userdanger("[parent] falls off of your [owner_limb.plaintext_zone]!"))
+		owner.visible_message(span_warning("[parent] falls off of [owner.name]'s [owner_limb.plaintext_zone]!"),
+			span_warning("[parent] falls off of your [owner_limb.plaintext_zone]!"))
 		remove_embedding()
 		return
 
