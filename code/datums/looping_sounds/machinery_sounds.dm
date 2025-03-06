@@ -139,7 +139,7 @@
 	mid_length = 1.8 SECONDS
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 1 SECONDS
-	volume = 2
+	volume = SOUND_AUDIBLE_VOLUME_MIN
 	falloff_exponent = 5 //Ultra quiet very fast
 	extra_range = -12
 	falloff_distance = 1 //Instant falloff after initial tile
