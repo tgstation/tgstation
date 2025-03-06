@@ -21716,7 +21716,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "hEV" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
@@ -44723,7 +44723,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "pPY" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/white/textured_half,
@@ -54692,7 +54692,7 @@
 	},
 /area/station/service/chapel)
 "tjd" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner,
 /turf/open/floor/iron/white/smooth_edge,
@@ -54856,7 +54856,7 @@
 /turf/open/floor/plating,
 /area/station/medical/medbay/lobby)
 "tms" = (
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -64377,7 +64377,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/machinery/chem_heater/withbuffer,
+/obj/machinery/chem_heater,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "wDJ" = (
