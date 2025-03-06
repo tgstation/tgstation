@@ -20,7 +20,7 @@
 	name = "eggplant"
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 20
 
 // Egg-Plant
