@@ -23,21 +23,33 @@
 		/obj/item/tank/internals/plasmaman,
 	)
 
+/obj/item/job_equipment_strap/Initialize(mapload)
+	. = ..()
+	register_item_context()
+
 /obj/item/job_equipment_strap/examine(mob/user)
 	. = ..()
 	. += span_notice("Using this on a <b>suit slot</b> item will add this strap's job items to the things you can wear in it's suit storage.")
 	return .
 
-/obj/item/job_equipment_strap/pre_attack(atom/attacking, mob/living/user, params)
-	if(!istype(attacking, /obj/item/clothing/suit))
-		return ..()
-	var/obj/item/clothing/suit/attacking_suit = attacking
-	attacking_suit.allowed |= things_to_allow
-	if(!do_after(user, 3 SECONDS, user))
-		return FALSE
+/obj/item/job_equipment_strap/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(!istype(target, /obj/item/clothing/suit))
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Attach strap"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/job_equipment_strap/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/item/clothing/suit))
+		return NONE
+	if(!do_after(user, 3 SECONDS, target = interacting_with))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/clothing/suit/targeted_suit = interacting_with
+	targeted_suit.allowed |= things_to_allow
 	playsound(src, 'sound/items/equip/toolbelt_equip.ogg', 50, TRUE)
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
+
 
 // Service
 /obj/item/job_equipment_strap/service
