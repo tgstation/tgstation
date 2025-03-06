@@ -784,7 +784,7 @@
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
 
 	if(owner)
-		. = owner //return valueld owner
+		. = owner //return value is old owner
 		clear_ownership(owner)
 	if(new_owner)
 		apply_ownership(new_owner)
