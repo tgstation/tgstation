@@ -318,6 +318,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			GLOB.cached_storage_typecaches[unique_key] = typecacheof(exception_hold_list)
 		exception_hold = GLOB.cached_storage_typecaches[unique_key]
 
+	can_hold_description = null
 	var/list/holdables = can_hold_list | exception_hold
 	if(length(holdables))
 		can_hold_description = generate_hold_desc(holdables)
