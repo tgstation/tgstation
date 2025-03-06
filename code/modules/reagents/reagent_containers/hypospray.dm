@@ -194,7 +194,7 @@
 	base_icon_state = "syndipen"
 	volume = 50
 	amount_per_transfer_from_this = 50
-	list_reagents = list(/datum/reagent/medicine/final_fortuna = 50)
+	list_reagents = list(/datum/reagent/medicine/final_fortuna = 60)
 
 /obj/item/reagent_containers/hypospray/medipen/methamphetamine
 	name = "methamphetamine medipen"

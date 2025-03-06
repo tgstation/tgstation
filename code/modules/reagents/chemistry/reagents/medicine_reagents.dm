@@ -1849,7 +1849,7 @@
 
 /datum/reagent/medicine/final_fortuna/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	if(affected_mob.reagents.get_reagent_amount(/datum/reagent/water/holywater)>40)
+	if(affected_mob.reagents.get_reagent_amount(/datum/reagent/medicine/final_fortuna)>40)
 		active = TRUE
 		affected_mob.add_traits(subject_traits, type)
 
