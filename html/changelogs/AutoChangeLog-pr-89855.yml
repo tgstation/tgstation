@@ -1,0 +1,4 @@
+author: "StrangeWeirdKitten"
+delete-after: True
+changes:
+  - bugfix: "Design disks now have a cooldown when uploading to no longer crash the server."
