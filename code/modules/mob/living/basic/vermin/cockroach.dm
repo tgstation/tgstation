@@ -167,11 +167,18 @@
 /mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
 	if(!istype(living_target))
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
-	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
-		living_target.visible_message(span_danger("[living_target] steps onto [cockroach]'s spike!"), span_userdanger("You step onto [cockroach]'s spike!"))
-		return TRUE
-	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
-	return FALSE
+
+//NONMODULAR DOPPLER EDIT START
+	switch(rand(1,2))
+		if(1)
+			explosion(src, light_impact_range = 2, flame_range = 1)
+		if(2)
+			empulse(src, 1, 3)
+
+	living_target.visible_message(span_danger("[living_target] steps onto [cockroach]'s back-plate!"), span_userdanger("You step onto [cockroach]'s back-plate!"))
+	src.adjustBruteLoss(10) //need to do this to ensure it dies
+	return TRUE //NONMODULAR DOPPLER EDIT END
+
 
 /datum/ai_controller/basic_controller/cockroach/hauberoach
 	planning_subtrees = list(
