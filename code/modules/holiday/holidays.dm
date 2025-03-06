@@ -253,6 +253,7 @@
 	begin_day = 1
 	end_day = 2
 	holiday_hat = /obj/item/clothing/head/chameleon/broken
+	always_celebrate = TRUE
 
 /datum/holiday/april_fools/celebrate()
 	. = ..()

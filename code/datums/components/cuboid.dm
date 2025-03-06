@@ -1,7 +1,4 @@
-
-
 /datum/component/cuboid
-	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///Rarity of the cube
 	var/rarity = COMMON_CUBE
 	/// Name of the cube's rarity
@@ -32,5 +29,11 @@
 
 /datum/component/cuboid/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	// I don't think an april fools PR is the place to make a helper for this so I'm just gonna use the indexes.
+	// Also I'm pretty sure a helper wouldn't work because it's using spans.
 
-	examine_list += "It's \a [src.rarity_name] Cube!"
+	//!Note to self, figure out how to use HTML to make this have a unique little window
+	var/a_an = "a"
+	if(src.rarity == UNCOMMON_CUBE || src.rarity == EPIC_CUBE)
+		a_an = "an"
+	examine_list += "It's [a_an] [src.rarity_name] Cube!"

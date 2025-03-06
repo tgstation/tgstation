@@ -104,3 +104,63 @@ GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ/eyes/dullahan,
 ), only_root_path = TRUE))
 
+/// List of Common Cubes
+/// I could have made these not only_root_path but I realized that would include EVERY box.
+GLOBAL_LIST_INIT(common_cubes, typecacheof(list(
+	/obj/item/dice/d6,
+	/obj/item/dice/d6/ebony,
+	/obj/item/dice/d6/space,
+	/obj/item/food/monkeycube,
+	/obj/item/storage/box,
+	/obj/item/storage/box/gloves,
+	/obj/item/storage/box/masks,
+	/obj/item/storage/box/shipping,
+	/obj/item/storage/box/donkpockets,
+	/obj/item/storage/box/ingredients/wildcard,
+	/obj/item/storage/box/zipties,
+	/obj/item/stock_parts/power_store/cell,
+	/obj/item/stock_parts/power_store/cell/upgraded,
+), only_root_path = TRUE))
+
+/// List of Uncommon Cubes
+GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
+	/obj/item/bounty_cube,
+	/obj/item/food/monkeycube/chicken,
+	/obj/item/food/monkeycube/bee,
+	/obj/item/crusher_trophy/ice_demon_cube,
+	/obj/item/barriercube,
+	/obj/item/mmi/posibrain,
+)))
+
+/// List of Rare Cubes
+GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
+	/obj/item/food/monkeycube/gorilla,
+	/obj/item/warp_cube,
+)))
+
+/// List of Epic Cubes
+GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
+	/obj/item/freeze_cube,
+	/obj/item/prisoncube,
+)))
+
+/// List of Legendary Cubes
+GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
+	/obj/item/blackbox,
+)))
+
+/// List of Mythical Cubes
+GLOBAL_LIST_INIT(mythical_cubes, typecacheof(list(
+)))
+
+
+/// Loot pool used by the All Rarities cube spawner
+/// Total 916 weight
+GLOBAL_LIST_INIT(all_cubes, list(
+	GLOB.common_cubes = 500, // ~54%
+	GLOB.uncommon_cubes = 250, // ~27%
+	GLOB.rare_cubes = 100, // ~10%
+	GLOB.epic_cubes = 50, // ~5%
+	GLOB.legendary_cubes = 15, // ~1.5%
+	GLOB.mythical_cubes = 1, // ~0.1%
+	))

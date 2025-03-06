@@ -96,6 +96,11 @@
 	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
 	spawned_mob = /mob/living/basic/gorilla
 
+/obj/item/food/monkeycube/gorilla/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE)
+
 /obj/item/food/monkeycube/chicken
 	name = "chicken cube"
 	desc = "A new Nanotrasen classic, the chicken cube. Tastes like everything!"
@@ -106,6 +111,11 @@
 	)
 	tastes = list("chicken" = 1, "the country" = 1, "chicken bouillon" = 1)
 	spawned_mob = /mob/living/basic/chicken
+
+/obj/item/food/monkeycube/chicken/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
 
 /obj/item/food/monkeycube/bee
 	name = "bee cube"
@@ -118,3 +128,8 @@
 	)
 	tastes = list("buzzing" = 1, "honey" = 1, "regret" = 1)
 	spawned_mob = /mob/living/basic/bee
+
+/obj/item/food/monkeycube/bee/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
