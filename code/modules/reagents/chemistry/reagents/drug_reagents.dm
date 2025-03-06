@@ -884,7 +884,7 @@
 		active_hallucination_weakref = WEAKREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = !overdosed))
 	else
 		// if they're just some random schmuck, give them random hallucinations
-		affected_mob.adjust_hallucinations_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+		affected_mob.adjust_hallucinations_up_to(4 SECONDS * REM * seconds_per_tick, 30 SECONDS)
 
 /datum/reagent/drug/syndol/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()

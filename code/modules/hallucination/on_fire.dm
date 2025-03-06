@@ -3,6 +3,7 @@
 
 /datum/hallucination/fire
 	random_hallucination_weight = 3
+	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 
 	/// Are we currently burning our mob?
 	var/active = TRUE

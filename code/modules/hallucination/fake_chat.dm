@@ -1,6 +1,7 @@
 /// Sends a fake chat message to the hallucinator.
 /datum/hallucination/chat
 	random_hallucination_weight = 100
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// If TRUE, we force the message to be hallucinated from common radio. Only set in New()
 	var/force_radio
@@ -14,26 +15,42 @@
 
 /datum/hallucination/chat/start()
 	var/mob/living/carbon/human/speaker
-	var/datum/language/understood_language = hallucinator.get_random_understood_language()
+	var/list/datum/language/understood_languages = hallucinator.get_language_holder().understood_languages
+	var/understood_language
+	var/list/valid_humans = list()
+	var/list/valid_corpses = list()
 	for(var/mob/living/carbon/nearby_human in view(hallucinator))
 		if(nearby_human == hallucinator)
 			continue
+		if(nearby_human.stat == DEAD)
+			valid_corpses += nearby_human
+			continue
+		valid_humans += nearby_human
 
-		if(!speaker)
+	// pick a nearby human which can speak a language the hallucinator understands
+	for(var/mob/living/carbon/nearby_human in shuffle(valid_humans))
+		var/list/shared_languages = nearby_human.get_language_holder().understood_languages & understood_languages
+		if(length(shared_languages))
 			speaker = nearby_human
-		else if(get_dist(hallucinator, nearby_human) < get_dist(hallucinator, speaker))
-			speaker = nearby_human
+			understood_language = pick(shared_languages)
+			break
+
+	// corpses disrespect language because they're... dead
+	if(!speaker && length(valid_corpses))
+		speaker = pick(valid_corpses)
 
 	// Get person to affect if radio hallucination
 	var/is_radio = !speaker || force_radio
 	if(is_radio)
-		var/list/humans = list()
-
-		for(var/datum/mind/crew_mind in get_crewmember_minds())
-			if(crew_mind.current)
-				humans += crew_mind.current
-		if(humans.len)
-			speaker = pick(humans)
+		for(var/datum/mind/crew_mind in shuffle(get_crewmember_minds()))
+			if(crew_mind == hallucinator.mind)
+				continue
+			var/mob/living/carbon/distant_human = crew_mind.current
+			var/list/shared_languages = distant_human.get_language_holder().understood_languages & understood_languages
+			if(length(shared_languages))
+				speaker = distant_human
+				understood_language = pick(shared_languages)
+				break
 
 	if(!speaker)
 		return

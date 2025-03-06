@@ -2,6 +2,7 @@
 /datum/hallucination/fake_item
 	abstract_hallucination_parent = /datum/hallucination/fake_item
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// A flag of slots this fake item can appear in.
 	var/valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_BELT|ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET
