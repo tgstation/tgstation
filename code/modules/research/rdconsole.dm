@@ -381,9 +381,9 @@ Nothing else in the console has ID requirements.
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
 					return TRUE
+				COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
-				COOLDOWN_START(src, cooldowncopy, 3 SECONDS)
 			return TRUE
 
 		//Tech disk-only action.
@@ -394,9 +394,9 @@ Nothing else in the console has ID requirements.
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")
 				return
-			stored_research.copy_research_to(t_disk.stored_research)
+			COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 			say("Downloading to technology disk.")
-			COOLDOWN_START(src, cooldowncopy, 3 SECONDS)
+			stored_research.copy_research_to(t_disk.stored_research)
 			return TRUE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)
