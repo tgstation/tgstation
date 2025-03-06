@@ -276,6 +276,7 @@
 	name = "Final Fortuna"
 	desc = "A highly illegal cocktail of drugs designed to keep you alive for up to a minute, however once it leaves your system it causes massive brain damage."
 	item = /obj/item/reagent_containers/hypospray/medipen/final_fortuna
-	cost = 10
+	cost = 5
 	purchasable_from = UPLINK_TRAITORS
 	progression_minimum = 20 MINUTES
+	limited_stock = 1
