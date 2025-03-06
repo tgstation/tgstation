@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(frame_types, list(
 	"zhenkov",
 	"zhenkovdark",
 	"shard_alpha",
+	"polytronic",
 	))
 
 // What will be showed in the drop-down
@@ -44,6 +45,7 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 	"zhenkov" = "Zhenkov & Co. Foundries",
 	"zhenkovdark" = "Zhenkov & Co. Foundries - At Night",
 	"shard_alpha" = "Shard Alpha Raptoral",
+	"polytronic" = "Polytronic Modular Doll",
 	))
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)

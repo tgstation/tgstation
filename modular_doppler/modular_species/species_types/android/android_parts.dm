@@ -985,6 +985,42 @@
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 
+/obj/item/bodypart/head/robot/android/polytronic
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_state = "polytronic_head"
+	limb_id = "polytronic"
+
+/obj/item/bodypart/chest/robot/android/polytronic
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_state = "polytronic_chest"
+	limb_id = "polytronic"
+
+/obj/item/bodypart/arm/right/robot/android/polytronic
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_state = "polytronic_r_arm"
+	limb_id = "polytronic"
+
+/obj/item/bodypart/arm/left/robot/android/polytronic
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_state = "polytronic_l_arm"
+	limb_id = "polytronic"
+
+/obj/item/bodypart/leg/right/robot/android/polytronic
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_state = "polytronic_r_leg"
+	limb_id = "polytronic"
+
+/obj/item/bodypart/leg/left/robot/android/polytronic
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_state = "polytronic_r_leg"
+	limb_id = "polytronic"
+
 #undef HEAD_MONITOR_FACE
 #undef ANDROID_BODYPARTS_DMI
 
