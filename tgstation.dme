@@ -6614,6 +6614,7 @@
 #include "modular_doppler\antag_factions\code\_uplink.dm"
 #include "modular_doppler\antag_factions\code\factions\cragjumpers.dm"
 #include "modular_doppler\antag_factions\code\factions\cybersun.dm"
+#include "modular_doppler\antag_factions\code\factions\echoes_dark.dm"
 #include "modular_doppler\antag_factions\code\factions\fixer.dm"
 #include "modular_doppler\antag_factions\code\factions\thinktank.dm"
 #include "modular_doppler\antag_factions\code\factions\uzka.dm"

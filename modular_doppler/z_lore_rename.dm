@@ -45,12 +45,6 @@
 	name = "Employee Birthday"
 	report_message = "We here at Region Admin would all like to wish Employee Name a very happy birthday"
 
-/* //so this is stuff that is extremely goofy and i was told may be removed but might not be. if it's still in at a later date just uncomment this
-datum/map_template/shuttle/emergency/rollerdome
-	name = "Uncle Pete's Rollerdome"
-	description = "Hey, daddy-o, don't lose your cool, cat, you dig? \
-	A shuttle based off an old entertainment complex from the 1990s, though our database has no records on anything pertaining to that decade." */
-
 /datum/computer_file/program/budgetorders
 	filedesc = "PA IRN"
 	downloader_category = PROGRAM_CATEGORY_SUPPLY
@@ -60,6 +54,15 @@ datum/map_template/shuttle/emergency/rollerdome
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
 	description = "Watered-down rum, scallywag approved!"
+
+//antag stuff
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon
+	name = "Icemoon Echoes-Dark-Locations Agent"
+	prompt_name = "Echoes-Dark-Locations crewman"
+	you_are_text = "You are an EDL crewman, assigned in an underground secret listening post close to your rival-sister-ship's facility."
+	flavour_text = "9LP has unjustly supplanted your crew as the 'flagship' Port Authority crew for this region. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw the Promenade crew off your trail and disrupt their productivity."
+	important_text = "Do NOT let the Promenade sieze the outpost and recover evidence of our tampering for Port Authority inspection; A small scuttling charge has been provided."
 
 //OBJECTS
 

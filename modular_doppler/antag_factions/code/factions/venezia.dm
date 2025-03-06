@@ -4,7 +4,7 @@
 	However, pushing boundaries is not done without a fuss. Indeed, Venezia is relentless in it's pursuit of acquiring anything from new species to unique samples. From their conception, they've employed all manner of agents to stay on top of any medical and genetic advancements, through subterfuge, force and always proxies."
 	antagonist_types = list(/datum/antagonist/traitor, /datum/antagonist/spy)
 	faction_category = /datum/uplink_category/faction_special/venezia
-	entry_line = span_boldnotice("Venezian subcontractor: authorized. Please consult your allocated uplink device for extra modificiation kits authorized for your current mission.")
+	entry_line = span_boldnotice("Venezian subcontractor: authorized. You have (probably) been hired by the 9LP's sister-rival-bloodfeud-crew, Echoes-Dark-Locations, to complete your contracts. Please consult your allocated uplink device for extra modificiation kits authorized for your current mission.")
 
 /datum/uplink_category/faction_special/venezia
 	name = "Authorized Short-Term Venezian Enhancements"

@@ -4,7 +4,7 @@
 	Armed with a litany of Xion-era mining tools previously outlawed for their awful safety record and a wide array of industrial explosives, they're certain to make their ire known with a bang."
 	antagonist_types = list(/datum/antagonist/traitor, /datum/antagonist/spy)
 	faction_category = /datum/uplink_category/faction_special/cragjumpers
-	entry_line = span_boldnotice("A staticky voice trails across the sub-band of your implanted comms device: \"Remember, kid. You're a Crag Jumper now, and the union's riding on your efforts out here. Check the uplink we've sent you with for some extras to help you out. Make those 4CA fucks -remember- what happens when they grist the working man.\"")
+	entry_line = span_boldnotice("A staticky voice trails across the sub-band of your implanted comms device: \"Remember, kid. You're a Crag Jumper now, and the union's riding on your efforts out here. Don't let those 9LP scabs drive our comrades in Echoes-Dark-Locations out. We're countin' on you.\"")
 
 /datum/uplink_category/faction_special/cragjumpers
 	name = "Jumper-grade Reacquired Operational Equipment"
