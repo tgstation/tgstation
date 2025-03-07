@@ -386,12 +386,13 @@
 	cast_spell(user, user)
 
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
+	if(!cast_spell(M, user))
+		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 	user.do_attack_animation(M)
-	cast_spell(M, user)
 
 /obj/item/melee/blood_magic/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iscarbon(user) || !IS_CULTIST(user))
@@ -755,22 +756,26 @@
  * '/obj/item/melee/blood_magic/manipulator/proc/blood_draw' handles blood pools/trails and does not affect parent proc
  */
 /obj/item/melee/blood_magic/manipulator/cast_spell(mob/living/target, mob/living/carbon/user)
-	if((isconstruct(target) || isshade(target)) && !heal_construct(target, user))
+	if(isconstruct(target) || isshade(target))
+		if (heal_construct(target, user))
+			return ..()
 		return
 	if(istype(target, /obj/effect/decal/cleanable/blood) || isturf(target))
 		blood_draw(target, user)
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_bloodbag = target
-		if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
-			human_bloodbag.balloon_alert(user, "no blood!")
-			return
-		if(human_bloodbag.stat == DEAD)
-			human_bloodbag.balloon_alert(user, "dead!")
-			return
-		if(IS_CULTIST(human_bloodbag) && !heal_cultist(human_bloodbag, user))
-			return
-		if(!IS_CULTIST(human_bloodbag) && !drain_victim(human_bloodbag, user))
-			return
+		return ..()
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/human_bloodbag = target
+	if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
+		human_bloodbag.balloon_alert(user, "no blood!")
+		return
+	if(human_bloodbag.stat == DEAD)
+		human_bloodbag.balloon_alert(user, "dead!")
+		return
+	if(IS_CULTIST(human_bloodbag) && !heal_cultist(human_bloodbag, user))
+		return
+	if(!IS_CULTIST(human_bloodbag) && !drain_victim(human_bloodbag, user))
+		return
 	return ..()
 
 /**
