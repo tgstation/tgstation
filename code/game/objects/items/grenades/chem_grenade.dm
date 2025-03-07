@@ -248,10 +248,10 @@
 
 /obj/item/grenade/chem_grenade/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	log_grenade(user) //Inbuilt admin procs already handle null users
-	if(user)
+	if (user)
 		add_fingerprint(user)
-		if(msg)
-			if(landminemode)
+		if (msg)
+			if (landminemode)
 				to_chat(user, span_warning("You prime [src], activating its proximity sensor."))
 			else
 				to_chat(user, span_warning("You prime [src]! [DisplayTimeText(det_time)]!"))
@@ -259,9 +259,8 @@
 	active = TRUE
 	update_icon_state()
 	playsound(src, grenade_arm_sound, volume, grenade_sound_vary)
-	if(landminemode)
-		if (landminemode.time)
-			landminemode.toggle_scan(FALSE)
+	if (landminemode)
+		landminemode.toggle_scan(FALSE) // Ensures that if it was turned on before for some reason, it doesn't get turned off
 		landminemode.activate()
 	else
 		addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)
