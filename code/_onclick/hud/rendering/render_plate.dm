@@ -374,6 +374,13 @@
 	plane = RENDER_PLANE_NON_GAME
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 
+/atom/movable/screen/plane_master/rendering_plate/turf_lighting
+	name = "Turf lighting post-processing plate"
+	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
+	plane = TURF_LIGHTING_PLATE
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	blend_mode = BLEND_ADD
+
 /**
  * Plane master proc called in Initialize() that creates relay objects, and sets them up as needed
  * Sets:

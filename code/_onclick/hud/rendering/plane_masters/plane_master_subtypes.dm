@@ -272,7 +272,7 @@
 	documentation = "Contains all lighting drawn to turfs. Not so complex, draws directly onto the lighting plate."
 	plane = LIGHTING_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(TURF_LIGHTING_PLATE)
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
@@ -295,7 +295,7 @@
 /atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	// I'd love for this to be HSL but filters don't work with blend modes
-	add_relay_to(GET_NEW_PLANE(LIGHTING_PLANE, offset), BLEND_MULTIPLY, relay_color = list(
+	add_relay_to(GET_NEW_PLANE(TURF_LIGHTING_PLATE, offset), BLEND_MULTIPLY, relay_color = list(
 		-1, -1, -1, 0,
 		-1, -1, -1, 0,
 		-1, -1, -1, 0,
