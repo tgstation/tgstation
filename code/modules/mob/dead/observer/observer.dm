@@ -877,13 +877,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				remove_verb(src, /mob/dead/observer/verb/possess)
 
 /mob/dead/observer/reset_perspective(atom/A)
-	message_admins("///reset_perspective[A], client:[client], src:[src]")
 	if(client)
 		if(ismob(client.eye) && (client.eye != src))
 			cleanup_observe()
 	if(..())
 		if(hud_used)
-			message_admins("///hud_used:[hud_used], hud_vers:[hud_used.hud_version], src:[src]")
 			client.clear_screen()
 			hud_used.show_hud(hud_used.hud_version)
 
@@ -940,7 +938,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			this is a bug (and a past exploit) and should be investigated.")
 		return
 
-	message_admins("---do_observe([mob_eye])")
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.set_eye(mob_eye)
@@ -951,7 +948,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(mob_eye.hud_used)
 			client.clear_screen()
 			LAZYOR(mob_eye.observers, src)
-			message_admins("mob_eye.hud_used.show_hud([mob_eye.hud_used.hud_version], [src]), mob_eye:[mob_eye], hud_used:[hud_used] ")
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
 

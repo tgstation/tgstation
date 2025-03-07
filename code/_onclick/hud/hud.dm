@@ -330,13 +330,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
  */
 /datum/hud/proc/show_hud(version = 0, mob/viewmob)
 	if(!ismob(mymob))
-		message_admins("early ret mymob")
 		return FALSE
 
 	var/mob/screenmob = viewmob || mymob
-	message_admins("screenmob:[screenmob] = [viewmob] || [mymob], [screenmob.client], src:[src], usr:[usr]")
 	if(!screenmob.client)
-		message_admins("early ret:[screenmob], [screenmob.client]")
 		return FALSE
 
 	// This code is the absolute fucking worst, I want it to go die in a fire
@@ -412,22 +409,19 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 
-	message_admins("update_parallax_pref() screenmob:[screenmob]")
-
-	if(screenmob == mymob)
+	if(screenmob != mymob)
+		viewmob.hud_used.update_parallax_pref()
+	else
 		update_parallax_pref(screenmob)
+
 	update_reuse(screenmob)
 
 	// ensure observers get an accurate and up-to-date view
-	message_admins("viewmob:[viewmob], mymob:[mymob]")
 	if (!viewmob)
-		message_admins("_viewmob:[viewmob]")
 		plane_masters_update()
 		for(var/M in mymob.observers)
-			message_admins("_show_hud([hud_version], [M])")
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
-		message_admins("_viewmob.hud_used:[viewmob.hud_used]")
 		viewmob.hud_used.plane_masters_update()
 		viewmob.show_other_mob_action_buttons(mymob)
 
@@ -435,7 +429,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return TRUE
 
 /datum/hud/proc/plane_masters_update()
-	message_admins("plane_masters_update() src:[src], usr:[usr]")
 	for(var/group_key in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
 		// Plane masters are always shown to OUR mob, never to observers

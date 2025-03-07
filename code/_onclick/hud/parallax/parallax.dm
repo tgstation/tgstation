@@ -2,11 +2,9 @@
 /datum/hud/proc/create_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
-	message_admins("~~create_parallax([viewmob]), screenmob:[screenmob], mymob:[mymob], C:[C] ")
 	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
 		for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
 			parallax.hide_plane(screenmob)
-		message_admins("~~early ret apply_parallax_pref([viewmob]), [!apply_parallax_pref(viewmob)]")
 		return
 
 	for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
@@ -35,9 +33,7 @@
 	// This could be changed, but it would require refactoring this whole thing
 	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
 	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
-		message_admins("~~screenmob:[screenmob] != mymob:[mymob], plane_master:[plane_master], src:[src], usr:[usr] ")
 		if(screenmob != mymob)
-			message_admins("~~locate:[locate(/atom/movable/screen/plane_master/parallax_white) in C.screen]")
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
 			C.screen += plane_master
 		// this color makes parallax not black
@@ -56,7 +52,7 @@
 	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
-			C.screen -= plane_master
+			C.screen += plane_master
 		plane_master.color = initial(plane_master.color)
 	C.parallax_layers = null
 
@@ -105,9 +101,7 @@
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
 	var/mob/screen_mob = viewmob || mymob
-	message_admins("~~update_parallax_pref([viewmob]) screen_mob:[screen_mob], mymob:[mymob], [screen_mob.client], src:[src]")
 	if(!screen_mob.client)
-		message_admins("~~early ret [screen_mob.client]")
 		return
 	remove_parallax(screen_mob)
 	create_parallax(screen_mob)
@@ -177,7 +171,6 @@
 /datum/hud/proc/update_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
-	message_admins("update_parallax([viewmob]) viewmob:[screenmob], mymob:[mymob] ")
 	var/turf/posobj = get_turf(C.eye)
 	if(!posobj)
 		return
