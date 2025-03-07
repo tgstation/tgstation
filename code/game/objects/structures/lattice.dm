@@ -52,7 +52,7 @@
 		if(is_station_level(loc.z) || is_mining_level(loc.z))
 			stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z], [get_area(LAT)])")
 		else
-			log_mapping("multiple lattices found in ([loc.x], [loc.y], [loc.z], [get_area(LAT)])")
+			log_mapping("multiple lattices found in non-station/non-mining area: [get_area(LAT)]")
 		return INITIALIZE_HINT_QDEL
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
