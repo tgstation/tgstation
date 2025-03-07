@@ -925,6 +925,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
 
+/// This mob always initiates a soft landing.
+#define TRAIT_SOFT_FALL "soft_fall"
+
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
 

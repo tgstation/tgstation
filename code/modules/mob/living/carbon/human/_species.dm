@@ -72,6 +72,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	)
 	///Internal organs that are unique to this race, like a tail or other cosmetic organs. list(typepath of organ 1, typepath of organ 2 = "Round").
 	var/list/mutant_organs = list()
+	///Internal organs that might be present that we want to remove when regenerating the dummy.
+	var/list/conditional_mutant_organs = list()
 	///Replaces default brain with a different organ
 	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
 	///Replaces default heart with a different organ

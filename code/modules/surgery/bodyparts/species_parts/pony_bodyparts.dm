@@ -265,17 +265,14 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_inherent_trait = TRAIT_PONY_PREFS
 
-/datum/preference/choiced/pony_tail/init_possible_values()
+/datum/preference/choiced/pony_choice/init_possible_values()
 	return list("Unicorn", "Pegasus", "Earth")
 
 /datum/preference/choiced/pony_choice/apply_to_human(mob/living/carbon/human/target, value)
-	switch(value)
-		if("Unicorn")
-		if("Pegasus")
-		if("Earth")
+	target.dna.features["pony_archetype"] = value
 
-/datum/preference/choiced/pony_tail/create_default_value()
-	return /datum/sprite_accessory/pony_tail/pony::name
+/datum/preference/choiced/pony_choice/create_default_value()
+	return "Unicorn"
 
 /obj/item/organ/pony_horn
 	name = "unicorn horn"
@@ -284,8 +281,14 @@
 	worn_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
 	worn_icon_state = "m_pony_horn_pony_FRONT"
 	visual = TRUE
+	organ_flags = ORGAN_ORGANIC | ORGAN_VIRGIN | ORGAN_EXTERNAL | ORGAN_VITAL
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_horn
-	slot = ORGAN_SLOT_PONY_HORN
+	slot = ORGAN_SLOT_EXTERNAL_PONY_HORN
+	zone = BODY_ZONE_HEAD
+
+/datum/bodypart_overlay/mutant/pony_horn/get_image(image_layer, obj/item/bodypart/limb)
+	var/mutable_appearance/appearance = mutable_appearance('icons/mob/human/species/pony/bodyparts.dmi', "m_pony_horn_pony_FRONT", layer = image_layer)
+	return appearance
 
 /datum/bodypart_overlay/mutant/pony_horn
 	dyable = TRUE
@@ -294,4 +297,202 @@
 	layers = EXTERNAL_FRONT
 
 /datum/bodypart_overlay/mutant/pony_horn/get_global_feature_list()
-	return SSaccessories.pony_tail_list
+	return SSaccessories.pony_horn_list
+
+/obj/item/organ/pony_wings
+	name = "pegasus wings"
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "m_pony_wings_pony_FRONT"
+	worn_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	worn_icon_state = "m_pony_wings_pony_FRONT"
+	organ_flags = ORGAN_ORGANIC | ORGAN_VIRGIN | ORGAN_EXTERNAL | ORGAN_VITAL
+	visual = TRUE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_wings
+	slot = ORGAN_SLOT_EXTERNAL_PONY_WINGS
+	zone = BODY_ZONE_CHEST
+	var/datum/action/cooldown/spell/icarian_flight/jumping_power
+	var/datum/component/tackler
+
+/obj/item/organ/pony_wings/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/jetpack, \
+		TRUE, \
+		1, \
+		1, \
+		COMSIG_ORGAN_IMPLANTED, \
+		COMSIG_ORGAN_REMOVED, \
+		null, \
+		CALLBACK(src, PROC_REF(allow_flight)), \
+		null, \
+	)
+	jumping_power = new(src)
+	jumping_power.background_icon_state = "bg_tech_blue"
+	jumping_power.base_background_icon_state = jumping_power.background_icon_state
+	jumping_power.active_background_icon_state = "[jumping_power.base_background_icon_state]_active"
+	jumping_power.overlay_icon_state = "bg_tech_blue_border"
+	jumping_power.active_overlay_icon_state = null
+	jumping_power.panel = "Genetic"
+	jumping_power.our_wings = src
+
+/obj/item/organ/pony_wings/Destroy()
+	tackler = null
+	qdel(jumping_power)
+	. = ..()
+
+/obj/item/organ/pony_wings/proc/allow_flight()
+	if(!owner || !owner.client)
+		return FALSE
+	if(owner.has_gravity())
+		return FALSE
+	var/datum/gas_mixture/current = owner.loc.return_air()
+	if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85))
+		return TRUE
+	return FALSE
+
+/obj/item/organ/pony_wings/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	add_organ_trait(TRAIT_CATLIKE_GRACE)
+	add_organ_trait(TRAIT_SOFT_FALL)
+	tackler = organ_owner.AddComponent(
+		/datum/component/tackler,
+		stamina_cost = /obj/item/clothing/gloves/tackler::tackle_stam_cost,
+		base_knockdown = /obj/item/clothing/gloves/tackler::base_knockdown,
+		range = /obj/item/clothing/gloves/tackler::tackle_range,
+	 	speed = /obj/item/clothing/gloves/tackler::tackle_speed,
+		skill_mod = /obj/item/clothing/gloves/tackler::skill_mod,
+	 	min_distance = /obj/item/clothing/gloves/tackler::min_distance
+	)
+	jumping_power.Grant(organ_owner)
+
+/obj/item/organ/pony_wings/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	remove_organ_trait(TRAIT_CATLIKE_GRACE)
+	remove_organ_trait(TRAIT_SOFT_FALL)
+	jumping_power.Remove(organ_owner)
+
+/datum/bodypart_overlay/mutant/pony_wings
+	dyable = TRUE
+	color_source = ORGAN_COLOR_INHERIT
+	feature_key = "pony_wings"
+	layers = EXTERNAL_FRONT
+	var/unfurled = FALSE
+
+/datum/bodypart_overlay/mutant/pony_wings/get_global_feature_list()
+	return SSaccessories.pony_wings_list
+
+/datum/bodypart_overlay/mutant/pony_wings/get_image(image_layer, obj/item/bodypart/limb)
+	var/state_to_use = unfurled ? "m_pony_wings_pony_FRONT" : "m_pony_wings_pony_folded_FRONT"
+	var/mutable_appearance/appearance = mutable_appearance('icons/mob/human/species/pony/bodyparts.dmi', state_to_use, layer = image_layer)
+	return appearance
+
+/datum/bodypart_overlay/mutant/pony_wings/generate_icon_cache()
+	. = ..()
+	if(unfurled)
+		. += "_unfurled"
+
+#define ICARIAN_FLIGHT "icarian_flight"
+
+/datum/action/cooldown/spell/icarian_flight
+	name = "Icarian Flight"
+	desc = "Take flight with your wings and fly over obstacles and through windows!"
+	button_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	button_icon_state = "m_pony_wings_pony_FRONT"
+	cooldown_time = 7 SECONDS
+	spell_requirements = NONE
+	var/mob/living/carbon/human/last_caster
+	var/obj/item/organ/pony_wings/our_wings
+
+/datum/action/cooldown/spell/icarian_flight/cast(mob/living/cast_on)
+	. = ..()
+	last_caster = cast_on
+	var/hindered = FALSE
+	var/mob/living/carbon/human/pegasus = cast_on
+	if(pegasus.getStaminaLoss() > 0 || pegasus.legcuffed) // cannot reach maximum jump if you have any stamina loss or are legcuffed(bola, bear trap, etc.)
+		hindered = TRUE
+		pegasus.visible_message(span_warning("[pegasus] weakly flies with their wings, hampered by their lack of stamina!"))
+		pegasus.balloon_alert_to_viewers("weakly flies")
+	else
+		pegasus.visible_message(span_warning("[pegasus] flies with their wings!"))
+		pegasus.balloon_alert_to_viewers("flies")
+	playsound(pegasus, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
+
+	var/datum/bodypart_overlay/mutant/pony_wings/wings_overlay = our_wings.bodypart_overlay
+	wings_overlay.unfurled = TRUE
+	pegasus.update_body_parts()
+	pegasus.layer = ABOVE_MOB_LAYER
+	if(!hindered)
+		pegasus.pass_flags |= PASSTABLE|PASSGRILLE|PASSWINDOW|PASSMACHINE|PASSSTRUCTURE
+		RegisterSignal(pegasus, COMSIG_MOVABLE_MOVED, PROC_REF(break_glass))
+	else
+		pegasus.pass_flags |= PASSTABLE|PASSGRILLE|PASSMACHINE|PASSSTRUCTURE
+		RegisterSignal(pegasus, COMSIG_MOVABLE_MOVED, PROC_REF(break_grilles))
+	ADD_TRAIT(pegasus, TRAIT_SILENT_FOOTSTEPS, ICARIAN_FLIGHT)
+	ADD_TRAIT(pegasus, TRAIT_MOVE_FLYING, ICARIAN_FLIGHT)
+	pegasus.zMove(UP)
+	cast_on.add_filter(ICARIAN_FLIGHT, 2, drop_shadow_filter(color = "#03020781", size = 0.9))
+	var/shadow_filter = cast_on.get_filter(ICARIAN_FLIGHT)
+	var/jump_height = 24
+	var/jump_duration = 1.5 SECONDS
+	new /obj/effect/temp_visual/mook_dust(get_turf(cast_on))
+	animate(cast_on, pixel_y = cast_on.pixel_y + jump_height, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
+	animate(pixel_y = initial(owner.pixel_y), time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
+
+	animate(shadow_filter, y = -jump_height, size = 4, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
+	animate(y = 0, size = 0.9, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
+
+	addtimer(CALLBACK(src, PROC_REF(end_jump), cast_on), jump_duration)
+
+/datum/action/cooldown/spell/icarian_flight/proc/break_glass(atom/movable/mover, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/pegasus = mover
+	for(var/obj/structure/window/window in get_turf(pegasus))
+		window.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		pegasus.apply_damage(damage = rand(5,15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
+		new /obj/effect/decal/cleanable/glass(get_step(pegasus, pegasus.dir))
+	for(var/obj/machinery/door/window/windoor in get_turf(pegasus))
+		windoor.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		pegasus.apply_damage(damage = rand(5,15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(windoor, oldloc))
+		new /obj/effect/decal/cleanable/glass(get_step(pegasus, pegasus.dir))
+	for(var/obj/structure/grille/grille in get_turf(pegasus))
+		grille.shock(pegasus, 70)
+		grille.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		pegasus.apply_damage(damage = rand(5,10), damagetype = BRUTE, wound_bonus = 5, bare_wound_bonus = 15, attack_direction = get_dir(grille, oldloc))
+		new /obj/effect/decal/cleanable/generic(get_step(pegasus, pegasus.dir))
+
+/datum/action/cooldown/spell/icarian_flight/proc/break_grilles(atom/movable/mover, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/pegasus = mover
+	for(var/obj/structure/grille/grille in get_turf(pegasus))
+		grille.shock(pegasus, 70)
+		grille.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		pegasus.apply_damage(damage = rand(5,10), damagetype = BRUTE, wound_bonus = 5, bare_wound_bonus = 15, attack_direction = get_dir(grille, oldloc))
+		new /obj/effect/decal/cleanable/generic(get_step(pegasus, pegasus.dir))
+
+///Ends the jump
+/datum/action/cooldown/spell/icarian_flight/proc/end_jump(mob/living/jumper)
+	var/datum/bodypart_overlay/mutant/pony_wings/wings_overlay = our_wings.bodypart_overlay
+	wings_overlay.unfurled = FALSE
+	last_caster.update_body_parts()
+	jumper.remove_filter(ICARIAN_FLIGHT)
+	jumper.layer = initial(jumper.layer)
+	jumper.pass_flags = initial(jumper.pass_flags)
+	REMOVE_TRAIT(jumper, TRAIT_SILENT_FOOTSTEPS, ICARIAN_FLIGHT)
+	REMOVE_TRAIT(jumper, TRAIT_MOVE_FLYING, ICARIAN_FLIGHT)
+	new /obj/effect/temp_visual/mook_dust(get_turf(jumper))
+	UnregisterSignal(jumper, COMSIG_MOVABLE_MOVED)
+
+
+/obj/item/organ/earth_pony_core
+	name = "beating core of earth"
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "earth_pony_core"
+	worn_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	worn_icon_state = "earth_pony_core"
+	organ_flags = ORGAN_ORGANIC | ORGAN_VIRGIN | ORGAN_EDIBLE | ORGAN_VITAL
+	slot = ORGAN_SLOT_PONY_EARTH
+	zone = BODY_ZONE_CHEST

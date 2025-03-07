@@ -41,6 +41,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
 
+	for(var/organ_path in current_species.conditional_mutant_organs)
+		var/obj/item/organ/current_organ = get_organ_by_type(organ_path)
+		if(current_organ)
+			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
+			SSwardrobe.stash_object(current_organ)
+
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
 //Hopefully this makes preference reloading not the worst thing ever
 /mob/living/carbon/human/dummy/delete_equipment()

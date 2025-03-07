@@ -13,6 +13,11 @@
 		/obj/item/organ/ears/pony = "Pony",
 		/obj/item/organ/tail/pony = "Pony",
 	)
+	conditional_mutant_organs = list(
+		/obj/item/organ/pony_horn,
+		/obj/item/organ/pony_wings,
+		/obj/item/organ/earth_pony_core
+	)
 	mutanteyes = /obj/item/organ/eyes/pony
 	mutantears = /obj/item/organ/ears/pony
 	sexes = FALSE // todo: get them to only be women
@@ -36,6 +41,23 @@
 	var/list/features = ..()
 	//features["lizard_markings"] = pick(SSaccessories.lizard_markings_list)
 	return features
+
+/datum/species/pony/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current, list/excluded_zones, visual_only)
+	. = ..()
+	for(var/organ_path in conditional_mutant_organs)
+		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
+		if(current_organ)
+			current_organ.Remove(organ_holder, special = TRUE)
+	switch(organ_holder.dna.features["pony_archetype"])
+		if("Unicorn")
+			var/obj/item/organ/pony_horn/horn = new(organ_holder)
+			horn.Insert(organ_holder)
+		if("Pegasus")
+			var/obj/item/organ/pony_wings/wings = new(organ_holder)
+			wings.Insert(organ_holder)
+		if("Earth")
+			var/obj/item/organ/earth_pony_core/core = new(organ_holder)
+			core.Insert(organ_holder)
 
 // TODO: GET WRITEUPS FROM WINTERSSHIELD ON THESE
 /datum/species/pony/get_physical_attributes()
