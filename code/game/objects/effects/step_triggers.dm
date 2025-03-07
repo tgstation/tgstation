@@ -222,7 +222,7 @@
 		qdel(src)
 
 /obj/effect/step_trigger/sound_effect/lavaland_cult_altar
-	happens_once = 1
+	happens_once = TRUE
 	name = "a grave mistake";
 	sound = 'sound/effects/hallucinations/i_see_you1.ogg'
 	triggerer_only = 1
@@ -231,7 +231,7 @@
 /obj/effect/step_trigger/outfitter
 	mobs_only = TRUE
 	///outfit to equip
-	var/datum/outfit/dresscode
+	var/datum/outfit/outfit_to_equip
 	var/happens_once = FALSE
 
 /obj/effect/step_trigger/outfitter/Trigger(atom/movable/A)
@@ -240,7 +240,7 @@
 
 	var/mob/living/carbon/human/fellow = A
 	fellow.delete_equipment()
-	fellow.equipOutfit(dresscode,FALSE)
+	fellow.equipOutfit(outfit_to_equip,FALSE)
 
 	if(happens_once)
 		qdel(src)
