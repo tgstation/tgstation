@@ -157,3 +157,21 @@
   - bugfix: chameleon IDs actually prevent AI tracking now
   hry-gh:
   - bugfix: the admin music player works again on 516
+2025-03-07:
+  Ben10Omintrix:
+  - qol: the raptor minigame now no longer opens up a new window
+  - rscadd: the raptor minigame has been reworked
+  Kocma-san:
+  - qol: ERT leaders now have a headset with high-volume mode
+  - bugfix: Deathsquad Officer will now have proper outfit
+  Melbert:
+  - bugfix: Wigs no longer color their hats
+  - bugfix: You can hear looping computer sounds again
+  StrangeWeirdKitten:
+  - bugfix: Design disks now have a cooldown when uploading to no longer crash the
+      server.
+  necromanceranne:
+  - balance: Last resort is no longer an innate changeling ability. Changeling on
+      changeling violence is back on the menu. (literally)
+  possiblepossibility:
+  - rscadd: you may now take out individual slices of pizza

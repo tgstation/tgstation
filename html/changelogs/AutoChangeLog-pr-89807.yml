@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Touch protection actually respects the TOUCH exposure method."
+  - bugfix: "You cannot Fry-Fu someone through bio protective clothing using three drops of essential oils heated to the temperature of the sun."
