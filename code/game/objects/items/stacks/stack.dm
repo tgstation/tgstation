@@ -215,6 +215,12 @@
 	else
 		. = (amount)
 
+/// Gets the table type we make, accounting for potential exceptions.
+/obj/item/stack/proc/get_table_type()
+	if(ispath(tableVariant, /obj/structure/table/greyscale) && isnull(material_type))
+		return // This table type breaks without a material type.
+	return tableVariant
+
 /**
  * Builds all recipes in a given recipe list and returns an association list containing them
  *
