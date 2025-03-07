@@ -39,7 +39,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/table_frame/wrench_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You start disassembling [src]..."))
+	balloon_alert(user, "deconstructing...")
 	tool.play_tool_sound(src)
 	if(!tool.use_tool(src, user, 3 SECONDS))
 		return ITEM_INTERACT_BLOCKING
@@ -59,12 +59,13 @@
 		return NONE
 
 	if(our_stack.get_amount() < 1)
-		to_chat(user, span_warning("You need one [our_stack.name] sheet to do this!"))
+		balloon_alert(user, "need more material!")
 		return ITEM_INTERACT_BLOCKING
 	if(locate(/obj/structure/table) in loc)
-		to_chat(user, span_warning("There's already a table built here!"))
+		balloon_alert(user, "can't stack tables!")
 		return ITEM_INTERACT_BLOCKING
 
+	balloon_alert(user, "constructing table...")
 	if(!do_after(user, 2 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 	if((locate(/obj/structure/table) in loc) || !our_stack.use(1))
