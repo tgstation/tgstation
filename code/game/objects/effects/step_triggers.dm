@@ -202,7 +202,7 @@
 	var/volume = 100
 	var/freq_vary = 1 //Should the frequency of the sound vary?
 	var/extra_range = 0 // eg World.view = 7, extra_range = 1, 7+1 = 8, 8 turfs radius
-	var/happens_once = 0
+	var/happens_once = FALSE
 	var/triggerer_only = 0 //Whether the triggerer is the only person who hears this
 
 
@@ -232,7 +232,7 @@
 	mobs_only = TRUE
 	///outfit to equip
 	var/datum/outfit/dresscode
-	var/happens_once = 0
+	var/happens_once = FALSE
 
 /obj/effect/step_trigger/outfitter/Trigger(atom/movable/A)
 	if(!ishuman(A))
