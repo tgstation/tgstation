@@ -233,7 +233,6 @@
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
-
 /obj/item/clothing/suit/wizrobe/durathread
 	name = "durathread robe"
 	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much more stylish."
