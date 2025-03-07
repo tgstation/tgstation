@@ -20,12 +20,15 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// The item typepath that we insert into the parent's hands
 	var/obj/item/mutant_hand_path = /obj/item/mutant_hand
+	/// Can be passed RIGHT_HAND or LEFT_HAND to ignore that hand
+	var/ignored = null
 
-/datum/component/mutant_hands/Initialize(obj/item/mutant_hand_path = /obj/item/mutant_hand)
+/datum/component/mutant_hands/Initialize(obj/item/mutant_hand_path = /obj/item/mutant_hand, ignored = null)
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.mutant_hand_path = mutant_hand_path
+	src.ignored = ignored
 
 /datum/component/mutant_hands/RegisterWithParent()
 	// Give them a hand before registering ANYTHING just so it's clean
@@ -56,23 +59,25 @@
  */
 /datum/component/mutant_hands/proc/apply_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
-	for(var/obj/item/hand_slot as anything in human_parent.held_items)
+	for(var/hand_slot in 1 to length(human_parent.held_items))
+		var/obj/item/hand_item = human_parent.held_items[hand_slot]
 		// This slot is already a mutant hand
-		if(istype(hand_slot, mutant_hand_path))
+		if(istype(hand_item, mutant_hand_path))
 			continue
-		// This slot is not empty
-		// Yes the held item lists contains nulls to represent empty hands
-		// It saves us a /item cast by using as anything in the loop
-		if(!isnull(hand_slot))
-			if(HAS_TRAIT(hand_slot, TRAIT_NODROP) || (hand_slot.item_flags & ABSTRACT))
-				// There's a nodrop / abstract item in the way of putting a mutant hand in
-				// It can stay, for now, but if it gets dropped / unequipped we'll swoop in to replace the slot
-				continue
-			// Drop any existing non-nodrop items to the ground
-			human_parent.dropItemToGround(hand_slot)
+		if(ignored == RIGHT_HANDS && IS_RIGHT_INDEX(hand_slot))
+			continue
+		if(ignored == LEFT_HANDS && IS_LEFT_INDEX(hand_slot))
+			continue
+		// This slot is not empty, and does not have some abstract item in it
+		// Try to drop it to the ground before putting in a new hand
+		if(!isnull(hand_item) && !(hand_item.item_flags & ABSTRACT) && !human_parent.dropItemToGround(hand_item))
+			// We could not drop whatever is in its place, probably nodrop. Skip
+			continue
 
 		// Put in hands has a sleep somewhere in there
-		human_parent.put_in_hands(new mutant_hand_path(), del_on_fail = TRUE)
+		var/obj/item/new_hand = new mutant_hand_path()
+		if(!human_parent.put_in_hand(new_hand, hand_slot))
+			qdel(new_hand)
 
 /**
  * Removes all mutant idems from the parent's hand slots
