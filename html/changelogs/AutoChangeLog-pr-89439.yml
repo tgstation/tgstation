@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "It's now possible to take trophy fish from previous shifts off their mounts without turning them into dust based on a probability revolving around the size and weight of the fish against your fishing skill."
