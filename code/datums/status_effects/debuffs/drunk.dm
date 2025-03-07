@@ -106,7 +106,7 @@
 /datum/status_effect/inebriated/drunk/on_apply()
 	. = ..()
 	owner.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
-	owner.add_mood_event(id, /datum/mood_event/drunk)
+	owner.add_mood_event(id, /datum/mood_event/drunk, drunk_value)
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(drunk_gun_fired))
 
 /datum/status_effect/inebriated/drunk/on_remove()
@@ -143,10 +143,14 @@
 	. = ..()
 	if(QDELETED(src))
 		return
-
 	// Return to "tipsyness" when we're below 6.
 	if(drunk_value < TIPSY_THRESHOLD)
 		owner.apply_status_effect(/datum/status_effect/inebriated/tipsy, drunk_value)
+		return
+
+	var/datum/mood_event/drunk/moodlet = owner.mob_mood.mood_events[id]
+	if(istype(moodlet))
+		moodlet.update_change(drunk_value)
 
 /datum/status_effect/inebriated/drunk/on_tick_effects()
 	// Handle the Ballmer Peak.
