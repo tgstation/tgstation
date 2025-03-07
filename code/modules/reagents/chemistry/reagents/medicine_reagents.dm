@@ -1832,7 +1832,7 @@
 	description = "Prevents death but weakens tendons and kills once it leaves your system."
 	color = "#ad0a0a"
 	metabolization_rate = REAGENTS_METABOLISM * 5
-	overdose_threshold = 51
+	overdose_threshold = 61
 	var/static/list/subject_traits = list(
 		TRAIT_STABLEHEART,
 		TRAIT_NOHARDCRIT,
