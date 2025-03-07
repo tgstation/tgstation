@@ -1862,10 +1862,11 @@
 
 /datum/reagent/medicine/final_fortuna/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	if(active)
-		affected_mob.remove_traits(subject_traits, type)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200, 200)
-		affected_mob.updatehealth()
+	if(!active)
+	    return
+	affected_mob.remove_traits(subject_traits, type)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200, 200)
+	affected_mob.updatehealth()
 
 /datum/reagent/medicine/final_fortuna/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.remove_traits(subject_traits, type)
