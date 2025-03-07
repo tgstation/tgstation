@@ -235,7 +235,7 @@
 	var/happens_once = 0
 
 /obj/effect/step_trigger/outfitter/Trigger(atom/movable/A)
-	if(!iscarbon(A))
+	if(!ishuman(A))
 		return
 
 	var/mob/living/carbon/human/fellow = A
