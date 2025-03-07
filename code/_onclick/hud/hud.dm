@@ -331,7 +331,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/show_hud(version = 0, mob/viewmob)
 	if(!ismob(mymob))
 		return FALSE
-
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
 		return FALSE
