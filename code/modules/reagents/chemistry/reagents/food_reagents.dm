@@ -193,7 +193,7 @@
 		exposed_mob.adjustFireLoss(FryLoss)
 	playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
 	ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
-	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
+	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 2 SECONDS)
 
 /datum/reagent/consumable/nutriment/fat/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
