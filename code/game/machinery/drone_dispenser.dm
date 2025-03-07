@@ -105,7 +105,7 @@
 	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/syndrone/badass)
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
-// I don't need your forgiveness, this is awesome.
+// tool don't need your forgiveness, this is awesome.
 /obj/machinery/drone_dispenser/snowflake
 	name = "snowflake drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
@@ -254,36 +254,35 @@
 	icon_state = icon_on
 	return ..()
 
-/obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		materials.retrieve_all()
-		I.play_tool_sound(src)
-		to_chat(user, span_notice("You retrieve the materials from [src]."))
+/obj/machinery/drone_dispenser/crowbar_act(mob/living/user, obj/item/tool)
+	materials.retrieve_all()
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You retrieve the materials from [src]."))
+	return ITEM_INTERACT_SUCCESS
 
-	else if(I.tool_behaviour == TOOL_WELDER)
-		if(!(machine_stat & BROKEN))
-			to_chat(user, span_warning("[src] doesn't need repairs."))
-			return
+/obj/machinery/drone_dispenser/welder_act(mob/living/user, obj/item/tool)
+	if(!(machine_stat & BROKEN))
+		to_chat(user, span_warning("[src] doesn't need repairs."))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!I.tool_start_check(user, amount=1))
-			return
+	if(!tool.tool_start_check(user, amount=1))
+		return ITEM_INTERACT_BLOCKING
 
-		user.visible_message(
-			span_notice("[user] begins patching up [src] with [I]."),
-			span_notice("You begin restoring the damage to [src]..."))
+	user.visible_message(
+		span_notice("[user] begins patching up [src] with [tool]."),
+		span_notice("You begin restoring the damage to [src]..."))
 
-		if(!I.use_tool(src, user, 40, volume=50))
-			return
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
 
-		user.visible_message(
-			span_notice("[user] fixes [src]!"),
-			span_notice("You restore [src] to operation."))
+	user.visible_message(
+		span_notice("[user] fixes [src]!"),
+		span_notice("You restore [src] to operation."))
 
-		set_machine_stat(machine_stat & ~BROKEN)
-		atom_integrity = max_integrity
-		update_appearance()
-	else
-		return ..()
+	set_machine_stat(machine_stat & ~BROKEN)
+	atom_integrity = max_integrity
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/drone_dispenser/atom_break(damage_flag)
 	. = ..()
