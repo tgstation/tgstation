@@ -231,7 +231,7 @@
 /obj/effect/step_trigger/outfitter
 	mobs_only = TRUE
 	///outfit to equip
-	var/datum/outfit/dress_code
+	var/datum/outfit/dresscode
 	var/happens_once = 0
 
 /obj/effect/step_trigger/outfitter/Trigger(atom/movable/A)
@@ -239,8 +239,8 @@
 		return
 
 	var/mob/living/carbon/human/fellow = A
-	A.delete_equipment()
-	A.equipOutfit(dresscode,FALSE)
+	fellow.delete_equipment()
+	fellow.equipOutfit(dresscode,FALSE)
 
 	if(happens_once)
 		qdel(src)
