@@ -192,8 +192,8 @@
 	icon_state = "syndipen"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "syndipen"
-	volume = 50
-	amount_per_transfer_from_this = 50
+	volume = 60
+	amount_per_transfer_from_this = 60
 	list_reagents = list(/datum/reagent/medicine/final_fortuna = 60)
 
 /obj/item/reagent_containers/hypospray/medipen/methamphetamine
