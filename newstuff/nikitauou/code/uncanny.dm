@@ -17,10 +17,12 @@
 	sleep(5)
 	src.clear_fullscreen("uncanny_cat", animated = 5)
 
-
 /obj/item/gun/magic/wand/uncanny
-	name = "Uncanny wand"
+	name = "Жезл ужаса"
 	desc = "stalkerscream.mp3"
+	icon = 'newstuff/nikitauou/icons/guns.dmi'
+	base_icon_state = "uncanny"
+	icon_state = "uncanny"
 	ammo_type = /obj/item/ammo_casing/magic/uncanny
 	variable_charges = FALSE
 	max_charges = 100
@@ -30,6 +32,8 @@
 
 /obj/projectile/magic/uncanny
 	name = "Снаряд ужаса"
+	icon = 'newstuff/nikitauou/icons/projectiles.dmi'
+	icon_state = "uncanny"
 
 /obj/projectile/magic/uncanny/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()

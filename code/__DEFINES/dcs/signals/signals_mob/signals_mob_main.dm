@@ -224,6 +224,8 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
+///from living/flash_act(), when couldnt flash a mob because of eye protection
+#define COMSIG_MOB_FLASH_PROTECTED "mob_flash_protected"
 /// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
 #define COMSIG_MOB_PRE_FLASHED_CARBON "mob_pre_flashed_carbon"
 	/// Return to override deviation to be full deviation (fail the flash, usually)

@@ -619,6 +619,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() >= intensity)
+		SEND_SIGNAL(src, COMSIG_MOB_FLASH_PROTECTED, intensity, length)
 		return FALSE
 	if(is_blind() && !(override_blindness_check || affect_silicon))
 		return FALSE

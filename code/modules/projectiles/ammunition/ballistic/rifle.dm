@@ -113,9 +113,10 @@
 	projectile_type = /obj/projectile/bullet/paperball
 	newtonian_force = 0.5
 
-/obj/item/ammo_casing/rebar/Initialize(mapload)
+/obj/item/ammo_casing/rebar/Initialize(mapload, skip = FALSE)
 	. = ..()
-	AddElement(/datum/element/caseless, TRUE)
+	if(!skip)
+		AddElement(/datum/element/caseless, TRUE)
 
 /obj/item/ammo_casing/rebar/update_icon_state()
 	. = ..()

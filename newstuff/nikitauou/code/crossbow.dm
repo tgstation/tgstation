@@ -13,8 +13,9 @@
 	damage = 15
 	dismemberment = 0
 	armour_penetration = 5
+	shrapnel_type = /obj/item/ammo_casing/rebar
 
-/obj/projectile/bullet/rebar/flame/impact(atom/target)
+/obj/projectile/bullet/rebar/flame/on_hit(atom/target, blocked=0, pierce_hit)
 	.=..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -30,13 +31,20 @@
 	projectile_type = /obj/projectile/bullet/rebar/explosive
 	newtonian_force = 1.5
 
+// /obj/item/ammo_casing/rebar/explosive/Initialize(mapload)
+// 	. = ..(mapload,TRUE)
+// 	AddElement(/datum/element/caseless, FALSE)
+
 /obj/projectile/bullet/rebar/explosive
 	name = "Разрывной болт"
 	damage = 15
 	dismemberment = 0
 	armour_penetration = 5
+	can_hit_turfs = TRUE
+	shrapnel_type = /obj/item/ammo_casing/rebar
 
-/obj/projectile/bullet/rebar/explosive/impact(atom/target)
-	.=..()
-	explosion(target.loc, explosion_cause = src, flame_range = 1, flash_range = 1, light_impact_range = 1)
-	qdel(src)
+/obj/projectile/bullet/rebar/explosive/on_hit(atom/target, blocked = 0, pierce_hit = FALSE)
+	..()
+	explosion(target, explosion_cause = src, flame_range = 1, flash_range = 1, light_impact_range = 1)
+	return BULLET_ACT_HIT
+
