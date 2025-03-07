@@ -226,3 +226,21 @@
 	name = "a grave mistake";
 	sound = 'sound/effects/hallucinations/i_see_you1.ogg'
 	triggerer_only = 1
+
+/// Forces a given outfit onto any carbon which crosses it, for event maps
+/obj/effect/step_trigger/outfitter
+	mobs_only = TRUE
+	///outfit to equip
+	var/datum/outfit/dress_code
+	var/happens_once = 0
+
+/obj/effect/step_trigger/outfitter/Trigger(atom/movable/A)
+	if(!iscarbon(A))
+		return
+
+	var/mob/living/carbon/human/fellow = A
+	A.delete_equipment()
+	A.equipOutfit(dresscode,FALSE)
+
+	if(happens_once)
+		qdel(src)
