@@ -11,6 +11,8 @@
 	var/mob/living/carbon/human/human_owner = owner
 	blush_overlay = human_owner.give_emote_overlay(/datum/bodypart_overlay/simple/emote/blush)
 
+/// Updates the description and value of the moodlet according to the passed drunkness value
+/// (Does not add to or remove from the current level - it will sets it directly to the new value)
 /datum/mood_event/drunk/proc/update_change(drunkness = 0)
 	var/old_mood = mood_change
 	switch(drunkness)
