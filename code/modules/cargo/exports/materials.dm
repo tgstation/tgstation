@@ -78,6 +78,7 @@
 
 /datum/export/material/market
 	cost = 1
+	k_recovery_elasticity = 1/10 //Modeled such that a stack of materials, selling to drop the cost to ~20%, will recover fully in 8 minutes instead of 20.
 	export_types = list(
 		/obj/item/stack/sheet/mineral,
 		/obj/item/stack/tile/mineral,
