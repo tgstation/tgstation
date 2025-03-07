@@ -49,7 +49,7 @@
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT == src)
 			continue
-		if(mapload)
+		if(is_station_level(loc.z) || is_mining_level(loc.z))
 			stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z], [get_area(LAT)])")
 		else
 			log_mapping("multiple lattices found in ([loc.x], [loc.y], [loc.z], [get_area(LAT)])")
