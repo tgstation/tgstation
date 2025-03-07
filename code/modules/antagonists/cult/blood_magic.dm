@@ -436,7 +436,7 @@
 
 /obj/item/melee/blood_magic/stun/cast_spell(mob/living/target, mob/living/carbon/user)
 	if(!istype(target) || IS_CULTIST(target))
-		return FALSE
+		return
 	var/datum/antagonist/cult/cultist = GET_CULTIST(user)
 	var/datum/team/cult/cult_team = cultist?.get_team()
 	var/effect_coef = 1
