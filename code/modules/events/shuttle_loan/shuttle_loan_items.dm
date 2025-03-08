@@ -8,6 +8,9 @@
 	name = "Objectives of a Bee Liberation Front Operative"
 	default_raw_text = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
 
+/obj/machinery/syndicatebomb/shuttle_loan
+	add_boom_wires = FALSE
+
 /obj/machinery/syndicatebomb/shuttle_loan/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
