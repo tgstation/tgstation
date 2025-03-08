@@ -559,6 +559,13 @@
 	affected_mob.adjust_drowsiness(-12 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
+/datum/reagent/consumable/iron_tincture
+	name = "Iron Tincture"
+	description = "An orange fizzy drink with a strange flavour. Made to a top-secret recipe in the Scotia solar cluster."
+	color = "#b44809" // rgb: 180, 72, 9
+	taste_description = "sweet ginger and bubblegum"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/consumable/space_up
 	name = "Space-Up"
 	description = "Tastes like a hull breach in your mouth."

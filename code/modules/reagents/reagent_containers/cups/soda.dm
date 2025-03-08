@@ -229,6 +229,14 @@
 	list_reagents = list(/datum/reagent/consumable/spacemountainwind = 30)
 	drink_type = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/cup/soda_cans/iron_tincture
+	name = "Iron Tincture"
+	desc = "Made with real girders."
+	icon_state = "iron-tincture"
+	list_reagents = list(/datum/reagent/consumable/iron_tincture = 25, /datum/reagent/iron = 10,)
+	drink_type = SUGAR | FRUIT | JUNKFOOD
+	custom_price = PAYCHECK_CREW * 1.2 //import tax
+
 /obj/item/reagent_containers/cup/soda_cans/thirteenloko
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
