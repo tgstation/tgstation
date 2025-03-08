@@ -276,6 +276,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
 	if(!GLOB.cargo_ripley && mapload)
 		GLOB.cargo_ripley = src
+	ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src)) //It was built *long* before the shift started.
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Destroy()
 	if(GLOB.cargo_ripley == src)
