@@ -283,6 +283,8 @@
 		return LAVA_BE_IGNORING
 	if(isobj(burn_target))
 		var/obj/burn_obj = burn_target
+		if(HAS_TRAIT(src, TRAIT_ELEVATED_TURF) && !HAS_TRAIT(burn_obj, TRAIT_ELEVATING_OBJECT))
+			return LAVA_BE_PROCESSING
 		if((burn_obj.resistance_flags & immunity_resistance_flags))
 			return LAVA_BE_PROCESSING
 		return LAVA_BE_BURNING
