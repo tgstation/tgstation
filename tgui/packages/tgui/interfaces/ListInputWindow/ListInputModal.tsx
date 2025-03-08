@@ -181,6 +181,7 @@ const ListDisplay = (props) => {
       {filteredItems.map((item, index) => {
         return (
           <Button
+            className="candystripe"
             color="transparent"
             fluid
             id={index}
