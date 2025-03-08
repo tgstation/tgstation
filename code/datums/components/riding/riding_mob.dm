@@ -332,10 +332,10 @@
 
 /datum/component/riding/creature/mulebot/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
-		TEXT_NORTH = list(0, 12),
-		TEXT_SOUTH = list(0, 12),
-		TEXT_EAST =  list(0, 12),
-		TEXT_WEST =  list(0, 12),
+		TEXT_NORTH = list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/mulebot/get_parent_offsets_and_layers()
@@ -353,10 +353,10 @@
 
 /datum/component/riding/creature/cow/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/pig
@@ -371,10 +371,10 @@
 
 /datum/component/riding/creature/pig/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/pony
@@ -391,10 +391,10 @@
 
 /datum/component/riding/creature/pony/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/pony/driver_move(atom/movable/movable_parent, mob/living/user, direction)
@@ -422,10 +422,10 @@
 
 /datum/component/riding/creature/bear/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/carp
@@ -441,10 +441,10 @@
 
 /datum/component/riding/creature/carp/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/megacarp
@@ -459,10 +459,10 @@
 
 /datum/component/riding/creature/megacarp/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/vatbeast
@@ -479,10 +479,10 @@
 
 /datum/component/riding/creature/vatbeast/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/goliath
@@ -513,10 +513,10 @@
 
 /datum/component/riding/creature/goliath/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(-12, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(-12, 0, ABOVE_MOB_LAYER),
-		TEXT_EAST =  list(-12, 0, OBJ_LAYER),
-		TEXT_WEST =  list(-12, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/glutton
@@ -531,10 +531,10 @@
 
 /datum/component/riding/creature/glutton/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/guardian
@@ -550,10 +550,10 @@
 
 /datum/component/riding/creature/guardian/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/guardian/ride_check(mob/living/user, consequences = TRUE)
@@ -566,18 +566,18 @@
 
 /datum/component/riding/creature/goldgrub/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
-		TEXT_NORTH = list(11, 3),
-		TEXT_SOUTH = list(11, 3),
-		TEXT_EAST =  list( 9, 3),
-		TEXT_WEST =  list(14, 3),
+		TEXT_NORTH = list(0, 3),
+		TEXT_SOUTH = list(1, 7),
+		TEXT_EAST =  list(-3, 3),
+		TEXT_WEST =  list(3, 3),
 	)
 
 /datum/component/riding/creature/goldgrub/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/leaper
@@ -587,12 +587,19 @@
 
 /datum/component/riding/creature/leaper/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
-		TEXT_NORTH = list(17, 46),
-		TEXT_SOUTH = list(17, 51),
-		TEXT_EAST =  list(27, 46),
+		TEXT_NORTH = list(0, 46),
+		TEXT_SOUTH = list(0, 51),
+		TEXT_EAST =  list(-6, 46),
 		TEXT_WEST =  list( 6, 46),
 	)
 
+/datum/component/riding/creature/leaper/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+	)
 /datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
 	. = ..()
 	RegisterSignal(riding_mob, COMSIG_MOVABLE_POINTED, PROC_REF(attack_pointed))
@@ -657,10 +664,10 @@
 
 /datum/component/riding/creature/raptor/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, OBJ_LAYER),
-		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/raptor/fast
