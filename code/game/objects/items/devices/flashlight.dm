@@ -35,6 +35,8 @@
 	var/sound_off = 'sound/items/weapons/magout.ogg'
 	/// Should the flashlight start turned on?
 	var/start_on = FALSE
+	/// When true, painting the flashlight won't change its light color
+	var/ignore_base_color = FALSE
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
@@ -291,6 +293,16 @@
 		toggle_light()
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
 	return TRUE
+
+/obj/item/flashlight/update_atom_colour()
+	. = ..()
+	if (ignore_base_color)
+		return
+	var/list/applied_matrix = cached_color_filter
+	if (!applied_matrix)
+		applied_matrix = color_transition_filter(color, SATURATION_OVERRIDE)
+	var/new_light_color = apply_matrix_to_color(initial(light_color), applied_matrix["color"], applied_matrix["space"] || COLORSPACE_RGB)
+	set_light_color(new_light_color)
 
 /obj/item/flashlight/pen
 	name = "penlight"
@@ -691,7 +703,6 @@
 	name = "jade lantern"
 	desc = "An ornate, green lantern."
 	color = LIGHT_COLOR_GREEN
-	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/flashlight/lantern/jade/on
 	start_on = TRUE
@@ -782,6 +793,7 @@
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
 	toggle_context = FALSE
+	ignore_base_color = TRUE
 	/// How much max fuel we have
 	var/max_fuel = 0
 	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
@@ -979,15 +991,20 @@
 
 /obj/item/flashlight/flashdark
 	name = "flashdark"
-	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
+	desc = "A powerful antiphoton projector, capable of projecting a bubble of darkness around the user."
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
 	light_system = COMPLEX_LIGHT //The overlay light component is not yet ready to produce darkness.
 	light_range = 0
+	light_color = COLOR_WHITE
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
-	var/dark_light_range = 2.5
+	var/dark_light_range = 3.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_power = -3
+
+/obj/item/flashlight/flashdark/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/overlay_lighting, dark_light_range, dark_light_power, force = TRUE)
 
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()
