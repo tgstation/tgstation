@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Changed the civilian bounty console's cooldown message to a balloon alert, and it now says like \"1 minute and 30 seconds\" instead of \"1.5 minutes\""
+  - code_imp: "Minor improvements to civilian bounty console code."

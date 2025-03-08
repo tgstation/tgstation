@@ -58,10 +58,8 @@
 	var/complexity = 0
 	/// Power usage of the MOD.
 	var/charge_drain = DEFAULT_CHARGE_DRAIN
-	/// Slowdown of the MOD when not active.
-	var/slowdown_inactive = 1.25
-	/// Slowdown of the MOD when active.
-	var/slowdown_active = 0.75
+	/// Slowdown of the MOD when all of its pieces are deployed.
+	var/slowdown_deployed = 0.75
 	/// How long this MOD takes each part to seal.
 	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Extended description of the theme.
@@ -202,10 +200,6 @@
 	if(!wearer)
 		return
 	clean_up()
-
-/obj/item/mod/control/item_action_slot_check(slot)
-	if(slot & slot_flags)
-		return TRUE
 
 // Grant pinned actions to pin owners, gives AI pinned actions to the AI and not the wearer
 /obj/item/mod/control/grant_action_to_bearer(datum/action/action)
@@ -691,7 +685,10 @@
 
 /obj/item/mod/control/proc/update_speed()
 	for(var/obj/item/part as anything in get_parts(all = TRUE))
-		part.slowdown = (get_part_datum(part).sealed ? slowdown_active : slowdown_inactive) / length(mod_parts)
+		part.slowdown = slowdown_deployed / length(mod_parts)
+		var/datum/mod_part/part_datum = get_part_datum(part)
+		if (!part_datum.sealed)
+			part.slowdown = max(part.slowdown, 0)
 	wearer?.update_equipment_speed_mods()
 
 /obj/item/mod/control/proc/power_off()
@@ -750,7 +747,7 @@
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(slowdown_inactive <= 0)
+	if(slowdown_deployed <= 0)
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
 		return SPEED_POTION_STOP
 	if(active)
@@ -758,8 +755,7 @@
 		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
 	set_mod_color(color_transition_filter(COLOR_RED))
-	slowdown_inactive = 0
-	slowdown_active = 0
+	slowdown_deployed = 0
 	update_speed()
 	qdel(speed_potion)
 	return SPEED_POTION_STOP

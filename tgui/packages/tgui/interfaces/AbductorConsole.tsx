@@ -93,6 +93,8 @@ const Abductsoft = (props) => {
         disabled: (credits || 0) < item.cost,
         icon: item.icon,
         icon_state: item.icon_state,
+        population_tooltip: '',
+        insufficient_population: false,
       });
     }
   }
