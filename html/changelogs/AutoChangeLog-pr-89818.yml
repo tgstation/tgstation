@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Makes absolutely sure we're removing Cyrogelidia's status effects if the reagent is out of our mobs system."
