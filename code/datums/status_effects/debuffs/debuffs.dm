@@ -197,6 +197,10 @@
 		if(HAS_TRAIT(owner, TRAIT_DEAF))
 			sleep_quality += 0.1
 
+		// if the user has Super Melatonin
+		if(HAS_TRAIT(owner, TRAIT_SUPERSLEEPER))
+			sleep_quality += 1
+
 		// check for beds
 		if((locate(/obj/structure/bed) in owner.loc))
 			sleep_quality += 0.2

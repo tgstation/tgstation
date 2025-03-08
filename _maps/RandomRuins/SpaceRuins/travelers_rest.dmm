@@ -227,7 +227,7 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/chem_heater/withbuffer{
+/obj/machinery/chem_heater{
 	pixel_x = 1;
 	pixel_y = 2
 	},
