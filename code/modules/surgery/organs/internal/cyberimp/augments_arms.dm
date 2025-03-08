@@ -554,6 +554,7 @@
 	organs_needed = 2
 	bonus_activate_text = span_notice("Your improved arms allow you to open airlocks by force with your bare hands!")
 	bonus_deactivate_text = span_notice("You can no longer force open airlocks with your bare hands.")
+	required_biotype = NONE
 
 /datum/status_effect/organ_set_bonus/strongarm/enable_bonus()
 	. = ..()
