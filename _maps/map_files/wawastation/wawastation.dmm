@@ -44419,9 +44419,6 @@
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/clothing/glasses/welding,
-/obj/item/disk/tech_disk{
-	pixel_y = 6
-	},
 /obj/item/reagent_containers/dropper,
 /obj/structure/table,
 /obj/machinery/requests_console/auto_name/directional/north,
