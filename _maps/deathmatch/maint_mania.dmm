@@ -47,7 +47,7 @@
 /turf/closed/indestructible/fakedoor,
 /area/deathmatch)
 "ih" = (
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /turf/open/indestructible,
 /area/deathmatch)
 "iC" = (
@@ -132,7 +132,7 @@
 /area/deathmatch)
 "qK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /turf/open/indestructible,
 /area/deathmatch)
 "sk" = (
@@ -235,7 +235,7 @@
 /area/deathmatch)
 "Ew" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /turf/open/indestructible,
 /area/deathmatch)
 "EK" = (
@@ -254,7 +254,7 @@
 /area/deathmatch)
 "Fp" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /obj/item/spear,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -289,7 +289,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Hp" = (
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /obj/structure/sign/poster/random/directional/north,
 /obj/structure/table/reinforced,
 /turf/open/indestructible,

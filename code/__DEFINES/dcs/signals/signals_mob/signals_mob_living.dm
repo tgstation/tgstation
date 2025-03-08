@@ -263,7 +263,7 @@
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
 
-/// Sent from `obj/item/reagent_containers/pill/on_consumption`: (obj/item/reagent_containers/pill/pill, mob/feeder)
+/// Sent from `obj/item/reagent_containers/applicator/pill/on_consumption`: (obj/item/reagent_containers/applicator/pill/pill, mob/feeder)
 #define COMSIG_LIVING_PILL_CONSUMED "living_pill_consumed"
 
 /// Sent from a mob to their loc when starting to remove cuffs on itself
