@@ -562,7 +562,7 @@
 /datum/reagent/consumable/iron_tincture
 	name = "Iron Tincture"
 	description = "An orange fizzy drink with a strange flavour. Made to a top-secret recipe in the Scotia solar cluster."
-	color = "#b44809" // rgb: 180, 72, 9
+	color = "#e38717" // rgb: 227, 135, 23
 	taste_description = "sweet ginger and bubblegum"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
