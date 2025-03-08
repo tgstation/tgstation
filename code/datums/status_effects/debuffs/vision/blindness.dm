@@ -28,16 +28,12 @@
 	update_blindness()
 	return ..()
 
-/*
-
 /datum/status_effect/grouped/blindness/source_added(source, ...)
 	update_blindness()
 
 /datum/status_effect/grouped/blindness/source_removed(source, removing)
 	if (!removing)
 		update_blindness()
-
-*/
 
 /datum/status_effect/grouped/blindness/proc/update_blindness()
 	if (!CAN_BE_BLIND(owner)) // future proofing

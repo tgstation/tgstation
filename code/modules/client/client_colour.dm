@@ -15,7 +15,7 @@
 	var/split_filters = FALSE
 	/// If non-zero, 'animate_client_colour(fade_in)' will be called instead of 'update_client_colour' when added.
 	var/fade_in = 0
-	/// Same as above, but on removal.
+	/// If non-zero, 'animate_client_colour(fade_out)' will be called instead of 'update_client_colour' when removed.
 	var/fade_out = 0
 
 /datum/client_colour/New(mob/owner)
