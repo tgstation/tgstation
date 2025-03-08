@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "The Sakhno SKS no longer ejects its entire internal magazine upon interaction. To facilitate this, it now requires the bolt to be open like its bolt-action contemporaries in order to load ammunition."
-  - bugfix: "You can no longer force ammunition into Sakhno precision rifles and other bolt-action-likes through a closed bolt."

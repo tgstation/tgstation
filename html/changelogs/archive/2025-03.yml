@@ -175,3 +175,25 @@
       changeling violence is back on the menu. (literally)
   possiblepossibility:
   - rscadd: you may now take out individual slices of pizza
+2025-03-08:
+  Ghommie:
+  - balance: It's now possible to take trophy fish from previous shifts off their
+      mounts without turning them into dust based on a probability revolving around
+      the size and weight of the fish against your fishing skill.
+  Hatterhat:
+  - bugfix: The Sakhno SKS no longer ejects its entire internal magazine upon interaction.
+      To facilitate this, it now requires the bolt to be open like its bolt-action
+      contemporaries in order to load ammunition.
+  - bugfix: You can no longer force ammunition into Sakhno precision rifles and other
+      bolt-action-likes through a closed bolt.
+  Melbert:
+  - rscadd: If you are sufficiently drunk, you can resist your phobias and social
+      anxiety.
+  - rscadd: Your mood will increase further the more drunk you are. Until you crash
+      out.
+  SmArtKar:
+  - image: Resprited all eyes and gave cybernetic eyes unique sprites
+  necromanceranne:
+  - bugfix: Touch protection actually respects the TOUCH exposure method.
+  - bugfix: You cannot Fry-Fu someone through bio protective clothing using three
+      drops of essential oils heated to the temperature of the sun.
