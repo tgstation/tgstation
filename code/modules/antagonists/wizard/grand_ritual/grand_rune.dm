@@ -342,14 +342,14 @@
 		return
 	var/datum/grand_finale/picked_finale = picks_to_instances[pick]
 	var/round_time_passed = world.time - SSticker.round_start_time
-	if(picked_finale.minimum_time >=round_time_passed)
+	if(picked_finale.minimum_time >= round_time_passed)
 		to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(picked_finale.minimum_time - round_time_passed)]</b>!"))
 		to_chat(user, span_warning("Be patient, or select another option."))
 		return
 	chosen_effect = TRUE
 	if (pick == PICK_NOTHING)
 		return
-	finale_effect = picks_to_instances[pick]
+	finale_effect = picked_finale
 	invoke_time = get_invoke_time()
 	if (finale_effect.glow_colour)
 		spell_colour = finale_effect.glow_colour
