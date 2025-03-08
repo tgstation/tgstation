@@ -853,9 +853,36 @@
 			)
 		if(SFX_SUTURE_DROP)
 			soundin = pick(
-
 				'sound/items/handling/suture/needle_drop1.ogg',
 				'sound/items/handling/suture/needle_drop2.ogg',
 				'sound/items/handling/suture/needle_drop3.ogg',
 			)
+		if(SFX_REGEN_MESH_BEGIN)
+			soundin = pick(
+				'sound/items/regenerative_mesh/regen_mesh_begin1.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_begin2.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_begin3.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_begin4.ogg',
+			)
+		if(SFX_REGEN_MESH_CONTINUOUS)
+			soundin = pick(
+				'sound/items/regenerative_mesh/regen_mesh_continuous1.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous2.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous3.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous4.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous5.ogg',
+			)
+		if(SFX_REGEN_MESH_END)
+			soundin = pick(
+				'sound/items/regenerative_mesh/regen_mesh_end1.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_end2.ogg',
+			)
+		if(SFX_REGEN_MESH_PICKUP)
+			soundin = pick(
+				'sound/items/handling/regenerative_mesh/regen_mesh_pickup1.ogg',
+				'sound/items/handling/regenerative_mesh/regen_mesh_pickup2.ogg',
+				'sound/items/handling/regenerative_mesh/regen_mesh_pickup3.ogg',
+			)
+		if(SFX_REGEN_MESH_DROP)
+			soundin = 'sound/items/regenerative_mesh/regen_mesh_drop1.ogg'
 	return soundin

@@ -263,6 +263,11 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_SUTURE_END "suture_end"
 #define SFX_SUTURE_PICKUP "suture_pickup"
 #define SFX_SUTURE_DROP "suture_drop"
+#define SFX_REGEN_MESH_BEGIN "regen_mesh_begin"
+#define SFX_REGEN_MESH_CONTINUOUS "regen_mesh_continuous"
+#define SFX_REGEN_MESH_END "regen_mesh_end"
+#define SFX_REGEN_MESH_PICKUP "regen_mesh_pickup"
+#define SFX_REGEN_MESH_DROP "regen_mesh_drop"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
