@@ -3,6 +3,7 @@
 #define VERTICAL_ARROW_HEIGHT 13
 #define HORIZONTAL_ARROW_HEIGHT 9
 #define FADE_AWAY_TIME 0.1 SECONDS
+#define PING_GRACE 0.25 SECONDS
 
 //a simple minigame players must win to mount and tame a mob
 /datum/riding_minigame
@@ -149,9 +150,8 @@
 		return
 	cached_arrows[direction]["is_active"] = arrow
 	RegisterSignal(arrow, COMSIG_QDELETING, PROC_REF(on_arrow_delete))
-	var/ping_accounting = min(rider_client.avgping / 1000, 0.25) SECONDS
 	var/distance_to_travel = get_arrow_height(direction) * 2
-	var/time_of_grace = (distance_to_travel / arrow_speed) SECONDS + linger_time + ping_accounting - FADE_AWAY_TIME
+	var/time_of_grace = (distance_to_travel / arrow_speed) SECONDS + linger_time + PING_GRACE - FADE_AWAY_TIME
 	addtimer(CALLBACK(src, PROC_REF(remove_active_arrow), arrow, direction), time_of_grace)
 
 /datum/riding_minigame/proc/remove_active_arrow(atom/arrow, direction)
@@ -261,3 +261,4 @@
 #undef VERTICAL_ARROW_HEIGHT
 #undef HORIZONTAL_ARROW_HEIGHT
 #undef FADE_AWAY_TIME
+#undef PING_GRACE
