@@ -2,6 +2,9 @@
 #define FOV_90_DEGREES 90
 #define FOV_180_DEGREES 180
 #define FOV_270_DEGREES 270
+#define FOV_REVERSE_90_DEGRESS -90
+#define FOV_REVERSE_180_DEGRESS -180
+#define FOV_REVERSE_270_DEGRESS -270
 
 /// Base mask dimensions. They're like a client's view, only change them if you modify the mask to different dimensions.
 #define BASE_FOV_MASK_X_DIMENSION 15

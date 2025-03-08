@@ -40,7 +40,7 @@
 
 /datum/component/fov_handler/proc/set_fov_angle(new_angle)
 	fov_angle = new_angle
-	blocker_mask.icon_state = "[fov_angle]"
+	blocker_mask.icon_state = "[fov_angle > 0 ? fov_angle : (360 + fov_angle)]"
 
 /// Updates the size of the FOV masks by comparing them to client view size.
 /datum/component/fov_handler/proc/update_fov_size()
@@ -61,6 +61,9 @@
 	var/y_scale = view_size[2] / current_fov_y
 	current_fov_x = view_size[1]
 	current_fov_y = view_size[2]
+	if (fov_angle < 0)
+		x_scale *= -1
+		y_scale *= -1
 	blocker_mask.transform = new_matrix.Scale(x_scale, y_scale)
 	blocker_mask.transform = new_matrix.Translate(x_shift * 16, y_shift * 16)
 
