@@ -3,6 +3,12 @@
 	/// Preference of how the preview should show the character.
 	var/preview_pref = PREVIEW_PREF_JOB
 
+	/// Associative list, keyed by language typepath, pointing to LANGUAGE_UNDERSTOOD, or LANGUAGE_SPOKEN, for whether we understand or speak the language
+	var/list/languages = list()
+
+	/// Associative list containing all powers, pointing to their respective cost
+	var/list/powers = list()
+
 // Updates the mob's chat color in the global cache
 /datum/preferences/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
 	. = ..()

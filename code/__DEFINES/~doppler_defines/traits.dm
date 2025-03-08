@@ -79,3 +79,38 @@
 #define TRAIT_WORN_EXAMINE "worn_examine"
 /// Trait given to a brain that is able to accept souls from a RSD
 #define TRAIT_RSD_COMPATIBLE "rsd_compatible"
+
+////
+// Powers
+////
+
+#define TRAIT_POWER "power_trait"
+
+#define TRAIT_PATH_SORCEROUS "path_sorcerous"
+#define TRAIT_PATH_RESONANT "path_resonant"
+#define TRAIT_PATH_MORTAL "path_mortal"
+
+// Sorcerous
+#define TRAIT_PATH_SUBTYPE_THAUMATURGE "subtype_thamaturge"
+#define TRAIT_PATH_SUBTYPE_ENIGMATIST "subtype_engimatist"
+#define TRAIT_PATH_SUBTYPE_THEOLOGIST "subtype_theologist"
+
+// Resonant
+#define TRAIT_PATH_SUBTYPE_PSYKER "subtype_psyker"
+#define TRAIT_PATH_SUBTYPE_CULTIVATOR "subtype_cultivator"
+#define TRAIT_PATH_SUBTYPE_ABERRANT "subtype_aberrant"
+
+// Mortal
+#define TRAIT_PATH_SUBTYPE_WARFIGHTER "subtype_warfighter"
+#define TRAIT_PATH_SUBTYPE_EXPERT "subtype_expert"
+#define TRAIT_PATH_SUBTYPE_AUGMENTED "subtype_augmented"
+
+// Powers
+#define TRAIT_POWER_TENACIOUS "power_tenacious"
+#define TRAIT_POWER_MUSCLY "power_muscly"
+#define TRAIT_POWER_BESTIAL "power_bestial"
+#define TRAIT_POWER_CQB "power_cqb"
+#define TRAIT_POWER_SNIPER "power_sniper"
+#define TRAIT_POWER_MEDICAL "power_medical"
+#define TRAIT_POWER_ENGINEERING "power_engineering"
+#define TRAIT_POWER_SERVICE "power_service"

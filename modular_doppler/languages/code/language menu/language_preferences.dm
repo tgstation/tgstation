@@ -1,9 +1,5 @@
 #define MAX_MUTANT_ROWS 4
 
-/datum/preferences
-	/// Associative list, keyed by language typepath, pointing to LANGUAGE_UNDERSTOOD, or LANGUAGE_SPOKEN, for whether we understand or speak the language
-	var/list/languages = list()
-
 /datum/preferences/proc/species_updated(species_type)
 	all_quirks = list()
 	// Reset cultural stuff

@@ -100,6 +100,19 @@ export type Language = {
   name: string;
   icon: string;
 };
+
+export type Power = {
+  description: string;
+  name: string;
+  icon: string;
+  cost: number;
+  state: string;
+  word: string;
+  color: string;
+  powertype: (string | null)[];
+  rootpower: (string | null)[];
+};
+
 // DOPPLER EDIT END
 
 export type QuirkInfo = {
@@ -189,9 +202,23 @@ export type PreferencesMenuData = {
 
   // DOPPLER EDIT
   job_alt_titles: Record<string, string>;
+
   selected_languages: Language[];
   unselected_languages: Language[];
   total_language_points: number;
+
+  total_power_points: number;
+  thaumaturge: Power[];
+  enigmatist: Power[];
+  theologist: Power[];
+  psyker: Power[];
+  cultivator: Power[];
+  aberrant: Power[];
+  warfighter: Power[];
+  expert: Power[];
+  augmented: Power[];
+  power_points: number;
+
   // DOPPLER EDIT END
   keybindings: Record<string, string[]>;
   overflow_role: string;

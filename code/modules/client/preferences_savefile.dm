@@ -309,7 +309,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
-	/// DOPPLER SHIFT ADDITION BEGIN
+	// DOPPLER SHIFT ADDITION BEGIN
 	var/list/save_languages = SANITIZE_LIST(save_data?["languages"])
 	for(var/language in save_languages)
 		var/value = save_languages[language]
@@ -320,7 +320,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		save_languages[language] = value
 	languages = save_languages
 	alt_job_titles = save_data?["alt_job_titles"]
-	/// DOPPLER SHIFT ADDITION END
+
+	var/list/save_powers = SANITIZE_LIST(save_data?["powers"])
+
+	for(var/power in save_powers)
+		var/value = save_powers[power]
+		save_powers -= power
+
+		if(istext(value))
+			value = _text2path(value)
+
+		save_powers[power] = value
+
+	powers = save_powers
+	// DOPPLER SHIFT ADDITION END
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
@@ -331,7 +344,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = SANITIZE_LIST(randomise)
 	job_preferences = SANITIZE_LIST(job_preferences)
 	all_quirks = SANITIZE_LIST(all_quirks)
-	languages = SANITIZE_LIST(languages) /// DOPPLER SHIFT ADDITION
+	// DOPPLER SHIFT ADDITION BEGIN
+	languages = SANITIZE_LIST(languages)
+	powers = SANITIZE_LIST(powers)
+	// DOPPLER SHIFT ADDITION END
 
 	//Validate job prefs
 	for(var/j in job_preferences)
@@ -340,7 +356,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
-	sanitize_languages() /// DOPPLER SHIFT ADDITION
+	// DOPPLER SHIFT ADDITION BEGIN
+	sanitize_languages()
+	sanitize_powers()
+	// DOPPLER SHIFT ADDITION END
 
 	return TRUE
 
@@ -381,8 +400,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks
-	save_data["languages"] = languages /// DOPPLER SHIFT ADDITION - we might want to migrate this
-	save_data["alt_job_titles"] = alt_job_titles /// DOPPLER SHIFT ADDITION: alt job titles
+	save_data["languages"] = languages // DOPPLER SHIFT ADDITION - we might want to migrate this
+	save_data["alt_job_titles"] = alt_job_titles // DOPPLER SHIFT ADDITION: alt job titles
+	save_data["powers"] = powers // dopplor powerz :3c
 
 	return TRUE
 
