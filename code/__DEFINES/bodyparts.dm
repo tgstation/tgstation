@@ -49,5 +49,7 @@
 #define LIMB_COLOR_CARP_INFUSION 20
 /// Base priority for atom colors, gets atom priorities added to it
 #define LIMB_COLOR_ATOM_COLOR 30
+/// Abductor team recoloring priority
+#define LIMB_COLOR_AYYLMAO 31
 /// Voidwalker effect color priority
 #define LIMB_COLOR_VOIDWALKER_CURSE 40
