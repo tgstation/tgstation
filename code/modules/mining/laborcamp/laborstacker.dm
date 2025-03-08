@@ -185,7 +185,7 @@
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_stack(obj/item/stack/input)
-	if (istype(input, /obj/item/stack/sheet))
+	if (!istype(input, /obj/item/stack/sheet))
 		return ..()
 	var/obj/item/stack/sheet/sheet = input
 	if (sheet.manufactured && sheet.gulag_valid)
