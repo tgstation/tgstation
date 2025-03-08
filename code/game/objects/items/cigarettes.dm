@@ -57,11 +57,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/match/update_desc(updates)
 	. = ..()
 	if(lit)
-		desc = "[initial(desc)]. This one is lit."
+		desc = "[initial(desc)] This one is lit."
 	else if(burnt)
-		desc = "[initial(desc)]. This one has seen better days."
+		desc = "[initial(desc)] This one has seen better days."
 	else if(broken)
-		desc = "[initial(desc)]. This one is broken."
+		desc = "[initial(desc)] This one is broken."
 	else
 		desc = initial(desc)
 
@@ -168,6 +168,19 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/match/firebrand/Initialize(mapload)
 	. = ..()
+	matchignite()
+
+/obj/item/match/battery
+	name = "battery lighter"
+	desc = "A budget lighter done by using a battery and some aluminium. Hold tightly to ignite."
+	icon_state = "battery_unlit"
+	base_icon_state = "battery"
+
+/obj/item/match/battery/attack_self(mob/living/user, modifiers)
+	. = ..()
+	if(!do_after(user, 4 SECONDS, src))
+		return
+	user.apply_damage(5, BURN, user.get_active_hand())
 	matchignite()
 
 //////////////////
