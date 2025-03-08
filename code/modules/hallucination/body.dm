@@ -1,6 +1,7 @@
 /// Makes a random body appear and disappear quickly in view of the hallucinator.
 /datum/hallucination/body
 	abstract_hallucination_parent = /datum/hallucination/body
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 	/// The file to make the body image from.
 	var/body_image_file
 	/// The icon state to make the body image form.

@@ -62,7 +62,7 @@
 		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * seconds_per_tick)
 
 		if(SPT_PROB(60, seconds_per_tick))
-			human_in_range.adjust_hallucinations_up_to(10 SECONDS, 240 SECONDS)
+			human_in_range.adjust_hallucinations_up_to(10 SECONDS, 120 SECONDS)
 
 		if(SPT_PROB(40, seconds_per_tick))
 			human_in_range.set_jitter_if_lower(10 SECONDS)
