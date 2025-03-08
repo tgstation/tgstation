@@ -362,24 +362,17 @@
         ],
       };
 
-      try {
-        window
-          .showSaveFilePicker(opts)
-          .then(function (fileHandle) {
-            fileHandle
-              .createWritable()
-              .then(function (writeableFileHandle) {
-                writeableFileHandle
-                  .write(blob)
-                  .then(function () {
-                    writeableFileHandle.close();
-                  })
-                  .catch(function () {});
-              })
-              .catch(function () {});
-          })
-          .catch(function () {});
-      } catch (e) {}
+      window
+        .showSaveFilePicker(opts)
+        .then(function (file) {
+          return file.createWritable();
+        })
+        .then(function (file) {
+          return file.write(blob).then(function () {
+            return file.close();
+          });
+        })
+        .catch(function () {});
     }
   };
 
