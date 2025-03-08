@@ -234,3 +234,8 @@
 	/// Modify this via add_offsets and remove_offsets,
 	/// NOT directly (and definitely avoid modifying offsets directly)
 	VAR_PRIVATE/list/offsets
+
+	/// Lazylist of martial arts this mob knows
+	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
+	/// Reference handling is done by the martial arts themselves
+	var/list/datum/martial_art/martial_arts

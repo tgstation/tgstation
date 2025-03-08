@@ -309,3 +309,8 @@
 #define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
 /// From /mob/living/proc/stop_leaning()
 #define COMSIG_LIVING_STOPPED_LEANING "living_stopped_leaning"
+
+/// When a living mob is table slamming another mob: (mob/living/slammed, obj/structure/table/slammed_table)
+#define COMSIG_LIVING_TABLE_SLAMMING "living_table_slamming"
+/// When a living mob is table slamming another mob, neck grab (so a limb slam): (mob/living/slammed, obj/structure/table/slammed_table)
+#define COMSIG_LIVING_TABLE_LIMB_SLAMMING "living_table_limb_slamming"

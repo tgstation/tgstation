@@ -241,19 +241,17 @@
 	scan_desc = "violent psychosis"
 	gain_text = span_warning("You feel unhinged...")
 	lose_text = span_notice("You feel more balanced.")
+	/// The martial art we teach
 	var/datum/martial_art/psychotic_brawling/psychotic_brawling
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
-	..()
-	psychotic_brawling = new()
-	psychotic_brawling.allow_temp_override = FALSE
-	if(!psychotic_brawling.teach(owner, TRUE))
-		to_chat(owner, span_notice("But your martial knowledge keeps you grounded."))
-		qdel(src)
+	. = ..()
+	psychotic_brawling = new(src)
+	psychotic_brawling.locked_to_use = TRUE
+	psychotic_brawling.teach(owner)
 
 /datum/brain_trauma/special/psychotic_brawling/on_lose()
-	..()
-	psychotic_brawling.fully_remove(owner)
+	. = ..()
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
@@ -587,18 +585,18 @@
 		to_chat(owner, span_warning("You start having a bad feeling..."))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 		return
-		
+
 	if(!isarea(axe_location))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
 		return
-		
+
 	if(istype(axe_location, /area/station/command))
 		to_chat(owner, span_notice("You feel a sense of relief..."))
 		if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
 			return
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
-		
+
 	to_chat(owner, span_warning("You start having a bad feeling..."))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 
