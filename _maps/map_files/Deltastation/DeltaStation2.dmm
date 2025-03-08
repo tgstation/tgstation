@@ -19400,11 +19400,6 @@
 /area/station/hallway/secondary/exit)
 "eOE" = (
 /obj/structure/table/wood,
-/obj/machinery/camera/directional/west{
-	c_tag = "Medbay - Break Room";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/coffeemaker/impressa,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -36786,11 +36781,6 @@
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/structure/sign/poster/official/cleanliness/directional/west,
-/obj/machinery/camera/directional/west{
-	c_tag = "Science - Break Room";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
 /turf/open/floor/iron/diagonal,
 /area/station/science/breakroom)
 "jfy" = (
@@ -50635,10 +50625,6 @@
 "mDP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/camera/directional/north{
-	c_tag = "Cargo - Warehouse";
-	name = "cargo camera"
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -64735,6 +64721,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "qig" = (

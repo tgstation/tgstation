@@ -426,6 +426,7 @@
 /obj/effect/spawner/random/techstorage/rnd_secure_all,
 /obj/effect/turf_decal/siding/dark,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/camera/autoname/motion/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "aiI" = (
@@ -2201,6 +2202,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
+"aQl" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/west,
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
+/area/station/science/research)
 "aQm" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/small,
@@ -3353,6 +3363,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "bno" = (
@@ -7373,6 +7384,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/machinery/camera/autoname/motion/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "cKV" = (
@@ -13565,7 +13577,6 @@
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/white/corner,
-/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/warehouse)
 "eQY" = (
@@ -23777,6 +23788,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/motion/directional/south,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/ai_monitored/command/storage/eva)
 "ihb" = (
@@ -23911,9 +23923,6 @@
 /obj/effect/mapping_helpers/airalarm/engine_access,
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /obj/machinery/meter,
-/obj/machinery/camera/directional/west{
-	c_tag = "Engineering Supermatter Port"
-	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "iiI" = (
@@ -30651,6 +30660,7 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
+/obj/machinery/camera/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kjw" = (
@@ -38405,7 +38415,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "mKR" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/camera/autoname/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -39554,8 +39563,11 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/structure/closet/firecloset,
-/obj/machinery/status_display/ai/directional/east,
+/obj/machinery/button/door/directional/east{
+	name = "E.V.A Shutters";
+	req_access = list("command");
+	id = "evashutter"
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -61478,6 +61490,16 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/commons/storage/tools)
+"uxd" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/button/door/directional/west{
+	name = "E.V.A Shutters";
+	req_access = list("command");
+	id = "evashutter"
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/ai_monitored/command/storage/eva)
 "uxJ" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
 /obj/machinery/door/firedoor,
@@ -63806,6 +63828,7 @@
 	pixel_y = 2;
 	pixel_x = 4
 	},
+/obj/machinery/camera/autoname/motion/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "vkI" = (
@@ -73108,6 +73131,7 @@
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -94879,7 +94903,7 @@ hCr
 mYp
 wlo
 olO
-wIm
+uxd
 sUy
 mnN
 vbR
@@ -116509,7 +116533,7 @@ oNN
 xds
 mfl
 uZf
-xds
+aQl
 uGU
 vfT
 uMU
