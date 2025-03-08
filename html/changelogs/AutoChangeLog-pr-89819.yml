@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some hearing sensitive objects hearing the same thing multiple times, such as the broadcast camera sending everything to the entertainment channel twice."

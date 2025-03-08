@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - balance: "Spacemen (e.g. you, the reader) grappling a target now prioritize using their bare hands to beat their target to death if they're grappled, instead of contorting in weird ways to kick them (also, presumably, to death)."
+  - balance: "Spacemen have learned to Punch Good(er) against grappled targets, leading to kick-tier damage against standing grappled targets - even if they're not doing the grappling."
+  - balance: "Strong-Arm implant users also benefit from the training of punching grappled people as well - as a treat, horizontal targets slam into the ground and break tiling for no additional damage, but a very visible sign of \"oh god someone got pasted here\"."

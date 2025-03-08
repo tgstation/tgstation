@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "The strongarm set bonus no longer requires a specific biotype to function. You can now get the set bonus as an android."
