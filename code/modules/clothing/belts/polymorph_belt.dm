@@ -36,21 +36,29 @@
 	worn_icon_state = base_icon_state + (active ? "" : "_inactive")
 	return ..()
 
-/obj/item/polymorph_belt/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
-	if (!istype(weapon, /obj/item/assembly/signaler/anomaly/bioscrambler))
+/obj/item/polymorph_belt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/assembly/signaler/anomaly/bioscrambler))
 		return NONE
+
 	if (active)
 		balloon_alert(user, "core already inserted!")
 		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, "inserting...")
+
 	if (!do_after(user, delay = 3 SECONDS, target = src))
 		balloon_alert(user, "interrupted!")
 		return ITEM_INTERACT_BLOCKING
-	qdel(weapon)
+
+	if (active)
+		balloon_alert(user, "core already inserted!")
+		return ITEM_INTERACT_BLOCKING
+
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	update_transform_action()
 	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
+	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
