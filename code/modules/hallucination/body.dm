@@ -52,6 +52,7 @@
 /// Makes the image of the body to show at the location passed.
 /datum/hallucination/body/proc/make_body_image(turf/location)
 	var/image/created_image = image(body_image_file, location, body_image_state, body_layer)
+	SET_PLANE_EXPLICIT(created_image, GAME_PLANE, location)
 	if(body_floats)
 		DO_FLOATING_ANIM(created_image)
 	return created_image

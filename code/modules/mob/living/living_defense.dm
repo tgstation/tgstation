@@ -182,7 +182,7 @@
 		return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 	if(w_class)
 		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-	return 0
+	return 0 // plays no sound
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
 
@@ -195,7 +195,7 @@
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_appearance()
-	if(silent || !(client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode)))
+	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
 		return
 	if(combat_mode)
 		SEND_SOUND(src, sound('sound/misc/ui_togglecombat.ogg', volume = 25)) //Sound from interbay!
@@ -248,7 +248,7 @@
 	if(!thrown_item.throwforce)
 		return
 	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone_with_bodypart(zone)].", "Your armor has softened hit to your [parse_zone_with_bodypart(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
-	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND), attacking_item = thrown_item)
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
 	if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
@@ -671,7 +671,7 @@
 /** Handles exposing a mob to reagents.
  *
  * If the methods include INGEST or INHALE, the mob tastes the reagents.
- * If the methods include VAPOR it incorporates permiability protection.
+ * If the methods include VAPOR or TOUCH it incorporates permiability protection.
  */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
@@ -681,7 +681,7 @@
 	if(methods & (INGEST | INHALE))
 		taste_list(reagents)
 
-	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
+	var/touch_protection = (methods & (VAPOR | TOUCH)) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/datum/reagent/reagent as anything in reagents)
 		var/reac_volume = reagents[reagent]

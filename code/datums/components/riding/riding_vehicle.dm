@@ -379,10 +379,10 @@
 
 /datum/component/riding/vehicle/speedbike/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(-16, -16, OBJ_LAYER),
-		TEXT_SOUTH = list(-16, -16, ABOVE_MOB_LAYER),
-		TEXT_EAST =  list(-18,   0, ABOVE_MOB_LAYER),
-		TEXT_WEST =  list(-18,   0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(-16, -16),
+		TEXT_SOUTH = list(-16, -16),
+		TEXT_EAST =  list(-18,   0),
+		TEXT_WEST =  list(-18,   0),
 	)
 
 /datum/component/riding/vehicle/speedwagon
@@ -392,31 +392,31 @@
 	switch(pass_index)
 		if(1)
 			return list(
-				TEXT_NORTH = list(-10, -4, LYING_MOB_LAYER),
-				TEXT_SOUTH = list( 16, -4, LYING_MOB_LAYER),
-				TEXT_EAST =  list( -4, 30, LYING_MOB_LAYER),
-				TEXT_WEST =  list(  4, -3, LYING_MOB_LAYER),
+				TEXT_NORTH = list(-10, -4),
+				TEXT_SOUTH = list( 16, -4),
+				TEXT_EAST =  list( -4, 30),
+				TEXT_WEST =  list(  4, -3),
 			)
 		if(2)
 			return list(
-				TEXT_NORTH = list( 19, -5, MOB_LAYER),
-				TEXT_SOUTH = list(-13,  3, MOB_LAYER),
-				TEXT_EAST =  list( -4, -3, ABOVE_MOB_LAYER),
-				TEXT_WEST =  list(  4, 28, VEHICLE_LAYER),
+				TEXT_NORTH = list( 19, -5),
+				TEXT_SOUTH = list(-13,  3),
+				TEXT_EAST =  list( -4, -3),
+				TEXT_WEST =  list(  4, 28),
 			)
 		if(3)
 			return list(
-				TEXT_NORTH = list(-10, -18, ABOVE_MOB_LAYER + 0.1),
-				TEXT_SOUTH = list( 16,  25, VEHICLE_LAYER),
-				TEXT_EAST =  list(-22,  30, LYING_MOB_LAYER),
-				TEXT_WEST =  list( 22,  -3, ABOVE_MOB_LAYER),
+				TEXT_NORTH = list(-10, -18),
+				TEXT_SOUTH = list( 16,  25),
+				TEXT_EAST =  list(-22,  30),
+				TEXT_WEST =  list( 22,  -3,),
 			)
 		if(4)
 			return list(
-				TEXT_NORTH = list( 19, -18, ABOVE_MOB_LAYER + 0.1),
-				TEXT_SOUTH = list(-13,  25, VEHICLE_LAYER),
-				TEXT_EAST =  list(-22,   3, VEHICLE_LAYER),
-				TEXT_WEST =  list( 22,  28, LYING_MOB_LAYER),
+				TEXT_NORTH = list( 19, -18),
+				TEXT_SOUTH = list(-13,  25),
+				TEXT_EAST =  list(-22,   3),
+				TEXT_WEST =  list( 22,  28),
 			)
 
 /datum/component/riding/vehicle/speedwagon/get_parent_offsets_and_layers()
@@ -434,10 +434,10 @@
 
 /datum/component/riding/vehicle/wheelchair/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, OBJ_LAYER),
-		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0),
+		TEXT_SOUTH = list(0, 0),
+		TEXT_EAST =  list(0, 0),
+		TEXT_WEST =  list(0, 0),
 	)
 
 /datum/component/riding/vehicle/wheelchair/hand

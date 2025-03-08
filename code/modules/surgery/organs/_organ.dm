@@ -76,7 +76,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/Initialize(mapload)
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
-		AddComponent(/datum/component/edible,\
+		AddComponentFrom(
+			SOURCE_EDIBLE_INNATE, \
+			/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			foodtypes = foodtype_flags,\
 			volume = reagent_vol,\
@@ -178,7 +180,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It should be inserted in the [parse_zone(zone)].")
+	. += zones_tip()
 
 	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER) || isobserver(user))
 		if(HAS_TRAIT(src, TRAIT_CLIENT_STARTING_ORGAN))
@@ -193,6 +195,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			. += span_warning("[src] seems to be malfunctioning.")
 			return
 		. += span_warning("[src] is starting to look discolored.")
+
+/// Returns a line to be displayed regarding valid insertion zones
+/obj/item/organ/proc/zones_tip()
+	return span_notice("It should be inserted in the [parse_zone(zone)].")
 
 ///Used as callbacks by object pooling
 /obj/item/organ/proc/exit_wardrobe()

@@ -1,7 +1,0 @@
-author: "GwynCodes"
-delete-after: True
-changes:
-  - rscadd: "Added a button in the \"Secrets\" menu to alter the department console order delay."
-  - qol: "Button makes it easier to find cargo related bugs."
-  - code_imp: "Changed code in department_order.dm to allow for overriding the order cooldown duration."
-  - admin: "Created an admin button in the \"Secrets\" panel."

@@ -27,7 +27,7 @@
 ///Override for checkliked callback
 /obj/item/food/donut/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/donut/proc/decorate_donut()
 	if(is_decorated || !decorated_icon)

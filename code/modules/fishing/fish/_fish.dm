@@ -154,8 +154,13 @@
 	/// power of the tesla zap created by the fish in a bioelectric generator. Scales with size.
 	var/electrogenesis_power = 2 MEGA JOULES
 
-	/// The beauty this fish provides to the aquarium it's inserted in.
+	/// The beauty this fish provides to the aquarium or mount it's inserted in.
 	var/beauty = FISH_BEAUTY_GENERIC
+
+	/// Set and used by trophy mounts, this one is for the name of who mounted it (might actually not be the catcher but w/e)
+	var/catcher_name
+	/// Set and used by trophy mounts, this is for the day of when it was first mounted
+	var/catch_date
 
 	/**
 	 * If you wonder why this isn't being tracked by the edible component instead:
@@ -299,7 +304,9 @@
 	create_reagents(INFINITY) //We'll set this to the total volume of the reagents right after generate_fish_reagents() is over
 	generate_fish_reagents(bites_to_finish)
 	reagents.maximum_volume = round(reagents.total_volume * 1.25) //make some meager space for condiments.
-	AddComponent(/datum/component/edible, \
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE, \
+		/datum/component/edible, \
 		food_flags = FOOD_NO_EXAMINE|FOOD_NO_BITECOUNT, \
 		foodtypes = foodtypes, \
 		volume = reagents.total_volume, \
@@ -338,10 +345,10 @@
 		adjust_reagents_capacity((protein_volume - old_blood_volume) * volume_mult)
 		///Add the extra nutriment
 		if(protein)
-			reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
+			reagents.multiply(2, /datum/reagent/consumable/nutriment/protein)
 
-	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
-	edible.foodtypes &= ~(RAW|GORE)
+	//Remove the raw and gore foodtypes from the edible component
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = get_food_types() & ~(RAW|GORE))
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
 		well_cooked()
 
@@ -435,7 +442,7 @@
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	///updates how many units of reagent one bite takes if edible.
 	if(IS_EDIBLE(src))
-		AddComponent(/datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
+		AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
 
 ///Grinding a fish replaces some the protein it has with blood and gibs. You ain't getting a clean smoothie out of it.
 /obj/item/fish/on_grind()
@@ -457,8 +464,7 @@
 			if(!result_reagent)
 				created.reagents.add_reagent(reagent.type, transfer_vol, reagents.copy_data(reagent), reagents.chem_temp, reagent.purity, reagent.ph, no_react = TRUE)
 				continue
-			var/multiplier = transfer_vol / result_reagent.volume
-			created.reagents.multiply_single_reagent(reagent.type, multiplier)
+			created.reagents.multiply(transfer_vol / result_reagent.volume, reagent.type)
 	return ..()
 
 /obj/item/fish/update_icon_state()
@@ -483,6 +489,9 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
+	if(catcher_name && catch_date)
+		. += span_boldnicegreen("Caught by [catcher_name] on [catch_date].")
+
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
@@ -550,8 +559,11 @@
 	fish_flags |= FISH_FLAG_UPDATING_SIZE_AND_WEIGHT
 	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
 
+	var/is_mount = istype(loc, /obj/structure/fish_mount) //used to prevent fish from getting butchered inside mounts
+
 	if(size)
-		remove_fillet_type()
+		if(!is_mount)
+			remove_fillet_type()
 		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
 			qdel(GetComponent(/datum/component/two_handed))
 	else
@@ -590,7 +602,8 @@
 		inhand_icon_state = "[inhand_icon_state]_wielded"
 		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
-	add_fillet_type()
+	if(!is_mount)
+		add_fillet_type()
 
 	var/make_edible = !weight
 	if(weight)
@@ -609,7 +622,7 @@
 				var/amount_to_gen = bites_left / initial_bites_left * multiplier
 				generate_fish_reagents(amount_to_gen)
 			else
-				reagents.multiply_reagents(new_weight_ratio)
+				reagents.multiply(new_weight_ratio)
 				adjust_reagents_capacity(volume_diff)
 
 	weight = new_weight
@@ -1426,7 +1439,7 @@
 	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
 		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)^FISH_PRICE_SOFT_CAP_EXPONENT
 		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
-	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
+	if(HAS_TRAIT(src, TRAIT_FISH_LOW_PRICE)) //Avoid printing money by simply ordering fish and sending it back.
 		raw_price *= 0.05
 	return raw_price * elasticity_percent
 
