@@ -17,6 +17,7 @@
 		/datum/reagent/consumable/blackpepper = 5
 	)
 	result = /obj/item/food/raw_headcheese
+	added_foodtypes = GORE
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/shredded_lungs
@@ -33,6 +34,7 @@
 	)
 
 	result = /obj/item/food/shredded_lungs
+	added_foodtypes = MEAT|GORE
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/tsatsikh
@@ -56,6 +58,7 @@
 		/obj/item/food/grown/onion = 1
 	)
 	result = /obj/item/food/liver_pate
+	removed_foodtypes = RAW
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/moonfish_caviar
@@ -78,6 +81,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/lizard_escargot
+	removed_foodtypes = GORE
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/fried_blood_sausage
@@ -88,6 +92,8 @@
 		/datum/reagent/water = 5
 	)
 	result = /obj/item/food/fried_blood_sausage
+	added_foodtypes = FRIED|NUTS
+	removed_foodtypes = RAW
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/lizard_fries
@@ -110,6 +116,7 @@
 		/datum/reagent/consumable/salt = 3
 	)
 	result = /obj/item/food/brain_pate
+	added_foodtypes = MEAT|GORE
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/crispy_headcheese
@@ -175,22 +182,12 @@
 		/obj/item/food/meat/steak = 1,
 		/obj/item/food/bbqribs = 1
 	)
+	removed_foodtypes = SUGAR
 	result = /obj/item/food/lizard_surf_n_turf
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/rootdough
-	name = "Rootdough"
-	reqs = list(
-		/obj/item/food/grown/potato = 2,
-		/obj/item/food/egg = 1,
-		/datum/reagent/consumable/korta_flour = 5,
-		/datum/reagent/water = 10
-	)
-	result = /obj/item/food/rootdough
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/rootdough2
-	name = "Rootdough"
+	name = "Rootdough (Without Eggs)"
 	reqs = list(
 		/obj/item/food/grown/potato = 2,
 		/datum/reagent/consumable/soymilk = 15,
@@ -198,7 +195,19 @@
 		/datum/reagent/water = 10
 	)
 	result = /obj/item/food/rootdough
+	added_foodtypes = NUTS
 	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/rootdough/with_eggs
+	name = "Rootdough (With Eggs)"
+	reqs = list(
+		/obj/item/food/grown/potato = 2,
+		/obj/item/food/egg = 1,
+		/datum/reagent/consumable/korta_flour = 5,
+		/datum/reagent/water = 10
+	)
+	result = /obj/item/food/rootdough/egg
+	removed_foodtypes = RAW
 
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
@@ -209,6 +218,7 @@
 		/datum/reagent/consumable/ethanol/wine = 5
 	)
 	result = /obj/item/food/spaghetti/snail_nizaya
+	removed_foodtypes = GORE
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/garlic_nizaya
@@ -233,6 +243,7 @@
 		/datum/reagent/consumable/korta_nectar = 5
 	)
 	result = /obj/item/food/spaghetti/demit_nizaya
+	added_foodtypes = SUGAR
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/mushroom_nizaya
@@ -308,6 +319,7 @@
 		/obj/item/organ/liver = 1
 	)
 	result = /obj/item/food/pizza/flatbread/zmorgast
+	removed_foodtypes = RAW
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/fish_flatbread
@@ -339,6 +351,7 @@
 		/datum/reagent/consumable/korta_milk = 5
 	)
 	result = /obj/item/food/pizza/flatbread/nutty
+	removed_foodtypes = VEGETABLES //This is so nuts
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/emperor_roll
@@ -371,6 +384,8 @@
 		/datum/reagent/consumable/vinegar = 2
 	)
 	result = /obj/item/food/black_eggs
+	added_foodtypes = GORE|BREAKFAST
+	removed_foodtypes = RAW
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/patzikula
@@ -382,18 +397,21 @@
 		/obj/item/food/egg = 2
 	)
 	result = /obj/item/food/patzikula
+	removed_foodtypes = RAW
+	added_foodtypes = BREAKFAST
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/korta_brittle
 	name = "Korta brittle slab"
 	reqs = list(
 		/obj/item/food/grown/korta_nut = 2,
-		/obj/item/food/butterslice = 1,
 		/datum/reagent/consumable/korta_nectar = 5,
 		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/nutriment/fat/oil = 3,
 		/datum/reagent/consumable/salt = 2
 	)
 	result = /obj/item/food/cake/korta_brittle
+	added_foodtypes = SUGAR
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/korta_ice
@@ -405,6 +423,7 @@
 		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/snowcones/korta_ice
+	added_foodtypes = SUGAR|NUTS
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/candied_mushrooms
@@ -416,6 +435,7 @@
 		/datum/reagent/consumable/salt = 1
 	)
 	result = /obj/item/food/kebab/candied_mushrooms
+	added_foodtypes = SUGAR
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/sauerkraut
@@ -434,6 +454,7 @@
 		/datum/reagent/consumable/korta_flour = 5
 	)
 	result = /obj/item/food/lizard_dumplings
+	added_foodtypes = NUTS
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/steeped_mushrooms
@@ -453,6 +474,7 @@
 		/datum/reagent/consumable/cherryjelly = 5
 	)
 	result = /obj/item/food/rootbread_peanut_butter_jelly
+	added_foodtypes = FRUIT
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/rootbreadpbb
@@ -463,6 +485,7 @@
 		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/rootbread_peanut_butter_banana
+	added_foodtypes = FRUIT
 	category = CAT_LIZARD
 // Soups
 
