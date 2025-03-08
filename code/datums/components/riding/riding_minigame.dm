@@ -60,7 +60,6 @@
 		linger_time *= easy_difficulty_multiplier
 	if(HAS_TRAIT(ridden, TRAIT_MOB_DIFFICULT_TO_MOUNT))
 		linger_time *= hard_difficulty_multiplier
-	to_chat(world, arrow_speed)
 
 /datum/riding_minigame/proc/generate_visuals()
 	var/static/list/void_arrow_order = list(
