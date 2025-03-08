@@ -408,10 +408,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 
-	if(screenmob != mymob)
-		viewmob.hud_used.update_parallax_pref()
-	else
+	if(screenmob == mymob)
 		update_parallax_pref(screenmob)
+	else
+		viewmob.hud_used.update_parallax_pref()
 
 	update_reuse(screenmob)
 
