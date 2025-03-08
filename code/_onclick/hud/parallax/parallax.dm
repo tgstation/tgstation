@@ -37,6 +37,7 @@
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
 			C.screen += plane_master
+		// this color makes parallax not black
 		plane_master.color = list(
 			0, 0, 0, 0,
 			0, 0, 0, 0,
