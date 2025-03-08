@@ -72,6 +72,9 @@
 /// Additional information of the tank.
 #define TANK_RESULTS_MISC 2
 
+/// Color used by omni-color pipes
+#define ATMOS_COLOR_OMNI COLOR_VERY_LIGHT_GRAY
+
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
