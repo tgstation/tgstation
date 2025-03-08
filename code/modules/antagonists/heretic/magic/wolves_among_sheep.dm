@@ -14,7 +14,7 @@
 	button_icon_state = "among_sheep"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 2 MINUTES
+	cooldown_time = 5 MINUTES
 
 	invocation = "D`M``N `XP`NS``N!"
 	invocation_type = INVOCATION_SHOUT
