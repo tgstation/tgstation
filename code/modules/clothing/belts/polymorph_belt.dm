@@ -36,7 +36,7 @@
 	worn_icon_state = base_icon_state + (active ? "" : "_inactive")
 	return ..()
 
-/obj/item/polymorph_belt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/polymorph_belt/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
 	if (!istype(weapon, /obj/item/assembly/signaler/anomaly/bioscrambler))
 		return NONE
 	if (active)
