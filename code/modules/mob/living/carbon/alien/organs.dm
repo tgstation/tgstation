@@ -120,7 +120,7 @@
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
 		to_chat(owner, span_danger("You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"))
-		owner.emote("scream")
+		owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		owner.Paralyze(100)
 
 	owner.adjust_jitter(1 MINUTES)

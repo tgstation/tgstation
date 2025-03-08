@@ -874,7 +874,7 @@
 				if(1)
 					victim.say(pick(ant_debuff_speech), forced = /datum/status_effect/ants)
 				if(2)
-					victim.emote("scream")
+					victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		if(prob(50)) // Most of the damage is done through random chance. When tested yielded an average 100 brute with 200u ants.
 			switch(rand(1,50))
 				if (1 to 8) //16% Chance

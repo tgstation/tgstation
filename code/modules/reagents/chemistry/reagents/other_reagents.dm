@@ -462,7 +462,7 @@
 					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
 		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
-				affected_mob.emote("scream")
+				affected_mob.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
 
 	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
@@ -2966,7 +2966,7 @@
 		else
 			victim.say(pick(ant_screams), forced = type)
 	if(SPT_PROB(15, seconds_per_tick))
-		victim.emote("scream")
+		victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	if(SPT_PROB(2, seconds_per_tick)) // Stuns, but purges ants.
 		victim.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = rand(5,10), purge_ratio = 1)
 

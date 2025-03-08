@@ -87,7 +87,7 @@
 	var/max_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = weapon)
 
 	target.apply_damage(weapon.force, weapon.damtype, leg, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = weapon)
-	target.emote("scream")
+	target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	log_combat(attacker, target, "broke the kneecaps of", weapon)
 	attacker.do_attack_animation(target, used_item = weapon)
 	playsound(source = weapon, soundin = weapon.hitsound, vol = weapon.get_clamped_volume(), vary = TRUE)

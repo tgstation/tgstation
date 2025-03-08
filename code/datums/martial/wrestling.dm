@@ -162,7 +162,7 @@ If you make a derivative work from this code, you must include this notification
 	defender.visible_message(span_danger("[attacker] starts spinning around with [defender]!"), \
 					span_userdanger("You're spun around by [attacker]!"), span_hear("You hear aggressive shuffling!"), null, attacker)
 	to_chat(attacker, span_danger("You start spinning around with [defender]!"))
-	attacker.emote("scream")
+	attacker.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	for (var/i in 1 to 20)
 		var/delay = 5
@@ -220,7 +220,7 @@ If you make a derivative work from this code, you must include this notification
 		var/turf/T = get_edge_target_turf(attacker, attacker.dir)
 		if (T && isturf(T))
 			if (!defender.stat)
-				defender.emote("scream")
+				defender.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			defender.throw_at(T, 10, 4, attacker, TRUE, TRUE, callback = CALLBACK(defender, TYPE_PROC_REF(/mob/living, Paralyze), 20))
 	log_combat(attacker, defender, "has thrown with wrestling")
 	return
@@ -320,7 +320,7 @@ If you make a derivative work from this code, you must include this notification
 		to_chat(attacker, span_danger("You [fluff] [defender]!"))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		if (!defender.stat)
-			defender.emote("scream")
+			defender.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			defender.Paralyze(4 SECONDS)
 
 			switch(rand(1,3))
@@ -371,7 +371,7 @@ If you make a derivative work from this code, you must include this notification
 /datum/martial_art/wrestling/proc/kick(mob/living/attacker, mob/living/defender)
 	if(!defender)
 		return
-	attacker.emote("scream")
+	attacker.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	attacker.emote("flip")
 	attacker.setDir(turn(attacker.dir, 90))
 
@@ -445,7 +445,7 @@ If you make a derivative work from this code, you must include this notification
 						span_userdanger("You're leg-dropped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 		to_chat(attacker, span_danger("You leg-drop [defender]!"))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
-		attacker.emote("scream")
+		attacker.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 		if (falling == 1)
 			if (prob(33) || defender.stat)

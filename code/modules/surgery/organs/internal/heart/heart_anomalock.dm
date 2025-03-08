@@ -67,7 +67,7 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 	user.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
-	user.emote("scream")
+	user.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	return TRUE
 
 /obj/item/organ/heart/cybernetic/anomalock/proc/on_emp_act(severity)

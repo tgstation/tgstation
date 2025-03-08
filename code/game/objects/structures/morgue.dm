@@ -472,7 +472,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if(M.incorporeal_move) //can't cook revenants!
 				continue
 			if (M.stat != DEAD)
-				M.emote("scream")
+				M.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			if(user)
 				log_combat(user, M, "cremated")
 			else

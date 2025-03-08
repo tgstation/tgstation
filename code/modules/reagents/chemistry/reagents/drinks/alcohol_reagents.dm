@@ -261,14 +261,14 @@
 				eyes.Remove(drinker)
 				eyes.forceMove(get_turf(drinker))
 				to_chat(drinker, span_userdanger("You double over in pain as you feel your eyeballs liquify in your head!"))
-				drinker.emote("scream")
+				drinker.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				if(drinker.adjustBruteLoss(15 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
 					. = UPDATE_MOB_HEALTH
 			else
 				to_chat(drinker, span_userdanger("You scream in terror as you go blind!"))
 				if(eyes.apply_organ_damage(eyes.maxHealth))
 					. = UPDATE_MOB_HEALTH
-				drinker.emote("scream")
+				drinker.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	if(SPT_PROB(1.5, seconds_per_tick) && iscarbon(drinker))
 		drinker.visible_message(span_danger("[drinker] starts having a seizure!"), span_userdanger("You have a seizure!"))
@@ -2106,7 +2106,7 @@
 		. = UPDATE_MOB_HEALTH
 		// Random chance of causing a screm if we did some damage
 		if(SPT_PROB(2, seconds_per_tick))
-			drinker.emote("scream")
+			drinker.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 /datum/reagent/consumable/ethanol/applejack
 	name = "Applejack"

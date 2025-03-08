@@ -236,7 +236,7 @@
 	lasgun.chambered.loaded_projectile.damage *= self_penalty_mult
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
-	victim.emote("scream")
+	victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	adjust_blood_flow(-1 * (damage / (5 * self_penalty_mult))) // 20 / 5 = 4 bloodflow removed, p good
 	victim.visible_message(span_warning("The cuts on [victim]'s [limb.plaintext_zone] scar over!"))
 	return TRUE
@@ -265,7 +265,7 @@
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	victim.apply_damage(2 + severity, BURN, limb, wound_bonus = CANT_WOUND)
 	if(prob(30))
-		victim.emote("scream")
+		victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	var/blood_cauterized = (0.6 / (self_penalty_mult * improv_penalty_mult))
 	var/mob/victim_stored = victim
 	adjust_blood_flow(-blood_cauterized)

@@ -125,7 +125,7 @@
 	else
 		var/mob/living/carbon/human/jill = loc
 		jill.visible_message(span_boldwarning("[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!"), span_userdanger("[src] goes off!"))
-		jill.emote("scream")
+		jill.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 		jill.apply_damage(9999, BRUTE, BODY_ZONE_HEAD)

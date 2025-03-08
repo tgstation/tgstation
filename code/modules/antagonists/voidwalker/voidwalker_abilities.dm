@@ -50,7 +50,7 @@
 	target.Paralyze(stun_time)
 	target.adjustStaminaLoss(stamina_damage)
 	target.apply_status_effect(/datum/status_effect/speech/slurring/generic)
-	target.emote("scream")
+	target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(owner))
 	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(target))

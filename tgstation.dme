@@ -7326,6 +7326,7 @@
 #include "modular_doppler\research\techweb\all_nodes.dm"
 #include "modular_doppler\research\techweb\roundstart_techweb_nodes.dm"
 #include "modular_doppler\ruins_but_epic\code\space_junk.dm"
+#include "modular_doppler\scream_b_gone\code\human.dm"
 #include "modular_doppler\ships_r_us\code\buyable_shuttle_template.dm"
 #include "modular_doppler\ships_r_us\code\micro_reactor.dm"
 #include "modular_doppler\ships_r_us\code\order_console.dm"

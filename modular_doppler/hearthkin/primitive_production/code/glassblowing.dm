@@ -97,7 +97,7 @@
 /obj/item/glassblowing/molten_glass/proc/try_burn_user(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, remaining_heat))
 		to_chat(user, span_warning("You burn your hands trying to pick up [src]!"))
-		user.emote("scream")
+		user.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		user.dropItemToGround(src)
 		var/obj/item/bodypart/affecting = user.get_active_hand()
 		user.investigate_log("was burned their hand on [src] for [15] at [AREACOORD(user)]", INVESTIGATE_CRAFTING)

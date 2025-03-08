@@ -1395,7 +1395,7 @@ Striking a noncultist, however, will tear their flesh."}
 						L.Paralyze(20)
 						L.adjustBruteLoss(45)
 						playsound(L, 'sound/effects/hallucinations/wail.ogg', 50, TRUE)
-						L.emote("scream")
+						L.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
 
 

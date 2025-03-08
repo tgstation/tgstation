@@ -157,7 +157,7 @@
 		span_userdanger("You are crushed by [src]!")
 	)
 	poor_target.Paralyze(5 SECONDS)
-	poor_target.emote("scream")
+	poor_target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	playsound(poor_target, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 	add_memory_in_range(poor_target, 7, /datum/memory/witness_vendor_crush, protagonist = poor_target, antognist = src)
 	return TRUE

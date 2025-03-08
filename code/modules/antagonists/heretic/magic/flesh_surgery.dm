@@ -208,7 +208,7 @@
 	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
 	if(carbon_victim.stat == CONSCIOUS)
 		carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
-		carbon_victim.emote("scream")
+		carbon_victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	// We need to wait for the spell to actually finish casting to put the organ in their hands, hence, 1 ms timer.
 	addtimer(CALLBACK(caster, TYPE_PROC_REF(/mob, put_in_hands), picked_organ), 0.1 SECONDS)

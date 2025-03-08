@@ -605,7 +605,7 @@
 		apply_organ_damage(20 * severity)
 		to_chat(owner, span_warning("Your eyes start to fizzle in their sockets!"))
 		do_sparks(2, TRUE, owner)
-		owner.emote("scream")
+		owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 /obj/item/organ/eyes/robotic/xray
 	name = "x-ray eyes"

@@ -601,7 +601,7 @@
 		affected_mob.remove_traits(subject_traits, type)
 		to_chat(affected_mob, span_danger("You feel something rupturing inside your chest!"))
 		if(!HAS_TRAIT(affected_mob, TRAIT_ANALGESIA))
-			affected_mob.emote("scream")
+			affected_mob.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		affected_mob.set_heartattack(TRUE)
 		volume = 0
 	if(need_mob_update)

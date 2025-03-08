@@ -63,7 +63,7 @@
 					affected_mob.AdjustSleeping(1 SECONDS)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("[pick("You feel as though your atoms are accelerating in place.", "You feel like you're being torn apart!")]"))
-				affected_mob.emote("scream")
+				affected_mob.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				need_mob_update += affected_mob.adjustBruteLoss(10, updating_health = FALSE)
 			if(need_mob_update)
 				affected_mob.updatehealth()
@@ -76,7 +76,7 @@
 					to_chat(affected_mob, span_boldwarning("There is no place for you in this timeline."))
 					affected_mob.adjustStaminaLoss(100, forced = TRUE)
 					playsound(affected_mob.loc, 'sound/effects/magic/repulse.ogg', 100, FALSE)
-					affected_mob.emote("scream")
+					affected_mob.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 					for(var/mob/living/viewers in viewers(3, affected_mob.loc))
 						viewers.flash_act()
 					new /obj/effect/decal/cleanable/plasma(affected_mob.loc)

@@ -155,7 +155,7 @@
 					span_userdanger("[the_hulk] starts spinning you around by your tail!"), span_hear("You hear wooshing sounds!"), null, the_hulk)
 	to_chat(the_hulk, span_danger("You start spinning [yeeted_person] around by [yeeted_person.p_their()] tail!"))
 	the_hulk.emote("scream")
-	yeeted_person.emote("scream")
+	yeeted_person.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	swing_loop(the_hulk, yeeted_person, 0, original_dir)
 
 /**
@@ -253,7 +253,7 @@
 	if(!isturf(T))
 		return
 	if(!yeeted_person.stat)
-		yeeted_person.emote("scream")
+		yeeted_person.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
 

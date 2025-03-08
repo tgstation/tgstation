@@ -198,7 +198,7 @@
 		return FALSE
 
 	victim.forceMove(jaunter)
-	victim.emote("scream")
+	victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	jaunt_turf.visible_message(
 		span_boldwarning("[jaunter] drags [victim] into [blood]!"),
 		blind_message = span_notice("You hear a splash."),

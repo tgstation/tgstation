@@ -293,7 +293,7 @@
 		to_chat(owner, span_warning("The spell had no effect!"))
 		return FALSE
 	to_chat(cast_on, span_userdanger("Your mind gets twisted!"))
-	cast_on.emote("scream")
+	cast_on.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	cast_on.apply_status_effect(/datum/status_effect/psychic_projection, projection_duration)
 	return TRUE
 

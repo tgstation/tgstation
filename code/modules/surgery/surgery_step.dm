@@ -325,7 +325,7 @@
 				return
 			to_chat(target, span_userdanger(pain_message))
 			if(prob(30) && !mechanical_surgery)
-				target.emote("scream")
+				target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 #undef SURGERY_SPEED_TRAIT_ANALGESIA
 #undef SURGERY_SPEED_DISSECTION_MODIFIER

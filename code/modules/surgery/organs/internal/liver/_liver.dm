@@ -152,12 +152,12 @@
 		if(4)
 			to_chat(owner, span_userdanger("Overwhelming pain knocks you out!"))
 			owner.vomit(VOMIT_CATEGORY_BLOOD, distance = rand(1,2))
-			owner.emote("Scream")
+			owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			owner.AdjustUnconscious(2.5 SECONDS)
 		if(5)
 			to_chat(owner, span_userdanger("You feel as if your guts are about to melt!"))
 			owner.vomit(VOMIT_CATEGORY_BLOOD, distance = rand(1,3))
-			owner.emote("Scream")
+			owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			owner.AdjustUnconscious(5 SECONDS)
 
 	switch(failure_time)

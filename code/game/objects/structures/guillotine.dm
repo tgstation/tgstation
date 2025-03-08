@@ -175,7 +175,7 @@
 			else
 				victim.apply_damage(15 * blade_sharpness, BRUTE, head, attacking_item = src)
 				log_combat(user, victim, "dropped the blade on", src, " non-fatally")
-				victim.emote("scream")
+				victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 			if (blade_sharpness > 1)
 				blade_sharpness -= 1

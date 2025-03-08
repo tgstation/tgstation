@@ -577,7 +577,7 @@
 				future_pancake.Paralyze(100)
 			else if(ishuman(future_pancake)) //For humans
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				future_pancake.emote("scream")
+				future_pancake.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				future_pancake.Paralyze(100)
 			else //for simple_animals & borgs
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)

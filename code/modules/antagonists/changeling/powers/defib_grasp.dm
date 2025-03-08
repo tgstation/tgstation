@@ -37,7 +37,7 @@
 	changeling.buckled?.unbuckle_mob(changeling) // get us off of stasis beds please
 	changeling.set_resting(FALSE)
 	changeling.adjust_jitter(20 SECONDS)
-	changeling.emote("scream")
+	changeling.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	playsound(changeling, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 	// Mimics some real defib stuff (wish this was more generalized)
@@ -72,7 +72,7 @@
 				defibber.adjust_dizzy(1 MINUTES)
 				defibber.adjust_stutter(1 MINUTES)
 				defibber.adjust_eye_blur(10 SECONDS)
-				defibber.emote("scream")
+				defibber.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 				changeling.visible_message(
 					span_bolddanger("[changeling] awakens suddenly, snatching [defib] out of [defibber]'s hands while ripping off [removed_arms >= 2 ? "" : "one of "][defibber.p_their()] arms!"),

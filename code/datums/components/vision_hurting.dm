@@ -23,4 +23,4 @@
 		if(SPT_PROB(50, seconds_per_tick))
 			to_chat(viewer, span_userdanger("[message] [parent]!"))
 		if(SPT_PROB(20, seconds_per_tick))
-			viewer.emote("scream")
+			viewer.painful_scream() // DOPPLER EDIT: check for painkilling before screaming

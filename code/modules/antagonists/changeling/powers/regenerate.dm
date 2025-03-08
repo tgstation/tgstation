@@ -25,6 +25,6 @@
 			span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),
 			span_hear("You hear organic matter ripping and tearing!"),
 		)
-		carbon_user.emote("scream")
+		carbon_user.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	return TRUE

@@ -174,7 +174,7 @@
 			fallen_mob.apply_damage(25 * levels, BRUTE, sharpness = SHARP_POINTY)
 			if(iscarbon(fallen_mob))
 				var/mob/living/carbon/fallen_carbon = fallen_mob
-				fallen_carbon.emote("scream")
+				fallen_carbon.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				fallen_carbon.bleed(30)
 	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
 

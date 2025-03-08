@@ -117,7 +117,7 @@
 
 /obj/structure/kitchenspike/post_buckle_mob(mob/living/target)
 	playsound(src.loc, 'sound/effects/splat.ogg', 25, TRUE)
-	target.emote("scream")
+	target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	target.add_splatter_floor()
 	target.adjustBruteLoss(30)
 	target.setDir(2)

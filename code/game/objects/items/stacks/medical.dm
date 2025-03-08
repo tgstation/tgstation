@@ -708,7 +708,7 @@
 		patient.visible_message(span_suicide("[patient] screws up like an idiot and still dies anyway!"))
 		return BRUTELOSS
 
-	patient.emote("scream")
+	patient.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	for(var/obj/item/bodypart/bone as anything in patient.bodyparts)
 		// fine to just, use these raw, its a meme anyway
 		var/datum/wound/blunt/bone/severe/oof_ouch = new

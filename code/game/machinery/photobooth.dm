@@ -135,7 +135,7 @@
 				carbon_occupant.flash_act(5)
 			sleep(0.2 SECONDS)
 		if(carbon_occupant)
-			carbon_occupant.emote("scream")
+			carbon_occupant.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		finish_taking_pictures()
 		return
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM)) //gives them time to put their hand items away.

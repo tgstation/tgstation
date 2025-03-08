@@ -52,7 +52,7 @@
 		span_hear("You hear a sickening sound of metal piercing flesh!")
 	)
 	eyeballies.apply_organ_damage(eyeballies.maxHealth)
-	target.emote("scream")
+	target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
 	log_combat(user, target, "cracked the skull of (eye snatching)", src)
 
@@ -76,7 +76,7 @@
 		source = target,
 		header = "Ouch!",
 	)
-	target.emote("scream")
+	target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	if(prob(20))
 		target.emote("cry")
 	used = TRUE

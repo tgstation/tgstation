@@ -408,7 +408,7 @@
 	motherfucker_to_hurt.update_damage_overlays()
 
 	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] [smite_text_to_target], hurting you!"))
-	motherfucker_to_hurt.emote("scream")
+	motherfucker_to_hurt.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
 	. = TRUE
 

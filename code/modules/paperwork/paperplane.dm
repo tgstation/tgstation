@@ -107,7 +107,7 @@
 	hit_human.adjust_eye_blur(12 SECONDS)
 	eyes?.apply_organ_damage(rand(6, 8))
 	hit_human.Paralyze(4 SECONDS)
-	hit_human.emote("scream")
+	hit_human.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 /obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, gentle, quickstart = TRUE)
 	return ..(target, range, speed, thrower, FALSE, diagonals_first, callback, quickstart = quickstart)

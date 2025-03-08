@@ -388,7 +388,7 @@
 				span_danger("[rider] misses the landing and falls on [rider.p_their()] face!)"),
 				span_userdanger("You smack against the board, hard."),
 			)
-			rider.emote("scream")
+			rider.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			rider.adjustBruteLoss(10)  // thats gonna leave a mark
 			return
 		rider.visible_message(

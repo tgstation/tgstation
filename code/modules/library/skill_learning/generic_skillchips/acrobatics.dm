@@ -113,7 +113,7 @@
 					span_userdanger("Your head hurts so much, it feels like it's on fire!"),
 				)
 				ASYNC
-					bozo.emote("scream")
+					bozo.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				if(particle_effect?.type == particle_path)
 					return
 				particle_path = /particles/smoke/steam/bad

@@ -46,7 +46,7 @@
 			owner.Immobilize(0.1 SECONDS * stacks)
 
 		if(2)
-			owner.emote("scream")
+			owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			owner.say("AAAAH!!", forced = "phobia")
 
 			if(stacks >= 5)

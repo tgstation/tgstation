@@ -216,7 +216,7 @@
 				to_chat(interfering, span_warning("[GLOB.deity] brands your flesh for interfering with [chaplain]'s sparring match!!"))
 				var/obj/item/bodypart/branded_limb = pick(branded.bodyparts)
 				branded_limb.force_wound_upwards(/datum/wound/burn/flesh/severe/brand, wound_source = "divine intervention")
-				branded.emote("scream")
+				branded.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	flubs--
 	if(!flubs) //too many interferences

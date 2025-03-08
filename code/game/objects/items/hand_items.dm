@@ -182,7 +182,7 @@
 		damage += rand(3,7)
 
 	if(damage >= 5)
-		target.emote("scream")
+		target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
 	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)

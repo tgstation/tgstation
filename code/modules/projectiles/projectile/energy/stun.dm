@@ -175,7 +175,7 @@
 		owner.add_mood_event("tased", /datum/mood_event/tased)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/being_tased)
 		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
-			owner.emote("scream")
+			owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		if(HAS_TRAIT(owner, TRAIT_HULK))
 			owner.say(pick(
 				";RAAAAAAAARGH!",

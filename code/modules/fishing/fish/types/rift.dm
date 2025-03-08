@@ -316,7 +316,7 @@
 	playsound(user, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, TRUE)
 	user.visible_message("[user]'s [eyes ? eyes : "eye holes"] suddenly sprout stalks and turn into [new_eyes]!")
 	ASYNC
-		user.emote("scream")
+		user.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		eyes.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 		sleep(5 SECONDS)
 		if(!QDELETED(eyes))

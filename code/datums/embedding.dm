@@ -359,7 +359,7 @@
 		damagetype = STAMINA,
 	)
 
-	owner.emote("scream")
+	owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 /// The proper proc to call when you want to remove something. If a mob is passed, the item will be put in its hands - otherwise it's just dumped onto the ground
 /datum/embedding/proc/remove_embedding(mob/living/to_hands)

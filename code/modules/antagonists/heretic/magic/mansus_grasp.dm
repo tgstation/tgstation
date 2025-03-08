@@ -130,7 +130,7 @@
 			carbon_user.adjustFireLoss(20)
 			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
-				carbon_user.emote("scream")
+				carbon_user.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				carbon_user.adjust_stutter(26 SECONDS)
 
 		source.cast_on_hand_hit(src, user, user)

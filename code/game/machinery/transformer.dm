@@ -93,7 +93,7 @@
 	update_appearance()
 
 	playsound(src.loc, 'sound/items/tools/welder.ogg', 50, TRUE)
-	victim.emote("scream") // It is painful
+	victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming // It is painful
 	victim.adjustBruteLoss(max(0, 80 - victim.getBruteLoss())) // Hurt the human, don't try to kill them though.
 
 	// Sleep for a couple of ticks to allow the human to see the pain

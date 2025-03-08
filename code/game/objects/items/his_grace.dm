@@ -107,7 +107,7 @@
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 				master.visible_message(span_boldwarning("[src] turns on [master]!"), "<span class='his_grace big bold'>[src] turns on you!</span>")
 				do_attack_animation(master, null, src)
-				master.emote("scream")
+				master.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				master.remove_status_effect(/datum/status_effect/his_grace)
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)

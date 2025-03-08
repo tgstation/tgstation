@@ -39,7 +39,7 @@
 
 	playsound(src, 'sound/effects/pope_entry.ogg', 60, TRUE)
 	playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 40)
-	user.emote("scream")
+	user.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 	addtimer(CALLBACK(src, PROC_REF(make_meat_toilet), user), 5 SECONDS)
 	return MANUAL_SUICIDE

@@ -57,7 +57,7 @@
 					to_chat(infected_mob, span_userdanger("Your ears pop painfully and start bleeding!"))
 					// Just absolutely murder me man
 					ears.apply_organ_damage(ears.maxHealth)
-					infected_mob.emote("scream")
+					infected_mob.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 					ADD_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
 			else
 				to_chat(infected_mob, span_userdanger("Your ears pop and begin ringing loudly!"))

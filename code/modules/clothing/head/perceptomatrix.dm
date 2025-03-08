@@ -239,7 +239,7 @@
 		return
 
 	to_chat(cast_on, span_warning("Your brain feels like it's on fire!"))
-	cast_on.emote("scream")
+	cast_on.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	cast_on.adjust_staggered(stagger_duration)
 	cast_on.apply_status_effect(/datum/status_effect/hallucination, hallucination_duration, \

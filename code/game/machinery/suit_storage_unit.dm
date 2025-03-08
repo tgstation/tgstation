@@ -498,7 +498,7 @@
 				mob_occupant.adjustFireLoss(rand(10, 16))
 			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
 				//Awake, organic and screaming
-				mob_occupant.emote("scream")
+				mob_occupant.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		addtimer(CALLBACK(src, PROC_REF(cook)), 5 SECONDS)
 	else
 		uv_cycles = initial(uv_cycles)

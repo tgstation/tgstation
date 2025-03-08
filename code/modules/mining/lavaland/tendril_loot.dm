@@ -556,7 +556,7 @@
 	wings.Insert(exposed_human)
 	playsound(exposed_human.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE, -1)
 	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, forced = TRUE, wound_bonus = CANT_WOUND)
-	exposed_human.emote("scream")
+	exposed_human.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 
 /datum/reagent/flightpotion/proc/get_wing_choice(mob/needs_wings, obj/item/bodypart/chest/chest)
 	var/list/wing_types = chest.wing_types.Copy()
@@ -861,7 +861,7 @@
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
 	to_chat(victim, span_userdanger("You experience blinding pain, as [src] burrows into your skull."))
-	victim.emote("scream")
+	victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	victim.flash_act()
 
 /datum/action/cooldown/spell/pointed/scan

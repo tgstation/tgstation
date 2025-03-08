@@ -905,7 +905,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(7.5, seconds_per_tick))
-		affected_mob.emote("scream")
+		affected_mob.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		affected_mob.say(pick("AAAAAAAHHHHH!!","OOOOH NOOOOOO!!","GGGUUUUHHHHH!!","AIIIIIEEEEEE!!","HAHAHAHAHAAAAAA!!","OORRRGGGHHH!!","AAAAAAAJJJJJJJJJ!!"), forced = type)
 
 /datum/reagent/inverse/rezadone

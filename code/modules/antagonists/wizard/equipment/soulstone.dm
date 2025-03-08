@@ -160,7 +160,7 @@
 /obj/item/soulstone/proc/hot_potato(mob/living/user)
 	to_chat(user, span_userdanger("Holy magics residing in [src] burn your hand!"))
 	user.apply_damage(10, BURN, user.get_active_hand())
-	user.emote("scream")
+	user.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	user.update_damage_overlays()
 	user.dropItemToGround(src)
 

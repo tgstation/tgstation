@@ -123,7 +123,7 @@
 	var/turf/target = get_step(src, output_dir)
 	for(var/obj/item/bodypart/limb_to_remove as anything in operation_order) //first we do non-essential limbs
 		limb_to_remove.drop_limb()
-		carbon_occupant.emote("scream")
+		carbon_occupant.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		if(limb_to_remove.body_zone != "chest")
 			limb_to_remove.forceMove(target)    //Move the limbs right next to it, except chest, that's a weird one
 			limb_to_remove.drop_organs()

@@ -191,7 +191,7 @@
 		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
 		span_userdanger("You're covered in boiling oil!"))
 		if(FryLoss)
-			exposed_mob.emote("scream")
+			exposed_mob.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
 		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
 		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
@@ -443,7 +443,7 @@
 		//actually handle the pepperspray effects
 		if (!victim.is_pepper_proof()) // you need both eye and mouth protection
 			if(prob(5))
-				victim.emote("scream")
+				victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 			victim.emote("cry")
 			victim.set_eye_blur_if_lower(10 SECONDS)
 			victim.adjust_temp_blindness(6 SECONDS)

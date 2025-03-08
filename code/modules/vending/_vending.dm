@@ -891,7 +891,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					living_target.apply_damage(adjusted_damage, damage_type, blocked = blocked, forced = TRUE, attack_direction = crush_dir)
 
 				living_target.Paralyze(paralyze_time)
-				living_target.emote("scream")
+				living_target.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 				playsound(living_target, 'sound/effects/blob/blobattack.ogg', 40, TRUE)
 				playsound(living_target, 'sound/effects/splat.ogg', 50, TRUE)
 				post_crush_living(living_target, was_alive)

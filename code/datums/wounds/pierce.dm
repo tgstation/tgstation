@@ -158,7 +158,7 @@
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	victim.apply_damage(2 + severity, BURN, limb, wound_bonus = CANT_WOUND)
 	if(prob(30))
-		victim.emote("scream")
+		victim.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 	var/blood_cauterized = (0.6 / (self_penalty_mult * improv_penalty_mult))
 	adjust_blood_flow(-blood_cauterized)
 

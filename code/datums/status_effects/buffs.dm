@@ -220,7 +220,7 @@
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
-		new_owner.emote("scream")
+		new_owner.painful_scream() // DOPPLER EDIT: check for painkilling before screaming
 		return // exhaustion_limit
 
 	return bonus_time
