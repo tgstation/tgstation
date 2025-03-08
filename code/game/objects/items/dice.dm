@@ -9,20 +9,10 @@
 	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "dicebag"
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/dice/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(/obj/item/dice)
+	storage_type = /datum/storage/dice
 
 /obj/item/storage/dice/PopulateContents()
-	new /obj/item/dice/d4(src)
-	new /obj/item/dice/d6(src)
-	new /obj/item/dice/d8(src)
-	new /obj/item/dice/d10(src)
-	new /obj/item/dice/d12(src)
-	new /obj/item/dice/d20(src)
-	var/picked = pick(list(
+	var/static/list/obj/item/options = list(
 		/obj/item/dice/d1,
 		/obj/item/dice/d2,
 		/obj/item/dice/fudge,
@@ -31,8 +21,17 @@
 		/obj/item/dice/eightbd20,
 		/obj/item/dice/fourdd6,
 		/obj/item/dice/d100,
-	))
-	new picked(src)
+	)
+
+	return list(
+		/obj/item/dice/d4,
+		/obj/item/dice/d6,
+		/obj/item/dice/d8,
+		/obj/item/dice/d10,
+		/obj/item/dice/d12,
+		/obj/item/dice/d20,
+		pick(options),
+	)
 
 /obj/item/storage/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -41,14 +40,19 @@
 /obj/item/storage/dice/hazard
 
 /obj/item/storage/dice/hazard/PopulateContents()
-	new /obj/item/dice/d6(src)
-	new /obj/item/dice/d6(src)
-	new /obj/item/dice/d6(src)
+	var/list/obj/item/dices = list(
+		new /obj/item/dice/d6,
+		new /obj/item/dice/d6,
+		new /obj/item/dice/d6,
+	)
+
 	for(var/i in 1 to 2)
 		if(prob(7))
-			new /obj/item/dice/d6/ebony(src)
+			dices += /obj/item/dice/d6/ebony
 		else
-			new /obj/item/dice/d6(src)
+			dices += /obj/item/dice/d6
+
+	return dices
 
 ///this is a prototype for dice, for a real d6 use "/obj/item/dice/d6"
 /obj/item/dice
