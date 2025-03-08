@@ -86,7 +86,7 @@
 	suffix = null
 	if(name == "\improper MULEbot")
 		name = "\improper MULEbot [id]"
-	set_home(loc)
+	set_home(get_turf(src))
 
 /mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
 	. = ..()
