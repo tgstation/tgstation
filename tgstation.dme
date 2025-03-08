@@ -6057,6 +6057,7 @@
 #include "code\modules\spells\spell_types\pointed\dominate.dm"
 #include "code\modules\spells\spell_types\pointed\finger_guns.dm"
 #include "code\modules\spells\spell_types\pointed\fireball.dm"
+#include "code\modules\spells\spell_types\pointed\flash.dm"
 #include "code\modules\spells\spell_types\pointed\lightning_bolt.dm"
 #include "code\modules\spells\spell_types\pointed\mind_transfer.dm"
 #include "code\modules\spells\spell_types\pointed\spell_cards.dm"

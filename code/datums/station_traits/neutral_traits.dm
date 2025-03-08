@@ -597,3 +597,12 @@
 	show_in_report = TRUE
 
 	dynamic_threat_id = "GMM Econ Spotlight"
+
+/datum/station_trait/summoner_spells
+	name = "Summoner Spells"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	cost = STATION_TRAIT_COST_LOW
+	dynamic_threat_id = "Summoner Spells"
+	sign_up_button = TRUE
+	force = TRUE
