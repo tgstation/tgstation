@@ -233,7 +233,8 @@
 	name = "Iron Tincture"
 	desc = "Made with real girders."
 	icon_state = "iron-tincture"
-	list_reagents = list(/datum/reagent/consumable/iron_tincture = 25, /datum/reagent/iron = 10,)
+	volume = 40
+	list_reagents = list(/datum/reagent/consumable/iron_tincture = 30, /datum/reagent/iron = 10,)
 	drink_type = SUGAR | FRUIT | JUNKFOOD
 	custom_price = PAYCHECK_CREW * 1.2 //import tax
 
