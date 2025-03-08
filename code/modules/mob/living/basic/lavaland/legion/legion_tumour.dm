@@ -164,3 +164,7 @@
 	to_chat(finder, span_notice("Its pulsing tendrils reach all throughout the body."))
 	if(prob(stage * 2))
 		infest()
+
+/obj/item/organ/legion_tumour/feel_for_damage(self_aware)
+	// keep stealthy for now, revisit later
+	return ""
