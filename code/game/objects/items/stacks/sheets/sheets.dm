@@ -13,6 +13,7 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
 	material_flags = MATERIAL_EFFECTS
+	table_type = /obj/structure/table/greyscale
 	pickup_sound = 'sound/items/handling/materials/metal_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
