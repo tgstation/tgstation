@@ -340,6 +340,12 @@
 	var/pick = show_radial_menu(user, user, options, require_near = TRUE, tooltips = TRUE)
 	if (!pick)
 		return
+	var/datum/grand_finale/picked_finale = picks_to_instances[pick]
+	var/round_time_passed = world.time - SSticker.round_start_time
+	if(picked_finale.minimum_time >=round_time_passed)
+		to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(picked_finale.minimum_time - round_time_passed)]</b>!"))
+		to_chat(user, span_warning("Be patient, or select another option."))
+		return
 	chosen_effect = TRUE
 	if (pick == PICK_NOTHING)
 		return
