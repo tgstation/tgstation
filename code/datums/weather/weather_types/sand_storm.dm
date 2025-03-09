@@ -28,22 +28,18 @@
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.sand_storm_sounds[impacted_area] = /datum/looping_sound/weak_outside_ashstorm
-		CHECK_TICK
-
 	return ..()
 
 /datum/weather/sand_storm/start()
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.sand_storm_sounds[impacted_area] = /datum/looping_sound/active_outside_ashstorm
-		CHECK_TICK
 	return ..()
 
 /datum/weather/sand_storm/wind_down()
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.sand_storm_sounds[impacted_area] = /datum/looping_sound/weak_outside_ashstorm
-		CHECK_TICK
 	return ..()
 
 /datum/weather/sand_storm/weather_act_mob(mob/living/victim)
