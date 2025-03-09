@@ -104,19 +104,21 @@
 
 /datum/weather/rain_storm/weather_act_turf(turf/open/weather_turf)
 	for(var/obj/thing as anything in weather_turf.contents)
-		if(!thing.IsObscured())
-			rain_reagent.expose_obj(thing, RAIN_REAGENT_VOLUME, TOUCH)
+		if(thing.IsObscured())
+			continue
 
-			// Time for the sophisticated art of catching sky-booze
-			if(!is_reagent_container(thing))
-				continue
+		rain_reagent.expose_obj(thing, RAIN_REAGENT_VOLUME, TOUCH)
 
-			var/obj/item/reagent_containers/container = thing
-			if(!container.is_open_container() || container.reagents.holder_full())
-				continue
+		// Time for the sophisticated art of catching sky-booze
+		if(!is_reagent_container(thing))
+			continue
 
-			var/amount_to_add = min(container.volume - container.reagents.total_volume, RAIN_REAGENT_VOLUME)
-			container.reagents.add_reagent(rain_reagent.type, amount_to_add)
+		var/obj/item/reagent_containers/container = thing
+		if(!container.is_open_container() || container.reagents.holder_full())
+			continue
+
+		var/amount_to_add = min(container.volume - container.reagents.total_volume, RAIN_REAGENT_VOLUME)
+		container.reagents.add_reagent(rain_reagent.type, amount_to_add)
 
 	if(istype(rain_reagent, /datum/reagent/water))
 		weather_turf.wash(CLEAN_ALL, TRUE)
