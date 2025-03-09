@@ -40,9 +40,6 @@
 /datum/weather/rain_storm/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
 	..()
 
-	if(IS_WEATHER_AESTHETIC(weather_flags))
-		return
-
 	var/reagent_id
 	if(custom_reagent)
 		reagent_id = custom_reagent
