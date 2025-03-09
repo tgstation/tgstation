@@ -25,7 +25,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 			return
 		//if("Custom") venture on lil fella
 
-	var/static/list/area_choices = list()
+	var/list/area_choices = list()
 	if(!length(area_choices))
 		for(var/area/area_type as anything in typesof(/area))
 			area_choices[initial(area_type.type)] = area_type
