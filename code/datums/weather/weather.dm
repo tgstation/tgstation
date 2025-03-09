@@ -120,10 +120,7 @@
 	impacted_z_levels = z_levels
 	area_type = area_override || area_type
 	weather_flags = weather_flags_override || weather_flags
-
-	// turf_thunder_chance = thunder_chance_override || turf_thunder_chance
-	// this breaks when thunder_chance_override is 0 (aka FALSE), so we need to null check
-	turf_thunder_chance = isnull(thunder_chance_override) ? turf_thunder_chance : thunder_chance_override 
+	turf_thunder_chance = isnull(thunder_chance_override) ? turf_thunder_chance : thunder_chance_override
 
 	if(weather_flags & (WEATHER_MOBS))
 		subsystem_tasks += SSWEATHER_MOBS
