@@ -90,17 +90,20 @@
 		living.wash()
 	rain_reagent.expose_mob(living, TOUCH, RAIN_REAGENT_VOLUME)
 
+	if(!(weather_flags & WEATHER_NOTIFICATION) || prob(95))
+		return
+
 	var/rain_type = LOWER_TEXT(rain_reagent.name)
-	if((weather_flags & WEATHER_NOTIFICATION) && prob(5))
-		var/wetmessage = pick( "You're drenched in [rain_type]!",
+	var/wetmessage = pick(
+		"You're drenched in [rain_type]!",
 		"You're completely soaked by the [rain_type] rainfall!",
 		"You become soaked by the heavy [rain_type] rainfall!",
 		"[capitalize(rain_type)] drips off your uniform as the rain soaks your outfit!",
 		"Rushing [rain_type] rolls off your face as the rain soaks you completely!",
 		"Heavy [rain_type] raindrops hit your face as the rain thoroughly soaks your body!",
 		"As you move through the heavy [rain_type] rain, your clothes become completely soaked!",
-		)
-		to_chat(living, span_warning(wetmessage))
+	)
+	to_chat(living, span_warning(wetmessage))
 
 /datum/weather/rain_storm/weather_act_turf(turf/open/weather_turf)
 	for(var/obj/thing as anything in weather_turf.contents)
