@@ -1,6 +1,6 @@
 ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather on the z-level you choose.", ADMIN_CATEGORY_WEATHER)
 
-	var/static/list/weather_choices = list()
+	var/list/weather_choices = list()
 	if(!length(weather_choices))
 		for(var/datum/weather/weather_type as anything in subtypesof(/datum/weather))
 			weather_choices[initial(weather_type.type)] = weather_type
