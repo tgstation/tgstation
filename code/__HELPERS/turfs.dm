@@ -478,9 +478,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 ///Runs through all adjacent open turfs and checks if any are planetary_atmos returns true if even one passes.
 /turf/proc/is_nearby_planetary_atmos()
 	. = FALSE
-	for(var/t in RANGE_TURFS(1, src))
-		if(!isopenturf(t))
-			continue
-		var/turf/open/turf_adjacent = t
+	for(var/turf/open/turf_adjacent in RANGE_TURFS(1, src))
 		if(turf_adjacent.planetary_atmos)
 			return TRUE
