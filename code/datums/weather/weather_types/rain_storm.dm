@@ -64,21 +64,18 @@
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
-		CHECK_TICK
 	return ..()
 
 /datum/weather/rain_storm/start()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/middle
-		CHECK_TICK
 	return ..()
 
 /datum/weather/rain_storm/wind_down()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/end
-		CHECK_TICK
 	return ..()
 
 /datum/weather/rain_storm/end()
