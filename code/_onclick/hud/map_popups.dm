@@ -19,6 +19,16 @@
 /atom/movable/screen/proc/set_position(x, y, px = 0, py = 0)
 	if(assigned_map)
 		screen_loc = "[assigned_map]:[x]:[px],[y]:[py]"
+		ASYNC
+			// HACK: This fixes the character creator in 516 being small and relying on other byondui things (like cameras) to update and refresh. This fixes them to.
+			// Adding three then setting it back seemed to do the trick!
+			// Why the fuck does this work? This is some byond bug and I honestly have no fucking clue why this works.
+			// I don't think plane master will be effected, I hope.
+			// We're stuck in the belly of this awful machine.
+			sleep(0.2 SECONDS)
+			screen_loc = "[assigned_map]:[x+3]:[px],[y+3]:[py]"
+			sleep(0.2 SECONDS)
+			screen_loc = "[assigned_map]:[x]:[px],[y]:[py]"
 	else
 		screen_loc = "[x]:[px],[y]:[py]"
 
