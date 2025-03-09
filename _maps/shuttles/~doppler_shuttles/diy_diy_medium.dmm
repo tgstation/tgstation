@@ -8,9 +8,18 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "ez" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought,
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	view_range = 2;
+	y_offset = 5
+	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/do_it_yourself_medium)
+"eM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/ship_captain_spawner,
+/turf/open/floor/plating,
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "fI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -164,7 +173,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/digital_clock/directional/south,
+/obj/machinery/space_heater/wall_mounted/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "CU" = (
@@ -277,6 +286,10 @@
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/do_it_yourself_medium)
+"IZ" = (
+/obj/machinery/space_heater/wall_mounted/directional/west,
+/turf/open/floor/plating,
 /area/shuttle/personally_bought/do_it_yourself_medium)
 "Jd" = (
 /obj/item/storage/toolbox/emergency,
@@ -531,7 +544,7 @@ YC
 Av
 Pp
 Wb
-yi
+IZ
 yi
 kO
 IG
@@ -547,7 +560,7 @@ kO
 kO
 BV
 kO
-Ef
+eM
 Ur
 Pp
 fI

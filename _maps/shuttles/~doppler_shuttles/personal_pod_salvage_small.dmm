@@ -1,0 +1,231 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/cramped_salvage)
+"c" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"g" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"h" = (
+/obj/structure/cable,
+/obj/machinery/computer/shuttle/personally_bought{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"j" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"k" = (
+/obj/structure/railing/eva_handhold/directional/south,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/cramped_salvage)
+"m" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/cramped_salvage)
+"o" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/cramped_salvage)
+"r" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/button/door/personal_shuttle_windows/directional/north{
+	pixel_x = -6;
+	pixel_y = 26
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 7
+	},
+/obj/item/radio/intercom/directional/north{
+	pixel_y = 37
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"s" = (
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/personally_bought/cramped_salvage)
+"t" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"u" = (
+/obj/structure/railing/eva_handhold/directional/north,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/cramped_salvage)
+"v" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded{
+	anchored = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/cramped_salvage)
+"C" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"F" = (
+/obj/structure/railing/eva_handhold/directional/north,
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/cramped_salvage)
+"H" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/cramped_salvage)
+"I" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/docking_port/mobile/personally_bought,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"M" = (
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"P" = (
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/cramped_salvage)
+"Q" = (
+/obj/structure/railing/eva_handhold/directional/east,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/cramped_salvage)
+"R" = (
+/obj/structure/railing/eva_handhold/directional/south,
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/cramped_salvage)
+"S" = (
+/obj/machinery/space_heater/wall_mounted/directional/north,
+/obj/effect/landmark/ship_captain_spawner,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"T" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/structure/cable,
+/obj/structure/closet/crate,
+/obj/item/wrench,
+/obj/item/storage/bag/breach_bag,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/stock_parts/power_store/cell/high,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"U" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/cramped_salvage)
+"V" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/cramped_salvage)
+"W" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/obj/structure/railing/eva_handhold/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/cramped_salvage)
+"Y" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/cramped_salvage)
+
+(1,1,1) = {"
+U
+H
+v
+H
+U
+"}
+(2,1,1) = {"
+F
+a
+m
+a
+R
+"}
+(3,1,1) = {"
+Y
+t
+V
+s
+I
+"}
+(4,1,1) = {"
+u
+S
+T
+C
+k
+"}
+(5,1,1) = {"
+Y
+r
+M
+j
+Y
+"}
+(6,1,1) = {"
+P
+g
+h
+c
+P
+"}
+(7,1,1) = {"
+U
+Q
+o
+W
+U
+"}

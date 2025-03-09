@@ -64,6 +64,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/space_heater/wall_mounted/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "cP" = (
@@ -143,7 +144,11 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "jj" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought,
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	x_offset = -4;
+	y_offset = 5;
+	view_range = 4
+	},
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/button/door/personal_shuttle_windows/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
@@ -255,6 +260,7 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/space_heater/wall_mounted/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "tm" = (
@@ -362,6 +368,7 @@
 /obj/structure/sink/kitchen/directional/east,
 /obj/structure/curtain,
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/space_heater/wall_mounted/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "BU" = (
@@ -447,6 +454,7 @@
 /obj/structure/tank_dispenser,
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/space_heater/wall_mounted/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "Ir" = (
@@ -503,6 +511,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/flatpacked_machine,
 /obj/item/circuitboard/machine/techfab,
+/obj/machinery/space_heater/wall_mounted/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "KY" = (
@@ -517,6 +526,7 @@
 "LQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave/frontier_printed,
+/obj/machinery/space_heater/wall_mounted/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "LV" = (
@@ -573,6 +583,7 @@
 /obj/item/pen/fourcolor,
 /obj/machinery/light/warm/directional/north,
 /obj/machinery/button/door/personal_shuttle_windows/directional/north,
+/obj/machinery/space_heater/wall_mounted/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "Po" = (
@@ -618,6 +629,12 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
+"RS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/ship_captain_spawner,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/private_liner)
 "Ti" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/personally_bought/private_liner)
@@ -628,6 +645,7 @@
 	dir = 8
 	},
 /obj/machinery/recharge_station,
+/obj/machinery/space_heater/wall_mounted/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/private_liner)
 "VJ" = (
@@ -940,7 +958,7 @@ hy
 Kk
 wI
 vf
-tZ
+RS
 AG
 Kk
 tN

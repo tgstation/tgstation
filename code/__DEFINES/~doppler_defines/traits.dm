@@ -51,6 +51,9 @@
 /// Given to the detective, if they have this, they can see syndicate special descriptions.
 #define TRAIT_DETECTIVE "detective_ability"
 
+/// Used to quickly earmark mobs as bit avatars
+#define TRAIT_BITRUNNER_AVATAR "bitrunner_avatar"
+
 ////
 // Reagents
 ////

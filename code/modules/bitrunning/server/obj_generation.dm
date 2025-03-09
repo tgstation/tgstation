@@ -92,6 +92,10 @@
 		emp_proof = TRUE, \
 	)
 
+	// DOPPLER EDIT BEGIN: assign trait for avatars
+	ADD_TRAIT(avatar, TRAIT_BITRUNNER_AVATAR, REF(src))
+	// DOPPLER EDIT END
+
 	return avatar
 
 

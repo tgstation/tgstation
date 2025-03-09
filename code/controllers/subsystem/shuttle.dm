@@ -309,6 +309,8 @@ SUBSYSTEM_DEF(shuttle)
 	WARNING("couldn't find shuttle with id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
+	if(id == "infinite_transit_super_hell") // DOPPLER ADDITION START
+		return null // DOPPLER ADDITION END
 	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
 		if(S.shuttle_id == id)
 			return S

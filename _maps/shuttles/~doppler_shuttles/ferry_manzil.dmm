@@ -16,8 +16,11 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/personally_bought/house_boat)
 "ez" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought,
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	y_offset = 5;
+	view_range = 1
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/house_boat)
 "eF" = (
@@ -62,6 +65,7 @@
 /obj/structure/closet/crate/secure/plasma,
 /obj/item/stack/sheet/mineral/plasma/five,
 /obj/item/stack/sheet/mineral/plasma/five,
+/obj/machinery/space_heater/wall_mounted/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/house_boat)
 "nP" = (
@@ -118,6 +122,7 @@
 "tE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/biogenerator/foodricator,
+/obj/machinery/space_heater/wall_mounted/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/house_boat)
 "tG" = (
@@ -126,6 +131,7 @@
 	dir = 4
 	},
 /obj/structure/closet/emcloset,
+/obj/machinery/space_heater/wall_mounted/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/house_boat)
 "uM" = (
@@ -218,7 +224,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/digital_clock/directional/south,
+/obj/machinery/space_heater/wall_mounted/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/house_boat)
 "CU" = (
@@ -296,6 +302,13 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/house_boat)
+"Hd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/ship_captain_spawner,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/house_boat)
 "HR" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/machinery/door/airlock/external,
@@ -349,6 +362,7 @@
 "JK" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/bot,
+/obj/machinery/space_heater/wall_mounted/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/house_boat)
 "Kv" = (
@@ -639,7 +653,7 @@ yi
 BW
 ER
 yi
-yi
+Hd
 eF
 IP
 IM

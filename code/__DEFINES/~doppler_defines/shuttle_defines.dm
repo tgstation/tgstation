@@ -9,3 +9,4 @@
 #define PERSONAL_SHIP_TYPE_FERRY "Ferry"
 #define PERSONAL_SHIP_TYPE_MINING "Supply"
 #define PERSONAL_SHIP_TYPE_DIY "Incomplete"
+#define PERSONAL_SHIP_TYPE_POD "Pod"

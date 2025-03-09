@@ -102,7 +102,7 @@
 		)
 		valid_destinations += list(location_data)
 	var/list/null_location_data = list( // DOPPLER ADDITION START
-		id = null,
+		id = "infinite_transit_super_hell",
 		name = "Infinite Transit",
 	)
 	valid_destinations += list(null_location_data) // DOPPLER ADDITION END

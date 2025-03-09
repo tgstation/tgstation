@@ -145,6 +145,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/machinery/light/warm/directional/south,
+/obj/machinery/space_heater/wall_mounted/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/people_mover)
 "pM" = (
@@ -154,6 +155,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/diagonal,
+/area/shuttle/personally_bought/people_mover)
+"pV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/ship_captain_spawner,
+/turf/open/floor/iron/smooth_large,
 /area/shuttle/personally_bought/people_mover)
 "qy" = (
 /obj/structure/cable,
@@ -270,6 +278,14 @@
 /obj/structure/railing/eva_handhold/directional/north,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/personally_bought/people_mover)
+"CB" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/space_heater/wall_mounted/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/people_mover)
 "Db" = (
 /obj/machinery/computer/shuttle/personally_bought,
 /obj/effect/turf_decal/bot_white,
@@ -328,6 +344,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/suit_storage_unit/industrial/personal_shuttle,
+/obj/machinery/space_heater/wall_mounted/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/people_mover)
 "GK" = (
@@ -453,7 +470,10 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/personally_bought/people_mover)
 "Sd" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought,
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	y_offset = 5;
+	view_range = 1
+	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/people_mover)
@@ -514,6 +534,7 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/red/dim/directional/west,
+/obj/machinery/space_heater/wall_mounted/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/people_mover)
 
@@ -612,7 +633,7 @@ jx
 Lt
 zg
 MT
-zg
+CB
 Fw
 gV
 qy
@@ -628,7 +649,7 @@ qy
 Bq
 Qc
 qy
-qy
+pV
 DE
 us
 dh

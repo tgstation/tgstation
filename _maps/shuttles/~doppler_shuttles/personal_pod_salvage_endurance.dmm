@@ -1,0 +1,394 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/endurance_salvage)
+"b" = (
+/obj/structure/railing/eva_handhold/directional/south,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+"c" = (
+/obj/machinery/computer/shuttle/personally_bought{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"d" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/docking_port/mobile/personally_bought,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"e" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"f" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded{
+	anchored = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/endurance_salvage)
+"g" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+"h" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+"i" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/obj/structure/closet/crate/secure/plasma{
+	anchored = 1
+	},
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/endurance_salvage)
+"k" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"l" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/obj/structure/railing/eva_handhold/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/endurance_salvage)
+"m" = (
+/obj/structure/curtain/bounty,
+/obj/item/bedsheet/black,
+/obj/structure/bed,
+/obj/machinery/light_switch/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"n" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/toilet,
+/obj/structure/curtain,
+/turf/open/floor/iron/freezer,
+/area/shuttle/personally_bought/endurance_salvage)
+"o" = (
+/obj/structure/railing/eva_handhold/directional/north,
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+"p" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"r" = (
+/obj/structure/railing/eva_handhold/directional/north,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+"t" = (
+/obj/structure/cable,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+"u" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"v" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"w" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/light/cold/directional/south,
+/obj/structure/closet/crate,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/wrench,
+/obj/item/storage/bag/breach_bag,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/screwdriver,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"x" = (
+/obj/structure/railing/eva_handhold/directional/south,
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+"z" = (
+/obj/item/tether_anchor,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/endurance_salvage)
+"A" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/endurance_salvage)
+"B" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/microwave/frontier_printed,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"C" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/door/window/survival_pod/left/directional/west,
+/obj/structure/sink/directional/west,
+/obj/structure/sink/directional/west,
+/obj/machinery/shower/directional/north,
+/obj/structure/curtain,
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/freezer,
+/area/shuttle/personally_bought/endurance_salvage)
+"D" = (
+/obj/structure/cable,
+/obj/machinery/door/window/survival_pod/left/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/effect/mapping_helpers/apc/unlocked,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"E" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/personally_bought/endurance_salvage)
+"F" = (
+/obj/structure/railing/eva_handhold/directional/east,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/endurance_salvage)
+"G" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/endurance_salvage)
+"H" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/button/door/personal_shuttle_windows/directional/south{
+	pixel_x = 6;
+	pixel_y = -26
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -6
+	},
+/obj/item/radio/intercom/directional/south{
+	pixel_y = -37
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"J" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"K" = (
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 6
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/personally_bought/endurance_salvage)
+"L" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/personally_bought/endurance_salvage)
+"N" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/cold/directional/south,
+/obj/effect/landmark/ship_captain_spawner,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"P" = (
+/obj/structure/cable,
+/obj/machinery/holopad,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"Q" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/window/survival_pod/left/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"R" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/cable,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/biogenerator/foodricator,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"S" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/chem_dispenser/frontier_appliance,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"T" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/cold/directional/north,
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/structure/cable,
+/obj/structure/secure_safe/directional/north,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"U" = (
+/obj/machinery/door/poddoor/preopen/personal_shuttle_windows,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/endurance_salvage)
+"V" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"X" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"Y" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/closet/mini_fridge{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_y = 13;
+	pixel_x = 9
+	},
+/obj/item/storage/box/foodpack/marsian/burger_blind_bag,
+/obj/item/storage/box/foodpack/marsian/beef_rice,
+/obj/item/storage/box/foodpack/marsian/sushi,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/personally_bought/endurance_salvage)
+"Z" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/personally_bought/endurance_salvage)
+
+(1,1,1) = {"
+a
+A
+f
+G
+i
+A
+a
+"}
+(2,1,1) = {"
+o
+L
+t
+L
+h
+L
+x
+"}
+(3,1,1) = {"
+g
+S
+R
+v
+e
+E
+d
+"}
+(4,1,1) = {"
+r
+B
+Q
+N
+Z
+X
+b
+"}
+(5,1,1) = {"
+g
+Y
+u
+J
+D
+w
+g
+"}
+(6,1,1) = {"
+a
+T
+p
+k
+P
+H
+K
+"}
+(7,1,1) = {"
+z
+n
+C
+m
+c
+V
+z
+"}
+(8,1,1) = {"
+a
+a
+a
+F
+U
+l
+a
+"}

@@ -93,8 +93,11 @@
 /turf/open/floor/plating,
 /area/shuttle/personally_bought/do_it_yourself_small)
 "wA" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought,
+/obj/machinery/computer/camera_advanced/shuttle_docker/personally_bought{
+	y_offset = 3
+	},
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/space_heater/wall_mounted/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/do_it_yourself_small)
 "yi" = (
@@ -181,6 +184,13 @@
 /obj/structure/railing/eva_handhold/directional/north,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/personally_bought/do_it_yourself_small)
+"Fi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/landmark/ship_captain_spawner,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/do_it_yourself_small)
 "Fo" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/cable,
@@ -191,6 +201,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/calendar/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/personally_bought/do_it_yourself_small)
+"GM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/space_heater/wall_mounted/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/personally_bought/do_it_yourself_small)
 "HR" = (
@@ -435,7 +451,7 @@ zu
 (8,1,1) = {"
 In
 tG
-bv
+Fi
 Ur
 CC
 fI
@@ -455,7 +471,7 @@ In
 Wi
 bv
 Ur
-Ur
+GM
 Gm
 In
 "}
