@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(weather)
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
 	for(var/datum/weather/weather_event in processing)
-		if(!(weather_event.weather_flags & FUNCTIONAL_WEATHER) || weather_event.stage != MAIN_STAGE)
+		if(!length(weather_event.subsystem_tasks) || weather_event.stage != MAIN_STAGE)
 			continue
 
 		if(weather_event.currentpart == SSWEATHER_MOBS)
