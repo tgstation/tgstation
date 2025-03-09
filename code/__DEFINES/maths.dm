@@ -36,6 +36,10 @@
 
 #define ROUND_UP(x) ( -round(-(x)))
 
+/// Probabilistic rounding adds 1 to x with a probability equal to its fractional part.
+/// ie. ROUND_PROB(40.25) means there is a 75% chance of 40 with a 25% chance of being 41
+#define ROUND_PROB(x) ( floor(x) + (prob(fract(x) * 100)) )
+
 /// Returns the number of digits in a number. Only works on whole numbers.
 /// This is marginally faster than string interpolation -> length
 #define DIGITS(x) (ROUND_UP(log(10, x)))

@@ -32,9 +32,7 @@ SUBSYSTEM_DEF(weather)
 
 		if(weather_event.currentpart == SSWEATHER_TURFS)
 			if(!resumed)
-				weather_event.turf_iteration = floor(weather_event.weather_turfs_per_tick)
-				var/fraction_chance = fract(weather_event.weather_turfs_per_tick) * 100
-				weather_event.turf_iteration += prob(fraction_chance) ? 1 : 0
+				weather_event.turf_iteration = ROUND_PROB(weather_event.weather_turfs_per_tick)
 			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
 			while(weather_event.turf_iteration)
 				weather_event.turf_iteration--
@@ -47,9 +45,7 @@ SUBSYSTEM_DEF(weather)
 
 		if(weather_event.currentpart == SSWEATHER_THUNDER)
 			if(!resumed)
-				weather_event.thunder_iteration = floor(weather_event.thunder_turfs_per_tick)
-				var/fraction_chance = fract(weather_event.thunder_turfs_per_tick) * 100
-				weather_event.thunder_iteration += prob(fraction_chance) ? 1 : 0
+				weather_event.thunder_iteration = ROUND_PROB(weather_event.thunder_turfs_per_tick)
 			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
 			while(weather_event.thunder_iteration)
 				weather_event.thunder_iteration--
