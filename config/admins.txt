@@ -149,5 +149,7 @@ WaylandSmithy = Game Master
 NamelessFairy = Game Master
 WalterMeldron = Game Master
 san7890 = Game Master
-nikitauou = Game Master
 
+ahathg = Game Master
+Kross_0435 = Moderator
+nikitauou = Game Master
