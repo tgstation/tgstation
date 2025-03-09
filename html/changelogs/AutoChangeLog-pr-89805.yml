@@ -1,4 +1,0 @@
-author: "LikeLakers2"
-delete-after: True
-changes:
-  - bugfix: "Fixes a potential runtime with the radioactivity mutation."

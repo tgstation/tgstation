@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Removed a rogue fire alarm from DeltaStation's freezer"

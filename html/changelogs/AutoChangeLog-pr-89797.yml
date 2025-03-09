@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed hat stabilizers not detaching clothing traits, turning any helmet with a pacifism bud attached into one."
