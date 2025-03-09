@@ -105,7 +105,7 @@
 	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/syndrone/badass)
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
-// tool don't need your forgiveness, this is awesome.
+// I don't need your forgiveness, this is awesome.
 /obj/machinery/drone_dispenser/snowflake
 	name = "snowflake drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
