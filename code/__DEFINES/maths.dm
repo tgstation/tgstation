@@ -36,8 +36,8 @@
 
 #define ROUND_UP(x) ( -round(-(x)))
 
-/// Probabilistic rounding adds 1 to x with a probability equal to its fractional part.
-/// ie. ROUND_PROB(40.25) means there is a 75% chance of 40 with a 25% chance of being 41
+/// Probabilistic rounding: Adds 1 to the integer part of x with a probability equal to the decimal part of x.
+/// ie. ROUND_PROB(40.25) returns 40 with 75% probability, and 41 with 25% probability.
 #define ROUND_PROB(x) ( floor(x) + (prob(fract(x) * 100)) )
 
 /// Returns the number of digits in a number. Only works on whole numbers.
