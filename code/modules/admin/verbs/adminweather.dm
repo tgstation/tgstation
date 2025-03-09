@@ -23,7 +23,6 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 			return
 		if("Cancel")
 			return
-		//if("Custom") venture on lil fella
 
 	var/list/area_choices = list()
 	if(!length(area_choices))
