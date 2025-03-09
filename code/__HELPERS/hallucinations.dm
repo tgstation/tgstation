@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 			to_chat(nearby_living, pick(optional_messages))
 
 /// Global weighted list of all hallucinations that can show up randomly.
-GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weighted_list())
+GLOBAL_LIST_INIT_TYPED(random_hallucination_weighted_list, /list, generate_hallucination_weighted_list())
 
 /// Generates the global weighted list of random hallucinations.
 /proc/generate_hallucination_weighted_list()
@@ -145,7 +145,10 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 /// * tier - the tier of hallucination to select from
 /// * strict - if true, only select from the passed tier. If false, select from the passed tier and all tiers below it.
 /proc/get_random_hallucination(tier = HALLUCINATION_TIER_COMMON, strict = FALSE)
-	var/list/pool = GLOB.random_hallucination_weighted_list["[tier]"]
+	if(!GLOB.random_hallucination_weighted_list[tier])
+		CRASH("get_random_hallucination - No hallucinations in tier \[[tier]\].")
+
+	var/list/pool = GLOB.random_hallucination_weighted_list["[tier]"].Copy()
 	if(!strict)
 		tier -= 1
 		while(tier >= HALLUCINATION_TIER_COMMON)
