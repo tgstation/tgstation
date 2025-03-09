@@ -387,9 +387,3 @@
 		gen_overlay_cache += new_weather_overlay
 
 	return gen_overlay_cache
-
-/// Updates the currentpart with the subsystem task that is next in line
-/datum/weather/proc/next_subsystem_task()
-	// loops back to the start of the list once it reaches the end
-	var/next_part = currentpart % length(subsystem_tasks) + 1
-	currentpart = subsystem_tasks[next_part]
