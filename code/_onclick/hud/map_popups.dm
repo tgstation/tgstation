@@ -26,7 +26,7 @@
 			// I don't think plane master will be effected, I hope.
 			// We're stuck in the belly of this awful machine.
 			sleep(0.2 SECONDS)
-			screen_loc = "[assigned_map]:[x+3]:[px],[y+3]:[py]"
+			screen_loc = "[assigned_map]:[x+100]:[px],[y+100]:[py]"
 			sleep(0.2 SECONDS)
 			screen_loc = "[assigned_map]:[x]:[px],[y]:[py]"
 	else
