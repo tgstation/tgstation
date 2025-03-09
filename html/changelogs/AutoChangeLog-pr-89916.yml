@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Immortal pyro anomalies no longer (unsuccessfully) attempt to spawn pyro slimes"
