@@ -60,23 +60,29 @@
 	. = ..()
 	register_context()
 
-/obj/machinery/seed_extractor/update_icon_state()
-	if(machine_stat & BROKEN)
-		if (!powered())
-			if (state_open)
-				icon_state = "[initial(icon_state)]-broken-off-open"
-			else
-				icon_state = "[initial(icon_state)]-broken-off"
-		else if (state_open)
-			icon_state = "[initial(icon_state)]-broken-open"
+/obj/machinery/seed_extractor/update_overlays()
+	. = ..()
+
+	// Screen
+	if (!powered())
+		. += "[initial(icon_state)]-screen-off"
+	else if (machine_stat & BROKEN)
+		if (state_open)
+			. += "[initial(icon_state)]-screen-open"
 		else
-			icon_state = "[initial(icon_state)]-broken"
-		return ..()
-	if (state_open)
-		icon_state = "[initial(icon_state)][powered() ? "-broken" : "-broken-off"]"
+			. += "[initial(icon_state)]-screen-broken"
 	else
-		icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
-	return ..()
+		. += "[initial(icon_state)]-screen-on"
+
+	// Chassis
+	if (machine_stat & BROKEN)
+		. += "[initial(icon_state)]-broken"
+	else
+		. += "[initial(icon_state)]"
+
+	// Little maintenance panel
+	if (state_open)
+		. += "[initial(icon_state)]-open"
 
 /obj/machinery/seed_extractor/add_context(
 	atom/source,
@@ -117,20 +123,8 @@
 	if(!isliving(user) || user.combat_mode)
 		return ..()
 
-	if( \
-		default_deconstruction_screwdriver( \
-			user, \
-			icon_state_open = \
-				powered() ? \
-					(machine_stat & BROKEN ? "sextractor-broken-open" : "sextractor_open") : \
-					(machine_stat & BROKEN ? "sextractor-broken-off-open" : "sextractor-off-open"), \
-			icon_state_closed = \
-				powered() ? \
-					(machine_stat & BROKEN ? "sextractor-broken" : "sextractor") : \
-					(machine_stat & BROKEN ? "sextractor-broken-off" : "sextractor-off"), \
-			screwdriver = attacking_item \
-		) \
-	)
+	if(default_deconstruction_screwdriver(user = user, screwdriver = attacking_item))
+		update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
 	if(default_pry_open(attacking_item, close_after_pry = TRUE))
