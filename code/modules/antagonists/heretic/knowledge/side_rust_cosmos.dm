@@ -31,7 +31,7 @@
 
 /datum/heretic_knowledge/rust_sower
 	name = "Rust Sower Grenade"
-	desc = "Conjures a cursed grenade filled with Eldritch Rust, upon detonating it releases a huge cloud that blinds organics, rusts affected turfs and obliterates Silicons and Mechs."
+	desc = "Allws you to combine a chemical grenade casing and a liver to conjure a cursed grenade filled with Eldritch Rust, upon detonating it releases a huge cloud that blinds organics, rusts affected turfs and obliterates Silicons and Mechs."
 	gain_text = "The choked vines of the Rusted Hills are burdened with such overripe fruits. It undoes the markers of progress, leaving a clean slate to work into new shapes."
 	required_atoms = list(
 		/obj/item/grenade/chem_grenade = 1,

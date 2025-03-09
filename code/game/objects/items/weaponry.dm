@@ -734,7 +734,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 
 /obj/item/cane/white/handle_limping(mob/living/user)
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? COMPONENT_CANCEL_LIMP : NONE
@@ -749,6 +748,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
+
+	if(!HAS_TRAIT(src, TRAIT_BLIND_TOOL))
+		ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 

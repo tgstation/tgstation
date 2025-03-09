@@ -62,11 +62,12 @@
 /datum/action/item_action/nano_picket_sign
 	name = "Retext Nano Picket Sign"
 
-/datum/action/item_action/nano_picket_sign/Trigger(trigger_flags)
+/datum/action/item_action/nano_picket_sign/do_effect(trigger_flags)
 	if(!istype(target, /obj/item/picket_sign))
-		return
+		return FALSE
 	var/obj/item/picket_sign/sign = target
 	sign.retext(owner)
+	return TRUE
 
 /datum/crafting_recipe/picket_sign
 	name = "Picket Sign"

@@ -36,7 +36,7 @@
 	pain_stam_pct = 0.4
 	pain_mult = 5
 	jostle_pain_mult = 6
-	rip_time = 10
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/incendiary/fire/junk
 	name = "burning oil"
@@ -67,7 +67,7 @@
 /obj/projectile/bullet/junk/hunter
 	name = "junk hunter bullet"
 	icon_state = "gauss"
-	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL
+	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL | MOB_MINING
 	extra_damage_multiplier = 0
 	extra_damage_added_damage = 50
 
@@ -87,10 +87,11 @@
 	pain_stam_pct = 0.4
 	pain_mult = 5
 	jostle_pain_mult = 6
-	rip_time = 10
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/junk/reaper
 	name = "junk reaper bullet"
+	icon_state = null
 	tracer_type = /obj/effect/projectile/tracer/sniper
 	impact_type = /obj/effect/projectile/impact/sniper
 	muzzle_type = /obj/effect/projectile/muzzle/sniper
