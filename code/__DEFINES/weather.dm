@@ -34,9 +34,6 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 	"None - Admin Safe Space (Thunder Disabled)" = NONE,
 ))
 
-/// Does weather have any type of processing related to mobs, turfs, or thunder?
-#define IS_WEATHER_AESTHETIC(flags) (!(flags & (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)))
-
 //WEATHER FLAGS
 /// If weather will affect turfs
 #define WEATHER_TURFS (1<<0)
@@ -52,3 +49,6 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 #define WEATHER_BAROMETER (1<<5)
 /// If weather provides a notification message to mobs
 #define WEATHER_NOTIFICATION (1<<6)
+
+/// Does weather have any type of processing related to mobs, turfs, or thunder?
+#define FUNCTIONAL_WEATHER (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)
