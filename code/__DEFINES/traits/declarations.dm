@@ -169,6 +169,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_SOCKS_ONLY "no_socks_only"
 /// Species with this trait have access to the pony horn/wings/earth preference
 #define TRAIT_PONY_PREFS "pony_prefs"
+// makes it so held items float by their head
+#define TRAIT_FLOATING_HELD "held_items_float"
 /// This carbon doesn't show an overlay when they have no brain
 #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 /// Humans with this trait cannot get augmentation surgery

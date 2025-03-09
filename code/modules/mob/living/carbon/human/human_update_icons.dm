@@ -543,7 +543,7 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/suit_overlay
 		var/icon_file = DEFAULT_SUIT_FILE
-		if(bodyshape & BODYSHAPE_PONY)
+		if(bodyshape & BODYSHAPE_PONY && !(wear_suit.supports_variations_flags & CLOTHING_PONY_MASK))
 			var/icon/new_south = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, SOUTH)
 			var/icon/new_north = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, NORTH)
 			var/icon/new_east = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, EAST)
@@ -565,8 +565,12 @@ There are several things that need to be remembered:
 			suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
 
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
-		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
-		overlays_standing[SUIT_LAYER] = suit_overlay
+		if(bodyshape & BODYSHAPE_PONY && wear_suit.supports_variations_flags & CLOTHING_PONY_MASK)
+			overlays_standing[SUIT_LAYER] = suit_overlay
+		else
+			my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
+			overlays_standing[SUIT_LAYER] = suit_overlay
+
 
 	apply_overlay(SUIT_LAYER)
 	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_OCLOTHING)
@@ -699,8 +703,69 @@ There are several things that need to be remembered:
 		overlays_standing[BACK_LAYER] = back_overlay
 	apply_overlay(BACK_LAYER)
 
+/obj/effect/abstract/held_tk_effect
+	name = "held_tk_effect"
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "holder"
+	layer = HANDS_LAYER
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	var/is_right = TRUE
+	var/list/base_x
+	var/list/base_y
+
+/obj/effect/abstract/held_tk_effect/proc/on_parent_dir_change(datum/source, _old_dir, new_dir)
+	SIGNAL_HANDLER
+	set_direction_facing(new_dir)
+
+/obj/effect/abstract/held_tk_effect/proc/set_direction_facing(new_dir)
+	if(base_x && base_y)
+		var/current_dir = dir2text(new_dir)
+		pixel_w = length(base_x) ? ((current_dir in base_x) ? base_x[current_dir] : base_x["south"]) : 0
+		pixel_z = length(base_y) ? ((current_dir in base_y) ? base_y[current_dir] : base_y["south"]) : 0
+		switch(new_dir)
+			if(NORTH)
+				if(is_right)
+					pixel_w += 5
+					pixel_z += 10
+				else
+					pixel_w += -5
+					pixel_z += 10
+			if(SOUTH)
+				if(is_right)
+					pixel_w += -5
+					pixel_z += 10
+				else
+					pixel_w += 5
+					pixel_z += 10
+			if(EAST)
+				if(is_right)
+					pixel_w += 0
+					pixel_z += 10
+				else
+					pixel_w += 0
+					pixel_z += 10
+			if(WEST)
+				if(is_right)
+					pixel_w += 0
+					pixel_z += 10
+				else
+					pixel_w += 0
+					pixel_z += 10
+
+/obj/effect/abstract/held_tk_effect/right
+	is_right = TRUE
+
+/obj/effect/abstract/held_tk_effect/left
+	is_right = FALSE
+
 /mob/living/carbon/human/get_held_overlays()
 	var/list/hands = list()
+	if(held_left)
+		held_left.overlays.Cut()
+		held_left.underlays.Cut()
+	if(held_right)
+		held_right.overlays.Cut()
+		held_right.underlays.Cut()
 	for(var/obj/item/worn_item in held_items)
 		var/held_index = get_held_index_of_item(worn_item)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
@@ -725,9 +790,66 @@ There are several things that need to be remembered:
 		var/icon_file = IS_RIGHT_INDEX(held_index) ? worn_item.righthand_file : worn_item.lefthand_file
 		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 		var/obj/item/bodypart/arm/held_in_hand = hand_bodyparts[held_index]
-		held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
-
-		hands += hand_overlay
+		if(HAS_TRAIT(src, TRAIT_FLOATING_HELD))
+			if(!held_left)
+				held_left = new(src)
+				held_left.render_target = "*[REF(src)]_hover_left"
+				held_left.RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/obj/effect/abstract/held_tk_effect, on_parent_dir_change))
+				src.vis_contents += held_left
+			if(!held_right)
+				held_right = new(src)
+				held_right.render_target = "*[REF(src)]_hover_right"
+				held_right.RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/obj/effect/abstract/held_tk_effect, on_parent_dir_change))
+				src.vis_contents += held_right
+			if(held_index % 2 == 0)
+				held_right.overlays.Cut()
+				held_right.underlays.Cut()
+				held_right.pixel_z = 0
+				held_right.pixel_w = 0
+				held_right.overlays += hand_overlay
+				var/mutable_appearance/hover_effect = mutable_appearance(held_left.icon, "hover_right", HANDS_LAYER)
+				if(dna.features["pony_unicorn_tk_color"])
+					hover_effect.color = dna.features["pony_unicorn_tk_color"]
+				held_right.underlays += hover_effect
+				var/list/offset = held_in_hand?.held_hand_offset?.get_offset()
+				if(offset)
+					held_right.base_x = held_in_hand?.held_hand_offset?.offset_x
+					held_right.base_y = held_in_hand?.held_hand_offset?.offset_y
+				else
+					held_right.base_x = list("south" = 0)
+					held_right.base_y = list("south" = 0)
+				held_right.set_direction_facing(src.dir)
+			else
+				held_left.overlays.Cut()
+				held_left.underlays.Cut()
+				held_left.pixel_z = 0
+				held_left.pixel_w = 0
+				held_left.overlays += hand_overlay
+				var/mutable_appearance/hover_effect = mutable_appearance(held_left.icon, "hover_left", HANDS_LAYER)
+				if(dna.features["pony_unicorn_tk_color"])
+					hover_effect.color = dna.features["pony_unicorn_tk_color"]
+				held_left.underlays += hover_effect
+				var/list/offset = held_in_hand?.held_hand_offset?.get_offset()
+				if(offset)
+					held_left.base_x = held_in_hand?.held_hand_offset?.offset_x
+					held_left.base_y = held_in_hand?.held_hand_offset?.offset_y
+				else
+					held_left.base_x = list("south" = 0)
+					held_left.base_y = list("south" = 0)
+				held_left.set_direction_facing(src.dir)
+			var/mutable_appearance/hand_overlay_real = mutable_appearance(layer = HANDS_LAYER, offset_spokesman = src)
+			if(held_index % 2 == 0)
+				hand_overlay_real.render_source = "*[REF(src)]_hover_right"
+				animate(held_right, pixel_z = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+				animate(pixel_z = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+			else
+				hand_overlay_real.render_source = "*[REF(src)]_hover_left"
+				animate(held_left, pixel_z = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+				animate(pixel_z = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+			hands += hand_overlay_real
+		else
+			held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
+			hands += hand_overlay
 	return hands
 
 /// Modifies a sprite slightly to conform to female body shapes

@@ -183,3 +183,11 @@
 
 /datum/movespeed_modifier/tail_dragger
 	multiplicative_slowdown = 4
+
+/datum/movespeed_modifier/pony_holding_no_items
+	multiplicative_slowdown = -0.3
+	blacklisted_movetypes = FLOATING|FLYING
+
+/datum/movespeed_modifier/pony_holding_two_items
+	multiplicative_slowdown = 0.4
+	blacklisted_movetypes = FLOATING|FLYING

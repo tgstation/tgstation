@@ -1,0 +1,9 @@
+{
+	"armor_sec": [
+		{
+			"type": "icon_state",
+			"icon_state": "armor_sec",
+			"blend_mode": "overlay"
+		}
+	]
+}

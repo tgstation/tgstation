@@ -122,6 +122,11 @@ export const feature_pony_choice: FeatureChoiced = {
   },
 };
 
+export const unicorn_tk_color: Feature<string> = {
+  name: 'Aura Manifest Color',
+  component: FeatureColorInput,
+};
+
 export const feature_mcolor: Feature<string> = {
   name: 'Mutant color',
   component: FeatureColorInput,

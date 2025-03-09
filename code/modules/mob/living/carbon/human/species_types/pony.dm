@@ -20,7 +20,7 @@
 	)
 	mutanteyes = /obj/item/organ/eyes/pony
 	mutantears = /obj/item/organ/ears/pony
-	sexes = FALSE // todo: get them to only be women
+	sexes = WOMAN_ONLY
 	payday_modifier = 0.8
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	no_equip_flags = ITEM_SLOT_GLOVES
@@ -41,6 +41,33 @@
 	var/list/features = ..()
 	//features["lizard_markings"] = pick(SSaccessories.lizard_markings_list)
 	return features
+
+/datum/species/pony/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
+	. = ..()
+	RegisterSignal(human_who_gained_species, COMSIG_MOB_UPDATE_HELD_ITEMS, PROC_REF(on_updated_held_items))
+
+/datum/species/pony/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(human, COMSIG_MOB_UPDATE_HELD_ITEMS)
+
+/datum/species/pony/proc/update_movespeed(mob/living/holding_mob)
+	holding_mob.remove_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
+	holding_mob.remove_movespeed_modifier(/datum/movespeed_modifier/pony_holding_two_items)
+	if(HAS_TRAIT(holding_mob, TRAIT_FLOATING_HELD))
+		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
+		return
+	var/amount_of_held_items = 0
+	for(var/obj/item/held in holding_mob.held_items)
+		amount_of_held_items++
+	if(amount_of_held_items >= 2)
+		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_two_items)
+	else if(amount_of_held_items == 0)
+		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
+
+
+/datum/species/pony/proc/on_updated_held_items(mob/living/holding_mob)
+	SIGNAL_HANDLER
+	update_movespeed(holding_mob)
 
 /datum/species/pony/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current, list/excluded_zones, visual_only)
 	. = ..()

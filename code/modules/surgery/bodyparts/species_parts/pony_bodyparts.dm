@@ -274,6 +274,69 @@
 /datum/preference/choiced/pony_choice/create_default_value()
 	return "Unicorn"
 
+/datum/preference/color/unicorn_tk_color
+	savefile_key = "unicorn_tk_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+
+/datum/preference/color/unicorn_tk_color/create_default_value()
+	return "#FF99FF"
+
+/datum/preference/color/unicorn_tk_color/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["pony_unicorn_tk_color"] = value
+
+/datum/preference/color/unicorn_tk_color/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	return preferences.read_preference(/datum/preference/choiced/pony_choice) == "Unicorn"
+
+/datum/action/innate/toggle_floating_items
+	name = "Toggle Psionic Holding"
+	button_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	button_icon_state = "telekinesis_throw"
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS
+	var/obj/item/organ/pony_horn/my_horn
+
+/datum/action/innate/toggle_floating_items/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!COOLDOWN_FINISHED(my_horn, psionic_cooldown))
+		owner.balloon_alert(owner, "still recovering!")
+		return FALSE
+	if(owner)
+		if(HAS_TRAIT(owner, TRAIT_FLOATING_HELD))
+			REMOVE_TRAIT(owner, TRAIT_FLOATING_HELD, ORGAN_TRAIT)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/owner_human = owner
+				if(is_species(owner_human, /datum/species/pony))
+					var/datum/species/pony/pony_species = owner_human.dna.species
+					pony_species.update_movespeed(owner_human)
+				owner_human.update_held_items()
+		else
+			ADD_TRAIT(owner, TRAIT_FLOATING_HELD, ORGAN_TRAIT)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/owner_human = owner
+				if(is_species(owner_human, /datum/species/pony))
+					var/datum/species/pony/pony_species = owner_human.dna.species
+					pony_species.update_movespeed(owner_human)
+				owner_human.update_held_items()
+	return TRUE
+
+/obj/effect/temp_visual/pony_aura_feedback
+	name = "aura feedback"
+	desc = "Feedback from a pony's aura manifesting."
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "tele_effect"
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 1 SECONDS
+
+/obj/effect/temp_visual/pony_aura_feedback/Initialize(mapload, aura_color)
+	. = ..()
+	color = aura_color
+
 /obj/item/organ/pony_horn
 	name = "unicorn horn"
 	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
@@ -285,16 +348,280 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_horn
 	slot = ORGAN_SLOT_EXTERNAL_PONY_HORN
 	zone = BODY_ZONE_HEAD
+	var/grab_range = 3
+	var/hit_cooldown_time = 1 SECONDS
+	var/atom/movable/grabbed_atom
+	var/mutable_appearance/kinesis_icon
+	var/atom/movable/screen/fullscreen/cursor_catcher/kinesis/kinesis_catcher
+	var/datum/looping_sound/gravgen/kinesis/soundloop
+	var/datum/action/innate/toggle_floating_items/toggle
+	COOLDOWN_DECLARE(hit_cooldown)
+	COOLDOWN_DECLARE(psionic_cooldown)
+
+/obj/item/organ/pony_horn/Initialize(mapload)
+	. = ..()
+	soundloop = new(src)
+
+/obj/item/organ/pony_horn/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	toggle = new
+	toggle.my_horn = src
+	toggle.Grant(organ_owner)
+	RegisterSignal(organ_owner, COMSIG_MOB_CLICKON, PROC_REF(start_kinesis))
+	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+
+/obj/item/organ/pony_horn/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	qdel(toggle)
+	clear_grab(playsound = FALSE)
+	UnregisterSignal(organ_owner, COMSIG_MOB_CLICKON)
+	UnregisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT)
+
+/obj/item/organ/pony_horn/proc/on_emp_act(datum/source, severity, protection)
+	SIGNAL_HANDLER
+	if(protection & EMP_PROTECT_SELF)
+		return
+	if(grabbed_atom || HAS_TRAIT(owner, TRAIT_FLOATING_HELD))
+		new /obj/effect/temp_visual/pony_aura_feedback(get_turf(owner), owner.dna.features["pony_unicorn_tk_color"])
+		owner.flash_act(1, TRUE, FALSE, TRUE)
+		to_chat(owner, span_userdanger("Your brain flashes with every color imaginable as sharp, searing pain runs through your skull through your horn!"))
+		if(HAS_TRAIT(owner, TRAIT_FLOATING_HELD))
+			REMOVE_TRAIT(owner, TRAIT_FLOATING_HELD, ORGAN_TRAIT)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/owner_human = owner
+				if(is_species(owner_human, /datum/species/pony))
+					var/datum/species/pony/pony_species = owner_human.dna.species
+					pony_species.update_movespeed(owner_human)
+				owner_human.update_held_items()
+		if(grabbed_atom)
+			clear_grab(playsound = FALSE)
+		COOLDOWN_START(src, psionic_cooldown, 60 SECONDS)
+		owner.set_jitter_if_lower(40 SECONDS)
+		owner.set_confusion_if_lower(10 SECONDS)
+		owner.set_stutter_if_lower(16 SECONDS)
+
+		SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
+		addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), owner), 2 SECONDS)
+
+/obj/item/organ/pony_horn/proc/apply_stun_effect_end(mob/living/target)
+	target.Knockdown(5 SECONDS)
+
+/obj/item/organ/pony_horn/proc/start_kinesis(mob/living/source, atom/clicked_on, modifiers)
+	SIGNAL_HANDLER
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		if(!COOLDOWN_FINISHED(src, psionic_cooldown))
+			balloon_alert(owner, "still recovering!")
+			return COMSIG_MOB_CANCEL_CLICKON
+		if(grabbed_atom)
+			var/launched_object = grabbed_atom
+			clear_grab(playsound = FALSE)
+			launch(launched_object)
+			return COMSIG_MOB_CANCEL_CLICKON
+		if(!range_check(clicked_on))
+			balloon_alert(owner, "too far!")
+			return COMSIG_MOB_CANCEL_CLICKON
+		if(!can_grab(clicked_on))
+			balloon_alert(owner, "can't grab!")
+			return COMSIG_MOB_CANCEL_CLICKON
+		grab_atom(clicked_on)
+		return COMSIG_MOB_CANCEL_CLICKON
+	return NONE
+
+/obj/item/organ/pony_horn/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
+
+/obj/item/organ/pony_horn/process(seconds_per_tick)
+	if(!owner.client || INCAPACITATED_IGNORING(owner, INCAPABLE_GRAB))
+		clear_grab()
+		return
+	if(!range_check(grabbed_atom))
+		balloon_alert(owner, "out of range!")
+		clear_grab()
+		return
+	if(kinesis_catcher.mouse_params)
+		kinesis_catcher.calculate_params()
+	if(!kinesis_catcher.given_turf)
+		return
+	if(grabbed_atom.loc == kinesis_catcher.given_turf)
+		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - ICON_SIZE_X/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - ICON_SIZE_Y/2)
+			return //spare us redrawing if we are standing still
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
+		return
+	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
+	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
+	if(grabbed_atom.Move(next_turf, get_dir(grabbed_atom, next_turf), 8))
+		if(isitem(grabbed_atom) && (owner in next_turf))
+			var/obj/item/grabbed_item = grabbed_atom
+			clear_grab()
+			grabbed_item.pickup(owner)
+			owner.put_in_hands(grabbed_item)
+		return
+	var/pixel_x_change = 0
+	var/pixel_y_change = 0
+	var/direction = get_dir(grabbed_atom, next_turf)
+	if(direction & NORTH)
+		pixel_y_change = ICON_SIZE_Y/2
+	else if(direction & SOUTH)
+		pixel_y_change = -ICON_SIZE_Y/2
+	if(direction & EAST)
+		pixel_x_change = ICON_SIZE_X/2
+	else if(direction & WEST)
+		pixel_x_change = -ICON_SIZE_X/2
+	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + pixel_x_change, pixel_y = grabbed_atom.base_pixel_y + pixel_y_change)
+	if(!isitem(grabbed_atom) || !COOLDOWN_FINISHED(src, hit_cooldown))
+		return
+	var/atom/hitting_atom
+	if(next_turf.density)
+		hitting_atom = next_turf
+	for(var/atom/movable/movable_content as anything in next_turf.contents)
+		if(ismob(movable_content))
+			continue
+		if(movable_content.density)
+			hitting_atom = movable_content
+			break
+	var/obj/item/grabbed_item = grabbed_atom
+	grabbed_item.melee_attack_chain(owner, hitting_atom)
+	COOLDOWN_START(src, hit_cooldown, hit_cooldown_time)
+
+/obj/item/organ/pony_horn/proc/can_grab(atom/target)
+	if(!ismovable(target))
+		return FALSE
+	if(iseffect(target))
+		return FALSE
+	var/atom/movable/movable_target = target
+	if(movable_target.anchored)
+		return FALSE
+	if(movable_target.throwing)
+		return FALSE
+	if(movable_target.move_resist >= MOVE_FORCE_OVERPOWERING)
+		return FALSE
+	if(ismob(movable_target))
+		return FALSE
+	else if(isitem(movable_target))
+		var/obj/item/item_target = movable_target
+		if(item_target.w_class >= WEIGHT_CLASS_GIGANTIC)
+			return FALSE
+		if(item_target.item_flags & ABSTRACT)
+			return FALSE
+	return TRUE
+
+/obj/item/organ/pony_horn/proc/grab_atom(atom/movable/target)
+	grabbed_atom = target
+	if(isliving(grabbed_atom))
+		grabbed_atom.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), REF(src))
+	ADD_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
+	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_setanchored))
+	playsound(grabbed_atom, 'sound/effects/magic.ogg', 75, TRUE)
+	kinesis_icon = mutable_appearance(icon = 'icons/mob/human/species/pony/bodyparts.dmi', icon_state = "telekinesis_throw", layer = grabbed_atom.layer - 0.1)
+	kinesis_icon.color = owner.dna.features["pony_unicorn_tk_color"]
+	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
+	kinesis_icon.overlays += emissive_appearance(icon = 'icons/mob/human/species/pony/bodyparts.dmi', icon_state = "telekinesis_throw", offset_spokesman = grabbed_atom)
+	grabbed_atom.add_overlay(kinesis_icon)
+	kinesis_catcher = owner.overlay_fullscreen("kinesis_pony", /atom/movable/screen/fullscreen/cursor_catcher/kinesis/no_icon, 0)
+	kinesis_catcher.assign_to_mob(owner)
+	var/datum/bodypart_overlay/mutant/pony_horn/horn_overlay = bodypart_overlay
+	horn_overlay.doing_tk = TRUE
+	horn_overlay.tk_color = owner.dna.features["pony_unicorn_tk_color"]
+	owner.update_body_parts()
+	RegisterSignal(kinesis_catcher, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(on_catcher_click))
+	soundloop.start()
+	START_PROCESSING(SSfastprocess, src)
+
+/atom/movable/screen/fullscreen/cursor_catcher/kinesis/no_icon
+	icon_state = "fullscreen_blocker"
+
+/obj/item/organ/pony_horn/proc/clear_grab(playsound = TRUE)
+	if(!grabbed_atom)
+		return
+	. = grabbed_atom
+	if(playsound)
+		playsound(grabbed_atom, 'sound/effects/magic/summonitems_generic.ogg', 75, TRUE)
+	STOP_PROCESSING(SSfastprocess, src)
+	UnregisterSignal(grabbed_atom, list(COMSIG_MOB_STATCHANGE, COMSIG_MOVABLE_SET_ANCHORED))
+	owner.clear_fullscreen("kinesis_pony")
+	kinesis_catcher = null
+	grabbed_atom.cut_overlay(kinesis_icon)
+	if(isliving(grabbed_atom))
+		grabbed_atom.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), REF(src))
+	REMOVE_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
+	if(!isitem(grabbed_atom))
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x, pixel_y = grabbed_atom.base_pixel_y)
+	grabbed_atom = null
+	soundloop.stop()
+	var/datum/bodypart_overlay/mutant/pony_horn/horn_overlay = bodypart_overlay
+	horn_overlay.doing_tk = FALSE
+	owner.update_body_parts()
+
+/obj/item/organ/pony_horn/proc/range_check(atom/target)
+	if(!isturf(owner.loc))
+		return FALSE
+	if(ismovable(target) && !isturf(target.loc))
+		return FALSE
+	if(!can_see(owner, target, grab_range))
+		return FALSE
+	return TRUE
+
+
+/obj/item/organ/pony_horn/proc/on_catcher_click(atom/source, location, control, params, user)
+	SIGNAL_HANDLER
+
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		clear_grab()
+
+/obj/item/organ/pony_horn/proc/on_setanchored(atom/movable/grabbed_atom, anchorvalue)
+	SIGNAL_HANDLER
+
+	if(grabbed_atom.anchored)
+		clear_grab()
+
+/obj/item/organ/pony_horn/proc/launch(atom/movable/launched_object)
+	playsound(launched_object, 'sound/effects/gravhit.ogg', 100, TRUE)
+	RegisterSignal(launched_object, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
+	var/turf/target_turf = get_turf_in_angle(get_angle(owner, launched_object), get_turf(src), 10)
+	launched_object.throw_at(target_turf, range = 8, speed = launched_object.density ? 3 : 4, thrower = owner, spin = isitem(launched_object))
+
+/obj/item/organ/pony_horn/proc/launch_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
+	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
+	if(!(isstructure(source) || ismachinery(source) || isvehicle(source)))
+		return
+	var/damage_self = TRUE
+	var/damage = 8
+	if(source.density)
+		damage_self = FALSE
+		damage = 15
+	if(isliving(hit_atom))
+		var/mob/living/living_atom = hit_atom
+		living_atom.apply_damage(damage, BRUTE)
+	else if(hit_atom.uses_integrity)
+		hit_atom.take_damage(damage, BRUTE, MELEE)
+	if(damage_self && source.uses_integrity)
+		source.take_damage(source.max_integrity/5, BRUTE, MELEE)
+
+/datum/bodypart_overlay/mutant/pony_horn/get_global_feature_list()
+	return SSaccessories.pony_wings_list
 
 /datum/bodypart_overlay/mutant/pony_horn/get_image(image_layer, obj/item/bodypart/limb)
 	var/mutable_appearance/appearance = mutable_appearance('icons/mob/human/species/pony/bodyparts.dmi', "m_pony_horn_pony_FRONT", layer = image_layer)
+	if(doing_tk)
+		var/mutable_appearance/appearance_tk = mutable_appearance('icons/mob/human/species/pony/bodyparts.dmi', "horn_tk_overlay", layer = image_layer)
+		appearance_tk.color = tk_color
+		appearance.overlays += appearance_tk
 	return appearance
+
+/datum/bodypart_overlay/mutant/pony_horn/generate_icon_cache()
+	. = ..()
+	if(doing_tk)
+		. += "_doing_tk_[tk_color]"
 
 /datum/bodypart_overlay/mutant/pony_horn
 	dyable = TRUE
 	color_source = ORGAN_COLOR_INHERIT
 	feature_key = "pony_horn"
 	layers = EXTERNAL_FRONT
+	var/doing_tk = FALSE
+	var/tk_color = "#FF99FF"
 
 /datum/bodypart_overlay/mutant/pony_horn/get_global_feature_list()
 	return SSaccessories.pony_horn_list
@@ -354,15 +681,7 @@
 	. = ..()
 	add_organ_trait(TRAIT_CATLIKE_GRACE)
 	add_organ_trait(TRAIT_SOFT_FALL)
-	tackler = organ_owner.AddComponent(
-		/datum/component/tackler,
-		stamina_cost = /obj/item/clothing/gloves/tackler::tackle_stam_cost,
-		base_knockdown = /obj/item/clothing/gloves/tackler::base_knockdown,
-		range = /obj/item/clothing/gloves/tackler::tackle_range,
-	 	speed = /obj/item/clothing/gloves/tackler::tackle_speed,
-		skill_mod = /obj/item/clothing/gloves/tackler::skill_mod,
-	 	min_distance = /obj/item/clothing/gloves/tackler::min_distance
-	)
+	tackler = organ_owner.AddComponent(/datum/component/tackler, stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 1, min_distance = 0)
 	jumping_power.Grant(organ_owner)
 
 /obj/item/organ/pony_wings/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)

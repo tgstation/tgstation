@@ -9,9 +9,9 @@
 
 /datum/preference/choiced/gender/apply_to_human(mob/living/carbon/human/target, value)
 	if(target.dna.species.sexes == WOMAN_ONLY)
-		return FEMALE
+		value = FEMALE
 	if(target.dna.species.sexes == MAN_ONLY)
-		return MALE
+		value = MALE
 	if(!target.dna.species.sexes)
 		value = PLURAL //disregard gender preferences on this species
 	target.gender = value

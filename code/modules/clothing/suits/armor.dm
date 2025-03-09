@@ -58,6 +58,17 @@
 
 /obj/item/clothing/suit/armor/vest/alt/sec
 	icon_state = "armor_sec"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(1,1)
+	)
+	pony_icon_state = "armor_sec"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/armor/vest/alt/sec/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
+
 
 /obj/item/clothing/suit/armor/vest/press
 	name = "press armor vest"

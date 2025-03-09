@@ -70,8 +70,8 @@
 		new_matrix.Turn(offset["rotation"])
 	overlay.transform = new_matrix
 
-	overlay.pixel_x += offset["x"]
-	overlay.pixel_y += offset["y"]
+	overlay.pixel_w += offset["x"]
+	overlay.pixel_z += offset["y"]
 
 /// When the owner of the bodypart changes, update our signal registrations
 /datum/worn_feature_offset/proc/changed_owner(obj/item/bodypart/part, mob/living/new_owner, mob/living/old_owner)
