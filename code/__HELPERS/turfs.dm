@@ -462,7 +462,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return blueprint_data_returned
 
 /// Returns the diffrence in pressure between a turf from surrounding turfs
-
 /turf/proc/return_turf_delta_p()
 	var/pressure_greatest = 0
 	var/pressure_smallest = INFINITY //Freaking terrified to use INFINITY, man
