@@ -28,7 +28,7 @@
 
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
 
-	/// A weighted list of possible reagents that will rain down from the sky.
+	/// A list (supports regular, nested, and weighted) of possible reagents that will rain down from the sky.
 	/// Only one of these will be selected to be used as the reagent
 	var/list/whitelist_weather_reagents = list(/datum/reagent/water)
 	/// A list of reagents that are forbidden from being selected when there is no
