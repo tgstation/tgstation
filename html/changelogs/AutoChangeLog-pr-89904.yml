@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed pre-filled fish stasis cases breaking fish inside of them\n/:cl"
