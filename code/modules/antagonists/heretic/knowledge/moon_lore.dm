@@ -3,7 +3,7 @@
 	ui_bgr = "node_moon"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
-	tier1 = /datum/heretic_knowledge/spell/moon_smile
+	tier1 = /datum/heretic_knowledge/spell/mind_gate
 	unique_ability = /datum/heretic_knowledge/spell/moon_parade
 	tier2 = /datum/heretic_knowledge/moon_amulet
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
@@ -45,13 +45,14 @@
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
 	carbon_target.mob_mood.set_sanity(carbon_target.mob_mood.sanity-30)
 
-/datum/heretic_knowledge/spell/moon_smile
-	name = "Smile of the moon"
-	desc = "Grants you Smile of the moon, a ranged spell muting, blinding, deafening and knocking down the target for a\
-		duration based on their sanity."
-	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
+/datum/heretic_knowledge/spell/mind_gate
+	name = "Mind Gate"
+	desc = "Grants you Mind Gate, a spell which inflicts hallucinations, \
+		confusion, oxygen loss and brain damage to its target over 10 seconds.\
+		The caster takes 20 brain damage per use."
+	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
 
-	action_to_add = /datum/action/cooldown/spell/pointed/moon_smile
+	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 1
 
 /datum/heretic_knowledge/spell/moon_parade

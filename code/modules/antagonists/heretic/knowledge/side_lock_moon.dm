@@ -1,21 +1,10 @@
 /datum/heretic_knowledge_tree_column/moon_to_lock
 	route = PATH_SIDE
 
-	tier1 = /datum/heretic_knowledge/spell/mind_gate
 	tier2 = list(/datum/heretic_knowledge/unfathomable_curio, /datum/heretic_knowledge/painting)
 	tier3 = /datum/heretic_knowledge/codex_morbus
 
 // Sidepaths for knowledge between Knock and Moon.
-
-/datum/heretic_knowledge/spell/mind_gate
-	name = "Mind Gate"
-	desc = "Grants you Mind Gate, a spell which inflicts hallucinations, \
-		confusion, oxygen loss and brain damage to its target over 10 seconds.\
-		The caster takes 20 brain damage per use."
-	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
-
-	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
-	cost = 1
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"

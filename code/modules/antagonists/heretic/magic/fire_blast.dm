@@ -15,8 +15,8 @@
 	invocation = "V'LC'N!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
-	channel_time = 5 SECONDS
-	target_radius = 5
+	channel_time = 2.5 SECONDS
+	target_radius = 7
 	max_beam_bounces = 4
 
 	/// How long the beam visual lasts, also used to determine time between jumps
@@ -29,7 +29,7 @@
 		caster.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration, -2)
 	return ..()
 
-/datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = 4)
+/datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = max_beam_bounces)
 	// Send a beam from the origin to the hit mob
 	origin.Beam(to_beam, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/reacting/fire)
 

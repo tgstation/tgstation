@@ -157,24 +157,74 @@
 	// How much damage does this item do to the targets sanity?
 	var/sanity_damage = 20
 
-/obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, params)
-	var/mob/living/carbon/human/hit = target
-	if(!IS_HERETIC_OR_MONSTER(user))
-		user.balloon_alert(user, "you feel a presence watching you")
-		user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
-		return
-	if(hit.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
-		return
-	if(!hit.mob_mood)
-		return
-	if(hit.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
-		user.balloon_alert(user, "their mind is too strong!")
-		hit.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)
-	else
-		user.balloon_alert(user, "their mind bends to see the truth!")
-		hit.apply_status_effect(/datum/status_effect/moon_converted)
-		user.log_message("made [target] insane.", LOG_GAME)
-		hit.log_message("was driven insane by [user]")
+/obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
+	if(!(slot_flags & slot))
+		// Make sure to restore the values of any blades we might be holding when our amulet is removed
+		on_dropped_item(user, user.get_active_held_item())
+		on_dropped_item(user, user.get_inactive_held_item())
+		return
+	if(!IS_HERETIC(user))
+		channel_amulet(user) // Putting it on will give you the mood debuff
+		return
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(channel_amulet))
+	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip_item))
+	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_dropped_item))
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM))
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, params)
+	if(channel_amulet(user, target))
+		return
+	return ..()
+
+/// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie
+/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/channel_amulet(mob/user, atom/target)
+	SIGNAL_HANDLER
+	if(!isliving(user) || !ishuman(target))
+		return
+	var/mob/living/living_user = user
+	var/mob/living/carbon/human/human_target = target
+	if(!IS_HERETIC_OR_MONSTER(living_user))
+		living_user.balloon_alert(living_user, "you feel a presence watching you")
+		living_user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
+		living_user.mob_mood.set_sanity(living_user.mob_mood.sanity - 50)
+		return FALSE
+	if(human_target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+		return FALSE
+	if(!human_target.mob_mood)
+		return FALSE
+	if(human_target.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
+		living_user.balloon_alert(living_user, "their mind is too strong!")
+		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
+		human_target.mob_mood.set_sanity(human_target.mob_mood.sanity - sanity_damage)
+	else
+		living_user.balloon_alert(living_user, "their mind bends to see the truth!")
+		human_target.apply_status_effect(/datum/status_effect/moon_converted)
+		living_user.log_message("made [target] insane.", LOG_GAME)
+		human_target.log_message("was driven insane by [living_user]")
+
+/// Modifies any blades that we equip while wearing the amulet
+/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_equip_item(mob/user, obj/item/blade, slot)
+	SIGNAL_HANDLER
+	if(!istype(blade, /obj/item/melee/sickly_blade))
+		return // We only care about modifying blades
+	if(slot & ITEM_SLOT_HANDS)
+		blade.force = 0
+		blade.wound_bonus = 0
+		blade.bare_wound_bonus = 0
+		return
+	blade.force = initial(blade.force)
+	blade.wound_bonus = initial(blade.wound_bonus)
+	blade.bare_wound_bonus = initial(blade.bare_wound_bonus)
+
+/// Modifies any blades that we drop while wearing the amulet
+/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_dropped_item(mob/user, obj/item/dropped_item)
+	SIGNAL_HANDLER
+	if(!istype(dropped_item, /obj/item/melee/sickly_blade))
+		return // We only care about modifying blades
+	dropped_item.force = initial(dropped_item.force)
+	dropped_item.wound_bonus = initial(dropped_item.wound_bonus)
+	dropped_item.bare_wound_bonus = initial(dropped_item.bare_wound_bonus)

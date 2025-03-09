@@ -21,6 +21,16 @@
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ash_shift
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/ash_shift/out
 
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/cast(mob/living/cast_on)
+	. = ..()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.uncuff()
+	var/obj/item/clothing/shoes/shoes = carbon_owner.shoes
+	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
+		shoes.adjust_laces(SHOES_TIED, carbon_owner)
+
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_steam_effects()
 	return
 
