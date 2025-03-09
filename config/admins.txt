@@ -152,3 +152,4 @@ san7890 = Game Master
 
 ahathg = Game Master
 Kross_0435 = Moderator
+nikitauou = Game Master
