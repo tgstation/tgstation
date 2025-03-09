@@ -138,11 +138,17 @@
 
 /obj/item/bodypart/arm/left/pony/Initialize(mapload)
 	. = ..()
-	worn_glove_offset = new( // even though they can't wear gloves. we're cheating and using this for the front leg offsets
+	worn_glove_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_GLOVES,
 		offset_x = list("north" = 0, "south" = 0, "east" = 5, "west" = -5),
 		offset_y = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
+	)
+	held_hand_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = 4, "south" = -4, "east" = 3, "west" = -5),
+		offset_y = list("north" = -9, "south" = -9, "east" = -9, "west" = -9),
 	)
 
 
@@ -160,6 +166,12 @@
 		feature_key = OFFSET_GLOVES,
 		offset_x = list("north" = -1, "south" = -1, "east" = 5, "west" = -5),
 		offset_y = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
+	)
+	held_hand_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = -3, "south" = 3, "east" = 5, "west" = 0),
+		offset_y = list("north" = -9, "south" = -9, "east" = -9, "west" = -9),
 	)
 
 /obj/item/bodypart/leg/left/pony
