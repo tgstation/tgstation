@@ -299,7 +299,9 @@
 	create_reagents(INFINITY) //We'll set this to the total volume of the reagents right after generate_fish_reagents() is over
 	generate_fish_reagents(bites_to_finish)
 	reagents.maximum_volume = round(reagents.total_volume * 1.25) //make some meager space for condiments.
-	AddComponent(/datum/component/edible, \
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE, \
+		/datum/component/edible, \
 		food_flags = FOOD_NO_EXAMINE|FOOD_NO_BITECOUNT, \
 		foodtypes = foodtypes, \
 		volume = reagents.total_volume, \
@@ -340,8 +342,8 @@
 		if(protein)
 			reagents.multiply(2, /datum/reagent/consumable/nutriment/protein)
 
-	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
-	edible.foodtypes &= ~(RAW|GORE)
+	//Remove the raw and gore foodtypes from the edible component
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = get_food_types() & ~(RAW|GORE))
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
 		well_cooked()
 
@@ -435,7 +437,7 @@
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	///updates how many units of reagent one bite takes if edible.
 	if(IS_EDIBLE(src))
-		AddComponent(/datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
+		AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
 
 ///Grinding a fish replaces some the protein it has with blood and gibs. You ain't getting a clean smoothie out of it.
 /obj/item/fish/on_grind()

@@ -111,15 +111,6 @@
 	icon_state = "atmos_secure"
 	base_icon_state = "atmos_secure"
 
-/obj/structure/closet/crate/secure/engineering/atmos/Initialize(mapload)
-	. = ..()
-
-/obj/structure/closet/crate/secure/engineering/atmos/Destroy()
-	. = ..()
-
-/obj/structure/closet/crate/secure/engineering/atmos/Move(atom/newloc, direct, glide_size_override, update_dir)
-	. = ..()
-	
 
 /obj/structure/closet/crate/secure/science
 	name = "secure science crate"

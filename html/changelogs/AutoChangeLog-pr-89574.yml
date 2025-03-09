@@ -1,4 +1,0 @@
-author: "subject217"
-delete-after: True
-changes:
-  - bugfix: "Tramstation disposals now allow you to send mail to R&D."

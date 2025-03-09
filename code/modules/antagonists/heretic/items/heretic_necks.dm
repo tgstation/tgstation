@@ -168,7 +168,7 @@
 		return
 	if(!hit.mob_mood)
 		return
-	if(hit.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
+	if(hit.mob_mood.sanity_level > SANITY_LEVEL_UNSTABLE)
 		user.balloon_alert(user, "their mind is too strong!")
 		hit.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)

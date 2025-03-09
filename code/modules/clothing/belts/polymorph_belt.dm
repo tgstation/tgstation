@@ -31,9 +31,6 @@
 	if (!active)
 		. += span_warning("It requires a Bioscrambler Anomaly Core in order to function.")
 
-/obj/item/polymorph_belt/item_action_slot_check(slot, mob/user, datum/action/action)
-	return slot & ITEM_SLOT_BELT
-
 /obj/item/polymorph_belt/update_icon_state()
 	icon_state = base_icon_state + (active ? "" : "_inactive")
 	worn_icon_state = base_icon_state + (active ? "" : "_inactive")
