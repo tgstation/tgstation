@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - balance: "\"Wolves Among Sheep\" cooldown increased from 2 to 5 minutes."
