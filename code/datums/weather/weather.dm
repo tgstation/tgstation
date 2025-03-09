@@ -123,10 +123,7 @@
 
 	// turf_thunder_chance = thunder_chance_override || turf_thunder_chance
 	// this breaks when thunder_chance_override is 0 (aka FALSE), so we need to null check
-	turf_thunder_chance = !isnull(thunder_chance_override) ? thunder_chance_override : turf_thunder_chance
-
-	if(IS_WEATHER_AESTHETIC(weather_flags))
-		return
+	turf_thunder_chance = isnull(thunder_chance_override) ? turf_thunder_chance : thunder_chance_override 
 
 	if(weather_flags & (WEATHER_MOBS))
 		subsystem_tasks += SSWEATHER_MOBS
@@ -135,7 +132,8 @@
 	if(weather_flags & (WEATHER_THUNDER))
 		subsystem_tasks += SSWEATHER_THUNDER
 
-	currentpart = subsystem_tasks[1]
+	if(length(subsystem_tasks))
+		currentpart = subsystem_tasks[1]
 /**
  * Telegraphs the beginning of the weather on the impacted z levels
  *
