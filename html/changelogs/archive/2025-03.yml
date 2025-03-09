@@ -157,3 +157,87 @@
   - bugfix: chameleon IDs actually prevent AI tracking now
   hry-gh:
   - bugfix: the admin music player works again on 516
+2025-03-07:
+  Ben10Omintrix:
+  - qol: the raptor minigame now no longer opens up a new window
+  - rscadd: the raptor minigame has been reworked
+  Kocma-san:
+  - qol: ERT leaders now have a headset with high-volume mode
+  - bugfix: Deathsquad Officer will now have proper outfit
+  Melbert:
+  - bugfix: Wigs no longer color their hats
+  - bugfix: You can hear looping computer sounds again
+  StrangeWeirdKitten:
+  - bugfix: Design disks now have a cooldown when uploading to no longer crash the
+      server.
+  necromanceranne:
+  - balance: Last resort is no longer an innate changeling ability. Changeling on
+      changeling violence is back on the menu. (literally)
+  possiblepossibility:
+  - rscadd: you may now take out individual slices of pizza
+2025-03-08:
+  Ghommie:
+  - balance: It's now possible to take trophy fish from previous shifts off their
+      mounts without turning them into dust based on a probability revolving around
+      the size and weight of the fish against your fishing skill.
+  Hatterhat:
+  - bugfix: The Sakhno SKS no longer ejects its entire internal magazine upon interaction.
+      To facilitate this, it now requires the bolt to be open like its bolt-action
+      contemporaries in order to load ammunition.
+  - bugfix: You can no longer force ammunition into Sakhno precision rifles and other
+      bolt-action-likes through a closed bolt.
+  Melbert:
+  - rscadd: If you are sufficiently drunk, you can resist your phobias and social
+      anxiety.
+  - rscadd: Your mood will increase further the more drunk you are. Until you crash
+      out.
+  SmArtKar:
+  - image: Resprited all eyes and gave cybernetic eyes unique sprites
+  necromanceranne:
+  - bugfix: Touch protection actually respects the TOUCH exposure method.
+  - bugfix: You cannot Fry-Fu someone through bio protective clothing using three
+      drops of essential oils heated to the temperature of the sun.
+2025-03-09:
+  Absolucy:
+  - bugfix: Fixed some hearing sensitive objects hearing the same thing multiple times,
+      such as the broadcast camera sending everything to the entertainment channel
+      twice.
+  - qol: Changed the civilian bounty console's cooldown message to a balloon alert,
+      and it now says like "1 minute and 30 seconds" instead of "1.5 minutes"
+  - code_imp: Minor improvements to civilian bounty console code.
+  - code_imp: Removed a random unused var on space turfs.
+  Hatterhat:
+  - balance: Spacemen (e.g. you, the reader) grappling a target now prioritize using
+      their bare hands to beat their target to death if they're grappled, instead
+      of contorting in weird ways to kick them (also, presumably, to death).
+  - balance: Spacemen have learned to Punch Good(er) against grappled targets, leading
+      to kick-tier damage against standing grappled targets - even if they're not
+      doing the grappling.
+  - balance: Strong-Arm implant users also benefit from the training of punching grappled
+      people as well - as a treat, horizontal targets slam into the ground and break
+      tiling for no additional damage, but a very visible sign of "oh god someone
+      got pasted here".
+  - qol: Holosigns (engineering holobarriers, janitor holosigns, PENLITE holobarriers,
+      etc.) can now be projected onto doors.
+  - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
+      and grilles.
+  LikeLakers2:
+  - bugfix: Fixes a potential runtime with the radioactivity mutation.
+  SmArtKar:
+  - bugfix: Removed a rogue fire alarm from DeltaStation's freezer
+  - bugfix: Fixed fake airlock bolts being examineable
+  - bugfix: Fixed most mining mobs being unaffected by additional damage against them
+  - bugfix: Fixed hat stabilizers not detaching clothing traits, turning any helmet
+      with a pacifism bud attached into one.
+  - bugfix: Fixed certain hallucinations displaying below floors/decals/items
+  - bugfix: Cult spells no longer play attack animation when clicking on an invalid
+      target
+  - bugfix: Fixed prototype egun's electrodes instantly detaching
+  - bugfix: Fixed night shifts removing coloring from lights
+  - bugfix: Objects on tables no longer get burnt by lava
+  - bugfix: Stacking machines can now pick up bluespace crystals
+  necromanceranne:
+  - bugfix: Makes absolutely sure we're removing Cyrogelidia's status effects if the
+      reagent is out of our mobs system.
+  - bugfix: The strongarm set bonus no longer requires a specific biotype to function.
+      You can now get the set bonus as an android.
