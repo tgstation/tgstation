@@ -480,3 +480,4 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/turf/open/turf_adjacent in RANGE_TURFS(1, src))
 		if(turf_adjacent.planetary_atmos)
 			return TRUE
+	return FALSE
