@@ -5,11 +5,11 @@ import { dragStartHandler } from 'tgui/drag';
 import { isEscape, KEY } from 'tgui-core/keys';
 import { BooleanLike, classes } from 'tgui-core/react';
 
-import { Channel, ChannelIterator } from '../ChannelIterator';
-import { ChatHistory } from '../ChatHistory';
-import { byondMessages } from '../timers';
+import { Channel, ChannelIterator } from './ChannelIterator';
+import { ChatHistory } from './ChatHistory';
 import { LineLength, RADIO_PREFIXES, WindowSize } from './constants';
 import { getPrefix, windowClose, windowOpen, windowSet } from './helpers';
+import { byondMessages } from './timers';
 
 type ByondOpen = {
   channel: Channel;

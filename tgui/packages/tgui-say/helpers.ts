@@ -1,4 +1,4 @@
-import { Channel } from '../ChannelIterator';
+import { Channel } from './ChannelIterator';
 import { RADIO_PREFIXES, WindowSize } from './constants';
 
 /**
