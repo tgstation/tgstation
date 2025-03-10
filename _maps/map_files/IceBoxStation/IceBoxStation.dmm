@@ -4063,10 +4063,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay Break Room";
-	network = list("ss13","medbay")
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "bea" = (
@@ -27006,12 +27002,10 @@
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/medical/morgue)
 "hHD" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Construction Area"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/item/wallframe/camera,
 /turf/open/floor/plating,
 /area/station/construction)
 "hHG" = (
