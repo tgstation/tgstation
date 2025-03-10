@@ -345,6 +345,37 @@
     loadAsset({ url: url, sync: sync, type: 'css' });
   };
 
+  Byond.saveBlob = function (blob, filename, ext) {
+    if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, filename);
+    } else if (window.showSaveFilePicker) {
+      var accept = {};
+      accept[blob.type] = [ext];
+
+      var opts = {
+        suggestedName: filename,
+        types: [
+          {
+            description: 'SS13 file',
+            accept: accept,
+          },
+        ],
+      };
+
+      window
+        .showSaveFilePicker(opts)
+        .then(function (file) {
+          return file.createWritable();
+        })
+        .then(function (file) {
+          return file.write(blob).then(function () {
+            return file.close();
+          });
+        })
+        .catch(function () {});
+    }
+  };
+
   // Icon cache
   Byond.iconRefMap = {};
 })();
