@@ -52,7 +52,7 @@
 		living_mob.Paralyze(10)
 		living_mob.Knockdown(100)
 		to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
-		living_mob.adjust_hallucinations(100 SECONDS)
+		living_mob.adjust_hallucinations(150 SECONDS)
 
 	else
 		if(distance <= 1)
@@ -60,7 +60,7 @@
 			living_mob.Knockdown(30)
 		if(hypno_sound)
 			to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
-			living_mob.adjust_hallucinations(100 SECONDS)
+			living_mob.adjust_hallucinations(150 SECONDS)
 
 	//Flash
 	if(living_mob.flash_act(affect_silicon = 1))

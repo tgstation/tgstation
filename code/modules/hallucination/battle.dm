@@ -2,6 +2,7 @@
 /datum/hallucination/battle
 	abstract_hallucination_parent = /datum/hallucination/battle
 	random_hallucination_weight = 3
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /// Subtype of battle hallucination for gun based battles, where it sounds like someone is being shot.
 /datum/hallucination/battle/gun

@@ -9,6 +9,8 @@
 /datum/hallucination
 	/// What is this hallucination's weight in the random hallucination pool?
 	var/random_hallucination_weight = 0
+	/// What tier of hallucination is this? Rarer ones should be higher
+	var/hallucination_tier = HALLUCINATION_TIER_NEVER
 	/// Who's our next highest abstract parent type?
 	var/abstract_hallucination_parent = /datum/hallucination
 	/// Extra info about the hallucination displayed in the log.
