@@ -493,6 +493,11 @@
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
 
+	if(ismachinery(source))
+		var/obj/machinery/machine = source
+		if(machine.machine_stat || machine.panel_open)
+			return
+
 	user_insert(weapon, user)
 
 	return ITEM_INTERACT_SUCCESS
