@@ -26,9 +26,9 @@
 			// Why the fuck does this work? This is some byond bug and I honestly have no fucking clue why this works.
 			// I don't think plane master will be affected, I hope.
 			// We're stuck in the belly of this awful machine.
-			sleep(0.2 SECONDS)
+			sleep(world.tick_lag)
 			screen_loc = "[assigned_map]:[x+100]:[px],[y+100]:[py]"
-			sleep(0.2 SECONDS)
+			sleep(world.tick_lag)
 			screen_loc = "[assigned_map]:[x]:[px],[y]:[py]"
 	else
 		screen_loc = "[x]:[px],[y]:[py]"
