@@ -707,6 +707,7 @@
 /// Proc to append and redefine behavior to the change of the [/mob/living/var/resting] variable.
 /mob/living/proc/update_resting()
 	update_rest_hud_icon()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATED_RESTING, resting) //NIKITKABUILD EDIT ADDITION - GUNPOINT
 
 
 /mob/living/proc/get_up(instant = FALSE)

@@ -309,3 +309,6 @@
 #define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
 /// From /mob/living/proc/stop_leaning()
 #define COMSIG_LIVING_STOPPED_LEANING "living_stopped_leaning"
+
+///Resting position for living mob updated
+#define COMSIG_LIVING_UPDATED_RESTING "living_updated_resting"
