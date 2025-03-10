@@ -1826,3 +1826,49 @@
 		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_disgust(-10 * REM * seconds_per_tick)
+
+/datum/reagent/medicine/final_fortuna
+	name = "Final Fortuna"
+	description = "Prevents death but weakens tendons and kills once it leaves your system."
+	color = "#ad0a0a"
+	metabolization_rate = REAGENTS_METABOLISM * 5
+	overdose_threshold = 61
+	var/static/list/subject_traits = list(
+		TRAIT_STABLEHEART,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_STUNIMMUNE,
+		TRAIT_NODEATH,
+		TRAIT_NO_DAMAGE_OVERLAY,
+		TRAIT_EASYDISMEMBER
+	)
+	chemical_flags = REAGENT_IGNORE_STASIS
+	///To prevent funky things
+	var/active = FALSE
+
+/datum/reagent/medicine/final_fortuna/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	if(affected_mob.reagents.get_reagent_amount(/datum/reagent/medicine/final_fortuna)>40)
+		active = TRUE
+		affected_mob.add_traits(subject_traits, type)
+
+/datum/reagent/medicine/final_fortuna/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(active)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
+		if(SPT_PROB(10, seconds_per_tick))
+			affected_mob.emote("scream")
+
+/datum/reagent/medicine/final_fortuna/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	if(!active)
+		return
+	affected_mob.remove_traits(subject_traits, type)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200, 200)
+	affected_mob.updatehealth()
+
+/datum/reagent/medicine/final_fortuna/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.remove_traits(subject_traits, type)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200, 200)
+	affected_mob.updatehealth()
