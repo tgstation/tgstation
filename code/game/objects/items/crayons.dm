@@ -803,6 +803,8 @@
 		/obj/item/fish, // Used for aquarium sprites
 		/obj/structure/window, // Does not play nice with window tint
 	))
+	// The Spinward Stellar Coalition's D.A.R.E. campaign was effective in persuading NT to stop selling spraypaint cans to people who can't be trusted to not get high off of it.
+	age_restricted = TRUE
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
