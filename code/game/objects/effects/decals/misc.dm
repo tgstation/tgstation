@@ -2,7 +2,7 @@
 /obj/effect/decal/chempuff
 	name = "chemicals"
 	icon = 'icons/obj/medical/chempuff.dmi'
-	pass_flags = PASSTABLE | PASSGRILLE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	///The mob who sourced this puff, if one exists
