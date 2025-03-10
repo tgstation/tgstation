@@ -1368,6 +1368,7 @@
 #include "code\datums\components\plumbing\simple_components.dm"
 #include "code\datums\components\plumbing\splitter.dm"
 #include "code\datums\components\riding\riding.dm"
+#include "code\datums\components\riding\riding_minigame.dm"
 #include "code\datums\components\riding\riding_mob.dm"
 #include "code\datums\components\riding\riding_vehicle.dm"
 #include "code\datums\components\style\style.dm"
