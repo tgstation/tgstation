@@ -20,7 +20,7 @@
 	/// Used interally, you don't want to modify
 	var/cooldown_check = 0
 	/// Default wait time until can stun again.
-	var/cooldown = (4 SECONDS)
+	var/cooldown = (2 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
 	var/knockdown_time = (1.5 SECONDS)
 	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
@@ -28,7 +28,7 @@
 	/// The length of the knockdown applied to the user on clumsy_check()
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 55
+	var/stamina_damage = 35 //NIKITKABUILD CHANGE
 	/// How much armor does our baton ignore? This operates as armour penetration, but only applies to the stun attack.
 	var/stun_armour_penetration = 15
 	/// What armor does our stun attack check before delivering the attack?
@@ -239,8 +239,8 @@
 		var/effective_armour_penetration = get_stun_penetration_value()
 		var/armour_block = target.run_armor_check(null, armour_type_against_stun, null, null, effective_armour_penetration)
 		target.apply_damage(stamina_damage, STAMINA, blocked = armour_block)
-		if(!trait_check)
-			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
+		// if(!trait_check)
+		// 	target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))  #NIKITKABUILD CHANGE
 		additional_effects_non_cyborg(target, user)
 	SEND_SIGNAL(target, COMSIG_MOB_BATONED, user, src)
 	return TRUE
@@ -495,7 +495,7 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 60
+	stamina_damage = 35 //NIKITKABUILD CHANGE
 	armour_type_against_stun = ENERGY
 	// This value is added to our stun armour penetration when called by get_stun_penetration_value(). For giving some batons extra OOMPH.
 	var/additional_stun_armour_penetration = 0
@@ -772,12 +772,14 @@
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
-	if(!target.IsKnockdown())
-		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
+	// var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	// if(!target.IsKnockdown())
+	// 	to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
-	if(!trait_check)
-		target.Knockdown(knockdown_time)
+	// if(!trait_check)
+	// 	target.Knockdown(knockdown_time)
+
+	//NIKITKABUILD CHANGE
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")
