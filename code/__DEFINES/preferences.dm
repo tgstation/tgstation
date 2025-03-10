@@ -165,3 +165,8 @@
 #define INFO_RESKIN "reskin"
 /// Handles which layer the item will be on, for accessories
 #define INFO_LAYER "layer"
+
+// Lipstick styles
+#define UPPER_LIP "Upper"
+#define MIDDLE_LIP "Middle"
+#define LOWER_LIP "Lower"
