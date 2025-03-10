@@ -1047,7 +1047,7 @@
 /datum/glass_style/drinking_glass/iron_slushie
 	required_drink_type = /datum/reagent/consumable/ethanol/iron_slushie
 	name = "Iron Slushie"
-	desc = "A drink consisting mostly of blended ice and fruit soda, with a shot of whisky for flavour. Good for cooling you down without making you drunk."
+	desc = "A drink consisting mostly of blended ice and Iron-Tincture, with a shot of whisky for flavour. Good for cooling you down without making you drunk."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "iron_slushie"
 

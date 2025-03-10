@@ -2929,7 +2929,7 @@
 
 /datum/reagent/consumable/ethanol/iron_slushie
 	name = "Iron Slushie"
-	description = "Ice, Iron Tincture, and a little bit of whisky and lemon juice come together in a surprisingly mild and fruity frozen treat."
+	description = "Ice, Iron-Tincture, and a little bit of whisky and lemon juice come together in a surprisingly mild and fruity frozen treat."
 	boozepwr = 20
 	color = "#FFB01D" // rgb: 255, 176, 29
 	quality = DRINK_VERYGOOD
