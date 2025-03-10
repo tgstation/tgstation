@@ -410,6 +410,7 @@
 			/datum/reagent/consumable/ethanol/alliescocktail = 5,
 			/datum/reagent/consumable/ethanol/martini = 5,
 			/datum/reagent/consumable/ethanol/gintonic = 5,
+			/datum/reagent/consumable/ethanol/glaswegian = 5,
 			/datum/reagent/consumable/tea = 10,
 		),
 	)

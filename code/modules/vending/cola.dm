@@ -18,6 +18,7 @@
 		/obj/item/reagent_containers/cup/glass/waterbottle = 10,
 		/obj/item/reagent_containers/cup/glass/bottle/mushi_kombucha = 3,
 		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 3,
+		/obj/item/reagent_containers/cup/soda_cans/iron_tincture = 10,
 	)
 	contraband = list(
 		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 6,
