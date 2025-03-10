@@ -45,11 +45,13 @@
 #define AUGGED_HEAD_EMP_GLITCH_DURATION 6 SECONDS
 
 // Color priorities for bodyparts
+/// Abductor team recoloring priority
+#define LIMB_COLOR_AYYLMAO 5
+/// Hulk effect color priority
 #define LIMB_COLOR_HULK 10
+/// Carp infusion color priority
 #define LIMB_COLOR_CARP_INFUSION 20
 /// Base priority for atom colors, gets atom priorities added to it
 #define LIMB_COLOR_ATOM_COLOR 30
-/// Abductor team recoloring priority
-#define LIMB_COLOR_AYYLMAO 31
 /// Voidwalker effect color priority
 #define LIMB_COLOR_VOIDWALKER_CURSE 40
