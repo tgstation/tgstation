@@ -54,7 +54,7 @@
 		stickers. You're not sure you want to try and get a whiff..."
 	icon_state = "m12gd"
 	base_icon_state = "m12gd"
-	ammo_type = /obj/item/ammo_casing/shotgun/fletchette/donk
+	ammo_type = /obj/item/ammo_casing/shotgun/flechette/donk
 
 /obj/item/ammo_box/magazine/m12g/donk/examine_more(mob/user)
 	. = ..()
