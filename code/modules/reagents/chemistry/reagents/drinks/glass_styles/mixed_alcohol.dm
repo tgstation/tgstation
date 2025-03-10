@@ -1030,6 +1030,34 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "blue_hawaiian"
 
+/datum/glass_style/drinking_glass/william_wallace
+	required_drink_type = /datum/reagent/consumable/ethanol/william_wallace
+	name = "William Wallace"
+	desc = "A dark amber whisky cocktail served in a lowball glass."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "william_wallace"
+
+/datum/glass_style/drinking_glass/orange_martini
+	required_drink_type = /datum/reagent/consumable/ethanol/orange_martini
+	name = "Orange Martini"
+	desc = "A variant on the classic martini with a bright orange colour. Contains no actual orange."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "orange_martini"
+
+/datum/glass_style/drinking_glass/iron_slushie
+	required_drink_type = /datum/reagent/consumable/ethanol/iron_slushie
+	name = "Iron Slushie"
+	desc = "A drink consisting mostly of blended ice and fruit soda, with a shot of whisky for flavour. Good for cooling you down without making you drunk."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "iron_slushie"
+
+/datum/glass_style/drinking_glass/glaswegian
+	required_drink_type = /datum/reagent/consumable/ethanol/glaswegian
+	name = "Glaswegian"
+	desc = "A fruity gin-based cocktail. Served with a slice of lime and a little plastic traffic cone."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "glaswegian"
+
 // Shot glasses
 
 /datum/glass_style/shot_glass/toxins_special
