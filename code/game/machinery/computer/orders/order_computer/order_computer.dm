@@ -4,20 +4,19 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console
 	name = "Orders Console"
-	desc = "An interface for ordering specific ingredients from Cargo, with an express option at the cost of more money."
+	desc = "An interface for ordering specific ingredients from Cargo, with an autodeliver option at the cost of more money."
 	icon_screen = "request"
 	icon_keyboard = "generic_key"
 	light_color = LIGHT_COLOR_ORANGE
-	///Tooltip for the express button in TGUI
-	var/express_tooltip = @{"Sends your purchases instantly,
-	but locks the console longer and increases the price!"}
+	///Tooltip for the autodelivery button in TGUI
+	var/autodelivery_tooltip = @{"Sends your purchases without cargo! Will take time to arrive, and lock the console for longer."}
 	///Tooltip for the purchase button in TGUI
 	var/purchase_tooltip = @{"Your purchases will arrive at cargo,
-	and hopefully get delivered by them."}
+	and hopefully get delivered by them. Always cheaper than autodelivery."}
 
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
-	///Cooldown time between uses, express console will have extra time depending on express_cost_multiplier.
+	///Cooldown time between uses, autodelivery console will have extra time depending on autodelivery_cost_multiplier.
 	var/cooldown_time = 60 SECONDS
 	///The channel we will attempt to speak into through our radio.
 	var/radio_channel = RADIO_CHANNEL_SUPPLY
@@ -26,12 +25,14 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 	///The kind of cash does the console use.
 	var/credit_type = CREDIT_TYPE_CREDIT
-	///Whether the console can only use express mode ONLY
-	var/forced_express = FALSE
+	///Whether the console can only use autodelivery mode ONLY
+	var/forced_autodelivery = FALSE
+	///How long the autodelivery takes to arrive
+	var/autodelivery_delay_time = 2 MINUTES
 	///Multiplied cost to use for cargo mode
 	var/cargo_cost_multiplier = 1
-	///Multiplied cost to use for express mode
-	var/express_cost_multiplier = 2
+	///Multiplied cost to use for autodelivery mode
+	var/autodelivery_cost_multiplier = 2
 	///The categories of orderable items this console can view and purchase.
 	var/list/order_categories = list()
 	///The current list of things we're trying to order, waiting for checkout.
@@ -93,12 +94,12 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
 	var/list/data = list()
 	data["credit_type"] = credit_type
-	data["express_tooltip"] = express_tooltip
+	data["autodelivery_tooltip"] = autodelivery_tooltip
 	data["purchase_tooltip"] = purchase_tooltip
-	data["forced_express"] = forced_express
+	data["forced_autodelivery"] = forced_autodelivery
 	data["cargo_value"] = CARGO_CRATE_VALUE
 	data["cargo_cost_multiplier"] = cargo_cost_multiplier
-	data["express_cost_multiplier"] = express_cost_multiplier
+	data["autodelivery_cost_multiplier"] = autodelivery_cost_multiplier
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
 	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
@@ -150,8 +151,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		if("purchase")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
-			if(forced_express)
-				return ui_act(action = "express")
+			if(forced_autodelivery)
+				return ui_act(action = "autodelivery")
 			//So miners cant spam buy crates for a very low price
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				return
@@ -163,26 +164,26 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(!purchase_items(used_id_card))
 				return
 			if(blackbox_key)
-				SSblackbox.record_feedback("tally", "non_express_[blackbox_key]_order", 1, name)
+				SSblackbox.record_feedback("tally", "non_autodelivery_[blackbox_key]_order", 1, name)
 			order_groceries(living_user, used_id_card, grocery_list)
 			grocery_list.Cut()
 			COOLDOWN_START(src, order_cooldown, cooldown_time)
-		if("express")
+		if("autodelivery")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
 				return
-			if(!purchase_items(used_id_card, express = TRUE))
+			if(!purchase_items(used_id_card, autodelivery = TRUE))
 				return
 			var/say_message = "Thank you for your purchase!"
-			if(express_cost_multiplier > 1)
-				say_message += " Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
-			COOLDOWN_START(src, order_cooldown, cooldown_time * express_cost_multiplier)
+			if(autodelivery_cost_multiplier > 1)
+				say_message += " Please note: The charge of this purchase and machine cooldown has been multiplied by [autodelivery_cost_multiplier]!"
+			COOLDOWN_START(src, order_cooldown, cooldown_time * autodelivery_cost_multiplier)
 			say(say_message)
 			if(blackbox_key)
-				SSblackbox.record_feedback("tally", "express_[blackbox_key]_order", 1, name)
+				SSblackbox.record_feedback("tally", "autodelivery_[blackbox_key]_order", 1, name)
 			var/list/ordered_paths = list()
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
 				if(!(item.category_index in order_categories))
@@ -191,10 +192,16 @@ GLOBAL_LIST_EMPTY(order_console_products)
 					continue
 				for(var/amt in 1 to grocery_list[item])//every order amount
 					ordered_paths += item.purchase_path
+			var/delivery_delay = list(POD_TRANSIT = 30, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+			// if the console forces autodelivery, there's no reason to add a punishment waiting time
+			// because there was no alternative (working with cargo) to get around it
+			if(!forced_autodelivery)
+				delivery_delay = list(POD_TRANSIT = autodelivery_delay_time, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 			podspawn(list(
 				"target" = get_turf(living_user),
 				"style" = /datum/pod_style/advanced,
 				"spawn" = ordered_paths,
+				"delays" = delivery_delay,
 			))
 			grocery_list.Cut()
 	return TRUE
@@ -204,11 +211,11 @@ GLOBAL_LIST_EMPTY(order_console_products)
  * and deducts the cost if they can.
  * Args:
  * card - The ID card we check for balance
- * express - Boolean on whether we need to add the express cost mulitplier
+ * autodelivery - Boolean on whether we need to add the autodelivery cost mulitplier
  * returns TRUE if we can afford, FALSE otherwise.
  */
-/obj/machinery/computer/order_console/proc/purchase_items(obj/item/card/id/card, express = FALSE)
-	var/final_cost = round(get_total_cost() * (express ? express_cost_multiplier : cargo_cost_multiplier))
+/obj/machinery/computer/order_console/proc/purchase_items(obj/item/card/id/card, autodelivery = FALSE)
+	var/final_cost = round(get_total_cost() * (autodelivery ? autodelivery_cost_multiplier : cargo_cost_multiplier))
 	if(subtract_points(final_cost, card))
 		return TRUE
 	say("Sorry, but you do not have enough [credit_type].")

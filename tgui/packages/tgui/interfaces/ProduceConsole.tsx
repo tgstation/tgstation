@@ -39,12 +39,12 @@ type Data = {
   credit_type: string;
   off_cooldown: BooleanLike;
   points: number;
-  express_tooltip: string;
+  autodelivery_tooltip: string;
   purchase_tooltip: string;
-  forced_express: string;
+  forced_autodelivery: string;
   cargo_value: number;
   cargo_cost_multiplier: number;
-  express_cost_multiplier: number;
+  autodelivery_cost_multiplier: number;
   order_categories: string[];
   order_datums: OrderDatum[];
   item_amts: Item[];
@@ -200,13 +200,13 @@ const CheckoutTab = (props) => {
   const {
     credit_type,
     purchase_tooltip,
-    express_tooltip,
-    forced_express,
+    autodelivery_tooltip,
+    forced_autodelivery,
     cargo_value,
     order_datums,
     total_cost,
     cargo_cost_multiplier,
-    express_cost_multiplier,
+    autodelivery_cost_multiplier,
     item_amts,
   } = data;
   const total_cargo_cost = Math.floor(total_cost * cargo_cost_multiplier);
@@ -275,9 +275,9 @@ const CheckoutTab = (props) => {
           <Stack>
             <Stack.Item grow mt={0.5}>
               Total:{total_cargo_cost}&#40;Express:
-              {total_cost * express_cost_multiplier}&#41;
+              {total_cost * autodelivery_cost_multiplier}&#41;
             </Stack.Item>
-            {!forced_express && (
+            {!forced_autodelivery && (
               <Stack.Item grow textAlign="center">
                 <Button
                   fluid
@@ -302,10 +302,12 @@ const CheckoutTab = (props) => {
                 content="Express"
                 disabled={total_cost <= 0}
                 tooltip={
-                  total_cost <= 0 ? 'Order atleast 1 item' : express_tooltip
+                  total_cost <= 0
+                    ? 'Order at least 1 item'
+                    : autodelivery_tooltip
                 }
                 tooltipPosition="top-start"
-                onClick={() => act('express')}
+                onClick={() => act('autodelivery')}
               />
             </Stack.Item>
           </Stack>
