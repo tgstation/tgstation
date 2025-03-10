@@ -59312,14 +59312,6 @@
 /obj/item/clothing/glasses/welding{
 	pixel_y = 4
 	},
-/obj/item/disk/tech_disk{
-	pixel_x = -2;
-	pixel_y = -6
-	},
-/obj/item/disk/tech_disk{
-	pixel_x = -4;
-	pixel_y = -7
-	},
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},

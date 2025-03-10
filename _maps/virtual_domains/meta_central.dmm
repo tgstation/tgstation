@@ -2832,10 +2832,6 @@
 	pixel_x = 9;
 	pixel_y = -1
 	},
-/obj/item/disk/tech_disk{
-	pixel_x = -2;
-	pixel_y = -3
-	},
 /obj/item/disk/design_disk{
 	name = "component design disk";
 	pixel_y = 6

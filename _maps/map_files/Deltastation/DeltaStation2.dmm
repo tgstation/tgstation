@@ -6375,15 +6375,6 @@
 /area/station/hallway/primary/starboard)
 "bBL" = (
 /obj/structure/table/reinforced,
-/obj/item/disk/tech_disk{
-	pixel_x = -6
-	},
-/obj/item/disk/tech_disk{
-	pixel_x = 6
-	},
-/obj/item/disk/tech_disk{
-	pixel_y = 6
-	},
 /obj/structure/sign/warning/no_smoking/directional/west,
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
