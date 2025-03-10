@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed constant hotspot runtimes"
-  - bugfix: "Hotspots should properly play their SFX when created by sources other than plasmafires."
