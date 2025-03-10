@@ -171,55 +171,11 @@
 /obj/machinery/plumbing/reaction_chamber/chem
 	name = "reaction chamber"
 
-	///If below this pH, we start dumping buffer into it
-	var/acidic_limit = 5
-	///If above this pH, we start dumping acid into it
-	var/alkaline_limit = 9
-
-	///beaker that holds the acidic buffer(50u)
-	var/obj/item/reagent_containers/cup/beaker/acidic_beaker
-	///beaker that holds the alkaline buffer(50u).
-	var/obj/item/reagent_containers/cup/beaker/alkaline_beaker
-
 /obj/machinery/plumbing/reaction_chamber/chem/Initialize(mapload, bolt, layer)
 	. = ..()
 
-	acidic_beaker = new (src)
-	alkaline_beaker = new (src)
-
-	AddComponent(/datum/component/plumbing/acidic_input, bolt, custom_receiver = acidic_beaker)
-	AddComponent(/datum/component/plumbing/alkaline_input, bolt, custom_receiver = alkaline_beaker)
-
-/// Make sure beakers are deleted when being deconstructed
 /obj/machinery/plumbing/reaction_chamber/chem/Destroy()
-	QDEL_NULL(acidic_beaker)
-	QDEL_NULL(alkaline_beaker)
 	return ..()
-
-/obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
-	if(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
-		//nothing to react with
-		var/num_of_reagents = length(reagents.reagent_list)
-		if(!num_of_reagents)
-			return
-
-		/**
-		 * figure out which buffer to transfer to restore balance
-		 * if solution is getting too basic(high ph) add some acid to lower its value
-		 * else if solution is getting too acidic(low ph) add some base to increase its value
-		 */
-		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker.reagents : alkaline_beaker.reagents
-		if(!buffer.total_volume)
-			return
-
-		//transfer buffer and handle reactions
-		var/ph_change = max((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)), 0.25)
-		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents)) * seconds_per_tick
-		if(!buffer.trans_to(reagents, buffer_amount))
-			return
-
-		//some power for accurate ph balancing & keep track of attempts made
-		use_energy(active_power_usage * 0.03 * buffer_amount)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -230,18 +186,8 @@
 /obj/machinery/plumbing/reaction_chamber/chem/ui_data(mob/user)
 	. = ..()
 	.["ph"] = round(reagents.ph, 0.01)
-	.["reagentAcidic"] = acidic_limit
-	.["reagentAlkaline"] = alkaline_limit
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	. = TRUE
-
-	switch(action)
-		if("acidic")
-			acidic_limit = clamp(round(text2num(params["target"])), CHEMICAL_MIN_PH, alkaline_limit - 1)
-		if("alkaline")
-			alkaline_limit = clamp(round(text2num(params["target"])), acidic_limit + 1, CHEMICAL_MAX_PH)
-		else
-			return FALSE
+	. = FALSE
 
 #undef HEATER_COEFFICIENT

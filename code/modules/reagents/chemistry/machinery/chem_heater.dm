@@ -17,8 +17,6 @@
 	var/heater_coefficient = 0.05
 	/// Is the heater on or off
 	var/on = FALSE
-	/// How much buffer are we transferig per click
-	var/dispense_volume = 1
 
 /obj/machinery/chem_heater/Initialize(mapload)
 	. = ..()
@@ -290,11 +288,7 @@
 					entry["quality"] = (entry["quality"] + equilibrium.reaction_quality) /2
 					continue
 	.["activeReactions"] = active_reactions
-
 	.["isFlashing"] = flashing
-	.["acidicBufferVol"] = reagents.get_reagent_amount(/datum/reagent/reaction_agent/acidic_buffer)
-	.["basicBufferVol"] = reagents.get_reagent_amount(/datum/reagent/reaction_agent/basic_buffer)
-	.["dispenseVolume"] = dispense_volume
 
 /obj/machinery/chem_heater/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -322,82 +316,19 @@
 			//Eject doesn't turn it off, so you can preheat for beaker swapping
 			return replace_beaker(ui.user)
 
-		if("acidBuffer")
-			var/target = params["target"]
-			if(!target)
-				return FALSE
-
-			target = text2num(target)
-			if(isnull(target))
-				return FALSE
-
-			return move_buffer(/datum/reagent/reaction_agent/acidic_buffer, target)
-		if("basicBuffer")
-			var/target = params["target"]
-			if(!target)
-				return FALSE
-
-			target = text2num(target)
-			if(isnull(target))
-				return FALSE
-
-			return move_buffer(/datum/reagent/reaction_agent/basic_buffer, target)
-		if("disp_vol")
-			var/target = params["target"]
-			if(!target)
-				return FALSE
-
-			target = text2num(target)
-			if(isnull(target))
-				return FALSE
-
-			dispense_volume = target
-			return TRUE
-
 /**
  * Injects either acid/base buffer into the beaker
  * Arguments
  * * datum/reagent/buffer_type - the type of buffer[acid, base] to inject/withdraw
  * * volume - how much to volume to inject -ve values means withdraw
  */
-/obj/machinery/chem_heater/proc/move_buffer(datum/reagent/buffer_type, volume)
-	PRIVATE_PROC(TRUE)
-
-	//no beaker
-	if(QDELETED(beaker))
-		say("No beaker found!")
-		return FALSE
-
-	//trying to absorb buffer from currently inserted beaker
-	if(volume < 0)
-		if(!beaker.reagents.has_reagent(buffer_type))
-			var/name = initial(buffer_type.name)
-			say("Unable to find [name] in beaker to draw from! Please insert a beaker containing [name].")
-			return FALSE
-		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - reagents.get_reagent_amount(buffer_type), target_id = buffer_type)
-		return TRUE
-
-	//trying to inject buffer into currently inserted beaker
-	reagents.trans_to(beaker, dispense_volume, target_id = buffer_type)
-	return TRUE
 
 //Has a lot of buffer and is upgraded
 /obj/machinery/chem_heater/debug
 	name = "Debug Reaction Chamber"
-	desc = "Now with even more buffers!"
+	desc = "Now with even more chemistry!"
 
 /obj/machinery/chem_heater/debug/Initialize(mapload)
 	. = ..()
 	reagents.maximum_volume = 2000
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 1000)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 1000)
 	heater_coefficient = 0.4 //hack way to upgrade
-
-//map load types
-/obj/machinery/chem_heater/withbuffer
-	desc = "This Reaction Chamber comes with a bit of buffer to help get you started."
-
-/obj/machinery/chem_heater/withbuffer/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
