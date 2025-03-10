@@ -83,8 +83,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt clockwise"
-		return CONTEXTUAL_SCREENTIP_SET
-if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_RMB] = "Rotate conveyor belt counterclockwise"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
