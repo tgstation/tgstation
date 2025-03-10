@@ -290,4 +290,19 @@
 
 /// Proc that gets called when someone starts surgically inserting the organ
 /obj/item/organ/proc/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
+	if (!valid_zones)
+		return TRUE
+
+	// Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
+	if (!valid_zones[target_zone])
+		return FALSE
+
+	swap_zone(target_zone)
 	return TRUE
+
+/// Readjusts the organ to fit into a different body zone/slot
+/obj/item/organ/proc/swap_zone(target_zone)
+	if (!valid_zones[target_zone])
+		CRASH("[src]'s ([type]) swap_zone was called with invalid zone [target_zone]")
+	zone = target_zone
+	slot = valid_zones[zone]
