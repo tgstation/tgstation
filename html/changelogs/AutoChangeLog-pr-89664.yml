@@ -1,0 +1,6 @@
+author: "combustor"
+delete-after: True
+changes:
+  - map: "Removed cameras from most break rooms and cargo warehouses."
+  - qol: "Added and moved a bunch of cameras to remove silly blind-spots and added cams to rooms where there should've been cams."
+  - map: "Added EVA shutter buttons to birdshot"
