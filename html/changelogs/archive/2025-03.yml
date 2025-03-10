@@ -241,3 +241,22 @@
       reagent is out of our mobs system.
   - bugfix: The strongarm set bonus no longer requires a specific biotype to function.
       You can now get the set bonus as an android.
+2025-03-10:
+  EnterTheJake:
+  - balance: '"Wolves Among Sheep" cooldown increased from 2 to 5 minutes.'
+  Paxilmaniac:
+  - balance: The syndie smartgun has 2 tile aimbot now
+  SmArtKar:
+  - bugfix: 'Fixed pre-filled fish stasis cases breaking fish inside of them
+
+      /:cl'
+  - bugfix: Immortal pyro anomalies no longer (unsuccessfully) attempt to spawn pyro
+      slimes
+  - bugfix: Fixed balloon alert positioning on wide mobs
+  - bugfix: Fixed constant hotspot runtimes
+  - bugfix: Hotspots should properly play their SFX when created by sources other
+      than plasmafires.
+  - bugfix: Fixes rideable mob layering
+  StrangeWeirdKitten:
+  - code_imp: Readds return_turf_delta_p() and is_nearby_planetary_atmos() as turf
+      helpers.
