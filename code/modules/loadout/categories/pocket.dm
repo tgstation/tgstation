@@ -223,3 +223,7 @@
 /datum/loadout_item/pocket_items/wallet
 	name = "Wallet"
 	item_path = /obj/item/storage/wallet
+
+/datum/loadout_item/pocket_items/holodisk
+	name = "Holodisk"
+	item_path = /obj/item/disk/holodisk
