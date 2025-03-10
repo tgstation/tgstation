@@ -8792,6 +8792,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "dhH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/small,
 /area/station/commons/fitness/locker_room)
 "dhK" = (
@@ -8856,6 +8858,8 @@
 	name = "Barber"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/textured_half,
 /area/station/commons/fitness/locker_room)
 "diG" = (
@@ -15590,6 +15594,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/small,
 /area/station/commons/fitness/locker_room)
 "fBw" = (
@@ -51938,6 +51944,7 @@
 "rsZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
 /area/station/commons/fitness/locker_room)
 "rta" = (
@@ -108549,7 +108556,7 @@ fPZ
 eeJ
 wjq
 dtv
-mSa
+dtv
 diF
 fBs
 dhH
