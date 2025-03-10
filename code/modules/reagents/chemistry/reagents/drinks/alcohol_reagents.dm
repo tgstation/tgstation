@@ -2944,7 +2944,7 @@
 
 /datum/reagent/consumable/ethanol/glaswegian
 	name = "Glaswegian"
-	description = "A bold gin cocktail with a strong citrus flavour. Sharp and sweet."
+	description = "A bold vodka cocktail with a strong citrus flavour. Sharp and sweet."
 	boozepwr = 55
 	color = "#E38717" // rgb: 227, 135, 23
 	quality = DRINK_VERYGOOD

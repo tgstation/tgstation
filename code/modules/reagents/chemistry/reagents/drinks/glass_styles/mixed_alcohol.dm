@@ -1054,7 +1054,7 @@
 /datum/glass_style/drinking_glass/glaswegian
 	required_drink_type = /datum/reagent/consumable/ethanol/glaswegian
 	name = "Glaswegian"
-	desc = "A fruity gin-based cocktail. Served with a slice of lime and a little plastic traffic cone."
+	desc = "A fruity vodka-based cocktail. Served with a slice of lime and a little plastic traffic cone."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "glaswegian"
 
