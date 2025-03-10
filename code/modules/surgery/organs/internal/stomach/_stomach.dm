@@ -258,6 +258,13 @@
 	stomach_owner.hud_used?.hunger?.update_appearance()
 	return ..()
 
+/obj/item/organ/stomach/feel_for_damage(self_aware)
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		return span_warning("Your stomach hurts.")
+	return span_boldwarning("Your stomach cramps in pain!")
+
 /obj/item/organ/stomach/bone
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
