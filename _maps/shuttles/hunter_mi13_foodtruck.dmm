@@ -626,7 +626,7 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -9;
 	pixel_x = -2
 	},
@@ -750,7 +750,7 @@
 	pixel_y = 6;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -6;
 	pixel_x = 10
 	},

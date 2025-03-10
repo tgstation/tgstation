@@ -469,7 +469,7 @@
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/deathmatch)
 "cB" = (
-/obj/item/reagent_containers/pill/stimulant,
+/obj/item/reagent_containers/applicator/pill/stimulant,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/deathmatch)
 "cC" = (
@@ -515,7 +515,7 @@
 /turf/open/floor/engine,
 /area/deathmatch)
 "cM" = (
-/obj/item/reagent_containers/pill/happinesspsych,
+/obj/item/reagent_containers/applicator/pill/happinesspsych,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/deathmatch)
 "cN" = (
@@ -533,11 +533,11 @@
 /turf/open/floor/noslip,
 /area/deathmatch)
 "cQ" = (
-/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/deathmatch)
 "cR" = (
-/obj/item/reagent_containers/pill/probital,
+/obj/item/reagent_containers/applicator/pill/probital,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/deathmatch)
 "cS" = (

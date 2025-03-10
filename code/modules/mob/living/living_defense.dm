@@ -678,7 +678,7 @@
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if(methods & (INGEST | INHALE))
+	if(show_message && (methods & (INGEST | INHALE)))
 		taste_list(reagents)
 
 	var/touch_protection = (methods & (VAPOR | TOUCH)) ? getarmor(null, BIO) * 0.01 : 0
