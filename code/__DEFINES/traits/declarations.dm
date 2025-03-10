@@ -512,6 +512,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob has a scar on their left/right eye
 #define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
 #define TRAIT_LEFT_EYE_SCAR "left_eye_scar"
+/// Mob has their face visually, but not physically, covered
+#define TRAIT_FACE_COVERED "face_covered"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
