@@ -47,7 +47,12 @@
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
-		var/image/pipe = get_pipe_image('icons/obj/pipes_n_cables/manifold.dmi', "pipe-3", get_dir(src, nodes[i]), nodes[i].pipe_color)
+		var/applied_color = nodes[i].pipe_color
+		var/node_dir = get_dir(src, nodes[i])
+		if (istype(nodes[i], /obj/machinery/atmospherics/pipe/color_adapter) && ((node_dir & (SOUTH|EAST)) || nodes[i].pipe_color == ATMOS_COLOR_OMNI) && pipe_color != ATMOS_COLOR_OMNI)
+			applied_color = pipe_color
+		var/image/pipe = get_pipe_image('icons/obj/pipes_n_cables/manifold.dmi', "pipe-3", node_dir, applied_color)
+		pipe.appearance_flags |= RESET_COLOR|KEEP_APART
 		PIPING_LAYER_DOUBLE_SHIFT(pipe, piping_layer)
 		pipe.layer = layer + 0.01
 		. += pipe
