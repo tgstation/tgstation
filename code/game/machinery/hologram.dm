@@ -622,12 +622,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return TRUE
 
 /obj/machinery/holopad/proc/clear_holo(datum/owner)
-    if(!disk || !disk.record)
-        return FALSE
+	if(!disk || !disk.record)
+		return FALSE
 
-    qdel(masters[owner])
-    unset_holo(owner)
-    return TRUE
+	qdel(masters[owner])
+	unset_holo(owner)
+	return TRUE
 /**
  * Called by holocall to inform outgoing_call that the receiver picked up.
  */
@@ -754,19 +754,19 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return hologram
 
 /obj/machinery/holopad/proc/replay_start()
-    if(!disk)
-        say("Please insert the disc to play the recording.")
-        return
+	if(!disk)
+		say("Please insert the disc to play the recording.")
+		return
 
-    if(!disk.record)
-        say("There is no record on the disc. Please check the disk.")
-        return
+	if(!disk.record)
+		say("There is no record on the disc. Please check the disk.")
+		return
 
-    if(!replay_mode)
-        replay_mode = TRUE
-        replay_holo = setup_replay_holo(disk.record)
-        SetLightsAndPower()
-        replay_entry(1)
+	if(!replay_mode)
+		replay_mode = TRUE
+		replay_holo = setup_replay_holo(disk.record)
+		SetLightsAndPower()
+		replay_entry(1)
 
 /obj/machinery/holopad/proc/replay_stop()
 	if(!disk || !disk.record)
