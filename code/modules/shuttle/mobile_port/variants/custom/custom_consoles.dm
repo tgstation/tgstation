@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/asteroid))
-
 /obj/machinery/computer/shuttle/custom_shuttle
 	desc = "A shuttle control computer."
 	icon_screen = "shuttle"
@@ -44,13 +42,13 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 		return TRUE
 	return FALSE
 
-
 //docking cam
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom
 	lock_override = NONE
 	jump_to_ports = list("whiteship_home" = 1)
 	designate_time = 100
 	circuit = /obj/item/circuitboard/computer/shuttle/docker
+	zlink_range = 1
 	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/on_construction(mob/user)
@@ -75,7 +73,7 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	if(shuttleId) //We normally should only be connecting newly-created consoles to shuttles, but just in case...
+	if(shuttleId) //We normally should only be connecting unlinked consoles to shuttles, but just in case...
 		var/obj/docking_port/mobile/old_shuttle = SSshuttle.getShuttle(shuttleId)
 		if(old_shuttle)
 			UnregisterSignal(old_shuttle, COMSIG_SHUTTLE_EXPANDED)
@@ -158,7 +156,7 @@ GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/aster
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/checkLandingTurf(turf/T, list/overlappers)
 	. = ..()
 	var/area/area = get_area(T)
-	if(!is_type_in_list(area, GLOB.custom_shuttle_station_area_whitelist) && is_type_in_list(area, GLOB.the_station_areas))
+	if(!area.allow_shuttle_docking)
 		return SHUTTLE_DOCKER_BLOCKED
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/attack_hand(mob/user)
