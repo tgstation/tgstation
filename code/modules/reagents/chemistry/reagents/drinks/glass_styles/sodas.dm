@@ -45,8 +45,8 @@
 
 /datum/glass_style/drinking_glass/iron_tincture
 	required_drink_type = /datum/reagent/consumable/iron_tincture
-	name = "glass of Iron Tincture"
-	desc = "Iron Tincture. Legend says it's made in the Scotia solar cluster to a well-guarded secret recipe and contains melted-down iron girders."
+	name = "glass of Iron-Tincture"
+	desc = "Iron-Tincture. Legend says it's made in the Scotia solar cluster to a well-guarded secret recipe and contains melted-down iron girders."
 	icon_state = "iron-tincture"
 
 /datum/glass_style/drinking_glass/lemon_lime

@@ -560,7 +560,7 @@
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/iron_tincture
-	name = "Iron Tincture"
+	name = "Iron-Tincture"
 	description = "An orange fizzy drink with a strange flavour. Made to a top-secret recipe in the Scotia solar cluster."
 	color = "#e38717" // rgb: 227, 135, 23
 	taste_description = "sweet ginger and bubblegum"

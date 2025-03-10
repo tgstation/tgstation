@@ -230,7 +230,7 @@
 	drink_type = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/cup/soda_cans/iron_tincture
-	name = "Iron Tincture"
+	name = "Iron-Tincture"
 	desc = "Made with real girders."
 	icon_state = "iron-tincture"
 	volume = 40
