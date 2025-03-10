@@ -37,8 +37,8 @@
 	/// Are these eyes immune to pepperspray?
 	var/pepperspray_protect = FALSE
 
-	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
-	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
+	var/eye_color_left = null // set to a hex code to override a mob's left eye color
+	var/eye_color_right = null // set to a hex code to override a mob's right eye color
 	var/eye_icon_state = "eyes"
 	/// Do these eyes have blinking animations
 	var/blink_animation = TRUE
@@ -74,6 +74,11 @@
 	. = ..()
 	receiver.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
+	// Ensures that non-player mobs get their eye colors assigned
+	if (!eye_color_left)
+		eye_color_left = receiver.eye_color_left
+	if (!eye_color_right)
+		eye_color_right = receiver.eye_color_right
 	refresh(receiver, call_update = !special)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(receiver, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_wash))
@@ -90,9 +95,9 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = eye_owner
-	if(length(eye_color_left))
+	if(eye_color_left)
 		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
-	if(length(eye_color_right))
+	if(eye_color_right)
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	refresh_atom_color_overrides()
 
@@ -152,9 +157,9 @@
 		var/left_color = COLOR_WHITE
 		var/right_color = COLOR_WHITE
 
-		if (length(eye_color_left))
+		if (eye_color_left)
 			left_color = eye_color_left
-		if (length(eye_color_right))
+		if (eye_color_right)
 			right_color = eye_color_right
 
 		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
@@ -295,7 +300,7 @@
 		left_scar.blend_mode = BLEND_INSET_OVERLAY
 		. += left_scar
 
-	if (iris_overlay && length(eye_color_left) && length(eye_color_right))
+	if (iris_overlay && eye_color_left && eye_color_right)
 		var/mutable_appearance/left_iris = mutable_appearance(icon, "[iris_overlay]_l")
 		var/mutable_appearance/right_iris = mutable_appearance(icon, "[iris_overlay]_r")
 		var/list/color_left = rgb2num(eye_color_left, COLORSPACE_HSL)
@@ -636,8 +641,8 @@
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
 	desc = "It's two flashlights rigged together with some wire. Why would you put these in someone's head?"
-	eye_color_left ="fee5a3"
-	eye_color_right ="fee5a3"
+	eye_color_left ="#fee5a3"
+	eye_color_right ="#fee5a3"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight_eyes"
 	flash_protect = FLASH_PROTECTION_WELDER
