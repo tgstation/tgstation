@@ -656,3 +656,19 @@
 /datum/chemical_reaction/drink/blue_hawaiian
 	results = list(/datum/reagent/consumable/ethanol/blue_hawaiian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/curacao = 1)
+
+/datum/chemical_reaction/drink/william_wallace
+	results = list(/datum/reagent/consumable/ethanol/william_wallace = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, /datum/reagent/consumable/iron_tincture = 1, /datum/reagent/consumable/ethanol/bitters = 1,)
+
+/datum/chemical_reaction/drink/orange_martini
+	results = list(/datum/reagent/consumable/ethanol/orange_martini = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/iron_tincture = 2, /datum/reagent/consumable/lemonjuice = 1,)
+
+/datum/chemical_reaction/drink/iron_slushie
+	results = list(/datum/reagent/consumable/ethanol/iron_slushie = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey_sour = 1, /datum/reagent/consumable/iron_tincture = 2, /datum/reagent/consumable/ice = 2,)
+
+/datum/chemical_reaction/drink/glaswegian
+	results = list(/datum/reagent/consumable/ethanol/glaswegian = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/iron_tincture = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ethanol/triple_sec = 1)

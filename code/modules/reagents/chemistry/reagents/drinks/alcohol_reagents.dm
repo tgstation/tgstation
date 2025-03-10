@@ -2893,5 +2893,68 @@
 	taste_description = "the aloha state"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/william_wallace
+	name = "William Wallace"
+	description = "A whisky cocktail named after a knight, traditionally served in a lowball glass without ice. The turbid amber liquid swirls in the glass like storm clouds."
+	boozepwr = 70
+	color = "#B15725" // rgb: 177, 87, 37
+	quality = DRINK_FANTASTIC
+	taste_description = "whisky and glory"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_HIGH
+	var/heart_heal = 2
+
+/datum/reagent/consumable/ethanol/william_wallace/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	drinker.adjust_drowsiness(-8 SECONDS * REM * seconds_per_tick)
+	var/obj/item/organ/heart/heart = drinker.get_organ_slot(ORGAN_SLOT_HEART)
+	if(!heart || HAS_TRAIT(drinker, TRAIT_EVIL) || heart.organ_flags & ORGAN_FAILING)
+		return
+	heart.apply_organ_damage(-heart_heal * seconds_per_tick)
+	return UPDATE_MOB_HEALTH
+
+/datum/reagent/consumable/ethanol/orange_martini
+	name = "Orange Martini"
+	description = "This martini is bright orange. That can only make it taste better, no?"
+	boozepwr = 40
+	color = "#E38717" // rgb: 227, 135, 23
+	quality = DRINK_GOOD
+	taste_description = "fruity gin"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
+/datum/reagent/consumable/ethanol/orange_martini/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	drinker.adjust_drowsiness(-8 SECONDS * REM * seconds_per_tick)
+
+/datum/reagent/consumable/ethanol/iron_slushie
+	name = "Iron Slushie"
+	description = "Ice, Iron Tincture, and a little bit of whisky and lemon juice come together in a surprisingly mild and fruity frozen treat."
+	boozepwr = 20
+	color = "#FFB01D" // rgb: 255, 176, 29
+	quality = DRINK_VERYGOOD
+	taste_description = "ice cold satisfaction"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_HIGH
+
+/datum/reagent/consumable/ethanol/iron_slushie/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	drinker.adjust_drowsiness(-4 SECONDS * REM * seconds_per_tick)
+	drinker.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
+
+/datum/reagent/consumable/ethanol/glaswegian
+	name = "Glaswegian"
+	description = "A bold gin cocktail with a strong citrus flavour. Sharp and sweet."
+	boozepwr = 55
+	color = "#E38717" // rgb: 227, 135, 23
+	quality = DRINK_VERYGOOD
+	taste_description = "cream soda on a cold street"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_HIGH
+
+/datum/reagent/consumable/ethanol/glaswegian/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	drinker.adjust_drowsiness(-8 SECONDS * REM * seconds_per_tick)
+
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
