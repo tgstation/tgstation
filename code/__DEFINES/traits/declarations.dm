@@ -1462,4 +1462,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to heretic summons, making them immune to heretic spells
 #define TRAIT_HERETIC_SUMMON "heretic_summon"
 
+///Не бегать гойда
+#define TRAIT_NORUNNING "norunning"
+
 // END TRAIT DEFINES
