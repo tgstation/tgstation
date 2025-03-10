@@ -93,5 +93,8 @@
 #define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
 	#define COMSIG_SABOTEUR_SUCCESS 1
 
+/// Called when a radio jammer pulses to disable radio.
+#define COMSIG_ATOM_JAMMER_ACT "jammer_act"
+
 /// signal sent when a mouse is hovering over us, sent by atom/proc/on_mouse_entered
 #define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"
