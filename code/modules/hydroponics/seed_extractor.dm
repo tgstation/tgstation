@@ -48,6 +48,8 @@
 	icon_state = "sextractor"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/seed_extractor
+	max_integrity = 200
+	integrity_failure = 0.5
 	/// Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each
 	// seed
 	var/list/piles = list()
@@ -57,6 +59,30 @@
 /obj/machinery/seed_extractor/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	register_context()
+
+/obj/machinery/seed_extractor/update_overlays()
+	. = ..()
+
+	// Screen
+	if (!powered())
+		. += "[initial(icon_state)]-screen-off"
+	else if (machine_stat & BROKEN)
+		if (state_open)
+			. += "[initial(icon_state)]-screen-open"
+		else
+			. += "[initial(icon_state)]-screen-broken"
+	else
+		. += "[initial(icon_state)]-screen-on"
+
+	// Chassis
+	if (machine_stat & BROKEN)
+		. += "[initial(icon_state)]-broken"
+	else
+		. += "[initial(icon_state)]"
+
+	// Little maintenance panel
+	if (state_open)
+		. += "[initial(icon_state)]-open"
 
 /obj/machinery/seed_extractor/add_context(
 	atom/source,
@@ -97,7 +123,8 @@
 	if(!isliving(user) || user.combat_mode)
 		return ..()
 
-	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", attacking_item))
+	if(default_deconstruction_screwdriver(user = user, screwdriver = attacking_item))
+		update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
 	if(default_pry_open(attacking_item, close_after_pry = TRUE))
