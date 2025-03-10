@@ -44,15 +44,13 @@ export function AirAlarmControl(props) {
       scrollable
       title={route.title}
       buttons={
-        screen && (
-          <Button
-            icon="arrow-left"
-            onClick={() => setScreen('home')}
-            disabled={isHome}
-          >
-            Back
-          </Button>
-        )
+        <Button
+          icon="arrow-left"
+          onClick={() => setScreen('home')}
+          disabled={isHome}
+        >
+          Back
+        </Button>
       }
     >
       <Component {...(isHome && { setScreen })} />

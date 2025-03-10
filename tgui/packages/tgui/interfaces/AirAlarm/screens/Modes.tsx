@@ -1,6 +1,4 @@
-import { Fragment } from 'react';
-import { Box } from 'tgui-core/components';
-import { Button } from 'tgui-core/components';
+import { Button, NoticeBox, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../../backend';
 import { AirAlarmData } from '../types';
@@ -10,13 +8,17 @@ export function AirAlarmControlModes(props) {
   const { modes, selectedModePath } = data;
 
   if (!modes || modes.length === 0) {
-    return <span>Nothing to show</span>;
+    return (
+      <NoticeBox info textAlign="center">
+        Nothing to show
+      </NoticeBox>
+    );
   }
 
   return (
-    <>
+    <Stack vertical>
       {modes.map((mode) => (
-        <Fragment key={mode.path}>
+        <Stack.Item key={mode.path}>
           <Button
             icon={
               mode.path === selectedModePath ? 'check-square-o' : 'square-o'
@@ -28,9 +30,8 @@ export function AirAlarmControlModes(props) {
           >
             {mode.name + ' - ' + mode.desc}
           </Button>
-          <Box mt={1} />
-        </Fragment>
+        </Stack.Item>
       ))}
-    </>
+    </Stack>
   );
 }
