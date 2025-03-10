@@ -85,8 +85,8 @@ export const DecalPainter = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
-            <Section title="Decal Style" scrollable fill>
-              <Flex direction="row" wrap="wrap" align="fill" justify="fill">
+            <Section title="Decal Style" fill>
+              <Flex wrap="wrap">
                 {data.decal_list.map((decal) => {
                   const nondirectional = data.nondirectional_decals.includes(
                     decal.decal,
@@ -104,13 +104,7 @@ export const DecalPainter = (props) => {
                     />
                   ) : (
                     // 4 buttons for directional
-                    <Flex
-                      key={decal.decal}
-                      direction="column"
-                      wrap="nowrap"
-                      align="fill"
-                      justify="fill"
-                    >
+                    <Flex key={decal.decal} direction="column">
                       {data.dir_list.map((dir) => {
                         const selected =
                           decal.decal === data.current_decal &&
