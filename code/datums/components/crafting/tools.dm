@@ -109,3 +109,13 @@
 			continue
 		if(crayon.use_charges(user, 10))
 			return
+
+/datum/crafting_recipe/makeshift_radio_jammer
+	name = "Makeshift Radio Jammer"
+	result = /obj/item/jammer/makeshift
+	reqs = list(
+		/obj/item/universal_scanner = 1,
+		/obj/item/encryptionkey = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_TOOLS
