@@ -152,6 +152,8 @@
 	///What was our power state the last time we updated its appearance?
 	///TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
+	///variable controlling the size of carbon mobs allowed to occupy our machine, defaults to large
+	var/max_mob_size_allowed = MOB_SIZE_LARGE
 
 /datum/armor/obj_machinery
 	melee = 25
@@ -434,7 +436,7 @@
 				continue
 			if(isliving(current_atom))
 				var/mob/living/current_mob = atom
-				if(current_mob.buckled || current_mob.mob_size >= MOB_SIZE_LARGE)
+				if(current_mob.buckled || current_mob.mob_size >= max_mob_size_allowed)
 					continue
 			target = atom
 
