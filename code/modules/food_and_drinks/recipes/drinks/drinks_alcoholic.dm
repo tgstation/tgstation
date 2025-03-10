@@ -671,4 +671,4 @@
 
 /datum/chemical_reaction/drink/glaswegian
 	results = list(/datum/reagent/consumable/ethanol/glaswegian = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/iron_tincture = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ethanol/triple_sec = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/iron_tincture = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ethanol/cognac = 1)
