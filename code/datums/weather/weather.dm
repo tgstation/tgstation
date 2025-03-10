@@ -1,3 +1,8 @@
+/// The maximum amount of turfs that can be processed in a single tick regardless of
+/// the number of turfs determined by turf_weather_chance and turf_thunder_chance
+/// increasing this too high can result in severe lag so please be careful
+#define MAX_TURFS_PER_TICK 500
+
 /**
  * Causes weather to occur on a z level in certain area types
  *
@@ -53,12 +58,18 @@
 	var/area_type = /area/space
 	/// Areas to be affected by the weather, calculated when the weather begins
 	var/list/impacted_areas = list()
+	/// A weighted list of areas impacted by weather, where weights reflect the total turf count in each area.
+	var/list/impacted_areas_weighted = list()
+	/// The total number of turfs impacted by weather across all z-levels and areas.
+	var/total_impacted_turfs = 0
 	/// Areas affected by weather have their blend modes changed
 	var/list/impacted_areas_blend_modes = list()
 	/// Areas that are protected and excluded from the affected areas.
 	var/list/protected_areas = list()
 	/// The list of z-levels that this weather is actively affecting
 	var/impacted_z_levels
+	/// A weighted list of z-levels impacted by weather, where weights reflect the total turf count on each level
+	var/list/impacted_z_levels_weighted = list()
 
 	/// Since it's above everything else, this is the layer used by default.
 	var/overlay_layer = AREA_LAYER
@@ -81,19 +92,12 @@
 	var/target_trait = ZTRAIT_STATION
 	/// For barometers to know when the next storm will hit
 	var/next_hit_time = 0
-	/// The list of turfs (only /turf/open/ subtypes) that the weather event is being applied to.
-	/// If WEATHER_TURFS or WEATHER_THUNDER weather_flags are not applied this will be an empty list
-	var/list/weather_turfs = list()
 	/// The chance, per tick, a turf will have weather effects applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
 	/// Recommend setting this low near 0.01 (results in 1 in 100 affected turfs having weather reagents applied per tick)
 	var/turf_weather_chance = 0
 	/// The chance, per tick, a turf will have a thunder strike applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
 	/// Recommend setting this really low near 0.001 (results in 1 in 1000 affected turfs having thunder strikes applied per tick)
 	var/turf_thunder_chance = THUNDER_CHANCE_AVERAGE // does nothing without the WEATHER_THUNDER weather_flag
-	/// The maximum amount of turfs that can be processed in a single tick regardless of
-	/// the number of turfs determined by turf_weather_chance and turf_thunder_chance
-	/// increasing this too high can result in severe lag so please be careful
-	var/max_turfs_per_tick = 500
 	/// The calculated amount of turfs that get weather effects processed each tick (this gets calculated do not manually set this var)
 	var/weather_turfs_per_tick = 0
 	/// The calculated amount of turfs that get thunder effects processed each tick (this gets calculated do not manually set this var)
@@ -131,6 +135,9 @@
 
 	if(length(subsystem_tasks))
 		currentpart = subsystem_tasks[1]
+
+	setup_weather_areas()
+	setup_weather_turfs()
 /**
  * Telegraphs the beginning of the weather on the impacted z levels
  *
@@ -142,11 +149,6 @@
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
-	setup_weather_areas(impacted_areas)
-
-	if(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER))
-		setup_weather_turfs()
-
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
 
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
@@ -156,10 +158,7 @@
 		send_alert(telegraph_message, telegraph_sound, telegraph_sound_vol)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
-/datum/weather/proc/setup_weather_areas(list/selected_areas)
-	if(length(selected_areas))
-		return // impacted areas already been setup
-
+/datum/weather/proc/setup_weather_areas()
 	var/list/affectareas = list()
 	for(var/area/selected_area as anything in get_areas(area_type))
 		affectareas += selected_area
@@ -170,39 +169,46 @@
 			continue
 
 		for(var/z in impacted_z_levels)
-			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
-				selected_areas |= affected_area
+			var/total_turfs = length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z])
+			if(total_turfs)
+				impacted_areas |= affected_area
+
+				var/z_string = num2text(z)
+				if(!impacted_z_levels_weighted[z_string])
+					impacted_z_levels_weighted[z_string] = 0
+				if(!impacted_areas_weighted[z_string])
+					impacted_areas_weighted[z_string] = list()
+
+				impacted_z_levels_weighted[z_string] += total_turfs
+				impacted_areas_weighted[z_string][affected_area] = total_turfs
+				total_impacted_turfs += total_turfs
 				continue
 
+/// Selects a turf impacted by weather, if available, otherwise returns null
+/datum/weather/proc/pick_turf()
+	var/z_string = pick_weight_recursive(impacted_z_levels_weighted)
+	var/area/selected_area = pick_weight_recursive(impacted_areas_weighted[z_string])
+	var/z = text2num(z_string)
+	var/list/available_turfs = selected_area.get_turfs_by_zlevel(z)
+    // Areas or turfs may change during weather events. For example, a shuttle
+	// landing and departing might leave an area in 'impacted_areas' but without
+	// turfs on the expected z-level, resulting in an empty 'available_turfs' list.
+	if(length(available_turfs))
+		return pick(available_turfs)
+	return
+
 /datum/weather/proc/setup_weather_turfs()
-	for(var/area/weather_area as anything in impacted_areas)
-		for(var/z in impacted_z_levels)
-			for(var/turf/valid_weather_turf as anything in weather_area.get_turfs_by_zlevel(z))
-				// applying weather effects to solid walls is a waste since nothing will happen
-				if(isclosedturf(valid_weather_turf))
-					continue
-				// same logic for space and openspace turfs which should boost performance a ton
-				// note - mobs in space/openspace turfs still have weather affects applied to them if they are in a affected area
-				if(is_space_or_openspace(valid_weather_turf))
-					continue
-				// solid windows are also worth skipping
-				var/obj/structure/window/window = locate() in valid_weather_turf
-				if(window?.fulltile)
-					continue
-
-				weather_turfs += valid_weather_turf
-
-	var/total_turfs = length(weather_turfs)
-
-	if(!total_turfs || !(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER)))
+	if(!(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER)))
+		return
+	if(!total_impacted_turfs)
 		return
 
 	if(weather_flags & (WEATHER_TURFS))
-		weather_turfs_per_tick = total_turfs * turf_weather_chance
-		weather_turfs_per_tick = min(weather_turfs_per_tick, max_turfs_per_tick)
+		weather_turfs_per_tick = total_impacted_turfs * turf_weather_chance
+		weather_turfs_per_tick = min(weather_turfs_per_tick, MAX_TURFS_PER_TICK)
 	if(weather_flags & (WEATHER_THUNDER))
-		thunder_turfs_per_tick = total_turfs * turf_thunder_chance
-		thunder_turfs_per_tick = min(thunder_turfs_per_tick, max_turfs_per_tick)
+		thunder_turfs_per_tick = total_impacted_turfs * turf_thunder_chance
+		thunder_turfs_per_tick = min(thunder_turfs_per_tick, MAX_TURFS_PER_TICK)
 
 /**
  * Starts the actual weather and effects from it
@@ -300,6 +306,23 @@
 	return TRUE
 
 /**
+ * Returns TRUE if the turf can be affected by the weather
+ */
+/datum/weather/proc/can_weather_act_turf(turf/valid_weather_turf)
+	// applying weather effects to solid walls is a waste since nothing will happen
+	if(isclosedturf(valid_weather_turf))
+		return
+	// same logic for space and openspace turfs
+	if(is_space_or_openspace(valid_weather_turf))
+		return
+	// solid windows are also worth skipping
+	var/obj/structure/window/window = locate() in valid_weather_turf
+	if(window?.fulltile)
+		return
+
+	return TRUE
+
+/**
  * Affects the mob with whatever the weather does
  */
 /datum/weather/proc/weather_act_mob(mob/living/L)
@@ -387,3 +410,5 @@
 		gen_overlay_cache += new_weather_overlay
 
 	return gen_overlay_cache
+
+#undef MAX_TURFS_PER_TICK

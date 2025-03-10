@@ -27,18 +27,13 @@
 	var/list/strong_sounds = list()
 
 /datum/weather/ash_storm/telegraph()
-	var/list/eligible_areas = list()
-	for (var/z in impacted_z_levels)
-		eligible_areas += SSmapping.areas_in_z["[z]"]
-	for(var/i in 1 to eligible_areas.len)
-		var/area/place = eligible_areas[i]
-		if(place.outdoors)
-			weak_sounds[place] = /datum/looping_sound/weak_outside_ashstorm
-			strong_sounds[place] = /datum/looping_sound/active_outside_ashstorm
+	for(var/area/impacted_area as anything in impacted_areas)
+		if(impacted_area.outdoors)
+			weak_sounds[impacted_area] = /datum/looping_sound/weak_outside_ashstorm
+			strong_sounds[impacted_area] = /datum/looping_sound/active_outside_ashstorm
 		else
-			weak_sounds[place] = /datum/looping_sound/weak_inside_ashstorm
-			strong_sounds[place] = /datum/looping_sound/active_inside_ashstorm
-		CHECK_TICK
+			weak_sounds[impacted_area] = /datum/looping_sound/weak_inside_ashstorm
+			strong_sounds[impacted_area] = /datum/looping_sound/active_inside_ashstorm
 
 	//We modify this list instead of setting it to weak/stron sounds in order to preserve things that hold a reference to it
 	//It's essentially a playlist for a bunch of components that chose what sound to loop based on the area a player is in

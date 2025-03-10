@@ -33,11 +33,11 @@ SUBSYSTEM_DEF(weather)
 		if(weather_event.currentpart == SSWEATHER_TURFS)
 			if(!resumed)
 				weather_event.turf_iteration = ROUND_PROB(weather_event.weather_turfs_per_tick)
-			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
 			while(weather_event.turf_iteration)
 				weather_event.turf_iteration--
-				var/turf/open/selected_turf = pick(weather_turfs)
-				weather_event.weather_act_turf(selected_turf)
+				var/turf/selected_turf = weather_event.pick_turf()
+				if(selected_turf && weather_event.can_weather_act_turf(selected_turf))
+					weather_event.weather_act_turf(selected_turf)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
@@ -46,11 +46,11 @@ SUBSYSTEM_DEF(weather)
 		if(weather_event.currentpart == SSWEATHER_THUNDER)
 			if(!resumed)
 				weather_event.thunder_iteration = ROUND_PROB(weather_event.thunder_turfs_per_tick)
-			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
 			while(weather_event.thunder_iteration)
 				weather_event.thunder_iteration--
-				var/turf/open/selected_turf = pick(weather_turfs)
-				weather_event.thunder_act_turf(selected_turf)
+				var/turf/selected_turf = weather_event.pick_turf()
+				if(selected_turf && weather_event.can_weather_act_turf(selected_turf))
+					weather_event.thunder_act_turf(selected_turf)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE

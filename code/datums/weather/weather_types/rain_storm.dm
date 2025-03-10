@@ -56,8 +56,6 @@
 	weather_color = rain_reagent.color
 
 /datum/weather/rain_storm/telegraph()
-	setup_weather_areas(impacted_areas)
-
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
