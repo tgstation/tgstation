@@ -41,6 +41,6 @@
 
 #undef OBJECTIFY_TIME
 
-/datum/smite/objectify/divin
+/datum/smite/objectify/divine
 	name = "Become Object (Divine)"
 	smite_flags = SMITE_DIVINE|SMITE_STUN
