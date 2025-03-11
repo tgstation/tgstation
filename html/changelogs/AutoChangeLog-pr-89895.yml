@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed missing distro pipe in CE's office, and missing cable in tech storage"

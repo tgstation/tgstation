@@ -1,4 +1,0 @@
-author: "Vallat"
-delete-after: True
-changes:
-  - bugfix: "fixed \"Save chat log\" verb"

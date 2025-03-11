@@ -260,3 +260,19 @@
   StrangeWeirdKitten:
   - code_imp: Readds return_turf_delta_p() and is_nearby_planetary_atmos() as turf
       helpers.
+2025-03-11:
+  Sadboysuss:
+  - sound: regenerative meshes now make sounds when healing and have new drop/pickup
+      sounds
+  SmArtKar:
+  - bugfix: Fixed missing distro pipe in CE's office, and missing cable in tech storage
+  Vallat:
+  - bugfix: fixed "Save chat log" verb
+  Wallem:
+  - qol: some tgui lists that use the same simple function--Navigation menu, Fulton
+      navbeacon selection, Ghost teleportation, etc.--have been given a candystripe.
+  combustor:
+  - map: Removed cameras from most break rooms and cargo warehouses.
+  - qol: Added and moved a bunch of cameras to remove silly blind-spots and added
+      cams to rooms where there should've been cams.
+  - map: Added EVA shutter buttons to birdshot
