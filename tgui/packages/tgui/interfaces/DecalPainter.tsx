@@ -84,8 +84,8 @@ export const DecalPainter = (props) => {
               )}
             </Section>
           </Stack.Item>
-          <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
-            <Section title="Decal Style" fill>
+          <Stack.Item grow>
+            <Section title="Decal Style" fill scrollable>
               <Flex wrap="wrap">
                 {data.decal_list.map((decal) => {
                   const nondirectional = data.nondirectional_decals.includes(
