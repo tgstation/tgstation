@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Adds the Policy Panel verb, which shows you all the policy the server has set."

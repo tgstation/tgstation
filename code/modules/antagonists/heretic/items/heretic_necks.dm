@@ -196,7 +196,7 @@
 		return FALSE
 	if(!human_target.mob_mood)
 		return FALSE
-	if(human_target.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
+	if(human_target.mob_mood.sanity_level > SANITY_LEVEL_UNSTABLE)
 		living_user.balloon_alert(living_user, "their mind is too strong!")
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		human_target.mob_mood.set_sanity(human_target.mob_mood.sanity - sanity_damage)

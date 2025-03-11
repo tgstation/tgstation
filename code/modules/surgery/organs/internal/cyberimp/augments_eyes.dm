@@ -11,11 +11,10 @@
 	name = "HUD implant"
 	desc = "These cybernetic eyes will display a HUD over everything you see. Maybe."
 	slot = ORGAN_SLOT_HUD
-	actions_types = list(/datum/action/item_action/toggle_hud)
+	actions_types = list(/datum/action/item_action/organ_action/toggle_hud)
 	var/HUD_traits = list()
 	/// Whether the HUD implant is on or off
 	var/toggled_on = TRUE
-
 
 /obj/item/organ/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
 	if(toggled_on)

@@ -3641,6 +3641,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/wicg-file-system-access@npm:^2023.10.5":
+  version: 2023.10.5
+  resolution: "@types/wicg-file-system-access@npm:2023.10.5"
+  checksum: 10c0/3c6099320a2517ab405bd65712eb19ba2c1f7f0c30f952744102b76809ed9ad5205f881c79ebe6f92ac7af7a13667df8c23dd59b0a5182119c74afa17335bfd3
+  languageName: node
+  linkType: hard
+
 "@types/ws@npm:^8.5.13":
   version: 8.5.13
   resolution: "@types/ws@npm:8.5.13"
@@ -18723,17 +18730,17 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
-    tgui-core: "npm:^1.7.4"
+    tgui-core: "npm:^1.8.1"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:^1.7.4":
-  version: 1.7.4
-  resolution: "tgui-core@npm:1.7.4"
+"tgui-core@npm:^1.8.1":
+  version: 1.8.1
+  resolution: "tgui-core@npm:1.8.1"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/06b9d8702d6ae170383b28725bf6308cd320499367ea8ea1f9dd5039ab371cfe34419a7d3d1e0e2b86884326e8d4ab116e5601208d2f85d215b7c464fd32fdbf
+  checksum: 10c0/ae0bc55f177d98849b60beba413c2a8358ba3062166a851c2399a2d5dee76d7ebd7f72accc0481e30fa6d772358ba4031cd65f5963eb8c22034674a766cd4d4d
   languageName: node
   linkType: hard
 
@@ -18761,7 +18768,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
-    tgui-core: "npm:^1.7.4"
+    tgui-core: "npm:^1.8.1"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
@@ -18788,7 +18795,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
-    tgui-core: "npm:^1.7.4"
+    tgui-core: "npm:^1.8.1"
     tgui-polyfill: "workspace:*"
   languageName: unknown
   linkType: soft
@@ -18802,6 +18809,7 @@ __metadata:
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.9.0"
     "@types/webpack-env": "npm:^1.18.5"
+    "@types/wicg-file-system-access": "npm:^2023.10.5"
     "@typescript-eslint/parser": "npm:^8.13.0"
     "@typescript-eslint/utils": "npm:^8.13.0"
     css-loader: "npm:^7.1.2"
@@ -18850,7 +18858,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-popper: "npm:^2.3.0"
-    tgui-core: "npm:^1.7.4"
+    tgui-core: "npm:^1.8.1"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
