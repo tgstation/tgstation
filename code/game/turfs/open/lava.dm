@@ -300,9 +300,8 @@
 
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
-	if(burn_buckled)
-		if(cache_burn_check(burn_buckled) != LAVA_BE_BURNING)
-			return LAVA_BE_PROCESSING
+	if(burn_buckled && cache_burn_check(burn_buckled) != LAVA_BE_BURNING)
+		return LAVA_BE_PROCESSING
 
 	if(iscarbon(burn_living))
 		var/mob/living/carbon/burn_carbon = burn_living
