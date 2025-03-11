@@ -210,10 +210,10 @@
 	var/mob/living/ridden = parent
 	if(!require_minigame || ridden.faction.Find(REF(rider)))
 		return
-	ridden.Shake(duration = 2 SECONDS)
+	ridden.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 1 SECONDS)
+	ridden.spin(spintime = 1 SECONDS, speed = 1)
 	ridden.balloon_alert(rider, "tries to shake you off!")
-	var/datum/riding_minigame/game = new(ridden, rider, FALSE)
-	game.commence_minigame()
+	new /datum/riding_minigame(ridden, rider)
 
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
@@ -332,10 +332,10 @@
 
 /datum/component/riding/creature/mulebot/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
-		TEXT_NORTH = list(0, 12),
-		TEXT_SOUTH = list(0, 12),
-		TEXT_EAST =  list(0, 12),
-		TEXT_WEST =  list(0, 12),
+		TEXT_NORTH = list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 12, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/mulebot/get_parent_offsets_and_layers()
@@ -353,10 +353,10 @@
 
 /datum/component/riding/creature/cow/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/pig
@@ -371,10 +371,10 @@
 
 /datum/component/riding/creature/pig/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/pony
@@ -391,10 +391,10 @@
 
 /datum/component/riding/creature/pony/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/pony/driver_move(atom/movable/movable_parent, mob/living/user, direction)
@@ -422,10 +422,10 @@
 
 /datum/component/riding/creature/bear/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/carp
@@ -441,10 +441,10 @@
 
 /datum/component/riding/creature/carp/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/megacarp
@@ -459,10 +459,10 @@
 
 /datum/component/riding/creature/megacarp/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/vatbeast
@@ -479,10 +479,10 @@
 
 /datum/component/riding/creature/vatbeast/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/goliath
@@ -513,10 +513,10 @@
 
 /datum/component/riding/creature/goliath/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(-12, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(-12, 0, ABOVE_MOB_LAYER),
-		TEXT_EAST =  list(-12, 0, OBJ_LAYER),
-		TEXT_WEST =  list(-12, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/glutton
@@ -531,10 +531,10 @@
 
 /datum/component/riding/creature/glutton/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/guardian
@@ -550,10 +550,10 @@
 
 /datum/component/riding/creature/guardian/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/guardian/ride_check(mob/living/user, consequences = TRUE)
@@ -566,18 +566,18 @@
 
 /datum/component/riding/creature/goldgrub/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
-		TEXT_NORTH = list(11, 3),
-		TEXT_SOUTH = list(11, 3),
-		TEXT_EAST =  list( 9, 3),
-		TEXT_WEST =  list(14, 3),
+		TEXT_NORTH = list(0, 3),
+		TEXT_SOUTH = list(1, 7),
+		TEXT_EAST =  list(-3, 3),
+		TEXT_WEST =  list(3, 3),
 	)
 
 /datum/component/riding/creature/goldgrub/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/leaper
@@ -587,12 +587,19 @@
 
 /datum/component/riding/creature/leaper/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
-		TEXT_NORTH = list(17, 46),
-		TEXT_SOUTH = list(17, 51),
-		TEXT_EAST =  list(27, 46),
+		TEXT_NORTH = list(0, 46),
+		TEXT_SOUTH = list(0, 51),
+		TEXT_EAST =  list(-6, 46),
 		TEXT_WEST =  list( 6, 46),
 	)
 
+/datum/component/riding/creature/leaper/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+	)
 /datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
 	. = ..()
 	RegisterSignal(riding_mob, COMSIG_MOVABLE_POINTED, PROC_REF(attack_pointed))
@@ -657,10 +664,10 @@
 
 /datum/component/riding/creature/raptor/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, OBJ_LAYER),
-		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
 /datum/component/riding/creature/raptor/fast
@@ -673,83 +680,170 @@
 	///our current rider
 	var/datum/weakref/mounter
 	///the total amount of tries the rider gets
-	var/maximum_attempts = 6
+	var/maximum_attempts = 25
 	///maximum number of failures before we fail
-	var/maximum_failures = 3
+	var/current_attempts = 0
+	///required number of successes
+	var/required_successes = 11
+	///what failures are we on
+	var/current_failures = 0
+	///we win these
+	var/current_succeeded = 0
+	///holder of our heart counter
+	var/image/heart_counter
+	///list of our hearts
+	var/list/hearts_list = list()
+	///holder of our minigame!
+	var/image/minigame_holder
 	///cached directional icons of our host
-	var/list/cached_icons = list()
+	var/list/cached_arrows = list()
+	///cooldown when we fail
+	COOLDOWN_DECLARE(failure_cooldown)
 
-/datum/riding_minigame/New(mob/living/ridden, mob/living/rider, use_mob_icons = TRUE)
+/datum/riding_minigame/New(mob/living/ridden, mob/living/rider)
 	. = ..()
-	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_game))
 	host = WEAKREF(ridden)
 	mounter = WEAKREF(rider)
-	var/used_icon = use_mob_icons ? initial(ridden.icon) : 'icons/testing/turf_analysis.dmi'
-	var/used_icon_state = use_mob_icons ? initial(ridden.icon_state) : "red_arrow"
-	for(var/direction in GLOB.cardinals)
-		var/icon/directional_icon = getFlatIcon(image(icon = used_icon, icon_state = used_icon_state, dir = direction))
-		var/string_icon = icon2base64(directional_icon)
-		var/opposite_direction = dir2text(REVERSE_DIR(direction))
-		cached_icons[opposite_direction] = string_icon
-
-/datum/riding_minigame/proc/commence_minigame()
-	set waitfor = FALSE
+	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_minigame))
+	RegisterSignal(ridden, COMSIG_MOVABLE_ATTEMPTED_MOVE, PROC_REF(on_ridden_moved))
+	minigame_holder = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0, pixel_x = 32, pixel_y = 0)
+	heart_counter = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0, pixel_x = 0, pixel_y = -32)
+	SET_PLANE_EXPLICIT(minigame_holder, ABOVE_HUD_PLANE, rider)
+	SET_PLANE_EXPLICIT(heart_counter, ABOVE_HUD_PLANE, rider)
+	generate_heart_counter()
+	generate_visuals()
+	rider.client.images |= list(minigame_holder, heart_counter)
 	START_PROCESSING(SSprocessing, src)
-	var/mob/living/rider = mounter?.resolve()
-	if(isnull(rider))
-		lose_game()
-		return
-	ui_interact(rider)
+
+/datum/riding_minigame/proc/generate_visuals()
+	var/static/list/void_arrow_angles = list(
+		"north" = -90,
+		"west" = 180,
+		"south" = 90,
+		"east" = 0,
+	)
+	var/x_offset = 0
+	for(var/direction in void_arrow_angles)
+		var/obj/effect/overlay/vis/ride_minigame/new_arrow = new
+		new_arrow.icon = 'icons/effects/riding_minigame.dmi'
+		new_arrow.icon_state = "blank_arrow"
+		new_arrow.transform = new_arrow.transform.Turn(void_arrow_angles[direction])
+		new_arrow.pixel_x = x_offset
+		new_arrow.layer = ABOVE_ALL_MOB_LAYER
+		minigame_holder.vis_contents += new_arrow
+		cached_arrows[direction] = list("visual_object" = new_arrow, "is_active" = null)
+		x_offset += 16
+
+/datum/riding_minigame/proc/generate_heart_counter()
+	var/x_offset = -32
+	for(var/i in 1 to required_successes)
+		var/obj/effect/overlay/vis/ride_minigame/heart = new
+		heart.icon = 'icons/effects/effects.dmi'
+		heart.icon_state = "empty_heart"
+		heart.pixel_x = x_offset
+		x_offset += 8
+		hearts_list += heart
+		heart_counter.vis_contents += heart
 
 /datum/riding_minigame/process()
-	var/mob/living/living_host = host?.resolve()
-	if(isnull(living_host))
-		return PROCESS_KILL
-	if(prob(60)) //we shake and move uncontrollably!
-		living_host.Shake(duration = 2 SECONDS)
-		var/list/new_direction = GLOB.cardinals.Copy() - living_host.dir
-		living_host.setDir(pick(new_direction))
-
-/datum/riding_minigame/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "RideMinigame")
-		ui.open()
-
-/datum/riding_minigame/ui_static_data(mob/user)
-	var/list/data = list()
-	data["maximum_attempts"] = maximum_attempts
-	data["maximum_failures"] = maximum_failures
-	data["all_icons"] = list()
-	for(var/index in cached_icons)
-		data["all_icons"] += list(list(
-			"direction" = index,
-			"icon" = cached_icons[index],
-		))
-	return data
-
-/datum/riding_minigame/ui_state(mob/user)
-	return GLOB.always_state
-
-/datum/riding_minigame/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	switch(action)
-		if("lose_game")
-			lose_game()
-		if("win_game")
-			win_game()
-
-/datum/riding_minigame/proc/win_game()
-	var/mob/living/living_host = host?.resolve()
-	var/mob/living/living_rider = mounter?.resolve()
-	if(isnull(living_host) || isnull(living_rider))
-		qdel(src)
+	if(current_attempts >= maximum_attempts)
+		lose_minigame()
 		return
-	living_host.befriend(living_rider)
-	living_host.balloon_alert(living_rider, "calms down...")
-	qdel(src)
+	if(prob(30)) //we shake and move uncontrollably!
+		var/mob/living/living_host = host.resolve()
+		living_host.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 0.75 SECONDS)
+		living_host.spin(spintime = 0.75 SECONDS, speed = 1)
 
-/datum/riding_minigame/proc/lose_game()
+
+
+	for(var/index in 0 to 1)
+		addtimer(CALLBACK(src, PROC_REF(generate_arrow)), 0.3 SECONDS * index)
+
+/datum/riding_minigame/proc/generate_arrow()
+	if(current_attempts >= maximum_attempts)
+		return
+	var/static/list/possible_arrows = list(
+		"north" = 0,
+		"west" = 16,
+		"south" = 32,
+		"east" = 48,
+	)
+	current_attempts++
+	var/picked_arrow = pick(possible_arrows)
+	var/obj/effect/overlay/vis/ride_minigame/new_arrow = new
+	new_arrow.icon = 'icons/effects/riding_minigame.dmi'
+	new_arrow.icon_state = "[picked_arrow]_arrow"
+	new_arrow.alpha = 0
+	new_arrow.layer = ABOVE_ALL_MOB_LAYER + 0.1
+	new_arrow.pixel_x = possible_arrows[picked_arrow]
+	new_arrow.pixel_y = -50
+	minigame_holder.vis_contents += new_arrow
+	animate(new_arrow, alpha = 255, time = 0.15 SECONDS)
+	animate(new_arrow, pixel_y = 20, time = 1.4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(add_active_arrow), new_arrow, picked_arrow), 0.9 SECONDS)
+
+/datum/riding_minigame/proc/add_active_arrow(atom/arrow, direction)
+	if(QDELETED(arrow))
+		return
+	cached_arrows[direction]["is_active"] = arrow
+	RegisterSignal(arrow, COMSIG_QDELETING, PROC_REF(on_arrow_delete))
+	addtimer(CALLBACK(src, PROC_REF(remove_active_arrow), arrow, direction), 0.2 SECONDS)
+
+/datum/riding_minigame/proc/remove_active_arrow(atom/arrow, direction)
+	if(QDELETED(arrow))
+		return
+	animate(arrow, alpha = 0, time = 0.1 SECONDS)
+	QDEL_IN(arrow, 0.1 SECONDS)
+
+/datum/riding_minigame/proc/on_arrow_delete(datum/source)
+	SIGNAL_HANDLER
+	for(var/arrow in cached_arrows)
+		var/list/arrow_details = cached_arrows[arrow]
+		if(arrow_details["is_active"] != source)
+			continue
+		arrow_details["is_active"] = null
+
+/datum/riding_minigame/proc/on_ridden_moved(atom/movable/source, atom/new_loc, direction)
+	SIGNAL_HANDLER
+	. = NONE
+	if(new_loc.z != source.z || !COOLDOWN_FINISHED(src, failure_cooldown))
+		return
+	var/list/arrow_data = cached_arrows[dir2text(direction)]
+	var/atom/existing_arrow = arrow_data["is_active"]
+
+	if(!QDELETED(existing_arrow))
+		qdel(existing_arrow)
+		var/atom/arrow_object = arrow_data["visual_object"]
+		flick("blank_arrow_win", arrow_object)
+		increment_counter()
+		return
+
+	for(var/arrow_direction in cached_arrows)
+		var/obj/my_arrow = cached_arrows[arrow_direction]["visual_object"]
+		if(isnull(my_arrow))
+			continue
+		flick("blank_arrow_lose", my_arrow)
+		my_arrow.Shake(duration = 2 SECONDS)
+
+	increment_failure()
+
+/datum/riding_minigame/proc/increment_counter()
+	current_succeeded++
+	var/obj/new_heart = hearts_list[current_succeeded]
+	new_heart.icon_state = "full_heart"
+	new_heart.transform = new_heart.transform.Scale(2 ,2)
+	animate(new_heart, transform = matrix(), time = 0.3 SECONDS)
+	if(current_succeeded >= required_successes)
+		win_minigame()
+
+/datum/riding_minigame/proc/increment_failure()
+	current_failures++
+	COOLDOWN_START(src, failure_cooldown, 2 SECONDS)
+	if(current_failures > (maximum_attempts - required_successes))
+		lose_minigame()
+
+/datum/riding_minigame/proc/lose_minigame()
+	SIGNAL_HANDLER
 	var/mob/living/living_host = host?.resolve()
 	var/mob/living/living_rider = mounter?.resolve()
 	if(isnull(living_host) || isnull(living_rider))
@@ -763,11 +857,32 @@
 		living_host.balloon_alert(living_rider, "knocks you down!")
 	qdel(src)
 
-/datum/riding_minigame/ui_close(mob/user)
-	lose_game()
+/datum/riding_minigame/proc/win_minigame()
+	var/mob/living/living_host = host?.resolve()
+	var/mob/living/living_rider = mounter?.resolve()
+	if(isnull(living_host) || isnull(living_rider))
+		qdel(src)
+		return
+	living_host.befriend(living_rider)
+	living_host.balloon_alert(living_rider, "calms down...")
+	qdel(src)
 
 /datum/riding_minigame/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
+
+	var/mob/living/living_mounter = mounter?.resolve()
+	if(living_mounter)
+		living_mounter.client.images -= minigame_holder
+		living_mounter.client.images -= heart_counter
+
 	mounter = null
 	host = null
+	hearts_list = null
+	cached_arrows = null
+	minigame_holder = null
+	heart_counter = null
 	return ..()
+
+/obj/effect/overlay/vis/ride_minigame
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
+
