@@ -7,6 +7,7 @@
 	var/icon_normal = "bcircuit"
 	light_color = LIGHT_COLOR_BABY_BLUE
 	floor_tile = /obj/item/stack/tile/circuit
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 	/// If we want to ignore our area's power status and just be always off
 	/// Mostly for mappers doing asthetic things, or cases where the floor should be broken
 	var/always_off = FALSE

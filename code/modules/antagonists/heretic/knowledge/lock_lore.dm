@@ -100,15 +100,7 @@
 	result_item.shapeshift(id)
 	return TRUE
 
-/datum/heretic_knowledge/mark/lock_mark
-	name = "Mark of Lock"
-	desc = "Your Mansus Grasp now applies the Mark of Lock. \
-		Attack a marked person to bar them from all passages for the duration of the mark. \
-		This will make it so that they have no access whatsoever, even public access doors will reject them."
-	gain_text = "The Gatekeeper was a corrupt Steward. She hindered her fellows for her own twisted amusement."
-	mark_type = /datum/status_effect/eldritch/lock
-
-/datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
+/datum/heretic_knowledge/limited_amount/concierge_rite
 	name = "Concierge's Rite"
 	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
@@ -132,7 +124,7 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 1
 
-/datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former
+/datum/heretic_knowledge/blade_upgrade/flesh/lock
 	name = "Opening Blade"
 	desc = "Your blade has a chance to cause a weeping avulsion on attack."
 	gain_text = "The Pilgrim-Surgeon was not an Steward. Nonetheless, its blades and sutures proved a match for their keys."

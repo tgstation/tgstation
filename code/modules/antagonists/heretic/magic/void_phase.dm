@@ -57,7 +57,7 @@
 		if(living_mob.can_block_magic(antimagic_flags))
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
-		living_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
+		living_mob.apply_status_effect(/datum/status_effect/void_chill, 2)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'

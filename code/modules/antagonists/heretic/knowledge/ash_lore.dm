@@ -1,7 +1,7 @@
-
 /datum/heretic_knowledge_tree_column/main/ash
 	route = PATH_ASH
 	ui_bgr = "node_ash"
+
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
 	tier1 = /datum/heretic_knowledge/spell/ash_passage
 	unique_ability = /datum/heretic_knowledge/spell/fire_blast

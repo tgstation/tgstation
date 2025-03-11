@@ -13,20 +13,23 @@
 	if(!istype(start_turf) || !HAS_TRAIT(start_turf, TRAIT_RUSTY))
 		return FALSE
 	StartCooldown(135 SECONDS, 135 SECONDS)
+	RegisterSignal(owner, COMSIG_FINISHED_CHARGE, PROC_REF(affect_aoe))
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 	return TRUE
+
 /datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc, atom/target)
 	var/turf/victim = get_turf(owner)
 	if(!actively_moving)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
-	victim.rust_heretic_act()
+	var/mob/living/living_owner = owner
+	living_owner.do_rust_heretic_act(victim)
 	for(var/dir in GLOB.cardinals)
 		var/turf/nearby_turf = get_step(victim, dir)
 		if(istype(nearby_turf))
-			nearby_turf.rust_heretic_act()
+			living_owner.do_rust_heretic_act(nearby_turf)
 
 /datum/action/cooldown/mob_cooldown/charge/rust/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
@@ -49,3 +52,10 @@
 
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	try_hit_target(source, target, charge_damage)
+
+/datum/action/cooldown/mob_cooldown/charge/rust/proc/affect_aoe()
+	SIGNAL_HANDLER
+	UnregisterSignal(owner, COMSIG_FINISHED_CHARGE)
+	for(var/mob/living/nearby_mob in view(1, owner))
+		nearby_mob.apply_damage(charge_damage, BRUTE, wound_bonus = CANT_WOUND)
+		nearby_mob.Knockdown(5 SECONDS)

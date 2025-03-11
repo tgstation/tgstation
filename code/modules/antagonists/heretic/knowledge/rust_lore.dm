@@ -37,6 +37,12 @@
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
 
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		for(var/obj/item/bodypart/robotic_limb in carbon_target.bodyparts)
+			if(robotic_limb.biological_state & BIO_ROBOTIC)
+				robotic_limb.receive_damage(10)
+
 	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
 
@@ -126,6 +132,7 @@
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
+
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
 	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
@@ -136,8 +143,6 @@
 
 	action_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
-
-
 
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
 	. = ..()

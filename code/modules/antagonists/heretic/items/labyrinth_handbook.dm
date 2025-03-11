@@ -31,15 +31,21 @@
 	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 	///what type of barrier do we spawn when used
 	var/barrier_type = /obj/effect/forcefield/wizard/heretic
-	///how many uses do we have left
-	var/uses = 3
+	/// Current charges remaining
+	var/charges = 5
+	/// Max possible amount of charges
+	var/max_charges = 5
+	/// List that contains each timer for the charge
+	var/list/charge_timers = list()
+	/// How long before a charge is restored
+	var/charge_time = 8 SECONDS
 
 /obj/item/heretic_labyrinth_handbook/examine(mob/user)
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
 	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
-	. += span_hypnophrase("It has <b>[uses]</b> uses left.")
+	. += span_notice("It has <b>[charges]</b> charges remaining.")
 
 /obj/item/heretic_labyrinth_handbook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
@@ -64,8 +70,9 @@
 	new /obj/effect/temp_visual/paper_scatter(turf_target)
 	playsound(turf_target, 'sound/effects/magic/smoke.ogg', 30)
 	new barrier_type(turf_target, user)
-	uses--
-	if(uses <= 0)
-		to_chat(user, span_warning("[src] falls apart, turning into ash and dust!"))
-		qdel(src)
+	charges--
+	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/heretic_labyrinth_handbook/proc/recharge()
+	charges = min(charges+1, max_charges)
