@@ -166,8 +166,8 @@
 	fall_chance = 0
 	jostle_chance = 50
 	ignore_throwspeed_threshold = TRUE
-	pain_mult = 10
-	jostle_pain_mult = 20
+	pain_mult = 1
+	jostle_pain_mult = 1
 	rip_time = 0.5 SECONDS
 
 // Mech Scattershot
