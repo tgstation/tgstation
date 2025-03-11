@@ -1001,25 +1001,30 @@
 	block_sound = 'sound/items/weapons/block_shield.ogg'
 	slot_flags = ITEM_SLOT_BELT
 	cooldown = CLICK_CD_MELEE
-	knockdown_time = 250 MILLISECONDS
+	knockdown_time = 0.25 SECONDS
 	demolition_mod = 1.5
-	stamina_damage = 35 // 3 hit stamcrit
+	stamina_damage = 30 // 4 hit stamcrit
 	stun_armour_penetration = 30 // bronze-silver telescopic
 	force = 16 // 7 hit crit
-	bare_wound_bonus = 5 // 5 hit crit
-
-/obj/item/melee/baton/nunchaku/Initialize(mapload)
-	. = ..()
-	// change icon state after throw/attacks
-	RegisterSignals(src, list(COMSIG_MOVABLE_POST_THROW, COMSIG_ITEM_AFTERATTACK), PROC_REF(randomize_state))
+	bare_wound_bonus = 5
 
 /obj/item/melee/baton/nunchaku/proc/randomize_state()
 	icon_state = pick(list("nunchaku", "nunchaku_x", "nunchaku_y"))
-	update_icon_state()
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/melee/baton/nunchaku/after_throw(datum/callback/callback)
+	. = ..()
+	randomize_state()
+
+/obj/item/melee/baton/nunchaku/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	randomize_state()
 
 /obj/item/melee/baton/nunchaku/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 	if(attack_type == PROJECTILE_ATTACK || !owner.throw_mode)
 		return ..()
+
+	randomize_state()
 
 	// blocks any melee/throwable attacks
 	owner.adjustStaminaLoss(5)
@@ -1028,7 +1033,7 @@
 	// counterattack at melee
 	if(attack_type in list(MELEE_ATTACK, UNARMED_ATTACK, LEAP_ATTACK))
 		var/mob/living/attacker = GET_ASSAILANT(hitby)
-		playsound(src, pick(list('sound/items/weapons/cqchit2.ogg', 'sound/items/weapons/cqchit1.ogg')), 100, FALSE)
-		attack(attacker, owner, BATON_DO_NORMAL_ATTACK)
+		playsound(src, pick(list('sound/items/weapons/cqchit2.ogg', 'sound/items/weapons/cqchit1.ogg')), 70, FALSE)
+		melee_attack_chain(owner, attacker, LEFT_CLICK)
 
-	. = ..()
+	return ..()
