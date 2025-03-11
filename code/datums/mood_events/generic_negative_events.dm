@@ -526,3 +526,5 @@
 	if(HAS_TRAIT(owner, TRAIT_ANOSMIA))
 		description = "Cigarette smoke is unpleasant."
 		mood_change = -1
+	else if(prob(20))
+		owner.emote("cough")
