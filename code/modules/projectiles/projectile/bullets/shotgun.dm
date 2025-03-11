@@ -137,6 +137,8 @@
 	wound_bonus = 5
 	bare_wound_bonus = 5
 	armour_penetration = 30
+	damage_falloff_tile = -0.2
+	wound_falloff_tile = -0.5
 	speed = 1.2
 	sharpness = SHARP_POINTY
 	embed_type = /datum/embedding/bullet_flechette
@@ -159,6 +161,8 @@
 	wound_bonus = 20 // but it WILL mulch you if you don't have armor.
 	bare_wound_bonus = 20
 	armour_penetration = 0
+	damage_falloff_tile = -0.1
+	wound_falloff_tile = -2
 	embed_type = /datum/embedding/bullet_flechette_donk // the true power of the donk spike.
 
 /datum/embedding/bullet_flechette_donk
