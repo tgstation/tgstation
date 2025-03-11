@@ -19,7 +19,7 @@
 /datum/bodypart_overlay/texture/generate_icon_cache()
 	return "[type]"
 
-/datum/bodypart_overlay/texture/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
+/datum/bodypart_overlay/texture/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	for (var/datum/bodypart_overlay/texture/other_texture in bodypart_owner.bodypart_overlays)
 		if (other_texture.overlay_priority > overlay_priority)
 			return FALSE

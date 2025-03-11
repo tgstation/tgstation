@@ -121,8 +121,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = "horns"
 	dyable = TRUE
 
-/datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
-	if(!human)
+/datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
 		return TRUE
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
@@ -152,8 +153,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	layers = EXTERNAL_ADJACENT
 	feature_key = "frills"
 
-/datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
-	if(!human)
+/datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
 		return TRUE
 	if(!(human.head?.flags_inv & HIDEEARS))
 		return TRUE
@@ -185,8 +187,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	layers = EXTERNAL_ADJACENT
 	feature_key = "snout"
 
-/datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
-	if(!human)
+/datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
 		return TRUE
 	if((human.head?.flags_inv & HIDESNOUT) || (human.wear_mask?.flags_inv & HIDESNOUT))
 		return FALSE
@@ -277,8 +280,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
-	if(!human)
+/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
 		return TRUE
 	if(!(human.head?.flags_inv & HIDEANTENNAE))
 		return TRUE
@@ -327,8 +331,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	else
 		overlay.color = null
 
-/datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/human/human)
-	if(!human)
+/datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
 		return TRUE
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
