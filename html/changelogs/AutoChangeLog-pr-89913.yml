@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "When reaching the wizard grand finale, you no longer get locked into finale effects that cannot yet be invoked."
