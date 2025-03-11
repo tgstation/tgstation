@@ -99,7 +99,7 @@
 	new_abductor.real_name = "[team.name] [sub_role]"
 	new_abductor.equipOutfit(outfit)
 
-	// If we have a team skincolor, apply it here. Applied by admins or 0.1% chance of natural occurance
+	// If we have a team skincolor, apply it here. Applied by admins or 5% chance of natural occurance
 	if(!isnull(team.team_skincolor))
 		for(var/obj/item/bodypart/part as anything in new_abductor.bodyparts)
 			part.should_draw_greyscale = TRUE
@@ -177,7 +177,7 @@
 	name = "Mothership [pick(GLOB.greek_letters)]" //TODO Ensure unique and actual alieny names
 	add_objective(new /datum/objective/experiment)
 	// Some aliens can be green as a treat
-	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 0.1) && isnull(team_skincolor))
+	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 5) && isnull(team_skincolor))
 		team_skincolor = COLOR_EMERALD
 
 /datum/team/abductor_team/roundend_report()
