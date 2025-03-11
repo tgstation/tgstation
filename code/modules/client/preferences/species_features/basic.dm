@@ -1,21 +1,21 @@
 /proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory, y_offset = 0)
-	var/static/icon/head_icon
+	var/static/datum/universal_icon/head_icon
 	if (isnull(head_icon))
-		head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
-		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+		head_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
-	var/icon/final_icon = new(head_icon)
-	if (!isnull(sprite_accessory))
+	var/datum/universal_icon/final_icon = head_icon.copy()
+	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
 		ASSERT(istype(sprite_accessory))
 
-		var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+		var/datum/universal_icon/head_accessory_icon = uni_icon(sprite_accessory.icon, sprite_accessory.icon_state)
 		if(y_offset)
-			head_accessory_icon.Shift(NORTH, y_offset)
-		head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
-		final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
+			head_accessory_icon.shift(NORTH, y_offset, ICON_SIZE_X, ICON_SIZE_Y)
+		head_accessory_icon.blend_color(COLOR_DARK_BROWN, ICON_MULTIPLY)
+		final_icon.blend_icon(head_accessory_icon, ICON_OVERLAY)
 
-	final_icon.Crop(10, 19, 22, 31)
-	final_icon.Scale(32, 32)
+	final_icon.crop(10, 19, 22, 31)
+	final_icon.scale(32, 32)
 
 	return final_icon
 

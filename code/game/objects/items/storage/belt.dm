@@ -264,6 +264,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
 		/obj/item/knife/ritual,
+		/obj/item/flesh_shears,
 	))
 
 /obj/item/storage/belt/medical/paramedic
@@ -352,7 +353,7 @@
 	))
 	atom_storage.open_sound = 'sound/items/handling/holster_open.ogg'
 	atom_storage.open_sound_vary = TRUE
-	atom_storage.rustle_sound = FALSE
+	atom_storage.rustle_sound = null
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)

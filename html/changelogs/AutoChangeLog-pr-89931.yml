@@ -1,0 +1,4 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - bugfix: "fixes unwalkable tiles in the film studio bar"

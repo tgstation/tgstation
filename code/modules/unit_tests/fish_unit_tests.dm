@@ -326,7 +326,6 @@
 	// pretend like this mob has a mind. they should be fished up first
 	no_brain.mind_initialize()
 
-	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
 	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
 	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
 	var/obj/item/fishing_hook/rescue/the_hook = allocate(/obj/item/fishing_hook/rescue, run_loc_floor_top_right)
@@ -456,10 +455,8 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))
@@ -474,7 +471,6 @@
 	TEST_ASSERT(edible, "Fish is not edible")
 	edible.eat_time = 0
 	TEST_ASSERT(fish.GetComponent(/datum/component/infective), "Fish doesn't have the infective component")
-	var/bite_size = edible.bite_consumption
 
 	var/mob/living/carbon/human/consistent/gourmet = allocate(/mob/living/carbon/human/consistent)
 
@@ -499,9 +495,10 @@
 	TEST_ASSERT(!fish.bites_amount, "bites_amount wasn't reset after the fish revived")
 
 	fish.update_size_and_weight(fish.size, FISH_WEIGHT_BITE_DIVISOR)
+	var/bite_size = edible.bite_consumption
 	fish.AddElement(/datum/element/fried_item, FISH_SAFE_COOKING_DURATION)
 	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish didn't die after being cooked")
-	TEST_ASSERT(bite_size < edible.bite_consumption, "The bite_consumption value hasn't increased after being cooked (it removes blood but doubles protein). Value: [bite_size]")
+	TEST_ASSERT(bite_size < edible.bite_consumption, "The bite_consumption value hasn't increased after being cooked (it removes blood but doubles protein). Old: [bite_size]. New: [edible.bite_consumption]")
 	TEST_ASSERT(!(edible.foodtypes & (RAW|GORE)), "Fish still has the GORE and/or RAW foodtypes flags after being cooked")
 	TEST_ASSERT(!fish.GetComponent(/datum/component/infective), "Fish still has the infective component after being cooked for long enough")
 
