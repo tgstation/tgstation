@@ -529,7 +529,7 @@
 
 /datum/design/donkflechette
 	name = "Donk Co. 'Donk Spike' Flechette Shotgun Shell (Lethal)"
-	desc = "A shotgun casing filled with small plastic darts. That's right, plasic. Do you really think plastic is that scary? Sure, it would hurt to be \
+	desc = "A shotgun casing filled with small plastic darts. That's right, plastic. Do you really think plastic is that scary? Sure, it would hurt to be \
 		shot by this, but is it really going to do that much damage? You decide, pal, I'm not your mother. I'm just a computer."
 	id = "donkshell"
 	build_type = PROTOLATHE | AWAY_LATHE
