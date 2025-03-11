@@ -57,6 +57,7 @@
 /datum/brain_trauma/voided/proc/texture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 
+	// Not updating because on_gain/on_lose() call it down the line, and calls coming from comsigs update the owner's body themselves
 	limb.add_bodypart_overlay(new bodypart_overlay_type(), update = FALSE)
 	limb.add_color_override(space_color, LIMB_COLOR_VOIDWALKER_CURSE)
 	if(istype(limb, /obj/item/bodypart/head))
