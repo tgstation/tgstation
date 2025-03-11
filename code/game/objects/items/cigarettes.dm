@@ -476,7 +476,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			ignored_mobs = guy_infront,
 		)
 		to_chat(guy_infront, span_warning("You get a face full of smoke from [smoker]'s [name]!"))
-		guy_infront.add_mood_event("smoke_bm", /datum/mood_event/smoke_in_face)
+		smoke_in_face(guy_infront)
 
 	else
 		guy_infront.visible_message(
@@ -490,6 +490,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker.loc, /particles/smoke/cig/big)
 	update_particle_position(big_smoke, smoker.dir)
 	QDEL_IN(big_smoke, big_smoke.particles.lifespan)
+
+/// Called when a mob gets smoke blown in their face.
+/obj/item/cigarette/proc/smoke_in_face(mob/living/getting_smoked)
+	getting_smoked.add_mood_event("smoke_bm", /datum/mood_event/smoke_in_face)
+	if(prob(20) && !HAS_TRAIT(getting_smoked, TRAIT_SMOKER) && !HAS_TRAIT(getting_smoked, TRAIT_ANOSMIA))
+		getting_smoked.emote("cough")
 
 /// Handles processing the reagents in the cigarette.
 /obj/item/cigarette/proc/handle_reagents(seconds_per_tick)
@@ -638,6 +644,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoke_all = TRUE
 	lung_harm = 1.5
 	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/medicine/omnizine = 15)
+
+/obj/item/cigarette/syndicate/smoke_in_face(mob/living/getting_smoked)
+	. = ..()
+	getting_smoked.adjust_eye_blur(6 SECONDS)
+	getting_smoked.adjust_temp_blindness(2 SECONDS)
 
 /obj/item/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
