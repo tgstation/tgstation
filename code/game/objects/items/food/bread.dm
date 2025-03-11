@@ -187,7 +187,7 @@
 		/datum/reagent/consumable/nutriment/protein = 12,
 	)
 	tastes = list("bread" = 10, "cobwebs" = 5)
-	foodtypes = GRAIN | MEAT | DAIRY
+	foodtypes = GRAIN|MEAT|DAIRY|TOXIC
 	slice_type = /obj/item/food/breadslice/spidermeat
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -202,7 +202,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("bread" = 10, "cobwebs" = 5)
-	foodtypes = GRAIN | MEAT | DAIRY
+	foodtypes = GRAIN|MEAT|DAIRY|TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/banana
@@ -346,7 +346,7 @@
 	attack_verb_continuous = list("touche's")
 	attack_verb_simple = list("touche")
 	tastes = list("bread" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// whether this is in fake swordplay mode or not

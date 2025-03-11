@@ -342,7 +342,7 @@
 	time = 15
 	name = "Donk-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/donkpocket/homemade
@@ -352,7 +352,7 @@
 	time = 15
 	name = "Dank-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/cannabis = 1
 	)
 	result = /obj/item/food/donkpocket/dank
@@ -362,7 +362,7 @@
 	time = 15
 	name = "Spicy-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/obj/item/food/grown/chili = 1
 	)
@@ -373,7 +373,7 @@
 	time = 15
 	name = "Teriyaki-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/datum/reagent/consumable/soysauce = 3
 	)
@@ -384,7 +384,7 @@
 	time = 15
 	name = "Pizza-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/obj/item/food/grown/tomato = 1
 	)
@@ -395,7 +395,7 @@
 	time = 15
 	name = "Honk-Pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/banana = 1,
 		/datum/reagent/consumable/sugar = 3
 	)
@@ -407,7 +407,7 @@
 	time = 15
 	name = "Berry-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/donkpocket/berry
@@ -418,7 +418,7 @@
 	time = 15
 	name = "Gondola-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/datum/reagent/gondola_mutation_toxin = 5
 	)
@@ -429,7 +429,7 @@
 	time = 15
 	name = "Deluxe Donk-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/obj/item/food/meat/bacon = 1,
 		/obj/item/food/onion_slice/red = 1
@@ -456,7 +456,7 @@
 	time = 15
 	name = "Deluxe Donk-roll"
 	reqs = list(
-		/obj/item/food/doughslice = 1, // pastry base is oft made with milk
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/bell_pepper = 1,
 		/obj/item/food/tofu = 2,

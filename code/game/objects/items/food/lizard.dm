@@ -193,7 +193,7 @@
 		/datum/reagent/consumable/garlic = 2,
 	)
 	tastes = list("snails" = 1, "garlic" = 1, "oil" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 

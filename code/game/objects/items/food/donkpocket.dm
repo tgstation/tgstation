@@ -9,7 +9,7 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
-	foodtypes = MEAT
+	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -48,12 +48,12 @@
 	baking_time_long = 15 SECONDS
 
 /obj/item/food/donkpocket/homemade
-	foodtypes = MEAT|GRAIN|DAIRY
+	foodtypes = MEAT|GRAIN
 	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
 	warm_type = /obj/item/food/donkpocket/warm/homemade
 
 /obj/item/food/donkpocket/warm/homemade
-	foodtypes = MEAT|GRAIN|DAIRY
+	foodtypes = MEAT|GRAIN
 	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
 
 /obj/item/food/donkpocket/dank
@@ -66,7 +66,7 @@
 		/datum/reagent/consumable/nutriment = 4,
 	)
 	tastes = list("weed" = 2, "dough" = 2)
-	foodtypes = GRAIN|DAIRY|VEGETABLES
+	foodtypes = GRAIN|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_2
 	warm_type = /obj/item/food/donkpocket/warm/dank
 
@@ -87,7 +87,7 @@
 		/datum/reagent/medicine/omnizine = 2,
 	)
 	tastes = list("weed" = 2, "dough" = 2)
-	foodtypes = GRAIN|DAIRY|VEGETABLES
+	foodtypes = GRAIN|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/donkpocket/spicy
@@ -100,7 +100,7 @@
 		/datum/reagent/consumable/capsaicin = 2,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "spice" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/spicy
 
 /obj/item/food/donkpocket/spicy/make_bakeable()
@@ -120,7 +120,7 @@
 		/datum/reagent/consumable/capsaicin = 5,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 2)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
+	foodtypes = MEAT|VEGETABLES|GRAIN
 
 /obj/item/food/donkpocket/teriyaki
 	name = "\improper Teriyaki-pocket"
@@ -132,7 +132,7 @@
 		/datum/reagent/consumable/soysauce = 2,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
-	foodtypes = MEAT|GRAIN|DAIRY
+	foodtypes = MEAT|GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/teriyaki
 
 /obj/item/food/donkpocket/teriyaki/make_bakeable()
@@ -152,7 +152,7 @@
 		/datum/reagent/consumable/soysauce = 2,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
-	foodtypes = MEAT|GRAIN|DAIRY
+	foodtypes = MEAT|GRAIN
 
 /obj/item/food/donkpocket/pizza
 	name = "\improper Pizza-pocket"
@@ -195,7 +195,7 @@
 		/datum/reagent/consumable/banana = 4,
 	)
 	tastes = list("banana" = 2, "dough" = 2, "children's antibiotics" = 1)
-	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
+	foodtypes = GRAIN|FRUIT|SUGAR
 	warm_type = /obj/item/food/donkpocket/warm/honk
 	crafting_complexity = FOOD_COMPLEXITY_3
 	var/static/list/honk_added_reagents = list(
@@ -220,7 +220,7 @@
 		/datum/reagent/consumable/laughter = 6,
 	)
 	tastes = list("banana" = 2, "dough" = 2, "children's antibiotics" = 1)
-	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
+	foodtypes = GRAIN|FRUIT|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donkpocket/berry
@@ -232,7 +232,7 @@
 		/datum/reagent/consumable/berryjuice = 3,
 	)
 	tastes = list("dough" = 2, "jam" = 2)
-	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
+	foodtypes = GRAIN|FRUIT|SUGAR
 	warm_type = /obj/item/food/donkpocket/warm/berry
 
 /obj/item/food/donkpocket/berry/make_bakeable()
@@ -251,7 +251,7 @@
 		/datum/reagent/consumable/berryjuice = 3,
 	)
 	tastes = list("dough" = 2, "warm jam" = 2)
-	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
+	foodtypes = GRAIN|FRUIT|SUGAR
 
 /obj/item/food/donkpocket/gondola
 	name = "\improper Gondola-pocket"
@@ -263,7 +263,7 @@
 		/datum/reagent/gondola_mutation_toxin = 5,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
-	foodtypes = GRAIN|DAIRY|MEAT
+	foodtypes = GRAIN|MEAT
 
 	warm_type = /obj/item/food/donkpocket/warm/gondola
 	var/static/list/gondola_added_reagents = list(
@@ -288,7 +288,7 @@
 		/datum/reagent/gondola_mutation_toxin = 10,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
-	foodtypes = GRAIN|DAIRY|MEAT
+	foodtypes = GRAIN|MEAT
 
 /obj/item/food/donkpocket/deluxe
 	name = "\improper Donk-pocket Deluxe"
@@ -301,7 +301,7 @@
 		/datum/reagent/medicine/omnizine = 2,
 	)
 	tastes = list("quality meat" = 2, "dough" = 2, "raw fanciness" = 1)
-	foodtypes = GRAIN|DAIRY|MEAT|VEGETABLES
+	foodtypes = GRAIN|MEAT|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 	warm_type = /obj/item/food/donkpocket/warm/deluxe
@@ -326,7 +326,7 @@
 		/datum/reagent/medicine/omnizine = 10,
 	)
 	tastes = list("quality meat" = 2, "dough" = 2, "fanciness" = 1)
-	foodtypes = GRAIN|DAIRY|MEAT|VEGETABLES|FRIED
+	foodtypes = GRAIN|MEAT|VEGETABLES|FRIED
 
 /obj/item/food/donkpocket/deluxe/nocarb
 	name = "\improper Meat-pocket"

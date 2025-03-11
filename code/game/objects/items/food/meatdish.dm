@@ -655,7 +655,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
-	foodtypes = MEAT|GRAIN
+	foodtypes = MEAT|GRAIN|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -675,7 +675,7 @@
 	)
 	bite_consumption = 3
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
-	foodtypes = MEAT|GRAIN
+	foodtypes = MEAT|GRAIN|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 

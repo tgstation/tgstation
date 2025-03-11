@@ -545,7 +545,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("taco meat" = 1, "batter" = 1, "corn" = 1, "cheese" = 1)
-	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES | DAIRY
+	foodtypes = MEAT|GRAIN|FRIED|VEGETABLES|DAIRY|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Batter AND Cargo ingredients.
 
@@ -559,7 +559,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("batter" = 1, "cabbage" = 1, "onion" = 1, "worcestershire sauce" = 1)
-	foodtypes = GRAIN | FRIED | VEGETABLES
+	foodtypes = GRAIN|FRIED|VEGETABLES|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Cargo stuff and batter.
 
@@ -791,7 +791,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("ham" = 1, "garlic rice" = 1, "egg" = 1)
-	foodtypes = MEAT|GRAIN|FRIED|BREAKFAST
+	foodtypes = MEAT|GRAIN|FRIED|BREAKFAST|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -903,7 +903,7 @@
 
 /obj/item/food/salad/beef_bowl
 	name = "beef bowl"
-	desc = "A tasty mix of stewed beef and onion, served over rice. Typical toppings include pickled ginger, chilli powder, and fried eggs."
+	desc = "A tasty mix of stewed beef, onion and dashi, served over rice. Typical toppings include pickled ginger, chilli powder, and fried eggs."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "beef_bowl"
 	food_reagents = list(
@@ -912,7 +912,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("beef" = 25, "onion" = 25, "chili heat" = 15, "rice" = 34, "soul" = 1) //I pour my soul into this bowl
-	foodtypes = MEAT | VEGETABLES | GRAIN
+	foodtypes = MEAT|VEGETABLES|GRAIN|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -1080,7 +1080,7 @@
 		/datum/reagent/consumable/sugar = 1,
 	)
 	tastes = list("banana" = 1, "batter" = 1)
-	foodtypes = GRAIN | FRUIT | FRIED
+	foodtypes = GRAIN|FRUIT|FRIED|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3 //Fried goodness, oil scawy.
 
@@ -1095,7 +1095,7 @@
 		/datum/reagent/consumable/sugar = 1,
 	)
 	tastes = list("pineapple" = 1, "batter" = 1)
-	foodtypes = GRAIN | FRUIT | FRIED | PINEAPPLE
+	foodtypes = GRAIN|FRUIT|FRIED|PINEAPPLE|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -1226,7 +1226,7 @@
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("frickles" = 1)
-	foodtypes = VEGETABLES|GRAIN|FRIED
+	foodtypes = VEGETABLES|GRAIN|FRIED|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3 //batter and cargo stuff.
 

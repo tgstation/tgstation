@@ -378,7 +378,7 @@
 		/obj/item/food/cheese/wedge = 1,
 	)
 	result = /obj/item/food/takoyaki/taco
-	added_foodtypes = GRAIN|FRIED
+	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/okonomiyaki
@@ -391,7 +391,7 @@
 		/obj/item/food/grown/potato/sweet = 1,
 	)
 	result = /obj/item/food/okonomiyaki
-	added_foodtypes = GRAIN|FRIED
+	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/brat_kimchi
@@ -663,6 +663,7 @@
 	)
 	result = /obj/item/food/salad/beef_bowl
 	removed_foodtypes = BREAKFAST
+	added_foodtypes = SEAFOOD
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/salt_chilli_bowl
@@ -786,7 +787,7 @@
 		/datum/reagent/consumable/martian_batter = 2
 	)
 	result = /obj/item/food/banana_fritter
-	added_foodtypes = GRAIN|FRIED
+	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/pineapple_fritter
@@ -796,7 +797,7 @@
 		/datum/reagent/consumable/martian_batter = 2
 	)
 	result = /obj/item/food/pineapple_fritter
-	added_foodtypes = GRAIN|FRIED
+	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/kasei_dango
@@ -901,7 +902,7 @@
 		/datum/reagent/consumable/red_bay = 1,
 	)
 	result = /obj/item/food/frickles
-	added_foodtypes = GRAIN|FRIED
+	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/raw_ballpark_pretzel
