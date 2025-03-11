@@ -1127,7 +1127,7 @@
 	if(!is_husked)
 		//Draw external organs like horns and frills
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-			if(!dropped && !overlay.can_draw_on_bodypart(owner)) //if you want different checks for dropped bodyparts, you can insert it here
+			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
 			//Some externals have multiple layers for background, foreground and between
 			for(var/external_layer in overlay.all_layers)
