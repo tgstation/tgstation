@@ -1,5 +1,0 @@
-author: "Kashargul"
-delete-after: True
-changes:
-  - bugfix: "TG chat can no longer initialize before the settings loading was called"
-  - qol: "chat settings can be exported and imported"

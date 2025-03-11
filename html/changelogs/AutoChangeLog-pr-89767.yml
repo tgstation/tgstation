@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Reworks Changeling's Darkness Adaptation. It's strength now scales with how dark your environment is, rather than being static transparency."
+  - bugfix: "Fixes Digital Camo's examine message"
