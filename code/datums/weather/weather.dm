@@ -190,7 +190,7 @@
 	var/area/selected_area = pick_weight_recursive(impacted_areas_weighted[z_string])
 	var/z = text2num(z_string)
 	var/list/available_turfs = selected_area.get_turfs_by_zlevel(z)
-    // Areas or turfs may change during weather events. For example, a shuttle
+	// Areas or turfs may change during weather events. For example, a shuttle
 	// landing and departing might leave an area in 'impacted_areas' but without
 	// turfs on the expected z-level, resulting in an empty 'available_turfs' list.
 	if(length(available_turfs))
