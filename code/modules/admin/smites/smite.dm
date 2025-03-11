@@ -12,6 +12,7 @@
 /// Return FALSE if the smite should not be used.
 /datum/smite/proc/configure(client/user)
 
+/// Invoked externally to actually perform the smite
 /datum/smite/proc/do_effect(client/user, mob/living/target)
 	if(smite_flags & SMITE_DIVINE)
 		playsound(target, 'sound/effects/pray.ogg', 50, FALSE, -1)
@@ -24,6 +25,7 @@
 	else
 		effect(user, target)
 
+/// Called after a delay if the smite has the SMITE_DELAY flag
 /datum/smite/proc/delayed_effect(client/user, mob/living/target)
 	if(QDELETED(target))
 		return
