@@ -17,6 +17,7 @@
 	if(smite_flags & SMITE_DIVINE)
 		playsound(target, 'sound/effects/pray.ogg', 50, FALSE, -1)
 		target.add_overlay(mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+		target.apply_status_effect(/datum/status_effect/spotlight_light/divine)
 
 	if(smite_flags & SMITE_STUN)
 		target.Stun(3 SECONDS, ignore_canstun = TRUE)
