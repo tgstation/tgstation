@@ -449,39 +449,41 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	QDEL_NULL(mob_smoke)
 
 /obj/item/cigarette/proc/long_exhale(mob/living/carbon/smoker)
-	var/turf/front = get_step(smoker, smoker.dir)
+	// Find a mob to blow smoke at
 	var/mob/living/guy_infront
-	for(var/mob/living/guy in front)
+	for(var/mob/living/guy in get_step(smoker, smoker.dir))
+		// one of you has to get on the other's level
 		if(guy.body_position != smoker.body_position)
 			continue
-		if(guy.is_pepper_proof())
-			continue
+		// ensures we're face to face
 		if(!(REVERSE_DIR(guy.dir) & smoker.dir))
 			continue
 		guy_infront = guy
-		// in case we get a living first, we wanna prioritize humans.
+		// in case we get a living first, we wanna prioritize humans
 		if(ishuman(guy_infront))
 			break
 
-	if(guy_infront)
-		if(ishuman(guy_infront) && guy_infront.get_bodypart(BODY_ZONE_HEAD))
-			guy_infront.visible_message(
-				span_notice("[smoker] exhales a large cloud of smoke from [src] directly at [guy_infront]'s face!"),
-				span_notice("You exhale a large cloud of smoke from [src] directly at [guy_infront]'s face."),
-				ignored_mobs = guy_infront,
-			)
-			to_chat(guy_infront, span_warning("You get a face full of smoke from [smoker]'s [name]!"))
-		else
-			guy_infront.visible_message(
-				span_notice("[smoker] exhales a large cloud of smoke from [src] at [guy_infront]."),
-				span_notice("You exhale a large cloud of smoke from [src] at [guy_infront]."),
-			)
-		guy_infront.add_mood_event("smoke_bm", /datum/mood_event/smoke_in_face)
-	else
+	if(isnull(guy_infront))
 		smoker.visible_message(
 			span_notice("[smoker] exhales a large cloud of smoke from [src]."),
 			span_notice("You exhale a large cloud of smoke from [src]."),
 		)
+
+	else if(ishuman(guy_infront) && guy_infront.get_bodypart(BODY_ZONE_HEAD) && !guy.is_pepper_proof())
+		guy_infront.visible_message(
+			span_notice("[smoker] exhales a large cloud of smoke from [src] directly at [guy_infront]'s face!"),
+			span_notice("You exhale a large cloud of smoke from [src] directly at [guy_infront]'s face."),
+			ignored_mobs = guy_infront,
+		)
+		to_chat(guy_infront, span_warning("You get a face full of smoke from [smoker]'s [name]!"))
+		guy_infront.add_mood_event("smoke_bm", /datum/mood_event/smoke_in_face)
+
+	else
+		guy_infront.visible_message(
+			span_notice("[smoker] exhales a large cloud of smoke from [src] at [guy_infront]."),
+			span_notice("You exhale a large cloud of smoke from [src] at [guy_infront]."),
+		)
+
 	if(!isturf(smoker.loc))
 		return
 
