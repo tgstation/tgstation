@@ -456,6 +456,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			continue
 		if(guy.is_pepper_proof())
 			continue
+		if(!(REVERSE_DIR(guy.dir) & smoker.dir))
+			continue
 		guy_infront = guy
 		// in case we get a living first, we wanna prioritize humans.
 		if(ishuman(guy_infront))
