@@ -150,7 +150,7 @@
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes/single_use
 
 /datum/uplink_item/spy_unique/nunchaku
-	name = "Syndie Nunchuks"
+	name = "Syndie Fitness Nunchuks"
 	desc = "Heavyweight titanium nunchucks, quickly knocking opponents to the ground, then just as easily smashing the opponent afterward."
 	item = /obj/item/melee/baton/nunchaku
 	cost = SPY_UPPER_COST_THRESHOLD
