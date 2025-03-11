@@ -62,7 +62,7 @@
 		return
 
 	var/mob/living/carbon/human/human_sniffer = user
-	if(!HAS_TRAIT(human_sniffer, TRAIT_ANOSMIA))
+	if(!HAS_TRAIT(human_sniffer, TRAIT_ANOSMIA) && human_sniffer.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING|FORBID_TELEKINESIS_REACH))
 		. += span_notice("You scratch and sniff the stickers.")
 		. += span_warning("<1>Oh god, where did they pull this from, a landfill?</i>")
 		human_sniffer.add_mood_event("stink-pocket", /datum/mood_event/disgusted)
