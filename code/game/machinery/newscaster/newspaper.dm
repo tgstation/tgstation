@@ -171,6 +171,8 @@
 	. = ..()
 	if (punctured)
 		. += span_notice("It has a pair of small peek holes punctured near the top.")
+	else
+		. += span_notice("You can cut out some peek holes using something [span_bolditalic("sharp")] or [span_bolditalic("pointy")]...")
 
 /// Called when someone tries to figure out what our identity is, but they can't see it because of the newspaper
 /obj/item/newspaper/proc/holder_checked_name(mob/living/carbon/human/source, list/identity)
