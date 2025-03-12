@@ -1010,7 +1010,7 @@
 
 /obj/item/melee/baton/nunchaku/proc/randomize_state()
 	icon_state = pick(list("nunchaku", "nunchaku_x", "nunchaku_y"))
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance()
 
 /obj/item/melee/baton/nunchaku/after_throw(datum/callback/callback)
 	. = ..()
