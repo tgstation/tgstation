@@ -1,12 +1,4 @@
 {
-	"smooth": [
-		{
-			"type": "icon_state",
-			"icon_state": "smooth",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
 	"window-fg": [
 		{
 			"type": "icon_state",
