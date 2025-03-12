@@ -366,7 +366,7 @@
 		/obj/item/food/meatball = 1,
 		/obj/item/food/grown/chili = 1
 	)
-	result = /obj/item/food/donkpocket/spicy
+	result = /obj/item/food/donkpocket/spicy/homemade
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/teriyaki
@@ -377,7 +377,7 @@
 		/obj/item/food/meatball = 1,
 		/datum/reagent/consumable/soysauce = 3
 	)
-	result = /obj/item/food/donkpocket/teriyaki
+	result = /obj/item/food/donkpocket/teriyaki/homemade
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/pizza

@@ -99,8 +99,8 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/capsaicin = 2,
 	)
-	tastes = list("meat" = 2, "dough" = 2, "spice" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN
+	tastes = list("umami" = 2, "dough" = 2, "spice" = 1)
+	foodtypes = VEGETABLES|GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/spicy
 
 /obj/item/food/donkpocket/spicy/make_bakeable()
@@ -119,7 +119,16 @@
 		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/consumable/capsaicin = 5,
 	)
-	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 2)
+	tastes = list("umami" = 2, "dough" = 2, "weird spices" = 2)
+	foodtypes = VEGETABLES|GRAIN
+
+/obj/item/food/donkpocket/spicy/homemade
+	tastes = list("meat" = 2, "dough" = 2, "spice" = 1)
+	foodtypes = MEAT|VEGETABLES|GRAIN
+	warm_type = /obj/item/food/donkpocket/warm/spicy/homemade
+
+/obj/item/food/donkpocket/warm/spicy/homemade
+	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN
 
 /obj/item/food/donkpocket/teriyaki
@@ -131,8 +140,8 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/soysauce = 2,
 	)
-	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
-	foodtypes = MEAT|GRAIN
+	tastes = list("umami" = 2, "dough" = 2, "soy sauce" = 2)
+	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/teriyaki
 
 /obj/item/food/donkpocket/teriyaki/make_bakeable()
@@ -151,6 +160,15 @@
 		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/consumable/soysauce = 2,
 	)
+	tastes = list("umami" = 2, "dough" = 2, "soy sauce" = 2)
+	foodtypes = GRAIN
+
+/obj/item/food/donkpocket/teriyaki/homemade
+	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
+	foodtypes = MEAT|GRAIN
+	warm_type = /obj/item/food/donkpocket/warm/teriyaki/homemade
+
+/obj/item/food/donkpocket/warm/teriyaki/homemade
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = MEAT|GRAIN
 
