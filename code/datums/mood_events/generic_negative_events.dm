@@ -437,11 +437,6 @@
 	mood_change = -1
 	timeout = 2 MINUTES
 
-/datum/mood_event/rippedtail
-	description = "I ripped their tail right off, what have I done!"
-	mood_change = -5
-	timeout = 30 SECONDS
-
 /datum/mood_event/sabrage_fail
 	description = "Blast it! That stunt didn't go as planned!"
 	mood_change = -2
