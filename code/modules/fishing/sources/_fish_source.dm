@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /proc/generate_specific_fish_icons()
 	var/list/return_list = zebra_typecacheof(list(
+		/datum/data/vending_product = FISH_ICON_COIN,
 		/mob/living/basic/axolotl = FISH_ICON_CRITTER,
 		/mob/living/basic/frog = FISH_ICON_CRITTER,
 		/mob/living/basic/carp = FISH_ICON_DEF,
@@ -61,6 +62,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
 	return_list[FISHING_RANDOM_ORGAN] = FISH_ICON_ORGAN
+	return_list[FISHING_VENDING_CHUCK] = FISH_ICON_COIN
 	return return_list
 
 /**
@@ -166,30 +168,30 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
  *
  * For non-fish, it's just the source's fishing difficulty minus the fisherman skill.
  */
-/datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+/datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman)
 	. = fishing_difficulty
 
 	// Difficulty modifier added by having the Settler quirk
 	if(HAS_TRAIT(fisherman, TRAIT_EXPERT_FISHER))
 		. += EXPERT_FISHER_DIFFICULTY_MOD
 
-	// Difficulty modifier added by the fisher's skill level
-	if(!(challenge?.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
-		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
-
 	// Difficulty modifier added by the rod
 	. += rod.difficulty_modifier
 
-	if(!ispath(result,/obj/item/fish))
+	var/is_fish_instance = isfish(result)
+	if(!ispath(result,/obj/item/fish) && !is_fish_instance)
 		// In the future non-fish rewards can have variable difficulty calculated here
 		return
 
 	var/obj/item/fish/caught_fish = result
-	var/list/fish_properties = SSfishing.fish_properties[caught_fish]
+
+	//Just to clarify when we should use the path instead of the fish, which can be both a path and an instance.
+	var/result_path = is_fish_instance ? caught_fish.type : result
+
 	// Baseline fish difficulty
 	. += initial(caught_fish.fishing_difficulty_modifier)
 
-
+	var/list/fish_properties = SSfishing.fish_properties[result_path]
 	if(rod.bait)
 		var/obj/item/bait = rod.bait
 		//Fav bait makes it easier
@@ -204,7 +206,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 				. += DISLIKED_BAIT_DIFFICULTY_MOD
 
 	// Matching/not matching fish traits and equipment
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
+	var/list/fish_traits
+	if(is_fish_instance)
+		fish_traits = caught_fish.fish_traits
+	else
+		fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
 
 	var/additive_mod = 0
 	var/multiplicative_mod = 1
@@ -217,15 +223,22 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	. += additive_mod
 	. *= multiplicative_mod
 
+
 ///Comsig proc from the fishing minigame for 'roll_reward'
 /datum/fish_source/proc/roll_reward_minigame(datum/source, obj/item/fishing_rod/rod, mob/fisherman, atom/location, list/rewards)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
 	rewards += roll_reward(rod, fisherman, location)
 
-/// Returns a typepath or a special value which we use for spawning dispensing a reward later.
+/// Returns a typepath, instance or another special value which we use for dispensing a reward later.
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
 	return pick_weight(get_modified_fish_table(rod, fisherman, location)) || FISHING_DUD
+
+/// Version of roll_reward() that blacklists objects that shouldn't be caught by ai-controlled mobs.
+/datum/fish_source/proc/roll_mindless_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	var/list/final_table = get_modified_fish_table(rod, fisherman, location)
+	final_table -= profound_fisher_blacklist
+	return pick_weight(final_table) || FISHING_DUD
 
 /**
  * Used to register signals or add traits and the such right after conditions have been cleared
@@ -248,14 +261,14 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	UnregisterSignal(user, COMSIG_MOB_COMPLETE_FISHING)
 	if(!success)
 		return
-	var/atom/movable/reward = dispense_reward(challenge.reward_path, user, challenge.location)
+	var/atom/movable/reward = dispense_reward(challenge.reward_path, user, challenge.location, challenge.used_rod)
 	if(reward)
 		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
 	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
 	challenge.used_rod.on_reward_caught(reward, user)
 
 /// Gives out the reward if possible
-/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot)
+/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot, obj/item/fishing_rod/rod)
 	var/atom/movable/reward = simple_dispense_reward(reward_path, get_turf(fisherman), fishing_spot)
 	if(!reward) //balloon alert instead
 		fisherman.balloon_alert(fisherman, pick(duds))
@@ -265,9 +278,9 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to forceMove() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
 		fisherman.balloon_alert(fisherman, "caught something!")
 		return
-	else // for fishing things like corpses, move them to the turf of the fisherman
-		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+	if (isfish(reward))
+		ADD_TRAIT(reward, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
 
 	return reward
 
@@ -306,6 +319,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
+	if(ismovable(reward_path))
+		var/atom/movable/reward = reward_path
+		reward.forceMove(spawn_location)
+		return reward
 	if(ispath(reward_path, /datum/chasm_detritus))
 		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(spawn_location, fishing_spot)
 	if(!ispath(reward_path, /atom/movable))
@@ -317,7 +334,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	return reward
 
 /// Returns the fish table, with with the unavailable items from fish_counts removed.
-/datum/fish_source/proc/get_fish_table(from_explosion = FALSE)
+/datum/fish_source/proc/get_fish_table(atom/location, from_explosion = FALSE)
 	var/list/table = fish_table.Copy()
 	//message bottles cannot spawn from explosions. They're meant to be one-time messages (rarely) and photos from past rounds
 	//and it would suck if the pool of bottle messages were constantly being emptied by explosive fishing.
@@ -336,8 +353,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	///Multiplier used to make fishes more common compared to everything else.
 	var/result_multiplier = 1
 
-
-	var/list/final_table = get_fish_table()
+	var/list/final_table = get_fish_table(location)
 
 	if(bait)
 		for(var/trait in weight_result_multiplier)
@@ -350,14 +366,14 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(HAS_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD))
 		final_table -= FISHING_DUD
 
-
-	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
-		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
 		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 
-		if(ispath(result, /obj/item/fish))
+		if(ispath(result, /mob/living) && bait && (HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT) || HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT)))
+			final_table[result] = round(final_table[result] * result_multiplier, 1)
+
+		else if(ispath(result, /obj/item/fish) || isfish(result))
 			if(bait)
 				final_table[result] = round(final_table[result] * result_multiplier, 1)
 				var/mult = bait.check_bait(result)
@@ -384,7 +400,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/highest_fish_weight
 	var/list/collected_fish_weights = list()
 	for(var/fishable in table)
-		if(ispath(fishable, /obj/item/fish))
+		if(ispath(fishable, /obj/item/fish) || isfish(fishable))
 			var/fish_weight = table[fishable]
 			collected_fish_weights[fishable] = fish_weight
 			if(fish_weight > highest_fish_weight)
@@ -397,30 +413,38 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		table[fish] += round(difference**exponent, 1)
 
 /datum/fish_source/proc/get_fish_trait_catch_mods(weight, obj/item/fish/fish, obj/item/fishing_rod/rod, mob/user, atom/location)
-	if(!ispath(fish, /obj/item/fish))
+	var/is_fish_instance = isfish(fish)
+	if(!ispath(fish, /obj/item/fish) && !is_fish_instance)
 		return weight
 	var/multiplier = 1
-	for(var/fish_trait in SSfishing.fish_properties[fish][FISH_PROPERTIES_TRAITS])
+	var/list/fish_traits
+	if(is_fish_instance)
+		fish_traits = fish.fish_traits
+	else
+		fish_traits = SSfishing.fish_properties[fish][FISH_PROPERTIES_TRAITS]
+	for(var/fish_trait in fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
-		var/list/mod = trait.catch_weight_mod(rod, user, location, fish)
+		var/list/mod = trait.catch_weight_mod(rod, user, location, is_fish_instance ? fish.type : fish)
 		weight += mod[ADDITIVE_FISHING_MOD]
 		multiplier *= mod[MULTIPLICATIVE_FISHING_MOD]
 
 	return round(weight * multiplier, 1)
 
 ///returns true if this fishing spot has fish that are shown in the catalog.
-/datum/fish_source/proc/has_known_fishes()
-	for(var/reward in fish_table)
-		if(!ispath(reward, /obj/item/fish))
+/datum/fish_source/proc/has_known_fishes(atom/location)
+	var/show_anyway = fish_source_flags & FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG
+	for(var/reward in get_fish_table(location))
+		if(!ispath(reward, /obj/item/fish) && !isfish(reward))
 			continue
 		var/obj/item/fish/prototype = reward
-		if(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
+		if(!show_anyway && initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
 			return TRUE
 	return FALSE
 
 ///Add a string with the names of catchable fishes to the examine text.
 /datum/fish_source/proc/get_catchable_fish_names(mob/user, atom/location, list/examine_text)
 	var/list/known_fishes = list()
+	var/show_anyway = fish_source_flags & FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG
 
 	var/obj/item/fishing_rod/rod = user.get_active_held_item()
 	var/list/final_table
@@ -433,17 +457,18 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/rodless_weights = list()
 	var/total_rod_weight = 0
 	var/list/rod_weights = list()
-	for(var/reward in fish_table)
-		var/weight = fish_table[reward]
+	var/list/table = get_fish_table(location)
+	for(var/reward in table)
+		var/weight = table[reward]
 		var/final_weight
 		if(rod)
 			total_weight += weight
 			final_weight = final_table[reward]
 			total_rod_weight += final_weight
-		if(!ispath(reward, /obj/item/fish))
+		if(!ispath(reward, /obj/item/fish) && !isfish(reward))
 			continue
 		var/obj/item/fish/prototype = reward
-		if(!(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
+		if(!show_anyway && !(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
 			continue
 		if(rod)
 			rodless_weights[reward] = weight
@@ -472,7 +497,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/info = "You can catch the following fish here"
 
 	if(rod)
-		info = span_tooltip("boldened are the fish you're more likely to catch with your current setup. The opposite is true for smaller names", info)
+		info = span_tooltip("In bold are fish you're more likely to catch with the current setup. The opposite is true for the smaller font", info)
 	examine_text += span_info("[info]: [english_list(known_fishes)].")
 
 ///How much the explosive_fishing_score impacts explosive fishing. The higher the value, the stronger the malus for repeated calls
@@ -482,6 +507,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	SIGNAL_HANDLER
+	if(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_NONE)
+		return
 	var/multiplier = 1
 	if(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS)
 		if(explosive_fishing_score <= 0)
@@ -493,7 +520,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
-		var/reward_loot = pick_weight(get_fish_table(from_explosion = TRUE))
+		var/reward_loot = pick_weight(get_fish_table(location, from_explosion = TRUE))
 		var/atom/spawn_location = isturf(location) ? location : location.drop_location()
 		var/atom/movable/reward = simple_dispense_reward(reward_loot, spawn_location, location)
 		if(isnull(reward))

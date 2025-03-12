@@ -6,6 +6,14 @@
 	var/airlock_state
 	var/frequency
 
+
+/obj/machinery/door/airlock/mouse_drop_receive(mob/living/dropping, mob/user, params)
+	. = ..()
+	// We add the component only once here & not in Initialize() because there are tons of airlocks & we don't want to add to their init times
+	// This is on airlock rather than on door because windoors are door and leaning looks whack on windoors
+	LoadComponent(/datum/component/leanable, dropping)
+
+
 /// Forces the airlock to unbolt and open
 /obj/machinery/door/airlock/proc/secure_open()
 	locked = FALSE

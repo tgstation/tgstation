@@ -12,7 +12,7 @@
 #define COMSIG_ATOM_EXPOSE_REAGENT "atom_expose_reagent"
 ///from base of [/datum/reagent/proc/expose_atom]: (/atom, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_ATOM "reagent_expose_atom"
-///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume)
+///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume, methods, show_message)
 #define COMSIG_REAGENT_EXPOSE_OBJ "reagent_expose_obj"
 ///from base of [/datum/reagent/proc/expose_atom]: (/mob/living, reac_volume, methods, show_message, touch_protection, /mob/eye/blob) // ovemind arg is only used by blob reagents.
 #define COMSIG_REAGENT_EXPOSE_MOB "reagent_expose_mob"
@@ -25,26 +25,13 @@
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
 #define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
 
-///from base of [/datum/reagents/proc/add_reagent] - Sent before the reagent is added: (reagenttype, amount, reagtemp, data, no_react)
-#define COMSIG_REAGENTS_PRE_ADD_REAGENT "reagents_pre_add_reagent"
-	/// Prevents the reagent from being added.
-	#define COMPONENT_CANCEL_REAGENT_ADD (1<<0)
-///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
-#define COMSIG_REAGENTS_NEW_REAGENT "reagents_new_reagent"
-///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
-#define COMSIG_REAGENTS_ADD_REAGENT "reagents_add_reagent"
-///from base of [/datum/reagents/proc/del_reagent]: (/datum/reagent)
-#define COMSIG_REAGENTS_DEL_REAGENT "reagents_del_reagent"
-///from base of [/datum/reagents/proc/remove_reagent]: (/datum/reagent, amount)
-#define COMSIG_REAGENTS_REM_REAGENT "reagents_rem_reagent"
-///from base of [/datum/reagents/proc/clear_reagents]: ()
-#define COMSIG_REAGENTS_CLEAR_REAGENTS "reagents_clear_reagents"
+///from base of [/datum/reagents/proc/update_total()]
+#define COMSIG_REAGENTS_HOLDER_UPDATED "reagents_update_total"
 ///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
 #define COMSIG_REAGENTS_TEMP_CHANGE "reagents_temp_change"
-///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
-#define COMSIG_REAGENTS_REACTED "reagents_reacted"
 ///from base of [/datum/reagents/proc/process]: (num_reactions)
 #define COMSIG_REAGENTS_REACTION_STEP "reagents_time_step"
+
 ///from base of [/atom/proc/expose_reagents]: (/atom, /list, methods, volume_modifier, show_message)
 #define COMSIG_REAGENTS_EXPOSE_ATOM "reagents_expose_atom"
 ///from base of [/obj/proc/expose_reagents]: (/obj, /list, methods, volume_modifier, show_message)

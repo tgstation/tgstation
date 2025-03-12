@@ -10,6 +10,7 @@
 	icon = 'icons/obj/aquarium/fish.dmi'
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
+	icon_angle = 180
 	force = 6
 	throwforce = 6
 	throw_range = 8
@@ -153,8 +154,13 @@
 	/// power of the tesla zap created by the fish in a bioelectric generator. Scales with size.
 	var/electrogenesis_power = 2 MEGA JOULES
 
-	/// The beauty this fish provides to the aquarium it's inserted in.
+	/// The beauty this fish provides to the aquarium or mount it's inserted in.
 	var/beauty = FISH_BEAUTY_GENERIC
+
+	/// Set and used by trophy mounts, this one is for the name of who mounted it (might actually not be the catcher but w/e)
+	var/catcher_name
+	/// Set and used by trophy mounts, this is for the day of when it was first mounted
+	var/catch_date
 
 	/**
 	 * If you wonder why this isn't being tracked by the edible component instead:
@@ -170,6 +176,10 @@
 	 * Once set, the value shouldn't be changed, so don't make typos.
 	 */
 	var/fish_id
+	///Used to redirect to another fish path so that catching this fish unlocks its entry instead.
+	var/obj/item/fish/fish_id_redirect_path
+	/// only used in the suicide for comedic value
+	var/suicide_slap_text = "*SLAP!*"
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -189,6 +199,9 @@
 		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Composting a food that is not real food wouldn't work anyway.
 		START_PROCESSING(SSobj, src)
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FISH_STASIS), PROC_REF(enter_stasis))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FISH_STASIS), PROC_REF(exit_stasis))
+
 	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
 	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
 
@@ -202,6 +215,26 @@
 
 	register_context()
 	register_item_context()
+
+/obj/item/fish/suicide_act(mob/living/user)
+	if(force == 0)
+		user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but nothing happens!"))
+		return SHAME
+	user.visible_message(span_suicide("[user] starts rapidly slapping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.set_combat_mode(TRUE)
+	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
+	slapperoni(user, iteration = 1)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/proc/slapperoni(mob/living/user, iteration)
+	stoplag(0.1 SECONDS)
+	user.visible_message(span_bolddanger(suicide_slap_text))
+	user.attackby(src, user)
+	if(user.stat > SOFT_CRIT || (iteration > 100))
+		REMOVE_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
+		user.gib(DROP_ORGANS|DROP_BODYPARTS|DROP_ITEMS)
+		return
+	slapperoni(user, iteration++)
 
 /obj/item/fish/add_item_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
@@ -219,7 +252,25 @@
 	if(istype(held_item, /obj/item/fish_analyzer))
 		context[SCREENTIP_CONTEXT_LMB] = "Scan"
 		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/clothing/neck/stethoscope))
+		context[SCREENTIP_CONTEXT_LMB] = "Check Pulse"
+		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/fish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/clothing/neck/stethoscope))
+		return NONE
+	user.balloon_alert_to_viewers("checking pulse")
+	if(!do_after(user, 2.5 SECONDS, src))
+		return ITEM_INTERACT_FAILURE
+	// Sir... I'm afraid your fish is dying.
+	user.visible_message(span_notice("[user] checks the pulse of [src] with [tool]."), span_notice("You check the pulse of [src] with [tool]."))
+	var/warns = get_health_warnings(user, always_deep = TRUE)
+	if(!warns)
+		to_chat(user, span_notice("[src] appears to be perfectly healthy!"))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, warns)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
@@ -253,7 +304,9 @@
 	create_reagents(INFINITY) //We'll set this to the total volume of the reagents right after generate_fish_reagents() is over
 	generate_fish_reagents(bites_to_finish)
 	reagents.maximum_volume = round(reagents.total_volume * 1.25) //make some meager space for condiments.
-	AddComponent(/datum/component/edible, \
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE, \
+		/datum/component/edible, \
 		food_flags = FOOD_NO_EXAMINE|FOOD_NO_BITECOUNT, \
 		foodtypes = foodtypes, \
 		volume = reagents.total_volume, \
@@ -292,10 +345,10 @@
 		adjust_reagents_capacity((protein_volume - old_blood_volume) * volume_mult)
 		///Add the extra nutriment
 		if(protein)
-			reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
+			reagents.multiply(2, /datum/reagent/consumable/nutriment/protein)
 
-	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
-	edible.foodtypes &= ~(RAW|GORE)
+	//Remove the raw and gore foodtypes from the edible component
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = get_food_types() & ~(RAW|GORE))
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
 		well_cooked()
 
@@ -340,6 +393,9 @@
 	bites_amount++
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	adjust_health(health - (initial(health) / bites_to_finish) * 3)
+	flinch_on_eat(eater, feeder)
+
+/obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
 	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src) && feeder.dropItemToGround(src))
 		to_chat(feeder, span_warning("[src] slips out of your hands in pain!"))
 		var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs), 2)
@@ -386,7 +442,7 @@
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	///updates how many units of reagent one bite takes if edible.
 	if(IS_EDIBLE(src))
-		AddComponent(/datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
+		AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
 
 ///Grinding a fish replaces some the protein it has with blood and gibs. You ain't getting a clean smoothie out of it.
 /obj/item/fish/on_grind()
@@ -408,12 +464,11 @@
 			if(!result_reagent)
 				created.reagents.add_reagent(reagent.type, transfer_vol, reagents.copy_data(reagent), reagents.chem_temp, reagent.purity, reagent.ph, no_react = TRUE)
 				continue
-			var/multiplier = transfer_vol / result_reagent.volume
-			created.reagents.multiply_single_reagent(reagent.type, multiplier)
+			created.reagents.multiply(transfer_vol / result_reagent.volume, reagent.type)
 	return ..()
 
 /obj/item/fish/update_icon_state()
-	if(status == FISH_DEAD && icon_state_dead)
+	if((status == FISH_DEAD || HAS_TRAIT(src, TRAIT_FISH_STASIS)) && icon_state_dead)
 		icon_state = icon_state_dead
 	else
 		icon_state = base_icon_state
@@ -434,26 +489,48 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH))
-		if(status == FISH_DEAD)
-			. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
-		else
-			var/list/warnings = list()
-			if(is_starving())
-				warnings += "starving"
-			if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
-				warnings += "drowning"
-			if(health < initial(health) * 0.6)
-				warnings += "sick"
-				if(length(warnings))
-					. += span_warning("It's [english_list(warnings)].")
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+	if(catcher_name && catch_date)
+		. += span_boldnicegreen("Caught by [catcher_name] on [catch_date].")
+
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
-		if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
-			. += span_smallnoticeital("It can be used as a fishing bait.")
+
+	. += get_health_warnings(user, always_deep = FALSE)
+
+	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+		. += span_smallnoticeital("It can be used as a fishing bait.")
+
 	if(bites_amount)
 		. += span_warning("It's been bitten by someone.")
+
+/obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
+		return
+	if(status == FISH_DEAD)
+		return span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
+
+	var/list/warnings = list()
+	if(get_starvation_mult())
+		warnings += "starving"
+	if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
+		warnings += "drowning"
+
+	var/health_ratio = health / initial(health)
+	switch(health_ratio)
+		if(0 to 0.25)
+			warnings += "dying"
+		if(0.25 to 0.5)
+			warnings += "very unhealthy"
+		if(0.5 to 0.75)
+			warnings += "unhealthy"
+		if(0.75 to 0.9)
+			warnings += "mostly healthy"
+
+	if(length(warnings))
+		. += span_warning("It's [english_list(warnings)].")
+
+	return .
 
 /**
  * This proc takes a base size, base weight and deviation arguments to generate new size and weight through a gaussian distribution (bell curve)
@@ -475,15 +552,18 @@
 	if(!maximum_size)
 		maximum_size = min(base_size * 2, average_size * MAX_FISH_DEVIATION_COEFF)
 	if(!maximum_weight)
-		maximum_weight = min(base_weight * 2, average_size * MAX_FISH_DEVIATION_COEFF)
+		maximum_weight = min(base_weight * 2, average_weight * MAX_FISH_DEVIATION_COEFF)
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	fish_flags |= FISH_FLAG_UPDATING_SIZE_AND_WEIGHT
 	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
 
+	var/is_mount = istype(loc, /obj/structure/fish_mount) //used to prevent fish from getting butchered inside mounts
+
 	if(size)
-		remove_fillet_type()
+		if(!is_mount)
+			remove_fillet_type()
 		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
 			qdel(GetComponent(/datum/component/two_handed))
 	else
@@ -522,7 +602,8 @@
 		inhand_icon_state = "[inhand_icon_state]_wielded"
 		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
-	add_fillet_type()
+	if(!is_mount)
+		add_fillet_type()
 
 	var/make_edible = !weight
 	if(weight)
@@ -541,7 +622,7 @@
 				var/amount_to_gen = bites_left / initial_bites_left * multiplier
 				generate_fish_reagents(amount_to_gen)
 			else
-				reagents.multiply_reagents(new_weight_ratio)
+				reagents.multiply(new_weight_ratio)
 				adjust_reagents_capacity(volume_diff)
 
 	weight = new_weight
@@ -758,25 +839,30 @@
 	. = ..()
 	check_flopping()
 
-/obj/item/fish/proc/enter_stasis()
-	ADD_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
-	// Stop processing until inserted into aquarium again.
+/// Stop processing once the stasis trait is added
+/obj/item/fish/proc/enter_stasis(datum/source)
+	SIGNAL_HANDLER
 	stop_flopping()
+	update_appearance()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/fish/proc/exit_stasis()
-	REMOVE_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
-	if(status != FISH_DEAD)
-		START_PROCESSING(SSobj, src)
+/// Start processing again when the stasis trait is removed
+/obj/item/fish/proc/exit_stasis(datum/source)
+	SIGNAL_HANDLER
+	if(status == FISH_DEAD)
+		return
+	START_PROCESSING(SSobj, src)
+	check_flopping()
 
-///Returns the 0-1 value for hunger
-/obj/item/fish/proc/get_hunger()
-	. = CLAMP01((world.time - last_feeding) / feeding_frequency)
+///Returns the value for hunger ranging from 0 to the cap (by default 1)
+/obj/item/fish/proc/get_hunger(cap = 1)
+	. = clamp((world.time - last_feeding) / feeding_frequency, 0, cap)
 	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER))
 		return min(., 0.2)
 
-/obj/item/fish/proc/is_starving()
-	return get_hunger() >= 1
+/obj/item/fish/proc/get_starvation_mult()
+	var/hunger = get_hunger(cap = 2)
+	return hunger >= 1 ? hunger : 0
 
 ///Feed the fishes with the contents of the fish feed
 /obj/item/fish/proc/feed(datum/reagents/fed_reagents)
@@ -809,30 +895,21 @@
 		return
 	fed_reagents.remove_reagent(wrong_reagent.type, 0.1)
 
-/**
- * Base multiplier of the difference between current size and weight and their maximum value
- * Used to calculate how much fish grow each time they're fed, alongside with the current hunger,
- * and the current size and weight, meaning bigger fish naturally tend to grow way more slowly
- * Growth peaks at 45% hunger but very rapidly wanes past that.
- */
-#define FISH_GROWTH_MULT 0.38
-#define FISH_GROWTH_PEAK 0.45
-#define FISH_SIZE_WEIGHT_GROWTH_MALUS 0.5
-
 ///Proc that should be called when the fish is fed. By default, it grows the fish depending on various variables.
 /obj/item/fish/proc/sate_hunger()
 	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
 		last_feeding = world.time
 		return
 	var/hunger = get_hunger()
+	last_feeding = world.time
 	if(hunger < 0.05) //don't bother growing for very small amounts.
-		last_feeding = world.time
 		return
+
 	var/new_size = size
 	var/new_weight = weight
 	var/hunger_mult
-	if(hunger < FISH_GROWTH_PEAK)
-		hunger_mult = hunger * (1/FISH_GROWTH_PEAK)
+	if(hunger <= FISH_GROWTH_PEAK)
+		hunger_mult = hunger / FISH_GROWTH_PEAK
 	else
 		hunger_mult = 1 - (hunger - FISH_GROWTH_PEAK) * 4
 		if(hunger_mult <= 0)
@@ -849,10 +926,6 @@
 	if(new_size != size || new_weight != weight)
 		update_size_and_weight(new_size, new_weight)
 
-#undef FISH_SIZE_WEIGHT_GROWTH_MALUS
-#undef FISH_GROWTH_MULT
-#undef FISH_GROWTH_PEAK
-
 /obj/item/fish/proc/check_flopping()
 	if(QDELETED(src)) //we don't care anymore
 		return
@@ -862,7 +935,7 @@
 
 	// Do additional stuff
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && loc && !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
+	var/should_be_flopping = status == FISH_ALIVE && (loc && !HAS_TRAIT(loc, TRAIT_STOP_FISH_FLOPPING))
 
 	if(should_be_flopping)
 		start_flopping()
@@ -870,15 +943,23 @@
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
+	do_fish_process(seconds_per_tick)
+
+/obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 
-	process_health(seconds_per_tick)
-	if(ready_to_reproduce())
-		try_to_reproduce()
+	//safe mode, don't do much except a few things that don't involve growing or reproducing.
+	if(loc && HAS_TRAIT_FROM(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
+		last_feeding += seconds_per_tick SECONDS
+		breeding_wait += seconds_per_tick SECONDS
+	else
+		process_health(seconds_per_tick)
+		if(ready_to_reproduce())
+			try_to_reproduce()
 
-	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && COOLDOWN_FINISHED(src, electrogenesis_cooldown))
-		try_electrogenesis()
+		if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && COOLDOWN_FINISHED(src, electrogenesis_cooldown))
+			try_electrogenesis()
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
@@ -900,7 +981,7 @@
 			REMOVE_TRAIT(src, TRAIT_UNCOMPOSTABLE, INNATE_TRAIT)
 			stop_flopping()
 			if(!silent)
-				var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
+				var/message = span_warning(replacetext(death_text, "%SRC", "[src]"))
 				if(loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 					loc.visible_message(message)
 				else
@@ -961,7 +1042,7 @@
 	var/datum/reagent/medicine/strange_reagent/revival = locate() in reagents
 	if(!revival)
 		return
-	if(reagents[revival] >= 2 * w_class)
+	if(reagents[revival] >= 2 * w_class && revival.pre_rez_check(src))
 		set_status(FISH_ALIVE)
 	else
 		balloon_alert_to_viewers("twitches for a moment!")
@@ -1098,13 +1179,14 @@
 /obj/item/fish/proc/process_health(seconds_per_tick)
 	var/health_change_per_second = 0
 	if(!proper_environment())
-		health_change_per_second -= 3 //Dying here
-	if(is_starving())
-		health_change_per_second -= 0.5 //Starving
+		health_change_per_second -= 2.5 //Dying here
+	var/starvation_mult = get_starvation_mult()
+	if(starvation_mult)
+		health_change_per_second -= 0.25 * starvation_mult //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
 	if(HAS_TRAIT(src, TRAIT_FISH_ON_TESLIUM))
-		health_change_per_second -= 0.65 //This becomes - 0.15 if safe and not starving.
+		health_change_per_second -= 0.65
 
 	adjust_health(health + health_change_per_second * seconds_per_tick)
 
@@ -1323,7 +1405,7 @@
 		flop_animation()
 
 /obj/item/fish/proc/try_electrogenesis()
-	if(status == FISH_DEAD || is_starving())
+	if(status == FISH_DEAD || get_starvation_mult())
 		return
 	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
 	var/fish_zap_range = 1
@@ -1357,7 +1439,7 @@
 	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
 		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)^FISH_PRICE_SOFT_CAP_EXPONENT
 		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
-	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
+	if(HAS_TRAIT(src, TRAIT_FISH_LOW_PRICE)) //Avoid printing money by simply ordering fish and sending it back.
 		raw_price *= 0.05
 	return raw_price * elasticity_percent
 
@@ -1387,9 +1469,9 @@
 
 /obj/item/fish/attack_self(mob/living/user)
 	. = ..()
-	pet_fish(user)
+	try_pet_fish(user)
 
-/obj/item/fish/proc/pet_fish(mob/living/user)
+/obj/item/fish/proc/try_pet_fish(mob/living/user)
 	var/in_aquarium = loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 	if(status == FISH_DEAD)
 		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] motionless!"))
@@ -1397,6 +1479,10 @@
 	if(!proper_environment())
 		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] not feeling well!"))
 		return FALSE
+
+	return pet_fish(user, in_aquarium)
+
+/obj/item/fish/proc/pet_fish(mob/living/user, in_aquarium)
 	if(fish_flags & FISH_FLAG_PETTED)
 		if(in_aquarium)
 			to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
@@ -1407,8 +1493,8 @@
 		user.electrocute_act(5, src) //was it all worth it?
 	fish_flags |= FISH_FLAG_PETTED
 	new /obj/effect/temp_visual/heart(get_turf(src))
-	if((/datum/fish_trait/aggressive in fish_traits) && prob(50))
-		if(!in_aquarium)
+	if((/datum/fish_trait/predator in fish_traits) && prob(50))
+		if(in_aquarium)
 			user.visible_message(
 				span_warning("[src] dances around before biting [user]!"),
 				span_warning("[src] dances around before biting you!"),
@@ -1439,6 +1525,14 @@
 /obj/item/fish/update_atom_colour()
 	. = ..()
 	aquarium_vc_color = color || initial(aquarium_vc_color)
+
+///Proc called in trophy_fishes.dm, when a fish is mounted on persistent trophy mounts
+/obj/item/fish/proc/persistence_save(list/data)
+	return
+
+///Proc called in trophy_fishes.dm, when a persistent fishing trophy mount is spawned and the fish instantiated
+/obj/item/fish/proc/persistence_load(list/data)
+	return
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

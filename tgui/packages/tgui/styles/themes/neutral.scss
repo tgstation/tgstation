@@ -21,20 +21,20 @@ $neutral: hsl(42.12, 100%, 50%);
 .theme-neutral {
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': color.scale($neutral, $lightness: -30%),
       'color-transparent-text': color.scale($neutral, $lightness: 30%)
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
+    '~tgui-core/styles/components/ProgressBar',
     $with: (
       'color-default-fill': $neutral,
       'background-color': rgba(0, 0, 0, 0.5)
     )
   );
-  @include meta.load-css('pkg:tgui-styles/components/Section');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

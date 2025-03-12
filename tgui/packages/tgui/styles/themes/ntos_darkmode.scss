@@ -19,20 +19,20 @@ $nanotrasen: hsl(0, 0%, 17.25%);
 .theme-ntos_darkmode {
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': $nanotrasen,
       'color-transparent-text': rgba(227, 240, 255, 0.75)
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
+    '~tgui-core/styles/components/ProgressBar',
     $with: (
       'color-default-fill': $nanotrasen,
       'background-color': rgba(0, 0, 0, 0.5)
     )
   );
-  @include meta.load-css('pkg:tgui-styles/components/Section');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

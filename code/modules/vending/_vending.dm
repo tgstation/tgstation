@@ -33,10 +33,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/amount = 0
 	///How many we can store at maximum
 	var/max_amount = 0
-	///Does the item have a custom price override
-	var/custom_price
-	///Does the item have a custom premium price override
-	var/custom_premium_price
+	///The price of the item
+	var/price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
 	///Whether the product can be recolored by the GAGS system
@@ -217,8 +215,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	///Name of lighting mask for the vending machine
 	var/light_mask
 
-	/// used for narcing on underages
-	var/obj/item/radio/sec_radio
+	//the path of the fish_source datum to use for the fishing_spot component
+	var/fish_source_path = /datum/fish_source/vending
 
 /datum/armor/machinery_vending
 	melee = 20
@@ -272,18 +270,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if(circuit)
 				circuit.all_products_free = all_products_free //sync up the circuit so the pricing schema is carried over if it's reconstructed.
 
-		else if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
-			for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
-				/**
-				 * in average, it should be 37.5% of the max amount, rounded up to the nearest int,
-				 * tho the max boundary can be as low/high as 50%/100%
-				 */
-				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
-				product_record.amount = rand(0, max_amount)
-				credits_contained += rand(1, 5) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
-			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
-				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
-				credits_contained = 0 // If it's tilted, it's been looted, so no credits for you.
 	else if(circuit)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 	if(!all_products_free)
@@ -291,12 +277,24 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
 	register_context()
 
+	if(fish_source_path)
+		AddComponent(/datum/component/fishing_spot, fish_source_path)
+
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
-	QDEL_NULL(sec_radio)
 	GLOB.vending_machines_to_restock -= src
 	return ..()
+
+/obj/machinery/vending/vv_edit_var(vname, vval)
+	. = ..()
+	if (vname == NAMEOF(src, all_products_free))
+		if (all_products_free)
+			qdel(GetComponent(/datum/component/payment))
+			GLOB.vending_machines_to_restock -= src
+		else
+			AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
+			GLOB.vending_machines_to_restock += src
 
 /obj/machinery/vending/can_speak(allow_mimes)
 	return is_operational && !shut_up && ..()
@@ -355,10 +353,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	. = ..()
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
-	if((total_loaded_stock() / total_max_stock()) < 1)
-		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
-	else
-		. += span_notice("\The [src] is fully stocked.")
+	if(total_max_stock())
+		if(total_loaded_stock() < total_max_stock())
+			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
+		else
+			. += span_notice("\The [src] is fully stocked.")
 	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
 		. += span_notice("It should have a handfull of credits stored based on the missing items.")
 	else if (credits_contained > PAYCHECK_CREW)
@@ -391,13 +390,12 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/dump_path = record.product_path
 			if(!dump_path)
 				continue
-			record.amount--
 			// busting open a vendor will destroy some of the contents
 			if(found_anything && prob(80))
+				record.amount--
 				continue
 
-			var/obj/obj_to_dump = new dump_path(loc)
-			on_dispense(obj_to_dump)
+			var/obj/obj_to_dump = dispense(record, loc)
 			step(obj_to_dump, pick(GLOB.alldirs))
 			found_anything = TRUE
 			dump_amount++
@@ -413,13 +411,12 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * * recordlist - the list containing /datum/data/vending_product datums
  * * categories - A list in the format of product_categories to source category from
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
+ * * premium - Whether the ending products shall have premium or default prices
  */
-/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE)
-	default_price = round(initial(default_price))
-	extra_price = round(initial(extra_price))
-	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
-		default_price *= SSeconomy.inflation_value()
-		extra_price *= SSeconomy.inflation_value()
+/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
+	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
+	default_price = round(initial(default_price) * inflation_value)
+	extra_price = round(initial(extra_price) * inflation_value)
 
 	var/list/product_to_category = list()
 	for (var/list/category as anything in categories)
@@ -439,12 +436,18 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(!start_empty)
 			new_record.amount = amount
 		new_record.max_amount = amount
+
 		///Prices of vending machines are all increased uniformly.
-		new_record.custom_price = round(initial(temp.custom_price))
-		new_record.custom_premium_price = round(initial(temp.custom_premium_price))
-		if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
-			new_record.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
-			new_record.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
+		var/custom_price = round(initial(temp.custom_price) * inflation_value)
+		if(!premium)
+			new_record.price = custom_price || default_price
+		else
+			var/premium_custom_price = round(initial(temp.custom_premium_price) * inflation_value)
+			if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
+				new_record.price = extra_price + custom_price
+			else
+				new_record.price = premium_custom_price || extra_price
+
 		new_record.age_restricted = initial(temp.age_restricted)
 		new_record.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		new_record.category = product_to_category[typepath]
@@ -456,8 +459,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 */
 /obj/machinery/vending/proc/build_inventories(start_empty)
 	build_inventory(products, product_records, product_categories, start_empty)
-	build_inventory(contraband, hidden_records, create_categories_from("Contraband", "mask", contraband), start_empty)
-	build_inventory(premium, coin_records, create_categories_from("Premium", "coins", premium), start_empty)
+	build_inventory(contraband, hidden_records, create_categories_from("Contraband", "mask", contraband), start_empty, premium = TRUE)
+	build_inventory(premium, coin_records, create_categories_from("Premium", "coins", premium), start_empty, premium = TRUE)
 
 /**
  * Returns a list of data about the category
@@ -494,30 +497,22 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
  */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
-	var/crash_status = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING)
-	default_price = round(initial(default_price))
-	extra_price = round(initial(extra_price))
-	if(crash_status)
-		default_price *= SSeconomy.inflation_value()
-		extra_price *= SSeconomy.inflation_value()
+	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
+	default_price = round(initial(default_price) * inflation_value)
+	extra_price = round(initial(extra_price) * inflation_value)
 
 	for(var/datum/data/vending_product/record as anything in recordlist)
 		var/obj/item/potential_product = record.product_path
-		record.custom_price = round(initial(potential_product.custom_price))
-		if(crash_status)
-			record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
+		var/custom_price = round(initial(potential_product.custom_price) * inflation_value)
+		record.price = custom_price | default_price
 	for(var/datum/data/vending_product/premium_record as anything in premiumlist)
 		var/obj/item/potential_product = premium_record.product_path
-		var/premium_sanity = round(initial(potential_product.custom_premium_price))
-		if(premium_sanity)
-			premium_record.custom_premium_price = round(premium_sanity)
-			if(crash_status)
-				premium_record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
-			continue
-		//For some ungodly reason, some premium only items only have a custom_price
-		premium_record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price)))
-		if(crash_status)
-			premium_record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (SSeconomy.inflation_value() - 1)))
+		var/premium_custom_price = round(initial(potential_product.custom_premium_price) * inflation_value)
+		var/custom_price = initial(potential_product.custom_price)
+		if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
+			premium_record.price = extra_price + round(custom_price * inflation_value)
+		else
+			premium_record.price = premium_custom_price || extra_price
 
 /**
  * Refill a vending machine from a refill canister
@@ -793,17 +788,13 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 			if(record.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
-			var/dump_path = record.product_path
-			if(!dump_path)
-				continue
 			if(record.amount > LAZYLEN(record.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-				var/obj/item/free_stuff = new dump_path(get_turf(src))
-				on_dispense(free_stuff)
+				dispense(record, get_turf(src), silent = TRUE)
 			else
 				var/obj/returned_obj_to_dump = LAZYACCESS(record.returned_products, LAZYLEN(record.returned_products)) //first in, last out
 				LAZYREMOVE(record.returned_products, returned_obj_to_dump)
 				returned_obj_to_dump.forceMove(get_turf(src))
-			record.amount--
+				record.amount--
 			break
 	deploy_credits()
 
@@ -813,8 +804,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * fatty - atom to tilt the vendor onto
  * local_crit_chance - percent chance of a critical hit
  * forced_crit - specific critical hit case to use, if any
+ * range - the range of the machine when thrown if not adjacent
 */
-/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit)
+/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit, range = 1)
 	if(QDELETED(src) || !has_gravity(src))
 		return
 
@@ -831,7 +823,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			layer = ABOVE_MOB_LAYER
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
+		throw_at(get_turf(fatty), range, 1, spin = FALSE, quickstart = FALSE)
 
 /**
  * Causes src to fall onto [target], crushing everything on it (including itself) with [damage]
@@ -1082,7 +1074,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.set_embed(/datum/embed_data/glass_candy)
+				shard.set_embed(/datum/embedding/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 				shard.set_embed(initial(shard.embed_type))
 			return TRUE
@@ -1161,15 +1153,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
-	if(!istype(replacer))
-		return FALSE
-	if(!component_parts || !refill_canister)
+	if(!istype(replacer) || !component_parts || !refill_canister)
 		return FALSE
 
-	if(!panel_open || replacer.works_from_distance)
+	var/works_from_distance = istype(replacer, /obj/item/storage/part_replacer/bluespace)
+
+	if(!panel_open || works_from_distance)
 		to_chat(user, display_parts(user))
 
-	if(!panel_open && !replacer.works_from_distance)
+	if(!panel_open && !works_from_distance)
 		return FALSE
 
 	var/restocked = 0
@@ -1215,7 +1207,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 /obj/machinery/vending/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/vending),
+		get_asset_datum(/datum/asset/spritesheet_batched/vending),
 	)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
@@ -1263,7 +1255,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		var/list/static_record = list(
 			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
 			name = record.name,
-			price = premium ? (record.custom_premium_price || extra_price) : (record.custom_price || default_price),
+			price = record.price,
 			max_amount = record.max_amount,
 			ref = REF(record),
 		)
@@ -1412,9 +1404,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(!item_record || !istype(item_record) || !item_record.product_path)
 		vend_ready = TRUE
 		return
-	var/price_to_use = default_price
-	if(item_record.custom_price)
-		price_to_use = item_record.custom_price
+	var/price_to_use = item_record.price
 	if(item_record in hidden_records)
 		if(!extended_inventory)
 			vend_ready = TRUE
@@ -1438,17 +1428,18 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
 			speak("You are not of legal age to purchase [item_record.name].")
 			if(!(usr in GLOB.narcd_underages))
-				if (isnull(sec_radio))
-					sec_radio = new (src)
-					sec_radio.set_listening(FALSE)
-				sec_radio.set_frequency(FREQ_SECURITY)
-				sec_radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [item_record.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
+				aas_config_announce(/datum/aas_config_entry/vendomat_age_control, list(
+					"PERSON" = usr.name,
+					"LOCATION" = get_area_name(src),
+					"VENDOR" = name,
+					"PRODUCT" = item_record.name
+				), src, list(RADIO_CHANNEL_SECURITY))
 				GLOB.narcd_underages += usr
 			flick(icon_deny,src)
 			vend_ready = TRUE
 			return
 
-		if(!proceed_payment(card_used, living_user, item_record, price_to_use))
+		if(!proceed_payment(card_used, living_user, item_record, price_to_use, params["discountless"]))
 			vend_ready = TRUE
 			return
 
@@ -1461,26 +1452,34 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
-	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item
 	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
-		vended_item = new item_record.product_path(get_turf(src))
-		if(vended_item.type in contraband)
-			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
-		on_dispense(vended_item)
+		vended_item = dispense(item_record, get_turf(src))
 	else
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
 		LAZYREMOVE(item_record.returned_products, vended_item)
 		vended_item.forceMove(get_turf(src))
 	if(greyscale_colors)
 		vended_item.set_greyscale(colors=greyscale_colors)
-	item_record.amount--
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [item_record.name] out of the slot."))
 	else
 		to_chat(usr, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))
 	vend_ready = TRUE
+
+///Common proc that dispenses an item. Called when the item is vended, or gotten some other way.
+/obj/machinery/vending/proc/dispense(datum/data/vending_product/item_record, atom/spawn_location, silent = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!silent)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+	var/obj/item/vended_item = new item_record.product_path (spawn_location)
+	if(vended_item.type in contraband)
+		ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
+	on_dispense(vended_item)
+	item_record.amount--
+	return vended_item
 
 ///A proc meant to perform custom behavior on newly dispensed items.
 /obj/machinery/vending/proc/on_dispense(obj/item/vended_item)
@@ -1502,16 +1501,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * mob_paying - the mob that is trying to purchase the item.
  * product_to_vend - the product record of the item we're trying to vend.
  * price_to_use - price of the item we're trying to vend.
+ * discountless - whether or not to apply discounts
  */
-/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, discountless)
 	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
 		speak("You do not possess an ID to purchase [product_to_vend.name].")
 		return FALSE
 	var/datum/bank_account/account = paying_id_card.registered_account
-	if(account.account_job && account.account_job.paycheck_department == payment_department)
+	if(account.account_job && account.account_job.paycheck_department == payment_department && !discountless)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
-	if(coin_records.Find(product_to_vend) || hidden_records.Find(product_to_vend))
-		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
 	if(price_to_use && (attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE))
@@ -1525,7 +1523,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 		SSeconomy.track_purchase(account, price_to_use, name)
 		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
-	credits_contained += round(price_to_use * 0.2)
+	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE
 
 /obj/machinery/vending/process(seconds_per_tick)
@@ -1710,6 +1708,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	payment_department = NO_FREEBIES
 	light_mask = "custom-light-mask"
 	refill_canister = /obj/item/vending_refill/custom
+	fish_source_path = /datum/fish_source/vending/custom
 	/// where the money is sent
 	var/datum/bank_account/linked_account
 	/// max number of items that the custom vendor can hold
@@ -1758,9 +1757,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(vending_machine_input[stocked_item] > 0)
 			var/base64
 			var/price = 0
+			var/itemname = initial(stocked_item.name)
 			for(var/obj/item/stored_item in contents)
 				if(stored_item.type == stocked_item)
 					price = stored_item.custom_price
+					itemname = stored_item.name
 					if(!base64) //generate an icon of the item to use in UI
 						if(base64_cache[stored_item.type])
 							base64 = base64_cache[stored_item.type]
@@ -1770,7 +1771,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					break
 			var/list/data = list(
 				path = stocked_item,
-				name = initial(stocked_item.name),
+				name = itemname,
 				price = price,
 				img = base64,
 				amount = vending_machine_input[stocked_item],
@@ -1797,15 +1798,19 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			linked_account = card_used.registered_account
 			speak("\The [src] has been linked to [card_used].")
 
-	if(compartmentLoadAccessCheck(user))
-		if(IS_WRITING_UTENSIL(attack_item))
-			name = tgui_input_text(user, "Set name", "Name", name, max_length = 20)
-			desc = tgui_input_text(user, "Set description", "Description", desc, max_length = 60)
-			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60)
-			last_slogan = world.time + rand(0, slogan_delay)
-			return
+	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
+		return ..()
 
-	return ..()
+	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
+	if (new_name)
+		name = new_name
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
+	if (new_desc)
+		desc = new_desc
+	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
+	if (new_slogan)
+		slogan_list += new_slogan
+		last_slogan = world.time + rand(0, slogan_delay)
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	return FALSE
@@ -1900,5 +1905,17 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+
+/datum/aas_config_entry/vendomat_age_control
+	name = "Security Alert: Underaged Substance Abuse"
+	announcement_lines_map = list(
+		"Message" = "SECURITY ALERT: Underaged crewmember %PERSON recorded attempting to purchase %PRODUCT in %LOCATION by %VENDOR. Please watch for substance abuse."
+	)
+	vars_and_tooltips_map = list(
+		"PERSON" = "will be replaced with the name of the crewmember",
+		"PRODUCT" = "with the product, he attempted to purchase",
+		"LOCATION" = "with place of purchase",
+		"VENDOR" = "with the vending machine"
+	)
 
 #undef MAX_VENDING_INPUT_AMOUNT

@@ -148,7 +148,7 @@
 	if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, user, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
 		return FALSE
 
-	ringtone = ringtone
+	ringtone = new_ringtone
 	return TRUE
 
 /datum/computer_file/program/messenger/ui_interact(mob/user, datum/tgui/ui)
@@ -385,7 +385,7 @@
 
 /datum/computer_file/program/messenger/ui_assets(mob/user)
 	. = ..()
-	. += get_asset_datum(/datum/asset/spritesheet/chat)
+	. += get_asset_datum(/datum/asset/spritesheet_batched/chat)
 
 //////////////////////
 // MESSAGE HANDLING //
@@ -575,7 +575,7 @@
 	var/mob/sender
 	if(ismob(source))
 		sender = source
-		if(!sender.can_perform_action(computer, ALLOW_RESTING))
+		if(!sender.can_perform_action(computer, ALLOW_RESTING | ALLOW_PAI))
 			return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
@@ -709,7 +709,7 @@
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
 		if (isAI(messaged_mob))
-			sender_title = "<a href='?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
+			sender_title = "<a href='byond://?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
 
@@ -730,7 +730,7 @@
 
 	if(QDELETED(src))
 		return
-	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING | ALLOW_PAI))
 		return
 
 	// send an activation message and open the messenger

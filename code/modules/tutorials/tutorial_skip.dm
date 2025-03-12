@@ -6,6 +6,7 @@
 	alpha = 0
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	layer = TUTORIAL_INSTRUCTIONS_LAYER
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/atom/movable/screen/tutorial_skip_text/skip_text
 
 /atom/movable/screen/tutorial_skip/Initialize(mapload, datum/hud/hud_owner)

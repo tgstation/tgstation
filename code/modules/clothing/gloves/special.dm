@@ -145,10 +145,10 @@
 
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
-	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
 	inhand_icon_state = "greyscale_gloves"
 	icon_state = "clockwork_gauntlets"
-	greyscale_colors = "#db6f05"
+	greyscale_colors = "#996e23"
 	siemens_coefficient = 0.8
 	armor_type = /datum/armor/tinker_gloves
 	clothing_traits = list(TRAIT_QUICK_BUILD)
@@ -236,6 +236,7 @@
 	name = "athletics fishing gloves"
 	icon = /obj/item/clothing/gloves/fishing::icon
 	icon_state = /obj/item/clothing/gloves/fishing::icon_state
+	frame_state = "frame_athletic"
 	line = null
 	bait = null
 	ui_description = "A pair of gloves to fish without a fishing rod while training your athletics."

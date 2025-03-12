@@ -64,6 +64,7 @@
 
 /obj/item/fish/sludgefish/purple
 	name = "purple sludgefish"
+	fish_id = "purple_sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
 	icon_state = "sludgefish_purple"
 	random_case_rarity = FISH_RARITY_NOPE
@@ -150,6 +151,12 @@
 		add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GREAT_QUALITY_BAIT), INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_FISH_SURVIVE_COOKING, INNATE_TRAIT)
 
+/obj/item/fish/fryish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.say("Mmmm! Delicious!", forced = "fryfish suicide")
+	qdel(src)
+	return OXYLOSS
+
 /obj/item/fish/fryish/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	if(!next_type)
@@ -200,18 +207,29 @@
 /obj/item/fish/fryish/fritterish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	variant = pick(FISH_FRITTERISH, FISH_BERNARD, FISH_MATTHEW)
+	load_variant(pick(FISH_FRITTERISH, FISH_BERNARD, FISH_MATTHEW))
+
+/obj/item/fish/fryish/fritterish/proc/load_variant(new_variant)
+	variant = new_variant
 	switch(variant)
 		if(FISH_BERNARD)
-			name = "bernard-fish"
-			desc = "A <u>deliciously</> extremophile alien fish shaped like a dinosaur. Children love it."
-			base_icon_state = icon_state = "bernardfish"
 			sprite_width = 4
 			sprite_height = 6
+			base_icon_state = "bernardfish"
 		if(FISH_MATTHEW)
-			name = "matthew-fish"
-			desc = "A <u>deliciously</> extremophile alien fish shaped like a pterodactyl. Children love it."
-			base_icon_state = icon_state = "matthewfish"
 			sprite_width = 6
+			base_icon_state = "matthewfish"
+	update_appearance()
+
+#define PERSISTENCE_FISH_FRITTERISH_VARIANT "fritterish_variant"
+
+/obj/item/fish/fryish/fritterish/persistence_save(list/data)
+	data[PERSISTENCE_FISH_FRITTERISH_VARIANT] = variant
+
+/obj/item/fish/fryish/fritterish/persistence_load(list/data)
+	load_variant(data[PERSISTENCE_FISH_FRITTERISH_VARIANT])
+
+#undef PERSISTENCE_FISH_FRITTERISH_VARIANT
 
 /obj/item/fish/fryish/fritterish/update_name()
 	switch(variant)
@@ -239,8 +257,8 @@
 	desc = "A <u>deliciously</u> extremophile alien fish. This one is so big, you could write legends about it."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "nessiefish"
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	sprite_width = 12
 	sprite_height = 4
 	average_size = 150

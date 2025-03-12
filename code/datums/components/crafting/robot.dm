@@ -47,7 +47,7 @@
 	result = /mob/living/basic/bot/repairbot
 	reqs = list(
 		/obj/item/storage/toolbox = 1,
-		/obj/item/stack/tile/iron = 10,
+		/obj/item/stack/conveyor = 1,
 		/obj/item/assembly/prox_sensor = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
 	)

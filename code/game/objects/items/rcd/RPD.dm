@@ -9,163 +9,14 @@
 #define DESTROY_MODE (1<<2)
 #define REPROGRAM_MODE (1<<3)
 
-#define PIPE_LAYER(num) (1<<(num-1))
+///Maximum number of pipe layers the RPD can support
+#define MAX_PIPE_LAYERS 5
+
+///Converts the pipe layer into a bitflag so we can append multiple layers into 1 bitfield
+#define PIPE_LAYER(num) (1 << (num - 1))
 
 ///Sound to make when we use the item to build/destroy something
 #define RPD_USE_SOUND 'sound/items/deconstruct.ogg'
-
-GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
-	"Pipes" = list(
-		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/smart, TRUE),
-		new /datum/pipe_info/pipe("Layer Adapter", /obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
-		new /datum/pipe_info/pipe("Color Adapter", /obj/machinery/atmospherics/pipe/color_adapter, TRUE),
-		new /datum/pipe_info/pipe("Bridge Pipe", /obj/machinery/atmospherics/pipe/bridge_pipe, TRUE),
-		new /datum/pipe_info/pipe("Multi-Deck Adapter", /obj/machinery/atmospherics/pipe/multiz, FALSE),
-	),
-	"Binary" = list(
-		new /datum/pipe_info/pipe("Manual Valve", /obj/machinery/atmospherics/components/binary/valve, TRUE),
-		new /datum/pipe_info/pipe("Digital Valve", /obj/machinery/atmospherics/components/binary/valve/digital, TRUE),
-		new /datum/pipe_info/pipe("Gas Pump", /obj/machinery/atmospherics/components/binary/pump, TRUE),
-		new /datum/pipe_info/pipe("Volume Pump", /obj/machinery/atmospherics/components/binary/volume_pump, TRUE),
-		new /datum/pipe_info/pipe("Passive Gate", /obj/machinery/atmospherics/components/binary/passive_gate, TRUE),
-		new /datum/pipe_info/pipe("Pressure Valve", /obj/machinery/atmospherics/components/binary/pressure_valve, TRUE),
-		new /datum/pipe_info/pipe("Temperature Gate", /obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
-		new /datum/pipe_info/pipe("Temperature Pump", /obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
-	),
-	"Devices" = list(
-		new /datum/pipe_info/pipe("Gas Filter", /obj/machinery/atmospherics/components/trinary/filter, TRUE),
-		new /datum/pipe_info/pipe("Gas Mixer", /obj/machinery/atmospherics/components/trinary/mixer, TRUE),
-		new /datum/pipe_info/pipe("Connector", /obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
-		new /datum/pipe_info/pipe("Injector", /obj/machinery/atmospherics/components/unary/outlet_injector, TRUE),
-		new /datum/pipe_info/pipe("Scrubber", /obj/machinery/atmospherics/components/unary/vent_scrubber, TRUE),
-		new /datum/pipe_info/pipe("Unary Vent", /obj/machinery/atmospherics/components/unary/vent_pump, TRUE),
-		new /datum/pipe_info/pipe("Passive Vent", /obj/machinery/atmospherics/components/unary/passive_vent, TRUE),
-		new /datum/pipe_info/meter("Meter"),
-	),
-	"Heat Exchange" = list(
-		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/heat_exchanging/simple, FALSE),
-		new /datum/pipe_info/pipe("Manifold", /obj/machinery/atmospherics/pipe/heat_exchanging/manifold, FALSE),
-		new /datum/pipe_info/pipe("4-Way Manifold", /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w, FALSE),
-		new /datum/pipe_info/pipe("Junction", /obj/machinery/atmospherics/pipe/heat_exchanging/junction, FALSE),
-		new /datum/pipe_info/pipe("Heat Exchanger", /obj/machinery/atmospherics/components/unary/heat_exchanger, FALSE),
-	)
-))
-
-GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
-	"Disposal Pipes" = list(
-		new /datum/pipe_info/disposal("Pipe", /obj/structure/disposalpipe/segment, PIPE_BENDABLE),
-		new /datum/pipe_info/disposal("Junction", /obj/structure/disposalpipe/junction, PIPE_TRIN_M),
-		new /datum/pipe_info/disposal("Y-Junction", /obj/structure/disposalpipe/junction/yjunction),
-		new /datum/pipe_info/disposal("Sort Junction", /obj/structure/disposalpipe/sorting/mail, PIPE_TRIN_M),
-		new /datum/pipe_info/disposal("Rotator", /obj/structure/disposalpipe/rotator, PIPE_ONEDIR_FLIPPABLE),
-		new /datum/pipe_info/disposal("Trunk", /obj/structure/disposalpipe/trunk),
-		new /datum/pipe_info/disposal("Down Turn", /obj/structure/disposalpipe/trunk/multiz/down),
-		new /datum/pipe_info/disposal("Up Turn", /obj/structure/disposalpipe/trunk/multiz),
-		new /datum/pipe_info/disposal("Bin", /obj/machinery/disposal/bin, PIPE_ONEDIR),
-		new /datum/pipe_info/disposal("Outlet", /obj/structure/disposaloutlet),
-		new /datum/pipe_info/disposal("Chute", /obj/machinery/disposal/delivery_chute),
-	)
-))
-
-GLOBAL_LIST_INIT(transit_tube_recipes, list(
-	"Transit Tubes" = list(
-		new /datum/pipe_info/transit("Straight Tube", /obj/structure/c_transit_tube, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Straight Tube with Crossing", /obj/structure/c_transit_tube/crossing, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Curved Tube", /obj/structure/c_transit_tube/curved, PIPE_UNARY_FLIPPABLE),
-		new /datum/pipe_info/transit("Diagonal Tube", /obj/structure/c_transit_tube/diagonal, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Diagonal Tube with Crossing", /obj/structure/c_transit_tube/diagonal/crossing, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Junction", /obj/structure/c_transit_tube/junction, PIPE_UNARY_FLIPPABLE),
-	),
-	"Station Equipment" = list(
-		new /datum/pipe_info/transit("Through Tube Station", /obj/structure/c_transit_tube/station, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Terminus Tube Station", /obj/structure/c_transit_tube/station/reverse, PIPE_UNARY_FLIPPABLE),
-		new /datum/pipe_info/transit("Through Tube Dispenser Station", /obj/structure/c_transit_tube/station/dispenser, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Terminus Tube Dispenser Station", /obj/structure/c_transit_tube/station/dispenser/reverse, PIPE_UNARY_FLIPPABLE),
-		new /datum/pipe_info/transit("Transit Tube Pod", /obj/structure/c_transit_tube_pod, PIPE_ONEDIR),
-	)
-))
-
-/datum/pipe_info
-	var/name
-	var/icon_state
-	var/id = -1
-	var/dirtype = PIPE_BENDABLE
-	var/all_layers
-
-/datum/pipe_info/proc/get_preview(selected_dir, selected = FALSE)
-	var/list/dirs
-	switch(dirtype)
-		if(PIPE_STRAIGHT, PIPE_BENDABLE)
-			dirs = list("[NORTH]" = "Vertical", "[EAST]" = "Horizontal")
-			if(dirtype == PIPE_BENDABLE)
-				dirs += list("[NORTHWEST]" = "West to North", "[NORTHEAST]" = "North to East",
-							"[SOUTHWEST]" = "South to West", "[SOUTHEAST]" = "East to South")
-		if(PIPE_TRINARY)
-			dirs = list("[NORTH]" = "West South East", "[SOUTH]" = "East North West",
-						"[EAST]" = "North West South", "[WEST]" = "South East North")
-		if(PIPE_TRIN_M)
-			dirs = list("[NORTH]" = "North East South", "[SOUTHWEST]" = "North West South",
-						"[NORTHEAST]" = "South East North", "[SOUTH]" = "South West North",
-						"[WEST]" = "West North East", "[SOUTHEAST]" = "West South East",
-						"[NORTHWEST]" = "East North West", "[EAST]" = "East South West",)
-		if(PIPE_UNARY)
-			dirs = list("[NORTH]" = "North", "[SOUTH]" = "South", "[WEST]" = "West", "[EAST]" = "East")
-		if(PIPE_ONEDIR)
-			dirs = list("[SOUTH]" = name)
-		if(PIPE_UNARY_FLIPPABLE)
-			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West",
-						"[NORTHEAST]" = "North Flipped", "[SOUTHEAST]" = "East Flipped", "[SOUTHWEST]" = "South Flipped", "[NORTHWEST]" = "West Flipped")
-		if(PIPE_ONEDIR_FLIPPABLE)
-			dirs = list("[SOUTH]" = name, "[SOUTHEAST]" = "[name] Flipped")
-
-	var/list/rows = list()
-	for(var/dir in dirs)
-		var/numdir = text2num(dir)
-		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE) || (dirtype == PIPE_ONEDIR_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
-		var/is_variant_selected = selected && (!selected_dir ? FALSE : (dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir)))
-		rows += list(list(
-			"selected" = is_variant_selected,
-			"dir" = dir2text(numdir),
-			"dir_name" = dirs[dir],
-			"icon_state" = icon_state,
-			"flipped" = flipped,
-		))
-
-	return rows
-
-/datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
-	name = label
-	id = path
-	all_layers = use_five_layers
-	icon_state = initial(path.pipe_state)
-	var/obj/item/pipe/c = initial(path.construction_type)
-	dirtype = initial(c.RPD_type)
-
-/datum/pipe_info/meter
-	icon_state = "meter"
-	dirtype = PIPE_ONEDIR
-	all_layers = TRUE
-
-/datum/pipe_info/meter/New(label)
-	name = label
-
-/datum/pipe_info/disposal/New(label, obj/path, dt=PIPE_UNARY)
-	name = label
-	id = path
-
-	icon_state = initial(path.icon_state)
-	if(ispath(path, /obj/structure/disposalpipe))
-		icon_state = "con[icon_state]"
-
-	dirtype = dt
-
-/datum/pipe_info/transit/New(label, obj/path, dt=PIPE_UNARY)
-	name = label
-	id = path
-	dirtype = dt
-	icon_state = initial(path.icon_state)
-	if(dt == PIPE_UNARY_FLIPPABLE)
-		icon_state = "[icon_state]_preview"
 
 /obj/item/pipe_dispenser
 	name = "rapid pipe dispenser"
@@ -210,8 +61,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/pipe_layers = PIPE_LAYER(3)
 	///Are we laying multiple layers per click
 	var/multi_layer = FALSE
-	///Layer for disposal ducts
-	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///Stores the current device to spawn
 	var/datum/pipe_info/recipe
 	///Stores the first atmos device
@@ -245,14 +94,22 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	register_item_context()
 
 /obj/item/pipe_dispenser/Destroy()
-	qdel(spark_system)
-	spark_system = null
+	QDEL_NULL(spark_system)
 	return ..()
 
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
 	. += span_notice("You can scroll your <b>mouse wheel</b> to change the piping layer.")
 	. += span_notice("You can <b>right click</b> a pipe to set the RPD to its color and layer.")
+
+/obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+
+	if(istype(target, /obj/machinery/atmospherics))
+		var/obj/machinery/atmospherics/atmos_target = target
+		if(atmos_target.pipe_color && atmos_target.piping_layer)
+			context[SCREENTIP_CONTEXT_RMB] = "Copy piping color and layer"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
@@ -265,13 +122,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
 
-/obj/item/pipe_dispenser/proc/get_active_pipe_layers()
-	var/list/layer_nums = list()
-	for(var/pipe_layer_number in 1 to 5)
-		if(PIPE_LAYER(pipe_layer_number) & pipe_layers)
-			layer_nums += pipe_layer_number
-	return layer_nums
-
 /obj/item/pipe_dispenser/cyborg_unequip(mob/user)
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
@@ -279,33 +129,26 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
-	if(!istype(target, /obj/machinery/atmospherics))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target.pipe_color && target.piping_layer)
-		paint_color = GLOB.pipe_color_name[target.pipe_color]
-		pipe_layers = PIPE_LAYER(target.piping_layer)
-		balloon_alert(user, "color/layer copied")
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
-	. = ..()
-	if(istype(target, /obj/machinery/atmospherics))
-		var/obj/machinery/atmospherics/atmos_target = target
-		if(atmos_target.pipe_color && atmos_target.piping_layer)
-			context[SCREENTIP_CONTEXT_RMB] = "Copy piping color and layer"
-	return CONTEXTUAL_SCREENTIP_SET
-
-
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
 	playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
 	return BRUTELOSS
 
+///Converts pipe_layers bitflag into its corresponding list of actual pipe layers
+/obj/item/pipe_dispenser/proc/get_active_pipe_layers()
+	PRIVATE_PROC(TRUE)
+	RETURN_TYPE(/list)
+
+	var/list/layer_nums = list()
+	for(var/pipe_layer_number in 1 to MAX_PIPE_LAYERS)
+		if(PIPE_LAYER(pipe_layer_number) & pipe_layers)
+			layer_nums += pipe_layer_number
+	return layer_nums
+
 /obj/item/pipe_dispenser/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/pipes),
+		get_asset_datum(/datum/asset/spritesheet_batched/pipes),
 	)
 
 /obj/item/pipe_dispenser/ui_interact(mob/user, datum/tgui/ui)
@@ -315,15 +158,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_static_data(mob/user)
-	var/list/data = list("paint_colors" = GLOB.pipe_paint_colors)
-	return data
+	return list(
+		"paint_colors" = GLOB.pipe_paint_colors,
+		"max_pipe_layers" = MAX_PIPE_LAYERS,
+	)
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
 	var/list/data = list(
 		"category" = category,
 		"multi_layer" = multi_layer,
 		"pipe_layers" = pipe_layers,
-		"ducting_layer" = ducting_layer,
 		"categories" = list(),
 		"selected_recipe" = recipe.name,
 		"selected_color" = paint_color,
@@ -370,10 +214,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
-	var/playeffect = TRUE
 	switch(action)
 		if("color")
 			paint_color = params["paint_color"]
+			return TRUE
+
 		if("category")
 			category = text2num(params["category"])
 			switch(category)
@@ -384,66 +229,87 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(TRANSIT_CATEGORY)
 					recipe = first_transit
 			p_dir = NORTH
-			playeffect = FALSE
+			return TRUE
+
 		if("pipe_layers")
 			var/selected_layers = text2num(params["pipe_layers"])
+
+			//is valid
 			var/valid_layer = FALSE
-			for(var/pipe_layer_number in 1 to 5)
+			for(var/pipe_layer_number in 1 to MAX_PIPE_LAYERS)
 				if(!(PIPE_LAYER(pipe_layer_number) & selected_layers))
 					continue
 				valid_layer = TRUE
+				break
 			if(!valid_layer)
-				return
+				return FALSE
+
+			//append or set the layer
 			if(multi_layer)
 				if(pipe_layers != selected_layers)
 					pipe_layers ^= selected_layers
 			else
 				pipe_layers = selected_layers
-			playeffect = FALSE
+
+			return TRUE
+
 		if("toggle_multi_layer")
 			if(multi_layer)
 				pipe_layers = PIPE_LAYER(max(get_active_pipe_layers()))
 			multi_layer = !multi_layer
-		if("ducting_layer")
-			ducting_layer = text2num(params["ducting_layer"])
-			playeffect = FALSE
+
 		if("pipe_type")
 			var/static/list/recipes
 			if(!recipes)
 				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
 			recipe = recipes[params["category"]][text2num(params["pipe_type"])]
 			p_dir = NORTH
+
 		if("setdir")
 			p_dir = text2dir(params["dir"])
 			p_flipped = text2num(params["flipped"])
-			playeffect = FALSE
+			return TRUE
+
 		if("mode")
 			var/selected_mode = text2num(params["mode"])
 			mode ^= selected_mode
+
 		if("init_dir_setting")
 			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
 			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
 			if (ISNOTSTUB(target_dir))
 				p_init_dir = target_dir
 			else
-				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
-				playeffect = FALSE
+				to_chat(ui.user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				return FALSE
+
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
-	if(playeffect)
-		spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
+
+	spark_system.start()
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/atom_to_attack, mob/user, params)
-	if(!ISADVANCEDTOOLUSER(user) || istype(atom_to_attack, /turf/open/space/transit))
-		return ..()
+/obj/item/pipe_dispenser/interact_with_atom(atom/attack_target, mob/living/user, list/modifiers)
+	. = NONE
 
-	if(istype(atom_to_attack, /obj/item/rpd_upgrade))
-		install_upgrade(atom_to_attack, user)
-		return TRUE
+	if(!ISADVANCEDTOOLUSER(user) || HAS_TRAIT(attack_target, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || istype(attack_target, /turf/open/space/transit))
+		return
 
-	var/atom/attack_target = atom_to_attack
+	if(istype(attack_target, /obj/item/rpd_upgrade))
+		var/obj/item/rpd_upgrade/rpd_disk = attack_target
+
+		// Check if the upgrade's already present
+		if(rpd_disk.upgrade_flags & upgrade_flags)
+			balloon_alert(user, "already installed!")
+			return ITEM_INTERACT_BLOCKING
+
+		// Adds the upgrade from the disk and then deletes the disk
+		upgrade_flags |= rpd_disk.upgrade_flags
+		playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
+		balloon_alert(user, "upgrade installed")
+		qdel(rpd_disk)
+		return ITEM_INTERACT_SUCCESS
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_pipe_type = recipe.id
@@ -454,20 +320,29 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
 		attack_target = attack_target.wrench_act(user, src)
 		if(!isatom(attack_target)) //can return null, FALSE if do_after() fails see /obj/machinery/atmospherics/wrench_act()
-			return TRUE
+			return ITEM_INTERACT_FAILURE
 
 	if(istype(attack_target, /obj/machinery/atmospherics) && (mode & BUILD_MODE))
 		attack_target = get_turf(attack_target)
 
-	var/can_make_pipe = check_can_make_pipe(attack_target)
-
-	. = TRUE
-
-	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
-		playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
-		playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+	var/can_destroy = FALSE
+	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe))
+		can_destroy = TRUE
+	if(!can_destroy)
+		var/static/list/destroyables = list(
+			/obj/structure/disposalconstruct,
+			/obj/structure/c_transit_tube,
+			/obj/structure/c_transit_tube_pod,
+			/obj/item/pipe_meter,
+			/obj/structure/disposalpipe/broken
+		)
+		can_destroy = is_type_in_list(attack_target, destroyables)
+	if(can_destroy)
+		var/turf/ground = get_turf(src)
+		playsound(ground, SFX_TOOL_SWITCH, 20, TRUE)
+		playsound(ground, RPD_USE_SOUND, 50, TRUE)
 		qdel(attack_target)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(mode & REPROGRAM_MODE)
 		// If this is a placed smart pipe, try to reprogram it
@@ -475,16 +350,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(istype(target_smart_pipe))
 			if(target_smart_pipe.dir == ALL_CARDINALS)
 				balloon_alert(user, "has no unconnected directions!")
-				return
+				return ITEM_INTERACT_FAILURE
 			var/old_init_dir = target_smart_pipe.get_init_directions()
 			if(old_init_dir == p_init_dir)
 				balloon_alert(user, "already configured!")
-				return
+				return ITEM_INTERACT_FAILURE
 			// Check for differences in unconnected directions
 			var/target_differences = (p_init_dir ^ old_init_dir) & ~target_smart_pipe.connections
 			if(!target_differences)
 				balloon_alert(user, "already configured for its directions!")
-				return
+				return ITEM_INTERACT_FAILURE
 
 			playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
 
@@ -494,7 +369,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
 			if(target_differences & target_smart_pipe.connections)
 				balloon_alert(user, "can't configure for its direction!")
-				return
+				return ITEM_INTERACT_FAILURE
 			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
 			var/current_init_dir = target_smart_pipe.get_init_directions()
 			// Access p_init_dir directly. The RPD can change target layer and initializable directions (though not pipe type or dir) while working to dispense and connect a component,
@@ -503,7 +378,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			// Don't make a smart pipe with only one connection
 			if(ISSTUB(new_init_dir))
 				balloon_alert(user, "no one directional pipes allowed!")
-				return
+				return ITEM_INTERACT_FAILURE
 			target_smart_pipe.set_init_directions(new_init_dir)
 			// We're now reconfigured.
 			// We can never disconnect from existing connections, but we can connect to previously unconnected directions, and should immediately do so
@@ -529,108 +404,146 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			// Finally, update our internal state - update_pipe_icon also updates dir and connections
 			target_smart_pipe.update_pipe_icon()
 			user.visible_message(span_notice("[user] reprograms \the [target_smart_pipe]."), span_notice("You reprogram \the [target_smart_pipe]."))
-			return
+			return ITEM_INTERACT_SUCCESS
+
 		// If this is an unplaced smart pipe, try to reprogram it
 		var/obj/item/pipe/quaternary/target_unsecured_pipe = attack_target
 		if(istype(target_unsecured_pipe) && ispath(target_unsecured_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
 			// An unplaced pipe never has any existing connections, so just directly assign the new configuration
 			target_unsecured_pipe.p_init_dir = p_init_dir
 			target_unsecured_pipe.update()
+			return ITEM_INTERACT_SUCCESS
 
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
-				if(!do_pipe_build(attack_target, user, params))
-					return ..()
+				return do_pipe_build(attack_target, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
-				if(!can_make_pipe)
-					return ..()
+				if(!check_can_make_pipe(attack_target))
+					return ITEM_INTERACT_FAILURE
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
 					balloon_alert(user, "target is blocked!")
-					return
+					return ITEM_INTERACT_FAILURE
 				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
-				if(do_after(user, disposal_build_speed, target = attack_target))
-					var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_pipe_type, queued_pipe_dir, queued_pipe_flipped)
 
-					if(!new_disposals_segment.can_place())
-						balloon_alert(user, "not enough room!")
-						qdel(new_disposals_segment)
-						return
+				if(!do_after(user, disposal_build_speed, target = attack_target))
+					return ITEM_INTERACT_FAILURE
 
-					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+				var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_pipe_type, queued_pipe_dir, queued_pipe_flipped)
 
-					new_disposals_segment.add_fingerprint(usr)
-					new_disposals_segment.update_appearance()
-					if(mode & WRENCH_MODE)
-						new_disposals_segment.wrench_act(user, src)
-					return
+				if(!new_disposals_segment.can_place())
+					balloon_alert(user, "not enough room!")
+					qdel(new_disposals_segment)
+					return ITEM_INTERACT_FAILURE
+
+				playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+
+				new_disposals_segment.add_fingerprint(user)
+				new_disposals_segment.update_appearance()
+				if(mode & WRENCH_MODE)
+					new_disposals_segment.wrench_act(user, src)
+				return ITEM_INTERACT_SUCCESS
 
 			if(TRANSIT_CATEGORY) //Making transit tubes
-				if(!can_make_pipe)
-					return ..()
+				if(!check_can_make_pipe(attack_target))
+					return ITEM_INTERACT_FAILURE
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
 					balloon_alert(user, "something in the way!")
-					return
+					return ITEM_INTERACT_FAILURE
 
 				var/turf/target_turf = get_turf(attack_target)
 				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
 					balloon_alert(user, "something in the way!")
-					return
+					return ITEM_INTERACT_FAILURE
 
 				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
-				if(do_after(user, transit_build_speed, target = attack_target))
-					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-					if(queued_pipe_type == /obj/structure/c_transit_tube_pod)
-						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(attack_target)
-						pod.add_fingerprint(usr)
-						if(mode & WRENCH_MODE)
-							pod.wrench_act(user, src)
+				if(!do_after(user, transit_build_speed, target = attack_target))
+					return ITEM_INTERACT_FAILURE
 
-					else
-						var/obj/structure/c_transit_tube/tube = new queued_pipe_type(attack_target)
-						tube.setDir(queued_pipe_dir)
+				playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+				if(queued_pipe_type == /obj/structure/c_transit_tube_pod)
+					var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(attack_target)
+					pod.add_fingerprint(user)
+					if(mode & WRENCH_MODE)
+						pod.wrench_act(user, src)
 
-						if(queued_pipe_flipped)
-							tube.setDir(turn(queued_pipe_dir, 45 + ROTATION_FLIP))
-							tube.post_rotation(user, ROTATION_FLIP)
+				else
+					var/obj/structure/c_transit_tube/tube = new queued_pipe_type(attack_target)
+					tube.setDir(queued_pipe_dir)
 
-						tube.add_fingerprint(usr)
-						if(mode & WRENCH_MODE)
-							tube.wrench_act(user, src)
-					return
-			else
-				return ..()
+					if(queued_pipe_flipped)
+						tube.setDir(turn(queued_pipe_dir, 45 + ROTATION_FLIP))
+						tube.post_rotation(user, ROTATION_FLIP)
 
+					tube.add_fingerprint(user)
+					if(mode & WRENCH_MODE)
+						tube.wrench_act(user, src)
+				return ITEM_INTERACT_SUCCESS
+
+/obj/item/pipe_dispenser/interact_with_atom_secondary(obj/machinery/atmospherics/target, mob/living/user, list/modifiers)
+	. = NONE
+
+	if(!istype(target))
+		return
+
+	if(target.pipe_color && target.piping_layer)
+		paint_color = GLOB.pipe_color_name[target.pipe_color]
+		pipe_layers = PIPE_LAYER(target.piping_layer)
+		balloon_alert(user, "color/layer copied")
+		return ITEM_INTERACT_SUCCESS
+
+/**
+ * Can we make a pipe on the target
+ * Arguments
+ *
+ * * atom/target_of_attack - the target we are trying to build a pipe on
+ */
 /obj/item/pipe_dispenser/proc/check_can_make_pipe(atom/target_of_attack)
-	//make sure what we're clicking is valid for the current category
-	var/static/list/make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille))
-	var/can_we_make_pipe = (isturf(target_of_attack) || is_type_in_typecache(target_of_attack, make_pipe_whitelist))
-	return can_we_make_pipe
+	PRIVATE_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
 
-/obj/item/pipe_dispenser/proc/do_pipe_build(atom/atom_to_target, mob/user, params)
+	if(isturf(target_of_attack))
+		return TRUE
+
+	//make sure what we're clicking is valid for the current category
+	var/static/list/make_pipe_whitelist = typecacheof(
+		list(
+				/obj/structure/lattice,
+				/obj/structure/girder,
+				/obj/item/pipe,
+				/obj/structure/window,
+				/obj/structure/grille
+			)
+	)
+	return is_type_in_typecache(target_of_attack, make_pipe_whitelist)
+
+/**
+ * Build pipe on the target
+ * Arguments
+ *
+ * * atom/atom_to_target - the target we are trying to build the pipe on
+ * * mob/user - mob performing the action
+ */
+/obj/item/pipe_dispenser/proc/do_pipe_build(atom/atom_to_target, mob/user)
+	PRIVATE_PROC(TRUE)
+
+	if(!check_can_make_pipe(atom_to_target))
+		return FALSE
+
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_pipe_type = recipe.id
 	var/queued_pipe_dir = p_dir
 	var/queued_pipe_flipped = p_flipped
 
-	var/can_make_pipe = check_can_make_pipe(atom_to_target)
 	var/list/pipe_layer_numbers = get_active_pipe_layers()
-	var/continued_build = FALSE
-	for(var/pipe_layer_num in 1 to length(pipe_layer_numbers))
-		var/layer_to_build = pipe_layer_numbers[pipe_layer_num]
-		if(layer_to_build != pipe_layer_numbers[1])
-			continued_build = TRUE
-		if(!layer_to_build)
-			return FALSE
-		if(!can_make_pipe)
-			return FALSE
+	for(var/layer_to_build in pipe_layer_numbers)
 		playsound(get_turf(src), SFX_TOOL_SWITCH, 20, vary = TRUE)
-		if(!continued_build && !do_after(user, atmos_build_speed, target = atom_to_target))
+		if(!do_after(user, atmos_build_speed, target = atom_to_target))
 			return FALSE
-		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == 5))
+		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == MAX_PIPE_LAYERS))
 			balloon_alert(user, "can't build on layer [layer_to_build]!")
 			if(multi_layer)
 				continue
@@ -657,31 +570,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				new_flippable_pipe.flipped = queued_pipe_flipped
 
 			pipe_type.update()
-			pipe_type.add_fingerprint(usr)
+			pipe_type.add_fingerprint(user)
 			pipe_type.set_piping_layer(layer_to_build)
 			if(ispath(queued_pipe_type, /obj/machinery/atmospherics) && !ispath(queued_pipe_type, /obj/machinery/atmospherics/pipe/color_adapter))
 				pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 			if(mode & WRENCH_MODE)
 				pipe_type.wrench_act(user, src)
 	return TRUE
-
-/obj/item/pipe_dispenser/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/rpd_upgrade))
-		install_upgrade(item, user)
-		return TRUE
-	return ..()
-
-/// Installs an upgrade into the RPD after checking if it is already installed
-/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_disk, mob/user)
-	// Check if the upgrade's already present
-	if(rpd_disk.upgrade_flags & upgrade_flags)
-		balloon_alert(user, "already installed!")
-		return
-	// Adds the upgrade from the disk and then deletes the disk
-	upgrade_flags |= rpd_disk.upgrade_flags
-	playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
-	balloon_alert(user, "upgrade installed")
-	qdel(rpd_disk)
 
 ///Changes the piping layer when the mousewheel is scrolled up or down.
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)
@@ -695,7 +590,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 
 	if(delta_y < 0)
-		pipe_layers = min(PIPE_LAYER(5), pipe_layers << 1)
+		pipe_layers = min(PIPE_LAYER(MAX_PIPE_LAYERS), pipe_layers << 1)
 	else if(delta_y > 0)
 		pipe_layers = max(PIPE_LAYER(1), pipe_layers >> 1)
 	else //mice with side-scrolling wheels are apparently a thing and fuck this up
@@ -730,3 +625,4 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef PIPE_LAYER
 
 #undef RPD_USE_SOUND
+#undef MAX_PIPE_LAYERS

@@ -98,3 +98,23 @@
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
 	dummy.fully_heal(HEAL_ORGANS)
+
+///Allocate a human mob, give 'em a skillchip and a generic trauma, then see if it throws any error when the brain is removed.
+/datum/unit_test/chipped_traumatized_brain_removal
+
+/datum/unit_test/chipped_traumatized_brain_removal/Run()
+	var/mob/living/carbon/human/dummy/dummy = allocate(__IMPLIED_TYPE__)
+
+	//add the chip and activate it
+	var/obj/item/skillchip/basketweaving/chip = new(dummy.loc)
+	dummy.implant_skillchip(chip, force = TRUE)
+	TEST_ASSERT(chip.holding_brain, "Skillchip couldn't be implanted successfully, 'holding_brain' is null")
+	chip.try_activate_skillchip(force = TRUE)
+	TEST_ASSERT(chip.active, "Skillchip couldn't be activated")
+
+	//add a trauma
+	dummy.gain_trauma_type(BRAIN_TRAUMA_MILD)
+
+	var/obj/item/organ/brain = locate() in dummy.organs
+	brain.forceMove(dummy.loc)
+	allocated += brain

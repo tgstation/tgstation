@@ -77,16 +77,14 @@
 		return ..()
 
 	//we hide medical hud while in regular state or an item
-	var/image/holder = hud_list[HEALTH_HUD]
-	holder.icon_state = null
+	set_hud_image_state(HEALTH_HUD, null)
 
 /mob/living/basic/morph/med_hud_set_status()
 	if(isliving(form_typepath))
 		return ..()
 
 	//we hide medical hud while in regular state or an item
-	var/image/holder = hud_list[STATUS_HUD]
-	holder.icon_state = null
+	set_hud_image_state(STATUS_HUD, null)
 
 /mob/living/basic/morph/death(gibbed)
 	if(HAS_TRAIT(src, TRAIT_DISGUISED))
@@ -145,7 +143,7 @@
 	SIGNAL_HANDLER
 
 	// linters hate this if it's not async for some reason even though nothing blocks
-	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), caller = source, target = target)
+	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), clicker = source, target = target)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Handles the logic for attacking anything.

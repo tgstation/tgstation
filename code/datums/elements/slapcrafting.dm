@@ -134,7 +134,7 @@
 
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		var/atom/result = initial(recipe.result)
-		examine_list += "<a href='?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
+		examine_list += "<a href='byond://?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
 
 /datum/element/slapcrafting/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
@@ -180,7 +180,7 @@
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
 		to_chat(user, span_boldnotice("Extra Ingredients:"))
-		to_chat(user, examine_block(span_notice(string_ingredient_list)))
+		to_chat(user, boxed_message(span_notice(string_ingredient_list)))
 
 	var/list/tool_list = ""
 
@@ -194,7 +194,7 @@
 
 	if(length(tool_list))
 		to_chat(user, span_boldnotice("Required Tools:"))
-		to_chat(user, examine_block(span_notice(tool_list)))
+		to_chat(user, boxed_message(span_notice(tool_list)))
 
 	qdel(cur_recipe)
 

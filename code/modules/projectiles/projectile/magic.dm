@@ -37,7 +37,7 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+			if(victim.revive(ADMIN_HEAL_ALL & ~HEAL_REFRESH_ORGANS , force_grab_ghost = TRUE)) // This heals suicides
 				victim.grab_ghost(force = TRUE)
 				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
 			else if(victim.stat != DEAD)
@@ -68,7 +68,7 @@
 			victim.death()
 			return
 
-		if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+		if(victim.revive(ADMIN_HEAL_ALL & ~HEAL_REFRESH_ORGANS , force_grab_ghost = TRUE)) // This heals suicides
 			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
 		else if(victim.stat != DEAD)
 			to_chat(victim, span_notice("You feel great!"))
@@ -378,7 +378,7 @@
 	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/mob/dead/observer/ghosted_target = target.ghostize(FALSE)
-		target.key = chosen_one.key
+		target.PossessByPlayer(chosen_one.key)
 		trauma.add_friend(ghosted_target)
 	else
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))

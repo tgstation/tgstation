@@ -1,27 +1,11 @@
-/// Brimdemon crusher trophy, it... makes a funny sound?
-/obj/item/crusher_trophy/brimdemon_fang
-	name = "brimdemon's fang"
-	icon_state = "brimdemon_fang"
-	desc = "A fang from a brimdemon's corpse."
-	denied_type = /obj/item/crusher_trophy/brimdemon_fang
-	/// Cartoon punching vfx
-	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
-
-/obj/item/crusher_trophy/brimdemon_fang/effect_desc()
-	return "mark detonation to create visual and audiosensory effects at the target"
-
-/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
-	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
-	playsound(target, 'sound/mobs/non-humanoids/brimdemon/brimdemon_crush.ogg', 100)
-
 /// Reagent pool left by dying brimdemon
 /obj/effect/decal/cleanable/brimdust
 	name = "brimdust"
-	desc = "Dust from a brimdemon. It is considered valuable for its' botanical abilities."
+	desc = "Dust from a brimdemon. It is considered valuable for its botanical abilities."
 	icon_state = "brimdust"
 	icon = 'icons/obj/mining.dmi'
 	plane = GAME_PLANE
-	layer = GAME_CLEAN_LAYER
+	layer = CLEANABLE_OBJECT_LAYER
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/brimdust/Initialize(mapload)

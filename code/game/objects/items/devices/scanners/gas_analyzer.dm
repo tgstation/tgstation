@@ -220,7 +220,7 @@
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
 
 	// we let the join apply newlines so we do need handholding
-	to_chat(user, examine_block(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
+	to_chat(user, boxed_message(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	return TRUE
 
 /obj/item/analyzer/ranged

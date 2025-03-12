@@ -26,7 +26,7 @@
 	var/require_comms_key = FALSE
 
 /datum/world_topic/proc/TryRun(list/input)
-	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
+	key_valid = (CONFIG_GET(string/comms_key) == input["key"]) && CONFIG_GET(string/comms_key) && input["key"]
 	input -= "key"
 	if(require_comms_key && !key_valid)
 		. = "Bad Key"
@@ -44,6 +44,7 @@
 
 // TOPICS
 
+// If you modify the protocol for this, update tools/Tgstation.PRAnnouncer
 /datum/world_topic/ping
 	keyword = "ping"
 	log = FALSE
@@ -60,6 +61,7 @@
 /datum/world_topic/playing/Run(list/input)
 	return GLOB.player_list.len
 
+// If you modify the protocol for this, update tools/Tgstation.PRAnnouncer
 /datum/world_topic/pr_announce
 	keyword = "announce"
 	require_comms_key = TRUE
@@ -114,8 +116,8 @@
 
 	var/message = "<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
 			the following message (will autoapprove in [soft_filter_passed ? "[extended_time_display]" : "[normal_time_display]"]): \
-			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
-			[html_encode(input["message"])]"
+			<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
+			[input["message"]]"
 
 	if(soft_filter_passed)
 		message += "<br><br><b>NOTE: This message passed the soft filter on the origin server! The time was automatically expanded to [extended_time_display].</b>"
@@ -204,6 +206,10 @@
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
 	.["identifier"] = CONFIG_GET(string/serversqlname)
+
+	var/public_address = CONFIG_GET(string/public_address)
+	if(public_address)
+		.["public_address"] = public_address
 
 
 	var/list/adm = get_admin_counts()

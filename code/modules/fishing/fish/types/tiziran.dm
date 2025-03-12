@@ -37,7 +37,7 @@
 /obj/item/fish/moonfish/proc/egg_checks(datum/source, seconds_per_tick, growth, result_path)
 	if(result_path != /obj/item/food/moonfish_eggs) //Don't stop the growth of the dwarf subtype.
 		return
-	if(!proper_environment() || is_starving())
+	if(!proper_environment() || get_starvation_mult())
 		return COMPONENT_DONT_GROW
 	var/count = 0
 	for(var/obj/item/food/moonfish_eggs/egg in loc)

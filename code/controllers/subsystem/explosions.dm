@@ -524,6 +524,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 /datum/controller/subsystem/explosions/proc/shake_the_room(turf/epicenter, near_distance, far_distance, quake_factor, echo_factor, creaking, sound/near_sound = sound(get_sfx(SFX_EXPLOSION)), sound/far_sound = sound('sound/effects/explosion/explosionfar.ogg'), sound/echo_sound = sound('sound/effects/explosion/explosion_distant.ogg'), sound/creaking_sound = sound(get_sfx(SFX_EXPLOSION_CREAKING)), hull_creaking_sound = sound(get_sfx(SFX_HULL_CREAKING)))
 	var/frequency = get_rand_frequency()
 	var/blast_z = epicenter.z
+	var/area/epicenter_area = get_area(epicenter)
 	if(isnull(creaking)) // Autoset creaking.
 		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
 		if(on_station && prob((quake_factor * QUAKE_CREAK_PROB) + (echo_factor * ECHO_CREAK_PROB))) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
@@ -559,7 +560,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 				base_shake_amount = max(base_shake_amount, quake_factor * 3, 0) // Devastating explosions rock the station and ground
 				shake_camera(listener, FAR_SHAKE_DURATION, min(base_shake_amount, FAR_SHAKE_CAP))
 
-		else if(!isspaceturf(listener_turf) && echo_factor) // Big enough explosions echo through the hull.
+		else if(!isspaceturf(listener_turf) && !(!(epicenter_area.type in GLOB.the_station_areas) && SSmapping.is_planetary()) && echo_factor) // Big enough explosions echo through the hull. Except on planetary maps if the epicenter is not on the station's area.
 			var/echo_volume
 			if(quake_factor)
 				echo_volume = 60
@@ -634,23 +635,27 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 		// top left to one before top right
 		if(highest_y <= max_y)
 			candidates += block(
-				locate(max(lowest_x, 1), highest_y, our_z),
-				locate(min(highest_x - 1, max_x), highest_y, our_z))
+				lowest_x, highest_y, our_z,
+				highest_x - 1, highest_y, our_z
+			)
 		// top right to one before bottom right
 		if(highest_x <= max_x)
 			candidates += block(
-				locate(highest_x, min(highest_y, max_y), our_z),
-				locate(highest_x, max(lowest_y + 1, 1), our_z))
+				highest_x, highest_y, our_z,
+				highest_x, lowest_y + 1, our_z
+			)
 		// bottom right to one before bottom left
 		if(lowest_y >= 1)
 			candidates += block(
-				locate(min(highest_x, max_x), lowest_y, our_z),
-				locate(max(lowest_x + 1, 1), lowest_y, our_z))
+				highest_x, lowest_y, our_z,
+				lowest_x + 1, lowest_y, our_z
+			)
 		// bottom left to one before top left
 		if(lowest_x >= 1)
 			candidates += block(
-				locate(lowest_x, max(lowest_y, 1), our_z),
-				locate(lowest_x, min(highest_y - 1, max_y), our_z))
+				lowest_x, lowest_y, our_z,
+				lowest_x, highest_y - 1, our_z
+			)
 
 	if(!do_directional)
 		outlist += candidates

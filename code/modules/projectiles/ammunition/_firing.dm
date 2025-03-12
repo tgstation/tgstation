@@ -61,6 +61,8 @@
 		loaded_projectile.damage *= gun.projectile_damage_multiplier * integrity_mult
 		loaded_projectile.stamina *= gun.projectile_damage_multiplier * integrity_mult
 
+		loaded_projectile.speed *= gun.projectile_speed_multiplier * integrity_mult
+
 		loaded_projectile.wound_bonus += gun.projectile_wound_bonus
 		loaded_projectile.wound_bonus *= loaded_projectile.wound_bonus >= 0 ? 1 : 2 - integrity_mult
 		loaded_projectile.bare_wound_bonus += gun.projectile_wound_bonus

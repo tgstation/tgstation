@@ -96,7 +96,7 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), REF(src))
 	owner.do_alert_animation()
 	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
@@ -109,7 +109,7 @@
 /datum/status_effect/overwatch/on_remove()
 	UnregisterSignal(owner, forbidden_actions + list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	QDEL_NULL(link)
-	owner.remove_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), REF(src))
 	if (!QDELETED(owner))
 		owner.apply_status_effect(/datum/status_effect/overwatch_immune)
 	return ..()

@@ -69,8 +69,15 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 /datum/fish_evolution/proc/get_evolution_tooltip()
 	. = ""
 	if(required_temperature_min > 0 || required_temperature_max < INFINITY)
-		var/max_temp = required_temperature_max < INFINITY ? " to [required_temperature_max]" : ""
-		. = "An aquarium temperature of [required_temperature_min][max_temp] is required."
+		var/temp_reqs = ""
+		if(required_temperature_min == 0)
+			temp_reqs = "below [required_temperature_max]"
+		else if(required_temperature_max == INFINITY)
+			temp_reqs = "above [required_temperature_min]"
+		else
+			temp_reqs = "of [required_temperature_min] to [required_temperature_max]"
+		. = "An aquarium temperature [temp_reqs]K is required."
+
 	if(conditions_note)
 		. += " [conditions_note]"
 	return .
@@ -96,7 +103,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	name = "???" //The resulting fish is not shown on the catalog.
 	probability = 40
 	new_fish_type = /obj/item/fish/mastodon
-	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/territorial)
 	conditions_note = "The fish (and its mate) needs to be unusually big both in size and weight."
 	show_result_on_wiki = FALSE
 
@@ -125,13 +132,13 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 /datum/fish_evolution/chainsawfish
 	probability = 30
 	new_fish_type = /obj/item/fish/chainsawfish
-	new_traits = list(/datum/fish_trait/predator, /datum/fish_trait/aggressive)
-	conditions_note = "The fish needs to be unusually big and aggressive"
+	new_traits = list(/datum/fish_trait/predator, /datum/fish_trait/territorial)
+	conditions_note = "The fish needs to be unusually big and territorial"
 
 /datum/fish_evolution/chainsawfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	var/double_avg_size = /obj/item/fish/goldfish::average_size * 2
 	var/double_avg_weight = /obj/item/fish/goldfish::average_weight * 2
-	if(source.size >= double_avg_size && source.weight >= double_avg_weight && (/datum/fish_trait/aggressive in source.fish_traits))
+	if(source.size >= double_avg_size && source.weight >= double_avg_weight && (/datum/fish_trait/territorial in source.fish_traits))
 		return ..()
 	return FALSE
 
@@ -168,10 +175,10 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 
 /datum/fish_evolution/moonfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
 	if(source.size < (/obj/item/fish/moonfish/dwarf::average_size * 1.5) && source.size < (/obj/item/fish/moonfish/dwarf::average_weight * 1.5))
-		return ..()
+		return FALSE
 	if(mate && (mate.size < (/obj/item/fish/moonfish::average_size * 1.3) && mate.size < (/obj/item/fish/moonfish::average_weight * 1.3)))
 		return FALSE
-	return FALSE
+	return ..()
 
 /datum/fish_evolution/dwarf_moonfish
 	probability = 200 //guaranteed if the conditions are met
@@ -185,3 +192,12 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 		return FALSE
 	return ..()
 
+/datum/fish_evolution/lavaloop
+	probability = 85
+	new_fish_type = /obj/item/fish/lavaloop
+	required_temperature_min = MIN_AQUARIUM_TEMP + 60
+
+/datum/fish_evolution/plasmaloop
+	probability = 85
+	new_fish_type = /obj/item/fish/lavaloop/plasma_river
+	required_temperature_max = MIN_AQUARIUM_TEMP + 60

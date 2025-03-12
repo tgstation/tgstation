@@ -173,6 +173,8 @@
 	var/light_color =  NONSENSICAL_VALUE
 	if(!isnull(color))
 		light_color = color
+	if (cached_color_filter)
+		light_color = apply_matrix_to_color(COLOR_WHITE, cached_color_filter["color"], cached_color_filter["space"] || COLORSPACE_RGB)
 	set_light(light_setting_list[setting], light_power, light_color)
 
 /obj/machinery/power/floodlight/add_context(

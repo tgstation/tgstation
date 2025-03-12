@@ -100,11 +100,12 @@
 	ADD_KEEP_TOGETHER(movable, AQUARIUM_TRAIT) //render the fish on the same layer of the aquarium.
 
 	if(reagents_size > 0)
-		RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 		if(!movable.reagents)
 			movable.create_reagents(reagents_size, SEALED_CONTAINER)
-		else if(movable.reagents.total_volume)
+		if(movable.reagents.total_volume)
 			start_autofeed(movable.reagents)
+		else
+			RegisterSignal(movable.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_autofeed))
 		RegisterSignal(movable, COMSIG_PLUNGER_ACT, PROC_REF(on_plunger_act))
 
 	RegisterSignal(movable, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
@@ -113,17 +114,23 @@
 
 	if(isitem(movable))
 		RegisterSignal(movable, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
+		RegisterSignal(movable, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(secondary_interact))
 		RegisterSignals(movable, list(COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(on_secondary_attack_hand))
 	else
 		RegisterSignal(movable, COMSIG_ATOM_UI_INTERACT, PROC_REF(interact))
 
 	movable.AddElement(/datum/element/relay_attackers)
+	movable.AddComponent(/datum/component/fishing_spot, /datum/fish_source/aquarium)
+
+
+	movable.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	RegisterSignal(movable, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 	for(var/atom/movable/content as anything in movable.contents)
 		if(content.flags_1 & INITIALIZED_1)
 			on_entered(movable, content)
 
-	ADD_TRAIT(movable, TRAIT_IS_AQUARIUM, AQUARIUM_TRAIT)
+	movable.add_traits(list(TRAIT_IS_AQUARIUM, TRAIT_STOP_FISH_FLOPPING), AQUARIUM_TRAIT)
 
 /datum/component/aquarium/UnregisterFromParent()
 	var/atom/movable/movable = parent
@@ -143,13 +150,15 @@
 		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
 		COMSIG_ATOM_UI_INTERACT,
+		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
 	if(movable.reagents)
-		UnregisterSignal(movable, COMSIG_REAGENTS_NEW_REAGENT)
+		UnregisterSignal(movable, COMSIG_REAGENTS_HOLDER_UPDATED)
 		STOP_PROCESSING(SSobj, src)
 	beauty_by_content = null
 	tracked_fish_by_type = null
-	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), AQUARIUM_TRAIT)
+	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, TRAIT_STOP_FISH_FLOPPING), AQUARIUM_TRAIT)
+	qdel(movable.GetComponent(/datum/component/fishing_spot))
 	REMOVE_KEEP_TOGETHER(movable, AQUARIUM_TRAIT)
 
 /datum/component/aquarium/PreTransfer(atom/movable/new_parent)
@@ -182,6 +191,8 @@
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
+	if(!user.can_perform_action(source))
+		return
 	var/closing = HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN)
 	if(closing)
 		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, AQUARIUM_TRAIT)
@@ -214,7 +225,7 @@
 		source.balloon_alert(user, "fed the fish")
 		return ITEM_INTERACT_SUCCESS
 
-	if(!HAS_TRAIT(item, TRAIT_AQUARIUM_CONTENT))
+	if(!HAS_TRAIT(item, TRAIT_AQUARIUM_CONTENT) || (!isitem(parent) && user.combat_mode))
 		return //proceed with normal interactions
 
 	var/broken = source.get_integrity_percentage() <= source.integrity_failure
@@ -231,17 +242,21 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Called when the feed storage is no longer empty.
-/datum/component/aquarium/proc/start_autofeed(atom/movable/source, new_reagent, amount, reagtemp, data, no_react)
+/datum/component/aquarium/proc/start_autofeed(datum/reagents/source)
 	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_REAGENTS_HOLDER_UPDATED)
 	START_PROCESSING(SSobj, src)
-	UnregisterSignal(source.reagents, COMSIG_REAGENTS_NEW_REAGENT)
 
 ///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)
+	//safe mode, no need to feed the fishes
+	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
+		last_feeding += seconds_per_tick SECONDS
+		return
 	var/atom/movable/movable = parent
 	if(!movable.reagents?.total_volume)
 		if(movable.reagents)
-			RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
+			RegisterSignal(movable.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_autofeed))
 		return PROCESS_KILL
 	if(world.time < last_feeding + feeding_interval)
 		return
@@ -253,6 +268,7 @@
 /datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
+		source.balloon_alert(user, "open panel first!")
 		return
 	INVOKE_ASYNC(src, PROC_REF(do_plunging), source, user)
 	return COMPONENT_NO_AFTERATTACK
@@ -346,7 +362,7 @@
 		types_to_mate_with = types_to_mate_with & types_to_check
 
 	for(var/obj/item/fish/fish_type as anything in types_to_mate_with)
-		var/list/type_fishes = types_to_mate_with[fish_type]
+		var/list/type_fishes = tracked_fish_by_type[fish_type]
 		if(length(type_fishes) >= initial(fish_type.stable_population))
 			continue
 		candidates += type_fishes
@@ -438,15 +454,20 @@
 
 /datum/component/aquarium/proc/interact(atom/movable/source, mob/user)
 	SIGNAL_HANDLER
-
 	if(HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
 		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
-	else if(!isitem(source))
-		INVOKE_ASYNC(src, PROC_REF(admire), user)
+		return
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
+
+/datum/component/aquarium/proc/secondary_interact(atom/movable/source, mob/user)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
+		return
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
 
 /datum/component/aquarium/proc/on_secondary_attack_hand(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(admire), user)
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/aquarium/ui_interact(mob/user, datum/tgui/ui)
@@ -461,7 +482,7 @@
 	var/atom/movable/aquarium = parent
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allowBreeding"] = HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	.["safe_mode"] = HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
@@ -510,8 +531,8 @@
 			if(params["fluid"] != fluid_type && (params["fluid"] in fluid_types))
 				set_fluid_type(params["fluid"])
 			. = TRUE
-		if("allow_breeding")
-			if(HAS_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
+		if("safe_mode")
+			if(HAS_TRAIT_FROM(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
 				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 			else
 				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
@@ -560,6 +581,28 @@
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_bad : /datum/mood_event/aquarium_positive)
 	else if(dead_fish > 0)
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
+
+/datum/component/aquarium/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+	var/open_panel = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)
+	var/is_held_item = (held_item == source)
+	if(!held_item || is_held_item)
+		var/isitem = isitem(source)
+		if(!isitem || is_held_item)
+			context[SCREENTIP_CONTEXT_LMB] = open_panel ? "Adjust settings" : "Admire"
+		if(isitem)
+			context[SCREENTIP_CONTEXT_RMB] = "Admire"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "[!open_panel ? "Open" : "Close"] settings panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/plunger))
+		context[SCREENTIP_CONTEXT_LMB] = "Empty feed storage"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/reagent_containers/cup/fish_feed) && (!source.reagents || !open_panel))
+		context[SCREENTIP_CONTEXT_LMB] = "Feed fishes"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(HAS_TRAIT(held_item, TRAIT_AQUARIUM_CONTENT))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert in aquarium"
+		return CONTEXTUAL_SCREENTIP_SET
 
 #undef MIN_AQUARIUM_BEAUTY
 #undef MAX_AQUARIUM_BEAUTY

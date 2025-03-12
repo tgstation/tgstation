@@ -5,7 +5,7 @@
 	desc = "Use iron rods to build a girder!"
 	button_icon = 'icons/obj/structures.dmi'
 	button_icon_state = "girder"
-	cooldown_time = 3 SECONDS
+	cooldown_time = 5 SECONDS
 	click_to_activate = TRUE
 
 /datum/action/cooldown/mob_cooldown/bot/build_girder/IsAvailable(feedback)

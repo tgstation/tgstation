@@ -1,7 +1,7 @@
 //Space Ruin Parents
 
 /area/ruin/space
-	has_gravity = FALSE
+	default_gravity = ZERO_GRAVITY
 	area_flags = UNIQUE_AREA
 
 /area/ruin/space/unpowered
@@ -11,7 +11,7 @@
 	power_environ = FALSE
 
 /area/ruin/space/has_grav
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
@@ -529,18 +529,18 @@
 /area/ruin/space/djstation
 	name = "\improper Ruskie DJ Station"
 	icon_state = "DJ"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
 	area_flags = UNIQUE_AREA
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = ZERO_GRAVITY
 
 /area/ruin/space/djstation/service
 	name = "\improper DJ Station Service"
 	icon_state = "DJ"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 //ABANDONED TELEPORTER
 
@@ -763,3 +763,25 @@
 	airlock_wires = /datum/wires/airlock/security
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	ambience_index = AMBIENCE_DANGER
+
+//Film studio
+/area/ruin/space/has_grav/film_studio
+	name = "\improper Film Studio Generator Room"
+
+/area/ruin/space/has_grav/film_studio/dorms
+	name = "\improper Film Studio Living Quarters"
+
+/area/ruin/space/has_grav/film_studio/stage
+	name = "\improper Film Studio Main Set Area"
+
+/area/ruin/space/has_grav/film_studio/backstage
+	name = "\improper Film Studio Backstage"
+
+/area/ruin/space/has_grav/film_studio/director
+	name = "\improper Film Studio Director Room"
+
+/area/ruin/space/has_grav/film_studio/solars
+	name = "\improper Film Studio Maintenance Solars"
+
+/area/ruin/space/has_grav/film_studio/starboard
+	name = "\improper Film Studio Starboard Wing"

@@ -197,7 +197,7 @@
 	var/extra_wound = 0
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		extra_wound = 20
-	banged_limb?.receive_damage(30, wound_bonus = extra_wound)
+	pushed_mob.apply_damage(30, BRUTE, banged_limb, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
 	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
@@ -345,8 +345,7 @@
 	SIGNAL_HANDLER
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
-	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-	target.apply_status_effect(/datum/status_effect/next_shove_stuns)
+	target.Knockdown(SHOVE_KNOCKDOWN_TABLE, daze_amount = 3 SECONDS)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
@@ -382,13 +381,30 @@
 /obj/structure/table/rolling/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_our_moved))
 
 /obj/structure/table/rolling/Destroy()
 	for(var/item in attached_items)
 		clear_item_reference(item)
 	LAZYNULL(attached_items) // safety
 	return ..()
+
+/obj/structure/table/rolling/item_interaction(mob/living/user, obj/item/rolling_table_dock/rable, list/modifiers)
+	. = NONE
+	if(!istype(rable))
+		return
+
+	if(rable.loaded)
+		to_chat(user, span_warning("You already have \a [rable.loaded] docked!"))
+		return ITEM_INTERACT_FAILURE
+
+	if(locate(/mob/living) in loc.get_all_contents())
+		to_chat(user, span_warning("You can't collect \the [src] with that much on top!"))
+		return ITEM_INTERACT_FAILURE
+
+	rable.loaded = src
+	forceMove(rable)
+	user.visible_message(span_notice("[user] collects \the [src]."), span_notice("You collect \the [src]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	. = ..()
@@ -406,8 +422,9 @@
 	clear_item_reference(thing)
 
 /// Handles movement of the table itself, as well as moving along any atoms we have on our surface.
-/obj/structure/table/rolling/proc/on_our_moved(datum/source, atom/old_loc, dir, forced, list/old_locs, momentum_change)
-	SIGNAL_HANDLER
+/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
 	if(isnull(loc)) // aw hell naw
 		return
 
@@ -820,13 +837,11 @@
 
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.pixel_y += 6
+	buckled.add_offsets(type, z_add = 6)
 
 ///Disalign the mob with the table when unbuckled.
 /obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.pixel_y -= 6
+	buckled.remove_offsets(type)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)

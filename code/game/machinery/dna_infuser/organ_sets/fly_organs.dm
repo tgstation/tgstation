@@ -23,9 +23,11 @@
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
 	eye_icon_state = "flyeyes"
-	icon_state = "eyeballs-fly"
+	icon_state = "eyes_fly"
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	native_fov = NONE //flies can see all around themselves.
+	blink_animation = FALSE
+	iris_overlay = null
 
 /obj/item/organ/eyes/fly/Initialize(mapload)
 	. = ..()
@@ -49,12 +51,10 @@
 		"S" = "Z",
 	)
 
-/obj/item/organ/tongue/fly/New(class, timer, datum/mutation/human/copymut)
-	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
 /obj/item/organ/tongue/fly/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
 /obj/item/organ/tongue/fly/get_possible_languages()

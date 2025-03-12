@@ -34,9 +34,6 @@
 	if(gps_enabled)
 		. += span_notice("The cuff's GPS signal is on.")
 
-/obj/item/kheiral_cuffs/item_action_slot_check(slot)
-	return (slot & ITEM_SLOT_GLOVES)
-
 /obj/item/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot & ITEM_SLOT_GLOVES))
@@ -93,7 +90,6 @@
 		if(isliving(loc))
 			connect_kheiral_network(loc)
 
-// LEMON AND HERE
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)

@@ -23,11 +23,20 @@ You can avoid hacky code by using object-oriented methodologies, such as overrid
 
 ### Develop Secure Code
 
-* Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
+* Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind.
+	* This extends to much further than just numbers or strings. You should always sanity check that an input is valid, especially when it comes to datums or references!
+	* Input stalling is a very common exploit / bug that involves opening an input window when in a valid state, and triggering the input after exiting the valid state. These can be very serious, and allow players to teleport across the map or remove someone's brain at any given moment. If you check the player must be in a specific context before an input, you should generally check that they are still in the context AFTER the input resolves.
+		* For example, if you have an item which can be used (in hand) by a player to make it explode, but you want them to confirm (via prompt) that they want it to explode, you should check that the item is still in the player's hands after confirming. Otherwise, they could drop it and explode it at any moment they want.
+	* Another less common exploit involves allowing a player to open multiple of an input at once. This may allow the player to stack effects, such as triggering 10 explosions when only 1 should be allowed. While a lot of code is generally built in a way making this infeasible (usually due to runtime errors), it is noteworthy regardless.
+		* You should also consider if it would make sense to apply a timeout to your input, to prevent players from opening it and keeping it on their screen until convenient.
 
-* Calls to the database must be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
+* SQL queries **must** use parameters for any sort of input data, and `format_table_name` for table names. Directly substituting input into SQL queries is how SQL injections happen, which parameterized queries prevent.
+	* Good: `SSdbcore.NewQuery({"UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))`
+	* Bad: `SSdbcore.NewQuery({"UPDATE round SET map_name = '[current_map.map_name]' WHERE id = [GLOB.round_id]"}`
 
 * All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
+	* Don't expose a topic call to more than what you need it to. If you are only looking for an item inside an atom, don't look for every item in the world - just look in the atom's contents.
+		* You rarely should call `locate(ref)` without specifying a list! This is a serious exploit vector which can be used to spawn Nar'sie or delete players across the map. Try narrowing it down via a list - such as `locate(ref) in contents`, to find an item in an atom's contents.
 
 * Information that players could use to metagame (that is, to identify round information and/or antagonist type via information that would not be available to them in character) should be kept as administrator only.
 
@@ -68,15 +77,11 @@ var/path_type = "/obj/item/baseball_bat"
 
 * You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
 
-* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
-
 * Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
 
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
 * Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
-
-* The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
 ## Structural
 ### No duplicated code (Don't repeat yourself)

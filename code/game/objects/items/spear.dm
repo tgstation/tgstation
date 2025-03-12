@@ -1,24 +1,25 @@
 //spears
 /obj/item/spear
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spearglass0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "spear"
-	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	icon_angle = -45
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
 	throw_speed = 4
 	demolition_mod = 0.75
-	embed_type = /datum/embed_data/spear
+	embed_type = /datum/embedding/spear
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
-	sharpness = SHARP_EDGED // i know the whole point of spears is that they're pointy, but edged is more devastating at the moment so
+	sharpness = SHARP_POINTY
 	max_integrity = 200
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
@@ -32,7 +33,7 @@
 	/// How much damage to do wielded
 	var/force_wielded = 18
 
-/datum/embed_data/spear
+/datum/embedding/spear
 	impact_pain_mult = 2
 	remove_pain_mult = 4
 	jostle_chance = 2.5
@@ -195,7 +196,7 @@
 //GREY TIDE
 /obj/item/spear/grey_tide
 	name = "\improper Grey Tide"
-	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
+	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualties among Nanotrasen military forces."
 	attack_verb_continuous = list("gores")
 	attack_verb_simple = list("gore")
 	force_unwielded = 15

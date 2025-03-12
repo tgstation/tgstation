@@ -4,6 +4,13 @@
 #define FISHING_RANDOM_SEED "Random seed"
 ///Used in the surgery fishing spot to define a random organ reward
 #define FISHING_RANDOM_ORGAN "Random organ"
+///Used in the dimensional rift fishing spot to define influence gain
+#define FISHING_INFLUENCE "Influence"
+///Used in the dimensional rift fishing spot to define arm procurement
+#define FISHING_RANDOM_ARM "arm"
+
+///Represents the chance of getting squashed by the vending machine from the vending machine fish source
+#define FISHING_VENDING_CHUCK "thinkfastchucklenuts"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
@@ -135,6 +142,17 @@
 ///The coefficient for maximum weight/size divergence relative to the averages.
 #define MAX_FISH_DEVIATION_COEFF 2.5
 
+/**
+ * Base multiplier of the difference between current size and weight and their maximum value
+ * used to calculate how much fish grow each time they're fed, alongside with the current hunger,
+ * and the current size and weight, meaning bigger fish naturally tend to grow way slowier
+ */
+#define FISH_GROWTH_MULT 0.38
+/// Growth peaks at 45% hunger but very rapidly wanes past that.
+#define FISH_GROWTH_PEAK 0.45
+/// Used as part of the divisor to slow down growth of bigger fish
+#define FISH_SIZE_WEIGHT_GROWTH_MALUS 0.5
+
 ///The volume of the grind results is multiplied by the fish' weight and divided by this.
 #define FISH_GRIND_RESULTS_WEIGHT_DIVISOR 500
 ///The number of fillets is multiplied by the fish' size and divided by this.
@@ -166,7 +184,7 @@
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
-#define NEW_FISH_LAST_FEEDING_MULT 0.5
+#define NEW_FISH_LAST_FEEDING_MULT 0.33
 
 //IF YOU ADD ANY NEW FLAG, ADD IT TO THE RESPECTIVE BITFIELD in _globalvars/bitfields.dm TOO!
 
@@ -186,7 +204,6 @@
 #define FISH_FLAG_SAFE_TEMPERATURE (1<<6)
 ///Flag added when in an aquarium with the right fluid type.
 #define FISH_FLAG_SAFE_FLUID (1<<7)
-
 
 #define MIN_AQUARIUM_TEMP T0C
 #define MAX_AQUARIUM_TEMP (T0C + 100)
@@ -260,11 +277,10 @@
 #define FISH_SOURCE_FLAG_EXPLOSIVE_MALUS (1<<0)
 /// The fish source is not elegible for random rewards from bluespace fishing rods
 #define FISH_SOURCE_FLAG_NO_BLUESPACE_ROD (1<<1)
-/**
- * If present, fish that can be caught from this source won't be included in the 'fish caught' score, unless
- * present in other sources without this flag as well.
- */
-#define FISH_SOURCE_FLAG_SKIP_CATCHABLES (1<<2)
+/// When examined by someone with enough fishing skill, this will also display fish that doesn't have FISH_FLAG_SHOW_IN_CATALOG
+#define FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG (1<<2)
+/// This fish source will not spawn fish on explosions
+#define FISH_SOURCE_FLAG_EXPLOSIVE_NONE (1<<3)
 
 /**
  * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have

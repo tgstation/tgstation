@@ -42,7 +42,7 @@
 
 /obj/machinery/power/manufacturing/sorter/receive_resource(atom/movable/receiving, atom/from, receive_dir)
 	if(length(loc.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
-		return MANUFACTURING_FAIL_FULL
+		return MANUFACTURING_FAIL
 	receiving.Move(loc)
 	return MANUFACTURING_SUCCESS
 

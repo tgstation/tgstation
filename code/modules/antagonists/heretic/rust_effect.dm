@@ -13,3 +13,4 @@
 	pixel_x = rand(-6, 6)
 	icon_state = "small_rune_[rand(1, 12)]"
 	update_appearance()
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)

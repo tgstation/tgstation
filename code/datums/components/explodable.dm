@@ -147,18 +147,20 @@
 		return // If we don't do this and this doesn't delete it can lock the MC into only processing Input, Timers, and Explosions.
 
 	var/atom/bomb = parent
-	var/log = TRUE
-	if(light_impact_range < 1)
-		log = FALSE
+	var/do_log = light_impact_range >= 1
 
 	exploding = TRUE
-	explosion(bomb, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, log, uncapped) //epic explosion time
+	explosion(bomb, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, do_log, uncapped) //epic explosion time
 
 	switch(delete_after)
 		if(EXPLODABLE_DELETE_SELF)
 			qdel(src)
 		if(EXPLODABLE_DELETE_PARENT)
-			qdel(bomb)
+			if(isobj(bomb))
+				var/obj/obj_bomb = bomb
+				obj_bomb.deconstruct(disassembled = FALSE)
+			else
+				qdel(bomb)
 		else
 			addtimer(CALLBACK(src, PROC_REF(reset_exploding)), 0.1 SECONDS)
 

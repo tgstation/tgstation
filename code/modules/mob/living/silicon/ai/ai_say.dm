@@ -1,7 +1,7 @@
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+		return "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -84,7 +84,7 @@
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
 		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='byond://?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
 		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
@@ -161,28 +161,32 @@
 	if(GLOB.vox_sounds[word])
 
 		var/sound_file = GLOB.vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
-		voice.status = SOUND_STREAM
 
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
-				if(!player_mob.can_hear() || !safe_read_pref(player_mob.client, /datum/preference/toggle/sound_ai_vox))
+				var/pref_volume = safe_read_pref(player_mob.client, /datum/preference/numeric/volume/sound_ai_vox)
+				if(!player_mob.can_hear() || !pref_volume)
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)
 				if(!is_valid_z_level(ai_turf, player_turf))
 					continue
 
+				var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX, volume = pref_volume)
+				voice.status = SOUND_STREAM
 				SEND_SOUND(player_mob, voice)
 		else
+			var/pref_volume = safe_read_pref(only_listener.client, /datum/preference/numeric/volume/sound_ai_vox)
+			var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX, volume = pref_volume)
+			voice.status = SOUND_STREAM
 			SEND_SOUND(only_listener, voice)
 		return TRUE
 	return FALSE
 
 /proc/does_target_have_vox_off(mob/target)
-	return !safe_read_pref(target.client, /datum/preference/toggle/sound_ai_vox)
+	return !safe_read_pref(target.client, /datum/preference/numeric/volume/sound_ai_vox)
 
 #undef VOX_DELAY
 #endif

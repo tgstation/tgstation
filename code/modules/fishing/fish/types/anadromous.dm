@@ -39,8 +39,8 @@
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "pike"
 	inhand_icon_state = "pike"
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	stable_population = 4
 	sprite_width = 10
 	sprite_height = 3
@@ -55,7 +55,7 @@
 	fishing_difficulty_modifier = 10
 	required_temperature_min = MIN_AQUARIUM_TEMP+12
 	required_temperature_max = MIN_AQUARIUM_TEMP+27
-	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/territorial)
 	evolution_types = list(/datum/fish_evolution/armored_pike)
 	compatible_types = list(/obj/item/fish/pike/armored)
 	favorite_bait = list(

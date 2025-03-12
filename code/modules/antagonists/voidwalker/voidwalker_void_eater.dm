@@ -7,6 +7,7 @@
 	icon = 'icons/obj/weapons/voidwalker_items.dmi'
 	icon_state = "tentacle"
 	inhand_icon_state = "tentacle"
+	icon_angle = 180
 	force = 25
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/voidwalker_lefthand.dmi'
@@ -34,11 +35,11 @@
 /obj/item/void_eater/equipped(mob/user)
 	. = ..()
 
-	RegisterSignal(user, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, PROC_REF(refresh))
+	RegisterSignal(user, COMSIG_VOIDWALKER_SUCCESSFUL_KIDNAP, PROC_REF(refresh))
 
 /obj/item/void_eater/dropped(mob/user, silent)
 	. = ..()
-	UnregisterSignal(user, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP)
+	UnregisterSignal(user, COMSIG_VOIDWALKER_SUCCESSFUL_KIDNAP)
 
 /obj/item/void_eater/examine(mob/user)
 	. = ..()

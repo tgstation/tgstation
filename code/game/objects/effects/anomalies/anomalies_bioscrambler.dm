@@ -3,9 +3,10 @@
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
 	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
+	lifespan = ANOMALY_COUNTDOWN_TIMER * 2
+
 	/// Who are we moving towards?
 	var/datum/weakref/pursuit_target
 	/// Cooldown for every anomaly pulse
@@ -15,7 +16,7 @@
 	/// Range of the anomaly pulse
 	var/range = 2
 
-/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan)
 	. = ..()
 	pursuit_target = WEAKREF(find_nearest_target())
 
@@ -79,6 +80,10 @@
 
 /obj/effect/anomaly/bioscrambler/docile/update_target()
 	return
+
+/obj/effect/anomaly/bioscrambler/detonate()
+	COOLDOWN_RESET(src, pulse_cooldown)
+	anomalyEffect()
 
 /// Visual effect spawned when the bioscrambler scrambles your bio
 /obj/effect/temp_visual/circle_wave

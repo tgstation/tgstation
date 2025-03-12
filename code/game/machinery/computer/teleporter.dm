@@ -116,7 +116,7 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_appearance()
-			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 5 SECONDS * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
@@ -233,8 +233,7 @@
 		return FALSE
 	if(is_centcom_level(T.z) || is_away_level(T.z))
 		return FALSE
-	var/area/A = get_area(T)
-	if(!A || (A.area_flags & NOTELEPORT))
+	if(!check_teleport_valid(AM, get_turf(src)))
 		return FALSE
 	return TRUE
 

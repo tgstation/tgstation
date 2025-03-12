@@ -64,13 +64,13 @@
 	build_all_button_icons()
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/clicker, params, atom/target)
 	var/atom/aim_assist_target
 	if(aim_assist)
-		aim_assist_target = aim_assist(caller, target)
-	return ..(caller, params, aim_assist_target || target)
+		aim_assist_target = aim_assist(clicker, target)
+	return ..(clicker, params, aim_assist_target || target)
 
-/datum/action/cooldown/spell/pointed/proc/aim_assist(mob/living/caller, atom/target)
+/datum/action/cooldown/spell/pointed/proc/aim_assist(mob/living/clicker, atom/target)
 	if(!isturf(target))
 		return
 

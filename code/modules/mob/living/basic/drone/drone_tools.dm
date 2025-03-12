@@ -34,6 +34,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
 	inhand_icon_state = "crowbar"
+	icon_angle = 0
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/screwdriver/drone
@@ -61,6 +62,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_wrench"
 	inhand_icon_state = "wrench"
+	icon_angle = 0
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/weldingtool/drone
@@ -84,6 +86,7 @@
 	desc = "A multitool built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_multitool"
+	icon_angle = 0
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5
 

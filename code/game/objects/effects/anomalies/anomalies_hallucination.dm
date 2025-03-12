@@ -15,7 +15,7 @@
 		span_warning("You are going insane!"),
 	)
 
-/obj/effect/anomaly/hallucination/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/hallucination/Initialize(mapload, new_lifespan)
 	. = ..()
 	apply_wibbly_filters(src)
 	generate_decoys()
@@ -55,11 +55,11 @@
 			new /obj/effect/anomaly/hallucination/decoy(floor)
 
 /obj/effect/anomaly/hallucination/decoy
-	drops_core = FALSE
+	anomaly_core = null
 	///Stores the fake analyzer scan text, so the result is always consistent for each anomaly.
 	var/report_text
 
-/obj/effect/anomaly/hallucination/decoy/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/hallucination/decoy/Initialize(mapload, new_lifespan)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_ILLUSORY_EFFECT, INNATE_TRAIT)
 	report_text = pick(
@@ -85,8 +85,10 @@
 	)
 
 /obj/effect/anomaly/hallucination/decoy/anomalyEffect(seconds_per_tick)
+#ifndef UNIT_TESTS // These might move away during a CI run and cause a flaky mapping nearstation errors
 	if(SPT_PROB(move_chance, seconds_per_tick))
 		move_anomaly()
+#endif
 
 /obj/effect/anomaly/hallucination/decoy/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	to_chat(user, span_notice("You activate [tool]. [replacetext(report_text, "%TOOL%", "[tool]")]"))

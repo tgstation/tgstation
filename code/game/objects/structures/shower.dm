@@ -193,7 +193,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 	if(!actually_on)
 		return
-	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
 	switch(dir)
 		if(NORTH)
@@ -233,12 +233,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(mist && !(actually_on && current_temperature != SHOWER_FREEZING))
 		qdel(mist)
 
-
 /obj/machinery/shower/proc/on_entered(datum/source, atom/movable/enterer)
 	SIGNAL_HANDLER
 
 	if(actually_on && reagents.total_volume)
-		wash_atom(enterer)
+		expose_to_reagents(enterer)
 
 /obj/machinery/shower/proc/on_exited(datum/source, atom/movable/exiter)
 	SIGNAL_HANDLER
@@ -252,18 +251,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	var/mob/living/take_his_status_effect = exiter
 	take_his_status_effect.remove_status_effect(/datum/status_effect/washing_regen)
 
-/obj/machinery/shower/proc/wash_atom(atom/target)
-	target.wash(CLEAN_RAD | CLEAN_WASH)
+/obj/machinery/shower/proc/expose_to_reagents(atom/target)
+	var/purity_volume = reagents.total_volume*0.70 	// need 70% of total reagents
+	var/datum/reagent/blood/bloody_shower = reagents.has_reagent(/datum/reagent/blood, amount=purity_volume)
+	var/datum/reagent/water/clean_shower = reagents.has_reagent(/datum/reagent/water, amount=purity_volume)
+	// we only care about blood and h20 for mood/status effect
+	var/datum/reagent/shower_reagent = bloody_shower || clean_shower || null
+
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
 	check_heat(living_target)
-	living_target.apply_status_effect(/datum/status_effect/washing_regen)
-	if(!HAS_TRAIT(target, TRAIT_WATER_HATER) || HAS_TRAIT(target, TRAIT_WATER_ADAPTATION))
-		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
-	else
-		living_target.add_mood_event("shower", /datum/mood_event/shower_hater)
+
+	living_target.apply_status_effect(/datum/status_effect/washing_regen, shower_reagent)
+	living_target.add_mood_event("shower", /datum/mood_event/shower, shower_reagent)
 
 /**
  * Toggle whether shower is actually on and outputting water.
@@ -323,13 +325,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 		// FOREVER mode stays processing so it can cycle back on.
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
+	// Assemble cleaning flags
+	var/purity_volume = reagents.total_volume*0.70 	// need 70% of total reagents
+	var/datum/reagent/water/clean_shower = reagents.has_reagent(/datum/reagent/water, amount=purity_volume)
+
+	// radiation my beloved
+	var/rad_purity_volume = reagents.total_volume*0.20 // need 20% of total reagents
+	var/radium_volume = reagents.get_reagent_amount(/datum/reagent/uranium/radium)
+	var/uranium_volume = reagents.get_reagent_amount(/datum/reagent/uranium)
+	var/polonium_volume = reagents.get_reagent_amount(/datum/reagent/toxin/polonium) * 3 // highly radioactive
+	var/total_radiation_volume = (radium_volume + uranium_volume + polonium_volume)
+	var/radioactive_shower = total_radiation_volume >= rad_purity_volume
+
+	var/wash_flags = NONE
+	if(clean_shower)
+		wash_flags |= CLEAN_WASH
+	if(!radioactive_shower)
+		// note it is possible to have a clean_shower that is radioactive (+70% water mixed with +20% radiation)
+		wash_flags |= CLEAN_RAD
 
 	// Wash up.
-	wash_atom(loc)
+	loc.wash(wash_flags, TRUE)
+	expose_to_reagents(loc)
 	for(var/atom/movable/movable_content as anything in loc)
-		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
-
+		expose_to_reagents(movable_content) // Wash the items on the turf (=expose them to the shower reagent)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)

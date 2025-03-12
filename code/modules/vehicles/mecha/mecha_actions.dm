@@ -24,7 +24,7 @@
 	button_icon_state = "mech_eject"
 
 /datum/action/vehicle/sealed/mecha/mech_eject/Trigger(trigger_flags)
-	if(!owner)
+	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
@@ -36,7 +36,9 @@
 	desc = "Airtight cabin preserves internal air and can be pressurized with a mounted air tank."
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	chassis.set_cabin_seal(owner, !chassis.cabin_sealed)
 
@@ -45,7 +47,9 @@
 	button_icon_state = "mech_lights_off"
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_lights/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	chassis.toggle_lights(user = owner)
 
@@ -54,7 +58,9 @@
 	button_icon_state = "mech_view_stats"
 
 /datum/action/vehicle/sealed/mecha/mech_view_stats/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 
 	chassis.ui_interact(owner)
@@ -68,7 +74,9 @@
 	RegisterSignal(chassis, COMSIG_MECH_SAFETIES_TOGGLE, PROC_REF(update_action_icon))
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_safeties/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 
 	chassis.set_safety(owner)
@@ -86,7 +94,9 @@
 	button_icon_state = "strafe"
 
 /datum/action/vehicle/sealed/mecha/strafe/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 
 	chassis.toggle_strafe()
@@ -114,7 +124,9 @@
 	button_icon_state = "mech_seat_swap"
 
 /datum/action/vehicle/sealed/mecha/swap_seat/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 
 	if(chassis.occupants.len == chassis.max_occupants)
@@ -143,7 +155,9 @@
 	button_icon_state = "mech_overload_off"
 
 /datum/action/vehicle/sealed/mecha/mech_overclock/Trigger(trigger_flags, forced_state = null)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	chassis.toggle_overclock(forced_state)
 	button_icon_state = "mech_overload_[chassis.overclock_mode ? "on" : "off"]"

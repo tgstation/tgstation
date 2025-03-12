@@ -278,7 +278,7 @@
 	if(owner)
 		var/obj/item/bodypart/part = owner.get_bodypart(BODY_ZONE_CHEST)
 		// Brute damage to the mob is less then to the organ, so there's a higher chance of the explosion happening before xeno death
-		part.receive_damage(impact / 2)
+		owner.apply_damage(impact / 2, BRUTE, part)
 		// We choose the option that's best for the check
 		var/part_dam_ratio = part.brute_dam / max(part.max_damage, 1)
 		if(damage_ratio < part_dam_ratio)

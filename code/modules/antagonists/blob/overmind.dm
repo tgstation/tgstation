@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				break
 	else // no blob starts so look for an alternate
 		for(var/i in 1 to 16)
-			var/turf/picked_safe = get_safe_random_station_turf()
+			var/turf/picked_safe = get_safe_random_station_turf_equal_weight()
 			if(is_valid_turf(picked_safe))
 				T = picked_safe
 				break
@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	var/message_a = say_quote(message)
 	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
-	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src)
+	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src, MESSAGE_TYPE_RADIO)
 
 /mob/eye/blob/blob_act(obj/structure/blob/B)
 	return

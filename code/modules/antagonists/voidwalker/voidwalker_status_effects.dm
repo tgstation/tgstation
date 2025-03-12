@@ -32,15 +32,15 @@
 	icon_state = "paralysis"
 
 /datum/status_effect/void_eatered
+	id = "void_eatered"
 	duration = 10 SECONDS
 	remove_on_fullheal = TRUE
+	alert_type = null
 
 /datum/status_effect/void_eatered/on_apply()
 	. = ..()
-
-	ADD_TRAIT(owner, TRAIT_NODEATH, REF(src))
+	ADD_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/void_eatered/on_remove()
 	. = ..()
-
-	REMOVE_TRAIT(owner, TRAIT_NODEATH, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id))

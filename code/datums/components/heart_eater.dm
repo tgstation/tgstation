@@ -50,7 +50,7 @@
 	eater_tongue.disliked_foodtypes &= ~GORE
 	eater_tongue.liked_foodtypes |= GORE
 
-/datum/component/heart_eater/proc/on_species_change(mob/living/carbon/human/eater, datum/species/new_species, datum/species/old_species)
+/datum/component/heart_eater/proc/on_species_change(mob/living/carbon/human/eater, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
 	eater.dna?.species?.damage_modifier += remember_modifier

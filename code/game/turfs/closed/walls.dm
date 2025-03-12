@@ -49,15 +49,18 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+	register_context()
+
+/turf/closed/wall/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(!isnull(held_item))
+		if((initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS) && held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Adjust Wall Corner"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
-	. = ..()
-	if (added_leaning)
-		return
-	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
-	AddComponent(/datum/component/leanable, 11)
-	added_leaning = TRUE
-	dropping.base_mouse_drop_handler(src, null, null, params)
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of walls & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
 
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
@@ -69,7 +72,9 @@
 	return ..()
 
 /turf/closed/wall/examine(mob/user)
-	. += ..()
+	. = ..()
+	if(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS)
+		. += span_notice("You could adjust its corners with a <b>wrench</b>.")
 	. += deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
@@ -173,7 +178,7 @@
  **arg2 is the hulk
  */
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
-	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
+	hulkman.apply_damage(damage, BRUTE, arm, wound_bonus = CANT_WOUND)
 	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
 	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
 		return
@@ -329,3 +334,15 @@
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
+
+/turf/closed/wall/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode || !(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+		smoothing_flags &= ~SMOOTH_DIAGONAL_CORNERS
+	else
+		smoothing_flags |= SMOOTH_DIAGONAL_CORNERS
+	QUEUE_SMOOTH(src)
+	to_chat(user, span_notice("You adjust [src]."))
+	tool.play_tool_sound(src)
+	return ITEM_INTERACT_SUCCESS

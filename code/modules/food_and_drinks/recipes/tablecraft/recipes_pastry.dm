@@ -418,6 +418,7 @@
 	)
 	result = /obj/item/food/donkpocket/deluxe
 	category = CAT_PASTRY
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/donkpocket/deluxe/nocarb
 	time = 15

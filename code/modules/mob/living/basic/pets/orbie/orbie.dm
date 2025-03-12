@@ -39,8 +39,9 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/move,
 		/datum/pet_command/untargeted_ability/pet_lights,
-		/datum/pet_command/point_targeting/use_ability/take_photo,
+		/datum/pet_command/use_ability/take_photo,
 		/datum/pet_command/follow/orbie,
 		/datum/pet_command/perform_trick_sequence,
 	)

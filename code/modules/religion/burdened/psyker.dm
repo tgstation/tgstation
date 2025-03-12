@@ -63,8 +63,7 @@
 	if(!psykerize())
 		to_chat(src, span_warning("The transformation subsides..."))
 		return
-	var/obj/item/bodypart/head/psyker_head = get_bodypart(BODY_ZONE_HEAD)
-	psyker_head.receive_damage(brute = 50)
+	apply_damage(50, BRUTE, BODY_ZONE_HEAD)
 	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
 	new /obj/effect/gibspawner/generic(drop_location(), src)
 	emote("scream")

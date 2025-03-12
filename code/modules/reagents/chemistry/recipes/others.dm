@@ -575,6 +575,30 @@
 		new /mob/living/basic/pet/dog/corgi(location)
 	..()
 
+/datum/chemical_reaction/lifish
+	required_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
+	required_temp = 374
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/lifish/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+
+	// create fish possibles
+	var/list/fish_types = list()
+	for(var/path in subtypesof(/obj/item/fish))
+		var/obj/item/fish/fake_fish = path
+		if(initial(fake_fish.random_case_rarity) == FISH_RARITY_NOPE) // means they aren't mean to be randomly available
+			continue
+		fish_types |= path
+
+	// spawn from popssible fishes
+	for(var/i in 1 to rand(1, created_volume)) // More flop.
+		var/spawned_fish = pick(fish_types)
+		var/obj/item/fish/new_fish = new spawned_fish(location)
+		ADD_TRAIT(new_fish, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
+	return ..()
+
 //monkey powder heehoo
 /datum/chemical_reaction/monkey_powder
 	results = list(/datum/reagent/monkey_powder = 5)
@@ -904,7 +928,7 @@
 /datum/chemical_reaction/eigenstate/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/turf/open/location = get_turf(holder.my_atom)
-	if(reaction.data["ducts_teleported"] == TRUE) //If we teleported an duct, then we reconnect it at the end
+	if(reaction.data["ducts_teleported"] == TRUE) //If we teleported a duct, then we reconnect it at the end
 		for(var/obj/item/stack/ducts/duct in range(location, 3))
 			duct.check_attach_turf(duct.loc)
 
@@ -928,7 +952,7 @@
 	for(var/mob/living/nearby_mob in range(location, 3))
 		do_sparks(3,FALSE,nearby_mob)
 		do_teleport(nearby_mob, get_turf(holder.my_atom), 3, no_effects=TRUE)
-		nearby_mob.Knockdown(20, TRUE)
+		nearby_mob.Knockdown(20, ignore_canstun = TRUE)
 		nearby_mob.add_atom_colour("#cebfff", WASHABLE_COLOUR_PRIORITY)
 		do_sparks(3,FALSE,nearby_mob)
 	clear_products(holder, step_volume_added)

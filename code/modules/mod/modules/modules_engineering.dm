@@ -91,6 +91,13 @@
 	cooldown_time = 1.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
 
+/obj/item/mod/module/tether/used()
+	if(HAS_TRAIT_FROM(mod.wearer, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(mod.wearer, "already tethered!")
+		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
+		return FALSE
+	return ..()
+
 /obj/item/mod/module/tether/on_select_use(atom/target)
 	. = ..()
 	if(!.)
@@ -107,8 +114,10 @@
 	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "button", "scissors")
 
 /obj/item/mod/module/tether/configure_edit(key, value)
-	if (key != "cut_tethers")
-		return
+	if (key == "cut_tethers")
+		SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
+
+/obj/item/mod/module/tether/on_deactivation(display_message, deleting)
 	SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
 /obj/projectile/tether
@@ -121,7 +130,7 @@
 	hitsound_wall = 'sound/items/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
 	hit_threshhold = ABOVE_NORMAL_TURF_LAYER
-	embed_type = /datum/embed_data/tether_projectile
+	embed_type = /datum/embedding/tether_projectile
 	shrapnel_type = /obj/item/tether_anchor
 	/// Reference to the beam following the projectile.
 	var/line
@@ -139,7 +148,10 @@
 /obj/projectile/tether/proc/on_embedded(datum/source, obj/item/payload, atom/hit)
 	SIGNAL_HANDLER
 
-	firer.AddComponent(/datum/component/tether, hit, 7, "MODtether", payload, parent_module = parent_module)
+	if (HAS_TRAIT_FROM(hit, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		return
+
+	firer.AddComponent(/datum/component/tether, hit, 7, "MODtether", payload, parent_module = parent_module, tether_trait_source = REF(parent_module))
 
 /obj/projectile/tether/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -161,7 +173,12 @@
 		return
 
 	if (istype(target, /obj/item/tether_anchor) || isstructure(target) || ismachinery(target))
-		firer.AddComponent(/datum/component/tether, target, 7, "MODtether", parent_module = parent_module)
+		if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+			return
+		var/avoid_target_trait = FALSE
+		if (istype(target, /obj/item/tether_anchor))
+			avoid_target_trait = TRUE
+		firer.AddComponent(/datum/component/tether, target, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module), no_target_trait = avoid_target_trait)
 		return
 
 	var/hitx = impact_x
@@ -182,7 +199,8 @@
 	anchor.pixel_x = hitx
 	anchor.pixel_y = hity
 	anchor.anchored = TRUE
-	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module)
+	anchor.parent_module = parent_module
+	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module))
 
 /obj/projectile/tether/Destroy()
 	QDEL_NULL(line)
@@ -195,6 +213,17 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	max_integrity = 60
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+	/// MODsuit tether module that created our projectile
+	var/obj/item/mod/module/tether/parent_module
+
+/obj/item/tether_anchor/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_TETHER_SNAPPED, PROC_REF(tether_snapped))
+
+/obj/item/tether_anchor/Destroy(force)
+	// We don't need to worry about hanging refs in case our parent gets destroyed because then it snaps all tethers, which in turn destroys us
+	parent_module = null
+	return ..()
 
 /obj/item/tether_anchor/examine(mob/user)
 	. = ..()
@@ -210,8 +239,16 @@
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	if(HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
+	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	balloon_alert(user, "attached tether")
-	user.AddComponent(/datum/component/tether, src, 7, "tether")
+	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
@@ -221,9 +258,17 @@
 	if (!isliving(target) || !target.CanReach(src))
 		return
 
+	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
+	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	if (target == user)
 		balloon_alert(user, "attached tether")
-		user.AddComponent(/datum/component/tether, src, 7, "tether")
+		user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
 		return
 
 	balloon_alert(user, "attaching tether...")
@@ -231,11 +276,29 @@
 	if (!do_after(user, 5 SECONDS, target))
 		return
 
+	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
+	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	balloon_alert(user, "attached tether")
 	to_chat(target, span_userdanger("[user] attaches a tether to you!"))
-	target.AddComponent(/datum/component/tether, src, 7, "tether")
+	target.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
 
-/datum/embed_data/tether_projectile
+/obj/item/tether_anchor/proc/tether_snapped(datum/component/tether/tether, tether_source)
+	SIGNAL_HANDLER
+
+	if (!parent_module || tether_source != REF(parent_module))
+		return
+
+	// Destroy self if we've been created by a tether module
+	do_sparks(3, TRUE, src)
+	qdel(src)
+
+/datum/embedding/tether_projectile
 	embed_chance = 65 //spiky
 	fall_chance = 2
 	ignore_throwspeed_threshold = TRUE

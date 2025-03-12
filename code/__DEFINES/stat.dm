@@ -13,10 +13,15 @@
 #define MAX_SATIETY 600
 
 // bitflags for machine stat variable
+
+/// physically broken
 #define BROKEN (1<<0)
+/// not powered
 #define NOPOWER (1<<1)
-#define MAINT (1<<2) // under maintaince
-#define EMPED (1<<3) // temporary broken by EMP pulse
+/// under maintaince
+#define MAINT (1<<2)
+/// temporary broken by EMP pulse
+#define EMPED (1<<3)
 
 //ai power requirement defines
 #define POWER_REQ_ALL 1

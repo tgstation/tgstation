@@ -197,8 +197,10 @@
 	icon_state = "repairbot_base"
 	throwforce = 10
 	created_name = "Repairbot"
+	///the toolbox our repairbot is made of
 	var/toolbox = /obj/item/storage/toolbox/mechanical
-	var/toolbox_color = "" //Blank for blue, r for red, y for yellow, etc.
+	///the color of our toolbox
+	var/toolbox_color = ""
 
 /obj/item/bot_assembly/repairbot/Initialize(mapload)
 	. = ..()
@@ -245,7 +247,9 @@
 			repair.toolbox = toolbox
 			repair.set_color(toolbox_color)
 			to_chat(user, span_notice("You add [item] to [src]. Boop beep!"))
-			qdel(item)
+			var/obj/item/stack/crafting_stack = item
+			var/atom/used_belt = crafting_stack.split_stack(user, 1)
+			qdel(used_belt)
 			qdel(src)
 
 
@@ -253,7 +257,8 @@
 /obj/item/bot_assembly/medbot
 	name = "incomplete medibot assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon_state = "firstaid_arm"
+	icon_state = "medbot_assembly_generic"
+	base_icon_state = "medbot_assembly"
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	var/healthanalyzer = /obj/item/healthanalyzer
@@ -262,7 +267,7 @@
 /obj/item/bot_assembly/medbot/proc/set_skin(skin)
 	src.skin = skin
 	if(skin)
-		add_overlay("kit_skin_[skin]")
+		icon_state = "[base_icon_state]_[skin]"
 
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
@@ -275,7 +280,7 @@
 				to_chat(user, span_notice("You add [W] to [src]."))
 				qdel(W)
 				name = "first aid/robot arm/health analyzer assembly"
-				add_overlay("na_scanner")
+				add_overlay("[base_icon_state]_analyzer")
 				build_step++
 
 		if(ASSEMBLY_SECOND_STEP)

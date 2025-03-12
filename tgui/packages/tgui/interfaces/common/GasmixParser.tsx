@@ -1,4 +1,4 @@
-import { Box, Button, LabeledList } from '../../components';
+import { Box, Button, LabeledList } from 'tgui-core/components';
 
 export type Gasmix = {
   name?: string;

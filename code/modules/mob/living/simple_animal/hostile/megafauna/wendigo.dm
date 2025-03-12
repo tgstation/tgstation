@@ -199,6 +199,7 @@ Difficulty: Hard
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
 	speed = 0.5
+
 	/// Amount the angle changes every pixel move
 	var/wave_speed = 0.5
 	/// Amount of movements this projectile has made
@@ -209,60 +210,17 @@ Difficulty: Hard
 
 /obj/projectile/colossus/wendigo_shockwave/wave
 	speed = 0.125
-	homing = TRUE
 	wave_speed = 0.3
 
 /obj/projectile/colossus/wendigo_shockwave/wave/alternate
 	wave_speed = -0.3
 
-/obj/projectile/colossus/wendigo_shockwave/process_homing()
-	pixel_moves++
+/obj/projectile/colossus/wendigo_shockwave/process_movement(pixels_to_move, hitscan, tile_limit)
+	. = ..()
+	if (QDELETED(src))
+		return
+	pixel_moves += .
 	set_angle(original_angle + pixel_moves * wave_speed)
-
-/obj/item/wendigo_blood
-	name = "bottle of wendigo blood"
-	desc = "A bottle of viscous red liquid... You're not actually going to drink this, are you?"
-	icon = 'icons/obj/mining_zones/artefacts.dmi'
-	icon_state = "vial"
-
-/obj/item/wendigo_blood/attack_self(mob/living/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/human_user = user
-	if(!human_user.mind)
-		return
-	to_chat(human_user, span_danger("Power courses through you! You can now shift your form at will."))
-	var/datum/action/cooldown/spell/shapeshift/polar_bear/transformation_spell = new(user.mind || user)
-	transformation_spell.Grant(user)
-	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
-	qdel(src)
-
-/obj/item/crusher_trophy/wendigo_horn
-	name = "wendigo horn"
-	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
-	icon_state = "wendigo_horn"
-	denied_type = /obj/item/crusher_trophy/wendigo_horn
-
-/obj/item/crusher_trophy/wendigo_horn/effect_desc()
-	return "melee hits inflict twice as much damage"
-
-/obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
-
-/obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
-
-/obj/item/wendigo_skull
-	name = "wendigo skull"
-	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
-	icon = 'icons/obj/mining_zones/artefacts.dmi'
-	icon_state = "wendigo_skull"
-	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/noportal/create_portal()
 	return

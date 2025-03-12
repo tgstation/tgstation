@@ -554,7 +554,7 @@
 
 /datum/design/mech_thrusters
 	name = "RCS Thruster Package"
-	desc = "A thruster package for exosuits. Expells gas from the internal life-support air tank to generate thrust."
+	desc = "A thruster package for exosuits. Expels gas from the internal life-support air tank to generate thrust."
 	id = "mech_thrusters"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/thrusters/gas

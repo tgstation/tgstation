@@ -2,12 +2,12 @@
 //They'll attempt to leap at their target from afar using their hatchets.
 /mob/living/basic/mining/mook
 	name = "wanderer"
-	desc = "This unhealthy looking primitive seems to be talented at administiring health care."
+	desc = "This unhealthy looking primitive seems to be talented at administering health care."
 	icon = 'icons/mob/simple/jungle/mook.dmi'
 	icon_state = "mook"
 	icon_living = "mook"
 	icon_dead = "mook_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_MINING
 	gender = FEMALE
 	maxHealth = 150
 	faction = list(FACTION_MINING, FACTION_NEUTRAL)
@@ -41,8 +41,8 @@
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/attack,
+		/datum/pet_command/fetch,
 	)
 
 /mob/living/basic/mining/mook/Initialize(mapload)

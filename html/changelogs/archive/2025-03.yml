@@ -1,0 +1,303 @@
+2025-03-01:
+  SmArtKar:
+  - bugfix: Cyborg pre-screening dogtags should once again be given to crew with the
+      quirk of the same name.
+  TiviPlus:
+  - code_imp: cleaned up some mass var edit code
+  necromanceranne:
+  - code_imp: Cleans up a bit of human punch code.
+  - bugfix: Stagger combos occur at the correct threshold, and properly utilize armor
+      or a threshold minimum, adjusted for puncher limb accuracy.
+2025-03-02:
+  Jackraxxus:
+  - bugfix: AI will no longer deathloop after being revived with 0 backup power.
+  Jacquerel:
+  - rscadd: You can transplant xenomorph tails onto people.
+  - bugfix: The Warp Cube will now fail if it tries to teleport you to nowhere, instead
+      of turning you blue and then failing
+  Melbert:
+  - bugfix: Ion Storms should be far far far less likely to purge ais and far far
+      far more likely to replace the ai's lawset with a new set
+  - rscadd: Battle arcades get funny names again
+  - bugfix: Roundend title music will play at half volume again
+  - bugfix: April Fools lobby music will correctly always be clown music
+  - bugfix: Lobby Music will repeat across sequential rounds less often
+  OrionTheFox:
+  - qol: Mirrors now have context tips, and can now be unmounted from walls with a
+      Wrench. (Magic ones can't be removed though. Because magic.)
+  SmArtKar:
+  - rscadd: Foam darts now stick to people when they have their cap on, riot foam
+      darts also can passively deal a bit of stamina damage when you move with one.
+  - rscadd: Syringes can be inserted into foam darts, making them embed and slowly
+      leak their reagents into their victim.
+  - rscadd: Syringe guns can be toggled (with right click) between high power and
+      low power modes, former being their normal functionality and latter making syringes
+      embed and slowly leak their contents.
+  - bugfix: Fixed projectiles sometimes not embedding when they should've
+  - code_imp: Cleaned embedding code up
+  - bugfix: You no longer get set ablaze by a person you're fireman carrying through
+      lava while riding a raptor
+  - refactor: Refactored item action handling
+  - bugfix: You should no longer be able to get med/sec/diag HUDs by toggling a hud
+      in your pocket, or use jump boots from your hands.
+  - qol: Welding/breathing masks, hardhats and other glasses/helmets no longer show
+      their actions in your top bar while you're holding them in your hands.
+  mc-oofert:
+  - bugfix: The Thing (Outpost 31) will aggro if shot from outside aggro range, has
+      achievement
+  - balance: the loot room in outpost 31 now contains a freezer with a set of T2 robotic
+      organs, and a set of advanced medical tools. Also The Thing returns to its spawn
+      location if not aggroed
+  timothymtorres:
+  - bugfix: Fix illiterate people writing messages with crayons and spraycans.
+2025-03-03:
+  00-Steven:
+  - bugfix: Harvesting botany plants actually uses the right drop location. Botany
+      plants harvested by monkey hardworkers on big manipulators harvesting using
+      a full plant bag no longer puts the resulting items inside of the big manipulator.
+  Ghommie:
+  - balance: objects made out of meat are no longer classified as gross food on top
+      of being raw and meaty, and actually contain protein and fat instead of standard
+      nutriment and oil.
+  - balance: the pizza material stacks, crafted with margherita pizza and rollig pin
+      mind you, no longer magically contain pepperoni.
+  Melbert:
+  - qol: '[Icebox] Botany''s Holofirelocks are now walkable plastic flaps'
+  SmArtKar:
+  - code_imp: Split and cleaned up mining loot's code
+  - refactor: Refactored the hierophant club.
+  - bugfix: Hierophant club's beacon no longer can go missing (until you try using
+      it)
+  - image: Resprited the hierophant arena
+  TheRyeGuyWhoWillNowDie:
+  - balance: wildcard limits have been removed from Agent ID cards
+  - balance: the specops crate gets a variation of the agent ID card which can only
+      hold limited access (same as it is now)
+  TiviPlus:
+  - code_imp: previously silent failures due to empty sounds or too low volumes will
+      now create a runtime in the runtime log
+  - bugfix: some footstep sounds like robotic or slimes are no longer silent
+  subject217:
+  - balance: Contractor Kit is no longer available in lowpop.
+2025-03-04:
+  00-Steven:
+  - qol: Added screentips to the big manipulator.
+  - bugfix: You can actually open the big manipulator's wires UI while holding an
+      assembly.
+  Absolucy:
+  - bugfix: Fixed more advanced regex-based chat highlights not working.
+  AyIong:
+  - bugfix: Fixed random chat BSOD on Byond 516
+  Holoo-1:
+  - qol: cult spells no longer overlap with second row of inventory
+  Kashargul:
+  - bugfix: tgui say 516 will no longer change channels when the button is used to
+      drag it
+  - bugfix: tgui say 516 will no longer leak radio messages into the wrong channel
+  - bugfix: runechat flickering when faded up messages fade out
+  MichiRecRoom:
+  - bugfix: The component printer now shows icons for the items in its UI.
+  - bugfix: Nukes will now always be deleted upon exploding, no matter if they have
+      a valid cutscene to play.
+  - bugfix: The cleaning AI behavior (generally used by cleanbots) will no longer
+      return early if the list of emagged phrases is empty.
+  Rhials:
+  - spellcheck: Fixes grammar in autosurgeon use message.
+  SmArtKar:
+  - bugfix: Fixed external organs not being colored by colorful reagent
+  - bugfix: Fixed inconsistent crusher trophy droprates
+  adamsong:
+  - rscadd: Added the ability for borgs to pathfind into and through restricted areas.
+  itsmeow:
+  - bugfix: Fixed lizard body markings and ethereal feature previews in the preference
+      menu missing some overlays.
+  - refactor: Optimized spritesheet asset generation greatly using rustg IconForge,
+      greatly reducing post-initialization lag as well as reducing init times and
+      saving server computation.
+  - config: Added 'smart' asset caching, for batched rustg IconForge spritesheets.
+      It is persistent and suitable for use on local, with automatic invalidation.
+  - rscadd: Added admin verbs - Debug -> Clear Smart/Legacy Asset Cache for spritesheets.
+  - bugfix: Fixed R&D console icons breaking on WebView2/516
+  mc-oofert:
+  - bugfix: prevents stripping in caretakers last refuge
+  - bugfix: the eldritch id (Lock path) now preserves the ID used.
+  timothymtorres:
+  - bugfix: Fix hauntinum reagent to work when it is exposed to item objects.
+2025-03-05:
+  Jacquerel:
+  - rscadd: Apples now react appropriately if they impact doctors or scientists under
+      the expected circumstances.
+  StrangeWeirdKitten:
+  - bugfix: Megafauna should no longer attack eachother.
+  TJatPBnJ:
+  - balance: French fries are now immune to the effects of the floor. I miss floor
+      fries
+2025-03-06:
+  Absolucy:
+  - qol: Messages from blood cult communion, abductor telepathy, xeno hivemind, golem
+      resonator, blob telepathy, changeling hivemind, and binary chat are now considered
+      "radio" messages by the chat, so they can properly be sorted via chat tabs.
+  - qol: Your own messages in blood cult communion, abductor/xenomorph/changeling
+      hivemind, or golem telepathy will no longer be highlighted in chat (to prevent
+      highlight spam whenever you talk if you highlight your own name, mainly)
+  Ghommie:
+  - bugfix: Follower hoodies can now be crafted.
+  Kashargul:
+  - bugfix: TG chat can no longer initialize before the settings loading was called
+  - qol: chat settings can be exported and imported
+  LemonInTheDark:
+  - config: the config loader now supports relatively pathed imports (importing a
+      file inside a subfolder now acts as if you were IN that subfolder)
+  Melbert:
+  - bugfix: Fixed random names always giving male names
+  Singul0:
+  - balance: Buffs the energy cells borg factory-spawned cyborgs spawn with (They
+      are now T2 cells)
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: chameleon IDs actually prevent AI tracking now
+  hry-gh:
+  - bugfix: the admin music player works again on 516
+2025-03-07:
+  Ben10Omintrix:
+  - qol: the raptor minigame now no longer opens up a new window
+  - rscadd: the raptor minigame has been reworked
+  Kocma-san:
+  - qol: ERT leaders now have a headset with high-volume mode
+  - bugfix: Deathsquad Officer will now have proper outfit
+  Melbert:
+  - bugfix: Wigs no longer color their hats
+  - bugfix: You can hear looping computer sounds again
+  StrangeWeirdKitten:
+  - bugfix: Design disks now have a cooldown when uploading to no longer crash the
+      server.
+  necromanceranne:
+  - balance: Last resort is no longer an innate changeling ability. Changeling on
+      changeling violence is back on the menu. (literally)
+  possiblepossibility:
+  - rscadd: you may now take out individual slices of pizza
+2025-03-08:
+  Ghommie:
+  - balance: It's now possible to take trophy fish from previous shifts off their
+      mounts without turning them into dust based on a probability revolving around
+      the size and weight of the fish against your fishing skill.
+  Hatterhat:
+  - bugfix: The Sakhno SKS no longer ejects its entire internal magazine upon interaction.
+      To facilitate this, it now requires the bolt to be open like its bolt-action
+      contemporaries in order to load ammunition.
+  - bugfix: You can no longer force ammunition into Sakhno precision rifles and other
+      bolt-action-likes through a closed bolt.
+  Melbert:
+  - rscadd: If you are sufficiently drunk, you can resist your phobias and social
+      anxiety.
+  - rscadd: Your mood will increase further the more drunk you are. Until you crash
+      out.
+  SmArtKar:
+  - image: Resprited all eyes and gave cybernetic eyes unique sprites
+  necromanceranne:
+  - bugfix: Touch protection actually respects the TOUCH exposure method.
+  - bugfix: You cannot Fry-Fu someone through bio protective clothing using three
+      drops of essential oils heated to the temperature of the sun.
+2025-03-09:
+  Absolucy:
+  - bugfix: Fixed some hearing sensitive objects hearing the same thing multiple times,
+      such as the broadcast camera sending everything to the entertainment channel
+      twice.
+  - qol: Changed the civilian bounty console's cooldown message to a balloon alert,
+      and it now says like "1 minute and 30 seconds" instead of "1.5 minutes"
+  - code_imp: Minor improvements to civilian bounty console code.
+  - code_imp: Removed a random unused var on space turfs.
+  Hatterhat:
+  - balance: Spacemen (e.g. you, the reader) grappling a target now prioritize using
+      their bare hands to beat their target to death if they're grappled, instead
+      of contorting in weird ways to kick them (also, presumably, to death).
+  - balance: Spacemen have learned to Punch Good(er) against grappled targets, leading
+      to kick-tier damage against standing grappled targets - even if they're not
+      doing the grappling.
+  - balance: Strong-Arm implant users also benefit from the training of punching grappled
+      people as well - as a treat, horizontal targets slam into the ground and break
+      tiling for no additional damage, but a very visible sign of "oh god someone
+      got pasted here".
+  - qol: Holosigns (engineering holobarriers, janitor holosigns, PENLITE holobarriers,
+      etc.) can now be projected onto doors.
+  - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
+      and grilles.
+  LikeLakers2:
+  - bugfix: Fixes a potential runtime with the radioactivity mutation.
+  SmArtKar:
+  - bugfix: Removed a rogue fire alarm from DeltaStation's freezer
+  - bugfix: Fixed fake airlock bolts being examineable
+  - bugfix: Fixed most mining mobs being unaffected by additional damage against them
+  - bugfix: Fixed hat stabilizers not detaching clothing traits, turning any helmet
+      with a pacifism bud attached into one.
+  - bugfix: Fixed certain hallucinations displaying below floors/decals/items
+  - bugfix: Cult spells no longer play attack animation when clicking on an invalid
+      target
+  - bugfix: Fixed prototype egun's electrodes instantly detaching
+  - bugfix: Fixed night shifts removing coloring from lights
+  - bugfix: Objects on tables no longer get burnt by lava
+  - bugfix: Stacking machines can now pick up bluespace crystals
+  necromanceranne:
+  - bugfix: Makes absolutely sure we're removing Cyrogelidia's status effects if the
+      reagent is out of our mobs system.
+  - bugfix: The strongarm set bonus no longer requires a specific biotype to function.
+      You can now get the set bonus as an android.
+2025-03-10:
+  EnterTheJake:
+  - balance: '"Wolves Among Sheep" cooldown increased from 2 to 5 minutes.'
+  Paxilmaniac:
+  - balance: The syndie smartgun has 2 tile aimbot now
+  SmArtKar:
+  - bugfix: 'Fixed pre-filled fish stasis cases breaking fish inside of them
+
+      /:cl'
+  - bugfix: Immortal pyro anomalies no longer (unsuccessfully) attempt to spawn pyro
+      slimes
+  - bugfix: Fixed balloon alert positioning on wide mobs
+  - bugfix: Fixed constant hotspot runtimes
+  - bugfix: Hotspots should properly play their SFX when created by sources other
+      than plasmafires.
+  - bugfix: Fixes rideable mob layering
+  StrangeWeirdKitten:
+  - code_imp: Readds return_turf_delta_p() and is_nearby_planetary_atmos() as turf
+      helpers.
+2025-03-11:
+  Sadboysuss:
+  - sound: regenerative meshes now make sounds when healing and have new drop/pickup
+      sounds
+  SmArtKar:
+  - bugfix: Fixed missing distro pipe in CE's office, and missing cable in tech storage
+  Vallat:
+  - bugfix: fixed "Save chat log" verb
+  Wallem:
+  - qol: some tgui lists that use the same simple function--Navigation menu, Fulton
+      navbeacon selection, Ghost teleportation, etc.--have been given a candystripe.
+  combustor:
+  - map: Removed cameras from most break rooms and cargo warehouses.
+  - qol: Added and moved a bunch of cameras to remove silly blind-spots and added
+      cams to rooms where there should've been cams.
+  - map: Added EVA shutter buttons to birdshot
+2025-03-12:
+  Melbert:
+  - qol: When reaching the wizard grand finale, you no longer get locked into finale
+      effects that cannot yet be invoked.
+  - bugfix: Preference dummy now properly updates when changing some species features
+  - qol: If you have the bald quirk selected, the wig shows up on the preference dummy
+  - qol: If you have the bald quirk selected, and your role starts with a hat, the
+      hat will start attached to your wig
+  - balance: Reworks Changeling's Darkness Adaptation. It's strength now scales with
+      how dark your environment is, rather than being static transparency.
+  - bugfix: Fixes Digital Camo's examine message
+  - bugfix: '[Delta] Rearranges / adds some missing wallmounts'
+  Singul0:
+  - bugfix: fixes unwalkable tiles in the film studio bar
+  SmArtKar:
+  - bugfix: Connected Birdshot dorms to distro
+  - bugfix: Fixed a missing wire under Wawa's Coldroom APC
+  - bugfix: Going through lava while buckled to an object no longer explodes the server
+  - bugfix: Getting a carp infusion or committing a certain holofish suicide no longer
+      gets rid of your voidwalker overlay.
+  StrangeWeirdKitten:
+  - bugfix: Character creator preview being miniature
+  subject217:
+  - bugfix: Updated the description of insulated gloves to reflect their lack of chunky
+      fingers.

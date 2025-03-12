@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
-	if(GLOB.move_manager.processing_on(user, SSnewtonian_movement))
+	if(!isnull(user.drift_handler))
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !GLOB.move_manager.processing_on(user, SSnewtonian_movement))
+		if(drifting && isnull(user.drift_handler))
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -740,7 +740,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			newname = requesting_client?.prefs?.read_preference(preference_type)
 		else
 			var/datum/preference/preference = GLOB.preference_entries[preference_type]
-			newname = preference.create_informed_default_value(requesting_client.prefs)
+			if (requesting_client?.prefs)
+				newname = preference.create_informed_default_value(requesting_client.prefs)
+			else
+				newname = preference.create_default_value()
 
 		for(var/mob/living/checked_mob in GLOB.player_list)
 			if(checked_mob == src)

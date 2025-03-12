@@ -4,11 +4,18 @@
 /datum/ai_behavior/monkey_equip
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 
-/datum/ai_behavior/monkey_equip/finish_action(datum/ai_controller/controller, success)
+/datum/ai_behavior/monkey_equip/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	var/obj/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
+
+/datum/ai_behavior/monkey_equip/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
 
 	if(!success) //Don't try again on this item if we failed
-		controller.set_blackboard_key_assoc(BB_MONKEY_BLACKLISTITEMS, controller.blackboard[BB_MONKEY_PICKUPTARGET], TRUE)
+		controller.set_blackboard_key_assoc(BB_MONKEY_BLACKLISTITEMS, controller.blackboard[target_key], TRUE)
 
 	controller.clear_blackboard_key(BB_MONKEY_PICKUPTARGET)
 
@@ -50,9 +57,8 @@
 	return FALSE
 
 /datum/ai_behavior/monkey_equip/ground
-	required_distance = 0
 
-/datum/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	if(equip_item(controller))
 		return . | AI_BEHAVIOR_SUCCEEDED
@@ -60,7 +66,7 @@
 
 /datum/ai_behavior/monkey_equip/pickpocket
 
-/datum/ai_behavior/monkey_equip/pickpocket/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/ai_behavior/monkey_equip/pickpocket/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	if(controller.blackboard[BB_MONKEY_PICKPOCKETING]) //We are pickpocketing, don't do ANYTHING!!!!
 		return
@@ -74,8 +80,6 @@
 	if(!istype(victim))
 		finish_action(controller, FALSE)
 		return
-
-
 
 	victim.visible_message(span_warning("[living_pawn] starts trying to take [target] from [victim]!"), span_danger("[living_pawn] tries to take [target]!"))
 
@@ -196,7 +200,7 @@
 
 	if(isnull(potential_weapon))
 		controller.ai_interact(target = target, modifiers = disarm ? list(RIGHT_CLICK = TRUE) : null, combat_mode = TRUE)
-		if(!isnull(holding_weapon))
+		if(disarm && !isnull(holding_weapon) && controller.blackboard[BB_MONKEY_BLACKLISTITEMS][holding_weapon])
 			controller.remove_thing_from_blackboard_key(BB_MONKEY_BLACKLISTITEMS, holding_weapon) //lets try to pickpocket it again!
 		return TRUE
 

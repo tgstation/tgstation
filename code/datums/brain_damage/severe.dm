@@ -356,7 +356,7 @@
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
 	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
 	COOLDOWN_START(src, weeping_hallucinations, 10 SECONDS)
-	..()
+	return ..()
 
 //This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
 /datum/brain_trauma/severe/flesh_desire
@@ -373,7 +373,7 @@
 	// Allows them to eat faster, mainly for flavor
 	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
 	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	..()
+	return ..()
 
 /datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
 	// Causes them to need to eat at 10x the normal rate
@@ -399,19 +399,23 @@
 	var/scratch_damage = 0.5
 
 /datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
-	// Jumpsuits ruin the "perfection" of the body
-	if(!owner.get_item_by_slot(ITEM_SLOT_ICLOTHING))
+	if(owner.incapacitated)
 		return
 
 	// Scratching code
 	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
-	if(!(bodypart && IS_ORGANIC_LIMB(bodypart)) && bodypart.bodypart_flags & BODYPART_PSEUDOPART)
+	if(!bodypart || !IS_ORGANIC_LIMB(bodypart) || (bodypart.bodypart_flags & BODYPART_PSEUDOPART))
 		return
-	if(owner.incapacitated)
+	if(!ishuman(owner))
 		return
-	bodypart.receive_damage(scratch_damage)
+	// Jumpsuits ruin the "perfection" of the body
+	var/mob/living/carbon/human/scratcher = owner
+	if(!length(scratcher.get_clothing_on_part(bodypart)))
+		return
+
+	owner.apply_damage(scratch_damage, BRUTE, bodypart)
 	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at the clothed [bodypart]!"))
+		to_chat(owner, span_notice("You scratch furiously at your clothed [bodypart.plaintext_zone]!"))
 
 // This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
 /datum/brain_trauma/severe/rusting

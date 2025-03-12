@@ -7,6 +7,7 @@
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
+	projectiles_pass_chance = 0 // I guess gambling can save your life huh?
 
 	///If set, will dispense these as prizes instead of the default GLOB.arcade_prize_pool
 	///Like prize pool, it must be a list of the prize and the weight of being selected.

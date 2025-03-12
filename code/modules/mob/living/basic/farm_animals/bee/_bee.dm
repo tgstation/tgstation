@@ -57,7 +57,7 @@
 		/datum/pet_command/beehive/enter,
 		/datum/pet_command/beehive/exit,
 		/datum/pet_command/follow/bee,
-		/datum/pet_command/point_targeting/attack/swirl,
+		/datum/pet_command/attack/swirl,
 		/datum/pet_command/scatter,
 	)
 
@@ -79,7 +79,7 @@
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
 		reee[beegent.type] = 5
-	holder.AddComponent(/datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
+	holder.AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	picker.visible_message(span_warning("[picker] scoops up [src]!"))
 	picker.put_in_hands(holder)
 
@@ -313,7 +313,7 @@
 
 /obj/item/trash/bee/Initialize(mapload, mob/living/basic/bee/dead_bee)
 	. = ..()
-	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(isnull(dead_bee))

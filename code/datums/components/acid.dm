@@ -243,16 +243,10 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!iscarbon(user) || user.can_touch_acid(source, acid_power, acid_volume))
 		return NONE
 
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	//Should not happen!
-	if(!affecting)
-		return NONE
-
-	affecting.receive_damage(burn = 5)
+	user.apply_damage(5, BURN, user.get_active_hand())
 	to_chat(user, span_userdanger("The acid on \the [source] burns your hand!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(source, SFX_SEAR, 50, TRUE)
-	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.

@@ -68,6 +68,7 @@
 	id = "itchy skillchip"
 	tick_interval_lowerbound = 5 SECONDS
 	tick_interval_upperbound = 10 MINUTES
+	alert_type = null
 	///lower damage we apply to our itchy owner
 	var/minimum_damage = 1
 	///upper damage we apply to our itchy owner

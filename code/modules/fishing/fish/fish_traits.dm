@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /// Proc used by both the predator and necrophage traits.
 /datum/fish_trait/proc/eat_fish(obj/item/fish/predator, obj/item/fish/prey)
-	var/message = prey.status == FISH_DEAD ? "[src] eats [prey]'s carcass." : "[src] hunts down and eats [prey]."
+	var/message = prey.status == FISH_DEAD ? "[predator] eats [prey]'s carcass." : "[predator] hunts down and eats [prey]."
 	predator.loc.visible_message(span_warning(message))
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
@@ -120,12 +120,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/shiny_lover
 	name = "Shiny Lover"
-	catalog_description = "This fish loves shiny things, shiny lure recommended."
+	catalog_description = "This fish loves shiny things and money, shiny lure recommended."
 
 /datum/fish_trait/shiny_lover/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	// These fish are easier to catch with shiny hook
-	if(HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
+	if(HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS) || (rod.bait?.get_item_credit_value() >= PAYCHECK_CREW))
 		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/shiny_lover/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -184,11 +184,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/nocturnal/proc/check_light(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.loc && (HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || isturf(source.loc)))
-		var/turf/turf = get_turf(source)
-		var/light_amount = turf.get_lumcount()
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
-			source.adjust_health(source.health - 0.5 * seconds_per_tick)
+	if(!source.loc || (!HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) && !isturf(source.loc)))
+		return
+	var/turf/turf = get_turf(source)
+	var/light_amount = turf.get_lumcount()
+	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+		source.adjust_health(source.health - 0.5 * seconds_per_tick)
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
 	. = ..()
@@ -208,7 +209,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/light_amount = our_turf.get_lumcount()
 
 	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		mob.apply_status_effect(/datum/status_effect/shadow_regeneration)
+		mob.apply_status_effect(/datum/status_effect/shadow/regeneration)
 
 /datum/fish_trait/heavy
 	name = "Demersal"
@@ -285,11 +286,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/emulsijack
 	name = "Emulsifier"
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
+	var/list/resistance_traits = list(TRAIT_RESIST_EMULSIFY, TRAIT_FISH_TOXIN_IMMUNE)
+	var/trait_to_add = TRAIT_RESIST_EMULSIFY
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
-	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, trait_to_add, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -297,8 +300,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	var/emulsified = FALSE
 	for(var/obj/item/fish/victim in source.loc)
-		if(HAS_TRAIT(victim, TRAIT_RESIST_EMULSIFY) || HAS_TRAIT(victim, TRAIT_FISH_TOXIN_IMMUNE)) //no team killing
-			continue
+		for(var/trait in resistance_traits)
+			if(HAS_TRAIT(victim, trait))
+				continue
 		victim.adjust_health(victim.health - 3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 		emulsified = TRUE
 	if(emulsified)
@@ -320,6 +324,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	stench.gases[/datum/gas/miasma][MOLES] = MIASMA_CORPSE_MOLES * 2 * seconds_per_tick
 	stench.temperature = mob.bodytemperature
 	our_turf.assume_air(stench)
+
+/datum/fish_trait/emulsijack/psychic
+	name = "Psychic Aura"
+	catalog_description = "This fish emits an almost unblockable psychic aura that assaults minds, slowly killing all nearby fish and making humanoids have a bad time."
+	resistance_traits = list(TRAIT_RESIST_PSYCHIC)
+	trait_to_add = TRAIT_RESIST_PSYCHIC
+
+/datum/fish_trait/emulsijack/psychic/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick)
+	return
 
 /datum/fish_trait/necrophage
 	name = "Necrophage"
@@ -518,19 +531,22 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
 
-/datum/fish_trait/aggressive
-	name = "Aggressive"
+/datum/fish_trait/territorial
+	name = "Territorial"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish will start attacking other fish if the aquarium has five or more."
 
-/datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
+/datum/fish_trait/territorial/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
 
-/datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
+/datum/fish_trait/territorial/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || !SPT_PROB(1, seconds_per_tick))
+		return
+	var/list/fishes = source.get_aquarium_fishes(TRUE, source)
+	if(length(fishes) < 5)
 		return
 	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.status != FISH_ALIVE)
@@ -596,6 +612,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	diff_traits_inheritability = 25
 	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
 	added_difficulty = 20
+	reagents_to_add = list(/datum/reagent/gravitum = 2.3)
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
@@ -652,7 +669,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(cooked_time >= FISH_SAFE_COOKING_DURATION)
 		fish.reagents.del_reagent(/datum/reagent/consumable/liquidelectricity)
 	else
-		fish.reagents.multiply_single_reagent(/datum/reagent/consumable/liquidelectricity, 0.66)
+		fish.reagents.multiply(0.66, /datum/reagent/consumable/liquidelectricity)
 
 /datum/fish_trait/electrogenesis/add_reagents(obj/item/fish/fish, list/reagents)
 	. = ..()
@@ -713,7 +730,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic_barbs
 	name = "Toxic Barbs"
-	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effetive venom."
+	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effective venom."
 	spontaneous_manifest_types = list(/obj/item/fish/stingray = 35)
 
 /datum/fish_trait/toxic_barbs/apply_to_fish(obj/item/fish/fish)
@@ -744,6 +761,26 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/hallucinogenic/add_reagents(obj/item/fish/fish, list/reagents)
 	if(!HAS_TRAIT(src, TRAIT_FOOD_FRIED) && !HAS_TRAIT(src, TRAIT_FOOD_BBQ_GRILLED))
 		return ..()
+
+/datum/fish_trait/hallucinogenic/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, PROC_REF(make_venomous))
+	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_status_change))
+
+/datum/fish_trait/hallucinogenic/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		///Remove the trait from the fish so it doesn't show on the analyzer as it doesn't do anything on stingerless ones.
+		source.fish_traits -= type
+		UnregisterSignal(source, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED))
+		return
+	add_venom(source, /datum/reagent/toxin/mindbreaker/fish, new_weight, mult = source.status == FISH_DEAD ? 0.3 : 0.7)
+
+/datum/fish_trait/hallucinogenic/proc/on_status_change(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	change_venom_on_death(source, /datum/reagent/toxin/mindbreaker/fish, 0.7, 0.3)
 
 /datum/fish_trait/ink
 	name = "Ink Production"

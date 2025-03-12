@@ -210,6 +210,9 @@
 
 /// Validates that the teleport being attempted is valid or not
 /proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
+	if(isnull(destination))
+		return FALSE // Teleporting FROM nullspace is fine, but TO nullspace is not
+
 	var/area/origin_area = get_area(teleported_atom)
 	var/turf/origin_turf = get_turf(teleported_atom)
 
@@ -225,6 +228,10 @@
 		return FALSE
 
 	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
+		return FALSE
+
+	// If one of the areas you're trying to tp to has local_teleport, and they're not the same, return.
+	if(((origin_area.area_flags & LOCAL_TELEPORT) || (destination_area.area_flags & LOCAL_TELEPORT)) && destination_area != origin_area)
 		return FALSE
 
 	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)

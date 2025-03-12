@@ -8,7 +8,7 @@
 	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE | PIPING_BRIDGE
 	piping_layer = PIPING_LAYER_DEFAULT
 	device_type = 0
-	volume = 260
+	volume = 200
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
@@ -41,7 +41,7 @@
 	nodes = list()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_layer()
-	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? ABOVE_OPEN_TURF_LAYER : initial(layer)) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_overlays()
 	. = ..()

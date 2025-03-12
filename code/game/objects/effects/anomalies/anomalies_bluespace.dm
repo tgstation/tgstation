@@ -10,7 +10,7 @@
 	///Distance we can teleport someone passively
 	var/teleport_distance = 4
 
-/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan)
 	. = ..()
 	apply_wibbly_filters(src)
 
@@ -24,6 +24,9 @@
 		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/detonate()
+	new /obj/effect/temp_visual/circle_wave/bluespace(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50)
+
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(!T)
 		return
@@ -37,8 +40,7 @@
 			continue
 		if(is_centcom_level(turf.z) || is_away_level(turf.z))
 			continue
-		var/area/area = get_area(turf)
-		if(!area || (area.area_flags & NOTELEPORT))
+		if(!check_teleport_valid(src, turf))
 			continue
 		possible += beacon
 
@@ -95,7 +97,7 @@
 	teleport_distance = 12
 	anomaly_core = null
 
-/obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	transform *= 3
@@ -110,3 +112,8 @@
 
 	var/mob/living/living = bumpee
 	living.apply_status_effect(/datum/status_effect/teleport_madness)
+
+/obj/effect/temp_visual/circle_wave/bluespace
+	color = COLOR_BLUE_LIGHT
+	duration = 1 SECONDS
+	amount_to_scale = 5

@@ -35,7 +35,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 1,
 	)
 	//no tax on flying, since the power cost is in the leap itself.
 	phasing_energy_drain = 0
@@ -81,6 +81,8 @@
 	var/skyfall_charge_level = 0
 
 /datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
+	if(!..())
+		return
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	if(chassis.phasing)
@@ -145,7 +147,7 @@
 	chassis.mecha_flags |= QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT
 	chassis.phasing = "flying"
 	chassis.movedelay = 1
-	chassis.density = FALSE
+	chassis.set_density(FALSE)
 	chassis.layer = ABOVE_ALL_MOB_LAYER
 	animate(chassis, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
@@ -176,7 +178,7 @@
 	chassis.mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
 	chassis.phasing = initial(chassis.phasing)
 	chassis.movedelay = initial(chassis.movedelay)
-	chassis.density = TRUE
+	chassis.set_density(TRUE)
 	chassis.layer = initial(chassis.layer)
 	SET_PLANE(chassis, initial(chassis.plane), landed_on)
 	skyfall_charge_level = 0
@@ -251,7 +253,9 @@
 	return ..()
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_MISSILE_STRIKE)

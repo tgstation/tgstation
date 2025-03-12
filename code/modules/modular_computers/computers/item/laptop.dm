@@ -29,6 +29,16 @@
 	if(screen_on)
 		. += span_notice("Alt-click to close it.")
 
+/obj/item/modular_computer/laptop/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(screen_on)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Close"
+		context[SCREENTIP_CONTEXT_RMB] = "Interact"
+	else
+		context[SCREENTIP_CONTEXT_RMB] = "Open"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/modular_computer/laptop/Initialize(mapload)
 	. = ..()
 
@@ -70,13 +80,6 @@
 			return
 		user.put_in_hand(src, H.held_index)
 
-/obj/item/modular_computer/laptop/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(screen_on && isturf(loc))
-		return attack_self(user)
-
 /obj/item/modular_computer/laptop/proc/try_toggle_open(mob/living/user)
 	if(issilicon(user))
 		return
@@ -93,6 +96,14 @@
 		return CLICK_ACTION_BLOCKING
 	try_toggle_open(user) // Close it.
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/modular_computer/laptop/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	attack_self(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)

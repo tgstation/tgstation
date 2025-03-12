@@ -28,7 +28,7 @@
 #define WILDCARD_LIMIT_CENTCOM list(WILDCARD_NAME_CENTCOM = list(limit = -1, usage = list()))
 /// Wildcard slot define for Prisoner orange cards. No wildcard slots.
 #define WILDCARD_LIMIT_PRISONER list()
-/// Wildcard slot define for Chameleon/Agent ID grey cards. Can hold 6 common, 2 command and 1 captain access.
+/// Wildcard slot define for the cargo variant of agent ID. Can hold 6 common, 2 command and 1 captain access.
 #define WILDCARD_LIMIT_CHAMELEON list( \
 	WILDCARD_NAME_COMMON = list(limit = 6, usage = list()), \
 	WILDCARD_NAME_COMMAND = list(limit = 2, usage = list()), \
@@ -42,3 +42,22 @@
  * Used to crop the ID card's transparency away when chaching the icon for better use in tgui chat.
  */
 #define ID_ICON_BORDERS 1, 9, 32, 24
+
+///Honorific will display next to the first name.
+#define HONORIFIC_POSITION_FIRST (1<<0)
+///Honorific will display next to the last name.
+#define HONORIFIC_POSITION_LAST (1<<1)
+///Honorific will not be displayed.
+#define HONORIFIC_POSITION_NONE (1<<2)
+///Honorific will be appended to the full name at the start.
+#define HONORIFIC_POSITION_FIRST_FULL (1<<3)
+///Honorific will be appended to the full name at the end.
+#define HONORIFIC_POSITION_LAST_FULL (1<<4)
+
+#define HONORIFIC_POSITION_BITFIELDS(...) list( \
+	"Honorific + First Name" = HONORIFIC_POSITION_FIRST, \
+	"Honorific + Last Name" = HONORIFIC_POSITION_LAST, \
+	"Honorific + Full Name" = HONORIFIC_POSITION_FIRST_FULL, \
+	"Full Name + Honorific" = HONORIFIC_POSITION_LAST_FULL, \
+	"Disable Honorific" = HONORIFIC_POSITION_NONE, \
+)
