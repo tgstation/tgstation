@@ -42,16 +42,22 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 	)
 
 	var/datum/reagent/reagent_choice
-	if(ispath(weather_choice, /datum/weather/rain_storm) && (weather_bitflags & (WEATHER_TURFS|WEATHER_MOBS)))
-		var/static/list/reagent_choices = list()
-		if(!length(reagent_choices))
-			for(var/datum/reagent/reagent_type as anything in subtypesof(/datum/reagent))
-				reagent_choices[initial(reagent_type.type)] = reagent_type
+	if((weather_bitflags & (WEATHER_TURFS|WEATHER_MOBS)))
+		var/static/list/reagent_options = list("Default", "Custom", "Cancel")
+		var/reagent_option = tgui_alert(user, "Would you like to make the weather use a reagent?", "Weather Reagent", reagent_options)
+		switch(reagent_option)
+			if("Cancel")
+				return
+			if("Custom")
+				var/static/list/reagent_choices = list()
+				if(!length(reagent_choices))
+					for(var/datum/reagent/reagent_type as anything in subtypesof(/datum/reagent))
+						reagent_choices[initial(reagent_type.type)] = reagent_type
 
-		reagent_choice = tgui_input_list(user, "Select a reagent for the rain", "Rain Reagent", reagent_choices)
-		if(!reagent_choice)
-			return
-		reagent_choice = reagent_choices[reagent_choice]
+				reagent_choice = tgui_input_list(user, "Select a reagent for the rain", "Rain Reagent", reagent_choices)
+				if(!reagent_choice)
+					return
+				reagent_choice = reagent_choices[reagent_choice]
 
 	var/thunder_value
 	if(weather_bitflags & (WEATHER_THUNDER))

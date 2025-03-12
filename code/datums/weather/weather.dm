@@ -119,6 +119,15 @@
 	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
 	var/list/subsystem_tasks = list()
 
+	/// A list (supports regular, nested, and weighted) of possible reagents that will rain down from the sky.
+	/// Only one of these will be selected to be used as the reagent
+	var/list/whitelist_weather_reagents
+	/// A list of reagents that are forbidden from being selected when there is no
+	/// whitelist and the reagents are randomized
+	var/list/blacklist_weather_reagents
+	/// The selected reagent that will be rained down
+	var/datum/reagent/weather_reagent
+
 /datum/weather/New(z_levels, list/weather_data)
 	..()
 
@@ -126,6 +135,19 @@
 	area_type = weather_data?["area"] || area_type
 	weather_flags = weather_data?["weather_flags"] || weather_flags
 	turf_thunder_chance = isnull(weather_data?["thunder_chance"]) ? turf_thunder_chance : weather_data?["thunder_chance"]
+
+	var/datum/reagent/custom_reagent = weather_data?["reagent"]
+	var/reagent_id
+	if(custom_reagent)
+		reagent_id = custom_reagent
+	else if(whitelist_weather_reagents)
+		reagent_id = pick_weight_recursive(whitelist_weather_reagents)
+	else if(blacklist_weather_reagents) // randomized
+		reagent_id = get_random_reagent_id(blacklist_weather_reagents)
+
+	if(reagent_id)
+		weather_reagent = find_reagent_object_from_type(reagent_id)
+		weather_color = weather_reagent.color
 
 	if(weather_flags & (WEATHER_MOBS))
 		subsystem_tasks += SSWEATHER_MOBS
@@ -328,14 +350,62 @@
 /**
  * Affects the mob with whatever the weather does
  */
-/datum/weather/proc/weather_act_mob(mob/living/L)
-	return
+/datum/weather/proc/weather_act_mob(mob/living/living)
+	if(!weather_reagent)
+		return
+
+	if(istype(weather_reagent, /datum/reagent/water))
+		living.wash()
+
+	weather_reagent.expose_mob(living, TOUCH, WEATHER_REAGENT_VOLUME)
+
+	if(!(weather_flags & (WEATHER_NOTIFICATION) || prob(95))
+		return
+
+	var/reagent_name = LOWER_TEXT(weather_reagent.name)
+	var/weather_name = replacetext(name, " storm", "") // Remove " storm" if it exists
+	var/wetmessage = pick(
+		"You're coated in [reagent_name] from the [weather_name]!",
+		"The [weather_name] leaves you thoroughly covered in [reagent_name]!",
+		"You feel the [reagent_name] from the [weather_name] clinging to you!",
+		"The [weather_name] causes [reagent_name] to accumulate on your clothing!",
+		"The [weather_name] drops [reagent_name] onto you, soaking your outfit!",
+		"Moving through the [weather_name], you're quickly affected by the [reagent_name]!",
+		"The [weather_name_short] leaves a layer of [reagent_name] on your person!",
+		"The [weather_name] leaves you feeling damp from the [reagent_name]!",
+		"The [reagent_name] from the [weather_name] quickly accumulates on you!",
+		"The intense [weather_name] forces [reagent_name] to coat your exposed skin!",
+	)
+	to_chat(living, span_warning(wetmessage))
 
 /**
  * Affects the turf with whatever the weather does
  */
 /datum/weather/proc/weather_act_turf(turf/open/weather_turf)
-	return
+	if(!weather_reagent)
+		return
+
+	for(var/obj/thing as anything in weather_turf.contents)
+		if(thing.IsObscured())
+			continue
+
+		weather_reagent.expose_obj(thing, WEATHER_REAGENT_VOLUME, TOUCH)
+
+		// Time for the sophisticated art of catching sky-booze
+		if(!is_reagent_container(thing))
+			continue
+
+		var/obj/item/reagent_containers/container = thing
+		if(!container.is_open_container() || container.reagents.holder_full())
+			continue
+
+		var/amount_to_add = min(container.volume - container.reagents.total_volume, WEATHER_REAGENT_VOLUME)
+		container.reagents.add_reagent(weather_reagent.type, amount_to_add)
+
+	if(istype(weather_reagent, /datum/reagent/water))
+		weather_turf.wash(CLEAN_ALL, TRUE)
+
+	weather_reagent.expose_turf(weather_turf, WEATHER_REAGENT_VOLUME)
 
 /**
  * Affects the turf with thunder

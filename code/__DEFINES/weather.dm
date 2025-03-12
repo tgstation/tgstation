@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 #define END_STAGE 4
 
 /// The amount of reagent units that is applied when an object comes into contact with rain
-#define RAIN_REAGENT_VOLUME 5
+#define WEATHER_REAGENT_VOLUME 5
 
 /// 1 / 400 chance for a turf to get a thunder strike per tick (death and destruction to mobs/equipment in area)
 #define THUNDER_CHANCE_INSANE 0.0025
