@@ -50680,6 +50680,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "rUo" = (

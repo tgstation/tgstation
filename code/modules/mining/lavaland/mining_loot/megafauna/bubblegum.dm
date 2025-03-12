@@ -334,7 +334,7 @@
 		var/mob/living/attacked_mob = attacked_atom
 		if(attacked_mob.stat != DEAD)
 			give_blood(15)
-		attacked_mob.apply_damage(damage = force * (ishostile(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, bare_wound_bonus = 5)
+		attacked_mob.apply_damage(damage = force * (ismining(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, bare_wound_bonus = 5)
 		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
 	else if((ismachinery(attacked_atom) || isstructure(attacked_atom)) && use_blood(5))
 		var/obj/attacked_obj = attacked_atom
@@ -406,8 +406,10 @@
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
 /obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(ishostile(target))
-		damage *= 2
+	if (isliving(target))
+		var/mob/living/as_living = target
+		if (ismining(as_living))
+			damage *= 2
 	return ..()
 
 #undef MAX_BLOOD_LEVEL
