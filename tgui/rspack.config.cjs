@@ -1,0 +1,173 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+const path = require('path');
+const { defineConfig } = require('@rspack/cli');
+const { rspack } = require('@rspack/core');
+
+const createStats = (verbose) => ({
+  assets: verbose,
+  builtAt: verbose,
+  cached: false,
+  children: false,
+  chunks: false,
+  colors: true,
+  entrypoints: true,
+  hash: false,
+  modules: false,
+  performance: false,
+  timings: verbose,
+  version: verbose,
+});
+
+module.exports = (env = {}, argv) => {
+  const mode = argv.mode || 'production';
+  const bench = env.TGUI_BENCH;
+
+  const config = defineConfig({
+    mode: mode === 'production' ? 'production' : 'development',
+    context: path.resolve(__dirname),
+    target: ['web', 'es5', 'browserslist:ie 11'],
+    entry: {
+      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
+      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
+      'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
+    },
+    output: {
+      path: argv.useTmpFolder
+        ? path.resolve(__dirname, './public/.tmp')
+        : path.resolve(__dirname, './public'),
+      filename: '[name].bundle.js',
+      chunkFilename: '[name].bundle.js',
+      chunkLoadTimeout: 15000,
+      publicPath: '/',
+    },
+    resolve: {
+      pnp: true,
+      extensions: ['.tsx', '.ts', '.js', '.jsx'],
+      alias: {
+        tgui: path.resolve(__dirname, './packages/tgui'),
+        'tgui-panel': path.resolve(__dirname, './packages/tgui-panel'),
+        'tgui-say': path.resolve(__dirname, './packages/tgui-say'),
+        'tgui-dev-server': path.resolve(
+          __dirname,
+          './packages/tgui-dev-server',
+        ),
+      },
+    },
+    module: {
+      rules: [
+        {
+          test: /\.([tj]s(x)?|cjs)$/,
+          exclude: /node_modules[\\/]core-js/,
+          use: [
+            {
+              loader: 'builtin:swc-loader',
+              options: {
+                loose: true,
+                jsc: {
+                  parser: {
+                    syntax: 'typescript',
+                    tsx: true,
+                  },
+                },
+                transform: {
+                  react: {
+                    runtime: 'automatic',
+                  },
+                },
+              },
+            },
+          ],
+          type: 'javascript/auto',
+        },
+        {
+          test: /\.(s)?css$/,
+          use: [
+            {
+              loader: rspack.CssExtractRspackPlugin.loader,
+              options: {
+                esModule: false,
+              },
+            },
+            {
+              loader: require.resolve('css-loader'),
+              options: {
+                esModule: false,
+              },
+            },
+            {
+              loader: require.resolve('sass-loader'),
+              options: {
+                api: 'modern-compiler',
+                implementation: 'sass-embedded',
+              },
+            },
+          ],
+          type: 'javascript/auto',
+        },
+        {
+          test: /\.(png|jpg|svg)$/,
+          use: [
+            {
+              loader: require.resolve('url-loader'),
+              options: {
+                esModule: false,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    optimization: {
+      emitOnErrors: false,
+    },
+    performance: {
+      hints: false,
+    },
+    devtool: false,
+
+    stats: createStats(true),
+    plugins: [
+      new rspack.EnvironmentPlugin({
+        NODE_ENV: env.NODE_ENV || mode,
+        WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
+        DEV_SERVER_IP: env.DEV_SERVER_IP || null,
+      }),
+      new rspack.CssExtractRspackPlugin({
+        filename: '[name].bundle.css',
+        chunkFilename: '[name].bundle.css',
+      }),
+    ],
+  });
+
+  if (bench) {
+    config.entry = {
+      'tgui-bench': [
+        './packages/tgui-polyfill',
+        './packages/tgui-bench/entrypoint',
+      ],
+    };
+  }
+
+  // Development build specific options
+  if (mode !== 'production') {
+    config.devtool = 'cheap-module-source-map';
+  }
+
+  // Development server specific options
+  if (argv.devServer) {
+    config.devServer = {
+      progress: false,
+      quiet: false,
+      noInfo: false,
+      clientLogLevel: 'silent',
+      stats: createStats(false),
+    };
+  }
+
+  return config;
+};

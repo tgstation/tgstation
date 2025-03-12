@@ -9,7 +9,7 @@
   "scripts": {
     "tgui:analyze": "webpack --analyze",
     "tgui:bench": "webpack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js",
-    "tgui:build": "BROWSERSLIST_IGNORE_OLD_DATA=true webpack",
+    "tgui:build": "rspack build",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
     "tgui:prettier": "prettier --check .",
@@ -22,11 +22,12 @@
     "tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx"
   },
   "dependencies": {
+    "@rspack/cli": "^1.2.8",
+    "@rspack/core": "^1.2.8",
     "@swc/core": "^1.9.1",
     "@swc/jest": "^0.2.37",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.9.0",
-    "@types/webpack-env": "^1.18.5",
     "@types/wicg-file-system-access": "^2023.10.5",
     "@typescript-eslint/parser": "^8.13.0",
     "@typescript-eslint/utils": "^8.13.0",
@@ -43,16 +44,18 @@
     "jest-circus": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^25.0.1",
-    "mini-css-extract-plugin": "^2.9.2",
     "prettier": "^3.2.5",
     "sass": "^1.80.6",
+    "sass-embedded": "^1.85.1",
     "sass-loader": "^16.0.3",
     "style-loader": "^4.0.0",
     "swc-loader": "^0.2.6",
     "typescript": "^5.6.3",
     "url-loader": "^4.1.1",
-    "webpack": "^5.96.1",
-    "webpack-bundle-analyzer": "^4.10.2",
-    "webpack-cli": "^5.1.4"
+    "webpack": "^5.98.0",
+    "webpack-bundle-analyzer": "^4.10.2"
+  },
+  "devDependencies": {
+    "@types/webpack-bundle-analyzer": "^4"
   }
 }
