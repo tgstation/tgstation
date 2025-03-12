@@ -14,6 +14,7 @@
 #define LIMB_MAX_HP_ALIEN_LARVA 50 //Used by the weird larva chest and head. Did you know they have those?
 #define LIMB_MAX_HP_ALIEN_LIMBS 100 //Used by xenomorph limbs.
 #define LIMB_MAX_HP_ALIEN_CORE 500 //Used by xenomorph chests and heads
+#define LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER 2 //Used by xenomorphs and their larvae
 
 /// Limb Body Damage Coefficient
 /// A multiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
