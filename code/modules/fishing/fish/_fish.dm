@@ -1114,8 +1114,8 @@
 	var/move_number = rand(3, 5) //maybe unhardcode this
 	for(var/i in 1 to move_number)
 		//If it's last movement, move back to start otherwise move to some random point
-		var/target_x = i == move_number ? origin_w : rand(pw_min,pw_max) //could do with enforcing minimal delta for prettier zigzags
-		var/target_y = i == move_number ? origin_z : rand(pz_min,pz_max)
+		var/target_w = i == move_number ? origin_w : rand(pw_min,pw_max) //could do with enforcing minimal delta for prettier zigzags
+		var/target_z = i == move_number ? origin_z : rand(pz_min,pz_max)
 		var/dist_w = prev_w - target_w
 		var/dist_z = prev_z - target_z
 		prev_w = target_w
