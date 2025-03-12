@@ -46,6 +46,7 @@
 	victim.adjustBruteLoss(5, required_bodytype = BODYTYPE_ORGANIC)
 	if((weather_flags & WEATHER_NOTIFICATION) && prob(5))
 		to_chat(victim, span_danger("You are battered by the coarse sand!"))
+	return ..()
 
 /datum/weather/sand_storm/harmless
 	name = "sandfall"

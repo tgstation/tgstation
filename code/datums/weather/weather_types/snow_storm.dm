@@ -34,6 +34,7 @@
 
 /datum/weather/snow_storm/weather_act_mob(mob/living/living)
 	living.adjust_bodytemperature(-rand(cooling_lower, cooling_upper))
+	return ..()
 
 /datum/weather/snow_storm/start()
 	GLOB.snowstorm_sounds.Cut() // it's passed by ref

@@ -45,3 +45,4 @@
 
 /datum/weather/floor_is_lava/weather_act_mob(mob/living/victim)
 	victim.adjustFireLoss(3)
+	return ..()

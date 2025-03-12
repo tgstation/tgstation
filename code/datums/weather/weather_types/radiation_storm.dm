@@ -58,6 +58,8 @@
 	if(prob(50))
 		do_mutate(human)
 
+	return ..()
+
 /datum/weather/rad_storm/end()
 	if(..())
 		return

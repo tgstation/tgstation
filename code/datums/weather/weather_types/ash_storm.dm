@@ -60,6 +60,7 @@
 
 /datum/weather/ash_storm/weather_act_mob(mob/living/victim)
 	victim.adjustFireLoss(4, required_bodytype = BODYTYPE_ORGANIC)
+	return ..()
 
 /datum/weather/ash_storm/end()
 	GLOB.ash_storm_sounds -= weak_sounds
