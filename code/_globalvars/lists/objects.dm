@@ -120,6 +120,7 @@ GLOBAL_LIST_INIT(common_cubes, typecacheof(list(
 	/obj/item/storage/box/zipties,
 	/obj/item/stock_parts/power_store/cell,
 	/obj/item/stock_parts/power_store/cell/upgraded,
+	/obj/item/cube/random,
 ), only_root_path = TRUE))
 
 /// List of Uncommon Cubes
@@ -130,27 +131,32 @@ GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
 	/obj/item/crusher_trophy/ice_demon_cube,
 	/obj/item/barriercube,
 	/obj/item/mmi/posibrain,
+	/obj/item/cube/random/uncommon,
 )))
 
 /// List of Rare Cubes
 GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
 	/obj/item/food/monkeycube/gorilla,
 	/obj/item/warp_cube,
+	/obj/item/cube/random/rare,
 )))
 
 /// List of Epic Cubes
 GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
 	/obj/item/freeze_cube,
 	/obj/item/prisoncube,
+	/obj/item/cube/random/epic,
 )))
 
 /// List of Legendary Cubes
 GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
 	/obj/item/blackbox,
+	/obj/item/cube/random/legendary,
 )))
 
 /// List of Mythical Cubes
 GLOBAL_LIST_INIT(mythical_cubes, typecacheof(list(
+	/obj/item/cube/random/mythical,
 )))
 
 
