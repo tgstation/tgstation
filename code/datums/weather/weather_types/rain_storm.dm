@@ -37,8 +37,10 @@
 	/// The selected reagent that will be rained down
 	var/datum/reagent/rain_reagent
 
-/datum/weather/rain_storm/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
+/datum/weather/rain_storm/New(z_levels, list/weather_data)
 	..()
+
+	var/datum/reagent/custom_reagent = weather_data?["reagent"]
 
 	var/reagent_id
 	if(custom_reagent)

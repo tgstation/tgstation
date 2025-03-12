@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(weather)
 			LAZYINITLIST(eligible_zlevels["[z]"])
 			eligible_zlevels["[z]"][weather] = probability
 
-/datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, area_type, weather_bitflags, thunder_value, datum/reagent/reagent_type)
+/datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, list/weather_data)
 	if (istext(weather_datum_type))
 		for (var/V in subtypesof(/datum/weather))
 			var/datum/weather/W = V
@@ -104,7 +104,8 @@ SUBSYSTEM_DEF(weather)
 	else if (!islist(z_levels))
 		CRASH("run_weather called with invalid z_levels: [z_levels || "null"]")
 
-	var/datum/weather/W = new weather_datum_type(z_levels, area_type, weather_bitflags, thunder_value, reagent_type)
+
+	var/datum/weather/W = new weather_datum_type(z_levels, weather_data)
 	W.telegraph()
 
 /datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)

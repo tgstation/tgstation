@@ -119,12 +119,13 @@
 	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
 	var/list/subsystem_tasks = list()
 
-/datum/weather/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
+/datum/weather/New(z_levels, list/weather_data)
 	..()
+
 	impacted_z_levels = z_levels
-	area_type = area_override || area_type
-	weather_flags = weather_flags_override || weather_flags
-	turf_thunder_chance = isnull(thunder_chance_override) ? turf_thunder_chance : thunder_chance_override
+	area_type = weather_data?["area"] || area_type
+	weather_flags = weather_data?["weather_flags"] || weather_flags
+	turf_thunder_chance = isnull(weather_data?["thunder_chance"]) ? turf_thunder_chance : weather_data?["thunder_chance"]
 
 	if(weather_flags & (WEATHER_MOBS))
 		subsystem_tasks += SSWEATHER_MOBS

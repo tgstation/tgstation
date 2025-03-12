@@ -62,7 +62,14 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 			return
 		thunder_value = GLOB.thunder_chance_options[thunder_choice]
 
-	SSweather.run_weather(weather_choice, z_level, area_choice, weather_bitflags, thunder_value, reagent_choice)
+	var/list/weather_data = list(
+		area = area_choice,
+		weather_flags = weather_bitflags,
+		thunder_chance = thunder_value,
+		reagent = reagent_choice,
+	)
+
+	SSweather.run_weather(weather_choice, z_level, weather_data)
 
 	message_admins("[key_name_admin(user)] started weather of type [weather_choice] on the z-level [z_level].")
 	log_admin("[key_name(user)] started weather of type [weather_choice] on the z-level [z_level].")
