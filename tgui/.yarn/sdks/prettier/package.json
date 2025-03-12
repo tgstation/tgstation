@@ -3,5 +3,8 @@
   "version": "3.2.5-sdk",
   "main": "./index.cjs",
   "type": "commonjs",
-  "bin": "./bin/prettier.cjs"
+  "bin": "./bin/prettier.cjs",
+  "dependencies": {
+    "prettier": "file:"
+  }
 }

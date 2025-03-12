@@ -9,6 +9,7 @@
     "glob": "^7.2.3",
     "source-map": "^0.7.4",
     "stacktrace-parser": "^0.1.10",
+    "tgui-dev-server": "file:",
     "ws": "^8.18.0"
   }
 }

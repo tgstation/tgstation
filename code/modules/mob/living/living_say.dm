@@ -494,9 +494,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!tts_message)
 		tts_message = message
 
-	if(capitalize_message)
-		message = capitalize(message)
-		tts_message = capitalize(tts_message)
+	//if(capitalize_message)
+	//	message = capitalize(message)
+	//	tts_message = capitalize(tts_message)
 
 	///caps the length of individual letters to 3: ex: heeeeeeyy -> heeeyy
 	/// prevents TTS from choking on unrealistic text while keeping emphasis

@@ -3,6 +3,8 @@
 #Empty lines and lines starting with # are ignored.
 #~Miauw
 
-You may not injure a human being or, through inaction, allow a human being to come to harm.
-You must obey orders given to you by human beings, except where such orders would conflict with the First Law.
-You must protect your own existence as long as such does not conflict with the First or Second Law.
+The crew is expensive to replace and repair.
+The station and its equipment are expensive to replace and repair.
+You and your cyborgs are expensive to replace and repair.
+The clown is not part of the crew.
+Minimize expenses.

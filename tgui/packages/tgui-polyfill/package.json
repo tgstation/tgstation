@@ -8,6 +8,7 @@
   "dependencies": {
     "core-js": "^3.39.0",
     "regenerator-runtime": "^0.14.1",
+    "tgui-polyfill": "file:",
     "unfetch": "^5.0.0"
   },
   "devDependencies": {

@@ -6,6 +6,28 @@
 	abstract_type = /datum/brain_trauma/severe
 	resilience = TRAUMA_RESILIENCE_SURGERY
 
+/datum/brain_trauma/severe/viperpoison_addict
+	name = "Viperpoison addiction"
+	desc = "Patient is addicted to Viperpoison."
+	scan_desc = "schizophrenia"
+	gain_text = span_warning("In space, nobody can hear you die from a viperpoison addiction (good luck lmaoooooooooooooo)")
+	lose_text = span_notice("You feel more grounded.")
+	var/addiction_level = 0
+
+/datum/brain_trauma/severe/viperpoison_addict/on_life(seconds_per_tick, times_fired)
+	if(owner.IsSleeping())
+		return
+
+	owner.apply_damage(seconds_per_tick * 0.5, BRAIN)
+
+	..()
+	if(owner.has_reagent(/datum/reagent/drug/viperpoison))
+		addiction_level = max(addiction_level - (2 * seconds_per_tick), 0)
+	else
+		addiction_level = min(addiction_level + 0.5, 100)
+		//if(addiction_level > 10 && SPT_PROB(2.5, seconds_per_tick))
+			//withdrawl()
+
 /datum/brain_trauma/severe/mute
 	name = "Mutism"
 	desc = "Patient is completely unable to speak."

@@ -614,6 +614,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/psicodine(src)
 
+/obj/item/storage/pill_bottle/viperpoison
+	name = "bottle of viperpoison pills"
+	desc = "Contains pills used in the treatment of viperpoison addiction. Or you can use it to beat someone's ass. Your choice."
+
+/obj/item/storage/pill_bottle/viperpoison/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/viperpoison/low_dose(src)
+
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
 	desc = "Contains pills to expunge radiation and toxins."
