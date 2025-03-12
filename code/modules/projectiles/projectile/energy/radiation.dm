@@ -13,8 +13,6 @@
 	if (ishuman(target) && prob(radiation_chance))
 		radiation_pulse(target, max_range = 0, threshold = RAD_FULL_INSULATION)
 
-	return BULLET_ACT_HIT
-
 /obj/projectile/energy/radiation/weak
 	damage = 9
 	radiation_chance = 10
