@@ -4063,10 +4063,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay Break Room";
-	network = list("ss13","medbay")
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "bea" = (
@@ -17822,7 +17818,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/holosign/barrier/atmos/sturdy,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -17834,6 +17829,7 @@
 	id = "minecraft_shutter";
 	name = "Cart Shutters"
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/textured,
 /area/station/service/hydroponics)
 "eXH" = (
@@ -24381,7 +24377,6 @@
 /area/station/maintenance/starboard/aft)
 "gTr" = (
 /obj/structure/cable,
-/obj/structure/holosign/barrier/atmos/sturdy,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -24394,6 +24389,7 @@
 /obj/structure/minecart_rail{
 	dir = 1
 	},
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/iron/textured,
 /area/station/service/kitchen/coldroom)
 "gTw" = (
@@ -27006,12 +27002,10 @@
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/medical/morgue)
 "hHD" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Construction Area"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/item/wallframe/camera,
 /turf/open/floor/plating,
 /area/station/construction)
 "hHG" = (

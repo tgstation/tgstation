@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixes black vision for dextrous mobs using 516 version of BYOND"

@@ -120,9 +120,6 @@
 	if (!core_installed)
 		. += span_warning("It requires a hallucination anomaly core in order to function.")
 
-/obj/item/clothing/head/helmet/perceptomatrix/item_action_slot_check(slot, mob/user, datum/action/action)
-	return slot & ITEM_SLOT_HEAD
-
 /obj/item/clothing/head/helmet/perceptomatrix/update_icon_state()
 	icon_state = base_icon_state + (core_installed ? "" : "_inactive")
 	worn_icon_state = base_icon_state + (core_installed ? "" : "_inactive")

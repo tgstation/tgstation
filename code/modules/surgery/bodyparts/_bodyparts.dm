@@ -184,6 +184,8 @@
 	var/unarmed_damage_high = 1
 	///Determines the accuracy bonus, armor penetration and knockdown probability.
 	var/unarmed_effectiveness = 10
+	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
+	var/unarmed_pummeling_bonus = 1
 
 	/// Traits that are given to the holder of the part. This does not update automatically on life(), only when the organs are initially generated or inserted!
 	var/list/bodypart_traits = list()
@@ -496,9 +498,6 @@
 
 	brute *= wound_damage_multiplier
 	burn *= wound_damage_multiplier
-
-	if(bodytype & (BODYTYPE_ALIEN|BODYTYPE_LARVA_PLACEHOLDER)) //aliens take double burn //nothing can burn with so much snowflake code around
-		burn *= 2
 
 	/*
 	// START WOUND HANDLING
@@ -1017,6 +1016,10 @@
 			actual_color = apply_matrix_to_color(COLOR_WHITE, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
 		add_color_override(actual_color, LIMB_COLOR_ATOM_COLOR + i)
 	update_limb()
+	// Recolors mutant overlays to match new mutant colors
+	for(var/datum/bodypart_overlay/mutant/overlay in bodypart_overlays)
+		overlay.inherit_color(src, force = TRUE)
+	// Update either owner's bodyparts or our icon if we don't have one
 	if (owner)
 		owner.update_body_parts()
 	else
@@ -1121,7 +1124,7 @@
 	if(!is_husked)
 		//Draw external organs like horns and frills
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-			if(!dropped && !overlay.can_draw_on_bodypart(owner)) //if you want different checks for dropped bodyparts, you can insert it here
+			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
 			//Some externals have multiple layers for background, foreground and between
 			for(var/external_layer in overlay.all_layers)
