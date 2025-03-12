@@ -305,7 +305,7 @@
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
 	icon_state = "donkpocketpizza_raw"
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | RAW
+	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD|RAW
 	slice_type = null
 
 /obj/item/food/pizza/donkpocket/raw/make_bakeable()

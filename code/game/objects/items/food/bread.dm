@@ -449,7 +449,7 @@
 	)
 	bite_consumption = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
