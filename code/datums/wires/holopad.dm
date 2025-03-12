@@ -33,7 +33,7 @@
 			else
 				holopad.replay_stop()
 				holopad.replay_mode = FALSE
-	..()
+	return ..()
 
 /datum/wires/holopad/on_cut(wire, mend, source)
 	var/obj/machinery/holopad/holopad = holder
