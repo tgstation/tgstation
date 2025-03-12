@@ -74,7 +74,7 @@
 	var/list/custom_spawns = list()
 	/// Set TRUE if you want reusable custom spawners
 	var/keep_custom_spawns = FALSE
-	/// At least this many candidates or it will cancel the loading!
+	/// The domain must have this many ghost candidates willing to join as entities, or else it will not load.
 	var/mission_min_candidates = 0
 	/// Maximum amount possible of above.
 	var/mission_max_candidates = 0
@@ -82,6 +82,7 @@
 	var/list/chosen_ghosts
 	/// List of spawners used for candidates.
 	var/list/obj/effect/mob_spawn/ghost_role/ghost_spawners
+	/// Current domain mobs being held by ghosts
 	var/list/mob/living/ghost_mobs
 	/// The role that ghosts will get. Only used for poll text.
 	var/spawner_role = "Antagonist"

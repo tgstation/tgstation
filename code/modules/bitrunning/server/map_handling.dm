@@ -1,3 +1,5 @@
+#define POLLING_COOLDOWN_TIME 2 MINUTES
+
 /// Gives all current occupants a notification that the server is going down
 /obj/machinery/quantum_server/proc/begin_shutdown(mob/user)
 	if(isnull(generated_domain))
@@ -84,8 +86,14 @@
 	for(var/datum/lazy_template/virtual_domain/available in SSbitrunning.all_domains)
 		if(map_key == available.key && points >= available.cost)
 			generated_domain = available
+			break
 
 	if(!generated_domain)
+		return FALSE
+
+	if(generated_domain.mission_min_candidates && (!COOLDOWN_FINISHED(src, polling_cooldown)))
+		say("Advanced NPC algorithms resetting, please wait [DisplayTimeText(polling_cooldown)] or load a different domain.")
+		playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
 		return FALSE
 
 	var/list/mob/lucky_ghosts
@@ -94,12 +102,14 @@
 		say("Loading advanced NPCs...")
 		var/list/mob/candidates = SSpolling.poll_ghost_candidates("Do you want to play as a virtual [generated_domain.spawner_role] in a bitrunner domain?", ROLE_GHOST_ROLE, ROLE_GHOST_ROLE, 15 SECONDS, POLL_IGNORE_SHUTTLE_DENIZENS, TRUE)
 		for(var/amount in 1 to generated_domain.mission_max_candidates)
-			LAZYADD(lucky_ghosts, pick_n_take(candidates))
+			if(length(candidates)) // If no candidates, fails in code below anyways
+				LAZYADD(lucky_ghosts, pick_n_take(candidates))
 
 		if(length(lucky_ghosts) < generated_domain.mission_min_candidates)
 			notify_ghosts("Not enough candidates for [generated_domain.spawner_role]! Aborting mission!")
 			playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
 			say("Error! Unable to load advanced NPCs. Please try again or select different domain.")
+			COOLDOWN_START(src, polling_cooldown, POLLING_COOLDOWN_TIME)
 			return FALSE
 
 		playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
