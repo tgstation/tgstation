@@ -173,6 +173,9 @@
 			if(total_turfs)
 				impacted_areas |= affected_area
 
+				if(!(weather_flags & (WEATHER_THUNDER|WEATHER_TURFS)))
+					continue
+
 				var/z_string = num2text(z)
 				if(!impacted_z_levels_weighted[z_string])
 					impacted_z_levels_weighted[z_string] = 0
@@ -182,7 +185,6 @@
 				impacted_z_levels_weighted[z_string] += total_turfs
 				impacted_areas_weighted[z_string][affected_area] = total_turfs
 				total_impacted_turfs += total_turfs
-				continue
 
 /// Selects a turf impacted by weather, if available, otherwise returns null
 /datum/weather/proc/pick_turf()
