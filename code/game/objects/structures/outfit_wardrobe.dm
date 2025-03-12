@@ -6,17 +6,18 @@
 	desc = "Peek in and select one of several snazzy outfits. Narnia not included."
 	icon = 'icons/obj/storage/closet.dmi'
 	icon_state = "fullcabinet"
+	base_icon_state = "fullcabinet"
 	obj_flags = INDESTRUCTIBLE
 	density = TRUE
 	anchored = TRUE
 	/**
 	 * Assoc list of outfits to how many charges left.
-	 * If value is null, the amount is infinite. Otherwise, it decreases by one per use.
+	 * If value is INFINITY, the amount is infinite. Otherwise, it decreases by one per use.
 	 * At zero it can't be picked.
 	 * Value is unique per wardrobe.
 	 */
 	var/list/selectable_outfits_to_amount = list(
-		/datum/outfit/cat_butcher = null,
+		/datum/outfit/cat_butcher = INFINITY,
 		/datum/outfit/job/clown = 2,
 		)
 	/// Adds a trait with the source of wardrobe_id if this is TRUE, which is checked to prevent reuse.
@@ -56,25 +57,25 @@
 		display_classes[dressup] = option
 
 	sort_list(display_classes)
-	var/choice = show_radial_menu(human_user, src, display_classes, radius = 38)
+	var/choice = show_radial_menu(human_user, src, display_classes, radius = 38, require_near = TRUE)
 	if(!choice)
 		return
 
 	chosen_class = choice
 
-	human_user.balloon_alert(human_user, "outfitting...")
+	human_user.balloon_alert(human_user, lowertext(chosen_class.name))
 	playsound(human_user, 'sound/items/zip/un_zip.ogg', 33)
 	playsound(src, 'sound/machines/closet/wooden_closet_open.ogg', 25)
 	icon_state = "fullcabinet_open"
-	if(!do_after(human_user, 5 SECONDS))
+	if(!do_after(human_user, 3 SECONDS))
 		playsound(src, 'sound/machines/closet/wooden_closet_close.ogg', 50)
-		icon_state = initial(icon_state)
+		icon_state = base_icon_state
 		return
-	// If not null, reduce amount by one
-	if(!isnull(selectable_outfits_to_amount[choice]))
+	// If not inf, reduce amount by one
+	if(selectable_outfits_to_amount[choice] != INFINITY)
 		selectable_outfits_to_amount[choice]--
 	playsound(src, 'sound/machines/closet/wooden_closet_close.ogg', 50)
-	icon_state = initial(icon_state)
+	icon_state = base_icon_state
 	playsound(human_user, 'sound/items/zip/zip_up.ogg', 33)
 
 	human_user.drop_everything()
