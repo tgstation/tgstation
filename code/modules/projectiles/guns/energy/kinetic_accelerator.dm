@@ -249,7 +249,7 @@
 			modkit_upgrade.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
-		M.gets_drilled(firer, TRUE)
+		M.gets_drilled(firer, 1)
 		if(iscarbon(firer))
 			var/mob/living/carbon/carbon_firer = firer
 			var/skill_modifier = 1
@@ -270,7 +270,7 @@
 	new /obj/effect/temp_visual/explosion/fast(get_turf(target))
 
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(2, target) - target)
-		mineral_turf.gets_drilled(firer, TRUE)
+		mineral_turf.gets_drilled(firer, 0.1)
 
 	for(var/mob/living/living_mob in range(2, target) - firer - target)
 		if(!ismining(living_mob))
@@ -461,7 +461,7 @@
 		for(var/T in RANGE_TURFS(2, target_turf) - target_turf)
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
-				M.gets_drilled(kinetic_blast.firer, TRUE)
+				M.gets_drilled(kinetic_blast.firer, 0.1)
 
 	if(modifier)
 		for(var/mob/living/living_mob in range(2, target) - kinetic_blast.firer - target)
