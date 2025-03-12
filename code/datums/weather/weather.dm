@@ -359,7 +359,7 @@
 
 	weather_reagent.expose_mob(living, TOUCH, WEATHER_REAGENT_VOLUME)
 
-	if(!(weather_flags & (WEATHER_NOTIFICATION) || prob(95))
+	if(!(weather_flags & WEATHER_NOTIFICATION) || prob(95))
 		return
 
 	var/reagent_name = LOWER_TEXT(weather_reagent.name)
