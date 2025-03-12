@@ -23,8 +23,6 @@
 	target_trait = ZTRAIT_RAINSTORM
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
 	probability = 0
-	turf_weather_chance = 0.01
-	turf_thunder_chance = THUNDER_CHANCE_AVERAGE
 
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
 	whitelist_weather_reagents = list(/datum/reagent/water)
