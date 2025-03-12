@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Preference dummy now properly updates when changing some species features"
-  - qol: "If you have the bald quirk selected, the wig shows up on the preference dummy"
-  - qol: "If you have the bald quirk selected, and your role starts with a hat, the hat will start attached to your wig"

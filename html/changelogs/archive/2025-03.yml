@@ -276,3 +276,28 @@
   - qol: Added and moved a bunch of cameras to remove silly blind-spots and added
       cams to rooms where there should've been cams.
   - map: Added EVA shutter buttons to birdshot
+2025-03-12:
+  Melbert:
+  - qol: When reaching the wizard grand finale, you no longer get locked into finale
+      effects that cannot yet be invoked.
+  - bugfix: Preference dummy now properly updates when changing some species features
+  - qol: If you have the bald quirk selected, the wig shows up on the preference dummy
+  - qol: If you have the bald quirk selected, and your role starts with a hat, the
+      hat will start attached to your wig
+  - balance: Reworks Changeling's Darkness Adaptation. It's strength now scales with
+      how dark your environment is, rather than being static transparency.
+  - bugfix: Fixes Digital Camo's examine message
+  - bugfix: '[Delta] Rearranges / adds some missing wallmounts'
+  Singul0:
+  - bugfix: fixes unwalkable tiles in the film studio bar
+  SmArtKar:
+  - bugfix: Connected Birdshot dorms to distro
+  - bugfix: Fixed a missing wire under Wawa's Coldroom APC
+  - bugfix: Going through lava while buckled to an object no longer explodes the server
+  - bugfix: Getting a carp infusion or committing a certain holofish suicide no longer
+      gets rid of your voidwalker overlay.
+  StrangeWeirdKitten:
+  - bugfix: Character creator preview being miniature
+  subject217:
+  - bugfix: Updated the description of insulated gloves to reflect their lack of chunky
+      fingers.
