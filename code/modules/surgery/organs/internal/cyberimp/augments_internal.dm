@@ -9,6 +9,8 @@
 	var/aug_icon = 'icons/mob/human/species/misc/bodypart_overlay_augmentations.dmi'
 	/// icon_state of the bodypart overlay we're going to be applying to our owner
 	var/aug_overlay = null
+	/// Does the implant have an emissive overlay too?
+	var/emissive_overlay = FALSE
 	/// Bodypart overlay we're going to apply to whoever we're implanted into
 	var/datum/bodypart_overlay/simple/augment/bodypart_aug = null
 
@@ -25,11 +27,10 @@
 	return aug_overlay
 
 /obj/item/organ/cyberimp/proc/get_overlay(image_layer, obj/item/bodypart/limb)
-	return image(
-		icon = aug_icon,
-		icon_state = get_overlay_state(),
-		layer = image_layer,
-	)
+	. = list()
+	. += image(icon = aug_icon, icon_state = get_overlay_state(), layer = image_layer)
+	if (emissive_overlay)
+		. += emissive_appearance(aug_icon, "[get_overlay_state()]_e", limb.owner || limb, image_layer)
 
 /obj/item/organ/cyberimp/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
@@ -55,12 +56,22 @@
 	implant = null
 	return ..()
 
-/datum/bodypart_overlay/simple/augment/get_image(image_layer, obj/item/bodypart/limb)
-	return implant.get_overlay(image_layer, limb)
-
 /datum/bodypart_overlay/simple/augment/generate_icon_cache()
 	. = ..()
 	. += implant.get_overlay_state()
+
+/datum/bodypart_overlay/simple/augment/get_overlay(layer, obj/item/bodypart/limb)
+	layer = bitflag_to_layer(layer)
+	var/list/imageset = implant.get_overlay(layer, limb)
+	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
+		return imageset
+
+	var/list/all_images = list()
+	for(var/image/overlay as anything in imageset)
+		all_images += overlay
+		all_images += emissive_blocker(overlay.icon, overlay.icon_state, limb, layer = overlay.layer, alpha = overlay.alpha)
+
+	return all_images
 
 //[[[[BRAIN]]]]
 

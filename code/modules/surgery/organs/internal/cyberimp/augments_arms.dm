@@ -116,19 +116,19 @@
 	return "[aug_overlay][slot == left_arm_organ_slot ? "_left" : "_right"]"
 
 /obj/item/organ/cyberimp/arm/get_overlay(image_layer, obj/item/bodypart/limb)
-	var/image/arm_overlay = image(
+	var/mutable_appearance/arm_overlay = mutable_appearance(
 		icon = aug_icon,
 		icon_state = get_overlay_state(),
 		layer = image_layer,
 	)
 
-	arm_overlay.overlays += image(
+	var/mutable_appearance/hand_overlay = mutable_appearance(
 		icon = aug_icon,
 		icon_state = "[get_overlay_state()]_hand",
-		layer = -GLOVES_LAYER,
+		layer = -BODYPARTS_HIGH_LAYER,
 	)
 
-	return arm_overlay
+	return list(arm_overlay, hand_overlay)
 
 /**
  * Called when the mob uses the "drop item" hotkey

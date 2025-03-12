@@ -430,15 +430,7 @@
 	eyelid_right.render_target = "*[REF(parent)]_eyelid_right"
 	parent.vis_contents += eyelid_left
 	parent.vis_contents += eyelid_right
-	var/sync_blinking = synchronized_blinking && (parent.get_organ_loss(ORGAN_SLOT_BRAIN) < ASYNC_BLINKING_BRAIN_DAMAGE)
-	// Randomize order for unsynched animations
-	if (sync_blinking || prob(50))
-		var/list/anim_times = animate_eyelid(eyelid_left, parent, sync_blinking)
-		animate_eyelid(eyelid_right, parent, sync_blinking, anim_times)
-	else
-		var/list/anim_times = animate_eyelid(eyelid_right, parent, sync_blinking)
-		animate_eyelid(eyelid_left, parent, sync_blinking, anim_times)
-
+	animate_eyelids(parent)
 	var/mutable_appearance/left_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
 	var/mutable_appearance/right_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
 	left_eyelid_overlay.render_source = "*[REF(parent)]_eyelid_left"
@@ -450,14 +442,28 @@
 	. = list()
 	var/prevent_loops = HAS_TRAIT(parent, TRAIT_PREVENT_BLINK_LOOPS)
 	animate(eyelid, alpha = 0, time = 0, loop = (prevent_loops ? 0 : -1))
-	for (var/i in 1 to (prevent_loops ? 1 : BLINK_LOOPS))
-		var/wait_time = rand(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, BASE_BLINKING_DELAY + RAND_BLINKING_DELAY)
+
+	var/wait_time = rand(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, BASE_BLINKING_DELAY + RAND_BLINKING_DELAY)
+	if (anim_times)
+		if (sync_blinking)
+			wait_time = anim_times[1]
+			anim_times.Cut(1, 2)
+		else
+			wait_time = rand(max(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, anim_times[1] - RAND_BLINKING_DELAY), anim_times[1])
+
+	animate(time = wait_time)
+	. += wait_time
+
+	var/cycles = (prevent_loops ? 1 : BLINK_LOOPS)
+	for (var/i in 1 to cycles)
 		if (anim_times)
 			if (sync_blinking)
 				wait_time = anim_times[1]
 				anim_times.Cut(1, 2)
 			else
 				wait_time = rand(max(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, anim_times[1] - RAND_BLINKING_DELAY), anim_times[1])
+		else
+			wait_time = rand(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, BASE_BLINKING_DELAY + RAND_BLINKING_DELAY)
 		. += wait_time
 		if (anim_times && !sync_blinking)
 			// Make sure that we're somewhat in sync with the other eye
@@ -465,8 +471,38 @@
 			anim_times.Cut(1, 2)
 		animate(alpha = 255, time = 0)
 		animate(time = BLINK_DURATION)
-		animate(alpha = 0, time = 0)
-		animate(time = wait_time)
+		if (i != cycles)
+			animate(alpha = 0, time = 0)
+			animate(time = wait_time)
+
+/obj/item/organ/eyes/proc/blink(duration = BLINK_DURATION, restart_animation = TRUE)
+	var/left_delayed = rand(50)
+	// Storing blink delay so mistimed blinks of lizards don't get cut short
+	var/blink_delay = synchronized_blinking ? rand(0, RAND_BLINKING_DELAY) : 0
+	animate(eyelid_left, alpha = 0, time = 0)
+	if (!synchronized_blinking && left_delayed)
+		animate(time = blink_delay)
+	animate(alpha = 255, time = 0)
+	animate(time = duration)
+	animate(alpha = 0, time = 0)
+	animate(eyelid_right, alpha = 0, time = 0)
+	if (!synchronized_blinking && !left_delayed)
+		animate(time = blink_delay)
+	animate(alpha = 255, time = 0)
+	animate(time = duration)
+	animate(alpha = 0, time = 0)
+	if (restart_animation)
+		addtimer(CALLBACK(src, PROC_REF(animate_eyelids), owner), blink_delay + duration)
+
+/obj/item/organ/eyes/proc/animate_eyelids(mob/living/carbon/human/parent)
+	var/sync_blinking = synchronized_blinking && (parent.get_organ_loss(ORGAN_SLOT_BRAIN) < ASYNC_BLINKING_BRAIN_DAMAGE)
+	// Randomize order for unsynched animations
+	if (sync_blinking || prob(50))
+		var/list/anim_times = animate_eyelid(eyelid_left, parent, sync_blinking)
+		animate_eyelid(eyelid_right, parent, sync_blinking, anim_times)
+	else
+		var/list/anim_times = animate_eyelid(eyelid_right, parent, sync_blinking)
+		animate_eyelid(eyelid_left, parent, sync_blinking, anim_times)
 
 /obj/effect/abstract/eyelid_effect
 	name = "eyelid"

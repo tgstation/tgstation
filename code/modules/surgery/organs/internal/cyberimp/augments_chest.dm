@@ -44,6 +44,8 @@
 	name = "reviver implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart!"
 	icon_state = "reviver_implant"
+	aug_overlay = "reviver"
+	emissive_overlay = TRUE
 	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = FALSE
@@ -160,6 +162,7 @@
 	icon_state = "imp_jetpack"
 	base_icon_state = "imp_jetpack"
 	aug_overlay = "imp_jetpack"
+	emissive_overlay = TRUE
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
 	var/on = FALSE
@@ -264,11 +267,9 @@
 	return "[aug_overlay][on ? "_on" : ""]"
 
 /obj/item/organ/cyberimp/chest/thrusters/get_overlay(image_layer, obj/item/bodypart/limb)
-	return image(
-		icon = aug_icon,
-		icon_state = get_overlay_state(),
-		layer = -BODYPARTS_HIGH_LAYER, // makes absolutely zero sense why it would layer ontop of jumpsuits but it looks cool
-	)
+	. = ..()
+	for (var/image/overlay as anything in .)
+		overlay.layer = -BODYPARTS_HIGH_LAYER // makes absolutely zero sense why it would layer ontop of jumpsuits but it looks cool
 
 /obj/item/organ/cyberimp/chest/spine
 	name = "\improper Herculean gravitronic spinal implant"
