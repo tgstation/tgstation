@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - code_imp: "Spawning the debug \"sheet snatcher\" box will no longer try to do ~400 stack merges."
