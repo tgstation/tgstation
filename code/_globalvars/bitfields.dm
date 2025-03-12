@@ -8,11 +8,6 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 	/// An associative list of the readable flag and its true value
 	var/list/flags
 
-/// Returns a list in the form list(list(FILE_DEFINED, LINE_DEFINED), ...)
-/// Used to detect and prevent duplicate bitfield definitions
-/datum/bitfield/proc/return_sources()
-	return list()
-
 /// Turns /datum/bitfield subtypes into a list for use in debugging
 /proc/generate_bitfields()
 	var/list/bitfields = list()
@@ -23,14 +18,14 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 
 /// Returns an associative list of bitflag name -> number for all valid bitflags in the passed in field
 /proc/get_valid_bitflags(var_name)
-    return GLOB.bitfields[var_name] || list()
+	return GLOB.bitfields[var_name] || list()
 
 /proc/get_random_bitflag(var_name)
-    var/list/flags = get_valid_bitflags(var_name)
-    if(!length(flags))
-        return
-    var/name = pick(flags)
-    return flags[name]
+	var/list/flags = get_valid_bitflags(var_name)
+	if(!length(flags))
+		return
+	var/name = pick(flags)
+	return flags[name]
 
 DEFINE_BITFIELD(admin_flags, list(
 	"ADMIN" = R_ADMIN,
