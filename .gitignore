@@ -184,6 +184,11 @@ Temporary Items
 /tools/Tgstation.DiscordDiscussions/bin/*
 /tools/Tgstation.DiscordDiscussions/obj/*
 /tools/Tgstation.DiscordDiscussions/Properties/launchSettings.json
+/tools/Tgstation.PRAnnouncer/.vs/*
+/tools/Tgstation.PRAnnouncer/bin/*
+/tools/Tgstation.PRAnnouncer/obj/*
+/tools/Tgstation.PRAnnouncer/Properties/launchSettings.json
+/tools/Tgstation.PRAnnouncer/appsettings.*.json
 
 #GitHub Atom
 .atom-build.json

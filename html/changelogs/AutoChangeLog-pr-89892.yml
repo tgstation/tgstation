@@ -1,0 +1,4 @@
+author: "Holoo-1"
+delete-after: True
+changes:
+  - bugfix: "fixed offstation humans being able to be cult target"

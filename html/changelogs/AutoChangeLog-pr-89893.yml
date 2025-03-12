@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed spiderwebs, alien weeds, kudzu, and other stuff layering below catwalks and glass floors"
