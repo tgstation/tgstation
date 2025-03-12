@@ -1,3 +1,4 @@
+/// April fools PR for the biggest content update in the game. Infinite possibilities. Infinite cubes.
 /datum/component/cuboid
 	///Rarity of the cube
 	var/rarity = COMMON_CUBE
@@ -20,19 +21,22 @@
 		"white" = COLOR_WHITE,
 		"green" = COLOR_VIBRANT_LIME,
 		"blue" = COLOR_DARK_CYAN,
-		"purple" = COLOR_PURPLE,
+		"purple" = COLOR_VIOLET,
 		"red" = COLOR_RED,
 		"pink" = COLOR_PINK
 		)
 
 
 /datum/component/cuboid/Initialize(mapload, cube_rarity = COMMON_CUBE)
+	. = ..()
 	/// Rarity
 	src.rarity = cube_rarity
 	/// We love indexes!!!
 	src.rarity_name = all_rarenames[src.rarity]
 	src.rarity_color_name = all_rarecolors[src.rarity]
 	src.rarity_color = all_rarecolors[src.rarity_color_name]
+	/// Really make it obvious. You can't get 2 feet without seeing an outline.
+	parent.add_filter("cubeglow", 3, outline_filter(color = src.rarity_color, size = 1))
 
 /datum/component/cuboid/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
@@ -51,6 +55,6 @@
 	var/cube_examine = ""
 	if(rarity == COMMON_CUBE)
 		cube_examine = boxed_message("It's a [src.rarity_name] Cube!")
-	else:
+	else
 		cube_examine = custom_boxed_message("[src.rarity_color_name]_box", "It's [a_an] [src.rarity_name] Cube!")
 	examine_list += cube_examine

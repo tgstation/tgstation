@@ -74,18 +74,62 @@
 	. = ..()
 	AddComponent(/datum/component/cuboid, cube_rarity = rarity)
 
-/// Random cubes
+/// Random cubes ///
+
 /obj/item/cube/random
+	name = "Random Common Cube"
 	desc = "A cube that's full of surprises!"
+	/// I'm like 90% sure trying to reference the bitflags as a list was the reason my computer was crashing 4 times so I'm just putting it here instead
+	var/static/foodtype_list = list(
+		MEAT,
+		VEGETABLES,
+		RAW,
+		JUNKFOOD,
+		GRAIN,
+		FRUIT,
+		DAIRY,
+		FRIED,
+		ALCOHOL,
+		SUGAR,
+		GROSS,
+		TOXIC,
+		PINEAPPLE,
+		BREAKFAST,
+		CLOTH,
+		NUTS,
+		SEAFOOD,
+		ORANGES,
+		BUGS,
+		GORE,
+		STONE,
+	)
 
 /obj/item/cube/random/Initialize(mapload)
-	. = ..()
+	give_random_icon()
+	apply_rand_size()
 	randcolor()
 	create_random_name()
+	. = ..()
 	give_random_effects()
 
+/// Randomize the color for the cube
 /obj/item/cube/proc/randcolor()
-	color = ready_random_color()
+	add_filter("cubecolor", 1, color_matrix_filter(ready_random_color()))
+
+/// Randomize icons (once I make more generic ones)
+/obj/item/cube/proc/give_random_icon()
+	if(!prob(10*rarity))
+		return
+	icon_state = pick(
+		"small",
+	)
+
+/// Randomize size
+/obj/item/cube/proc/apply_rand_size()
+	if(!prob(10*rarity))
+		return
+	var/randscale = rand(0.5, 2.0)
+	transform.Scale(randscale,randscale)
 
 /// Create a random name for the cube with a complexity based off its rarity
 /obj/item/cube/proc/create_random_name()
@@ -111,11 +155,20 @@
 					name = "[pick(GLOB.adjectives)] Cube of[adjective_string] [pick(GLOB.ing_verbs)]"
 
 /// Random cube effects
-/obj/item/cube/random/proc/give_random_effects()
+/obj/item/cube/proc/give_random_effects()
 
+//! Continue random effects
 	var/list/possible_cube_effects = list(
 	"Edible",
 	"Chemical",
+	"Circuit",
+	"Boomerang",
+	"Tool",
+	"Instrument",
+	"Laser Gun",
+	"Melee",
+	"Storage",
+	"Paperweight"
 	)
 	for(var/i in 1 to rarity)
 		var/rand_swap = pick(possible_cube_effects)
@@ -126,12 +179,10 @@
 					create_reagents(50, INJECTABLE)
 				var/list/cube_reagents
 				var/cube_foodtypes
-				var/foodtype_list = GLOB.bitfields["foodtypes"] || list()
 				var/list/cube_tastes
 				for(var/r in 1 to rarity)
 					cube_reagents += list(subtypesof(/datum/reagent/consumable) = rand(2,5*rarity))
-					if(length(foodtype_list))
-						cube_foodtypes |= foodtype_list[pick(foodtype_list)]
+					cube_foodtypes |= pick(foodtype_list)
 					cube_tastes += list("[pick(GLOB.adjectives)]" = rand(1,rarity))
 
 				AddComponentFrom(
@@ -157,19 +208,25 @@
 				var/temp_raw = rand(0, rarity*150)
 				reagents.set_temperature(round((temp_raw/(rarity*150))**2*(rarity*150)))
 
+
 		possible_cube_effects -= rand_swap
 
 /obj/item/cube/random/uncommon
+	name = "Random Uncommon Cube"
 	rarity = UNCOMMON_CUBE
 
 /obj/item/cube/random/rare
+	name = "Random Rare Cube"
 	rarity = RARE_CUBE
 
 /obj/item/cube/random/epic
+	name = "Random Epic Cube"
 	rarity = EPIC_CUBE
 
 /obj/item/cube/random/legendary
+	name = "Random Legendary Cube"
 	rarity = LEGENDARY_CUBE
 
 /obj/item/cube/random/mythical
+	name = "Random Mythical Cube"
 	rarity = MYTHICAL_CUBE
