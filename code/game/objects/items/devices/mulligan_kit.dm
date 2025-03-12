@@ -22,11 +22,6 @@
 		balloon_alert(user, "records already exist!")
 		return
 
-	if (tgui_alert(user, "Announce arrival of new identity, and update manifest?", "Are you ready?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
-		return
-	if (QDELETED(src) || !user.can_perform_action(src, interaction_flags_click))
-		return
-
 	user.temporarilyRemoveItemFromInventory(src)
 	user.playsound_local(user, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 
@@ -66,8 +61,6 @@
 
 	user.sec_hud_set_ID()
 
-	announce_arrival(user, assigned_job)
-
 	var/mob/living/carbon/human/dummy/consistent/dummy = new() // For manifest rendering, unfortunately
 	dummy.physique = user.physique
 	user.dna.transfer_identity(dummy, transfer_SE = TRUE)
@@ -91,4 +84,39 @@
 		else
 			to_chat(user, span_notice("You stash your old ID card [returned_to]."))
 
+	var/obj/item/arrival_announcer/announcer = new(user.drop_location())
+	user.put_in_hands(announcer)
+	to_chat(user, span_notice("You quickly eat the leftover paperwork, leaving only the signaller used to announce your arrival on the station."))
+	qdel(src)
+
+/obj/item/arrival_announcer
+	name = "arrivals announcement signaller"
+	desc = "A radio signaller which uses a backdoor in the NT announcement system to trigger a fake announcement that you have just arrived there, then self-destructs."
+	icon_state = "signaller"
+	inhand_icon_state = "signaler"
+	icon = 'icons/obj/devices/new_assemblies.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
+
+/obj/item/arrival_announcer/attack_self(mob/living/user, modifiers)
+	. = ..()
+	if (!isliving(user))
+		return
+
+	var/name = user.real_name
+	var/datum/record/manifest_data = find_record(name)
+	if (isnull(manifest_data))
+		balloon_alert(user, "no records found!")
+		return
+	var/job = manifest_data.rank
+	if (tgui_alert(user, "Announce arrival of [name] as [job]?", "Are you ready?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
+		return
+	if (QDELETED(src) || !user.can_perform_action(src, interaction_flags_click))
+		return
+
+	announce_arrival(user, job, announce_to_ghosts = FALSE)
+	do_sparks(1, FALSE, user)
+	new /obj/effect/decal/cleanable/ash(user.drop_location())
+	user.temporarilyRemoveItemFromInventory(src)
 	qdel(src)
