@@ -85,7 +85,7 @@
 
 /obj/item/assembly/signaler/anomaly/dimensional/Initialize(mapload)
 	. = ..()
-	var/static/list/recipes = list(/datum/crafting_recipe/dismensional_bombcore)
+	var/static/list/recipes = list(/datum/crafting_recipe/dimensional_bombcore)
 	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/assembly/signaler/anomaly/ectoplasm

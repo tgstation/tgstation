@@ -440,7 +440,7 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/dismensional_bombcore
+/datum/crafting_recipe/dimensional_bombcore
 	name = "Multi-Dimensional Payload"
 	result = /obj/item/bombcore/dimensional
 	reqs = list(
