@@ -487,6 +487,7 @@
 /obj/item/borg/upgrade/modkit/aoe/mobs/andturfs
 	name = "offensive mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
+	turf_aoe = TRUE
 
 //Minebot passthrough
 /obj/item/borg/upgrade/modkit/minebot_passthrough
