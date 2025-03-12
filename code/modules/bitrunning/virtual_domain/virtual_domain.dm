@@ -81,11 +81,16 @@
 	/// Ghosts that will be spawned as, presumably, an antagonist in the map.
 	var/list/chosen_ghosts
 	/// List of spawners used for candidates.
-	var/list/obj/effect/mob_spawn/ghost_role/ghost_spawners
+	VAR_PRIVATE/list/obj/effect/mob_spawn/ghost_role/ghost_spawners
 	/// Current domain mobs being held by ghosts
-	var/list/mob/living/ghost_mobs
+	VAR_PRIVATE/list/mob/living/ghost_mobs
 	/// The role that ghosts will get. Only used for poll text.
 	var/spawner_role = "Antagonist"
+
+/datum/lazy_template/virtual_domain/Destroy(force)
+	QDEL_NULL(ghost_spawners)
+	QDEL_NULL(ghost_mobs)
+	. = ..()
 
 /// Sends a point to any loot signals on the map
 /datum/lazy_template/virtual_domain/proc/add_points(points_to_add = 1)
