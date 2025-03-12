@@ -30,14 +30,14 @@
 	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
 	balloon_alert(eye_owner, "hud enabled")
 	if(hud_color)
-		eye_owner.add_eye_color_left(hud_color, EYE_COLOR_HUD_PRIORITY)
+		eye_owner.add_eye_color_right(hud_color, EYE_COLOR_HUD_PRIORITY)
 
 /obj/item/organ/cyberimp/eyes/hud/on_mob_insert(mob/living/carbon/human/eye_owner, special = FALSE, movement_flags)
 	. = ..()
 	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
 	toggled_on = TRUE
 	if(hud_color)
-		eye_owner.add_eye_color_left(hud_color, EYE_COLOR_HUD_PRIORITY, !special)
+		eye_owner.add_eye_color_right(hud_color, EYE_COLOR_HUD_PRIORITY, !special)
 
 /obj/item/organ/cyberimp/eyes/hud/on_mob_remove(mob/living/carbon/human/eye_owner, special, movement_flags)
 	. = ..()

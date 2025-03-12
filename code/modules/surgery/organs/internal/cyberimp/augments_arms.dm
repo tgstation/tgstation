@@ -112,6 +112,24 @@
 		// give the owner an idea about why his implant is glitching
 		Retract()
 
+/obj/item/organ/cyberimp/arm/get_overlay_state(image_layer, obj/item/bodypart/limb)
+	return "[aug_overlay][slot == left_arm_organ_slot ? "_left" : "_right"]"
+
+/obj/item/organ/cyberimp/arm/get_overlay(image_layer, obj/item/bodypart/limb)
+	var/image/arm_overlay = image(
+		icon = aug_icon,
+		icon_state = get_overlay_state(),
+		layer = image_layer,
+	)
+
+	arm_overlay.overlays += image(
+		icon = aug_icon,
+		icon_state = "[get_overlay_state()]_hand",
+		layer = -GLOVES_LAYER,
+	)
+
+	return arm_overlay
+
 /**
  * Called when the mob uses the "drop item" hotkey
  *
@@ -255,6 +273,7 @@
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
 	icon_state = "toolkit_engineering"
+	aug_overlay = "toolkit_engi"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/screwdriver/cyborg,
@@ -273,6 +292,7 @@
 	name = "integrated paperwork implant"
 	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necessary for paperwork handy"
 	icon_state = "toolkit_engineering"
+	aug_overlay = "toolkit_engi"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/pen/fountain,
@@ -315,12 +335,15 @@
 /obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
+	icon_state = "toolkit_surgical"
+	aug_overlay = "toolkit_med"
 	items_to_create = list(/obj/item/gun/medbeam)
 
 
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
+	aug_overlay = "toolkit"
 	items_to_create = list(/obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/flash/Initialize(mapload)
@@ -345,11 +368,13 @@
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
+	aug_overlay = "toolkit"
 	items_to_create = list(/obj/item/borg/stun)
 
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
+	aug_overlay = "toolkit"
 	items_to_create = list(
 		/obj/item/melee/energy/blade/hardlight,
 		/obj/item/gun/medbeam,
@@ -370,6 +395,7 @@
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	icon_state = "toolkit_surgical"
+	aug_overlay = "toolkit_med"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/retractor/augment,
@@ -384,6 +410,7 @@
 /obj/item/organ/cyberimp/arm/surgery/emagged
 	name = "hacked surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm. This one seems to have been tampered with."
+	aug_overlay = "toolkit_med"
 	items_to_create = list(
 		/obj/item/retractor/augment,
 		/obj/item/hemostat/augment,
@@ -411,6 +438,7 @@
 	left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_MUSCLE
 
 	actions_types = list()
+	aug_overlay = null
 
 	///The amount of damage the implant adds to our unarmed attacks.
 	var/punch_damage = 5
