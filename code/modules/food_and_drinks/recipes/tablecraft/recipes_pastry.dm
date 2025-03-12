@@ -385,7 +385,7 @@
 	name = "Pizza-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
-		/obj/item/food/meatball = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/donkpocket/pizza

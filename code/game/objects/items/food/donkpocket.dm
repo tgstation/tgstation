@@ -163,8 +163,8 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/tomatojuice = 2,
 	)
-	tastes = list("meat" = 2, "dough" = 2, "cheese"= 2)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
+	tastes = list("tomato" = 2, "dough" = 2, "cheese"= 2)
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 	warm_type = /obj/item/food/donkpocket/warm/pizza
 
 /obj/item/food/donkpocket/pizza/make_bakeable()
@@ -183,8 +183,8 @@
 		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/consumable/tomatojuice = 2,
 	)
-	tastes = list("meat" = 2, "dough" = 2, "melty cheese"= 2)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
+	tastes = list("tomato" = 2, "dough" = 2, "melty cheese"= 2)
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 
 /obj/item/food/donkpocket/honk
 	name = "\improper Honk-pocket"

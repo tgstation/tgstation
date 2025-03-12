@@ -654,7 +654,7 @@
 		/datum/reagent/consumable/nutriment = 10,
 	)
 	tastes = list("bread" = 1, "egg" = 1, "meat" = 1, "onion" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|BREAKFAST
+	foodtypes = MEAT|VEGETABLES|GRAIN|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -685,7 +685,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	tastes = list("bread" = 1, "spicy fries" = 1, "mayonnaise" = 1, "curry" = 1, "meat" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
+	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
