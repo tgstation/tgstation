@@ -597,19 +597,19 @@
 
 /obj/item/bombcore/dimensional/CheckParts(list/parts_list)
 	. = ..()
-	var/new_range = 13
+	range_heavy = 13
 	for(var/obj/item/grenade/chem_grenade/nade in src)
 		if(istype(nade, /obj/item/grenade/chem_grenade/large) || istype(nade, /obj/item/grenade/chem_grenade/adv_release))
-			new_range += 1
+			range_heavy += 1
 		for(var/obj/item/thing as anything in nade.beakers) //remove beakers, then delete the grenade.
 			thing.forceMove(drop_location())
 		qdel(nade)
 	var/obj/item/gibtonite/ore = locate() in src
 	switch(ore.quality)
 		if(GIBTONITE_QUALITY_LOW)
-			new_range -= 2
+			range_heavy -= 2
 		if(GIBTONITE_QUALITY_HIGH)
-			new_range += 4
+			range_heavy += 4
 	qdel(ore)
 
 /obj/item/bombcore/dimensional/examine(mob/user)
