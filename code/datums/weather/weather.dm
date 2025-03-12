@@ -371,7 +371,7 @@
 		"The [weather_name] causes [reagent_name] to accumulate on your clothing!",
 		"The [weather_name] drops [reagent_name] onto you, soaking your outfit!",
 		"Moving through the [weather_name], you're quickly affected by the [reagent_name]!",
-		"The [weather_name_short] leaves a layer of [reagent_name] on your person!",
+		"The [weather_name] leaves a layer of [reagent_name] on your person!",
 		"The [weather_name] leaves you feeling damp from the [reagent_name]!",
 		"The [reagent_name] from the [weather_name] quickly accumulates on you!",
 		"The intense [weather_name] forces [reagent_name] to coat your exposed skin!",
