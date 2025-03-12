@@ -81,9 +81,9 @@
 	/// Ghosts that will be spawned as, presumably, an antagonist in the map.
 	var/list/chosen_ghosts
 	/// List of spawners used for candidates.
-	VAR_PRIVATE/list/obj/effect/mob_spawn/ghost_role/ghost_spawners
+	var/list/obj/effect/mob_spawn/ghost_role/ghost_spawners
 	/// Current domain mobs being held by ghosts
-	VAR_PRIVATE/list/mob/living/ghost_mobs
+	var/list/mob/living/ghost_mobs
 	/// The role that ghosts will get. Only used for poll text.
 	var/spawner_role = "Antagonist"
 
