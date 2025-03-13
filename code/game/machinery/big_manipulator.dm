@@ -80,6 +80,8 @@
 		press_on(pressed_by = null)
 	set_wires(new /datum/wires/big_manipulator(src))
 
+	register_context()
+
 /// Init priority settings list for all modes.
 /obj/machinery/big_manipulator/proc/set_up_priority_settings()
 	for(var/datum/manipulator_priority/priority_for_drop as anything in subtypesof(/datum/manipulator_priority/for_drop))
@@ -94,6 +96,27 @@
 	var/mob/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
 		. += "You can see [monkey_resolve]: [src] manager."
+
+/obj/machinery/big_manipulator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Interact with wires" : "Open UI"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
+		context[SCREENTIP_CONTEXT_RMB] = "Rotate clockwise"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(is_wire_tool(held_item) && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Interact with wires"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
@@ -176,23 +199,13 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/big_manipulator/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!panel_open)
-		return ITEM_INTERACT_BLOCKING
+/obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	if(!panel_open || !is_wire_tool(tool))
+		return NONE
 	wires.interact(user)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/big_manipulator/multitool_act_secondary(mob/living/user, obj/item/tool)
-	return multitool_act(user, tool)
-
-/obj/machinery/big_manipulator/wirecutter_act(mob/living/user, obj/item/tool)
-	if(!panel_open)
-		return ITEM_INTERACT_BLOCKING
-	wires.interact(user)
-	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/big_manipulator/wirecutter_act_secondary(mob/living/user, obj/item/tool)
-	return wirecutter_act(user, tool)
 
 /obj/machinery/big_manipulator/RefreshParts()
 	. = ..()

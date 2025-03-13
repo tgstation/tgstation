@@ -9,6 +9,7 @@ import DOMPurify from 'dompurify';
 
 import {
   addHighlightSetting,
+  importSettings,
   loadSettings,
   removeHighlightSetting,
   updateHighlightSetting,
@@ -97,12 +98,14 @@ export const chatMiddleware = (store) => {
   chatRenderer.events.on('scrollTrackingChanged', (scrollTracking) => {
     store.dispatch(changeScrollTracking(scrollTracking));
   });
-  setInterval(() => {
-    saveChatToStorage(store);
-  }, MESSAGE_SAVE_INTERVAL);
   return (next) => (action) => {
     const { type, payload } = action;
-    if (!initialized) {
+    const settings = selectSettings(store.getState());
+    // Load the chat once settings are loaded
+    if (!initialized && settings.initialized) {
+      setInterval(() => {
+        saveChatToStorage(store);
+      }, MESSAGE_SAVE_INTERVAL);
       initialized = true;
       loadChatFromStorage(store);
     }
@@ -176,13 +179,14 @@ export const chatMiddleware = (store) => {
       type === loadSettings.type ||
       type === addHighlightSetting.type ||
       type === removeHighlightSetting.type ||
-      type === updateHighlightSetting.type
+      type === updateHighlightSetting.type ||
+      type === importSettings.type
     ) {
       next(action);
-      const settings = selectSettings(store.getState());
+      const nextSettings = selectSettings(store.getState());
       chatRenderer.setHighlight(
-        settings.highlightSettings,
-        settings.highlightSettingById,
+        nextSettings.highlightSettings,
+        nextSettings.highlightSettingById,
       );
 
       return;

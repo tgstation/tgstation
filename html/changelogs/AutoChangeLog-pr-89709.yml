@@ -1,5 +1,0 @@
-author: "TheRyeGuyWhoWillNowDie"
-delete-after: True
-changes:
-  - balance: "wildcard limits have been removed from Agent ID cards"
-  - balance: "the specops crate gets a variation of the agent ID card which can only hold limited access (same as it is now)"

@@ -476,7 +476,7 @@
 /area/deathmatch)
 "rX" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/pill/patch/synthflesh,
+/obj/item/reagent_containers/applicator/patch/synthflesh,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "sk" = (

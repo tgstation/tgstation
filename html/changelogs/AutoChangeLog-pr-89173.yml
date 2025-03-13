@@ -1,0 +1,4 @@
+author: "ArrisFairburne"
+delete-after: True
+changes:
+  - qol: "Added a widget to the main menu of the modular computer screen, which will tell the user what the current alert level is and if they are needed to fix the problem."

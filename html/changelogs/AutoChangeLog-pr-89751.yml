@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Split and cleaned up mining loot's code"
-  - refactor: "Refactored the hierophant club."
-  - bugfix: "Hierophant club's beacon no longer can go missing (until you try using it)"

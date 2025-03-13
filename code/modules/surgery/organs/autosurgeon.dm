@@ -76,7 +76,7 @@
 	if(implant_time)
 		user.visible_message(
 			span_notice("[user] prepares to use [src] on [target]."),
-			span_notice("You begin to prepare to use [src] on [target]."),
+			span_notice("You prepare to use [src] on [target]."),
 		)
 		if(!do_after(user, (implant_time * surgery_speed), target))
 			return
@@ -86,7 +86,7 @@
 		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	else
 		user.visible_message(
-			span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."),
+			span_notice("[user] presses a button on [src] as it plunges into [user.p_their()] body."),
 			span_notice("You press a button on [src] as it plunges into your body."),
 		)
 
