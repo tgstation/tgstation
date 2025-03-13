@@ -43,12 +43,12 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 
 	var/datum/reagent/reagent_choice
 	if((weather_bitflags & (WEATHER_TURFS|WEATHER_MOBS)))
-		var/static/list/reagent_options = list("Default", "Custom", "Cancel")
-		var/reagent_option = tgui_alert(user, "Would you like to make the weather use a reagent?", "Weather Reagent", reagent_options)
+		var/static/list/reagent_options = list("Yes", "No", "Cancel")
+		var/reagent_option = tgui_alert(user, "Would you like to make the weather use a custom reagent?", "Weather Reagent", reagent_options)
 		switch(reagent_option)
 			if("Cancel")
 				return
-			if("Custom")
+			if("Yes")
 				var/static/list/reagent_choices = list()
 				if(!length(reagent_choices))
 					for(var/datum/reagent/reagent_type as anything in subtypesof(/datum/reagent))
