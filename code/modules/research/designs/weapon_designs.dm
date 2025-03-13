@@ -516,7 +516,7 @@
 
 /datum/design/flechette
 	name = "Flechette Shotgun Shell (Lethal)"
-	desc = "A shotgun casing filled with small metal darts. Pokes many tiny holes into meat and kevlar alike. Useful for turning someones insides \
+	desc = "A shotgun casing filled with small metal darts. Pokes many tiny holes into meat and kevlar alike. Useful for turning someone's insides \
 		into outsides."
 	id = "flechetteshell"
 	build_type = PROTOLATHE | AWAY_LATHE
