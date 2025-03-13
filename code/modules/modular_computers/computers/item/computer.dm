@@ -94,8 +94,6 @@
 	var/saved_identification
 	///The job title of the stored ID card
 	var/saved_job
-	///The saved ID card's access list
-	var/saved_id_accesses = list()
 
 	///The 'computer' itself, as an obj. Primarily used for Adjacent() and UI visibility checks, especially for computers.
 	var/obj/physical
@@ -720,18 +718,16 @@
 
 ///Imprints name and job into the modular computer, and calls back to necessary functions.
 ///Acts as a replacement to directly setting the imprints fields. All fields are optional, the proc will try to fill in missing gaps.
-/obj/item/modular_computer/proc/imprint_id(name = null, job_name = null, obj/item/card/id/id_card = null)
+/obj/item/modular_computer/proc/imprint_id(name = null, job_name = null)
 	saved_identification = name || computer_id_slot?.registered_name || saved_identification
 	saved_job = job_name || computer_id_slot?.assignment || saved_job
-	saved_id_accesses = id_card?.access || computer_id_slot?.access || saved_id_accesses
-	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, saved_identification, saved_job, id_card)
+	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, saved_identification, saved_job)
 	UpdateDisplay()
 
 ///Resets the imprinted name and job back to null.
 /obj/item/modular_computer/proc/reset_imprint()
 	saved_identification = null
 	saved_job = null
-	saved_id_accesses = null
 	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_RESET)
 	UpdateDisplay()
 
@@ -999,7 +995,7 @@
 		if(SEC_LEVEL_RED) // all-hands-on-deck situations, everyone is responsible for combatting a threat
 			return ALERT_RELEVANCY_PERTINENT
 		if(SEC_LEVEL_BLUE) // suspected threat. security needs to be alert and possibly preparing for it, no further concerns
-			if(ACCESS_SECURITY in saved_id_accesses)
+			if(ACCESS_SECURITY in computer_id_slot.access)
 				return ALERT_RELEVANCY_PERTINENT
 			else
 				return ALERT_RELEVANCY_WARN
