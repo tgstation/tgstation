@@ -372,7 +372,7 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 
 /atom/movable/screen/lobby/button/bottom/settings
-	name = "View Game Preferences"
+	name = "Просмотр настроек игры"
 	icon_state = "settings"
 	base_icon_state = "settings"
 	screen_loc = "TOP:-122,CENTER:+29"
@@ -388,7 +388,7 @@
 	preferences.ui_interact(usr)
 
 /atom/movable/screen/lobby/button/bottom/changelog_button
-	name = "View Changelog"
+	name = "Просмотр списка изменений"
 	icon_state = "changelog"
 	base_icon_state = "changelog"
 	screen_loc ="TOP:-122,CENTER:+57"
@@ -398,7 +398,7 @@
 	usr.client?.changelog()
 
 /atom/movable/screen/lobby/button/bottom/crew_manifest
-	name = "View Crew Manifest"
+	name = "Просмотреть список членов экипажа"
 	icon_state = "crew_manifest"
 	base_icon_state = "crew_manifest"
 	screen_loc = "TOP:-122,CENTER:+2"
@@ -411,7 +411,7 @@
 	new_player.ViewManifest()
 
 /atom/movable/screen/lobby/button/bottom/poll
-	name = "View Available Polls"
+	name = "Просмотр доступных опросов"
 	icon_state = "poll"
 	base_icon_state = "poll"
 	screen_loc = "TOP:-122,CENTER:-26"
@@ -620,7 +620,7 @@
 
 /// LOCALHOST ONLY - Start Now button
 /atom/movable/screen/lobby/button/start_now
-	name = "Start Now (LOCALHOST ONLY)"
+	name = "НАЧАТЬ СЕЙЧАС! (ТОЛЬКО ДЛЯ ЛОКАЛЬНОГО СЕРВЕРА)"
 	screen_loc = "TOP:-146,CENTER:-54"
 	icon = 'icons/hud/lobby/start_now.dmi'
 	icon_state = "start_now"
@@ -635,7 +635,7 @@
 	SEND_SOUND(hud.mymob, sound('sound/effects/splat.ogg', volume = 50))
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
-		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
+		to_chat(usr, span_admin("Сервер все еще настраивается, но раунд будет запущен как можно скорее."))
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION

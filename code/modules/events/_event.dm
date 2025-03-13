@@ -222,7 +222,7 @@ Runs the event
 
 ///Announces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
 /datum/round_event/proc/announce_deadchat(random, cause)
-	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered[cause ? " by [cause]" : ""]!", "<b>[control.name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+	deadchat_broadcast(" только что был[random ? " рандомный" : ""] триггер[cause ? " вызванный [cause]" : ""]!", "<b>[control.name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Called when the tick is equal to the start_when variable.
 //Allows you to start before announcing or vice versa.
@@ -238,7 +238,7 @@ Runs the event
 	if(control.alert_observers)
 		if (atom_of_interest)
 			notify_ghosts(
-				"[control.name] has an object of interest: [atom_of_interest]!",
+				"[control.name] имеет объект, представляющий интерес: [atom_of_interest]!",
 				source = atom_of_interest,
 			)
 	return

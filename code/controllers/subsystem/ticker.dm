@@ -160,9 +160,9 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
+			to_chat(world, span_notice("<b>Добро пожаловать на [station_name()]!</b>"))
 			for(var/channel_tag in CONFIG_GET(str_list/channel_announce_new_game))
-				send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), channel_tag)
+				send2chat(new /datum/tgs_message_content("Новый раунд начинается через [SSmapping.current_map.map_name]!"), channel_tag)
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
@@ -231,7 +231,7 @@ SUBSYSTEM_DEF(ticker)
 	return FALSE
 
 /datum/controller/subsystem/ticker/proc/setup()
-	to_chat(world, span_boldannounce("Starting game..."))
+	to_chat(world, span_boldannounce("Начало игры..."))
 	var/init_start = world.timeofday
 
 	CHECK_TICK
@@ -245,12 +245,12 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
-			log_game("Game failed pre_setup")
-			to_chat(world, "<B>Error setting up game.</B> Reverting to pre-game lobby.")
+			log_game("Игра провалилась pre_setup")
+			to_chat(world, "<B>Ошибка при настройке игры.</B> Возвращаемся в предыгровое лобби.")
 			SSjob.reset_occupations()
 			return FALSE
 	else
-		message_admins(span_notice("DEBUG: Bypassing prestart checks..."))
+		message_admins(span_notice("DEBUG: Обход предстартовых настроек..."))
 
 	CHECK_TICK
 
@@ -282,10 +282,10 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time //otherwise round_start_time would be 0 for the signals
 	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING, world.time)
 
-	log_world("Game start took [(world.timeofday - init_start)/10]s")
+	log_world("Начало игры заняло [(world.timeofday - init_start)/10]s")
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
-	to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
+	to_chat(world, span_notice(span_bold("Добро пожаловать на [station_name()], приятного вам пребывания!")))
 	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
 
 	current_state = GAME_STATE_PLAYING
@@ -309,7 +309,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	send2adminchat("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]" : ""] has started[allmins.len ? ".":" with no active admins online!"]")
+	send2adminchat("Сервер", "Раунд [GLOB.round_id ? "#[GLOB.round_id]" : ""] начался[allmins.len ? ".":" без активных администраторов в Сети!"]")
 	setup_done = TRUE
 
 	for(var/i in GLOB.start_landmarks_list)
@@ -317,7 +317,7 @@ SUBSYSTEM_DEF(ticker)
 		if(istype(S)) //we can not runtime here. not in this important of a proc.
 			S.after_round_start()
 		else
-			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
+			stack_trace("[S] [S.type] найден в списке начальных ориентиров, который не является начальным ориентиром!")
 
 	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
 	for(var/i in GLOB.player_list)
@@ -331,9 +331,9 @@ SUBSYSTEM_DEF(ticker)
 		if(!iter_human.hardcore_survival_score)
 			continue
 		if(iter_human.mind?.special_role)
-			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score) * 2] hardcore random points if you greentext this round!"))
+			to_chat(iter_human, span_notice("Вы получите [round(iter_human.hardcore_survival_score) * 2] огромное количество случайных очков, если вы поучаствуете в этом раунде!"))
 		else
-			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!"))
+			to_chat(iter_human, span_notice("Вы получите [round(iter_human.hardcore_survival_score)] огромные случайные очки, если вы выживете в этом раунде!"))
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -435,7 +435,7 @@ SUBSYSTEM_DEF(ticker)
 		for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
 			var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 			if(new_player_human)
-				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
+				to_chat(new_player_mob, span_notice("Долность капитана никому не досталось."))
 			CHECK_TICK
 
 
@@ -490,7 +490,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!hard_popcap)
 		list_clear_nulls(queued_players)
 		for (var/mob/dead/new_player/new_player in queued_players)
-			to_chat(new_player, span_userdanger("The alive players limit has been released!<br><a href='byond://?src=[REF(new_player)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
+			to_chat(new_player, span_userdanger("Лимит на количество роли игроков был снят!<br><a href='byond://?src=[REF(new_player)];late_join=override'>[html_encode(">>Присоединяйтесь к игре<<")]</a>"))
 			SEND_SOUND(new_player, sound('sound/announcer/notice/notice1.ogg'))
 			GLOB.latejoin_menu.ui_interact(new_player)
 		queued_players.len = 0
@@ -505,14 +505,14 @@ SUBSYSTEM_DEF(ticker)
 			list_clear_nulls(queued_players)
 			if(living_player_count() < hard_popcap)
 				if(next_in_line?.client)
-					to_chat(next_in_line, span_userdanger("A slot has opened! You have approximately 20 seconds to join. <a href='byond://?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a>"))
+					to_chat(next_in_line, span_userdanger("Открыта вакансия! У вас есть примерно 20 секунд, чтобы присоединиться. <a href='byond://?src=[REF(next_in_line)];late_join=override'>\>\>Присоединяйтесь к игре\<\<</a>"))
 					SEND_SOUND(next_in_line, sound('sound/announcer/notice/notice1.ogg'))
 					next_in_line.ui_interact(next_in_line)
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			to_chat(next_in_line, span_danger("No response received. You have been removed from the line."))
+			to_chat(next_in_line, span_danger("Ответа не получено. Вы были удалены с очереди."))
 			queued_players -= next_in_line
 			queue_delay = 0
 
@@ -560,97 +560,97 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/send_news_report()
 	var/news_message
-	var/news_source = "Nanotrasen News Network"
+	var/news_source = "Новостная сеть Нанотрейзен"
 	var/decoded_station_name = html_decode(station_name()) //decode station_name to avoid minor_announce double encode
 
 	switch(news_report)
-		// The nuke was detonated on the syndicate recon outpost
+		// Нук был взорван на условном реконзостировании
 		if(NUKE_SYNDICATE_BASE)
-			news_message = "In a daring raid, the heroic crew of [decoded_station_name] \
-				detonated a nuclear device in the heart of a terrorist base."
-		// The station was destroyed by nuke ops
+			news_message = "В дерзком рейде героический экипаж [decoded_station_name] \
+				взорвал ядерное устройство в самом сердце базы террористов."
+		// Станция была уничтожена Nuke Ops
 		if(STATION_DESTROYED_NUKE)
-			news_message = "We would like to reassure all employees that the reports of a Syndicate \
-				backed nuclear attack on [decoded_station_name] are, in fact, a hoax. Have a secure day!"
-		// The station was evacuated (normal result)
+			news_message = "Мы хотели бы заверить всех сотрудников в том, что отчеты Синдиката \
+				поддержанный ядерный удар по [decoded_station_name] на самом деле это розыгрыш. Удачного дня!"
+		// Станция была эвакуирована (нормальный результат)
 		if(STATION_EVACUATED)
-			// Had an emergency reason supplied to pass along
+			// Имела экстренную причину для прохождения
 			if(emergency_reason)
-				news_message = "[decoded_station_name] has been evacuated after transmitting \
-					the following distress beacon:\n\n[html_decode(emergency_reason)]"
+				news_message = "[decoded_station_name] был эвакуирован после передачи \
+					следующий аварийный маяк:\n\n[html_decode(emergency_reason)]"
 			else
-				news_message = "The crew of [decoded_station_name] has been \
-					evacuated amid unconfirmed reports of enemy activity."
-		// A blob won
+				news_message = "Экипаж [decoded_station_name] был \
+					эвакуированы на фоне неподтвержденных сообщений об активности противника."
+		// Блоб выиграла
 		if(BLOB_WIN)
-			news_message = "[decoded_station_name] was overcome by an unknown biological outbreak, killing \
-				all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
-		// A blob was destroyed
+			news_message = "[decoded_station_name] был охвачен неизвестной биологической вспышкой, убившей \
+				весь экипаж на борту. Не допустите, чтобы это случилось с вами! Помните, что чистое рабочее место - это безопасное рабочее место."
+		// Блоб был уничтожен
 		if(BLOB_DESTROYED)
-			news_message = "[decoded_station_name] is currently undergoing decontamination procedures \
-				after the destruction of a biological hazard. As a reminder, any crew members experiencing \
-				cramps or bloating should report immediately to security for incineration."
-		// A certain percentage of all cultists managed to escape at the end of round
+			news_message = "[decoded_station_name] в настоящее время проходит процедуры обеззараживания \
+				после уничтожения биологической опасности. Напоминаем, что все члены экипажа, испытывающие \
+				спазмах или вздутии живота следует немедленно сообщить в службу безопасности для сжигания."
+		// Определенный процент всех культистов удалось сбежать в конце раунда
 		if(CULT_ESCAPE)
-			news_message = "Security Alert: A group of religious fanatics have escaped from [decoded_station_name]."
-		// Cult was completely or almost completely wiped out
+			news_message = "Тревога службы безопасности: Группа религиозных фанатиков сбежала из [decoded_station_name]."
+		// Культ был полностью или почти полностью уничтожен
 		if(CULT_FAILURE)
-			news_message = "Following the dismantling of a restricted cult aboard [decoded_station_name], \
-				we would like to remind all employees that worship outside of the Chapel is strictly prohibited, \
-				and cause for termination."
-		// Cult summoned Nar'sie
+			news_message = "После ликвидации запрещенного культа на борту [decoded_station_name], \
+				мы хотели бы напомнить всем сотрудникам, что богослужение за пределами часовни строго запрещено \
+				и является основанием для увольнения."
+		// Культ вызвал Нарси
 		if(CULT_SUMMON)
-			news_message = "Company officials would like to clarify that [decoded_station_name] was scheduled \
-				to be decommissioned following meteor damage earlier this year. Earlier reports of an \
-				unknowable eldritch horror were made in error."
-		// Nuke detonated, but missed the station entirely
+			news_message = "Официальные лица компании хотели бы уточнить, что  [decoded_station_name] было запланировано \
+				для из эксплуатации после падения метеорита в начале этого года. Более ранние сообщения о \
+				непознаваемом сверхъестественном ужасе были сделаны по ошибке."
+		// Нук взорвался, но полностью пропустил станцию
 		if(NUKE_MISS)
-			news_message = "The Syndicate have bungled a terrorist attack [decoded_station_name], \
-				detonating a nuclear weapon in empty space nearby."
-		// All nuke ops got killed
+			news_message = "Синдикат провалил террористическую атаку [decoded_station_name], \
+				взорвав ядерное оружие в пустом пространстве неподалеку."
+		// Все Nuke Ops были убиты
 		if(OPERATIVES_KILLED)
-			news_message = "Repairs to [decoded_station_name] are underway after an elite \
-				Syndicate death squad was wiped out by the crew."
-		// Nuke ops results inconclusive - Crew escaped without the disk, or nukies were left alive, or something
+			news_message = "Ремонт [decoded_station_name] ведётся после боя с отрядом \
+				Синдиката, они был уничтожены экипажем."
+		// Nuke Ops Результаты неубедительны - экипаж сбежал без диска, или ярбы остались в живых, или что -то в этом роде
 		if(OPERATIVE_SKIRMISH)
-			news_message = "A skirmish between security forces and Syndicate agents aboard [decoded_station_name] \
-				ended with both sides bloodied but intact."
-		// Revolution victory
+			news_message = "Перестрелка между силами безопасности и агентами Синдиката на борту [decoded_station_name] \
+				закончилась тем, что обе стороны были пострадали, но не проиграли."
+		// Революция победа
 		if(REVS_WIN)
-			news_message = "Company officials have reassured investors that despite a union led revolt \
-				aboard [decoded_station_name] there will be no wage increases for workers."
-		// Revolution defeat
+			news_message = "Представители компании заверили инвесторов, что, несмотря на восстание, возглавляемое революционерами \
+				на борту [decoded_station_name] повышения заработной платы работникам не будет."
+		// революционное поражение
 		if(REVS_LOSE)
-			news_message = "[decoded_station_name] quickly put down a misguided attempt at mutiny. \
-				Remember, unionizing is illegal!"
-		// All wizards (plus apprentices) have been killed
+			news_message = "[decoded_station_name] быстро подавите необоснованную попытку мятежа. \
+				Помните, создание оппозиции корпорации незаконно!"
+		// все волшебники (плюс ученики) были убиты
 		if(WIZARD_KILLED)
-			news_message = "Tensions have flared with the Space Wizard Federation following the death \
-				of one of their members aboard [decoded_station_name]."
-		// The station was nuked generically
+			news_message = "Напряженность в отношениях с Федерацией космических магов возросла после смерти \
+				одного из их сотрудников на борту [decoded_station_name]."
+		// станция была обдуманна в целом
 		if(STATION_NUKED)
-			// There was a blob on board, guess it was nuked to stop it
+			// на борту была блоб, подумайте, что это было обдуманное, чтобы остановить его
 			if(length(GLOB.overminds))
 				for(var/mob/eye/blob/overmind as anything in GLOB.overminds)
 					if(overmind.max_count < overmind.announcement_size)
 						continue
 
-					news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled \
-						burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, \
-						and are enjoying a relaxing vacation."
+					news_message = "[decoded_station_name] в настоящее время проходит дезактивацию после контролируемого выброса радиации \
+						для удаления биологического загрязнения был использован радиационный фон. Все сотрудники были благополучно эвакуированы заранее, \
+						и наслаждаются отдыхом."
 					break
-			// A self destruct or something else
+			// самоуничтожение или что -то еще
 			else
-				news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. \
-					Attempts to clone the Captain for arrest and execution are underway."
-		// The emergency escape shuttle was hijacked
+				news_message = "[decoded_station_name] по неизвестным причинам активировал устройство самоуничтожения. \
+					Предпринимаются попытки клонировать капитана для ареста и казни."
+		// аварийный побег был захвачен
 		if(SHUTTLE_HIJACK)
-			news_message = "During routine evacuation procedures, the emergency shuttle of [decoded_station_name] \
-				had its navigation protocols corrupted and went off course, but was recovered shortly after."
-		// A supermatter cascade triggered
+			news_message = "Во время обычных процедур эвакуации аварийный шаттл [decoded_station_name] \
+				получил повреждение навигационных протоколов и сбился с курса, но вскоре был восстановлен."
+		// запускается каскад Supermatter
 		if(SUPERMATTER_CASCADE)
-			news_message = "Officials are advising nearby colonies about a newly declared exclusion zone in \
-				the sector surrounding [decoded_station_name]."
+			news_message = "Официальные лица информируют близлежащие колонии о недавно объявленной зоне отчуждения в \
+				секторе, прилегающем к [decoded_station_name]."
 
 	if(news_message)
 		send2otherserver(news_source, news_message, "News_Report")
@@ -687,17 +687,17 @@ SUBSYSTEM_DEF(ticker)
 
 	var/skip_delay = check_rights()
 	if(delay_end && !skip_delay)
-		to_chat(world, span_boldannounce("An admin has delayed the round end."))
+		to_chat(world, span_boldannounce("Администратор отложил окончание раунда."))
 		return
 
-	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
+	to_chat(world, span_boldannounce("Рестарт раунда в [DisplayTimeText(delay)]. [reason]"))
 
 	var/statspage = CONFIG_GET(string/roundstatsurl)
 	var/gamelogloc = CONFIG_GET(string/gamelogurl)
 	if(statspage)
-		to_chat(world, span_info("Round statistics and logs can be viewed <a href=\"[statspage][GLOB.round_id]\">at this website!</a>"))
+		to_chat(world, span_info("Статистику раундов и логи можно просмотреть <a href=\"[statspage][GLOB.round_id]\">на этом веб-сайте!</a>"))
 	else if(gamelogloc)
-		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
+		to_chat(world, span_info("Логи раунда можно найти <a href=\"[gamelogloc]\">на этом веб-сайте!</a>"))
 
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
@@ -708,7 +708,7 @@ SUBSYSTEM_DEF(ticker)
 	if(end_string)
 		end_state = end_string
 
-	log_game(span_boldannounce("Rebooting World. [reason]"))
+	log_game(span_boldannounce("Рестарт раунда. [reason]"))
 
 	world.Reboot()
 
@@ -720,9 +720,9 @@ SUBSYSTEM_DEF(ticker)
  */
 /datum/controller/subsystem/ticker/proc/cancel_reboot(mob/user)
 	if(!reboot_timer)
-		to_chat(user, span_warning("There is no pending reboot!"))
+		to_chat(user, span_warning("Ожидающей перезагрузки нет!"))
 		return FALSE
-	to_chat(world, span_boldannounce("An admin has delayed the round end."))
+	to_chat(world, span_boldannounce("Администратор отложил окончание раунда."))
 	deltimer(reboot_timer)
 	reboot_timer = null
 	return TRUE

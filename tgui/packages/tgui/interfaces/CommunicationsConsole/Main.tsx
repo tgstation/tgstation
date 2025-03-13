@@ -43,7 +43,7 @@ export function PageMain(props) {
   return (
     <Box>
       {!syndicate && (
-        <Section title="Emergency Shuttle">
+        <Section title="Аварийный шаттл">
           {shuttleCalled ? (
             <Button.Confirm
               icon="space-shuttle"
@@ -52,8 +52,8 @@ export function PageMain(props) {
               tooltip={
                 (canRecallShuttles &&
                   !shuttleRecallable &&
-                  "It's too late for the emergency shuttle to be recalled.") ||
-                'You do not have permission to recall the emergency shuttle.'
+                  'Уже слишком поздно вызывать аварийный шаттл.') ||
+                'У вас нет разрешения на отзыв аварийного шаттла.'
               }
               tooltipPosition="top"
               onClick={() => act('recallShuttle')}
@@ -88,7 +88,7 @@ export function PageMain(props) {
       )}
 
       {!!canSetAlertLevel && (
-        <Section title="Alert Level">
+        <Section title="Уровень тревоги">
           <Flex justify="space-between">
             <Flex.Item>
               <Box>
@@ -111,7 +111,7 @@ export function PageMain(props) {
         </Section>
       )}
 
-      <Section title="Functions">
+      <Section title="Функции">
         <Flex direction="column">
           {!!canMakeAnnouncement && (
             <Button

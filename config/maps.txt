@@ -15,7 +15,7 @@ endmap
 
 # Production-level maps.
 
-map birdshot
+#map birdshot
 	#default
 	maxplayers 66
 	votable
@@ -26,7 +26,7 @@ map deltastation
 	votable
 endmap
 
-map icebox
+#map icebox
 	minplayers 25
 	votable
 endmap
@@ -37,28 +37,28 @@ map metastation
 	votable
 endmap
 
-map tramstation
+#map tramstation
 	minplayers 35
 	votable
 endmap
 
-map nebulastation
+#map nebulastation
 	minplayers 35
 	votable
 endmap
 
-map wawastation
+#map wawastation
 	votable
 	minplayers 40
 endmap
 
 # Debug-only maps.
 
-map gateway_test
-endmap
+#map gateway_test
+#endmap
 
-map multiz_debug
-endmap
+#map multiz_debug
+#endmap
 
-map runtimestation
-endmap
+#map runtimestation
+#endmap

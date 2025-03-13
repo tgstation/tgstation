@@ -150,7 +150,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/view_book(id, mob/show_to)
 	if (!SSdbcore.Connect())
 		can_connect = FALSE
-		message_admins("Failed to establish database connection.")
+		message_admins("Не удалось установить подключение к базе данных.")
 		return
 
 	var/datum/db_query/query_library_view = SSdbcore.NewQuery(
@@ -206,7 +206,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/hide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		to_chat(admin, span_danger("Failed to establish database connection."))
+		to_chat(admin, span_danger("Не удалось установить подключение к базе данных."))
 		return
 	if(!check_rights_for(admin, R_BAN))
 		log_admin_private("[admin.ckey] tried to hide a book without the required perms")
@@ -241,7 +241,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/unhide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		to_chat(admin, span_danger("Failed to establish database connection."))
+		to_chat(admin, span_danger("Не удалось установить подключение к базе данных."))
 		return
 	if(!check_rights_for(admin, R_BAN))
 		log_admin_private("[admin.ckey] tried to unhide a book without the required perms")

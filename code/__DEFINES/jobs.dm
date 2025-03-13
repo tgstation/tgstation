@@ -4,16 +4,16 @@
 #define JOB_UNAVAILABLE_PLAYTIME 3
 #define JOB_UNAVAILABLE_ACCOUNTAGE 4
 #define JOB_UNAVAILABLE_SLOTFULL 5
-/// Job unavailable due to incompatibility with an antag role.
+/// Работа недоступна из -за несовместимости с роли ANTAG.
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
-/// Checks for character age.
+/// Проверка на возраст персонажа.
 #define JOB_UNAVAILABLE_AGE 7
 
-/// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
+/// Используется, когда `get_job_unavailable_error_message` proc не может понять данное код.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
 
-// Human authority settings
-// If you want to add another setting, make sure to also add it to the if chain in /datum/job_config_type/human_authority/validate_value()
+// Настройки человеческой власти
+// Если вы хотите добавить другую настройку, обязательно добавьте его в цепочку if в/datum/job_config_type/human_authority/validate_value ()
 #define JOB_AUTHORITY_HUMANS_ONLY "HUMANS_ONLY"
 #define JOB_AUTHORITY_NON_HUMANS_ALLOWED "NON_HUMANS_ALLOWED"
 
@@ -24,7 +24,7 @@
 
 #define JOB_DISPLAY_ORDER_DEFAULT 0
 
-// Keys for jobconfig.toml
+// клавиши для jobconfig.toml
 #define JOB_CONFIG_PLAYTIME_REQUIREMENTS "Playtime Requirements"
 #define JOB_CONFIG_REQUIRED_ACCOUNT_AGE "Required Account Age"
 #define JOB_CONFIG_REQUIRED_CHARACTER_AGE "Required Character Age"
@@ -34,72 +34,72 @@
 
 /**
  * =======================
- * WARNING WARNING WARNING
- * WARNING WARNING WARNING
- * WARNING WARNING WARNING
- * =======================
- * These names are used as keys in many locations in the database
- * you cannot change them trivially without breaking job bans and
- * role time tracking, if you do this and get it wrong you will die
- * and it will hurt the entire time
+* Предупреждение о предупреждении
+* Предупреждение о предупреждении
+* Предупреждение о предупреждении
+* ======================
+* Эти имена используются в качестве ключей во многих местах в базе данных
+* Вы не можете изменить их тривиально, не нарушая запреты на работу и
+* Ролевое отслеживание времени, если вы сделаете это и пойдете неправильно, вы умрете
+* И это будет больно все время
  */
 
 //No department
-#define JOB_ASSISTANT "Assistant"
-#define JOB_PRISONER "Prisoner"
+#define JOB_ASSISTANT "Ассистент"
+#define JOB_PRISONER "Заключённый"
 //Command
-#define JOB_CAPTAIN "Captain"
-#define JOB_HEAD_OF_PERSONNEL "Head of Personnel"
-#define JOB_HEAD_OF_SECURITY "Head of Security"
-#define JOB_RESEARCH_DIRECTOR "Research Director"
-#define JOB_CHIEF_ENGINEER "Chief Engineer"
-#define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+#define JOB_CAPTAIN "Капитан"
+#define JOB_HEAD_OF_PERSONNEL "Глава персонала"
+#define JOB_HEAD_OF_SECURITY "Глава службы безопасности"
+#define JOB_RESEARCH_DIRECTOR "Глава научного отдела"
+#define JOB_CHIEF_ENGINEER "Глава инженерного отдела"
+#define JOB_CHIEF_MEDICAL_OFFICER "Глава медицинского отдела"
 #define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
 #define JOB_VETERAN_ADVISOR "Veteran Security Advisor"
 //Silicon
-#define JOB_AI "AI"
-#define JOB_CYBORG "Cyborg"
+#define JOB_AI "Искусственный интеллект"
+#define JOB_CYBORG "Киборг"
 #define JOB_PERSONAL_AI "Personal AI"
 #define JOB_HUMAN_AI "Big Brother"
 //Security
-#define JOB_WARDEN "Warden"
-#define JOB_DETECTIVE "Detective"
-#define JOB_SECURITY_OFFICER "Security Officer"
-#define JOB_SECURITY_OFFICER_MEDICAL "Security Officer (Medical)"
-#define JOB_SECURITY_OFFICER_ENGINEERING "Security Officer (Engineering)"
-#define JOB_SECURITY_OFFICER_SCIENCE "Security Officer (Science)"
-#define JOB_SECURITY_OFFICER_SUPPLY "Security Officer (Cargo)"
+#define JOB_WARDEN "Смотритель"
+#define JOB_DETECTIVE "Детектив"
+#define JOB_SECURITY_OFFICER "Офицер безопасности"
+#define JOB_SECURITY_OFFICER_MEDICAL "Офицер безопасности (Медицинский)"
+#define JOB_SECURITY_OFFICER_ENGINEERING "Офицер безопасности (Инженерный)"
+#define JOB_SECURITY_OFFICER_SCIENCE "Офицер безопасности (Научный)"
+#define JOB_SECURITY_OFFICER_SUPPLY "Офицер безопасности (Карго)"
 //Engineering
-#define JOB_STATION_ENGINEER "Station Engineer"
-#define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
+#define JOB_STATION_ENGINEER "Инженер станции"
+#define JOB_ATMOSPHERIC_TECHNICIAN "Атмосферный техник"
 //Medical
-#define JOB_CORONER "Coroner"
-#define JOB_MEDICAL_DOCTOR "Medical Doctor"
-#define JOB_PARAMEDIC "Paramedic"
-#define JOB_CHEMIST "Chemist"
+#define JOB_CORONER "Патологоанат"
+#define JOB_MEDICAL_DOCTOR "Доктор"
+#define JOB_PARAMEDIC "Парамедик"
+#define JOB_CHEMIST "Химик"
 //Science
-#define JOB_SCIENTIST "Scientist"
-#define JOB_ROBOTICIST "Roboticist"
-#define JOB_GENETICIST "Geneticist"
+#define JOB_SCIENTIST "Ученый"
+#define JOB_ROBOTICIST "Робототехник"
+#define JOB_GENETICIST "Генетик"
 //Supply
-#define JOB_QUARTERMASTER "Quartermaster"
-#define JOB_CARGO_TECHNICIAN "Cargo Technician"
+#define JOB_QUARTERMASTER "Квартирмейстер"
+#define JOB_CARGO_TECHNICIAN "Грузовой техник"
 #define JOB_CARGO_GORILLA "Cargo Gorilla"
-#define JOB_SHAFT_MINER "Shaft Miner"
-#define JOB_BITRUNNER "Bitrunner"
+#define JOB_SHAFT_MINER "Шахтёр"
+#define JOB_BITRUNNER "Битраннер"
 //Service
-#define JOB_BARTENDER "Bartender"
-#define JOB_BOTANIST "Botanist"
-#define JOB_COOK "Cook"
-#define JOB_CHEF "Chef" // Alternate cook title.
-#define JOB_JANITOR "Janitor"
-#define JOB_CLOWN "Clown"
-#define JOB_MIME "Mime"
-#define JOB_CURATOR "Curator"
-#define JOB_LAWYER "Lawyer"
-#define JOB_CHAPLAIN "Chaplain"
-#define JOB_PSYCHOLOGIST "Psychologist"
-#define JOB_PUN_PUN "Pun Pun"
+#define JOB_BARTENDER "Бармен"
+#define JOB_BOTANIST "Ботаник"
+#define JOB_COOK "Повар"
+#define JOB_CHEF "Шеф-повар" // Alternate cook title.
+#define JOB_JANITOR "Уборщик"
+#define JOB_CLOWN "Клоун"
+#define JOB_MIME "Мима"
+#define JOB_CURATOR "Куратор"
+#define JOB_LAWYER "Адвокат"
+#define JOB_CHAPLAIN "Капеллан"
+#define JOB_PSYCHOLOGIST "Психолог"
+#define JOB_PUN_PUN "Пун Пун"
 //ERTs
 #define JOB_ERT_DEATHSQUAD "Death Commando"
 #define JOB_ERT_COMMANDER "Emergency Response Team Commander"
@@ -178,28 +178,28 @@
 #define JOB_DISPLAY_ORDER_SECURITY_OFFICER 39
 #define JOB_DISPLAY_ORDER_PRISONER 40
 
-#define DEPARTMENT_UNASSIGNED "No Department"
+#define DEPARTMENT_UNASSIGNED "Без отдела"
 
 #define DEPARTMENT_BITFLAG_SECURITY (1<<0)
-#define DEPARTMENT_SECURITY "Security"
+#define DEPARTMENT_SECURITY "Отдел безопасности"
 #define DEPARTMENT_BITFLAG_COMMAND (1<<1)
-#define DEPARTMENT_COMMAND "Command"
+#define DEPARTMENT_COMMAND "Командование станции"
 #define DEPARTMENT_BITFLAG_SERVICE (1<<2)
-#define DEPARTMENT_SERVICE "Service"
+#define DEPARTMENT_SERVICE "Сервисный отдел"
 #define DEPARTMENT_BITFLAG_CARGO (1<<3)
-#define DEPARTMENT_CARGO "Cargo"
+#define DEPARTMENT_CARGO "Отдел снабжения"
 #define DEPARTMENT_BITFLAG_ENGINEERING (1<<4)
-#define DEPARTMENT_ENGINEERING "Engineering"
+#define DEPARTMENT_ENGINEERING "Инженерный отдел"
 #define DEPARTMENT_BITFLAG_SCIENCE (1<<5)
-#define DEPARTMENT_SCIENCE "Science"
+#define DEPARTMENT_SCIENCE "Научный отдел"
 #define DEPARTMENT_BITFLAG_MEDICAL (1<<6)
-#define DEPARTMENT_MEDICAL "Medical"
+#define DEPARTMENT_MEDICAL "Медицинский отде"
 #define DEPARTMENT_BITFLAG_SILICON (1<<7)
-#define DEPARTMENT_SILICON "Silicon"
+#define DEPARTMENT_SILICON "ИИ"
 #define DEPARTMENT_BITFLAG_ASSISTANT (1<<8)
-#define DEPARTMENT_ASSISTANT "Assistant"
+#define DEPARTMENT_ASSISTANT "Ассистент"
 #define DEPARTMENT_BITFLAG_CAPTAIN (1<<9)
-#define DEPARTMENT_CAPTAIN "Captain"
+#define DEPARTMENT_CAPTAIN "Капитан"
 
 DEFINE_BITFIELD(departments_bitflags, list(
 	"SECURITY" = DEPARTMENT_BITFLAG_SECURITY,
