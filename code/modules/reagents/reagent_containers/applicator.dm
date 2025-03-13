@@ -4,9 +4,13 @@
 	desc = "Report this please."
 	has_variable_transfer_amount = FALSE
 	grind_results = list()
+	/// Action string displayed in vis_message
 	var/apply_method = "swallow"
+	/// Does the item get its name changed as volume when its produced
 	var/rename_with_volume = FALSE
+	/// How long does it take to apply this item to someone else?
 	var/application_delay = 3 SECONDS
+	/// How long does it take to apply this item to self?
 	var/self_delay = 0
 
 /obj/item/reagent_containers/applicator/Initialize(mapload)

@@ -270,7 +270,7 @@
 	if (!length(stomach_contents))
 		return
 
-	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/chest/chest = owner.get_bodypart(zone)
 	var/datum/wound/slash/flesh/slash = chest.get_wound_type(/datum/wound/slash/flesh)
 	// A chance to spill out all the contents
 	if (cut_open_damage && slash?.severity >= WOUND_SEVERITY_CRITICAL)
