@@ -23,6 +23,7 @@
 		/mob/living/basic/carp/mega = 9 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 28
+	associated_safe_turfs = list(/turf/open/space)
 
 /datum/fish_source/dimensional_rift
 	background = "background_mansus"

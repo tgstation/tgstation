@@ -33,11 +33,13 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+	associated_safe_turfs = list(/turf/open/water/beach)
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
 	radial_state = "palm_beach"
 	overlay_state = "portal_beach"
+	associated_safe_turfs = list(/turf/open/water/beach)
 
 /datum/fish_source/ice_fishing
 	background = "background_ice"
@@ -52,6 +54,8 @@
 		/obj/item/fish/boned = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
+	associated_safe_turfs = list(/turf/open/water)
+	safe_turfs_blacklist = list(/turf/open/water/hot_spring, /turf/open/water/beach)
 
 /datum/fish_source/river
 	catalog_description = "River water"
@@ -79,6 +83,8 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+	associated_safe_turfs = list(/turf/open/water)
+	safe_turfs_blacklist = list(/turf/open/water/hot_spring, /turf/open/water/beach)
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
@@ -113,6 +119,7 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+	associated_safe_turfs = list(/turf/open/water/hot_spring)
 
 /datum/fish_source/tizira
 	catalog_description = "Tiziran Sea"
@@ -128,3 +135,4 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+	associated_safe_turfs = list(/turf/open/water/beach/tizira)

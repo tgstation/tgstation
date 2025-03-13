@@ -14,6 +14,7 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 35
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+	associated_safe_turfs = list(/turf/open/water/hot_spring)
 
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
@@ -63,6 +64,8 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+	associated_safe_turfs = list(/turf/open/lava)
+	safe_turfs_blacklist = list(/turf/open/lava/plasma)
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -94,6 +97,7 @@
 		/obj/item/stack/sheet/mineral/runite = 10 MINUTES,
 	)
 	overlay_state = "portal_plasma"
+	associated_safe_turfs = list(/turf/open/lava/plasma)
 
 /datum/fish_source/oil_well
 	background = "background_oil_well"

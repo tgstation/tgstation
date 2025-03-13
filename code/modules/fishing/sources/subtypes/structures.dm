@@ -44,6 +44,7 @@
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY + 10
 	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
+	associated_safe_turfs = list(/turf/open/floor/holofloor/beach/water)
 
 /datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	ADD_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src)) //You would have to be inside the holodeck anyway...
