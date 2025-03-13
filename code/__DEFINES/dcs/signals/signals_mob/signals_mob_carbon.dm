@@ -173,3 +173,7 @@
 #define COMSIG_MUTATION_GAINED "mutation_gained"
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
+
+/// Called at the very end of human character setup
+/// At this point all quirks are assigned and the mob has a mind / client
+#define COMSIG_HUMAN_CHARACTER_SETUP_FINISHED "human_character_setup_finished"
