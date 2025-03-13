@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "Food types are now passed down when cooking from recipes. For example, a plate of corned \"beef\" made from giant killer tomato slabs no longer counts as meat but only vegetables now."
+  - bugfix: "Fixed a metric ton of inconsistencies with food types and recipes."
+  - bugfix: "Dank-pockets (the weed variant) can now be microwaved."
