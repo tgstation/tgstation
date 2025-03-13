@@ -32,19 +32,17 @@
 
 /obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/pkc, mob/user)
 	. = ..()
-	if(.)
-		pkc.icon = retool_icon
-		pkc.icon_state = retool_icon_state
-		pkc.current_inhand_icon_state = retool_inhand_icon
-		pkc.projectile_icon = retool_projectile_icon
-		pkc.inhand_x_dimension = retool_inhand_X
-		pkc.inhand_y_dimension = retool_inhand_Y
-		pkc.update_appearance()
-		if(iscarbon(pkc.loc))
-			var/mob/living/carbon/holder = pkc.loc
-			holder.update_worn_back()
-			holder.update_suit_storage()
-			holder.update_held_items()
+	if(!.)
+		return
+
+	pkc.icon = retool_icon
+	pkc.icon_state = retool_icon_state
+	pkc.current_inhand_icon_state = retool_inhand_icon
+	pkc.projectile_icon = retool_projectile_icon
+	pkc.inhand_x_dimension = retool_inhand_X
+	pkc.inhand_y_dimension = retool_inhand_Y
+	pkc.update_appearance()
+	pkc.update_slot_icon()
 
 /obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/pkc)
 	pkc.icon = initial(pkc.icon)
@@ -56,17 +54,13 @@
 	pkc.inhand_x_dimension = initial(pkc.inhand_x_dimension)
 	pkc.inhand_y_dimension = initial(pkc.inhand_y_dimension)
 	pkc.update_appearance()
-	if(iscarbon(pkc.loc))
-		var/mob/living/carbon/holder = pkc.loc
-		holder.update_worn_back()
-		holder.update_suit_storage()
-		holder.update_held_items()
-	..()
+	pkc.update_slot_icon()
+	return ..()
 
 /obj/item/crusher_trophy/retool_kit/harpoon
 	name = "crusher harpoon retool kit"
 	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a harpoon."
-	retool_icon = "crusher_harpoon"
+	retool_icon_state = "crusher_harpoon"
 	retool_inhand_icon = "crusher_harpoon"
 	retool_projectile_icon = "pulse_harpoon"
 
@@ -76,7 +70,7 @@
 /obj/item/crusher_trophy/retool_kit/dagger
 	name = "crusher dagger retool kit"
 	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a dual dagger and mini-blaster on a chain."
-	retool_icon = "crusher_dagger"
+	retool_icon_state = "crusher_dagger"
 	retool_inhand_icon = "crusher_dagger"
 
 /obj/item/crusher_trophy/retool_kit/dagger/effect_desc()
@@ -85,7 +79,7 @@
 /obj/item/crusher_trophy/retool_kit/glaive
 	name = "crusher glaive retool kit"
 	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a glaive, with a longer, thinner blade."
-	retool_icon = "crusher_glaive"
+	retool_icon_state = "crusher_glaive"
 	retool_inhand_icon = "crusher_glaive"
 	retool_lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	retool_righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -99,7 +93,7 @@
 	name = "ashen skull"
 	desc = "It burns with the flame of the necropolis, whispering in your ear. It demands to be bound to a suitable weapon."
 	icon_state = "retool_kit_skull"
-	retool_icon = "crusher_skull"
+	retool_icon_state = "crusher_skull"
 	retool_inhand_icon = "crusher_skull"
 	retool_projectile_icon = "pulse_skull"
 

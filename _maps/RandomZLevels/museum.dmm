@@ -5527,10 +5527,10 @@
 /turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
 "UD" = (
-/obj/item/reagent_containers/pill/patch/ondansetron,
+/obj/item/reagent_containers/applicator/patch/ondansetron,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/pill/patch/libital,
+/obj/item/reagent_containers/applicator/patch/libital,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "UG" = (
