@@ -746,9 +746,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(current_active_effect == FISHING_MINIGAME_RULE_ANTIGRAV)
 		velocity_change = -velocity_change
 
-	if(special_effects & FISHING_MINIGAME_AUTOREEL)
+	if(reeling_state == REELING_STATE_IDLE && special_effects & FISHING_MINIGAME_AUTOREEL)
 		var/bait_center = bait_position + bait_height / 2
-		var/auto_adjustment = reeling_velocity * 0.2
+		var/auto_adjustment = reeling_velocity * 0.25
 		if(fish_position > bait_center)
 			velocity_change += auto_adjustment
 		else
