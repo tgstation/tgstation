@@ -618,6 +618,23 @@
 	chosen_theme = null
 	return ..()
 
+/obj/item/bombcore/dimensional/CheckParts(list/parts_list)
+	. = ..()
+	range_heavy = 13
+	for(var/obj/item/grenade/chem_grenade/nade in src)
+		if(istype(nade, /obj/item/grenade/chem_grenade/large) || istype(nade, /obj/item/grenade/chem_grenade/adv_release))
+			range_heavy += 1
+		for(var/obj/item/thing as anything in nade.beakers) //remove beakers, then delete the grenade.
+			thing.forceMove(drop_location())
+		qdel(nade)
+	var/obj/item/gibtonite/ore = locate() in src
+	switch(ore.quality)
+		if(GIBTONITE_QUALITY_LOW)
+			range_heavy -= 2
+		if(GIBTONITE_QUALITY_HIGH)
+			range_heavy += 4
+	qdel(ore)
+
 /obj/item/bombcore/dimensional/examine(mob/user)
 	. = ..()
 	. += span_notice("Use in hand to change the linked dimension. Current dimension: [chosen_theme?.name || "None, output will be random"].")
@@ -661,9 +678,9 @@
 		if(!theme_to_use.can_convert(affected))
 			continue
 		num_affected++
-		var/skip_sound = TRUE
+		var/skip_sound = FALSE
 		if(num_affected % 5) //makes it play the sound more sparingly
-			skip_sound = FALSE
+			skip_sound = TRUE
 		var/time_mult = round(get_dist_euclidean(get_turf(src), affected)) + 1
 		addtimer(CALLBACK(theme_to_use, TYPE_PROC_REF(/datum/dimension_theme, apply_theme), affected, skip_sound, TRUE), 0.1 SECONDS * time_mult)
 	qdel(src)
