@@ -28,7 +28,7 @@
 	. = ..()
 
 	if(!packaging_types)
-		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/chemmaster)
+		var/datum/asset/spritesheet_batched/assets = get_asset_datum(/datum/asset/spritesheet_batched/chemmaster)
 
 		var/list/types = list(
 			CAT_PILLS = GLOB.reagent_containers[CAT_PILLS],
@@ -62,7 +62,7 @@
 
 /obj/machinery/plumbing/pill_press/examine(mob/user)
 	. = ..()
-	. += span_notice("The [name] currently has [stored_products.len] stored. There needs to be less than [MAX_FLOOR_PRODUCTS] on the floor to continue dispensing.")
+	. += span_notice("\The [src] currently has [stored_products.len] stored. There needs to be less than [MAX_FLOOR_PRODUCTS] on the floor to continue dispensing.")
 
 /obj/machinery/plumbing/pill_press/process(seconds_per_tick)
 	if(!is_operational)
@@ -100,7 +100,7 @@
 
 /obj/machinery/plumbing/pill_press/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/chemmaster)
+		get_asset_datum(/datum/asset/spritesheet_batched/chemmaster)
 	)
 
 /obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)

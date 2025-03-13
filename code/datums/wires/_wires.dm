@@ -1,13 +1,25 @@
 #define MAXIMUM_EMP_WIRES 3
 
-/proc/is_wire_tool(obj/item/I)
-	if(!I)
-		return
-
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
+/**
+ * Is the passed item a tool that would interact with wires?
+ *
+ * Arguments:
+ * * tool - The item to check.
+ * * check_secured - If TRUE, and the item ends up being an assembly,
+ * we will only return TRUE if the assembly is not secured.
+ * "Secured" is used to indicate an assembly that may have a use outside of wire interactions,
+ * so we don't want to falsely identify it as a wire tool in some contexts.
+ */
+/proc/is_wire_tool(obj/item/tool, check_secured = FALSE)
+	if(!istype(tool))
+		return FALSE
+	if(tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(isassembly(I))
-		return TRUE
+	if(isassembly(tool))
+		var/obj/item/assembly/assembly = tool
+		if(!check_secured || !assembly.secured)
+			return TRUE
+	return FALSE
 
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
@@ -76,6 +88,7 @@
 	LAZYCLEARLIST(assemblies)
 	return ..()
 
+/// Adds a number of wires which do absolutely nothing.
 /datum/wires/proc/add_duds(duds)
 	while(duds)
 		var/dud = WIRE_DUD_PREFIX + "[--duds]"
@@ -90,30 +103,35 @@
 	qdel(src)
 
 /datum/wires/proc/randomize()
-	var/static/list/possible_colors = list(
-	"blue",
-	"brown",
-	"crimson",
-	"cyan",
-	"gold",
-	"green",
-	"grey",
-	"lime",
-	"magenta",
-	"orange",
-	"pink",
-	"purple",
-	"red",
-	"silver",
-	"violet",
-	"white",
-	"yellow",
+	var/static/list/default_possible_colors = list(
+		"blue",
+		"brown",
+		"crimson",
+		"cyan",
+		"gold",
+		"green",
+		"grey",
+		"lime",
+		"magenta",
+		"orange",
+		"pink",
+		"purple",
+		"red",
+		"silver",
+		"violet",
+		"white",
+		"yellow",
 	)
 
-	var/list/my_possible_colors = possible_colors.Copy()
+	if(length(wires) > length(default_possible_colors))
+		stack_trace("Wire type [type] has more wires than possible colors, consider adding more colors or removing wires.")
+
+	var/list/possible_colors = default_possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
-		colors[pick_n_take(my_possible_colors)] = wire
+		if(!length(possible_colors))
+			possible_colors = default_possible_colors.Copy()
+		colors[pick_n_take(possible_colors)] = wire
 
 /datum/wires/proc/shuffle_wires()
 	colors.Cut()

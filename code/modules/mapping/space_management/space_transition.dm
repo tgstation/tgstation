@@ -131,9 +131,10 @@
 			continue
 		var/zlevelnumber = level.z_value
 		for(var/side in 1 to 4)
-			var/turf/beginning = locate(x_pos_beginning[side], y_pos_beginning[side], zlevelnumber)
-			var/turf/ending = locate(x_pos_ending[side], y_pos_ending[side], zlevelnumber)
-			var/list/turfblock = block(beginning, ending)
+			var/list/turfblock = block(
+				x_pos_beginning[side], y_pos_beginning[side], zlevelnumber,
+				x_pos_ending[side], y_pos_ending[side], zlevelnumber
+			)
 			var/dirside = 2**(side-1)
 			var/x_target = x_pos_transition[side] == 1 ? 0 : x_pos_transition[side]
 			var/y_target = y_pos_transition[side] == 1 ? 0 : y_pos_transition[side]

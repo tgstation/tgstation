@@ -62,7 +62,7 @@
 	return ..()
 
 /**
- * Expells the pipe's contents.
+ * Expels the pipe's contents.
  *
  * This proc checks through src's contents for holder objects,
  * and then tells each one to empty onto the tile. Called when

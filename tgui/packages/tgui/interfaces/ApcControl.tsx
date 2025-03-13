@@ -82,7 +82,7 @@ function ApcLoggedOut(props) {
           </Stack>
         </Stack.Item>
         <Stack.Item color="#2a2a2a" mb={1}>
-          Nanotrasen or its affiliants do not endorse this product. Risk of
+          Nanotrasen and its affiliates do not endorse this product. Risk of
           serious bodily injury or death is inherent in the use of any device
           that generates electricity. Nanotrasen is not responsible for any
           damages caused by the use of this product.

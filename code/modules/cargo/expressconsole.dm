@@ -92,26 +92,17 @@
 
 /obj/machinery/computer/cargo/express/proc/packin_up(forced = FALSE) // oh shit, I'm sorry
 	meme_pack_data = list() // sorry for what?
-	if (!forced && !SSshuttle.initialized) // Subsystem is still sleeping, add ourselves to its buffer and abort
-		SSshuttle.express_consoles += src
-		return
-	for(var/pack in SSshuttle.supply_packs) // our quartermaster taught us not to be ashamed of our supply packs
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]  // specially since they're such a good price and all
-		if(!meme_pack_data[P.group]) // yeah, I see that, your quartermaster gave you good advice
-			meme_pack_data[P.group] = list( // it gets cheaper when I return it
-				"name" = P.group, // mmhm
-				"packs" = list()  // sometimes, I return it so much, I rip the manifest
-			) // see, my quartermaster taught me a few things too
-		if((P.hidden) || (P.special)) // like, how not to rip the manifest
-			continue// by using someone else's crate
-		if(P.contraband && !contraband) // will you show me?
-			continue // i'd be right happy to
-		meme_pack_data[P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.get_cost() * get_discount(),
-			"id" = pack,
-			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
-		))
+	if(!forced && !SSshuttle.initialized) // our quartermaster taught us not to be ashamed of our supply packs
+		SSshuttle.express_consoles += src // specially since they're such a good price and all
+		return // yeah, I see that, your quartermaster gave you good advice
+	// it gets cheaper when I return it
+	for(var/pack_id in SSshuttle.supply_packs) // mmhm
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id] // sometimes, I return it so much, I rip the manifest
+		if(!meme_pack_data[pack.group]) // see, my quartermaster taught me a few things too
+			meme_pack_data[pack.group] = list( // like, how not to rip the manifest
+				"name" = pack.group, // by using someone else's crate
+				"packs" = get_packs_data(pack.group, express = TRUE), // will you show me?
+			) // i'd be right happy to
 
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
@@ -146,7 +137,7 @@
 	data["supplies"] = meme_pack_data
 	return data
 
-/obj/machinery/computer/cargo/express/proc/get_discount()
+/obj/machinery/computer/cargo/express/get_discount()
 	return (obj_flags & EMAGGED) ? EXPRESS_EMAG_DISCOUNT : 1
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)

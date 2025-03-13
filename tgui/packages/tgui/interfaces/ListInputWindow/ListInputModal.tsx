@@ -59,7 +59,9 @@ export const ListInputModal = (props: ListInputModalProps) => {
   // User presses a letter key and searchbar is visible
   const onFocusSearch = () => {
     setSearchBarVisible(false);
-    setSearchBarVisible(true);
+    setTimeout(() => {
+      setSearchBarVisible(true);
+    }, 1);
   };
   // User presses a letter key with no searchbar visible
   const onLetterSearch = (key: number) => {
@@ -179,8 +181,10 @@ const ListDisplay = (props) => {
       {filteredItems.map((item, index) => {
         return (
           <Button
+            className="candystripe"
             color="transparent"
             fluid
+            id={index}
             key={index}
             onClick={() => onClick(index)}
             onDoubleClick={(event) => {

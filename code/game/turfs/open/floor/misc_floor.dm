@@ -218,6 +218,10 @@
 	name = "black floor"
 	icon_state = "black"
 
+/turf/open/floor/greenscreen
+	name = "greenscreen"
+	icon_state = "green"
+
 /turf/open/floor/plastic
 	name = "plastic floor"
 	desc = "Cheap, lightweight flooring. Melts easily."
@@ -349,7 +353,7 @@
 
 /turf/open/floor/iron/tgmcemblem
 	name = "TGMC Emblem"
-	desc = "The symbol of the Terran Goverment."
+	desc = "The symbol of the Terran Government."
 	icon_state = "tgmc_emblem"
 
 /turf/open/floor/iron/tgmcemblem/center

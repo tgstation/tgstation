@@ -85,8 +85,10 @@
 	)
 
 /obj/effect/anomaly/hallucination/decoy/anomalyEffect(seconds_per_tick)
+#ifndef UNIT_TESTS // These might move away during a CI run and cause a flaky mapping nearstation errors
 	if(SPT_PROB(move_chance, seconds_per_tick))
 		move_anomaly()
+#endif
 
 /obj/effect/anomaly/hallucination/decoy/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	to_chat(user, span_notice("You activate [tool]. [replacetext(report_text, "%TOOL%", "[tool]")]"))

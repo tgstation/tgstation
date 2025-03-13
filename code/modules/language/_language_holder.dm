@@ -57,7 +57,7 @@ Key procs
 /datum/language_holder/New(atom/new_owner)
 	if(new_owner)
 		if(QDELETED(new_owner))
-			CRASH("Langauge holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
+			CRASH("Language holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
 		if(!ismovable(new_owner))
 			CRASH("Language holder being added to a non-movable thing, this is invalid (was: [new_owner] / [new_owner.type])")
 
@@ -489,6 +489,26 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/beachbum = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/beachbum
+
+/datum/language_holder/spinwarder
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
+
+/datum/language_holder/spinwarder_exclusive
+	understood_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
 
 // Vending machines are extremely well-educated
 /datum/language_holder/speaking_machine

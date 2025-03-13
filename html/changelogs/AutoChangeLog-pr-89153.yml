@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "NPC zombies found in ruins now use the basic mob framework. Please make an issue report if they exhibit any unusual behaviour."

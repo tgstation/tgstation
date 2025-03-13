@@ -6,6 +6,8 @@
 #define FISHING_RANDOM_ORGAN "Random organ"
 ///Used in the dimensional rift fishing spot to define influence gain
 #define FISHING_INFLUENCE "Influence"
+///Used in the dimensional rift fishing spot to define arm procurement
+#define FISHING_RANDOM_ARM "arm"
 
 ///Represents the chance of getting squashed by the vending machine from the vending machine fish source
 #define FISHING_VENDING_CHUCK "thinkfastchucklenuts"

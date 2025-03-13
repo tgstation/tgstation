@@ -84,6 +84,12 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(goliath_foods))
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
 
+/mob/living/basic/mining/goliath/Destroy()
+	QDEL_NULL(tentacles)
+	QDEL_NULL(melee_tentacles)
+	QDEL_NULL(tentacle_line)
+	return ..()
+
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
 	if (saddled)
@@ -151,6 +157,8 @@
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction = new_friend.faction.Copy()
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)

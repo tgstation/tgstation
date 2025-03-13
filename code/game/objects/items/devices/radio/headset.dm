@@ -30,6 +30,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 	slot_flags = ITEM_SLOT_EARS
 	dog_fashion = null
+	equip_sound = SFX_HEADSET_EQUIP
+	pickup_sound = SFX_HEADSET_PICKUP
+	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
+	sound_vary = TRUE
 	var/obj/item/encryptionkey/keyslot2 = null
 	/// A list of all languages that this headset allows the user to understand. Populated by language encryption keys.
 	var/list/language_list
@@ -387,10 +391,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
+/obj/item/radio/headset/headset_cent/alt/leader
+	command = TRUE
+
 /obj/item/radio/headset/silicon/pai
 	name = "\proper mini Integrated Subspace Transceiver"
 	subspace_transmission = FALSE
-
 
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver"

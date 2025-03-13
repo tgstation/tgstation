@@ -5,7 +5,7 @@
 	icon_state = "polarbear"
 	icon_living = "polarbear"
 	icon_dead = "polarbear_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	mouse_opacity = MOUSE_OPACITY_ICON
 	friendly_verb_continuous = "growls at"
 	friendly_verb_simple = "growl at"
@@ -51,7 +51,7 @@
 		rapid_melee = initial(rapid_melee)
 		return
 	if(!aggressive_message_said && target)
-		visible_message(span_danger("The [name] gets an enraged look at [target]!"))
+		visible_message(span_danger("\The [src] gets an enraged look at [target]!"))
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 

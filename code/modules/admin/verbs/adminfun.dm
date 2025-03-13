@@ -167,8 +167,12 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 	smite.effect(user, target)
 
 /// "Turns" people into objects. Really, we just add them to the contents of the item.
-/proc/objectify(atom/movable/target, path)
-	var/atom/tomb = new path(get_turf(target))
+/proc/objectify(atom/movable/target, path_or_instance)
+	var/atom/tomb
+	if(ispath(path_or_instance))
+		tomb = new path_or_instance(get_turf(target))
+	else
+		tomb = path_or_instance
 	target.forceMove(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
 

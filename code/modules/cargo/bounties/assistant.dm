@@ -49,7 +49,7 @@
 
 /datum/bounty/item/assistant/statue
 	name = "Statue"
-	description = "Central Command would like to commision an artsy statue for the lobby. Ship one out, when possible."
+	description = "Central Command would like to commission an artsy statue for the lobby. Ship one out, when possible."
 	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/obj/structure/statue = TRUE)
 
@@ -244,7 +244,7 @@
 	var/obj/item/fish/fishie = shipped
 	if(istype(shipped, /obj/item/storage/fish_case))
 		fishie = locate() in shipped
-	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_FROM_CASE))
+	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_LOW_PRICE))
 		reward -= shipping_penalty
 
 ///A subtype of the fish bounty that requires fish with a specific fluid type

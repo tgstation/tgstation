@@ -22,7 +22,7 @@
 
 /obj/item/clothing/head/costume/constable
 	name = "constable helmet"
-	desc = "A british looking helmet."
+	desc = "A British-looking helmet."
 	icon_state = "constable"
 	inhand_icon_state = null
 	custom_price = PAYCHECK_COMMAND * 1.5
@@ -60,6 +60,7 @@
 	flags_inv = NONE
 	clothing_flags = SNUG_FIT
 	flags_cover = NONE
+	dirt_state = null
 
 /datum/armor/bio_hood_plague
 	bio = 100

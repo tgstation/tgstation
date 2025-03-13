@@ -25,3 +25,10 @@ export const removeHighlightSetting = createAction(
 export const updateHighlightSetting = createAction(
   'settings/updateHighlightSetting',
 );
+export const exportSettings = createAction('settings/export');
+export const importSettings = createAction(
+  'settings/import',
+  (settings, pages) => ({
+    payload: { newSettings: settings, newPages: pages },
+  }),
+);

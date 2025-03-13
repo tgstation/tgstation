@@ -215,8 +215,10 @@
 		if(FISH_BERNARD)
 			sprite_width = 4
 			sprite_height = 6
+			base_icon_state = "bernardfish"
 		if(FISH_MATTHEW)
 			sprite_width = 6
+			base_icon_state = "matthewfish"
 	update_appearance()
 
 #define PERSISTENCE_FISH_FRITTERISH_VARIANT "fritterish_variant"
@@ -255,8 +257,8 @@
 	desc = "A <u>deliciously</u> extremophile alien fish. This one is so big, you could write legends about it."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "nessiefish"
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	sprite_width = 12
 	sprite_height = 4
 	average_size = 150
