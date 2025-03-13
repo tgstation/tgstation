@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Newspapers now give you inversed FOV, but you can negate this by poking out holes in them with a sharp or pointy tool. They also prevent people from seeing you whisper."
-  - balance: "Empaths can now \"feel\" people whispering even if they can't see their mouth."
-  - code_imp: "Cleaned up newspaper code."

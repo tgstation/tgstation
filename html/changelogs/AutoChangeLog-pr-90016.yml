@@ -1,0 +1,5 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - rscadd: "Added a new smite: Retcon"
+  - refactor: "Refactored the component temporary_atom into an atom level fade_into_nothing proc"

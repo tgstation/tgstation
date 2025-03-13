@@ -1,4 +1,0 @@
-author: "itsmeow"
-delete-after: True
-changes:
-  - bugfix: "Fixed TGUI assets and icons sometimes not showing up until you refreshed the page on 516 clients"

@@ -301,3 +301,37 @@
   subject217:
   - bugfix: Updated the description of insulated gloves to reflect their lack of chunky
       fingers.
+2025-03-13:
+  Absolucy:
+  - code_imp: Spawning the debug "sheet snatcher" box will no longer try to do ~400
+      stack merges.
+  Hatterhat:
+  - qol: Genetics data disks are now infinitely recolorable/reskinnable via alt-click.
+  Holoo-1:
+  - bugfix: fixed offstation humans being able to be cult target
+  Kocma-san:
+  - code_imp: The damage multiplier of xenomorph bodypart has been relocated
+  Melbert:
+  - bugfix: You can make eye charts out of blank signs
+  SmArtKar:
+  - bugfix: Fixed spiderwebs, alien weeds, kudzu, and other stuff layering below catwalks
+      and glass floors
+  - bugfix: Polymorph belts no longer can consume unlimited amounts of cores
+  - balance: Delusions now override your examine and tooltip names, similarly to prosopagnosia.
+  - bugfix: Delusions no longer turn you into shadowy blobs when moving between z-levels
+  - rscadd: Newspapers now give you inversed FOV, but you can negate this by poking
+      out holes in them with a sharp or pointy tool. They also prevent people from
+      seeing you whisper.
+  - balance: Empaths can now "feel" people whispering even if they can't see their
+      mouth.
+  - code_imp: Cleaned up newspaper code.
+  - bugfix: Nooatrium can no longer revive suicided mobs
+  - bugfix: Fixes black vision for dextrous mobs using 516 version of BYOND
+  Thunder12345:
+  - bugfix: Alien pistols do damage again
+  Wallem:
+  - rscadd: Some aliens have recently been discovered to be green.
+  - image: The circuit drone has had its icons updated
+  itsmeow:
+  - bugfix: Fixed TGUI assets and icons sometimes not showing up until you refreshed
+      the page on 516 clients
