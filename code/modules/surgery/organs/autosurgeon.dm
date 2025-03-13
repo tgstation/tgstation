@@ -90,17 +90,17 @@
 			span_notice("You press a button on [src] as it plunges into your body."),
 		)
 
-	if (stored_organ.valid_zones)
-		var/hand_index = user.get_held_index_of_item(src)
-		if (hand_index)
-			var/list/checked_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_L_LEG)
-			if (IS_RIGHT_INDEX(hand_index))
-				checked_zones = list(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG)
-			checked_zones.Insert(1, user.zone_selected)
-			for (var/check_zone in checked_zones)
-				if (stored_organ.valid_zones[check_zone])
-					stored_organ.swap_zone(check_zone)
-					break
+	if (stored_organ.valid_zones && user.get_held_index_of_item(src))
+		var/list/checked_zones = list(user.zone_selected)
+		if (IS_RIGHT_INDEX(user.get_held_index_of_item(src)))
+			checked_zones += list(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG)
+		else
+			checked_zones += list(BODY_ZONE_L_ARM, BODY_ZONE_L_LEG)
+
+		for (var/check_zone in checked_zones)
+			if (stored_organ.valid_zones[check_zone])
+				stored_organ.swap_zone(check_zone)
+				break
 
 	if (!stored_organ.Insert(target)) // insert stored organ into the user
 		balloon_alert(user, "insertion failed!")
