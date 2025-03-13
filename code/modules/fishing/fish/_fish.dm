@@ -297,8 +297,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/proc/released(atom/location, mob/living/user)
-	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
-	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src, user)
+	playsound(location, 'sound/effects/splash.ogg', 50)
+	SEND_SIGNAL(location, COMSIG_FISH_RELEASED_INTO, src, user)
 	qdel(src)
 
 ///Main proc that makes the fish edible.
@@ -954,7 +954,7 @@
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 	do_fish_process(seconds_per_tick)
-	if(staus != FISH_ALIVE || !is_type_in_typecache(loc, SSfishing.fish_safe_turfs_by_type[type]))
+	if(status != FISH_ALIVE || !is_type_in_typecache(loc, SSfishing.fish_safe_turfs_by_type[type]))
 		on_safe_turf_counter = 0
 		return
 	on_safe_turf_counter++
