@@ -156,3 +156,7 @@
 #define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
 	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls
 	#define COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE (1<<0)
+
+/// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
+#define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
+	#define COMPONENT_CANCEL_DIGESTION (1<<0)

@@ -330,7 +330,7 @@
 	connect_nodes()
 
 /obj/machinery/atmospherics/components/update_layer()
-	layer = (showpipe ? initial(layer) : ABOVE_OPEN_TURF_LAYER) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)
+	layer = (showpipe ? initial(layer) : BELOW_CATWALK_LAYER) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)
 
 /**
  * Handles air relocation to the pipenet/environment

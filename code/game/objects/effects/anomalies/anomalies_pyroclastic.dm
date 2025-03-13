@@ -23,7 +23,7 @@
 
 /obj/effect/anomaly/pyro/anomalyEffect(seconds_per_tick)
 	..()
-	if(!already_polling && death_time < (world.time - poll_time))
+	if(!immortal && !already_polling && death_time < (world.time - poll_time))
 		start_poll()
 	ticks += seconds_per_tick
 	if(ticks < releasedelay)

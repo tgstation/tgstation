@@ -188,10 +188,10 @@ IPINTEL_REJECT_BAD
 # FORUMURL http://tgstation13.org/phpBB/index.php
 
 ## Wiki address
-# WIKIURL http://www.tgstation13.org/wiki
+# WIKIURL http://tgstation13.org/wiki
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+# RULESURL http://tgstation13.org/wiki/Rules
 
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
