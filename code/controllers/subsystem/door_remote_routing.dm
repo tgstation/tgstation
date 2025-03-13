@@ -7,9 +7,8 @@ SUBSYSTEM_DEF(door_remote_routing)
 	)
 
 /datum/controller/subsystem/door_remote_routing/Initialize()
-
-	setup_remote_request_action_lists()
 	setup_door_remote_radials()
+	..()
 
 /* When someone bops a door with the alternate action of their ID, they will request the door be opened by the door remote.
  * First, we deduce the appropriate region(s) for the access request.
@@ -20,12 +19,10 @@ SUBSYSTEM_DEF(door_remote_routing)
  */
 /datum/controller/subsystem/door_remote_routing/proc/route_request_to_door_remote(obj/item/card/id/ID_requesting, obj/machinery/door/airlock/door_requested)
 	. = FALSE
-	for(var/region in SSid_access.station_regions)
-		if(door_requested.check_access_list(SSid_access.accesses_by_region[region]))
-			for(var/obj/item/door_remote/remote in SSdoor_remote_routing.remotes_listening_by_region[region])
-				. = SEND_SIGNAL(remote, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
+	var/received = SEND_SIGNAL(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
+	. = received		
 	if(!.)
-		SSdoor_remote_routing.id_feedback_message("buzzes \"ROUTE REQUEST: FAILED\".")
+		id_feedback_message(ID_requesting, "buzzes \"ROUTE REQUEST: FAILED\".")
 
 /datum/controller/subsystem/door_remote_routing/proc/setup_door_remote_radials()
 	for(var/region_name in GLOB.door_remote_radial_images)
