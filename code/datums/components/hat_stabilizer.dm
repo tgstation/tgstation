@@ -207,7 +207,7 @@
 
 	var/former_hat = attached_hat
 	var/obj/item/clothing/apparel = parent
-	apparel.detach_clothing_traits(attached_hat)
+	apparel.detach_clothing_traits(attached_hat.clothing_traits)
 	apparel.flags_cover = former_flags
 	apparel.visor_flags_cover = former_visor_flags
 	apparel.update_appearance()

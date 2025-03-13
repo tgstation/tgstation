@@ -176,3 +176,7 @@
 
 /// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
+
+/// Called at the very end of human character setup
+/// At this point all quirks are assigned and the mob has a mind / client
+#define COMSIG_HUMAN_CHARACTER_SETUP_FINISHED "human_character_setup_finished"
