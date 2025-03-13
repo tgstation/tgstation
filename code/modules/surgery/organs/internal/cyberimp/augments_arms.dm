@@ -21,6 +21,8 @@
 	var/right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_AUG
 	/// Organ slot that the implant occupies for the left arm
 	var/left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_AUG
+	/// Do we have a separate icon_state for the hand overlay?
+	var/hand_state = TRUE
 
 /obj/item/organ/cyberimp/arm/Initialize(mapload)
 	. = ..()
@@ -116,18 +118,19 @@
 	return "[aug_overlay][slot == left_arm_organ_slot ? "_left" : "_right"]"
 
 /obj/item/organ/cyberimp/arm/get_overlay(image_layer, obj/item/bodypart/limb)
+	if (!hand_state)
+		return ..()
+
 	var/mutable_appearance/arm_overlay = mutable_appearance(
 		icon = aug_icon,
 		icon_state = get_overlay_state(),
 		layer = image_layer,
 	)
-
 	var/mutable_appearance/hand_overlay = mutable_appearance(
 		icon = aug_icon,
 		icon_state = "[get_overlay_state()]_hand",
 		layer = -BODYPARTS_HIGH_LAYER,
 	)
-
 	return list(arm_overlay, hand_overlay)
 
 /**
@@ -438,7 +441,8 @@
 	left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_MUSCLE
 
 	actions_types = list()
-	aug_overlay = null
+	aug_overlay = "strongarm"
+	hand_state = FALSE
 
 	///The amount of damage the implant adds to our unarmed attacks.
 	var/punch_damage = 5

@@ -346,6 +346,7 @@
 	icon_state = "implant_mask"
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
+	aug_overlay = "breathing_tube"
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()

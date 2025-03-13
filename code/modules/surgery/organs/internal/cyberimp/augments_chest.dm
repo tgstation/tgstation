@@ -7,6 +7,7 @@
 	name = "nutriment pump implant"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "nutriment_implant"
+	aug_overlay = "nutripump"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
@@ -37,6 +38,7 @@
 	name = "nutriment pump implant PLUS"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "adv_nutriment_implant"
+	aug_overlay = "nutripump_adv"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 
