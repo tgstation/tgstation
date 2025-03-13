@@ -21,25 +21,25 @@
 
 .alertIndicator {
   font-weight: bold;
-  right: "0px";
-  text-align: "center";
-  vertical-align: "center";
-  font-family: "Courier New";
+  right: '0px';
+  text-align: 'center';
+  vertical-align: 'center';
+  font-family: 'Courier New';
 }
 
 .alertBlink {
-  color: #FFFFFF;
+  color: #ffffff;
   animation: alertBlinkAnimation 1s infinite;
 }
 
 @keyframes alertBlinkAnimation {
   0% {
-    color: #DDDDDD;
+    color: #dddddd;
   }
   49% {
-    color: #DDDDDD;
+    color: #dddddd;
   }
-  50%{
+  50% {
     color: #333333;
   }
   100% {
