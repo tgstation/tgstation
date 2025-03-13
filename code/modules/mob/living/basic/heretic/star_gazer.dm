@@ -37,9 +37,16 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
+	//---- Abilities given to the star gazer mob
+	var/datum/action/cooldown/spell/conjure/cosmic_expansion/expansion
+	var/datum/action/cooldown/spell/pointed/projectile/star_blast/blast
 
 /mob/living/basic/heretic_summon/star_gazer/Initialize(mapload)
 	. = ..()
+	expansion = new(src)
+	expansion.Grant(src)
+	blast = new(src)
+	blast.Grant(src)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)

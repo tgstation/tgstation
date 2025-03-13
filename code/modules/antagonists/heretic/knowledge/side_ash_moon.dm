@@ -40,14 +40,14 @@
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"
-	desc = "Allows you to transmute a head, a pile of ash, and a book to create an Ash Spirit. \
+	desc = "Allows you to transmute a pile of ash and a book to create an Ash Spirit. \
 		Ash Spirits have a short range jaunt and the ability to cause bleeding in foes at range. \
-		They also have the ability to create a ring of fire around themselves for a length of time."
+		They also have the ability to create a ring of fire around themselves for a length of time. \
+		They have a low amount of health, but will passively recover given enough time to do so."
 	gain_text = "I combined my principle of hunger with my desire for destruction. The Marshal knew my name, and the Nightwatcher gazed on."
 
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
-		/obj/item/bodypart/head = 1,
 		/obj/item/book = 1,
 		)
 	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit

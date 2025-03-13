@@ -255,7 +255,6 @@
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
-	//- Mark variables
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 

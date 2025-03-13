@@ -8,7 +8,7 @@
 	button_icon_state = "uncuff"
 	sound = 'sound/effects/magic/swap.ogg'
 
-	school = SCHOOL_FORBIDDEN
+	school = SCHOOL_EVOCATION
 	cooldown_time = 5 MINUTES
 
 	invocation = "F'K 'FF."

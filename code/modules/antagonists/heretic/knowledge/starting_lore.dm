@@ -267,7 +267,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		/obj/item/pen = 1,
 		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse) = 1,
 	)
-	banned_atom_types = list(/obj/item/pen)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	is_starting_knowledge = TRUE
@@ -275,11 +274,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse))
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book"
-
-/datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
-	if(item_path == /obj/item/pen)
-		return "unique type of pen"
-	return ..()
 
 /datum/heretic_knowledge/codex_cicatrix/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()

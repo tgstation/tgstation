@@ -124,6 +124,7 @@
 
 	// Let examiners know this works as a focus only if the hood is down
 	. += span_notice("Allows you to cast heretic spells while the hood is down.")
+	. += span_notice("Is space worthy as long as the hood is down.")
 
 /obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
 	make_visible()
@@ -149,6 +150,7 @@
 	RemoveElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
+		loc.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
 		REMOVE_TRAIT(loc, TRAIT_RESISTLOWPRESSURE, REF(src))
 		loc.balloon_alert(loc, "cloak hidden")
 		loc.visible_message(span_notice("Light shifts around [loc], making the cloak around them invisible!"))
@@ -159,6 +161,6 @@
 	AddElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
-		ADD_TRAIT(loc, TRAIT_RESISTLOWPRESSURE, REF(src))
+		loc.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
 		loc.balloon_alert(loc, "cloak revealed")
 		loc.visible_message(span_notice("A kaleidoscope of colours collapses around [loc], a cloak appearing suddenly around their person!"))

@@ -3264,6 +3264,7 @@
 #include "code\modules\antagonists\heretic\magic\caretaker.dm"
 #include "code\modules\antagonists\heretic\magic\cosmic_expansion.dm"
 #include "code\modules\antagonists\heretic\magic\cosmic_runes.dm"
+#include "code\modules\antagonists\heretic\magic\crimson_cleave.dm"
 #include "code\modules\antagonists\heretic\magic\eldritch_blind.dm"
 #include "code\modules\antagonists\heretic\magic\eldritch_emplosion.dm"
 #include "code\modules\antagonists\heretic\magic\eldritch_shapeshift.dm"

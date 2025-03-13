@@ -170,7 +170,7 @@
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
 	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with bluespace dust in their body to a transmutation rune to complete the ritual. \
+		Bring 3 corpses a star mark to a transmutation rune to complete the ritual. \
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
 		You can also give it commands through speech. \
@@ -193,16 +193,20 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/attack/star_gazer
 	)
+	/// List of traits given once ascended
+	var/static/list/ascended_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_BOMBIMMUNE)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	return sacrifice.has_reagent(/datum/reagent/bluespace)
+	return sacrifice.has_status_effect(/datum/status_effect/star_mark)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
+	user.add_traits(ascended_traits, type)
+
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY
@@ -216,6 +220,7 @@
 	if(star_touch_spell)
 		star_touch_spell.set_star_gazer(star_gazer_mob)
 		star_touch_spell.ascended = TRUE
+	star_gazer_mob.add_traits(ascended_traits, type)
 
 	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)
