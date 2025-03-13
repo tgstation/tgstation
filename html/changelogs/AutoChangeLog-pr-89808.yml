@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Wallet loadout item comes pre-equipped"
+  - qol: "Lipstick loadout item comes pre-applied"
+  - qol: "You can choose your lipstick color from any color now. You can also choose what layer it defaults to."
