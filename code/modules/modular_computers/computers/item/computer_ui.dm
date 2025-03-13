@@ -78,9 +78,6 @@
 		return data
 
 	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
-	data["alert_style"] = get_security_level_relevancy()
-	data["alert_color"] = SSsecurity_level?.current_security_level?.announcement_color
-	data["alert_name"] = SSsecurity_level?.current_security_level?.name_shortform
 	return data
 
 /obj/item/modular_computer/ui_data(mob/user)
@@ -122,6 +119,10 @@
 			"icon" = program.program_icon,
 			"alert" = program.alert_pending,
 		))
+
+	data["alert_style"] = get_security_level_relevancy()
+	data["alert_color"] = SSsecurity_level?.current_security_level?.announcement_color
+	data["alert_name"] = SSsecurity_level?.current_security_level?.name_shortform
 
 	return data
 
