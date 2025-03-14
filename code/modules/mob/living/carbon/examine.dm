@@ -2,12 +2,6 @@
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
 #define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
 
-/mob/living/carbon/human/get_examine_name(mob/user)
-	if(!HAS_TRAIT(user, TRAIT_PROSOPAGNOSIA))
-		return ..()
-
-	return "Unknown"
-
 /mob/living/carbon/human/get_examine_icon(mob/user)
 	return null
 

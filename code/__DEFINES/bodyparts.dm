@@ -14,6 +14,7 @@
 #define LIMB_MAX_HP_ALIEN_LARVA 50 //Used by the weird larva chest and head. Did you know they have those?
 #define LIMB_MAX_HP_ALIEN_LIMBS 100 //Used by xenomorph limbs.
 #define LIMB_MAX_HP_ALIEN_CORE 500 //Used by xenomorph chests and heads
+#define LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER 2 //Used by xenomorphs and their larvae
 
 /// Limb Body Damage Coefficient
 /// A multiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
@@ -45,9 +46,19 @@
 #define AUGGED_HEAD_EMP_GLITCH_DURATION 6 SECONDS
 
 // Color priorities for bodyparts
+/// Abductor team recoloring priority
+#define LIMB_COLOR_AYYLMAO 5
+/// Hulk effect color priority
 #define LIMB_COLOR_HULK 10
+/// Carp infusion color priority
 #define LIMB_COLOR_CARP_INFUSION 20
+#define LIMB_COLOR_CS_SOURCE_SUICIDE 30
 /// Base priority for atom colors, gets atom priorities added to it
-#define LIMB_COLOR_ATOM_COLOR 30
+#define LIMB_COLOR_ATOM_COLOR 40
 /// Voidwalker effect color priority
-#define LIMB_COLOR_VOIDWALKER_CURSE 40
+#define LIMB_COLOR_VOIDWALKER_CURSE 50
+
+// Overlay priorities
+#define BODYPART_OVERLAY_CARP_INFUSION 1
+#define BODYPART_OVERLAY_CSS_SUICIDE 2
+#define BODYPART_OVERLAY_VOIDWALKER_CURSE 3

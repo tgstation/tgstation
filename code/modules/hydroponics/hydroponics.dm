@@ -894,7 +894,7 @@
 			else
 				reagent_source.reagents.trans_to(H.reagents, transfer_amount, transferred_by = user)
 			lastuser = WEAKREF(user)
-			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/applicator/pill))
 				qdel(reagent_source)
 				H.update_appearance()
 				return 1

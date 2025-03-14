@@ -512,6 +512,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob has a scar on their left/right eye
 #define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
 #define TRAIT_LEFT_EYE_SCAR "left_eye_scar"
+/// Mob has their face visually, but not physically, covered
+#define TRAIT_FACE_COVERED "face_covered"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -890,7 +892,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SELF_AWARE "self_aware"
 #define TRAIT_FREERUNNING "freerunning"
 #define TRAIT_SKITTISH "skittish"
-#define TRAIT_PROSOPAGNOSIA "prosopagnosia"
 #define TRAIT_TAGGER "tagger"
 #define TRAIT_PHOTOGRAPHER "photographer"
 #define TRAIT_MUSICIAN "musician"
@@ -1048,8 +1049,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
 #define TRAIT_FISH_WELL_COOKED "fish_well_cooked"
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
-///It comes from a fish case. Relevant for bounties so far.
-#define TRAIT_FISH_FROM_CASE "fish_from_case"
+///Fish with this trait only sell for 1/20 of the original price when exported. For fish cases and trophy mounts.
+#define TRAIT_FISH_LOW_PRICE "fish_from_case"
 ///Fish will also occasionally fire weak tesla zaps
 #define TRAIT_FISH_ELECTROGENESIS "fish_electrogenesis"
 ///Offsprings from this fish will never be of its same type (unless it's self-reproducing).
@@ -1229,6 +1230,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Makes a character be better/worse at defending against tackling depending on their tail's status
 #define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"
+
+/// Makes a character better at tackling if they have a tail
+#define TRAIT_TACKLING_TAILED_POUNCE "tackling_tailed_pounce"
 
 /// Is runechat for this atom/movable currently disabled, regardless of prefs or anything?
 #define TRAIT_RUNECHAT_HIDDEN "runechat_hidden"
@@ -1455,5 +1459,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
 #define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
+
+///Trait given to heretic summons, making them immune to heretic spells
+#define TRAIT_HERETIC_SUMMON "heretic_summon"
+
+///trait given to mobs that are difficult to tame through mounting
+#define TRAIT_MOB_DIFFICULT_TO_MOUNT "difficult_to_mount"
+
+///trait given to mobs that are easy to tame through mounting
+#define TRAIT_MOB_EASY_TO_MOUNT "easy_to_mount"
 
 // END TRAIT DEFINES
