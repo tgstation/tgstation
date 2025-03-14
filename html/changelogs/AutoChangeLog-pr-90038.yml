@@ -1,0 +1,4 @@
+author: "hry-gh"
+delete-after: True
+changes:
+  - bugfix: "icons generate properly for janicarts"
