@@ -67,8 +67,8 @@
 
 	set_holdable(list(
 		/obj/item/stack/medical/bandage,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/pill/patch,
+		/obj/item/reagent_containers/applicator/pill,
+		/obj/item/reagent_containers/applicator/patch,
 	))
 
 ///Monkey cubes box

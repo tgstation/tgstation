@@ -35,7 +35,7 @@
 		/obj/item/card/emag, // 4 tc
 		/obj/item/card/emag/doorjack, //emag used to do both. 3 tc
 		/obj/item/pen/sleepy, // 4 tc
-		/obj/item/reagent_containers/pill/cyanide,
+		/obj/item/reagent_containers/applicator/pill/cyanide,
 		/obj/item/chameleon, //its not the original cloaking device, but it will do. 8 tc
 		/obj/item/gun/ballistic/revolver, // 13 tc old one stays in the old box
 		/obj/item/implanter/freedom, // 5 tc

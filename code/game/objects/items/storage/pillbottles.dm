@@ -25,14 +25,14 @@
 /obj/item/storage/pill_bottle/multiver/PopulateContents()
 	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/pill/multiver
+		. += /obj/item/reagent_containers/applicator/pill/multiver
 
 /obj/item/storage/pill_bottle/multiver/less
 
 /obj/item/storage/pill_bottle/multiver/less/PopulateContents()
 	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/reagent_containers/pill/multiver
+		. += /obj/item/reagent_containers/applicator/pill/multiver
 
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
@@ -41,7 +41,7 @@
 /obj/item/storage/pill_bottle/epinephrine/PopulateContents()
 	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/pill/epinephrine
+		. += /obj/item/reagent_containers/applicator/pill/epinephrine
 
 /obj/item/storage/pill_bottle/mutadone
 	name = "bottle of mutadone pills"
@@ -50,7 +50,7 @@
 /obj/item/storage/pill_bottle/mutadone/PopulateContents()
 	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/pill/mutadone
+		. += /obj/item/reagent_containers/applicator/pill/mutadone
 
 /obj/item/storage/pill_bottle/potassiodide
 	name = "bottle of potassium iodide pills"
@@ -59,7 +59,7 @@
 /obj/item/storage/pill_bottle/potassiodide/PopulateContents()
 	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/reagent_containers/pill/potassiodide
+		. += /obj/item/reagent_containers/applicator/pill/potassiodide
 
 /obj/item/storage/pill_bottle/probital
 	name = "bottle of probital pills"
@@ -68,7 +68,7 @@
 /obj/item/storage/pill_bottle/probital/PopulateContents()
 	. = list()
 	for(var/i in 1 to 4)
-		. += /obj/item/reagent_containers/pill/probital
+		. += /obj/item/reagent_containers/applicator/pill/probital
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
@@ -77,7 +77,7 @@
 /obj/item/storage/pill_bottle/iron/PopulateContents()
 	. = list()
 	for(var/i in 1 to 4)
-		. += /obj/item/reagent_containers/pill/iron
+		. += /obj/item/reagent_containers/applicator/pill/iron
 
 /obj/item/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
@@ -86,7 +86,7 @@
 /obj/item/storage/pill_bottle/mannitol/PopulateContents()
 	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/pill/mannitol
+		. += /obj/item/reagent_containers/applicator/pill/mannitol
 
 //Contains 4 pills instead of 7, and 5u pills instead of 50u (50u pills heal 250 brain damage, 5u pills heal 25)
 /obj/item/storage/pill_bottle/mannitol/braintumor
@@ -95,7 +95,7 @@
 /obj/item/storage/pill_bottle/mannitol/braintumor/PopulateContents()
 	. = list()
 	for(var/i in 1 to 4)
-		. += /obj/item/reagent_containers/pill/mannitol/braintumor
+		. += /obj/item/reagent_containers/applicator/pill/mannitol/braintumor
 
 /obj/item/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"
@@ -104,7 +104,7 @@
 /obj/item/storage/pill_bottle/stimulant/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/stimulant
+		. += /obj/item/reagent_containers/applicator/pill/stimulant
 
 /obj/item/storage/pill_bottle/sansufentanyl
 	name = "bottle of experimental medication"
@@ -113,7 +113,7 @@
 /obj/item/storage/pill_bottle/sansufentanyl/PopulateContents()
 	. = list()
 	for(var/i in 1 to 6)
-		. += /obj/item/reagent_containers/pill/sansufentanyl
+		. += /obj/item/reagent_containers/applicator/pill/sansufentanyl
 
 /obj/item/storage/pill_bottle/mining
 	name = "bottle of patches"
@@ -121,8 +121,8 @@
 
 /obj/item/storage/pill_bottle/mining/PopulateContents()
 	return flatten_quantified_list(list(
-		/obj/item/reagent_containers/pill/patch/aiuri = 1,
-		/obj/item/reagent_containers/pill/patch/libital = 3,
+		/obj/item/reagent_containers/applicator/patch/aiuri = 1,
+		/obj/item/reagent_containers/applicator/patch/libital = 3,
 	))
 
 /obj/item/storage/pill_bottle/zoom
@@ -132,7 +132,7 @@
 /obj/item/storage/pill_bottle/zoom/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/zoom
+		. += /obj/item/reagent_containers/applicator/pill/zoom
 
 /obj/item/storage/pill_bottle/happy
 	name = "suspicious pill bottle"
@@ -141,7 +141,7 @@
 /obj/item/storage/pill_bottle/happy/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/happy
+		. += /obj/item/reagent_containers/applicator/pill/happy
 
 /obj/item/storage/pill_bottle/lsd
 	name = "suspicious pill bottle"
@@ -150,7 +150,7 @@
 /obj/item/storage/pill_bottle/lsd/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/lsd
+		. += /obj/item/reagent_containers/applicator/pill/lsd
 
 /obj/item/storage/pill_bottle/aranesp
 	name = "suspicious pill bottle"
@@ -159,7 +159,7 @@
 /obj/item/storage/pill_bottle/aranesp/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/aranesp
+		. += /obj/item/reagent_containers/applicator/pill/aranesp
 
 /obj/item/storage/pill_bottle/psicodine
 	name = "bottle of psicodine pills"
@@ -168,7 +168,7 @@
 /obj/item/storage/pill_bottle/psicodine/PopulateContents()
 	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/pill/psicodine
+		. += /obj/item/reagent_containers/applicator/pill/psicodine
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
@@ -177,7 +177,7 @@
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
 	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/reagent_containers/pill/penacid
+		. += /obj/item/reagent_containers/applicator/pill/penacid
 
 
 /obj/item/storage/pill_bottle/neurine
@@ -187,26 +187,26 @@
 /obj/item/storage/pill_bottle/neurine/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/neurine
+		. += /obj/item/reagent_containers/applicator/pill/neurine
 
 /obj/item/storage/pill_bottle/maintenance_pill
 	name = "bottle of maintenance pills"
 	desc = "An old pill bottle. It smells musty."
 
-/obj/item/storage/pill_bottle/maintenance_pill/Initialize(mapload)
+/obj/item/storage/pill_bottle/maintenance_applicator/pill/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/pill/P = locate() in src
+	var/obj/item/reagent_containers/applicator/pill/P = locate() in src
 	name = "bottle of [P.name]s"
 
-/obj/item/storage/pill_bottle/maintenance_pill/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_applicator/pill/PopulateContents()
 	. = list()
 	for(var/i in 1 to rand(1,7))
-		. += /obj/item/reagent_containers/pill/maintenance
+		. += /obj/item/reagent_containers/applicator/pill/maintenance
 
-/obj/item/storage/pill_bottle/maintenance_pill/full/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_applicator/pill/full/PopulateContents()
 	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/pill/maintenance
+		. += /obj/item/reagent_containers/applicator/pill/maintenance
 
 ///////////////////////////////////////// Psychologist inventory pillbottles
 /obj/item/storage/pill_bottle/happinesspsych
@@ -216,7 +216,7 @@
 /obj/item/storage/pill_bottle/happinesspsych/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/happinesspsych
+		. += /obj/item/reagent_containers/applicator/pill/happinesspsych
 
 /obj/item/storage/pill_bottle/lsdpsych
 	name = "mindbreaker toxin pills"
@@ -225,7 +225,7 @@
 /obj/item/storage/pill_bottle/lsdpsych/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/lsdpsych
+		. += /obj/item/reagent_containers/applicator/pill/lsdpsych
 
 /obj/item/storage/pill_bottle/paxpsych
 	name = "pax pills"
@@ -234,7 +234,7 @@
 /obj/item/storage/pill_bottle/paxpsych/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/paxpsych
+		. += /obj/item/reagent_containers/applicator/pill/paxpsych
 
 /obj/item/storage/pill_bottle/naturalbait
 	name = "freshness jar"
@@ -252,4 +252,4 @@
 /obj/item/storage/pill_bottle/ondansetron/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/pill/patch/ondansetron
+		. += /obj/item/reagent_containers/applicator/patch/ondansetron

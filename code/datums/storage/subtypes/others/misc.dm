@@ -210,7 +210,7 @@
 	. = ..()
 
 	set_holdable(list(
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/food/bait/natural,
 	))
 
@@ -263,13 +263,13 @@
 			/obj/item/photo,
 			/obj/item/reagent_containers/dropper,
 			/obj/item/reagent_containers/syringe,
-			/obj/item/reagent_containers/pill,
+			/obj/item/reagent_containers/applicator,
 			/obj/item/screwdriver,
 			/obj/item/seeds,
 			/obj/item/spess_knife,
 			/obj/item/stack/medical,
 			/obj/item/stamp,
-			/obj/item/toy/crayon
+			/obj/item/toy/crayon,
 		),
 		cant_hold_list = list(
 			/obj/item/screwdriver/power

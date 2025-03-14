@@ -69,7 +69,7 @@
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/spray,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/retractor,
@@ -86,6 +86,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
 		/obj/item/knife/ritual,
+		/obj/item/flesh_shears,
 	))
 
 //Security belt
@@ -148,7 +149,7 @@
 		/obj/item/reagent_containers/cup/glass,
 		/obj/item/reagent_containers/cup/glass/bottle,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/resonator,
 		/obj/item/screwdriver,
 		/obj/item/shovel,

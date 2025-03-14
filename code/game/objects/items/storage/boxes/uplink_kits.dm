@@ -241,7 +241,7 @@
 				/obj/item/implanter/freedom, // 5 tc
 				/obj/item/flashlight/emp, // 2 tc
 				/obj/item/grenade/c4/x4, // 1ish tc
-				/obj/item/reagent_containers/pill/cyanide,
+				/obj/item/reagent_containers/applicator/pill/cyanide,
 				/obj/item/toy/cards/deck/syndicate, // 1 tc, for poker
 			)
 
