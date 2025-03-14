@@ -51,17 +51,27 @@ export const DecalPainter = (props) => {
   // Handle custom color icon correctly
   const preview_color = custom_color_selected ? 'custom' : data.current_color;
 
+  const {
+    color_list,
+    current_custom_color,
+    current_color,
+    current_decal,
+    current_dir,
+    decal_list,
+    dir_list,
+  } = data;
+
   return (
     <Window width={525} height={400}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
             <Section title="Decal Color">
-              {data.color_list.map((color) => {
+              {color_list.map((color) => {
                 return (
                   <Button
                     key={color.color}
-                    selected={color.color === data.current_color}
+                    selected={color.color === current_color}
                     onClick={() =>
                       act('select color', {
                         color: color.color,
@@ -78,7 +88,7 @@ export const DecalPainter = (props) => {
                   selected={custom_color_selected}
                   onClick={() => act('pick custom color')}
                 >
-                  <ColorBox color={data.current_custom_color} mr={0.5} />
+                  <ColorBox color={current_custom_color} mr={0.5} />
                   Custom
                 </Button>
               )}
@@ -87,7 +97,7 @@ export const DecalPainter = (props) => {
           <Stack.Item grow>
             <Section title="Decal Style" fill scrollable>
               <Flex wrap="wrap">
-                {data.decal_list.map((decal) => {
+                {decal_list.map((decal) => {
                   const nondirectional = data.nondirectional_decals.includes(
                     decal.decal,
                   );
@@ -100,15 +110,15 @@ export const DecalPainter = (props) => {
                       dir={2}
                       color={preview_color}
                       label={decal.name}
-                      selected={decal.decal === data.current_decal}
+                      selected={decal.decal === current_decal}
                     />
                   ) : (
                     // 4 buttons for directional
                     <Flex key={decal.decal} direction="column">
-                      {data.dir_list.map((dir) => {
+                      {dir_list.map((dir) => {
                         const selected =
-                          decal.decal === data.current_decal &&
-                          dir.dir === data.current_dir;
+                          decal.decal === current_decal &&
+                          dir.dir === current_dir;
 
                         return (
                           <IconButton
