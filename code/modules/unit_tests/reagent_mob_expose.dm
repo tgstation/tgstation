@@ -17,7 +17,7 @@
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/dropper/dropper = allocate(/obj/item/reagent_containers/dropper)
 	var/obj/item/reagent_containers/cup/glass/bottle/drink = allocate(/obj/item/reagent_containers/cup/glass/bottle)
-	var/obj/item/reagent_containers/pill/patch/patch = allocate(/obj/item/reagent_containers/pill/patch)
+	var/obj/item/reagent_containers/applicator/patch/patch = allocate(/obj/item/reagent_containers/applicator/patch)
 	var/obj/item/reagent_containers/syringe/syringe = allocate(/obj/item/reagent_containers/syringe)
 
 	// INGEST
@@ -51,6 +51,8 @@
 	patch.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
 	patch.self_delay = 0
 	patch.interact_with_atom(human, human)
+	patch.get_embed().process(SSdcs.wait / 10)
+	human.Life(SSMOBS_DT)
 	TEST_ASSERT_EQUAL(human.health, 90, "Human health did not update after patch was applied")
 
 	// INJECT
