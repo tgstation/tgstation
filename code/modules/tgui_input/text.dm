@@ -162,4 +162,4 @@
 /datum/tgui_input_text/proc/set_entry(entry)
 	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
-		src.entry = trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length))
+		src.entry = max_length ? trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length)) : converted_entry
