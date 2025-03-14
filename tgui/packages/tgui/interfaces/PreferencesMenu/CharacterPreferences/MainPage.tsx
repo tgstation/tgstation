@@ -511,8 +511,8 @@ export function MainPage(props: MainPageProps) {
     data.character_preferences.secondary_features || [];
 
   const mainFeatures = [
-    ...Object.entries(data.character_preferences.clothing),
-    ...Object.entries(data.character_preferences.features),
+    ...Object.entries(data.character_preferences.clothing ?? {}),
+    ...Object.entries(data.character_preferences.features ?? {}),
   ];
 
   const randomBodyEnabled =
