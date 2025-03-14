@@ -34,7 +34,6 @@
 /datum/element/death_drops/proc/create_loot(typepath, atom/loot_loc, mob/living/dead, gibbed)
 	if(ispath(typepath, /obj/effect/mob_spawn/corpse))
 		handle_corpse(typepath, loot_loc, dead, gibbed)
-		// INVOKE_ASYNC(src, PROC_REF(handle_corpse), typepath, loot_loc, dead, gibbed)
 		return
 
 	new typepath(loot_loc)
