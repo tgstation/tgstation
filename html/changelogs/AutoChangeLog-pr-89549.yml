@@ -1,8 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Instead of dissolving instantly, pills now activate after 4 seconds. This timer can be increased by using a dropper filled with sugar on them, 1s added per 1u dropped."
-  - rscadd: "Patches now stick to you and slowly bleed their reagents, instead of being strictly inferior to both pills and sprays."
-  - rscadd: "Items that you accidentally swallow now go into your stomach contents."
-  - refactor: "Patches are no longer considered pills by the game"
-  - refactor: "All stomachs now have contents, instead of it being exclusive to aliens. You can cut open a stomach to empty it with a scalpel, and mend an existing incision with a cautery."

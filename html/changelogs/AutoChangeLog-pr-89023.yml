@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "To prevent infinite sales issues, security helmets, armors, and batons packs now all cost 600 credits, up from 400."
-  - bugfix: "Candle packs now cost 400 credits, up from 300, and candles now sell for 12.25 cr each."
