@@ -19,8 +19,8 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	products = list(
 		/obj/item/reagent_containers/syringe = 4,
 		/obj/item/healthanalyzer = 4,
-		/obj/item/reagent_containers/pill/patch/libital = 5,
-		/obj/item/reagent_containers/pill/patch/aiuri = 5,
+		/obj/item/reagent_containers/applicator/patch/libital = 5,
+		/obj/item/reagent_containers/applicator/patch/aiuri = 5,
 		/obj/item/reagent_containers/cup/bottle/multiver = 1,
 		/obj/item/reagent_containers/cup/bottle/syriniver = 1,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 3,

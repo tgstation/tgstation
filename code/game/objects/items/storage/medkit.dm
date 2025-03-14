@@ -128,7 +128,7 @@
 		return
 
 	return flatten_quantified_list(list(
-		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/reagent_containers/applicator/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
@@ -205,7 +205,7 @@
 		return
 
 	return flatten_quantified_list(list(
-		/obj/item/reagent_containers/pill/patch/libital = 3,
+		/obj/item/reagent_containers/applicator/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
@@ -228,7 +228,7 @@
 		return
 
 	return flatten_quantified_list(list(
-		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
+		/obj/item/reagent_containers/applicator/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1,
@@ -279,8 +279,8 @@
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
-		/obj/item/reagent_containers/pill/patch/libital = 4,
-		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/reagent_containers/applicator/patch/libital = 4,
+		/obj/item/reagent_containers/applicator/patch/aiuri = 4,
 	))
 
 	return items_inside
@@ -300,8 +300,8 @@
 	var/static/list/items_inside = flatten_quantified_list(list(
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
-		/obj/item/reagent_containers/pill/patch/libital = 3,
-		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/reagent_containers/applicator/patch/libital = 3,
+		/obj/item/reagent_containers/applicator/patch/aiuri = 3,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/mod/module/thread_ripper = 1,

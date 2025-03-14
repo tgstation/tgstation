@@ -764,7 +764,7 @@
 /area/deathmatch)
 "Js" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/applicator/patch/aiuri,
 /turf/open/indestructible,
 /area/deathmatch)
 "JF" = (
