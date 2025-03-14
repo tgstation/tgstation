@@ -1,7 +1,7 @@
 
 /obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents()
 	new /obj/item/grenade/c4 (src)
-	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
 	new /obj/item/grenade/chem_grenade/facid(src)
 
 /obj/item/paper/fluff/bee_objectives
