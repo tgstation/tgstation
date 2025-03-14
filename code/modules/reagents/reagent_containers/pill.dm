@@ -190,13 +190,13 @@
 
 /obj/item/reagent_containers/pill/viperpoison
 	name = "viperpoison pill"
-	desc = "Extremely powerful stimulant with massive side effects."
-	list_reagents = list(/datum/reagent/drug/viperpoison = 25)
+	desc = "Extremely powerful medication to treat brain damage. Side effects include nausea, drowsiness, extreme pain, nerve damage and cyanide poisoning."
+	list_reagents = list(/datum/reagent/drug/viperpoison = 15)
 	icon_state = "pill22"
 	rename_with_volume = FALSE
 
 /obj/item/reagent_containers/pill/viperpoison/low_dose
-	desc = "Extremely powerful stimulant with massive side effects. This pill is lower-dose to help treat addiction."
+	desc = "Extremely powerful medication to treat brain damage. This is a lower-dose version prescribed to those with rare brain conditions.."
 	list_reagents = list(/datum/reagent/drug/viperpoison = 10)
 
 /obj/item/reagent_containers/pill/penacid

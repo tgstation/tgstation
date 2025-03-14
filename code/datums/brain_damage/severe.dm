@@ -18,7 +18,7 @@
 	if(owner.IsSleeping())
 		return
 
-	owner.apply_damage(seconds_per_tick * 0.5, BRAIN)
+	owner.apply_damage(seconds_per_tick * 0.3, BRAIN)
 
 	..()
 	if(owner.has_reagent(/datum/reagent/drug/viperpoison))

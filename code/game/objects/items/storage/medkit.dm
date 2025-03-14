@@ -616,7 +616,7 @@
 
 /obj/item/storage/pill_bottle/viperpoison
 	name = "bottle of viperpoison pills"
-	desc = "Contains pills used in the treatment of viperpoison addiction. Or you can use it to beat someone's ass. Your choice."
+	desc = "Contains pills rarely used to treat severe brain damage. Generally unused due to the massive side effects for those without a tolerance."
 
 /obj/item/storage/pill_bottle/viperpoison/PopulateContents()
 	for(var/i in 1 to 7)

@@ -3,6 +3,11 @@
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG
 
+/datum/chemical_reaction/viperpoison
+	results = list(/datum/reagent/drug/viperpoison = 3)
+	required_reagents = list(/datum/reagent/acetone = 3, /datum/reagent/toxin/cyanide = 3, /datum/reagent/uranium/radium = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG
+
 /datum/chemical_reaction/krokodil
 	results = list(/datum/reagent/drug/krokodil = 6)
 	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/medicine/morphine = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/potassium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/fuel = 1)

@@ -1,4 +1,4 @@
-/datum/quirk/jumo_moment
+/datum/quirk/item_quirk/jumo_moment
 	name = "Decaying Brain"
 	desc = "You brain will rapidly take damage at all times unless you take viperpoison. No other BRAIN medicines work on you. However, you have a significantly higher tolerance for the stuff, and will start out with a full bottle of it (plus a syringe to inject it.)"
 	icon = FA_ICON_TAG
@@ -11,16 +11,22 @@
 
 	var/datum/weakref/added_trama_ref
 
-/datum/quirk/jumo_moment/add_unique(client/client_source)
+/datum/quirk/item_quirk/jumo_moment/add_unique(client/client_source)
 	if(!iscarbon(quirk_holder))
 		return
 
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 
-	var/newbottle = /obj/item/storage/pill_bottle/viperpoison
+	var/newbottle = new /obj/item/storage/pill_bottle/viperpoison
 
-	carbon_quirk_holder.put_in_hands(
-		newbottle
+	give_item_to_holder(
+		newbottle,
+		list(
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_HANDS = ITEM_SLOT_HANDS,
+		),
 	)
 
 	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)

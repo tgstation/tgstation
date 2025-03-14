@@ -12,23 +12,20 @@
 /datum/reagent/drug/viperpoison
 	name = "Viperpoison"
 	description = "Temporary"
-	taste_description = "your butthole"
+	taste_description = "firey"
 	color = "#315f2b" //mannitol is light grey, neurine is lighter grey
 	ph = 8.5
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	purity = REAGENT_STANDARD_PURITY
 	inverse_chem = /datum/reagent/drug/space_drugs
-	inverse_chem_val = 0.666
+	inverse_chem_val = 0.366
 	metabolized_traits = list(TRAIT_TUMOR_SUPPRESSED) //Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
 
 /datum/reagent/drug/viperpoison/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.set_drugginess(30 SECONDS * REM * seconds_per_tick)
-	if(isturf(affected_mob.loc) && !isspaceturf(affected_mob.loc) && !HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && SPT_PROB(5, seconds_per_tick))
-		step(affected_mob, pick(GLOB.cardinals))
-	if(SPT_PROB(3.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan","giggle"))
+	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3.5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/space_drugs
 	name = "Space Drugs"
