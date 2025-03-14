@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Polymorph belts no longer can consume unlimited amounts of cores"
