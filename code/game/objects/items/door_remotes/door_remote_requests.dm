@@ -29,6 +29,13 @@
 	UnregisterSignal(SSdoor_remote_routing, list(COMSIG_DOOR_REMOTE_ACCESS_REQUEST_RESOLVED, COMSIG_DOOR_REMOTE_ACCESS_REQUEST))
 	REMOTE_FEEDBACK("buzzes, \"NOT LISTENING.\"")
 
+/obj/item/door_remote/proc/acknowledge_resolution(datum/source, obj/item/card/id/advanced/ID_resolved, obj/machinery/door/airlock/resolved_door)
+	SIGNAL_HANDLER
+	if(!recently_resolved_requests[ID_resolved])
+		return
+	recently_resolved_requests -= ID_resolved
+	REMOTE_FEEDBACK("buzzes, \"REQUEST TO [response_name] RESOLVED.\"")
+
 
 /obj/item/door_remote/proc/clear_requests(mob/user)
 	REMOTE_FEEDBACK("buzzes: \"CLEARED REQUESTS.\"")
@@ -43,18 +50,18 @@
 /obj/item/door_remote/proc/receive_access_request(datum/source, obj/item/card/id/advanced/ID_requesting, obj/machinery/door/airlock/requested_door)
 	SIGNAL_HANDLER
 
-	if(!check_access(door_requested) && !in_our_area(get_area(door_requested)))
+	if(!check_access(requested_door) && !in_our_area(get_area(requested_door)))
 		return NONE
 
 	if(open_requests[ID_requesting])
 		ID_FEEDBACK(ID_requesting, "buzzes uncharitably, \"REQUEST TO [response_name] PENDING, ROUTING DENIED\"")
 		return COMPONENT_REQUEST_LIMIT_REACHED
 	if(recent_denials[ID_requesting])
-		ID_FEEDBACK("buzzes, \"REQUEST TO [response_name] DENIED, ROUTING DENIED\"")
+		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST TO [response_name] DENIED, ROUTING DENIED\"")
 		return COMPONENT_REQUEST_DENIED
-	open_requests[ID_requesting] = requested_door5
+	open_requests[ID_requesting] = requested_door
 	addtimer(CALLBACK, PROC_REF(expire_access_request), ID_requesting, 5 MINUTES)
-	ID_FEEDBACK("intones, \"REQUEST ROUTED TO [response_name]; REQUEST RECEIVED.\"")
+	ID_FEEDBACK(ID_requesting, "intones, \"REQUEST ROUTED TO [response_name]; REQUEST RECEIVED.\"")
 	return COMPONENT_REQUEST_RECEIVED
 
 /obj/item/door_remote/proc/expire_access_request(obj/item/card/id/advanced/ID_requesting)
@@ -65,10 +72,10 @@
 			recently_resolved_requests -= ID_requesting
 			return
 		LAZYREMOVE(open_requests, ID_requesting)
-		ID_FEEDBACK("intones \"_[response_name]_ REQUEST TIMEOUT\"")
+		ID_FEEDBACK(ID_requesting, "intones \"_[response_name]_ REQUEST TIMEOUT\"")
 
 /obj/item/door_remote/proc/handle_config(mob/user)
-	to_chat(user, span_yellowteamradio("The remote buzzes: %CONFIG%"))												// :3 *meow
+	REMOTE_FEEDBACK("buzzes: CONFIG")
 	var/config_choice = tgui_alert(user, "Blocky, flickering text gives you a few options: \n(C)LEAR_REQUESTS\n(A)UTO_RESPONSE\n(T)OGGLE_LISTEN", "%CONFIG:NT_DOOR_WAND%", list("C", "A", "T"))
 	var/datum/callback/chosen_callback = setting_callbacks[config_choice]
 	if(!config_choice)
@@ -77,7 +84,7 @@
 
 /obj/item/door_remote/proc/handle_requests(mob/user)
 	if(!length(open_requests))
-		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_REQUESTS%"))
+		REMOTE_FEEDBACK("buzzes: NO_REQUESTS")
 		return
 	// Javascript doesn't like when you feed associative arrays from BYOND into its functions that want
 	// primitives so we have to do some value conversion here
@@ -112,34 +119,30 @@
 		items = parsed_requests
 	)
 	if(!length(choices))
-		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_SELECTION%"))
+		REMOTE_FEEDBACK("buzzes: \"NO SELECTION\"")
 		return
 	balloon_alert(user, "choose batch action")
 	var/list/available_actions = resolve_response_radial_options()
 	var/action = show_radial_menu(user, user, available_actions, radius = 32)
 	if(!action)
 		return NONE
-	for(var/choice in choices)
-		// second index of a given choice is its index in open_requests
-		// first index was just text for the remote user
-		var/choice_index_in_requests = choices[choice][2]
-		var/given_request = open_requests[choice_index_in_requests]
-		if(given_request != cached_requests["[choice_index_in_requests]"])
-			REMOTE_FEEDBACK(span_red("%REQUEST_RESOLUTION_FAILURE%[choices[choice][1]]"))
-			REMOTE_FEEDBACK("buzzes: \"PLEASE TRY AGAIN.\"")
-			// Clear your cache and restart BYON-- request resolving
+	var/list/resolved_selections = list()
+	for(var/choice_tuple in choices)
+		// Break out of this whole loop if the requests got handled by someone else
+		if(!length(open_requests))
+			REMOTE_FEEDBACK("buzzes: \"RACE CONDITION, ALTERNATIVE NODE HANDLED REQUESTS\"")
 			return NONE
-		var/obj/item/card/id/advanced/given_id = given_request
-		var/obj/machinery/door/airlock/given_door = open_requests[given_request]
-		if(!istype(given_id) || !istype(given_door))
-			REMOTE_FEEDBACK(span_red("%REQUEST_RESPONSE_FAILURE%[choices[choice][1]]"))
-			open_requests -= given_id
-			if(istype(given_id))
-				recently_resolved_requests += given_id
-			continue
-		if(!given_door.requiresID() || !given_door.canAIControl())
-			REMOTE_FEEDBACK("buzzes: \"[given_door] NOT RESPONDING.")
-			continue
+		// The way checkbox inputs work for tgui: index 1 = player text, index 2 = list index
+		var/actual_index = choice_tuple[2]
+		// check that each request in the cache we chose to handle is still in the same place
+		if(cached_requests[actual_index] && (open_requests.Find(cached_requests[actual_index]) == actual_index))
+			// resolve the list of IDs we're going to handle requests for so we can remove them from our requests
+			// all at once
+			resolved_selections += open_requests[actual_index]
+
+
+
+
 
 
 #undef ID_FEEDBACK

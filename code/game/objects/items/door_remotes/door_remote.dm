@@ -31,6 +31,8 @@
 	// A simple lists of IDs that have had their requests resolved recently
 	// so we can make sure our timers are expiring (or not) the correct requests
 	var/list/recently_resolved_requests
+	// A given response to automatically respond to any given request with (horrible idea, good for morale)
+	var/auto_response = null
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
@@ -222,6 +224,7 @@
 		interacting_with.balloon_alert(user, mode == WAND_OPEN ? "it won't budge!" : "nothing happens!")
 		return ITEM_INTERACT_BLOCKING
 
+
 	switch (mode)
 		if (WAND_OPEN)
 			if (door.density)
@@ -244,8 +247,19 @@
 				interacting_with.balloon_alert(user, "only airlocks!")
 				return ITEM_INTERACT_BLOCKING
 
+
 			airlock.emergency = !airlock.emergency
 			airlock.update_appearance(UPDATE_ICON)
+
+		if (WAND_SHOCK)
+			if (!istype(airlock))
+				interacting_with.balloon_alert(user, "only airlocks!")
+				return ITEM_INTERACT_BLOCKING
+
+			if(airlock.isElectrified())
+				airlock.set_electrified(MACHINE_NOT_ELECTRIFIED, user)
+			else
+				airlock.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, user)
 
 	return ITEM_INTERACT_SUCCESS
 

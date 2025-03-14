@@ -2,9 +2,6 @@ SUBSYSTEM_DEF(door_remote_routing)
 	name = "IDs and Access"
 	init_order = INIT_ORDER_DOOR_REMOTES
 	flags = SS_NO_FIRE
-	var/routing_regions = list(
-
-	)
 
 /datum/controller/subsystem/door_remote_routing/Initialize()
 	setup_door_remote_radials()
@@ -18,12 +15,14 @@ SUBSYSTEM_DEF(door_remote_routing)
  * * door_requested - The door that the ID card is requesting be opened.
  */
 /datum/controller/subsystem/door_remote_routing/proc/route_request_to_door_remote(obj/item/card/id/ID_requesting, obj/machinery/door/airlock/door_requested)
-	. = FALSE
+	// Signal that someone requested this door; if no door remotes are listening, ask the AI
 	var/received = SEND_SIGNAL(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
-	. = received		
-	if(!.)
+	if(!received)
 		id_feedback_message(ID_requesting, "buzzes \"ROUTE REQUEST: FAILED\".")
 
+/// Does a bunch of a hullabaloo to set up a door remote's radial menu images
+/// Done this way so we can just have a set of images hanging around on GLOB
+/// Instead of regenerating the images every time the menu gets opened
 /datum/controller/subsystem/door_remote_routing/proc/setup_door_remote_radials()
 	for(var/region_name in GLOB.door_remote_radial_images)
 		var/image_set = GLOB.door_remote_radial_images[region_name]
