@@ -1,4 +1,0 @@
-author: "StrangeWeirdKitten"
-delete-after: True
-changes:
-  - code_imp: "Readds return_turf_delta_p() and is_nearby_planetary_atmos() as turf helpers."

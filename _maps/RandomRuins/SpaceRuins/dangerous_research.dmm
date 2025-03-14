@@ -3839,7 +3839,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/item/paper/fluff/ruins/dangerous_research/smith,
 /obj/item/clothing/suit/toggle/labcoat/chemist,
-/obj/item/reagent_containers/pill/stimulant,
+/obj/item/reagent_containers/applicator/pill/stimulant,
 /obj/item/card/id/away/dangerous_research,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/dark/corner{
