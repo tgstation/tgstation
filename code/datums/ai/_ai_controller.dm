@@ -246,6 +246,8 @@ multiple modular subtrees with behaviors
  * Returns AI_STATUS_ON otherwise.
  */
 /datum/ai_controller/proc/get_expected_ai_status()
+	if (isnull(get_turf(pawn)))
+		return AI_STATUS_OFF
 
 	if (!ismob(pawn))
 		return AI_STATUS_ON

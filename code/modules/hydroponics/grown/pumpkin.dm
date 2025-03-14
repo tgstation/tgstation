@@ -23,7 +23,7 @@
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
 	bite_consumption_mod = 2
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	juice_typepath = /datum/reagent/consumable/pumpkinjuice
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.
@@ -56,7 +56,6 @@
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
 	bite_consumption_mod = 3
-	foodtypes = FRUIT
 	juice_typepath = /datum/reagent/consumable/blumpkinjuice
 	wine_power = 50
 	carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin

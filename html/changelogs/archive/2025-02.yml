@@ -685,3 +685,13 @@
       trauma by pulling off some surgery shenanigans
   - bugfix: You no longer lose tenacity trauma gained via lobotomy after losing voltaic
       override
+2025-02-28:
+  Profakos:
+  - bugfix: Request consoles once again enter emergency mode when you hit an emergency
+      button
+  SmArtKar:
+  - image: Resprited GPSs
+  - bugfix: You can no longer try to occupy an AI uplink brain already occupied by
+      another AI
+  - bugfix: Armsy (aka Lord Of The Night (aka flesh snek (aka heretic ascention)))
+      no longer affects itself with its own spells

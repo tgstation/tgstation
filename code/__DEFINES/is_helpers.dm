@@ -165,9 +165,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 
 /// asteroid mobs, which are both simple and basic atm
-#define isminingpath(A) (ispath(A, /mob/living/simple_animal/hostile/asteroid) || ispath(A, /mob/living/basic/mining))
-
-#define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
+#define ismining(A) (A.mob_biotypes & MOB_MINING)
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))

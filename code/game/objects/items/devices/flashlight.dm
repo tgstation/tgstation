@@ -19,6 +19,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_LIGHT_ORANGE
 	light_range = 4
@@ -800,7 +801,9 @@
 	reagents.add_reagent(fuel_type, max_fuel)
 	. = ..()
 	set_light_color(color)
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		food_flags = FOOD_NO_EXAMINE,\
 		volume = reagents.total_volume,\
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\

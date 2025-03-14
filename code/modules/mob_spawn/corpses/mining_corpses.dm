@@ -352,7 +352,7 @@
 	glasses = /obj/item/clothing/glasses/blindfold
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	r_pocket = /obj/item/reagent_containers/pill/shadowtoxin
+	r_pocket = /obj/item/reagent_containers/applicator/pill/shadowtoxin
 
 	accessory = /obj/item/clothing/accessory/medal/plasma/nobel_science
 

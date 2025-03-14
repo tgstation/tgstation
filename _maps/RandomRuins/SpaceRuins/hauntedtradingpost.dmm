@@ -5744,11 +5744,11 @@
 	pixel_y = 12;
 	pixel_x = -6
 	},
-/obj/item/food/dankpocket{
+/obj/item/food/donkpocket/dank{
 	pixel_x = -10
 	},
-/obj/item/food/dankpocket,
-/obj/item/food/dankpocket{
+/obj/item/food/donkpocket/dank,
+/obj/item/food/donkpocket/dank{
 	pixel_x = 10
 	},
 /obj/machinery/light/warm/directional/east,

@@ -16,11 +16,102 @@
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
-	var/obj/item/food/pizzaslice/slice_type
-	slice_type = /obj/item/food/pizzaslice
+	var/obj/item/food/pizzaslice/slice_type = /obj/item/food/pizzaslice
 	///What label pizza boxes use if this pizza spawns in them.
 	var/boxtag = ""
+	/// how many slices left
+	var/slices_left = 6
+	/// have we been sliced? like sliced and you can take it apart by hand
+	var/sliced = FALSE
+	/// cutting tools
+	var/list/cutting_tools = list(TOOL_KNIFE, TOOL_SAW, TOOL_SCALPEL)
 
+/obj/item/food/pizza/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/drag_pickup)
+	register_context()
+
+/obj/item/food/pizza/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(istype(held_item) && (held_item.tool_behaviour in cutting_tools))
+		context[SCREENTIP_CONTEXT_LMB] = "Slice"
+		context[SCREENTIP_CONTEXT_RMB] = "Slice apart"
+		return TRUE
+
+	if(sliced)
+		context[SCREENTIP_CONTEXT_LMB] = "Take Slice"
+		return TRUE
+
+/obj/item/food/pizza/examine(mob/user)
+	. = ..()
+	if(isnull(slice_type) || !sliced)
+		return
+	. += span_notice("You can slice this to make it possible to take out slices with an empty hand!")
+
+/obj/item/food/pizza/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(isnull(slice_type) || !(tool.tool_behaviour in cutting_tools))
+		return
+	if(!sliced)
+		slice(user, tool)
+		return ITEM_INTERACT_SUCCESS
+	user.visible_message(span_notice("[user] seperates [src] into individual slices with [tool]."))
+	cut_apart()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/food/pizza/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(isnull(slice_type) || !(tool.tool_behaviour in cutting_tools))
+		return
+	visible_message(span_notice("[user] seperates [src] into individual slices with [tool]."))
+	cut_apart()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/food/pizza/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(!sliced)
+		return
+	user.visible_message(span_notice("You take a slice of [src]."), span_notice("[user] takes a slice of [src]."))
+	produce_slice(user)
+
+/obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
+	return alpha_mask_filter(icon = icon('icons/obj/food/pizza.dmi', "[slices_left]slices"))
+
+/// slices this pizza. all arguments optional.
+/obj/item/food/pizza/proc/slice(mob/user, obj/item/tool)
+	if(sliced)
+		return
+	tool?.play_tool_sound(src)
+	sliced = TRUE
+	user?.visible_message(span_notice("[user] cuts [src] into 6 slices with [tool]."))
+	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+
+/obj/item/food/pizza/proc/cut_apart()
+	for(var/_ in 1 to slices_left)
+		produce_slice(no_update = TRUE)
+
+/// make a slice and give it to user. no_update means no filter work is done. user is optional
+/obj/item/food/pizza/proc/produce_slice(mob/user, no_update = FALSE)
+	var/turf/our_turf = get_turf(src)
+	var/obj/item/food/pizzaslice/slice = new slice_type(our_turf)
+	if(HAS_TRAIT(src, TRAIT_FOOD_SILVER))
+		ADD_TRAIT(slice, TRAIT_FOOD_SILVER, INNATE_TRAIT)
+	if(HAS_TRAIT(src, TRAIT_FOOD_CHEF_MADE))
+		ADD_TRAIT(slice, TRAIT_FOOD_CHEF_MADE, GET_TRAIT_SOURCES(src, TRAIT_FOOD_CHEF_MADE)[1]) // wack thing to inherit first source
+	slice.pixel_x += rand(-6, 6)
+	slice.pixel_y += rand(-6, 6)
+	user?.put_in_active_hand(slice)
+	slices_left--
+	if(slices_left <= 0)
+		qdel(src)
+		return
+	if(no_update)
+		return
+	remove_filter("pizzaslices")
+	add_filter("pizzaslices", 1, get_slices_filter())
+
+// Raw Pizza
 /obj/item/food/pizza/raw
 	foodtypes = GRAIN | RAW
 	slice_type = null
@@ -28,12 +119,6 @@
 
 /obj/item/food/pizza/raw/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
-
-/obj/item/food/pizza/make_processable()
-	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
-		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 4.5 SECONDS, table_required = TRUE, screentip_verb = "Slice")
-		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 6 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 // Pizza Slice
 /obj/item/food/pizzaslice
@@ -211,8 +296,8 @@
 		/datum/reagent/medicine/omnizine = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "umami" = 1, "laziness" = 1)
+	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD
 	slice_type = /obj/item/food/pizzaslice/donkpocket
 	boxtag = "Bangin' Donk"
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -220,7 +305,7 @@
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
 	icon_state = "donkpocketpizza_raw"
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | RAW
+	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD|RAW
 	slice_type = null
 
 /obj/item/food/pizza/donkpocket/raw/make_bakeable()
@@ -230,8 +315,8 @@
 	name = "donkpocket pizza slice"
 	desc = "Smells like donkpocket."
 	icon_state = "donkpocketpizzaslice"
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "umami" = 1, "laziness" = 1)
+	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD
 
 /obj/item/food/pizza/dank
 	name = "dank pizza"
@@ -373,12 +458,13 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 	slice_type = /obj/item/food/pizzaslice/arnold
 	boxtag = "9mm Pepperoni"
+	foodtypes = MEAT|GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/arnold/raw
 	name = "raw Arnold pizza"
 	icon_state = "arnoldpizza_raw"
-	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
+	foodtypes = MEAT|GRAIN|DAIRY|VEGETABLES|RAW
 	slice_type = null
 
 /obj/item/food/pizza/arnold/raw/make_bakeable()
@@ -454,14 +540,14 @@
 	)
 	tastes = list("pure electricity" = 4, "pizza" = 2)
 	slice_type = /obj/item/food/pizzaslice/energy
-	foodtypes = TOXIC
+	foodtypes = GRAIN|TOXIC
 	boxtag = "24 Hour Energy"
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizza/energy/raw
 	name = "raw energy pizza"
 	icon_state = "energypizza_raw"
-	foodtypes = TOXIC
+	foodtypes = GRAIN|TOXIC|RAW
 	slice_type = null
 
 /obj/item/food/pizza/energy/raw/make_bakeable()
@@ -472,7 +558,7 @@
 	desc = "You're thinking about using this to power your modsuit. You should avoid eating this if you aren't an Ethereal."
 	icon_state ="energypizzaslice"
 	tastes = list("pure electricity" = 4, "pizza" = 2)
-	foodtypes = TOXIC
+	foodtypes = GRAIN|TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_meat_calzone
@@ -485,7 +571,7 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("raw dough" = 1, "raw meat" = 1, "cheese" = 1, "tomato sauce" = 1)
-	foodtypes = GRAIN | RAW | DAIRY | MEAT
+	foodtypes = GRAIN|VEGETABLES|DAIRY|MEAT|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -502,7 +588,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("baked dough" = 1, "juicy meat" = 1, "melted cheese" = 1, "tomato sauce" = 1)
-	foodtypes = GRAIN | DAIRY | MEAT
+	foodtypes = GRAIN|VEGETABLES|DAIRY|MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -515,7 +601,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("raw dough" = 1, "vegetables" = 1, "tomato sauce" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|VEGETABLES|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
