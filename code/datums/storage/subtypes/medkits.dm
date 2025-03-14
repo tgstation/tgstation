@@ -42,7 +42,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/spray,
-		/obj/item/reagent_containers/applicator/pill/libital,
+		/obj/item/reagent_containers/applicator/patch/libital,
 		/obj/item/reagent_containers/applicator/patch/aiuri,
 		/obj/item/reagent_containers/hypospray/combat/empty,
 		/obj/item/reagent_containers/medigel/sterilizine,
