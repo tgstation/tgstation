@@ -10,4 +10,4 @@
 	name = "Новые айтемы аплинку"
 	group = "Features"
 	desc = "Добавляем новые вещи в аплинки нюкера и трейтора"
-	author = "Glamyr"
+	author = "Glamyr" 
