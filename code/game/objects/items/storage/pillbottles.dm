@@ -253,3 +253,22 @@
 	. = list()
 	for(var/i in 1 to 5)
 		. += /obj/item/reagent_containers/applicator/patch/ondansetron
+
+/obj/item/storage/pill_bottle/maintenance_pill
+	name = "bottle of maintenance pills"
+	desc = "An old pill bottle. It smells musty."
+
+/obj/item/storage/pill_bottle/maintenance_pill/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/applicator/pill/P = locate() in src
+	name = "bottle of [P.name]s"
+
+/obj/item/storage/pill_bottle/maintenance_pill/PopulateContents()
+	. = list()
+	for(var/i in 1 to rand(1, 7))
+		. += /obj/item/reagent_containers/applicator/pill/maintenance
+
+/obj/item/storage/pill_bottle/maintenance_pill/full/PopulateContents()
+	. = list()
+	for(var/i in 1 to 7)
+		. += /obj/item/reagent_containers/applicator/pill/maintenance
