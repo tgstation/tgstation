@@ -135,7 +135,7 @@
 
 	if(!techweb_updating) //so we batch these updates together
 		techweb_updating = TRUE
-		addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS)
 
 ///When materials are instered via silo link
 /obj/machinery/rnd/production/proc/silo_material_insert(obj/machinery/rnd/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
