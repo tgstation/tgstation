@@ -920,12 +920,9 @@
 	name = "syndicate poster pack"
 	desc = "Contains a variety of demotivational posters to ensure minimum productivity for the crew of any Nanotrasen station."
 
-	/// Number of posters this box contains when spawning.
-	var/poster_count = 3
-
 /obj/item/storage/box/syndie_kit/poster_box/PopulateContents()
 	. = list()
-	for(var/i in 1 to poster_count)
+	for(var/i in 1 to 3)
 		. += /obj/item/poster/traitor
 
 /obj/item/storage/box/syndie_kit/cowboy

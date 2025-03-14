@@ -2716,7 +2716,6 @@
 #include "code\game\objects\items\storage\pillbottles.dm"
 #include "code\game\objects\items\storage\sixpack.dm"
 #include "code\game\objects\items\storage\storage.dm"
-#include "code\game\objects\items\storage\uplink_kits.dm"
 #include "code\game\objects\items\storage\wallets.dm"
 #include "code\game\objects\items\storage\boxes\_boxes.dm"
 #include "code\game\objects\items\storage\boxes\cargo_boxes.dm"
