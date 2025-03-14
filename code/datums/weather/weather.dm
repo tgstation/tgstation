@@ -3,6 +3,9 @@
 /// increasing this too high can result in severe lag so please be careful
 #define MAX_TURFS_PER_TICK 500
 
+/// Weather reagent volume applied to randomly selected turfs/objects is scaled by this multiplier to compensate for reduced processing frequency.
+#define TURF_REAGENT_VOLUME_MULTIPLIER 3
+
 /**
  * Causes weather to occur on a z level in certain area types
  *
@@ -127,6 +130,8 @@
 	var/list/blacklist_weather_reagents
 	/// The selected reagent that will be rained down
 	var/datum/reagent/weather_reagent
+	/// The actual atom that holds our reagents that is held in nullspace
+	var/obj/effect/abstract/weather_reagent_holder
 
 /datum/weather/New(z_levels, list/weather_data)
 	..()
@@ -148,6 +153,9 @@
 	if(reagent_id)
 		weather_reagent = find_reagent_object_from_type(reagent_id)
 		weather_color = weather_reagent.color
+		weather_reagent_holder = new(null) // spawns in nullspace
+		weather_reagent_holder.create_reagents(WEATHER_REAGENT_VOLUME, NO_REACT)
+		weather_reagent_holder.reagents.add_reagent(reagent_id, WEATHER_REAGENT_VOLUME)
 
 	if(weather_flags & (WEATHER_MOBS))
 		subsystem_tasks += SSWEATHER_MOBS
@@ -161,6 +169,11 @@
 
 	setup_weather_areas()
 	setup_weather_turfs()
+
+/datum/weather/Destroy()
+	QDEL_NULL(weather_reagent_holder)
+	return ..()
+
 /**
  * Telegraphs the beginning of the weather on the impacted z levels
  *
@@ -351,13 +364,13 @@
  * Affects the mob with whatever the weather does
  */
 /datum/weather/proc/weather_act_mob(mob/living/living)
-	if(!weather_reagent)
+	if(!weather_reagent || !weather_reagent_holder || living.IsObscured())
 		return
 
 	if(istype(weather_reagent, /datum/reagent/water))
 		living.wash()
 
-	weather_reagent.expose_mob(living, TOUCH, WEATHER_REAGENT_VOLUME)
+	weather_reagent_holder.reagents.expose(living, TOUCH)
 
 	if(!(weather_flags & WEATHER_NOTIFICATION) || prob(95))
 		return
@@ -382,14 +395,15 @@
  * Affects the turf with whatever the weather does
  */
 /datum/weather/proc/weather_act_turf(turf/open/weather_turf)
-	if(!weather_reagent)
+	if(!weather_reagent || !weather_reagent_holder)
 		return
 
-	for(var/obj/thing as anything in weather_turf.contents)
-		if(thing.IsObscured())
+	weather_reagent_holder.reagents.expose(weather_turf, TOUCH, TURF_REAGENT_VOLUME_MULTIPLIER)
+	for(var/atom/thing as anything in weather_turf)
+		if(thing.IsObscured() || isliving(thing))
 			continue
 
-		weather_reagent.expose_obj(thing, WEATHER_REAGENT_VOLUME, TOUCH)
+		weather_reagent_holder.reagents.expose(thing, TOUCH, TURF_REAGENT_VOLUME_MULTIPLIER)
 
 		// Time for the sophisticated art of catching sky-booze
 		if(!is_reagent_container(thing))
@@ -399,13 +413,10 @@
 		if(!container.is_open_container() || container.reagents.holder_full())
 			continue
 
-		var/amount_to_add = min(container.volume - container.reagents.total_volume, WEATHER_REAGENT_VOLUME)
-		container.reagents.add_reagent(weather_reagent.type, amount_to_add)
+		container.reagents.add_reagent(weather_reagent.type, WEATHER_REAGENT_VOLUME, TURF_REAGENT_VOLUME_MULTIPLIER)
 
 	if(istype(weather_reagent, /datum/reagent/water))
 		weather_turf.wash(CLEAN_ALL, TRUE)
-
-	weather_reagent.expose_turf(weather_turf, WEATHER_REAGENT_VOLUME)
 
 /**
  * Affects the turf with thunder
@@ -485,3 +496,4 @@
 	return gen_overlay_cache
 
 #undef MAX_TURFS_PER_TICK
+#undef TURF_REAGENT_VOLUME_MULTIPLIER
