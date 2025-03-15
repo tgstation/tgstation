@@ -1,16 +1,16 @@
 ---LICENSE NOTICE---
 
-The server operator(s) is responsible for the copyright status of all sounds placed within the /config/title_music/sounds folder unless otherwise noted.
+Оператор(ы) сервера несет ответственность за статус авторских прав на все звуки, размещенные в папке /config/title_music/sounds, если не указано иное.
 
-If a sound requires attribution and/or a specific license it is up to the operator(s) to make this information publicly available on either 
-a website associated with their server or on the server itself. 
+Если звук требует указания авторства и/или специальной лицензии, оператор (ы) должен(ы) сделать эту информацию общедоступной либо
+на веб-сайте, связанном с их сервером, либо на самом сервере.
 
-If operators(s) allow these configuration files to be public this file can serve that purpose by keeping it properly updated.
+Если операторы разрешают публикацию этих конфигурационных файлов, этот файл может служить этой цели, если его должным образом обновлять.
 
-If in the future new sounds are published to these folders (i.e. in an online code repository) they must explicitly state their 
-license if said license is not the same as the default licensing found in README.md in the root directory of the project.
+Если в будущем в этих папках будут публиковаться новые звуки (например, в онлайн-хранилище кода), они должны явно указать свою
+лицензию, если указанная лицензия не совпадает с лицензией по умолчанию, указанной в README.md в корневом каталоге проекта.
 
-Do not remove this notice.
+Не удаляйте это уведомление.
 
 ---END NOTICE---
 
@@ -19,12 +19,12 @@ Do not remove this notice.
 
 ---EXAMPLES (NOT PART OF ANY LICENSE)---
 
-These are examples of properly attributed and licensed sounds. 
-They are not an actual part of any license under any circumstance.
+Это примеры правильно атрибутированных и лицензированных звуков.
+На самом деле они не являются частью какой-либо лицензии ни при каких обстоятельствах.
 
-title5.ogg was created by Mya Quinn on February 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
+title5.ogg был создан Майей Куинн 28 февраля 2557 года. Он лицензирован под лицензией HO-NK на боевую клоунаду 3.0 (http://example.com/license/url/).
 
-Unless otherwise noted all sounds were created by Cuban Pete on July 26, 2555. They are licensed under the RUMBABEAT Public License.(http://example.com/license/url/).
+Если не указано иное, все звуки были созданы кубинцем Питом 26 июля 2555 года. Они лицензированы под публичной лицензией RUMBABEAT.(http://example.com/license/url/).
 
 ---END EXAMPLES (NOT PART OF ANY LICENSE)---
 

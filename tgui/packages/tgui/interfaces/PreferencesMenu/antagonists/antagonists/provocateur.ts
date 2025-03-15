@@ -3,7 +3,7 @@ import { REVOLUTIONARY_MECHANICAL_DESCRIPTION } from './headrevolutionary';
 
 const Provocateur: Antagonist = {
   key: 'provocateur',
-  name: 'Провокатор',
+  name: 'Революционер',
   description: [
     `
       Революционная форма головы, которая может быть активирована при присоединении к текущей

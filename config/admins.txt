@@ -5,3 +5,7 @@
 #If SQL-based admin loading is enabled, admins listed here will always be loaded first and will override any duplicate entries in the database.
 
 Rewokin = Host
+NIKforest321 = Game Admin
+YanNikk = Game Admin
+POPik = Game Admin
+ZiIuyeer = Game Admin
