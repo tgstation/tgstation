@@ -79,6 +79,10 @@
 	AddElement(/datum/element/beauty, 25*rarity)
 	AddComponent(/datum/component/cuboid, cube_rarity = rarity)
 
+/// Randomize the color for the cube
+/obj/item/cube/proc/randcolor()
+	add_filter("cubecolor", 1, color_matrix_filter(ready_random_color()))
+
 //* Random cubes //
 
 /obj/item/cube/random
@@ -146,11 +150,6 @@
 		. += span_warning("It deals extra damage to [bane.plural_form]")
 	if((cube_examine_flags & CUBE_VAMPIRIC))
 		. += span_warning("It heals you when you hit enemies!")
-
-
-/// Randomize the color for the cube
-/obj/item/cube/proc/randcolor()
-	add_filter("cubecolor", 1, color_matrix_filter(ready_random_color()))
 
 /// Randomize icons (once I make more generic ones)
 /obj/item/cube/random/proc/give_random_icon()
