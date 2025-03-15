@@ -406,3 +406,20 @@
       power to shuttles, nor can they be used to add unlimited shuttle power.
   - bugfix: Constructed shuttle engines now connect to shuttles when build, rather
       than needing to be unachored and then reanchored.
+2025-03-15:
+  ArcaneMusic:
+  - balance: Sheets of material and stock blocks are now subject to elastic price
+      changes. AKA, if you sell materials, their price will go down after sale and
+      will return after some time.
+  - bugfix: Stock blocks can no longer be made with no value or with a quantity of
+      zero material.
+  - bugfix: The GMM Machine can now no longer create stock blocks when unpowered.
+  - qol: The GMM machine now lights up when powered.
+  Holoo-1:
+  - bugfix: fixed white space when observing in auto observe mode
+  Melbert:
+  - bugfix: Plaslamen can see prefs again
+  SmArtKar:
+  - bugfix: Fixed basic mobs not idling due to nearby ghosts
+  hry-gh:
+  - bugfix: icons generate properly for janicarts
