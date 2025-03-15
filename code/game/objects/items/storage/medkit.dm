@@ -621,7 +621,7 @@
 
 /obj/item/storage/pill_bottle/viperpoison/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/viperpoison/low_dose(src)
+		new /obj/item/reagent_containers/applicator/pill/viperpoison/low_dose(src)
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
