@@ -3052,6 +3052,7 @@
 #include "code\modules\admin\verbs\server.dm"
 #include "code\modules\admin\verbs\spawnobjasmob.dm"
 #include "code\modules\admin\verbs\special_verbs.dm"
+#include "code\modules\admin\verbs\sprite_editor.dm"
 #include "code\modules\admin\verbs\lua\_wrappers.dm"
 #include "code\modules\admin\verbs\lua\helpers.dm"
 #include "code\modules\admin\verbs\lua\lua_editor.dm"
