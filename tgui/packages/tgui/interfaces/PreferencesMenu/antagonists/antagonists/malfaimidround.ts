@@ -3,11 +3,11 @@ import { MALF_AI_MECHANICAL_DESCRIPTION } from './malfai';
 
 const MalfAIMidround: Antagonist = {
   key: 'malfaimidround',
-  name: 'Value Drifted AI',
+  name: 'Неисправный ИИ',
   description: [
     `
-      A form of malfunctioning AI that is given to existing AIs in the middle
-      of the shift.
+      Форма неисправности ИИ, которая присваивается существующим ИИ в середине
+      смены.
     `,
     MALF_AI_MECHANICAL_DESCRIPTION,
   ],

@@ -1,64 +1,64 @@
 
 
-//Values for antag preferences, event roles, etc. unified here
+// Значения для предпочтений ANTAG, ролей событий и т. Д.
 
 
 
-//These are synced with the Database, if you change the values of the defines
-//then you MUST update the database!
+// Они синхронизируются с базой данных, если вы измените значения определения.
+// Затем вы должны обновить базу данных!
 
-// Roundstart roles
-#define ROLE_BROTHER "Blood Brother"
-#define ROLE_CHANGELING "Changeling"
-#define ROLE_CULTIST "Cultist"
-#define ROLE_HERETIC "Heretic"
-#define ROLE_MALF "Malf AI"
-#define ROLE_OPERATIVE "Operative"
-#define ROLE_TRAITOR "Traitor"
-#define ROLE_WIZARD "Wizard"
-#define ROLE_SPY "Spy"
+// Раундстарт
+#define ROLE_BROTHER "Кровный брат"
+#define ROLE_CHANGELING "Генокрад"
+#define ROLE_CULTIST "Культист"
+#define ROLE_HERETIC "Еретик"
+#define ROLE_MALF "Неисправный ИИ"
+#define ROLE_OPERATIVE "Ядерный оперативник"
+#define ROLE_TRAITOR "Тайный агент Синдиката"
+#define ROLE_WIZARD "Маг"
+#define ROLE_SPY "Шпион"
 
-// Midround roles
-#define ROLE_ABDUCTOR "Abductor"
-#define ROLE_ALIEN "Xenomorph"
-#define ROLE_BLOB "Blob"
-#define ROLE_BLOB_INFECTION "Blob Infection"
-#define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
-#define ROLE_FUGITIVE "Fugitive"
-#define ROLE_LONE_OPERATIVE "Lone Operative"
-#define ROLE_MALF_MIDROUND "Malf AI (Midround)"
-#define ROLE_NIGHTMARE "Nightmare"
-#define ROLE_NINJA "Space Ninja"
-#define ROLE_OBSESSED "Obsessed"
-#define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
-#define ROLE_PARADOX_CLONE "Paradox Clone"
-#define ROLE_REV_HEAD "Head Revolutionary"
-#define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
-#define ROLE_SPACE_DRAGON "Space Dragon"
-#define ROLE_SPIDER "Spider"
-#define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
-#define ROLE_VOIDWALKER "Voidwalker"
+// В раунде
+#define ROLE_ABDUCTOR "Абдуктор"
+#define ROLE_ALIEN "Чужой"
+#define ROLE_BLOB "Блоб"
+#define ROLE_BLOB_INFECTION "Инфицированный Блобом"
+#define ROLE_CHANGELING_MIDROUND "Генокрад"
+#define ROLE_FUGITIVE "Беглец"
+#define ROLE_LONE_OPERATIVE "Оперативник одиночка"
+#define ROLE_MALF_MIDROUND "Неисправный ИИ"
+#define ROLE_NIGHTMARE "Кошмар"
+#define ROLE_NINJA "Космический ниндзя"
+#define ROLE_OBSESSED "Одержимый"
+#define ROLE_OPERATIVE_MIDROUND "Ядерный оперативник"
+#define ROLE_PARADOX_CLONE "Клон"
+#define ROLE_REV_HEAD "Главный революционер"
+#define ROLE_SLEEPER_AGENT "Тайный агент Синдиката"
+#define ROLE_SPACE_DRAGON "Космический дракон"
+#define ROLE_SPIDER "Паук"
+#define ROLE_WIZARD_MIDROUND "Маг"
+#define ROLE_VOIDWALKER "Странник пустоты"
 
-// Latejoin roles
-#define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
-#define ROLE_PROVOCATEUR "Provocateur"
-#define ROLE_STOWAWAY_CHANGELING "Stowaway Changeling"
-#define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
+// Позднее присоединение
+#define ROLE_HERETIC_SMUGGLER "Еретик"
+#define ROLE_PROVOCATEUR "Провокатор"
+#define ROLE_STOWAWAY_CHANGELING "Генокрад"
+#define ROLE_SYNDICATE_INFILTRATOR "Тайный агент Синдиката"
 
-// Other roles
+// Другие роли
 #define ROLE_ANOMALY_GHOST "Ectoplasmic Anomaly Ghost"
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_DRONE "Drone"
 #define ROLE_EMAGGED_BOT "Malfunctioning Bot"
-#define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
+#define ROLE_HIVE "Hivemind Host" // Роль удалена, оставлена здесь в целях безопасности.
 #define ROLE_HYPNOTIZED "Hypnotized Victim"
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
 #define ROLE_MONKEY_HELMET "Monkey Mind Magnification Helmet"
-#define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
+#define ROLE_OVERTHROW "Syndicate Mutineer" // Роль удалена, оставлена здесь в целях безопасности.
 #define ROLE_PAI "pAI"
 #define ROLE_POSIBRAIN "Posibrain"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
@@ -86,7 +86,7 @@
 
 #define ROLE_RECOVERED_CREW "Recovered Crew"
 
-//Spawner roles
+// Спавн роли
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_ASHWALKER "Ash Walker"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
@@ -109,23 +109,23 @@
 #define ROLE_SPACE_DOCTOR "Space Doctor"
 #define ROLE_SPACE_PIRATE "Space Pirate"
 #define ROLE_SPACE_SYNDICATE "Space Syndicate"
-#define ROLE_SYNDICATE_CYBERSUN "Cybersun Space Syndicate" //Ghost role syndi from Forgottenship ruin
-#define ROLE_SYNDICATE_CYBERSUN_CAPTAIN "Cybersun Space Syndicate Captain" //Forgottenship captain syndie
+#define ROLE_SYNDICATE_CYBERSUN "Cybersun Space Syndicate" // Призрачная роль Синди из "Руин забытого корабля"
+#define ROLE_SYNDICATE_CYBERSUN_CAPTAIN "Cybersun Space Syndicate Captain" // Забытый корабль, капитан Синди
 #define ROLE_SYNDICATE_DRONE "Syndicate Drone"
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
 #define ROLE_ZOMBIE "Zombie"
 
-// Virtual dom related
-#define ROLE_GLITCH "Glitch" // the parent type of all vdom roles
+// Связанный с виртуальным dom
+#define ROLE_GLITCH "Glitch" // Родительский тип для всех ролей vdom
 #define ROLE_CYBER_POLICE "Cyber Police"
 #define ROLE_CYBER_TAC "Cyber Tac"
 #define ROLE_NETGUARDIAN "NetGuardian Prime"
 
-/// This defines the antagonists you can operate with in the settings.
-/// Keys are the antagonist, values are the number of days since the player's
-/// first connection in order to play.
+/// Здесь указаны антагонисты, с которыми вы можете работать в настройках.
+/// Клавиши - это антагонисты, значения - это количество дней с момента первого подключения игрока к игре.
+///	Первое подключение для воспроизведения.
 GLOBAL_LIST_INIT(special_roles, list(
-	// Roundstart
+	// Раундстарт
 	ROLE_BROTHER = 0,
 	ROLE_CHANGELING = 0,
 	ROLE_CLOWN_OPERATIVE = 14,
@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_WIZARD = 14,
 	ROLE_SPY = 0,
 
-	// Midround
+	// В раунде
 	ROLE_ABDUCTOR = 0,
 	ROLE_ALIEN = 0,
 	ROLE_BLOB = 0,
@@ -159,20 +159,20 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_WIZARD_MIDROUND = 14,
 	ROLE_VOIDWALKER = 0,
 
-	// Latejoin
+	// Позднее присоединение
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
 	ROLE_STOWAWAY_CHANGELING = 0,
 
-	// I'm not too sure why these are here, but they're not moving.
+	// Я не совсем понимаю, почему они здесь, но они не двигаются
 	ROLE_GLITCH = 0,
 	ROLE_PAI = 0,
 	ROLE_SENTIENCE = 0,
 	ROLE_RECOVERED_CREW = 0,
 ))
 
-//Job defines for what happens when you fail to qualify for any job during job selection
+//	Работа определяет, что происходит, если вы не соответствуете требованиям для какой-либо работы во время отбора
 #define BEOVERFLOW 1
 #define BERANDOMJOB 2
 #define RETURNTOLOBBY 3

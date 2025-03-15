@@ -3,9 +3,9 @@ import { HERETIC_MECHANICAL_DESCRIPTION } from './heretic';
 
 const HereticSmuggler: Antagonist = {
   key: 'hereticsmuggler',
-  name: 'Heretic Smuggler',
+  name: 'Еретик',
   description: [
-    'A form of heretic that can activate when joining an ongoing shift.',
+    'Разновидность еретика, которая может активироваться при присоединении к текущей смене.',
     HERETIC_MECHANICAL_DESCRIPTION,
   ],
   category: Category.Latejoin,

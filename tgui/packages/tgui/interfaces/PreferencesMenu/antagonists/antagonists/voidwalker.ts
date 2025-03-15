@@ -2,11 +2,11 @@ import { Antagonist, Category } from '../base';
 
 const Voidwalker: Antagonist = {
   key: 'voidwalker',
-  name: 'Voidwalker',
+  name: 'Странник пустоты',
   description: [
     `
-      Move through space and pull people into the void.
-      Declare solars an independent nation.
+      Перемещайтесь в космосе и увлекайте людей в пустоту.
+      Объявите соларов независимой нацией.
     `,
   ],
   category: Category.Midround,

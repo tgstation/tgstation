@@ -2,19 +2,19 @@ import { Antagonist, Category } from '../base';
 
 const Abductor: Antagonist = {
   key: 'abductor',
-  name: 'Abductor',
+  name: 'Абдуктор',
   description: [
     `
-      Abductors are technologically advanced alien society set on cataloging
-      all species in the system. Unfortunately for their subjects their methods
-      are quite invasive.
+      Похитители - это технологически развитое инопланетное общество, занимающееся каталогизацией
+      всех видов в системе. К сожалению для их подданных, их методы
+      довольно агрессивны.
     `,
 
     `
-      You and a partner will become the abductor scientist and agent duo.
-      As an agent, abduct unassuming victims and bring them back to your UFO.
-      As a scientist, scout out victims for your agent, keep them safe, and
-      operate on whoever they bring back.
+      Вы с напарником станете дуэтом ученых-похитителей и агентов.
+      В качестве агента похищайте скромных жертв и доставляйте их обратно на свой НЛО.
+      В качестве ученого ищите жертв для своего агента, обеспечивайте их безопасность и
+      оперируйте тех, кого они доставят обратно.
     `,
   ],
   category: Category.Midround,

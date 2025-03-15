@@ -3,11 +3,11 @@ import { TRAITOR_MECHANICAL_DESCRIPTION } from './traitor';
 
 const SyndicateSleeperAgent: Antagonist = {
   key: 'syndicatesleeperagent',
-  name: 'Syndicate Sleeper Agent',
+  name: 'Тайный агент Синдиката',
   description: [
     `
-      A form of traitor that can activate at any point in the middle
-      of the shift.
+      Разновидность предателя, которая может активироваться в любой момент в середине
+      смены.
     `,
     TRAITOR_MECHANICAL_DESCRIPTION,
   ],

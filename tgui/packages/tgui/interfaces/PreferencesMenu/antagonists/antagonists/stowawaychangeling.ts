@@ -3,11 +3,11 @@ import { CHANGELING_MECHANICAL_DESCRIPTION } from './changeling';
 
 const Stowaway_Changeling: Antagonist = {
   key: 'stowawaychangeling',
-  name: 'Stowaway Changeling',
+  name: 'Генокрад',
   description: [
     `
-      A Changeling that found its way onto the shuttle
-      unbeknownst to the crewmembers on board.
+      Генокрад, который проник на шаттл
+      без ведома членов экипажа на борту.
     `,
     CHANGELING_MECHANICAL_DESCRIPTION,
   ],

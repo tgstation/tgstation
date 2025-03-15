@@ -3,11 +3,11 @@ import { CHANGELING_MECHANICAL_DESCRIPTION } from './changeling';
 
 const ChangelingMidround: Antagonist = {
   key: 'changelingmidround',
-  name: 'Space Changeling',
+  name: 'Космический генокрад',
   description: [
     `
-    A midround changeling does not receive a crew identity, instead arriving
-    from space. This will be more difficult than being a round-start changeling!
+      Подменыш среднего уровня не получает удостоверение члена экипажа, вместо этого он прибывает
+      из космоса. Это будет сложнее, чем быть подменышем среднего уровня!
     `,
     CHANGELING_MECHANICAL_DESCRIPTION,
   ],

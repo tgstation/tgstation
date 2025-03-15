@@ -3,11 +3,11 @@ import { BLOB_MECHANICAL_DESCRIPTION } from './blob';
 
 const BlobInfection: Antagonist = {
   key: 'blobinfection',
-  name: 'Blob Infection',
+  name: 'Инфицированный Блобом',
   description: [
     `
-      At any point in the middle of the shift, be strucken with an infection
-      that will turn you into the terrifying blob.
+      В любой момент в середине смены вас может поразить инфекция,
+      которая превратит вас в ужасающую каплю.
     `,
     BLOB_MECHANICAL_DESCRIPTION,
   ],

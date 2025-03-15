@@ -3,9 +3,9 @@ import { WIZARD_MECHANICAL_DESCRIPTION } from './wizard';
 
 const WizardMidround: Antagonist = {
   key: 'wizardmidround',
-  name: 'Wizard (Midround)',
+  name: 'Маг',
   description: [
-    'A form of wizard that is offered to ghosts in the middle of the shift.',
+    'Форма волшебства, которая предлагается призракам в середине смены.',
     WIZARD_MECHANICAL_DESCRIPTION,
   ],
   category: Category.Midround,

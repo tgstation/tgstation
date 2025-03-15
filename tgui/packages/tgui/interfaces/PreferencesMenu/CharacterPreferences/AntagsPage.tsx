@@ -204,17 +204,17 @@ export function AntagsPage() {
   return (
     <Box className="PreferencesMenu__Antags">
       <AntagSelection
-        name="Roundstart"
+        name="С начала раунда"
         antagonists={antagsByCategory.get(Category.Roundstart)!}
       />
 
       <AntagSelection
-        name="Midround"
+        name="В раунде"
         antagonists={antagsByCategory.get(Category.Midround)!}
       />
 
       <AntagSelection
-        name="Latejoin"
+        name="Позднее присоединение"
         antagonists={antagsByCategory.get(Category.Latejoin)!}
       />
     </Box>

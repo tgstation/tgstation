@@ -2,15 +2,15 @@ import { Antagonist, Category } from '../base';
 
 const Glitch: Antagonist = {
   key: 'glitch',
-  name: 'Glitch',
+  name: 'Глитчер',
   description: [
     `
-    The virtual domain is a dangerous place for bitrunners. Make it so.
+      Виртуальный домен - опасное место для пользователей битранеров. Сделайте так, чтобы это было так.
     `,
 
     `
-    You are a short-term antagonist, a glitch in the system. Use martial arts \
-    and lethal weaponry to terminate organics.
+      Вы - кратковременный противник, сбой в системе. Используйте боевые искусства
+      и смертоносное оружие, чтобы уничтожать органиков.
     `,
   ],
   category: Category.Midround,

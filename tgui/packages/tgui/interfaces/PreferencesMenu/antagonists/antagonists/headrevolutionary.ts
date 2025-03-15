@@ -1,14 +1,17 @@
 import { Antagonist, Category } from '../base';
 
 export const REVOLUTIONARY_MECHANICAL_DESCRIPTION = `
-      Armed with a flash, convert as many people to the revolution as you can.
-      Kill or exile all heads of staff on the station.
-   `;
+      Вооружившись вспышкой, привлеките к революции как можно больше людей.
+      Убейте или изгоните всех руководителей станции. Смерть корпаратам!
+  `;
 
 const HeadRevolutionary: Antagonist = {
   key: 'headrevolutionary',
-  name: 'Head Revolutionary',
-  description: ['VIVA LA REVOLUTION!', REVOLUTIONARY_MECHANICAL_DESCRIPTION],
+  name: 'Главный революционер',
+  description: [
+    'ДА ЗДРАВСТВУЕТ РЕВОЛЮЦИЯ!',
+    REVOLUTIONARY_MECHANICAL_DESCRIPTION,
+  ],
   category: Category.Roundstart,
 };
 

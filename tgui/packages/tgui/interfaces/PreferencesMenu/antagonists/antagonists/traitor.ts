@@ -1,18 +1,18 @@
 import { Antagonist, Category } from '../base';
 
 export const TRAITOR_MECHANICAL_DESCRIPTION = `
-      Start with an uplink to purchase your gear and take on your sinister
-      objectives. Ascend through the ranks and become an infamous legend.
-   `;
+      Начните с аплинка, чтобы приобрести снаряжение и приступить к выполнению своих зловещих
+      задач. Продвигайтесь по служебной лестнице и станьте печально известной легендой.
+  `;
 
 const Traitor: Antagonist = {
   key: 'traitor',
-  name: 'Traitor',
+  name: 'Тайный агент Синдиката',
   description: [
     `
-      An unpaid debt. A score to be settled. Maybe you were just in the wrong
-      place at the wrong time. Whatever the reasons, you were selected to
-      infiltrate Space Station 13.
+      Неоплаченный долг. Нужно свести счеты. Возможно, вы просто оказались не в том
+      месте и не в то время. Каковы бы ни были причины, вас выбрали для
+      проникновения на космическую станцию 13.
     `,
     TRAITOR_MECHANICAL_DESCRIPTION,
   ],

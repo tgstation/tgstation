@@ -101,9 +101,7 @@ export function CharacterPreferenceWindow(props) {
         />
       </Stack.Item>
       {!data.content_unlocked && (
-        <Stack.Item align="center">
-          Buy BYOND premium for more slots!
-        </Stack.Item>
+        <Stack.Item align="center">Настройте своего персонажа!</Stack.Item>
       )}
       <Stack.Divider />
       <Stack.Item>
@@ -115,7 +113,7 @@ export function CharacterPreferenceWindow(props) {
               setPage={setCurrentPage}
               otherActivePages={[Page.Species]}
             >
-              Character
+              Персонаж
             </PageButton>
           </Stack.Item>
 
@@ -125,7 +123,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Loadout}
               setPage={setCurrentPage}
             >
-              Loadout
+              Лодаут
             </PageButton>
           </Stack.Item>
 
@@ -136,10 +134,10 @@ export function CharacterPreferenceWindow(props) {
               setPage={setCurrentPage}
             >
               {/*
-                    Fun fact: This isn't "Jobs" so that it intentionally
-                    catches your eyes, because it's really important!
+                    Забавный факт: это не "Работа", которая намеренно
+                    привлекает ваше внимание, потому что это действительно важно!
                   */}
-              Occupations
+              Профессии
             </PageButton>
           </Stack.Item>
 
@@ -149,7 +147,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Antags}
               setPage={setCurrentPage}
             >
-              Antagonists
+              Антагонисты
             </PageButton>
           </Stack.Item>
 
@@ -159,7 +157,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Quirks}
               setPage={setCurrentPage}
             >
-              Quirks
+              Черты
             </PageButton>
           </Stack.Item>
         </Stack>

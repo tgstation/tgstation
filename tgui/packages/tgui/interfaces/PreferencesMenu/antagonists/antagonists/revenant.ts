@@ -2,12 +2,12 @@ import { Antagonist, Category } from '../base';
 
 const Revenant: Antagonist = {
   key: 'revenant',
-  name: 'Revenant',
+  name: 'Ревенант',
   description: [
     `
-      Become the mysterious revenant. Break windows, overload lights, and eat
-      the crew's life force, all while talking to your old community of
-      disgruntled ghosts.
+      Станьте таинственным призраком. Разбивайте окна, отключайте освещение и питайтесь
+      жизненной силой экипажа, и все это время общайтесь со своим старым сообществом
+      недовольных призраков.
     `,
   ],
   category: Category.Midround,
