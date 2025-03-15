@@ -3,6 +3,9 @@
 # Local overrides--you can use this to change the config for your dev environment (like setting up SQL) without worrying about committing it
 /config/dev_overrides.txt
 
+#Ignore the dbconfig because it contains sensitive info for the server
+/config/dbconfig.txt
+
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
