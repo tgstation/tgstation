@@ -75,3 +75,36 @@
 		if(!isnull(species_to_test[last_species]))
 			TEST_ASSERT(!(species_to_test[last_species] in quirk.mail_goodies), \
 				"Blood deficiency quirk did not update correctly for [species_type]! ([last_species] did not get its blood bag removed)")
+
+/// Ensures that all quirks correctly initialized when added
+/datum/unit_test/quirk_validity
+
+/datum/unit_test/quirk_validity/Run()
+	// Required for language quirks to function properly
+	// Assigning this manually as config is empty
+	GLOB.uncommon_roundstart_languages = list(/datum/language/uncommon)
+
+	for (var/datum/quirk/quirk_type as anything in subtypesof(/datum/quirk))
+		if (initial(quirk_type.abstract_parent_type) == quirk_type)
+			continue
+
+		var/mob/dead/new_player/abstract_player = allocate(/mob/dead/new_player)
+		var/datum/client_interface/roundstart_mock_client = new()
+		abstract_player.mock_client = roundstart_mock_client
+		roundstart_mock_client.prefs = new(roundstart_mock_client)
+		var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human/consistent)
+		new_character.mind_initialize()
+		abstract_player.new_character = new_character
+		if (!new_character.add_quirk(quirk_type, roundstart_mock_client))
+			TEST_FAIL("Failed to initialize quirk [quirk_type] on a roundstart character!")
+
+		var/mob/living/carbon/human/latejoin_character = allocate(/mob/living/carbon/human/consistent)
+		var/datum/client_interface/latejoin_mock_client = new()
+		latejoin_mock_client.prefs = new(latejoin_mock_client)
+		latejoin_character.mock_client = latejoin_mock_client
+		latejoin_character.mind_initialize()
+		if (!latejoin_character.add_quirk(quirk_type, latejoin_mock_client))
+			TEST_FAIL("Failed to initialize quirk [quirk_type] on a latejoin character!")
+
+	// Clean up after ourselves
+	GLOB.uncommon_roundstart_languages.Cut()

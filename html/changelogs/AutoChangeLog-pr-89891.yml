@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "You can no longer insert infinite amounts of slime cores into advanced chem grenades"
+  - bugfix: "Non-beaker containers in grenades work once more"
+  - bugfix: "Proximity sensors in grenade finally work after like, 4 years."
+  - code_imp: "Cleaned up chemical grenade code"
