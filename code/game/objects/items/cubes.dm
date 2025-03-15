@@ -260,11 +260,16 @@
 				create_storage(rarity, rarity, (rarity * 7))
 			if("Weight")
 				w_class = clamp(6-rarity, 1, 5)
-				AddElement(/datum/element/falling_hazard, damage = 2*rarity, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
+				AddElement(/datum/element/falling_hazard,
+				damage = 2 * rarity,
+				wound_bonus = 5,
+				hardhat_safety = TRUE,
+				crushes = FALSE,
+				impact_sound = drop_sound)
 			if("Butcher")
-				AddComponent(/datum/component/butchering, \
-				speed = round(10 SECONDS/rarity), \
-				effectiveness = 100-round(50/rarity), \
+				AddComponent(/datum/component/butchering,
+				speed = round(10 SECONDS/rarity),
+				effectiveness = 100-round(50/rarity),
 				)
 				cube_examine_flags |= CUBE_BUTCHER
 			if("Bake")
@@ -275,12 +280,12 @@
 					TRUE, TRUE)
 			if("Egg")
 				AddComponent(\
-					/datum/component/fertile_egg,\
-					embryo_type = random_rarity_list[rarity],\
-					minimum_growth_rate = 1*rarity,\
-					maximum_growth_rate = 2*rarity,\
-					total_growth_required = round(400/rarity),\
-					current_growth = 0,\
+					/datum/component/fertile_egg,
+					embryo_type = random_rarity_list[rarity],
+					minimum_growth_rate = 1*rarity,
+					maximum_growth_rate = 2*rarity,
+					total_growth_required = round(400/rarity),
+					current_growth = 0,
 				)
 				cube_examine_flags |= CUBE_EGG
 			if("Fishing Spot")
@@ -293,14 +298,20 @@
 			if("Leashed")
 				ready_leash = TRUE
 			if("Religious")
-				AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, force_catalyst_afterattack = FALSE, charges = rarity)
+				AddComponent(/datum/component/religious_tool,
+				RELIGION_TOOL_INVOKE,
+				force_catalyst_afterattack = FALSE,
+				charges = rarity)
 			if("Scope")
 				AddComponent(/datum/component/scope, range_modifier = rarity)
 			if("Slip")
-				AddComponent(/datum/component/slippery, knockdown = rarity SECONDS, lube_flags = NO_SLIP_WHEN_WALKING)
+				AddComponent(/datum/component/slippery,
+				knockdown = rarity SECONDS,
+				lube_flags = NO_SLIP_WHEN_WALKING)
 				cube_examine_flags |= CUBE_SLIP
 			if("Funny")
-				AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
+				AddComponent(/datum/component/wearertargeting/sitcomlaughter,
+				CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 				cube_examine_flags |= CUBE_FUNNY
 			if("Squeak")
 				AddComponent(/datum/component/squeak)
@@ -310,7 +321,9 @@
 				cube_examine_flags |= CUBE_SURGICAL
 			if("Bane")
 				bane = pick(typecacheof(datum/species, ignore_root_path = TRUE))
-				AddElement(/datum/element/bane, target_type = bane, damage_multiplier = round(rarity/10,0.1))
+				AddElement(/datum/element/bane,
+				target_type = bane,
+				damage_multiplier = round(rarity/10,0.1))
 			if("Haunted")
 				AddElement(/datum/element/haunted)
 			if("Reverse")
