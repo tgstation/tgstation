@@ -1098,3 +1098,26 @@
 	human_user?.do_jitter_animation(50)
 	// Hand fires at them from the location
 	fire_curse_hand(user, get_turf(challenge.location))
+
+/datum/fish_source/cube
+	catalog_description = "Cubes"
+	fish_table = list(
+		FISHING_DUD = 10,
+	)
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_EXPLOSIVE_NONE
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY
+
+/datum/fish_source/cube/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	if(istype(location, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = location
+		location = portal.current_linked_atom
+	if(!istype(location, /obj/item/cube))
+		return list()
+
+	return get_cube_rarity(rod, fisherman, location)
+
+// Get the rarity 1 lower than our current rarity
+/datum/fish_source/cube/proc/get_cube_rarity(obj/item/fishing_rod/rod, mob/fisherman, obj/item/cube/location)
+	var/obj/effect/spawner/random/cube/newcube
+	newcube.cube_rarity = clamp(location.rarity-1, COMMON_CUBE, MYTHICAL_CUBE)
+	return list(newcube = 30, /obj/effect/spawner/random/cube_all = 1)

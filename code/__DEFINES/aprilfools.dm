@@ -5,3 +5,27 @@
 #define EPIC_CUBE 4
 #define LEGENDARY_CUBE 5
 #define MYTHICAL_CUBE 6
+
+// Cube examine flags, used for anything that doesn't inherently already add an examine string
+/// Is a tool
+#define CUBE_TOOL (1<<0)
+/// Ignites what it hits
+#define CUBE_IGNITER (1<<1)
+/// Is an egg
+#define CUBE_EGG (1<<2)
+/// Can butcher things
+#define CUBE_BUTCHER(1<<3)
+/// Is a laser gun
+#define CUBE_LASER(1<<4)
+/// Is leashed to a mob
+#define CUBE_LEASHED(1<<5)
+/// Is slippery
+#define CUBE_SLIP(1<<6)
+/// Does sitcom laughs
+#define CUBE_FUNNY(1<<7)
+/// Can initiate surgery
+#define CUBE_SURGICAL(1<<8)
+/// Is a much better weapon
+#define CUBE_WEAPON(1<<9)
+/// Steals life on hit
+#define CUBE_VAMPIRIC(1<<10)

@@ -36,7 +36,7 @@
 	src.rarity_color_name = all_rarecolors[src.rarity]
 	src.rarity_color = all_rarecolors[src.rarity_color_name]
 	/// Really make it obvious. You can't get 2 feet without seeing an outline.
-	parent.add_filter("cubeglow", 3, outline_filter(color = src.rarity_color, size = 1))
+	parent.add_filter("cubeglow", 10, outline_filter(color = src.rarity_color, size = 1))
 
 /datum/component/cuboid/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
