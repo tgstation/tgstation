@@ -642,7 +642,7 @@
 /datum/reagent/medicine/c2/penthrite/heart_attack/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.Knockdown(2 SECONDS, 2 SECONDS)
-	affected_mob.adjust_silence_up_to(2 SECONDS, 2 SECONDS)
+	affected_mob.set_silence_if_lower(2 SECONDS)
 
 /atom/movable/screen/alert/heart_desperation
 	name = "Last Chance!"

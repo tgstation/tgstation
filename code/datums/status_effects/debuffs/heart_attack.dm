@@ -50,7 +50,7 @@
 	if(time_until_stoppage > ATTACK_STAGE_THREE)
 		if(prob(5))
 			owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 25, FALSE, use_reverb = FALSE)
-			owner.adjustStaminaLoss(5, FALSE)
+			owner.adjustStaminaLoss(5)
 
 	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)	//This coughing gets replaced with worse coughing, no need to stack it.
 		owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 25, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
@@ -97,7 +97,7 @@
 				owner.adjust_temp_blindness(2 SECONDS)
 				owner.adjust_eye_blur_up_to(4 SECONDS, 20 SECONDS)
 			oxyloss_sum += 8
-			owner.Paralyze(10)
+			owner.Paralyze(1 SECONDS)
 		oxyloss_sum += 3
 
 	if(owner.getOxyLoss() < OXYLOSS_MAXIMUM) //A bad enough roll on the verge of passing out might still push you over into unconciousness for a few seconds...?
@@ -124,7 +124,7 @@
 	if(time_until_stoppage <= ATTACK_STAGE_THREE)
 		return span_warning("[owner.p_they()] looks to be doubling over, clutching [owner.p_their()] chest in pain!")
 
-/datum/status_effect/heart_attack/Destroy()
+/datum/status_effect/heart_attack/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_HIGH, type)
 	owner.med_hud_set_status()
 	. = ..()
@@ -139,7 +139,7 @@
 /datum/status_effect/heart_attack/proc/minor_shock(datum/source)
 	SIGNAL_HANDLER
 	time_until_stoppage += 18 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
-	if(prob(50))			//Also good for crafty solos who want to stunbaton themselves back to health. Timing will be key.
+	if(prob(50)) //Also good for crafty solos who want to stunbaton themselves back to health. Timing will be key.
 		to_chat(owner, span_nicegreen("Something about being shocked makes the pain in your chest ease up!"))
 
 ///Makes major progress towards curing the attack.
