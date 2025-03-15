@@ -80,7 +80,7 @@
 			damage_text = "limp and lifeless"
 		else
 			damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
-		. += span_boldwarning("[capitalize(t_his)] [body_part.plaintext_zone] is [damage_text]!")
+		. += span_boldwarning("[capitalize(t_his)] [body_part.plaintext_zone] looks [damage_text]!")
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
