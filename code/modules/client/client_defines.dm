@@ -237,9 +237,15 @@
 	var/list/keys_held = list()
 	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
 	var/list/key_combos_held = list()
+
 	/// The direction we WANT to move, based off our keybinds
-	/// Will be udpated to be the actual direction later on
+	/// It updates by client "move_key_(direction)" verbs and tells us exactly when client wants to move and when they don't
 	var/intended_direction = NONE
+	/// The direction we WANT to move, but another one, based off our keybinds too
+	/// It sets by KeyUp and KeyDown verbs but using it alone can lead to key stucks
+	/// It will be combined with intended_direction and used to set the actual direction later on
+	/// We MIGHT be able to do without it, but BYOND does not handle more than 1 +REP command, so alas
+	var/additional_intended_direction = NONE
 	/*
 	** These next two vars are to apply movement for keypresses and releases made while move delayed.
 	** Because discarding that input makes the game less responsive.

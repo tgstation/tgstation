@@ -998,12 +998,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			switch(kb_name)
 				if("North")
 					movement_keys[key] = NORTH
+					winset(src, "default-[REF(key)]", "parent=default;name=[key]+REP;command=move-key-north")
 				if("East")
 					movement_keys[key] = EAST
+					winset(src, "default-[REF(key)]", "parent=default;name=[key]+REP;command=move-key-east")
 				if("West")
 					movement_keys[key] = WEST
+					winset(src, "default-[REF(key)]", "parent=default;name=[key]+REP;command=move-key-west")
 				if("South")
 					movement_keys[key] = SOUTH
+					winset(src, "default-[REF(key)]", "parent=default;name=[key]+REP;command=move-key-south")
 				if(ADMIN_CHANNEL)
 					if(holder)
 						var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)
