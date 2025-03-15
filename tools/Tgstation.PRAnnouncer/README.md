@@ -26,13 +26,13 @@ Here's an example config:
 	"Settings": {
 		"CommsKey": "<COMMS_KEY config setting>",
 		"GitHubSecret": "<GitHub webhook secret>",
-		"GameServerHealthCheckSeconds": 30,
+		"GameServerHealthCheckSeconds": 30, // How often this service will ping game servers
 		"Servers": [
 			{
-				"Address": "blockmoths.tg.lan",
-				"Port": 3336,
+				"Address": "blockmoths.tg.lan", // DNS/IP address of game server
+				"Port": 3336, // Game server port
 				"InterestedRepoSlugs": [
-					"tgstation/tgstation"
+					"tgstation/tgstation" // List of GitHub owner/repos that notifications should be delivered for
 				]
 			},
 			{
