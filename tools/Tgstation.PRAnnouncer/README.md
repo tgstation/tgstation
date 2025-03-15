@@ -68,6 +68,12 @@ Here's an example config:
 }
 ```
 
+#### Webhook Settings
+
+Webhook must be delivered to `/api/github/webhooks` in the `application/json` format.
+
+Only `Pull Request` events need to be listened for.
+
 ### HTTPS
 
 This service only operates over HTTP. HTTPS must be setup by routing through a reverse proxy of choice.
