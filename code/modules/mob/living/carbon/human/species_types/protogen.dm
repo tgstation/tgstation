@@ -2,7 +2,10 @@
 	name = "\improper Protogen"
 	plural_form = "Protogens"
 	id = SPECIES_PROTOGEN
-	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	inherent_traits = list(
+		TRAIT_RESISTBRUTE,
+	)
 	body_markings = list(
 		/datum/bodypart_overlay/simple/body_marking/moth = SPRITE_ACCESSORY_NONE,
 	)
@@ -15,7 +18,7 @@
 	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_cookie = /obj/item/food/muffin/moffin
-	species_language_holder = /datum/language_holder/moth
+	species_language_holder = /datum/language_holder/protogen
 	death_sound = 'sound/mobs/humanoids/moth/moth_death.ogg'
 	payday_modifier = 1.0
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
@@ -135,25 +138,37 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_COGS,
 			SPECIES_PERK_NAME = "Taste of Silicon",
-			SPECIES_PERK_DESC = "Yeah, they can eat computer parts.",
+			SPECIES_PERK_DESC = "Yes, they can eat computer parts.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "tshirt",
-			SPECIES_PERK_NAME = "Meal Plan",
-			SPECIES_PERK_DESC = "Moths can eat clothes for temporary nourishment.",
+			SPECIES_PERK_NAME = "The Armored Floofy Menace",
+			SPECIES_PERK_DESC = "Protogens have partially-cybernetic arms, legs and chest. The metal parts act as armor, providing 15% BRUTE resistance.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "tshirt",
+			SPECIES_PERK_NAME = "Hormone Control",
+			SPECIES_PERK_DESC = "Protogens have better control of their hormones and bodily chemicals. They move faster than humans when injured, and can trigger their bodies to boost adrenaline production.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fire",
-			SPECIES_PERK_NAME = "Ablazed Wings",
-			SPECIES_PERK_DESC = "Moth wings are fragile, and can be easily burnt off.",
+			SPECIES_PERK_NAME = "Big Ol' Snoot",
+			SPECIES_PERK_DESC = "Protogen visors jut out far enough to prevent them from wearing standard humanoid masks.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "sun",
+			SPECIES_PERK_NAME = "Nanite Restart Syndrome",
+			SPECIES_PERK_DESC = "If a protogen is in critical condition, they may develop Nanite Restart Syndrome. This will cause them to start repeatedly powering on and off for a period of time.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "sun",
 			SPECIES_PERK_NAME = "Electricity Sensitivity",
-			SPECIES_PERK_DESC = "Protogens are extremely sensitive to electricity - tasers (and to a lesser extent, stunbatons) deal significant BURN and BRUTE damage to them.",
+			SPECIES_PERK_DESC = "Protogens are extremely sensitive to electricity - tasers and stunbatons will deal damage. Electrocution will just straight-up kill you.",
 		),
 	)
 

@@ -41,6 +41,8 @@
 		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 	if(damage_amount <= 0)
 		return 0
+	if(HAS_TRAIT(src, TRAIT_RESISTBRUTE) && attacking_item)
+		damage_amount *= 0.85
 
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
 
@@ -277,10 +279,12 @@
 	return TRUE
 
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+
 	if (!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	. = bruteloss
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+
 	. -= bruteloss
 	if(!.) // no change, no need to update
 		return 0

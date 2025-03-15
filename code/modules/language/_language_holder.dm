@@ -372,11 +372,13 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 		/datum/language/machine = list(LANGUAGE_ATOM),
+		/datum/language/hexadecimal = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 		/datum/language/machine = list(LANGUAGE_ATOM),
+		/datum/language/hexadecimal = list(LANGUAGE_ATOM),
 	)
 
 /datum/language_holder/moth
@@ -387,6 +389,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/moffic = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/protogen
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/hexadecimal = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/hexadecimal = list(LANGUAGE_ATOM),
 	)
 
 /datum/language_holder/skeleton
@@ -516,6 +528,7 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 		/datum/language/machine = list(LANGUAGE_ATOM),
+		/datum/language/hexadecimal = list(LANGUAGE_ATOM),
 		/datum/language/draconic = list(LANGUAGE_ATOM),
 		/datum/language/moffic = list(LANGUAGE_ATOM),
 		/datum/language/calcic = list(LANGUAGE_ATOM),
@@ -526,6 +539,7 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 		/datum/language/machine = list(LANGUAGE_ATOM),
+		/datum/language/hexadecimal = list(LANGUAGE_ATOM),
 		/datum/language/draconic = list(LANGUAGE_ATOM),
 		/datum/language/moffic = list(LANGUAGE_ATOM),
 		/datum/language/calcic = list(LANGUAGE_ATOM),
