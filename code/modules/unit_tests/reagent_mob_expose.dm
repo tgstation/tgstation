@@ -53,12 +53,12 @@
 	patch.interact_with_atom(human, human)
 	patch.get_embed().process(SSdcs.wait / 10)
 	human.Life(SSMOBS_DT)
-	TEST_ASSERT_EQUAL(round(human.getBruteLoss()), 20, "Human health did not update after patch was applied")
+	TEST_ASSERT_EQUAL(human.getBruteLoss(), 20, "Human health did not update after patch was applied")
 
 	// INJECT
 	syringe.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
 	syringe.melee_attack_chain(human, human)
-	TEST_ASSERT_EQUAL(round(human.getBruteLoss()), 10, "Human health did not update after injection from syringe")
+	TEST_ASSERT_EQUAL(human.getBruteLoss(), 10, "Human health did not update after injection from syringe")
 
 	// INHALE
 	human.fully_heal(ALL)
