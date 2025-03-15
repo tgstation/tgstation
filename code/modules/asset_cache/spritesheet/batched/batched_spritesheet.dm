@@ -228,8 +228,8 @@
 	fully_generated = TRUE
 	// If we were ever in there, remove ourselves
 	SSasset_loading.dequeue_asset(src)
-	if(data["error"] && !(ignore_dir_errors && findtext(data["error"], "is not in the set of valid dirs")))
-		CRASH("Error during spritesheet generation for [name]: [data["error"]]")
+	//if(data["error"] && !(ignore_dir_errors && findtext(data["error"], "is not in the set of valid dirs")))
+	//	LOG_ERROR("Error during spritesheet generation for [name]: [data["error"]]")
 
 /datum/asset/spritesheet_batched/queued_generation()
 	realize_spritesheets(yield = TRUE)

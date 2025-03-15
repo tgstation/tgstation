@@ -170,7 +170,7 @@
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "sun",
 			SPECIES_PERK_NAME = "Electricity Sensitivity",
-			SPECIES_PERK_DESC = "Protogens are extremely sensitive to electricity - tasers and stunbatons will deal damage. Electrocution will just straight-up kill you.",
+			SPECIES_PERK_DESC = "Protogens are extremely sensitive to electricity - tasers and stunbatons will deal damage. Electrocution causes instantaneous death.",
 		),
 	)
 
