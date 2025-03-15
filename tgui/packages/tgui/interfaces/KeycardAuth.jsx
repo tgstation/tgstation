@@ -56,6 +56,12 @@ export const KeycardAuth = (props) => {
                       onClick={() => act('give_janitor_access')}
                       content="Grant Janitor Access"
                     />
+                    <Button
+                      icon="walkie-talkie"
+                      fluid
+                      onClick={() => act('lockdown_door_remote')}
+                      content="Lockdown Door Remote"
+                    />
                   </>
                 )}
               </>

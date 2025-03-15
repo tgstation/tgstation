@@ -11,6 +11,13 @@
 	name = "control wand"
 	desc = "A remote for controlling a set of airlocks."
 	w_class = WEIGHT_CLASS_TINY
+	var/static/list/always_available_options = list(
+		WAND_OPEN,
+		WAND_BOLT,
+		WAND_EMERGENCY,
+		WAND_HANDLE_REQUESTS
+		)
+	var/static/emagged_available_option = WAND_SHOCK
 	var/department_name = "civilian"
 	var/mode = WAND_OPEN
 	var/datum/id_trim/job/owner_trim = null
@@ -18,21 +25,22 @@
 	var/listening = FALSE
 	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department_name head's id_trim/job
 	var/response_name = null
-	/// A bitfield to represent regions this remote is listening to requests for
-	/// Will typically be one region; Captain can listen to any station region; down the line
-	/// we may allow remotes to have their access modified by HoP, hacking, science, etc.
-	var/listening_regions = null
 	/// When the remote gets dropped, start a 5 minute timer before we stop listening for requests
 	var/list/setting_callbacks = list()
 	// Areas this remote has unfettered access to
 	var/list/our_departmental_areas = null
 	// Assoclist of ID -> door they want opened
 	var/list/open_requests
-	// A simple lists of IDs that have had their requests resolved recently
-	// so we can make sure our timers are expiring (or not) the correct requests
-	var/list/recently_resolved_requests
+	// A simple lists of IDs that have had their requests denied recently
+	// to stop spamming
+	var/list/obj/item/card/id/advanced/recent_denials
 	// A given response to automatically respond to any given request with (horrible idea, good for morale)
 	var/auto_response = null
+	// Dummy record created when this remote is emagged, to display to anyone who checks the logs thereon
+	// Relevantly: will freeze in time any blocked/denied people, even if the remote holder removes blocks
+	// or denials expire; dummy record also won't update for responses, so if you do some basic deduction
+	// you can figure out if a remote was emagged (of course you can also just hold the remote and see)
+	var/list/dummy_record = null
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
@@ -125,7 +133,7 @@
 	if(!response_name)
 		response_name = department_name
 	setting_callbacks = list( // asslist of callbacks for the config menu, see handle_config
-	"C" = CALLBACK(src, PROC_REF(clear_requests)),
+	"C" = CALLBACK(src, PROC_REF(check_logs)),
 	"A" = CALLBACK(src, PROC_REF(set_auto_response)),
 	"T" = CALLBACK(src, PROC_REF(toggle_listen)),
 	)
@@ -138,36 +146,31 @@
 		toggle_listen()
 	else
 		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	SSdoor_remote_routing.begin_tracking(src)
 
 /obj/item/door_remote/proc/resolve_mode_radial_options()
-	var/static/list/always_available_options = list(
-		WAND_OPEN,
-		WAND_BOLT,
-		WAND_EMERGENCY,
-	)
-	var/static/handle_requests_option = WAND_HANDLE_REQUESTS
-	var/static/emagged_available_option = WAND_SHOCK
-	var/list/image_set = GLOB.door_remote_radial_images?[department_name]
+	var/list/image_set = GLOB.door_remote_radial_images[department_name]
 	var/is_emagged = obj_flags & EMAGGED
 	if(!image_set)
 		image_set = GLOB.door_remote_radial_images[REGION_ALL_STATION]
 	var/list/resolved_options = list()
 	for(var/option in always_available_options)
 		resolved_options[option] = image_set[option]
-	resolved_options[handle_requests_option] = GLOB.door_remote_radial_images[WAND_HANDLE_REQUESTS]
+	resolved_options[WAND_HANDLE_REQUESTS] = GLOB.door_remote_radial_images[WAND_HANDLE_REQUESTS]
+	resolved_options[WAND_HANDLE_CONFIG] = GLOB.door_remote_radial_images[WAND_HANDLE_CONFIG]
 	if(is_emagged)
 		resolved_options[emagged_available_option] = image_set[emagged_available_option]
 	return resolved_options
 
 /obj/item/door_remote/proc/resolve_response_radial_options()
-	var/list/resolved_options = list()
+	var/list/resolved_responses = list()
 	var/is_emagged = obj_flags & EMAGGED
-	var/static/list/request_handling_options = GLOB.door_remote_radial_images[REQUEST_RESPONSES]
-	for(var/option in request_handling_options)
-		resolved_options[option] = request_handling_options[option]
+	var/options = SSdoor_remote_routing.request_handling_options
+	for(var/option in options)
+		resolved_responses[option] = options[option]
 	if(!is_emagged)
-		resolved_options -= REMOTE_RESPONSE_SHOCK
-	return resolved_options
+		resolved_responses -= REMOTE_RESPONSE_SHOCK
+	return resolved_responses
 
 /obj/item/door_remote/proc/on_pickup(datum/source, atom/new_hand_touches_the_beacon)
 	SIGNAL_HANDLER
@@ -187,8 +190,13 @@
 			mode = WAND_EMERGENCY
 		if(WAND_HANDLE_REQUESTS)
 			handle_requests(user)
+			return
 		if(WAND_SHOCK) // doorshock not wizard shock
 			mode = WAND_SHOCK
+			return
+		if(WAND_HANDLE_CONFIG)
+			handle_config(user)
+			return
 	update_icon_state()
 	balloon_alert(user, "mode: [desc[mode]]")
 
@@ -259,7 +267,12 @@
 			if(airlock.isElectrified())
 				airlock.set_electrified(MACHINE_NOT_ELECTRIFIED, user)
 			else
-				airlock.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, user)
+				var/duration = MACHINE_ELECTRIFIED_PERMANENT
+				if(get_dist(user, airlock) < 7)
+					//if they're more than 7 tiles away, only set it temporarily
+					//so emagged remote holders can't perma-shock every door with a security camera console
+					duration = MACHINE_DEFAULT_ELECTRIFY_TIME
+				airlock.set_electrified(duration, user)
 
 	return ITEM_INTERACT_SUCCESS
 

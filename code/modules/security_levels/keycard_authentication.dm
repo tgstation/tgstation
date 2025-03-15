@@ -102,6 +102,34 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 				SEND_GLOBAL_SIGNAL(COMSIG_ON_DEPARTMENT_ACCESS, info["regions"])
 				balloon_alert(usr, "key access sent")
 				return
+		if("lockdown_door_remote")
+			var/mob/living/living_user = usr
+			if(!living_user || !istype(living_user))
+				return TRUE
+			var/obj/item/card/id/advanced/card = living_user.get_idcard(hand_first = TRUE)
+			if(!card)
+				return TRUE
+			var/list/obj/item/door_remote/door_remotes = list()
+			for(var/obj/item/door_remote/door_remote as anything in SSdoor_remote_routing.door_remote_records)
+				if(card.check_access(door_remote))
+					door_remotes += door_remote
+			if(!length(door_remotes))
+				return TRUE
+			var/obj/item/door_remote/locked_down = null
+			locked_down = tgui_input_list(
+				living_user,
+				"Select door remote to lock down.",
+				"Lockdown Door Remote",
+				door_remotes
+			)
+			if(!locked_down)
+				return TRUE
+			locked_down.lockdown()
+			if(locked_down.listening == "LOCKED DOWN")
+				balloon_alert(usr, "door remote locked down")
+			else
+				balloon_alert(usr, "door remote unlocked")
+			return
 
 /obj/machinery/keycard_auth/update_appearance(updates)
 	. = ..()

@@ -4,12 +4,12 @@
 	DEPARTMENT_COMMAND = COMMAND_REMOTE_RADIALS, \
 	DEPARTMENT_ENGINEERING = ENGINEERING_REMOTE_RADIALS, \
 	DEPARTMENT_SECURITY = SECURITY_REMOTE_RADIALS, \
-	DEPARTMENT_MEDBAY = MEDBAY_REMOTE_RADIALS, \
-	DEPARTMENT_RESEARCH = RESEARCH_REMOTE_RADIALS, \
-	DEPARTMENT_GENERAL = SERVICE_REMOTE_RADIALS, \
+	DEPARTMENT_MEDICAL = MEDBAY_REMOTE_RADIALS, \
+	DEPARTMENT_SCIENCE = RESEARCH_REMOTE_RADIALS, \
+	DEPARTMENT_SERVICE = SERVICE_REMOTE_RADIALS, \
 	DEPARTMENT_CARGO = CARGO_REMOTE_RADIALS, \
 	WAND_HANDLE_REQUESTS = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_request_decision"), \
-	REQUEST_RESPONSES = REMOTE_RESPONSE_RADIALS \
+	WAND_HANDLE_CONFIG = image(icon = 'icons/obj/signs.dmi', icon_state = "nanotrasen"), \
 )
 
 #define GENERIC_REMOTE_RADIALS list( \
@@ -73,7 +73,7 @@
 	REMOTE_RESPONSE_DENY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_big_no"), \
 	REMOTE_RESPONSE_BOLT = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_padlock"), \
 	REMOTE_RESPONSE_BLOCK = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_fuck_off"), \
-	REMOTE_RESPONSE_EMERGENCY = image(icon = 'icons/obj/signs.dmi', icon_state = "secure_area"), \
+	REMOTE_RESPONSE_EA = image(icon = 'icons/obj/signs.dmi', icon_state = "securearea"), \
 	REMOTE_RESPONSE_SHOCK = image(icon = 'icons/mob/human/human.dmi', icon_state = "electrocuted_generic"), \
 )
 
