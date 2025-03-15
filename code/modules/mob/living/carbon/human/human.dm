@@ -1163,6 +1163,9 @@
 /mob/living/carbon/human/species/pod
 	race = /datum/species/pod
 
+/mob/living/carbon/human/species/protogen
+	race = /datum/species/protogen
+
 /mob/living/carbon/human/species/shadow
 	race = /datum/species/shadow
 
