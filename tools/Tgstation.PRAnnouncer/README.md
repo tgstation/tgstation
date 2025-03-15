@@ -61,7 +61,7 @@ Here's an example config:
 	"Kestrel": {
 		"Endpoints": {
 			"Http": {
-				"Url": "http://0.0.0.0:11337" // This is the port the daemon will be hosted on.
+				"Url": "http://0.0.0.0:11337" // This is the address the service will be hosted on.
 			}
 		}
 	}
