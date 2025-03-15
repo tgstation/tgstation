@@ -111,21 +111,25 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 				return TRUE
 			var/list/obj/item/door_remote/door_remotes = list()
 			for(var/obj/item/door_remote/door_remote as anything in SSdoor_remote_routing.door_remote_records)
-				if(card.check_access(door_remote))
+				var/turf/remote_turf = get_turf(door_remote)
+				if(!remote_turf || !is_station_level(remote_turf.z))
+					continue
+				if(door_remote.check_access_list(card.access))
 					door_remotes += door_remote
 			if(!length(door_remotes))
+				tgui_alert(living_user, "No door remotes found or your access is insufficient.")
 				return TRUE
-			var/obj/item/door_remote/locked_down = null
-			locked_down = tgui_input_list(
+			var/obj/item/door_remote/locked_down_remote = null
+			locked_down_remote = tgui_input_list(
 				living_user,
 				"Select door remote to lock down.",
 				"Lockdown Door Remote",
 				door_remotes
 			)
-			if(!locked_down)
+			if(!locked_down_remote)
 				return TRUE
-			locked_down.lockdown()
-			if(locked_down.listening == "LOCKED DOWN")
+			locked_down_remote.lockdown(card.access)
+			if(locked_down_remote.locked_down)
 				balloon_alert(usr, "door remote locked down")
 			else
 				balloon_alert(usr, "door remote unlocked")

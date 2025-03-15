@@ -19,13 +19,38 @@ SUBSYSTEM_DEF(door_remote_routing)
 		REMOTE_RESPONSE_EA = "set EA",
 		REMOTE_RESPONSE_SHOCK = "shocked door",
 		)
+	var/list/standard_modes = list(
+		WAND_OPEN,
+		WAND_BOLT,
+		WAND_EMERGENCY,
+		WAND_HANDLE_REQUESTS,
+		WAND_HANDLE_CONFIG,
+		)
+	var/list/standard_responses = list(
+		REMOTE_RESPONSE_APPROVE,
+		REMOTE_RESPONSE_DENY,
+		REMOTE_RESPONSE_BOLT,
+		REMOTE_RESPONSE_BLOCK,
+		REMOTE_RESPONSE_EA,
+		)
+	var/list/possible_resolutions = list(
+		REMOTE_RESPONSE_APPROVE,
+		REMOTE_RESPONSE_DENY,
+		REMOTE_RESPONSE_BOLT,
+		REMOTE_RESPONSE_BLOCK,
+		REMOTE_RESPONSE_EA,
+		REMOTE_RESPONSE_SHOCK,
+		EXPIRED_REQUEST,
+		)
+	var/emag_mode = WAND_SHOCK
+	var/emag_response = REMOTE_RESPONSE_SHOCK
 
 
 /datum/controller/subsystem/door_remote_routing/Initialize()
 	setup_door_remote_radials()
 	request_handling_options = GLOB.door_remote_radial_images[REQUEST_RESPONSES]
 	RegisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST_RESOLVED, PROC_REF(handle_resolution))
-	..()
+	return SS_INIT_SUCCESS
 
 // If (when?) we make this info player-available, shocks won't be visible because we'll create a dummy
 // record when the remote is emagged, which will display the records at the moment it was emagged
@@ -66,18 +91,16 @@ SUBSYSTEM_DEF(door_remote_routing)
  * * door_requested - The door that the ID card is requesting be opened.
  */
 /datum/controller/subsystem/door_remote_routing/proc/route_request_to_door_remote(obj/item/card/id/ID_requesting, obj/machinery/door/airlock/door_requested)
-	// Signal that someone requested this door; if no door remotes are listening, ask the AI
-	open_requests[ID_requesting] = list(ID_requesting, door_requested, COMPONENT_REQUEST_AUTO_HANDLED)
-	var/received = SEND_SIGNAL(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
-	if(!(received & COMPONENT_REQUEST_RECEIVED))
-		id_feedback_message(ID_requesting, "buzzes: \"ROUTING REQUEST FAILED, NO REMOTES LISTENING\"")
-		open_requests -= ID_requesting
-		return NONE
-	if(received & COMPONENT_REQUEST_AUTO_HANDLED)
-		return NONE
 	var/timer_id = addtimer(CALLBACK(src, PROC_REF(expire_access_request), ID_requesting, door_requested), 10 SECONDS, TIMER_STOPPABLE)
 	#warn "fix this timer"
 	open_requests[ID_requesting] = list(ID_requesting, door_requested, timer_id)
+	var/received = SEND_SIGNAL(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
+	if(!(received & COMPONENT_REQUEST_RECEIVED))
+		id_feedback_message(ID_requesting, "buzzes: \"ROUTING REQUEST FAILED, NO REMOTES LISTENING\"")
+		deltimer(timer_id)
+		open_requests -= ID_requesting
+		return NONE
+	id_feedback_message(ID_requesting, "buzzes: \"REQUEST ROUTED AND RECEIVED SUCCESSFULLY.\"")
 
 /*Does a bunch of a hullabaloo to set up a door remote's radial menu images
  * Done this way so we can just have a set of images hanging around on GLOB
@@ -93,6 +116,7 @@ SUBSYSTEM_DEF(door_remote_routing)
 				var/list/list_to_append = GLOB.door_remote_radial_images[added_to]
 				if(islist(list_to_append))
 					list_to_append[WAND_HANDLE_REQUESTS] = GLOB.door_remote_radial_images[WAND_HANDLE_REQUESTS]
+					list_to_append[WAND_HANDLE_CONFIG] = GLOB.door_remote_radial_images[WAND_HANDLE_CONFIG]
 			continue // we do it like this to minimize the creation of GLOB variables for holding our radial images
 		var/image/bolt_radial = image_set[WAND_BOLT]
 		var/image/EA_radial = image_set[WAND_EMERGENCY]
@@ -139,19 +163,14 @@ SUBSYSTEM_DEF(door_remote_routing)
 	obj/item/card/id/advanced/ID_resolved,
 	obj/machinery/door/airlock/resolved_door,
 	action,
-	obj/item/door_remote/handler)
+	obj/item/door_remote/handler,
+	handling_flags = NONE)
 	SIGNAL_HANDLER
 
-	var/static/list/possible_actions = list(
-		REMOTE_RESPONSE_APPROVE,
-		REMOTE_RESPONSE_DENY,
-		REMOTE_RESPONSE_BOLT,
-		REMOTE_RESPONSE_BLOCK,
-		REMOTE_RESPONSE_EA,
-		REMOTE_RESPONSE_SHOCK,
-		EXPIRED_REQUEST
-		)
-	if(!possible_actions.Find(action))
+	. = NONE
+	if(handling_flags & COMPONENT_REQUEST_AUTO_HANDLED)
+		. |= COMPONENT_REQUEST_AUTO_HANDLED
+	if(!possible_resolutions.Find(action))
 		CRASH("handle_resolution called with invalid action.")
 	// Handled this way so remotes hear it to clear the expired request
 	if(action == EXPIRED_REQUEST)
@@ -161,8 +180,8 @@ SUBSYSTEM_DEF(door_remote_routing)
 	if(open_requests.Find(ID_resolved))
 		var/request_info = open_requests[ID_resolved]
 		var/timer_id = request_info[3]
-		if(timer_id != COMPONENT_REQUEST_AUTO_HANDLED)
-			deltimer(timer_id)
+		if(!deltimer(timer_id))
+			debug_admins("Timer deletion failed for [timer_id] on [src].")
 		open_requests -= ID_resolved
 	else
 		// to prevent headaches if multiple heads of staff are trying to handle the same request
@@ -178,22 +197,29 @@ SUBSYSTEM_DEF(door_remote_routing)
 					resolved_door.unlock()
 				INVOKE_ASYNC(resolved_door, TYPE_PROC_REF(/obj/machinery/door/airlock, open))
 				id_feedback_message(ID_resolved, "buzzes \"APPROVED BY [handling_head]\".")
+				. |= COMPONENT_REQUEST_HANDLED
 			else
 				id_feedback_message(ID_resolved, "buzzes \"SIGNAL TO AIRLOCK LOST\".")
-				return
+				return .
 		if(REMOTE_RESPONSE_DENY)
 			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handler.response_name]\".")
 			door_remote_records[handler]["DENIED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
 			addtimer(CALLBACK(src, PROC_REF(lift_lockout), handler, WEAKREF(ID_resolved), "DENIED"), 10 SECONDS)
+			. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED
+			return .
 			#warn "fix this timer"
 		if(REMOTE_RESPONSE_BOLT)
 			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handler.response_name]. FURTHER REQUESTS TO [handler.response_name] BLOCKED. AIRLOCK SECURED.\"")
 			if(powered_and_controllable && !resolved_door.locked)
 				INVOKE_ASYNC(resolved_door, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close))
+				. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED
 			door_remote_records[handler]["BLOCKED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
+			return .
 		if(REMOTE_RESPONSE_BLOCK)
 			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handling_head]. FURTHER REQUESTS TO [handling_head] BLOCKED.\"")
 			door_remote_records[handler]["BLOCKED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
+			. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED
+			return .
 		if(REMOTE_RESPONSE_EA)
 			id_feedback_message(ID_resolved, "buzzes \"EMERGENCY ACCESS GRANTED BY [handling_head].\"")
 			if(powered_and_controllable && !resolved_door.emergency)
@@ -201,6 +227,10 @@ SUBSYSTEM_DEF(door_remote_routing)
 					resolved_door.unlock()
 				resolved_door.emergency = TRUE
 				resolved_door.update_appearance(UPDATE_ICON)
+				. |= COMPONENT_REQUEST_HANDLED
+			else
+				id_feedback_message(ID_resolved, "buzzes \"SIGNAL TO AIRLOCK LOST\".")
+			return .
 		if(REMOTE_RESPONSE_SHOCK)
 			//relevantly, we don't return the name of the handler here
 			//as a subtle tell
@@ -212,6 +242,6 @@ SUBSYSTEM_DEF(door_remote_routing)
 				resolved_door.unlock()
 			resolved_door.emergency = TRUE
 			resolved_door.update_appearance(UPDATE_ICON)
-			if(powered_and_controllable)
-				//the remote (as in not local, but also door remote) response for electrifying is temporary; doing it in LOS is the permanent one
-				resolved_door.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, get(/mob/living, handler))
+			//the remote (as in not local, but also door remote) response for electrifying is temporary; doing it in LOS is the permanent one
+			resolved_door.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, get(/mob/living, handler))
+			. |= COMPONENT_REQUEST_HANDLED

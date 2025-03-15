@@ -1,6 +1,3 @@
-#define RESOLVE_OPERATION_RADIALS (1<<0)
-#define RESOLVE_RESPONSE_RADIALS (1<<1)
-
 /obj/item/door_remote
 	icon_state = "remote"
 	base_icon_state = "remote"
@@ -21,25 +18,28 @@
 	var/department_name = "civilian"
 	var/mode = WAND_OPEN
 	var/datum/id_trim/job/owner_trim = null
-	var/list/access_list
+	var/list/accesses = list()
 	var/listening = FALSE
 	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department_name head's id_trim/job
 	var/response_name = null
 	/// When the remote gets dropped, start a 5 minute timer before we stop listening for requests
-	var/list/setting_callbacks = list()
+	var/listen_timeout_timer_id = null
+	var/static/list/special_modes = list(
+		WAND_HANDLE_REQUESTS,
+		WAND_HANDLE_CONFIG,
+	)
 	// Areas this remote has unfettered access to
 	var/list/our_departmental_areas = null
-	// Assoclist of ID -> door they want opened
-	var/list/open_requests
-	// A simple lists of IDs that have had their requests denied recently
-	// to stop spamming
-	var/list/obj/item/card/id/advanced/recent_denials
 	// A given response to automatically respond to any given request with (horrible idea, good for morale)
 	var/auto_response = null
-	// Dummy record created when this remote is emagged, to display to anyone who checks the logs thereon
-	// Relevantly: will freeze in time any blocked/denied people, even if the remote holder removes blocks
-	// or denials expire; dummy record also won't update for responses, so if you do some basic deduction
-	// you can figure out if a remote was emagged (of course you can also just hold the remote and see)
+	// Whether a remote holder has disabled its audio feedback messages
+	var/silenced = FALSE
+	// A head of staff with access equaling this remote's access can lock it down
+	// To unlock the remote, the person wanting to unlock it must have access equal to
+	// or greater than whoever locked it
+	var/locked_down = FALSE
+	// Dummy record created on the remote (instead of the subsystem) when the remote gets emagged
+	// Record auditing returns a dummy record when there is one
 	var/list/dummy_record = null
 
 /obj/item/door_remote/omni
@@ -92,7 +92,7 @@
 	)
 
 /obj/item/door_remote/head_of_security/Initialize(mapload)
-	/// Warden wishes they were a head
+	// Warden wishes they were a head
 	response_name = span_secradio("HEAD OF SEC[generate_heretic_text(3)]WARDEN")
 	return ..()
 
@@ -127,50 +127,22 @@
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
 	// Trim accesses get updated by configs so we don't set it until all that's done
-	owner_trim = SSid_access.trim_singletons_by_path[owner_trim]
-	access_list = owner_trim.access
+	if(owner_trim)
+		owner_trim = SSid_access.trim_singletons_by_path[owner_trim]
+		accesses = owner_trim.access
+		req_access = accesses
 	update_icon_state()
 	if(!response_name)
 		response_name = department_name
-	setting_callbacks = list( // asslist of callbacks for the config menu, see handle_config
-	"C" = CALLBACK(src, PROC_REF(check_logs)),
-	"A" = CALLBACK(src, PROC_REF(set_auto_response)),
-	"T" = CALLBACK(src, PROC_REF(toggle_listen)),
-	)
 	// For cases where it spawns on somebody
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/door_remote/LateInitialize()
-	. = ..()
 	if(get(loc, /mob/living))
 		toggle_listen()
 	else
 		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 	SSdoor_remote_routing.begin_tracking(src)
-
-/obj/item/door_remote/proc/resolve_mode_radial_options()
-	var/list/image_set = GLOB.door_remote_radial_images[department_name]
-	var/is_emagged = obj_flags & EMAGGED
-	if(!image_set)
-		image_set = GLOB.door_remote_radial_images[REGION_ALL_STATION]
-	var/list/resolved_options = list()
-	for(var/option in always_available_options)
-		resolved_options[option] = image_set[option]
-	resolved_options[WAND_HANDLE_REQUESTS] = GLOB.door_remote_radial_images[WAND_HANDLE_REQUESTS]
-	resolved_options[WAND_HANDLE_CONFIG] = GLOB.door_remote_radial_images[WAND_HANDLE_CONFIG]
-	if(is_emagged)
-		resolved_options[emagged_available_option] = image_set[emagged_available_option]
-	return resolved_options
-
-/obj/item/door_remote/proc/resolve_response_radial_options()
-	var/list/resolved_responses = list()
-	var/is_emagged = obj_flags & EMAGGED
-	var/options = SSdoor_remote_routing.request_handling_options
-	for(var/option in options)
-		resolved_responses[option] = options[option]
-	if(!is_emagged)
-		resolved_responses -= REMOTE_RESPONSE_SHOCK
-	return resolved_responses
 
 /obj/item/door_remote/proc/on_pickup(datum/source, atom/new_hand_touches_the_beacon)
 	SIGNAL_HANDLER
@@ -179,33 +151,39 @@
 	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
 
 /obj/item/door_remote/attack_self(mob/user)
-	var/list/radial_options = resolve_mode_radial_options()
+	if(locked_down)
+		notify_lockdown()
+		return NONE
+	var/list/radial_options = resolve_radial_options("modes")
 	var/choice = show_radial_menu(user, user, radial_options, radius = 40)
-	switch(choice)
-		if(WAND_OPEN)
-			mode = WAND_OPEN
-		if(WAND_BOLT)
-			mode = WAND_BOLT
-		if(WAND_EMERGENCY)
-			mode = WAND_EMERGENCY
-		if(WAND_HANDLE_REQUESTS)
-			handle_requests(user)
-			return
-		if(WAND_SHOCK) // doorshock not wizard shock
-			mode = WAND_SHOCK
-			return
-		if(WAND_HANDLE_CONFIG)
-			handle_config(user)
-			return
+	if(choice)
+		if(choice in special_modes)
+			return handle_special_mode(user, choice)
+		mode = choice
+		balloon_alert(user, "mode: [desc[mode]]")
+		if(mode == WAND_SHOCK)
+			return // this is only a special case to spare players further coder sprites
 	update_icon_state()
-	balloon_alert(user, "mode: [desc[mode]]")
+
+/obj/item/door_remote/proc/handle_special_mode(mob/user, special_mode)
+	if(special_mode == WAND_HANDLE_REQUESTS)
+		handle_requests(user)
+		return
+	if(special_mode == WAND_HANDLE_CONFIG)
+		handle_config(user)
 
 /obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(locked_down)
+		notify_lockdown()
+		return NONE
 	if(!istype(interacting_with, /obj/machinery/door) && !isturf(interacting_with))
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(locked_down)
+		notify_lockdown()
+		return NONE
 	var/obj/machinery/door/door
 
 	if (istype(interacting_with, /obj/machinery/door))
@@ -222,7 +200,7 @@
 		if (isnull(door))
 			return ITEM_INTERACT_BLOCKING
 
-	if ((!door.check_access_list(access_list) && !in_our_area(get_area(door))) || !door.requiresID())
+	if ((!door.check_access_list(accesses) && !in_our_area(get_area(door))) || !door.requiresID())
 		interacting_with.balloon_alert(user, "can't access!")
 		return ITEM_INTERACT_BLOCKING
 

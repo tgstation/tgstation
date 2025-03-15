@@ -20,25 +20,39 @@
 
 // Similar to the message SSdoor_remote_routing generates on IDs, an audible message from the remote
 /obj/item/door_remote/proc/remote_feedback_message(message)
+	if(silenced)
+		return NONE
 	audible_message("[message]", audible_message_flags = EMOTE_MESSAGE)
-
-/obj/item/door_remote/proc/check_logs(mob/user)
-	#warn implement log checking
 
 // Heads of staff can lock down a door remote, assuming that they have access that would match or override
 // that remote's access
-/obj/item/door_remote/proc/lockdown()
-	if(listening == "LOCKED DOWN")
-		access_list = owner_trim.access
-		listening = FALSE
-		return
+/obj/item/door_remote/proc/lockdown(list/access_list_used)
+	if(!check_access_list(access_list_used))
+		return FALSE
+	locked_down = !locked_down
+	silenced = FALSE
+	if(!locked_down)
+		REMOTE_FEEDBACK("buzzes: \"LOCKDOWN LIFTED.\"")
+		req_access = accesses
+		return TRUE
 	if(listening == TRUE)
 		UnregisterSignal(SSdoor_remote_routing, list(COMSIG_DOOR_REMOTE_ACCESS_REQUEST, COMSIG_DOOR_REMOTE_ACCESS_REQUEST_RESOLVED))
-	access_list = list()
+		listening = FALSE
+	auto_response = null
+	req_access = access_list_used
+	notify_lockdown()
+
+/obj/item/door_remote/proc/notify_lockdown()
+	playsound(source = src, soundin = 'sound/machines/scanner/scanbuzz.ogg', vol = 30, vary = FALSE)
+	REMOTE_FEEDBACK("buzzes: \"LOCKDOWN ENGAGED.\"")
+	var/mob/living/my_holder = get(loc, /mob/living)
+	if(obj_flags & EMAGGED && my_holder)
+		my_holder.electrocute_act(5, src, 10)
 
 /obj/item/door_remote/proc/toggle_listen()
-	if(listening == "LOCKED OUT")
-		return
+	if(locked_down)
+		notify_lockdown()
+		return NONE
 	listening = !listening
 	if(listening)
 		RegisterSignal(SSdoor_remote_routing, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, PROC_REF(receive_access_request))
@@ -57,8 +71,14 @@
 	)
 	SIGNAL_HANDLER
 
+	var/area/given_area = get_area(resolved_door)
+	if(!(resolved_door.check_access_list(accesses) || in_our_area(given_area)))
+		return
+	var/ID_name = "\[[uppertext(ID_resolved.registered_name)]\]"
+	var/airlock_name = "\[[uppertext(resolved_door.name)]\]"
+	var/area_name = "\[[uppertext(given_area.name)]\]"
 	if(action == EXPIRED_REQUEST)
-		REMOTE_FEEDBACK("buzzes: [full_capitalize(ID_resolved.registered_name)] REQUEST FOR [full_capitalize(resolved_door.name)] EXPIRED.")
+		REMOTE_FEEDBACK("buzzes: [ID_name] REQUEST FOR [airlock_name] IN [area_name] EXPIRED.")
 		return
 	if(handler == src)
 		return
@@ -67,7 +87,7 @@
 		//if someone does something like steal a remote, emag it, and set it to auto-shock requested doors
 		//that's a big enough ruckus that it should be obvious something is up
 		conspicuous = TRUE
-	var/action_message = "buzzes: [full_capitalize(ID_resolved.registered_name)] REQUEST FOR [full_capitalize(resolved_door.name)] "
+	var/action_message = "buzzes: \"[ID_name] REQUEST FOR [airlock_name] IN [area_name] "
 	switch(action)
 		if(REMOTE_RESPONSE_APPROVE)
 			action_message += "APPROVED BY "
@@ -82,7 +102,9 @@
 				action_message += "##ERROR## SERVICE REM##ERROR##"
 			else
 				action_message += "APPROVED BY "
-	action_message += "[handler.response_name]."
+	action_message += "\[[handler.response_name]\]"
+	if(conspicuous)
+		action_message += "\[--AUTOMATIC RESPONSE--\].\""
 	REMOTE_FEEDBACK(action_message)
 
 /obj/item/door_remote/proc/set_auto_response(mob/living/user)
@@ -90,8 +112,8 @@
 		auto_response = null
 		REMOTE_FEEDBACK("buzzes: \"AUTO-RESPONSE CLEARED.\"")
 		return
+	var/auto_response_option = show_radial_menu(user, user, resolve_radial_options("responses"), radius = 40)
 	user.balloon_alert("set auto-response")
-	var/auto_response_option = show_radial_menu(user, user, resolve_response_radial_options(), radius = 40)
 	if(!auto_response_option)
 		return
 	REMOTE_FEEDBACK("buzzes: \"AUTO-RESPONSE SET.\"")
@@ -99,31 +121,81 @@
 
 /obj/item/door_remote/proc/receive_access_request(datum/source, obj/item/card/id/advanced/ID_requesting, obj/machinery/door/airlock/requested_door)
 	SIGNAL_HANDLER
-	if(!requested_door.check_access(src) && !in_our_area(get_area(requested_door)))
+	if(!requested_door.check_access_list(accesses) && !in_our_area(get_area(requested_door)))
 		return NONE
 	if(WAS_DENIED(WEAKREF(ID_requesting)))
-		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST NOT ROUTED TO [response_name]: RECENT DENIAL NOTICE\"")
-		return COMPONENT_REQUEST_DENIED
+		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST NOT ROUTED TO [response_name]: RECENT DENIAL NOTICE.\"")
+		return COMPONENT_REQUEST_DENIED | COMPONENT_REQUEST_BLOCKED
 	if(IS_BLOCKED(WEAKREF(ID_requesting)))
-		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST NOT ROUTED TO [response_name]: BLOCKED ID NOTICE\"")
-		return COMPONENT_REQUEST_DENIED
-	ID_FEEDBACK(ID_requesting, "intones, \"REQUEST ROUTED TO [response_name]: REQUEST RECEIVED.\"")
-	REMOTE_FEEDBACK("buzzes: \"NEW ACCESS REQUEST NOTICE[auto_response ? ". AUTO-HANDLED. HAVE A SECURE DAY" : null].\"")
+		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST NOT ROUTED TO [response_name]: BLOCKED ID NOTICE.\"")
+		return COMPONENT_REQUEST_DENIED | COMPONENT_REQUEST_BLOCKED
 	. = COMPONENT_REQUEST_RECEIVED
+	var/ID_name = "\[[uppertext(ID_requesting.registered_name)]\]"
+	var/airlock_name = "\[[uppertext(requested_door.name)]\]"
+	var/area_name
+	var/area/given_area = get_area(requested_door)
+	area_name = "\[[uppertext(given_area.name)]\]"
+	var/to_buzz = "buzzes: \"[ID_name] REQUESTS ACCESS TO [airlock_name] IN [area_name]"
 	if(auto_response)
-		SEND_SIGNAL(SSdoor_remote_routing, COMSIG_DOOR_REMOTE_ACCESS_REQUEST_RESOLVED, ID_requesting, requested_door, auto_response, src, COMPONENT_REQUEST_AUTO_HANDLED)
-		. &= COMPONENT_REQUEST_AUTO_HANDLED
+		var/auto_handling = SEND_SIGNAL(SSdoor_remote_routing, COMSIG_DOOR_REMOTE_ACCESS_REQUEST_RESOLVED, ID_requesting, requested_door, auto_response, src, COMPONENT_REQUEST_AUTO_HANDLED)
+		if(auto_handling & COMPONENT_REQUEST_HANDLED)
+			. |= COMPONENT_REQUEST_AUTO_HANDLED
+			to_buzz += ". HANDLED WITH AUTO-RESPONSE. HAVE A SECURE DAY.\""
+		else
+			to_buzz += ". AUTO-RESPONSE FAILED. PLEASE REVIEW.\""
+	else
+		to_buzz += ".\""
+	REMOTE_FEEDBACK(to_buzz)
+	return .
 
 /obj/item/door_remote/proc/handle_config(mob/user)
-	REMOTE_FEEDBACK("buzzes: CONFIG")
-	var/config_choice = tgui_alert(user, "Blocky, flickering text gives you options: \n(C)HECK_LOGS\n(A)UTO_RESPONSE\n(T)OGGLE_LISTEN", "%CONFIG:NT_DOOR_WAND%", list("C", "A", "T"))
-	var/datum/callback/chosen_callback = setting_callbacks[config_choice]
+	if(locked_down)
+		notify_lockdown()
+		return NONE
+	REMOTE_FEEDBACK("buzzes: \"CONFIG\"")
+	var/list/available_configs = list()
+	available_configs = list(
+		"\[B\]LOCKED REQUESTS MANAGEMENT.",
+		"\[C\]HECK LOGS: ACTIONS | DENIALS | BLOCKED",
+		"\[A\]UTO-RESPONSE TOGGLE. CURRENT: [auto_response ? "ON" : "OFF"]",
+		"\[T\]OGGLE LISTENING. CURRENT: [listening ? "ON" : "OFF"]",
+		"\[S\]ILENCE FEEDBACK. CURRENT: [silenced ? "ON" : "OFF"]",
+	)
+	var/config_choice = tgui_input_list(user,
+	"Blocky, flickering text presents your options:",
+	"%CONFIG:NT_DOOR_WAND%",
+	available_configs
+	)
 	if(!config_choice)
 		return NONE
-	return chosen_callback.Invoke(user)
+	var/config_index = available_configs.Find(config_choice)
+	switch(config_index)
+		if(1)
+			manage_blocked(user)
+		if(2)
+			check_logs(user)
+		if(3)
+			set_auto_response(user)
+		if(4)
+			toggle_listen()
+		if(5)
+			toggle_audible_feedback(user)
+
+/obj/item/door_remote/proc/toggle_audible_feedback(mob/user)
+	silenced = !silenced
+	if(silenced)
+		to_chat(user, "[src] conspicuously does not buzz.")
+	else
+		REMOTE_FEEDBACK("buzzes: \"UNMUTED.\"")
+
+/obj/item/door_remote/proc/manage_blocked(mob/user)
+	#warn "implement this"
 
 // See the door_remote_routing controller for the format of open requests
 /obj/item/door_remote/proc/handle_requests(mob/user)
+	if(locked_down)
+		notify_lockdown()
+		return NONE
 	if(!listening)
 		REMOTE_FEEDBACK("buzzes: \"NOT LISTENING FOR ACCESS REQUESTS. PLEASE ENABLE LISTENING FOR ACCESS REQUESTS.\"")
 		return
@@ -134,7 +206,7 @@
 			// Make sure we just take the list itself rather than worrying about making our own
 			qualified_requests[request_item] = OPEN_REQUESTS[request_item]
 	if(!length(qualified_requests))
-		REMOTE_FEEDBACK("buzzes: NO REQUESTS")
+		REMOTE_FEEDBACK("buzzes: \"NO REQUESTS.\"")
 		return
 	// Javascript doesn't like when you feed associative arrays from BYOND into its functions that want
 	// primitives so we have to do some value conversion here
@@ -169,7 +241,7 @@
 		REMOTE_FEEDBACK("buzzes: \"NO SELECTION\"")
 		return
 	balloon_alert(user, "choose batch action")
-	var/list/available_actions = resolve_response_radial_options()
+	var/list/available_actions = resolve_radial_options("responses")
 	var/action = show_radial_menu(user, user, available_actions, radius = 32)
 	if(!action)
 		return NONE
@@ -197,3 +269,6 @@
 
 #undef ID_FEEDBACK
 #undef REMOTE_FEEDBACK
+#undef IS_BLOCKED
+#undef WAS_DENIED
+#undef OPEN_REQUESTS
