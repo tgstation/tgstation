@@ -419,7 +419,7 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/pill/patch/synthflesh{
+/obj/item/reagent_containers/applicator/patch/synthflesh{
 	pixel_x = 6;
 	pixel_y = 2
 	},

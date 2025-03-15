@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Delusions now override your examine and tooltip names, similarly to prosopagnosia."
-  - bugfix: "Delusions no longer turn you into shadowy blobs when moving between z-levels"
