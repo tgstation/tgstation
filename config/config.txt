@@ -1,4 +1,4 @@
-# You can use the "$include" directive to split your configs however you want
+# Вы можете использовать директиву "$include", чтобы разделить ваши конфигурации так, как вы хотите
 
 $include game_options.txt
 $include dbconfig.txt
@@ -10,77 +10,78 @@ $include lua.txt
 $include auxtools.txt
 $include map_vote.txt
 
-# You can use the @ character at the beginning of a config option to lock it from being edited in-game
-# Example usage:
+# Вы можете использовать символ @ в начале параметра конфигурации, чтобы заблокировать его редактирование в игре
+# Пример использования:
 # @SERVERNAME tgstation
-# Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
+# Который задает имя СЕРВЕРА и запрещает администраторам изменять его с помощью переменных представления.
 # @LOG_TWITTER 0
-# Which explicitly disables LOG_TWITTER, as well as locking it.
-# There are various options which are hard-locked for security reasons.
+# Который явно отключает LOG_TWITTER, а также блокирует его.
+# Существуют различные опции, которые жестко заблокированы по соображениям безопасности.
 
-## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-# SERVERNAME tgstation
+## Название сервера: оно отображается в верхней части экрана в игре и в BYOND hub. Раскомментируйте и замените "tgstation" на название по вашему выбору.
+SERVERNAME Andromeda
 
-## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
-# SERVERSQLNAME tgstation
+## Имя SQL сервера: Это имя, используемое для идентификации сервера в базе данных SQL, отличается от SERVERNAME, поскольку оно должно содержать не более 32 символов.
+# SERVERSQLNAME Andromeda
 
-## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+## Название станции: название станции в том виде, в каком оно указано в игре. Если его не закомментировать, игра сгенерирует случайное название.
+STATIONNAME Андромеда-13
 
-## Put on byond hub: Uncomment this to put your server on the byond hub.
-#HUB
+## Подключите byond hub: Раскомментируйте это, чтобы подключить ваш сервер к byond hub.
+HUB
 
-## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
+## Время в лобби: это промежуток времени между раундами, в течение которого игроки должны настроить своих персонажей и быть готовыми.
 LOBBY_COUNTDOWN 120
 
-## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
+## Время окончания раунда: Это количество времени после окончания раунда, в течение которого игроки должны убивать друг друга.
 ROUND_END_COUNTDOWN 90
 
-## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
-## You need to set up your database to use the SQL based system.
-## This flag is automatically enabled if SQL_ENABLED isn't
-ADMIN_LEGACY_SYSTEM
+## Прокомментируйте это, если вы хотите использовать систему администрирования на основе SQL, в устаревшей системе используется admins.txt.
+## Вам необходимо настроить свою базу данных для использования системы на основе SQL.
+## Этот флаг включается автоматически, если параметр SQL_ENABLED не установлен.
+# ADMIN_LEGACY_SYSTEM
 
-##Uncomment this to stop any admins loaded by the legacy system from having their rank edited by the permissions panel
+##Раскомментируйте это, чтобы запретить любым администраторам, загруженным в устаревшую систему, редактировать свой рейтинг на панели разрешений.
 #PROTECT_LEGACY_ADMINS
 
-##Uncomment this to stop any ranks loaded by the legacy system from having their flags edited by the permissions panel
+##Раскомментируйте это, чтобы запретить редактирование флагов всех рангов, загруженных устаревшей системой, с помощью панели разрешений.
 #PROTECT_LEGACY_RANKS
 
-##Uncomment this to have admin ranks only loaded from the legacy admin_ranks.txt
-##If enabled, each time admins are loaded ranks the database will be updated with the current ranks and their flags
+##Раскомментируйте это, чтобы ранги администраторов загружались только из устаревшего списка admin_ranks.txt.
+##Если эта опция включена, при каждой загрузке рангов администраторов база данных будет обновляться с учетом текущих рангов и их флагов.
 #LOAD_LEGACY_RANKS_ONLY
 
-## Comment this out to stop locally connected clients from being given the almost full access !localhost! admin rank
+## Прокомментируйте это, чтобы локально подключенным клиентам не предоставлялся почти полный доступ!localhost! звание администратора.
 ENABLE_LOCALHOST_RANK
 
-## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
-## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
-## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
-## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
-## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
+### Работка
+## Раскомментируйте эту запись, чтобы указать, что для выбора определенных вакансий требуется, чтобы вашей учетной записи было не менее определенного количества дней. Вы можете настроить точный возрастной ценз для разных вакансий, отредактировав
+## переменная minimal_player_age в файлах в папке /code/game/jobs/job/.. для задания, которое вы хотите отредактировать. Установите значение minimal_player_age равным 0, чтобы отключить возрастные требования для этого задания.
+## ДЛЯ работы требуется настроить базу данных. Сохраняйте ее хэшированной, если у вас нет настроенной базы данных.
+## ПРИМЕЧАНИЕ: Если вы только что настроили базу данных, отключите эту функцию, так как возраст игрока определяется с момента первого подключения к серверу с установленной базой данных. Если вы просто настроили его, это означает, что
+## у вас нет никого старше 0 дней, поскольку никто еще не был зарегистрирован. Включите это только после того, как база данных будет доступна в течение 30 дней.
 #USE_AGE_RESTRICTION_FOR_JOBS
 
-## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
-#USE_ACCOUNT_AGE_FOR_JOBS
-
-## Unhash this to track player playtime in the database. Requires database to be enabled.
-#USE_EXP_TRACKING
-## Unhash this to enable playtime requirements for head jobs.
-#USE_EXP_RESTRICTIONS_HEADS
-## Unhash this to override head jobs' playtime requirements with this number of hours.
-## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
+## Раскомментируйте это, чтобы система заданий использовала дату создания учетной записи игрока, а не дату, когда он впервые присоединился к серверу, для определения времени выполнения заданий.
+USE_ACCOUNT_AGE_FOR_JOBS
+## Отмените хэширование, чтобы отслеживать время воспроизведения игрока в базе данных. Требуется, чтобы база данных была включена.
+USE_EXP_TRACKING
+## Отключите это, чтобы включить требования ко времени воспроизведения для заданий head.
+USE_EXP_RESTRICTIONS_HEADS
+## Снимите хэш с этого параметра, чтобы изменить требования к времени выполнения заданий head на это количество часов.
+## Оставьте это значение без комментариев, чтобы использовать значения, определенные в исходных данных задания. Значения в исходных данных хранятся в минутах.
 #USE_EXP_RESTRICTIONS_HEADS_HOURS 3
-## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
-#USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
-## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
-#USE_EXP_RESTRICTIONS_OTHER
-## Allows admins to bypass job playtime requirements.
-#USE_EXP_RESTRICTIONS_ADMIN_BYPASS
-## Unhash this to have intern tags automatically added to ID cards for station roles depending on the living hours of the player holding them.
+## Измените это, чтобы изменить требования к игровому времени руководителей, чтобы они основывались на игровом времени отдела, а не команды.
+USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
+## Отключите это, чтобы включить требования к игровому времени для некоторых профессий, не связанных с работой руководителя, таких как инженер и ученый.
+USE_EXP_RESTRICTIONS_OTHER
+## Позволяет администраторам обходить требования о времени выполнения заданий.
+USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+## Отключите это, чтобы метки стажера автоматически добавлялись к идентификационным картам для ролей на станции в зависимости от продолжительности жизни игрока, у которого они есть.
 #USE_LOW_LIVING_HOUR_INTERN
-## If USE_LOW_LIVING_HOUR_INTERN is unhashed, players under this number of living hours have [Intern] added to their ID card. If this isn't set, uses USE_EXP_RESTRICTIONS_HEADS_HOURS instead. If that isn't set, it finally defaults to a hardcoded fallback of 15 hours.
+## Если значение USE_LOW_LIVING_HOUR_INTERN не изменено, то игрокам с таким количеством часов жизни [Стажер] добавляется в их идентификационную карту. Если это значение не задано, вместо него используется USE_EXP_RESTRICTIONS_HEADS_HOURS. Если это значение не задано, то по умолчанию используется жестко запрограммированный резервный период в 15 часов.
 #USE_LOW_LIVING_HOUR_INTERN_HOURS 50
+###
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
