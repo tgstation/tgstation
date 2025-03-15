@@ -19,13 +19,11 @@
 #define CUBE_LASER(1<<4)
 /// Is leashed to a mob
 #define CUBE_LEASHED(1<<5)
-/// Is slippery
-#define CUBE_SLIP(1<<6)
 /// Does sitcom laughs
-#define CUBE_FUNNY(1<<7)
+#define CUBE_FUNNY(1<<6)
 /// Can initiate surgery
-#define CUBE_SURGICAL(1<<8)
+#define CUBE_SURGICAL(1<<7)
 /// Is a much better weapon
-#define CUBE_WEAPON(1<<9)
+#define CUBE_WEAPON(1<<8)
 /// Steals life on hit
-#define CUBE_VAMPIRIC(1<<10)
+#define CUBE_VAMPIRIC(1<<9)

@@ -138,8 +138,6 @@
 		. += span_warning("It can shoot lasers!")
 	if((cube_examine_flags & CUBE_LEASHED))
 		. += span_notice("It's currently leashed to someone!")
-	if((cube_examine_flags & CUBE_SLIP))
-		. += span_notice("It's extra slippery!")
 	if((cube_examine_flags & CUBE_FUNNY))
 		. += span_clown("It looks pretty funny!")
 	if((cube_examine_flags & CUBE_SURGICAL))
@@ -197,7 +195,7 @@
 	if(prob(10*rarity))
 		// A little something for free that barely anyone will notice
 		AddElement(/datum/element/ignites_matches)
-	//! Continue random effects
+	/// All the possible effects random cubes can have. Gets pick()-ed once per rarity level, removing previous picks to not have repeats
 	var/list/possible_cube_effects = list(
 	"Edible",
 	"Chemical",
@@ -217,7 +215,6 @@
 	"Leashed",
 	"Religious",
 	"Scope",
-	"Slip",
 	"Funny",
 	"Squeak",
 	"Surgical",
@@ -227,6 +224,7 @@
 	"Vampire",
 	"Speen"
 	)
+	// It looks big and scary but it's just a giant switch() function that applies components/elements. If a section would have been too long it was made its own proc.
 	for(var/i in 1 to rarity)
 		var/rand_swap = pick(possible_cube_effects)
 		switch(rand_swap)
@@ -304,15 +302,13 @@
 				charges = rarity)
 			if("Scope")
 				AddComponent(/datum/component/scope, range_modifier = rarity)
-			if("Slip")
-				AddComponent(/datum/component/slippery,
-				knockdown = rarity SECONDS,
-				lube_flags = NO_SLIP_WHEN_WALKING)
-				cube_examine_flags |= CUBE_SLIP
 			if("Funny")
 				AddComponent(/datum/component/wearertargeting/sitcomlaughter,
 				CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 				cube_examine_flags |= CUBE_FUNNY
+				AddComponent(/datum/component/slippery,
+				knockdown = rarity SECONDS,
+				lube_flags = NO_SLIP_WHEN_WALKING)
 			if("Squeak")
 				AddComponent(/datum/component/squeak)
 				AddElement(/datum/element/toy_talk)
