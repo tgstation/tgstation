@@ -1,0 +1,5 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - rscadd: "You can now craft radio jammers."
+  - balance: "Radio jammers have had their cost lowered from 5 TC to 1 TC."
