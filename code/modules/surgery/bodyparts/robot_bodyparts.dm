@@ -1,7 +1,7 @@
 
 #define ROBOTIC_LIGHT_BRUTE_MSG "marred"
 #define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
-#define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
+#define ROBOTIC_HEAVY_BRUTE_MSG "like its falling apart"
 
 #define ROBOTIC_LIGHT_BURN_MSG "scorched"
 #define ROBOTIC_MEDIUM_BURN_MSG "charred"
