@@ -44,6 +44,7 @@
 		/obj/item/reagent_containers/spray,
 		/obj/item/reagent_containers/applicator/patch/libital,
 		/obj/item/reagent_containers/applicator/patch/aiuri,
+		/obj/item/reagent_containers/applicator/patch/synthflesh,
 		/obj/item/reagent_containers/hypospray/combat/empty,
 		/obj/item/reagent_containers/medigel/sterilizine,
 		/obj/item/reagent_containers/hypospray,

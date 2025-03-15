@@ -211,6 +211,7 @@
 
 	set_holdable(list(
 		/obj/item/reagent_containers/applicator/pill,
+		/obj/item/reagent_containers/applicator/patch,
 		/obj/item/food/bait/natural,
 	))
 
