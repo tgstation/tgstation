@@ -28,8 +28,8 @@
 	var/click_delay = 0.15 SECONDS
 	/// Pressure level on the fist
 	var/fist_pressure_setting = LOW_PRESSURE
-	/// Amount of moles per punch
-	var/gas_per_fist = 3
+	/// Volume released per punch
+	var/gas_per_fist = 7
 	/// Tank used for the gauntlet's piston-ram.
 	var/obj/item/tank/internals/tank
 
@@ -114,7 +114,8 @@
 	if(!our_turf)
 		return
 
-	var/datum/gas_mixture/gas_used = tank.remove_air(gas_per_fist * fist_pressure_setting)
+	var/moles_to_remove = PUMP_MAX_PRESSURE * (gas_per_fist * fist_pressure_setting)/(R_IDEAL_GAS_EQUATION * tank.air_contents.temperature)
+	var/datum/gas_mixture/gas_used = tank.remove_air(moles_to_remove)
 	if(!gas_used)
 		to_chat(user, span_warning("\The [src]'s tank is empty!"))
 		target.apply_damage((force / 5), BRUTE)
@@ -123,7 +124,7 @@
 			span_userdanger("[user]'s punches you!"))
 		return
 
-	if(!molar_cmp_equals(gas_used.total_moles(), gas_per_fist * fist_pressure_setting))
+	if(gas_used.total_moles() < moles_to_remove)
 		our_turf.assume_air(gas_used)
 		to_chat(user, span_warning("\The [src]'s piston-ram lets out a weak hiss, it needs more gas!"))
 		playsound(loc, 'sound/items/weapons/punch4.ogg', 50, TRUE)
