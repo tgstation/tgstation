@@ -4,6 +4,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Antennae"
 	should_generate_icons = TRUE
+	relevant_external_organ = /obj/item/organ/antennae
 
 /datum/preference/choiced/moth_antennae/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.moth_antennae_list)
@@ -84,6 +85,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Moth wings"
 	should_generate_icons = TRUE
+	relevant_external_organ = /obj/item/organ/wings/moth
 
 /datum/preference/choiced/moth_wings/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.moth_wings_list)

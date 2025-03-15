@@ -533,7 +533,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(silent)
 		return
 
-	if(do_rustle)
+	if(do_rustle && rustle_sound)
 		playsound(parent, rustle_sound, 50, rustle_vary, -5)
 
 	if(!silent_for_user)
@@ -567,7 +567,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(do_rustle && !silent)
 			if(remove_rustle_sound)
 				playsound(parent, remove_rustle_sound, 50, TRUE, -5)
-			else
+			else if(rustle_sound)
 				playsound(parent, rustle_sound, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()

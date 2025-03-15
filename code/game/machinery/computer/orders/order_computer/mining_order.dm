@@ -9,12 +9,13 @@
 	icon_screen = null
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
+	autodelivery_delay_time = 30 SECONDS
 	cargo_cost_multiplier = 0.65
-	express_cost_multiplier = 1
+	autodelivery_cost_multiplier = 1
 	purchase_tooltip = @{"Your purchases will arrive at cargo,
 	and hopefully get delivered by them.
-	35% cheaper than express delivery."}
-	express_tooltip = @{"Sends your purchases instantly."}
+	35% cheaper than autodelivery."}
+	autodelivery_tooltip = @{"Sends your purchases without cargo! Will take 2 minutes to arrive."}
 	credit_type = CREDIT_TYPE_MINING
 
 	order_categories = list(

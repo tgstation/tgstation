@@ -342,34 +342,34 @@
 		var/nutrition = mob_parent.nutrition
 		switch(nutrition)
 			if(NUTRITION_LEVEL_FULL to INFINITY)
-				msg += span_info("I'm completely stuffed!<br>")
+				msg += "[span_info("I'm completely stuffed!")]<br>"
 			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				msg += span_info("I'm well fed!<br>")
+				msg += "[span_info("I'm well fed!")]<br>"
 			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				msg += span_info("I'm not hungry.<br>")
+				msg += "[span_info("I'm not hungry.")]<br>"
 			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				msg += span_info("I could use a bite to eat.<br>")
+				msg += "[span_info("I could use a bite to eat.")]<br>"
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				msg += span_warning("I feel quite hungry.<br>")
+				msg += "[span_warning("I feel quite hungry.")]<br>"
 			if(0 to NUTRITION_LEVEL_STARVING)
-				msg += span_boldwarning("I'm starving!<br>")
+				msg += "[span_boldwarning("I'm starving!")]<br>"
 
 	var/drunkness = mob_parent.get_timed_status_effect_duration(/datum/status_effect/inebriated)
 	if(drunkness >= 1)
 		msg += span_notice("My current drunkenness: ")
 		switch(drunkness)
 			if(1 to 10)
-				msg += span_info("I'm feeling a little tipsy.<br>")
+				msg += "[span_info("I'm feeling a little tipsy.")]<br>"
 			if(11 to 21)
-				msg += span_info("I'm feeling a bit drunk.<br>")
+				msg += "[span_info("I'm feeling a bit drunk.")]<br>"
 			if(21 to 41)
-				msg += span_info("I'm feeling quite drunk.<br>")
+				msg += "[span_info("I'm feeling quite drunk.")]<br>"
 			if(41 to 61)
-				msg += span_info("I'm feeling very drunk.<br>")
+				msg += "[span_info("I'm feeling very drunk.")]<br>"
 			if(61 to 81)
-				msg += span_warning("I'm feeling like a mess.<br>")
+				msg += "[span_warning("I'm feeling like a mess.")]<br>"
 			if(81 to INFINITY)
-				msg += span_boldwarning("I'm completely wasted.<br>")
+				msg += "[span_boldwarning("I'm completely wasted.")]<br>"
 
 	msg += span_notice("My current sanity: ") //Long term
 	switch(sanity)
@@ -414,17 +414,17 @@
 			msg += "&bull; "
 			switch(event.mood_change)
 				if(-INFINITY to MOOD_SAD2)
-					msg += span_boldwarning(event.description + "<br>")
+					msg += "[span_boldwarning(event.description)]<br>"
 				if(MOOD_SAD2 to MOOD_SAD1)
-					msg += span_warning(event.description + "<br>")
+					msg += "[span_warning(event.description)]<br>"
 				if(MOOD_SAD1 to MOOD_NEUTRAL)
-					msg += span_grey(event.description + "<br>")
+					msg += "[span_grey(event.description)]<br>"
 				if(MOOD_NEUTRAL to MOOD_HAPPY1)
-					msg += span_info(event.description + "<br>")
+					msg += "[span_info(event.description)]<br>"
 				if(MOOD_HAPPY1 to MOOD_HAPPY2)
-					msg += span_nicegreen(event.description + "<br>")
+					msg += "[span_nicegreen(event.description)]<br>"
 				if(MOOD_HAPPY2 to INFINITY)
-					msg += span_boldnicegreen(event.description + "<br>")
+					msg += "[span_boldnicegreen(event.description)]<br>"
 	else
 		msg += "&bull; [span_grey("I don't have much of a reaction to anything right now.")]<br>"
 
