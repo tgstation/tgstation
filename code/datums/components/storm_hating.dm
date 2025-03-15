@@ -43,5 +43,5 @@
 	var/atom/parent_atom = parent
 	if (!isturf(parent_atom.loc))
 		return
-	parent.AddElement(/datum/element/temporary_atom, life_time = 3 SECONDS, fade_time = 2 SECONDS)
+	parent_atom.fade_into_nothing(life_time = 3 SECONDS, fade_time = 2 SECONDS)
 	qdel(src)

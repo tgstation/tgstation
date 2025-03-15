@@ -445,7 +445,7 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
 
-/obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
+/obj/item/gun/ballistic/rifle/sniper_rifle/reset_fire_cd()
 	. = ..()
 	if(suppressed)
 		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
