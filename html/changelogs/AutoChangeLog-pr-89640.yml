@@ -1,0 +1,4 @@
+author: "possiblepossibility"
+delete-after: True
+changes:
+  - bugfix: "fixes slaughter demon roundend report"

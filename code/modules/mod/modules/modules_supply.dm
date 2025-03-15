@@ -443,7 +443,7 @@
 			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
 			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
 			playsound(src, 'sound/effects/sparks/sparks1.ogg', 100, TRUE)
-			actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
+			actual_speed_added = max(0, min(mod.slowdown_deployed, speed_added))
 			mod.slowdown -= actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
