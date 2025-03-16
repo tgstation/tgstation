@@ -1697,7 +1697,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	siemens_coefficient = 0
 	slowdown_deployed = 0.5
-	ui_theme = "terminal"
+	ui_theme = "ntos_terminal"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
