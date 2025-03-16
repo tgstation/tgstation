@@ -164,14 +164,14 @@
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)
 
-/obj/item/food/CheckParts(list/parts, datum/crafting_recipe/food/current_recipe)
+/obj/item/food/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
 	if(!istype(current_recipe))
 		return
 
 	var/made_with_food = FALSE
 	var/final_foodtypes = current_recipe.added_foodtypes
-	for(var/obj/item/food/ingredient in parts)
+	for(var/obj/item/food/ingredient in components)
 		made_with_food = TRUE
 		final_foodtypes |= ingredient.foodtypes
 	if(!made_with_food)

@@ -615,22 +615,20 @@
 	chosen_theme = null
 	return ..()
 
-/obj/item/bombcore/dimensional/CheckParts(list/parts_list)
+/obj/item/bombcore/dimensional/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
 	range_heavy = 13
-	for(var/obj/item/grenade/chem_grenade/nade in src)
+	for(var/obj/item/grenade/chem_grenade/nade in components)
 		if(istype(nade, /obj/item/grenade/chem_grenade/large) || istype(nade, /obj/item/grenade/chem_grenade/adv_release))
 			range_heavy += 1
 		for(var/obj/item/thing as anything in nade.beakers) //remove beakers, then delete the grenade.
 			thing.forceMove(drop_location())
-		qdel(nade)
-	var/obj/item/gibtonite/ore = locate() in src
+	var/obj/item/gibtonite/ore = locate() in components
 	switch(ore.quality)
 		if(GIBTONITE_QUALITY_LOW)
 			range_heavy -= 2
 		if(GIBTONITE_QUALITY_HIGH)
 			range_heavy += 4
-	qdel(ore)
 
 /obj/item/bombcore/dimensional/examine(mob/user)
 	. = ..()
