@@ -7,58 +7,60 @@ import {
 import { FeatureDropdownInput } from '../dropdowns';
 
 export const asaycolor: Feature<string> = {
-  name: 'Admin chat color',
-  category: 'ADMIN',
-  description: 'The color of your messages in Adminsay.',
+  name: 'Цвет чата администрации',
+  category: 'Админ',
+  description: 'Цвет ваших сообщений в Adminsay.',
   component: FeatureColorInput,
 };
 
 export const brief_outfit: Feature<string> = {
-  name: 'Brief outfit',
-  category: 'ADMIN',
-  description: 'The outfit to gain when spawning as the briefing officer.',
+  name: 'Экипировка',
+  category: 'Админ',
+  description:
+    'Экипировка, которую можно получить при появлении в качестве офицера-инструктора.',
   component: FeatureDropdownInput,
 };
 
 export const bypass_deadmin_in_centcom: FeatureToggle = {
-  name: 'Bypass deadmin options when in CentCom',
-  category: 'ADMIN',
+  name: 'Обходите настройки deadmin на ЦентКом',
+  category: 'Админ',
   description:
-    'Whether or not to always remain an admin when spawned in CentCom.',
+    'Следует ли всегда оставаться администратором при появлении на ЦентКом или нет.',
   component: CheckboxInput,
 };
 
 export const fast_mc_refresh: FeatureToggle = {
-  name: 'Enable fast MC stat panel refreshes',
-  category: 'ADMIN',
+  name: 'Быстрое обновление статистики MC',
+  category: 'Админ',
   description:
-    'Whether or not the MC tab of the Stat Panel refreshes fast. This is expensive so make sure you need it.',
+    'Независимо от того, быстро ли обновляется вкладка MC на панели статистики. Это дорого, поэтому убедитесь, что вам это нужно.',
   component: CheckboxInput,
 };
 
 export const ghost_roles_as_admin: FeatureToggle = {
-  name: 'Get ghost roles while adminned',
-  category: 'ADMIN',
+  name: 'Получайте призрачные роли во время администрирования',
+  category: 'Админ',
   description: `
-    If you de-select this, you will not get any ghost role pop-ups while
-    adminned! Every single pop-up WILL never show up for you in an adminned
-    state. However, this does not suppress notifications when you are
-    a regular player (deadminned).
+    Если вы отключите этот параметр, у вас не будет всплывающих окон с ролями-призраками, пока
+    вы являетесь администратором! Ни одно всплывающее окно не будет отображаться для вас в
+    режиме администратора. Однако это не отключает уведомления, если вы являетесь
+    обычным игроком (deadmin).
 `,
   component: CheckboxInput,
 };
 
 export const comms_notification: FeatureToggle = {
-  name: 'Enable comms console sound',
-  category: 'ADMIN',
+  name: 'Включить звук консоли связи',
+  category: 'Админ',
   component: CheckboxInput,
 };
 
 export const auto_deadmin_on_ready_or_latejoin: FeatureToggle = {
-  name: 'Auto deadmin - Ready or Latejoin',
-  category: 'ADMIN',
+  name: 'Автоматическое отключение - Готовность или позднее подключение',
+  category: 'Админ',
   description: `
-    When enabled, you will automatically deadmin when you click to ready up or latejoin a round.
+    Если эта функция включена, вы автоматически отключаете время ожидания,
+    когда нажимаете кнопку "Готово" или "поздно присоединиться к раунду".
 `,
   component: CheckboxInput,
 };

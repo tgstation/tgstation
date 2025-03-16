@@ -39,7 +39,7 @@ export function GamePreferenceWindow(props: Props) {
               page={GamePreferencesSelectedPage.Settings}
               setPage={setCurrentPage}
             >
-              Settings
+              Настройки
             </PageButton>
           </Stack.Item>
 
@@ -49,7 +49,7 @@ export function GamePreferenceWindow(props: Props) {
               page={GamePreferencesSelectedPage.Keybindings}
               setPage={setCurrentPage}
             >
-              Keybindings
+              Назначение клавиш
             </PageButton>
           </Stack.Item>
         </Stack>

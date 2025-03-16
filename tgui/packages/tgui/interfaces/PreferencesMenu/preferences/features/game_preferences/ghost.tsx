@@ -15,9 +15,9 @@ import {
 import { FeatureDropdownInput } from '../dropdowns';
 
 export const ghost_accs: FeatureChoiced = {
-  name: 'Ghost accessories',
-  category: 'GHOST',
-  description: 'Determines what adjustments your ghost will have.',
+  name: 'Призрачные аксессуары',
+  category: 'Призрак',
+  description: 'Определяет, какие настройки будут у вашего призрака.',
   component: FeatureDropdownInput,
 };
 
@@ -93,25 +93,25 @@ function GhostFormInput(
 }
 
 export const ghost_form: FeatureChoiced = {
-  name: 'Ghosts form',
-  category: 'GHOST',
-  description: 'The appearance of your ghost. Requires BYOND membership.',
+  name: 'Призрак форма',
+  category: 'Призрак',
+  description: 'Появление вашего призрака. Требуется подписка на BYOND.',
   component: GhostFormInput,
 };
 
 export const ghost_hud: FeatureToggle = {
-  name: 'Ghost HUD',
-  category: 'GHOST',
-  description: 'Enable HUD buttons for ghosts.',
+  name: 'Призрак HUD',
+  category: 'Призрак',
+  description: 'Включите кнопки HUD для призраков.',
   component: CheckboxInput,
 };
 
 export const ghost_orbit: FeatureChoiced = {
-  name: 'Ghost orbit',
-  category: 'GHOST',
+  name: 'Призрачная орбита',
+  category: 'Призрак',
   description: `
-    The shape in which your ghost will orbit.
-    Requires BYOND membership.
+    Форма, в которой ваш призрак будет вращаться по орбите.
+    Требуется членство в BYOND.
   `,
   component: (
     props: FeatureValueProps<string, string, FeatureChoicedServerData>,
@@ -125,30 +125,31 @@ export const ghost_orbit: FeatureChoiced = {
 };
 
 export const ghost_others: FeatureChoiced = {
-  name: 'Ghosts of others',
-  category: 'GHOST',
+  name: 'Призраки других людей',
+  category: 'Призрак',
   description: `
-    Do you want the ghosts of others to show up as their own setting, as
-    their default sprites, or always as the default white ghost?
+    Вы хотите, чтобы призраки других людей отображались в их собственных настройках, как
+    их спрайты по умолчанию или всегда как белый призрак по умолчанию?
   `,
   component: FeatureDropdownInput,
 };
 
 export const inquisitive_ghost: FeatureToggle = {
-  name: 'Ghost inquisitiveness',
-  category: 'GHOST',
-  description: 'Clicking on something as a ghost will examine it.',
+  name: 'Призрачная любознательность',
+  category: 'Призрак',
+  description:
+    'Нажав на что-то в качестве призрака, вы сможете изучить предметы.',
   component: CheckboxInput,
 };
 
 export const ghost_roles: FeatureToggle = {
-  name: 'Get ghost roles',
-  category: 'GHOST',
+  name: 'Получайте роли призраков',
+  category: 'Призрак',
   description: `
-    If you de-select this, you will not get any ghost role pop-ups what-so-ever!
-    Every single type of these pop-ups WILL be muted for you when you are
-    ghosted. Very useful for those who find ghost roles or the
-    pop-ups annoying, use at your own peril.
+    Если вы снимите этот флажок, вы больше никогда не увидите всплывающих окон с ролями-призраками!
+    Все эти всплывающие окна будут отключены, когда вы будете
+    отображаться как призрак. Очень полезно для тех, кого раздражают призрачные роли или
+    всплывающие окна, используйте на свой страх и риск.
 `,
   component: CheckboxInput,
 };

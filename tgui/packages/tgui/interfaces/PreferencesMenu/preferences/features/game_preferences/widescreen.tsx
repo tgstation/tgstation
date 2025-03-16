@@ -1,7 +1,7 @@
 import { CheckboxInput, FeatureToggle } from '../base';
 
 export const widescreenpref: FeatureToggle = {
-  name: 'Enable widescreen',
-  category: 'UI',
+  name: 'Включить широкоэкранный режим',
+  category: 'Интерфейс',
   component: CheckboxInput,
 };
