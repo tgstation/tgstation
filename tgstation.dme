@@ -1196,6 +1196,7 @@
 #include "code\datums\components\marionette.dm"
 #include "code\datums\components\martial_art_giver.dm"
 #include "code\datums\components\mind_linker.dm"
+#include "code\datums\components\mind_martial_art.dm"
 #include "code\datums\components\mirv.dm"
 #include "code\datums\components\mob_chain.dm"
 #include "code\datums\components\mob_harvest.dm"
