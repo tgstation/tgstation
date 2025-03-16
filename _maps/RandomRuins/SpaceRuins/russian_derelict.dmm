@@ -1356,9 +1356,6 @@
 "pn" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/shard{
-	icon_state = "medium"
-	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "pp" = (
@@ -3343,9 +3340,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "zP" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/item/shard,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/table,
-/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "zR" = (
@@ -5272,15 +5271,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ks13/hallway/central)
-"JP" = (
-/obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/tech_storage)
 "JQ" = (
 /obj/structure/frame/machine{
 	anchored = 1
@@ -11460,7 +11450,7 @@ sU
 Dy
 Us
 Rt
-JP
+iy
 iy
 zP
 QG
