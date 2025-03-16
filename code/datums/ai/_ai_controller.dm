@@ -228,7 +228,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER
 
-	if (!locate(/mob/living) in target_list)
+	if (!(locate(/mob/living) in target_list))
 		return
 
 	if(ai_status == AI_STATUS_IDLE)
