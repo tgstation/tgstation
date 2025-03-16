@@ -38,7 +38,7 @@
 		return
 	. += span_tinynotice("It has a [EXAMINE_HINT("wire")] panel that could be interacted with...")
 
-/obj/item/clothing/neck/collar_bomb/attackby(obj/item/item, mob/user, params)
+/obj/item/clothing/neck/collar_bomb/attackby(obj/item/item, mob/user, list/modifiers)
 	if(is_wire_tool(item))
 		wires.interact(user)
 	else

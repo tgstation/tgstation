@@ -78,7 +78,7 @@
 	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
 	return paper_overlay
 
-/obj/item/folder/attackby(obj/item/weapon, mob/user, params)
+/obj/item/folder/attackby(obj/item/weapon, mob/user, list/modifiers)
 	if(burn_paper_product_attackby_check(weapon, user))
 		return
 	if(is_type_in_typecache(weapon, folder_insertables))

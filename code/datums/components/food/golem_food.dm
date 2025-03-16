@@ -36,7 +36,7 @@
 	return ..()
 
 /// Attempt to feed this item to golem
-/datum/component/golem_food/proc/on_attack(atom/source, mob/living/target, mob/living/user, click_parameters)
+/datum/component/golem_food/proc/on_attack(atom/source, mob/living/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 	if (user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER))
 		return
@@ -48,7 +48,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (isnull(golem_snack))
 		create_golem_snack(source)
-	golem_snack.attack(target, user, click_parameters)
+	golem_snack.attack(target, user, modifiers)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Creates our golem snack atom instance

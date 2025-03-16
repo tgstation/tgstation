@@ -26,7 +26,7 @@
 
 	return
 
-/obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/barricade/attackby(obj/item/I, mob/living/user, list/modifiers)
 	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && bar_material == METAL)
 		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=1))

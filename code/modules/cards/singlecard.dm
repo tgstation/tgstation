@@ -219,7 +219,7 @@
 		return
 	return ..()
 
-/obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, modifiers)
+/obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, list/modifiers)
 	attackby(item, user, modifiers, flip_card=TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

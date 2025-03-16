@@ -151,7 +151,7 @@ Difficulty: Hard
  * * mob/user The user of the item
  * * params, extra parameters
  */
-/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, list/modifiers)
 	. = ..()
 	if(istype(W, /obj/item/organ/tongue))
 		user.client?.give_award(/datum/award/achievement/jobs/frenching, user)

@@ -108,7 +108,7 @@
 	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
 	return TRUE
 
-/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
+/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return ..()
 	if(istype(W, /obj/item/tank/internals))

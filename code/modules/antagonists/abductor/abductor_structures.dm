@@ -15,7 +15,7 @@
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
 
-/obj/structure/table_frame/abductor/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/table_frame/abductor/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, span_notice("You start disassembling [src]..."))
 		attacking_item.play_tool_sound(src)

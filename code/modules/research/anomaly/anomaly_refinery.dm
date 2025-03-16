@@ -73,7 +73,7 @@
 	var/radius = clamp(round(MIN_RADIUS_REQUIRED + radius_increase_per_core * already_made, 1), MIN_RADIUS_REQUIRED, MAX_RADIUS_REQUIRED)
 	return radius
 
-/obj/machinery/research/anomaly_refinery/attackby(obj/item/tool, mob/living/user, params)
+/obj/machinery/research/anomaly_refinery/attackby(obj/item/tool, mob/living/user, list/modifiers)
 	if(active)
 		to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] currently active."))
 		return

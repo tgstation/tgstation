@@ -76,7 +76,7 @@
 		recharge_console.update_appearance()
 
 
-/obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, params)
+/obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, list/modifiers)
 	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
 		return
 

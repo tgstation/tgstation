@@ -587,18 +587,18 @@
 		to_chat(owner, span_warning("You start having a bad feeling..."))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 		return
-		
+
 	if(!isarea(axe_location))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
 		return
-		
+
 	if(istype(axe_location, /area/station/command))
 		to_chat(owner, span_notice("You feel a sense of relief..."))
 		if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
 			return
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
-		
+
 	to_chat(owner, span_warning("You start having a bad feeling..."))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 
@@ -685,7 +685,7 @@
 	else
 		examine_strings += span_warning("It's a simulacra, a fake axe made to fool the masses.")
 
-/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, click_parameters)
+/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if(user != owner)
 		return

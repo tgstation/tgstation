@@ -47,7 +47,7 @@
 	throw_range = 7
 	grind_results = list(/datum/reagent/cellulose = 10) //really partially hemicellulose
 
-/obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
+/obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, list/modifiers)
 	if(W.get_sharpness())
 		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
 		new /obj/item/cigarette/pipe/cobpipe (user.loc)

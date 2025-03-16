@@ -159,7 +159,7 @@
 	if(reagent_type)
 		reagents.add_reagent(reagent_type, 15)
 
-/obj/item/burner/attackby(obj/item/I, mob/living/user, params)
+/obj/item/burner/attackby(obj/item/I, mob/living/user, list/modifiers)
 	. = ..()
 	if(is_reagent_container(I))
 		if(lit)

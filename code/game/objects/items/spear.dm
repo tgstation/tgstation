@@ -173,7 +173,7 @@
 	return CLICK_ACTION_SUCCESS
 
 
-/obj/item/spear/explosive/afterattack(atom/movable/target, mob/user, click_parameters)
+/obj/item/spear/explosive/afterattack(atom/movable/target, mob/user, list/modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !istype(target))
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
@@ -202,7 +202,7 @@
 	force_unwielded = 15
 	force_wielded = 25
 
-/obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, click_parameters)
+/obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, list/modifiers)
 	user.faction |= "greytide([REF(user)])"
 	if(!isliving(target))
 		return

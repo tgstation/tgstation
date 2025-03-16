@@ -90,7 +90,7 @@
 	speaking = FALSE
 	times_spoken_to++
 
-/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, params)
+/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_paw(mob/user, list/modifiers)

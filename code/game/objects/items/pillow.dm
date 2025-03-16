@@ -48,7 +48,7 @@
 	. = ..()
 	QDEL_NULL(pillow_trophy)
 
-/obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
+/obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, list/modifiers)
 	. = ..()
 	if(!iscarbon(target_mob))
 		return
@@ -73,7 +73,7 @@
 		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 
-/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(!bricked && istype(attacking_item, /obj/item/stack/sheet/mineral/sandstone))
 		var/obj/item/stack/sheet/mineral/sandstone/brick = attacking_item
 		balloon_alert(user, "inserting brick...")

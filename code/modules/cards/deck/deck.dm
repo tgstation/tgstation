@@ -177,7 +177,7 @@
 			card.Flip(CARD_FACEDOWN)
 	. = ..()
 
-/obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
+/obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, list/modifiers)
 	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
 		insert(item)
 		var/card_grammar = istype(item, /obj/item/toy/singlecard) ? "card" : "cards"

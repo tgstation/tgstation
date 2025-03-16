@@ -80,7 +80,7 @@
 	//replace lights & stuff
 	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
-/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
+/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, list/modifiers)
 	. = ..()
 	if(uses >= max_uses)
 		user.balloon_alert(user, "already full!")

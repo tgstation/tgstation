@@ -67,7 +67,7 @@
 	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
 	return TRUE
 
-/obj/item/inspector/attackby(obj/item/I, mob/user, params)
+/obj/item/inspector/attackby(obj/item/I, mob/user, list/modifiers)
 	if(cell_cover_open && istype(I, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
@@ -274,7 +274,7 @@
 	cycle_print_time(user)
 	return TRUE
 
-/obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
+/obj/item/inspector/clown/attackby(obj/item/I, mob/user, list/modifiers)
 	if(cell_cover_open && istype(I, /obj/item/kitchen/fork))
 		cycle_sound(user)
 		return
@@ -353,7 +353,7 @@
 	check_settings_legality()
 	return TRUE
 
-/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
+/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, list/modifiers)
 	. = ..()
 	if(cell_cover_open)
 		check_settings_legality()

@@ -79,7 +79,7 @@
 	pushed_over = FALSE
 	tacticool = AddComponent(/datum/component/tactical)
 
-/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
+/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, list/modifiers)
 	if(istype(I, /obj/item/toy/crayon))
 		change_appearance(I, user)
 		return TRUE

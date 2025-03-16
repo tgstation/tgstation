@@ -54,16 +54,16 @@
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 
-/obj/machinery/mass_driver/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/mass_driver/attackby(obj/item/item, mob/living/user, list/modifiers)
 
-	if(is_wire_tool(I) && panel_open)
+	if(is_wire_tool(item) && panel_open)
 		wires.interact(user)
 		return
-	if(default_deconstruction_screwdriver(user, "mass_driver_o", "mass_driver", I))
+	if(default_deconstruction_screwdriver(user, "mass_driver_o", "mass_driver", item))
 		return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(item))
 		return
 
 	return ..()

@@ -23,7 +23,7 @@
 	demoraliser = new(src, 7, TRUE, mood_category)
 	return ..()
 
-/obj/structure/sign/poster/traitor/attackby(obj/item/tool, mob/user, params)
+/obj/structure/sign/poster/traitor/attackby(obj/item/tool, mob/user, list/modifiers)
 	if (tool.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(demoraliser)
 	return ..()

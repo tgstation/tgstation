@@ -50,7 +50,7 @@
 		active = FALSE
 		toggleFirepit()
 
-/obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
+/obj/structure/firepit/attackby(obj/item/W,mob/living/user,list/modifiers)
 	if(!active)
 		var/msg = W.ignition_effect(src, user)
 		if(msg)

@@ -53,7 +53,7 @@ This component is used in vat growing to swab for microbiological samples which 
 				examine_list += MO.get_details()
 
 ///Ran when you attack an object, tries to get a swab of the object. if a swabbable surface is found it will run behavior and hopefully
-/datum/component/swabbing/proc/try_to_swab(datum/source, atom/target, mob/user, params)
+/datum/component/swabbing/proc/try_to_swab(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(istype(target, /obj/structure/table))//help how do i do this less shitty

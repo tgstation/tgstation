@@ -73,7 +73,7 @@
 	to_chat(user, span_notice("You screw the battery case on [src] [open ? "open" : "closed"] ."))
 	update_appearance()
 
-/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(!istype(I, /obj/item/stock_parts/power_store/cell))
 		return ..()

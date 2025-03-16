@@ -68,7 +68,7 @@
 	if(!.)
 		flick("mining-deny", src)
 
-/obj/machinery/computer/order_console/mining/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/computer/order_console/mining/attackby(obj/item/weapon, mob/user, list/modifiers)
 	if(istype(weapon, /obj/item/mining_voucher))
 		redeem_voucher(weapon, user)
 		return
@@ -156,7 +156,7 @@
 	. = ..()
 	. += span_notice("There's [points] point\s on the card.")
 
-/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(!isidcard(attacking_item))
 		return ..()
 	var/obj/item/card/id/attacking_id = attacking_item

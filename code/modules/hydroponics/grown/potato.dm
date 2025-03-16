@@ -37,7 +37,7 @@
 	icon_state = "potato_wedges"
 	bite_consumption_mod = 100
 
-/obj/item/food/grown/potato/attackby(obj/item/W, mob/user, params)
+/obj/item/food/grown/potato/attackby(obj/item/W, mob/user, list/modifiers)
 	if(W.get_sharpness())
 		to_chat(user, span_notice("You cut the potato into wedges with [W]."))
 		var/obj/item/food/grown/potato/wedges/Wedges = new /obj/item/food/grown/potato/wedges

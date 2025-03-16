@@ -253,7 +253,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, params)
+/obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/tank))
 		return replace_tank(user, FALSE, item)
 	return ..()

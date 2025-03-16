@@ -71,7 +71,7 @@
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
-/obj/item/house_edge/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/house_edge/afterattack(atom/target, mob/user, list/modifiers)
 	if(!ismob(target))
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))

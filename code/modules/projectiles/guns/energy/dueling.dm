@@ -165,7 +165,7 @@
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
 
-/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, params)
+/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/gun/energy/dueling))
 		var/obj/item/gun/energy/dueling/other_gun = W
 

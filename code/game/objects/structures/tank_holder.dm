@@ -42,7 +42,7 @@
 		. += "It is empty."
 	. += span_notice("It is held together by some <b>screws</b>.")
 
-/obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return ..()
 	if(W.tool_behaviour == TOOL_WRENCH)

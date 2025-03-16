@@ -167,7 +167,7 @@
 	stage_change(GRENADE_EMPTY)
 	to_chat(user, span_notice("You remove the activation mechanism from the [initial(name)] assembly."))
 
-/obj/item/grenade/chem_grenade/attackby(obj/item/item, mob/user, params)
+/obj/item/grenade/chem_grenade/attackby(obj/item/item, mob/user, list/modifiers)
 	if(isassembly(item) && stage == GRENADE_WIRED)
 		wires.interact(user)
 	else if(stage == GRENADE_WIRED && is_type_in_list(item, allowed_containers))
@@ -328,7 +328,7 @@
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
 	//make a special case you might as well do it explicitly. -Sayu
-/obj/item/grenade/chem_grenade/large/attackby(obj/item/item, mob/user, params)
+/obj/item/grenade/chem_grenade/large/attackby(obj/item/item, mob/user, list/modifiers)
 	if(!istype(item, /obj/item/slime_extract) || stage != GRENADE_WIRED)
 		return ..()
 

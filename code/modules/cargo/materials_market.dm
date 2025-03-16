@@ -53,7 +53,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/materials_market/attackby(obj/item/O, mob/user, params)
+/obj/machinery/materials_market/attackby(obj/item/O, mob/user, list/modifiers)
 	if(is_type_in_list(O, exportable_material_items))
 		var/amount = 0
 		var/value = 0

@@ -78,7 +78,7 @@
 
 	return NONE
 
-/obj/item/grown/log/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/grown/log/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(attacking_item.get_sharpness())
 		var/plank_count = 1
 		if(seed)

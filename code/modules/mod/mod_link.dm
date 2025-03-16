@@ -206,7 +206,7 @@
 		return
 	cell.use(0.02 * STANDARD_CELL_RATE * seconds_per_tick, force = TRUE)
 
-/obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, params)
+/obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, list/modifiers)
 	. = ..()
 	if(cell || !istype(attacked_by, /obj/item/stock_parts/power_store/cell))
 		return

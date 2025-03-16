@@ -91,7 +91,7 @@
 	crystal_lens = null
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, params)
+/obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, list/modifiers)
 	if(istype(attack_item, /obj/item/stock_parts/micro_laser))
 		if(diode)
 			balloon_alert(user, "already has a diode!")

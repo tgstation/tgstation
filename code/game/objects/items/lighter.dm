@@ -192,7 +192,7 @@
 	)
 	user.add_mood_event("burnt_thumb", /datum/mood_event/burnt_thumb)
 
-/obj/item/lighter/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/lighter/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	if(lit)
 		use(0.5)
 		if(target_mob.ignite_mob())

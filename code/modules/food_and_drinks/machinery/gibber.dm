@@ -123,7 +123,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
+/obj/machinery/gibber/attackby(obj/item/P, mob/user, list/modifiers)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 

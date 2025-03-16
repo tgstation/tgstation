@@ -75,7 +75,7 @@
 	cell_reference.forceMove(drop_location())
 	return cell_reference.attack_tk(user)
 
-/obj/structure/light_construct/attackby(obj/item/tool, mob/user, params)
+/obj/structure/light_construct/attackby(obj/item/tool, mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(!cell_connectors)

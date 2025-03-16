@@ -28,7 +28,7 @@
 	var/obj/item/item_parent = parent
 	RegisterSignal(item_parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
 
-/datum/component/item_killsound/proc/on_attack(host, target_mob, user, params)
+/datum/component/item_killsound/proc/on_attack(host, target_mob, user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!allowed_mobs || is_type_in_list(target_mob, allowed_mobs))

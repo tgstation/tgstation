@@ -112,7 +112,7 @@
 	flamethrower_screwdriver(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
+/obj/item/weldingtool/attackby(obj/item/tool, mob/user, list/modifiers)
 	if(istype(tool, /obj/item/stack/rods))
 		flamethrower_rods(tool, user)
 	else
@@ -170,7 +170,7 @@
 	INVOKE_ASYNC(src, PROC_REF(try_heal_loop), interacting_with, user, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/weldingtool/afterattack(atom/target, mob/user, list/modifiers)
 	if(!isOn())
 		return
 	use(1)

@@ -36,7 +36,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
-/obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, click_parameters)
+/obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, list/modifiers)
 	if(!istype(user) || !ishuman(target))
 		return
 

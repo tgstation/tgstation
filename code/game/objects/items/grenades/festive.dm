@@ -14,7 +14,7 @@
 /obj/item/sparkler/fire_act(exposed_temperature, exposed_volume)
 	light()
 
-/obj/item/sparkler/attackby(obj/item/item, mob/user, params)
+/obj/item/sparkler/attackby(obj/item/item, mob/user, list/modifiers)
 	var/ignition_msg = item.ignition_effect(src, user)
 	if(ignition_msg)
 		light(user, ignition_msg)
@@ -75,7 +75,7 @@
 /obj/item/grenade/firecracker/attack_self(mob/user) // You need to light it manually.
 	return
 
-/obj/item/grenade/firecracker/attackby(obj/item/item, mob/user, params)
+/obj/item/grenade/firecracker/attackby(obj/item/item, mob/user, list/modifiers)
 	var/ignition_msg = item.ignition_effect(src, user)
 	if(ignition_msg && !active)
 		visible_message(ignition_msg)

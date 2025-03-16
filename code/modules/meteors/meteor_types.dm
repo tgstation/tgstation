@@ -118,7 +118,7 @@
 
 	check_examine_award(user)
 
-/obj/effect/meteor/attackby(obj/item/I, mob/user, params)
+/obj/effect/meteor/attackby(obj/item/I, mob/user, list/modifiers)
 	if(I.tool_behaviour == TOOL_MINING)
 		make_debris()
 		qdel(src)

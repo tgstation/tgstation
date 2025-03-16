@@ -168,7 +168,7 @@
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(istype(I, /obj/item/stock_parts/power_store/cell))
 		if(!panel_open)

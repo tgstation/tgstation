@@ -202,7 +202,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
+/obj/machinery/space_heater/attackby(obj/item/I, mob/user, list/modifiers)
 	add_fingerprint(user)
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -402,7 +402,7 @@
 			. = TRUE
 
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
-/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, params)
+/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(default_deconstruction_crowbar(item))
 		return

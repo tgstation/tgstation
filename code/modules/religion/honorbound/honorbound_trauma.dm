@@ -61,7 +61,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Signal to see if the trauma allows us to attack a target with a weapon
-/datum/brain_trauma/special/honorbound/proc/attack_honor(mob/living/honorbound, atom/attacked, params)
+/datum/brain_trauma/special/honorbound/proc/attack_honor(mob/living/honorbound, atom/attacked, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!isliving(attacked))

@@ -79,7 +79,7 @@
 /**
  * Hooks on attack to try and run an experiment (When using a handheld handler)
  */
-/datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if (!should_run_handheld_experiment(source, target, user))
 		return
@@ -89,7 +89,7 @@
 /**
  * Provides feedback when an item isn't related to an experiment, and has fully passed the attack chain
  */
-/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if ((isnull(selected_experiment) && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || (config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		return

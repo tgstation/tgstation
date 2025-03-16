@@ -71,7 +71,7 @@
 	W.setDir(dir)
 	qdel(src)
 
-/obj/structure/chair/attackby(obj/item/W, mob/user, params)
+/obj/structure/chair/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
 		electrify_self(W, user)
 		return
@@ -415,7 +415,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		return TRUE
 	return FALSE
 
-/obj/item/chair/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/chair/afterattack(atom/target, mob/user, list/modifiers)
 	if(!ishuman(target))
 		return
 

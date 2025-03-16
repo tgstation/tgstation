@@ -50,7 +50,7 @@
 	balloon_alert_to_viewers("id ejected")
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
-/obj/machinery/computer/prisoner/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/computer/prisoner/attackby(obj/item/weapon, mob/user, list/modifiers)
 	if(istype(weapon, /obj/item/card/id/advanced/prisoner))
 		id_insert(user, weapon)
 		return TRUE

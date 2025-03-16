@@ -98,7 +98,7 @@
 
 	senders = list()
 
-/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, params)
+/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, list/modifiers)
 	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), I))
 		update_appearance()
 		return

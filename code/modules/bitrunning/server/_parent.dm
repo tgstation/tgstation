@@ -118,7 +118,7 @@
 	icon_state = "[base_icon_state]_[is_ready ? "on" : "off"]"
 	return ..()
 
-/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, list/modifiers)
 	. = ..()
 
 	if(!istype(weapon, /obj/item/bitrunning_debug))

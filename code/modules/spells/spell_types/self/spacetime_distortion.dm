@@ -149,7 +149,7 @@
 	if(!busy)
 		walk_link(AM)
 
-/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
+/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, list/modifiers)
 	if(user.temporarilyRemoveItemFromInventory(W))
 		walk_link(W)
 	else

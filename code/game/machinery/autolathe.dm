@@ -419,7 +419,7 @@
 	drop_direction = 0
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(user.combat_mode) //so we can hit the machine
 		return ..()
 

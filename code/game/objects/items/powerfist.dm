@@ -72,7 +72,7 @@
 	update_tank(tank, TANK_REMOVING, user)
 	return TRUE
 
-/obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, params)
+/obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, list/modifiers)
 	if(!istype(item_to_insert, /obj/item/tank/internals))
 		return ..()
 	if(tank)

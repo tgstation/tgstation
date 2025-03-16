@@ -78,7 +78,7 @@
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/camera/attackby(obj/item/I, mob/user, params)
+/obj/item/camera/attackby(obj/item/I, mob/user, list/modifiers)
 	if(istype(I, /obj/item/camera_film))
 		if(pictures_left)
 			to_chat(user, span_notice("[src] still has some film in it!"))

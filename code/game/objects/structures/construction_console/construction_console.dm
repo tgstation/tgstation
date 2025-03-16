@@ -64,10 +64,10 @@
 	eyeobj = new /mob/eye/camera/remote/base_construction(spawn_spot, src)
 	return TRUE
 
-/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)
+/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, list/modifiers)
 	//If we have an internal RCD, we can refill it by slapping the console with some materials
 	if(internal_rcd && (istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet)))
-		internal_rcd.attackby(W, user, params)
+		internal_rcd.attackby(W, user, modifiers)
 	else
 		return ..()
 

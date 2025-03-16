@@ -32,7 +32,7 @@
 /datum/component/alternative_sharpness/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_secondary_attack))
 
-/datum/component/alternative_sharpness/proc/on_secondary_attack(obj/item/source, atom/target, mob/user, params)
+/datum/component/alternative_sharpness/proc/on_secondary_attack(obj/item/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if (alt_attacking || (required_trait && !HAS_TRAIT(source, required_trait)))

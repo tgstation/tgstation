@@ -25,8 +25,8 @@
 
 	return ..()
 
-/datum/tutorial/switch_hands/perform(list/params)
-	create_hand_preview(params[SCREEN_LOC])
+/datum/tutorial/switch_hands/perform(list/modifiers)
+	create_hand_preview(modifiers[SCREEN_LOC])
 	addtimer(CALLBACK(src, PROC_REF(show_instructions)), TIME_TO_START_MOVING_HAND_ICON)
 
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))

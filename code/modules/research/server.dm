@@ -165,7 +165,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
-/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))
 		switch(deconstruction_state)
 			if(HDD_PANEL_CLOSED)
