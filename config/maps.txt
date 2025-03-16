@@ -52,6 +52,11 @@ map wawastation
 	minplayers 40
 endmap
 
+# Northstar is back baybee! (just for fun)
+map northstar
+	minplayers 50
+endmap
+
 # Debug-only maps.
 
 map gateway_test

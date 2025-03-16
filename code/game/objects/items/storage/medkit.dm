@@ -625,7 +625,7 @@
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
-	desc = "Contains pills to expunge radiation and toxins."
+	desc = "Contains pills to expunge radiation and toxins. "
 
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
 	for(var/i in 1 to 3)

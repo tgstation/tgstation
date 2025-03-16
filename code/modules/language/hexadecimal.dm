@@ -1,7 +1,6 @@
 /datum/language/hexadecimal
 	name = "Hexadecimal"
 	desc = "Galactic Common encoded to hexadecimal in a currently-unknown way."
-	spans = list(SPAN_ROBOT)
 	key = "2"
 	flags = NO_STUTTER
 	syllables = list(

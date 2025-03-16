@@ -86,6 +86,7 @@
 		/datum/language/aphasia,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
+		/datum/language/hexadecimal,
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
