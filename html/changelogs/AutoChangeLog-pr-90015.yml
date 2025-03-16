@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "A number of UIs with spacing issues - such as genetics scanner and circuit boards - have been fixed. Report issues!"

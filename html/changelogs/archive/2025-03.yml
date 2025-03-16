@@ -406,3 +406,44 @@
       power to shuttles, nor can they be used to add unlimited shuttle power.
   - bugfix: Constructed shuttle engines now connect to shuttles when build, rather
       than needing to be unachored and then reanchored.
+2025-03-15:
+  ArcaneMusic:
+  - balance: Sheets of material and stock blocks are now subject to elastic price
+      changes. AKA, if you sell materials, their price will go down after sale and
+      will return after some time.
+  - bugfix: Stock blocks can no longer be made with no value or with a quantity of
+      zero material.
+  - bugfix: The GMM Machine can now no longer create stock blocks when unpowered.
+  - qol: The GMM machine now lights up when powered.
+  Holoo-1:
+  - bugfix: fixed white space when observing in auto observe mode
+  Melbert:
+  - bugfix: Plaslamen can see prefs again
+  SmArtKar:
+  - bugfix: Fixed basic mobs not idling due to nearby ghosts
+  hry-gh:
+  - bugfix: icons generate properly for janicarts
+2025-03-16:
+  AyIong:
+  - bugfix: Antagonists tab in preferences, scrollable in Byond 516 now
+  - bugfix: Fixed TGUI text inputs, that's allows only 1 symbol instead infinity
+  Melbert:
+  - rscadd: Your mood printout (clicking on the mood face) has been reformatted, and
+      should generally be cleaner.
+  - rscadd: Self examining was reworked, and overall gives you a lot less perfect
+      information, unless you are self-aware.
+  - rscadd: Bullet and grenade shrapnel is now hidden from examining - it's skin deep.
+      You can't rip them out with your hands, but hemostats / wirecutters still suffice
+      if you know they're there. Health analyzers still pick them up too.
+  - qol: Ghosts aren't notified about NPCs getting appendicitis
+  Mothblocks:
+  - rscadd: You can now craft radio jammers.
+  - balance: Radio jammers have had their cost lowered from 5 TC to 1 TC.
+  SmArtKar:
+  - bugfix: You can no longer insert infinite amounts of slime cores into advanced
+      chem grenades
+  - bugfix: Non-beaker containers in grenades work once more
+  - bugfix: Proximity sensors in grenade finally work after like, 4 years.
+  - code_imp: Cleaned up chemical grenade code
+  tralezab:
+  - balance: The cargo console now has a delay to express orders (renamed to autodelivery)

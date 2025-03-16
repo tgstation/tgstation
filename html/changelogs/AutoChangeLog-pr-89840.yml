@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored martial arts, if you notice any oddities like managing to know two martial arts at once or having your powers disappear, report it!"
+  - rscadd: "If you know multiple martial arts, such as krav maga from gloves and cqc from a book, you can now swap between them at will via a button in the IC tab!"
