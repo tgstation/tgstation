@@ -92,6 +92,12 @@
 	. = ..()
 	randcolor()
 
+/obj/item/cube/colorful/isometric
+	name = "Isometric Cube"
+	desc = "Some madman turned this cube 45 degrees, now it looks all weird!"
+	icon_state = "isometric"
+	rarity = UNCOMMON_CUBE
+
 /obj/item/cube/colorful/huge
 	name = "Huge Cube"
 	desc = "THAT is one BIG cube. It would probably hurt a lot if it fell on someone's head..."
@@ -144,8 +150,10 @@
 	if(solved)
 		balloon_alert(user, "Already solved")
 		return
+	// Oh yea. Now we're gaming.
+	var/skill_level = user?.mind?.get_skill_level(/datum/skill/gaming) || 1
 	to_chat(user, "You concentrate on solving [src]...")
-	if(!do_after(user, (13*rarity) SECONDS))
+	if(!do_after(user, round((13*rarity) SECONDS / skill_level)))
 		balloon_alert(user, "Lost concentration!")
 		return
 	balloon_alert(user, "Solved!")
@@ -158,7 +166,7 @@
 /obj/item/cube/puzzle/examine(mob/user)
 	. = ..()
 	if(!solved)
-		. += span_notice("It looks like it can still be solved...")
+		. += span_notice("It is yet to be solved...")
 	else
 		. += span_nicegreen("It's already been solved!")
 
@@ -246,13 +254,14 @@
 	if((cube_examine_flags & CUBE_FISH))
 		. += span_notice("It's moving around like deep water...")
 
-/// Randomize icons. HEAVILY skewed in favor of normal cube
+/// Randomize icons. HEAVILY skewed in favor of normally sized cubes
 /obj/item/cube/random/proc/give_random_icon()
 	var/possible_visuals = list(
 		"cube" = 500,
-		"small" = 30+rarity,
-		"massive" = 20+rarity,
-		"plane" = 10+rarity,
+		"isometric" = 250,
+		"small" = 15*rarity,
+		"massive" = 10*rarity,
+		"plane" = 5*rarity,
 		"voxel" = 5+rarity,
 		"pixel" = 1
 	)

@@ -1110,21 +1110,19 @@
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		fishing_spot = portal.current_linked_atom
 	if(!istype(fishing_spot, /obj/item/cube))
-		var/fishcube = pick_weight(get_cube_rarity(COMMON_CUBE))
+		var/fishcube = pick_weight_recursive(get_cube_rarity(COMMON_CUBE))
 		return new fishcube(spawn_location)
 
 	var/obj/item/cube/cubespot = fishing_spot
 	var/list/possible_cubes = get_cube_rarity(cubespot.rarity)
 	if(!length(possible_cubes))
 		return null
-	var/newcube = pick_weight(possible_cubes)
+	var/newcube = pick_weight_recursive(possible_cubes)
 	return new newcube(spawn_location)
 
 // Get the rarity 1 lower than our current rarity
 /datum/fish_source/cube/proc/get_cube_rarity(rarity)
-	var/obj/effect/spawner/random/cube/newcube
-	newcube.cube_rarity = clamp(rarity-1, COMMON_CUBE, MYTHICAL_CUBE)
-	return list(newcube = 30, /obj/effect/spawner/random/cube_all = 1)
+	return list(GLOB.all_cubes[clamp(rarity-1, COMMON_CUBE, MYTHICAL_CUBE)] = 49, GLOB.all_cubes = 1)
 
 /datum/fish_source/cube/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/list/data = list()
