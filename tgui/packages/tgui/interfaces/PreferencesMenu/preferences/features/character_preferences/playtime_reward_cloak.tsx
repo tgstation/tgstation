@@ -1,8 +1,8 @@
 import { CheckboxInput, FeatureToggle } from '../base';
 
 export const playtime_reward_cloak: FeatureToggle = {
-  name: 'Don gamer cloak',
+  name: 'Наденьте плащ геймера',
   description:
-    'Your reward for playing 5k+ hours. Don a fancy cloak only wearable by fellow super-veterans.',
+    'Ваша награда за более чем 5 тысяч часов игры. Наденьте модный плащ, который могут носить только другие супер-ветераны.',
   component: CheckboxInput,
 };

@@ -1,6 +1,6 @@
 /// Head Slot Items (Deletes overrided items)
 /datum/loadout_category/head
-	category_name = "Head"
+	category_name = "Голова"
 	category_ui_icon = FA_ICON_HAT_COWBOY
 	type_to_generate = /datum/loadout_item/head
 	tab_order = 1

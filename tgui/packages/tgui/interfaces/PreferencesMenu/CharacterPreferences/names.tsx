@@ -80,7 +80,7 @@ export function MultiNameInput(props: MultiNameProps) {
               Close
             </Button>
           }
-          title="Alternate names"
+          title="Альтернативные имена"
         >
           <LabeledList>
             {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(

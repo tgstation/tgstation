@@ -2,16 +2,16 @@ import { FeatureChoiced } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
 export const junkie: FeatureChoiced = {
-  name: 'Addiction',
+  name: 'Зависимость',
   component: FeatureDropdownInput,
 };
 
 export const smoker: FeatureChoiced = {
-  name: 'Favorite Brand',
+  name: 'Любимый бренд',
   component: FeatureDropdownInput,
 };
 
 export const alcoholic: FeatureChoiced = {
-  name: 'Favorite Drink',
+  name: 'Любимый напиток',
   component: FeatureDropdownInput,
 };

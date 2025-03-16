@@ -56,7 +56,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleRotate}
           fontSize="22px"
           icon="undo"
-          tooltip="Rotate"
+          tooltip="Повернуть"
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -66,7 +66,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleOpenSpecies}
           fontSize="22px"
           icon="paw"
-          tooltip="Species"
+          tooltip="Раса"
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -255,7 +255,7 @@ function GenderButton(props: GenderButtonProps) {
         }}
         fontSize="22px"
         icon={GENDERS[props.gender].icon}
-        tooltip="Gender"
+        tooltip="Гендер"
         tooltipPosition="top"
       />
     </Popper>

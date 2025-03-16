@@ -1,8 +1,8 @@
 import { FeatureIconnedDropdownInput, FeatureWithIcons } from '../dropdowns';
 
 export const preferred_ai_emote_display: FeatureWithIcons<string> = {
-  name: 'AI emote display',
+  name: 'ИИ на дисплеях',
   description:
-    'If you are the AI, the default image displayed on all AI displays on station.',
+    'Если вы являетесь искусственным интеллектом, то изображение по умолчанию отображается на всех дисплеях искусственного интеллекта на станции.',
   component: FeatureIconnedDropdownInput,
 };

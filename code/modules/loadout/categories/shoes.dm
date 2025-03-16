@@ -1,6 +1,6 @@
 /// Shoe Slot Items (Deletes overrided items)
 /datum/loadout_category/shoes
-	category_name = "Shoes"
+	category_name = "Обувь"
 	category_ui_icon = FA_ICON_SHOE_PRINTS
 	type_to_generate = /datum/loadout_item/shoes
 	tab_order = 1
