@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Stock blocks that have gone liquid should properly recalculate their cost when possible."
+  - bugfix: "Spawned sheets of uranium now actually hold 50 sheets."
