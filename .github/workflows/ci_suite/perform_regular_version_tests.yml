@@ -1,4 +1,5 @@
 name: Run Regular BYOND Version Tests
+
 on:
   workflow_call:
     inputs:
@@ -11,7 +12,7 @@ on:
 
 jobs:
   run:
-    uses: ./.github/workflows/run_integration_tests.yml
+    uses: ./.github/workflows/ci_suite/run_integration_tests.yml
 
     strategy:
       fail-fast: false
