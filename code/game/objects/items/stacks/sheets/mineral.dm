@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	amount = 25
 
 /obj/item/stack/sheet/mineral/uranium/fifty
-	amount = 25
+	amount = 50
 
 /*
  * Plasma
