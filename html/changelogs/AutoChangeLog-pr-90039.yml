@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - bugfix: "Fixed TGUI text inputs, that's allows only 1 symbol instead infinity"
