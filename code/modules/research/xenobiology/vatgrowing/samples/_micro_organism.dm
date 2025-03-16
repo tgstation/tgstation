@@ -158,5 +158,5 @@
 	var/list/mutant_shift_matrix = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, hue_shift,0,0,0) //matrix for our colour shifting.
 
 	//Here we make the changes for the atom, we apply a filter and change the name to indicate rarity.
-	beautiful_mutant.add_filter("slime splice", 15, color_matrix_filter(mutant_shift_matrix, FILTER_COLOR_HSL))
+	beautiful_mutant.add_filter("shiny mutation", 15, color_matrix_filter(mutant_shift_matrix, FILTER_COLOR_HSL))
 	beautiful_mutant.name = "[rarity_affix] [beautiful_mutant.name]"
