@@ -302,7 +302,6 @@
 	slice_type = /obj/item/food/pizzaslice/donkpocket
 	boxtag = "Bangin' Donk"
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"

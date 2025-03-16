@@ -9,11 +9,10 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 	/// What type of donk pocket we're warmed into via baking or microwaving.
 	var/warm_type = /obj/item/food/donkpocket/warm
@@ -52,10 +51,12 @@
 	foodtypes = MEAT|GRAIN
 	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
 	warm_type = /obj/item/food/donkpocket/warm/homemade
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/warm/homemade
 	foodtypes = MEAT|GRAIN
 	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/dank
 	name = "\improper Dank-pocket"
@@ -127,10 +128,12 @@
 	tastes = list("meat" = 2, "dough" = 2, "spice" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/spicy/homemade
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/warm/spicy/homemade
 	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/teriyaki
 	name = "\improper Teriyaki-pocket"
@@ -168,10 +171,12 @@
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = MEAT|GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/teriyaki/homemade
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/warm/teriyaki/homemade
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = MEAT|GRAIN
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/pizza
 	name = "\improper Pizza-pocket"
@@ -289,6 +294,7 @@
 	foodtypes = GRAIN|MEAT
 
 	warm_type = /obj/item/food/donkpocket/warm/gondola
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	var/static/list/gondola_added_reagents = list(
 		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/gondola_mutation_toxin = 5,
@@ -312,6 +318,7 @@
 	)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtypes = GRAIN|MEAT
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/deluxe
 	name = "\improper Donk-pocket Deluxe"
@@ -385,6 +392,7 @@
 	)
 	tastes = list("meat" = 2, "more meat" = 2, "no carbs" = 1)
 	foodtypes = MEAT
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 4)
 
 /obj/item/food/donkpocket/deluxe/vegan
 	name = "\improper Donk-roll"
