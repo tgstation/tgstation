@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "The glaive retool kit works again and no longer turns your crusher invisible."
