@@ -36,7 +36,7 @@
 	icon_state = "validsalad"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/doctor_delight = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
-	foodtypes = VEGETABLES | MEAT | FRIED | FRUIT
+	foodtypes = VEGETABLES | MEAT | FRIED
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/fruit
@@ -45,7 +45,7 @@
 	icon_state = "fruitsalad"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("fruit" = 1)
-	foodtypes = FRUIT
+	foodtypes = FRUIT|ORANGES
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/jungle
@@ -131,7 +131,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("rice" = 1, "cheese" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN|DAIRY|VEGETABLES
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -145,7 +145,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("rice" = 1, "egg" = 1)
-	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/edensalad
@@ -269,7 +269,7 @@
 		/datum/reagent/consumable/nutriment = 14,
 	)
 	tastes = list("healthy greens" = 2, "olive dressing" = 1, "feta cheese" = 1)
-	foodtypes = VEGETABLES | DAIRY
+	foodtypes = VEGETABLES|FRUIT|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/caesar_salad
@@ -306,7 +306,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("creamy potatoes" = 2, "eggs" = 2, "mayonnaise" = 1, "onions" = 1)
-	foodtypes = VEGETABLES | BREAKFAST
+	foodtypes = MEAT|VEGETABLES|BREAKFAST
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/spinach_fruit_salad
@@ -318,7 +318,7 @@
 		/datum/reagent/consumable/nutriment = 12,
 	)
 	tastes = list("spinach" = 2, "berries" = 2, "pineapple" = 2, "dressing" = 1)
-	foodtypes = VEGETABLES | FRUIT
+	foodtypes = VEGETABLES|FRUIT|PINEAPPLE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/antipasto_salad
@@ -331,6 +331,6 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("lettuce" = 2, "salami" = 2, "mozzarella cheese" = 2, "tomatoes" = 2, "dressing" = 1)
-	foodtypes = VEGETABLES | DAIRY | MEAT
+	foodtypes = MEAT|VEGETABLES|FRUIT|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)

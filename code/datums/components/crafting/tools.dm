@@ -107,3 +107,14 @@
 		if(final_check ? crayon.use_charges(user, 10) : crayon.check_empty(user, 10))
 			return TRUE
 	return FALSE
+
+/datum/crafting_recipe/makeshift_radio_jammer
+	name = "Makeshift Radio Jammer"
+	result = /obj/item/jammer/makeshift
+	reqs = list(
+		/obj/item/universal_scanner = 1,
+		/obj/item/encryptionkey = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_TOOLS
+

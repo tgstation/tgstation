@@ -107,6 +107,7 @@
 		return
 	if(attached_hat)
 		var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		worn_overlay.appearance_flags |= RESET_COLOR
 		// loose hats are slightly angled
 		if(loose_hat)
 			var/matrix/tilt_trix = matrix(worn_overlay.transform)
@@ -206,7 +207,7 @@
 
 	var/former_hat = attached_hat
 	var/obj/item/clothing/apparel = parent
-	apparel.detach_clothing_traits(attached_hat)
+	apparel.detach_clothing_traits(attached_hat.clothing_traits)
 	apparel.flags_cover = former_flags
 	apparel.visor_flags_cover = former_visor_flags
 	apparel.update_appearance()

@@ -118,6 +118,8 @@
 			all_gear[template::name] = new template
 		battle_arcade_gear_list = all_gear
 
+	name = make_boss_name_with_verb()
+
 /obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
@@ -144,37 +146,49 @@
 	equipped_gear = list(WEAPON_SLOT = null, ARMOR_SLOT = null)
 	return ..()
 
+/obj/machinery/computer/arcade/battle/proc/make_boss_name_with_verb(boss_verb)
+	if(check_holidays(HALLOWEEN))
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_halloween")
+	else if(check_holidays(CHRISTMAS))
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_xmas")
+	else if(check_holidays(VALENTINES))
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_valentines")
+	else
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action")
+
+	return "[boss_verb] [make_boss_name()]"
+
+/obj/machinery/computer/arcade/battle/proc/make_boss_name(boss_name, boss_adjective)
+	if(check_holidays(HALLOWEEN))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_halloween")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+	else if(check_holidays(CHRISTMAS))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_xmas")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+	else if(check_holidays(VALENTINES))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+	else
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy")
+
+	return "The [boss_adjective] [boss_name]"
+
 ///Sets up a new opponent depending on what stage they are at.
 /obj/machinery/computer/arcade/battle/proc/setup_new_opponent(enemy_gets_first_move = FALSE)
-	var/name_adjective
-	var/new_name
-
-	if(check_holidays(HALLOWEEN))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
-	else if(check_holidays(CHRISTMAS))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
-	else if(check_holidays(VALENTINES))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
-	else
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy")
-
 	enemy_hp = round(rand(90, 125) * all_worlds[player_current_world], 1)
 	enemy_mp = round(rand(20, 30) * all_worlds[player_current_world], 1)
 	enemy_gold_reward = rand((DEFAULT_ITEM_PRICE / 2), DEFAULT_ITEM_PRICE)
 
 	// there's only one boss in each stage (except the last)
-	if((player_current_world == latest_unlocked_world) && enemies_defeated == WORLD_ENEMY_BOSS)
+	var/boss = (player_current_world == latest_unlocked_world) && enemies_defeated == WORLD_ENEMY_BOSS
+	if(boss)
 		enemy_mp *= 1.25
 		enemy_hp *= 1.25
 		enemy_gold_reward *= 1.5
-		name_adjective = "Big Boss"
 
 	enemy_icon_id = rand(1,6)
-	enemy_name = "The [name_adjective] [new_name]"
+	enemy_name = make_boss_name(boss_adjective = (boss ? "Big Boss" : null))
 	feedback_message = "New game started against [enemy_name]"
 
 	if(obj_flags & EMAGGED)

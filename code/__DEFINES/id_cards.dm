@@ -28,7 +28,7 @@
 #define WILDCARD_LIMIT_CENTCOM list(WILDCARD_NAME_CENTCOM = list(limit = -1, usage = list()))
 /// Wildcard slot define for Prisoner orange cards. No wildcard slots.
 #define WILDCARD_LIMIT_PRISONER list()
-/// Wildcard slot define for Chameleon/Agent ID grey cards. Can hold 6 common, 2 command and 1 captain access.
+/// Wildcard slot define for the cargo variant of agent ID. Can hold 6 common, 2 command and 1 captain access.
 #define WILDCARD_LIMIT_CHAMELEON list( \
 	WILDCARD_NAME_COMMON = list(limit = 6, usage = list()), \
 	WILDCARD_NAME_COMMAND = list(limit = 2, usage = list()), \

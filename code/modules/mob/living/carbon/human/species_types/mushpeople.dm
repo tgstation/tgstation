@@ -33,6 +33,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/mushroom,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
 	)
+	/// Martial art for the mushpeople
 	var/datum/martial_art/mushpunch/mush
 
 /datum/species/mush/check_roundstart_eligible()
@@ -40,14 +41,12 @@
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
-	if(ishuman(C))
-		mush = new()
-		mush.teach(C)
-		mush.allow_temp_override = FALSE
+	mush = new(src)
+	mush.locked_to_use = TRUE
+	mush.teach(C)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.fully_remove(C)
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -88,10 +87,12 @@
 /datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()
 	return SSaccessories.caps_list
 
-/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
-
 	return TRUE
 
 /datum/bodypart_overlay/mutant/mushroom_cap/override_color(obj/item/bodypart/bodypart_owner)

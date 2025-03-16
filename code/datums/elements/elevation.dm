@@ -13,6 +13,8 @@
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 
+	ADD_TRAIT(target, TRAIT_ELEVATING_OBJECT, ref(src))
+
 	src.pixel_shift = pixel_shift
 
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
@@ -22,6 +24,7 @@
 
 /datum/element/elevation/Detach(atom/movable/source)
 	unregister_turf(source, source.loc)
+	REMOVE_TRAIT(source, TRAIT_ELEVATING_OBJECT, ref(src))
 	return ..()
 
 /datum/element/elevation/proc/reset_elevation(turf/target)
@@ -172,6 +175,7 @@
 	// we want to avoid accidentally double-elevating anything they're buckled to (namely vehicles)
 	if(target.has_offset(source = ELEVATION_SOURCE(src)))
 		return
+	ADD_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 	// We are buckled to something
 	if(target.buckled)
 		// We are buckled to a vehicle, so it also must be elevated
@@ -187,6 +191,7 @@
 
 /// Reverts elevation of the mob.
 /datum/element/elevation_core/proc/deelevate_mob(mob/living/target, elevate_time = ELEVATE_TIME)
+	REMOVE_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 	target.remove_offsets(ELEVATION_SOURCE(src), animate = elevate_time > 0)
 	if(isvehicle(target.buckled))
 		animate(target.buckled, pixel_z = -pixel_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)

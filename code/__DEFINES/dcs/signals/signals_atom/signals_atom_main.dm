@@ -156,3 +156,7 @@
 #define COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS "atom_finalize_material_effects"
 /// From /atom/finalize_remove_material_effects(): (list/materials, datum/material/main_material)
 #define COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS "atom_finalize_remove_material_effects"
+
+/// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
+#define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
+	#define COMPONENT_CANCEL_DIGESTION (1<<0)

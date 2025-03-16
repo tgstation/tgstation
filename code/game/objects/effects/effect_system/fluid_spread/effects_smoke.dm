@@ -91,7 +91,7 @@
 		spread_smoke.lifetime = lifetime
 
 		// the smoke spreads rapidly, but not instantly
-		SSfoam.queue_spread(spread_smoke)
+		SSsmoke.queue_spread(spread_smoke)
 
 
 /obj/effect/particle_effect/fluid/smoke/process(seconds_per_tick)

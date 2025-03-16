@@ -111,6 +111,7 @@
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	preserved_food = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/fries/Initialize(mapload)
@@ -126,9 +127,10 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("fries" = 3, "cheese" = 1)
-	foodtypes = VEGETABLES | DAIRY
+	foodtypes = VEGETABLES|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	preserved_food = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cheesyfries/Initialize(mapload)
@@ -144,6 +146,7 @@
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/carrotfries/Initialize(mapload)
@@ -156,9 +159,10 @@
 	icon_state = "poutine"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
-	foodtypes = VEGETABLES | FRIED | MEAT
+	foodtypes = VEGETABLES|DAIRY|FRIED|MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	preserved_food = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/poutine/Initialize(mapload)

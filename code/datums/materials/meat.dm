@@ -91,6 +91,7 @@
 
 /datum/material/meat/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()
+	source.RemoveComponentSource(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible)
 	qdel(source.GetComponent(/datum/component/blood_walk))
 	qdel(source.GetComponent(/datum/component/bloody_spreader))
 	source.RemoveComponentSource(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible)

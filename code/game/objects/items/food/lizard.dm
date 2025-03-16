@@ -13,7 +13,7 @@
 		/datum/reagent/blood = 3,
 	)
 	tastes = list("meat" = 1, "black pudding" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
@@ -48,7 +48,7 @@
 		/datum/reagent/consumable/salt = 5,
 	)
 	tastes = list("meat" = 1, "salt" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT|RAW|GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
@@ -123,7 +123,7 @@
 	icon_state = "pate"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("liver" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -198,7 +198,7 @@
 		/datum/reagent/consumable/garlic = 2,
 	)
 	tastes = list("snails" = 1, "garlic" = 1, "oil" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -214,7 +214,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil = 1,
 	)
 	tastes = list("black pudding" = 1, "batter" = 1, "oil" = 1)
-	foodtypes = MEAT | FRIED
+	foodtypes = MEAT|NUTS|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
@@ -279,7 +279,7 @@
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("fish" = 1, "acid" = 1, "onion" = 1, "heat" = 1)
-	foodtypes = SEAFOOD | VEGETABLES
+	foodtypes = VEGETABLES|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -294,7 +294,7 @@
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("meat" = 1, "sweet" = 1, "heat" = 1)
-	foodtypes = GORE | MEAT | BUGS
+	foodtypes = MEAT|VEGETABLES|BUGS|GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -338,7 +338,7 @@
 		/datum/reagent/consumable/nutriment = 2,
 	)
 	tastes = list("fish" = 2, "potatoes" = 1, "carrots" = 1)
-	foodtypes = SEAFOOD
+	foodtypes = VEGETABLES|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -372,6 +372,9 @@
 	tastes = list("gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/spaghetti/nizaya/egg
+	foodtypes = parent_type::foodtypes | MEAT
 
 /obj/item/food/spaghetti/snail_nizaya
 	name = "desert snail nizaya"
@@ -411,7 +414,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("peppery sweet" = 1, "veggies" = 1, "gnocchi" = 1)
-	foodtypes = VEGETABLES | SUGAR | NUTS
+	foodtypes = VEGETABLES|NUTS|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/mushroom_nizaya
@@ -424,7 +427,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("savouriness" = 1, "nuttiness" = 1, "gnocchi" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 //Dough Dishes
@@ -439,12 +442,20 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	var/bread_type = /obj/item/food/bread/root
+	var/flat_type = /obj/item/food/flatrootdough
 
 /obj/item/food/rootdough/make_bakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/bread/root, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, bread_type, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdough/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, flat_type, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+
+/obj/item/food/rootdough/egg
+	desc = "A root based dough, made with nuts, tubers and eggs. Used in a wide range of Tiziran cooking."
+	foodtypes = parent_type::foodtypes | MEAT
+	bread_type = /obj/item/food/bread/root/egg
+	flat_type = /obj/item/food/flatrootdough/egg
 
 /obj/item/food/flatrootdough
 	name = "flat rootdough"
@@ -455,12 +466,19 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	var/process_type = /obj/item/food/rootdoughslice
+	var/grill_type = /obj/item/food/root_flatbread
 
 /obj/item/food/flatrootdough/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, process_type, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/flatrootdough/make_grillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/root_flatbread, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, grill_type, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
+/obj/item/food/flatrootdough/egg
+	foodtypes = parent_type::foodtypes | MEAT
+	process_type = /obj/item/food/rootdoughslice/egg
+	grill_type = /obj/item/food/root_flatbread/egg
 
 /obj/item/food/rootdoughslice
 	name = "rootdough ball"
@@ -472,12 +490,21 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	var/process_type = /obj/item/food/spaghetti/nizaya
+	var/bake_type = /obj/item/food/rootroll
+
+/obj/item/food/rootdoughslice/egg
+	foodtypes = parent_type::foodtypes | MEAT
 
 /obj/item/food/rootdoughslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/rootdoughslice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/rootroll, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
+/obj/item/food/rootdoughslice/egg
+	process_type = /obj/item/food/spaghetti/nizaya/egg
+	bake_type = /obj/item/food/rootroll/egg
 
 /obj/item/food/root_flatbread
 	name = "root flatbread"
@@ -489,6 +516,9 @@
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/obj/item/food/root_flatbread/egg
+	foodtypes = parent_type::foodtypes | MEAT
+
 /obj/item/food/rootroll
 	name = "rootroll"
 	desc = "A dense, chewy roll, made from roots. A nice companion to a bowl of soup."
@@ -499,6 +529,9 @@
 	tastes = list("roll" = 1) // the roll tastes of roll.
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/rootroll/egg
+	foodtypes = parent_type::foodtypes | MEAT
 
 //Bread Dishes
 
@@ -518,6 +551,10 @@
 	. = ..()
 	AddComponent(/datum/component/ingredients_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
+/obj/item/food/bread/root/egg
+	foodtypes = parent_type::foodtypes | MEAT
+	slice_type = /obj/item/food/breadslice/root/egg
+
 /obj/item/food/breadslice/root
 	name = "rootbread slice"
 	desc = "A slice of dense, chewy rootbread."
@@ -531,6 +568,9 @@
 /obj/item/food/breadslice/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+
+/obj/item/food/breadslice/root/egg
+	foodtypes = parent_type::foodtypes | MEAT
 
 //Pizza Dishes
 /obj/item/food/pizza/flatbread
@@ -591,7 +631,7 @@
 		/datum/reagent/consumable/nutriment/protein = 10,
 	)
 	tastes = list("bread" = 1, "meat" = 1)
-	foodtypes = MEAT | NUTS | GORE
+	foodtypes = MEAT|VEGETABLES|RAW|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
@@ -605,7 +645,7 @@
 		/datum/reagent/consumable/honey = 2,
 	)
 	tastes = list("bread" = 1, "sweetness" = 1, "stinging" = 1, "slime" = 1)
-	foodtypes = BUGS | NUTS | SEAFOOD | GORE
+	foodtypes = MEAT|VEGETABLES|NUTS|SEAFOOD|BUGS|GORE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/zmorgast  // Name is based off of the Swedish dish Smörgåstårta
@@ -631,7 +671,7 @@
 		/datum/reagent/consumable/bbqsauce = 2,
 	)
 	tastes = list("bread" = 1, "fish" = 1)
-	foodtypes = SEAFOOD | NUTS
+	foodtypes = VEGETABLES|NUTS|SEAFOOD
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/flatbread/mushroom
@@ -868,7 +908,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("peanut butter" = 1, "jelly" = 1, "rootbread" = 2)
-	foodtypes = FRUIT | NUTS
+	foodtypes = FRUIT|VEGETABLES|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/rootbread_peanut_butter_banana
@@ -883,7 +923,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("peanut butter" = 1, "banana" = 1, "rootbread" = 2)
-	foodtypes = FRUIT | NUTS
+	foodtypes = FRUIT|VEGETABLES|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/plain/korta
@@ -896,7 +936,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
-	foodtypes = NUTS | MEAT
+	foodtypes = MEAT|VEGETABLES|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3 //Gotta make the dough, +1
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
@@ -911,7 +951,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("dead rat" = 4, "bun" = 2)
-	foodtypes = NUTS | MEAT | GORE
+	foodtypes = NUTS | MEAT | GORE | VEGETABLES | RAW
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/rootguffin
@@ -926,7 +966,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("muffin" = 2, "bacon" = 3)
-	foodtypes = NUTS | MEAT | BREAKFAST
+	foodtypes = NUTS | MEAT | BREAKFAST | VEGETABLES | FRIED
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
@@ -943,7 +983,7 @@
 		/datum/reagent/consumable/bbqsauce = 1,
 	)
 	tastes = list("bun" = 2, "pork patty" = 4)
-	foodtypes = NUTS | MEAT
+	foodtypes = NUTS | MEAT | VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
@@ -961,7 +1001,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
-	foodtypes = NUTS | MEAT | FRIED
+	foodtypes = NUTS | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -977,7 +1017,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("bun" = 4, "fish" = 4)
-	foodtypes = NUTS | SEAFOOD
+	foodtypes = VEGETABLES | NUTS | SEAFOOD
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
 

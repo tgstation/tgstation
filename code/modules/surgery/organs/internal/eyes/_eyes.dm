@@ -42,8 +42,8 @@
 	var/eye_icon_state = "eyes"
 	/// Do these eyes have blinking animations
 	var/blink_animation = TRUE
-	/// Do these eyes have iris overlays
-	var/iris_overlays = TRUE
+	/// Icon state for iris overlays
+	var/iris_overlay = "eyes_iris"
 	/// Should our blinking be synchronized or can separate eyes have (slightly) separate blinking times
 	var/synchronized_blinking = TRUE
 	// A pair of abstract eyelid objects (yes, really) used to animate blinking
@@ -268,18 +268,18 @@
 			overlays += eyelids
 
 	if (scarring & RIGHT_EYE_SCAR)
-		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_face.dmi', "eye_scar_right", -BODY_LAYER)
+		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_face.dmi', "eye_scar_right", -BODY_LAYER, parent)
 		right_scar.color = my_head.draw_color
 		overlays += right_scar
 
 	if (scarring & LEFT_EYE_SCAR)
-		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_face.dmi', "eye_scar_left", -BODY_LAYER)
+		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_face.dmi', "eye_scar_left", -BODY_LAYER, parent)
 		left_scar.color = my_head.draw_color
 		overlays += left_scar
 
 	if(my_head.worn_face_offset)
-		my_head.worn_face_offset.apply_offset(eye_left)
-		my_head.worn_face_offset.apply_offset(eye_right)
+		for (var/mutable_appearance/overlay as anything in overlays)
+			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
 
@@ -295,9 +295,9 @@
 		left_scar.blend_mode = BLEND_INSET_OVERLAY
 		. += left_scar
 
-	if (iris_overlays && eye_color_left && eye_color_right)
-		var/mutable_appearance/left_iris = mutable_appearance(icon, "[icon_state]_iris_l")
-		var/mutable_appearance/right_iris = mutable_appearance(icon, "[icon_state]_iris_r")
+	if (iris_overlay && length(eye_color_left) && length(eye_color_right))
+		var/mutable_appearance/left_iris = mutable_appearance(icon, "[iris_overlay]_l")
+		var/mutable_appearance/right_iris = mutable_appearance(icon, "[iris_overlay]_r")
 		var/list/color_left = rgb2num(eye_color_left, COLORSPACE_HSL)
 		var/list/color_right = rgb2num(eye_color_right, COLORSPACE_HSL)
 		// Ugly as sin? Indeed it is! But otherwise eyeballs turn out to be super dark, and this way even lighter colors are mostly preserved
@@ -390,6 +390,10 @@
 		owner.assign_nearsightedness(EYE_DAMAGE, severity, TRUE)
 
 	damaged = TRUE
+
+/obj/item/organ/eyes/feel_for_damage(self_aware)
+	// Eye damage has visual effects, so we don't really need to "feel" it when self-examining
+	return ""
 
 #define BASE_BLINKING_DELAY 5 SECONDS
 #define RAND_BLINKING_DELAY 1 SECONDS
@@ -547,7 +551,7 @@
 	icon_state = "adamantine_cords"
 	eye_icon_state = null
 	blink_animation = FALSE
-	iris_overlays = FALSE
+	iris_overlay = null
 	color = COLOR_GOLEM_GRAY
 	visual = FALSE
 	organ_flags = ORGAN_MINERAL
@@ -572,8 +576,7 @@
 /obj/item/organ/eyes/robotic
 	name = "robotic eyes"
 	desc = "Your vision is augmented."
-	icon_state = "cybernetic_eyeballs"
-	iris_overlays = FALSE
+	icon_state = "eyes_cyber"
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
 
@@ -589,8 +592,10 @@
 /obj/item/organ/eyes/robotic/basic
 	name = "basic robotic eyes"
 	desc = "A pair of basic cybernetic eyes that restore vision, but at some vulnerability to light."
-	eye_color_left = "5500ff"
-	eye_color_right = "5500ff"
+	icon_state = "eyes_cyber_basic"
+	iris_overlay = null
+	eye_color_left = "#2f3032"
+	eye_color_right = "#2f3032"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/basic/emp_act(severity)
@@ -606,8 +611,10 @@
 /obj/item/organ/eyes/robotic/xray
 	name = "x-ray eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
-	eye_color_left = "000"
-	eye_color_right = "000"
+	icon_state = "eyes_cyber_xray"
+	iris_overlay = null
+	eye_color_left = "#3cb8a5"
+	eye_color_right = "#3cb8a5"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
 /obj/item/organ/eyes/robotic/xray/on_mob_insert(mob/living/carbon/eye_owner)
@@ -621,8 +628,10 @@
 /obj/item/organ/eyes/robotic/thermals
 	name = "thermal eyes"
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
-	eye_color_left = "FC0"
-	eye_color_right = "FC0"
+	icon_state = "eyes_cyber_thermal"
+	iris_overlay = null
+	eye_color_left = "#ce2525"
+	eye_color_right = "#ce2525"
 	// We're gonna downshift green and blue a bit so darkness looks yellow
 	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
@@ -663,6 +672,10 @@
 /obj/item/organ/eyes/robotic/shield
 	name = "shielded robotic eyes"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
+	icon_state = "eyes_cyber_shield"
+	iris_overlay = null
+	eye_color_left = "#353845"
+	eye_color_right = "#353845"
 	flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/organ/eyes/robotic/shield/Initialize(mapload)
@@ -678,8 +691,10 @@
 /obj/item/organ/eyes/robotic/glow
 	name = "high luminosity eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
-	eye_color_left = "000"
-	eye_color_right = "000"
+	icon_state = "eyes_cyber_glow"
+	iris_overlay = "eyes_cyber_glow_iris"
+	eye_color_left = "#19191a"
+	eye_color_right = "#19191a"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/max_light_beam_distance = 5
 	var/obj/item/flashlight/eyelight/glow/eye
@@ -937,71 +952,78 @@
 /obj/item/organ/eyes/moth
 	name = "moth eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
-	icon_state = "eyeballs-moth"
+	icon_state = "eyes_moth"
 	eye_icon_state = "motheyes"
 	blink_animation = FALSE
-	iris_overlays = FALSE
+	iris_overlay = null
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/moth
 	name = "robotic moth eyes"
 	desc = "Your vision is augmented. Much like actual moth eyes, very sensitive to bright lights."
-	icon_state = "eyeballs-cybermoth"
-	eye_icon_state = "motheyes"
-	blink_animation = FALSE
+	icon_state = "eyes_moth_cyber"
+	eye_icon_state = "motheyes_cyber"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/basic/moth
 	name = "basic robotic moth eyes"
-	icon_state = "eyeballs-cybermoth"
-	eye_icon_state = "motheyes"
+	icon_state = "eyes_moth_cyber_basic"
+	eye_icon_state = "motheyes_white"
+	eye_color_left = "#65686f"
+	eye_color_right = "#65686f"
 	blink_animation = FALSE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/xray/moth
 	name = "moth x-ray eyes"
 	desc = "These cybernetic imitation moth eyes will give you X-ray vision. Blinking is futile. Much like actual moth eyes, very sensitive to bright lights."
-	icon_state = "eyeballs-cybermoth"
-	eye_icon_state = "motheyes"
+	icon_state = "eyes_moth_cyber_xray"
+	eye_icon_state = "motheyes_white"
+	eye_color_left = "#3c4e52"
+	eye_color_right = "#3c4e52"
 	blink_animation = FALSE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/shield/moth
 	name = "shielded robotic moth eyes"
-	icon_state = "eyeballs-cybermoth"
-	eye_icon_state = "motheyes"
+	icon_state = "eyes_moth_cyber_shield"
+	eye_icon_state = "motheyes_white"
+	eye_color_left = "#353845"
+	eye_color_right = "#353845"
 	blink_animation = FALSE
 
 /obj/item/organ/eyes/robotic/glow/moth
 	name = "high luminosity moth eyes"
 	desc = "Special glowing eyes, to be one with the lamp. Much like actual moth eyes, very sensitive to bright lights."
-	icon_state = "eyeballs-cybermoth"
-	eye_icon_state = "motheyes"
+	icon_state = "eyes_moth_cyber_glow"
+	eye_icon_state = "motheyes_cyber"
+	iris_overlay = "eyes_moth_cyber_glow_iris"
 	blink_animation = FALSE
 	base_eye_state = "eyes_mothglow"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/thermals/moth //we inherit flash weakness from thermals
 	name = "thermal moth eyes"
-	icon_state = "eyeballs-cybermoth"
-	eye_icon_state = "motheyes"
+	icon_state = "eyes_moth_cyber_thermal"
+	eye_icon_state = "motheyes_white"
+	eye_color_left = "#901f38"
+	eye_color_right = "#901f38"
 	blink_animation = FALSE
 
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."
-	icon_state = "snail_eyeballs"
+	icon_state = "eyes_snail"
 	eye_icon_state = "snail_eyes"
 	blink_animation = FALSE
-	iris_overlays = FALSE
 
 /obj/item/organ/eyes/jelly
 	name = "jelly eyes"
 	desc = "These eyes are made of a soft jelly. Unlike all other eyes, though, there are three of them."
-	icon_state = "eyeballs-jelly"
+	icon_state = "eyes_jelly"
 	eye_icon_state = "jelleyes"
 	blink_animation = FALSE
-	iris_overlays = FALSE
+	iris_overlay = null
 
 /obj/item/organ/eyes/lizard
 	name = "reptile eyes"
@@ -1012,13 +1034,13 @@
 /obj/item/organ/eyes/night_vision/maintenance_adapted
 	name = "adapted eyes"
 	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."
-	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
-	eye_color_left = "f00"
-	eye_color_right = "f00"
-	icon_state = "adapted_eyes"
+	icon_state = "eyes_adapted"
+	eye_color_left = "#f74a4d"
+	eye_color_right = "#f74a4d"
 	eye_icon_state = "eyes_glow"
-	iris_overlays = FALSE
+	iris_overlay = null
 	overlay_ignore_lighting = TRUE
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	low_light_cutoff = list(5, 12, 20)
 	medium_light_cutoff = list(15, 20, 30)
 	high_light_cutoff = list(30, 35, 50)
@@ -1043,4 +1065,8 @@
 /obj/item/organ/eyes/pod
 	name = "pod eyes"
 	desc = "Strangest salad you've ever seen."
+	icon_state = "eyes_pod"
+	eye_color_left = "#375846"
+	eye_color_right = "#375846"
+	iris_overlay = null
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES

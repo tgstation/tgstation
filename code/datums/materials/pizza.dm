@@ -33,7 +33,7 @@
 /datum/material/pizza/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(IS_EDIBLE(source))
-		make_edible(source, mat_amount)
+		make_edible(source, mat_amount, multiplier)
 
 /datum/material/pizza/on_edible_applied(atom/source, datum/component/edible/edible)
 	for(var/datum/reagent/consumable/nutriment/foodchem in source.reagents.reagent_list)
