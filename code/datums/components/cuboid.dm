@@ -25,18 +25,20 @@
 		"red" = COLOR_RED,
 		"pink" = COLOR_PINK
 		)
+	/// Anything above common gets a sound when it gains the component. First one is there just in case it messes up
+	var/static/list/gain_sounds = list(
+		'sound/effects/page_turn/pageturn1.ogg',
+		'sound/effects/achievement/glockenspiel_ping.ogg',
+		'sound/effects/magic/swap.ogg',
+		'sound/effects/achievement/tada_fanfare.ogg',
+		'sound/effects/magic/magic_block_holy.ogg',
+		'sound/items/bikehorn.ogg'
+	)
 
 
 /datum/component/cuboid/Initialize(mapload, cube_rarity = COMMON_CUBE)
 	. = ..()
-	/// Rarity
-	src.rarity = cube_rarity
-	/// We love indexes!!!
-	src.rarity_name = all_rarenames[src.rarity]
-	src.rarity_color_name = all_rarecolors[src.rarity]
-	src.rarity_color = all_rarecolors[src.rarity_color_name]
-	/// Really make it obvious. You can't get 2 feet without seeing an outline.
-	parent.add_filter("cubeglow", 10, outline_filter(color = src.rarity_color, size = 1))
+	update_rarity(mapload, cube_rarity)
 
 /datum/component/cuboid/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
@@ -45,6 +47,21 @@
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE
 	))
+
+/// Updates the rarity of the cube & its outline, then plays a little jingle. Seperate proc from init so we can use it outside the component as well
+/datum/component/cuboid/proc/update_rarity(mapload, new_rarity = COMMON_CUBE)
+	/// Rarity
+	src.rarity = new_rarity
+	/// We love indexes!!!
+	src.rarity_name = all_rarenames[src.rarity]
+	src.rarity_color_name = all_rarecolors[src.rarity]
+	src.rarity_color = all_rarecolors[src.rarity_color_name]
+	/// Really make it obvious. You can't get 2 feet without seeing an outline.
+	parent.remove_filter("cubeglow")
+	parent.add_filter("cubeglow", 10, outline_filter(color = src.rarity_color, size = 1))
+	if(mapload || src.rarity < 2)
+		return
+	playsound(parent, gain_sounds[rarity], 30)
 
 /datum/component/cuboid/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

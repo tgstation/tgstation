@@ -1,4 +1,5 @@
 // Tool types, if you add new ones please add them to /obj/item/debug/omnitool in code/game/objects/items/debug_items.dm
+// and to GLOB.all_tool_behaviours in code/_globalvars/lists/objects.dm
 #define TOOL_CROWBAR "crowbar"
 #define TOOL_MULTITOOL "multitool"
 #define TOOL_SCREWDRIVER "screwdriver"
@@ -51,27 +52,3 @@
  * This is only used explicitly because some interactions may not want to ever be skipped.
  */
 #define SHOULD_SKIP_INTERACTION(target, item, user) (HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && user.combat_mode)
-
-///A list of all tool types, taken from the top of this file
-#define ALL_TOOLS = list(
-	TOOL_ANALYZER,
-	TOOL_BLOODFILTER,
-	TOOL_BONESET,
-	TOOL_CAUTERY,
-	TOOL_CROWBAR,
-	TOOL_DRILL,
-	TOOL_HEMOSTAT,
-	TOOL_KNIFE,
-	TOOL_MINING,
-	TOOL_MULTITOOL,
-	TOOL_RETRACTOR,
-	TOOL_ROLLINGPIN,
-	TOOL_RUSTSCRAPER,
-	TOOL_SAW,
-	TOOL_SCALPEL,
-	TOOL_SCREWDRIVER,
-	TOOL_SHOVEL,
-	TOOL_WELDER,
-	TOOL_WIRECUTTER,
-	TOOL_WRENCH,
-	)

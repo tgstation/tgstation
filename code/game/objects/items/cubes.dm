@@ -83,12 +83,97 @@
 /obj/item/cube/proc/randcolor()
 	add_filter("cubecolor", 1, color_matrix_filter(ready_random_color()))
 
-//* Random cubes //
+/obj/item/cube/colorful
+	name = "Pretty Cube"
+	desc = "It's a wonderful shade of... whatever that is!"
+	rarity = UNCOMMON_CUBE
 
+/obj/item/cube/colorful/Initialize(mapload)
+	. = ..()
+	randcolor()
+
+/obj/item/cube/colorful/huge
+	name = "Huge Cube"
+	desc = "THAT is one BIG cube. It would probably hurt a lot if it fell on someone's head..."
+	icon_state = "massive"
+	rarity = RARE_CUBE
+	w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/cube/colorful/huge/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/falling_hazard, damage = 15, wound_bonus = 5, hardhat_safety = FALSE, crushes = TRUE)
+
+/obj/item/cube/colorful/voxel
+	name = "Voxel"
+	desc = "Cubes just don't get any smaller."
+	icon_state = "voxel"
+	w_class = WEIGHT_CLASS_SMALL
+	rarity = RARE_CUBE
+
+/obj/item/cube/colorful/pixel
+	name = "Pixel"
+	desc = "Technically a square, but close enough if you squint. Try not to lose it!"
+	icon_state = "pixel"
+	w_class = WEIGHT_CLASS_TINY
+	rarity = EPIC_CUBE
+
+/obj/item/cube/colorful/pixel/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER)
+
+/obj/item/cube/colorful/plane
+	name = "Plane"
+	desc = "A flattened cube."
+	icon_state = "plane"
+	rarity = UNCOMMON_CUBE
+
+/obj/item/cube/colorful/plane/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER)
+
+/obj/item/cube/puzzle
+	name = "Lament Configuration"
+	desc = "A strange box of metal and wood."
+	icon_state = "rubik"
+	rarity = EPIC_CUBE
+	/// Have we solved the puzzle?
+	var/solved = FALSE
+
+/obj/item/cube/puzzle/attack_self(user)
+	. = ..()
+	if(solved)
+		balloon_alert(user, "Already solved")
+		return
+	to_chat(user, "You concentrate on solving [src]...")
+	if(!do_after(user, (13*rarity) SECONDS))
+		balloon_alert(user, "Lost concentration!")
+		return
+	balloon_alert(user, "Solved!")
+	solved = TRUE
+	icon_state = "[icon_state]_solved"
+	rarity += 1
+	var/datum/component/cuboid/cuboid = GetComponent(/datum/component/cuboid)
+	cuboid.update_rarity(new_rarity = rarity)
+
+/obj/item/cube/puzzle/examine(mob/user)
+	. = ..()
+	if(!solved)
+		. += span_notice("It looks like it can still be solved...")
+	else
+		. += span_nicegreen("It's already been solved!")
+
+/obj/item/cube/puzzle/rubiks
+	name = "Rubik's Cube"
+	desc = "A famous cube housing a small sliding puzzle."
+	icon_state = "rubik"
+	rarity = RARE_CUBE
+
+
+//* Random cubes //
 /obj/item/cube/random
 	name = "Random Common Cube"
 	desc = "A cube that's full of surprises!"
-	tool_behavior = null
+	tool_behaviour = null
 	/// All possible tool behaviors for the cube
 	var/list/cube_tools = list()
 	/// Used for cubes that create more cubes
@@ -130,7 +215,7 @@
 		if(length(cube_tools) > 1)
 			cube_tool_examine += span_notice("\nIt can be thrown to randomly swap between the following tools:\n")
 			for(var/tbehavior in cube_tools)
-				cube_tool_examine += "- [tool_behaviour]\n"
+				cube_tool_examine += "- [tbehavior]\n"
 		. += boxed_message(cube_tool_examine)
 	if((cube_examine_flags & CUBE_IGNITER))
 		. += span_warning("It will ignite anything it hits!")
@@ -143,21 +228,35 @@
 	if((cube_examine_flags & CUBE_LEASHED))
 		. += span_notice("It's currently leashed to someone!")
 	if((cube_examine_flags & CUBE_FUNNY))
-		. += span_clown("It looks pretty funny!")
+		. += span_sans("It looks pretty funny!")
 	if((cube_examine_flags & CUBE_SURGICAL))
 		. += span_notice("It can be used to start surgery!")
 	if(bane)
-		. += span_warning("It deals extra damage to [bane.plural_form]")
+		. += span_warning("It deals extra damage to [bane.plural_form ? bane.plural_form : bane.name]")
 	if((cube_examine_flags & CUBE_VAMPIRIC))
 		. += span_warning("It heals you when you hit enemies!")
+	if((cube_examine_flags & CUBE_GPS))
+		. += span_notice("It's outputting its location!")
+	if((cube_examine_flags & CUBE_CIRCUIT))
+		. += span_notice("It has a slot for circuits!")
+	if((cube_examine_flags & CUBE_STORAGE))
+		. += span_notice("It can store items!")
+	if((cube_examine_flags & CUBE_WEAPON))
+		. += span_warning("It's much more powerful!")
+	if((cube_examine_flags & CUBE_FISH))
+		. += span_notice("It's moving around like deep water...")
 
-/// Randomize icons (once I make more generic ones)
+/// Randomize icons. HEAVILY skewed in favor of normal cube
 /obj/item/cube/random/proc/give_random_icon()
-	if(!prob(10*rarity))
-		return
-	icon_state = pick(
-		"small",
+	var/possible_visuals = list(
+		"cube" = 500,
+		"small" = 30+rarity,
+		"massive" = 20+rarity,
+		"plane" = 10+rarity,
+		"voxel" = 5+rarity,
+		"pixel" = 1
 	)
+	icon_state = pick_weight(fill_with_ones(possible_visuals))
 
 /// Randomize size
 /obj/item/cube/random/proc/apply_rand_size()
@@ -218,10 +317,9 @@
 	"Squeak",
 	"Surgical",
 	"Bane",
-	"Haunted",
 	"Reverse",
 	"Vampire",
-	"Speen"
+	"Speen",
 	)
 	// It looks big and scary but it's just a giant switch() function that applies components/elements. If a section would have been too long it was made its own proc.
 	for(var/i in 1 to rarity)
@@ -235,12 +333,9 @@
 				AddComponent(/datum/component/shell, list(
 				new /obj/item/circuit_component/cube()
 				), SHELL_CAPACITY_SMALL)
+				cube_examine_flags |= CUBE_CIRCUIT
 			if("Boomerang")
-				AddComponent(
-					/datum/component/boomerang,
-					boomerang_throw_range = rarity,
-					examine_message = "When thrown, [src] will return after [rarity] meters!"
-					)
+				AddComponent(/datum/component/boomerang, boomerang_throw_range = (throw_range + rarity), examine_message = "When thrown, [src] will return after [rarity] meters!")
 			if("Tool")
 				make_tool()
 			if("Laser Gun")
@@ -255,59 +350,37 @@
 				demolition_mod = 1.05*round(rarity/4)
 			if("Storage")
 				create_storage(rarity, rarity, (rarity * 7))
+				cube_examine_flags |= CUBE_STORAGE
 			if("Weight")
 				w_class = clamp(6-rarity, 1, 5)
-				AddElement(/datum/element/falling_hazard,
-				damage = 2 * rarity,
-				wound_bonus = 5,
-				hardhat_safety = TRUE,
-				crushes = FALSE,
-				impact_sound = drop_sound)
+				AddElement(/datum/element/falling_hazard, damage = 2 * rarity, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 			if("Butcher")
-				AddComponent(/datum/component/butchering,
-				speed = round(10 SECONDS/rarity),
-				effectiveness = 100-round(50/rarity),
-				)
+				AddComponent(/datum/component/butchering, speed = round(10 SECONDS/rarity), effectiveness = 100-round(50/rarity))
 				cube_examine_flags |= CUBE_BUTCHER
 			if("Bake")
-				AddComponent(
-					/datum/component/bakeable,
-					random_rarity_list[rarity],
-					rand(15 SECONDS, 15 * clamp(round(7-rarity), COMMON_CUBE, MYTHICAL_CUBE)),
-					TRUE, TRUE)
+				AddComponent( /datum/component/bakeable, random_rarity_list[rarity], rand(15 SECONDS, 15 * clamp(round(7-rarity), COMMON_CUBE, MYTHICAL_CUBE)), TRUE, TRUE)
 			if("Egg")
-				AddComponent(\
-					/datum/component/fertile_egg,
-					embryo_type = random_rarity_list[rarity],
-					minimum_growth_rate = 1*rarity,
-					maximum_growth_rate = 2*rarity,
-					total_growth_required = round(400/rarity),
-					current_growth = 0,
-				)
+				AddComponent( /datum/component/fertile_egg, embryo_type = random_rarity_list[rarity], minimum_growth_rate = 1*rarity, maximum_growth_rate = 2*rarity, total_growth_required = round(1000/rarity), current_growth = 0)
 				cube_examine_flags |= CUBE_EGG
 			if("Fishing Spot")
 				AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/cube])
+				cube_examine_flags |= CUBE_FISH
 			if("GPS")
 				AddComponent(/datum/component/gps, "[src]")
+				cube_examine_flags |= CUBE_GPS
 			if("Igniter")
 				AddComponent(/datum/component/igniter, rarity)
 				cube_examine_flags |= CUBE_IGNITER
 			if("Leashed")
 				ready_leash = TRUE
 			if("Religious")
-				AddComponent(/datum/component/religious_tool,
-				RELIGION_TOOL_INVOKE,
-				force_catalyst_afterattack = FALSE,
-				charges = rarity)
+				AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, force_catalyst_afterattack = FALSE, charges = rarity)
 			if("Scope")
 				AddComponent(/datum/component/scope, range_modifier = rarity)
 			if("Funny")
-				AddComponent(/datum/component/wearertargeting/sitcomlaughter,
-				CALLBACK(src, PROC_REF(after_sitcom_laugh)))
+				AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 				cube_examine_flags |= CUBE_FUNNY
-				AddComponent(/datum/component/slippery,
-				knockdown = rarity SECONDS,
-				lube_flags = NO_SLIP_WHEN_WALKING)
+				AddComponent(/datum/component/slippery, knockdown = rarity SECONDS, lube_flags = NO_SLIP_WHEN_WALKING)
 			if("Squeak")
 				AddComponent(/datum/component/squeak)
 				AddElement(/datum/element/toy_talk)
@@ -315,12 +388,8 @@
 				AddComponent(/datum/component/surgery_initiator)
 				cube_examine_flags |= CUBE_SURGICAL
 			if("Bane")
-				bane = pick(typecacheof(datum/species, ignore_root_path = TRUE))
-				AddElement(/datum/element/bane,
-				target_type = bane,
-				damage_multiplier = round(rarity/10,0.1))
-			if("Haunted")
-				AddElement(/datum/element/haunted)
+				bane = pick(typecacheof(/datum/species, ignore_root_path = TRUE))
+				AddElement(/datum/element/bane, target_type = bane, damage_multiplier = round(rarity/10,0.1))
 			if("Reverse")
 				reverse_movements = TRUE
 			if("Vampire")
@@ -374,8 +443,7 @@
 		food_flags = pick(NONE, FOOD_FINGER_FOOD),\
 		foodtypes = cube_foodtypes,\
 		eat_time = round(3 SECONDS/rarity),\
-		tastes = cube_tastes,\
-	)
+		tastes = cube_tastes)
 
 /// Makes the cube a reagent holder w/ random reagents
 /obj/item/cube/random/proc/make_reagents()
@@ -392,21 +460,30 @@
 
 /// Makes the cube into a random tool
 /obj/item/cube/random/proc/make_tool()
+	var/list/possible_tools = list() + GLOB.all_tool_behaviours
 	for(var/t in 1 to rarity)
-		cube_tools += pick(ALL_TOOLS)
-	tool_behavior = pick(cube_tools)
+		var/new_tool = pick(possible_tools)
+		cube_tools += new_tool
+		possible_tools -= new_tool
+
+	tool_behaviour = pick(cube_tools)
 	toolspeed = round(1/rarity, 0.1)
 	cube_examine_flags |= CUBE_TOOL
+
+/obj/item/cube/random/get_all_tool_behaviours()
+	if(isnull(tool_behaviour))
+		return null
+	return cube_tools
 
 // Throw-activated tool swapping so we don't mess with the other possible effects, also because it's funny
 /obj/item/cube/random/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE)
 	. = ..()
 	if(!.)
 		return
-	if(isnull(tool_behavior) || length(cube_tools) < 2)
+	if(isnull(tool_behaviour) || length(cube_tools) < 2)
 		return
-	tool_behavior = pick(cube_tools)
-	balloon_alert(thrower, "[tool_behavior]")
+	tool_behaviour = pick(cube_tools)
+	balloon_alert(thrower, "[tool_behaviour]")
 
 // If we're a lasergun, then we can fire lasers!
 /obj/item/cube/random/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -443,6 +520,7 @@
 /obj/item/cube/random/dropped(mob/user, silent = FALSE)
 	. = ..()
 	user.RemoveElement(/datum/element/inverted_movement)
+	// Technically you can get stuck rotated but that's funny so who cares
 	user.RemoveElement(/datum/element/wheel)
 
 
@@ -454,8 +532,11 @@
 	///The cube in reference
 	var/obj/item/cube/random/mycube
 
+
 	///Who is holding the cube
 	var/datum/port/output/holder
+	///Who is throwing the cube
+	var/datum/port/output/thrower
 	///Toggled when we throw the cube
 	var/datum/port/output/thrown
 	///Who did we throw the cube against
@@ -471,9 +552,9 @@
 	if(isnull(mycube))
 		return
 
-	RegisterSignal(mycube, COMSIG_MOVABLE_POST_THROW, PROC_REF(cubethrown))
+	RegisterSignal(mycube, COMSIG_MOVABLE_PRE_THROW, PROC_REF(cubethrown))
 	RegisterSignal(mycube, COMSIG_MOVABLE_IMPACT, PROC_REF(hit_target))
-	RegisterSignal(mycube, COMSIG_ITEM_EQUIPPED, PROC_REF(cube_held))
+	RegisterSignal(mycube, COMSIG_ITEM_PICKUP, PROC_REF(cube_held))
 
 /obj/item/circuit_component/cube/unregister_shell(atom/movable/shell)
 	if(mycube)
@@ -483,13 +564,18 @@
 
 /obj/item/circuit_component/cube/populate_ports()
 	holder = add_output_port("Holder", PORT_TYPE_ATOM)
+	thrower = add_output_port("Thrower", PORT_TYPE_ATOM)
 	thrown = add_output_port("Thrown", PORT_TYPE_SIGNAL)
 	victim = add_output_port("Throw Victim", PORT_TYPE_ATOM)
 	victim_hit = add_output_port("Victim Hit", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/cube/proc/cubethrown(atom/source)
+/obj/item/circuit_component/cube/proc/cubethrown(atom/source, list/throw_args)
 	SIGNAL_HANDLER
+	var/mob/thrown_by = throw_args[4]
+	if(istype(thrown_by))
+		thrower.set_output(thrown_by)
 	thrown.set_output(COMPONENT_SIGNAL)
+
 
 /obj/item/circuit_component/cube/proc/hit_target(atom/source, atom/hit_atom)
 	SIGNAL_HANDLER

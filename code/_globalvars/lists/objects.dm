@@ -104,6 +104,30 @@ GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ/eyes/dullahan,
 ), only_root_path = TRUE))
 
+// List of all tool behaviours.
+GLOBAL_LIST_INIT(all_tool_behaviours, list(
+	TOOL_ANALYZER,
+	TOOL_BLOODFILTER,
+	TOOL_BONESET,
+	TOOL_CAUTERY,
+	TOOL_CROWBAR,
+	TOOL_DRILL,
+	TOOL_HEMOSTAT,
+	TOOL_KNIFE,
+	TOOL_MINING,
+	TOOL_MULTITOOL,
+	TOOL_RETRACTOR,
+	TOOL_ROLLINGPIN,
+	TOOL_RUSTSCRAPER,
+	TOOL_SAW,
+	TOOL_SCALPEL,
+	TOOL_SCREWDRIVER,
+	TOOL_SHOVEL,
+	TOOL_WELDER,
+	TOOL_WIRECUTTER,
+	TOOL_WRENCH,
+))
+
 /// List of Common Cubes
 /// I could have made these not only_root_path but I realized that would include EVERY box.
 GLOBAL_LIST_INIT(common_cubes, typecacheof(list(
@@ -132,6 +156,8 @@ GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
 	/obj/item/barriercube,
 	/obj/item/mmi/posibrain,
 	/obj/item/cube/random/uncommon,
+	/obj/item/cube/colorful,
+	/obj/item/cube/colorful/plane,
 )))
 
 /// List of Rare Cubes
@@ -139,6 +165,9 @@ GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
 	/obj/item/food/monkeycube/gorilla,
 	/obj/item/warp_cube,
 	/obj/item/cube/random/rare,
+	/obj/item/cube/colorful/huge,
+	/obj/item/cube/colorful/voxel,
+	/obj/item/cube/puzzle/rubiks,
 )))
 
 /// List of Epic Cubes
@@ -146,6 +175,8 @@ GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
 	/obj/item/freeze_cube,
 	/obj/item/prisoncube,
 	/obj/item/cube/random/epic,
+	/obj/item/cube/colorful/pixel,
+	/obj/item/cube/puzzle,
 )))
 
 /// List of Legendary Cubes

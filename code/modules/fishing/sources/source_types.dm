@@ -1101,23 +1101,39 @@
 
 /datum/fish_source/cube
 	catalog_description = "Cubes"
-	fish_table = list(
-		FISHING_DUD = 10,
-	)
+	fish_table = list("cube" = 10)
 	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY
 
-/datum/fish_source/cube/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
-	if(istype(location, /obj/machinery/fishing_portal_generator))
-		var/obj/machinery/fishing_portal_generator/portal = location
-		location = portal.current_linked_atom
-	if(!istype(location, /obj/item/cube))
-		return list()
+/datum/fish_source/cube/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
+	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
+		fishing_spot = portal.current_linked_atom
+	if(!istype(fishing_spot, /obj/item/cube))
+		var/fishcube = pick_weight(get_cube_rarity(COMMON_CUBE))
+		return new fishcube(spawn_location)
 
-	return get_cube_rarity(rod, fisherman, location)
+	var/obj/item/cube/cubespot = fishing_spot
+	var/list/possible_cubes = get_cube_rarity(cubespot.rarity)
+	if(!length(possible_cubes))
+		return null
+	var/newcube = pick_weight(possible_cubes)
+	return new newcube(spawn_location)
 
 // Get the rarity 1 lower than our current rarity
-/datum/fish_source/cube/proc/get_cube_rarity(obj/item/fishing_rod/rod, mob/fisherman, obj/item/cube/location)
+/datum/fish_source/cube/proc/get_cube_rarity(rarity)
 	var/obj/effect/spawner/random/cube/newcube
-	newcube.cube_rarity = clamp(location.rarity-1, COMMON_CUBE, MYTHICAL_CUBE)
+	newcube.cube_rarity = clamp(rarity-1, COMMON_CUBE, MYTHICAL_CUBE)
 	return list(newcube = 30, /obj/effect/spawner/random/cube_all = 1)
+
+/datum/fish_source/cube/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Cubes",
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
+		FISH_SOURCE_AUTOWIKI_NOTES = "A random type of cube one rarity lower than the source cube.",
+	))
+
+	return data

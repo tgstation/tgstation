@@ -14,16 +14,25 @@
 /// Is an egg
 #define CUBE_EGG (1<<2)
 /// Can butcher things
-#define CUBE_BUTCHER(1<<3)
+#define CUBE_BUTCHER (1<<3)
 /// Is a laser gun
-#define CUBE_LASER(1<<4)
+#define CUBE_LASER (1<<4)
 /// Is leashed to a mob
-#define CUBE_LEASHED(1<<5)
+#define CUBE_LEASHED (1<<5)
 /// Does sitcom laughs
-#define CUBE_FUNNY(1<<6)
+#define CUBE_FUNNY (1<<6)
 /// Can initiate surgery
-#define CUBE_SURGICAL(1<<7)
+#define CUBE_SURGICAL (1<<7)
 /// Is a much better weapon
-#define CUBE_WEAPON(1<<8)
+#define CUBE_WEAPON (1<<8)
 /// Steals life on hit
-#define CUBE_VAMPIRIC(1<<9)
+#define CUBE_VAMPIRIC (1<<9)
+/// is a gps
+#define CUBE_GPS (1<<10)
+/// Is a circuit shell
+#define CUBE_CIRCUIT (1<<11)
+/// Can store items
+#define CUBE_STORAGE (1<<12)
+/// Can be fished in
+#define CUBE_FISH (1<<13)
+
