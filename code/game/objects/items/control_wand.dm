@@ -51,7 +51,7 @@
 	return FALSE
 
 /obj/item/door_remote/attack_self(mob/user)
-	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
+	var/static/list/ops = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
 	switch(mode)
 		if(WAND_OPEN)
 			mode = WAND_BOLT
@@ -60,7 +60,7 @@
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
 	update_icon_state()
-	balloon_alert(user, "mode: [mode]")
+	balloon_alert(user, "mode: [ops[mode]]")
 
 /obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/door) && !isturf(interacting_with))
@@ -76,15 +76,18 @@
 
 /obj/item/door_remote/captain
 	name = "command door remote"
+	desc = "A remote for controlling a set of airlocks. Despite its gaudy insignia denoting the Captain as its owner, some fine print\
+		indicates that its access is exclusively relegated to the Bridge and high-security command areas -- an additional byline\
+		specifically excludes Security from the high-security areas. Ironic."
 	department = "command"
 	region_access = REGION_COMMAND
-	// doesn't get captain owner trim because AA remote is a bad idea
 	our_domain = list(
-		/area/station,	// still restricted by extremely small list of accesses in REGION_COMMAND
+		/area/station,	// still restricted by limited accesses in REGION_COMMAND
 	)
 
 /obj/item/door_remote/chief_engineer
 	name = "engineering door remote"
+	desc = "A remote for controlling a set of airlocks. This one smells like burnt flesh and ozone."
 	department = "engi"
 	region_access = REGION_ENGINEERING
 	owner_trim = /datum/id_trim/job/chief_engineer
@@ -92,6 +95,7 @@
 
 /obj/item/door_remote/research_director
 	name = "research director's door remote"
+	desc = "A remote for controlling a set of airlocks. This one is slightly misshapen, as if squeezed by a person possessing ludicrous strength."
 	department = "sci"
 	region_access = REGION_RESEARCH
 	owner_trim = /datum/id_trim/job/research_director
@@ -103,6 +107,8 @@
 
 /obj/item/door_remote/head_of_security
 	name = "warden's(?) door remote"
+	desc = "A remote for controlling a set of airlocks. This one smells like sweat, blood, resentment, and coffee.\
+		Someone appears to have tampered with the identifier."
 	department = "security"
 	region_access = REGION_SECURITY
 	owner_trim = /datum/id_trim/job/head_of_security
@@ -110,7 +116,7 @@
 
 /obj/item/door_remote/quartermaster
 	name = "quartermaster's door remote"
-	desc = "Remotely controls airlocks. This remote has additional Vault access."
+	desc = "Remotely controls airlocks. This remote has additional Vault access. Despite that, holding it makes you feel insecure for some reason."
 	department = "cargo"
 	region_access = REGION_SUPPLY
 	owner_trim = /datum/id_trim/job/quartermaster
@@ -118,12 +124,16 @@
 
 /obj/item/door_remote/chief_medical_officer
 	name = "chief medical officer's door remote"
+	desc = "A remote for controlling a set of airlocks. It has the overpowering odor of blood and, despite its medical insignia,\
+		has absolutely no accompanying odor of disinfectant."
 	department = "med"
 	region_access = REGION_MEDBAY
 	owner_trim = /datum/id_trim/job/chief_medical_officer
 
 /obj/item/door_remote/head_of_personnel
 	name = "head of personnel's door remote"
+	desc = "A remote for controlling a set of airlocks. This one smells like printer ink, and fills its holder with the urge\
+		to mysteriously vanish."
 	department = "civilian"
 	region_access = REGION_GENERAL
 	owner_trim = /datum/id_trim/job/head_of_personnel
