@@ -137,6 +137,12 @@
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER)
 
+/obj/item/cube/colorful/meta
+	name = "Billboard Cube"
+	desc = "It's always facing directly towards the camera."
+	icon_state = "billboard"
+	rarity = EPIC_CUBE
+
 /obj/item/cube/puzzle
 	name = "Lament Configuration"
 	desc = "A strange box of metal and wood."

@@ -158,6 +158,7 @@ GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
 	/obj/item/cube/random/uncommon,
 	/obj/item/cube/colorful,
 	/obj/item/cube/colorful/plane,
+	/obj/item/cube/colorful/isometric,
 )))
 
 /// List of Rare Cubes
@@ -177,6 +178,7 @@ GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
 	/obj/item/cube/random/epic,
 	/obj/item/cube/colorful/pixel,
 	/obj/item/cube/puzzle,
+	/obj/item/cube/colorful/meta,
 )))
 
 /// List of Legendary Cubes
