@@ -241,19 +241,17 @@
 	scan_desc = "violent psychosis"
 	gain_text = span_warning("You feel unhinged...")
 	lose_text = span_notice("You feel more balanced.")
+	/// The martial art we teach
 	var/datum/martial_art/psychotic_brawling/psychotic_brawling
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
-	..()
-	psychotic_brawling = new()
-	psychotic_brawling.allow_temp_override = FALSE
-	if(!psychotic_brawling.teach(owner, TRUE))
-		to_chat(owner, span_notice("But your martial knowledge keeps you grounded."))
-		qdel(src)
+	. = ..()
+	psychotic_brawling = new(src)
+	psychotic_brawling.locked_to_use = TRUE
+	psychotic_brawling.teach(owner)
 
 /datum/brain_trauma/special/psychotic_brawling/on_lose()
-	..()
-	psychotic_brawling.fully_remove(owner)
+	. = ..()
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts

@@ -7,6 +7,10 @@
 	failing_desc = "seems to be broken."
 	var/implant_color = COLOR_WHITE
 
+/obj/item/organ/cyberimp/feel_for_damage(self_aware)
+	// No feeling in implants (yet?)
+	return ""
+
 //[[[[BRAIN]]]]
 
 /obj/item/organ/cyberimp/brain
