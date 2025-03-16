@@ -323,15 +323,15 @@ function JoblessRoleDropdown(props) {
 
   const options = [
     {
-      displayText: `Join as ${data.overflow_role} if unavailable`,
+      displayText: `Присоединиться как ${data.overflow_role} если должности недоступны`,
       value: JoblessRole.BeOverflow,
     },
     {
-      displayText: `Join as a random job if unavailable`,
+      displayText: `Присоединиться на случайную должность, если ваша не доступна`,
       value: JoblessRole.BeRandomJob,
     },
     {
-      displayText: `Return to lobby if unavailable`,
+      displayText: `Вернуться в лобби, если ваша должность недоступна`,
       value: JoblessRole.ReturnToLobby,
     },
   ];
