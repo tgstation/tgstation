@@ -164,7 +164,7 @@
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)
 
-/obj/item/food/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+/obj/item/food/on_craft_completion(list/components, datum/crafting_recipe/food/current_recipe, atom/crafter)
 	. = ..()
 	if(!istype(current_recipe))
 		return
