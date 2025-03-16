@@ -163,7 +163,9 @@ export function CharacterPreferenceWindow(props) {
         </Stack>
       </Stack.Item>
       <Stack.Divider />
-      <Stack.Item>{pageContents}</Stack.Item>
+      <Stack.Item grow position="relative" overflow="hidden auto">
+        {pageContents}
+      </Stack.Item>
     </Stack>
   );
 }
