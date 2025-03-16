@@ -2005,7 +2005,7 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib6-old"
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -2;
 	pixel_x = 6
 	},

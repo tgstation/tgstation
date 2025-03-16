@@ -271,7 +271,8 @@
 
 /obj/item/storage/backpack/meat/Initialize(mapload)
 	. = ..()
-	AddComponent(
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE, \
 		/datum/component/edible,\
 		initial_reagents = meat_reagents,\
 		foodtypes = foodtypes,\

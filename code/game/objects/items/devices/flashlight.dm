@@ -801,7 +801,9 @@
 	reagents.add_reagent(fuel_type, max_fuel)
 	. = ..()
 	set_light_color(color)
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		food_flags = FOOD_NO_EXAMINE,\
 		volume = reagents.total_volume,\
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\

@@ -415,7 +415,7 @@
 	///The amount of damage the implant adds to our unarmed attacks.
 	var/punch_damage = 5
 	///Biotypes we apply an additional amount of damage too
-	var/biotype_bonus_targets = MOB_BEAST | MOB_SPECIAL
+	var/biotype_bonus_targets = MOB_BEAST | MOB_SPECIAL | MOB_MINING
 	///Extra damage dealt to our targeted mobs
 	var/biotype_bonus_damage = 20
 	///IF true, the throw attack will not smash people into walls
@@ -499,9 +499,20 @@
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	var/potential_damage = punch_damage
+	var/ground_bounce = FALSE // funny flavor. if you hit someone who's floored you slam them into the ground, breaking tiles
+	var/turf/target_turf = get_turf(living_target)
+
 	var/obj/item/bodypart/attacking_bodypart = hand
+	var/potential_damage = punch_damage
+	var/potential_effectiveness = attacking_bodypart.unarmed_effectiveness
+	var/potential_pummel_bonus = attacking_bodypart.unarmed_pummeling_bonus
 	potential_damage += rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+
+	if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE) // get pummeled idiot
+		potential_damage *= potential_pummel_bonus
+		potential_effectiveness *= potential_pummel_bonus
+		if(living_target.body_position == LYING_DOWN)
+			ground_bounce = TRUE
 
 	var/is_correct_biotype = living_target.mob_biotypes & biotype_bonus_targets
 	if(biotype_bonus_targets && is_correct_biotype) //If we are punching one of our special biotype targets, increase the damage floor by a factor of two.
@@ -511,22 +522,26 @@
 	playsound(living_target.loc, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
-	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = attacking_bodypart.unarmed_effectiveness)
+	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = potential_effectiveness)
 	living_target.apply_damage(potential_damage * 2, attacking_bodypart.attack_type, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
 		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle = non_harmful_throw)
+		if(ground_bounce)
+			if(isfloorturf(target_turf))
+				var/turf/open/floor/crunched = target_turf
+				crunched.crush() // crunch
 
 	living_target.visible_message(
-		span_danger("[source] [picked_hit_type]ed [living_target]!"),
-		span_userdanger("You're [picked_hit_type]ed by [source]!"),
+		span_danger("[source] [picked_hit_type]ed [living_target][ground_bounce ? " into [target_turf]" : ""]!"),
+		span_userdanger("You're [picked_hit_type]ed by [source][ground_bounce ? " into [target_turf]" : ""]!"),
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		COMBAT_MESSAGE_RANGE,
 		source,
 	)
 
-	to_chat(source, span_danger("You [picked_hit_type] [target]!"))
+	to_chat(source, span_danger("You [picked_hit_type] [target][ground_bounce ? " into [target_turf]" : ""]!"))
 
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
 
@@ -539,6 +554,7 @@
 	organs_needed = 2
 	bonus_activate_text = span_notice("Your improved arms allow you to open airlocks by force with your bare hands!")
 	bonus_deactivate_text = span_notice("You can no longer force open airlocks with your bare hands.")
+	required_biotype = NONE
 
 /datum/status_effect/organ_set_bonus/strongarm/enable_bonus()
 	. = ..()
