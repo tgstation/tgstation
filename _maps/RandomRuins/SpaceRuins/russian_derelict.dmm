@@ -1356,6 +1356,9 @@
 "pn" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/shard{
+	icon_state = "medium"
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "pp" = (
@@ -1589,6 +1592,15 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"qH" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/tech_storage)
 "qI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -3341,8 +3353,8 @@
 /area/ruin/space/ks13/engineering/atmos)
 "zP" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/stock_parts/power_store/battery/high,
 /obj/structure/table,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "zR" = (
@@ -11448,7 +11460,7 @@ sU
 Dy
 Us
 Rt
-iy
+qH
 iy
 zP
 QG
