@@ -31,7 +31,7 @@
 	// Areas this remote has unfettered access to
 	var/list/our_departmental_areas = null
 	// A given response to automatically respond to any given request with (horrible idea, good for morale)
-	var/auto_response = null
+	var/list/auto_response = null
 	// Whether a remote holder has disabled its audio feedback messages
 	var/silenced = FALSE
 	// A head of staff with access equaling this remote's access can lock it down

@@ -113,21 +113,21 @@
 		REMOTE_FEEDBACK("buzzes: \"AUTO-RESPONSE CLEARED.\"")
 		return
 	var/auto_response_option = show_radial_menu(user, user, resolve_radial_options("responses"), radius = 40)
-	user.balloon_alert("set auto-response")
+	balloon_alert(user, "set auto-response")
 	if(!auto_response_option)
 		return
 	REMOTE_FEEDBACK("buzzes: \"AUTO-RESPONSE SET.\"")
-	auto_response = auto_response_option
+	auto_response = list(auto_response_option, user)
 
 /obj/item/door_remote/proc/receive_access_request(datum/source, obj/item/card/id/advanced/ID_requesting, obj/machinery/door/airlock/requested_door)
 	SIGNAL_HANDLER
 	if(!requested_door.check_access_list(accesses) && !in_our_area(get_area(requested_door)))
 		return NONE
-	if(WAS_DENIED(WEAKREF(ID_requesting)))
-		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST NOT ROUTED TO [response_name]: RECENT DENIAL NOTICE.\"")
-		return COMPONENT_REQUEST_DENIED | COMPONENT_REQUEST_BLOCKED
 	if(IS_BLOCKED(WEAKREF(ID_requesting)))
 		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST NOT ROUTED TO [response_name]: BLOCKED ID NOTICE.\"")
+		return COMPONENT_REQUEST_DENIED | COMPONENT_REQUEST_BLOCKED
+	if(WAS_DENIED(WEAKREF(ID_requesting)))
+		ID_FEEDBACK(ID_requesting, "buzzes, \"REQUEST NOT ROUTED TO [response_name]: RECENT DENIAL NOTICE.\"")
 		return COMPONENT_REQUEST_DENIED | COMPONENT_REQUEST_BLOCKED
 	. = COMPONENT_REQUEST_RECEIVED
 	var/ID_name = "\[[uppertext(ID_requesting.registered_name)]\]"
@@ -264,8 +264,11 @@
 		var/list/resolved_request_information = qualified_requests[qualified_requests[actual_index]]
 		resolved_requests_to_handle[resolved_request_information[1]] = resolved_request_information
 	for(var/request_being_handled in resolved_requests_to_handle)
-		var/requested_door = resolved_requests_to_handle[request_being_handled][2]
-		SEND_SIGNAL(SSdoor_remote_routing, COMSIG_DOOR_REMOTE_ACCESS_REQUEST_RESOLVED, request_being_handled, requested_door, action, src)
+		var/obj/item/card/id/advanced/ID_requesting = resolved_requests_to_handle[request_being_handled][1]
+		var/obj/machinery/door/airlock/requested_door = resolved_requests_to_handle[request_being_handled][2]
+		. = SEND_SIGNAL(SSdoor_remote_routing, COMSIG_DOOR_REMOTE_ACCESS_REQUEST_RESOLVED, request_being_handled, requested_door, action, src)
+		if(!(. & COMPONENT_REQUEST_HANDLED))
+			REMOTE_FEEDBACK("buzzes: \"[uppertext("REQUEST RESOLUTION FOR \[[ID_requesting.registered_name]\] TO \[[requested_door.name]\] FAILED.")]\"")
 
 #undef ID_FEEDBACK
 #undef REMOTE_FEEDBACK

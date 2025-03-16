@@ -12,12 +12,12 @@ SUBSYSTEM_DEF(door_remote_routing)
 	var/door_remotes_unrestricted = FALSE
 	var/list/request_handling_options
 	var/static/list/record_actions = list(
-		REMOTE_RESPONSE_APPROVE = "approved",
-		REMOTE_RESPONSE_DENY = "denied",
-		REMOTE_RESPONSE_BOLT = "bolted+blocked",
-		REMOTE_RESPONSE_BLOCK = "blocked",
-		REMOTE_RESPONSE_EA = "set EA",
-		REMOTE_RESPONSE_SHOCK = "shocked door",
+		REMOTE_RESPONSE_APPROVE = "approve",
+		REMOTE_RESPONSE_DENY = "deny",
+		REMOTE_RESPONSE_BOLT = "bolt+block",
+		REMOTE_RESPONSE_BLOCK = "block",
+		REMOTE_RESPONSE_EA = "emrgncy",
+		REMOTE_RESPONSE_SHOCK = "shocked",
 		)
 	var/list/standard_modes = list(
 		WAND_OPEN,
@@ -168,80 +168,84 @@ SUBSYSTEM_DEF(door_remote_routing)
 	SIGNAL_HANDLER
 
 	. = NONE
-	if(handling_flags & COMPONENT_REQUEST_AUTO_HANDLED)
-		. |= COMPONENT_REQUEST_AUTO_HANDLED
 	if(!possible_resolutions.Find(action))
 		CRASH("handle_resolution called with invalid action.")
 	// Handled this way so remotes hear it to clear the expired request
 	if(action == EXPIRED_REQUEST)
 		id_feedback_message(ID_resolved, "buzzes: \"REQUEST TIMEOUT\"")
 		open_requests -= ID_resolved
-		return
-	if(open_requests.Find(ID_resolved))
-		var/request_info = open_requests[ID_resolved]
-		var/timer_id = request_info[3]
-		if(!deltimer(timer_id))
-			debug_admins("Timer deletion failed for [timer_id] on [src].")
-		open_requests -= ID_resolved
-	else
-		// to prevent headaches if multiple heads of staff are trying to handle the same request
+		return NONE
+	if(!open_requests.Find(ID_resolved))
 		return NONE
 	var/powered_and_controllable = (resolved_door.hasPower() && resolved_door.canAIControl())
+	if(!powered_and_controllable)
+		id_feedback_message(ID_resolved, "buzzes \"SIGNAL TO AIRLOCK LOST\".")
+		return NONE
+	if(handling_flags & COMPONENT_REQUEST_AUTO_HANDLED)
+		. |= COMPONENT_REQUEST_AUTO_HANDLED
+	var/request_info = open_requests[ID_resolved]
+	var/timer_id = request_info[3]
+	if(!deltimer(timer_id))
+		debug_admins("Timer deletion failed for [timer_id] on [src].")
+	open_requests -= ID_resolved
 	var/handling_head = handler.response_name
-	var/log_index = "[ID_resolved],[resolved_door] at X\[[resolved_door.x]\]Y\[[resolved_door.y]\],[record_actions[action]]"
-	door_remote_records[handler]["ACTIONS"][log_index] = list("[time2text(world.realtime)]","[time2text(station_time())]")
 	switch(action)
 		if(REMOTE_RESPONSE_APPROVE)
-			if(powered_and_controllable)
-				if(resolved_door.locked)
-					resolved_door.unlock()
-				INVOKE_ASYNC(resolved_door, TYPE_PROC_REF(/obj/machinery/door/airlock, open))
-				id_feedback_message(ID_resolved, "buzzes \"APPROVED BY [handling_head]\".")
-				. |= COMPONENT_REQUEST_HANDLED
-			else
-				id_feedback_message(ID_resolved, "buzzes \"SIGNAL TO AIRLOCK LOST\".")
-				return .
+			if(resolved_door.locked)
+				resolved_door.unlock()
+			INVOKE_ASYNC(resolved_door, TYPE_PROC_REF(/obj/machinery/door/airlock, open))
+			id_feedback_message(ID_resolved, "buzzes \"APPROVED BY [handling_head]\".")
+			. |= COMPONENT_REQUEST_HANDLED
 		if(REMOTE_RESPONSE_DENY)
-			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handler.response_name]\".")
-			door_remote_records[handler]["DENIED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
-			addtimer(CALLBACK(src, PROC_REF(lift_lockout), handler, WEAKREF(ID_resolved), "DENIED"), 10 SECONDS)
+			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handling_head]\".")
 			. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED
-			return .
-			#warn "fix this timer"
 		if(REMOTE_RESPONSE_BOLT)
-			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handler.response_name]. FURTHER REQUESTS TO [handler.response_name] BLOCKED. AIRLOCK SECURED.\"")
-			if(powered_and_controllable && !resolved_door.locked)
-				INVOKE_ASYNC(resolved_door, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close))
-				. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED
-			door_remote_records[handler]["BLOCKED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
-			return .
+			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handling_head]. FURTHER REQUESTS TO [handling_head] BLOCKED. AIRLOCK SECURED.\"")
+			INVOKE_ASYNC(resolved_door, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close))
+			. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED | COMPONENT_REQUEST_BLOCKED
 		if(REMOTE_RESPONSE_BLOCK)
 			id_feedback_message(ID_resolved, "buzzes \"DENIED BY [handling_head]. FURTHER REQUESTS TO [handling_head] BLOCKED.\"")
-			door_remote_records[handler]["BLOCKED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
-			. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED
-			return .
+			. |= COMPONENT_REQUEST_HANDLED | COMPONENT_REQUEST_DENIED | COMPONENT_REQUEST_BLOCKED
 		if(REMOTE_RESPONSE_EA)
 			id_feedback_message(ID_resolved, "buzzes \"EMERGENCY ACCESS GRANTED BY [handling_head].\"")
-			if(powered_and_controllable && !resolved_door.emergency)
-				if(resolved_door.locked)
-					resolved_door.unlock()
-				resolved_door.emergency = TRUE
-				resolved_door.update_appearance(UPDATE_ICON)
-				. |= COMPONENT_REQUEST_HANDLED
-			else
-				id_feedback_message(ID_resolved, "buzzes \"SIGNAL TO AIRLOCK LOST\".")
-			return .
+			if(resolved_door.locked)
+				resolved_door.unlock()
+			resolved_door.emergency = TRUE
+			resolved_door.update_appearance(UPDATE_ICON)
+			. |= COMPONENT_REQUEST_HANDLED
 		if(REMOTE_RESPONSE_SHOCK)
 			//relevantly, we don't return the name of the handler here
 			//as a subtle tell
 			id_feedback_message(ID_resolved, "buzzes \"EMERGENCY ACCESS GRANTED.\"")
-			if(!powered_and_controllable)
-				id_feedback_message(ID_resolved, "buzzes \"SIGNAL TO AIRLOCK LOST\".")
-				return
 			if(resolved_door.locked)
 				resolved_door.unlock()
 			resolved_door.emergency = TRUE
 			resolved_door.update_appearance(UPDATE_ICON)
 			//the remote (as in not local, but also door remote) response for electrifying is temporary; doing it in LOS is the permanent one
-			resolved_door.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, get(/mob/living, handler))
+			resolved_door.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, handler.auto_response ? handler.auto_response[2] : get(handler.loc, /mob/living))
 			. |= COMPONENT_REQUEST_HANDLED
+	if(. & COMPONENT_REQUEST_DENIED)
+		if(. & COMPONENT_REQUEST_BLOCKED)
+			door_remote_records[handler]["BLOCKED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
+		else
+			door_remote_records[handler]["DENIED"][WEAKREF(ID_resolved)] = "[ID_resolved]"
+			addtimer(CALLBACK(src, PROC_REF(lift_lockout), handler, WEAKREF(ID_resolved), "DENIED"), 10 SECONDS)
+	#warn "fix this timer"
+	log_action(ID_resolved, resolved_door, handler, action)
+
+/datum/controller/subsystem/door_remote_routing/proc/log_action(
+	obj/item/card/id/advanced/ID_resolved,
+	obj/machinery/door/airlock/resolved_door,
+	obj/item/door_remote/handler,
+	action)
+	var/list/record_lists = door_remote_records[handler]
+	var/list/action_record = record_lists["ACTIONS"]
+	var/name_and_assignment = "[ID_resolved]\[[ID_resolved.assignment]\]"
+	var/doordinates/*door coordinates*/ = "X\[[resolved_door.x]\]Y\[[resolved_door.y]\]"
+	var/action_statement = " [record_actions[action]]"
+	var/log_time = "[gameTimestamp()]"
+	// in-character log time
+	var/IC_log_time = "[gameTimestamp(format = "MMM DD [CURRENT_STATION_YEAR] HH:MM:SS")]"
+	var/log_text = uppertext("[name_and_assignment] [doordinates] [action_statement]")
+	var/list/log_list = list(log_text, log_time, IC_log_time)
+	action_record["[action_record.len + 1]"] = log_list
