@@ -8,8 +8,8 @@
 /datum/keybinding/robot/moduleone
 	hotkey_keys = list("1")
 	name = "module_one"
-	full_name = "Toggle module 1"
-	description = "Equips or unequips the first module"
+	full_name = "Переключающий модуль 1"
+	description = "Оснащает или расцепляет первый модуль"
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULEONE_DOWN
 
 /datum/keybinding/robot/moduleone/down(client/user)
@@ -23,8 +23,8 @@
 /datum/keybinding/robot/moduletwo
 	hotkey_keys = list("2")
 	name = "module_two"
-	full_name = "Toggle module 2"
-	description = "Equips or unequips the second module"
+	full_name = "Переключающий модуль 2"
+	description = "Оснащает или расцепляет второй модуль"
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULETWO_DOWN
 
 /datum/keybinding/robot/moduletwo/down(client/user)
@@ -38,8 +38,8 @@
 /datum/keybinding/robot/modulethree
 	hotkey_keys = list("3")
 	name = "module_three"
-	full_name = "Toggle module 3"
-	description = "Equips or unequips the third module"
+	full_name = "Переключающий модуль 3"
+	description = "Оснащает или расцепляет третий модуль"
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULETHREE_DOWN
 
 /datum/keybinding/robot/modulethree/down(client/user)
@@ -53,8 +53,8 @@
 /datum/keybinding/robot/unequip_module
 	hotkey_keys = list("Q")
 	name = "unequip_module"
-	full_name = "Unequip module"
-	description = "Unequips the active module"
+	full_name = "Необорудованный модуль"
+	description = "Отсоединяет активный модуль"
 	keybind_signal = COMSIG_KB_SILICON_UNEQUIPMODULE_DOWN
 
 /datum/keybinding/robot/unequip_module/down(client/user)
@@ -69,8 +69,8 @@
 	category = CATEGORY_AI
 	hotkey_keys = list("=")
 	name = "undeploy"
-	full_name = "Disconnect from shell"
-	description = "Returns you to your AI core"
+	full_name = "Отсоединиться от оболочки"
+	description = "Возвращает вас к вашему ядру искусственного интеллекта"
 	keybind_signal = COMSIG_KB_SILION_UNDEPLOY_DOWN
 
 /datum/keybinding/robot/undeploy/down(client/user)

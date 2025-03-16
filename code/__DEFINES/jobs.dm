@@ -45,7 +45,7 @@
  */
 
 //No department
-#define JOB_ASSISTANT "Ассистеннт"
+#define JOB_ASSISTANT "Ассистент"
 #define JOB_PRISONER "Заключённый"
 //Command
 #define JOB_CAPTAIN "Капитан"

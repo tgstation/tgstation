@@ -8,15 +8,15 @@
 /datum/keybinding/admin/admin_say
 	hotkey_keys = list("F3")
 	name = ADMIN_CHANNEL
-	full_name = "Admin say"
-	description = "Talk with other admins."
+	full_name = "Администратор чат Say"
+	description = "Поговорите с другими администраторами."
 	keybind_signal = COMSIG_KB_ADMIN_ASAY_DOWN
 
 /datum/keybinding/admin/admin_ghost
 	hotkey_keys = list("F5")
 	name = "admin_ghost"
-	full_name = "Aghost"
-	description = "Go ghost"
+	full_name = "Админский призрак"
+	description = "Стань призраком, но чуть круче"
 	keybind_signal = COMSIG_KB_ADMIN_AGHOST_DOWN
 
 /datum/keybinding/admin/admin_ghost/down(client/user)
@@ -29,8 +29,8 @@
 /datum/keybinding/admin/player_panel_new
 	hotkey_keys = list("F6")
 	name = "player_panel_new"
-	full_name = "Player Panel New"
-	description = "Opens up the new player panel"
+	full_name = "Новая панель проигрывателя"
+	description = "Открывает новую панель проигрывателя"
 	keybind_signal = COMSIG_KB_ADMIN_PLAYERPANELNEW_DOWN
 
 /datum/keybinding/admin/player_panel_new/down(client/user)
@@ -43,8 +43,8 @@
 /datum/keybinding/admin/toggle_buildmode_self
 	hotkey_keys = list("F7")
 	name = "toggle_buildmode_self"
-	full_name = "Toggle Buildmode Self"
-	description = "Toggles buildmode"
+	full_name = "Переключить режим сборки самостоятельно"
+	description = "Переключает режим сборки"
 	keybind_signal = COMSIG_KB_ADMIN_TOGGLEBUILDMODE_DOWN
 
 /datum/keybinding/admin/toggle_buildmode_self/down(client/user)
@@ -57,8 +57,8 @@
 /datum/keybinding/admin/stealthmode
 	hotkey_keys = list("CtrlF8")
 	name = "stealth_mode"
-	full_name = "Stealth mode"
-	description = "Enters stealth mode"
+	full_name = "Скрытый режим"
+	description = "Переходит в скрытый режим"
 	keybind_signal = COMSIG_KB_ADMIN_STEALTHMODETOGGLE_DOWN
 
 /datum/keybinding/admin/stealthmode/down(client/user)
@@ -71,8 +71,8 @@
 /datum/keybinding/admin/invisimin
 	hotkey_keys = list("F8")
 	name = "invisimin"
-	full_name = "Admin invisibility"
-	description = "Toggles ghost-like invisibility (Don't abuse this)"
+	full_name = "Невидимость администратора"
+	description = "Переключает призрачную невидимость (не злоупотребляйте этим)"
 	keybind_signal = COMSIG_KB_ADMIN_INVISIMINTOGGLE_DOWN
 
 /datum/keybinding/admin/invisimin/down(client/user)
@@ -85,8 +85,8 @@
 /datum/keybinding/admin/deadsay
 	hotkey_keys = list("F10")
 	name = "dsay"
-	full_name = "deadsay"
-	description = "Allows you to send a message to dead chat"
+	full_name = "Мёртвый чат Say"
+	description = "Позволяет вам отправить сообщение в мертвый чат"
 	keybind_signal = COMSIG_KB_ADMIN_DSAY_DOWN
 
 /datum/keybinding/admin/deadsay/down(client/user)
@@ -99,8 +99,8 @@
 /datum/keybinding/admin/deadmin
 	hotkey_keys = list("Unbound")
 	name = "deadmin"
-	full_name = "Deadmin"
-	description = "Shed your admin powers"
+	full_name = "Снять админ права"
+	description = "Откажитесь от своих административных полномочий"
 	keybind_signal = COMSIG_KB_ADMIN_DEADMIN_DOWN
 
 /datum/keybinding/admin/deadmin/down(client/user)
@@ -113,8 +113,8 @@
 /datum/keybinding/admin/readmin
 	hotkey_keys = list("Unbound")
 	name = "readmin"
-	full_name = "Readmin"
-	description = "Regain your admin powers"
+	full_name = "Вернуть админ права"
+	description = "Восстановите свои административные полномочия"
 	keybind_signal = COMSIG_KB_ADMIN_READMIN_DOWN
 
 /datum/keybinding/admin/readmin/down(client/user)
@@ -127,8 +127,8 @@
 /datum/keybinding/admin/view_tags
 	hotkey_keys = list("F9")
 	name = "view_tags"
-	full_name = "View Tags"
-	description = "Open the View-Tags menu"
+	full_name = "Просмотр тегов"
+	description = "Откройте меню Просмотр-Теги"
 	keybind_signal = COMSIG_KB_ADMIN_VIEWTAGS_DOWN
 
 /datum/keybinding/admin/view_tags/down(client/user)

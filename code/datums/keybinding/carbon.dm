@@ -8,8 +8,8 @@
 /datum/keybinding/carbon/toggle_throw_mode
 	hotkey_keys = list("R", "Southwest") // END
 	name = "toggle_throw_mode"
-	full_name = "Toggle throw mode"
-	description = "Toggle throwing the current item or not."
+	full_name = "Переключение режима броска"
+	description = "Переключите, выбрасывать текущий элемент или нет."
 	category = CATEGORY_CARBON
 	keybind_signal = COMSIG_KB_CARBON_TOGGLETHROWMODE_DOWN
 
@@ -24,8 +24,8 @@
 /datum/keybinding/carbon/hold_throw_mode
 	hotkey_keys = list("Space")
 	name = "hold_throw_mode"
-	full_name = "Hold throw mode"
-	description = "Hold this to turn on throw mode, and release it to turn off throw mode"
+	full_name = "Удерживайте режим броска"
+	description = "Удерживайте эту кнопку, чтобы включить режим броска, и отпустите, чтобы выключить режим броска"
 	category = CATEGORY_CARBON
 	keybind_signal = COMSIG_KB_CARBON_HOLDTHROWMODE_DOWN
 
@@ -45,8 +45,8 @@
 /datum/keybinding/carbon/give
 	hotkey_keys = list("G")
 	name = "Give_Item"
-	full_name = "Give item"
-	description = "Give the item you're currently holding"
+	full_name = "Дайте предмет"
+	description = "Отдайте предмет, который вы сейчас держите в руках (из рук в руки)"
 	keybind_signal = COMSIG_KB_CARBON_GIVEITEM_DOWN
 
 /datum/keybinding/carbon/give/down(client/user)
