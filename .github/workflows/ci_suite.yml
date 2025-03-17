@@ -2,17 +2,17 @@ name: CI Suite
 on:
   push:
     branches:
-      - master
-      - "project/**"
-      - "gh-readonly-queue/master/**"
-      - "gh-readonly-queue/project/**"
+    - master
+    - 'project/**'
+    - 'gh-readonly-queue/master/**'
+    - 'gh-readonly-queue/project/**'
   pull_request:
     branches:
-      - master
-      - "project/**"
+    - master
+    - 'project/**'
   merge_group:
     branches:
-      - master
+    - master
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -45,7 +45,6 @@ jobs:
   run_all_tests:
     name: Integration Tests
     needs: collect_data
-
     uses: ./.github/workflows/ci_suite/perform_regular_version_tests.yml
     with:
       maps: ${{ needs.collect_data.outputs.maps }}
@@ -55,7 +54,6 @@ jobs:
     if: needs.collect_data.outputs.alternate_tests != '[]'
     name: Alternate Tests
     needs: collect_data
-
     uses: ./.github/workflows/ci_suite/perform_alternate_version_tests.yml
     with:
       alternate_tests: ${{ needs.collect_data.outputs.alternate_tests }}
@@ -63,7 +61,7 @@ jobs:
 
   compare_screenshots:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
-    needs: [collect_data, run_all_tests, run_alternate_tests]
+    needs: [ collect_data, run_all_tests, run_alternate_tests ]
     name: Compare Screenshot Tests
     uses: ./.github/workflows/ci_suite/compare_screenshots.yml
 
@@ -75,15 +73,7 @@ jobs:
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()
     name: Completion Gate
-    needs:
-      [
-        test_windows,
-        compare_screenshots,
-        compile_all_maps,
-        run_all_tests,
-        run_alternate_tests,
-        run_linters,
-      ]
+    needs: [ test_windows, compare_screenshots, compile_all_maps, run_all_tests, run_alternate_tests, run_linters ]
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
