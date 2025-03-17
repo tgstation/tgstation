@@ -106,7 +106,7 @@
 	)
 
 /obj/item/door_remote/head_of_security
-	name = "warden's(?) door remote"
+	name = "security door remote"
 	desc = "A remote for controlling a set of airlocks. This one smells like sweat, blood, resentment, and coffee.\
 		Someone appears to have tampered with the identifier."
 	department = "security"
