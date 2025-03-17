@@ -21,59 +21,63 @@
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
 
+/obj/structure/table_frame/Initialize(mapload)
+	. = ..()
+	register_context()
 
-/obj/structure/table_frame/wrench_act(mob/living/user, obj/item/I)
-	to_chat(user, span_notice("You start disassembling [src]..."))
-	I.play_tool_sound(src)
-	if(!I.use_tool(src, user, 3 SECONDS))
-		return TRUE
+/obj/structure/table_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(isstack(held_item) && get_table_type(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Construct table"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/table_frame/wrench_act(mob/living/user, obj/item/tool)
+	balloon_alert(user, "deconstructing...")
+	tool.play_tool_sound(src)
+	if(!tool.use_tool(src, user, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
 	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	deconstruct(TRUE)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/table_frame/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return wrench_act(user, tool)
 
-/obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
-	if(isstack(I))
-		var/obj/item/stack/material = I
-		if(material.tableVariant)
-			if(material.get_amount() < 1)
-				to_chat(user, span_warning("You need one [material.name] sheet to do this!"))
-				return
-			if(locate(/obj/structure/table) in loc)
-				to_chat(user, span_warning("There's already a table built here!"))
-				return
-			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(!do_after(user, 2 SECONDS, target = src) || !material.use(1) || (locate(/obj/structure/table) in loc))
-				return
-			make_new_table(material.tableVariant)
-		else if(istype(material, /obj/item/stack/sheet))
-			if(material.get_amount() < 1)
-				to_chat(user, span_warning("You need one sheet to do this!"))
-				return
-			if(locate(/obj/structure/table) in loc)
-				to_chat(user, span_warning("There's already a table built here!"))
-				return
-			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(!do_after(user, 2 SECONDS, target = src) || !material.use(1) || (locate(/obj/structure/table) in loc))
-				return
-			var/list/material_list = list()
-			if(material.material_type)
-				material_list[material.material_type] = SHEET_MATERIAL_AMOUNT
-			make_new_table(/obj/structure/table/greyscale, material_list)
-		return
-	return ..()
+/obj/structure/table_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isstack(tool))
+		return NONE
+	var/obj/item/stack/our_stack = tool
+	var/table_type = get_table_type(our_stack)
+	if(isnull(table_type))
+		return NONE
 
+	if(our_stack.get_amount() < 1)
+		balloon_alert(user, "need more material!")
+		return ITEM_INTERACT_BLOCKING
+	if(locate(/obj/structure/table) in loc)
+		balloon_alert(user, "can't stack tables!")
+		return ITEM_INTERACT_BLOCKING
 
-/obj/structure/table_frame/proc/make_new_table(table_type, custom_materials, carpet_type) //makes sure the new table made retains what we had as a frame
-	var/obj/structure/table/T = new table_type(loc)
-	T.frame = type
-	T.framestack = framestack
-	T.framestackamount = framestackamount
-	if (carpet_type)
-		T.buildstack = carpet_type
-	if(custom_materials)
-		T.set_custom_materials(custom_materials)
+	balloon_alert(user, "constructing table...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	if((locate(/obj/structure/table) in loc) || !our_stack.use(1))
+		return ITEM_INTERACT_BLOCKING
+
+	new table_type(loc, src, our_stack)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/// Gets the table type we make with our given stack.
+/obj/structure/table_frame/proc/get_table_type(obj/item/stack/our_stack)
+	return our_stack.get_table_type()
 
 /obj/structure/table_frame/atom_deconstruct(disassembled = TRUE)
 	new framestack(get_turf(src), framestackamount)
@@ -94,22 +98,8 @@
 	framestackamount = 2
 	resistance_flags = FLAMMABLE
 
-/obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
-	if (isstack(I))
-		var/obj/item/stack/material = I
-		var/toConstruct // stores the table variant
-		var/carpet_type // stores the carpet type used for construction in case of poker tables
-		if(istype(I, /obj/item/stack/sheet/mineral/wood))
-			toConstruct = /obj/structure/table/wood
-		else if(istype(I, /obj/item/stack/tile/carpet))
-			toConstruct = /obj/structure/table/wood/poker
-			carpet_type = I.type
-		if (toConstruct)
-			if(material.get_amount() < 1)
-				to_chat(user, span_warning("You need one [material.name] sheet to do this!"))
-				return
-			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(do_after(user, 2 SECONDS, target = src) && material.use(1))
-				make_new_table(toConstruct, null, carpet_type)
-	else
-		return ..()
+/obj/structure/table_frame/wood/get_table_type(obj/item/stack/our_stack)
+	if(istype(our_stack, /obj/item/stack/sheet/mineral/wood))
+		return /obj/structure/table/wood
+	if(istype(our_stack, /obj/item/stack/tile/carpet))
+		return /obj/structure/table/wood/poker

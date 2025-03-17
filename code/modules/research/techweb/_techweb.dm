@@ -149,10 +149,10 @@
 		CHECK_TICK
 		if(get_available_nodes()[i] || get_researched_nodes()[i] || get_visible_nodes()[i])
 			receiver.hidden_nodes -= i //We can see it so let them see it too.
-	for(var/i in researched_nodes)
+	for(var/i in researched_nodes - receiver.researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
-	for(var/i in researched_designs)
+	for(var/i in researched_designs - receiver.researched_designs)
 		CHECK_TICK
 		receiver.add_design_by_id(i)
 	receiver.recalculate_nodes()
@@ -486,7 +486,7 @@
 		return
 	if(researched)
 		researched_nodes[node.id] = TRUE
-		for(var/id in node.design_ids)
+		for(var/id in node.design_ids - researched_designs)
 			add_design(SSresearch.techweb_design_by_id(id))
 	else
 		if(available)
