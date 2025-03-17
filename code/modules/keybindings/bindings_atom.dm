@@ -50,20 +50,20 @@
 /client/verb/move_key_north()
 	set instant = TRUE
 	set hidden = TRUE
-	intended_direction = NORTH
+	intended_direction |= NORTH
 
 /client/verb/move_key_south()
 	set instant = TRUE
 	set hidden = TRUE
-	intended_direction = SOUTH
+	intended_direction |= SOUTH
 
 /client/verb/move_key_west()
 	set instant = TRUE
 	set hidden = TRUE
-	intended_direction = WEST
+	intended_direction |= WEST
 
 /client/verb/move_key_east()
 	set instant = TRUE
 	set hidden = TRUE
-	intended_direction = EAST
+	intended_direction |= EAST
 
