@@ -70,6 +70,11 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
 	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited)
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/cosmic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -91,6 +96,23 @@
 		fail_invoke()
 		return
 	invoke(user)
+
+/obj/effect/cosmic_rune/proc/on_entered(datum/source, atom/movable/arrived)
+	SIGNAL_HANDLER
+	if(!isliving(arrived))
+		return
+	RegisterSignal(arrived, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_self))
+
+/// If something clicks on themselves while on top of the rune, we instead will act as if they clicked on the rune instead
+/obj/effect/cosmic_rune/proc/on_attack_self(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	if(source == user)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, attack_hand), user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/effect/cosmic_rune/proc/on_exited(datum/source, exiter)
+	SIGNAL_HANDLER
+	UnregisterSignal(exiter, COMSIG_ATOM_ATTACK_HAND)
 
 /// For invoking the rune
 /obj/effect/cosmic_rune/proc/invoke(mob/living/user)

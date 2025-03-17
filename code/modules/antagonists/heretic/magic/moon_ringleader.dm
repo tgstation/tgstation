@@ -22,6 +22,7 @@
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast(mob/living/caster)
 	new moon_effect(get_turf(caster))
+	caster.faction |= "ringleader([REF(caster)])"
 	return ..()
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
@@ -30,9 +31,9 @@
 	for(var/mob/living/carbon/nearby_mob in o_range)
 		if(nearby_mob.stat == DEAD)
 			continue
-		if(!nearby_mob.mob_mood)
-			continue
 		if(IS_HERETIC_OR_MONSTER(nearby_mob))
+			continue
+		if(issilicon(nearby_mob))
 			continue
 		if(nearby_mob.can_block_magic(antimagic_flags))
 			continue
@@ -42,17 +43,31 @@
 	return stuff
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/caster)
-	var/victim_sanity = victim.mob_mood.sanity
+	var/mob/living/simple_animal/hostile/illusion/fake_clone = new(pick(RANGE_TURFS(2, victim)))
+	fake_clone.faction = caster.faction.Copy()
+	fake_clone.Copy_Parent(caster, 20 SECONDS, caster.health, 1)
+	fake_clone.GiveTarget(victim)
+	fake_clone.AddElement(/datum/element/relay_attackers)
+	RegisterSignal(fake_clone, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
-	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 - victim_sanity, 160)
-	for(var/i in 1 to round((120 - victim_sanity) / 10))
-		victim.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body), name)
-	if(victim_sanity < 15)
-		victim.apply_status_effect(/datum/status_effect/moon_converted)
-		caster.log_message("made [victim] insane.", LOG_GAME)
-		victim.log_message("was driven insane by [caster]")
-	victim.mob_mood.set_sanity(victim_sanity * 0.5)
-
+/// Used by Ringleaders Rise, illusions created by this spell will explode when they are interacted with
+/datum/action/cooldown/spell/aoe/moon_ringleader/proc/on_attacked(mob/victim, atom/attacker)
+	SIGNAL_HANDLER
+	if(isliving(attacker))
+		var/mob/living/living_attacker = attacker
+		if(IS_HERETIC_OR_MONSTER(living_attacker)) // Heretics cant smack these guys to trigger their effects
+			return
+	playsound(victim, 'sound/items/party_horn.ogg', 30)
+	new /obj/effect/decal/cleanable/confetti(get_turf(victim))
+	for(var/mob/living/mob in range(3, victim))
+		if(IS_HERETIC_OR_MONSTER(mob))
+			continue
+		mob.AdjustStun(1 SECONDS)
+		mob.AdjustKnockdown(1 SECONDS)
+		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
+		if(mob.mob_mood)
+			mob.mob_mood.sanity -= 50
+	qdel(victim)
 
 /obj/effect/temp_visual/moon_ringleader
 	icon = 'icons/effects/eldritch.dmi'

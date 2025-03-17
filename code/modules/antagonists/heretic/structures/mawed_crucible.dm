@@ -251,6 +251,8 @@
 	var/crucible_tip = "Doesn't do anything."
 	/// Typepath to the status effect this applies
 	var/status_effect
+	/// If you can drink the same potion while the effect is active
+	var/can_refresh = TRUE
 
 /obj/item/eldritch_potion/examine(mob/user)
 	. = ..()
@@ -265,6 +267,9 @@
 		return
 
 	if(!iscarbon(user))
+		return
+
+	if(!can_refresh && user.has_status_effect(status_effect))
 		return
 
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
@@ -295,7 +300,14 @@
 	desc = "A glass bottle containing a bright orange, translucent liquid."
 	icon_state = "crucible_soul"
 	status_effect = /datum/status_effect/crucible_soul
-	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 15 seconds."
+	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 40 seconds."
+	can_refresh = FALSE
+
+/obj/item/eldritch_potion/crucible_soul/attack_self(mob/user)
+	if(user.has_status_effect(/datum/status_effect/crucible_soul_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return TRUE
+	return ..()
 
 /obj/item/eldritch_potion/duskndawn
 	name = "brew of dusk and dawn"

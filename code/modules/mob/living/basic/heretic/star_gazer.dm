@@ -37,9 +37,13 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
+	/// Reference to the mob which summoned us
+	var/datum/weakref/summoner
+
 	//---- Abilities given to the star gazer mob
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/expansion
 	var/datum/action/cooldown/spell/pointed/projectile/star_blast/blast
+	var/datum/action/cooldown/recall_stargazer/recall
 
 /mob/living/basic/heretic_summon/star_gazer/Initialize(mapload)
 	. = ..()
@@ -47,6 +51,8 @@
 	expansion.Grant(src)
 	blast = new(src)
 	blast.Grant(src)
+	recall = new(src)
+	recall.Grant(src)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
@@ -59,10 +65,19 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	set_light(4, l_color = "#dcaa5b")
+	INVOKE_ASYNC(src, PROC_REF(beg_for_ghost))
+	RegisterSignal(src, COMSIG_MOB_GHOSTIZED, PROC_REF(beg_for_ghost))
+
+/// Tries to find a ghost to take control of the mob. If no ghost accepts, ask again in a bit
+/mob/living/basic/heretic_summon/star_gazer/proc/beg_for_ghost()
+	var/mob/chosen_ghost = SSpolling.poll_ghost_candidates("Do you want to play as an ascended heretic's stargazer?", check_jobban = ROLE_HERETIC, poll_time = 20 SECONDS, ignore_category = POLL_IGNORE_HERETIC_MONSTER, alert_pic = mutable_appearance('icons/mob/nonhuman-player/96x96eldritch_mobs.dmi', "star_gazer"), jump_target = src, role_name_text = "star gazer", amount_to_pick = 1)
+	if(chosen_ghost)
+		PossessByPlayer(chosen_ghost.key)
+	else
+		addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES) // Keep begging until someone accepts
 
 // Star gazer attacks everything around itself applies a spooky mark
 /mob/living/basic/heretic_summon/star_gazer/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
@@ -81,6 +96,25 @@
 		to_chat(nearby_mob, span_userdanger("\The [src] [attack_verb_continuous] you!"))
 		do_attack_animation(nearby_mob, ATTACK_EFFECT_SLASH)
 		log_combat(src, nearby_mob, "slashed")
+
+/datum/action/cooldown/recall_stargazer
+	name = "Seek master"
+	desc = "Teleports you to your master"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "stargazer_menu"
+	check_flags = NONE
+	cooldown_time = 5 SECONDS
+
+/datum/action/cooldown/recall_stargazer/Activate(atom/target)
+	var/mob/living/basic/heretic_summon/star_gazer/real_owner = owner
+	var/mob/living/master = real_owner.summoner.resolve()
+	if(!master)
+		return FALSE
+	do_teleport(owner, master, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
+	StartCooldown()
+	return TRUE
 
 /datum/ai_controller/basic_controller/star_gazer
 	blackboard = list(
