@@ -1,6 +1,6 @@
 /turf/closed/wall
-	name = "wall"
-	desc = "A huge chunk of iron used to separate rooms."
+	name = "стена"
+	desc = "Огромный кусок железа, служит для разделения комнат."
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
@@ -55,7 +55,7 @@
 	. = NONE
 	if(!isnull(held_item))
 		if((initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS) && held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "Adjust Wall Corner"
+			context[SCREENTIP_CONTEXT_LMB] = "Отрегулируйте угол стены"
 			return CONTEXTUAL_SCREENTIP_SET
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
@@ -74,11 +74,11 @@
 /turf/closed/wall/examine(mob/user)
 	. = ..()
 	if(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS)
-		. += span_notice("You could adjust its corners with a <b>wrench</b>.")
+		. += span_notice("Вы можете отрегулировать его с помощью <b>гаечного ключа</b>.")
 	. += deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
-	return span_notice("The outer plating is <b>welded</b> firmly in place.")
+	return span_notice("Наружная обшивка прочно <b>приварена</b> к месту.")
 
 /turf/closed/wall/attack_tk()
 	return
@@ -162,8 +162,8 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		add_dent(WALL_DENT_HIT)
 		user.visible_message(span_danger("[user] smashes \the [src]!"), \
-					span_danger("You smash \the [src]!"), \
-					span_hear("You hear a booming smash!"))
+					span_danger("Ты разбиваешь \the [src]!"), \
+					span_hear("Вы слышите оглушительный грохот!"))
 	return TRUE
 
 /**
@@ -189,13 +189,13 @@
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, span_notice("You push the wall but nothing happens!"))
+	to_chat(user, span_notice("Ты толкаешь стену, но ничего не происходит!"))
 	playsound(src, 'sound/items/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
 /turf/closed/wall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning("У тебя не хватит ловкости, чтобы сделать это!"))
 		return ITEM_INTERACT_BLOCKING
 
 	add_fingerprint(user)
@@ -214,10 +214,10 @@
 		if(!W.tool_start_check(user, amount=1))
 			return FALSE
 
-		to_chat(user, span_notice("You begin fixing dents on the wall..."))
+		to_chat(user, span_notice("Вы начинаете заделывать вмятины на стене..."))
 		if(W.use_tool(src, user, 0, volume=100))
 			if(iswallturf(src) && LAZYLEN(dent_decals))
-				to_chat(user, span_notice("You fix some dents on the wall."))
+				to_chat(user, span_notice("Ты заделызаделал кое-какие вмятины на стене."))
 				cut_overlay(dent_decals)
 				dent_decals.Cut()
 			return TRUE
@@ -243,10 +243,10 @@
 		if(!I.tool_start_check(user, amount=round(slicing_duration / 50), heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return FALSE
 
-		to_chat(user, span_notice("You begin slicing through the outer plating..."))
+		to_chat(user, span_notice("Вы начинаете разрезать внешнюю обшивку..."))
 		if(I.use_tool(src, user, slicing_duration, volume=100))
 			if(iswallturf(src))
-				to_chat(user, span_notice("You remove the outer plating."))
+				to_chat(user, span_notice("Вы прорезаете внешнюю обшивку."))
 				dismantle_wall()
 			return TRUE
 
@@ -343,6 +343,6 @@
 	else
 		smoothing_flags |= SMOOTH_DIAGONAL_CORNERS
 	QUEUE_SMOOTH(src)
-	to_chat(user, span_notice("You adjust [src]."))
+	to_chat(user, span_notice("Вы настраиваете [src]."))
 	tool.play_tool_sound(src)
 	return ITEM_INTERACT_SUCCESS

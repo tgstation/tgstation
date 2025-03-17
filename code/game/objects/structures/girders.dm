@@ -1,9 +1,9 @@
 /obj/structure/girder
 	icon = 'icons/obj/smooth_structures/girder.dmi'
-	name = "girder"
+	name = "металлокаркас"
 	base_icon_state = "girder"
 	icon_state = "girder-0"
-	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
+	desc = "Большой конструктивный узел, изготовленный из металла, для того чтобы его сделать стеной, требуется слой железа."
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 200
@@ -30,18 +30,18 @@
 	. = ..()
 	switch(state)
 		if(GIRDER_REINF)
-			. += span_notice("The support struts are <b>screwed</b> in place.")
+			. += span_notice("Опорные стойки <b>привинчены</b> на место.")
 		if(GIRDER_REINF_STRUTS)
-			. += span_notice("The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.")
+			. += span_notice("Опорные стойки <i>отвинчены</i> а внутренняя <b>решетка</b> не повреждена.")
 		if(GIRDER_NORMAL)
 			if(can_displace)
-				. += span_notice("The bolts are <b>wrenched</b> in place.")
+				. += span_notice("Болты <b>закручены</b> на место.")
 		if(GIRDER_DISPLACED)
-			. += span_notice("The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.")
+			. += span_notice("Болты <i>ослаблены</i>, но <b>винты</b> удерживают [src] вместе.")
 		if(GIRDER_DISASSEMBLED)
-			. += span_notice("[src] is disassembled! You probably shouldn't be able to see this examine message.")
+			. += span_notice("[src] разобран! Вероятно, вы не сможете увидеть это сообщение о проверке.")
 		if(GIRDER_TRAM)
-			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
+			. += span_notice("[src] предназначен для использования в трамвае. Разбирается с помощью отвертки!") //перевод под вопросом -Rewokin.
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	var/platingmodifier = 1
@@ -53,7 +53,7 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
-		balloon_alert(user, "slicing apart...")
+		balloon_alert(user, "разрезая на части...")
 		if(W.use_tool(src, user, 40, volume=100))
 			if(state == GIRDER_TRAM)
 				var/obj/item/stack/sheet/mineral/titanium/M = new (user.loc, 2)
@@ -68,14 +68,14 @@
 
 	else if(isstack(W))
 		if(iswallturf(loc) || (locate(/obj/structure/falsewall) in src.loc.contents))
-			balloon_alert(user, "wall already present!")
+			balloon_alert(user, "стена уже присутствует!")
 			return
 		if(!isfloorturf(src.loc) && state != GIRDER_TRAM)
-			balloon_alert(user, "need floor!")
+			balloon_alert(user, "нужен пол!")
 			return
 		if(state == GIRDER_TRAM)
 			if(!locate(/obj/structure/transport/linear/tram) in src.loc.contents)
-				balloon_alert(user, "need tram floors!")
+				balloon_alert(user, "нужны трамвайные перекрытия!") //перевод под вопросом -Rewokin.
 				return
 
 		if(istype(W, /obj/item/stack/rods))
@@ -83,9 +83,9 @@
 			var/amount = construction_cost[rod.type]
 			if(state == GIRDER_DISPLACED)
 				if(rod.get_amount() < amount)
-					balloon_alert(user, "need [amount] rods!")
+					balloon_alert(user, "нужно [amount] стержней!")
 					return
-				balloon_alert(user, "concealing entrance...")
+				balloon_alert(user, "скрывающий вход...")
 				if(do_after(user, 2 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
@@ -96,9 +96,9 @@
 					return
 			else
 				if(rod.get_amount() < amount)
-					balloon_alert(user, "need [amount] rods!")
+					balloon_alert(user, "нужно [amount] стержней!")
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "добавление покрытия...")
 				if(do_after(user, 4 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
@@ -117,9 +117,9 @@
 			var/amount = construction_cost[/obj/item/stack/sheet/iron]
 			if(state == GIRDER_DISPLACED)
 				if(sheets.get_amount() < amount)
-					balloon_alert(user, "need [amount] sheets!")
+					balloon_alert(user, "нужно [amount] листов!")
 					return
-				balloon_alert(user, "concealing entrance...")
+				balloon_alert(user, "скрывающий вход...")
 				if(do_after(user, 20*platingmodifier, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -129,13 +129,13 @@
 					qdel(src)
 					return
 			else if(state == GIRDER_REINF)
-				balloon_alert(user, "need plasteel sheet!")
+				balloon_alert(user, "нужен пласталевый лист!")
 				return
 			else if(state == GIRDER_TRAM)
 				if(sheets.get_amount() < amount)
-					balloon_alert(user, "need [amount] sheets!")
+					balloon_alert(user, "нужно [amount] листов!")
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "добавление покрытия...")
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -146,9 +146,9 @@
 				return
 			else
 				if(sheets.get_amount() < amount)
-					balloon_alert(user, "need [amount] sheets!")
+					balloon_alert(user, "нужно [amount] листов!")
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "добавление покрытия...")
 				if (do_after(user, 40*platingmodifier, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -162,9 +162,9 @@
 		if(istype(sheets, /obj/item/stack/sheet/titaniumglass) && state == GIRDER_TRAM)
 			var/amount = construction_cost[/obj/item/stack/sheet/titaniumglass]
 			if(sheets.get_amount() < amount)
-				balloon_alert(user, "need [amount] sheets!")
+				balloon_alert(user, "нужно [amount] листов!")
 				return
-			balloon_alert(user, "adding panel...")
+			balloon_alert(user, "добавление покрытия...")
 			if (do_after(user, 2 SECONDS, target = src))
 				if(sheets.get_amount() < amount)
 					return
@@ -178,9 +178,9 @@
 			var/amount = construction_cost[/obj/item/stack/sheet/plasteel]
 			if(state == GIRDER_DISPLACED)
 				if(sheets.get_amount() < amount)
-					balloon_alert(user, "need [amount] sheets!")
+					balloon_alert(user, "нужно [amount] листов!")
 					return
-				balloon_alert(user, "concealing entrance...")
+				balloon_alert(user, "скрывающий вход...")
 				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -193,7 +193,7 @@
 				amount = 1 // hur dur let's make plasteel have different construction amounts 4norasin
 				if(sheets.get_amount() < amount)
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "добавление покрытия...")
 				if(do_after(user, 50*platingmodifier, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -207,7 +207,7 @@
 				amount = 1 // hur dur x2
 				if(sheets.get_amount() < amount)
 					return
-				balloon_alert(user, "reinforcing frame...")
+				balloon_alert(user, "усиливающий каркас...")
 				if(do_after(user, 60*platingmodifier, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -219,20 +219,20 @@
 
 		if(!sheets.has_unique_girder && sheets.material_type)
 			if(istype(src, /obj/structure/girder/reinforced))
-				balloon_alert(user, "need plasteel!")
+				balloon_alert(user, "нужна пласталь!")
 				return
 
 			var/M = sheets.sheettype
 			var/amount = construction_cost["exotic_material"]
 			if(state == GIRDER_TRAM)
 				if(sheets.get_amount() < amount)
-					balloon_alert(user, "need [amount] sheets!")
+					balloon_alert(user, "нужно [amount] листов!")
 					return
 				var/tram_wall_type = text2path("/obj/structure/tram/alt/[M]")
 				if(!tram_wall_type)
-					balloon_alert(user, "need titanium glass or mineral!")
+					balloon_alert(user, "нужно титановое стекло или минерал!")
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "добавление покрытия...")
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -245,9 +245,9 @@
 			if(state == GIRDER_DISPLACED)
 				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
 				if(sheets.get_amount() < amount)
-					balloon_alert(user, "need [amount] sheets!")
+					balloon_alert(user, "нужно [amount] листов!")
 					return
-				balloon_alert(user, "concealing entrance...")
+				balloon_alert(user, "скрывающий вход...")
 				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -267,9 +267,9 @@
 					return
 			else
 				if(sheets.get_amount() < amount)
-					balloon_alert(user, "need [amount] sheets!")
+					balloon_alert(user, "нужно [amount] листов!")
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "добавление покрытия...")
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
@@ -295,7 +295,7 @@
 		if (P.pipe_type in list(0, 1, 5)) //simple pipes, simple bends, and simple manifolds.
 			if(!user.transferItemToLoc(P, drop_location()))
 				return
-			balloon_alert(user, "inserted pipe")
+			balloon_alert(user, "вставленная труба")
 	else
 		return ..()
 
@@ -306,7 +306,7 @@
 
 	. = FALSE
 	if(state == GIRDER_TRAM)
-		balloon_alert(user, "disassembling frame...")
+		balloon_alert(user, "разбираем раму...")
 		if(tool.use_tool(src, user, 4 SECONDS, volume=100))
 			if(state != GIRDER_TRAM)
 				return
@@ -318,7 +318,7 @@
 		return TRUE
 
 	if(state == GIRDER_DISPLACED)
-		balloon_alert(user, "disassembling frame...")
+		balloon_alert(user, "разбираем раму...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_DISPLACED)
 				return
@@ -330,7 +330,7 @@
 		return TRUE
 
 	else if(state == GIRDER_REINF)
-		balloon_alert(user, "unsecuring support struts...")
+		balloon_alert(user, "незакрепленные опорные стойки...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_REINF)
 				return
@@ -338,7 +338,7 @@
 		return TRUE
 
 	else if(state == GIRDER_REINF_STRUTS)
-		balloon_alert(user, "securing support struts...")
+		balloon_alert(user, "закрепление опорных стоек...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_REINF_STRUTS)
 				return
@@ -349,7 +349,7 @@
 /obj/structure/girder/wirecutter_act(mob/user, obj/item/tool)
 	. = ..()
 	if(state == GIRDER_REINF_STRUTS)
-		balloon_alert(user, "removing inner grille...")
+		balloon_alert(user, "снимаем внутреннюю решетку...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			new /obj/item/stack/sheet/plasteel(get_turf(src))
 			var/obj/structure/girder/G = new (loc)
@@ -361,16 +361,16 @@
 	. = ..()
 	if(state == GIRDER_DISPLACED)
 		if(!isfloorturf(loc))
-			balloon_alert(user, "needs floor!")
+			balloon_alert(user, "нужен пол!")
 
-		balloon_alert(user, "securing frame...")
+		balloon_alert(user, "крепежная рама...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
 			qdel(src)
 		return TRUE
 	else if(state == GIRDER_NORMAL && can_displace)
-		balloon_alert(user, "unsecuring frame...")
+		balloon_alert(user, "незащищенная рама...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			var/obj/structure/girder/displaced/D = new (loc)
 			transfer_fingerprints_to(D)
@@ -398,7 +398,7 @@
 	qdel(src)
 
 /obj/structure/girder/displaced
-	name = "displaced girder"
+	name = "смещенная металлокаркас"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
 	anchored = FALSE
@@ -410,7 +410,7 @@
 	canSmoothWith = null
 
 /obj/structure/girder/reinforced
-	name = "reinforced girder"
+	name = "армированный металлокаркас"
 	icon = 'icons/obj/smooth_structures/reinforced_girder.dmi'
 	icon_state = "reinforced-0"
 	base_icon_state = "reinforced"
@@ -419,8 +419,8 @@
 	max_integrity = 350
 
 /obj/structure/girder/tram
-	name = "tram girder"
-	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
+	name = "трамвайная балка" //перевод под вопросом -Rewokin.
+	desc = "Титановый каркас для изготовления стен трамвая. Может быть покрыт <b>титановым стеклом</b> или другими стеновыми материалами." //перевод под вопросом -Rewokin.
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "tram"
 	state = GIRDER_TRAM
@@ -430,13 +430,13 @@
 	canSmoothWith = null
 
 /obj/structure/girder/tram/corner
-	name = "tram frame corner"
+	name = "угол рамы трамвая" //перевод под вопросом -Rewokin.
 
-//////////////////////////////////////////// cult girder //////////////////////////////////////////////
+//////////////////////////////////////////// культ металлокаркас //////////////////////////////////////////////
 
 /obj/structure/girder/cult
-	name = "runed girder"
-	desc = "Framework made of a strange and shockingly cold metal. It doesn't seem to have any bolts."
+	name = "рунический металлокаркас"
+	desc = "Каркас сделан из странного и пугающе холодного металла. Кажется, у него нет никаких болтов."
 	icon = 'icons/obj/antags/cult/structures.dmi'
 	icon_state= "cultgirder"
 	can_displace = FALSE
@@ -450,7 +450,7 @@
 		if(!W.tool_start_check(user, amount=1))
 			return
 
-		balloon_alert(user, "slicing apart...")
+		balloon_alert(user, "разрезая на части...")
 		if(W.use_tool(src, user, 40, volume=50))
 			var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 1)
 			transfer_fingerprints_to(R)
@@ -460,9 +460,9 @@
 		var/obj/item/stack/sheet/runed_metal/R = W
 		var/amount = construction_cost[R.type]
 		if(R.get_amount() < amount)
-			balloon_alert(user, "need [amount] sheet!")
+			balloon_alert(user, "нужно [amount] листов!")
 			return
-		balloon_alert(user, "adding plating...")
+		balloon_alert(user, "добавление покрытия...")
 		if(do_after(user, 5 SECONDS, target = src))
 			if(R.get_amount() < amount)
 				return
@@ -510,8 +510,8 @@
 	return FALSE
 
 /obj/structure/girder/bronze
-	name = "wall gear"
-	desc = "A girder made out of sturdy bronze, made to resemble a gear."
+	name = "механическая стена"
+	desc = "Металокаркас, сделанный из прочной бронзы и напоминающая шестеренку."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wall_gear"
 	can_displace = FALSE
@@ -524,7 +524,7 @@
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return
-		balloon_alert(user, "slicing apart...")
+		balloon_alert(user, "разрезая на части...")
 		if(W.use_tool(src, user, 40, volume=50))
 			var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
 			transfer_fingerprints_to(B)
@@ -534,9 +534,9 @@
 		var/obj/item/stack/sheet/bronze/B = W
 		var/amount = construction_cost[B.type]
 		if(B.get_amount() < amount)
-			balloon_alert(user, "need [amount] sheets!")
+			balloon_alert(user, "нужно [amount] листов!")
 			return
-		balloon_alert(user, "adding plating...")
+		balloon_alert(user, "добавление покрытия...")
 		if(do_after(user, 5 SECONDS, target = src))
 			if(B.get_amount() < amount)
 				return
