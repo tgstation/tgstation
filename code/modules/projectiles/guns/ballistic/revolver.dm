@@ -194,7 +194,7 @@
 	if(.)
 		spun = TRUE
 
-/obj/item/gun/ballistic/revolver/russian/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/revolver/russian/attackby(obj/item/A, mob/user, list/modifiers)
 	..()
 	if(get_ammo() > 0)
 		spin()

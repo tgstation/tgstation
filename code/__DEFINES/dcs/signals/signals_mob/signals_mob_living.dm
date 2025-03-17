@@ -305,7 +305,7 @@
 
 /// Sent to the mob when their mind is slaved
 #define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
-/// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked)
+/// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
 #define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
 /// From /mob/living/proc/stop_leaning()
 #define COMSIG_LIVING_STOPPED_LEANING "living_stopped_leaning"

@@ -40,7 +40,7 @@
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			. += span_notice("The turret's armor needs to be <b>welded</b> in place, the armor looks like it could be <i>pried</i> off.")
 
-/obj/machinery/porta_turret_construct/attackby(obj/item/used, mob/user, params)
+/obj/machinery/porta_turret_construct/attackby(obj/item/used, mob/user, list/modifiers)
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(PTURRET_UNSECURED) //first step

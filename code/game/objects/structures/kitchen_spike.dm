@@ -50,7 +50,7 @@
 	default_unfasten_wrench(user, tool)
 	return TRUE
 
-/obj/structure/kitchenspike_frame/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/kitchenspike_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(!istype(attacking_item, /obj/item/stack/rods))
 		return ..()

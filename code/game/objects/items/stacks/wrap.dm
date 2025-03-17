@@ -26,7 +26,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
-/obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	. = ..()
 	user.visible_message(
 		span_warning("[user] baps [target_mob] on the head with [src]!"),
@@ -224,7 +224,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
-/obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	. = ..()
 	user.visible_message(
 		span_warning("[user] baps [target_mob] on the head with [src]!"),

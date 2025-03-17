@@ -67,7 +67,7 @@
 		tank_two = null
 		update_appearance()
 
-/obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
+/obj/item/transfer_valve/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/tank))
 		if(tank_one && tank_two)
 			to_chat(user, span_warning("There are already two tanks attached, remove one first!"))

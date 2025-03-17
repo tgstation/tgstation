@@ -683,7 +683,7 @@
 	else
 		examine_strings += span_warning("It's a simulacra, a fake axe made to fool the masses.")
 
-/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, click_parameters)
+/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if(user != owner)
 		return

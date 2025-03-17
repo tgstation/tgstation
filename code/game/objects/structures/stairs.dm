@@ -212,7 +212,7 @@
 /obj/structure/stairs_frame/atom_deconstruct(disassembled = TRUE)
 	new frame_stack(get_turf(src), frame_stack_amount)
 
-/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, params)
+/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, list/modifiers)
 	if(!isstack(attacked_by))
 		return ..()
 	if(!anchored)

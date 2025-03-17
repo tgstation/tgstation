@@ -172,7 +172,7 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, params)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, list/modifiers)
 	// Store chromosomes in the console if there's room
 	if (istype(item, /obj/item/chromosome))
 		item.forceMove(src)

@@ -8,7 +8,7 @@
 	var/used_up = FALSE
 
 #define NICKNAME_CAP (MAX_NAME_LEN/2)
-/obj/item/virgin_mary/attackby(obj/item/potential_lighter, mob/living/user, params)
+/obj/item/virgin_mary/attackby(obj/item/potential_lighter, mob/living/user, list/modifiers)
 	. = ..()
 	if(resistance_flags & ON_FIRE)
 		return
