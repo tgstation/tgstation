@@ -1,0 +1,1 @@
+/obj/machinery/power/port_gen/pacman/pre_loaded : /obj/effect/spawner/random/engineering/pacman {@OLD}
