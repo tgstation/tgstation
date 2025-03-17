@@ -1,17 +1,17 @@
-/datum/quirk/item_quirk/jumo_moment
+/datum/quirk/item_quirk/decaying_brain
 	name = "Decaying Brain"
 	desc = "You brain will rapidly take damage at all times unless you take viperpoison. No other BRAIN medicines work on you. However, you have a significantly higher tolerance for the stuff, and will start out with a full bottle of it (plus a syringe to inject it.)"
 	icon = FA_ICON_TAG
-	mob_trait = TRAIT_VIPERPOISON_ADDICT
-	value = -4
-	gain_text = span_danger("Your thoughts feel fuzzy...")
+	mob_trait = TRAIT_DECAYING_BRAIN
+	value = -12
+	gain_text = span_danger("Your thoughts feel fuzzy... you need viperpoison NOW!")
 	lose_text = span_notice("You feel more sane than usual.")
-	medical_record_text = "Patient is suffering from a decaying brain."
+	medical_record_text = "Patient is suffering from severe Viperpoison-dependent brain decay."
 	mail_goodies = list(/obj/item/storage/pill_bottle/viperpoison)
 
 	var/datum/weakref/added_trama_ref
 
-/datum/quirk/item_quirk/jumo_moment/add_unique(client/client_source)
+/datum/quirk/item_quirk/decaying_brain/add_unique(client/client_source)
 	if(!iscarbon(quirk_holder))
 		return
 
@@ -29,14 +29,9 @@
 		),
 	)
 
-	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(tongue)
-		// Gamer diet
-		tongue.liked_foodtypes = JUNKFOOD
-
 	var/datum/brain_trauma/severe/viperpoison_addict/added_trauma = new()
 	added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
-	added_trauma.name = "Viperpoison Dependency"
+	added_trauma.name = "Decaying Brain"
 	added_trauma.desc = medical_record_text
 	added_trauma.scan_desc = LOWER_TEXT(added_trauma.name)
 	added_trauma.gain_text = null

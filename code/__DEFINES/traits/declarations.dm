@@ -915,7 +915,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SETTLER "settler"
 #define TRAIT_STRONG_STOMACH "strong_stomach"
 #define TRAIT_VEGETARIAN "trait_vegetarian"
-#define TRAIT_VIPERPOISON_ADDICT "trait_viperpoison_addict"
+#define TRAIT_DECAYING_BRAIN "trait_decaying_brain"
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"

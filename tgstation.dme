@@ -1798,7 +1798,7 @@
 #include "code\datums\quirks\negative_quirks\illiterate.dm"
 #include "code\datums\quirks\negative_quirks\indebted.dm"
 #include "code\datums\quirks\negative_quirks\insanity.dm"
-#include "code\datums\quirks\negative_quirks\jumo_moment.dm"
+#include "code\datums\quirks\negative_quirks\decaying_brain.dm"
 #include "code\datums\quirks\negative_quirks\light_drinker.dm"
 #include "code\datums\quirks\negative_quirks\mute.dm"
 #include "code\datums\quirks\negative_quirks\nearsighted.dm"
