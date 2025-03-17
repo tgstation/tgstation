@@ -133,7 +133,7 @@
 
 /obj/effect/spawner/random/engineering/pacman
 	name = "pacman generator"
-	icon_state = "portgen0"
+	icon_state = "portgen"
 	loot = list( // use this for deciding whether a pacman comes preloaded or not
 		/obj/machinery/power/port_gen/pacman = 8,
 		/obj/machinery/power/port_gen/pacman/fifteen = 5,
