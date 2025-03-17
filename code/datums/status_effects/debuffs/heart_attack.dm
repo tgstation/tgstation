@@ -105,8 +105,7 @@
 
 	if(time_until_stoppage <= 0)
 		if(owner.stat == CONSCIOUS)
-			owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
-			span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
+			to_chat(owner, span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		owner.adjust_eye_blur(20 SECONDS)
 		human_owner.set_heartattack(TRUE)
 		owner.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite/heart_attack, 2) // To give the victim a final chance to shock their heart before losing consciousness

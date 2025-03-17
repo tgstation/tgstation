@@ -632,6 +632,7 @@
 	name = "Desperation"
 	description = "The by-product of one's parasympathetic nervous system releasing everything it can. Rarely found in living patients, as this particular chemical mix is only released when your body knows it's about to shut down."
 	color = "#F5F5F5"
+	chemical_flags = NONE
 
 /datum/reagent/medicine/c2/penthrite/heart_attack/send_alert(mob/living/affected_mob)
 	affected_mob.throw_alert("heart_stop", /atom/movable/screen/alert/heart_desperation)
