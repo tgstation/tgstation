@@ -635,6 +635,12 @@
 	for(var/i in 1 to 3)
 		. += /obj/item/grenade/chem_grenade/ez_clean
 
+/obj/item/storage/box/syndie_kit/mulligan/PopulateContents()
+	return list(
+		/obj/item/reagent_containers/syringe/mulligan,
+		/obj/item/fake_identity_kit
+	)
+
 /obj/item/storage/box/hug/reverse_revolver/PopulateContents(datum/storage_config/config)
 	config.compute_max_item_weight = TRUE
 	config.compute_max_total_weight = TRUE
