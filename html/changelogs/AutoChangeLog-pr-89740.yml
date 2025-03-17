@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "The Mulligan Injector now comes as a kit which can create manifest entries for you under your new identity, as well as an Assistant ID Card with your new name."

@@ -73,6 +73,10 @@
 
 	return all_images
 
+/obj/item/organ/cyberimp/feel_for_damage(self_aware)
+	// No feeling in implants (yet?)
+	return ""
+
 //[[[[BRAIN]]]]
 
 /obj/item/organ/cyberimp/brain
