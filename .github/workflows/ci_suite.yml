@@ -37,6 +37,16 @@ jobs:
     needs: start_gate
     uses: ./.github/workflows/collect_data.yml
 
+  test_outputs:
+    needs: collect_data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check outputs
+        run: |
+          echo "Received maps: ${{ needs.collect_data.outputs.maps }}"
+          echo "Received alternate tests: ${{ needs.collect_data.outputs.alternate_tests }}"
+          echo "Received BYOND client: ${{ needs.collect_data.outputs.max_required_byond_client }}"
+
   compile_all_maps:
     name: Compile Maps
     needs: collect_data
