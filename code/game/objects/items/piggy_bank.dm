@@ -59,9 +59,14 @@
 	if(maximum_savings_per_shift)
 		maximum_value = calculate_dosh_amount() + maximum_savings_per_shift
 
-#define MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH 35
-
 /obj/item/piggy_bank/proc/save_cash()
+	sanitize_piggy_bank_contents_len()
+	SSpersistence.save_piggy_bank(src)
+
+#define MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH 38
+
+///This prevents the piggy bank from becoming laggy as hell if broken with hundred upon hundreds of chips inside it.
+/obj/item/piggy_bank/proc/sanitize_piggy_bank_contents_len()
 	var/contents_len = length(contents)
 	if(contents_len <= MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH)
 		return
@@ -76,7 +81,6 @@
 		qdel(money)
 	if(creds_amount)
 		new /obj/item/holochip(src, creds_amount)
-	SSpersistence.save_piggy_bank(src)
 
 #undef MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH
 
@@ -135,6 +139,7 @@
 		balloon_alert(user, "stuck in your hands!")
 	else
 		balloon_alert(user, "inserted [creds_value] creds")
+		sanitize_piggy_bank_contents_len()
 	return TRUE
 
 ///Returns the total amount of credits that its contents amount to.
