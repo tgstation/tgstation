@@ -2,6 +2,16 @@ name: Collect Data
 
 on:
   workflow_call:
+    outputs:
+      maps:
+        description: "The maps that were found"
+        value: ${{ jobs.collect_data.outputs.maps }}
+      alternate_tests:
+        description: "The alternate tests that were found"
+        value: ${{ jobs.collect_data.outputs.alternate_tests }}
+      max_required_byond_client:
+        description: "The max required byond client version"
+        value: ${{ jobs.collect_data.outputs.max_required_byond_client }}
 
 jobs:
   collect_data:
