@@ -67,7 +67,7 @@
 
 ///This prevents the piggy bank from becoming laggy as hell if broken with hundred upon hundreds of chips inside it.
 /obj/item/piggy_bank/proc/sanitize_piggy_bank_contents_len()
-var/contents_len = length(contents)
+	var/contents_len = length(contents)
 	if(contents_len <= MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH)
 		return
 	// that +1 is to make space for the holochip with the collected amount
