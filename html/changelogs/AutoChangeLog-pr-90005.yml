@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes:
+  - refactor: "tech disk uploading isnt super slow anymore (much harder to crash spacetime with it)"
