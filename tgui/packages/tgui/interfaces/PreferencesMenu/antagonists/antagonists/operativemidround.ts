@@ -3,7 +3,7 @@ import { OPERATIVE_MECHANICAL_DESCRIPTION } from './operative';
 
 const OperativeMidround: Antagonist = {
   key: 'operativemidround',
-  name: 'Ядерный противник',
+  name: 'Ядерный оперативник',
   description: [
     `
       Разновидность ядерного оперативника, которое предлагается призракам в середине
