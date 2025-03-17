@@ -41,6 +41,7 @@
 		if(mend)
 			holopad.replay_stop()
 			holopad.replay_mode = FALSE
-			return
-		holopad.replay_start()
-		holopad.replay_mode = TRUE
+		else
+			holopad.replay_start()
+			holopad.replay_mode = TRUE
+	return ..()
