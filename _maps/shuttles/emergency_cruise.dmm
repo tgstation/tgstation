@@ -1606,7 +1606,7 @@
 /area/shuttle/escape)
 "xH" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,

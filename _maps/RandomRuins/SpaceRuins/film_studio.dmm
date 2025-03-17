@@ -105,7 +105,7 @@
 /area/ruin/space/has_grav/film_studio/stage)
 "cd" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio)

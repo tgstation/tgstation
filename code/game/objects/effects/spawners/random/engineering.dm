@@ -136,8 +136,9 @@
 	icon_state = "portgen0"
 	loot = list( // use this for deciding whether a pacman comes preloaded or not
 		/obj/machinery/power/port_gen/pacman = 8,
-		/obj/machinery/power/port_gen/pacman/pre_loaded = 3,
-		/obj/machinery/power/port_gen/pacman/pre_loaded/stacked = 1,
+		/obj/machinery/power/port_gen/pacman/fifteen = 5,
+		/obj/machinery/power/port_gen/pacman/thirty = 3,
+		/obj/machinery/power/port_gen/pacman/fifty = 1
 	)
 
 /obj/effect/spawner/random/engineering/tracking_beacon

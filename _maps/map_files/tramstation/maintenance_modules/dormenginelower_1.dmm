@@ -221,7 +221,7 @@
 /area/station/maintenance/central/lesser)
 "nj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "nw" = (

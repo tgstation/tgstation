@@ -8358,7 +8358,7 @@
 /turf/open/openspace,
 /area/station/command/meeting_room)
 "dai" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "daz" = (
@@ -16143,8 +16143,8 @@
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/science/xenobiology)
 "fJn" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "fJz" = (
@@ -21438,8 +21438,8 @@
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics/garden)
 "hzn" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "hzx" = (
@@ -32172,7 +32172,7 @@
 /area/station/command/heads_quarters/hop)
 "loR" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /obj/machinery/light/small/dim/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -33983,7 +33983,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "lXY" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "lYa" = (
@@ -38429,8 +38429,8 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/maintenance/department/cargo)
 "nAe" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "nAm" = (
@@ -38574,7 +38574,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "nCu" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/upper)
 "nCH" = (
@@ -39158,7 +39158,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "nNP" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "nOx" = (
@@ -42434,7 +42434,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "pau" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "paC" = (
@@ -67070,11 +67070,9 @@
 "xBR" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman/pre_loaded{
-	anchored = 1
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/electric_shock/directional/south,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "xBS" = (

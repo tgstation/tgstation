@@ -14628,7 +14628,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "fje" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "fjn" = (
@@ -14832,7 +14832,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "flN" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "flQ" = (
@@ -31535,7 +31535,7 @@
 /area/station/engineering/atmos)
 "ldO" = (
 /obj/effect/landmark/blobstart,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -33195,7 +33195,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "lOZ" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "lPa" = (
@@ -36391,8 +36391,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "mVp" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "mVr" = (
@@ -41814,7 +41814,7 @@
 /turf/open/floor/plating/reinforced,
 /area/station/cargo/storage)
 "oOZ" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "oPc" = (
@@ -43906,7 +43906,7 @@
 "pCk" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "pCl" = (
@@ -45508,7 +45508,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "qfL" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "qfM" = (
@@ -50959,9 +50959,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "rYc" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "rYo" = (
@@ -52214,7 +52214,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "sxn" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "sxo" = (
@@ -57706,7 +57706,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "urE" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "urG" = (
@@ -60486,7 +60486,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "vmE" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "vmI" = (
@@ -62239,8 +62239,8 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "vQR" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "vQT" = (

@@ -278,8 +278,11 @@
 	power_gen = 30 KILO JOULES
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 
-/obj/machinery/power/port_gen/pacman/pre_loaded
+/obj/machinery/power/port_gen/pacman/fifteen
 	sheets = 15
 
-/obj/machinery/power/port_gen/pacman/pre_loaded/stacked
+/obj/machinery/power/port_gen/pacman/thirty
 	sheets = 30
+
+/obj/machinery/power/port_gen/pacman/fifty
+	sheets = 50
