@@ -9608,6 +9608,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "drO" = (
@@ -12529,6 +12530,7 @@
 "eqX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "era" = (
@@ -47946,6 +47948,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
+"qLS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "qMd" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/landmark/start/bartender,
@@ -177509,7 +177516,7 @@ uab
 qhG
 awM
 eqX
-bDk
+qLS
 drK
 unH
 sKn
