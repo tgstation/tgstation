@@ -138,7 +138,7 @@
 		/obj/machinery/power/port_gen/pacman = 8,
 		/obj/machinery/power/port_gen/pacman/fifteen = 5,
 		/obj/machinery/power/port_gen/pacman/thirty = 3,
-		/obj/machinery/power/port_gen/pacman/fifty = 1
+		/obj/machinery/power/port_gen/pacman/fifty = 1,
 	)
 
 /obj/effect/spawner/random/engineering/tracking_beacon
