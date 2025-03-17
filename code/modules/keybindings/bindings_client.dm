@@ -95,6 +95,7 @@
 
 	var/movement = movement_keys[_key]
 	if(movement && !movement_locked)
+		forced_intended_direction &= ~movement
 		calculate_move_dir()
 		if(!(next_move_dir_add & movement))
 			next_move_dir_sub |= movement
@@ -109,3 +110,27 @@
 	mob.focus?.key_up(_key, src)
 	mob.update_mouse_pointer()
 
+
+// These two verbs are necessary for processing the input from the windows TGUI
+// We need them for the correct movement handling when player uses TGUI
+/client/verb/keyDownTGUI(_key as text)
+	set instant = TRUE
+	set hidden = TRUE
+
+	var/movement = movement_keys[_key]
+	if(movement)
+		forced_intended_direction |= movement
+		return
+
+	keyUp(_key)
+
+/client/verb/keyUpTGUI(_key as text)
+	set instant = TRUE
+	set hidden = TRUE
+
+	var/movement = movement_keys[_key]
+	if(movement)
+		forced_intended_direction &= ~movement
+		return
+
+	keyDown(_key)

@@ -151,8 +151,13 @@
 	var/next_keysend_trip_reset = 0
 	///When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
+	#if DM_VERSION > 515
+	///custom movement keys for this client
+	var/alist/movement_keys = alist()
+	#else
 	///custom movement keys for this client
 	var/list/movement_keys = list()
+	#endif
 
 	///Autoclick list of two elements, first being the clicked thing, second being the parameters.
 	var/list/atom/selected_target[2]
@@ -233,10 +238,17 @@
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
 
+	#if DM_VERSION > 515
+	/// A buffer of currently held keys.
+	var/alist/keys_held = alist()
+	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
+	var/alist/key_combos_held = alist()
+	#else
 	/// A buffer of currently held keys.
 	var/list/keys_held = list()
 	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
 	var/list/key_combos_held = list()
+	#endif
 
 	/// The direction we WANT to move, based off our keybinds
 	/// It updates by client "move_key_(direction)" verbs and tells us exactly when client wants to move and when they don't
@@ -246,6 +258,8 @@
 	/// It will be combined with intended_direction and used to set the actual direction later on
 	/// We MIGHT be able to do without it, but BYOND does not handle more than 1 +REP command, so alas
 	var/additional_intended_direction = NONE
+	/// And another direction, this one we gets from TGUI windows to replicate +REP macro behaviour (trusting TGUI that it will never get sticky keys)
+	var/forced_intended_direction = NONE
 	/*
 	** These next two vars are to apply movement for keypresses and releases made while move delayed.
 	** Because discarding that input makes the game less responsive.
