@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Certain implants now have visuals when implanted"
+  - bugfix: "You no longer blink when you adjust your clothing"
+  - bugfix: "Fixed an issue where some NPC/midround humans would not get their eye color set correctly"
