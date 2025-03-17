@@ -42,7 +42,7 @@ jobs:
     needs: collect_data
     uses: ./.github/workflows/compile_all_maps.yml
     with:
-      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+      max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
 
   run_all_tests:
@@ -51,7 +51,7 @@ jobs:
     uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
       maps: ${{ needs.collect_data.outputs.maps }}
-      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+      max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
   run_alternate_tests:
     if: needs.collect_data.outputs.alternate_tests != '[]'
@@ -70,7 +70,7 @@ jobs:
 
   test_windows:
     name: Windows Build
-    needs: [collect_data]
+    needs: collect_data
     uses: ./.github/workflows/test_windows.yml
     with:
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
