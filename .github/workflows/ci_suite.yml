@@ -30,22 +30,22 @@ jobs:
   run_linters:
     name: Run Linters
     needs: start_gate
-    uses: ./.github/workflows/ci_suite/linters.yml
+    uses: ./.github/workflows/run_linters.yml
 
   compile_all_maps:
     name: Compile Maps
     needs: collect_data
-    uses: ./.github/workflows/ci_suite/compile_all_maps.yml
+    uses: ./.github/workflows/compile_all_maps.yml
 
   collect_data:
     name: Collect data and setup caches for other tasks
     needs: start_gate
-    uses: ./.github/workflows/ci_suite/collect_data.yml
+    uses: ./.github/workflows/collect_data.yml
 
   run_all_tests:
     name: Integration Tests
     needs: collect_data
-    uses: ./.github/workflows/ci_suite/perform_regular_version_tests.yml
+    uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
       maps: ${{ needs.collect_data.outputs.maps }}
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
@@ -54,7 +54,7 @@ jobs:
     if: needs.collect_data.outputs.alternate_tests != '[]'
     name: Alternate Tests
     needs: collect_data
-    uses: ./.github/workflows/ci_suite/perform_alternate_version_tests.yml
+    uses: ./.github/workflows/perform_alternate_version_tests.yml
     with:
       alternate_tests: ${{ needs.collect_data.outputs.alternate_tests }}
       default_max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
@@ -63,12 +63,12 @@ jobs:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
     needs: [ collect_data, run_all_tests, run_alternate_tests ]
     name: Compare Screenshot Tests
-    uses: ./.github/workflows/ci_suite/compare_screenshots.yml
+    uses: ./.github/workflows/compare_screenshots.yml
 
   test_windows:
     name: Windows Build
     needs: [collect_data]
-    uses: ./.github/workflows/ci_suite/test_windows.yml
+    uses: ./.github/workflows/test_windows.yml
 
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()

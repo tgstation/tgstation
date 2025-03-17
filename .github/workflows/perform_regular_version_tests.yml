@@ -12,7 +12,7 @@ on:
 
 jobs:
   run:
-    uses: ./.github/workflows/ci_suite/run_integration_tests.yml
+    uses: ./.github/workflows/run_integration_tests.yml
 
     strategy:
       fail-fast: false
