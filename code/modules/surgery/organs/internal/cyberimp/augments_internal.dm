@@ -12,7 +12,7 @@
 	/// Does the implant have an emissive overlay too?
 	var/emissive_overlay = FALSE
 	/// Bodypart overlay we're going to apply to whoever we're implanted into
-	var/datum/bodypart_overlay/simple/augment/bodypart_aug = null
+	var/datum/bodypart_overlay/augment/bodypart_aug = null
 
 /obj/item/organ/cyberimp/Initialize(mapload)
 	. = ..()
@@ -42,25 +42,24 @@
 	if (bodypart_aug)
 		limb.remove_bodypart_overlay(bodypart_aug)
 
-/datum/bodypart_overlay/simple/augment
-	icon_state = null
+/datum/bodypart_overlay/augment
 	layers = EXTERNAL_ADJACENT
 	/// Implant that owns this overlay
 	var/obj/item/organ/cyberimp/implant
 
-/datum/bodypart_overlay/simple/augment/New(obj/item/organ/cyberimp/implant)
+/datum/bodypart_overlay/augment/New(obj/item/organ/cyberimp/implant)
 	. = ..()
 	src.implant = implant
 
-/datum/bodypart_overlay/simple/augment/Destroy(force)
+/datum/bodypart_overlay/augment/Destroy(force)
 	implant = null
 	return ..()
 
-/datum/bodypart_overlay/simple/augment/generate_icon_cache()
+/datum/bodypart_overlay/augment/generate_icon_cache()
 	. = ..()
 	. += implant.get_overlay_state()
 
-/datum/bodypart_overlay/simple/augment/get_overlay(layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/augment/get_overlay(layer, obj/item/bodypart/limb)
 	layer = bitflag_to_layer(layer)
 	var/list/imageset = implant.get_overlay(layer, limb)
 	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
