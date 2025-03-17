@@ -9,13 +9,13 @@
 		return FALSE
 
 	// Handle movement dir queued right after last movement
-	user.intended_direction |= user.next_move_dir_add
+	user.intended_direction |= user.next_move_dir_add | user.forced_intended_direction
 	// We didn't recive any input so it's useless to proceed further
 	if(!user.intended_direction)
 		// No input == our removal would have done nothing
 		// So we can safely forget about it
 		user.next_move_dir_sub = NONE
-		return
+		return FALSE
 
 	var/movement_dir = user.intended_direction | user.additional_intended_direction
 	user.intended_direction = NONE
