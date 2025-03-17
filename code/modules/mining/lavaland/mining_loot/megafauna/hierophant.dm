@@ -124,7 +124,7 @@
 	var/turf/user_turf = get_turf(user)
 	teleporting = TRUE
 	user.update_mob_action_buttons()
-	user.visible_message(span_hierophant_warning("[user] starts to glow faintly..."), span_hierophant_warning("You begin channeling [src]'s power..i."))
+	user.visible_message(span_hierophant_warning("[user] starts to glow faintly..."), span_hierophant_warning("You begin channeling [src]'s power..."))
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/user_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(user_turf)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/beacon_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon_turf)

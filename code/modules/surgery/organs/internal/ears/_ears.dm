@@ -141,6 +141,10 @@
 	speech_args[SPEECH_MESSAGE] = message
 	return COMPONENT_UPPERCASE_SPEECH
 
+/obj/item/organ/ears/feel_for_damage(self_aware)
+	// Ear damage has audible effects, so we don't really need to "feel" it when self-examining
+	return ""
+
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
 
@@ -173,7 +177,10 @@
 /datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
 	return SSaccessories.ears_list
 
-/datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
 	return TRUE
