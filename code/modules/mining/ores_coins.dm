@@ -36,8 +36,8 @@
 	else //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-			newore.pixel_x = rand(-8,8)
-			newore.pixel_y = rand(-8,8)
+			newore.pixel_w = rand(-8,8)
+			newore.pixel_z = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
 
 	if(stack_overlays)

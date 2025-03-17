@@ -127,7 +127,7 @@
 		if (!istype(donut))
 			continue
 
-		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_w = donuts * DONUT_INBOX_SPRITE_WIDTH)
 		donuts += 1
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
