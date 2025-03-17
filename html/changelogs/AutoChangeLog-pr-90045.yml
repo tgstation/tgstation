@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Toxins no longer damage your liver if you are immune to toxins anyways."

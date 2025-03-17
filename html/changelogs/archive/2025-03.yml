@@ -447,3 +447,35 @@
   - code_imp: Cleaned up chemical grenade code
   tralezab:
   - balance: The cargo console now has a delay to express orders (renamed to autodelivery)
+2025-03-17:
+  Absolucy:
+  - bugfix: Toxins no longer damage your liver if you are immune to toxins anyways.
+  ArcaneMusic:
+  - bugfix: Stock blocks that have gone liquid should properly recalculate their cost
+      when possible.
+  - bugfix: Spawned sheets of uranium now actually hold 50 sheets.
+  Ben10Omintrix:
+  - bugfix: AI controllers should now be able to react much quicker
+  Hatterhat:
+  - bugfix: The glaive retool kit works again and no longer turns your crusher invisible.
+  Majkl-J:
+  - bugfix: Afro (Huge) layers correctly now
+  - bugfix: Plasmaman helmet hats layer correctly now, as does everything else with
+      the hat stabilizer component
+  - bugfix: Cyborg hats should now layer correctly, among other worn items
+  Melbert:
+  - refactor: Refactored martial arts, if you notice any oddities like managing to
+      know two martial arts at once or having your powers disappear, report it!
+  - rscadd: If you know multiple martial arts, such as krav maga from gloves and cqc
+      from a book, you can now swap between them at will via a button in the IC tab!
+  RandomDudeFromTheRim:
+  - spellcheck: fixed a single typo when using Vortex Recall
+  SmArtKar:
+  - bugfix: You no longer can insert sheets into unpowered, broken or opened autolathes.
+  - qol: Screwdriver/crowbar/multitool interactions on autolathes now work with left
+      click instead of right click.
+  - qol: Autosurgeons now can insert toolkit implants into your left arm when used
+      in the left hand/with left arm zone selected
+  jlsnow301:
+  - bugfix: A number of UIs with spacing issues - such as genetics scanner and circuit
+      boards - have been fixed. Report issues!
