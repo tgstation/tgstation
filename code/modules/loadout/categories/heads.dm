@@ -8,13 +8,19 @@
 /datum/loadout_item/head
 	abstract_type = /datum/loadout_item/head
 
-/datum/loadout_item/head/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
+/datum/loadout_item/head/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK) // DOPPLER EDIT CHANGE - Original: /datum/loadout_item/head/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	if(equipper.dna?.species?.outfit_important_for_life)
 		if(!visuals_only)
 			to_chat(equipper, "Your loadout helmet was not equipped directly due to your species outfit.")
 			LAZYADD(outfit.backpack_contents, item_path)
 	else
-		outfit.head = item_path
+		if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only) //DOPPLER EDIT START- Original: outfit.head = item_path
+			if(outfit.head)
+				LAZYADD(outfit.backpack_contents, outfit.head)
+			outfit.head = item_path
+		else
+			outfit.head = item_path
+		// DOPPLER EDIT END
 
 /datum/loadout_item/head/beanie
 	name = "Beanie (Colorable)"

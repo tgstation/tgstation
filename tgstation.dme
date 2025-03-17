@@ -7317,6 +7317,8 @@
 #include "modular_doppler\pixel_shift\code\pixel_shift_component.dm"
 #include "modular_doppler\pixel_shift\code\pixel_shift_keybind.dm"
 #include "modular_doppler\pixel_shift\code\pixel_shift_mob.dm"
+#include "modular_doppler\place_all_in_case\briefcase.dm"
+#include "modular_doppler\place_all_in_case\preferences.dm"
 #include "modular_doppler\reagent_forging\code\anvil.dm"
 #include "modular_doppler\reagent_forging\code\centrifuge.dm"
 #include "modular_doppler\reagent_forging\code\crafting_bench.dm"

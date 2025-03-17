@@ -16,6 +16,7 @@
 	datum/preferences/preference_source,
 	visuals_only = FALSE,
 )
+	set waitfor = FALSE // DOPPLER ADDITION: the nuclear option: this should stop the linter fucking whining?
 	if(isnull(preference_source))
 		return equipOutfit(outfit, visuals_only)
 
@@ -27,16 +28,40 @@
 	else
 		CRASH("Invalid outfit passed to equip_outfit_and_loadout ([outfit])")
 
+	var/override_preference = preference_source.read_preference(/datum/preference/choiced/loadout_override_preference) // DOPPLER ADDITION: loadout preferences
+
 	var/list/preference_list = preference_source.read_preference(/datum/preference/loadout)
 	var/list/loadout_datums = loadout_list_to_datums(preference_list)
+	/* DOPPLER EDIT START - Original:
 	// Slap our things into the outfit given
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		item.insert_path_into_outfit(equipped_outfit, src, visuals_only)
 	// Equip the outfit loadout items included
 	if(!equipped_outfit.equip(src, visuals_only))
 		return FALSE
+	*/
+	var/obj/item/storage/briefcase/empty/briefcase
+	var/list/new_contents
+	if (!isnull(override_preference) && override_preference == LOADOUT_OVERRIDE_CASE && !visuals_only)
+		briefcase = new(loc)
+		for(var/datum/loadout_item/item as anything in loadout_datums)
+			new item.item_path(briefcase)
+
+		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
+		equipOutfit(equipped_outfit, visuals_only)
+		put_in_hands(briefcase)
+		new_contents = briefcase.get_all_contents()
+	else
+		// Slap our things into the outfit given
+		for(var/datum/loadout_item/item as anything in loadout_datums)
+			item.insert_path_into_outfit(equipped_outfit, src, visuals_only, override_preference)
+		// Equip the outfit loadout items included
+		if(!equipped_outfit.equip(src, visuals_only))
+			return FALSE
+		new_contents = get_all_gear()
+
 	// Handle any snowflake on_equips
-	var/list/new_contents = get_all_gear()
+	// DOPPLER EDIT END
 	var/update = NONE
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		var/obj/item/equipped = locate(item.item_path) in new_contents
