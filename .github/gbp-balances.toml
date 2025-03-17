@@ -186,7 +186,7 @@
 8010151 = 4 # Togopalis
 8052896 = 0 # Lorwp
 8107459 = 5 # PJB3005
-8171642 = 884 # Cyberboss
+8171642 = 885 # Cyberboss
 8175582 = 5 # Hanador
 8294011 = 20 # Urumasi
 8324695 = 7 # FluffySensation
@@ -350,7 +350,7 @@
 20053168 = 15 # xPokee
 20099363 = 3 # Nimowa
 20109643 = 3 # dj-34
-20155238 = 3 # EmptyLullaby
+20155238 = -2 # EmptyLullaby
 20369082 = 23 # redmoogle
 20376599 = 11 # nero1024
 20523270 = 6 # Runa-Dacino
@@ -502,7 +502,7 @@
 31424899 = 3 # FelixRuin
 31657169 = 13 # JoshAdamPowell
 31713423 = 5 # Kerbin-Fiber
-31829017 = 35 # Hatterhat
+31829017 = 38 # Hatterhat
 31856346 = -6 # Sebbe9123
 31931237 = 51 # larentoun
 31995558 = 4 # Michiyamenotehifunana
@@ -683,7 +683,7 @@
 44510065 = 10 # k-k-karma
 44647111 = 6 # Boopideedoo
 44654353 = 6 # malton33
-44720187 = 1487 # SmArtKar
+44720187 = 1488 # SmArtKar
 44807268 = 4 # MadoFrog
 44811257 = 49 # Shadow-Quill
 44842426 = 1 # Swiftkor
@@ -1265,6 +1265,7 @@
 154214742 = -5 # Ormebia
 154919526 = -6 # munchyi
 155187285 = 6 # 0-ERRORNAME-0
+155616889 = 6 # TheBibleMelts
 159744229 = 6 # memecraft22
 160051896 = 6 # EnnyDaiz
 160211100 = 6 # Roastglue
