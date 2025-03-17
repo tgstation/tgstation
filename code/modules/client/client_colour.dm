@@ -90,6 +90,7 @@
 		var/list/filter_color = null
 		if (islist(client_color.color))
 			filter_color = client_color.color
+			// If our list has "type" in it then its a filter
 			if (!filter_color["type"])
 				filter_color = null
 
@@ -135,7 +136,7 @@
 	color_filter_store.Cut()
 	var/list/applied_filters = get_client_colour_filters()
 
-	for (var/list/color_filter in applied_filters)
+	for (var/list/color_filter as anything in applied_filters)
 		var/added_color = color_filter[CLIENT_COLOR_VALUE_INDEX]
 		var/filter_priority = color_filter[CLIENT_COLOR_PRIORITY_INDEX]
 		for (var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
@@ -158,7 +159,7 @@
 	color_filter_store.Cut()
 	var/list/applied_filters = get_client_colour_filters()
 
-	for (var/list/color_filter in applied_filters)
+	for (var/list/color_filter as anything in applied_filters)
 		var/added_color = color_filter[CLIENT_COLOR_VALUE_INDEX]
 		var/filter_priority = color_filter[CLIENT_COLOR_PRIORITY_INDEX]
 		for (var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
@@ -193,8 +194,8 @@
 	color = COLOR_MATRIX_GRAYSCALE
 	priority = CLIENT_COLOR_FILTER_PRIORITY
 	split_filters = TRUE
-	fade_in = 20
-	fade_out = 20
+	fade_in = 2 SECONDS
+	fade_out = 2 SECONDS
 
 /datum/client_colour/monochrome/glasses
 	priority = CLIENT_COLOR_GLASSES_PRIORITY
@@ -202,7 +203,7 @@
 /datum/client_colour/bloodlust
 	priority = CLIENT_COLOR_IMPORTANT_PRIORITY
 	color = list(0,0,0,0,0,0,0,0,0,1,0,0) // pure red
-	fade_out = 10
+	fade_out = 1 SECONDS
 
 /datum/client_colour/bloodlust/New(mob/owner)
 	..()

@@ -7,6 +7,7 @@
 		colour = new colour
 		if (islist(colour.color))
 			var/list/potential_filter = colour.color
+			// If our list has "type" in it then its a filter, ignore that
 			if (potential_filter["type"])
 				continue
 
