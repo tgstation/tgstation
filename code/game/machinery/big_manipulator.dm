@@ -489,7 +489,7 @@
 		check_end_of_use_for_use_with_empty_hand()
 		return
 	/// We don't do unarmed attack on item because we will take it so we just attack self it like if we wanna to on/off table lamp.
-	if(istype(type_to_use, /obj/item))
+	if(isitem(type_to_use))
 		var/obj/item/interact_with_item = type_to_use
 		var/resolve_loc = interact_with_item.loc
 		monkey_resolve.put_in_active_hand(interact_with_item)
@@ -502,10 +502,7 @@
 	check_end_of_use_for_use_with_empty_hand()
 
 /obj/machinery/big_manipulator/proc/check_end_of_use_for_use_with_empty_hand(obj/item/my_item, item_was_used)
-	if(!use_with_empty_hand && manipulate_mode == USE_ITEM_MODE)
-		finish_manipulation()
-		return
-	if(!on)
+	if(!on || (!use_with_empty_hand && manipulate_mode == USE_ITEM_MODE))
 		finish_manipulation()
 		return
 	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), my_item), working_speed)
