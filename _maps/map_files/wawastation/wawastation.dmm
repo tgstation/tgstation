@@ -7051,6 +7051,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"czw" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "czC" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/button/door/directional/east{
@@ -110446,7 +110455,7 @@ jJp
 kBN
 oAc
 moU
-oAc
+czw
 eaX
 xfi
 mjf
