@@ -574,7 +574,7 @@
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
-	owner.add_client_colour(/datum/client_colour/monochrome/trance)
+	owner.add_client_colour(/datum/client_colour/monochrome, REF(src))
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
 	span_warning(pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")))
 	return TRUE
@@ -588,7 +588,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_status_effect(/datum/status_effect/dizziness)
-	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
+	owner.remove_client_colour(REF(src))
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
 /datum/status_effect/trance/get_examine_text()

@@ -6,6 +6,8 @@
 	var/datum/client_colour/colour_type
 	///The slot(s) that enable the client colour
 	var/equip_slots = NONE
+	///Source for the client colour
+	var/colour_source
 	///For items that want costumizable client colours
 	var/custom_colour
 	///if forced is false, we check that the user has the TRAIT_SEE_WORN_COLOURS before adding the colour.
@@ -13,7 +15,7 @@
 	///On examine, it'll tell which you have to press to toggle TRAIT_SEE_WORN_COLOURS.
 	var/key_info = "Figure it out yourself how"
 
-/datum/element/wearable_client_colour/Attach(obj/item/target, colour_type, equip_slots, custom_colour, forced = FALSE, comsig_toggle = COMSIG_CLICK_ALT)
+/datum/element/wearable_client_colour/Attach(obj/item/target, colour_type, equip_slots, colour_source, custom_colour, forced = FALSE, comsig_toggle = COMSIG_CLICK_ALT)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -23,6 +25,7 @@
 
 	src.colour_type = colour_type
 	src.equip_slots = equip_slots
+	src.colour_source = colour_source
 	src.custom_colour = custom_colour
 	src.forced = forced
 
@@ -90,19 +93,19 @@
 	var/datum/client_colour/colour_to_add = colour_type
 	if(custom_colour)
 		colour_to_add = new colour_to_add
-		colour_to_add.colour = custom_colour
-	equipper.add_client_colour(colour_to_add)
+		colour_to_add.color = custom_colour
+	equipper.add_client_colour(colour_to_add, colour_source)
 
 /datum/element/wearable_client_colour/proc/on_trait_removed(mob/source, trait)
 	SIGNAL_HANDLER
-	source.remove_client_colour(colour_type)
+	source.remove_client_colour(colour_source)
 
 /datum/element/wearable_client_colour/proc/remove_client_colour(mob/dropper)
 	if(!forced)
 		UnregisterSignal(dropper, list(SIGNAL_ADDTRAIT(TRAIT_SEE_WORN_COLOURS), SIGNAL_REMOVETRAIT(TRAIT_SEE_WORN_COLOURS)))
 		if(!HAS_TRAIT(dropper, TRAIT_SEE_WORN_COLOURS))
 			return
-	dropper.remove_client_colour(colour_type)
+	dropper.remove_client_colour(colour_source)
 
 /datum/element/wearable_client_colour/proc/toggle_see_worn_colors(obj/item/source, mob/clicker)
 	SIGNAL_HANDLER
