@@ -992,11 +992,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.key_bindings)
 		return
-	#if DM_VERSION > 515
-		movement_keys = alist()
-	#else
-		movement_keys = list()
-	#endif
+#if DM_VERSION > 515
+	movement_keys = alist()
+#else
+	movement_keys = list()
+#endif
 	for(var/kb_name in D.key_bindings)
 		for(var/key in D.key_bindings[kb_name])
 			switch(kb_name)
