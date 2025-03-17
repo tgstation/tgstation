@@ -32,15 +32,18 @@ jobs:
     needs: start_gate
     uses: ./.github/workflows/run_linters.yml
 
-  compile_all_maps:
-    name: Compile Maps
-    needs: collect_data
-    uses: ./.github/workflows/compile_all_maps.yml
-
   collect_data:
     name: Collect data and setup caches for other tasks
     needs: start_gate
     uses: ./.github/workflows/collect_data.yml
+
+  compile_all_maps:
+    name: Compile Maps
+    needs: collect_data
+    uses: ./.github/workflows/compile_all_maps.yml
+    with:
+      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+
 
   run_all_tests:
     name: Integration Tests
@@ -69,6 +72,8 @@ jobs:
     name: Windows Build
     needs: [collect_data]
     uses: ./.github/workflows/test_windows.yml
+    with:
+      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()

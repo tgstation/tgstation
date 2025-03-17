@@ -2,6 +2,10 @@ name: Test Windows
 
 on:
   workflow_call:
+    inputs:
+      max_required_byond_client:
+        required: true
+        type: string
 
 jobs:
   test_windows:
@@ -22,4 +26,4 @@ jobs:
         uses: tgstation/byond-client-compatibility-check@v3
         with:
           dmb-location: tgstation.dmb
-          max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
+          max-required-client-version: ${{inputs.max_required_byond_client}}
