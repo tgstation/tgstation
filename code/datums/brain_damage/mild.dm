@@ -280,11 +280,11 @@
 	lose_text = span_notice("The world feels bright and colorful again.")
 
 /datum/brain_trauma/mild/color_blindness/on_gain()
-	owner.add_client_colour(/datum/client_colour/monochrome/colorblind)
+	owner.add_client_colour(/datum/client_colour/monochrome, TRAUMA_TRAIT)
 	return ..()
 
 /datum/brain_trauma/mild/color_blindness/on_lose(silent)
-	owner.remove_client_colour(/datum/client_colour/monochrome/colorblind)
+	owner.remove_client_colour(TRAUMA_TRAIT)
 	return ..()
 
 /datum/brain_trauma/mild/possessive

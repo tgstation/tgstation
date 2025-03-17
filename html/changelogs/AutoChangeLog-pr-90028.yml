@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - spellcheck: "Fixes a missing space in battle rifle's examine text"

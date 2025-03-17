@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed perceptomatix helmet allowing you to see even when unconscious"
+  - refactor: "Refactored how client colors are handled, ensuring that certain effects like nightmare goggles don't disappear when another vision-affecting piece of clothing is worn."

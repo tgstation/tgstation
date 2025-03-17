@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - admin: "Adds \"Dustself\""
+  - admin: "Adds \"Dust\" smite. Does what it says on the tin"
+  - admin: "Adds \"Divine\" smites. They are variations of normal smites themed around divine intervention."
