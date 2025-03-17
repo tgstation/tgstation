@@ -159,7 +159,7 @@
 	target.apply_status_effect(/datum/status_effect/crusher_damage)
 	return ..()
 
-/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, clicklist/modifiers)
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, list/modifiers)
 	if(!isliving(target))
 		return
 	// Melee effect
