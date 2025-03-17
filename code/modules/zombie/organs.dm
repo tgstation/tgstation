@@ -23,6 +23,10 @@
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
+/obj/item/organ/zombie_infection/feel_for_damage(self_aware)
+	// keep stealthy for now, revisit later
+	return ""
+
 /obj/item/organ/zombie_infection/on_mob_insert(mob/living/carbon/new_owner, special = FALSE, movement_flags)
 	. = ..()
 	RegisterSignal(new_owner, COMSIG_LIVING_DEATH, PROC_REF(organ_owner_died))

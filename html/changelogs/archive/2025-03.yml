@@ -335,3 +335,147 @@
   itsmeow:
   - bugfix: Fixed TGUI assets and icons sometimes not showing up until you refreshed
       the page on 516 clients
+2025-03-14:
+  ArcaneMusic:
+  - bugfix: To prevent infinite sales issues, security helmets, armors, and batons
+      packs now all cost 600 credits, up from 400.
+  - bugfix: Candle packs now cost 400 credits, up from 300, and candles now sell for
+      12.25 cr each.
+  ArrisFairburne:
+  - qol: Added a widget to the main menu of the modular computer screen, which will
+      tell the user what the current alert level is and if they are needed to fix
+      the problem.
+  Ben10Omintrix:
+  - rscadd: tweaks the raptor taming minigame to be fairer
+  - rscadd: the taming minigame's difficulty now relies on the raptor's personality
+      as well as the rider's quirks
+  DATA-xPUNGED:
+  - rscadd: 'Added a new smite: Retcon'
+  - refactor: Refactored the component temporary_atom into an atom level fade_into_nothing
+      proc
+  Ghommie:
+  - rscadd: You can now craft multi-dimensional payloads with dimensional anomalies.
+  - qol: Food types are now passed down when cooking from recipes. For example, a
+      plate of corned "beef" made from giant killer tomato slabs no longer counts
+      as meat but only vegetables now.
+  - bugfix: Fixed a metric ton of inconsistencies with food types and recipes.
+  - bugfix: Dank-pockets (the weed variant) can now be microwaved.
+  Hatterhat:
+  - bugfix: Burst-firing weapons now respect their fire delay, in the event that their
+      fire delay is longer than click cooldown. If your local burst-fire weapon starts
+      to feel weird because of this, please submit an issue report.
+  Maximal08:
+  - qol: Now you can turn the conveyor belt counterclockwise using the right mouse
+      button with the wrench in your hand.
+  Melbert:
+  - qol: Wallet loadout item comes pre-equipped
+  - qol: Lipstick loadout item comes pre-applied
+  - qol: You can choose your lipstick color from any color now. You can also choose
+      what layer it defaults to.
+  - rscadd: If you exhale a cloud of smoke from a cigarette while face to face with
+      someone, you'll blow it right in their face.
+  - rscadd: Syndicate Cigarettes will blind (for a very short time) if you blow their
+      smoke in someone's face.
+  - balance: Syndicate bombs get harder to defuse the longer its timer is set, up
+      to 9 minutes.
+  - bugfix: Training bombs won't message admins when they're "detonated" or defused.
+  SmArtKar:
+  - bugfix: Fixed animated circuit tiles missing CS:S when powered off
+  - rscadd: Instead of dissolving instantly, pills now activate after 4 seconds. This
+      timer can be increased by using a dropper filled with sugar on them, 1s added
+      per 1u dropped.
+  - rscadd: Patches now stick to you and slowly bleed their reagents, instead of being
+      strictly inferior to both pills and sprays.
+  - rscadd: Items that you accidentally swallow now go into your stomach contents.
+  - refactor: Patches are no longer considered pills by the game
+  - refactor: All stomachs now have contents, instead of it being exclusive to aliens.
+      You can cut open a stomach to empty it with a scalpel, and mend an existing
+      incision with a cautery.
+  Twaticus:
+  - bugfix: the station may appear dusty again!
+  Y0SH1M4S73R:
+  - rscadd: The station blueprints can be used to toggle whether custom shuttles can
+      be built/expanded/docked within station areas.
+  - qol: Custom areas do not have to be completely contained within shuttle frames,
+      as long as the APC isn't attached to the frame.
+  - rscadd: Custom shuttles with functioning engines will fly off into the sunset
+      when the emergency shuttle leaves.
+  - rscadd: Custom shuttle navigation computers can view space levels adjacent to
+      the one the shuttle is currently docked at.
+  - bugfix: Constructed shuttle engines no longer contribute twice as much engine
+      power to shuttles, nor can they be used to add unlimited shuttle power.
+  - bugfix: Constructed shuttle engines now connect to shuttles when build, rather
+      than needing to be unachored and then reanchored.
+2025-03-15:
+  ArcaneMusic:
+  - balance: Sheets of material and stock blocks are now subject to elastic price
+      changes. AKA, if you sell materials, their price will go down after sale and
+      will return after some time.
+  - bugfix: Stock blocks can no longer be made with no value or with a quantity of
+      zero material.
+  - bugfix: The GMM Machine can now no longer create stock blocks when unpowered.
+  - qol: The GMM machine now lights up when powered.
+  Holoo-1:
+  - bugfix: fixed white space when observing in auto observe mode
+  Melbert:
+  - bugfix: Plaslamen can see prefs again
+  SmArtKar:
+  - bugfix: Fixed basic mobs not idling due to nearby ghosts
+  hry-gh:
+  - bugfix: icons generate properly for janicarts
+2025-03-16:
+  AyIong:
+  - bugfix: Antagonists tab in preferences, scrollable in Byond 516 now
+  - bugfix: Fixed TGUI text inputs, that's allows only 1 symbol instead infinity
+  Melbert:
+  - rscadd: Your mood printout (clicking on the mood face) has been reformatted, and
+      should generally be cleaner.
+  - rscadd: Self examining was reworked, and overall gives you a lot less perfect
+      information, unless you are self-aware.
+  - rscadd: Bullet and grenade shrapnel is now hidden from examining - it's skin deep.
+      You can't rip them out with your hands, but hemostats / wirecutters still suffice
+      if you know they're there. Health analyzers still pick them up too.
+  - qol: Ghosts aren't notified about NPCs getting appendicitis
+  Mothblocks:
+  - rscadd: You can now craft radio jammers.
+  - balance: Radio jammers have had their cost lowered from 5 TC to 1 TC.
+  SmArtKar:
+  - bugfix: You can no longer insert infinite amounts of slime cores into advanced
+      chem grenades
+  - bugfix: Non-beaker containers in grenades work once more
+  - bugfix: Proximity sensors in grenade finally work after like, 4 years.
+  - code_imp: Cleaned up chemical grenade code
+  tralezab:
+  - balance: The cargo console now has a delay to express orders (renamed to autodelivery)
+2025-03-17:
+  Absolucy:
+  - bugfix: Toxins no longer damage your liver if you are immune to toxins anyways.
+  ArcaneMusic:
+  - bugfix: Stock blocks that have gone liquid should properly recalculate their cost
+      when possible.
+  - bugfix: Spawned sheets of uranium now actually hold 50 sheets.
+  Ben10Omintrix:
+  - bugfix: AI controllers should now be able to react much quicker
+  Hatterhat:
+  - bugfix: The glaive retool kit works again and no longer turns your crusher invisible.
+  Majkl-J:
+  - bugfix: Afro (Huge) layers correctly now
+  - bugfix: Plasmaman helmet hats layer correctly now, as does everything else with
+      the hat stabilizer component
+  - bugfix: Cyborg hats should now layer correctly, among other worn items
+  Melbert:
+  - refactor: Refactored martial arts, if you notice any oddities like managing to
+      know two martial arts at once or having your powers disappear, report it!
+  - rscadd: If you know multiple martial arts, such as krav maga from gloves and cqc
+      from a book, you can now swap between them at will via a button in the IC tab!
+  RandomDudeFromTheRim:
+  - spellcheck: fixed a single typo when using Vortex Recall
+  SmArtKar:
+  - bugfix: You no longer can insert sheets into unpowered, broken or opened autolathes.
+  - qol: Screwdriver/crowbar/multitool interactions on autolathes now work with left
+      click instead of right click.
+  - qol: Autosurgeons now can insert toolkit implants into your left arm when used
+      in the left hand/with left arm zone selected
+  jlsnow301:
+  - bugfix: A number of UIs with spacing issues - such as genetics scanner and circuit
+      boards - have been fixed. Report issues!

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Mobs that pry open doors (regal rats, space dragons, strong arms) now deal damage to the doors, similar to how jaws of life damage the doors"
