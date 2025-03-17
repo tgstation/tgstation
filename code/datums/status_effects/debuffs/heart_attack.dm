@@ -121,7 +121,9 @@
 
 /datum/status_effect/heart_attack/get_examine_text()
 	if(time_until_stoppage <= ATTACK_STAGE_THREE)
-		return span_warning("[owner.p_they()] looks to be doubling over, clutching [owner.p_their()] chest in pain!")
+		var/mob/living/carbon/human/human_owner = owner
+		var/cannot_grasp = (human_owner.usable_hands <= 0 || owner.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
+		return span_warning("[owner.p_they()] looks to be doubling over" + "[cannot_grasp ? " in pain!" : ", clutching [owner.p_their()] chest in pain!"]")
 
 /datum/status_effect/heart_attack/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_HIGH, type)
