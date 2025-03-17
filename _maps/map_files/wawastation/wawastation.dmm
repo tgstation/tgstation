@@ -19343,7 +19343,7 @@
 	dir = 5
 	},
 /turf/open/space/openspace,
-/area/space)
+/area/space/nearstation)
 "gLp" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -35577,10 +35577,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
-"mqV" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/openspace,
-/area/space)
 "mra" = (
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_y = 24
@@ -67394,7 +67390,7 @@
 	dir = 6
 	},
 /turf/open/space/openspace,
-/area/space)
+/area/space/nearstation)
 "xsj" = (
 /obj/machinery/netpod,
 /obj/structure/cable,
@@ -181125,7 +181121,7 @@ vxX
 vxX
 hhX
 gKU
-mqV
+mxt
 xsf
 hhX
 vxX
@@ -181382,7 +181378,7 @@ fYe
 vxX
 vxX
 hhX
-mqV
+mxt
 hhX
 hhX
 vxX
@@ -181639,7 +181635,7 @@ uVI
 mUQ
 hhX
 hhX
-mqV
+mxt
 hhX
 hhX
 vxX
