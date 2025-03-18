@@ -53,7 +53,7 @@
 		return
 	var/mutable_appearance/appearance = new()
 	appearance.copy_overlays(victim)
-	appearance.pixel_y = 12
+	appearance.pixel_z = 12
 	appearance.layer = layer + 0.1
 	. += appearance
 
