@@ -119,6 +119,7 @@
 		part_datum.part_item = mod_part
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
 		parts += mod_part
+
 	for(var/obj/item/part as anything in parts)
 		part.name = "[name] [part.name]"
 		part.desc = "[part.desc] [desc]"
@@ -130,6 +131,7 @@
 		part.max_heat_protection_temperature = max_heat_protection_temperature
 		part.min_cold_protection_temperature = min_cold_protection_temperature
 		part.siemens_coefficient = siemens_coefficient
+
 	set_skin(mod, skin || default_skin)
 
 /datum/mod_theme/proc/set_skin(obj/item/mod/control/mod, skin)
