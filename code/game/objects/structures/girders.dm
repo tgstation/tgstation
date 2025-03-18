@@ -363,14 +363,14 @@
 		if(!isfloorturf(loc))
 			balloon_alert(user, "нужен пол!")
 
-		balloon_alert(user, "крепежная рама...")
+		balloon_alert(user, "прикрепление рамы...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
 			qdel(src)
 		return TRUE
 	else if(state == GIRDER_NORMAL && can_displace)
-		balloon_alert(user, "незащищенная рама...")
+		balloon_alert(user, "открепление рамы...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			var/obj/structure/girder/displaced/D = new (loc)
 			transfer_fingerprints_to(D)
