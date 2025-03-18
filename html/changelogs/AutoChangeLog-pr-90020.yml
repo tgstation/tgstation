@@ -1,6 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Afro (Huge) layers correctly now"
-  - bugfix: "Plasmaman helmet hats layer correctly now, as does everything else with the hat stabilizer component"
-  - bugfix: "Cyborg hats should now layer correctly, among other worn items"
