@@ -18,6 +18,7 @@
 		/area/shuttle/transit,
 		// Space Ruins do their own thing (dilapidated lattices over space turfs, for instance). Rather than fuss over it, let's just let it through.
 		/area/ruin/space,
+		/area/ruin/unpowered/no_grav,
 		// Same stipulation as space ruins, but they're (ruined) shuttles instead.
 		/area/shuttle/ruin,
 		/area/shuttle/abandoned,

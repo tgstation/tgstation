@@ -165,7 +165,18 @@
 #define COMSIG_CARBON_LIMPING "mob_limp_check"
 	#define COMPONENT_CANCEL_LIMP (1<<0)
 
+/// from /obj/item/toy/crayon/spraycan/use_on(target, user, modifiers): (atom/target, mob/user)
+#define COMSIG_CARBON_SPRAYPAINTED "comsig_carbon_spraypainted"
+	#define COMPONENT_CANCEL_SPRAYPAINT (1<<0)
+
 ///Called from on_acquiring(mob/living/carbon/human/acquirer)
 #define COMSIG_MUTATION_GAINED "mutation_gained"
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
+
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+#define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
+
+/// Called at the very end of human character setup
+/// At this point all quirks are assigned and the mob has a mind / client
+#define COMSIG_HUMAN_CHARACTER_SETUP_FINISHED "human_character_setup_finished"

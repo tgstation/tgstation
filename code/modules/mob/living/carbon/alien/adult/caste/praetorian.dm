@@ -18,6 +18,7 @@
 		ORGAN_SLOT_XENO_RESINSPINNER = /obj/item/organ/alien/resinspinner,
 		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
 		ORGAN_SLOT_XENO_NEUROTOXINGLAND = /obj/item/organ/alien/neurotoxin,
+		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno,
 	)
 
 /mob/living/carbon/alien/adult/royal/praetorian/Initialize(mapload)

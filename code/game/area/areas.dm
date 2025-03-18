@@ -124,6 +124,9 @@
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
+	/// Are shuttles allowed to dock in this area
+	var/allow_shuttle_docking = FALSE
+
 /**
  * A list of teleport locations
  *
@@ -355,6 +358,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//just for sanity sake cause why not
 	if(!isnull(GLOB.areas))
 		GLOB.areas -= src
+	if(!isnull(GLOB.custom_areas))
+		GLOB.custom_areas -= src
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)

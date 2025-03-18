@@ -292,6 +292,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 /datum/fishing_challenge/proc/no_longer_fishing(datum/source)
 	SIGNAL_HANDLER
+	if(completed) //we already won/lost
+		return
 	user.balloon_alert(user, "interrupted!")
 	interrupt()
 
@@ -350,6 +352,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	completed = TRUE
 	if(phase == MINIGAME_PHASE)
 		remove_minigame_hud()
+
 	if(!QDELETED(user) && user.mind && start_time && !(special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		var/seconds_spent = (world.time - start_time) * 0.1
 		var/extra_exp_malus = user.mind.get_skill_level(/datum/skill/fishing) - difficulty * 0.1
@@ -359,16 +362,32 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		user.mind.adjust_experience(/datum/skill/fishing, round(seconds_spent * FISHING_SKILL_EXP_PER_SECOND * experience_multiplier))
 		if(user.mind.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
 			user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
-	if(win)
-		if(reward_path != FISHING_DUD)
-			playsound(location, 'sound/effects/bigsplash.ogg', 100)
-		if(ispath(reward_path, /obj/item/fish) || isfish(reward_path))
-			var/obj/item/fish/fish_reward = reward_path
-			var/obj/item/fish/redirect_path = initial(fish_reward.fish_id_redirect_path)
-			var/fish_id = ispath(redirect_path, /obj/item/fish) ? initial(redirect_path.fish_id) : initial(fish_reward.fish_id)
-			if(fish_id)
-				user.client?.give_award(/datum/award/score/progress/fish, user, fish_id)
-	SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, win)
+
+	if(!win)
+		SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, FALSE)
+		if(!QDELETED(src))
+			qdel(src)
+		return
+
+	if(reward_path != FISHING_DUD)
+		playsound(location, 'sound/effects/bigsplash.ogg', 100)
+
+	var/valid_achievement_catch = FALSE
+	if (ispath(reward_path, /obj/item/fish))
+		valid_achievement_catch = TRUE
+	else if (isfish(reward_path))
+		var/obj/item/fish/fishy_individual = reward_path
+		if (!HAS_TRAIT(fishy_individual, TRAIT_NO_FISHING_ACHIEVEMENT) && fishy_individual.status == FISH_ALIVE)
+			valid_achievement_catch = TRUE
+
+	if(valid_achievement_catch)
+		var/obj/item/fish/fish_reward = reward_path
+		var/obj/item/fish/redirect_path = initial(fish_reward.fish_id_redirect_path)
+		var/fish_id = ispath(redirect_path, /obj/item/fish) ? initial(redirect_path.fish_id) : initial(fish_reward.fish_id)
+		if(fish_id)
+			user.client?.give_award(/datum/award/score/progress/fish, user, fish_id)
+
+	SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, TRUE)
 	if(!QDELETED(src))
 		qdel(src)
 
@@ -876,6 +895,14 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		RegisterSignal(spot, COMSIG_MOVABLE_MOVED, PROC_REF(follow_movable))
 	SET_BASE_PIXEL(spot.pixel_x, spot.pixel_y)
 	SET_BASE_VISUAL_PIXEL(spot.pixel_w, spot.pixel_z)
+	// early return for spots with a plane lower than this. the floor plane is topdown and we don't want to inherit their layers.
+	if(spot.plane < plane)
+		return
+	if(spot.plane > plane) //We want this to render above the fishing spot.
+		var/turf/turf = get_turf(spot)
+		SET_PLANE_EXPLICIT(src, PLANE_TO_TRUE(spot.plane), turf)
+	if(spot.layer > layer) //Ditto. New stuff renders above old stuff if the layer is the same iirc (with some caveats).
+		layer = spot.layer
 
 /obj/effect/fishing_float/proc/follow_movable(atom/movable/source)
 	SIGNAL_HANDLER

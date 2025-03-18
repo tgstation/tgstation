@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	var/message_a = say_quote(message)
 	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
-	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src)
+	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src, MESSAGE_TYPE_RADIO)
 
 /mob/eye/blob/blob_act(obj/structure/blob/B)
 	return

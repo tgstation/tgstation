@@ -228,3 +228,4 @@ sound/items/weapons/cain_and_abel/dagger_slash_1 to dagger_slash_6 -- https://pi
 sound/items/weapons/crystal_dagger_sound.ogg -- https://pixabay.com/sound-effects/breaking-glass-with-feet-45176/ freesound community
 
 'sound/items/weapons/effects/blood_wisp_explode.ogg' -- https://pixabay.com/sound-effects/fire-sound-effects-224089/ by Alice-soundz
+sound/effect/plasticflaps.ogg -- door_plastic_tapes.wav by estupe -- https://freesound.org/s/186357/ -- License: Creative Commons 0

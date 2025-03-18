@@ -200,7 +200,7 @@
 	spawn_loot_count = 1
 	loot = list(	// random photos would go here. IF I HAD ONE. :'(
 		/obj/item/lipstick/random,
-		/obj/item/reagent_containers/pill/maintenance,
+		/obj/item/reagent_containers/applicator/pill/maintenance,
 		/obj/effect/spawner/random/food_or_drink/seed,
 		/obj/effect/spawner/random/medical/minor_healing,
 		/obj/effect/spawner/random/medical/injector,
@@ -249,6 +249,7 @@
 		/obj/item/toy/plush/lizard_plushie,
 		/obj/item/toy/plush/snakeplushie,
 		/obj/item/toy/plush/plasmamanplushie,
+		/obj/item/toy/plush/human,
 		/obj/item/toy/plush/beeplushie,
 		/obj/item/toy/plush/moth,
 		/obj/item/toy/plush/pkplush,
@@ -266,6 +267,7 @@
 		/obj/item/toy/plush/beeplushie = 5,
 		/obj/item/toy/plush/moth = 5,
 		/obj/item/toy/plush/pkplush = 5,
+		/obj/item/toy/plush/human = 5,
 		// rare plushies
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,

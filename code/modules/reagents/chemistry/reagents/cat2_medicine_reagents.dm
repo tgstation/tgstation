@@ -45,7 +45,7 @@
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
-	if(good_kind_of_healing && !reaping && SPT_PROB(0.00005, seconds_per_tick)) //janken with the grim reaper!
+	if(good_kind_of_healing && !reaping && SPT_PROB(0.005, seconds_per_tick)) //janken with the grim reaper!
 		notify_ghosts(
 			"[affected_mob] has entered a game of rock-paper-scissors with death!",
 			source = affected_mob,

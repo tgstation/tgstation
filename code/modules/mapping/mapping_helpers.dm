@@ -130,6 +130,8 @@
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
 	late = TRUE
+	/// If TRUE we will apply to every windoor in the loc if we can't find an airlock.
+	var/apply_to_windoors = FALSE
 
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
@@ -139,9 +141,19 @@
 
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
+		if(apply_to_windoors)
+			var/any_found = FALSE
+			for(var/obj/machinery/door/window/windoor in loc)
+				payload(windoor)
+				any_found = TRUE
+			if(!any_found)
+				log_mapping("[src] failed to find an airlock at [AREACOORD(src)], AND no windoors were found.")
+			return
+
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
-	else
-		payload(airlock)
+		return
+
+	payload(airlock)
 
 /obj/effect/mapping_helpers/airlock/LateInitialize()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
@@ -277,6 +289,14 @@
 	else
 		airlock.req_access += list(ACCESS_INACCESSIBLE)
 
+/obj/effect/mapping_helpers/airlock/red_alert_access
+	name = "airlock red alert access helper"
+	icon_state = "airlock_red_alert_access"
+	apply_to_windoors = TRUE
+
+/obj/effect/mapping_helpers/airlock/red_alert_access/payload(obj/machinery/door/airlock)
+	airlock.red_alert_access = TRUE
+
 //air alarm helpers
 /obj/effect/mapping_helpers/airalarm
 	desc = "You shouldn't see this. Report it please."
@@ -308,9 +328,11 @@
 
 	if(target.tlv_cold_room)
 		target.set_tlv_cold_room()
+	if(target.tlv_kitchen)
+		target.set_tlv_kitchen()
 	if(target.tlv_no_checks)
 		target.set_tlv_no_checks()
-	if(target.tlv_no_checks && target.tlv_cold_room)
+	if(target.tlv_no_checks + target.tlv_cold_room + target.tlv_kitchen > 1)
 		CRASH("Tried to apply incompatible air alarm threshold helpers!")
 
 	if(target.syndicate_access)
@@ -401,6 +423,16 @@
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
 	target.tlv_cold_room = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen
+	name = "airalarm kitchen tlv helper"
+	icon_state = "airalarm_tlv_kitchen_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen/payload(obj/machinery/airalarm/target)
+	if(target.tlv_kitchen)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to kitchen but it's already changed!")
+	target.tlv_kitchen = TRUE
 
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks
 	name = "airalarm no checks tlv helper"

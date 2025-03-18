@@ -35,6 +35,7 @@
 						<a href='byond://?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
 						<span class='message'>[quoted_message]</span>\
 					"),
+					type = MESSAGE_TYPE_RADIO,
 					avoid_highlighting = src == M
 				)
 			else
@@ -44,6 +45,7 @@
 						Robotic Talk, \
 						[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 					"),
+					type = MESSAGE_TYPE_RADIO,
 					avoid_highlighting = src == M
 				)
 
@@ -66,6 +68,7 @@
 					Robotic Talk, \
 					[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 				"),
+				type = MESSAGE_TYPE_RADIO,
 				avoid_highlighting = src == M
 			)
 

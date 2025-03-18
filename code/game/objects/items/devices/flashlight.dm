@@ -19,6 +19,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_LIGHT_ORANGE
 	light_range = 4
@@ -792,13 +793,17 @@
 	/// The timer id powering our burning
 	var/timer_id = TIMER_ID_NULL
 
-/obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null)
+/obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null, fuel_type_override = null)
 	max_fuel = isnull(fuel_override) ? rand(20, 25) : fuel_override
+	if (fuel_type_override)
+		fuel_type = fuel_type_override
 	create_reagents(max_fuel + oxygen_added, DRAWABLE | INJECTABLE)
 	reagents.add_reagent(fuel_type, max_fuel)
 	. = ..()
 	set_light_color(color)
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		food_flags = FOOD_NO_EXAMINE,\
 		volume = reagents.total_volume,\
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\

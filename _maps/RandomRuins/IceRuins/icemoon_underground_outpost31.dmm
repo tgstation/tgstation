@@ -33,7 +33,7 @@
 "aM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/girder,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "aP" = (
 /obj/machinery/vending/boozeomat{
@@ -110,8 +110,8 @@
 /area/ruin/outpost31/medical)
 "ce" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/indestructible,
 /area/ruin/outpost31/lootroom)
 "cf" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
@@ -215,7 +215,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/rglass/fifty,
-/turf/open/floor/plating,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/structure/broken_flooring/corner/always_floorplane/directional/west,
+/turf/open/indestructible,
 /area/ruin/outpost31/lootroom)
 "dW" = (
 /obj/effect/turf_decal/stripes/line{
@@ -314,6 +317,11 @@
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/freezer,
 /area/ruin/outpost31/crewquarters)
+"fd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/corner/always_floorplane/directional/west,
+/turf/open/indestructible/plating,
+/area/ruin/outpost31/lootroom)
 "fC" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -369,7 +377,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
 /obj/item/organ/brain/cybernetic/ai,
-/turf/open/floor/plating,
+/obj/item/cautery/advanced{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "gM" = (
 /turf/open/floor/iron/white,
@@ -410,8 +422,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate,
 /obj/item/storage/toolbox/electrical,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
+"hC" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/sign/warning/no_smoking/directional/south,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "hD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -464,8 +481,13 @@
 "jl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/item/paper,
-/turf/open/floor/plating,
+/obj/item/retractor/advanced,
+/obj/item/scalpel/advanced{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/structure/broken_flooring/pile/always_floorplane,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "jv" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -678,7 +700,7 @@
 /obj/structure/closet/crate,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "nJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -905,6 +927,11 @@
 /obj/machinery/light/broken/directional/east,
 /turf/open/floor/plating,
 /area/ruin/outpost31)
+"sj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/pile/always_floorplane,
+/turf/open/indestructible/plating,
+/area/ruin/outpost31/lootroom)
 "sk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/toolbox/mechanical,
@@ -1132,6 +1159,11 @@
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/textured_half,
 /area/ruin/outpost31)
+"wy" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/girder,
+/turf/open/indestructible,
+/area/ruin/outpost31/lootroom)
 "wE" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/table,
@@ -1173,6 +1205,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/outpost31/kennel)
+"xN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/ruin/outpost31/lootroom)
 "xP" = (
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
@@ -1505,7 +1541,7 @@
 /obj/machinery/light/warm/directional/west,
 /obj/structure/table,
 /obj/item/mod/module/flamethrower,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "DM" = (
 /obj/structure/table/wood,
@@ -1920,10 +1956,15 @@
 /area/ruin/outpost31/kennel)
 "ME" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/plating,
+/obj/structure/closet/crate/freezer,
+/obj/item/organ/heart/cybernetic/tier2,
+/obj/item/organ/liver/cybernetic/tier2,
+/obj/item/organ/lungs/cybernetic/tier2,
+/obj/item/organ/stomach/cybernetic/tier2,
+/obj/item/organ/eyes/robotic,
+/obj/item/organ/ears/cybernetic/upgraded,
+/obj/item/organ/tongue/robot,
+/turf/open/indestructible,
 /area/ruin/outpost31/lootroom)
 "MK" = (
 /obj/structure/tank_dispenser/oxygen{
@@ -2187,7 +2228,7 @@
 	id = "thingbosslootroom";
 	name = "Storage Room 2"
 	},
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "RR" = (
 /obj/structure/closet/cabinet,
@@ -2247,7 +2288,7 @@
 /area/icemoon/underground/explored)
 "SW" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "Td" = (
 /obj/machinery/light_switch/directional/south,
@@ -2404,7 +2445,7 @@
 /obj/item/vending_refill/cola,
 /obj/item/vending_refill/cigarette,
 /obj/item/vending_refill/boozeomat,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/ruin/outpost31/lootroom)
 "VM" = (
 /obj/machinery/light/small/dim/directional/west,
@@ -2784,7 +2825,7 @@ Yo
 Yo
 Yo
 TP
-IL
+hC
 yo
 ce
 dV
@@ -2828,9 +2869,9 @@ Yo
 Yo
 IL
 yo
-SW
-SW
-SW
+sj
+xN
+fd
 SW
 SW
 SW
@@ -2871,10 +2912,10 @@ Yo
 sK
 yo
 ME
-aM
-aM
+wy
+wy
 SW
-SW
+sj
 SW
 VK
 yo

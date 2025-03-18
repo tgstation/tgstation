@@ -73,8 +73,12 @@
 #define MOB_PLANT (1 << 10)
 ///The mob is a goopy creature, probably coming from xenobiology.
 #define MOB_SLIME (1 << 11)
-/// Mob is fish or water-related.
+///The mob is fish or water-related.
 #define MOB_AQUATIC (1 << 12)
+///The mob is a mining-related mob. It's the plasma, you see. Gets in ya bones.
+#define MOB_MINING (1 << 13)
+///The mob is a crustacean. Like crabs. Or lobsters.
+#define MOB_CRUSTACEAN (1 << 14)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -95,6 +99,10 @@
 #define BODYTYPE_GOLEM (1<<4)
 //The limb is a peg limb
 #define BODYTYPE_PEG (1<<5)
+//The limb is plantly (and will regen if photosynthesis is active)
+#define BODYTYPE_PLANT (1<<6)
+//This limb is shadowy and will regen if shadowheal is active
+#define BODYTYPE_SHADOW (1<<7)
 
 // Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
@@ -830,12 +838,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 
 // Bitflags for external organs restylability
+#define EXTERNAL_RESTYLE_ALL ALL
 /// This organ allows restyle through plant restyling (like secateurs)
-#define EXTERNAL_RESTYLE_PLANT (1 << 1)
+#define EXTERNAL_RESTYLE_PLANT (1 << 0)
 /// This organ allows restyling with flesh restyling stuff (surgery or something idk)
-#define EXTERNAL_RESTYLE_FLESH (1 << 2)
+#define EXTERNAL_RESTYLE_FLESH (1 << 1)
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
-#define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
+#define EXTERNAL_RESTYLE_ENAMEL (1 << 2)
 
 //Mob Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"

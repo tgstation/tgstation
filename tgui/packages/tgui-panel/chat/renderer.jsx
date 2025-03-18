@@ -83,6 +83,9 @@ const handleImageError = (e) => {
   setTimeout(() => {
     /** @type {HTMLImageElement} */
     const node = e.target;
+    if (!node) {
+      return;
+    }
     const attempts = parseInt(node.getAttribute('data-reload-n'), 10) || 0;
     if (attempts >= IMAGE_RETRY_LIMIT) {
       logger.error(`failed to load an image after ${attempts} attempts`);
@@ -216,7 +219,8 @@ class ChatRenderer {
             str &&
             str.length > 1 &&
             // Must be alphanumeric (with some punctuation)
-            allowedRegex.test(str) &&
+            (allowedRegex.test(str) ||
+              (str.charAt(0) === '/' && str.charAt(str.length - 1) === '/')) &&
             // Reset lastIndex so it does not mess up the next word
             ((allowedRegex.lastIndex = 0) || true),
         );
@@ -620,13 +624,13 @@ class ChatRenderer {
       '</body>\n' +
       '</html>\n';
     // Create and send a nice blob
-    const blob = new Blob([pageHtml]);
+    const blob = new Blob([pageHtml], { type: 'text/plain' });
     const timestamp = new Date()
       .toISOString()
       .substring(0, 19)
       .replace(/[-:]/g, '')
       .replace('T', '-');
-    window.navigator.msSaveBlob(blob, `ss13-chatlog-${timestamp}.html`);
+    Byond.saveBlob(blob, `ss13-chatlog-${timestamp}.html`, '.html');
   }
 }
 

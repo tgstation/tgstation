@@ -29,6 +29,7 @@
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	obj_flags = UNIQUE_RENAME
 	light_system = OVERLAY_LIGHT
 	light_range = 5
@@ -170,8 +171,6 @@
 	if(!mark)
 		return
 	var/boosted_mark = mark.boosted
-	if(world.time < mark.mark_applied + mark.ready_delay) // Simple way to prevent right+left click at the same time to detonate the mark for free
-		return
 	if(!target.remove_status_effect(mark))
 		return
 	// Detonation effect
@@ -205,6 +204,7 @@
 		balloon_alert(user, "can't aim at yourself!")
 		return ITEM_INTERACT_BLOCKING
 	fire_kinetic_blast(interacting_with, user, modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/kinetic_crusher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)

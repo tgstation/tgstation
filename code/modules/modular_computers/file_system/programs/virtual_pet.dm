@@ -17,6 +17,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	filedesc = "Virtual Pet"
 	downloader_category = PROGRAM_CATEGORY_GAMES
 	extended_desc = "Download your very own Orbie today!"
+	program_open_overlay = "generic"
 	program_flags = PROGRAM_ON_NTNET_STORE
 	size = 3
 	tgui_id = "NtosVirtualPet"
@@ -583,7 +584,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	announce_global_updates(message = "has found a chocolate at [selected_area.name]")
 	selected_area = null
 	var/obj/item/food/virtual_chocolate/chocolate = new(get_turf(computer))
-	chocolate.AddElement(/datum/element/temporary_atom, life_time = 30 SECONDS) //we cant maintain its existence for too long!
+	chocolate.fade_into_nothing(life_time = 30 SECONDS) //we cant maintain its existence for too long!
 
 /datum/computer_file/program/virtual_pet/proc/recall_pet(mob/living/friend)
 	animate(pet, transform = matrix().Scale(0.3, 0.3), time = 1.5 SECONDS)

@@ -920,20 +920,15 @@
 
 /// Re-generates the honorific title. Returns the compiled honorific_title value
 /obj/item/card/id/proc/update_honorific()
-	var/is_mononym = is_mononym(registered_name)
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
 			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST)
 			honorific_title = "[chosen_honorific] [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_FIRST_FULL)
-			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
-			if(!is_mononym)
-				honorific_title += " [last_name(registered_name)]"
+			honorific_title = "[chosen_honorific] [registered_name]"
 		if(HONORIFIC_POSITION_LAST_FULL)
-			if(!is_mononym)
-				honorific_title += "[first_name(registered_name)] "
-			honorific_title += "[last_name(registered_name)][chosen_honorific]"
+			honorific_title = "[registered_name][chosen_honorific]"
 	return honorific_title
 
 /// Returns the trim assignment name.
@@ -1045,6 +1040,10 @@
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
+
+/obj/item/card/id/away/filmstudio
+	name = "Film Studio ID"
+	desc = "An ID card that allows access to the variety of airlocks present in the film studio"
 
 /obj/item/card/id/departmental_budget
 	name = "departmental card (ERROR)"
@@ -1593,9 +1592,9 @@
 		return ..()
 	balloon_alert(user, "flipped")
 	if(trim_assignment_override)
-		SSid_access.remove_trim_from_chameleon_card(src)
+		SSid_access.remove_trim_override(src)
 	else
-		SSid_access.apply_trim_to_chameleon_card(src, alt_trim)
+		SSid_access.apply_trim_override(src, alt_trim)
 	update_label()
 	update_appearance()
 
@@ -1611,8 +1610,9 @@
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. \
 		Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
-	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+	wildcard_slots = WILDCARD_LIMIT_GOLD
 	actions_types = list(/datum/action/item_action/chameleon/change/id, /datum/action/item_action/chameleon/change/id_trim)
+	action_slots = ALL
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
@@ -1621,6 +1621,10 @@
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
 
+/obj/item/card/id/advanced/chameleon/crummy
+	desc = "A surplus version of a chameleon ID card. Can only hold a limited number of access codes."
+	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()
 	register_item_context()
@@ -1628,6 +1632,20 @@
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
 	return ..()
+
+/obj/item/card/id/advanced/chameleon/equipped(mob/user, slot)
+	. = ..()
+	if (slot & ITEM_SLOT_ID)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+
+/obj/item/card/id/advanced/chameleon/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+	return ..()
+
+/obj/item/card/id/advanced/chameleon/proc/can_track(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	return COMPONENT_CANT_TRACK
 
 /obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isidcard(interacting_with))
@@ -1811,7 +1829,7 @@
 	if(forged) //reset the ID if forged
 		registered_name = initial(registered_name)
 		assignment = initial(assignment)
-		SSid_access.remove_trim_from_chameleon_card(src)
+		SSid_access.remove_trim_override(src)
 		REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 		user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 		update_label()
@@ -1866,7 +1884,7 @@
 
 	registered_name = input_name
 	if(selected_trim_path)
-		SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+		SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 	if(target_occupation)
 		assignment = sanitize(target_occupation)
 	if(new_age)
@@ -1909,11 +1927,10 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
-/// A special variant of the classic chameleon ID card which accepts all access.
+/// A special variant of the classic chameleon ID card which is black. Cool!
 /obj/item/card/id/advanced/chameleon/black
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
-	wildcard_slots = WILDCARD_LIMIT_GOLD
 
 /obj/item/card/id/advanced/engioutpost
 	registered_name = "George 'Plastic' Miller"

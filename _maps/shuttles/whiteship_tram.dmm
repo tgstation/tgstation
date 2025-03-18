@@ -1108,12 +1108,12 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "CS" = (
-/obj/item/reagent_containers/pill/happy,
-/obj/item/reagent_containers/pill/aranesp{
+/obj/item/reagent_containers/applicator/pill/happy,
+/obj/item/reagent_containers/applicator/pill/aranesp{
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/pill/zoom{
+/obj/item/reagent_containers/applicator/pill/zoom{
 	pixel_x = -4;
 	pixel_y = -6
 	},
@@ -1219,7 +1219,7 @@
 /area/shuttle/abandoned/bridge)
 "IC" = (
 /obj/structure/cable,
-/obj/item/reagent_containers/pill/psicodine{
+/obj/item/reagent_containers/applicator/pill/psicodine{
 	pixel_x = 17;
 	pixel_y = 4
 	},

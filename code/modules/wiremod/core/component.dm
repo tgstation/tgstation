@@ -64,6 +64,10 @@
 	/// The UI buttons of this circuit component. An assoc list that has this format: "button_icon" = "action_name"
 	var/ui_buttons = null
 
+	/// The "important" UI tooltips of this circuit component. Used for important things like instant & disabled circuits, they're drawn next to the default tooltip icon.
+	/// An assoc list with the format ui_alerts["alert_icon"] = "alert_name".
+	var/ui_alerts = list()
+
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
 	return
@@ -86,8 +90,7 @@
 		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL, order = 2)
 	if((circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL) && !trigger_output)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
-	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
-		ui_color = "orange"
+	update_ui_alerts()
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
@@ -112,6 +115,21 @@
 	. = ..()
 	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
 		. += span_notice("It's incompatible with module components.")
+
+/// updates the ui alerts in the given component. new_flag adds flags, remove_flag removes them
+/obj/item/circuit_component/proc/update_ui_alerts(new_flag, remove_flag)
+	if(new_flag)
+		circuit_flags |= new_flag
+	if(remove_flag)
+		circuit_flags &= ~remove_flag
+	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
+		ui_alerts["tachometer-alt"] = "Instant"
+	else
+		ui_alerts -= "tachometer-alt"
+	if(circuit_flags & CIRCUIT_FLAG_DISABLED)
+		ui_alerts["exclamation"] = "Non-functional"
+	else
+		ui_alerts -= "exclamation"
 
 /**
  * Called when a shell is registered from the component/the component is added to a circuit.

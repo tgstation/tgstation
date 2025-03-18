@@ -65,7 +65,7 @@
 /datum/action/cooldown/mob_cooldown/charge/the_thing/hit_target(atom/movable/source, mob/living/target, damage_dealt)
 	target.visible_message(span_danger("[source] lunges into [target]!"), span_userdanger("[source] knocks you into the ground, slashing you in the process!"))
 	target.apply_damage(damage_dealt, BRUTE)
-	target.Knockdown(1 SECONDS)
+	target.Knockdown(0.5 SECONDS)
 	playsound(get_turf(target), 'sound/items/weapons/rapierhit.ogg', 100, TRUE)
 	shake_camera(target, 4, 3)
 
@@ -121,8 +121,8 @@
 	ADD_TRAIT(caster, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)
 	caster.visible_message(span_danger("[caster][caster.p_s()] flesh starts becoming filled with holes!"))
 	for(var/turf/open/target in RANGE_TURFS(2, caster))
-		new /obj/effect/temp_visual/telegraphing/exclamation(target, 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(shriek), owner), 1 SECONDS)
+		new /obj/effect/temp_visual/telegraphing/exclamation(target, 1.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(shriek), owner), 1.2 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/the_thing/shriek/proc/shriek(atom/caster)
 	REMOVE_TRAIT(caster, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)

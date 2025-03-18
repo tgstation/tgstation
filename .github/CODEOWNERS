@@ -23,6 +23,8 @@
 /code/modules/tgs/ @Cyberboss
 /code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
+/tools/Tgstation.DiscordDiscussions/ @Cyberboss
+/tools/Tgstation.PRAnnouncer/ @Cyberboss
 
 # Cobby
 
@@ -182,6 +184,10 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
+# Sadboysuss
+
+/sound/ @Sadboysuss
+
 # MULTIPLE OWNERS
 
 /SQL/ @Jordie0608 @scriptis
@@ -209,8 +215,6 @@
 
 /tools/build/ @scriptis @stylemistake
 /tools/tgs_scripts/ @Cyberboss @scriptis
-
-/tools/WebhookProcessor/ @BraveMole @TiviPlus
 
 # Host Hell
 
