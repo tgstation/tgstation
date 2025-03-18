@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	desc = "A very hostile rectangular steel crate."
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
+	base_icon_state = "crate"
 	icon_living = "crate"
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -78,12 +79,17 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	. = ..()
 	lock = new
 	lock.Grant(src)
-	crate = new crate(null) // Nullspaced so we don't accidentally spew it out when opening
 	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
 	ai_controller?.set_ai_status(AI_STATUS_OFF) //start inert, let gullible people pull us into cargo or something and then go nuts when opened
 	if(mapload) //eat shit
 		for(var/obj/item/item in loc)
 			item.forceMove(src)
+
+	crate = new crate(null) // Nullspaced so we don't accidentally spew it out when opening
+	icon = crate.icon
+	icon_state = crate.icon_state
+	base_icon_state = crate.base_icon_state
+	icon_living = icon_state
 
 /mob/living/basic/mimic/crate/Destroy()
 	QDEL_NULL(crate)
@@ -158,14 +164,14 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(!opened)
 		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = TRUE
-		icon_state = "crateopen"
+		icon_state = "[base_icon_state]open"
 		playsound(src, 'sound/machines/crate/crate_open.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in src)
 			movable.forceMove(loc)
 	else
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
-		icon_state = "crate"
+		icon_state = base_icon_state
 		playsound(src, 'sound/machines/crate/crate_close.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in get_turf(src))
 			if(movable != src && insert(movable) == CANT_INSERT_FULL)
