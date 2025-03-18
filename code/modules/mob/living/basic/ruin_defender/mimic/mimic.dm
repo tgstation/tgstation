@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/basic/mimic/crate
 	name = "crate"
-	desc = "A rectangular steel crate."
+	desc = "A very hostile rectangular steel crate."
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
 	icon_living = "crate"
@@ -70,12 +70,15 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/storage_capacity = 50
 	///A cap for mobs. Mobs count towards the item cap. Same purpose as above.
 	var/mob_storage_capacity = 10
+	///Nullspaced crate that we are pretending to be
+	var/atom/movable/crate = /obj/structure/closet/crate
 
 // Pickup loot
 /mob/living/basic/mimic/crate/Initialize(mapload)
 	. = ..()
 	lock = new
 	lock.Grant(src)
+	crate = new crate(null) // Nullspaced so we don't accidentally spew it out when opening
 	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
 	ai_controller?.set_ai_status(AI_STATUS_OFF) //start inert, let gullible people pull us into cargo or something and then go nuts when opened
 	if(mapload) //eat shit
@@ -83,6 +86,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			item.forceMove(src)
 
 /mob/living/basic/mimic/crate/Destroy()
+	QDEL_NULL(crate)
 	lock = null
 	return ..()
 
@@ -133,6 +137,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	. = ..()
 	if(istype(mover, /obj/structure/closet))
 		return FALSE
+
+/mob/living/basic/mimic/crate/examine(mob/user)
+	if(ai_controller?.ai_status == AI_STATUS_OFF && !client)
+		return crate.examine(user)
+	return ..()
 
 /**
 * Used to open and close the mimic
