@@ -1,7 +1,0 @@
-author: "Xackii"
-delete-after: True
-changes:
-  - qol: "Big Manipulator: Now you can change manipualtor work speed to slow down manipulator manipulations."
-  - qol: "Big Manipulator: Use mode now can work with \"empty hand\" - monkey worker will use its paw to interact with objects without requiring item in paw."
-  - qol: "Big Manipulator: Manipulator now can be locked with using id prevents anybody else configurate manipulator settings."
-  - bugfix: "Big Manipulator: Fixes random disappearance of a part of the manipulator ui."

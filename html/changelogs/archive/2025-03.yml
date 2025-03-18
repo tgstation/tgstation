@@ -479,3 +479,77 @@
   jlsnow301:
   - bugfix: A number of UIs with spacing issues - such as genetics scanner and circuit
       boards - have been fixed. Report issues!
+2025-03-18:
+  00-Steven:
+  - refactor: Refactored table frame interactions, please report any issues.
+  - bugfix: You can no longer make material-less material tables out of certain items.
+  - bugfix: Fancy tables remember which carpet was used to make them, and no longer
+      magically transmute carpets into simpler types.
+  - bugfix: You can no longer stack abductor table frame-using tables specifically.
+  - qol: Added screentips for deconstructing table frames and constructing tables
+      out of them if the material you're holding can do so.
+  - qol: Table frames can now also be deconstructed on right click for parity with
+      tables, in addition to left click.
+  - qol: Table frame interactions use balloon alerts.
+  EmptyLullaby:
+  - balance: Crew pinpointers have been moved to the regular section of the medivend,
+      and as such now benefit from the department discount.
+  EnnyDaiz:
+  - bugfix: remove downmix stereo=>mono where it is not required
+  Hatterhat:
+  - bugfix: The Cyber Tac Glitch MODsuit now has appropriately offset gauntlets.
+  - bugfix: The Cyber Tac Glitch MODsuit now has visor overlays instead of the menacing
+      white void. Red eyes, take warning (because that's when the armor booster is
+      active).
+  - bugfix: The Cyber Tac Glitch MODsuit's interface theme is now an appropriately
+      terminal-esque.
+  - bugfix: Dark Paladin MODsuits from the Dead Money bundle are no longer menacingly
+      white.
+  - bugfix: Armor boosters in MODsuits in general are no longer menacingly white voids.
+  Jacquerel:
+  - rscadd: The Mulligan Injector now comes as a kit which can create manifest entries
+      for you under your new identity, as well as an Assistant ID Card with your new
+      name.
+  Kylerace:
+  - refactor: tech disk uploading isnt super slow anymore (much harder to crash spacetime
+      with it)
+  Maximal08:
+  - rscadd: Adds wires for holopad
+  Melbert:
+  - admin: Adds "Dustself"
+  - admin: Adds "Dust" smite. Does what it says on the tin
+  - admin: Adds "Divine" smites. They are variations of normal smites themed around
+      divine intervention.
+  - balance: Mobs that pry open doors (regal rats, space dragons, strong arms) now
+      deal damage to the doors, similar to how jaws of life damage the doors
+  - qol: Double-examining a human will tell you if they have any limbs abnormal to
+      their species, assuming said limbs aren't concealed by their clothing.
+  OHJ4Y:
+  - qol: Botanical aprons can now hold your internals tank.
+  OrionTheFox:
+  - rscadd: the Tile Sprayer now includes quite a few more tile decals! Warning lines,
+      guide arrows, diagonals and filled tiles! Wow!
+  SSensum13:
+  - qol: 'Now you can shoot guns pointblank in combat mode! If you want to attack
+      melee only: use combat mode + right mouse button.'
+  SmArtKar:
+  - spellcheck: Fixes a missing space in battle rifle's examine text
+  - rscadd: Certain implants now have visuals when implanted
+  - bugfix: You no longer blink when you adjust your clothing
+  - bugfix: Fixed an issue where some NPC/midround humans would not get their eye
+      color set correctly
+  - bugfix: Fixed perceptomatix helmet allowing you to see even when unconscious
+  - refactor: Refactored how client colors are handled, ensuring that certain effects
+      like nightmare goggles don't disappear when another vision-affecting piece of
+      clothing is worn.
+  TheBibleMelts:
+  - bugfix: Added a Megacell to the Russian Derelict engine room. Rejoice, drones!
+  Xackii:
+  - qol: 'Big Manipulator: Now you can change manipualtor work speed to slow down
+      manipulator manipulations.'
+  - qol: 'Big Manipulator: Use mode now can work with "empty hand" - monkey worker
+      will use its paw to interact with objects without requiring item in paw.'
+  - qol: 'Big Manipulator: Manipulator now can be locked with using id prevents anybody
+      else configurate manipulator settings.'
+  - bugfix: 'Big Manipulator: Fixes random disappearance of a part of the manipulator
+      ui.'

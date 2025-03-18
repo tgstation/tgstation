@@ -1,8 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "The Cyber Tac Glitch MODsuit now has appropriately offset gauntlets."
-  - bugfix: "The Cyber Tac Glitch MODsuit now has visor overlays instead of the menacing white void. Red eyes, take warning (because that's when the armor booster is active)."
-  - bugfix: "The Cyber Tac Glitch MODsuit's interface theme is now an appropriately terminal-esque."
-  - bugfix: "Dark Paladin MODsuits from the Dead Money bundle are no longer menacingly white."
-  - bugfix: "Armor boosters in MODsuits in general are no longer menacingly white voids."
