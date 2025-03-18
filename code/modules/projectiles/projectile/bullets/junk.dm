@@ -37,7 +37,7 @@
 	pain_mult = 5
 	jostle_pain_mult = 6
 	rip_time = 1 SECONDS
-	stealthy_embed = TRUE
+	stealthy_embed = FALSE
 
 /obj/projectile/bullet/incendiary/fire/junk
 	name = "burning oil"
@@ -89,7 +89,6 @@
 	pain_mult = 5
 	jostle_pain_mult = 6
 	rip_time = 1 SECONDS
-	stealthy_embed = TRUE
 
 /obj/projectile/bullet/junk/reaper
 	name = "junk reaper bullet"
