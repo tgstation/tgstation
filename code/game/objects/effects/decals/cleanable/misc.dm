@@ -72,6 +72,8 @@
 	canSmoothWith = SMOOTH_GROUP_CLEANABLE_DIRT + SMOOTH_GROUP_WALLS
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
+	/// Set to FALSE if your dirt has no smoothing sprites
+	var/is_tileable = TRUE
 
 /obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
@@ -80,7 +82,7 @@
 	if(!isnull(broken_flooring))
 		return
 	var/turf/T = get_turf(src)
-	if(T.tiled_dirt)
+	if(T.tiled_dirt && is_tileable)
 		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
 	if(smoothing_flags & USES_SMOOTHING)
@@ -96,6 +98,7 @@
 	desc = "A thin layer of dust coating the floor."
 	icon_state = "dust"
 	base_icon_state = "dust"
+	is_tileable = FALSE
 
 /obj/effect/decal/cleanable/dirt/dust/Initialize(mapload)
 	. = ..()

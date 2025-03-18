@@ -123,13 +123,13 @@
 	var/bleed_overlay_icon
 
 	//Damage messages used by help_shake_act()
-	var/light_brute_msg = "bruised"
+	var/light_brute_msg = "bruised and feels sore"
 	var/medium_brute_msg = "battered"
 	var/heavy_brute_msg = "mangled"
 
-	var/light_burn_msg = "numb"
+	var/light_burn_msg = "red and feels numb"
 	var/medium_burn_msg = "blistered"
-	var/heavy_burn_msg = "peeling away"
+	var/heavy_burn_msg = "like its peeling away"
 
 	//Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
 	var/list/damage_examines = list(
@@ -184,6 +184,8 @@
 	var/unarmed_damage_high = 1
 	///Determines the accuracy bonus, armor penetration and knockdown probability.
 	var/unarmed_effectiveness = 10
+	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
+	var/unarmed_pummeling_bonus = 1
 
 	/// Traits that are given to the holder of the part. This does not update automatically on life(), only when the organs are initially generated or inserted!
 	var/list/bodypart_traits = list()
@@ -296,11 +298,10 @@
 
 /**
  * Called when a bodypart is checked for injuries.
- *
- * Modifies the check_list list with the resulting report of the limb's status.
  */
-/obj/item/bodypart/proc/check_for_injuries(mob/living/carbon/human/examiner, list/check_list)
+/obj/item/bodypart/proc/check_for_injuries(mob/living/carbon/human/examiner)
 
+	var/list/check_list = list()
 	var/list/limb_damage = list(BRUTE = brute_dam, BURN = burn_dam)
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_CHECKED_FOR_INJURY, examiner, check_list, limb_damage)
@@ -350,27 +351,46 @@
 		else
 			is_disabled += " and"
 
-	check_list += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [name][is_disabled][self_aware ? " has " : " is "][status].</span>"
+	check_list += "<span class='[no_damage ? "notice" : "warning"]'>Your [plaintext_zone][is_disabled][self_aware ? " has " : " looks "][status].</span>"
+
+	var/adept_organ_feeler = owner == examiner && HAS_TRAIT(examiner, TRAIT_SELF_AWARE)
+	for(var/obj/item/organ/organ in src)
+		if(organ.organ_flags & ORGAN_HIDDEN)
+			continue
+		var/feeling = organ.feel_for_damage(adept_organ_feeler)
+		if(feeling)
+			check_list += "\t[feeling]"
 
 	for(var/datum/wound/wound as anything in wounds)
-		switch(wound.severity)
-			if(WOUND_SEVERITY_TRIVIAL)
-				check_list += "\t [span_danger("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)].")]"
-			if(WOUND_SEVERITY_MODERATE)
-				check_list += "\t [span_warning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!")]"
-			if(WOUND_SEVERITY_SEVERE)
-				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!!")]"
-			if(WOUND_SEVERITY_CRITICAL)
-				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!!!")]"
+		var/wound_desc = wound.get_self_check_description(adept_organ_feeler)
+		if(wound_desc)
+			check_list += "\t[wound_desc]"
 
 	for(var/obj/item/embedded_thing as anything in embedded_objects)
+		if(embedded_thing.get_embed().stealthy_embed)
+			continue
 		var/harmless = embedded_thing.get_embed().is_harmless()
 		var/stuck_wordage = harmless ? "stuck to" : "embedded in"
-		var/embed_text = "\t <a href='byond://?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]'> There is [icon2html(embedded_thing, examiner)] \a [embedded_thing] [stuck_wordage] your [plaintext_zone]!</a>"
+		var/embed_text = "\t<a href='byond://?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]'> There is [icon2html(embedded_thing, examiner)] \a [embedded_thing] [stuck_wordage] your [plaintext_zone]!</a>"
 		if (harmless)
 			check_list += span_italics(span_notice(embed_text))
 		else
 			check_list += span_boldwarning(embed_text)
+
+	if(current_gauze)
+		check_list += span_notice("\tThere is some [current_gauze.name] wrapped around it.")
+	else if(can_bleed())
+		switch(get_modified_bleed_rate())
+			if(0.2 to 1)
+				check_list += span_warning("\tIt's lightly bleeding.")
+			if(1 to 2)
+				check_list += span_warning("\tIt's bleeding.")
+			if(3 to 4)
+				check_list += span_warning("\tIt's bleeding heavily!")
+			if(4 to INFINITY)
+				check_list += span_warning("\tIt's bleeding profusely!")
+
+	return jointext(check_list, "<br>")
 
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
@@ -496,9 +516,6 @@
 
 	brute *= wound_damage_multiplier
 	burn *= wound_damage_multiplier
-
-	if(bodytype & (BODYTYPE_ALIEN|BODYTYPE_LARVA_PLACEHOLDER)) //aliens take double burn //nothing can burn with so much snowflake code around
-		burn *= 2
 
 	/*
 	// START WOUND HANDLING
@@ -1017,6 +1034,10 @@
 			actual_color = apply_matrix_to_color(COLOR_WHITE, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
 		add_color_override(actual_color, LIMB_COLOR_ATOM_COLOR + i)
 	update_limb()
+	// Recolors mutant overlays to match new mutant colors
+	for(var/datum/bodypart_overlay/mutant/overlay in bodypart_overlays)
+		overlay.inherit_color(src, force = TRUE)
+	// Update either owner's bodyparts or our icon if we don't have one
 	if (owner)
 		owner.update_body_parts()
 	else
@@ -1121,7 +1142,7 @@
 	if(!is_husked)
 		//Draw external organs like horns and frills
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-			if(!dropped && !overlay.can_draw_on_bodypart(owner)) //if you want different checks for dropped bodyparts, you can insert it here
+			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
 			//Some externals have multiple layers for background, foreground and between
 			for(var/external_layer in overlay.all_layers)

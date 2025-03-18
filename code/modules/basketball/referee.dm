@@ -2,6 +2,7 @@
 	name = "referee whistle"
 	desc = "A referee whistle used to call fouls against players."
 	actions_types = list(/datum/action/innate/timeout)
+	action_slots = ALL
 
 // should be /datum/action/item_action but it doesn't support InterceptClickOn()
 /datum/action/innate/timeout

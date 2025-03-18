@@ -16,6 +16,7 @@
 		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel/large,
 		ORGAN_SLOT_XENO_RESINSPINNER = /obj/item/organ/alien/resinspinner,
 		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
+		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno,
 	)
 
 /mob/living/carbon/alien/adult/drone/Initialize(mapload)

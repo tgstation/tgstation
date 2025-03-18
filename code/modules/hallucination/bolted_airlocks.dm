@@ -73,6 +73,7 @@
 /obj/effect/client_image_holder/hallucination/fake_door_lock
 	layer = CLOSED_DOOR_LAYER + 1 //for Bump priority
 	plane = GAME_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	/// The real airlock we're fake bolting down.
 	var/obj/machinery/door/airlock/airlock

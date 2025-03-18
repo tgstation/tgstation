@@ -203,7 +203,7 @@ multiple modular subtrees with behaviors
 	if(!can_idle || isnull(our_cells))
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
+		if(locate(/mob/living) in grid.client_contents)
 			return FALSE
 	return TRUE
 
@@ -225,8 +225,11 @@ multiple modular subtrees with behaviors
 	if(should_idle())
 		set_ai_status(AI_STATUS_IDLE)
 
-/datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
+/datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER
+
+	if (!(locate(/mob/living) in target_list))
+		return
 
 	if(ai_status == AI_STATUS_IDLE)
 		set_ai_status(AI_STATUS_ON)
@@ -246,6 +249,8 @@ multiple modular subtrees with behaviors
  * Returns AI_STATUS_ON otherwise.
  */
 /datum/ai_controller/proc/get_expected_ai_status()
+	if (isnull(get_turf(pawn)))
+		return AI_STATUS_OFF
 
 	if (!ismob(pawn))
 		return AI_STATUS_ON
