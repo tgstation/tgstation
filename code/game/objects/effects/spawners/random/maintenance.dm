@@ -23,7 +23,12 @@
 		if(mapload)
 			stack_trace("[src] at [AREACOORD(src)] tried to spawn in a space or openspace tile! Mappers please use /obj/effect/spawner/random/maintenance/no_decals instead! Note: the coords might be for a ruin so keep that in mind.")
 		else
-			new /obj/effect/spawner/random/maintenance/no_decals(loc) // if this happens outside of mapload, just spawn a no_decals version and move on
+			// if this happens outside of mapload, just spawn a no_decals version and move on
+			var/regex/no_decal_regex = regex("maintenance")
+			var/new_path_string = no_decal_regex.Replace("[type]", "maintenance/no_decals")
+			var/no_decals_type = text2path(new_path_string)
+			new no_decals_type(loc)
+
 		return INITIALIZE_HINT_QDEL
 
 	loot = GLOB.maintenance_loot
