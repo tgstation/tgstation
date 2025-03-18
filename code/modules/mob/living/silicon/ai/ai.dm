@@ -970,6 +970,7 @@
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
+		ADD_TRAIT(target, TRAIT_LOUD_BINARY, REF(src))
 	diag_hud_set_deployed()
 
 /datum/action/innate/deploy_shell

@@ -18,8 +18,12 @@
 	can_smoothen_out = FALSE
 	/// if connected, our AI
 	var/mob/living/silicon/ai/mainframe
+	/// owner AI of this body (resets in on_mob_remove)
+	var/mob/living/silicon/ai/connected_ai
 	/// action for undeployment
 	var/datum/action/innate/brain_undeployment/undeployment_action = new
+	/// Weakref to our imaginary brain radio implant
+	var/datum/weakref/radio_weakref
 
 /obj/item/organ/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
@@ -42,11 +46,20 @@
 	RegisterSignals(brain_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
 	RegisterSignal(brain_owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
 
+	var/obj/item/implant/radio/radio = new(owner)
+	radio.implant(owner, null, TRUE, TRUE)
+	radio_weakref = WEAKREF(radio)
+
 /obj/item/organ/brain/cybernetic/ai/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	undeploy()
 	. = ..()
 	organ_owner.remove_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
 	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
+
+	var/obj/item/implant/radio/radio = radio_weakref.resolve()
+	if(radio)
+		QDEL_NULL(radio)
+	connected_ai = null
 
 /obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
 	SIGNAL_HANDLER
@@ -88,6 +101,8 @@
 	lines += "Estimated organic/inorganic integrity: [owner.health]"
 	if(mainframe)
 		lines += span_warning("Already occupied by another digital entity.")
+	else if(connected_ai && connected_ai != user)
+		lines += span_warning("Uplink is locked by another digital entity.")
 	else if(!is_sufficiently_augmented())
 		lines += span_warning("Organic organs detected. Robotic organs only, cannot take over.")
 	else
@@ -118,14 +133,27 @@
 	ADD_TRAIT(AI.mind, TRAIT_UNCONVERTABLE, REF(src))
 	ADD_TRAIT(AI, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	AI.mind.transfer_to(owner)
+	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
 
 /obj/item/organ/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
 	//todo camera maybe
 	mainframe = AI
+	connected_ai = AI
 	RegisterSignal(AI, COMSIG_QDELETING, PROC_REF(ai_deleted))
 	undeployment_action.Grant(owner)
 	update_med_hud_status(owner)
-	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
+
+	owner.add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_LOUD_BINARY), REF(src))
+
+	var/obj/item/implant/radio/implant = radio_weakref.resolve()
+	if(implant.radio && AI.radio)
+		if((AI.radio.special_channels & RADIO_SPECIAL_SYNDIE))
+			implant.radio.make_syndie()
+		implant.radio.subspace_transmission = TRUE
+		implant.radio.command = TRUE
+		implant.radio.channels = AI.radio.channels
+		for(var/channel in implant.radio.channels)
+			implant.radio.secure_radio_connections[channel] = add_radio(implant.radio, GLOB.radiochannels[channel])
 
 /obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER
@@ -144,6 +172,12 @@
 		mainframe.eyeobj.setLoc(loc)
 	REMOVE_TRAIT(mainframe.mind, TRAIT_UNCONVERTABLE, REF(src))
 	REMOVE_TRAIT(mainframe, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
+	owner.remove_traits(list(TRAIT_SILICON_ACCESS, TRAIT_LOUD_BINARY), REF(src)) // we don't want randoms using our body as free AA, so we only have it when we active.
+
+	var/obj/item/implant/radio/implant = radio_weakref.resolve()
+	if(implant)
+		implant.radio.resetChannels()
+
 	mainframe = null
 	update_med_hud_status(owner)
 
