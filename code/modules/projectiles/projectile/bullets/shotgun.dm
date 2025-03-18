@@ -141,9 +141,9 @@
 	wound_falloff_tile = -0.5
 	speed = 1.2
 	sharpness = SHARP_POINTY
-	embed_type = /datum/embedding/bullet_flechette
+	embed_type = /datum/embedding/bullet/flechette
 
-/datum/embedding/bullet_flechette
+/datum/embedding/bullet/flechette
 	embed_chance = 100
 	fall_chance = 0
 	jostle_chance = 20
@@ -163,9 +163,9 @@
 	armour_penetration = 0
 	damage_falloff_tile = -0.1
 	wound_falloff_tile = -2
-	embed_type = /datum/embedding/bullet_flechette_donk // the true power of the donk spike.
+	embed_type = /datum/embedding/bullet/flechette_donk // the true power of the donk spike.
 
-/datum/embedding/bullet_flechette_donk
+/datum/embedding/bullet/flechette_donk
 	embed_chance = 100
 	fall_chance = 0
 	jostle_chance = 50
