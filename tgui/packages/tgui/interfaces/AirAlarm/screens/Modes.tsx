@@ -1,6 +1,6 @@
+import { useBackend } from 'tgui/backend';
 import { Button, NoticeBox, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
 import { AirAlarmData } from '../types';
 
 export function AirAlarmControlModes(props) {
