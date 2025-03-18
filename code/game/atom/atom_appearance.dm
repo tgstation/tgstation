@@ -56,7 +56,7 @@
 				continue
 			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
 				continue
-			if(maybe_not_an_atom.layer <= 0 && (maybe_not_an_atom.pixel_x || maybe_not_an_atom.pixel_y))
+			if(maybe_not_an_atom.layer < 0 && (maybe_not_an_atom.pixel_x || maybe_not_an_atom.pixel_y))
 				stack_trace("Float layer added with pixel_x and pixel_y")
 			new_overlays[i] = maybe_not_an_atom.appearance
 		if(nulls)

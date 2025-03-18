@@ -25,7 +25,7 @@
 
 /obj/machinery/atmospherics/pipe/bridge_pipe/update_overlays()
 	. = ..()
-	var/mutable_appearance/center = mutable_appearance('icons/obj/pipes_n_cables/bridge_pipe.dmi', "bridge_center")
+	var/mutable_appearance/center = mutable_appearance('icons/obj/pipes_n_cables/bridge_pipe.dmi', "bridge_center", layer = GAS_PUMP_LAYER)
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	. += center
 
