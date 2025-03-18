@@ -109,9 +109,9 @@
 
 /datum/computer_file/program/arcade/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if (!isliving(usr))
-		return
 	var/mob/living/gamer = ui.user
+	if (!istype(gamer))
+		return
 	gamer.played_game()
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
