@@ -120,11 +120,6 @@
       location.href = 'byond://' + url;
       return;
     }
-    // Send an HTTP request to DreamSeeker's HTTP server.
-    // Allows sending much bigger payloads.
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.send();
   };
 
   Byond.callAsync = function (path, params) {
