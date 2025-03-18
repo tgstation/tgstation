@@ -12104,14 +12104,14 @@
 	spawn_scatter_radius = 1
 	},
 /turf/open/floor/pod/light,
-/obj/structure/chair)
+/area/station/maintenance/floor3/starboard/fore)
 "dac" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/obj/structure/chair)
+/area/station/maintenance/floor1/port/fore)
 "daf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
