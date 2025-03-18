@@ -6,6 +6,9 @@
 #define TAKE_CLOSETS 2
 #define TAKE_HUMANS 3
 
+#define DELAY_STEP 0.1
+#define MAX_DELAY 30
+
 /// Manipulator Core. Main part of the mechanism that carries out the entire process.
 /obj/machinery/big_manipulator
 	name = "Big Manipulator"
@@ -16,6 +19,10 @@
 	circuit = /obj/item/circuitboard/machine/big_manipulator
 	greyscale_colors = "#d8ce13"
 	greyscale_config = /datum/greyscale_config/big_manipulator
+	/// Min time manipulator can have in delay. Changing on upgrade.
+	var/min_working_speed = 2
+	/// Ui number that shows manipulator delay.
+	var/delay_value = 2
 	/// How many time manipulator need to take and drop item.
 	var/working_speed = 2 SECONDS
 	/// Using high tier manipulators speeds up big manipulator and requires more energy.
@@ -47,11 +54,17 @@
 	var/datum/weakref/filter_obj
 	/// Poor monkey that needs to use mode works.
 	var/datum/weakref/monkey_worker
+	/// weakref to id that locked this manipualtor.
+	var/datum/weakref/locked_by_this_id
+	/// Is manipulator locked by identity id.
+	var/id_locked = FALSE
 	/// Other manipulator component.
 	var/obj/effect/big_manipulator_hand/manipulator_hand
 	/// Here some ui setting we can on/off:
 	/// If activated: after item was used manipulator will also drop it.
 	var/drop_item_after_use = TRUE
+	/// Allowe monkey to do use mode with empty hand.
+	var/use_with_empty_hand = FALSE
 	/// If activated: will select only 1 priority and will not continue to look at the priorities below.
 	var/only_highest_priority = FALSE
 	/// Var for throw item mode: changes the range from which the manipulator throws an object.
@@ -130,6 +143,7 @@
 	var/mob/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
 		monkey_resolve.forceMove(get_turf(monkey_resolve))
+	locked_by_this_id = null
 
 /obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
 	if(isnull(monkey_worker))
@@ -257,6 +271,26 @@
 		y_add = 32 + manipulator_hand.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
 
+/obj/machinery/big_manipulator/attackby(obj/item/is_card, mob/user, params)
+	. = ..()
+	if(!isidcard(is_card))
+		return
+	var/obj/item/card/id/clicked_by_this_id = is_card
+	if(!isnull(locked_by_this_id))
+		var/obj/item/card/id/resolve_id = locked_by_this_id.resolve()
+		if(clicked_by_this_id != resolve_id)
+			balloon_alert(user, "locked by another id")
+			return
+		locked_by_this_id = null
+		change_id_locked_status(user)
+		return
+	locked_by_this_id = WEAKREF(clicked_by_this_id)
+	change_id_locked_status(user)
+
+/obj/machinery/big_manipulator/proc/change_id_locked_status(mob/user)
+	id_locked = !id_locked
+	balloon_alert(user, "successfully [!id_locked ? "un" : ""]locked")
+
 /// Creat manipulator hand effect on manipulator core.
 /obj/machinery/big_manipulator/proc/create_manipulator_hand()
 	manipulator_hand = new/obj/effect/big_manipulator_hand(src)
@@ -270,21 +304,25 @@
 		return
 	switch(locate_servo.tier)
 		if(-INFINITY to 1)
+			min_working_speed = delay_value = 2
 			working_speed = 2 SECONDS
 			power_use_lvl = 0.2
 			set_greyscale(COLOR_YELLOW)
 			manipulator_hand?.set_greyscale(COLOR_YELLOW)
 		if(2)
+			min_working_speed = delay_value = 1.4
 			working_speed = 1.4 SECONDS
 			power_use_lvl = 0.4
 			set_greyscale(COLOR_ORANGE)
 			manipulator_hand?.set_greyscale(COLOR_ORANGE)
 		if(3)
+			min_working_speed = delay_value = 0.8
 			working_speed = 0.8 SECONDS
 			power_use_lvl = 0.6
 			set_greyscale(COLOR_RED)
 			manipulator_hand?.set_greyscale(COLOR_RED)
 		if(4 to INFINITY)
+			min_working_speed = delay_value = 0.2
 			working_speed = 0.2 SECONDS
 			power_use_lvl = 0.8
 			set_greyscale(COLOR_PURPLE)
@@ -331,6 +369,9 @@
 /// Pre take and drop proc from [take and drop procs loop]:
 /// Check if we can start take and drop loop
 /obj/machinery/big_manipulator/proc/is_work_check()
+	if(use_with_empty_hand)
+		try_take_thing()
+		return TRUE
 	if(isclosedturf(drop_turf))
 		on = !on
 		say("Output blocked")
@@ -348,37 +389,44 @@
 /obj/machinery/big_manipulator/proc/try_take_thing(datum/source, atom/movable/target)
 	SIGNAL_HANDLER
 
+	var/empty_hand_check = use_with_empty_hand && manipulate_mode == USE_ITEM_MODE
+
 	if(!on)
 		return
 	if(!anchored)
 		return
-	if(QDELETED(source) || QDELETED(target))
-		return
-	if(!isturf(target.loc))
-		return
 	if(on_work)
 		return
+	if(!empty_hand_check)
+		if(QDELETED(source) || QDELETED(target))
+			return
+		if(!isturf(target.loc))
+			return
+		if(!check_filter(target))
+			return
 	if(!use_energy(active_power_usage, force = FALSE))
 		on = FALSE
 		say("Not enough energy!")
 		return
-	if(!check_filter(target))
-		return
-	start_work(target)
+	start_work(target, empty_hand_check)
 
 /// Second take and drop proc from [take and drop procs loop]:
 /// Taking our item and start manipulator hand rotate animation.
-/obj/machinery/big_manipulator/proc/start_work(atom/movable/target)
-	target.forceMove(src)
-	containment_obj = WEAKREF(target)
-	manipulator_hand.update_claw(containment_obj)
+/obj/machinery/big_manipulator/proc/start_work(atom/movable/target, hand_is_empty = FALSE)
+	if(!hand_is_empty)
+		target.forceMove(src)
+		containment_obj = WEAKREF(target)
+		manipulator_hand.update_claw(containment_obj)
 	on_work = TRUE
 	do_rotate_animation(1)
-	check_next_move(target)
+	check_next_move(target, hand_is_empty)
 
 /// 2.5 take and drop proc from [take and drop procs loop]:
 /// Choose what we will do with our item by checking the manipulate_mode.
-/obj/machinery/big_manipulator/proc/check_next_move(atom/movable/target)
+/obj/machinery/big_manipulator/proc/check_next_move(atom/movable/target, hand_is_empty = FALSE)
+	if(hand_is_empty)
+		addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand)), working_speed)
+		return
 	switch(manipulate_mode)
 		if(DROP_ITEM_MODE)
 			addtimer(CALLBACK(src, PROC_REF(drop_thing), target), working_speed)
@@ -413,7 +461,7 @@
 /// You can also set the setting in ui so that it does not return to its privious position and continues to use object in its hand.
 /// Checks the priority so that you can configure which object it will select: mob/obj/turf.
 /// Also can use filter to interact only with obj in filter.
-/obj/machinery/big_manipulator/proc/use_thing(atom/movable/target)
+/obj/machinery/big_manipulator/proc/use_thing(atom/movable/target, hand_is_empty = FALSE)
 	var/obj/obj_resolve = containment_obj?.resolve()
 	if(isnull(obj_resolve))
 		finish_manipulation()
@@ -443,6 +491,34 @@
 	do_attack_animation(drop_turf)
 	manipulator_hand.do_attack_animation(drop_turf)
 	check_end_of_use(im_item, item_was_used = TRUE)
+
+/obj/machinery/big_manipulator/proc/use_thing_with_empty_hand()
+	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
+	if(isnull(monkey_resolve))
+		finish_manipulation()
+		return
+	var/atom/type_to_use = search_type_by_priority_in_drop_turf(allowed_priority_settings, use_with_empty_hand && manipulate_mode == USE_ITEM_MODE)
+	if(isnull(type_to_use))
+		check_end_of_use_for_use_with_empty_hand()
+		return
+	/// We don't do unarmed attack on item because we will take it so we just attack self it like if we wanna to on/off table lamp.
+	if(isitem(type_to_use))
+		var/obj/item/interact_with_item = type_to_use
+		var/resolve_loc = interact_with_item.loc
+		monkey_resolve.put_in_active_hand(interact_with_item)
+		interact_with_item.attack_self(monkey_resolve)
+		interact_with_item.forceMove(resolve_loc)
+	else
+		monkey_resolve.UnarmedAttack(type_to_use)
+	do_attack_animation(drop_turf)
+	manipulator_hand.do_attack_animation(drop_turf)
+	check_end_of_use_for_use_with_empty_hand()
+
+/obj/machinery/big_manipulator/proc/check_end_of_use_for_use_with_empty_hand(obj/item/my_item, item_was_used)
+	if(!on || (!use_with_empty_hand && manipulate_mode == USE_ITEM_MODE))
+		finish_manipulation()
+		return
+	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), my_item), working_speed)
 
 /// Check what we gonna do next with our item. Drop it or use again.
 /obj/machinery/big_manipulator/proc/check_end_of_use(obj/item/my_item, item_was_used)
@@ -544,7 +620,7 @@
 			allowed_priority_settings += what_priority
 
 /// Proc thet return item by type in priority list. Selects item and increasing priority number if don't found req type.
-/obj/machinery/big_manipulator/proc/search_type_by_priority_in_drop_turf(list/priority_list)
+/obj/machinery/big_manipulator/proc/search_type_by_priority_in_drop_turf(list/priority_list, empty_hand = FALSE)
 	var/lazy_counter = 1
 	for(var/datum/manipulator_priority/take_type in priority_list)
 		/// If we set only_highest_priority on TRUE we don't go to priority below.
@@ -601,7 +677,16 @@
 	if(manipulator_throw_range > 7)
 		manipulator_throw_range = 1
 
+/// Changes manipulator working speed time.
+/obj/machinery/big_manipulator/proc/change_delay(new_delay)
+	delay_value = round(clamp(new_delay, min_working_speed, MAX_DELAY), DELAY_STEP)
+	working_speed = delay_value SECONDS
+
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
+	if(id_locked)
+		to_chat(user, span_warning("[src] is locked behind id authentication!"))
+		ui?.close()
+		return
 	if(!anchored)
 		to_chat(user, span_warning("[src] isn't attached to the ground!"))
 		ui?.close()
@@ -618,6 +703,7 @@
 	data["selected_type"] = selected_type.name
 	data["manipulate_mode"] = manipulate_mode
 	data["drop_after_use"] = drop_item_after_use
+	data["empty_hand_use"] = use_with_empty_hand
 	data["highest_priority"] = only_highest_priority
 	data["throw_range"] = manipulator_throw_range
 	var/list/priority_list = list()
@@ -628,6 +714,14 @@
 		priority_data["priority_width"] = allowed_setting.number
 		priority_list += list(priority_data)
 	data["settings_list"] = priority_list
+	data["min_delay"] = min_working_speed
+	data["delay_value"] = delay_value
+	return data
+
+/obj/machinery/big_manipulator/ui_static_data(mob/user)
+	var/list/data = list()
+	data["delay_step"] = DELAY_STEP
+	data["max_delay"] = MAX_DELAY
 	return data
 
 /obj/machinery/big_manipulator/ui_act(action, params, datum/tgui/ui)
@@ -672,6 +766,10 @@
 		if("drop_use_change")
 			drop_item_after_use = !drop_item_after_use
 			return TRUE
+		if("empty_use_change")
+			use_with_empty_hand = !use_with_empty_hand
+			is_work_check()
+			return TRUE
 		if("change_priority")
 			var/new_priority_number = params["priority"]
 			for(var/datum/manipulator_priority/new_order as anything in allowed_priority_settings)
@@ -684,6 +782,9 @@
 			return TRUE
 		if("change_throw_range")
 			change_throw_range()
+			return TRUE
+		if("changeDelay")
+			change_delay(text2num(params["new_delay"]))
 			return TRUE
 
 /// Using on change_priority: looks for a setting with the same number that we set earlier and reduce it.
@@ -796,3 +897,6 @@
 #undef TAKE_ITEMS
 #undef TAKE_CLOSETS
 #undef TAKE_HUMANS
+
+#undef DELAY_STEP
+#undef MAX_DELAY
