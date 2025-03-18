@@ -1,4 +1,4 @@
-/// Slowly kill the thing when iuts on a planet
+/// Slowly kills the affected when they're on a planet.
 /datum/component/planet_allergy/Initialize(...)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -9,6 +9,6 @@
 	SIGNAL_HANDLER
 
 	if(is_on_a_planet(parent) && parent.has_gravity())
-		parent.apply_status_effect(/datum/status_effect/planet_allergy) //your gamer body cant stand real gravity
+		parent.apply_status_effect(/datum/status_effect/planet_allergy) //your gamer body cant stand real gravity < Soul
 	else
 		parent.remove_status_effect(/datum/status_effect/planet_allergy)
