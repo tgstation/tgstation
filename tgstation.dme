@@ -1264,7 +1264,7 @@
 #include "code\datums\components\soul_stealer.dm"
 #include "code\datums\components\soulstoned.dm"
 #include "code\datums\components\sound_player.dm"
-#include "code\datums\components\space_allaergy.dm"
+#include "code\datums\components\space_allergy.dm"
 #include "code\datums\components\space_camo.dm"
 #include "code\datums\components\space_dive.dm"
 #include "code\datums\components\space_kidnap.dm"
