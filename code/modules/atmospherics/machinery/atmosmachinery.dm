@@ -524,7 +524,7 @@
  * * trinary - if TRUE we also use PIPING_FORWARD_SHIFT on layer 1 and 5 for trinary devices (filters and mixers)
  */
 /obj/machinery/atmospherics/proc/get_pipe_image(iconfile, iconstate, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, trinary = FALSE)
-	var/image/pipe_overlay = image(iconfile, iconstate, dir = direction, layer = GAS_PUMP_LAYER)
+	var/image/pipe_overlay = image(iconfile, iconstate, dir = direction)
 	pipe_overlay.color = color
 	PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
 	if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
