@@ -37,23 +37,30 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
+	///Whether or not the table could be flipped or not
+	var/can_flip = TRUE
+	///Whether or not the table is flipped
+	var/is_flipped = FALSE
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
-	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-
-	make_climbable()
-
+	if(!is_flipped)
+		unflip_table()
 	var/static/list/loc_connections = list(
 		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
-	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
+
+	if(can_flip)
+		AddElement( \
+			/datum/element/contextual_screentip_bare_hands, \
+			rmb_text = "Flip", \
+		)
 
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 
@@ -61,6 +68,22 @@
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
+
+//proc that adds elements present in normal tables
+/obj/structure/table/proc/unflip_table()
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+
+	make_climbable()
+	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
+	AddElement(/datum/element/give_turf_traits, give_turf_traits)
+
+//proc that removes elements present in now-flipped tables
+/obj/structure/table/proc/flip_table()
+	RemoveElement(/datum/element/climbable)
+	RemoveElement(/datum/element/elevation)
+
+	RemoveElement(/datum/element/footstep_override)
+	RemoveElement(/datum/element/give_turf_traits)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -87,10 +110,43 @@
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
+	if(is_flipped)
+		. += span_notice("It's been flipped on its side!")
 	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
+
+/obj/structure/table/proc/on_exit(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+	if(!is_flipped)
+		return
+	if(type == /obj/structure/table/glass) //Glass table, jolly ranchers pass
+		if(istype(leaving) && (leaving.pass_flags & PASSGLASS))
+			return
+
+	if(istype(leaving, /obj/projectile))
+		return
+
+	if(direction == dir)
+		return COMPONENT_ATOM_BLOCK_EXIT
+
+/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(!is_flipped)
+		return
+	if(type == /obj/structure/table/glass) //Glass table, jolly ranchers pass
+		if(istype(mover) && (mover.pass_flags & PASSGLASS))
+			return TRUE
+	if(istype(mover, /obj/projectile))
+		var/obj/projectile/proj = mover
+		//Lets through bullets shot from behind the cover of the table
+		if(proj.movement_vector && angle2dir_cardinal(proj.movement_vector.angle) == dir)
+			return TRUE
+		return FALSE
+	if(border_dir == dir)
+		return FALSE
+	return TRUE
 
 /obj/structure/table/update_icon(updates=ALL)
 	. = ..()
@@ -140,6 +196,62 @@
 					span_notice("You place [user.pulling] onto [src]."))
 				user.stop_pulling()
 	return ..()
+
+/obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(!istype(user) || !user.can_interact_with(src))
+		return FALSE
+
+	if(!can_flip)
+		user.balloon_alert_to_viewers("flipping table...")
+
+	if(!is_flipped)
+		if(!do_after(user, max_integrity * 0.25))
+			return
+
+		is_flipped = TRUE
+		flip_table()
+
+		//change icons
+		var/new_dir = get_dir(user, src)
+		if(new_dir == NORTHEAST || new_dir == SOUTHEAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
+			new_dir = EAST
+		if(new_dir == NORTHWEST || new_dir == SOUTHWEST)
+			new_dir = WEST
+		dir = new_dir
+		if(new_dir == NORTH)
+			layer = BELOW_MOB_LAYER
+		update_appearance()
+
+		var/turf/throw_target = get_step(src, src.dir)
+		if (!isnull(throw_target) && !HAS_TRAIT(user, TRAIT_PACIFISM))
+			for (var/atom/movable/movable_entity in src.loc)
+				if(is_able_to_throw(src, movable_entity))
+					movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+
+	else
+		user.balloon_alert_to_viewers("flipping table upright...")
+		if(do_after(user, max_integrity * 0.25, src))
+			is_flipped = FALSE
+			unflip_table()
+			//icons
+			playsound('sound/items/trayhit/trayhit2.ogg', 100)
+			qdel(src)
+			return TRUE
+
+/obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
+	if (movable_entity == table) //Thing is not the table
+		return FALSE
+	if (movable_entity.anchored) //Thing isn't anchored
+		return FALSE
+	if (movable_entity.invisibility > SEE_INVISIBLE_LIVING) //Thing isnt incorporeal ie. ghosts/revenants
+		return FALSE
+	if(!ismob(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
+		return FALSE
+	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING))) //Thing isn't flying/floating
+		return FALSE
+
+	return TRUE
 
 /obj/structure/table/attack_tk(mob/user)
 	return
