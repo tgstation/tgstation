@@ -44,6 +44,7 @@
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/expansion
 	var/datum/action/cooldown/spell/pointed/projectile/star_blast/blast
 	var/datum/action/cooldown/recall_stargazer/recall
+	var/datum/action/cooldown/stargazer_laser/giga_laser
 
 /mob/living/basic/heretic_summon/star_gazer/Initialize(mapload)
 	. = ..()
@@ -53,6 +54,8 @@
 	blast.Grant(src)
 	recall = new(src)
 	recall.Grant(src)
+	giga_laser = new(src)
+	giga_laser.Grant(src)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
@@ -97,6 +100,40 @@
 		do_attack_animation(nearby_mob, ATTACK_EFFECT_SLASH)
 		log_combat(src, nearby_mob, "slashed")
 
+/*
+/mob/living/basic/heretic_summon/star_gazer/RangedAttack(atom/target, modifiers)
+	. = ..()
+	if(!combat_mode || target == summoner?.resolve())
+		return
+	changeNext_move(melee_attack_cooldown)
+	if(isopenturf(target))
+		return
+	if(laser_beam)
+		QDEL_NULL(laser_beam)
+	laser_beam = Beam(target, icon_state = "plasmabeam", icon = 'icons/effects/beam.dmi')
+
+/mob/living/basic/heretic_summon/star_gazer/Life(seconds_per_tick, times_fired)
+	. = ..()
+	if(!laser_beam)
+		return
+	if(laser_beam.target)
+		process_beam(seconds_per_tick, laser_beam.target)
+
+/// Processes the beam every life tick, depending on what we are targetting
+/mob/living/basic/heretic_summon/star_gazer/proc/process_beam(seconds_per_tick, atom/target)
+	if(iswallturf(target))
+		var/turf/target_turf = target
+		target_turf.ChangeTurf()
+		QDEL_NULL(laser_beam)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.stat < CONSCIOUS)
+			living_target.dust()
+			QDEL_NULL(laser_beam)
+		living_target.apply_status_effect(/datum/status_effect/star_mark)
+		living_target.apply_damage(damage = 15, damagetype = BURN)
+*/
+
 /datum/action/cooldown/recall_stargazer
 	name = "Seek master"
 	desc = "Teleports you to your master"
@@ -109,12 +146,76 @@
 
 /datum/action/cooldown/recall_stargazer/Activate(atom/target)
 	var/mob/living/basic/heretic_summon/star_gazer/real_owner = owner
-	var/mob/living/master = real_owner.summoner.resolve()
+	var/mob/living/master = real_owner.summoner?.resolve()
 	if(!master)
 		return FALSE
 	do_teleport(owner, master, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/stargazer_laser
+	name = "Activate laser"
+	desc = "Generates a massive death beam that destroys everything in it's path"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "stargazer_menu"
+	check_flags = NONE
+	cooldown_time = 5 SECONDS
+	/// list of turfs we are hitting while shooting our beam
+	var/list/turf/targets
+	/// The laser beam we generate
+	var/datum/beam/giga_laser
+	/// Timer that handles the damage ticking
+	var/damage_timer
+
+/datum/action/cooldown/stargazer_laser/Activate(atom/target)
+	. = ..()
+
+	if(damage_timer)
+		stop_beaming()
+
+	var/turf/check_turf = get_step(owner, owner.dir)
+	LAZYINITLIST(targets)
+	while(check_turf && length(targets) < 20)
+		targets += check_turf
+		check_turf = get_step(check_turf, owner.dir)
+	if(!LAZYLEN(targets))
+		return
+
+	if(!do_after(owner, 2 SECONDS, owner))
+		QDEL_NULL(giga_laser)
+		targets = null
+		return
+
+	giga_laser = owner.Beam(targets[length(targets)], icon_state = "plasmabeam", icon = 'icons/effects/beam.dmi', override_origin_pixel_x = 8)
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_beaming))
+	process_beam()
+
+/// Recursive proc which affects whatever is caught within the beam
+/datum/action/cooldown/stargazer_laser/proc/process_beam()
+	for(var/turf/target as anything in targets)
+		if(iswallturf(target))
+			var/turf/closed/wall/wall_target = target
+			wall_target.dismantle_wall(devastated = TRUE)
+			continue
+		for(var/victim in target)
+			if(isliving(victim))
+				var/mob/living/living_victim = victim
+				if(living_victim.stat > CONSCIOUS)
+					living_victim.dust()
+				living_victim.apply_status_effect(/datum/status_effect/star_mark)
+				living_victim.apply_damage(damage = 10, damagetype = BURN)
+	damage_timer = addtimer(CALLBACK(src, PROC_REF(process_beam)), 0.3 SECONDS, TIMER_STOPPABLE)
+
+/// Stops the beam after we cancel it
+/datum/action/cooldown/stargazer_laser/proc/stop_beaming()
+	SIGNAL_HANDLER
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE))
+	QDEL_NULL(giga_laser)
+	deltimer(damage_timer)
+	damage_timer = null
+	targets = null
 
 /datum/ai_controller/basic_controller/star_gazer
 	blackboard = list(
