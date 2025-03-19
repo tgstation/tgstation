@@ -18,15 +18,15 @@
 	mask_worn_overlay = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
-	/// Speed added to the control unit.
-	var/speed_added = -0.5
+	/// Slowdown added to the control unit while this module is disabled
+	var/space_slowdown = 0.5
 	/// Armor values added to the suit parts.
 	var/datum/armor/armor_mod = /datum/armor/mod_module_armor_boost
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/no_speedbost
-	speed_added = 0
+	space_slowdown = 0
 
 /datum/armor/mod_module_armor_boost
 	melee = 25
@@ -39,6 +39,7 @@
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_part_deactivation(deleting = FALSE)
 	if(deleting)
@@ -47,6 +48,7 @@
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = initial(head_cover.flash_protect)
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_activation()
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -85,8 +87,8 @@
 
 /obj/item/mod/module/armor_booster/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
 	SIGNAL_HANDLER
-	if (active)
-		module_slowdowns += speed_added
+	if (!active)
+		module_slowdowns += space_slowdown
 
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
