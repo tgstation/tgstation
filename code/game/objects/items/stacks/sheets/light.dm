@@ -1,7 +1,7 @@
 /obj/item/stack/light_w
-	name = "wired glass tile"
+	name = "проволочная стеклянная плитка"
 	singular_name = "wired glass floor tile"
-	desc = "A glass tile, which is wired, somehow."
+	desc = "Стеклянная плитка, которая каким-то образом соединена проволокой."
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "glass_wire"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -16,19 +16,19 @@
 
 /obj/item/stack/light_w/examine(mob/user)
 	. = ..()
-	. += span_warning("\The [src] looks unfinished, add <b>iron</b> to complete it.")
+	. += span_warning("\The [src] выглядит незаконченным, добавьте <b>железо</b> чтобы завершить его.")
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = O
 		if (M.use(1))
 			var/obj/item/L = new /obj/item/stack/tile/light(user.drop_location())
-			to_chat(user, span_notice("You make a light tile."))
+			to_chat(user, span_notice("Вы делаете светлую плитку."))
 			if (!QDELETED(L))
 				L.add_fingerprint(user)
 			use(1)
 		else
-			to_chat(user, span_warning("You need one iron sheet to finish the light tile!"))
+			to_chat(user, span_warning("Вам понадобится один железный лист, чтобы отделать светлую плитку!"))
 	else
 		return ..()
 

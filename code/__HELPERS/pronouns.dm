@@ -4,7 +4,7 @@
 //datums don't have gender, but most of their subtypes do!
 
 /datum/proc/p_they(temp_gender)
-	return "it"
+	return "Это"
 
 /datum/proc/p_They(temp_gender)
 	return capitalize(p_they(temp_gender))
@@ -22,7 +22,7 @@
 	return capitalize(p_theirs(temp_gender))
 
 /datum/proc/p_them(temp_gender)
-	return "it"
+	return "Это"
 
 /datum/proc/p_Them(temp_gender)
 	return capitalize(p_them(temp_gender))

@@ -450,28 +450,28 @@
 	.[weight_class_to_text(w_class)] = weight_class_to_tooltip(w_class)
 
 	if(item_flags & CRUEL_IMPLEMENT)
-		.[span_red("morbid")] = "It seems quite practical for particularly morbid procedures and experiments."
+		.[span_red("патологический")] = "Это кажется вполне практичным для особо болезненных процедур и экспериментов."
 
 	if (siemens_coefficient == 0)
-		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
+		.["изолированный"] = "Он изготовлен из прочного электрического изолятора и блокирует любое проходящее через него электричество!"
 	else if (siemens_coefficient <= 0.5)
-		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
+		.["частично изолированный"] = "Он сделан из плохого изолятора, который будет гасить (но не полностью блокировать) удары электрическим током, проходящие через него."
 
 	if(resistance_flags & INDESTRUCTIBLE)
-		.["indestructible"] = "It is extremely robust! It'll probably withstand anything that could happen to it!"
+		.["нерушимый"] = "Он чрезвычайно прочный! Вероятно, он выдержит все, что с ним может случиться!"
 		return
 
 	if(resistance_flags & LAVA_PROOF)
-		.["lavaproof"] = "It is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+		.["лавонепроницаемый"] = "Он сделан из чрезвычайно термостойкого материала, он, вероятно, смог бы выдержать лаву!"
 	if(resistance_flags & (ACID_PROOF | UNACIDABLE))
-		.["acidproof"] = "It looks pretty robust! It'd probably be able to withstand acid!"
+		.["кислотостойкий"] = "Он выглядит довольно прочным! Вероятно, он смог бы противостоять кислоте!"
 	if(resistance_flags & FREEZE_PROOF)
-		.["freezeproof"] = "It is made of cold-resistant materials."
+		.["морозостойкий"] = "Он изготовлен из морозостойких материалов."
 	if(resistance_flags & FIRE_PROOF)
-		.["fireproof"] = "It is made of fire-retardant materials."
+		.["огнеупорный"] = "Он изготовлен из огнезащитных материалов."
 
 /obj/item/examine_descriptor(mob/user)
-	return "item"
+	return "предмет"
 
 /obj/item/examine_more(mob/user)
 	. = ..()

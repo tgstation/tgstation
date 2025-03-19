@@ -1,5 +1,5 @@
 /datum/design/iron
-	name = "Iron"
+	name = "Железо"
 	id = "iron"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
@@ -10,7 +10,7 @@
 	)
 
 /datum/design/rods
-	name = "Iron Rod"
+	name = "Железный прут"
 	id = "rods"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
@@ -21,7 +21,7 @@
 	)
 
 /datum/design/glass
-	name = "Glass"
+	name = "Стекло"
 	id = "glass"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
@@ -32,7 +32,7 @@
 	)
 
 /datum/design/rglass
-	name = "Reinforced Glass"
+	name = "Армированное стекло"
 	id = "rglass"
 	build_type = AUTOLATHE | SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
@@ -44,7 +44,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/silver
-	name = "Silver"
+	name = "Серебро"
 	id = "silver"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
@@ -55,7 +55,7 @@
 	)
 
 /datum/design/gold
-	name = "Gold"
+	name = "Золото"
 	id = "gold"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
@@ -66,7 +66,7 @@
 	)
 
 /datum/design/diamond
-	name = "Diamond"
+	name = "Алмаз"
 	id = "diamond"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT)
@@ -77,7 +77,7 @@
 	)
 
 /datum/design/plasma
-	name = "Plasma"
+	name = "Плазма"
 	id = "plasma"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT)
@@ -88,7 +88,7 @@
 	)
 
 /datum/design/uranium
-	name = "Uranium"
+	name = "Уран"
 	id = "uranium"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT)
@@ -99,7 +99,7 @@
 	)
 
 /datum/design/bananium
-	name = "Bananium"
+	name = "Бананиум"
 	id = "bananium"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT)
@@ -110,7 +110,7 @@
 	)
 
 /datum/design/titanium
-	name = "Titanium"
+	name = "Титан"
 	id = "titanium"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
@@ -121,7 +121,7 @@
 	)
 
 /datum/design/plastic
-	name = "Plastic"
+	name = "Пластик"
 	id = "plastic"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)

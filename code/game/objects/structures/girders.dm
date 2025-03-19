@@ -41,7 +41,7 @@
 		if(GIRDER_DISASSEMBLED)
 			. += span_notice("[src] разобран! Вероятно, вы не сможете увидеть это сообщение о проверке.")
 		if(GIRDER_TRAM)
-			. += span_notice("[src] предназначен для использования в трамвае. Разбирается с помощью отвертки!") //перевод под вопросом -Rewokin.
+			. += span_notice("[src] предназначен для использования в шаттле. Разбирается с помощью отвертки!")
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	var/platingmodifier = 1
@@ -75,7 +75,7 @@
 			return
 		if(state == GIRDER_TRAM)
 			if(!locate(/obj/structure/transport/linear/tram) in src.loc.contents)
-				balloon_alert(user, "нужны трамвайные перекрытия!") //перевод под вопросом -Rewokin.
+				balloon_alert(user, "нужны шаттловые перекрытия!")
 				return
 
 		if(istype(W, /obj/item/stack/rods))
@@ -419,8 +419,8 @@
 	max_integrity = 350
 
 /obj/structure/girder/tram
-	name = "трамвайная балка" //перевод под вопросом -Rewokin.
-	desc = "Титановый каркас для изготовления стен трамвая. Может быть покрыт <b>титановым стеклом</b> или другими стеновыми материалами." //перевод под вопросом -Rewokin.
+	name = "балка шаттла"
+	desc = "Титановый каркас для изготовления стен шаттла. Может быть покрыт <b>титановым стеклом</b> или другими стеновыми материалами."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "tram"
 	state = GIRDER_TRAM
@@ -430,7 +430,7 @@
 	canSmoothWith = null
 
 /obj/structure/girder/tram/corner
-	name = "угол рамы трамвая" //перевод под вопросом -Rewokin.
+	name = "угол рамы шаттла"
 
 //////////////////////////////////////////// культ металлокаркас //////////////////////////////////////////////
 

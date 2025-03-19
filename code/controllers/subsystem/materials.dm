@@ -5,7 +5,7 @@ These materials call on_applied() on whatever item they are applied to, common e
 
 */
 SUBSYSTEM_DEF(materials)
-	name = "Materials"
+	name = "Материалы"
 	flags = SS_NO_FIRE | SS_NO_INIT
 	///Dictionary of material.id || material ref
 	var/list/materials
@@ -21,15 +21,15 @@ SUBSYSTEM_DEF(materials)
 	var/list/list/material_combos
 	///List of stackcrafting recipes for materials using base recipes
 	var/list/base_stack_recipes = list(
-		new /datum/stack_recipe("Chair", /obj/structure/chair/greyscale, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
-		new /datum/stack_recipe("Toilet", /obj/structure/toilet/greyscale, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
-		new /datum/stack_recipe("Sink Frame", /obj/structure/sinkframe, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
-		new /datum/stack_recipe("Material floor tile", /obj/item/stack/tile/material, 1, 4, 20, crafting_flags = CRAFT_APPLIES_MATS, category = CAT_TILES),
-		new /datum/stack_recipe("Material airlock assembly", /obj/structure/door_assembly/door_assembly_material, 4, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS),
+		new /datum/stack_recipe("Стул", /obj/structure/chair/greyscale, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
+		new /datum/stack_recipe("Туалет", /obj/structure/toilet/greyscale, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
+		new /datum/stack_recipe("Умывальник", /obj/structure/sinkframe, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
+		new /datum/stack_recipe("Металлический пол", /obj/item/stack/tile/material, 1, 4, 20, crafting_flags = CRAFT_APPLIES_MATS, category = CAT_TILES),
+		new /datum/stack_recipe("Шлюз", /obj/structure/door_assembly/door_assembly_material, 4, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS),
 	)
 	///List of stackcrafting recipes for materials using rigid recipes
 	var/list/rigid_stack_recipes = list(
-		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_STRUCTURE),
+		new /datum/stack_recipe("Разделочный блок", /obj/structure/carving_block, 5, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_STRUCTURE),
 	)
 
 	///A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
@@ -100,16 +100,16 @@ SUBSYSTEM_DEF(materials)
 	if(istext(key)) // Handle text id
 		. = materials[key]
 		if(!.)
-			WARNING("Attempted to fetch material ref with invalid text id '[key]'")
+			WARNING("Предпринята попытка получить ссылку на материал с неверным текстовым идентификатором '[key]'")
 		return
 
 	if(!ispath(key, /datum/material))
-		CRASH("Attempted to fetch material ref with invalid key [key]")
+		CRASH("Предпринята попытка получить ссылку на материал с неверным ключом [key]")
 
 	if(!(initial(key.init_flags) & MATERIAL_INIT_BESPOKE))
 		. = materials[key]
 		if(!.)
-			WARNING("Attempted to fetch reference to an abstract material with key [key]")
+			WARNING("Предпринята попытка получить ссылку на абстрактный материал с ключом [key]")
 		return
 
 	key = GetIdFromArguments(arguments)

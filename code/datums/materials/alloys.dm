@@ -1,8 +1,8 @@
 /** Materials made from other materials.
  */
 /datum/material/alloy
-	name = "alloy"
-	desc = "A material composed of two or more other materials."
+	name = "сплав"
+	desc = "Материал, состоящий из двух или более других материалов."
 	init_flags = NONE
 	/// The materials this alloy is made from weighted by their ratios.
 	var/list/composition = null
@@ -24,8 +24,8 @@
  * Applies a significant slowdown effect to any and all items that contain it.
  */
 /datum/material/alloy/plasteel
-	name = "plasteel"
-	desc = "The heavy duty result of infusing iron with plasma."
+	name = "пласталь"
+	desc = "Сверхпрочный результат введения железа в плазму."
 	color = "#706374"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.135
@@ -62,8 +62,8 @@
  * An alloy of titanium and plasma.
  */
 /datum/material/alloy/plastitanium
-	name = "plastitanium"
-	desc = "The extremely heat resistant result of infusing titanium with plasma."
+	name = "пластитаниум"
+	desc = "Чрезвычайно термостойкий результат плазменного напыления титана."
 	color = "#3a313a"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.225
@@ -99,8 +99,8 @@
  * An alloy of silicate and plasma.
  */
 /datum/material/alloy/plasmaglass
-	name = "plasmaglass"
-	desc = "Plasma-infused silicate. It is much more durable and heat resistant than either of its component materials."
+	name = "плазменное стекло"
+	desc = "Силикат, пропитанный плазмой. Он намного прочнее и термостойче любого из входящих в его состав материалов."
 	color = "#ff80f4"
 	alpha = 150
 	starlight_color = COLOR_STRONG_MAGENTA
@@ -128,8 +128,8 @@
  * An alloy of glass and titanium.
  */
 /datum/material/alloy/titaniumglass
-	name = "titanium glass"
-	desc = "A specialized silicate-titanium alloy that is commonly used in shuttle windows."
+	name = "титановое стекло"
+	desc = "Специальный силикатно-титановый сплав, который обычно используется в стеклопакетах."
 	color = "#cfbee0"
 	alpha = 150
 	starlight_color = COLOR_COMMAND_BLUE
@@ -156,8 +156,8 @@
  * An alloy of plastitanium and glass.
  */
 /datum/material/alloy/plastitaniumglass
-	name = "plastitanium glass"
-	desc = "A specialized silicate-plastitanium alloy."
+	name = "пластитановое стекло"
+	desc = "Специальный силикатно-пластитановый сплав."
 	color = "#5d3369"
 	starlight_color = COLOR_CENTCOM_BLUE
 	alpha = 150
@@ -186,8 +186,8 @@
  * Anything constructed from it can slowly regenerate.
  */
 /datum/material/alloy/alien
-	name = "alien alloy"
-	desc = "An extremely dense alloy similar to plasteel in composition. It requires exotic metallurgical processes to create."
+	name = "инопланетный сплав"
+	desc = "Чрезвычайно плотный сплав, схожий по составу с пласталью. Для его создания требуются экзотические металлургические процессы."
 	color = "#6041aa"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	strength_modifier = 1.5 // It's twice the density of plasteel and just as durable. Getting hit with it is going to HURT.

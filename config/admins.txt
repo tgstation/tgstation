@@ -9,3 +9,4 @@ NIKforest321 = Game Admin
 YanNikk = Game Admin
 POPik = Game Admin
 ZiIuyeer = Game Admin
+Saneksotka = Game Admin

@@ -19,10 +19,10 @@ $include map_vote.txt
 # Существуют различные опции, которые жестко заблокированы по соображениям безопасности.
 
 ## Название сервера: оно отображается в верхней части экрана в игре и в BYOND hub. Раскомментируйте и замените "tgstation" на название по вашему выбору.
-SERVERNAME Andromeda
+SERVERNAME Andromeda [+18, MRP]
 
 ## Имя SQL сервера: Это имя, используемое для идентификации сервера в базе данных SQL, отличается от SERVERNAME, поскольку оно должно содержать не более 32 символов.
-# SERVERSQLNAME Andromeda
+SERVERSQLNAME Andromeda
 
 ## Название станции: название станции в том виде, в каком оно указано в игре. Если его не закомментировать, игра сгенерирует случайное название.
 STATIONNAME Андромеда-13
@@ -74,7 +74,7 @@ USE_EXP_RESTRICTIONS_HEADS
 ## Измените это, чтобы изменить требования к игровому времени руководителей, чтобы они основывались на игровом времени отдела, а не команды.
 USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
 ## Отключите это, чтобы включить требования к игровому времени для некоторых профессий, не связанных с работой руководителя, таких как инженер и ученый.
-USE_EXP_RESTRICTIONS_OTHER
+#USE_EXP_RESTRICTIONS_OTHER
 ## Позволяет администраторам обходить требования о времени выполнения заданий.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
 ## Отключите это, чтобы метки стажера автоматически добавлялись к идентификационным картам для ролей на станции в зависимости от продолжительности жизни игрока, у которого они есть.
@@ -183,7 +183,7 @@ IPINTEL_REJECT_BAD
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 ## This is also used to show the server's address in the TGS check command if the public address isn't set
-# SERVER ss13.example.com:2506
+SERVER 5.42.211.88:50527
 
 ## forum address
 # FORUMURL http://tgstation13.org/phpBB/index.php
@@ -197,22 +197,22 @@ IPINTEL_REJECT_BAD
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
 
-## Discord bot command prefix, if the discord bot is used
-# DISCORDBOTCOMMANDPREFIX ?
+## Префикс команды Discord bot, если используется discord bot
+# DISCORDBOTCOMMANDPREFIX
 
-## Round specific stats address
-## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
-## This will take priority over the game logs address during reboot.
+## Адрес статистики для конкретного раунда
+## Ссылка на логи для конкретного раунда, т.е. statbus. К нему автоматически добавляется roundId с помощью ticker/Reboot()
+## Этот адрес будет иметь приоритет над адресом логов игры во время перезагрузки.
 ## Example: https://atlantaned.space/statbus/round.php?round=
 # ROUNDSTATSURL
 
-## Game Logs address
-## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
+## Адрес игровых логов
+## Если у вас нет сложной системы синтаксического анализа, но вы все равно хотите, чтобы игроки могли найти, где вы храните логи вашего сервера.
 ## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
 # GAMELOGURL
 
-## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+## URL-адрес для подачи апелляций на запрет - обычно для форума или любого другого места, куда люди должны обратиться, чтобы связаться с вашими администраторами.
+# BANAPPEALS https://discord.gg/NxTZeUPtRf
 
 ## System command that invokes yt-dlp, used by Play Internet Sound.
 ## You can install yt-dlp with
@@ -263,7 +263,7 @@ ALLOW_HOLIDAYS
 TICKLAG 0.5
 
 ##Can also be set as per-second value, the following value is identical to the above.
-#FPS 20
+FPS 30
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON

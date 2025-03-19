@@ -37,15 +37,15 @@ map metastation
 	votable
 endmap
 
-#map tramstation
+map tramstation
 	minplayers 35
 	votable
-#endmap
+endmap
 
-#map nebulastation
+map nebulastation
 	minplayers 35
 	votable
-#endmap
+endmap
 
 #map wawastation
 	votable

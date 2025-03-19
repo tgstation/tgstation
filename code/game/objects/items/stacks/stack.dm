@@ -131,7 +131,7 @@
 
 /obj/item/stack/blend_requirements()
 	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
+		to_chat(usr, span_warning("[src] слишком встроен в ваше шасси и не может быть размонтирован!"))
 		return
 	return TRUE
 
@@ -200,14 +200,14 @@
 		return
 	if(singular_name)
 		if(get_amount()>1)
-			. += "There are [get_amount()] [singular_name]\s in the stack."
+			. += "В стопке [get_amount()] [singular_name]."
 		else
-			. += "There is [get_amount()] [singular_name] in the stack."
+			. += "В стопке [get_amount()] [singular_name]."
 	else if(get_amount()>1)
-		. += "There are [get_amount()] in the stack."
+		. += "В стопке [get_amount()]."
 	else
-		. += "There is [get_amount()] in the stack."
-	. += span_notice("<b>Right-click</b> with an empty hand to take a custom amount.")
+		. += "В стопке [get_amount()]."
+	. += span_notice("<b>Клик-ПКМ</b> пустой рукой, чтобы взять нужное количество.")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -386,16 +386,16 @@
 	if(!is_valid_recipe(recipe, recipes)) //href exploit protection
 		return
 	if(!multiplier || multiplier < 1 || !IS_FINITE(multiplier)) //href exploit protection
-		stack_trace("Invalid multiplier value in stack creation [multiplier], [usr] is likely attempting an exploit")
+		stack_trace("Недопустимое значение множителя при создании стека [multiplier], [usr] скорее всего, является попыткой использования эксплойта")
 		return
 	if(!building_checks(builder, recipe, multiplier))
 		return
 	if(recipe.time)
 		var/adjusted_time = 0
-		builder.balloon_alert(builder, "building...")
+		builder.balloon_alert(builder, "создание...")
 		builder.visible_message(
-			span_notice("[builder] starts building \a [recipe.title]."),
-			span_notice("You start building \a [recipe.title]..."),
+			span_notice("[builder] начинает создавать [recipe.title]."),
+			span_notice("Вы начинаете создавать [recipe.title]..."),
 		)
 		if(HAS_TRAIT(builder, recipe.trait_booster))
 			adjusted_time = (recipe.time * recipe.trait_modifier)
@@ -510,8 +510,8 @@
 		for(var/direction in GLOB.cardinals)
 			nearby_turf = get_step(dest_turf, direction)
 			if(locate(recipe.result_type) in nearby_turf)
-				to_chat(builder, span_warning("\The [recipe.title] must not be built directly adjacent to another!"))
-				builder.balloon_alert(builder, "can't be adjacent to another!")
+				to_chat(builder, span_warning("[recipe.title]  не должен быть построен непосредственно рядом с другим!"))
+				builder.balloon_alert(builder, "не может находиться рядом с другим!")
 				return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_ADJACENT)
@@ -549,15 +549,15 @@
 /obj/item/stack/tool_use_check(mob/living/user, amount, heat_required)
 	if(get_amount() < amount)
 		// general balloon alert that says they don't have enough
-		user.balloon_alert(user, "not enough material!")
+		user.balloon_alert(user, "недостаточно материала!")
 		// then a more specific message about how much they need and what they need specifically
 		if(singular_name)
 			if(amount > 1)
-				to_chat(user, span_warning("You need at least [amount] [singular_name]\s to do this!"))
+				to_chat(user, span_warning("Для этого вам нужно как минимум [amount] [singular_name]!"))
 			else
-				to_chat(user, span_warning("You need at least [amount] [singular_name] to do this!"))
+				to_chat(user, span_warning("Для этого вам нужно как минимум [amount] [singular_name]!"))
 		else
-			to_chat(user, span_warning("You need at least [amount] to do this!"))
+			to_chat(user, span_warning("Для этого вам нужно как минимум [amount]!"))
 
 		return FALSE
 
@@ -627,11 +627,11 @@
 	// Cover edge cases where multiple stacks are being merged together and haven't been deleted properly.
 	// Also cover edge case where a stack is being merged into itself, which is supposedly possible.
 	if(QDELETED(target_stack))
-		CRASH("Stack merge attempted on qdeleted target stack.")
+		CRASH("Предпринята попытка слияния стека в целевом стопке qdeleted.")
 	if(QDELETED(src))
-		CRASH("Stack merge attempted on qdeleted source stack.")
+		CRASH("Предпринята попытка слияния стека с удаленным исходным стеком.")
 	if(target_stack == src)
-		CRASH("Stack attempted to merge into itself.")
+		CRASH("Стопка попытался слиться сам с собой.")
 
 	var/transfer = get_amount()
 	if(target_stack.is_cyborg)
@@ -694,11 +694,11 @@
 	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
+	var/stackmaterial = tgui_input_number(user, "Сколько листов вы хотите взять из этой стопки?", "Разделение стопки", max_value = max)
 	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	split_stack(user, stackmaterial)
-	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
+	to_chat(user, span_notice("Вы берете листы [stackmaterial] из стопки."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /** Splits the stack into two stacks.
@@ -726,7 +726,7 @@
 	if(can_merge(W, inhand = TRUE))
 		var/obj/item/stack/S = W
 		if(merge(S))
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
+			to_chat(user, span_notice("Ваш стопка [S.name] теперь содержит [S.get_amount()] [S.singular_name]."))
 	else
 		. = ..()
 
