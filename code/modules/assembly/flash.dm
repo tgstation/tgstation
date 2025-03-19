@@ -239,7 +239,7 @@
 	. = TRUE
 
 	if(obj_flags & EMAGGED)
-		M.emp_act(2)
+		M.emp_act(EMP_LIGHT)
 		burn_out(src)
 
 	if(iscarbon(M))
