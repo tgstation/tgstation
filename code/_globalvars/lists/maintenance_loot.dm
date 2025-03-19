@@ -256,6 +256,10 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//Donk Co. 'Donk Spike' flechette shells, these things show up everywhere in donkpocket boxes
+		/obj/item/storage/box/donkpockets/donkpocketshell = 1,
+		) = 8,
+
 	list(//computer disks
 		/obj/item/computer_disk/maintenance/scanner = 1,
 		/obj/item/computer_disk/maintenance/camera = 1,

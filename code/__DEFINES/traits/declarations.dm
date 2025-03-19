@@ -1463,4 +1463,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to heretic summons, making them immune to heretic spells
 #define TRAIT_HERETIC_SUMMON "heretic_summon"
 
+///trait given to mobs that are difficult to tame through mounting
+#define TRAIT_MOB_DIFFICULT_TO_MOUNT "difficult_to_mount"
+
+///trait given to mobs that are easy to tame through mounting
+#define TRAIT_MOB_EASY_TO_MOUNT "easy_to_mount"
+
 // END TRAIT DEFINES
