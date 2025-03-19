@@ -7,6 +7,20 @@
 		"remove_quirk" = PROC_REF(remove_quirk),
 	)
 
+/datum/preference_middleware/quirks/post_set_preference(mob/user, preference, value)
+	if(preference != "species")
+		return
+	tainted = TRUE
+	preferences.validate_quirks()
+
+/datum/preference_middleware/quirks/proc/get_species_compatibility()
+	var/list/species_blacklist = list()
+	var/datum/species/mob_species = preferences.read_preference(/datum/preference/choiced/species)
+	for(var/datum/quirk/quirk_type as anything in SSquirks.quirk_prototypes)
+		if(!SSquirks.quirk_prototypes[quirk_type].is_species_appropriate(mob_species))
+			species_blacklist += quirk_type::name
+	return species_blacklist
+
 /datum/preference_middleware/quirks/get_ui_static_data(mob/user)
 	if (preferences.current_window != PREFERENCE_TAB_CHARACTER_PREFERENCES)
 		return list()
@@ -14,6 +28,7 @@
 	var/list/data = list()
 
 	data["selected_quirks"] = get_selected_quirks()
+	data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
 
@@ -23,6 +38,7 @@
 	if (tainted)
 		tainted = FALSE
 		data["selected_quirks"] = get_selected_quirks()
+		data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
 
@@ -63,6 +79,7 @@
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]
 
+	preferences.validate_quirks()
 	var/list/new_quirks = preferences.all_quirks | quirk_name
 	if (SSquirks.filter_invalid_quirks(new_quirks) != new_quirks)
 		// If the client is sending an invalid give_quirk, that means that
