@@ -151,3 +151,7 @@
 
 /// From /datum/component/tether/UnregisterFromParent()
 #define COMSIG_ATOM_TETHER_SNAPPED "atom_tether_snapped"
+
+/// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
+#define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
+	#define COMPONENT_CANCEL_DIGESTION (1<<0)

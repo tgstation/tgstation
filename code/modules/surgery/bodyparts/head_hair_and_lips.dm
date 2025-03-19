@@ -121,7 +121,7 @@
 			//Overlay
 			hair_overlay = image(base_icon, layer=-HAIR_LAYER, dir=image_dir)
 			hair_overlay.alpha = hair_alpha
-			hair_overlay.pixel_y = hair_sprite_accessory.y_offset
+			hair_overlay.pixel_z = hair_sprite_accessory.y_offset
 			//Emissive blocker
 			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
@@ -133,7 +133,7 @@
 			if(hair_gradient_style != "None")
 				var/hair_gradient_color = gradient_colors[GRADIENT_HAIR_KEY]
 				var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, -HAIR_LAYER, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, image_dir)
-				hair_gradient_overlay.pixel_y = hair_sprite_accessory.y_offset
+				hair_gradient_overlay.pixel_z = hair_sprite_accessory.y_offset
 				. += hair_gradient_overlay
 
 	if(show_debrained && (head_flags & HEAD_DEBRAIN))

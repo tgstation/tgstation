@@ -590,7 +590,7 @@
 	. = ..()
 
 	var/datum/martial_art/picked_art_path = pick_weight(weighted_martial_arts)
-	var/datum/martial_art/instantiated_art = new picked_art_path()
+	var/datum/martial_art/instantiated_art = new picked_art_path(player)
 
 	if (istype(instantiated_art, /datum/martial_art/boxing))
 		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_LEGENDARY)
