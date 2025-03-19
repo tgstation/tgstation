@@ -237,6 +237,11 @@
 		return FALSE
 
 	. = TRUE
+
+	if(obj_flags & EMAGGED)
+		M.emp_act(2)
+		burn_out(src)
+
 	if(iscarbon(M))
 		flash_carbon(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
 		return
@@ -303,6 +308,18 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
+
+///Emagging a handheld flash will turn it into a 1 use EMP
+/obj/item/assembly/flash/handheld/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "already emagged!")
+		return FALSE
+	if(burnt_out)
+		balloon_alert(user, "the flash too broken to supercharge")
+		return FALSE
+	balloon_alert(user, "sparks fly as the flash is supercharged")
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/assembly/flash/armimplant
 	name = "photon projector"
