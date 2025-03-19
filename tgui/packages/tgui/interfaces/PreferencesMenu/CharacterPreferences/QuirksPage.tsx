@@ -69,9 +69,8 @@ function QuirkList(props: QuirkProps & QuirkListProps) {
   return (
     <Stack vertical>
       {quirks.map(([quirkKey, quirk]) => (
-        <Stack.Item m={0}>
+        <Stack.Item key={quirkKey} m={0}>
           <QuirkDisplay
-            key={quirkKey}
             onClick={onClick}
             quirk={quirk}
             quirkKey={quirkKey}
