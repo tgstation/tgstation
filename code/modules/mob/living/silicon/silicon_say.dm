@@ -25,6 +25,12 @@
 	if(iscarbon(src))
 		namepart = GetVoice()
 
+	// AI in carbon body should still have its real name
+	var/obj/item/organ/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(istype(brain))
+		namepart = brain.mainframe.name
+		designation = brain.mainframe.job
+
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
