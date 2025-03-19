@@ -40,6 +40,7 @@
 
 /atom/movable/screen/movable/pic_in_pic/component_click(atom/movable/screen/component_button/component, params)
 	if(component == button_x)
+		usr.client?.close_popup("camera-[REF(src)]")
 		qdel(src)
 	else if(component == button_expand)
 		set_view_size(width+1, height+1)
@@ -182,9 +183,11 @@
 		return
 	usr.client.setup_popup("camera-[REF(src)]", width, height, 2, "1984")
 	popup_screen.display_to(usr)
-	RegisterSignal(popup_screen, COMSIG_POPUP_CLEARED, PROC_REF(on_popup_clear))
+	RegisterSignal(usr.client, COMSIG_POPUP_CLEARED, PROC_REF(on_popup_clear))
 
 /atom/movable/screen/movable/pic_in_pic/proc/on_popup_clear(client/source, window)
 	SIGNAL_HANDLER
-	popup_screen.hide_from_client(source)
-	UnregisterSignal(popup_screen, COMSIG_POPUP_CLEARED)
+	if (window == "camera-[REF(src)]")
+		UnregisterSignal(usr.client, COMSIG_POPUP_CLEARED)
+		popup_screen.hide_from(usr)
+
