@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - code_imp: "Changes floor diseases from advanced diseases into basic diseases. Should mostly function the same, except you can't mutate them."

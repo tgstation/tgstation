@@ -553,3 +553,15 @@
       else configurate manipulator settings.'
   - bugfix: 'Big Manipulator: Fixes random disappearance of a part of the manipulator
       ui.'
+2025-03-19:
+  Ghommie:
+  - bugfix: Fixing an issue with food exports.
+  - bugfix: fixed a small rendering issue with fishes inside an aquarium.
+  Melbert:
+  - bugfix: Fixed drunkness mood printout
+  SmArtKar:
+  - bugfix: Fixed premium internals boxes still being stretched
+  Twaticus:
+  - image: resprites party pod and harvester
+  hack-wrench:
+  - rscadd: Added syndie fitness nunchuks to spy uplink (medium-high bounty)
