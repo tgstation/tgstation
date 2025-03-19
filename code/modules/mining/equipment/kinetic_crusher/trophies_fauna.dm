@@ -90,7 +90,6 @@
 	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
 	var/missing_health_desc
 
-
 /obj/item/crusher_trophy/goliath_tentacle/Initialize(mapload)
 	. = ..()
 	missing_health_desc = 1 / missing_health_ratio / bonus_value
