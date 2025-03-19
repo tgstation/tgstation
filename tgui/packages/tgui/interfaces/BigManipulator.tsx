@@ -51,44 +51,88 @@ export const BigManipulator = (props) => {
     max_delay,
   } = data;
   return (
-    <Window title="Manipulator Interface" width={320} height={420}>
+    <Window title="Manipulator Interface" width={320} height={340}>
       <Window.Content>
         <Section
-          title="Action panel"
+          title="Action Panel"
           buttons={
-            <Box>
-              <Button
-                icon="power-off"
-                content={active ? 'On' : 'Off'}
-                selected={active}
-                onClick={() => act('on')}
-              />
-              <Button
-                icon="eject"
-                tooltip="drop item contained in manipulator"
-                onClick={() => act('drop')}
-              />
-            </Box>
+            <Button
+              icon="power-off"
+              selected={active}
+              content={active ? 'On' : 'Off'}
+              onClick={() => act('on')}
+            />
           }
         >
+          <Stack
+            style={{
+              lineHeight: '2em',
+              marginBottom: '0px',
+            }}
+          >
+            <Stack.Item grow>
+              <Stack>
+                <Stack.Item
+                  style={{
+                    marginRight: '10px',
+                  }}
+                >
+                  Delay:
+                </Stack.Item>
+                <Stack style={{ width: '100%' }}>
+                  <Stack.Item>
+                    <Button
+                      icon="backward-step"
+                      onClick={() =>
+                        act('changeDelay', {
+                          new_delay: min_delay,
+                        })
+                      }
+                    />
+                  </Stack.Item>
+                  <Stack.Item grow>
+                    {' '}
+                    <Slider
+                      style={{
+                        marginTop: '-5px',
+                      }}
+                      step={delay_step}
+                      my={1}
+                      value={delay_value}
+                      minValue={min_delay}
+                      maxValue={max_delay}
+                      unit="sec."
+                      onDrag={(e, value) =>
+                        act('changeDelay', {
+                          new_delay: value,
+                        })
+                      }
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="forward-step"
+                      onClick={() =>
+                        act('changeDelay', {
+                          new_delay: max_delay,
+                        })
+                      }
+                    />
+                  </Stack.Item>
+                </Stack>
+              </Stack>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                content={'Drop'}
+                icon="eject"
+                tooltip="Disengage the claws, dropping the held item"
+                onClick={() => act('drop')}
+              />
+            </Stack.Item>
+          </Stack>
+
           <Stack.Item grow>
-            <Button
-              content={`type to take: ${selected_type}`}
-              tooltip="changes type of item that manipulator will pick up."
-              onClick={() => act('change_take_item_type')}
-            />
-            <Button
-              content={`Mode: ${manipulate_mode}`}
-              tooltip="click to change manipulator mode"
-              onClick={() => act('change_mode')}
-            />
-          </Stack.Item>
-          <Stack.Item grow>
-            <Button
-              content={`filter: ${item_as_filter ? `${item_as_filter}` : `no filter`}`}
-              tooltip="click on this button with item in hands to add filter on this item."
-              onClick={() => act('add_filter')}
-            />
             {manipulate_mode === 'use' && (
               <Section fill>
                 <Button
@@ -105,85 +149,211 @@ export const BigManipulator = (props) => {
                 />
               </Section>
             )}
-            {manipulate_mode === 'throw' && (
-              <Button
-                content={`Throw range: ${throw_range}`}
-                tooltip="distance an object will travel when thrown"
-                onClick={() => act('change_throw_range')}
-              />
-            )}
           </Stack.Item>
         </Section>
-        <LabeledList.Item
-          label="Delay Seconds"
-          buttons={
-            <Box>
-              <Button
-                width={4}
-                lineHeight={2}
-                align="center"
-                icon="angles-left"
-                onClick={() =>
-                  act('changeDelay', {
-                    new_delay: min_delay,
-                  })
-                }
-              />
-              <Button
-                width={4}
-                lineHeight={2}
-                align="center"
-                icon="angles-right"
-                onClick={() =>
-                  act('changeDelay', {
-                    new_delay: max_delay,
-                  })
-                }
-              />
-            </Box>
-          }
-        >
-          <Slider
-            step={delay_step}
-            my={1}
-            value={delay_value}
-            minValue={min_delay}
-            maxValue={max_delay}
-            unit="sec."
-            onDrag={(e, value) =>
-              act('changeDelay', {
-                new_delay: value,
-              })
-            }
-          />
-        </LabeledList.Item>
-        {settings_list.length >= 2 && (
-          <Section fill>
-            {settings_list.length >= 2 && (
-              <Button
-                content={'Only 1 priority'}
-                selected={highest_priority}
-                tooltip="manipulate only on 1 priority in priority list"
-                onClick={() => act('highest_priority_change')}
-              />
+        <Section title={'Configuration'}>
+          <Table>
+            <Table.Row
+              className="candystripe"
+              style={{
+                height: '2em',
+                padding: '20px',
+                lineHeight: '2em',
+              }}
+            >
+              <Table.Cell>
+                <Box
+                  style={{
+                    marginLeft: '5px',
+                  }}
+                >
+                  Interaction Mode
+                </Box>
+              </Table.Cell>
+              <Table.Cell
+                style={{
+                  width: 'min-content',
+                  whiteSpace: 'nowrap',
+                  textAlign: 'right',
+                }}
+              >
+                <Button
+                  content={manipulate_mode.toUpperCase()}
+                  tooltip="Cycle through interaction modes"
+                  onClick={() => act('change_mode')}
+                />
+              </Table.Cell>
+            </Table.Row>
+            {manipulate_mode === 'throw' && (
+              <Table.Row
+                className="candystripe"
+                style={{
+                  height: '2em',
+                  padding: '20px',
+                  lineHeight: '2em',
+                }}
+              >
+                <Table.Cell>
+                  <Box
+                    style={{
+                      marginLeft: '5px',
+                    }}
+                  >
+                    Throwing Range
+                  </Box>
+                </Table.Cell>
+                <Table.Cell
+                  style={{
+                    width: 'min-content',
+                    whiteSpace: 'nowrap',
+                    textAlign: 'right',
+                  }}
+                >
+                  <Button
+                    content={`${throw_range} TILE${throw_range > 1 ? 'S' : ''}`}
+                    tooltip="Cycle the distance an object will travel when thrown"
+                    onClick={() => act('change_throw_range')}
+                  />
+                </Table.Cell>
+              </Table.Row>
             )}
+
+            <Table.Row
+              className="candystripe"
+              style={{
+                height: '2em',
+                paddingLeft: '20px',
+                lineHeight: '2em',
+              }}
+            >
+              <Table.Cell grow width={'100%'}>
+                <Box
+                  style={{
+                    marginLeft: '5px',
+                  }}
+                >
+                  Interaction Filter
+                </Box>
+              </Table.Cell>
+              <Table.Cell
+                style={{
+                  width: 'min-content',
+                  whiteSpace: 'nowrap',
+                  textAlign: 'right',
+                }}
+              >
+                <Button
+                  content={selected_type.toUpperCase()}
+                  tooltip="Cycle through types of items to filter"
+                  onClick={() => act('change_take_item_type')}
+                />
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row
+              className="candystripe"
+              style={{
+                height: '2em',
+                paddingLeft: '20px',
+                lineHeight: '2em',
+              }}
+            >
+              <Table.Cell grow width={'100%'}>
+                <Box
+                  style={{
+                    marginLeft: '5px',
+                  }}
+                >
+                  Item Filter
+                </Box>
+              </Table.Cell>
+              <Table.Cell
+                style={{
+                  width: 'min-content',
+                  whiteSpace: 'nowrap',
+                  textAlign: 'right',
+                }}
+              >
+                <Button
+                  content={item_as_filter ? item_as_filter : 'NO FILTER'}
+                  tooltip={
+                    <Box>
+                      Click while holding an item to
+                      <Box /> set filtering type
+                    </Box>
+                  }
+                  onClick={() => act('add_filter')}
+                  tooltipPosition="left"
+                />
+              </Table.Cell>
+            </Table.Row>
+            {manipulate_mode != 'throw' && (
+              <Table.Row
+                className="candystripe"
+                style={{
+                  height: '2em',
+                  paddingLeft: '20px',
+                  lineHeight: '2em',
+                }}
+              >
+                <Table.Cell grow width={'100%'}>
+                  <Box
+                    style={{
+                      marginLeft: '5px',
+                    }}
+                  >
+                    Use First Dropoff Point Only
+                  </Box>
+                </Table.Cell>
+                <Table.Cell
+                  style={{
+                    width: 'min-content',
+                    whiteSpace: 'nowrap',
+                    textAlign: 'right',
+                  }}
+                >
+                  <Button
+                    content={highest_priority ? 'TRUE' : 'FALSE'}
+                    selected={highest_priority}
+                    tooltip="Only interact with the highest dropoff point in the list"
+                    onClick={() => act('highest_priority_change')}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            )}
+          </Table>
+        </Section>
+        {manipulate_mode != 'throw' && (
+          <Section>
             <Table>
               {settings_list.map((setting) => (
-                <Table.Row key={setting.name} className="candystripe">
-                  <Table.Cell width={3}>
-                    {setting.name} {` [priority: ${setting.priority_width}]`}
-                    {setting.priority_width >= 2 && (
-                      <Button
-                        icon="arrow-up"
-                        align="right"
-                        onClick={() =>
-                          act('change_priority', {
-                            priority: setting.priority_width,
-                          })
-                        }
-                      />
-                    )}
+                <Table.Row
+                  key={setting.name}
+                  className="candystripe"
+                  style={{
+                    height: '2em',
+                    paddingLeft: '20px',
+                    lineHeight: '2em',
+                  }}
+                >
+                  <Table.Cell
+                    style={{
+                      paddingLeft: '2px',
+                      width: '2em',
+                    }}
+                  >
+                    <Button
+                      icon="arrow-up"
+                      onClick={() =>
+                        act('change_priority', {
+                          priority: setting.priority_width,
+                        })
+                      }
+                    />
                   </Table.Cell>
+                  <Table.Cell>
+                    <Box>{setting.name}</Box>
+                  </Table.Cell>
+                  <Table.Cell>{setting.priority_width}</Table.Cell>
                 </Table.Row>
               ))}
             </Table>
