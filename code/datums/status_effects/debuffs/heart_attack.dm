@@ -34,7 +34,7 @@
 /datum/status_effect/heart_attack/on_remove()
 	UnregisterSignal(owner, list(COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_MINOR_SHOCK, COMSIG_DEFIBRILLATOR_SHOCKED))
 
-/datum/status_effect/heart_attack/tick()
+/datum/status_effect/heart_attack/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/human_owner = owner
 	if(!istype(human_owner) || !human_owner.can_heartattack())
 		qdel(src) //No heart? No effects.
@@ -48,13 +48,13 @@
 	var/oxyloss_sum = 0 //A sum of the oxyloss we will inflict by the end of this cycle.
 
 	if(time_until_stoppage > ATTACK_STAGE_THREE)
-		if(prob(5))
+		if(SPT_PROB(5, seconds_between_ticks))
 			owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 25, FALSE, use_reverb = FALSE)
 			owner.adjustStaminaLoss(5)
 
 	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)	//This coughing gets replaced with worse coughing, no need to stack it.
 		owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 25, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
-		if(prob(10))
+		if(SPT_PROB(10, seconds_between_ticks))
 			owner.emote("cough")
 			owner.adjustStaminaLoss(10)
 			oxyloss_sum += 4
@@ -64,12 +64,13 @@
 			ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_HIGH, type)
 			owner.med_hud_set_status()
 			visible = TRUE //We do not reset this status until it's fully cured. Once it's been made apparent, there's no reason to hide it again until it is resolved. It will only confuse players.
-		if(prob(15))
+		if(SPT_PROB(15, seconds_between_ticks))
 			to_chat(owner, span_danger("You feel a sharp pain in your chest!"))
-			if(prob(25))
+			if(SPT_PROB(15, seconds_between_ticks))
 				human_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
 			owner.emote("cough")
-		if(prob(8))
+			oxyloss_sum += 1
+		if(SPT_PROB(8, seconds_between_ticks))
 			to_chat(owner, span_danger("You feel very weak and dizzy..."))
 			owner.adjust_confusion_up_to(6 SECONDS, 10 SECONDS)
 			owner.adjustStaminaLoss(20)
@@ -81,15 +82,15 @@
 		sound = FALSE
 		owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 100, FALSE, use_reverb = FALSE)
 
-		if(prob(5))
+		if(SPT_PROB(5, seconds_between_ticks))
 			to_chat(owner, span_userdanger("It feels like you're shutting down..."))
 			owner.adjust_dizzy_up_to(4 SECONDS, 10 SECONDS)
 			owner.adjust_eye_blur_up_to(4 SECONDS, 20 SECONDS)
 			owner.adjustStaminaLoss(20)
 
-		if(prob(5))
+		if(SPT_PROB(5, seconds_between_ticks))
 			owner.emote("cough")
-			if(prob(5))
+			if(SPT_PROB(5, seconds_between_ticks))
 				to_chat(owner, span_userdanger("You cough. Everything goes dark. You're going to die soon."))
 				owner.adjust_temp_blindness(10 SECONDS) //Are you panicking yet? You should be panicking by now.
 			else
