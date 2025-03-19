@@ -255,6 +255,9 @@ Chilling extracts:
 	var/mob/living/L = user
 	if(!istype(user))
 		return
+	if(HAS_TRAIT(user, TRAIT_NOBLOOD))
+		to_chat(user, span_warning("You have no blood with which to use this weapon!"))
+		return
 	var/obj/item/held = L.get_active_held_item() //This should be itself, but just in case...
 	L.dropItemToGround(held)
 	var/obj/item/gun/magic/bloodchill/gun = new(user)
