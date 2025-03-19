@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Mech PKA now once again mines turfs and does full damage on its AOE explosion (still only hitting mining mobs)."
+  - balance: "The standard PKA AOE mods are now by default 10% capacity. But they cannot be used with one another."
+  - balance: "The standard PKA offensive AOE mod now does the PKA's full damage in its AOE."
+  - balance: "Mining AOEs will affect everything within a 2 tile radius around the point of impact, up from a 1 tile radius."

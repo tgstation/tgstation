@@ -107,6 +107,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/allow_negative_cost = FALSE
 	/// coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
 	var/k_elasticity = 1/30
+	/// Coefficient used in the recovery of elastic price calculation. See Process, this value and k_elasticity are multiplied together to form the exponent that returns the price to normal.
+	var/k_recovery_elasticity = 1/30
 	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
 	var/amount_report_multiplier = 1
 	/// Type of the exported object. If none, the export datum is considered base type.
@@ -137,7 +139,8 @@ Then the player gets the profit from selling his own wasted time.
 	return ..()
 
 /datum/export/process()
-	cost *= NUM_E**(k_elasticity * (1/30))
+	cost *= NUM_E**(k_elasticity * k_recovery_elasticity)
+	// A little note here based on the standard values for k_recovery_elasticity: 1/30 will result in a price that started at 20% to go back to 100% in around 20 minutes, ramping up over time.
 	if(cost > init_cost)
 		cost = init_cost
 
