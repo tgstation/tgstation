@@ -403,7 +403,7 @@
 	. = ..()
 	. += span_notice("<b><i>Looking down at \the [src], you recall something you read in a promotional pamphlet... </i></b>")
 
-	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity.\
+	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity. \
 		This allows even less powerful cartridges to put out significant amounts of stopping power.")
 
 	. += span_notice("<b><i>However, you also remember some of the rumors...  </i></b>")

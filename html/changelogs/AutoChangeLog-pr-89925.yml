@@ -1,5 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - rscadd: "tweaks the raptor taming minigame to be fairer"
-  - rscadd: "the taming minigame's difficulty now relies on the raptor's personality as well as the rider's quirks"
