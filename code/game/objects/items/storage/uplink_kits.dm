@@ -674,6 +674,17 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 
+/obj/item/storage/box/syndie_kit/shotgun_surplus
+	name = "\improper Donk Co. 'Donk Spike' flechette 12g Bulldog magazine box"
+	desc = "A shoddy box full of Donk Co. 'Donk Spike' flechette 12g. It is debatable whether or not these are actually \
+		better or worse than standard flechette. Donk Co. did genuinely believe in this product being the future of military \
+		ammunition production. The only reason it didn't see wider adoption was a lack of faith in the product. Do you \
+		believe in Donk? Time to put that to the test."
+
+/obj/item/storage/box/syndie_kit/sniper_surplus/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_box/magazine/m12g/donk(src)
+
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
 
