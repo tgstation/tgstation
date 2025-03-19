@@ -3279,6 +3279,7 @@
 	if (eyes && !IS_ROBOTIC_ORGAN(eyes))
 		eyes.eye_color_left = color
 		eyes.eye_color_right = color
+		affected_human.update_body()
 
 /datum/reagent/luminescent_fluid/red
 	name = "Red Luminiscent Fluid"

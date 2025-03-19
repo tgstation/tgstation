@@ -1,4 +1,0 @@
-author: "EnnyDaiz"
-delete-after: True
-changes:
-  - bugfix: "remove downmix stereo=>mono where it is not required"

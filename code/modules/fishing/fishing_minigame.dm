@@ -406,8 +406,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	deltimer(next_phase_timer)
 	phase = WAIT_PHASE
 	//Bobbing animation
-	animate(float, pixel_y = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
-	animate(pixel_y = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(float, pixel_z = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_biting_phase)), wait_time, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	if(float.spin_frequency)
 		set_lure_timers()
@@ -464,8 +464,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 				send_alert("organ!!!")
 	else
 		send_alert("!!!")
-	animate(float, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
-	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
+	animate(float, pixel_z = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -3, time = 5, flags = ANIMATION_RELATIVE)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
 		addtimer(CALLBACK(src, PROC_REF(automatically_start_minigame)), 0.2 SECONDS)
 	// Setup next phase

@@ -26,7 +26,7 @@
 	atom_storage.max_slots += 2
 	atom_storage.max_total_storage += 4
 	name = "large [name]"
-	transform = transform.Scale(1.25, 1)
+	icon_state = "[icon_state]_large"
 
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)

@@ -1,0 +1,4 @@
+author: "warbluke"
+delete-after: True
+changes:
+  - rscadd: "Added Holodisks to loadout options"
