@@ -12,9 +12,6 @@
 	bonus_value = 5
 	wildhunter_drop = /obj/item/stack/sheet/sinew
 
-/obj/item/crusher_trophy/watcher_wing/Initialize(mapload)
-	. = ..()
-
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
 
@@ -39,9 +36,6 @@
 	bonus_value = 5
 	wildhunter_drop = /obj/item/stack/sheet/sinew
 
-/obj/item/crusher_trophy/blaster_tubes/magma_wing/Initialize(mapload)
-	. = ..()
-
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
 	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
 
@@ -60,9 +54,6 @@
 	bonus_value = 8
 	wildhunter_drop = /obj/item/stack/sheet/sinew
 
-/obj/item/crusher_trophy/watcher_wing/ice_wing/Initialize(mapload)
-	. = ..()
-
 //legion
 /obj/item/crusher_trophy/legion_skull
 	name = "legion skull"
@@ -71,9 +62,6 @@
 	denied_type = /obj/item/crusher_trophy/legion_skull
 	bonus_value = 3
 	wildhunter_drop = /obj/item/organ/monster_core/regenerative_core/legion // if you killed blood drunk you can afford stabilizer potions sooo....
-
-/obj/item/crusher_trophy/legion_skull/Initialize(mapload)
-	. = ..()
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
@@ -128,9 +116,6 @@
 	bonus_value = 1
 	wildhunter_drop = /obj/item/organ/monster_core/rush_gland
 
-/obj/item/crusher_trophy/lobster_claw/Initialize(mapload)
-	. = ..()
-
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly rebuke the target for [bonus_value] seconds"
 
@@ -148,9 +133,6 @@
 	wildhunter_drop = /obj/item/organ/monster_core/brimdust_sac
 	/// Cartoon punching vfx
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
-
-/obj/item/crusher_trophy/brimdemon_fang/Initialize(mapload)
-	. = ..()
 
 /obj/item/crusher_trophy/brimdemon_fang/effect_desc()
 	return "mark detonation to create visual and audiosensory effects at the target"
