@@ -182,10 +182,9 @@
 		return
 	usr.client.setup_popup("camera-[REF(src)]", width, height, 2, "1984")
 	popup_screen.display_to(usr)
-
-	RegisterSignal(usr.client, COMSIG_POPUP_CLEARED, PROC_REF(on_popup_clear))
+	RegisterSignal(popup_screen, COMSIG_POPUP_CLEARED, PROC_REF(on_popup_clear))
 
 /atom/movable/screen/movable/pic_in_pic/proc/on_popup_clear(client/source, window)
 	SIGNAL_HANDLER
 	popup_screen.hide_from_client(source)
-	UnregisterSignal(source, COMSIG_POPUP_CLEARED)
+	UnregisterSignal(popup_screen, COMSIG_POPUP_CLEARED)
