@@ -59,8 +59,8 @@
 			icon = 'icons/effects/eldritch.dmi',
 			loc = viewer,
 			icon_state = "eye_flash",
-			pixel_x = -viewer.pixel_x,
-			pixel_y = -viewer.pixel_y,
+			pixel_w = -viewer.pixel_x,
+			pixel_z = -viewer.pixel_y,
 		)
 		flick_overlay_global(flashed_overlay, show_to = GLOB.clients, duration = animation_time)
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(hide_eye)), animation_time, TIMER_STOPPABLE)
