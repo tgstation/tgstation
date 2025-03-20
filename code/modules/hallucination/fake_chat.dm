@@ -13,46 +13,59 @@
 	src.specific_message = specific_message
 	return ..()
 
+/// When passed a mob, returns a list of languages that mob could theoretically speak IF a blank slate.
+/datum/hallucination/chat/proc/get_hallucinating_spoken_languages(atom/movable/who)
+	var/override_typepath
+	if(iscarbon(who))
+		var/mob/living/carbon/human_who = who
+		override_typepath = human_who.dna?.species?.species_language_holder
+
+	var/datum/language_holder/what_they_speak = GLOB.prototype_language_holders[override_typepath || who.initial_language_holder]
+	return what_they_speak?.spoken_languages?.Copy() || list()
+
 /datum/hallucination/chat/start()
 	var/mob/living/carbon/human/speaker
 	var/list/datum/language/understood_languages = hallucinator.get_language_holder().understood_languages
 	var/understood_language
-	var/list/valid_humans = list()
-	var/list/valid_corpses = list()
-	for(var/mob/living/carbon/nearby_human in view(hallucinator))
-		if(nearby_human == hallucinator)
-			continue
-		if(nearby_human.stat == DEAD)
-			valid_corpses += nearby_human
-			continue
-		valid_humans += nearby_human
 
-	// pick a nearby human which can speak a language the hallucinator understands
-	for(var/mob/living/carbon/nearby_human in shuffle(valid_humans))
-		var/list/shared_languages = nearby_human.get_language_holder().understood_languages & understood_languages
-		if(length(shared_languages))
+	if(!force_radio)
+		var/list/valid_humans = list()
+		var/list/valid_corpses = list()
+		for(var/mob/living/carbon/nearby_human in view(hallucinator))
+			if(nearby_human == hallucinator)
+				continue
+			if(nearby_human.stat == DEAD)
+				valid_corpses += nearby_human
+				continue
+			valid_humans += nearby_human
+
+		// pick a nearby human which can speak a language the hallucinator understands
+		for(var/mob/living/carbon/nearby_human in shuffle(valid_humans))
+			var/list/shared_languages = get_hallucinating_spoken_languages(nearby_human) & understood_languages
+			if(!length(shared_languages)) // future idea : have people hallucinating off their minds ignore this check
+				continue
 			speaker = nearby_human
 			understood_language = pick(shared_languages)
 			break
 
-	// corpses disrespect language because they're... dead
-	if(!speaker && length(valid_corpses))
-		speaker = pick(valid_corpses)
+		// corpses disrespect language because they're... dead
+		if(isnull(speaker) && length(valid_corpses))
+			speaker = pick(valid_corpses)
 
 	// Get person to affect if radio hallucination
-	var/is_radio = !speaker || force_radio
+	var/is_radio = force_radio || isnull(speaker)
 	if(is_radio)
 		for(var/datum/mind/crew_mind in shuffle(get_crewmember_minds()))
 			if(crew_mind == hallucinator.mind)
 				continue
-			var/mob/living/carbon/distant_human = crew_mind.current
-			var/list/shared_languages = distant_human.get_language_holder().understood_languages & understood_languages
-			if(length(shared_languages))
-				speaker = distant_human
-				understood_language = pick(shared_languages)
-				break
+			var/list/shared_languages = get_hallucinating_spoken_languages(crew_mind.current) & understood_languages
+			if(!length(shared_languages))
+				continue
+			speaker = crew_mind.current
+			understood_language = pick(shared_languages)
+			break
 
-	if(!speaker)
+	if(isnull(speaker))
 		return
 
 	// Time to generate a message.
