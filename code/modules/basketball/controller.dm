@@ -18,9 +18,9 @@ GLOBAL_VAR(basketball_game)
  */
 /datum/basketball_controller
 	/// Template picked when the game starts. used for the name and desc reading
-	var/datum/map_template/basketball/current_map
-	/// Map generation tool that deletes the current map after the game finishes
-	var/datum/map_generator/massdelete/map_deleter
+	var/datum/lazy_template/basketball/current_map
+	/// Our turf reservation AKA where the arena is
+	var/datum/turf_reservation/location
 	/// Total amount of time basketball is played for
 	var/game_duration = 3 MINUTES
 
@@ -46,14 +46,17 @@ GLOBAL_VAR(basketball_game)
 
 /datum/basketball_controller/New()
 	. = ..()
+	if(GLOB.basketball_game)
+		qdel(src)
+		CRASH("A basketball controller already exists.")
 	GLOB.basketball_game = src
-	map_deleter = new
 
 /datum/basketball_controller/Destroy(force)
 	. = ..()
 	GLOB.basketball_game = null
+	current_map = null
+	location = null
 	end_game()
-	qdel(map_deleter)
 
 /**
  * Triggers at beginning of the game when there is a confirmed list of valid, ready players.
@@ -68,18 +71,13 @@ GLOBAL_VAR(basketball_game)
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
 /datum/basketball_controller/proc/prepare_game(ready_players)
-	var/list/possible_maps = subtypesof(/datum/map_template/basketball)
-	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/basketball/game_area) in GLOB.landmarks_list)
+	var/list/possible_maps = subtypesof(/datum/lazy_template/basketball)
 
 	current_map = pick(possible_maps)
 	current_map = new current_map
-
-	if(!spawn_area)
-		CRASH("No spawn area detected for Basketball Minigame!")
-	var/list/bounds = current_map.load(spawn_area)
-	if(!bounds)
+	location = current_map.lazy_load()
+	if(!location)
 		CRASH("Loading basketball map failed!")
-	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 25, spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
 	var/turf/home_hoop_turf = get_turf(locate(/obj/effect/landmark/basketball/team_spawn/home_hoop) in GLOB.landmarks_list)
 	if(!home_hoop_turf)
@@ -134,9 +132,8 @@ GLOBAL_VAR(basketball_game)
  * Called when the game is setting up, AFTER map is loaded but BEFORE the game start. Creates and places each body and gives the correct player key
  */
 /datum/basketball_controller/proc/create_bodies(ready_players)
-	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball) - current_map.type
-	var/datum/map_template/basketball/away_map = pick(possible_away_teams)
-	away_map = new away_map
+	var/list/possible_away_teams = subtypesof(/datum/lazy_template/basketball) - current_map.type
+	var/datum/lazy_template/basketball/away_map = pick(possible_away_teams)
 
 	var/list/home_spawnpoints = home_team_landmarks.Copy()
 	var/list/away_spawnpoints = away_team_landmarks.Copy()
@@ -148,7 +145,7 @@ GLOBAL_VAR(basketball_game)
 
 	// rename the hoops to their appropriate teams names
 	home_hoop.name = current_map.team_name
-	away_hoop.name = away_map.team_name
+	away_hoop.name = away_map::team_name
 
 	var/player_count = 0
 	// if total players is odd number then the odd man out is a referee
@@ -173,8 +170,8 @@ GLOBAL_VAR(basketball_game)
 			spawn_landmark = pick_n_take(away_spawnpoints)
 			away_team_players |= player_key
 			home_hoop.team_ckeys |= player_key // to restrict scoring on opponents hoop rapidly
-			team_uniform = away_map.home_team_uniform
-			team_name = away_map.team_name
+			team_uniform = away_map::home_team_uniform
+			team_name = away_map::team_name
 
 		var/mob/living/carbon/human/baller = new(get_turf(spawn_landmark))
 
@@ -264,13 +261,12 @@ GLOBAL_VAR(basketball_game)
 		if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
 			QDEL_NULL(competitor)
 
-	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
-	QDEL_NULL(current_map)
-
-	//map gen does not deal with landmarks
 	QDEL_LIST(home_team_landmarks)
 	QDEL_LIST(away_team_landmarks)
 	QDEL_LIST(referee_landmark)
+	current_map.reservations -= location
+	current_map = null
+	QDEL_NULL(location)
 
 /**
  * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
