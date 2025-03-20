@@ -15,8 +15,6 @@ GLOBAL_LIST_INIT(common_cubes, typecacheof(list(
 	/obj/item/storage/box/donkpockets,
 	/obj/item/storage/box/ingredients/wildcard,
 	/obj/item/storage/box/zipties,
-	/obj/item/stock_parts/power_store/cell,
-	/obj/item/stock_parts/power_store/cell/upgraded,
 	// Custom
 	/obj/item/cube/random,
 ), only_root_path = TRUE))
@@ -32,12 +30,12 @@ GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
 	/obj/item/mmi/posibrain,
 	// Custom
 	/obj/item/cube/random/uncommon,
-	/obj/item/cube/colorful,
+/obj/item/cube/colorful,
 	/obj/item/cube/colorful/plane,
 	/obj/item/cube/colorful/isometric,
-	/obj/item/reagent_containers/pill/cube/ice,
-	/obj/item/reagent_containers/pill/cube/sugar,
-	/obj/item/reagent_containers/pill/cube/salt,
+	/obj/item/reagent_containers/applicator/pill/cube/ice,
+	/obj/item/reagent_containers/applicator/pill/cube/sugar,
+	/obj/item/reagent_containers/applicator/pill/cube/salt,
 )))
 
 /// List of Rare Cubes
@@ -63,10 +61,11 @@ GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
 	/obj/item/cube/colorful/pixel,
 	/obj/item/cube/reference/puzzle,
 	/obj/item/cube/colorful/meta,
+	// t5 parts?
 	// Oxygen cube, generates oxygen
-	//Holocrons (Star Wars)
-	//Energon Cubes (Transformers)
-	//Nitrous boxes (Crash bandicoot)
+	//Holocrons (Star Wars) Probably just a tech disk
+	//Energon Cubes (Transformers) t5 battery?
+	//Nitrous boxes (Crash bandicoot) grenade
 ), only_root_path = TRUE))
 
 /// List of Legendary Cubes
@@ -75,11 +74,11 @@ GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
 	/obj/item/blackbox,
 	// Custom
 	/obj/item/cube/random/legendary,
-	/obj/item/cube/sphere,
-	//Spessman cube (skin cube)
-	//Dehydration cube(megamind)
-	//Tesseract(marvel)
-	//Pain Box(Dune)
+	/obj/item/cube/colorful/sphere,
+	//Spessman cube (skin cube) monkey cube but human
+	//Dehydration cube(megamind) monkey cube but random!
+	//Tesseract(marvel) t6 battery fuck it
+	//Pain Box(Dune) maxes out your pain
 )))
 
 /// List of Mythical Cubes

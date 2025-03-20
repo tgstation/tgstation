@@ -55,4 +55,4 @@ GLOBAL_LIST_INIT(typecache_general_bad_things_to_easily_move, typecacheof(list(
 )))
 
 /// Typecache of all materials.
-GLOBAL_LIST_INIT(typecache_material, typecacheof(/datum/material))
+GLOBAL_LIST_INIT(typecache_material, typecacheof(/datum/material, ignore_root_path = TRUE))

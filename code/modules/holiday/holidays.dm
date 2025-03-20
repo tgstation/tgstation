@@ -271,7 +271,7 @@
 	)
 	// Mmmmmm cube
 	var/list/pill_list = GLOB.reagent_containers[CAT_PILLS]
-	pill_list[/obj/item/reagent_containers/pill/cube] = TRUE
+	pill_list[/obj/item/reagent_containers/applicator/pill/cube] = TRUE
 
 /datum/holiday/april_fools/get_holiday_colors(atom/thing_to_color)
 	return "#[random_short_color()]"

@@ -60,69 +60,95 @@
 	rarity = EPIC_CUBE
 	//! Todo: Maybe this lets PLAYERS go undertile? see if that breaks shit.
 
-// Material cubes
-/obj/item/cube/material
-	name = "material cube"
-	desc = "Before the invention of material silos, stations all over the galaxy used to store their materials in the form of ultra-dense cubes."
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
-	rarity = RARE_CUBE
-
-/obj/item/cube/material/Initialize(mapload)
-	name = "cube"
-	var/datum/material/cube_mat = pick(GLOB.typecache_material)
-	custom_materials = list(cube_mat = max(SHEET_MATERIAL_AMOUNT * (1+(cube_mat.mineral_rarity/10)),1))
-	give_random_icon()
-	. = ..()
-
-
-// Pill cubes
-/obj/item/reagent_containers/pill/cube
-	icon = 'icons/obj/cubes.dmi'
-	icon_state = "pill_cube"
-	var/cube_rarity = COMMON_CUBE
-
-/obj/item/reagent_containers/pill/cube/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/cuboid, cube_rarity = cube_rarity)
-	color = mix_color_from_reagents(reagents.reagent_list) | COLOR_WHITE
-
-/obj/item/reagent_containers/pill/cube/ice
-	name = "ice cube"
-	desc = "The most common form of recreational ice, rivaled only by skating rinks."
-	icon_state = "small"
-	list_reagents = list(/datum/reagent/consumable/ice = 15)
-	// Hoping this means it won't melt
-	reagent_flags = NO_REACT
-	alpha = 200
-	cube_rarity = UNCOMMON_CUBE
-
-/obj/item/reagent_containers/pill/cube/sugar
-	name = "sugar cube"
-	desc = "Perfect for those who love a good cup of tea."
-	icon_state = "small"
-	list_reagents = list(/datum/reagent/consumable/sugar = 15)
-	cube_rarity = UNCOMMON_CUBE
-
-/obj/item/reagent_containers/pill/cube/salt
-	name = "salt cube"
-	desc = "Perfect for those who despise a good cup of tea."
-	icon_state = "small"
-	list_reagents = list(/datum/reagent/consumable/salt = 15)
-	cube_rarity = UNCOMMON_CUBE
-
 
 // Sphere (disgusting)
-/obj/item/cube/sphere
+/obj/item/cube/colorful/sphere
 	name = "sphere"
 	desc = "I think I'm gonna be sick."
 	icon_state = "sphere"
 	rarity = LEGENDARY_CUBE
 
-/obj/item/cube/sphere/attack_hand_secondary(mob/user, list/modifiers)
+/obj/item/cube/colorful/sphere/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
 	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
 	user.do_attack_animation(src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+
+// Material cubes
+/obj/item/cube/material
+	name = "material cube"
+	desc = "Before the invention of material silos, stations all over the galaxy used to store their materials in the form of ultra-dense cubes."
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	custom_materials = list()
+	rarity = RARE_CUBE
+
+/obj/item/cube/material/Initialize(mapload)
+	name = "cube"
+	var/datum/material/cube_mat = pick(GLOB.typecache_material)
+	custom_materials[cube_mat] = max(SHEET_MATERIAL_AMOUNT * (1+(cube_mat.mineral_rarity/10)),1)
+	give_random_icon()
+	. = ..()
+
+// If there's an easier way to handle this then I don't know it
+/obj/item/cube/material/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!istype(interacting_with, /obj/machinery))
+		return NONE
+	var/obj/machinery/attackin = interacting_with
+	var/datum/component/remote_materials/materials = attackin.GetComponent(/datum/component/material_container)
+	if(!materials)
+		return NONE
+	var/amount_inserted = materials.insert_item(/obj/item/cube/material)
+	if(amount_inserted)
+		to_chat(user, span_notice("[src] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [attackin]"))
+	else
+		to_chat(user, span_warning("[src] was rejected by [attackin]"))
+
+	return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+// Pill cubes
+/obj/item/reagent_containers/applicator/pill/cube
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "pill_cube"
+	fill_icon = 'icons/obj/cubes.dmi'
+	fill_icon_thresholds = list(0)
+	/// Pass for the component
+	var/cube_rarity = COMMON_CUBE
+
+/obj/item/reagent_containers/applicator/pill/cube/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = cube_rarity)
+
+/obj/item/reagent_containers/applicator/pill/cube/ice
+	name = "ice cube"
+	desc = "The most common form of recreational ice, rivaled only by skating rinks."
+	icon_state = "small"
+	list_reagents = list(/datum/reagent/consumable/ice = 15)
+	// Hoping this means it won't melt
+	reagent_flags = NO_REACT
+	alpha = 175
+	cube_rarity = UNCOMMON_CUBE
+
+/obj/item/reagent_containers/applicator/pill/cube/sugar
+	name = "sugar cube"
+	desc = "Perfect for those who love a good cup of tea."
+	icon_state = "small"
+	list_reagents = list(/datum/reagent/consumable/sugar = 15)
+	cube_rarity = UNCOMMON_CUBE
+
+/obj/item/reagent_containers/applicator/pill/cube/salt
+	name = "salt cube"
+	desc = "Perfect for those who <span class='danger'>despise</span> a good cup of tea."
+	icon_state = "small"
+	list_reagents = list(/datum/reagent/consumable/salt = 15)
+	cube_rarity = UNCOMMON_CUBE
+
+/obj/item/reagent_containers/applicator/pill/cube/pepper
+	name = "pepper cube"
+	desc = "Perfect for those who want a <b>really confusing</b> cup of tea."
+	icon_state = "small"
+	list_reagents = list(/datum/reagent/consumable/blackpepper = 15)
+	cube_rarity = UNCOMMON_CUBE

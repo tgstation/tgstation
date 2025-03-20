@@ -24,8 +24,6 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_POISONOUS_BAIT, INNATE_TRAIT) //bro is fishing using lithium...
-	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE)
 
 /* Cell variants*/
 /obj/item/stock_parts/power_store/cell/empty
@@ -104,7 +102,7 @@
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
-	
+
 
 /obj/item/stock_parts/power_store/cell/high/empty
 	empty = TRUE

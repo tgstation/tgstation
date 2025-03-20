@@ -1,3 +1,4 @@
+/// The root of all cubes. Entirely devoid of purpose, and yet so malleable to the whims of man. Go forth, build with the blocks of life.
 /obj/item/cube
 	name = "dev cube"
 	desc = "You shouldn't be seeing this cube!"
@@ -34,8 +35,9 @@
 			"isometric" = 250,
 			"small" = 15*rarity,
 			"massive" = 10*rarity,
-			"plane" = 5*rarity,
+			"plane" = 6*rarity,
 			"voxel" = 5+rarity,
+			"sphere" = 1+rarity,
 			"pixel" = 1
 		)
 	else

@@ -224,30 +224,6 @@
 
 /// Make the cube a food w/ random consumable reagents
 /obj/item/cube/random/proc/make_food()
-	/// I'm like 90% sure trying to reference the bitflags as a list was the reason my computer was crashing 4 times so I'm just putting it here instead
-	var/static/foodtype_list = list(
-		MEAT,
-		VEGETABLES,
-		RAW,
-		JUNKFOOD,
-		GRAIN,
-		FRUIT,
-		DAIRY,
-		FRIED,
-		ALCOHOL,
-		SUGAR,
-		GROSS,
-		TOXIC,
-		PINEAPPLE,
-		BREAKFAST,
-		CLOTH,
-		NUTS,
-		SEAFOOD,
-		ORANGES,
-		BUGS,
-		GORE,
-		STONE,
-	)
 	if(!reagents)
 		create_reagents(50, INJECTABLE | DRAWABLE | pick(AMOUNT_VISIBLE, TRANSPARENT) | pick(SEALED_CONTAINER, OPENCONTAINER))
 	var/list/cube_reagents
@@ -255,7 +231,7 @@
 	var/list/cube_tastes
 	for(var/r in 1 to rarity)
 		cube_reagents += list(subtypesof(/datum/reagent/consumable) = rand(2,5*rarity))
-		cube_foodtypes |= pick(foodtype_list)
+		cube_foodtypes |= get_random_bitflag("foodtypes")
 		cube_tastes += list("[pick(GLOB.adjectives)]" = rand(1,rarity))
 
 	AddComponentFrom(
