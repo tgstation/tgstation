@@ -212,22 +212,27 @@ DEFINE_BITFIELD(smoothing_junction, list(
 /// An inlined function used in both turf/Initialize and atom/Initialize.
 #define SETUP_SMOOTHING(...) \
 	if (smoothing_groups) { \
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
-			ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_groups); \
-		} \
-		SET_SMOOTHING_GROUPS(smoothing_groups); \
+		PARSE_SMOOTHING_GROUPS(smoothing_groups, smoothing_groups); \
 	} \
-\
 	if (canSmoothWith) { \
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
-			ASSERT_SORTED_SMOOTHING_GROUPS(canSmoothWith); \
-		} \
-		/* S_OBJ is always negative, and we are guaranteed to be sorted. */ \
-		if (canSmoothWith[1] == "-") { \
-			smoothing_flags |= SMOOTH_OBJ; \
-		} \
-		SET_SMOOTHING_GROUPS(canSmoothWith); \
+		PARSE_CAN_SMOOTH_WITH(canSmoothWith, canSmoothWith, smoothing_flags); \
 	}
+
+#define PARSE_SMOOTHING_GROUPS(parse_from, set_into) \
+	if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
+		ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_groups); \
+	} \
+	SET_SMOOTHING_GROUPS(parse_from, set_into);
+
+#define PARSE_CAN_SMOOTH_WITH(parse_from, set_into, set_flags_into) \
+	if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
+		ASSERT_SORTED_SMOOTHING_GROUPS(canSmoothWith); \
+	} \
+	/* S_OBJ is always negative, and we are guaranteed to be sorted. */ \
+	if (canSmoothWith[1] == "-") { \
+		set_flags_into |= SMOOTH_OBJ; \
+	} \
+	SET_SMOOTHING_GROUPS(parse_from, set_into);
 
 /// Given a smoothing groups variable, will set out to the actual numbers inside it
 #define UNWRAP_SMOOTHING_GROUPS(smoothing_groups, out) \
