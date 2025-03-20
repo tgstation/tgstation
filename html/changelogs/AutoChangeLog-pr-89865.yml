@@ -1,0 +1,11 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds 4-5 new hallucinations. Collect them all."
+  - balance: "If you are only hallucinating a little bit, the game will prefer to pick more subtle hallucinations. If you are hallucinating a ton, it will prefer the more wacky hallucinations."
+  - balance: "If you are only hallucinating a little bit, the cooldown between hallucinations is longer. If you are hallucinating a ton, it will be shorter."
+  - balance: "If a hallucination fails to trigger (such as a deaf person getting a sound hallucination) the next one will be a lot sooner."
+  - balance: "RDS hallucination amount is capped at mid tier hallucinations. This means bubblegum and co. will be a lot rarer, or will even never show. HOWEVER, there is now a preference allowing you to uncap your RDS hallucinations."
+  - balance: "Mindbreaker toxin is more effective at suppressing RDS."
+  - balance: "Some hallucinations effects have been tweaked up or down according to the new thresholds. Madness mask as an example."
+  - bugfix: "\"Fake Fire\" Hallucination works again, and now has a unique message for if you stop-drop-roll that other people see."
