@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored how overlay lights work - having one in your pocket will no longer color air around you into piss"
+  - qol: "Painted flashlights once again emit colored light."
