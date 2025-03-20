@@ -8,6 +8,7 @@
 		TRAIT_NO_UNDERSHIRT_ONLY,
 		TRAIT_PONY_PREFS, // provides access to the preference for selecting what organ to have
 	)
+	sexes = WOMAN_ONLY
 	inherent_biotypes = MOB_ORGANIC
 	mutant_organs = list(
 		/obj/item/organ/ears/pony = "Pony",
@@ -20,7 +21,7 @@
 	)
 	mutanteyes = /obj/item/organ/eyes/pony
 	mutantears = /obj/item/organ/ears/pony
-	sexes = WOMAN_ONLY
+
 	payday_modifier = 0.8
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	no_equip_flags = ITEM_SLOT_GLOVES
