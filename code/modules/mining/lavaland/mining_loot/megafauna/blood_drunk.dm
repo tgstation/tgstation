@@ -152,12 +152,14 @@
 
 //cut those trophies
 /obj/item/knife/hunting/wildhunter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /obj/item/crusher_trophy))
-		var/obj/item/crusher_trophy/trophy = interacting_with
-		if(!trophy.wildhunter_drop)
-			return
-		balloon_alert(user, "cutting trophy...")
-		if(do_after(user, 4 SECONDS, trophy))
-			new trophy.wildhunter_drop(trophy.drop_location())
-			qdel(trophy)
-			return
+	if(!istype(interacting_with, /obj/item/crusher_trophy))
+		return NONE
+	var/obj/item/crusher_trophy/trophy = interacting_with
+	if(isnull(trophy.wildhunter_drop))
+		return NONE
+	balloon_alert(user, "cutting trophy...")
+	if(!do_after(user, 4 SECONDS, trophy))
+		return ITEM_INTERACT_BLOCKING
+	new trophy.wildhunter_drop(trophy.drop_location())
+	qdel(trophy)
+	return ITEM_INTERACT_SUCCESS
