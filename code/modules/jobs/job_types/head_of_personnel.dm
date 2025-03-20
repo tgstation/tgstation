@@ -55,7 +55,7 @@
 	name = "Head of Personnel"
 	jobtype = /datum/job/head_of_personnel
 
-	id = /obj/item/card/id/advanced/silver
+	id = /obj/item/card/id/advanced/platinum
 	id_trim = /datum/id_trim/job/head_of_personnel
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	backpack_contents = list(
