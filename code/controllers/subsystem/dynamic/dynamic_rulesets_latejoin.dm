@@ -199,8 +199,8 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 8
-	cost = 6
+	weight = 4
+	cost = 12
 	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
