@@ -53,3 +53,6 @@ GLOBAL_LIST_INIT(typecache_general_bad_things_to_easily_move, typecacheof(list(
 	/obj/machinery/portable_atmospherics/canister,
 	/obj/structure/reagent_dispensers,
 )))
+
+/// Typecache of all materials.
+GLOBAL_LIST_INIT(typecache_material, typecacheof(/datum/material))

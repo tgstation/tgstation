@@ -1,191 +1,6 @@
-//* Randomized cube spawners (not to be confused with random cubes)
-/obj/effect/spawner/random/cube_all
-	name = "cube spawner (All Rarities)"
-	desc = "Roll the small cubes to see if you get the good cubes or the bad cubes."
-	icon_state = "loot"
-	remove_if_cant_spawn = FALSE //don't remove stuff from the global list, which other can use.
-	// see code/_globalvars/lists/objects.dm for loot table
-
-/obj/effect/spawner/random/cube_all/Initialize(mapload)
-	loot = GLOB.all_cubes
-	return ..()
-
-/obj/effect/spawner/random/cube_all/skew_loot_weights(list/loot_list, exponent)
-	///We only need to skew the weights once, since it's a global list used by all maint spawners.
-	var/static/already_cubed = FALSE
-	if(loot_list == GLOB.all_cubes && already_cubed)
-		return
-	already_cubed = TRUE
-	return ..()
-
-/obj/effect/spawner/random/cube
-	name = "cube spawner (Common)"
-	desc = "Used to roll for those delicious cubes."
-	icon_state = "loot"
-	remove_if_cant_spawn = FALSE
-
-	/// The rarity of the cube we're going to get. Just use this as an index instead of manually inputting an Initialize() proc in all the others.
-	var/cube_rarity = COMMON_CUBE
-	/// The list of the lists of all cubes
-	var/static/list/all_cubelists = list(
-		GLOB.common_cubes,
-		GLOB.uncommon_cubes,
-		GLOB.rare_cubes,
-		GLOB.epic_cubes,
-		GLOB.legendary_cubes,
-		GLOB.mythical_cubes,
-		)
-
-/obj/effect/spawner/random/cube/Initialize(mapload)
-	loot = all_cubelists[cube_rarity]
-	return ..()
-
-/obj/effect/spawner/random/cube/uncommon
-	name = "cube spawner (Uncommon)"
-	cube_rarity = UNCOMMON_CUBE
-
-/obj/effect/spawner/random/cube/rare
-	name = "cube spawner (Rare)"
-	cube_rarity = RARE_CUBE
-
-/obj/effect/spawner/random/cube/epic
-	name = "cube spawner (Epic)"
-	cube_rarity = EPIC_CUBE
-
-/obj/effect/spawner/random/cube/legendary
-	name = "cube spawner (Legendary)"
-	cube_rarity = LEGENDARY_CUBE
-
-/obj/effect/spawner/random/cube/mythical
-	name = "cube spawner (Mythical)"
-	cube_rarity = MYTHICAL_CUBE
-
-/obj/item/cube
-	name = "dev cube"
-	desc = "You shouldn't be seeing this cube!"
-	icon = 'icons/obj/cubes.dmi'
-	icon_state = "cube"
-	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("cubes", "squares", "deducts")
-	attack_verb_simple = list("cube", "square", "deduct")
-
-	/// The rarity of this cube
-	var/rarity = COMMON_CUBE
-
-/obj/item/cube/Initialize(mapload)
-	. = ..()
-	force = rarity
-	throwforce = rarity
-	AddElement(/datum/element/beauty, 25*rarity)
-	AddComponent(/datum/component/cuboid, cube_rarity = rarity)
-
-/// Randomize the color for the cube
-/obj/item/cube/proc/randcolor()
-	add_filter("cubecolor", 1, color_matrix_filter(ready_random_color()))
-
-/obj/item/cube/colorful
-	name = "Pretty Cube"
-	desc = "It's a wonderful shade of... whatever that is!"
-	rarity = UNCOMMON_CUBE
-
-/obj/item/cube/colorful/Initialize(mapload)
-	. = ..()
-	randcolor()
-
-/obj/item/cube/colorful/isometric
-	name = "Isometric Cube"
-	desc = "Some madman turned this cube 45 degrees, now it looks all weird!"
-	icon_state = "isometric"
-	rarity = UNCOMMON_CUBE
-
-/obj/item/cube/colorful/huge
-	name = "Huge Cube"
-	desc = "THAT is one BIG cube. It would probably hurt a lot if it fell on someone's head..."
-	icon_state = "massive"
-	rarity = RARE_CUBE
-	w_class = WEIGHT_CLASS_HUGE
-
-/obj/item/cube/colorful/huge/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/falling_hazard, damage = 15, wound_bonus = 5, hardhat_safety = FALSE, crushes = TRUE)
-
-/obj/item/cube/colorful/voxel
-	name = "Voxel"
-	desc = "Cubes just don't get any smaller."
-	icon_state = "voxel"
-	w_class = WEIGHT_CLASS_SMALL
-	rarity = RARE_CUBE
-
-/obj/item/cube/colorful/pixel
-	name = "Pixel"
-	desc = "Technically a square, but close enough if you squint. Try not to lose it!"
-	icon_state = "pixel"
-	w_class = WEIGHT_CLASS_TINY
-	rarity = EPIC_CUBE
-
-/obj/item/cube/colorful/pixel/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER)
-
-/obj/item/cube/colorful/plane
-	name = "Plane"
-	desc = "A flattened cube."
-	icon_state = "plane"
-	rarity = UNCOMMON_CUBE
-
-/obj/item/cube/colorful/plane/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER)
-
-/obj/item/cube/colorful/meta
-	name = "Billboard Cube"
-	desc = "It's always facing directly towards the camera."
-	icon_state = "billboard"
-	rarity = EPIC_CUBE
-
-/obj/item/cube/puzzle
-	name = "Lament Configuration"
-	desc = "A strange box of metal and wood."
-	icon_state = "rubik"
-	rarity = EPIC_CUBE
-	/// Have we solved the puzzle?
-	var/solved = FALSE
-
-/obj/item/cube/puzzle/attack_self(user)
-	. = ..()
-	if(solved)
-		balloon_alert(user, "Already solved")
-		return
-	// Oh yea. Now we're gaming.
-	var/skill_level = user?.mind?.get_skill_level(/datum/skill/gaming) || 1
-	to_chat(user, "You concentrate on solving [src]...")
-	if(!do_after(user, round((13*rarity) SECONDS / skill_level)))
-		balloon_alert(user, "Lost concentration!")
-		return
-	balloon_alert(user, "Solved!")
-	solved = TRUE
-	icon_state = "[icon_state]_solved"
-	rarity += 1
-	var/datum/component/cuboid/cuboid = GetComponent(/datum/component/cuboid)
-	cuboid.update_rarity(new_rarity = rarity)
-
-/obj/item/cube/puzzle/examine(mob/user)
-	. = ..()
-	if(!solved)
-		. += span_notice("It is yet to be solved...")
-	else
-		. += span_nicegreen("It's already been solved!")
-
-/obj/item/cube/puzzle/rubiks
-	name = "Rubik's Cube"
-	desc = "A famous cube housing a small sliding puzzle."
-	icon_state = "rubik"
-	rarity = RARE_CUBE
-
-
 //* Random cubes //
 /obj/item/cube/random
-	name = "Random Common Cube"
+	name = "random Common Cube"
 	desc = "A cube that's full of surprises!"
 	tool_behaviour = null
 	/// All possible tool behaviors for the cube
@@ -215,7 +30,7 @@
 	COOLDOWN_DECLARE(cube_laser_cooldown)
 
 /obj/item/cube/random/Initialize(mapload)
-	give_random_icon()
+	give_random_icon(TRUE)
 	apply_rand_size()
 	randcolor()
 	create_random_name()
@@ -259,19 +74,10 @@
 		. += span_warning("It's much more powerful!")
 	if((cube_examine_flags & CUBE_FISH))
 		. += span_notice("It's moving around like deep water...")
-
-/// Randomize icons. HEAVILY skewed in favor of normally sized cubes
-/obj/item/cube/random/proc/give_random_icon()
-	var/possible_visuals = list(
-		"cube" = 500,
-		"isometric" = 250,
-		"small" = 15*rarity,
-		"massive" = 10*rarity,
-		"plane" = 5*rarity,
-		"voxel" = 5+rarity,
-		"pixel" = 1
-	)
-	icon_state = pick_weight(fill_with_ones(possible_visuals))
+	if((cube_examine_flags & CUBE_FAITH))
+		. += span_notice("It's emitting a holy light!")
+	if(ready_leash)
+		. += span_notice("It will leash to the next person who picks it up.")
 
 /// Randomize size
 /obj/item/cube/random/proc/apply_rand_size()
@@ -390,6 +196,7 @@
 				ready_leash = TRUE
 			if("Religious")
 				AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, force_catalyst_afterattack = FALSE, charges = rarity)
+				cube_examine_flags |= CUBE_FAITH
 			if("Scope")
 				AddComponent(/datum/component/scope, range_modifier = rarity)
 			if("Funny")

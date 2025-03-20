@@ -197,6 +197,9 @@
 				var/quirk_goodie = pick(quirk.mail_goodies)
 				goodies[quirk_goodie] = 5
 
+	if(check_holidays(APRIL_FOOLS))
+		goodies[/obj/effect/spawner/random/cube_all] = 5
+
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)

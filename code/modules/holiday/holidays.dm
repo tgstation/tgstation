@@ -263,6 +263,15 @@
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
+	// maint_holiday_weight is divided by 5 since the only thing in here is cubes. 25% of everything being a random cube is WAY too much.
+	GLOB.maintenance_loot += list(
+		list(
+			/obj/effect/spawner/random/cube_all = 1,
+		) = round(maint_holiday_weight/5),
+	)
+	// Mmmmmm cube
+	var/list/pill_list = GLOB.reagent_containers[CAT_PILLS]
+	pill_list[/obj/item/reagent_containers/pill/cube] = TRUE
 
 /datum/holiday/april_fools/get_holiday_colors(atom/thing_to_color)
 	return "#[random_short_color()]"

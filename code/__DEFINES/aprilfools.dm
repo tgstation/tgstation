@@ -35,4 +35,5 @@
 #define CUBE_STORAGE (1<<12)
 /// Can be fished in
 #define CUBE_FISH (1<<13)
-
+/// Can edit religions using it
+#define CUBE_FAITH (1<<14)

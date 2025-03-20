@@ -42,6 +42,8 @@
 	AddElement(/datum/element/content_barfer)
 
 	grant_actions_by_list(get_innate_actions())
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!eat_atom(I, TRUE))
