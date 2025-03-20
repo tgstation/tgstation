@@ -1,6 +1,6 @@
 //the following 2 procs are staying here because its for AI and its shells (also AI controlled)
 /mob/living/silicon/compose_track_href(atom/movable/speaker, namepart)
-	if(!isAI(src) && !istype(src, /mob/living/silicon/robot/shell))
+	if(!HAS_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE))
 		return ""
 	var/mob/M = speaker.GetSource()
 	if(M)
@@ -9,7 +9,7 @@
 
 /mob/living/silicon/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
-	if(!isAI(src) && !istype(src, /mob/living/silicon/robot/shell))
+	if(!HAS_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE))
 		return ""
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
