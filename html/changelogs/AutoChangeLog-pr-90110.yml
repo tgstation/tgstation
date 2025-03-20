@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Improved formatting on holopad controls for AI"
+  - bugfix: "Fixed holopads softlocking AIs"

@@ -66,6 +66,8 @@
 	var/list/organ_effects
 	/// String displayed when the organ has decayed.
 	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
+	/// Assoc list of alternate zones where this can organ be slotted to organ slot for that zone
+	var/list/valid_zones = null
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -198,7 +200,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Returns a line to be displayed regarding valid insertion zones
 /obj/item/organ/proc/zones_tip()
-	return span_notice("It should be inserted in the [parse_zone(zone)].")
+	if (!valid_zones)
+		return span_notice("It should be inserted in the [parse_zone(zone)].")
+
+	var/list/fit_zones = list()
+	for (var/valid_zone in valid_zones)
+		fit_zones += parse_zone(valid_zone)
+	return span_notice("It should be inserted in the [english_list(fit_zones, and_text = " or ")].")
 
 ///Used as callbacks by object pooling
 /obj/item/organ/proc/exit_wardrobe()
@@ -404,6 +412,28 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
 /obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)
 	return
+
+/**
+ * Used when a mob is examining themselves / their limbs
+ *
+ * Reports how they feel based on how the status of this organ
+ *
+ * It should be formatted as an extension of the limb:
+ * Input is something like "Your chest is bruised. It is bleeding.",
+ * you would add something like "It hurts a little, and your stomach cramps."
+ *
+ * * self_aware - if TRUE, the examiner is more aware of themselves and thus may get more detailed information
+ *
+ * Return a string, to be concatenated with other organ / limb status strings. Include spans and punctuation.
+ */
+/obj/item/organ/proc/feel_for_damage(self_aware)
+	if(organ_flags & ORGAN_EXTERNAL)
+		return ""
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		return span_warning("[self_aware ? "[capitalize(slot)]" : "It"] feels a bit off.")
+	return span_boldwarning("[self_aware ? "[capitalize(slot)]" : "It"] feels terrible!")
 
 /// Tries to replace the existing organ on the passed mob with this one, with special handling for replacing a brain without ghosting target
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
