@@ -29,6 +29,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
+	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -72,18 +73,23 @@
 //proc that adds elements present in normal tables
 /obj/structure/table/proc/unflip_table()
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	layer = TABLE_LAYER
+	smoothing_flags |= SMOOTH_BITMASK
+	update_icon()
+	QUEUE_SMOOTH_NEIGHBORS(src)
+	QUEUE_SMOOTH(src)
+
 
 	make_climbable()
-	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
-	AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	AddElement(/datum/element/give_turf_traits, turf_traits)
 
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table()
 	RemoveElement(/datum/element/climbable)
-	RemoveElement(/datum/element/elevation)
+	RemoveElement(/datum/element/elevation, pixel_shift = 12)
 
-	RemoveElement(/datum/element/footstep_override)
-	RemoveElement(/datum/element/give_turf_traits)
+	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	RemoveElement(/datum/element/give_turf_traits, turf_traits)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -138,7 +144,7 @@
 	if(type == /obj/structure/table/glass) //Glass table, jolly ranchers pass
 		if(istype(mover) && (mover.pass_flags & PASSGLASS))
 			return TRUE
-	if(istype(mover, /obj/projectile))
+	if(isprojectile(mover))
 		var/obj/projectile/proj = mover
 		//Lets through bullets shot from behind the cover of the table
 		if(proj.movement_vector && angle2dir_cardinal(proj.movement_vector.angle) == dir)
@@ -163,6 +169,8 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/table/attack_hand(mob/living/user, list/modifiers)
+	if(is_flipped)
+		return
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
@@ -209,9 +217,6 @@
 		if(!do_after(user, max_integrity * 0.25))
 			return
 
-		is_flipped = TRUE
-		flip_table()
-
 		//change icons
 		var/new_dir = get_dir(user, src)
 		if(new_dir == NORTHEAST || new_dir == SOUTHEAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
@@ -221,13 +226,20 @@
 		dir = new_dir
 		if(new_dir == NORTH)
 			layer = BELOW_MOB_LAYER
+
+		smoothing_flags &= ~SMOOTH_BITMASK
 		update_appearance()
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 		var/turf/throw_target = get_step(src, src.dir)
 		if (!isnull(throw_target) && !HAS_TRAIT(user, TRAIT_PACIFISM))
 			for (var/atom/movable/movable_entity in src.loc)
 				if(is_able_to_throw(src, movable_entity))
 					movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+
+		is_flipped = TRUE
+		flip_table()
 
 	else
 		user.balloon_alert_to_viewers("flipping table upright...")
@@ -236,7 +248,6 @@
 			unflip_table()
 			//icons
 			playsound('sound/items/trayhit/trayhit2.ogg', 100)
-			qdel(src)
 			return TRUE
 
 /obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
@@ -342,6 +353,9 @@
 /obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(.)
+		return .
+
+	if(is_flipped)
 		return .
 
 	if(istype(tool, /obj/item/toy/cards/deck))
