@@ -15,7 +15,7 @@
 	remove_on_fullheal = TRUE
 	alert_type = null
 	///A timer that ticks down until the heart fully stops
-	var/time_until_stoppage = 150
+	var/time_until_stoppage = (150 SECONDS)
 	///Does the victim hear their own heartbeat?
 	var/sound = FALSE
 	///Does this show up on medhuds?
