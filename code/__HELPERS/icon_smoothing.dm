@@ -334,6 +334,18 @@ xxx xxx xxx
 				else
 					QUEUE_SMOOTH(movable_to_smooth)
 
+/atom/proc/set_can_smooth_with(canSmoothWith)
+	if(!canSmoothWith)
+		src.canSmoothWith = null
+		return
+	PARSE_CAN_SMOOTH_WITH(canSmoothWith, src.canSmoothWith, smoothing_flags)
+
+/atom/proc/set_smoothing_groups(smoothing_groups)
+	if(!smoothing_groups)
+		src.smoothing_groups = null
+		return
+	PARSE_SMOOTHING_GROUPS(smoothing_groups, src.smoothing_groups)
+
 /// Takes a direction, turns it into all the junctions that contain it
 /proc/dir_to_all_junctions(dir)
 	var/handback = NONE
