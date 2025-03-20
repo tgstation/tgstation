@@ -1,7 +1,7 @@
 ///////SMELTABLE ALLOYS///////
 
 /datum/design/plasteel_alloy
-	name = "Plasteel"
+	name = "Пласталь"
 	id = "plasteel"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SHEET_MATERIAL_AMOUNT)
@@ -12,7 +12,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/plastitanium_alloy
-	name = "Plastitanium"
+	name = "Пластитаниум"
 	id = "plastitanium"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SHEET_MATERIAL_AMOUNT)
@@ -23,7 +23,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/plaglass_alloy
-	name = "Plasma Glass"
+	name = "Стекло из плазмы"
 	id = "plasmaglass"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
@@ -34,7 +34,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/plasmarglass_alloy
-	name = "Reinforced Plasma Glass"
+	name = "Армированное стекло из плазмы"
 	id = "plasmareinforcedglass"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5,  /datum/material/glass = SHEET_MATERIAL_AMOUNT)
@@ -45,7 +45,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/titaniumglass_alloy
-	name = "Titanium Glass"
+	name = "Титановое стелко"
 	id = "titaniumglass"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
@@ -56,7 +56,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/plastitaniumglass_alloy
-	name = "Plastitanium Glass"
+	name = "Пластитановое стекло"
 	id = "plastitaniumglass"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
@@ -67,7 +67,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/alienalloy
-	name = "Alien Alloy"
+	name = "Инопланетный сплав"
 	desc = "A sheet of reverse-engineered alien alloy."
 	id = "alienalloy"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE

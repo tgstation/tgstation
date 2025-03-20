@@ -7,7 +7,8 @@
 /datum/emote/living/taunt
 	key = "taunt"
 	key_third_person = "taunts"
-	message = "taunts!"
+	name = "Крутиться 2"
+	message = "крутится вокруг себя!"
 	cooldown = 1.6 SECONDS //note when changing this- this is used by the matrix taunt to block projectiles.
 
 /datum/emote/living/taunt/run_emote(mob/living/user, params, type_override, intentional)
@@ -17,7 +18,8 @@
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
-	message = "blushes."
+	name = "Краснеть"
+	message = "краснеет."
 
 /datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -29,46 +31,53 @@
 /datum/emote/living/sing_tune
 	key = "tunesing"
 	key_third_person = "sings a tune"
-	message = "sings a tune."
+	name = "Напеть"
+	message = "напевает мелодию."
 
 /datum/emote/living/bow
 	key = "bow"
 	key_third_person = "bows"
-	message = "bows."
+	name = "Поклон"
+	message = "кланется ."
 	message_param = "bows to %t."
 	hands_use_check = TRUE
 
 /datum/emote/living/burp
 	key = "burp"
 	key_third_person = "burps"
-	message = "burps."
+	name = "Рыгнуть"
+	message = "рыгннул."
 	message_mime = "acts out a burp."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/choke
 	key = "choke"
 	key_third_person = "chokes"
-	message = "chokes!"
+	name = "Удушие"
+	message = "пытается набрать ртом воздух!"
 	message_mime = "chokes silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/cross
 	key = "cross"
 	key_third_person = "crosses"
-	message = "crosses their arms."
+	name = "Скрестить руки"
+	message = "скрещивает руки на груди."
 	hands_use_check = TRUE
 
 /datum/emote/living/chuckle
 	key = "chuckle"
 	key_third_person = "chuckles"
-	message = "chuckles."
+	name = "Насмешка"
+	message = "усмехается."
 	message_mime = "acts out chuckling."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/collapse
 	key = "collapse"
 	key_third_person = "collapses"
-	message = "collapses!"
+	name = "Упасть"
+	message = "падает и на мгновение теряет сознание!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/collapse/run_emote(mob/user, params, type_override, intentional)
@@ -80,19 +89,21 @@
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
-	message = "dances around happily."
+	name = "Танцевать"
+	message = "радостно танцует."
 	hands_use_check = TRUE
 
 /datum/emote/living/deathgasp
 	key = "deathgasp"
 	key_third_person = "deathgasps"
-	message = "seizes up and falls limp, their eyes dead and lifeless..."
-	message_robot = "shudders violently for a moment before falling still, its eyes slowly darkening."
-	message_AI = "screeches, its screen flickering as its systems slowly halt."
-	message_alien = "lets out a waning guttural screech, and collapses onto the floor..."
-	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
-	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
-	message_animal_or_basic = "stops moving..."
+	name = "Предсмертный вхдох"
+	message = "бледнеет, глаза становятся мертвыми и стеклянными..."
+	message_robot = "на мгновение он сильно вздрагивает, прежде чем затихнуть, его глаза медленно темнеют."
+	message_AI = "визжит, его экран мерцает синим цветом, а системы медленно останавливаются."
+	message_alien = "издает затихающий горловой визг и падает на пол..."
+	message_larva = "с болезненным шипением выдыхает воздух и безвольно падает на пол..."
+	message_monkey = "издает слабый звук, когда падает и перестает двигаться..."
+	message_animal_or_basic = "перестает двигаться..."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_IMPORTANT
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
@@ -118,12 +129,14 @@
 /datum/emote/living/drool
 	key = "drool"
 	key_third_person = "drools"
-	message = "drools."
+	name = "Пустить слюни"
+	message = "пускает слюни."
 
 /datum/emote/living/faint
 	key = "faint"
 	key_third_person = "faints"
-	message = "faints."
+	name = "Упасть в обморок"
+	message = "падает в обморок."
 
 /datum/emote/living/faint/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -134,7 +147,8 @@
 /datum/emote/living/flap
 	key = "flap"
 	key_third_person = "flaps"
-	message = "flaps their wings."
+	name = "Хлопать крыльями"
+	message = "хлопает крыльями."
 	hands_use_check = TRUE
 	var/wing_time = 0.35 SECONDS
 
@@ -165,27 +179,30 @@
 /datum/emote/living/flap/aflap
 	key = "aflap"
 	key_third_person = "aflaps"
-	name = "flap (Angry)"
-	message = "flaps their wings ANGRILY!"
+	name = "Хлопать крыльями (Сердито)"
+	message = "СЕРДИТО хлопает крыльями!"
 	hands_use_check = TRUE
 	wing_time = 10
 
 /datum/emote/living/frown
 	key = "frown"
 	key_third_person = "frowns"
-	message = "frowns."
+	name = "Нахмуриться"
+	message = "недовольно хмурится."
 
 /datum/emote/living/gag
 	key = "gag"
 	key_third_person = "gags"
-	message = "gags."
+	name = "Подавится"
+	message = "подавился."
 	message_mime = "gags silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/gasp
 	key = "gasp"
 	key_third_person = "gasps"
-	message = "gasps!"
+	name = "Задыхаться"
+	message = "задыхается!"
 	message_mime = "gasps silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = HARD_CRIT
@@ -211,8 +228,8 @@
 /datum/emote/living/gasp/shock
 	key = "gaspshock"
 	key_third_person = "gaspsshock"
-	name = "gasp (Shock)"
-	message = "gasps in shock!"
+	name = "Задыхаться 2"
+	message = "задыхается от боли!"
 	message_mime = "gasps in silent shock!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = SOFT_CRIT
@@ -220,37 +237,43 @@
 /datum/emote/living/giggle
 	key = "giggle"
 	key_third_person = "giggles"
-	message = "giggles."
+	name = "Хихикать"
+	message = "хихикает."
 	message_mime = "giggles silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/glare
 	key = "glare"
 	key_third_person = "glares"
-	message = "glares."
+	name = "Злобно смотреть"
+	message = "злобно смотрит."
 	message_param = "glares at %t."
 
 /datum/emote/living/grin
 	key = "grin"
 	key_third_person = "grins"
-	message = "grins."
+	name = "Улыбнуться"
+	message = "улыбается."
 
 /datum/emote/living/groan
 	key = "groan"
 	key_third_person = "groans"
-	message = "groans!"
+	name = "Стонать"
+	message = "стонет!"
 	message_mime = "appears to groan!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/grimace
 	key = "grimace"
 	key_third_person = "grimaces"
-	message = "grimaces."
+	name = "Морщится"
+	message = "морщится."
 
 /datum/emote/living/kiss
 	key = "kiss"
 	key_third_person = "kisses"
-	cooldown = 3 SECONDS
+	name = "Воздушный поцелуй"
+	cooldown = 1 SECONDS
 
 /datum/emote/living/kiss/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -276,17 +299,18 @@
 
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))
-		to_chat(user, span_notice("You ready your kiss-blowing hand."))
+		to_chat(user, span_notice("Ты готовишь свою руку для поцелуя."))
 		ink_action?.StartCooldown()
 		return
 
 	qdel(kiss_blower)
-	to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
+	to_chat(user, span_warning("В своем нынешнем состоянии ты не способен послать воздушный поцелуй."))
 
 /datum/emote/living/laugh
 	key = "laugh"
 	key_third_person = "laughs"
-	message = "laughs."
+	name = "Смеяться"
+	message = "смеётся."
 	message_mime = "laughs silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	specific_emote_audio_cooldown = 8 SECONDS
@@ -303,19 +327,22 @@
 /datum/emote/living/look
 	key = "look"
 	key_third_person = "looks"
-	message = "looks."
+	name = "Смотреть"
+	message = "смотрит."
 	message_param = "looks at %t."
 
 /datum/emote/living/nod
 	key = "nod"
 	key_third_person = "nods"
-	message = "nods."
+	name = "Кивнуть"
+	message = "кивает."
 	message_param = "nods at %t."
 
 /datum/emote/living/point
 	key = "point"
 	key_third_person = "points"
-	message = "points."
+	name = "Указать"
+	message = "указывает."
 	message_param = "points at %t."
 	cooldown = 1 SECONDS
 	// don't put hands use check here, everything is handled in run_emote
@@ -359,7 +386,8 @@
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
-	message = "sneezes."
+	name = "Чихать"
+	message = "чихает."
 	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
@@ -372,7 +400,8 @@
 /datum/emote/living/cough
 	key = "cough"
 	key_third_person = "coughs"
-	message = "coughs!"
+	name = "Кашлять"
+	message = "кашляет!"
 	message_mime = "acts out an exaggerated cough!"
 	vary = TRUE
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
@@ -389,13 +418,15 @@
 /datum/emote/living/pout
 	key = "pout"
 	key_third_person = "pouts"
-	message = "pouts."
+	name = "Губы бантиком"
+	message = "выставляет свои губы."
 	message_mime = "pouts silently."
 
 /datum/emote/living/scream
 	key = "scream"
 	key_third_person = "screams"
-	message = "screams!"
+	name = "Кричать"
+	message = "кричит!"
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_blacklist_typecache = list(/mob/living/brain, /mob/living/carbon/human)
@@ -409,22 +440,25 @@
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
 	. = ..()
 	if(!intentional && isanimal_or_basicmob(user))
-		return "makes a loud and pained whimper."
+		return "издает громкий и болезненный стон."
 
 /datum/emote/living/scowl
 	key = "scowl"
 	key_third_person = "scowls"
-	message = "scowls."
+	name = "Нахмуриться 2"
+	message = "злобно хмурится."
 
 /datum/emote/living/shake
 	key = "shake"
 	key_third_person = "shakes"
-	message = "shakes their head."
+	name = "Кивнуть"
+	message = "кивает головой."
 
 /datum/emote/living/shiver
 	key = "shiver"
 	key_third_person = "shiver"
-	message = "shivers."
+	name = "Вздрогнуть"
+	message = "вздрогнул."
 
 #define SHIVER_LOOP_DURATION (1 SECONDS)
 /datum/emote/living/shiver/run_emote(mob/living/user, params, type_override, intentional)
@@ -440,7 +474,8 @@
 /datum/emote/living/sigh
 	key = "sigh"
 	key_third_person = "sighs"
-	message = "sighs."
+	name = "Вздохнуть"
+	message = "вздыхает."
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
@@ -460,22 +495,26 @@
 /datum/emote/living/sit
 	key = "sit"
 	key_third_person = "sits"
-	message = "sits down."
+	name = "Сесть"
+	message = "садится."
 
 /datum/emote/living/smile
 	key = "smile"
 	key_third_person = "smiles"
-	message = "smiles."
+	name = "Улыбнуться"
+	message = "улыбается."
 
 /datum/emote/living/smug
 	key = "smug"
 	key_third_person = "smugs"
-	message = "grins smugly."
+	name = "Самодовольно улыбнутся"
+	message = "самодовольно улыбается."
 
 /datum/emote/living/sniff
 	key = "sniff"
 	key_third_person = "sniffs"
-	message = "sniffs."
+	name = "Нюхать"
+	message = "нюхает."
 	message_mime = "sniffs silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
@@ -488,7 +527,8 @@
 /datum/emote/living/snore
 	key = "snore"
 	key_third_person = "snores"
-	message = "snores."
+	name = "Храпеть"
+	message = "храпит."
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
@@ -502,23 +542,27 @@
 /datum/emote/living/stare
 	key = "stare"
 	key_third_person = "stares"
-	message = "stares."
-	message_param = "stares at %t."
+	name = "Глазеть"
+	message = "глазеет."
+	message_param = "глазеет на %t."
 
 /datum/emote/living/strech
 	key = "stretch"
 	key_third_person = "stretches"
-	message = "stretches their arms."
+	name = "Протянуть руки"
+	message = "протягивает свои руки."
 
 /datum/emote/living/sulk
 	key = "sulk"
 	key_third_person = "sulks"
-	message = "sulks down sadly."
+	name = "Дуться"
+	message = "печально хмурится."
 
 /datum/emote/living/surrender
 	key = "surrender"
 	key_third_person = "surrenders"
-	message = "puts their hands on their head and falls to the ground, they surrender%s!"
+	name = "Сдаться"
+	message = "хватаются руками за голову и падает на землю, показывая, что сдаётся!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
@@ -531,7 +575,8 @@
 /datum/emote/living/sway
 	key = "sway"
 	key_third_person = "sways"
-	message = "sways around dizzily."
+	name = "Контужен"
+	message = "неустойчиво покачивается."
 
 /datum/emote/living/sway/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -545,12 +590,14 @@
 /datum/emote/living/tilt
 	key = "tilt"
 	key_third_person = "tilts"
-	message = "tilts their head to the side."
+	name = "Наклонить голову"
+	message = "наклоняет голову в сторону."
 
 /datum/emote/living/tremble
 	key = "tremble"
 	key_third_person = "trembles"
-	message = "trembles!"
+	name = "Дрожать"
+	message = "дрожит!"
 
 #define TREMBLE_LOOP_DURATION (4.4 SECONDS)
 /datum/emote/living/tremble/run_emote(mob/living/user, params, type_override, intentional)
@@ -566,7 +613,8 @@
 /datum/emote/living/twitch
 	key = "twitch"
 	key_third_person = "twitches"
-	message = "twitches violently."
+	name = "Дергаться"
+	message = "сильно дёргается."
 
 /datum/emote/living/twitch/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -580,7 +628,8 @@
 /datum/emote/living/twitch_s
 	key = "twitch_s"
 	name = "twitch (Slight)"
-	message = "twitches."
+	name = "Слегка дёрнуться"
+	message = "слабо дёргвется."
 
 /datum/emote/living/twitch_s/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -591,20 +640,22 @@
 /datum/emote/living/wave
 	key = "wave"
 	key_third_person = "waves"
-	message = "waves."
+	name = "Помахать рукой"
+	message = "машет рукой."
 
 /datum/emote/living/whimper
 	key = "whimper"
 	key_third_person = "whimpers"
-	message = "whimpers."
+	name = "Хныкать"
+	message = "хнычет."
 	message_mime = "appears hurt."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/wsmile
 	key = "wsmile"
 	key_third_person = "wsmiles"
-	name = "smile (Weak)"
-	message = "smiles weakly."
+	name = "Слабо улыбнуться"
+	message = "слабо улыбается."
 
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
 #define YAWN_PROPAGATE_CHANCE_BASE 20
@@ -614,8 +665,9 @@
 /datum/emote/living/yawn
 	key = "yawn"
 	key_third_person = "yawns"
-	message = "yawns."
-	message_mime = "acts out an exaggerated silent yawn."
+	name = "Зевать"
+	message = "зевает."
+	message_mime = "изображает преувеличенный тихий зевок."
 	message_robot = "symphathetically yawns."
 	message_AI = "symphathetically yawns."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
@@ -665,7 +717,8 @@
 /datum/emote/living/gurgle
 	key = "gurgle"
 	key_third_person = "gurgles"
-	message = "makes an uncomfortable gurgle."
+	name = "Булькать"
+	message = "издает бульканье."
 	message_mime = "gurgles silently and uncomfortably."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
@@ -776,26 +829,30 @@
 /datum/emote/living/inhale
 	key = "inhale"
 	key_third_person = "inhales"
-	message = "breathes in."
+	name = "Глубойкий вдох"
+	message = "делает глубокий вдох."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/exhale
 	key = "exhale"
 	key_third_person = "exhales"
-	message = "breathes out."
+	name = "Выдох"
+	message = "выдыхает."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/swear
 	key = "swear"
 	key_third_person = "swears"
-	message = "says a swear word!"
+	name = "Материться"
+	message = "высказывает некультурные слова!"
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/whistle
 	key = "whistle"
 	key_third_person = "whistles"
-	message = "whistles."
+	name = "Свистеть"
+	message = "свистит."
 	message_mime = "whistles silently!"
 	vary = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE

@@ -110,6 +110,7 @@
 /datum/emote/spin
 	key = "spin"
 	key_third_person = "spins"
+	name = "Крутиться"
 	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/eye/imaginary_friend)
@@ -147,7 +148,8 @@
 /datum/emote/jump
 	key = "jump"
 	key_third_person = "jumps"
-	message = "jumps!"
+	name = "Прыгнуть"
+	message = "прыгает!"
 	// Allows ghosts to jump
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
 	affected_by_pitch = FALSE

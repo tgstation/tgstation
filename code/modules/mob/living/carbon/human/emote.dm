@@ -2,7 +2,7 @@
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
 /datum/emote/living/carbon/human/dap
-	key = "dap"
+	key = "dap" // Что это блять?
 	key_third_person = "daps"
 	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
 	message_param = "gives daps to %t."
@@ -10,12 +10,14 @@
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
-	message = "raises an eyebrow."
+	name = "Поднять бровь"
+	message = "приподнимает бровь."
 
 /datum/emote/living/carbon/human/glasses
 	key = "glasses"
 	key_third_person = "glasses"
-	message = "pushes up their glasses."
+	name = "Тост"
+	message = "поднимает бокал."
 	emote_type = EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional, params)
@@ -32,13 +34,15 @@
 /datum/emote/living/carbon/human/grumble
 	key = "grumble"
 	key_third_person = "grumbles"
-	message = "grumbles!"
+	name = "Ворчать"
+	message = "ворчит.."
 	message_mime = "grumbles silently!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/handshake
 	key = "handshake"
-	message = "shakes their own hands."
+	name = "Рукопожатие"
+	message = "пожимает руку."
 	message_param = "shakes hands with %t."
 	hands_use_check = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
@@ -46,21 +50,24 @@
 /datum/emote/living/carbon/human/hug
 	key = "hug"
 	key_third_person = "hugs"
-	message = "hugs themself."
+	name = "Обнять себя"
+	message = "обнимает себя."
 	message_param = "hugs %t."
 	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
 	key_third_person = "mumbles"
-	message = "mumbles!"
+	name = "Бормотать"
+	message = "бормочет.."
 	message_mime = "mumbles silently!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/scream
 	key = "scream"
 	key_third_person = "screams"
-	message = "screams!"
+	name = "Кричать"
+	message = "кричит!"
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	specific_emote_audio_cooldown = 10 SECONDS
@@ -79,7 +86,8 @@
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
 	key = "screech"
 	key_third_person = "screeches"
-	message = "screeches!"
+	name = "Орать"
+	message = "орёт!"
 	message_mime = "screeches silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = FALSE
@@ -91,18 +99,21 @@
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
-	message = "goes pale for a second."
+	name = "Бледнеть"
+	message = "на секунду бледнеет."
 
 /datum/emote/living/carbon/human/raise
 	key = "raise"
 	key_third_person = "raises"
-	message = "raises a hand."
+	name = "Поднять руку"
+	message = "поднимает руку."
 	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/salute
 	key = "salute"
 	key_third_person = "salutes"
-	message = "salutes."
+	name = "Воинское"
+	message = "отдаёт воинское приветствие."
 	message_param = "salutes to %t."
 	hands_use_check = TRUE
 	sound = 'sound/mobs/humanoids/human/salute/salute.ogg'
@@ -110,7 +121,8 @@
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
 	key_third_person = "shrugs"
-	message = "shrugs."
+	name = "Пожать плечами"
+	message = "пожимает плечами."
 
 /datum/emote/living/carbon/human/wag
 	key = "wag"
@@ -169,12 +181,14 @@
 /datum/emote/living/carbon/human/clear_throat
 	key = "clear"
 	key_third_person = "clears throat"
-	message = "clears their throat."
+	name = "Прокашляться"
+	message = "прокашливается."
 
 /datum/emote/living/carbon/human/blink
 	key = "blink"
 	key_third_person = "blinks"
-	message = "blinks."
+	name = "Моргнуть"
+	message = "моргает."
 
 /datum/emote/living/carbon/human/blink/can_run_emote(mob/living/carbon/human/user, status_check, intentional, params)
 	if (!ishuman(user) || HAS_TRAIT(user, TRAIT_PREVENT_BLINKING) || HAS_TRAIT(user, TRAIT_NO_EYELIDS))
@@ -191,8 +205,8 @@
 
 /datum/emote/living/carbon/human/blink_r
 	key = "blink_r"
-	name = "blink (Rapid)"
-	message = "blinks rapidly."
+	name = "Моргнуть ()"
+	message = "быстро моргает."
 
 /datum/emote/living/carbon/human/blink_r/can_run_emote(mob/living/carbon/human/user, status_check, intentional, params)
 	if (!ishuman(user) || HAS_TRAIT(user, TRAIT_PREVENT_BLINKING) || HAS_TRAIT(user, TRAIT_NO_EYELIDS))
@@ -220,7 +234,8 @@
 /datum/emote/living/carbon/human/monkey/gnarl
 	key = "gnarl"
 	key_third_person = "gnarls"
-	message = "gnarls and shows its teeth..."
+	name = "Оскал"
+	message = "скалится и показывает зубы..."
 	message_mime = "gnarls silently, baring its teeth..."
 
 /datum/emote/living/carbon/human/monkey/roll
@@ -232,19 +247,22 @@
 /datum/emote/living/carbon/human/monkey/scratch
 	key = "scratch"
 	key_third_person = "scratches"
-	message = "scratches."
+	name = "Царапать"
+	message = "царапает."
 	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/monkey/screech/roar
 	key = "roar"
 	key_third_person = "roars"
-	message = "roars!"
+	name = "Рычать"
+	message = "рычит!"
 	message_mime = "acts out a roar."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/monkey/tail
 	key = "tail"
-	message = "waves their tail."
+	name = "Вилять хвостом"
+	message = "машет хвостом."
 
 /datum/emote/living/carbon/human/monkey/sign
 	key = "sign"
