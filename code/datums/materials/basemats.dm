@@ -152,7 +152,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 ///Has no special properties
 /datum/material/diamond
-	name = "бриллиант"
+	name = "алмаз"
 	desc = "Углерод под высоким давлением."
 	color = "#C9D8F2"
 	categories = list(

@@ -54,11 +54,11 @@ endmap
 
 # Debug-only maps.
 
-#map gateway_test
-#endmap
+map gateway_test
+endmap
 
-#map multiz_debug
-#endmap
+map multiz_debug
+endmap
 
-#map runtimestation
-#endmap
+map runtimestation
+endmap
