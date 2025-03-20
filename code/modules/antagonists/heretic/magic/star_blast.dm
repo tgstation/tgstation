@@ -53,7 +53,7 @@
 	for(var/turf/spawn_turf in range(1, get_turf(owner)))
 		if(spawn_turf.density)
 			continue
-		new /obj/effect/forcefield/cosmic_field(spawn_turf)
+		new /obj/effect/forcefield/cosmic_field/star_blast(spawn_turf)
 	for(var/mob/living/nearby_mob in view(2, owner))
 		if(nearby_mob == owner)
 			continue
@@ -100,9 +100,4 @@
 
 /obj/projectile/magic/star_ball/Destroy()
 	playsound(get_turf(src), 'sound/effects/magic/cosmic_energy.ogg', 50, FALSE)
-	for(var/turf/cast_turf as anything in get_turfs())
-		new /obj/effect/forcefield/cosmic_field(cast_turf)
 	return ..()
-
-/obj/projectile/magic/star_ball/proc/get_turfs()
-	return list(get_turf(src), pick(get_step(src, NORTH), get_step(src, SOUTH)), pick(get_step(src, EAST), get_step(src, WEST)))

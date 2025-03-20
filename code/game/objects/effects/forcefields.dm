@@ -105,6 +105,9 @@
 		return FALSE
 	return ..()
 
+/obj/effect/forcefield/cosmic_field/star_blast
+	initial_duration = 10 SECONDS
+
 /obj/effect/forcefield/cosmic_field/fast
 	initial_duration = 5 SECONDS
 

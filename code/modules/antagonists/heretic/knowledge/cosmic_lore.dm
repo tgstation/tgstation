@@ -90,6 +90,15 @@
 	/// The hits we have on a mob with a mind.
 	var/combo_counter = 0
 
+/datum/heretic_knowledge/blade_upgrade/cosmic/on_ranged_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	. = ..()
+	if(!isliving(target) || get_dist(source, target) > 2)
+		return
+	if(!target.has_status_effect(/datum/status_effect/star_mark))
+		return
+	source.changeNext_move(blade.attack_speed)
+	return blade.attack(target, source)
+
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	var/static/list/valid_organ_slots = list(
 		ORGAN_SLOT_HEART,
@@ -212,7 +221,6 @@
 	star_gazer_mob.health = INFINITY
 	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands, radial_menu_offset = list(30,0), radial_menu_lifetime = 15 SECONDS, radial_relative_to_user = TRUE)
-	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(FACTION_HERETIC), current_owner = user)
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()
 	commands_action.Grant(user, star_gazer_mob)
