@@ -2798,14 +2798,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// This should be called by games when the gamer reaches a winning state, just sends a signal
 /mob/living/proc/won_game()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_WON_VIDEOGAME)
 
 /// This should be called by games when the gamer reaches a losing state, just sends a signal
 /mob/living/proc/lost_game()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_LOST_VIDEOGAME)
 
 /// This should be called by games whenever the gamer interacts with the device, sends a signal and grants us a moodlet
 /mob/living/proc/played_game()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_PLAYED_VIDEOGAME)
 	add_mood_event("gaming", /datum/mood_event/gaming)
 
