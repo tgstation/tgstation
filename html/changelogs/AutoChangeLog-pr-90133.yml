@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - bugfix: "Fixed preferences layout for Byond 515 after fixing it for Byond 516"

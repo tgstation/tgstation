@@ -1,0 +1,4 @@
+author: "Holoo-1"
+delete-after: True
+changes:
+  - rscadd: "AIs now can create a popup window via multicam"
