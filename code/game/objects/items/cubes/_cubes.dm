@@ -23,7 +23,9 @@
 
 /// Randomize the color for the cube
 /obj/item/cube/proc/randcolor()
-	add_filter("cubecolor", 1, color_matrix_filter(ready_random_color()))
+	var/mycolor = ready_random_color()
+	add_filter("cubecolor", 1, color_matrix_filter(mycolor))
+	return mycolor
 
 /// Randomize icons. HEAVILY skewed in favor of normally sized cubes
 /// set true_random to TRUE to get states other than "cube" and "isometric"

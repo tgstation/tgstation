@@ -26,13 +26,15 @@
 	var/reverse_movements = FALSE
 	/// Speen
 	var/speen = FALSE
+	/// The color we were randomly assigned
+	var/cube_color = COLOR_WHITE
 
 	COOLDOWN_DECLARE(cube_laser_cooldown)
 
 /obj/item/cube/random/Initialize(mapload)
 	give_random_icon(TRUE)
 	apply_rand_size()
-	randcolor()
+	cube_color = randcolor()
 	create_random_name()
 	. = ..()
 	give_random_effects()
@@ -141,6 +143,8 @@
 	"Reverse",
 	"Vampire",
 	"Speen",
+	"Material",
+	"Lamp",
 	)
 	// It looks big and scary but it's just a giant switch() function that applies components/elements. If a section would have been too long it was made its own proc.
 	for(var/i in 1 to rarity)
@@ -219,6 +223,14 @@
 				cube_examine_flags |= CUBE_VAMPIRIC
 			if("Speen")
 				speen = TRUE
+			if("Material")
+				make_material()
+			if("Lamp")
+				light_range = rarity
+				light_power = 1 + round(rarity/10,0.1)
+				light_color = cube_color
+				light_system = OVERLAY_LIGHT
+				update_light()
 
 		possible_cube_effects -= rand_swap
 
@@ -282,6 +294,22 @@
 		return
 	tool_behaviour = pick(cube_tools)
 	balloon_alert(thrower, "[tool_behaviour]")
+
+/// Add custom materials
+/obj/item/cube/random/proc/make_material()
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
+	switch(pick("All for one","One for all"))
+		if("All for one")
+			var/datum/material/cube_mat = pick(GLOB.typecache_material)
+			var/list/mymat = list()
+			mymat[cube_mat] = SHEET_MATERIAL_AMOUNT * rarity
+			set_custom_materials(mymat)
+		if("One for all")
+			var/list/mymat = list()
+			for(var/m in 1 to rarity)
+				var/datum/material/cube_mat = pick(GLOB.typecache_material)
+				mymat[cube_mat] += SHEET_MATERIAL_AMOUNT
+			set_custom_materials(mymat)
 
 // If we're a lasergun, then we can fire lasers!
 /obj/item/cube/random/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

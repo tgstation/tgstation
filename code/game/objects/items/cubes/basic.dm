@@ -81,6 +81,7 @@
 /obj/item/cube/material
 	name = "material cube"
 	desc = "Before the invention of material silos, stations all over the galaxy used to store their materials in the form of ultra-dense cubes."
+	w_class = WEIGHT_CLASS_SMALL
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	custom_materials = list()
 	rarity = RARE_CUBE
@@ -91,23 +92,6 @@
 	custom_materials[cube_mat] = max(SHEET_MATERIAL_AMOUNT * (1+(cube_mat.mineral_rarity/10)),1)
 	give_random_icon()
 	. = ..()
-
-// If there's an easier way to handle this then I don't know it
-/obj/item/cube/material/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(!istype(interacting_with, /obj/machinery))
-		return NONE
-	var/obj/machinery/attackin = interacting_with
-	var/datum/component/remote_materials/materials = attackin.GetComponent(/datum/component/material_container)
-	if(!materials)
-		return NONE
-	var/amount_inserted = materials.insert_item(/obj/item/cube/material)
-	if(amount_inserted)
-		to_chat(user, span_notice("[src] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [attackin]"))
-	else
-		to_chat(user, span_warning("[src] was rejected by [attackin]"))
-
-	return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
 // Pill cubes
 /obj/item/reagent_containers/applicator/pill/cube
@@ -148,7 +132,7 @@
 
 /obj/item/reagent_containers/applicator/pill/cube/pepper
 	name = "pepper cube"
-	desc = "Perfect for those who want a <b>really confusing</b> cup of tea."
+	desc = "Perfect for those who want a <span class='sans'>really confusing</span> cup of tea."
 	icon_state = "small"
 	list_reagents = list(/datum/reagent/consumable/blackpepper = 15)
 	cube_rarity = UNCOMMON_CUBE

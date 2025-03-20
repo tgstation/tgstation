@@ -83,7 +83,7 @@
 		total_in_stack += miningaway.amount
 		if(miningaway.amount < miningaway.max_amount)
 			sheets += miningaway
-	if(total_in_stack < full_stack)
+	if(total_in_stack >= full_stack)
 		COOLDOWN_START(src, cube_diamond_cooldown, mine_cooldown)
 		return
 	if(sheets.len)

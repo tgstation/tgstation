@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(common_cubes, typecacheof(list(
 	/obj/item/storage/box/ingredients/wildcard,
 	/obj/item/storage/box/zipties,
 	// Custom
-	/obj/item/cube/random,
+	/obj/item/cube/random = 3,
 ), only_root_path = TRUE))
 
 /// List of Uncommon Cubes
@@ -29,8 +29,8 @@ GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
 	/obj/item/barriercube,
 	/obj/item/mmi/posibrain,
 	// Custom
-	/obj/item/cube/random/uncommon,
-/obj/item/cube/colorful,
+	/obj/item/cube/random/uncommon = 3,
+	/obj/item/cube/colorful,
 	/obj/item/cube/colorful/plane,
 	/obj/item/cube/colorful/isometric,
 	/obj/item/reagent_containers/applicator/pill/cube/ice,
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
 	/obj/item/food/monkeycube/gorilla,
 	/obj/item/warp_cube,
 	// Custom
-	/obj/item/cube/random/rare,
+	/obj/item/cube/random/rare = 3,
 	/obj/item/cube/colorful/huge,
 	/obj/item/cube/colorful/voxel,
 	/obj/item/cube/reference/puzzle/rubiks,
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
 	/obj/item/freeze_cube,
 	/obj/item/prisoncube,
 	// Custom
-	/obj/item/cube/random/epic,
+	/obj/item/cube/random/epic = 3,
 	/obj/item/cube/colorful/pixel,
 	/obj/item/cube/reference/puzzle,
 	/obj/item/cube/colorful/meta,
@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
 	// Vanilla
 	/obj/item/blackbox,
 	// Custom
-	/obj/item/cube/random/legendary,
+	/obj/item/cube/random/legendary = 3,
 	/obj/item/cube/colorful/sphere,
 	//Spessman cube (skin cube) monkey cube but human
 	//Dehydration cube(megamind) monkey cube but random!
@@ -83,14 +83,14 @@ GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
 
 /// List of Mythical Cubes
 GLOBAL_LIST_INIT(mythical_cubes, typecacheof(list(
-	/obj/item/cube/random/mythical,
+	/obj/item/cube/random/mythical = 3,
 	/obj/item/cube/reference/craft,
 	/obj/item/cube/reference/generic,
 	//Blender default cube (maybe with gizmo)
 	//Spessman cube (ancient spessman)
-	//Companion cube
-	//Time Cube
-	//Escafil Device (Animorphs)
+	//Companion cube (portal) mood buff & crushing weight
+	//Time Cube (time cube) wizard time-stop spell w/ longer cooldown
+	//Escafil Device (Animorphs) morph belt/spell w/ cooldown
 	//Question mark block(Basically a reskinned christmas gift)
 )))
 
