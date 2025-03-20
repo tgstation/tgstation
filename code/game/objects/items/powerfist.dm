@@ -28,10 +28,23 @@
 	var/click_delay = 0.15 SECONDS
 	/// Pressure level on the fist
 	var/fist_pressure_setting = LOW_PRESSURE
-	/// Volume released per punch
-	var/gas_per_fist = 7
+	/// Pressure released per punch
+	var/pressure_per_punch = PUMP_MAX_PRESSURE / 12
+	/// Leakage of moles per fist
+	var/mol_leakage = 2
 	/// Tank used for the gauntlet's piston-ram.
-	var/obj/item/tank/internals/tank
+	var/obj/item/tank/internals/external_tank
+	/// The internal air buffer that needs to be pumped out after use.
+	var/obj/item/tank/internals/internal_buffer_tank
+
+/obj/item/melee/powerfist/Initialize(mapload)
+	. = ..()
+	internal_buffer_tank = new(src)
+
+/obj/item/melee/powerfist/Destroy(force)
+	. = ..()
+	qdel(internal_buffer_tank)
+	internal_buffer_tank = null
 
 /datum/armor/melee_powerfist
 	fire = 100
@@ -53,8 +66,8 @@
 	if(!in_range(user, src))
 		. += span_notice("You'll need to get closer to see any more.")
 		return
-	if(tank)
-		. += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
+	if(external_tank)
+		. += span_notice("[icon2html(external_tank, user)] It has \a [external_tank] mounted onto it.")
 		. += span_notice("Can be removed with a <b>screwdriver</b>.")
 
 	. += span_notice("Use a <b>wrench</b> to change the valve strength. Current strength is at <b>[pressure_setting_to_text(fist_pressure_setting)]</b> level.")
@@ -66,16 +79,16 @@
 	return TRUE
 
 /obj/item/melee/powerfist/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!tank)
+	if(!external_tank)
 		balloon_alert(user, "no tank present")
 		return
-	update_tank(tank, TANK_REMOVING, user)
+	update_tank(external_tank, TANK_REMOVING, user)
 	return TRUE
 
 /obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, params)
 	if(!istype(item_to_insert, /obj/item/tank/internals))
 		return ..()
-	if(tank)
+	if(external_tank)
 		to_chat(user, span_notice("A tank is already present, remove it with a screwdriver first."))
 		return
 	var/obj/item/tank/internals/tank_to_insert = item_to_insert
@@ -86,25 +99,25 @@
 
 /obj/item/melee/powerfist/proc/update_tank(obj/item/tank/internals/the_tank, removing = TANK_INSERTING, mob/living/carbon/human/user)
 	if(removing)
-		if(!tank)
+		if(!external_tank)
 			to_chat(user, span_notice("\The [src] currently has no tank attached to it."))
 			return
 		to_chat(user, span_notice("You detach \the [the_tank] from \the [src]."))
-		tank.forceMove(get_turf(user))
-		user.put_in_hands(tank)
-		tank = null
+		external_tank.forceMove(get_turf(user))
+		user.put_in_hands(external_tank)
+		external_tank = null
 		return
 
-	if(tank)
+	if(external_tank)
 		to_chat(user, span_warning("\The [src] already has a tank."))
 		return
 	if(!user.transferItemToLoc(the_tank, src))
 		return
 	to_chat(user, span_notice("You hook \the [the_tank] up to \the [src]."))
-	tank = the_tank
+	external_tank = the_tank
 
 /obj/item/melee/powerfist/attack(mob/living/target, mob/living/user)
-	if(!tank)
+	if(!external_tank)
 		to_chat(user, span_warning("\The [src] can't operate without a source of gas!"))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -114,8 +127,18 @@
 	if(!our_turf)
 		return
 
-	var/moles_to_remove = PUMP_MAX_PRESSURE * (gas_per_fist * fist_pressure_setting)/(R_IDEAL_GAS_EQUATION * tank.air_contents.temperature)
-	var/datum/gas_mixture/gas_used = tank.remove_air(moles_to_remove)
+	var/datum/gas_mixture/main_gas = external_tank.air_contents
+	var/datum/gas_mixture/internal_gas = internal_buffer_tank.air_contents
+
+	if(internal_gas.return_pressure() > main_gas.return_pressure())
+		to_chat(user, span_warning("\The [src]'s buffer tank is too full!"))
+		target.apply_damage((force / 5), BRUTE)
+		playsound(loc, 'sound/items/weapons/punch1.ogg', 50, TRUE)
+		target.visible_message(span_danger("[user]'s powerfist lets out a dull thunk as [user.p_they()] punch[user.p_es()] [target.name]!"), \
+			span_userdanger("[user]'s punches you!"))
+		return
+	main_gas.pump_gas_to(internal_gas, internal_gas.return_pressure() + pressure_per_punch)
+	var/datum/gas_mixture/gas_used = internal_gas.remove(mol_leakage)
 	if(!gas_used)
 		to_chat(user, span_warning("\The [src]'s tank is empty!"))
 		target.apply_damage((force / 5), BRUTE)
@@ -124,7 +147,7 @@
 			span_userdanger("[user]'s punches you!"))
 		return
 
-	if(gas_used.total_moles() < moles_to_remove)
+	if(gas_used.total_moles() < mol_leakage)
 		our_turf.assume_air(gas_used)
 		to_chat(user, span_warning("\The [src]'s piston-ram lets out a weak hiss, it needs more gas!"))
 		playsound(loc, 'sound/items/weapons/punch4.ogg', 50, TRUE)
