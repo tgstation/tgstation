@@ -553,3 +553,60 @@
       else configurate manipulator settings.'
   - bugfix: 'Big Manipulator: Fixes random disappearance of a part of the manipulator
       ui.'
+2025-03-19:
+  Ghommie:
+  - bugfix: Fixing an issue with food exports.
+  - bugfix: fixed a small rendering issue with fishes inside an aquarium.
+  Melbert:
+  - bugfix: Fixed drunkness mood printout
+  SmArtKar:
+  - bugfix: Fixed premium internals boxes still being stretched
+  Twaticus:
+  - image: resprites party pod and harvester
+  hack-wrench:
+  - rscadd: Added syndie fitness nunchuks to spy uplink (medium-high bounty)
+2025-03-20:
+  Ghommie:
+  - bugfix: The number of coins, chips or bills that can fit inside a piggy bank is
+      now capped, anything exceeding that amount is converted into a single holochip.
+  Melbert:
+  - qol: Corpses spawned from human-like NPCs will spawn damaged according to how
+      they died (or will even gib if the npc was gibbed)
+  - bugfix: Maint Russians with guns will now spawn corpses instead of vanishing
+  - rscadd: HoP now spawns with a platinum ID card which can hold infinite common
+      access slots, but is still limited in amount of command slots.
+  - bugfix: Some niche bullets are now hidden when embedded
+  RandomDudeFromTheRim:
+  - bugfix: You can no longer stuff anomaly cores into an autolathe for glass and
+      iron
+  Rhials:
+  - qol: Blobs now have a custom icon for the orbit menu/ComboHUD.
+  SmArtKar:
+  - qol: Improved formatting on holopad controls for AI
+  - bugfix: Fixed holopads softlocking AIs
+  - bugfix: Fixed escape shuttles only taking 4/9/19 minutes to arrive
+  - bugfix: Fixed emergency mode lighting using incorrect light color
+  - balance: Improved crate mimics' disguise
+  TealSeer:
+  - bugfix: fixed the blood filter whitelist doing the opposite of what it should
+  necromanceranne:
+  - balance: Flechette has been reworked into an AP pellet round that embeds and wounds,
+      but has less actual damage to buckshot. You can print it once Exotic Ammunition
+      has been researched. Also available to Nuclear Operatives.
+  - rscadd: Donk Co. 'Donk Spike' flechette rounds. No longer offered by Donk Co.
+      It can sometimes shows up in trashbins and dumpsters. And operatives can buy
+      it in bulk if they really feel like it.
+  - balance: Mech PKA now once again mines turfs and does full damage on its AOE explosion
+      (still only hitting mining mobs).
+  - balance: The standard PKA AOE mods are now by default 10% capacity. But they cannot
+      be used with one another.
+  - balance: The standard PKA offensive AOE mod now does the PKA's full damage in
+      its AOE.
+  - balance: Mining AOEs will affect everything within a 2 tile radius around the
+      point of impact, up from a 1 tile radius.
+  - code_imp: Changes floor diseases from advanced diseases into basic diseases. Should
+      mostly function the same, except you can't mutate them.
+  timothymtorres:
+  - code_imp: Remove redundant NOT operator from CALCULATE_ADJACENT_TURFS
+  warbluke:
+  - rscadd: Added Holodisks to loadout options
