@@ -128,17 +128,17 @@ VOTE_PERIOD 600
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
 
-## Determines if players can respawn after death
-## 0 = Cannot respawn (default)
-## 1 = Can respawn
-## 2 = Can respawn if choosing a different character
-ALLOW_RESPAWN 0
+## Определяет, могут ли игроки возродиться после смерти
+## 0 = Не могут возродиться (по умолчанию)
+## 1 = Могут возродиться
+## 2 = Могут возродиться, если выбрать другого персонажа
+ALLOW_RESPAWN 1
 
-## Respawn delay (deciseconds), which doesn't allow to return to lobby
-RESPAWN_DELAY 0
+## Задержка возрождения (несколько секунд), которая не позволяет вернуться в лобби
+RESPAWN_DELAY 300
 
 ## set a hosted by name for unix platforms
-HOSTEDBY Yournamehere
+HOSTEDBY Rewokin
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
