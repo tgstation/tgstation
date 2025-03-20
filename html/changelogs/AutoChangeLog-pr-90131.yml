@@ -1,0 +1,4 @@
+author: "deathrobotpunch"
+delete-after: True
+changes:
+  - qol: "Removed the access restrictions from mail sorter vending machine"

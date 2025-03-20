@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - spellcheck: "changes the description of the stable red extract from \"Nullifies all equipment based slowdowns.\" to \"Nullifies all equipment based speed change.\""
