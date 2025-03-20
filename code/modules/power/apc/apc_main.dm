@@ -175,7 +175,7 @@
 			pixel_x = -APC_PIXEL_OFFSET
 
 	hud_list = list(
-		MALF_APC_HUD = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked", pixel_x = src.pixel_x, pixel_y = src.pixel_y)
+		MALF_APC_HUD = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked", pixel_w = pixel_x, pixel_z = pixel_y)
 	)
 
 	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area

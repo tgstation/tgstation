@@ -114,13 +114,13 @@
 		active_scan_cone = new(spy.loc)
 		var/angle = round(get_angle(spy, stealing), 10)
 		if(angle > 180 && angle < 360)
-			active_scan_cone.pixel_x -= 16
+			active_scan_cone.pixel_w -= 16
 		else if(angle < 180 && angle > 0)
-			active_scan_cone.pixel_x += 16
+			active_scan_cone.pixel_w += 16
 		if(angle > 90 && angle < 270)
-			active_scan_cone.pixel_y -= 16
+			active_scan_cone.pixel_z -= 16
 		else if(angle < 90 || angle > 270)
-			active_scan_cone.pixel_y += 16
+			active_scan_cone.pixel_z += 16
 		active_scan_cone.transform = active_scan_cone.transform.Turn(angle)
 		active_scan_cone.alpha = 0
 		animate(active_scan_cone, time = 0.5 SECONDS, alpha = initial(active_scan_cone.alpha))

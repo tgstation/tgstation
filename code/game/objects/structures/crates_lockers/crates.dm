@@ -99,8 +99,8 @@
 
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
-		lid.pixel_x = lid_x
-		lid.pixel_y = lid_y
+		lid.pixel_w = lid_x
+		lid.pixel_z = lid_y
 		lid.layer = layer
 		. += lid
 
