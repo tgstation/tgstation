@@ -13,8 +13,20 @@
 
 // Imprinted brain - Cures basic traumas continuously
 /datum/status_effect/bioware/cortex/imprinted
-	tick_interval = 2 SECONDS
 
-/datum/status_effect/bioware/cortex/imprinted/tick(seconds_between_ticks)
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+/datum/status_effect/bioware/cortex/imprinted/bioware_gained()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
+	RegisterSignal(carbon_owner, COMSIG_CARBON_GAIN_TRAUMA, PROC_REF(on_gain_trauma))
+
+/datum/status_effect/bioware/cortex/imprinted/bioware_lost()
+	UnregisterSignal(owner, COMSIG_CARBON_GAIN_TRAUMA)
+
+/datum/status_effect/bioware/cortex/imprinted/proc/on_gain_trauma(datum/source, datum/brain_trauma/trauma, resilience)
+	SIGNAL_HANDLER
+	if(isnull(resilience))
+		resilience = trauma.resilience
+	if(resilience <= TRAUMA_RESILIENCE_BASIC) // there SHOULD be nothing lower than TRAUMA_RESILIENCE_BASIC, but I'd prefer to not make assumptions in case this ever gets some sort of refactor
+		return COMSIG_CARBON_BLOCK_TRAUMA
