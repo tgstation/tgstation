@@ -194,7 +194,7 @@
 	return ..() && shipped_ammount >= required_ammount
 
 /datum/bounty/pill/applies_to(obj/shipped)
-	if(!istype(shipped, /obj/item/reagent_containers/pill))
+	if(!istype(shipped, /obj/item/reagent_containers/applicator/pill))
 		return FALSE
 	if(shipped?.reagents.get_reagent_amount(wanted_reagent.type) >= wanted_vol)
 		return TRUE

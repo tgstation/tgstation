@@ -133,17 +133,46 @@
 /obj/projectile/bullet/pellet/flechette
 	name = "flechette"
 	icon_state = "flechette"
-	damage = 3
-	wound_bonus = -25
-	bare_wound_bonus = 50
-	damage_falloff_tile = 0.1
-	wound_falloff_tile = -10
+	damage = 2
+	wound_bonus = 5
+	bare_wound_bonus = 5
+	armour_penetration = 30
+	damage_falloff_tile = -0.2
+	wound_falloff_tile = -0.5
 	speed = 1.2
-	ricochet_decay_chance = 0.6
-	ricochet_decay_damage = 0.3
-	demolition_mod = 10
 	sharpness = SHARP_POINTY
-	weak_against_armour = TRUE
+	embed_type = /datum/embedding/bullet/flechette
+
+/datum/embedding/bullet/flechette
+	embed_chance = 100
+	fall_chance = 0
+	jostle_chance = 20
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.1
+	pain_mult = 0.5
+	jostle_pain_mult = 1.5
+	rip_time = 1 SECONDS
+
+/obj/projectile/bullet/pellet/flechette/donk
+	name = "\improper Donk Co. 'Donk Spike' flechette"
+	desc = "Your internal evisceration! As sponsored by the Donk Corporation!"
+	icon_state = "flechette_plastic"
+	damage = 1 // good god its awful
+	wound_bonus = 20 // but it WILL mulch you if you don't have armor.
+	bare_wound_bonus = 20
+	armour_penetration = 0
+	damage_falloff_tile = -0.1
+	wound_falloff_tile = -2
+	embed_type = /datum/embedding/bullet/flechette_donk // the true power of the donk spike.
+
+/datum/embedding/bullet/flechette_donk
+	embed_chance = 100
+	fall_chance = 0
+	jostle_chance = 50
+	ignore_throwspeed_threshold = TRUE
+	pain_mult = 1
+	jostle_pain_mult = 1
+	rip_time = 0.5 SECONDS
 
 // Mech Scattershot
 
