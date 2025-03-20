@@ -140,10 +140,11 @@
 
 //best butchering tool
 /obj/item/knife/hunting/wildhunter/set_butchering()
-	AddComponent(/datum/component/butchering, \
-	speed = 1.5 SECONDS , \
-	effectiveness = 110, \
-	bonus_modifier = 0, \
+	AddComponent(\
+		/datum/component/butchering, \
+		speed = 1.5 SECONDS , \
+		effectiveness = 110, \
+		bonus_modifier = 0, \
 	)
 
 /obj/item/knife/hunting/wildhunter/make_stabby()
