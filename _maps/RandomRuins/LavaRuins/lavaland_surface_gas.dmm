@@ -244,7 +244,6 @@
 /obj/structure/sign/warning/fire/directional/north,
 /obj/structure/reagent_dispensers/fueltank/large{
 	anchored = 1;
-	can_be_unanchored = 1
 	},
 /obj/structure/railing{
 	dir = 8
@@ -381,7 +380,6 @@
 /obj/structure/sign/warning/fire/directional/south,
 /obj/structure/reagent_dispensers/fueltank/large{
 	anchored = 1;
-	can_be_unanchored = 1
 	},
 /obj/structure/railing{
 	dir = 8
