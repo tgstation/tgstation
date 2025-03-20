@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Playing battle arcades now gives you a moodlet and counts as gaming for the gamer quirk"
+  - code_imp: "Cleaned up real gamer code"
