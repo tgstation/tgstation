@@ -313,6 +313,12 @@
 	cost = PAYCHECK_LOWER
 	contains = list(/obj/item/book/manual/fish_catalog)
 
+/datum/supply_pack/goody/aquarium_props
+	name = "Aquarium Props Single-Pack"
+	desc = "A box containing generic aquarium props. You'll still need an aquarium or fish tank for these."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/storage/box/aquarium_props)
+
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug Single-Pack"
 	desc = "A bog standard coffee mug, for drinking coffee."

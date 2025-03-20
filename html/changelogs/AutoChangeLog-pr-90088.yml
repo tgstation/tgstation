@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "The number of coins, chips or bills that can fit inside a piggy bank is now capped, anything exceeding that amount is converted into a single holochip."
