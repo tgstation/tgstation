@@ -1,4 +1,0 @@
-author: "GreytideSkye"
-delete-after: True
-changes:
-  - spellcheck: "Photocopier finally learned about %date and %time, and changed the forms' fields to accommodate them."

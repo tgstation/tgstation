@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Adds missing aquarium props box to goodies and games vending machine."

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "You can no longer dupe loot by reviving certain mobs (like ash drakes)"
