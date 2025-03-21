@@ -38,7 +38,7 @@
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
-		MATCONTAINER_EXAMINE, \
+		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
 	)
 	. = ..()

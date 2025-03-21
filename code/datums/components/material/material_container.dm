@@ -23,7 +23,7 @@
 	var/list/allowed_item_typecache
 	/// Whether or not this material container allows specific amounts from sheets to be inserted
 	var/precise_insertion = FALSE
-	/// The material container flags. See __DEFINES/materials.dm.
+	/// The material container flags. See __DEFINES/construction/materials.dm.
 	var/mat_container_flags
 	/// Signals that are registered with this contained
 	var/list/registered_signals
@@ -164,7 +164,7 @@
 	var/max_mat_value = 0
 	var/material_amount = 0
 
-	var/list/item_materials = source.get_material_composition()
+	var/list/item_materials = source.get_material_composition(mat_container_flags)
 	var/list/mats_consumed = list()
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
@@ -557,11 +557,11 @@
  * Arguments:
  * - [I][obj/item]: the item whos materials must be retrieved
  */
-/datum/component/material_container/proc/get_item_material_amount(obj/item/I)
-	if(!istype(I) || !I.custom_materials)
+/datum/component/material_container/proc/get_item_material_amount(obj/item/item)
+	if(!istype(item) || !item.custom_materials)
 		return 0
 	var/material_amount = 0
-	var/list/item_materials = I.get_material_composition()
+	var/list/item_materials = item.get_material_composition(mat_container_flags)
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
 			continue
@@ -769,7 +769,7 @@
 		return NONE
 	if((held_item.flags_1 & HOLOGRAM_1) || (held_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(held_item, allowed_item_typecache)))
 		return NONE
-	var/list/item_materials = held_item.get_material_composition()
+	var/list/item_materials = held_item.get_material_composition(mat_container_flags)
 	if(!length(item_materials))
 		return NONE
 	for(var/material in item_materials)
