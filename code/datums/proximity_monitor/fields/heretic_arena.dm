@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
-	crown_overlay.pixel_y = 24
+	crown_overlay.pixel_z = 24
 	owner.add_overlay(crown_overlay)
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 
@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
-	crown_overlay.pixel_y = 24
+	crown_overlay.pixel_z = 24
 	owner.add_overlay(crown_overlay)
 	return TRUE
 
