@@ -198,7 +198,7 @@ export const BigManipulator = (props) => {
             {manipulate_mode === 'use' && (
               <ConfigRow
                 label="Worker Interactions"
-                content={empty_hand_use ? 'EMPTY HAND' : 'SINGLE CYCLE'}
+                content={empty_hand_use ? 'EMPTY' : 'SINGLE'}
                 onClick={() => act('empty_use_change')}
                 tooltip={
                   empty_hand_use
