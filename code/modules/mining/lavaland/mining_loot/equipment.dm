@@ -81,7 +81,7 @@
 /obj/item/warp_cube/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE, ismapload = mapload)
 
 /obj/item/warp_cube/Destroy()
 	if(!QDELETED(linked))

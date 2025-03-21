@@ -71,7 +71,7 @@
 /obj/item/blackbox/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, ismapload = mapload)
 
 /**
  * The equivalent of the server, for PDA and request console messages.

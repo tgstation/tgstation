@@ -199,7 +199,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(autoping)
 		ping_ghosts("created", TRUE)
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE, ismapload = mapload)
 
 /obj/item/mmi/posibrain/update_icon_state()
 	. = ..()

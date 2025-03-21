@@ -56,6 +56,19 @@
 	if(our_turf && include_turf) //At this point, only the turf is left, provided it exists.
 		. += our_turf
 
+/// Returns the living mob that is currently holding us if we are either in their inventory or a backpack analogue.
+/// Returns null if it's in an invalid location, so that we can check explicitly for null later.
+/atom/movable/proc/get_held_mob()
+	if(isnull(loc))
+		return null
+	if(isliving(loc))
+		return loc
+	var/list/nested_locs = get_nested_locs(src)
+	for(var/mob/nest_check in nested_locs)
+		if(isliving(nest_check))
+			return nest_check
+	return null
+
 ///Step-towards method of determining whether one atom can see another. Similar to viewers()
 ///note: this is a line of sight algorithm, view() does not do any sort of raycasting and cannot be emulated by it accurately
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.

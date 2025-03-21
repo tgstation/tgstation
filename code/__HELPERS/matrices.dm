@@ -86,6 +86,10 @@ c f 1
 /matrix/proc/get_y_shift()
 	. = f
 
+///The angle of this matrix
+/matrix/proc/get_angle()
+	. = -ATAN2(a,d)
+
 /////////////////////
 // COLOUR MATRICES //
 /////////////////////

@@ -10,16 +10,18 @@
 
 	/**The rarity of this cube.
 	 * Changes the rarity of /datum/component/cuboid on Initialize()
-	 * To update this AFTER Initialize(), use update_cube_rarity(updated_rarity)
+	 * To update this AFTER Initialize(), use update_cube_rarity(updated_rarity, updated_reference)
 	**/
 	var/rarity = COMMON_CUBE
+	/// If this cube is a reference to something else. Same rule on updating applies.
+	var/reference = FALSE
 
 /obj/item/cube/Initialize(mapload)
 	. = ..()
 	force = rarity
 	throwforce = rarity
 	AddElement(/datum/element/beauty, 25*rarity)
-	AddComponent(/datum/component/cuboid, cube_rarity = rarity)
+	AddComponent(/datum/component/cuboid, cube_rarity = rarity, isreference = reference, ismapload = mapload)
 
 /// Randomize the color for the cube
 /obj/item/cube/proc/randcolor()
@@ -50,7 +52,7 @@
 	icon_state = pick_weight(fill_with_ones(possible_visuals))
 
 /// Updates the cube rarity & the cuboid rarity without deleting the cube
-/obj/item/cube/proc/update_cube_rarity(updated_rarity = COMMON_CUBE)
+/obj/item/cube/proc/update_cube_rarity(updated_rarity = COMMON_CUBE, updated_reference)
 	rarity = updated_rarity
 	var/datum/component/cuboid/cuboid = GetComponent(/datum/component/cuboid)
-	cuboid.update_rarity(new_rarity = rarity)
+	cuboid.update_rarity(new_rarity = rarity, new_reference = updated_reference)

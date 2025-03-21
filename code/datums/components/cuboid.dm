@@ -7,6 +7,8 @@
 	/// Color of the cube's rarity.
 	var/rarity_color_name = "white"
 	var/rarity_color = COLOR_WHITE
+	/// Is this cube a reference to another property?
+	var/isreference = FALSE
 	/// Unless there's some way to have the defines ALSO have names w/ the numbers, this is the best I can get lol
 	var/static/list/all_rarenames = list(
 		span_bold("Common"),
@@ -36,9 +38,9 @@
 	)
 
 
-/datum/component/cuboid/Initialize(mapload, cube_rarity = COMMON_CUBE)
+/datum/component/cuboid/Initialize(cube_rarity = COMMON_CUBE, isreference = FALSE, ismapload = FALSE)
 	. = ..()
-	update_rarity(mapload, cube_rarity)
+	update_rarity(cube_rarity, isreference, ismapload)
 
 /datum/component/cuboid/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
@@ -49,9 +51,11 @@
 	))
 
 /// Updates the rarity of the cube & its outline, then plays a little jingle. Seperate proc from init so we can use it outside the component as well
-/datum/component/cuboid/proc/update_rarity(mapload, new_rarity = COMMON_CUBE)
+/datum/component/cuboid/proc/update_rarity(new_rarity = COMMON_CUBE, new_reference, mapload)
 	/// Rarity
 	src.rarity = new_rarity
+	if(new_reference)
+		src.isreference = new_reference
 	/// We love indexes!!!
 	src.rarity_name = all_rarenames[src.rarity]
 	src.rarity_color_name = all_rarecolors[src.rarity]
@@ -69,9 +73,10 @@
 	var/a_an = "a"
 	if(src.rarity == UNCOMMON_CUBE || src.rarity == EPIC_CUBE)
 		a_an = "an"
-	var/cube_examine = ""
+	var/cube_examine = "It's [a_an] [src.rarity_name] Cube!"
+	if(isreference)
+		cube_examine += "\n"+span_tinynicegreen("Something about this cube feels familiar...")
 	if(rarity == COMMON_CUBE)
-		cube_examine = boxed_message("It's a [src.rarity_name] Cube!")
+		examine_list += boxed_message(cube_examine)
 	else
-		cube_examine = custom_boxed_message("[src.rarity_color_name]_box", "It's [a_an] [src.rarity_name] Cube!")
-	examine_list += cube_examine
+		examine_list += custom_boxed_message("[src.rarity_color_name]_box", cube_examine)

@@ -17,7 +17,7 @@
 /obj/item/freeze_cube/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = EPIC_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = EPIC_CUBE, ismapload = mapload)
 
 /obj/item/freeze_cube/examine(mob/user)
 	. = ..()

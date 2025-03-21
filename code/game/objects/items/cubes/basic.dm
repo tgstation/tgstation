@@ -104,7 +104,7 @@
 
 /obj/item/reagent_containers/applicator/pill/cube/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/cuboid, cube_rarity = cube_rarity)
+	AddComponent(/datum/component/cuboid, cube_rarity = cube_rarity, ismapload = mapload)
 
 /obj/item/reagent_containers/applicator/pill/cube/ice
 	name = "ice cube"

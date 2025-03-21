@@ -16,7 +16,7 @@
 /obj/item/food/monkeycube/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE, ismapload = mapload)
 
 /obj/item/food/monkeycube/attempt_pickup(mob/user)
 	if(expanding)
@@ -99,7 +99,7 @@
 /obj/item/food/monkeycube/gorilla/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE, ismapload = mapload)
 
 /obj/item/food/monkeycube/chicken
 	name = "chicken cube"
@@ -115,7 +115,7 @@
 /obj/item/food/monkeycube/chicken/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE, ismapload = mapload)
 
 /obj/item/food/monkeycube/bee
 	name = "bee cube"
@@ -132,4 +132,4 @@
 /obj/item/food/monkeycube/bee/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE, ismapload = mapload)

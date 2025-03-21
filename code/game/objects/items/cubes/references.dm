@@ -1,20 +1,18 @@
 // Cubes that are a reference to something else
-/obj/item/cube/reference/examine(mob/user)
-	. = ..()
-	. += span_tinynicegreen("Something about this cube feels familiar...")
 
 // Puzzle
-/obj/item/cube/reference/puzzle
+/obj/item/cube/puzzle
 	name = "\improper Lament Configuration"
 	desc = "A strange box of metal and wood, you get a strange feeling looking at it."
 	icon_state = "lament"
 	rarity = EPIC_CUBE
+	reference = TRUE
 	/// Have we solved the puzzle?
 	var/solved = FALSE
-	/// The message we say when we solve it
-	var/solve_msg = "THE BOX, YOU OPENED IT!"
+	/// Swaps our message & summons a silly little guy
+	var/eldritchsolve = TRUE
 
-/obj/item/cube/reference/puzzle/attack_self(mob/user)
+/obj/item/cube/puzzle/attack_self(mob/user)
 	. = ..()
 	if(solved)
 		balloon_alert(user, "Already solved")
@@ -29,31 +27,44 @@
 		balloon_alert(solver, "Lost concentration!")
 		return
 	solver?.mind?.adjust_experience(/datum/skill/gaming, 15*rarity)
+	var/solve_msg = "Solved!"
+	if(eldritchsolve)
+		solve_msg = "THE BOX, YOU OPENED IT!"
+		addtimer(CALLBACK(src, PROC_REF(he_did_what), solver), 5 SECONDS)
 	balloon_alert(solver, solve_msg)
 	solved = TRUE
 	icon_state = "[icon_state]_solved"
 	update_cube_rarity(rarity+1)
 
-/obj/item/cube/reference/puzzle/examine(mob/user)
+/// Spawn the guy
+/obj/item/cube/puzzle/proc/he_did_what(mob/living/user)
+	var/turf/newloc = pick(spiral_range_turfs(5, get_turf(user)))
+	var/mob/living/pinhead = new /mob/living/basic/heretic_summon/stalker(newloc)
+	new /obj/effect/temp_visual/mook_dust(get_turf(newloc))
+	playsound(pinhead, 'sound/effects/magic/demon_attack1.ogg', 75)
+	pinhead.say("I CAME!!")
+
+/obj/item/cube/puzzle/examine(mob/user)
 	. = ..()
 	if(!solved)
 		. += span_notice("It is yet to be solved...")
 	else
 		. += span_nicegreen("It's already been solved!")
 
-/obj/item/cube/reference/puzzle/rubiks
+/obj/item/cube/puzzle/rubiks
 	name = "\improper Rubik's Cube"
 	desc = "A famous cube housing a small sliding puzzle."
 	icon_state = "rubik"
 	rarity = RARE_CUBE
-	solve_msg = "Solved!"
+	eldritchsolve = FALSE
 
 // Craft
-/obj/item/cube/reference/craft
+/obj/item/cube/craft
 	name = "grass cube"
 	desc = "Despite being made of solid soil, you can dig inside to find the occasional diamond!"
 	icon_state = "craft"
 	rarity = MYTHICAL_CUBE
+	reference = TRUE
 	/// How much is a full stack of diamonds?
 	var/full_stack = 64
 	/// How long does it take for us to mine diamonds? Default: 15 SECONDS
@@ -61,19 +72,19 @@
 
 	COOLDOWN_DECLARE(cube_diamond_cooldown)
 
-/obj/item/cube/reference/craft/Initialize(mapload)
+/obj/item/cube/craft/Initialize(mapload)
 	. = ..()
 	create_storage(2, WEIGHT_CLASS_HUGE, full_stack, /obj/item/stack/sheet/mineral/diamond)
 	atom_storage.numerical_stacking = TRUE
 	START_PROCESSING(SSobj, src)
 
-/obj/item/cube/reference/craft/examine(mob/user)
+/obj/item/cube/craft/examine(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, cube_diamond_cooldown))
 		. += span_notice("It will mine a new diamond in [DisplayTimeText(COOLDOWN_TIMELEFT(src, cube_diamond_cooldown))].")
 
 /// Create a diamond after a cooldown
-/obj/item/cube/reference/craft/process(seconds_per_tick)
+/obj/item/cube/craft/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, cube_diamond_cooldown))
 		return
 	var/successful_haul = FALSE
@@ -99,8 +110,56 @@
 
 	COOLDOWN_START(src, cube_diamond_cooldown, mine_cooldown)
 
-/obj/item/cube/reference/generic
+// Generic cube
+/obj/item/cube/generic
 	name = "perfectly generic cube"
 	desc = "It's entirely non-noteworthy."
 	icon_state = "generic_object"
 	rarity = MYTHICAL_CUBE
+	reference = TRUE
+
+// Cell Cubes
+/// Energon cube
+/obj/item/stock_parts/power_store/cell/energon
+	name = "energon cube"
+	desc = "A rechargable power cell drawing upon the powers of the 3rd dimension to store extra charge."
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "energon"
+	charge_light_type = null
+	connector_type = null
+	maxcharge = STANDARD_CELL_CHARGE * 50
+	custom_materials = list(/datum/material/alloy/plasmaglass=SMALL_MATERIAL_AMOUNT*4)
+	chargerate = STANDARD_CELL_RATE * 2.5
+	light_range = 2
+	light_power = 1
+	light_color = COLOR_LIGHT_PINK
+	light_system = OVERLAY_LIGHT
+
+/obj/item/stock_parts/power_store/cell/energon/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, isreference = TRUE, ismapload = mapload)
+
+/// Tesseract
+/obj/item/stock_parts/power_store/cell/tesseract
+	name = "tesseract"
+	desc = "A rechargable power cell which pulls charge from the 4th dimension to generate new electricity out of thin air."
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "tesseract"
+	charge_light_type = null
+	connector_type = null
+	maxcharge = STANDARD_CELL_CHARGE * 40
+	custom_materials = list(/datum/material/bluespace=SMALL_MATERIAL_AMOUNT*4)
+	chargerate = STANDARD_CELL_RATE * 1.5
+	light_range = 2
+	light_power = 1
+	light_color = COLOR_BRIGHT_BLUE
+	light_system = OVERLAY_LIGHT
+
+/obj/item/stock_parts/power_store/cell/tesseract/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, isreference = TRUE, ismapload = mapload)
+	START_PROCESSING(SSobj, src)
+
+// Welcome back Hypercharged Yellow Slime Core
+/obj/item/stock_parts/power_store/cell/tesseract/process(seconds_per_tick)
+	give(chargerate * seconds_per_tick)

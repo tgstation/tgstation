@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
 	/obj/item/cube/random/rare = 3,
 	/obj/item/cube/colorful/huge,
 	/obj/item/cube/colorful/voxel,
-	/obj/item/cube/reference/puzzle/rubiks,
+	/obj/item/cube/puzzle/rubiks,
 	/obj/item/cube/material,
 )))
 
@@ -55,42 +55,42 @@ GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
 GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
 	// Vanilla
 	/obj/item/freeze_cube,
-	/obj/item/prisoncube,
 	// Custom
 	/obj/item/cube/random/epic = 3,
 	/obj/item/cube/colorful/pixel,
-	/obj/item/cube/reference/puzzle,
+	/obj/item/cube/puzzle,
 	/obj/item/cube/colorful/meta,
-	// t5 parts?
 	// Oxygen cube, generates oxygen
 	//Holocrons (Star Wars) Probably just a tech disk
-	//Energon Cubes (Transformers) t5 battery?
-	//Nitrous boxes (Crash bandicoot) grenade
+	//Nitrous boxes (Crash bandicoot) impact grenade
 ), only_root_path = TRUE))
 
 /// List of Legendary Cubes
 GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
 	// Vanilla
 	/obj/item/blackbox,
+	/obj/item/prisoncube,
 	// Custom
 	/obj/item/cube/random/legendary = 3,
 	/obj/item/cube/colorful/sphere,
+	// t5 parts?
+	/obj/item/stock_parts/power_store/cell/energon,
 	//Spessman cube (skin cube) monkey cube but human
-	//Dehydration cube(megamind) monkey cube but random!
-	//Tesseract(marvel) t6 battery fuck it
-	//Pain Box(Dune) maxes out your pain
+	//Dehydration cube(megamind) monkey cube but random! Take from gold slime pool.
+	//Pain Box(Dune) maxes out your pain, immediately fills you with a lot of determination
 )))
 
 /// List of Mythical Cubes
 GLOBAL_LIST_INIT(mythical_cubes, typecacheof(list(
 	/obj/item/cube/random/mythical = 3,
-	/obj/item/cube/reference/craft,
-	/obj/item/cube/reference/generic,
-	//Blender default cube (maybe with gizmo)
+	/obj/item/cube/craft,
+	/obj/item/cube/generic,
+	//Blender default cube (z level manip? jacobs ladder?)
 	//Spessman cube (ancient spessman)
 	//Companion cube (portal) mood buff & crushing weight
 	//Time Cube (time cube) wizard time-stop spell w/ longer cooldown
 	//Escafil Device (Animorphs) morph belt/spell w/ cooldown
+	/obj/item/stock_parts/power_store/cell/tesseract,
 	//Question mark block(Basically a reskinned christmas gift)
 )))
 

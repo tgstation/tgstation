@@ -314,7 +314,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_BARCODES, INNATE_TRAIT) // Don't allow anyone to override our pricetag component with a barcode
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE, ismapload = mapload)
 
 /obj/item/bounty_cube/examine()
 	. = ..()

@@ -3,8 +3,6 @@
 	name = "random Common Cube"
 	desc = "A cube that's full of surprises!"
 	tool_behaviour = null
-	/// All possible tool behaviors for the cube
-	var/list/cube_tools = list()
 	/// Used for cubes that create more cubes
 	var/static/list/random_rarity_list = list(
 		/obj/effect/spawner/random/cube,
@@ -16,6 +14,13 @@
 	)
 	/// Flags for anything that doesn't inherently have an examine string
 	var/cube_examine_flags = NONE
+		/// The color we were randomly assigned
+	var/cube_color = COLOR_WHITE
+	/// The person that picked us up, if anything requires it.
+	var/datum/weakref/owner
+
+	/// All possible tool behaviors for the cube
+	var/list/cube_tools = list()
 	/// If we're a laser gun
 	var/lasergun = FALSE
 	/// If this is true, we wait for someone to pick us up and then register a leash component to them.
@@ -26,18 +31,29 @@
 	var/reverse_movements = FALSE
 	/// Speen
 	var/speen = FALSE
-	/// The color we were randomly assigned
-	var/cube_color = COLOR_WHITE
+
+	/// Initiate silly gravity if we're not null
+	var/funnygrav
+	/// How many steps the user has taken since picking up cube w/ negative grav
+	var/step_count = 0
+	/// If you walk outside on a planetary turf, you fly up. To the sky. And Explode.
+	var/you_fucked_up = FALSE
+
 
 	COOLDOWN_DECLARE(cube_laser_cooldown)
 
 /obj/item/cube/random/Initialize(mapload)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	give_random_icon(TRUE)
 	apply_rand_size()
 	cube_color = randcolor()
 	create_random_name()
 	. = ..()
 	give_random_effects()
+
+/obj/item/cube/random/Destroy(force)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	return ..()
 
 /obj/item/cube/random/examine(mob/user)
 	. = ..()
@@ -145,6 +161,7 @@
 	"Speen",
 	"Material",
 	"Lamp",
+	"Gravity",
 	)
 	// It looks big and scary but it's just a giant switch() function that applies components/elements. If a section would have been too long it was made its own proc.
 	for(var/i in 1 to rarity)
@@ -231,6 +248,11 @@
 				light_color = cube_color
 				light_system = OVERLAY_LIGHT
 				update_light()
+			if("Gravity")
+				var/list/gravweights = list()
+				gravweights[ZERO_GRAVITY] = 90
+				gravweights[NEGATIVE_GRAVITY] = rarity
+				funnygrav = pick_weight(gravweights)
 
 		possible_cube_effects -= rand_swap
 
@@ -323,9 +345,27 @@
 	COOLDOWN_START(src, cube_laser_cooldown, (10-rarity) SECONDS) // Not very fast to make up for the fact it uses no ammo
 	return ITEM_INTERACT_SUCCESS
 
+/// Used for the "Funny" effect
+/obj/item/cube/random/proc/after_sitcom_laugh(mob/victim)
+	victim.visible_message("[src] lets out a burst of laughter!")
 
-/obj/item/cube/random/pickup(mob/user)
-	. = ..()
+/// Check if we were picked up by a mob, and keep that user as a weakref until we're removed
+/obj/item/cube/random/proc/on_moved(atom/movable/source, atom/oldloc, direction, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	var/mob/living/existing_user = owner?.resolve()
+	var/mob/living/holder = get_held_mob()
+	if(existing_user)
+		if(!holder)
+			handle_dropping(existing_user)
+			return
+		if(existing_user == holder)
+			return
+	else if(holder)
+		handle_equipping(holder)
+
+/obj/item/cube/random/proc/handle_equipping(mob/living/user)
+	owner = WEAKREF(user)
 	// If we have the leash effect but haven't been leashed yet, then leash to the first person that picks us up
 	if(ready_leash)
 		AddComponent(/datum/component/leash, user, 6, /obj/effect/decal/cleanable/confetti)
@@ -337,17 +377,123 @@
 	// Way funnier than you'll imagine
 	if(speen)
 		user.AddElement(/datum/element/wheel)
-
-/// Used for the funny effect
-/obj/item/cube/random/proc/after_sitcom_laugh(mob/victim)
-	victim.visible_message("[src] lets out a burst of laughter!")
+	if(!isnull(funnygrav))
+		if(funnygrav < ZERO_GRAVITY)
+			handle_neggrav_add(user)
+		// User gets hit heavy if negative but the cube is built different
+		AddElement(/datum/element/forced_gravity, funnygrav)
+		passtable_on(src, TRAIT_FORCED_GRAVITY)
+		user.AddElement(/datum/element/forced_gravity, funnygrav)
 
 // It's at least not permanent
-/obj/item/cube/random/dropped(mob/user, silent = FALSE)
-	. = ..()
+/obj/item/cube/random/proc/handle_dropping(mob/living/user)
 	user.RemoveElement(/datum/element/inverted_movement)
-	// Technically you can get stuck rotated but that's funny so who cares
 	user.RemoveElement(/datum/element/wheel)
+	user.RemoveElement(/datum/element/forced_gravity, funnygrav)
+	if(funnygrav < ZERO_GRAVITY)
+		handle_neggrav_remove()
+	owner = null
+
+///Ripped from the atrocinator
+/obj/item/cube/random/proc/handle_neggrav_add(mob/user)
+	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
+	RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(on_talk))
+	ADD_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_on(user, REF(src))
+	check_upstairs()
+
+/// Upside down
+/obj/item/cube/random/proc/on_talk(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= "upside_down"
+
+/// Again ripped from atrocinator, but edited to account for lack of modsuit
+/obj/item/cube/random/proc/check_upstairs(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
+	SIGNAL_HANDLER
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	if(you_fucked_up || user.has_gravity() > NEGATIVE_GRAVITY)
+		return
+
+	var/turf/open/current_turf = get_turf(user)
+	var/turf/open/openspace/turf_above = get_step_multiz(user, UP)
+	if(current_turf && istype(turf_above))
+		current_turf.zFall(user)
+		return
+
+	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
+		INVOKE_ASYNC(src, PROC_REF(fly_away))
+		return
+
+	if (forced || (SSlag_switch.measures[DISABLE_FOOTSTEPS] && !(HAS_TRAIT(source, TRAIT_BYPASS_MEASURES))))
+		return
+
+	if(!(step_count % 2))
+		playsound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg', 50)
+	step_count++
+
+#define FLY_TIME 5 SECONDS
+
+// Because it's a little harder to just "not turn on the cube outside", we're instead calling destroy_legs()
+/obj/item/cube/random/proc/fly_away()
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	you_fucked_up = TRUE
+	ADD_TRAIT(src, TRAIT_NODROP, NEGATIVE_GRAVITY_TRAIT)
+	playsound(src, 'sound/effects/whirthunk.ogg', 75)
+	to_chat(user, span_userdanger("[src] is pulling you into space! You can't let go!"))
+	investigate_log("has flown off into space due to [src].", INVESTIGATE_DEATHS)
+	user.Stun(FLY_TIME, ignore_canstun = TRUE)
+	animate(user, FLY_TIME, pixel_z = 300, alpha = 0)
+	addtimer(CALLBACK(src, PROC_REF(initiate_fall)), FLY_TIME)
+
+#undef FLY_TIME
+#define FALL_TIME 0.5 SECONDS
+
+/// We're pretty high up huh
+/obj/item/cube/random/proc/initiate_fall()
+	funnygrav = null
+	RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+	passtable_off(src, TRAIT_FORCED_GRAVITY)
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	playsound(src, 'sound/effects/whirthunk.ogg', 25)
+	to_chat(user, span_userdanger("[src] suddenly stops pulling you. You're starting to fall!"))
+	animate(user, FALL_TIME, pixel_z = 0, alpha = 255)
+	addtimer(CALLBACK(src, PROC_REF(destroy_legs)), FALL_TIME)
+
+#undef FALL_TIME
+
+/// Honestly destroying more than just the legs but yknow, it's similar enough
+/obj/item/cube/random/proc/destroy_legs()
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	user.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+	handle_neggrav_remove()
+	REMOVE_TRAIT(src, TRAIT_NODROP, NEGATIVE_GRAVITY_TRAIT)
+	new /obj/effect/temp_visual/mook_dust(get_turf(src))
+	playsound(src, 'sound/effects/gravhit.ogg', 75)
+	user.gib(DROP_ALL_REMAINS)
+
+/obj/item/cube/random/proc/handle_neggrav_remove()
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	UnregisterSignal(user, list(
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOB_SAY
+	))
+	step_count = 0
+	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_off(user, REF(src))
+	var/turf/open/openspace/current_turf = get_turf(user)
+	if(istype(current_turf))
+		current_turf.zFall(user, falling_from_move = TRUE)
 
 
 //* Circuit shell for random cubes

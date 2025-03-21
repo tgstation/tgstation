@@ -103,7 +103,7 @@ Slimecrossing Items
 /obj/item/barriercube/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE, ismapload = mapload)
 
 /obj/item/barriercube/attack_self(mob/user)
 	if(locate(/obj/structure/barricade/slime) in get_turf(loc))

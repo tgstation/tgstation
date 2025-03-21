@@ -12,6 +12,8 @@ Chilling extracts:
 /obj/item/slimecross/chilling/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE, ismapload = mapload)
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
 	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))

@@ -22,7 +22,7 @@
 	atom_storage.open_sound = 'sound/items/handling/cardboard_box/cardboard_box_open.ogg'
 	atom_storage.rustle_sound = 'sound/items/handling/cardboard_box/cardboard_box_rustle.ogg'
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE, ismapload = mapload)
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)

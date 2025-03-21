@@ -119,7 +119,7 @@
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 
 ///Returns the mob we are implanted in so that the electricity effect doesn't runtime
-/obj/item/organ/heart/cybernetic/anomalock/proc/get_held_mob()
+/obj/item/organ/heart/cybernetic/anomalock/get_held_mob()
 	return owner
 
 /obj/item/organ/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

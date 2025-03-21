@@ -323,7 +323,7 @@
 /obj/item/prisoncube/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = EPIC_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, ismapload = mapload)
 
 /obj/item/prisoncube/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))

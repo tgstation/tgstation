@@ -165,7 +165,7 @@
 /obj/item/dice/d6/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE)
+		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE, ismapload = mapload)
 
 /obj/item/dice/d6/ebony
 	name = "ebony die"
