@@ -44,6 +44,8 @@
 	var/can_flip = TRUE
 	///Whether or not the table is flipped
 	var/is_flipped = FALSE
+	/// Whether or not when flipped, it ignores PASS_GLASS flag
+	var/is_transparent = FALSE
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -88,6 +90,7 @@
 
 //proc that adds elements present in normal tables
 /obj/structure/table/proc/unflip_table()
+	playsound('sound/items/trayhit/trayhit2.ogg', 100)
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
@@ -100,13 +103,25 @@
 	smoothing_groups = on_init_smoothed_vars[1]
 	canSmoothWith = on_init_smoothed_vars[2]
 	update_appearance()
+	is_flipped = FALSE
 
 //proc that removes elements present in now-flipped tables
-/obj/structure/table/proc/flip_table()
+/obj/structure/table/proc/flip_table(new_dir)
+	playsound('sound/items/trayhit/trayhit1.ogg', 100)
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/elevation, pixel_shift = 12)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
+
+	//change icons
+		layer = LOW_ITEM_LAYER
+		if(new_dir & EAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
+			new_dir = EAST
+		else if(new_dir & WEST)
+			new_dir = WEST
+		dir = new_dir
+		if(new_dir == SOUTH)
+			layer = ABOVE_MOB_LAYER
 
 	smoothing_flags &= ~SMOOTH_BITMASK
 	smoothing_groups = null
@@ -116,6 +131,7 @@
 	icon_state = base_icon_state
 	update_appearance()
 	QUEUE_SMOOTH_NEIGHBORS(src)
+	is_flipped = TRUE
 
 	var/turf/throw_target = get_step(src, src.dir)
 	if (!isnull(throw_target))
@@ -159,13 +175,13 @@
 	SIGNAL_HANDLER
 	if(!is_flipped)
 		return
-		
+
 	if(leaving.movement_type & PHASING)
 		return
 
 	if(leaving == src)
 		return
-	if(type == /obj/structure/table/glass) //Glass table, jolly ranchers pass
+	if(is_transparent) //Glass table, jolly ranchers pass
 		if(istype(leaving) && (leaving.pass_flags & PASSGLASS))
 			return
 
@@ -180,11 +196,11 @@
 	. = ..()
 	if(.)
 		return
-		
+
 	if(!is_flipped)
 		return FALSE
-		
-	if(type == /obj/structure/table/glass) //Glass table, jolly ranchers pass
+
+	if(is_transparent) //Glass table, jolly ranchers pass
 		if(istype(mover) && (mover.pass_flags & PASSGLASS))
 			return TRUE
 	if(isprojectile(mover))
@@ -261,27 +277,13 @@
 		if(!do_after(user, max_integrity * 0.25))
 			return
 
-		//change icons
-		layer = LOW_ITEM_LAYER
-		var/new_dir = get_dir(user, src)
-		if(new_dir & EAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
-			new_dir = EAST
-		else if(new_dir & WEST)
-			new_dir = WEST
-		dir = new_dir
-		if(new_dir == SOUTH)
-			layer = ABOVE_MOB_LAYER
-
-		is_flipped = TRUE
-		flip_table()
+		flip_table(get_dir(user, src))
+		return
 
 	else
 		user.balloon_alert_to_viewers("flipping table upright...")
 		if(do_after(user, max_integrity * 0.25, src))
-			is_flipped = FALSE
 			unflip_table()
-			//icons
-			playsound('sound/items/trayhit/trayhit2.ogg', 100)
 			return TRUE
 
 /obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
