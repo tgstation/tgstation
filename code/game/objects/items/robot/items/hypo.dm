@@ -1,4 +1,5 @@
 /// All of the default reagent lists for each hypospray (+ hacked variants)
+// DOPPLER EDIT BEGIN: include lidocaine
 #define BASE_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/c2/aiuri,\
 		/datum/reagent/medicine/c2/convermol,\
@@ -6,8 +7,10 @@
 		/datum/reagent/medicine/c2/libital,\
 		/datum/reagent/medicine/c2/multiver,\
 		/datum/reagent/medicine/salglu_solution,\
-		/datum/reagent/medicine/spaceacillin\
+		/datum/reagent/medicine/spaceacillin,\
+		/datum/reagent/medicine/lidocaine\
 	)
+// DOPPLER EDIT END
 #define EXPANDED_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/haloperidol,\
 		/datum/reagent/medicine/inacusiate,\
