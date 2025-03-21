@@ -17,7 +17,9 @@
 	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE
 	/// The category of books to pick from when populating random books.
-	var/random_category = null
+	var/random_category = BOOK_CATEGORY_RANDOM
+	/// Probability that a category will be changed to random regardless of what it was set to.
+	var/category_prob = 25
 	/// How many random books to generate.
 	var/books_to_load = 0
 
@@ -51,7 +53,10 @@
 	//Loads a random selection of books in from the db, adds a copy of their info to a global list
 	//To send to library consoles as a starting inventory
 	if(load_random_books)
-		create_random_books(books_to_load, src, FALSE, random_category)
+		// When randomizing category we manually pick a new category
+		// This is done so we can exclude the adult category from randomizing on any bookcase that isn't already marked as adult
+		var/loaded_category = prob(category_prob) ? pick(BOOK_CATEGORY_FICTION, BOOK_CATEGORY_NONFICTION, BOOK_CATEGORY_RELIGION, BOOK_CATEGORY_REFERENCE, random_category) : random_category
+		create_random_books(amount = books_to_load, location = src, category = loaded_category)
 		after_random_load()
 		update_appearance() //Make sure you look proper
 
