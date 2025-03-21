@@ -320,5 +320,5 @@
 #define COMSIG_LIVING_PERCEIVE_EXAMINE_NAME "living_perceive_examine_name"
 	#define COMPONENT_EXAMINE_NAME_OVERRIDEN (1<<0)
 
-/// From /obj/item/bible/attack() : (mob/living/user, obj/item/bible/bible, bless_result)
+/// From /obj/item/book/bible/attack() : (mob/living/user, obj/item/book/bible/bible, bless_result)
 #define COMSIG_LIVING_BLESSED "living_blessed"

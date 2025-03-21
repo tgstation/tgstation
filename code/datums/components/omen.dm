@@ -218,7 +218,7 @@
 	return
 
 /// Hijack the mood system to see if we get the blessing mood event to cancel the omen
-/datum/component/omen/proc/check_bless(mob/living/our_guy, mob/living/priest, obj/item/bible/bible, bless_result)
+/datum/component/omen/proc/check_bless(mob/living/our_guy, mob/living/priest, obj/item/book/bible/bible, bless_result)
 	SIGNAL_HANDLER
 
 	if(incidents_left == INFINITY || bless_result != BLESSING_SUCCESS)
