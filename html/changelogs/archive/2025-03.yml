@@ -610,3 +610,61 @@
   - code_imp: Remove redundant NOT operator from CALCULATE_ADJACENT_TURFS
   warbluke:
   - rscadd: Added Holodisks to loadout options
+2025-03-21:
+  AyIong:
+  - bugfix: Fixed preferences layout for Byond 515 after fixing it for Byond 516
+  EmptyLullaby:
+  - bugfix: donksoft flechette box has been fixed
+  Ghommie:
+  - bugfix: Adds missing aquarium props box to goodies and games vending machine.
+  GremlinSeeker:
+  - map: redesigned wawa station's atmospherics
+  GreytideSkye:
+  - spellcheck: Photocopier finally learned about %date and %time, and changed the
+      forms' fields to accommodate them.
+  Holoo-1:
+  - rscadd: AIs now can create a popup window via multicam
+  LemonInTheDark:
+  - rscadd: Smoothed objects on shuttles now will only smooth with other shuttles
+      (added support for extensions of this system)
+  - refactor: I've funked around with our smoothing system, cutting out some older
+      code. Lemme know if anything is weird PLEASE
+  Maximal08:
+  - spellcheck: changes the description of the stable red extract from "Nullifies
+      all equipment based slowdowns." to "Nullifies all equipment based speed change."
+  Melbert:
+  - rscadd: Adds 4-5 new hallucinations. Collect them all.
+  - balance: If you are only hallucinating a little bit, the game will prefer to pick
+      more subtle hallucinations. If you are hallucinating a ton, it will prefer the
+      more wacky hallucinations.
+  - balance: If you are only hallucinating a little bit, the cooldown between hallucinations
+      is longer. If you are hallucinating a ton, it will be shorter.
+  - balance: If a hallucination fails to trigger (such as a deaf person getting a
+      sound hallucination) the next one will be a lot sooner.
+  - balance: RDS hallucination amount is capped at mid tier hallucinations. This means
+      bubblegum and co. will be a lot rarer, or will even never show. HOWEVER, there
+      is now a preference allowing you to uncap your RDS hallucinations.
+  - balance: Mindbreaker toxin is more effective at suppressing RDS.
+  - balance: Some hallucinations effects have been tweaked up or down according to
+      the new thresholds. Madness mask as an example.
+  - bugfix: '"Fake Fire" Hallucination works again, and now has a unique message for
+      if you stop-drop-roll that other people see.'
+  MelokGleb:
+  - rscadd: The Blood-Drunk Miner has found an ancient hunting knife...
+  SmArtKar:
+  - bugfix: You can no longer dupe loot by reviving certain mobs (like ash drakes)
+  - refactor: Refactored how overlay lights work - having one in your pocket will
+      no longer color air around you into piss
+  - qol: Painted flashlights once again emit colored light.
+  - bugfix: Playing battle arcades now gives you a moodlet and counts as gaming for
+      the gamer quirk
+  - code_imp: Cleaned up real gamer code
+  Twaticus:
+  - image: Resprites trashcarts, cardboard boxes, and tattoo kits.
+  deathrobotpunch:
+  - qol: Removed the access restrictions from mail sorter vending machine
+  vinylspiders:
+  - bugfix: combat rmb will no longer fire the gun at the same time as pistol whipping
+      for certain guns
+  warbluke:
+  - bugfix: Toner cartridges are no longer larger than the airlock sprayer.
