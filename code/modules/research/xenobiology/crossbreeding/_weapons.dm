@@ -112,7 +112,7 @@ Slimecrossing Weapons
 	var/mob/living/M = loc
 	if(istype(M) && HAS_TRAIT(M, TRAIT_NOBLOOD) && M.stat == CONSCIOUS)
 		charges ++
-		M.apply_damage(10, BRUTE)
+		M.apply_damage(5, BRUTE)
 	else
 		if(istype(M) && M.blood_volume >= 20)
 			charges++
