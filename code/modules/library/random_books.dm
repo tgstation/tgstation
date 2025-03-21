@@ -44,7 +44,8 @@
  * * amount: How many books to create.
  * * location: Where to create the books.
  * * fail_loud: If TRUE, will create a book with an error message if the database fails.
- * * category: The category of books to pick from. If null or BOOK_CATEGORY_RANDOM, will pick from any category.
+ * * category: The category of books to pick from.
+ * If null or BOOK_CATEGORY_RANDOM, will pick from any category on a per-book basis.
  * * existing_book: If set, will use this book object instead of creating a new one.
  * Note passing any amount above 1 with an existing_book will still only create one book.
  */

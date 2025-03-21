@@ -53,10 +53,29 @@
 	//Loads a random selection of books in from the db, adds a copy of their info to a global list
 	//To send to library consoles as a starting inventory
 	if(load_random_books)
-		// When randomizing category we manually pick a new category
-		// This is done so we can exclude the adult category from randomizing on any bookcase that isn't already marked as adult
-		var/loaded_category = prob(category_prob) ? pick(BOOK_CATEGORY_FICTION, BOOK_CATEGORY_NONFICTION, BOOK_CATEGORY_RELIGION, BOOK_CATEGORY_REFERENCE, random_category) : random_category
-		create_random_books(amount = books_to_load, location = src, category = loaded_category)
+		var/randomizing_categories = prob(category_prob) || random_category == BOOK_CATEGORY_RANDOM
+		// We only need to run this special logic if we're randomizing a non-adult bookshelf
+		if(randomizing_categories && random_category != BOOK_CATEGORY_ADULT)
+			// Category is manually randomized rather than using BOOK_CATEGORY_RANDOM
+			// So we can exclude adult books in non-adult bookshelves
+			// And also weight the prime category more heavily
+			var/list/category_pool = list(
+				BOOK_CATEGORY_FICTION,
+				BOOK_CATEGORY_NONFICTION,
+				BOOK_CATEGORY_REFERENCE,
+				BOOK_CATEGORY_RELIGION,
+			)
+			if(random_category != BOOK_CATEGORY_RANDOM)
+				category_pool += random_category
+			var/sub_books_to_load = books_to_load
+			while(sub_books_to_load > 0 && length(category_pool) > 0)
+				var/cat_amount = min(rand(1, 2), sub_books_to_load)
+				sub_books_to_load -= cat_amount
+				create_random_books(amount = cat_amount, location = src, category = pick_n_take(category_pool))
+		// Otherwise we can just let the proc handle everything, it will even do randomization for us
+		else
+			create_random_books(amount = books_to_load, location = src, category = random_category)
+
 		after_random_load()
 		update_appearance() //Make sure you look proper
 
