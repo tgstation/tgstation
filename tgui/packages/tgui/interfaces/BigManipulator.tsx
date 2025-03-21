@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Section,
-  Slider,
-  Stack,
-  Table,
-} from 'tgui-core/components';
+import { Box, Button, Section, Slider, Table } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -32,13 +25,18 @@ type PrioritySettings = {
   priority_width: number;
 };
 
-const DelayControls = ({ act, data }) => {
+const DelayControls = () => {
+  const { act, data } = useBackend<ManipulatorData>();
   const { delay_step, delay_value, min_delay, max_delay } = data;
   return (
-    <Stack>
-      <Stack.Item style={{ marginRight: '10px' }}>Delay:</Stack.Item>
-      <Stack style={{ width: '100%' }}>
-        <Stack.Item>
+    <Box style={{ display: 'flex' }}>
+      <Box style={{ display: 'inline-block' }}>Delay:</Box>
+      <Box style={{ display: 'flex', width: '100%' }}>
+        <Box
+          style={{
+            padding: '0 5px 0 5px',
+          }}
+        >
           <Button
             icon="backward-step"
             onClick={() =>
@@ -47,8 +45,8 @@ const DelayControls = ({ act, data }) => {
               })
             }
           />
-        </Stack.Item>
-        <Stack.Item grow>
+        </Box>
+        <Box style={{ flex: 1 }}>
           <Slider
             style={{ marginTop: '-5px' }}
             step={delay_step}
@@ -63,8 +61,12 @@ const DelayControls = ({ act, data }) => {
               })
             }
           />
-        </Stack.Item>
-        <Stack.Item>
+        </Box>
+        <Box
+          style={{
+            padding: '0 5px 0 5px',
+          }}
+        >
           <Button
             icon="forward-step"
             onClick={() =>
@@ -73,40 +75,52 @@ const DelayControls = ({ act, data }) => {
               })
             }
           />
-        </Stack.Item>
-      </Stack>
-    </Stack>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
-const ConfigRow = ({ label, content, onClick, tooltip, selected = false }) => (
-  <Table.Row
-    className="candystripe"
-    style={{
-      height: '2em',
-      padding: '20px',
-      lineHeight: '2em',
-    }}
-  >
-    <Table.Cell>
-      <Box style={{ marginLeft: '5px' }}>{label}</Box>
-    </Table.Cell>
-    <Table.Cell
+type ConfigRowProps = {
+  label: string;
+  content: string;
+  onClick: () => void;
+  tooltip: string;
+  selected?: BooleanLike;
+};
+
+const ConfigRow = (props: ConfigRowProps) => {
+  const { label, content, onClick, tooltip, selected = false } = props;
+
+  return (
+    <Table.Row
+      className="candystripe"
       style={{
-        width: 'min-content',
-        whiteSpace: 'nowrap',
-        textAlign: 'right',
+        height: '2em',
+        padding: '20px',
+        lineHeight: '2em',
       }}
     >
-      <Button
-        content={content}
-        tooltip={tooltip}
-        onClick={onClick}
-        selected={selected}
-      />
-    </Table.Cell>
-  </Table.Row>
-);
+      <Table.Cell>
+        <Box style={{ marginLeft: '5px' }}>{label}</Box>
+      </Table.Cell>
+      <Table.Cell
+        style={{
+          width: 'min-content',
+          whiteSpace: 'nowrap',
+          textAlign: 'right',
+        }}
+      >
+        <Button
+          content={content}
+          tooltip={tooltip}
+          onClick={onClick}
+          selected={!!selected}
+        />
+      </Table.Cell>
+    </Table.Row>
+  );
+};
 
 export const BigManipulator = (props) => {
   const { data, act } = useBackend<ManipulatorData>();
@@ -136,19 +150,25 @@ export const BigManipulator = (props) => {
             />
           }
         >
-          <Stack style={{ lineHeight: '2em', marginBottom: '0px' }}>
-            <Stack.Item grow>
-              <DelayControls act={act} data={data} />
-            </Stack.Item>
-            <Stack.Item>
+          <Box
+            style={{
+              lineHeight: '1.8em',
+              marginBottom: '-5px',
+              display: 'flex',
+            }}
+          >
+            <Box style={{ flex: 1 }}>
+              <DelayControls />
+            </Box>
+            <Box>
               <Button
                 content="Drop"
                 icon="eject"
                 tooltip="Disengage the claws, dropping the held item"
                 onClick={() => act('drop')}
               />
-            </Stack.Item>
-          </Stack>
+            </Box>
+          </Box>
         </Section>
 
         <Section title="Configuration">
@@ -185,19 +205,14 @@ export const BigManipulator = (props) => {
                     ? 'Interact with an empty hand'
                     : 'Drop the item after a single interaction cycle'
                 }
-                selected={empty_hand_use}
+                selected={!!empty_hand_use}
               />
             )}
             <ConfigRow
               label="Item Filter"
-              content={item_as_filter ? item_as_filter : 'NO FILTER'}
+              content={item_as_filter ? item_as_filter : 'NONE'}
               onClick={() => act('add_filter')}
-              tooltip={
-                <Box>
-                  Click while holding an item to
-                  <Box /> set filtering type
-                </Box>
-              }
+              tooltip="Click while holding an item to set filtering type"
             />
 
             {manipulate_mode !== 'throw' && (
@@ -206,7 +221,7 @@ export const BigManipulator = (props) => {
                 content={highest_priority ? 'TRUE' : 'FALSE'}
                 onClick={() => act('highest_priority_change')}
                 tooltip="Only interact with the highest dropoff point in the list"
-                selected={highest_priority}
+                selected={!!highest_priority}
               />
             )}
           </Table>
@@ -240,9 +255,7 @@ export const BigManipulator = (props) => {
                       }
                     />
                   </Table.Cell>
-                  <Table.Cell>
-                    <Box>{setting.name}</Box>
-                  </Table.Cell>
+                  <Table.Cell>{setting.name}</Table.Cell>
                   <Table.Cell>{setting.priority_width}</Table.Cell>
                 </Table.Row>
               ))}
