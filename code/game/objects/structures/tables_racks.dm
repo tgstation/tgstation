@@ -114,14 +114,14 @@
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
 
 	//change icons
-		layer = LOW_ITEM_LAYER
-		if(new_dir & EAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
-			new_dir = EAST
-		else if(new_dir & WEST)
-			new_dir = WEST
-		dir = new_dir
-		if(new_dir == SOUTH)
-			layer = ABOVE_MOB_LAYER
+	layer = LOW_ITEM_LAYER
+	if(new_dir & EAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
+		new_dir = EAST
+	else if(new_dir & WEST)
+		new_dir = WEST
+	dir = new_dir
+	if(new_dir == SOUTH)
+		layer = ABOVE_MOB_LAYER
 
 	smoothing_flags &= ~SMOOTH_BITMASK
 	smoothing_groups = null
@@ -293,7 +293,7 @@
 		return FALSE
 	if(!isliving(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
 		return FALSE
-	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING))) //Thing isn't flying/floating
+	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING)) || HAS_TRAIT(movable_entity, TRAIT_MOB_ELEVATED)) //Thing isn't flying/floating
 		return FALSE
 
 	return TRUE
@@ -919,6 +919,7 @@
 	buildstack = /obj/item/stack/sheet/bronze
 	smoothing_groups = SMOOTH_GROUP_BRONZE_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
+	can_flip = FALSE
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
