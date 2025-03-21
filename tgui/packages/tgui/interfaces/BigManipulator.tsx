@@ -1,4 +1,11 @@
-import { Box, Button, Section, Slider, Table } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Section,
+  Slider,
+  Stack,
+  Table,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -25,59 +32,59 @@ type PrioritySettings = {
   priority_width: number;
 };
 
-const DelayControls = () => {
+const MasterControls = () => {
   const { act, data } = useBackend<ManipulatorData>();
   const { delay_step, delay_value, min_delay, max_delay } = data;
   return (
-    <Box style={{ display: 'flex' }}>
-      <Box style={{ display: 'inline-block' }}>Delay:</Box>
-      <Box style={{ display: 'flex', width: '100%' }}>
-        <Box
-          style={{
-            padding: '0 5px 0 5px',
-          }}
-        >
-          <Button
-            icon="backward-step"
-            onClick={() =>
-              act('changeDelay', {
-                new_delay: min_delay,
-              })
-            }
-          />
-        </Box>
-        <Box style={{ flex: 1 }}>
-          <Slider
-            style={{ marginTop: '-5px' }}
-            step={delay_step}
-            my={1}
-            value={delay_value}
-            minValue={min_delay}
-            maxValue={max_delay}
-            unit="sec."
-            onDrag={(e, value) =>
-              act('changeDelay', {
-                new_delay: value,
-              })
-            }
-          />
-        </Box>
-        <Box
-          style={{
-            padding: '0 5px 0 5px',
-          }}
-        >
-          <Button
-            icon="forward-step"
-            onClick={() =>
-              act('changeDelay', {
-                new_delay: max_delay,
-              })
-            }
-          />
-        </Box>
-      </Box>
-    </Box>
+    <Stack>
+      <Stack.Item>Delay:</Stack.Item>
+      <Stack.Item>
+        {' '}
+        <Button
+          icon="backward-step"
+          onClick={() =>
+            act('changeDelay', {
+              new_delay: min_delay,
+            })
+          }
+        />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Slider
+          style={{ marginTop: '-5px' }}
+          step={delay_step}
+          my={1}
+          value={delay_value}
+          minValue={min_delay}
+          maxValue={max_delay}
+          unit="sec."
+          onDrag={(e, value) =>
+            act('changeDelay', {
+              new_delay: value,
+            })
+          }
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="forward-step"
+          onClick={() =>
+            act('changeDelay', {
+              new_delay: max_delay,
+            })
+          }
+        />
+      </Stack.Item>
+      <Stack.Item>
+        {' '}
+        <Button
+          content="Drop"
+          icon="eject"
+          tooltip="Disengage the claws, dropping the held item"
+          onClick={() => act('drop')}
+        />
+      </Stack.Item>
+    </Stack>
   );
 };
 
@@ -122,7 +129,7 @@ const ConfigRow = (props: ConfigRowProps) => {
   );
 };
 
-export const BigManipulator = (props) => {
+export const BigManipulator = () => {
   const { data, act } = useBackend<ManipulatorData>();
   const {
     active,
@@ -154,20 +161,9 @@ export const BigManipulator = (props) => {
             style={{
               lineHeight: '1.8em',
               marginBottom: '-5px',
-              display: 'flex',
             }}
           >
-            <Box style={{ flex: 1 }}>
-              <DelayControls />
-            </Box>
-            <Box>
-              <Button
-                content="Drop"
-                icon="eject"
-                tooltip="Disengage the claws, dropping the held item"
-                onClick={() => act('drop')}
-              />
-            </Box>
+            <MasterControls />
           </Box>
         </Section>
 
