@@ -49,6 +49,8 @@
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
+
+	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
 	if(!is_flipped)
 		unflip_table(TRUE)
 	var/static/list/loc_connections = list(
@@ -73,22 +75,19 @@
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 //proc that adds elements present in normal tables
-/obj/structure/table/proc/unflip_table(on_init)
-	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-	if(on_init)
-		on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
-	else //resets vars from table being flipped
-		layer = TABLE_LAYER
-		smoothing_flags |= SMOOTH_BITMASK
-		pass_flags_self |= PASSTABLE
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		smoothing_groups = on_init_smoothed_vars[1]
-		canSmoothWith = on_init_smoothed_vars[2]
-	update_appearance()
-
+/obj/structure/table/proc/unflip_table()
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	//resets vars from table being flipped
+	layer = TABLE_LAYER
+	smoothing_flags |= SMOOTH_BITMASK
+	pass_flags_self |= PASSTABLE
+	icon = initial(icon)
+	icon_state = initial(icon_state)
+	smoothing_groups = on_init_smoothed_vars[1]
+	canSmoothWith = on_init_smoothed_vars[2]
+	update_appearance()
 
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table()
@@ -104,6 +103,7 @@
 	icon = 'icons/obj/flipped_tables.dmi'
 	icon_state = base_icon_state
 	update_appearance()
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 	var/turf/throw_target = get_step(src, src.dir)
 	if (!isnull(throw_target))
@@ -231,9 +231,10 @@
 		return FALSE
 
 	if(!can_flip)
-		user.balloon_alert_to_viewers("flipping table...")
+		return
 
 	if(!is_flipped)
+		user.balloon_alert_to_viewers("flipping table...")
 		if(!do_after(user, max_integrity * 0.25))
 			return
 
@@ -244,24 +245,8 @@
 		if(new_dir == NORTHWEST || new_dir == SOUTHWEST)
 			new_dir = WEST
 		dir = new_dir
-		if(new_dir == NORTH)
-			layer = BELOW_MOB_LAYER
-
-		smoothing_flags &= ~SMOOTH_BITMASK
-		smoothing_groups = null
-		canSmoothWith = null
-		pass_flags_self &= ~PASSTABLE
-		icon = 'icons/obj/flipped_tables.dmi'
-		icon_state = base_icon_state
-		update_appearance()
-		QUEUE_SMOOTH(src)
-		QUEUE_SMOOTH_NEIGHBORS(src)
-
-		var/turf/throw_target = get_step(src, src.dir)
-		if (!isnull(throw_target) && !HAS_TRAIT(user, TRAIT_PACIFISM))
-			for (var/atom/movable/movable_entity in src.loc)
-				if(is_able_to_throw(src, movable_entity))
-					movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+		if(new_dir == SOUTH)
+			layer = ABOVE_MOB_LAYER
 
 		is_flipped = TRUE
 		flip_table()
@@ -529,6 +514,7 @@
 	icon_state = "rollingtable"
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
+	can_flip = FALSE
 
 /obj/structure/table/rolling/Initialize(mapload)
 	. = ..()
@@ -636,6 +622,8 @@
 		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
+	if(is_flipped)
+		return FALSE
 	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		table_shatter(M)
 
@@ -800,6 +788,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor_type = /datum/armor/table_reinforced
+	can_flip = FALSE
 
 /datum/armor/table_reinforced
 	melee = 10
@@ -957,6 +946,7 @@
 	can_buckle = TRUE
 	buckle_lying = 90
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	can_flip = FALSE
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
