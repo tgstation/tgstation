@@ -159,6 +159,12 @@
 	SIGNAL_HANDLER
 	if(!is_flipped)
 		return
+		
+	if(leaving.movement_type & PHASING)
+		return
+
+	if(leaving == src)
+		return
 	if(type == /obj/structure/table/glass) //Glass table, jolly ranchers pass
 		if(istype(leaving) && (leaving.pass_flags & PASSGLASS))
 			return
@@ -167,12 +173,17 @@
 		return
 
 	if(direction == dir)
+		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(!is_flipped)
+	if(.)
 		return
+		
+	if(!is_flipped)
+		return FALSE
+		
 	if(type == /obj/structure/table/glass) //Glass table, jolly ranchers pass
 		if(istype(mover) && (mover.pass_flags & PASSGLASS))
 			return TRUE
@@ -253,9 +264,9 @@
 		//change icons
 		layer = LOW_ITEM_LAYER
 		var/new_dir = get_dir(user, src)
-		if(new_dir == NORTHEAST || new_dir == SOUTHEAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
+		if(new_dir & EAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
 			new_dir = EAST
-		if(new_dir == NORTHWEST || new_dir == SOUTHWEST)
+		else if(new_dir & WEST)
 			new_dir = WEST
 		dir = new_dir
 		if(new_dir == SOUTH)
@@ -278,9 +289,7 @@
 		return FALSE
 	if (movable_entity.anchored) //Thing isn't anchored
 		return FALSE
-	if (movable_entity.invisibility > SEE_INVISIBLE_LIVING) //Thing isnt incorporeal ie. ghosts/revenants
-		return FALSE
-	if(!ismob(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
+	if(!isliving(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
 		return FALSE
 	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING))) //Thing isn't flying/floating
 		return FALSE
