@@ -58,5 +58,5 @@
 	max_ammo = 1
 
 /obj/item/ammo_box/magazine/internal/shot/single/musket
-	name = "donk co musket internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/fletchette
+	name = "\improper Donk Co. musket internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/flechette/donk
