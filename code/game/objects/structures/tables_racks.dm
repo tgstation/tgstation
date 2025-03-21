@@ -251,6 +251,7 @@
 			return
 
 		//change icons
+		layer = LOW_ITEM_LAYER
 		var/new_dir = get_dir(user, src)
 		if(new_dir == NORTHEAST || new_dir == SOUTHEAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
 			new_dir = EAST
