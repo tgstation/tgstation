@@ -75,6 +75,7 @@
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	layer = TABLE_LAYER
 	smoothing_flags |= SMOOTH_BITMASK
+	pass_flags_self |= PASSTABLE
 	update_icon()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
@@ -228,6 +229,7 @@
 			layer = BELOW_MOB_LAYER
 
 		smoothing_flags &= ~SMOOTH_BITMASK
+		pass_flags_self &= ~PASSTABLE
 		update_appearance()
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
