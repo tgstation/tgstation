@@ -54,7 +54,7 @@
 
 	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
 	if(!is_flipped)
-		unflip_table(TRUE)
+		unflip_table()
 	var/static/list/loc_connections = list(
 		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
