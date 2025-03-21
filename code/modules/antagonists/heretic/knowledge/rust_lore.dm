@@ -70,7 +70,7 @@
 
 /datum/heretic_knowledge/spell/rust_charge/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-		ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 // XANTODO - Add this to the heretic passive somehow
 /datum/heretic_knowledge/rust_regen
