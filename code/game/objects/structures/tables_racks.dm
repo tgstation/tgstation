@@ -75,18 +75,17 @@
 //proc that adds elements present in normal tables
 /obj/structure/table/proc/unflip_table(on_init)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-	if(on_init) //resets vars from table being flipped
+	if(on_init)
 		on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
-	else
+	else //resets vars from table being flipped
 		layer = TABLE_LAYER
 		smoothing_flags |= SMOOTH_BITMASK
 		pass_flags_self |= PASSTABLE
+		icon = initial(icon)
+		icon_state = initial(icon_state)
 		smoothing_groups = on_init_smoothed_vars[1]
 		canSmoothWith = on_init_smoothed_vars[2]
-	update_icon()
-	QUEUE_SMOOTH_NEIGHBORS(src)
-	QUEUE_SMOOTH(src)
-
+	update_appearance()
 
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, turf_traits)
@@ -95,9 +94,22 @@
 /obj/structure/table/proc/flip_table()
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/elevation, pixel_shift = 12)
-
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
+
+	smoothing_flags &= ~SMOOTH_BITMASK
+	smoothing_groups = null
+	canSmoothWith = null
+	pass_flags_self &= ~PASSTABLE
+	icon = 'icons/obj/flipped_tables.dmi'
+	icon_state = base_icon_state
+	update_appearance()
+
+	var/turf/throw_target = get_step(src, src.dir)
+	if (!isnull(throw_target))
+		for (var/atom/movable/movable_entity in src.loc)
+			if(is_able_to_throw(src, movable_entity))
+				movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -239,6 +251,8 @@
 		smoothing_groups = null
 		canSmoothWith = null
 		pass_flags_self &= ~PASSTABLE
+		icon = 'icons/obj/flipped_tables.dmi'
+		icon_state = base_icon_state
 		update_appearance()
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
