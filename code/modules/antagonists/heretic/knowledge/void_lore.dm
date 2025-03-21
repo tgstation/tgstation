@@ -7,7 +7,7 @@
 	unique_ability = /datum/heretic_knowledge/spell/void_prison
 	tier2 = /datum/heretic_knowledge/spell/void_pull
 	blade = /datum/heretic_knowledge/blade_upgrade/void
-	tier3 =	/datum/heretic_knowledge/spell/void_conduit
+	tier3 = /datum/heretic_knowledge/spell/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void
@@ -101,6 +101,10 @@
 		The doors won't close. I can't keep the cold out now."
 	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 1
+
+/datum/heretic_knowledge/spell/void_conduit/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"

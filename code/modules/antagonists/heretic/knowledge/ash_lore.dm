@@ -7,7 +7,7 @@
 	unique_ability = /datum/heretic_knowledge/spell/fire_blast
 	tier2 = /datum/heretic_knowledge/mad_mask
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
-	tier3 =	/datum/heretic_knowledge/spell/flame_birth
+	tier3 = /datum/heretic_knowledge/spell/flame_birth
 	ascension = /datum/heretic_knowledge/ultimate/ash_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash
@@ -112,6 +112,10 @@
 	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 	research_tree_icon_frame = 5
+
+/datum/heretic_knowledge/spell/flame_birth/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"

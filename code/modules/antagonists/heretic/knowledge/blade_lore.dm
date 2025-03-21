@@ -232,6 +232,10 @@
 	cost = 1
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 
+/datum/heretic_knowledge/spell/wolves_among_sheep/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Empowered Blades"
 	desc = "Attacking someone with a Sundered Blade in both hands \

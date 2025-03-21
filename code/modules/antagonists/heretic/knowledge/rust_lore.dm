@@ -7,7 +7,7 @@
 	unique_ability = /datum/heretic_knowledge/spell/rust_construction
 	tier2 = /datum/heretic_knowledge/spell/entropic_plume
 	blade = /datum/heretic_knowledge/blade_upgrade/rust
-	tier3 =	/datum/heretic_knowledge/spell/rust_charge
+	tier3 = /datum/heretic_knowledge/spell/rust_charge
 	ascension = /datum/heretic_knowledge/ultimate/rust_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust
@@ -67,6 +67,10 @@
 
 	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 1
+
+/datum/heretic_knowledge/spell/rust_charge/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+		ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 // XANTODO - Add this to the heretic passive somehow
 /datum/heretic_knowledge/rust_regen

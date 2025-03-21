@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/crimson_cleave
 	name = "Crimson Cleave"
-	desc = "A targeted spell that heals your wounds while damaging the enemy. \
-		It has a chance to transfer wounds between you and your enemy."
+	desc = "A targeted spell that heals you while damaging the enemy. \
+		It cleanses you of all wounds as well."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

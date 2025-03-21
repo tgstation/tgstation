@@ -7,7 +7,7 @@
 	unique_ability = /datum/heretic_knowledge/limited_amount/concierge_rite
 	tier2 = /datum/heretic_knowledge/spell/burglar_finesse
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
-	tier3 =	/datum/heretic_knowledge/spell/caretaker_refuge
+	tier3 = /datum/heretic_knowledge/spell/caretaker_refuge
 	ascension = /datum/heretic_knowledge/ultimate/lock_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_knock
@@ -103,7 +103,7 @@
 /datum/heretic_knowledge/limited_amount/concierge_rite
 	name = "Concierge's Rite"
 	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
-		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
+		It can materialize a barricade at range that only you and people resistant to magic can pass. 5 charges which regerate over time."
 	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
 	required_atoms = list(
 		/obj/item/toy/crayon = 1,
@@ -145,6 +145,10 @@
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
 	action_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
+
+/datum/heretic_knowledge/spell/caretaker_refuge/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 /datum/heretic_knowledge/ultimate/lock_final
 	name = "Unlock the Labyrinth"

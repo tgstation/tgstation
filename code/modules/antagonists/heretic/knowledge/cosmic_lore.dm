@@ -68,7 +68,8 @@
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
 		or if you attack someone already marked. If you combo more than four attacks you will receive, \
-		a cosmic trail and increase your combo timer up to ten seconds."
+		a cosmic trail and increase your combo timer up to ten seconds. \
+		Your attacks can now reach further if your victim is afflicted by a star mark."
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'

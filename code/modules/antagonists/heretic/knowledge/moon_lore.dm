@@ -7,7 +7,7 @@
 	unique_ability = /datum/heretic_knowledge/spell/moon_parade
 	tier2 = /datum/heretic_knowledge/moon_amulet
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
-	tier3 =	/datum/heretic_knowledge/spell/moon_ringleader
+	tier3 = /datum/heretic_knowledge/spell/moon_ringleader
 	ascension = /datum/heretic_knowledge/ultimate/moon_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon
@@ -67,7 +67,8 @@
 	name = "Moonlight Amulet"
 	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulet. \
 			If the item is used on someone with low sanity they go berserk attacking everyone, \
-			if their sanity isn't low enough it decreases their mood."
+			if their sanity isn't low enough it decreases their mood. \
+			Wearing this will make your blades harmless, they will instead directly attack their mind."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 
 	required_atoms = list(
@@ -118,8 +119,11 @@
 	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 
-
 	research_tree_icon_frame = 5
+
+/datum/heretic_knowledge/spell/moon_ringleader/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"

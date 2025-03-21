@@ -225,6 +225,10 @@
 	return ..()
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(HAS_TRAIT(user, TRAIT_UNLIMITED_BLADES))
+		for(var/obj/item/melee/sickly_blade/blade in created_items)
+			return TRUE
+
 	for(var/datum/weakref/ref as anything in created_items)
 		var/atom/real_thing = ref.resolve()
 		if(QDELETED(real_thing))

@@ -54,6 +54,8 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	if(HAS_TRAIT(user, TRAIT_UNLIMITED_BLADES))
+		return
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
 		user.balloon_alert(user, "can't escape!")
 		if(escape_attempts > 2)

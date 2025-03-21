@@ -159,17 +159,20 @@
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
+	if(!IS_HERETIC(user))
+		channel_amulet(user) // Putting it on will give you the mood debuff
+		return
 	if(!(slot_flags & slot))
 		// Make sure to restore the values of any blades we might be holding when our amulet is removed
 		on_dropped_item(user, user.get_active_held_item())
 		on_dropped_item(user, user.get_inactive_held_item())
 		return
-	if(!IS_HERETIC(user))
-		channel_amulet(user) // Putting it on will give you the mood debuff
-		return
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(channel_amulet))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip_item))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_dropped_item))
+	// Just make sure we pacify blades potentially in our hands when we put on the amulet
+	on_equip_item(user, user.get_active_held_item(), ITEM_SLOT_HANDS)
+	on_equip_item(user, user.get_inactive_held_item(), ITEM_SLOT_HANDS)
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/dropped(mob/living/user)
 	. = ..()
@@ -196,7 +199,7 @@
 		return FALSE
 	if(!human_target.mob_mood)
 		return FALSE
-	if(human_target.mob_mood.sanity_level > SANITY_LEVEL_UNSTABLE)
+	if(human_target.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
 		living_user.balloon_alert(living_user, "their mind is too strong!")
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		human_target.mob_mood.set_sanity(human_target.mob_mood.sanity - sanity_damage)
@@ -215,10 +218,12 @@
 		blade.force = 0
 		blade.wound_bonus = 0
 		blade.bare_wound_bonus = 0
+		blade.armour_penetration = 200
 		return
 	blade.force = initial(blade.force)
 	blade.wound_bonus = initial(blade.wound_bonus)
 	blade.bare_wound_bonus = initial(blade.bare_wound_bonus)
+	blade.armour_penetration = initial(blade.armour_penetration)
 
 /// Modifies any blades that we drop while wearing the amulet
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_dropped_item(mob/user, obj/item/dropped_item)
@@ -228,3 +233,4 @@
 	dropped_item.force = initial(dropped_item.force)
 	dropped_item.wound_bonus = initial(dropped_item.wound_bonus)
 	dropped_item.bare_wound_bonus = initial(dropped_item.bare_wound_bonus)
+	dropped_item.armour_penetration = initial(dropped_item.armour_penetration)

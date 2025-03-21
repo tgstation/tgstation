@@ -235,6 +235,9 @@
 
 	poll_ignore_define = POLL_IGNORE_STALKER
 
+/datum/heretic_knowledge/summon/stalker/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"

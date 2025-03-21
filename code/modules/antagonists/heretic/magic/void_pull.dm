@@ -1,7 +1,6 @@
 /datum/action/cooldown/spell/aoe/void_pull
 	name = "Void Pull"
-	desc = "Calls the void, damaging, knocking down, and stunning people nearby. \
-		Distant foes are also pulled closer to you (but not damaged)."
+	desc = "Calls the void, damaging, knocking down, pulling people closer, and stunning people nearby."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
