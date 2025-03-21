@@ -39,6 +39,8 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast/set_click_ability(mob/on_who)
 	var/obj/projectile/magic/star_ball/active_ball = projectile_weakref?.resolve()
 	if(!active_ball)
+		StartCooldown(30 SECONDS)
+		build_all_button_icons(UPDATE_OVERLAYS)
 		return ..()
 
 	pull_victims()
@@ -46,8 +48,8 @@
 	pull_victims() // Yes, this is intentional, we want to pull mobs from the place we were, and the place we've teleported to
 	QDEL_NULL(active_ball)
 	build_all_button_icons(UPDATE_OVERLAYS)
-	// Cooldown of the ability itself is only 1 second after shooting, it's 20 seconds after we teleport to our ball
-	StartCooldown(20 SECONDS)
+	// Cooldown of the ability itself is only 1 second after shooting, it's 30 seconds after we teleport to our ball
+	StartCooldown(30 SECONDS)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/proc/pull_victims()
 	new /obj/effect/temp_visual/circle_wave/star_blast(get_turf(owner))
@@ -78,7 +80,7 @@
 	icon_state = "star_ball"
 	damage = 0
 	speed = 0.2
-	range = 100
+	range = 25
 	knockdown = 4 SECONDS
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSBLOB | PASSMOB | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSFLAPS | PASSDOORS | PASSVEHICLE | PASSITEM | PASSWINDOW
 	projectile_piercing = PASSMOB | PASSVEHICLE

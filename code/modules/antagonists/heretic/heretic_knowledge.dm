@@ -226,7 +226,7 @@
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(HAS_TRAIT(user, TRAIT_UNLIMITED_BLADES))
-		for(var/obj/item/melee/sickly_blade/blade in created_items)
+		if(length(result_atoms & typesof(/obj/item/melee/sickly_blade)))
 			return TRUE
 
 	for(var/datum/weakref/ref as anything in created_items)
