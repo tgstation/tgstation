@@ -74,7 +74,7 @@
 				create_random_books(amount = cat_amount, location = src, category = pick_n_take(category_pool))
 		// Otherwise we can just let the proc handle everything, it will even do randomization for us
 		else
-			create_random_books(amount = books_to_load, location = src, category = random_category)
+			create_random_books(amount = books_to_load, location = src, category = randomizing_categories ? BOOK_CATEGORY_RANDOM : random_category)
 
 		after_random_load()
 		update_appearance() //Make sure you look proper
