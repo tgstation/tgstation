@@ -30,6 +30,8 @@
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
 	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
+	///a bit fucky, I know. but this is needed to get sorted on init smoothing groups stored
+	var/list/on_init_smoothed_vars
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -48,7 +50,7 @@
 	if(_buildstack)
 		buildstack = _buildstack
 	if(!is_flipped)
-		unflip_table()
+		unflip_table(TRUE)
 	var/static/list/loc_connections = list(
 		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
@@ -71,11 +73,16 @@
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 //proc that adds elements present in normal tables
-/obj/structure/table/proc/unflip_table()
+/obj/structure/table/proc/unflip_table(on_init)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-	layer = TABLE_LAYER
-	smoothing_flags |= SMOOTH_BITMASK
-	pass_flags_self |= PASSTABLE
+	if(on_init) //resets vars from table being flipped
+		on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
+	else
+		layer = TABLE_LAYER
+		smoothing_flags |= SMOOTH_BITMASK
+		pass_flags_self |= PASSTABLE
+		smoothing_groups = on_init_smoothed_vars[1]
+		canSmoothWith = on_init_smoothed_vars[2]
 	update_icon()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
@@ -229,6 +236,8 @@
 			layer = BELOW_MOB_LAYER
 
 		smoothing_flags &= ~SMOOTH_BITMASK
+		smoothing_groups = null
+		canSmoothWith = null
 		pass_flags_self &= ~PASSTABLE
 		update_appearance()
 		QUEUE_SMOOTH(src)
@@ -275,8 +284,9 @@
 		return
 	if(mover.throwing)
 		return TRUE
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return TRUE
+	for(var/obj/structure/table/table in get_turf(mover))
+		if(!table.is_flipped)
+			return TRUE
 
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
