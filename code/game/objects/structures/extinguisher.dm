@@ -1,6 +1,6 @@
 /obj/structure/extinguisher_cabinet
-	name = "extinguisher cabinet"
-	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
+	name = "шкаф для огнетушителя"
+	desc = "Небольшой настенный шкафчик, предназначенный для хранения огнетушителя."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher"
 	anchored = TRUE
@@ -180,8 +180,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		stored_extinguisher = null
 
 /obj/item/wallframe/extinguisher_cabinet
-	name = "extinguisher cabinet frame"
-	desc = "Used for building wall-mounted extinguisher cabinets."
+	name = "каркас шкафа для огнетушителя"
+	desc = "Используется для изготовления настенных шкафов для огнетушителей."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher" //Reuses wallmount icon, but no door overlay
 	result_path = /obj/structure/extinguisher_cabinet

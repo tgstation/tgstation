@@ -1,6 +1,6 @@
 /obj/item/radio/intercom
-	name = "station intercom"
-	desc = "A trusty station intercom, ready to spring into action even when the headsets go silent."
+	name = "интерком"
+	desc = "Надежный станционный интерком, готовый к работе даже при отключении наушников."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
 	anchored = TRUE
@@ -23,8 +23,8 @@
 	unscrewed = TRUE
 
 /obj/item/radio/intercom/prison
-	name = "receive-only intercom"
-	desc = "A station intercom. It looks like it has been modified to not broadcast."
+	name = "интерком только для приема"
+	desc = "Интерком станции. Похоже, что он был изменен, чтобы не транслировать."
 	icon_state = "intercom_prison"
 	icon_off = "intercom_prison-p"
 
@@ -190,8 +190,8 @@
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
-	name = "intercom frame"
-	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
+	name = "каркас интеркома"
+	desc = "Готовый к использованию интерком. Просто прикрепите его к стене и прикрутите!"
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
@@ -201,8 +201,8 @@
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/chapel
-	name = "Confessional intercom"
-	desc = "Talk through this... to confess your many sins. Conceals your voice, to keep them secret."
+	name = "Интерком исповеди"
+	desc = "Поговорите об этом... чтобы признаться в своих многочисленных грехах. Говорите тише, чтобы сохранить их в тайне."
 	anonymize = TRUE
 	freqlock = RADIO_FREQENCY_EMAGGABLE_LOCK
 
@@ -212,22 +212,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	set_broadcasting(TRUE)
 
 /obj/item/radio/intercom/command
-	name = "command intercom"
-	desc = "The command's special free-frequency intercom. It's a versatile tool that can be tuned to any frequency, granting you access to channels you're not supposed to be on. Plus, it comes equipped with a built-in voice amplifier for crystal-clear communication."
+	name = "командный интерком"
+	desc = "Специальный командный интерком со свободной частотой. Это универсальный инструмент, который можно настроить на любую частоту, предоставляя вам доступ к каналам, на которых вы не должны находиться. Кроме того, он оснащен встроенным усилителем голоса для обеспечения кристально чистой связи."
 	icon_state = "intercom_command"
 	freerange = TRUE
 	command = TRUE
 	icon_off = "intercom_command-p"
 
 /obj/item/radio/intercom/syndicate
-	name = "syndicate intercom"
-	desc = "Talk smack through this."
+	name = "интерком синдиката"
+	desc = "Обсудите это как следует."
 	command = TRUE
 	special_channels = RADIO_SPECIAL_SYNDIE
 
 /obj/item/radio/intercom/syndicate/freerange
-	name = "syndicate wide-band intercom"
-	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
+	name = "широкополосный интерком синдиката"
+	desc = "Изготовленный на заказ интерком Синдиката, используемый для передачи данных на всех частотах Nanotrasen. Особенно дорогой.	"
 	freerange = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)

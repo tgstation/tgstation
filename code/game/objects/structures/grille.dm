@@ -2,8 +2,8 @@
 #define CLEAR_TILE_MOVE_LIMIT 20
 
 /obj/structure/grille
-	desc = "A flimsy framework of iron rods."
-	name = "grille"
+	desc = "Хлипкий каркас из железных прутьев."
+	name = "решетка"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
 	base_icon_state = "grille"

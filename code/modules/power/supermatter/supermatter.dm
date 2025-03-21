@@ -15,8 +15,8 @@
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
-	name = "supermatter crystal"
-	desc = "A strangely translucent and iridescent crystal."
+	name = "кристалл сверхматерии"
+	desc = "Странно прозрачный и переливающийся кристалл."
 	icon = 'icons/obj/machines/engine/supermatter.dmi'
 	density = TRUE
 	anchored = TRUE

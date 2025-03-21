@@ -232,21 +232,21 @@
 	tank_leak()
 
 /obj/structure/reagent_dispensers/watertank
-	name = "water tank"
-	desc = "A water tank."
+	name = "резервуар для воды"
+	desc = "Резервуар для воды."
 	icon_state = "water"
 	openable = TRUE
 	climbable = TRUE
 
 /obj/structure/reagent_dispensers/watertank/high
-	name = "high-capacity water tank"
-	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
+	name = "резервуар для воды большой емкости"
+	desc = "Резервуар для воды под высоким давлением, предназначенный для хранения гигантского количества воды."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
 
 /obj/structure/reagent_dispensers/foamtank
-	name = "firefighting foam tank"
-	desc = "A tank full of firefighting foam."
+	name = "резервуар для пены для пожаротушения"
+	desc = "Бак, полный противопожарной пены."
 	icon_state = "foam"
 	reagent_id = /datum/reagent/firefighting_foam
 	tank_volume = 500
@@ -254,8 +254,8 @@
 	climbable = TRUE
 
 /obj/structure/reagent_dispensers/fueltank
-	name = "fuel tank"
-	desc = "A tank full of industrial welding fuel. Do not consume."
+	name = "топливный резервуар"
+	desc = "Заполните бак промышленным топливом для сварки. Не расходуйте его."
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
 	openable = TRUE
@@ -328,8 +328,8 @@
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/large
-	name = "high capacity fuel tank"
-	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
+	name = "топливный резервуар большой емкости"
+	desc = "Бак должен быть заполнен большим количеством сварочного топлива. Хранить вдали от открытого огня."
 	icon_state = "fuel_high"
 	tank_volume = 5000
 
@@ -340,7 +340,7 @@
 	can_be_tanked = FALSE
 
 /obj/structure/reagent_dispensers/wall/peppertank
-	name = "pepper spray refiller"
+	name = "заправка перцового баллончика"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin

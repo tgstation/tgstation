@@ -1,8 +1,8 @@
 #define TANK_DISPENSER_CAPACITY 10
 
 /obj/structure/tank_dispenser
-	name = "tank dispenser"
-	desc = "A simple yet bulky storage device for gas tanks."
+	name = "устройство раздачи баллонов"
+	desc = "Простое, но громоздкое устройство для хранения газовых баллонов."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "dispenser"
 	density = TRUE
@@ -19,7 +19,7 @@
 
 /obj/structure/tank_dispenser/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Take Plasma Tank", rmb_text = "Take Oxygen Tank")
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Возьмите плазменный баллон", rmb_text = "Возьмите кислородный баллон")
 	update_appearance()
 
 /obj/structure/tank_dispenser/update_overlays()
@@ -38,7 +38,7 @@
 /obj/structure/tank_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if (!plasmatanks)
-		balloon_alert(user, "no plasma tanks!")
+		balloon_alert(user, "нету плазменных баллонов!")
 		return
 	dispense(/obj/item/tank/internals/plasma, user)
 	plasmatanks--
@@ -47,7 +47,7 @@
 /obj/structure/tank_dispenser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if (!oxygentanks)
-		balloon_alert(user, "no oxygen tanks!")
+		balloon_alert(user, "никаких кислородных баллонов!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	dispense(/obj/item/tank/internals/oxygen, user)
 	oxygentanks--
@@ -72,17 +72,17 @@
 		else
 			full = TRUE
 	else if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
-		balloon_alert(user, "can't insert!")
+		balloon_alert(user, "не удается вставить!")
 		return
 	else
 		return ..()
 	if(full)
-		balloon_alert(user, "it is full!")
+		balloon_alert(user, "он полон!")
 		return
 
 	if(!user.transferItemToLoc(I, src))
 		return
-	balloon_alert(user, "tank inserted")
+	balloon_alert(user, "вставленный резервуар")
 	update_appearance()
 
 /obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
@@ -94,9 +94,9 @@
 /obj/structure/tank_dispenser/examine(mob/user)
 	. = ..()
 	if(plasmatanks && oxygentanks)
-		. += span_notice("It has <b>[plasmatanks]</b> plasma tank\s and <b>[oxygentanks]</b> oxygen tank\s left.")
+		. += span_notice("В нем остались <b>[plasmatanks]</b> плазменный баллон и <b>[oxygentanks]</b> кислородный баллон.")
 	else if(plasmatanks || oxygentanks)
-		. += span_notice("It has <b>[plasmatanks ? "[plasmatanks]</b> plasma" : "[oxygentanks]</b> oxygen"] tank\s left.")
+		. += span_notice("В нем есть <b>[plasmatanks ? "[plasmatanks]</b> плазма" : "[oxygentanks]</b> oxygen"] слева от бака.")
 
 /obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
 	var/existing_tank = locate(tank_type) in src

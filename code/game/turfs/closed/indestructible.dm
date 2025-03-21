@@ -373,7 +373,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	underlays += mutable_appearance('icons/turf/floors.dmi', "engine") // add the reinforced floor underneath
 
 /turf/closed/indestructible/grille
-	name = "grille"
+	name = "решетка"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
 	base_icon_state = "grille"

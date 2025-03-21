@@ -13,8 +13,8 @@
  */
 
 /obj/structure/table
-	name = "table"
-	desc = "A square piece of iron standing on four metal legs. It can not move."
+	name = "стол"
+	desc = "Просто стол, четыри ножки и одно основное полотно по верх."
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table-0"
 	base_icon_state = "table"
@@ -103,7 +103,7 @@
 	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
-	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
+	return span_notice("Верхняя часть <b>завинчена</b>, но основные <b>болты</b> также видны.")
 
 /obj/structure/table/update_icon(updates=ALL)
 	. = ..()
@@ -383,8 +383,8 @@
 
 ///Table on wheels
 /obj/structure/table/rolling
-	name = "Rolling table"
-	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
+	name = "подвижной стол"
+	desc = "Стол на колесиках марки NT \"Rolly poly\". Он может и будет двигаться."
 	anchored = FALSE
 	smoothing_flags = NONE
 	smoothing_groups = null
@@ -460,8 +460,8 @@
  * Glass tables
  */
 /obj/structure/table/glass
-	name = "glass table"
-	desc = "What did I say about leaning on the glass tables? Now you need surgery."
+	name = "стеклянный стол"
+	desc = "Что я говорил насчет того, чтобы опираться на стеклянные столы? Теперь вам нужна операция."
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
@@ -532,8 +532,8 @@
 	color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/table/glass/plasmaglass
-	name = "plasma glass table"
-	desc = "Someone thought this was a good idea."
+	name = "плазменный стеклянный стол"
+	desc = "Кто-то решил, что это хорошая идея.."
 	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
@@ -547,8 +547,8 @@
  */
 
 /obj/structure/table/wood
-	name = "wooden table"
-	desc = "Do not apply fire to this. Rumour says it burns easily."
+	name = "деревянный стол"
+	desc = "Не прикасайтесь к нему огнем. Ходят слухи, что он легко горит."
 	icon = 'icons/obj/smooth_structures/wood_table.dmi'
 	icon_state = "wood_table-0"
 	base_icon_state = "wood_table"
@@ -565,8 +565,8 @@
 		..()
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
-	name = "gambling table"
-	desc = "A seedy table for seedy dealings in seedy places."
+	name = "игровой стол"
+	desc = "Убогий столик для сомнительных сделок в сомнительных заведениях."
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	icon_state = "poker_table-0"
 	base_icon_state = "poker_table"
@@ -579,8 +579,8 @@
 	..(FALSE)
 
 /obj/structure/table/wood/fancy
-	name = "fancy table"
-	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
+	name = "необычный стол"
+	desc = "Стандартный металлический каркас стола, обтянутый тканью с удивительно причудливым рисунком."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "fancy_table"
 	base_icon_state = "fancy_table"
@@ -660,8 +660,8 @@
  * Reinforced tables
  */
 /obj/structure/table/reinforced
-	name = "reinforced table"
-	desc = "A reinforced version of the four legged table."
+	name = "усиленный стол"
+	desc = "Усиленная версия стола на четырех ножках."
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	icon_state = "reinforced_table-0"
 	base_icon_state = "reinforced_table"
@@ -758,8 +758,8 @@
 	return TRUE
 
 /obj/structure/table/bronze
-	name = "bronze table"
-	desc = "A solid table made out of bronze."
+	name = "бронзовый стол"
+	desc = "Массивный стол, сделанный из бронзы."
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table-0"
 	base_icon_state = "brass_table"
@@ -773,8 +773,8 @@
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/rglass
-	name = "reinforced glass table"
-	desc = "A reinforced version of the glass table."
+	name = "стол из армированного стекла"
+	desc = "Усиленная версия стеклянного стола."
 	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
@@ -783,8 +783,8 @@
 	max_integrity = 150
 
 /obj/structure/table/reinforced/plasmarglass
-	name = "reinforced plasma glass table"
-	desc = "A reinforced version of the plasma glass table."
+	name = "стол из армированного плазменного стекла"
+	desc = "Усиленная версия стола из плазменного стекла"
 	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
@@ -792,8 +792,8 @@
 	buildstack = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/table/reinforced/titaniumglass
-	name = "titanium glass table"
-	desc = "A titanium reinforced glass table, with a fresh coat of NT white paint."
+	name = "стол из титанового стекла"
+	desc = "Стол из армированного титаном стекла, недавно покрашенный белой краской NT white"
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
 	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
@@ -802,8 +802,8 @@
 	max_integrity = 250
 
 /obj/structure/table/reinforced/plastitaniumglass
-	name = "plastitanium glass table"
-	desc = "A table made of titanium reinforced silica-plasma composite. About as durable as it sounds."
+	name = "стол из пластитанового стекла"
+	desc = "Стол, изготовленный из композита, армированного титаном, кремнеземом и плазмой. Такой же прочный, как и кажется."
 	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
@@ -816,8 +816,8 @@
  */
 
 /obj/structure/table/optable
-	name = "operating table"
-	desc = "Used for advanced medical procedures."
+	name = "операционный стол"
+	desc = "Используется для проведения сложных медицинских процедур."
 	icon = 'icons/obj/medical/surgery_table.dmi'
 	icon_state = "surgery_table"
 	buildstack = /obj/item/stack/sheet/mineral/silver
@@ -905,8 +905,8 @@
  * Racks
  */
 /obj/structure/rack
-	name = "rack"
-	desc = "Different from the Middle Ages version."
+	name = "стеллаж"
+	desc = "Отличается от средневековой версии."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
@@ -916,8 +916,8 @@
 	max_integrity = 20
 
 /obj/structure/rack/skeletal
-	name = "skeletal minibar"
-	desc = "Rattle me boozes!"
+	name = "мини-бар в виде скелета"
+	desc = "Взбудоражьте меня выпивкой!"
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
 
@@ -1003,8 +1003,8 @@
  */
 
 /obj/item/rack_parts
-	name = "rack parts"
-	desc = "Parts of a rack."
+	name = "детали стеллажа"
+	desc = "Детали стеллажа."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"

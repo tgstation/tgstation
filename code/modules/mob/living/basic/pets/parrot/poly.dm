@@ -13,8 +13,8 @@
 
 /// The classically famous compadre to the Chief Engineer, Poly.
 /mob/living/basic/parrot/poly
-	name = "Poly"
-	desc = "Poly the Parrot. An expert on quantum cracker theory."
+	name = "Поли"
+	desc = "Попугай Поли. Специалист по квантовой теории взлома."
 	gold_core_spawnable = NO_SPAWN
 	speech_probability_rate = 13
 
@@ -78,11 +78,11 @@
 	phrases_to_return += read_memory() // must come first!!!
 	// now add some valuable lines every poly should have
 	phrases_to_return += list(
-		":e Check the crystal, you chucklefucks!",
-		":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE",
-		":e WHO TOOK THE DAMN MODSUITS?",
-		":e Wire the solars, you lazy bums!",
-		"Poly wanna cracker!",
+		":e Проверьте кристалл, болваны!",
+		":e О, БОЖЕ, ОН ВОТ-ВОТ РАССЛОИТСЯ, ВЫЗЫВАЙТЕ ШАТТЛ",
+		":e КТО ЗАБРАЛ ЭТИ ЧЕРТОВЫ КОМБИНЕЗОНЫ?",
+		":e Подключите солнечные батареи, вы, ленивые бездельники!",
+		"Поли хочет крекер!",
 	)
 	switch(determine_special_poly())
 		if(POLY_DEFAULT)
