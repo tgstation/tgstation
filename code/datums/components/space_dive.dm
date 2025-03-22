@@ -82,3 +82,4 @@
 
 /obj/effect/dummy/phased_mob/space_dive
 	movespeed = 1
+	phased_mob_icon_state = "solarflare"

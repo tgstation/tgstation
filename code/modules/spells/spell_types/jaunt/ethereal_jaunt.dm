@@ -153,6 +153,7 @@
 	cast_on.setDir(holder.dir)
 
 	if(jaunt_in_time > 0)
+		cast_on.Immobilize(jaunt_in_time, ignore_canstun = TRUE)
 		addtimer(CALLBACK(src, PROC_REF(end_jaunt), cast_on, holder, final_point), jaunt_in_time)
 	else
 		end_jaunt(cast_on, holder, final_point)
@@ -219,6 +220,7 @@
 	jaunt_duration = 5 SECONDS
 	jaunt_in_time = 0.6 SECONDS
 	jaunt_out_time = 0.6 SECONDS
+	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt/red
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
 
@@ -238,6 +240,7 @@
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/golem
 	name = "Runic Phase Shift"
 	cooldown_time = 80 SECONDS
+	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt/red
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
@@ -257,3 +260,7 @@
 	if (locate(/obj/effect/blessing) in .)
 		to_chat(user, span_warning("Holy energies block your path!"))
 		return null
+
+/// Red coloured variant
+/obj/effect/dummy/phased_mob/spell_jaunt/red
+	phased_mob_icon_state = "red_1"
