@@ -152,22 +152,6 @@ ADMIN_VERB(change_sec_level, R_ADMIN, "Set Security Level", "Changes the securit
 	message_admins("[key_name_admin(user)] changed the security level to [level]")
 	BLACKBOX_LOG_ADMIN_VERB("Set Security Level [capitalize(level)]")
 
-ADMIN_VERB(run_weather, R_FUN, "Run Weather", "Triggers specific weather on the z-level you choose.", ADMIN_CATEGORY_EVENTS)
-	var/weather_type = input(user, "Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
-	if(!weather_type)
-		return
-
-	var/turf/T = get_turf(user.mob)
-	var/z_level = input(user, "Z-Level to target?", "Z-Level", T?.z) as num|null
-	if(!isnum(z_level))
-		return
-
-	SSweather.run_weather(weather_type, z_level)
-
-	message_admins("[key_name_admin(user)] started weather of type [weather_type] on the z-level [z_level].")
-	log_admin("[key_name(user)] started weather of type [weather_type] on the z-level [z_level].")
-	BLACKBOX_LOG_ADMIN_VERB("Run Weather")
-
 ADMIN_VERB(command_report_footnote, R_ADMIN, "Command Report Footnote", "Adds a footnote to the roundstart command report.", ADMIN_CATEGORY_EVENTS)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	GLOB.communications_controller.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
