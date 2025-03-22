@@ -110,7 +110,10 @@
 			continue
 		var/obj/item/stack/our_sheet = locate(content) in src
 		if(isnull(our_sheet))
-			potential_stack.forceMove(src)
+			if(!user.transferItemToLoc(potential_stack, src))
+				user.balloon_alert(user, "stuck to your hand!")
+				return
+			balloon_alert(src, "inserted")
 			return
 		if(our_sheet.amount >= our_sheet.max_amount)
 			user?.balloon_alert(user, "full!")
@@ -119,7 +122,9 @@
 			user?.balloon_alert(user, "not suitable!")
 			return
 		var/atom/movable/to_move = potential_stack.split_stack(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
-		to_move.forceMove(src)
+		if(!user.transferItemToLoc(to_move, src))
+			user.balloon_alert(user, "stuck to your hand!")
+			return
 		balloon_alert(src, "inserted")
 		return
 
