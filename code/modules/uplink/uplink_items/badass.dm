@@ -103,3 +103,9 @@
 	desc = "Provides a surplus pinpointer, left over from the previous models that were abandoned in favor of a SAAS cloud-based PDA app."
 	item = /obj/item/pinpointer/nuke/syndicate
 	cost = 2
+
+/datum/uplink_item/badass/horsekk
+	name = "Syndicate horse with an apple"
+	desc = "A very strange item to acquire; This type of pony was created by bioengineers to survive in the space environment, and also has a strong body and skin which can survive a few shots from a gun!"
+	item = /obj/item/storage/box/syndicate/horsekk
+	cost = 4

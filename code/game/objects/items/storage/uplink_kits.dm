@@ -892,6 +892,18 @@
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
 
+/obj/item/storage/box/syndicate/horsekk
+	name = "boxed horse kit"
+	desc = "Box with a horse cube and an apple."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/horsekk/PopulateContents()
+	. = ..()
+	new /obj/item/food/grown/apple(src)
+	new /obj/item/food/monkeycube/horsekk(src)
+
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

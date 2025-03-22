@@ -166,3 +166,35 @@
 	// Only one person can tame these fellas, and they only need one apple
 	var/static/list/food_types = list(/obj/item/food/grown/apple)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100, bonus_tame_chance = 15, unique = unique_tamer)
+
+/mob/living/basic/pony/cowboy //same with syndicate, just other names
+	health = 300
+	maxHealth = 300
+	desc = "A special breed of horse engineered by the syndicate to be capable of surviving in the deep reaches of space. A modern outlaw's best friend."
+	faction = list(ROLE_SYNDICATE)
+	ponycolors = list("#5d566f", COLOR_RED)
+	pressure_resistance = 200
+	habitable_atmos = null
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 1500
+	unique_tamer = TRUE
+
+/mob/living/basic/pony/cowboy/Initialize(mapload)
+	. = ..()
+	var/static/list/mane_colors
+	mane_colors ||= list(
+
+		COLOR_RED=6,
+		COLOR_BLUE=6,
+		COLOR_PINK=3,
+		COLOR_GREEN=3,
+		COLOR_BLACK=3,
+		COLOR_YELLOW=2,
+		COLOR_ORANGE=1,
+		COLOR_WHITE=1,
+		COLOR_DARK_BROWN=1,
+	)
+	ponycolors = list("#5d566f", pick_weight(mane_colors))
+	name = pick("S-Horse", "Plotva", "Horsekk", "Yava", "Hons", "Shpak", "Burushka")
+	var/static/list/food_types = list(/obj/item/food/grown/apple)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100, bonus_tame_chance = 15, unique = unique_tamer)
