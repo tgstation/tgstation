@@ -11,10 +11,10 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { sanitizeText } from '../../sanitize';
-import { LibraryConsoleData } from './types';
-import { useLibraryContext } from './useLibraryContext';
+import { useBackend } from '../../../backend';
+import { sanitizeText } from '../../../sanitize';
+import { LibraryConsoleData } from '../types';
+import { useLibraryContext } from '../useLibraryContext';
 
 export function Upload(props) {
   const { act, data } = useBackend<LibraryConsoleData>();

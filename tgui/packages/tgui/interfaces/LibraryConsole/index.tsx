@@ -3,14 +3,14 @@ import { Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { Archive } from './Archive';
-import { Checkout } from './Checkout';
-import { Forbidden } from './Forbidden';
-import { Inventory } from './Inventory';
-import { PopoutMenu } from './PopoutMenu';
-import { Print } from './Print';
+import { PopoutMenu } from './components/PopoutMenu';
+import { Archive } from './screens/Archive';
+import { Checkout } from './screens/Checkout';
+import { Forbidden } from './screens/Forbidden';
+import { Inventory } from './screens/Inventory';
+import { Print } from './screens/Print';
+import { Upload } from './screens/Upload';
 import { LibraryConsoleData } from './types';
-import { Upload } from './Upload';
 import { LibraryContext } from './useLibraryContext';
 
 export function LibraryConsole(props) {

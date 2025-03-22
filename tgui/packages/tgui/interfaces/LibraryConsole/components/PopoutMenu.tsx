@@ -1,7 +1,7 @@
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { LibraryConsoleData } from './types';
+import { useBackend } from '../../../backend';
+import { LibraryConsoleData } from '../types';
 
 export function PopoutMenu(props) {
   const { act, data } = useBackend<LibraryConsoleData>();

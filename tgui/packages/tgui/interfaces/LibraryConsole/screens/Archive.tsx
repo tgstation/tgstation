@@ -1,9 +1,9 @@
 import { NoticeBox, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { PageSelect } from './components';
-import { SearchAndDisplay } from './Search';
-import { LibraryConsoleData } from './types';
+import { useBackend } from '../../../backend';
+import { PageSelect } from '../components/PageSelect';
+import { SearchAndDisplay } from '../components/Search';
+import { LibraryConsoleData } from '../types';
 
 export function Archive(props) {
   const { act, data } = useBackend<LibraryConsoleData>();

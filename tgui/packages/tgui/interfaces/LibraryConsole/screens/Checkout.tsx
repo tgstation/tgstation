@@ -10,10 +10,10 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { PageSelect, ScrollableSection } from './components';
-import { LibraryConsoleData } from './types';
-import { useLibraryContext } from './useLibraryContext';
+import { useBackend } from '../../../backend';
+import { PageSelect, ScrollableSection } from '../components/PageSelect';
+import { LibraryConsoleData } from '../types';
+import { useLibraryContext } from '../useLibraryContext';
 
 export function Checkout(props) {
   const { act, data } = useBackend<LibraryConsoleData>();

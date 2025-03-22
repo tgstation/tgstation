@@ -1,8 +1,8 @@
 import { Button, NoticeBox, Section, Stack, Table } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { PageSelect, ScrollableSection } from './components';
-import { LibraryConsoleData } from './types';
+import { useBackend } from '../../../backend';
+import { PageSelect, ScrollableSection } from '../components/PageSelect';
+import { LibraryConsoleData } from '../types';
 
 export function Inventory(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
