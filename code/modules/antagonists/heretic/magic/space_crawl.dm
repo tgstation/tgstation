@@ -18,6 +18,8 @@
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+
+	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt/space
 	///List of traits that are added to the heretic while in space phase jaunt
 	var/static/list/jaunting_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD, TRAIT_NOBREATH)
 
@@ -137,5 +139,9 @@
 /obj/item/space_crawl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/// Different graphic for position indicator
+/obj/effect/dummy/phased_mob/spell_jaunt/space
+	phased_mob_icon_state = "solarflare"
 
 #undef SPACE_PHASING
