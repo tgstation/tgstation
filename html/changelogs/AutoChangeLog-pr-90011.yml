@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Makes fishing rods with higher (or lower) bait speed a smidge easier to control during the minigame"
