@@ -1,0 +1,42 @@
+import { Stack } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
+import { Window } from '../../layouts';
+import { Archive } from './Archive';
+import { Checkout } from './Checkout';
+import { Forbidden } from './Forbidden';
+import { Inventory } from './Inventory';
+import { PopoutMenu } from './PopoutMenu';
+import { Print } from './Print';
+import { LibraryConsoleData } from './types';
+import { Upload } from './Upload';
+
+export function LibraryConsole(props) {
+  const { data } = useBackend<LibraryConsoleData>();
+  const { display_lore, screen_state } = data;
+
+  return (
+    <Window
+      theme={display_lore ? 'spookyconsole' : ''}
+      title="Library Terminal"
+      width={880}
+      height={520}
+    >
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item>
+            <PopoutMenu />
+          </Stack.Item>
+          <Stack.Item grow>
+            {screen_state === 1 && <Inventory />}
+            {screen_state === 2 && <Checkout />}
+            {screen_state === 3 && <Archive />}
+            {screen_state === 4 && <Upload />}
+            {screen_state === 5 && <Print />}
+            {screen_state === 6 && <Forbidden />}
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+}

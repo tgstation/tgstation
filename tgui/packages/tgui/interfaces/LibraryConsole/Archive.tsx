@@ -1,13 +1,13 @@
-import { Box, NoticeBox, Stack } from 'tgui-core/components';
+import { NoticeBox, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
-import { PageSelect, SearchAndDisplay } from '../LibraryConsole/components';
-import { LibraryAdminData } from './types';
+import { PageSelect, ScrollableSection } from './components';
+import { SearchAndDisplay } from './Search';
+import { LibraryConsoleData } from './types';
 
-export function BookListing(props) {
-  const { act, data } = useBackend<LibraryAdminData>();
-  const { can_connect, can_db_request, our_page, page_count } = data;
+export function Archive(props) {
+  const { act, data } = useBackend<LibraryConsoleData>();
+  const { can_connect, can_db_request, page_count, our_page } = data;
 
   if (!can_connect) {
     return (
@@ -19,13 +19,12 @@ export function BookListing(props) {
   }
 
   return (
-    <Stack fill vertical justify="space-between">
-      <Stack.Item>
-        <Box fillPositionedParent bottom="25px">
-          <Window.Content scrollable>
-            <SearchAndDisplay />
-          </Window.Content>
-        </Box>
+    <Stack vertical justify="space-between" height="100%">
+      <Stack.Item grow>
+        <ScrollableSection
+          header="Remote Archive"
+          contents={<SearchAndDisplay />}
+        />
       </Stack.Item>
       <Stack.Item align="center">
         <PageSelect

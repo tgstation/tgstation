@@ -1,75 +1,21 @@
 import { map, sortBy } from 'common/collections';
-import {
-  Box,
-  Button,
-  Dropdown,
-  Input,
-  NoticeBox,
-  Section,
-  Stack,
-  Table,
-} from 'tgui-core/components';
+import { Box, Button, Input, Stack, Table } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import { PageSelect } from './LibraryConsole/components';
+import { useBackend } from '../../backend';
+import { LibraryConsoleData } from './types';
 
-export const LibraryVisitor = (props) => {
-  return (
-    <Window title="Library Lookup Console" width={702} height={421}>
-      <BookListing />
-    </Window>
-  );
-};
-
-const BookListing = (props) => {
-  const { act, data } = useBackend();
-  const { can_connect, can_db_request, our_page, page_count } = data;
-  if (!can_connect) {
-    return (
-      <NoticeBox>
-        Unable to retrieve book listings. Please contact your system
-        administrator for assistance.
-      </NoticeBox>
-    );
-  }
-  return (
-    <Stack fill vertical justify="space-between">
-      <Stack.Item>
-        <Box fillPositionedParent bottom="25px">
-          <Window.Content scrollable>
-            <SearchAndDisplay />
-          </Window.Content>
-        </Box>
-      </Stack.Item>
-      <Stack.Item align="center">
-        <PageSelect
-          minimum_page_count={1}
-          page_count={page_count}
-          current_page={our_page}
-          disabled={!can_db_request}
-          call_on_change={(value) =>
-            act('switch_page', {
-              page: value,
-            })
-          }
-        />
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const SearchAndDisplay = (props) => {
-  const { act, data } = useBackend();
+export function SearchAndDisplay(props) {
+  const { act, data } = useBackend<LibraryConsoleData>();
   const {
-    can_db_request,
     search_categories = [],
     book_id,
     title,
     category,
     author,
     params_changed,
+    can_db_request,
   } = data;
+
   const records = sortBy(
     map(data.pages, (record, i) => ({
       ...record,
@@ -78,8 +24,9 @@ const SearchAndDisplay = (props) => {
     })),
     (record) => record.key,
   );
+
   return (
-    <Section>
+    <Box>
       <Stack justify="space-between">
         <Stack.Item pb={0.6}>
           <Stack>
@@ -98,6 +45,7 @@ const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Dropdown
+                width="120px"
                 options={search_categories}
                 selected={category}
                 onSelected={(value) =>
@@ -163,13 +111,24 @@ const SearchAndDisplay = (props) => {
         </Table.Row>
         {records.map((record) => (
           <Table.Row key={record.key}>
-            <Table.Cell>{record.id}</Table.Cell>
+            <Table.Cell>
+              <Button
+                onClick={() =>
+                  act('print_book', {
+                    book_id: record.id,
+                  })
+                }
+                icon="print"
+              >
+                {record.id}
+              </Button>
+            </Table.Cell>
             <Table.Cell>{record.category}</Table.Cell>
             <Table.Cell>{record.title}</Table.Cell>
             <Table.Cell>{record.author}</Table.Cell>
           </Table.Row>
         ))}
       </Table>
-    </Section>
+    </Box>
   );
-};
+}
