@@ -1375,7 +1375,7 @@
 #include "code\datums\components\riding\riding_vehicle.dm"
 #include "code\datums\components\style\style.dm"
 #include "code\datums\components\style\style_meter.dm"
-#include "code\datums\components\terror\common_effects.dm"
+#include "code\datums\components\terror\effects.dm"
 #include "code\datums\components\terror\fearful.dm"
 #include "code\datums\components\terror\terror_handler.dm"
 #include "code\datums\components\trader\trader.dm"

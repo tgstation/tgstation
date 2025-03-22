@@ -16,9 +16,12 @@
 #define TERROR_BUILDUP_TERROR 300
 /// Level at which we're having a full on panic attack
 #define TERROR_BUILDUP_PANIC 500
-/// Your heart gives out at this level
-#define TERROR_BUILDUP_HEART_ATTACK 800
 /// Maximum amount of terror that passive sources can stack
 #define TERROR_BUILDUP_PASSIVE_MAXIMUM 600
+/// Your heart gives out at this level, should always be higher than TERROR_BUILDUP_PASSIVE_MAXIMUM
+#define TERROR_BUILDUP_HEART_ATTACK 800
 /// Maximum amount of terror that can be held at once
 #define TERROR_BUILDUP_MAXIMUM 1000
+
+// How much terror panic attacks grant
+#define PANIC_ATTACK_TERROR_AMOUNT 50

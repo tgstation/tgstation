@@ -4,7 +4,7 @@
 /datum/component/fearful
 	dupe_mode = COMPONENT_DUPE_SOURCES
 
-	/// How terrified is the owner?
+	/// How terrified is the source?
 	var/terror_buildup = 0
 	/// List of terror handlers we currently have -> sources they're added by
 	var/list/terror_handlers = list()
@@ -41,6 +41,14 @@
 	STOP_PROCESSING(SSdcs, src)
 	QDEL_LIST(terror_handlers)
 	return ..()
+
+/datum/component/fearful/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/fearful/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /datum/component/fearful/on_source_add(source, initial_buildup, list/handler_types, add_defaults = TRUE)
 	. = ..()
@@ -84,3 +92,20 @@
 
 	for (var/datum/terror_handler/handler as anything in tick_later)
 		terror_buildup = clamp(terror_buildup + handler.tick(seconds_per_tick, terror_buildup), 0, TERROR_BUILDUP_MAXIMUM)
+
+/datum/component/fearful/proc/on_examine(mob/living/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if (source.stat >= UNCONSCIOUS)
+		return
+
+	if(terror_buildup > TERROR_BUILDUP_HEART_ATTACK)
+		examine_list += span_danger("[source.p_They()] [source.p_are()] are seizing up, about to collapse in fear!")
+	else if(terror_buildup > TERROR_BUILDUP_PANIC)
+		examine_list += span_boldwarning("[source.p_They()] [source.p_are()] are trembling and shaking, barely standing upright!")
+	else if(terror_buildup >= TERROR_BUILDUP_TERROR)
+		examine_list += span_boldwarning("[source] is visibly trembling and twitching. [source.p_they()] [source.p_are()] are clearly in distress!")
+	else if(terror_buildup >= TERROR_BUILDUP_FEAR)
+		examine_list += span_warning("[source] looks very worried about something. [source.p_are()] [source.p_they()] alright?")
+	else
+		examine_list += span_smallnotice("[source] looks rather anxious. [source.p_They()] could probably use a hug...")

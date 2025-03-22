@@ -1,6 +1,6 @@
-#define FEAR_SCALING(base, min, max) clamp(base * (terror_buildup - min) / (max - min), 0, base)
+// Terror effect handlers
 
-// Common terror effect handlers
+#define FEAR_SCALING(base, min, max) clamp(base * (terror_buildup - min) / (max - min), 0, base)
 
 /// Causes mild jittering, scaling with current terror level
 /datum/terror_handler/jittering
@@ -29,7 +29,7 @@
 	owner.set_jitter_if_lower(20 SECONDS)
 	owner.set_dizzy_if_lower(20 SECONDS)
 
-/// Stutter when terrified, or
+/// Stutter when afraid
 /datum/terror_handler/stuttering
 	handler_type = TERROR_HANDLER_EFFECT
 	default = TRUE
@@ -40,7 +40,7 @@
 		return
 
 	if (terror_buildup > TERROR_BUILDUP_TERROR || SPT_PROB(1 + FEAR_SCALING(4, TERROR_BUILDUP_FEAR, TERROR_BUILDUP_TERROR), seconds_per_tick))
-		owner.adjust_stutter_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
+		owner.set_stutter_if_lower(10 SECONDS)
 
 /// Can randomly give you some oxyloss, and cause a heart attack past TERROR_BUILDUP_HEART_ATTACK
 /datum/terror_handler/heart_problems
@@ -54,7 +54,7 @@
 		return
 
 	if (!SPT_PROB(1 + FEAR_SCALING(4, TERROR_BUILDUP_FEAR, TERROR_BUILDUP_PANIC), seconds_per_tick)) // 1% to 5% chance
-		continue
+		return
 
 	if (terror_buildup < TERROR_BUILDUP_HEART_ATTACK || !prob(15))
 		owner.adjustOxyLoss(8)
@@ -87,5 +87,62 @@
 		to_chat(owner, span_warning("You feel sick..."))
 		// Vomit blood if we're *really* freaking out
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), terror_buildup >= TERROR_BUILDUP_PASSIVE_MAXIMUM), 5 SECONDS)
+
+/// Causes tunnel vision, blurry eyes and periodic panic attacks when panicking
+/datum/terror_handler/panic
+	handler_type = TERROR_HANDLER_EFFECT
+	default = TRUE
+	/// Has the panic message been shown yet?
+	var/active = FALSE
+	/// Are we in a state of a panic attack currently? Only really used for tracking our breath loop
+	var/active_attack = FALSE
+	/// Breath loop used during a panic attack
+	var/datum/looping_sound/breathing/breath_loop
+
+/datum/terror_handler/panic/New(mob/living/new_owner, datum/component/fearful/new_component)
+	. = ..()
+	breath_loop = new(owner, _direct = TRUE)
+
+/datum/terror_handler/panic/Destroy(force)
+	QDEL_NULL(breath_loop)
+	return ..()
+
+/datum/terror_handler/panic/tick(seconds_per_tick, terror_buildup)
+	. = ..()
+	if (terror_buildup < TERROR_BUILDUP_PANIC)
+		if (active_attack) // No you don't
+			return TERROR_BUILDUP_PANIC - terror_buildup
+		active = FALSE
+		owner.remove_fov_trait(type, FOV_270_DEGREES)
+		return
+
+	if (!active)
+		active = TRUE
+		to_chat(owner, span_userdanger("Your heart is racing in your chest from the terror!"))
+		owner.add_fov_trait(type, FOV_270_DEGREES) // Terror induced tunnel vision
+
+	owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+	if (SPT_PROB(5, seconds_per_tick))
+		owner.set_eye_blur_if_lower(10 SECONDS)
+
+	if (active_attack)
+		owner.losebreath += 0.25 // Miss 1/4 breaths
+		return
+
+	if (SPT_PROB(2 + FEAR_SCALING(3, TERROR_BUILDUP_PANIC, TERROR_BUILDUP_MAXIMUM), seconds_per_tick))
+		. += panic_attack(terror_buildup)
+
+/datum/terror_handler/panic/proc/panic_attack(terror_buildup)
+	active_attack = TRUE
+	owner.emote("gasp")
+	owner.Knockdown(0.5 SECONDS)
+	breath_loop.start()
+	addtimer(CALLBACK(src, PROC_REF(stop_panic_attack)), rand(3 SECONDS, 5 SECONDS))
+	owner.visible_message(span_warning("[owner] drops to the floor for a moment, clutching their chest."), span_alert("Your heart lurches in your chest. You can't take much more of this!"))
+	return PANIC_ATTACK_TERROR_AMOUNT
+
+/datum/terror_handler/panic/proc/stop_panic_attack()
+	breath_loop.stop()
+	active_attack = FALSE
 
 #undef FEAR_SCALING
