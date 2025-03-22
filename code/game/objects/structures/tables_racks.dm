@@ -90,7 +90,7 @@
 
 //proc that adds elements present in normal tables
 /obj/structure/table/proc/unflip_table()
-	playsound('sound/items/trayhit/trayhit2.ogg', 100)
+	playsound(src, 'sound/items/trayhit/trayhit2.ogg', 100)
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
@@ -107,7 +107,7 @@
 
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table(new_dir)
-	playsound('sound/items/trayhit/trayhit1.ogg', 100)
+	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
