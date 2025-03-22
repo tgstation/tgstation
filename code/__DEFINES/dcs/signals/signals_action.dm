@@ -51,3 +51,6 @@
 
 /// From /datum/action/cooldown/mob_cooldown/capture_photo/Activate():
 #define COMSIG_ACTION_PHOTO_CAPTURED "action_photo_captured"
+
+/// From /datum/action/vehicle/ridden/wheelchair/bell/Trigger():
+#define COMSIG_WHEELCHAIR_BELL_RANG "wheelchair_bell_rang"

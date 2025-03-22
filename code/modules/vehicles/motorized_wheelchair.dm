@@ -36,6 +36,13 @@
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	power_cell = new /obj/item/stock_parts/power_store/cell(src)
 
+/// When you ring your bell and are armed try to explode
+/obj/vehicle/ridden/wheelchair/motorized/proc/on_bell_rang()
+	SIGNAL_HANDLER
+	if (!prob(20))
+		return
+	detonate_bomb()
+
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
@@ -185,12 +192,17 @@
 		if(!(guy in buckled_mobs))
 			Bump(guy)
 
+/// Detonate an armed explosive on this wheelchair
+/obj/vehicle/ridden/wheelchair/motorized/proc/detonate_bomb()
+	visible_message(span_boldwarning("[src] explodes!!"))
+	if (obj_flags & EMAGGED)
+		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
+
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/bumped_atom)
 	. = ..()
 	// Here is the shitty emag functionality.
 	if(obj_flags & EMAGGED && (isclosedturf(bumped_atom) || isliving(bumped_atom)))
-		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
-		visible_message(span_boldwarning("[src] explodes!!"))
+		detonate_bomb()
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
 	if(bumped_atom.density && speed > delay_multiplier && has_buckled_mobs())
@@ -219,6 +231,7 @@
 		balloon_alert(user, "open maintenance panel!")
 		return FALSE
 
+	RegisterSignal(src, COMSIG_WHEELCHAIR_BELL_RANG, PROC_REF(on_bell_rang))
 	balloon_alert(user, "bomb implanted...?")
 	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
