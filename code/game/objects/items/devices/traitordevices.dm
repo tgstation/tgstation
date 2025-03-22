@@ -413,12 +413,14 @@ effective or pretty fucking useless.
 	desc = "You feel a strange urge to hit this with a wrench."
 
 /obj/item/storage/toolbox/emergency/turret/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench/combat(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/analyzer(src)
-	new /obj/item/wirecutters(src)
+	return list(
+		/obj/item/screwdriver,
+		/obj/item/wrench/combat,
+		/obj/item/weldingtool,
+		/obj/item/crowbar,
+		/obj/item/analyzer,
+		/obj/item/wirecutters,
+	)
 
 /obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/wrench/combat))

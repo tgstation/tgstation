@@ -43,7 +43,12 @@
 		/obj/item/circuitboard/computer,
 	)
 
-	return is_type_in_list(to_insert, exceptions) ? ..() : FALSE
+	if(!is_type_in_list(to_insert, exceptions))
+		if(messages == STORAGE_ERROR_INSERT)
+			stack_trace("[parent.type]: [to_insert.type] is not a valid part")
+		return FALSE
+
+	return ..()
 
 /datum/storage/rped/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	if(isstack(to_insert))
