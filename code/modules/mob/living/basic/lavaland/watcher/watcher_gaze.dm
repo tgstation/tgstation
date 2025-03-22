@@ -59,8 +59,8 @@
 			icon = 'icons/effects/eldritch.dmi',
 			loc = viewer,
 			icon_state = "eye_flash",
-			pixel_x = -viewer.pixel_x,
-			pixel_y = -viewer.pixel_y,
+			pixel_w = -viewer.pixel_x,
+			pixel_z = -viewer.pixel_y,
 		)
 		flick_overlay_global(flashed_overlay, show_to = GLOB.clients, duration = animation_time)
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(hide_eye)), animation_time, TIMER_STOPPABLE)
@@ -83,7 +83,7 @@
 /// Display an animated overlay over our head to indicate what's going on
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/show_indicator_overlay(overlay_state)
 	clear_current_overlay()
-	current_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = overlay_state, pixel_x = -owner.pixel_x, pixel_y = 28, layer = ABOVE_ALL_MOB_LAYER)
+	current_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = overlay_state, pixel_w = -owner.pixel_x, pixel_z = 28, layer = ABOVE_ALL_MOB_LAYER)
 	SET_PLANE_EXPLICIT(current_overlay, ABOVE_LIGHTING_PLANE, owner)
 	for(var/client/add_to in GLOB.clients)
 		add_to.images += current_overlay

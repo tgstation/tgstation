@@ -658,12 +658,12 @@
 	if(alarm_type && powered() && !ignore_alarms)
 		var/mutable_appearance/hazards
 		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
+		hazards.pixel_w = light_xoffset
+		hazards.pixel_z = light_yoffset
 		. += hazards
 		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
+		hazards.pixel_w = light_xoffset
+		hazards.pixel_z = light_yoffset
 		. += hazards
 
 /**

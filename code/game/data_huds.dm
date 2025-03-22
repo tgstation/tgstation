@@ -549,10 +549,10 @@ Diagnostic HUDs!
 
 /atom/proc/adjust_hud_position(image/holder, animate_time = null)
 	if (animate_time)
-		animate(holder, pixel_x = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_y = get_cached_height() - ICON_SIZE_Y, time = animate_time)
+		animate(holder, pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_z = get_cached_height() - ICON_SIZE_Y, time = animate_time)
 		return
-	holder.pixel_x = -(get_cached_width() - ICON_SIZE_X) / 2
-	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
+	holder.pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2
+	holder.pixel_z = get_cached_height() - ICON_SIZE_Y
 
 /atom/proc/set_hud_image_state(hud_type, hud_state, x_offset = 0, y_offset = 0)
 	if (!hud_list) // Still initializing
@@ -565,5 +565,5 @@ Diagnostic HUDs!
 	holder.icon_state = hud_state
 	adjust_hud_position(holder)
 	if (x_offset || y_offset)
-		holder.pixel_x += x_offset
-		holder.pixel_y += y_offset
+		holder.pixel_w += x_offset
+		holder.pixel_z += y_offset

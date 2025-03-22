@@ -42,8 +42,8 @@
 		var/is_right = IS_RIGHT_INDEX(holding_mob.get_held_index_of_item(held))
 		var/icon_file = is_right ? held.righthand_file : held.lefthand_file
 		var/mutable_appearance/held_overlay = held.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
-		held_overlay.pixel_y += y_offset
-		held_overlay.pixel_x += x_offset * (is_right ? 1 : -1)
+		held_overlay.pixel_z += y_offset
+		held_overlay.pixel_w += x_offset * (is_right ? 1 : -1)
 		held_overlays += held_overlay
 
 	cached_overlays = held_overlays

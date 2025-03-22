@@ -394,13 +394,13 @@
 
 	if(numberleft != 0) //Don't make the number if we are 0.
 		var/mutable_appearance/number1 = mutable_appearance(icon, "[numberleft]")
-		number1.pixel_x = -shift_amount
+		number1.pixel_w = -shift_amount
 		add_overlay(number1)
 	else
 		shift_amount = 0 //We can stay centered.
 
 	var/mutable_appearance/number2 = mutable_appearance(icon, "[numberright]")
-	number2.pixel_x = shift_amount
+	number2.pixel_w = shift_amount
 	add_overlay(number2)
 
 /obj/machinery/roulette/proc/handle_color_light(color)

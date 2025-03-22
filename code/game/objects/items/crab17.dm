@@ -128,10 +128,10 @@
 		return
 	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
-	hologram.pixel_y = 16
+	hologram.pixel_z = 16
 	add_overlay(hologram)
 	var/mutable_appearance/holosign = mutable_appearance(icon, "holosign")
-	holosign.pixel_y = 16
+	holosign.pixel_z = 16
 	add_overlay(holosign)
 	add_overlay("legs_extending")
 	cut_overlay("legs_retracted")

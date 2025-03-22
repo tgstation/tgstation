@@ -52,8 +52,8 @@
 		return
 
 	var/image/bullet_hole = image('icons/effects/effects.dmi', "dent", OBJ_LAYER + 0.5)
-	bullet_hole.pixel_x = p_x - 1 //offset correction
-	bullet_hole.pixel_y = p_y - 1
+	bullet_hole.pixel_w = p_x - 1 //offset correction
+	bullet_hole.pixel_z = p_y - 1
 	if(hitting_projectile.damage_type != BRUTE)
 		bullet_hole.setDir(pick(GLOB.cardinals))// random scorch design
 		if(hitting_projectile.damage < 20 && is_generic_projectile)

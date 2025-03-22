@@ -581,17 +581,17 @@
 			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
 			switch (heading)
 				if (NORTH)
-					floorlight.pixel_x = 0
-					floorlight.pixel_y = 32
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = 32
 				if (SOUTH)
-					floorlight.pixel_x = 0
-					floorlight.pixel_y = -32
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = -32
 				if (EAST)
-					floorlight.pixel_x = 32
-					floorlight.pixel_y = 0
+					floorlight.pixel_w = 32
+					floorlight.pixel_z = 0
 				if (WEST)
-					floorlight.pixel_x = -32
-					floorlight.pixel_y = 0
+					floorlight.pixel_w = -32
+					floorlight.pixel_z = 0
 			. += floorlight
 
 /obj/machinery/door/airlock/run_animation(animation)

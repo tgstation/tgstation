@@ -69,9 +69,9 @@
 				continue
 			progress_bar.listindex--
 
-			progress_bar.bar.pixel_y = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
+			progress_bar.bar.pixel_z = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
 			var/dist_to_travel = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
-			animate(progress_bar.bar, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+			animate(progress_bar.bar, pixel_z = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 		LAZYREMOVEASSOC(user.progressbars, bar_loc, src)
 		user = null
@@ -120,10 +120,10 @@
 
 ///Adds a smoothly-appearing progress bar image to the player's screen.
 /datum/progressbar/proc/add_prog_bar_image_to_client()
-	bar.pixel_y = 0
+	bar.pixel_z = 0
 	bar.alpha = 0
 	user_client.images += bar
-	animate(bar, pixel_y = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+	animate(bar, pixel_z = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 
 ///Updates the progress bar image visually.
