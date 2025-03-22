@@ -118,7 +118,7 @@
 
 	if (!active)
 		active = TRUE
-		to_chat(owner, span_userdanger("Your heart is racing in your chest from the terror!"))
+		to_chat(owner, span_userdanger("You feel your heart racing!"))
 		owner.add_fov_trait(type, FOV_270_DEGREES) // Terror induced tunnel vision
 
 	owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
