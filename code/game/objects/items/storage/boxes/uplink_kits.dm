@@ -766,7 +766,7 @@
 		ammunition production. The only reason it didn't see wider adoption was a lack of faith in the product. Do you \
 		believe in Donk? Time to put that to the test."
 
-/obj/item/storage/box/syndie_kit/sniper_surplus/PopulateContents()
+/obj/item/storage/box/syndie_kit/shotgun_surplus/PopulateContents()
 	. = list()
 	for(var/i in 1 to 7)
 		. += /obj/item/ammo_box/magazine/m12g/donk
