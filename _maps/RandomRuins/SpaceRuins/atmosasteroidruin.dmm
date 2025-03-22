@@ -127,7 +127,7 @@
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "jM" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded{
+/obj/effect/spawner/random/engineering/pacman{
 	anchored = 1
 	},
 /obj/structure/cable,

@@ -545,7 +545,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/apc/unlocked,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/plating,

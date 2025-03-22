@@ -226,7 +226,7 @@
 /turf/open/misc/asteroid/moon,
 /area/deathmatch/fullbright)
 "OF" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /turf/open/misc/asteroid/moon,
 /area/deathmatch/fullbright)
 "St" = (

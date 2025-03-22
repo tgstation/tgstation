@@ -693,7 +693,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "HI" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/engineering/pacman,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/unlocked,
