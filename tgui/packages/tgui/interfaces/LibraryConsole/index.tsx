@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -10,33 +11,39 @@ import { PopoutMenu } from './PopoutMenu';
 import { Print } from './Print';
 import { LibraryConsoleData } from './types';
 import { Upload } from './Upload';
+import { LibraryContext } from './useLibraryContext';
 
 export function LibraryConsole(props) {
   const { data } = useBackend<LibraryConsoleData>();
   const { display_lore, screen_state } = data;
 
+  const checkoutBookState = useState(false);
+  const uploadToDBState = useState(false);
+
   return (
-    <Window
-      theme={display_lore ? 'spookyconsole' : ''}
-      title="Library Terminal"
-      width={880}
-      height={520}
-    >
-      <Window.Content>
-        <Stack fill>
-          <Stack.Item>
-            <PopoutMenu />
-          </Stack.Item>
-          <Stack.Item grow>
-            {screen_state === 1 && <Inventory />}
-            {screen_state === 2 && <Checkout />}
-            {screen_state === 3 && <Archive />}
-            {screen_state === 4 && <Upload />}
-            {screen_state === 5 && <Print />}
-            {screen_state === 6 && <Forbidden />}
-          </Stack.Item>
-        </Stack>
-      </Window.Content>
-    </Window>
+    <LibraryContext.Provider value={{ checkoutBookState, uploadToDBState }}>
+      <Window
+        theme={display_lore ? 'spookyconsole' : ''}
+        title="Library Terminal"
+        width={880}
+        height={520}
+      >
+        <Window.Content>
+          <Stack fill>
+            <Stack.Item>
+              <PopoutMenu />
+            </Stack.Item>
+            <Stack.Item grow>
+              {screen_state === 1 && <Inventory />}
+              {screen_state === 2 && <Checkout />}
+              {screen_state === 3 && <Archive />}
+              {screen_state === 4 && <Upload />}
+              {screen_state === 5 && <Print />}
+              {screen_state === 6 && <Forbidden />}
+            </Stack.Item>
+          </Stack>
+        </Window.Content>
+      </Window>
+    </LibraryContext.Provider>
   );
 }

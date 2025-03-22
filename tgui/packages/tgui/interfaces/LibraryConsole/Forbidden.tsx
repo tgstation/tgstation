@@ -34,24 +34,26 @@ function ForbiddenModal(props) {
             className="LibraryComputer__CultText"
             fluid
             icon="check"
-            content="Assent"
             color="good"
             fontSize="20px"
             onClick={() => act('lore_spawn')}
             lineHeight={2}
-          />
+          >
+            Assent
+          </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             className="LibraryComputer__CultText"
             fluid
             icon="times"
-            content="Decline"
             color="bad"
             fontSize="20px"
             onClick={() => act('lore_deny')}
             lineHeight={2}
-          />
+          >
+            Decline
+          </Button>
         </Stack.Item>
       </Stack>
     </Modal>

@@ -49,7 +49,7 @@ export function PageSelect(props) {
             // I am so sorry
             if (value !== '') {
               call_on_change(value);
-              e.target.value = null;
+              e.currentTarget.value = '';
             }
           }}
         />

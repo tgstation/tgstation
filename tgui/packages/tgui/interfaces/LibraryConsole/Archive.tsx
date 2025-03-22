@@ -1,7 +1,7 @@
 import { NoticeBox, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { PageSelect, ScrollableSection } from './components';
+import { PageSelect } from './components';
 import { SearchAndDisplay } from './Search';
 import { LibraryConsoleData } from './types';
 
@@ -19,12 +19,9 @@ export function Archive(props) {
   }
 
   return (
-    <Stack vertical justify="space-between" height="100%">
+    <Stack vertical justify="space-between" fill>
       <Stack.Item grow>
-        <ScrollableSection
-          header="Remote Archive"
-          contents={<SearchAndDisplay />}
-        />
+        <SearchAndDisplay />
       </Stack.Item>
       <Stack.Item align="center">
         <PageSelect

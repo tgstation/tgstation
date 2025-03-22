@@ -11,9 +11,10 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { sanitizeText } from '../../sanitize';
 import { LibraryConsoleData } from './types';
+import { useLibraryContext } from './useLibraryContext';
 
 export function Upload(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
@@ -28,7 +29,8 @@ export function Upload(props) {
     cooldown_string,
   } = data;
 
-  const [uploadToDB, setUploadToDB] = useLocalState('UploadDB', false);
+  const { uploadToDBState } = useLibraryContext();
+  const [uploadToDB, setUploadToDB] = uploadToDBState;
 
   if (!has_scanner) {
     return (
@@ -125,24 +127,26 @@ export function Upload(props) {
                 }
                 tooltipPosition="top"
                 icon="newspaper"
-                content="Newscaster"
                 fontSize="30px"
                 lineHeight={2}
                 textAlign="center"
                 onClick={() => act('news_post')}
-              />
+              >
+                Newscaster
+              </Button>
             </Stack.Item>
             <Stack.Item grow>
               <Button
                 disabled={!can_db_request}
                 fluid
                 icon="server"
-                content="Archive"
                 fontSize="30px"
                 lineHeight={2}
                 textAlign="center"
                 onClick={() => setUploadToDB(true)}
-              />
+              >
+                Archive
+              </Button>
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -154,9 +158,11 @@ export function Upload(props) {
 
 function UploadModal(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
-
   const { upload_categories, default_category, can_db_request } = data;
-  const [uploadToDB, setUploadToDB] = useLocalState('UploadDB', false);
+
+  const { uploadToDBState } = useLibraryContext();
+  const [uploadToDB, setUploadToDB] = uploadToDBState;
+
   const [uploadCategory, setUploadCategory] = useState('');
 
   const display_category = uploadCategory || default_category;
@@ -180,7 +186,6 @@ function UploadModal(props) {
           <Button
             disabled={!can_db_request}
             icon="upload"
-            content="Upload To DB"
             fontSize="18px"
             color="good"
             onClick={() => {
@@ -190,17 +195,20 @@ function UploadModal(props) {
               });
             }}
             lineHeight={2}
-          />
+          >
+            Upload To DB
+          </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             icon="times"
-            content="Return"
             fontSize="18px"
             color="bad"
             onClick={() => setUploadToDB(false)}
             lineHeight={2}
-          />
+          >
+            Return
+          </Button>
         </Stack.Item>
       </Stack>
     </Modal>

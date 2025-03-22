@@ -1,10 +1,29 @@
-import { map, sortBy } from 'common/collections';
-import { Box, Button, Input, Stack, Table } from 'tgui-core/components';
+import {
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+  Table,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { LibraryConsoleData } from './types';
 
 export function SearchAndDisplay(props) {
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        <SearchTabs />
+      </Stack.Item>
+      <Stack.Item grow>
+        <SearchResults />
+      </Stack.Item>
+    </Stack>
+  );
+}
+
+function SearchTabs(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
   const {
     search_categories = [],
@@ -12,21 +31,12 @@ export function SearchAndDisplay(props) {
     title,
     category,
     author,
-    params_changed,
     can_db_request,
+    params_changed,
   } = data;
 
-  const records = sortBy(
-    map(data.pages, (record, i) => ({
-      ...record,
-      // Generate a unique id
-      key: i,
-    })),
-    (record) => record.key,
-  );
-
   return (
-    <Box>
+    <Section fill>
       <Stack justify="space-between">
         <Stack.Item pb={0.6}>
           <Stack>
@@ -102,15 +112,33 @@ export function SearchAndDisplay(props) {
           </Button>
         </Stack.Item>
       </Stack>
+    </Section>
+  );
+}
+
+function SearchResults(props) {
+  const { act, data } = useBackend<LibraryConsoleData>();
+  const { pages } = data;
+
+  const sorted = pages
+    .map((record, i) => ({
+      ...record,
+      // Generate a unique id
+      key: i,
+    }))
+    .sort((a, b) => a.key - b.key);
+
+  return (
+    <Section fill scrollable>
       <Table>
-        <Table.Row>
+        <Table.Row className="candystripe">
           <Table.Cell fontSize={1.5}>#</Table.Cell>
           <Table.Cell fontSize={1.5}>Category</Table.Cell>
           <Table.Cell fontSize={1.5}>Title</Table.Cell>
           <Table.Cell fontSize={1.5}>Author</Table.Cell>
         </Table.Row>
-        {records.map((record) => (
-          <Table.Row key={record.key}>
+        {sorted.map((record) => (
+          <Table.Row key={record.key} className="candystripe">
             <Table.Cell>
               <Button
                 onClick={() =>
@@ -129,6 +157,6 @@ export function SearchAndDisplay(props) {
           </Table.Row>
         ))}
       </Table>
-    </Box>
+    </Section>
   );
 }

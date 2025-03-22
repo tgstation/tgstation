@@ -17,8 +17,9 @@ export function PopoutMenu(props) {
             onClick={() => act('toggle_dropdown')}
             icon={show_dropdown === 1 ? 'chevron-left' : 'chevron-right'}
             tooltip={!show_dropdown && 'Expand'}
-            content={!!show_dropdown && 'Collapse'}
-          />
+          >
+            {!!show_dropdown && 'Collapse'}
+          </Button>
         </Stack.Item>
         <PopoutEntry id={1} icon="list" text="Inventory" />
         <PopoutEntry id={2} icon="calendar" text="Checkout" />

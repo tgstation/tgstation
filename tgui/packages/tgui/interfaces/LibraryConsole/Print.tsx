@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Section, Stack } from 'tgui-core/components';
+import { Box, Button, Section, Stack, Tabs } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
@@ -8,6 +8,7 @@ import { LibraryConsoleData } from './types';
 export function Print(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
   const { deity, religion, bible_name, bible_sprite, posters } = data;
+
   const [selectedPoster, setSelectedPoster] = useState(posters[0]);
 
   return (
@@ -16,24 +17,23 @@ export function Print(props) {
         <Stack fill>
           <Stack.Item width="50%">
             <Section fill scrollable>
-              {posters.map((poster) => (
-                <div
-                  key={poster}
-                  title={poster}
-                  className={classes([
-                    'Button',
-                    'Button--fluid',
-                    'Button--color--transparent',
-                    'Button--ellipsis',
-                    selectedPoster &&
-                      poster === selectedPoster &&
-                      'Button--selected',
-                  ])}
-                  onClick={() => setSelectedPoster(poster)}
-                >
-                  {poster}
-                </div>
-              ))}
+              <Tabs vertical>
+                {posters.map((poster) => {
+                  const selected = selectedPoster === poster;
+
+                  return (
+                    <Tabs.Tab
+                      className="candystripe"
+                      selected={selected}
+                      color={selected && 'good'}
+                      key={poster}
+                      onClick={() => setSelectedPoster(poster)}
+                    >
+                      {poster}
+                    </Tabs.Tab>
+                  );
+                })}
+              </Tabs>
             </Section>
           </Stack.Item>
           <Stack.Item>
@@ -66,7 +66,6 @@ export function Print(props) {
             <Button
               fluid
               icon="scroll"
-              content="Poster"
               fontSize="30px"
               lineHeight={2}
               textAlign="center"
@@ -75,18 +74,21 @@ export function Print(props) {
                   poster_name: selectedPoster,
                 })
               }
-            />
+            >
+              Poster
+            </Button>
           </Stack.Item>
           <Stack.Item grow>
             <Button
               fluid
               icon="cross"
-              content="Bible"
               fontSize="30px"
               lineHeight={2}
               textAlign="center"
               onClick={() => act('print_bible')}
-            />
+            >
+              Bible
+            </Button>
           </Stack.Item>
         </Stack>
       </Stack.Item>

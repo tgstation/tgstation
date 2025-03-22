@@ -1,4 +1,3 @@
-import { map, sortBy } from 'common/collections';
 import { Button, NoticeBox, Section, Stack, Table } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -8,11 +7,13 @@ import { LibraryConsoleData } from './types';
 export function Inventory(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
   const { inventory_page_count, inventory_page, has_inventory } = data;
+
   if (!has_inventory) {
     return (
       <NoticeBox>No Book Records detected. Update your inventory!</NoticeBox>
     );
   }
+
   return (
     <Stack vertical justify="space-between" height="100%">
       <Stack.Item grow>
@@ -38,15 +39,16 @@ export function Inventory(props) {
 }
 
 function InventoryDetails(props) {
-  const { act, data } = useBackend();
-  const inventory = sortBy(
-    map(data.inventory, (book, i) => ({
+  const { act, data } = useBackend<LibraryConsoleData>();
+  const { inventory } = data;
+
+  const sorted = inventory
+    .map((book, i) => ({
       ...book,
       // Generate a unique id
       key: i,
-    })),
-    (book) => book.key,
-  );
+    }))
+    .sort((a, b) => a.key - b.key);
 
   return (
     <Section>
@@ -56,7 +58,7 @@ function InventoryDetails(props) {
           <Table.Cell>Title</Table.Cell>
           <Table.Cell>Author</Table.Cell>
         </Table.Row>
-        {inventory.map((book) => (
+        {sorted.map((book) => (
           <Table.Row key={book.key}>
             <Table.Cell>
               <Button

@@ -1,8 +1,5 @@
-import { sortBy } from 'common/collections';
-import { map } from 'common/collections';
 import { useState } from 'react';
 import {
-  Box,
   Button,
   Dropdown,
   Input,
@@ -13,15 +10,17 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { PageSelect, ScrollableSection } from './components';
 import { LibraryConsoleData } from './types';
+import { useLibraryContext } from './useLibraryContext';
 
 export function Checkout(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
   const { checkout_page, checkout_page_count } = data;
 
-  const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
+  const { checkoutBookState } = useLibraryContext();
+  const [checkoutBook, setCheckoutBook] = checkoutBookState;
 
   return (
     <Stack vertical height="100%" justify="space-between">
@@ -51,10 +50,11 @@ export function Checkout(props) {
         <Button
           fluid
           icon="barcode"
-          content="Check-Out Book"
           fontSize="20px"
           onClick={() => setCheckoutBook(true)}
-        />
+        >
+          Check-Out Book
+        </Button>
       </Stack.Item>
       {!!checkoutBook && <CheckoutModal />}
     </Stack>
@@ -62,81 +62,92 @@ export function Checkout(props) {
 }
 
 function CheckoutModal(props) {
-  const { act, data } = useBackend();
-  const inventory = sortBy(
-    map(data.inventory, (book, i) => ({
+  const { act, data } = useBackend<LibraryConsoleData>();
+
+  const inventory = data.inventory
+    .map((book, i) => ({
       ...book,
       // Generate a unique id
       key: i,
-    })),
-    (book) => book.key,
-  );
+    }))
+    .sort((a, b) => a.key - b.key);
 
-  const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
+  const { checkoutBookState } = useLibraryContext();
+  const [checkoutBook, setCheckoutBook] = checkoutBookState;
+
   const [bookName, setBookName] = useState('Insert Book name...');
   const [checkoutee, setCheckoutee] = useState('Recipient');
   const [checkoutPeriod, setCheckoutPeriod] = useState(5);
 
   return (
-    <Modal width="500px">
-      <Box fontSize="20px" pb={1}>
-        Are you sure you want to loan out this book?
-      </Box>
-      <Dropdown
-        over
-        mb={1.7}
-        width="100%"
-        selected={bookName}
-        options={inventory.map((book) => book.title)}
-        onSelected={(e) => setBookName(e)}
-      />
-      <LabeledList>
-        <LabeledList.Item label="Loan To">
-          <Input
-            width="160px"
-            value={checkoutee}
-            onChange={(e, value) => setCheckoutee(value)}
-          />
-        </LabeledList.Item>
-        <LabeledList.Item label="Loan Period">
-          <NumberInput
-            value={checkoutPeriod}
-            unit=" Minutes"
-            minValue={1}
-            maxValue={1440}
-            step={1}
-            stepPixelSize={10}
-            onChange={(value) => setCheckoutPeriod(value)}
-          />
-        </LabeledList.Item>
-      </LabeledList>
-      <Stack justify="center" align="center" pt={1}>
+    <Modal width="500px" py={4}>
+      <Stack fill vertical>
+        <Stack.Item fontSize="20px">
+          Are you sure you want to loan out this book?
+        </Stack.Item>
         <Stack.Item>
-          <Button
-            icon="upload"
-            content="Loan Out"
-            fontSize="16px"
-            color="good"
-            onClick={() => {
-              setCheckoutBook(false);
-              act('checkout', {
-                book_name: bookName,
-                loaned_to: checkoutee,
-                checkout_time: checkoutPeriod,
-              });
-            }}
-            lineHeight={2}
+          <Dropdown
+            over
+            width="100%"
+            selected={bookName}
+            options={inventory.map((book) => book.title)}
+            onSelected={(e) => setBookName(e)}
           />
         </Stack.Item>
         <Stack.Item>
-          <Button
-            icon="times"
-            content="Return"
-            fontSize="16px"
-            color="bad"
-            onClick={() => setCheckoutBook(false)}
-            lineHeight={2}
-          />
+          <LabeledList>
+            <LabeledList.Item label="Loan To">
+              <Input
+                width="160px"
+                value={checkoutee}
+                onChange={(e, value) => setCheckoutee(value)}
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Loan Period">
+              <NumberInput
+                value={checkoutPeriod}
+                unit=" Minutes"
+                minValue={1}
+                maxValue={1440}
+                step={1}
+                stepPixelSize={10}
+                onChange={(value) => setCheckoutPeriod(value)}
+              />
+            </LabeledList.Item>
+          </LabeledList>
+        </Stack.Item>
+        <Stack.Item>
+          <Stack justify="center" align="center" pt={1}>
+            <Stack.Item>
+              <Button
+                icon="upload"
+                fontSize="16px"
+                color="good"
+                onClick={() => {
+                  setCheckoutBook(false);
+                  act('checkout', {
+                    book_name: bookName,
+                    loaned_to: checkoutee,
+                    checkout_time: checkoutPeriod,
+                  });
+                }}
+                lineHeight={2}
+              >
+                Loan Out
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="times"
+                fontSize="16px"
+                color="bad"
+                onClick={() => setCheckoutBook(false)}
+                lineHeight={2}
+              >
+                Return
+              </Button>
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
       </Stack>
     </Modal>
