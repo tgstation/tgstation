@@ -31,6 +31,10 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
+// We WANT to call on_remove when replaced, else effects might not be cleaned up in the case where a mark is applied while a different mark is active.
+/datum/status_effect/eldritch/be_replaced()
+	qdel(src)
+
 /**
  * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
  *
