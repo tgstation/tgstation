@@ -32,7 +32,7 @@
 	INVOKE_ASYNC(src, PROC_REF(attempt_dive), parent, bumped)
 
 /datum/component/space_dive/proc/attempt_dive(mob/living/parent, atom/bumped)
-	if(!do_after(parent, dive_time, bumped, hidden = TRUE))
+	if(!do_after(parent, dive_time, bumped))
 		return
 
 	dive(bumped)
