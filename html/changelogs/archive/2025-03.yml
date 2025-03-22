@@ -668,3 +668,9 @@
       for certain guns
   warbluke:
   - bugfix: Toner cartridges are no longer larger than the airlock sprayer.
+2025-03-22:
+  Ghommie:
+  - bugfix: Custom material toolboxes and fishing rods can now be printed with alloys
+      such a plasteel and plasmaglass.
+  Melbert:
+  - bugfix: Failing to inject no longer prints a strange message
