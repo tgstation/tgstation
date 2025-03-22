@@ -58,21 +58,6 @@
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/ridden/wheelchair/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	if (. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	if (!istype(tool, /obj/item/transfer_valve))
-		return NONE
-	if (user.combat_mode || tool.flags_1 & HOLOGRAM_1)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-	if (!(obj_flags & EMAGGED))
-		RegisterSignal(src, COMSIG_WHEELCHAIR_BELL_RANG, PROC_REF(on_bell_rang))
-	bomb_attached = tool
-	tool.forceMove(src)
-	update_appearance()
-	return ITEM_INTERACT_SUCCESS
-
 /// When you ring your bell and are armed try to explode
 /obj/vehicle/ridden/wheelchair/proc/on_bell_rang()
 	SIGNAL_HANDLER
@@ -119,11 +104,19 @@
 	user.put_in_hands(wheelchair_folded)
 	qdel(src)
 
-///attaches bell to the wheelchair
+/// Attaches bell to the wheelchair
 /obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
 	bell_attached = bell
 	bell.forceMove(src)
 	generate_actions()
+	update_appearance()
+
+/// Attaches TTV to the wheelchair
+/obj/vehicle/ridden/wheelchair/proc/attach_bomb(obj/item/transfer_valve/bomb)
+	if (!(obj_flags & EMAGGED))
+		RegisterSignal(src, COMSIG_WHEELCHAIR_BELL_RANG, PROC_REF(on_bell_rang))
+	bomb_attached = bomb
+	bomb.forceMove(src)
 	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/examine(mob/user)
