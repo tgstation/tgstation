@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "combat rmb will no longer fire the gun at the same time as pistol whipping for certain guns"

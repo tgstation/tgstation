@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "Smoothed objects on shuttles now will only smooth with other shuttles (added support for extensions of this system)"
-  - refactor: "I've funked around with our smoothing system, cutting out some older code. Lemme know if anything is weird PLEASE"
