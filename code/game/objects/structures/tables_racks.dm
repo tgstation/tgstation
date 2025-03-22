@@ -29,6 +29,9 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
+	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
+	///a bit fucky, I know. but this is needed to get sorted on init smoothing groups stored
+	var/list/on_init_smoothed_vars
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -37,6 +40,12 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
+	///Whether or not the table could be flipped or not
+	var/can_flip = TRUE
+	///Whether or not the table is flipped
+	var/is_flipped = FALSE
+	/// Whether or not when flipped, it ignores PASS_GLASS flag
+	var/is_transparent = FALSE
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -45,18 +54,22 @@
 	if(stack_used)
 		apply_stack_properties(stack_used)
 
-	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-
-	make_climbable()
-
+	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
+	if(!is_flipped)
+		unflip_table()
 	var/static/list/loc_connections = list(
 		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
-	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
+
+	if(can_flip)
+		AddElement( \
+			/datum/element/contextual_screentip_bare_hands, \
+			rmb_text = "Flip", \
+		)
 
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 
@@ -74,6 +87,57 @@
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
+
+//proc that adds elements present in normal tables
+/obj/structure/table/proc/unflip_table()
+	playsound(src, 'sound/items/trayhit/trayhit2.ogg', 100)
+	make_climbable()
+	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	//resets vars from table being flipped
+	layer = TABLE_LAYER
+	smoothing_flags |= SMOOTH_BITMASK
+	pass_flags_self |= PASSTABLE
+	icon = initial(icon)
+	icon_state = initial(icon_state)
+	smoothing_groups = on_init_smoothed_vars[1]
+	canSmoothWith = on_init_smoothed_vars[2]
+	update_appearance()
+	is_flipped = FALSE
+
+//proc that removes elements present in now-flipped tables
+/obj/structure/table/proc/flip_table(new_dir)
+	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
+	RemoveElement(/datum/element/climbable)
+	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	RemoveElement(/datum/element/give_turf_traits, turf_traits)
+	RemoveElement(/datum/element/elevation, pixel_shift = 12)
+
+	//change icons
+	layer = LOW_ITEM_LAYER
+	if(new_dir & EAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
+		new_dir = EAST
+	else if(new_dir & WEST)
+		new_dir = WEST
+	dir = new_dir
+	if(new_dir == SOUTH)
+		layer = ABOVE_MOB_LAYER
+
+	var/turf/throw_target = get_step(src, src.dir)
+	if(!isnull(throw_target))
+		for(var/atom/movable/movable_entity in src.loc)
+			if(is_able_to_throw(src, movable_entity))
+				movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+
+	smoothing_flags &= ~SMOOTH_BITMASK
+	smoothing_groups = null
+	canSmoothWith = null
+	pass_flags_self &= ~PASSTABLE
+	icon = 'icons/obj/flipped_tables.dmi'
+	icon_state = base_icon_state
+	update_appearance()
+	QUEUE_SMOOTH_NEIGHBORS(src)
+	is_flipped = TRUE
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -100,10 +164,54 @@
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
+	if(is_flipped)
+		. += span_notice("It's been flipped on its side!")
 	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
+
+/obj/structure/table/proc/on_exit(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+	if(!is_flipped)
+		return
+
+	if(leaving.movement_type & PHASING)
+		return
+
+	if(leaving == src)
+		return
+	if(is_transparent) //Glass table, jolly ranchers pass
+		if(istype(leaving) && (leaving.pass_flags & PASSGLASS))
+			return
+
+	if(istype(leaving, /obj/projectile))
+		return
+
+	if(direction == dir)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
+
+/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(.)
+		return
+
+	if(!is_flipped)
+		return FALSE
+
+	if(is_transparent) //Glass table, jolly ranchers pass
+		if(istype(mover) && (mover.pass_flags & PASSGLASS))
+			return TRUE
+	if(isprojectile(mover))
+		var/obj/projectile/proj = mover
+		//Lets through bullets shot from behind the cover of the table
+		if(proj.movement_vector && angle2dir_cardinal(proj.movement_vector.angle) == dir)
+			return TRUE
+		return FALSE
+	if(border_dir == dir)
+		return FALSE
+	return TRUE
 
 /obj/structure/table/update_icon(updates=ALL)
 	. = ..()
@@ -120,6 +228,8 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/table/attack_hand(mob/living/user, list/modifiers)
+	if(is_flipped)
+		return
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
@@ -154,6 +264,41 @@
 				user.stop_pulling()
 	return ..()
 
+/obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(!istype(user) || !user.can_interact_with(src))
+		return FALSE
+
+	if(!can_flip)
+		return
+
+	if(!is_flipped)
+		user.balloon_alert_to_viewers("flipping table...")
+		if(!do_after(user, max_integrity * 0.25))
+			return
+
+		flip_table(get_dir(user, src))
+
+		return
+
+	else
+		user.balloon_alert_to_viewers("flipping table upright...")
+		if(do_after(user, max_integrity * 0.25, src))
+			unflip_table()
+			return TRUE
+
+/obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
+	if (movable_entity == table) //Thing is not the table
+		return FALSE
+	if (movable_entity.anchored) //Thing isn't anchored
+		return FALSE
+	if(!isliving(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
+		return FALSE
+	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING)) || HAS_TRAIT(movable_entity, TRAIT_IGNORE_ELEVATION)) //Thing isn't flying/floating
+		return FALSE
+
+	return TRUE
+
 /obj/structure/table/attack_tk(mob/user)
 	return
 
@@ -163,8 +308,9 @@
 		return
 	if(mover.throwing)
 		return TRUE
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return TRUE
+	for(var/obj/structure/table/table in get_turf(mover))
+		if(!table.is_flipped)
+			return TRUE
 
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
@@ -241,6 +387,9 @@
 /obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(.)
+		return .
+
+	if(is_flipped)
 		return .
 
 	if(istype(tool, /obj/item/toy/cards/deck))
@@ -393,6 +542,7 @@
 	icon_state = "rollingtable"
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
+	can_flip = FALSE
 
 /obj/structure/table/rolling/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -500,6 +650,8 @@
 		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
+	if(is_flipped)
+		return FALSE
 	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		table_shatter(M)
 
@@ -670,6 +822,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor_type = /datum/armor/table_reinforced
+	can_flip = FALSE
 
 /datum/armor/table_reinforced
 	melee = 10
@@ -767,6 +920,7 @@
 	buildstack = /obj/item/stack/sheet/bronze
 	smoothing_groups = SMOOTH_GROUP_BRONZE_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
+	can_flip = FALSE
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -827,6 +981,7 @@
 	can_buckle = TRUE
 	buckle_lying = 90
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	can_flip = FALSE
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
