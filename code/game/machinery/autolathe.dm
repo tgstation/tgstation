@@ -446,7 +446,7 @@
 		span_hear("You hear the chatter of a floppy drive."))
 	busy = TRUE
 
-	if(do_after(user, 1.5 SECONDS, target = src))
+	if(!do_after(user, 1.5 SECONDS, target = src))
 		busy = FALSE
 		update_static_data_for_all_viewers()
 		balloon_alert(user, "interrupted!")
