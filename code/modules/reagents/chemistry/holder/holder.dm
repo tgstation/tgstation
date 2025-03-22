@@ -538,13 +538,15 @@
  * * multiplier - multiplies each reagent amount by this number well byond their available volume before transfering. used to create reagents from thin air if you ever need to
  * * preserve_data - preserve user data of all reagents after transfering
  * * no_react - if TRUE will not handle reactions
+ * * copy_methods - forwards reagent exposure method flags like INGEST & INHALE to reagent.on_transfer to trigger transfer effects.
  */
 /datum/reagents/proc/copy_to(
 	atom/target,
 	amount = 1,
 	multiplier = 1,
 	preserve_data = TRUE,
-	no_react = FALSE
+	no_react = FALSE,
+	copy_methods
 )
 	if(QDELETED(target) || !total_volume)
 		return
@@ -578,6 +580,8 @@
 		if(preserve_data)
 			trans_data = copy_data(reagent)
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+		if(copy_methods && !no_react)
+			reagent.on_transfer(target, copy_methods, transfer_amount)
 		if(!transfered_amount)
 			continue
 		total_transfered_amount += transfered_amount

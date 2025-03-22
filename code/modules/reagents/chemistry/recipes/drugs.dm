@@ -123,7 +123,7 @@
 
 //These drug item reactions should probably be converted to fermichem in the future.
 /datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get made.
-	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 10, /datum/reagent/ammonia = 5)
+	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 5, /datum/reagent/ammonia = 3)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
@@ -134,6 +134,9 @@
 		var/obj/item/food/drug/moon_rock/new_rock = new(location)
 		new_rock.pixel_x = rand(-6, 6)
 		new_rock.pixel_y = rand(-6, 6)
+
+/datum/chemical_reaction/moon_rock/draintek
+	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 5, /datum/reagent/lye = 3)
 
 /datum/chemical_reaction/blastoff_ampoule
 	required_reagents = list(/datum/reagent/silver = 10, /datum/reagent/toxin/cyanide = 10, /datum/reagent/lye = 5)
