@@ -10,6 +10,7 @@
 	pass_flags = PASSTABLE // Able to place on tables
 	max_integrity = 5000 // To make attacking it not instantly break it
 	throwforce = 2
+	interaction_flags_mouse_drop = NEED_HANDS
 
 	/// The amount of times this bell has been rang, used to check the chance it breaks
 	var/times_rang = 0
@@ -113,8 +114,8 @@
 	times_rang++
 	return TRUE
 
-/obj/structure/desk_bell/mouse_drop_dragged(atom/over_object, mob/living/user)
-	if(!isliving(user) || over_object != user || !length(user.held_items))
+/obj/structure/desk_bell/mouse_drop_dragged(atom/over_object, mob/user)
+	if(over_object != user)
 		return FALSE
 	var/obj/item/inhand_desk_bell/held_bell = new (user, src)
 	user.put_in_hands(held_bell, del_on_fail = FALSE)
@@ -141,6 +142,7 @@
 		stack_trace("You shouldn't map in this item, use /obj/structure/desk_bell")
 	if (!bell)
 		return INITIALIZE_HINT_QDEL
+	register_item_context()
 	src.bell = bell
 	bell.forceMove(src)
 	appearance = bell.appearance
@@ -153,6 +155,14 @@
 	UnregisterSignal(bell, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	bell = null
 	qdel(src)
+
+/obj/item/inhand_desk_bell/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+	if(istype(target, /obj/vehicle/ridden/wheelchair))
+		var/obj/vehicle/ridden/wheelchair/chair = target
+		if(!chair.bell_attached)
+			context[SCREENTIP_CONTEXT_LMB] = "Attach bell to wheelchair."
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/inhand_desk_bell/examine(mob/user)
 	return bell.examine(user)
