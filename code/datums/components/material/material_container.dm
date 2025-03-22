@@ -492,11 +492,11 @@
 	SIGNAL_HANDLER
 	// Don't insert material items with left click
 	if (isstack(weapon))
-		attempt_insert(user, weapon)
+		return attempt_insert(user, weapon)
 
 /datum/component/material_container/proc/on_secondary_insert(datum/source, mob/living/user, obj/item/weapon)
 	SIGNAL_HANDLER
-	attempt_insert(user, weapon)
+	return attempt_insert(user, weapon)
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/attempt_insert(mob/living/user, obj/item/weapon)
@@ -504,8 +504,8 @@
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
 
-	if(ismachinery(source))
-		var/obj/machinery/machine = source
+	if(ismachinery(parent))
+		var/obj/machinery/machine = parent
 		if(machine.machine_stat || machine.panel_open)
 			return
 
