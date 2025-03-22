@@ -1,3 +1,4 @@
+###---КОНФИГУРАЦИИ---
 # Вы можете использовать директиву "$include", чтобы разделить ваши конфигурации так, как вы хотите
 
 $include game_options.txt
@@ -18,6 +19,8 @@ $include map_vote.txt
 # Который явно отключает LOG_TWITTER, а также блокирует его.
 # Существуют различные опции, которые жестко заблокированы по соображениям безопасности.
 
+
+###---СЕРВЕР---
 ## Название сервера: оно отображается в верхней части экрана в игре и в BYOND hub. Раскомментируйте и замените "tgstation" на название по вашему выбору.
 SERVERNAME Andromeda [+18, MRP]
 
@@ -30,12 +33,16 @@ STATIONNAME Андромеда-13
 ## Подключите byond hub: Раскомментируйте это, чтобы подключить ваш сервер к byond hub.
 HUB
 
+
+###---ЛОББИ---
 ## Время в лобби: это промежуток времени между раундами, в течение которого игроки должны настроить своих персонажей и быть готовыми.
 LOBBY_COUNTDOWN 120
 
 ## Время окончания раунда: Это количество времени после окончания раунда, в течение которого игроки должны убивать друг друга.
 ROUND_END_COUNTDOWN 90
 
+
+###---БАЗА ДАННЫХ---
 ## Прокомментируйте это, если вы хотите использовать систему администрирования на основе SQL, в устаревшей системе используется admins.txt.
 ## Вам необходимо настроить свою базу данных для использования системы на основе SQL.
 ## Этот флаг включается автоматически, если параметр SQL_ENABLED не установлен.
@@ -54,7 +61,8 @@ ROUND_END_COUNTDOWN 90
 ## Прокомментируйте это, чтобы локально подключенным клиентам не предоставлялся почти полный доступ!localhost! звание администратора.
 ENABLE_LOCALHOST_RANK
 
-### Работка
+
+###---ПРОФЕССИИ---
 ## Раскомментируйте эту запись, чтобы указать, что для выбора определенных вакансий требуется, чтобы вашей учетной записи было не менее определенного количества дней. Вы можете настроить точный возрастной ценз для разных вакансий, отредактировав
 ## переменная minimal_player_age в файлах в папке /code/game/jobs/job/.. для задания, которое вы хотите отредактировать. Установите значение minimal_player_age равным 0, чтобы отключить возрастные требования для этого задания.
 ## ДЛЯ работы требуется настроить базу данных. Сохраняйте ее хэшированной, если у вас нет настроенной базы данных.
@@ -81,53 +89,59 @@ USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
 #USE_LOW_LIVING_HOUR_INTERN
 ## Если значение USE_LOW_LIVING_HOUR_INTERN не изменено, то игрокам с таким количеством часов жизни [Стажер] добавляется в их идентификационную карту. Если это значение не задано, вместо него используется USE_EXP_RESTRICTIONS_HEADS_HOURS. Если это значение не задано, то по умолчанию используется жестко запрограммированный резервный период в 15 часов.
 #USE_LOW_LIVING_HOUR_INTERN_HOURS 50
-###
-
-##Log camera pictures - Must have picture logging enabled
+## Записывать снимки с камеры - необходимо включить запись изображений в журнал.
 PICTURE_LOGGING_CAMERA
 
-## period of time in seconds for players to be considered inactive
+
+###---АФК и ИНАКТИВ---
+## Период времени в секундах, в течение которого игроки считаются неактивными
 # INACTIVITY_PERIOD 300
 
-## period of time in seconds for players to be considered afk and kickable
+## Период времени в секундах, в течение которого игроки будут считаться афк и их можно будет атаковать.
 # AFK_PERIOD 600
 
-## disconnect players who are considered afk
+## Отключите игроков, которые считаются афк
 # KICK_INACTIVE
 
-## Comment this out to stop admins being able to choose their personal ooccolor
+###---ДЛЯ АДМИНОВ---
+## Прокомментируйте это, чтобы администраторы не могли выбирать свой личный цвет глаз
 ALLOW_ADMIN_OOCCOLOR
 
-## Comment this out to stop admins being able to choose their personal asay color
+## Прокомментируйте это, чтобы администраторы не могли выбирать свой личный цвет оформления
 ALLOW_ADMIN_ASAYCOLOR
 
-## Job slot open/close by identification consoles delay in seconds
+###---IC---
+## Задержка открытия/закрытия рабочего места с помощью пультов идентификации в секундах
 ID_CONSOLE_JOBSLOT_DELAY 30
 
-## allow players to initiate a restart vote
+
+###---ГОЛОСОВАНИЕ---
+## Разрешить игрокам инициировать повторное голосование
 #ALLOW_VOTE_RESTART
 
-## allow players to initiate a map-change vote
+## Разрешить игрокам инициировать голосование за изменение карты
 #ALLOW_VOTE_MAP
 
-## allow players to rock the vote, or to vote on the map again if they didn't like the last results
+## Разрешите игрокам участвовать в голосовании или голосовать на карте повторно, если им не понравились предыдущие результаты
 #ALLOW_ROCK_THE_VOTE
 
-## the number of times you wish to allow players to rock the vote in a given shift
+## Количество раз, которое вы хотите разрешить игрокам участвовать в голосовании за данную смену.
 MAX_ROCKING_VOTES 1
 
-## min delay (deciseconds) between voting sessions (default 10 minutes)
+## Минимальная задержка (секунды принятия решения) между сессиями голосования (по умолчанию 10 минут)
 VOTE_DELAY 6000
 
-## time period (deciseconds) which voting session will last (default 1 minute)
+## Период времени (секунды принятия решения), в течение которого будет длиться сессия голосования (по умолчанию 1 минута)
 VOTE_PERIOD 600
 
-## prevents dead players from voting or starting votes
+## Запрещает мертвым игрокам голосовать или начинать голосование
 # NO_DEAD_VOTE
 
-## players' votes default to "No vote" (otherwise,  default to "No change")
+## Для голосов игроков по умолчанию установлено значение "Без голосования" (в противном случае по умолчанию установлено значение "Без изменений").
 # DEFAULT_NO_VOTE
 
+
+###---РЕСПАВН---
 ## Определяет, могут ли игроки возродиться после смерти
 ## 0 = Не могут возродиться (по умолчанию)
 ## 1 = Могут возродиться
@@ -137,66 +151,68 @@ ALLOW_RESPAWN 1
 ## Задержка возрождения (несколько секунд), которая не позволяет вернуться в лобби
 RESPAWN_DELAY 300
 
-## set a hosted by name for unix platforms
+###---ХОСТИНГ---
+## Установите имя хостинга по умолчанию для платформ unix
 HOSTEDBY Rewokin
 
-## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
+###---Что-то про АЙПИ---
+## Раскомментируйте это, чтобы запретить пользователям подключаться к вашему серверу без зарегистрированного ключа ckey. (т.е. все гостевые * заблокированы для подключения)
 GUEST_BAN
-
 ## IPINTEL:
-## This allows you to detect likely proxies by checking ips against getipintel.net
-## Rating to warn at: (0.8 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+## Это позволяет вам определять вероятные прокси-серверы, проверяя ip-адреса на соответствие getipintel.net
+## Рейтинг для предупреждения: (0,8 - это хорошо, 1 - 100% вероятность того, что это спамер / прокси, 0,8 - 80% и т.д.) Все, что равно этому числу или выше, вызывает предупреждение администратора.
 #IPINTEL_RATING_BAD 0.8
-## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
+## Контактный адрес электронной почты (требуется для использования сервиса, оставьте поле пустым или по умолчанию IPINTEL будет отключен)
 #IPINTEL_EMAIL ch@nge.me
-## Query base, if you pay for more queries this is what you want to change.
+## База запросов, если вы платите за большее количество запросов, это то, что вы хотите изменить.
 #IPINTEL_BASE check.getipintel.net
-## Maximum number of queries in a minute
+## Максимальное количество запросов в минуту
 #IPINTEL_MAX_QUERY_MINUTE 15
-## Maximum number of queries in a day
+## Максимальное количество запросов в день
 #IPINTEL_MAX_QUERY_DAY 500
-## Whether clients which cannot be checked due to a rate limit will be denied
+## Будет ли отказано клиентам, которые не могут быть проверены из-за ограничения тарифа
 #IPINTEL_REJECT_RATE_LIMITED
-## Whether clients which are flagged as a VPN will be denied
+## Будет ли отказано в работе клиентам, которые помечены как VPN
 IPINTEL_REJECT_BAD
-## Whether clients which cannot be checked due to an error of some form will be denied
+## Будет ли отказано в работе клиентам, которые не могут быть проверены из-за ошибки той или иной формы
 #IPINTEL_REJECT_UNKNOWN
-## How long to store results in the cache before they must be retrieved again. IN DAYS.
+## Как долго должны храниться результаты в кэше, прежде чем их необходимо будет извлечь снова. В ДНЯХ.
 #IPINTEL_CACHE_LENGTH 7
-## How many minutes of living playtime to be automatically exempt from IPIntel. 0 for never.
+## Сколько минут игрового времени будет автоматически отключено от IPIntel. 0 для значения "никогда".
 #IPINTEL_EXEMPT_PLAYTIME_LIVING 0
 
-## Uncomment to allow web client connections
+## Раскомментируйте, чтобы разрешить подключение к веб-клиенту
 #ALLOW_WEBCLIENT
 
-## Uncomment to restrict web client connections to byond members
-## This makes for a nice pay gate to cut down on ban evading, as the webclient's cid system isn't that great
-## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
+###---Какой-то бред про Подписку бйонд---
+## Раскомментируйте, чтобы ограничить доступ к веб-клиентским подключениям только для пользователей byond
+## Это отличный способ сократить время обхода запрета, поскольку система cid webclient не так уж хороша
+# Стоимость подписки на # byond начинается с 10 долларов в течение 3 месяцев, поэтому, чтобы использовать webclient для уклонения, им придется потратить 10 долларов на каждое уклонение.
 #WEBCLIENT_ONLY_BYOND_MEMBERS
 
-## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
+###---ВЛ---
+## Установлен таким образом, чтобы никто, кроме тех, чьи ключи указаны в config/whitelist.txt и config/admins.txt, не мог подключиться к вашему серверу
 #USEWHITELIST
 
-## The address shown for the game server in the TGS check command
+###---ХАБ---
+## Адрес, указанный для игрового сервера в команде проверки TGS
 # PUBLIC_ADDRESS ss13.example.com:2506
 
-## set a server location for world reboot. Don't include the byond://, just give the address and port.
-## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
-## This is also used to show the server's address in the TGS check command if the public address isn't set
+## Укажите местоположение сервера для world reboot. Не указывайте byond://, просто укажите адрес и порт.
+## Не указывайте это для того же сервера, BYOND автоматически перезапустит игроков на сервер после перезагрузки.
+## Это также используется для отображения адреса сервера в команде проверки TGS, если общедоступный адрес не задан
 SERVER 5.42.211.88:50527
 
+
+###---ССЫЛКИ---
 ## forum address
 # FORUMURL http://tgstation13.org/phpBB/index.php
-
 ## Wiki address
 # WIKIURL http://tgstation13.org/wiki
-
 ## Rules address
 # RULESURL http://tgstation13.org/wiki/Rules
-
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
-
 ## Префикс команды Discord bot, если используется discord bot
 # DISCORDBOTCOMMANDPREFIX
 
@@ -214,81 +230,83 @@ SERVER 5.42.211.88:50527
 ## URL-адрес для подачи апелляций на запрет - обычно для форума или любого другого места, куда люди должны обратиться, чтобы связаться с вашими администраторами.
 # BANAPPEALS https://discord.gg/NxTZeUPtRf
 
-## System command that invokes yt-dlp, used by Play Internet Sound.
-## You can install yt-dlp with
-## "pip install yt-dlp" if you have pip installed
-## from https://github.com/yt-dlp/yt-dlp/releases
-## or your package manager
-## The default value assumes yt-dlp is in your system PATH
+## Системная команда, вызывающая yt-dlp, используемая Play Internet Sound.
+## Вы можете установить yt-dlp с помощью
+## "pip install yt-dlp", если у вас установлен pip
+## с помощью https://github.com/yt-dlp/yt-dlp/releases
+## или вашего менеджера пакетов.
+## Значение по умолчанию предполагает, что yt-dlp находится в вашем системном пути
 # INVOKE_YOUTUBEDL yt-dlp
 
-## Comment this out to disable users ability to use the request internet sounds to be played.
+
+###---СОУНДЫ ИЗ ИНТЕРНЕТА---
+## Прокомментируйте это, чтобы отключить пользователям возможность использовать функцию запроса воспроизведения интернет-звуков.
 REQUEST_INTERNET_SOUND
 
-## Request Internet Sound Allowed URL'S comma separated, urls here are the only sites allowed through Request Internet Sound, Add more to allow more, or remove to disallow.
-## The Defaults here are all supported by yt-dlp
-## Ensure . and / are escaped with \
+## URL-адреса, разрешенные для запроса интернет-звука, указаны через запятую, здесь указаны только URL-адреса сайтов, разрешенных для запроса интернет-звука, Добавьте больше, чтобы разрешить больше, или удалите, чтобы запретить.
+## Все приведенные здесь значения по умолчанию поддерживаются yt-dlp
+## Убедитесь. и / экранируются с помощью \
 REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,bandcamp\.com\/track\/
 
-## In-game features
 
-## Toggle for having jobs load up from the jobconfig.toml (or jobs.txt) file. Will use codebase defaults if commented out.
-## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
-## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
-## Playtime Requirements is in minutes, Required Account Age is in days.
-## Human Authority Whitelist Setting can either be 0 or 1.
-## Make sure to read the start of the file to get a more in-depth explanation of what each entry does!
+###---ОСОБЕННОСТИ ИГРЫ---
+## Включить загрузку заданий из файла jobconfig.toml (или jobs.txt). Будут использоваться значения из кодовой базы по умолчанию, если их не закомментировать.
+## У заданий есть специальные "ключи", привязанные к их внутриигровым параметрам, которые должны быть синхронизированы, в противном случае оно не сможет загрузиться.
+## Установка общего количества позиций/ мест появления на -1 откроет для них неограниченное количество мест для участия.
+## Время игры указано в минутах, возраст учетной записи - в днях.
+## Значение параметра "Белый список" может быть равно 0 или 1.
+## Обязательно прочтите начало файла, чтобы получить более подробное объяснение того, что делает каждая запись!
 #LOAD_JOBS_FROM_TXT
 
-## Uncomment this to forbid admins from possessing the singularity.
-## It is intentional that Admins can edit this config, as its meant to serve as a deterrent/warning for admin abuse.
-## Add a `@` in front to lock admins from editing this.
+## Раскомментируйте это, чтобы запретить администраторам использовать singularity.
+## Это сделано намеренно, чтобы администраторы могли редактировать эту конфигурацию, поскольку она должна служить сдерживающим фактором / предупреждением о злоупотреблениях со стороны администратора.
+## Добавьте "@" впереди, чтобы запретить администраторам редактировать это.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to give admins the ability to send a maptext popup to players.
-## Only fires when an admin requests it, not every ahelp.
+## Раскомментируйте, чтобы дать администраторам возможность отправлять игрокам всплывающее окно с текстом карты.
+## Срабатывает только по запросу администратора, а не при каждой помощи.
 POPUP_ADMIN_PM
 
-## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
+## Прокомментируйте, чтобы разрешить проведение специальных мероприятий с пасхальными яйцами в особые праздничные дни, такие как сезонные каникулы и другие подобные мероприятия, такие как "День пирата" :3 YAARRR
 ALLOW_HOLIDAYS
 
-## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
+## Раскомментируйте, чтобы показать имена администраторов, отправляющих личные сообщения из IRC, вместо того, чтобы показывать их как stealthmin.
 #SHOW_IRC_NAME
 
-## Uncomment to prevent machines syncing to the Science techweb by default.
+## Раскомментируйте, чтобы предотвратить синхронизацию компьютеров с Science techweb по умолчанию.
 #NO_DEFAULT_TECHWEB_LINK
 
-##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
-##	This also controls the client network update rate, as well as the default client fps
+## Определяет временной интервал для всего мира. Временной интервал - это промежуток времени между игровыми тиками (он же byond ticks) (в 1/10 секунды).
+## Это также определяет частоту обновления клиентской сети, а также частоту кадров в секунду, установленную клиентом по умолчанию
 TICKLAG 0.5
 
-##Can also be set as per-second value, the following value is identical to the above.
+## Также может быть установлено значение в секунду, следующее значение идентично приведенному выше.
 FPS 30
 
-## Comment this out to disable automuting
+## Закомментируйте это, чтобы отключить автоматическое отключение
 #AUTOMUTE_ON
 
-## Uncomment this to let players see their own notes (they can still be set by admins only)
+## Раскомментируйте это, чтобы игроки могли видеть свои собственные заметки (они по-прежнему могут быть установлены только администраторами).
 #SEE_OWN_NOTES
 
-### Comment these two out to prevent notes fading out over time for admins.
-## Notes older then this will start fading out.
+## Прокомментируйте эти две записи, чтобы со временем они не стали недоступными для администраторов.
+## Заметки, которые будут старше, начнут исчезать.
 NOTE_FRESH_DAYS 91.31055
-## Notes older then this will be completely faded out.
+## Заметки, более старые, чем эти, будут полностью стерты.
 NOTE_STALE_DAYS 365.2422
 
-## Uncomment to allow drastic performance enhancement measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
+## Раскомментируйте, чтобы разрешить автоматическое включение радикальных мер по повышению производительности при количестве клиентов, равном или превышающем заданное количество (также будет предложено администратору наложить вето).
 #AUTO_LAG_SWITCH_POP 75
 
-##Note: all population caps can be used with each other if desired.
+## Примечание: при желании все ограничения по численности населения можно использовать друг с другом.
 
-## Uncomment for 'soft' population caps, players will be warned while joining if the living crew exceeds the listed number.
+## Не комментируйте "сфот" ограничения по численности, игроки будут предупреждены при регистрации, если количество живых членов команды превысит указанное в списке.
 #SOFT_POPCAP 100
 
-## Message for soft cap
-SOFT_POPCAP_MESSAGE Be warned that the server is currently serving a high number of users, consider using alternative game servers.
+## Сообщение для заполненного сервера
+SOFT_POPCAP_MESSAGE Имейте в виду, что в настоящее время сервер обслуживает большое количество пользователей, поэтому подумайте об использовании альтернативных игровых серверов.
 
-## Uncomment for 'hard' population caps, players will not be allowed to spawn if the living crew exceeds the listed number, though they may still observe or wait for the living crew to decrease in size.
+## Без учета "жестких" ограничений по численности, игрокам не будет разрешено появляться, если численность живой команды превысит указанную в списке, хотя они все равно могут наблюдать или ждать, пока численность живой команды уменьшится.
 #HARD_POPCAP 150
 
 ## Message for hard cap
@@ -340,16 +358,17 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ##Name of the place to send people rejected by the bunker
 #PANIC_SERVER_NAME [Put the name here]
 
-## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
+###----ЛОГИ----
+## Раскомментируйте, чтобы файл журнала изменений автоматически открывался, когда пользователь подключается и не видит последний журнал изменений
 #AGGRESSIVE_CHANGELOG
 
-## Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
+## Прокомментируйте это, если вы использовали sql-процедуру массового преобразования для заметок или хотите прекратить преобразование заметок
 AUTOCONVERT_NOTES
 
-## Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
+## Прокомментируйте это, чтобы остановить отправку сообщений администратора в любое время, когда администратор отключается от раунда игры, вы можете редактировать сообщения в admin.dm
 ANNOUNCE_ADMIN_LOGOUT
 
-## Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
+## Раскомментировать чтобы отправлять сообщения администратору в любое время, когда администратор подключается к раунду игры, вы можете редактировать сообщения в admin.dm
 #ANNOUNCE_ADMIN_LOGIN
 
 ## Map rotation
@@ -384,52 +403,52 @@ AUTOADMIN_RANK Game Master
 #AUTO_DEADMIN_SILICONS
 
 
-## CLIENT VERSION CONTROL
-## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
-## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
-## These messages will be followed by one stating the clients current version and the required version for clarity.
-## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
+### УПРАВЛЕНИЕ ВЕРСИЯМИ КЛИЕНТА
+## Это позволяет вам настроить минимальную требуемую версию клиента, а также версию предупреждения и сообщение для обеих версий.
+## Они срабатывают для любой версии ниже (не включительно) указанной версии, поэтому 510 срабатывает на 509 или ниже.
+## За этими сообщениями последует сообщение с указанием текущей версии клиента и требуемой версии для наглядности.
+## Если CLIENT_WARN_POPUP не прокомментирован, вместо него будет отображено всплывающее окно с сообщением
 #CLIENT_WARN_VERSION 515
 #CLIENT_WARN_BUILD 1635
 #CLIENT_WARN_POPUP
-#CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including image generation for UIs and :: operators.
+#CLIENT_WARN_MESSAGE Byond выпустила 515-ю версию в качестве стабильного релиза. В нее входит множество дополнительных функций, включая создание изображений для пользовательских интерфейсов и :: операторов.
 CLIENT_ERROR_VERSION 515
-CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
-## The minimum build needed for joining the server.
+CLIENT_ERROR_MESSAGE Ваша версия byond не поддерживается. Пожалуйста, обновите ее.
+## Минимальная сборка, необходимая для подключения к серверу.
 CLIENT_ERROR_BUILD 1590
 
-## TOPIC RATE LIMITING
-## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
-## Admins are exempt from these limits.
-## Hitting the minute limit notifies admins.
-## Set to 0 or comment out to disable.
+## ОГРАНИЧЕНИЕ СКОРОСТИ ОБСУЖДЕНИЯ ТЕМ
+## Это позволяет вам ограничить количество вызовов тем (нажатием на окно интерфейса), которые клиент может выполнить за каждую игровую секунду и/или минуту игры.
+## Администраторы освобождены от этих ограничений.
+## Превышение минутного лимита уведомляет администраторов.
+## Установите значение 0 или закомментируйте, чтобы отключить.
 SECOND_TOPIC_LIMIT 10
 
 MINUTE_TOPIC_LIMIT 200
 
 
-## CLICK RATE LIMITING
-## Same as above, but applies to clicking on objects in the game window.
-## This should be a higher then the interface limit to allow for the spam clickly nature of most battles.
-## Admins are exempt from these limits.
-## Hitting the minute limit notifies admins.
-## Set to 0 to disable.
+## ОГРАНИЧЕНИЕ КОЛИЧЕСТВА КЛИКОВ
+## То же, что и выше, но применяется к щелчкам по объектам в игровом окне.
+## Это ограничение должно быть выше, чем ограничение интерфейса, чтобы в большинстве сражений можно было спамить кликами.
+## Администраторы не соблюдают эти ограничения.
+## Превышение минутного лимита уведомляет администраторов.
+## Установите значение 0 для отключения.
 SECOND_CLICK_LIMIT 15
 
 MINUTE_CLICK_LIMIT 400
 
-##Error handling related options
-## The "cooldown" time for each occurrence of a unique error
+##Параметры, связанные с обработкой ошибок
+## Время восстановления для каждого случая уникальной ошибки
 #ERROR_COOLDOWN 600
-## How many occurrences before the next will silence them
+## За сколько раз до следующего появления ошибки будут устранены
 #ERROR_LIMIT 90
-## How long a unique error will be silenced for
+## Как долго будет блокироваться сообщение об уникальной ошибке
 #ERROR_SILENCE_TIME 6000
-##How long to wait between messaging admins about occurrences of a unique error
+##Сколько времени нужно ждать, чтобы администраторы рассылали сообщения о появлении уникальной ошибки
 #ERROR_MSG_DELAY 50
 
 
-## Game Chat Message Options
+## Параметры сообщений игрового чата
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS>=4.
 ## If using TGS>=4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
@@ -452,7 +471,7 @@ MINUTE_CLICK_LIMIT 400
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 #DEBUG_ADMIN_HREFS
 
-###Master Controller High Pop Mode###
+##Master Controller High Pop Mode
 
 ##The Master Controller(MC) is the primary system controlling timed tasks and events in SS13 (lobby timer, game checks, lighting updates, atmos, etc)
 ##Default base MC tick rate (1 = process every "byond tick" (see: tick_lag/fps config settings), 2 = process every 2 byond ticks, etc)
