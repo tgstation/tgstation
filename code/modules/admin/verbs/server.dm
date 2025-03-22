@@ -22,7 +22,12 @@ ADMIN_VERB(toggle_hub, R_SERVER, "Toggle Hub", "Toggles the server's visilibilit
 #define HARDEST_RESTART "Hardest Restart (No actions, just reboot)"
 #define TGS_RESTART "Server Restart (Kill and restart DD)"
 ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.", ADMIN_CATEGORY_SERVER)
-	var/list/options = list(REGULAR_RESTART, REGULAR_RESTART_DELAYED, HARD_RESTART, HARDEST_RESTART)
+	var/list/options = list(REGULAR_RESTART, REGULAR_RESTART_DELAYED, HARD_RESTART)
+
+	// this option runs a codepath that can leak db connections because it skips subsystem (specifically SSdbcore) shutdown
+	if(!SSdbcore.IsConnected())
+		options += HARDEST_RESTART
+
 	if(world.TgsAvailable())
 		options += TGS_RESTART;
 
