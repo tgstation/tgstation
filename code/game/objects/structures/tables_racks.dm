@@ -109,9 +109,9 @@
 /obj/structure/table/proc/flip_table(new_dir)
 	playsound('sound/items/trayhit/trayhit1.ogg', 100)
 	RemoveElement(/datum/element/climbable)
-	RemoveElement(/datum/element/elevation, pixel_shift = 12)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
+	RemoveElement(/datum/element/elevation, pixel_shift = 12)
 
 	//change icons
 	layer = LOW_ITEM_LAYER
@@ -123,6 +123,12 @@
 	if(new_dir == SOUTH)
 		layer = ABOVE_MOB_LAYER
 
+	var/turf/throw_target = get_step(src, src.dir)
+	if(!isnull(throw_target))
+		for(var/atom/movable/movable_entity in src.loc)
+			if(is_able_to_throw(src, movable_entity))
+				movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+
 	smoothing_flags &= ~SMOOTH_BITMASK
 	smoothing_groups = null
 	canSmoothWith = null
@@ -132,12 +138,6 @@
 	update_appearance()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	is_flipped = TRUE
-
-	var/turf/throw_target = get_step(src, src.dir)
-	if (!isnull(throw_target))
-		for (var/atom/movable/movable_entity in src.loc)
-			if(is_able_to_throw(src, movable_entity))
-				movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -278,6 +278,7 @@
 			return
 
 		flip_table(get_dir(user, src))
+
 		return
 
 	else
@@ -293,7 +294,7 @@
 		return FALSE
 	if(!isliving(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
 		return FALSE
-	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING)) || HAS_TRAIT(movable_entity, TRAIT_MOB_ELEVATED)) //Thing isn't flying/floating
+	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING)) || HAS_TRAIT(movable_entity, TRAIT_IGNORE_ELEVATION)) //Thing isn't flying/floating
 		return FALSE
 
 	return TRUE
