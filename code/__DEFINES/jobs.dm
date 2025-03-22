@@ -97,7 +97,7 @@
 #define JOB_MIME "Мима"
 #define JOB_CURATOR "Куратор"
 #define JOB_LAWYER "Адвокат"
-#define JOB_CHAPLAIN "Капеллан"
+#define JOB_CHAPLAIN "Священник"
 #define JOB_PSYCHOLOGIST "Психолог"
 #define JOB_PUN_PUN "Pun Pun"
 //ERTs
