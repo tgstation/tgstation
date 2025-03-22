@@ -192,6 +192,9 @@
 
 /obj/item/fish/dolphish/do_fish_process(seconds_per_tick)
 	. = ..()
+	if(QDELETED(src))
+		return
+
 	var/patience_reduction = 1
 
 	var/turf/onturf = get_turf(loc)

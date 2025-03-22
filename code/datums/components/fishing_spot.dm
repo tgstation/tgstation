@@ -82,6 +82,6 @@
 		var/obj/machinery/fishing_portal_generator/portal = tool.buffer
 		return portal.link_fishing_spot(fish_source, source, user)
 
-/datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+/datum/component/fishing_spot/proc/fish_released(atom/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
-	fish_source.readd_fish(fish, releaser)
+	fish_source.readd_fish(source, fish, releaser)
