@@ -614,6 +614,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	name = "Anxiety"
 	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
 
+/datum/fish_trait/anxiety/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
+	. = ..()
+	// Anxious fish are easier with a cloaked line.
+	if(rod.line && (rod.line.fishing_line_traits & FISHING_LINE_CLOAKED))
+		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
+
 /datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))

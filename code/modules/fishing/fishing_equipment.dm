@@ -44,7 +44,7 @@
 	desc = "Even harder to notice than the common variety."
 	icon_state = "reel_white"
 	fishing_line_traits = FISHING_LINE_CLOAKED
-	line_color = "#82cfdd"
+	line_color = "#82cfdd20" //low alpha channel value, harder to see.
 	wiki_desc = "Fishing anxious and wary fish will be easier with this equipped."
 
 /obj/item/fishing_line/bouncy
@@ -87,8 +87,8 @@
 	icon_state = "reel_auto"
 	fishing_line_traits = FISHING_LINE_AUTOREEL
 	line_color = "#F88414"
-	wiki_desc = "Automatically starts the minigame once the fish bites the bait. It also spin fishing lures for you without needing an input. \
-		It can also be used to snag in objects from a distance more rapidly.<br>\
+	wiki_desc = "Automatically starts the minigame and helps guide the bait a little. It also spin fishing lures for you without need of an input. \
+		It can also be used to snag in objects from a distance and throw them in your direction.<br>\
 		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 
 /obj/item/fishing_line/auto_reel/Initialize(mapload)
