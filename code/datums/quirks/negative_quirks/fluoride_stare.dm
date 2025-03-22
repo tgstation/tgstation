@@ -28,7 +28,7 @@
 
 /datum/quirk/item_quirk/fluoride_stare/add(client/client_source)
 	ADD_TRAIT(quirk_holder, TRAIT_NO_EYELIDS, QUIRK_TRAIT)
-	quirk_holder.AddComponent(/datum/component/manual_blinking, 1, 30 SECONDS, 10 SECONDS, FALSE)
+	quirk_holder.AddComponent(/datum/component/manual_blinking, 0.5, 1800 SECONDS, 60 SECONDS, FALSE) // DOPPLER EDIT - half dmg, 30s to 30m inbetween, 10s to 60s grace
 
 /datum/quirk/item_quirk/fluoride_stare/remove()
 	REMOVE_TRAIT(quirk_holder, TRAIT_NO_EYELIDS, QUIRK_TRAIT)
