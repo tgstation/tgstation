@@ -62,7 +62,7 @@
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
-	carbon_target.mob_mood.set_sanity(carbon_target.mob_mood.sanity-30)
+	carbon_target.mob_mood.adjust_sanity(-30)
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
@@ -134,7 +134,7 @@
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
-	target.mob_mood.set_sanity(target.mob_mood.sanity - 10)
+	target.mob_mood.adjust_sanity(-10)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
@@ -234,7 +234,6 @@
 	)
 
 	for(var/mob/living/carbon/carbon_view in view(5, source))
-		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(carbon_view.stat != CONSCIOUS)
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
@@ -243,11 +242,13 @@
 			continue
 		new moon_effect(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
+		carbon_view.mob_mood.adjust_sanity(-5)
+		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(carbon_sanity < 30)
 			if(SPT_PROB(20, seconds_per_tick))
 				to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
 			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+
 		if(carbon_sanity < 10)
 			if(SPT_PROB(20, seconds_per_tick))
 				to_chat(carbon_view, span_warning("it echoes through you!"))
