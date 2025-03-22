@@ -31,6 +31,7 @@
 		return
 	var/mob/mob_jaunter = jaunter
 	position_indicator = image(phased_mob_icon, src, phased_mob_icon_state, ABOVE_LIGHTING_PLANE)
+	position_indicator.appearance_flags |= RESET_ALPHA
 	SET_PLANE_EXPLICIT(position_indicator, ABOVE_LIGHTING_PLANE, src)
 	RegisterSignal(mob_jaunter, COMSIG_MOB_LOGIN, PROC_REF(show_client_image))
 	RegisterSignal(mob_jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
