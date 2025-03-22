@@ -710,7 +710,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/req_players = MAFIA_MAX_PLAYER_COUNT
 	var/list/setup = custom_setup
 	if(length(setup))
-		req_players = assoc_value_sum(setup)
+		req_players = counterlist_sum(setup)
 
 	var/list/filtered_keys_and_pdas = filter_players(req_players)
 

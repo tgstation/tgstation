@@ -60,6 +60,8 @@
 	var/charge_drain = DEFAULT_CHARGE_DRAIN
 	/// Slowdown of the MOD when all of its pieces are deployed.
 	var/slowdown_deployed = 0.75
+	/// Have we had a speed potion applied to us?
+	var/prevent_slowdown = FALSE
 	/// How long this MOD takes each part to seal.
 	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Extended description of the theme.
@@ -684,9 +686,18 @@
 	wearer.update_spacesuit_hud_icon(state_to_use || "0")
 
 /obj/item/mod/control/proc/update_speed()
-	for(var/obj/item/part as anything in get_parts(all = TRUE))
-		part.slowdown = slowdown_deployed / length(mod_parts)
-		var/datum/mod_part/part_datum = get_part_datum(part)
+	var/total_slowdown = 0
+	if (!prevent_slowdown)
+		total_slowdown += slowdown_deployed
+
+	var/list/module_slowdowns = list()
+	SEND_SIGNAL(src, COMSIG_MOD_UPDATE_SPEED, module_slowdowns, prevent_slowdown)
+	for (var/module_slow in module_slowdowns)
+		total_slowdown += module_slow
+
+	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
+		var/obj/item/part = part_datum.part_item
+		part.slowdown = total_slowdown / length(mod_parts)
 		if (!part_datum.sealed)
 			part.slowdown = max(part.slowdown, 0)
 	wearer?.update_equipment_speed_mods()
@@ -747,15 +758,17 @@
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(slowdown_deployed <= 0)
+	if(prevent_slowdown)
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
 		return SPEED_POTION_STOP
+
 	if(active)
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
+
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
 	set_mod_color(color_transition_filter(COLOR_RED))
-	slowdown_deployed = 0
+	prevent_slowdown = TRUE
 	update_speed()
 	qdel(speed_potion)
 	return SPEED_POTION_STOP

@@ -61,15 +61,24 @@
 	/// A list of traits to add to the wearer when we're active (see: Magboots)
 	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
 
+/obj/item/mod/module/magboot/on_install()
+	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
+
+/obj/item/mod/module/magboot/on_uninstall(deleting)
+	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
+
 /obj/item/mod/module/magboot/on_activation()
 	mod.wearer.add_traits(active_traits, REF(src))
-	mod.slowdown += slowdown_active
-	mod.wearer.update_equipment_speed_mods()
+	mod.update_speed()
 
 /obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_traits(active_traits, REF(src))
-	mod.slowdown -= slowdown_active
-	mod.wearer.update_equipment_speed_mods()
+	mod.update_speed()
+
+/obj/item/mod/module/magboot/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
+	SIGNAL_HANDLER
+	if (!prevent_slowdown && active)
+		module_slowdowns += slowdown_active
 
 /obj/item/mod/module/magboot/advanced
 	name = "MOD advanced magnetic stability module"

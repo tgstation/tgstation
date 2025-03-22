@@ -912,7 +912,7 @@
 		return ITEM_INTERACT_SUCCESS
 	if(isitem(interacting_with))
 		var/obj/item/apply_to = interacting_with
-		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW))
+		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW) || HAS_TRAIT(apply_to, TRAIT_NO_SPEED_POTION))
 			if(interacting_with.atom_storage)
 				return NONE // lets us put the potion in the bag
 			to_chat(user, span_warning("[apply_to] can't be made any faster!"))

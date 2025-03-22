@@ -18,17 +18,15 @@
 	mask_worn_overlay = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
-	/// Speed added to the control unit.
-	var/speed_added = 0.5
-	/// Speed that we actually added.
-	var/actual_speed_added = 0
+	/// Slowdown added to the control unit while this module is disabled
+	var/space_slowdown = 0.5
 	/// Armor values added to the suit parts.
 	var/datum/armor/armor_mod = /datum/armor/mod_module_armor_boost
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/no_speedbost
-	speed_added = 0
+	space_slowdown = 0
 
 /datum/armor/mod_module_armor_boost
 	melee = 25
@@ -37,36 +35,37 @@
 	energy = 15
 
 /obj/item/mod/module/armor_booster/on_part_activation()
+	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_part_deactivation(deleting = FALSE)
 	if(deleting)
 		return
+	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = initial(head_cover.flash_protect)
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_activation()
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(mod.wearer, "armor boosted, EVA lost")
-	actual_speed_added = max(0, min(mod.slowdown_deployed, speed_added))
 	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
 	if(head_cover)
 		RegisterSignal(mod, COMSIG_MOD_PART_SEALED, PROC_REF(seal_helmet))
 		seal_helmet(mod, head_cover)
-	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
-		part.slowdown -= speed_added / length(mod_parts)
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
 		var/obj/item/clothing/clothing_part = part
 		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
-	mod.wearer.update_equipment_speed_mods()
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
@@ -76,17 +75,20 @@
 	if(head_cover)
 		UnregisterSignal(mod, COMSIG_MOD_PART_SEALED)
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
-	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
-		part.slowdown += speed_added / length(mod_parts)
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-	mod.wearer.update_equipment_speed_mods()
+	mod.update_speed()
 	spaceproofed = list()
+
+/obj/item/mod/module/armor_booster/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
+	SIGNAL_HANDLER
+	if (!active)
+		module_slowdowns += space_slowdown
 
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
