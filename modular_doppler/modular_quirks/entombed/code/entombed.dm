@@ -135,6 +135,7 @@
 				modsuit.icon = modular_icon_files[modsuit.skin]
 				modsuit.worn_icon = modular_worn_files[modsuit.skin]
 	install_racial_features()
+	install_skin_features(modsuit_skin)
 
 	//transfer as many items across from our dropped backslot as we can. do this last incase something breaks
 	if (force_dropped_items)
@@ -174,6 +175,20 @@
 	if (human_holder.get_quirk(/datum/quirk/paraplegic))
 		var/obj/item/mod/module/anomaly_locked/antigrav/entombed/ambulator = new
 		modsuit.install(ambulator, human_holder)
+
+/datum/quirk/equipping/entombed/proc/install_skin_features(modsuit_skin)
+	// adds non-functional visual equivalents of modules to skins that should have them
+	if (!modsuit)
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if (modsuit_skin == "Loader")
+		var/obj/item/mod/module/visual_dummy/hydraulic/loader = new
+		modsuit.install(loader, human_holder)
+	else if (modsuit_skin == "Elite")
+		var/obj/item/mod/module/visual_dummy/armor_booster/elite = new
+		modsuit.install(elite, human_holder)
 
 /datum/quirk_constant_data/entombed
 	associated_typepath = /datum/quirk/equipping/entombed

@@ -155,3 +155,41 @@
 	. = ..()
 	// we do this so that in the rare event that someone gets gibbed/destroyed, their suit can be retrieved easily w/o requiring admin intervention
 	REMOVE_TRAIT(src, TRAIT_NODROP, QUIRK_TRAIT)
+
+// VISUAL MODULES
+// this is a set of integrated dummy modules to allow specific visual variants to have their characteristic equipment sprites
+
+/obj/item/mod/module/visual_dummy
+	name = "MOD dummy module"
+	desc = "You're not quite certain what this is supposed to do."
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	icon_state = "module"
+	removable = FALSE
+	use_mod_colors = TRUE
+
+/obj/item/mod/module/visual_dummy/hydraulic
+	name = "MOD barebones auxiliary arms module"
+	desc = "A pair of questionably useful arms hooked up to central control systems. \
+		They get in the way so often that there's no practical benefit from having them, \
+		so they're most likely just installed for aesthetic purposes."
+	icon_state = "launch_loader"
+	module_type = MODULE_TOGGLE
+	overlay_state_inactive = "module_hydraulic"
+	overlay_state_active = "module_hydraulic_active"
+
+/obj/item/mod/module/visual_dummy/armor_booster
+	name = "MOD plating adjustment module"
+	desc = "A set of retractable external plates around the user's helmet. \
+		While some military suits use tech like this for armor and other combat functionality, \
+		these are just installed for aesthetic purposes."
+	icon_state = "armor_booster"
+	module_type = MODULE_TOGGLE
+	overlay_state_inactive = "module_armorbooster_off"
+	overlay_state_active = "module_armorbooster_on"
+	mask_worn_overlay = TRUE
+
+/obj/item/mod/module/visual_dummy/armor_booster/generate_worn_overlay(mutable_appearance/standing)
+	// mirrored here to allow this to properly apply visual states
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
+	return ..()
