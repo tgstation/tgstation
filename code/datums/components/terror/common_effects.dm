@@ -42,20 +42,6 @@
 	if (terror_buildup > TERROR_BUILDUP_TERROR || SPT_PROB(1 + FEAR_SCALING(4, TERROR_BUILDUP_FEAR, TERROR_BUILDUP_TERROR), seconds_per_tick))
 		owner.adjust_stutter_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
 
-/// Low chance to vomit when terrified, increases significantly during panic attacks
-/datum/terror_handler/vomiting
-	handler_type = TERROR_HANDLER_EFFECT
-
-/datum/terror_handler/vomiting/tick(seconds_per_tick, terror_buildup)
-	. = ..()
-	if (terror_buildup < TERROR_BUILDUP_TERROR)
-		return
-
-	if (SPT_PROB((terror_buildup >= TERROR_BUILDUP_PANIC) ? 3 : 1, seconds_per_tick))
-		to_chat(owner, span_warning("You feel sick..."))
-		// Vomit blood if we're *really* freaking out
-		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), terror_buildup >= TERROR_BUILDUP_PASSIVE_MAXIMUM), 5 SECONDS)
-
 /// Can randomly give you some oxyloss, and cause a heart attack past TERROR_BUILDUP_HEART_ATTACK
 /datum/terror_handler/heart_problems
 	handler_type = TERROR_HANDLER_EFFECT
@@ -87,5 +73,19 @@
 	heart_attack.stage_prob = 2 //Advances twice as fast
 	owner.ForceContractDisease(heart_attack)
 	owner.Unconscious(20 SECONDS)
+
+/// Low chance to vomit when terrified, increases significantly during panic attacks
+/datum/terror_handler/vomiting
+	handler_type = TERROR_HANDLER_EFFECT
+
+/datum/terror_handler/vomiting/tick(seconds_per_tick, terror_buildup)
+	. = ..()
+	if (terror_buildup < TERROR_BUILDUP_TERROR)
+		return
+
+	if (SPT_PROB((terror_buildup >= TERROR_BUILDUP_PANIC) ? 3 : 1, seconds_per_tick))
+		to_chat(owner, span_warning("You feel sick..."))
+		// Vomit blood if we're *really* freaking out
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), terror_buildup >= TERROR_BUILDUP_PASSIVE_MAXIMUM), 5 SECONDS)
 
 #undef FEAR_SCALING
