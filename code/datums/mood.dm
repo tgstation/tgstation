@@ -549,7 +549,7 @@
 			sanity_level = SANITY_LEVEL_GREAT
 
 	// Crazy or insane = add some uncommon hallucinations
-	if(sanity_level >= SANITY_CRAZY)
+	if(sanity_level >= SANITY_LEVEL_CRAZY)
 		mob_parent.apply_status_effect(/datum/status_effect/hallucination/sanity)
 	else
 		mob_parent.remove_status_effect(/datum/status_effect/hallucination/sanity)
