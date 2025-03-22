@@ -243,6 +243,21 @@
 			return
 		to_chat(usr, href_list["printlawtext"])
 
+	if(href_list["track"])
+		if(!can_track(href_list["track"]))
+			to_chat(src, span_info("This person is not currently on cameras."))
+			return
+		var/mob/living/silicon/ai/AI
+		var/mob/living/silicon/robot/shell/shell
+		if(!isAI(src))
+			shell = src
+			AI = shell.mainframe
+			AI.deployed_shell.undeploy()
+		else
+			AI = src
+
+		AI.ai_tracking_tool.track_name(src, href_list["track"])
+
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)

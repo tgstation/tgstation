@@ -61,6 +61,7 @@
 		var/obj/item/borg/upgrade/ai/board = new(src)
 		make_shell(board)
 		add_to_upgrades(board)
+		ADD_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, INNATE_TRAIT)
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
