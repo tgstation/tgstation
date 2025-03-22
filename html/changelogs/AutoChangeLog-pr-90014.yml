@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Made fish traits inheritability easier. They're now guaranteed to be passed down to offsprings if both parents have them."

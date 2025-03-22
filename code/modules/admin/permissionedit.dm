@@ -471,7 +471,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 		admin_holder.rank_flags(),
 		350,
 		590,
-		allowed_edit_list = usr.client.holder.can_edit_rights_flags(),
+		allowed_edit_flags = usr.client.holder.can_edit_rights_flags(),
 	)
 
 	admin_holder.disassociate()

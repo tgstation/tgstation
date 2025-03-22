@@ -96,7 +96,7 @@
 			their_loadout = manager.preferences.read_preference(/datum/preference/loadout) // after sleep: sanity check
 			if(their_loadout?[item_path]) // Validate they still have it equipped
 				their_loadout[item_path][INFO_LAYER] = chosen
-				manager.preferences.update_preference(/datum/preference/loadout, their_loadout)
+				manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], their_loadout)
 			return TRUE // Update UI
 
 		if("select_lipstick_color")
@@ -106,7 +106,7 @@
 			their_loadout = manager.preferences.read_preference(/datum/preference/loadout) // after sleep: sanity check
 			if(their_loadout?[item_path]) // Validate they still have it equipped
 				their_loadout[item_path][INFO_GREYSCALE] = chosen
-				manager.preferences.update_preference(/datum/preference/loadout, their_loadout)
+				manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], their_loadout)
 			return TRUE // Update UI
 
 	return ..()
@@ -252,6 +252,10 @@
 /datum/loadout_item/pocket_items/poster_pinup
 	name = "Poster (Pinup)"
 	item_path = /obj/item/poster/random_contraband/pinup
+
+/datum/loadout_item/pocket_items/holodisk
+	name = "Holodisk"
+	item_path = /obj/item/disk/holodisk
 
 // The wallet loadout item is special, and puts the player's ID and other small items into it on initialize (fancy!)
 /datum/loadout_item/pocket_items/wallet

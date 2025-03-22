@@ -354,7 +354,7 @@
 			if(0 to NUTRITION_LEVEL_STARVING)
 				msg += "[span_boldwarning("I'm starving!")]<br>"
 
-	var/drunkness = mob_parent.get_timed_status_effect_duration(/datum/status_effect/inebriated)
+	var/drunkness = mob_parent.get_drunk_amount()
 	if(drunkness >= 1)
 		msg += span_notice("My current drunkenness: ")
 		switch(drunkness)

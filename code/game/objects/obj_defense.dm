@@ -133,6 +133,8 @@
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
+	if(QDELETED(src)) // take_damage() can send our obj to an early grave, let's stop here if that happens
+		return
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
 		SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)

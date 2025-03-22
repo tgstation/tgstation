@@ -17,7 +17,7 @@
 	if(!iscarbon(quirk_holder))
 		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
-	
+
 	// Setup our special RDS mild hallucination.
 	// Not a unique subtype so not to plague subtypesof,
 	// also as we inherit the names and values from our quirk.
@@ -28,6 +28,7 @@
 	added_trauma.scan_desc = LOWER_TEXT(name)
 	added_trauma.gain_text = null
 	added_trauma.lose_text = null
+	added_trauma.uncapped = client_source?.prefs?.read_preference(/datum/preference/toggle/rds_limit)
 
 	carbon_quirk_holder.gain_trauma(added_trauma)
 	added_trama_ref = WEAKREF(added_trauma)
@@ -39,3 +40,7 @@
 
 /datum/quirk/insanity/remove()
 	QDEL_NULL(added_trama_ref)
+
+/datum/quirk_constant_data/rds_limit
+	associated_typepath = /datum/quirk/insanity
+	customization_options = list(/datum/preference/toggle/rds_limit)
