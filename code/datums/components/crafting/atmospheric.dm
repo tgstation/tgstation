@@ -45,13 +45,6 @@
 /datum/crafting_recipe/spec_pipe/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
 
-/datum/crafting_recipe/spec_pipe/on_craft_completion(mob/user, atom/result)
-	var/obj/item/pipe/crafted_pipe = result
-	crafted_pipe.pipe_type = pipe_type
-	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(user.dir)
-	crafted_pipe.update()
-
 /datum/crafting_recipe/spec_pipe/layer_adapter
 	name = "Layer manifold fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
