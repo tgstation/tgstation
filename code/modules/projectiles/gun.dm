@@ -291,11 +291,11 @@
 	return NONE
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!can_hold_up || !isliving(interacting_with))
-		return interact_with_atom(interacting_with, user, modifiers)
-
 	if(user.combat_mode && isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
+
+	if(!can_hold_up || !isliving(interacting_with))
+		return interact_with_atom(interacting_with, user, modifiers)
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)

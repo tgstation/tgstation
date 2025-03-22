@@ -1,27 +1,16 @@
 /// Caused by dirty food. Makes you vomit stars.
-/datum/disease/advance/nebula_nausea
+/datum/disease/nebula_nausea
 	name = "Nebula Nausea"
 	desc = "You can't contain the colorful beauty of the cosmos inside."
 	form = "Condition"
 	agent = "Stars"
+	cure_text = "Space Cleaner"
 	cures = list(/datum/reagent/space_cleaner)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_MEDIUM
 	required_organ = ORGAN_SLOT_STOMACH
 	max_stages = 5
-
-/datum/disease/advance/nebula_nausea/New()
-	symptoms = list(new/datum/symptom/vomit/nebula)
-	..()
-
-/datum/disease/advance/nebula_nausea/generate_cure()
-	cures = list(pick(cures))
-	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
-	cure_text = cure.name
-
-/datum/disease/advance/nebula_nausea/GetDiseaseID()
-	return "[type]"
 
 /datum/disease/advance/nebula_nausea/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -41,3 +30,5 @@
 		if(5)
 			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
 				to_chat(affected_mob, span_warning("Your stomach has become a turbulent nebula, swirling with kaleidoscopic patterns."))
+			else
+				affected_mob.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), vomit_type = /obj/effect/decal/cleanable/vomit/nebula, lost_nutrition = 10, distance = 2)
