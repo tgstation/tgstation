@@ -112,6 +112,9 @@
 		create_moth_snack()
 	moth_snack.attack(target, user, params)
 
+/obj/item/clothing/click_ctrl_shift(mob/user)
+	toggle_hair_mask()
+
 /// Creates a food object in null space which we can eat and imagine we're eating this pair of shoes
 /obj/item/clothing/proc/create_moth_snack()
 	moth_snack = new
@@ -349,6 +352,9 @@
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
+
+	if(hair_mask)
+		. += span_notice("Ctrl-Shift-click to toggle hiding hair on the character.")
 
 	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")

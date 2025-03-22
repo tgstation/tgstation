@@ -15,7 +15,7 @@
 				hair_hidden = TRUE
 			if(worn_item.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
-			if(worn_item.hair_mask)
+			if(worn_item.hair_mask && worn_item.hair_mask_enabled)
 				LAZYSET(hair_masks, worn_item.hair_mask, TRUE)
 		//invisibility and husk stuff
 		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))

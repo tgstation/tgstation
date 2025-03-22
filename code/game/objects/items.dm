@@ -132,6 +132,8 @@
 	///Name of a mask in icons\mob\human\hair_masks.dmi to apply to hair when this item is worn
 	///Used by certain hats to give the appearance of squishing down tall hairstyles without hiding the hair completely
 	var/hair_mask = ""
+	///Variable that indicates if hair_mask should be applied
+	var/hair_mask_enabled = TRUE
 
 	///flags for what should be done when you click on the item, default is picking it up
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
@@ -2037,3 +2039,16 @@
 		target_limb = victim.get_bodypart(target_limb) || victim.bodyparts[1]
 
 	return get_embed()?.embed_into(victim, target_limb)
+
+/// Toggles whether hair_mask should be applied to the character
+/obj/item/proc/toggle_hair_mask(toggle = null)
+	if(!hair_mask)
+		return
+
+	if(toggle != null)
+		if(toggle != hair_mask_enabled)
+			hair_mask_enabled = toggle
+		else
+			return
+	else
+		hair_mask_enabled = !hair_mask_enabled
