@@ -52,6 +52,11 @@ map wawastation
 	minplayers 40
 endmap
 
+map hotmeta
+	votable
+	min players 25
+endmap
+
 # Debug-only maps.
 
 map gateway_test
