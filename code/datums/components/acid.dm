@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/acid.dmi', "default"))
+GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/acid.dmi', "default", appearance_flags = RESET_COLOR|KEEP_APART))
 
 /**
  * Component representing acid applied to an object.
