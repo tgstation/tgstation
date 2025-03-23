@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "storages are no longer initialized with items that can't be put back in after taking them out"
+  - refactor: "storage initialization has been refactored. Please report bugs on github"

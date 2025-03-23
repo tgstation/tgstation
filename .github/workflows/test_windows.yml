@@ -1,0 +1,29 @@
+name: Test Windows
+
+on:
+  workflow_call:
+    inputs:
+      max_required_byond_client:
+        required: true
+        type: string
+
+jobs:
+  test_windows:
+    runs-on: windows-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
+        with:
+          restore-yarn-cache: true
+      - name: Compile
+        run: pwsh tools/ci/build.ps1
+        env:
+          DM_EXE: "C:\\byond\\bin\\dm.exe"
+      - name: Check client Compatibility
+        uses: tgstation/byond-client-compatibility-check@v3
+        with:
+          dmb-location: tgstation.dmb
+          max-required-client-version: ${{inputs.max_required_byond_client}}

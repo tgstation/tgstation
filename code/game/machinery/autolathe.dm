@@ -38,7 +38,7 @@
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
-		MATCONTAINER_EXAMINE, \
+		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
 	)
 	. = ..()
@@ -446,7 +446,7 @@
 		span_hear("You hear the chatter of a floppy drive."))
 	busy = TRUE
 
-	if(do_after(user, 1.5 SECONDS, target = src))
+	if(!do_after(user, 1.5 SECONDS, target = src))
 		busy = FALSE
 		update_static_data_for_all_viewers()
 		balloon_alert(user, "interrupted!")
