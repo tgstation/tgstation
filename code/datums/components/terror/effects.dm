@@ -10,6 +10,9 @@
 
 /datum/terror_handler/jittering/tick(seconds_per_tick, terror_buildup)
 	. = ..()
+	if (owner.stat >= UNCONSCIOUS)
+		return
+
 	if (terror_buildup < TERROR_BUILDUP_FEAR)
 		return
 
@@ -36,6 +39,9 @@
 
 /datum/terror_handler/stuttering/tick(seconds_per_tick, terror_buildup)
 	. = ..()
+	if (owner.stat >= UNCONSCIOUS)
+		return
+
 	if (terror_buildup < TERROR_BUILDUP_FEAR)
 		return
 
@@ -50,6 +56,9 @@
 
 /datum/terror_handler/heart_problems/tick(seconds_per_tick, terror_buildup)
 	. = ..()
+	if (owner.stat >= UNCONSCIOUS)
+		return
+
 	if (terror_buildup < TERROR_BUILDUP_FEAR)
 		return
 
@@ -80,6 +89,9 @@
 
 /datum/terror_handler/vomiting/tick(seconds_per_tick, terror_buildup)
 	. = ..()
+	if (owner.stat >= UNCONSCIOUS)
+		return
+
 	if (terror_buildup < TERROR_BUILDUP_TERROR)
 		return
 
@@ -104,11 +116,18 @@
 	breath_loop = new(owner, _direct = TRUE)
 
 /datum/terror_handler/panic/Destroy(force)
+	owner.remove_fov_trait(type, FOV_270_DEGREES)
 	QDEL_NULL(breath_loop)
 	return ..()
 
 /datum/terror_handler/panic/tick(seconds_per_tick, terror_buildup)
 	. = ..()
+	if (owner.stat >= UNCONSCIOUS)
+		active_attack = FALSE
+		active = FALSE
+		owner.remove_fov_trait(type, FOV_270_DEGREES)
+		return
+
 	if (terror_buildup < TERROR_BUILDUP_PANIC)
 		if (active_attack) // No you don't
 			return TERROR_BUILDUP_PANIC - terror_buildup
