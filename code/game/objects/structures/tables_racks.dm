@@ -55,8 +55,12 @@
 		apply_stack_properties(stack_used)
 
 	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
-	if(!is_flipped)
-		unflip_table()
+	if(can_flip)
+		if(!is_flipped)
+			unflip_table()
+		else
+			flip_table()
+
 	var/static/list/loc_connections = list(
 		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
@@ -734,7 +738,7 @@
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
-	icon_state = "fancy_table"
+	icon_state = "fancy_table-0"
 	base_icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
