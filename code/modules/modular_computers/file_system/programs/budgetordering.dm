@@ -261,7 +261,7 @@
 					return
 
 			if(id_card)
-				if(id_card.registered_account && id_card.registered_account?.account_job && )
+				if(id_card.registered_account && id_card.registered_account?.account_job) //Might need an extra condition
 					var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 					var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Department", "[personal_department.account_holder]"))
 					if(!choice)
