@@ -27,14 +27,6 @@ jobs:
     name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v4
       - name: Setup database

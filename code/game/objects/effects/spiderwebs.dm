@@ -32,8 +32,8 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
 	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
 	base_icon_state = "stickyweb"
 	icon_state = "stickyweb-0"
@@ -248,8 +248,8 @@
 /obj/structure/spider/spikes
 	name = "web spikes"
 	desc = "Silk hardened into small yet deadly spikes."
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
 	icon = 'icons/obj/smooth_structures/stickyweb_spikes.dmi'
 	base_icon_state = "stickyweb_spikes"
 	icon_state = "stickyweb_spikes-0"
@@ -275,6 +275,6 @@
 
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+	fade_into_nothing(1 MINUTES)
 
 #undef SPIDER_WEB_TINT

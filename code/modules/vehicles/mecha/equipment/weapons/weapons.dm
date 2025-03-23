@@ -167,12 +167,12 @@
 
 //Exosuit-mounted kinetic accelerator
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
-	equip_cooldown = 10
 	name = "Exosuit Proto-kinetic Accelerator"
 	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
 	icon_state = "mecha_kineticgun"
 	energy_drain = 30
 	projectile = /obj/projectile/kinetic/mech
+	equip_cooldown = 1.6 SECONDS
 	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING

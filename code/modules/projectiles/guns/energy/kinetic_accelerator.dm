@@ -263,16 +263,19 @@
 //mecha_kineticgun version of the projectile
 /obj/projectile/kinetic/mech
 	range = 5
-	damage = 80
+	damage = 50
+	//the multiplier we apply to our PKa's AOE effect.
+	var/aoe_damage_multiplier = 0.3
 
 /obj/projectile/kinetic/mech/strike_thing(atom/target)
 	. = ..()
-	new /obj/effect/temp_visual/explosion/fast(target)
-	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, target) - target)
-		mineral_turf.gets_drilled(firer, TRUE)
+	new /obj/effect/temp_visual/explosion/fast(get_turf(target))
+
 	for(var/mob/living/living_mob in range(1, target) - firer - target)
+		if(!ismining(living_mob))
+			continue
 		var/armor = living_mob.run_armor_check(def_zone, armor_flag, armour_penetration = armour_penetration)
-		living_mob.apply_damage(damage, damage_type, def_zone, armor)
+		living_mob.apply_damage(damage*aoe_damage_multiplier, damage_type, def_zone, armor)
 		to_chat(living_mob, span_userdanger("You're struck by a [name]!"))
 
 //Modkits
@@ -388,10 +391,10 @@
 
 // Recalculate recharge time after adding or removing cooldown mods.
 /obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-	
+
 	var/new_recharge_time = initial(KA.recharge_time)
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-		if(istype(modkit_upgrade, src))	
+		if(istype(modkit_upgrade, src))
 			new_recharge_time -= modifier
 
 	return new_recharge_time

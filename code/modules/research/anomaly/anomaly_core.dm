@@ -83,6 +83,11 @@
 	icon_state = "dimensional_core"
 	anomaly_type = /obj/effect/anomaly/dimensional
 
+/obj/item/assembly/signaler/anomaly/dimensional/Initialize(mapload)
+	. = ..()
+	var/static/list/recipes = list(/datum/crafting_recipe/dimensional_bombcore)
+	AddElement(/datum/element/slapcrafting, recipes)
+
 /obj/item/assembly/signaler/anomaly/ectoplasm
 	name = "\improper ectoplasm anomaly core"
 	desc = "The neutralized core of an ectoplasmic anomaly. When you hold it close, you can hear faint murmuring from inside. It'd probably be valuable for research."

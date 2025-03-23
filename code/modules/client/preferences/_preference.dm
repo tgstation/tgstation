@@ -325,23 +325,27 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return null
 
+/// Checks the species currently selected by the passed preferences object to see if it has this preference's key as a feature.
+/datum/preference/proc/current_species_has_savekey(datum/preferences/preferences)
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_prototypes[species_type]
+	return (savefile_key in species.get_features())
+
+/// Checks if this preference is relevant and thus visible to the passed preferences object.
+/datum/preference/proc/has_relevant_feature(datum/preferences/preferences)
+	if(isnull(relevant_inherent_trait) && isnull(relevant_external_organ) && isnull(relevant_head_flag) && isnull(relevant_body_markings))
+		return TRUE
+
+	return current_species_has_savekey(preferences)
+
 /// Returns whether or not this preference is accessible.
 /// If FALSE, will not show in the UI and will not be editable (by update_preference).
 /datum/preference/proc/is_accessible(datum/preferences/preferences)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if ( \
-		!isnull(relevant_inherent_trait) \
-		|| !isnull(relevant_external_organ) \
-		|| !isnull(relevant_head_flag) \
-		|| !isnull(relevant_body_markings) \
-	)
-		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-
-		var/datum/species/species = GLOB.species_prototypes[species_type]
-		if (!(savefile_key in species.get_features()))
-			return FALSE
+	if (!has_relevant_feature(preferences))
+		return FALSE
 
 	if (!should_show_on_page(preferences.current_window))
 		return FALSE
@@ -405,7 +409,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	CRASH("`init_possible_values()` was not implemented for [type]!")
 
 /// When `should_generate_icons` is TRUE, this proc is called for every value.
-/// It can return either an icon or a typepath to an atom to create.
+/// It can return either an /datum/universal_icon (see uni_icon() DEFINE) or a typepath to an atom to create.
 /datum/preference/choiced/proc/icon_for(value)
 	SHOULD_CALL_PARENT(FALSE)
 	SHOULD_NOT_SLEEP(TRUE)

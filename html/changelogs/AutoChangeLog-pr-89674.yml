@@ -1,0 +1,7 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - balance: "Sheets of material and stock blocks are now subject to elastic price changes. AKA, if you sell materials, their price will go down after sale and will return after some time."
+  - bugfix: "Stock blocks can no longer be made with no value or with a quantity of zero material."
+  - bugfix: "The GMM Machine can now no longer create stock blocks when unpowered."
+  - qol: "The GMM machine now lights up when powered."

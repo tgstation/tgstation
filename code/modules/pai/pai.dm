@@ -487,3 +487,6 @@
 /mob/living/silicon/pai/proc/remove_messenger_ability()
 	if(messenger_ability)
 		messenger_ability.Remove(src)
+
+/mob/living/silicon/pai/get_access()
+	return list()
