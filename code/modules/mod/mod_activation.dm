@@ -90,6 +90,10 @@
 				balloon_alert(user, "can't overslot MOD suit parts!")
 				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 				return FALSE
+			if(!overslot.forceMove(src))
+				balloon_alert(user, "failed to store old part!")
+				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+				return FALSE
 			part_datum.overslotting = overslot
 			wearer.transferItemToLoc(overslot, part, force = TRUE)
 			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit), override = TRUE)
