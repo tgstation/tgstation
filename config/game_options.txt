@@ -1,45 +1,45 @@
-## HEALTH ###
+## ЗДОРОВЬЕ ###
 
-##Damage multiplier, effects both weapons and healing on all mobs. For example, 1.25 would result in 25% higher damage.
+##Множитель урона, воздействующий как на оружие, так и на исцеление всех мобов. Например, значение 1,25 увеличит урон на 25%.
 DAMAGE_MULTIPLIER 1
 
-## REVIVAL ###
+## ВОЗРОЖДЕНИЕ ###
 
-## whether pod plants work or not
+## работают ли стручковые растения или нет
 REVIVAL_POD_PLANTS
 
-## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
+## количество времени (в сотых долях секунды), в течение которого мозг сохраняет "искру жизни" после смерти человека (установите значение -1 для бесконечности).
 REVIVAL_BRAIN_LIFE -1
 
-## OOC DURING ROUND ###
-## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
+## OOC ВО ВРЕМЯ РАУНДА ###
+## Прокомментируйте это, если вы хотите, чтобы OOC был автоматически отключен во время раунда, он будет включен во время лобби и после подведения итогов раунда.
 OOC_DURING_ROUND
 
-## EMOJI ###
-## Comment this out if you want to disable emojis
+## ЭМОДЗИ ###
+## Прокомментируйте это, если хотите отключить эмодзи
 EMOJIS
 
-## HEART COMMENDATIONS ###
-## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% suggested)
+## СЕРДЕЧНЫЕ БЛАГОДАРНОСТИ ###
+## Прокомментируйте это, если хотите, чтобы ближе к концу раунда для данного процента игроков были включены опросы с рекомендациями (рекомендуется 5%).
 COMMENDATION_PERCENT_POLL 0.05
 
-## MOB MOVEMENT ###
+## ДВИЖЕНИЕ МОБОВ ###
 
-## We suggest editing these variables ingame to find a good speed for your server.
-## To do this you must be a high level admin. Open the 'debug' tab ingame.
-## Select "Debug Controller" and then, in the popup, select "Configuration". These variables should have the same name.
+## Мы рекомендуем отредактировать эти переменные в игре, чтобы настроить скорость вашего сервера.
+## Для этого вы должны быть администратором высокого уровня. Откройте вкладку "Отладка" в игре.
+## Выберите "Отладочный контроллер", а затем во всплывающем окне выберите "Конфигурация". Эти переменные должны иметь одинаковые имена.
 
-## These values get directly added to values and totals ingame.
-## To speed things up make the number negative, to slow things down, make the number positive.
+## Эти значения напрямую добавляются к значениям и итоговым показателям в игре.
+## Чтобы ускорить процесс, сделайте число отрицательным, чтобы замедлить, сделайте число положительным.
 
-## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
+## Они изменяют скорость бега / ходьбы всех мобов до того, как будут применены специфические для моба модификаторы.
 RUN_DELAY 1.5
 WALK_DELAY 4
 
-## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
-## Entries completely override all subtypes. Later entries have precedence over earlier entries.
-## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and
-## /mob/living/carbon/human on the last entry, the last entry will override the first.
+## Приведенные ниже переменные влияют на перемещение определенных типов мобов. ЭТО ВЛИЯЕТ НА ВСЕ ПОДТИПЫ ВЫБРАННОГО ВАМИ ТИПА!
+## Записи полностью переопределяют все подтипы. Более поздние записи имеют приоритет над более ранними.
+## Это означает, что если вы добавите /mob 0 в последнюю запись, все изменения будут аннулированы, в то время как если вы добавите /mob в качестве первой записи и
+## /mob/living/carbon/human в последнюю запись, последняя запись переопределит первую.
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
@@ -48,35 +48,35 @@ MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
 
-## NAMES ###
-## If uncommented this adds a random surname to a player's name if they only specify one name.
+## ИМЕНА ###
+## Если не указано иное, к имени игрока добавляется случайная фамилия, если он указывает только одно имя.
 HUMANS_NEED_SURNAMES
 
-## If uncommented, this forces all players to use random names !and appearances!.
+## Если не указано иное, это заставит всех игроков использовать случайные имена ! и внешность!.
 #FORCE_RANDOM_NAMES
 
-## Unhash this to turn on automatic reopening of a player's job if they suicide at roundstart
+## Снимите флажок, чтобы включить автоматическое возобновление задания игрока, если он покончит с собой в начале раунда.
 #REOPEN_ROUNDSTART_SUICIDE_ROLES
 
-## Unhash to enable reopening of command level positions
+## Отменить хэширование, чтобы разрешить повторное открытие позиций командного уровня
 #REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_POSITIONS
 
-## Define the delay for roles to be reopened after the round starts in seconds.
-## Has a minimum delay of 30 seconds, though it's suggested to keep over 1 min
-## If undefined, the delay defaults to 4 minutes.
+## Определите задержку, с которой роли будут вновь открыты после начала раунда, в секундах.
+## Минимальная задержка составляет 30 секунд, хотя рекомендуется не превышать 1 минуту
+## Если не определено, задержка по умолчанию составляет 4 минуты.
 #REOPEN_ROUNDSTART_SUICIDE_ROLES_DELAY 240
 
-## Unhash to enable a printed command report for reopened roles listing what roles were reopened.
+## Отмените хэширование, чтобы включить распечатку командного отчета для вновь открытых ролей с указанием того, какие роли были вновь открыты.
 #REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_REPORT
 
 
-## ALERT LEVELS ###
-ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
-ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
-ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
-ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised. Additionally, access requirements on some doors have been lifted.
-ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+## УРОВНИ ОПОВЕЩЕНИЯ ###
+ALERT_GREEN Все угрозы для станции миновали. Охрана может не показывать оружие, законы о неприкосновенности частной жизни снова полностью соблюдаются.
+ALERT_BLUE_UPTO Получили достоверную информацию о возможной враждебной активности на станции. У сотрудников службы безопасности может быть на виду оружие, разрешены произвольные обыски.
+ALERT_BLUE_DOWNTO Непосредственная угроза миновала. Сотрудники службы безопасности, возможно, больше не будут постоянно держать оружие наготове, но могут по-прежнему держать его на виду. Произвольные обыски по-прежнему разрешены.
+ALERT_RED_UPTO На станции существует непосредственная серьезная угроза. Охрана может в любое время достать оружие из кобуры. Разрешены и рекомендуются произвольные обыски. Кроме того, были отменены требования к доступу к некоторым дверям.
+ALERT_RED_DOWNTO Разрушение станции было предотвращено. Однако непосредственная серьезная угроза для станции по-прежнему сохраняется. Охрана может в любое время достать оружие из кобур, поэтому разрешены и рекомендуются произвольные обыски.
+ALERT_DELTA Разрушение станции неизбежно. Весь экипаж проинструктирован выполнять все указания начальников штабов. Любое нарушение этих приказов может повлечь за собой смертную казнь. Это не учения.
 
 ## The total weight of station goals possible for a round (allows multiple goals)
 STATION_GOAL_BUDGET 1
@@ -518,9 +518,9 @@ MAXFINE 2000
 ## Whether circuit sounds are allowed to be played or not.
 #DISALLOW_CIRCUIT_SOUNDS
 
-## Comment if you wish to enable title music playing at the lobby screen. This flag is disabled by default to facilitate better code testing on local machines.
-## Do keep in mind that this flag will not affect individual player's preferences: if they opt-out on your server, it will never play for them.
-DISALLOW_TITLE_MUSIC
+## Прокомментируйте, если вы хотите включить воспроизведение музыки в заголовке на экране в лобби. По умолчанию этот флажок отключен, чтобы облегчить тестирование кода на локальных компьютерах.
+## Имейте в виду, что этот флажок не повлияет на предпочтения отдельных игроков: если они откажутся от участия на вашем сервере, он никогда не будет играть за них.
+#DISALLOW_TITLE_MUSIC
 
 ## If enabled, then when the database is disabled, all players will get tutorials.
 ## This is primarily useful for developing tutorials. If you have a proper DB setup, you

@@ -1,3 +1,19 @@
+### НАЧАЛО РАУНДА
+config/title_music/sounds/Blinding_Lights.ogg
+config/title_music/sounds/Dantes_dance_music.ogg
+config/title_music/sounds/Dushevnaia_Gitara.ogg
+config/title_music/sounds/Flip_flap.ogg
+config/title_music/sounds/Gachi.ogg
+config/title_music/sounds/INVISIBLE.ogg
+config/title_music/sounds/Kosmo_Vabik.ogg
+config/title_music/sounds/Kosmo_Vabik_Clown.ogg
+config/title_music/sounds/Magic_Fly.ogg
+config/title_music/sounds/Nightcall.ogg
+config/title_music/sounds/Portal.ogg
+config/title_music/sounds/Sigma_Tzar.ogg
+config/title_music/sounds/Syndicate.ogg
+config/title_music/sounds/Two_Of_Us.ogg
+config/title_music/sounds/Your_House.ogg
 sound/music/lobby_music/title0.ogg
 sound/music/lobby_music/title1.mod
 sound/music/lobby_music/title2.ogg

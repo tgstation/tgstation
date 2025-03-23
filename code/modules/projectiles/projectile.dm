@@ -101,8 +101,8 @@
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-	/// How many tiles we pass in a single SSprojectiles tick
-	var/speed = 1.25
+	/// How many tiles we pass in a single SSprojectiles tick /// Скорость полёта пули
+	var/speed = 2
 
 	/// The current angle of the projectile. Initially null, so if the arg is missing from [/fire()], we can calculate it from firer and target as fallback.
 	var/angle
