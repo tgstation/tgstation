@@ -317,7 +317,7 @@ SUBSYSTEM_DEF(dynamic)
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), 10 SECONDS)
 		return
 
-	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
+	. = "<b><i>Нанотрейзен - Департамент консультирования по разведывательным угрозам, вспомогательный сектор, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
 	. += generate_advisory_level()
 
 	var/min_threat = 100
@@ -1007,7 +1007,7 @@ SUBSYSTEM_DEF(dynamic)
 				[reopened_job_report_positions]</i>
 			"}
 
-			print_command_report(suicide_command_report, "Central Command Personnel Update")
+			print_command_report(suicide_command_report, "Обновление кадрового состава Центрального Командования")
 
 
 #undef MAXIMUM_DYN_DISTANCE

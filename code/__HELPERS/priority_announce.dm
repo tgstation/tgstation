@@ -58,14 +58,14 @@
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Priority Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE("Приоритетное объявление")
 			if(length(title) > 0)
 				header += SUBHEADER_ANNOUNCEMENT_TITLE(title)
 		if(ANNOUNCEMENT_TYPE_CAPTAIN)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Captain's Announcement")
-			GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
+			header = MAJOR_ANNOUNCEMENT_TITLE("Заявление капитана")
+			GLOB.news_network.submit_article(text, "Заявление капитана", "Станционное объявление", null)
 		if(ANNOUNCEMENT_TYPE_SYNDICATE)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Syndicate Captain's Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE("Заявление лидера Синдиката")
 		else
 			header += generate_unique_announcement_header(title, sender_override)
 
@@ -87,18 +87,18 @@
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
-			GLOB.news_network.submit_article(title + "<br><br>" + text, "[command_name()]", "Station Announcements", null)
+			GLOB.news_network.submit_article(title + "<br><br>" + text, "[command_name()]", "Станционное объявление", null)
 		else
-			GLOB.news_network.submit_article(text, "[command_name()] Update", "Station Announcements", null)
+			GLOB.news_network.submit_article(text, "[command_name()] Обновление", "Станционное объявление", null)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
-		title = "Classified [command_name()] Update"
+		title = "Секретное обновление  [command_name()]"
 
 	if(announce)
 		priority_announce(
-			text = "A report has been downloaded and printed out at all communications consoles.",
-			title = "Incoming Classified Message",
+			text = "Отчет был загружен и распечатан на всех коммуникационных консолях.",
+			title = "Входящее секретное сообщение",
 			sound = SSstation.announcer.get_rand_report_sound(),
 			has_important_message = TRUE,
 		)
@@ -123,7 +123,7 @@
  * should_play_sound - Whether the notice sound should be played or not. This can also be a callback, if you only want mobs to hear the sound based off of specific criteria.
  * color_override - optional, use the passed color instead of the default notice color.
  */
-/proc/minor_announce(message, title = "Attention:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override)
+/proc/minor_announce(message, title = "Внимание:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override)
 	if(!message)
 		return
 
@@ -156,10 +156,10 @@
 	var/message
 
 	if(current_level_number > previous_level_number)
-		title = "Attention! Security level elevated to [current_level_name]:"
+		title = "Внимание! Уровень безопасности повышен до  [current_level_name]:"
 		message = selected_level.elevating_to_announcement
 	else
-		title = "Attention! Security level lowered to [current_level_name]:"
+		title = "Внимание! Уровень безопасности снижен до [current_level_name]:"
 		message = selected_level.lowering_to_announcement
 
 	var/list/level_announcement_strings = list()
