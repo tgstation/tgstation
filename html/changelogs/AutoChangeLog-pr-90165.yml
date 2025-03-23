@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Mappers can now disable bookshelf randomization"
+  - qol: "Random books found via mail or in maint will no longer random into books from the \"adult\" section"
+  - qol: "Bookshelf randomization will now exclude adult books unless marked as adult"
