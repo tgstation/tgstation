@@ -10,12 +10,8 @@
  */
 /datum/component/ingredients_holder
 	can_transfer = TRUE
-	///List of item ingredients.
-	var/list/obj/item/ingredients
 	///Type path of replacement atom.
 	var/replacement
-	///Stores a copy of the list of materials that composed the base when ingredients were first added
-	var/list/base_materials
 	///Type of fill, can be [CUSTOM_INGREDIENT_ICON_NOCHANGE] for example.
 	var/fill_type
 	///Number of max ingredients.
@@ -27,8 +23,12 @@
 	/// Adds screentips for all items that call on this proc, defaults to "Add"
 	var/screentip_verb
 
-	/// Stores the names of the ingredients of the holder, useful for processed results which cannot withhold refs for GC reasons.
+	/// Stores the names of the ingredients used on the holder, to pass down if processed into new instances.
 	var/list/ingredient_names
+	///List of colors to be used for fillings, to pass down if processed into new instances.
+	var/list/filling_colors
+	/// The custom name attached to the original name of the holder, to pass down if processed into new instances.
+	var/custom_name
 
 /datum/component/ingredients_holder/Initialize(
 		atom/replacement,
@@ -53,15 +53,17 @@
 	src.ingredient_type = ingredient_type
 	src.screentip_verb = screentip_verb
 
-	if(processed_holder)
-		src.ingredient_names = processed_holder.ingredient_names
-		for(var/obj/item/ingredient as anything in processed_holder.ingredients)
-			handle_fill(ingredient)
+	if(!processed_holder)
+		return
+
+	ingredient_names = processed_holder.ingredient_names
+	custom_name = processed_holder.custom_name
+	atom_parent.name = "[custom_adjective()] [custom_name] [atom_parent.name]"
+	for(var/fillcol as anything in processed_holder.filling_colors)
+		apply_fill(fillcol)
 
 /datum/component/ingredients_holder/Destroy(force)
 	QDEL_NULL(top_overlay)
-	LAZYCLEARLIST(ingredients)
-	base_materials = null
 	return ..()
 
 /datum/component/ingredients_holder/RegisterWithParent()
@@ -82,7 +84,7 @@
 		COMSIG_ATOM_PROCESSED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
-	ADD_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER, INNATE_TRAIT)
+	REMOVE_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER, INNATE_TRAIT)
 
 /datum/component/ingredients_holder/PostTransfer(datum/new_parent)
 	if(!isatom(new_parent))
@@ -134,21 +136,25 @@
 	add_ingredient(ingredient)
 
 
-///Handles the icon update for a new ingredient.
-/datum/component/ingredients_holder/proc/handle_fill(obj/item/ingredient)
-	if (fill_type == CUSTOM_INGREDIENT_ICON_NOCHANGE)
-		//don't bother doing the icon procs
-		return
-	var/atom/atom_parent = parent
-	var/mutable_appearance/filling = mutable_appearance(atom_parent.icon, "[initial(atom_parent.icon_state)]_filling")
+///Extract the filling color from the ingredient, than calls apply_fill()
+/datum/component/ingredients_holder/proc/get_fill(obj/item/ingredient)
 	// get average color
 	var/icon/icon = new(ingredient.icon, ingredient.icon_state)
 	if(ingredient.color)
 		icon.Blend(ingredient.color, ICON_MULTIPLY)
 	icon.Scale(1, 1)
 	var/fillcol = copytext(icon.GetPixel(1, 1), 1, 8) // remove opacity
-	filling.color = fillcol
+	LAZYADD(filling_colors, fillcol)
+	apply_fill(fillcol)
 
+///Add a filling overlay to the parent atom.
+/datum/component/ingredients_holder/proc/apply_fill(fill_color)
+	if(fill_type == CUSTOM_INGREDIENT_ICON_NOCHANGE)
+		//don't bother doing the icon procs
+		return
+	var/atom/atom_parent = parent
+	var/mutable_appearance/filling = mutable_appearance(atom_parent.icon, "[initial(atom_parent.icon_state)]_filling")
+	filling.color = fill_color
 	switch(fill_type)
 		if(CUSTOM_INGREDIENT_ICON_SCATTER)
 			filling.pixel_x = rand(-1,1)
@@ -193,8 +199,6 @@
 ///Adds a new ingredient and updates the parent's name.
 /datum/component/ingredients_holder/proc/add_ingredient(obj/item/ingredient)
 	var/atom/atom_parent = parent
-	if(!LAZYLEN(ingredients))
-		base_materials = atom_parent.custom_materials.Copy()
 
 	if (replacement)
 		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
@@ -205,37 +209,34 @@
 		handle_reagents(atom_parent)
 		qdel(atom_parent)
 
-	if(ingredient.loc != atom_parent)
-		ingredient.forceMove(atom_parent)
-
 	handle_reagents(ingredient)
 
-	LAZYADD(ingredients, ingredient)
 	LAZYADD(ingredient_names, "\a [ingredient.name]")
 	if(isitem(atom_parent))
 		var/obj/item/item_parent = atom_parent
 		if(ingredient.w_class > item_parent.w_class)
 			item_parent.update_weight_class(ingredient.w_class)
-	atom_parent.name = "[custom_adjective()] [custom_type()] [initial(atom_parent.name)]"
+	if(!custom_name)
+		set_custom_name(ingredient)
+	atom_parent.name = "[custom_adjective()] [custom_name] [initial(atom_parent.name)]"
 	SEND_SIGNAL(atom_parent, COMSIG_ATOM_CUSTOMIZED, ingredient)
 	SEND_SIGNAL(ingredient, COMSIG_ITEM_USED_AS_INGREDIENT, atom_parent)
 
-	handle_fill(ingredient)
+	get_fill(ingredient)
+	handle_materials(ingredient)
 
-	handle_materials()
+	if(ingredient.loc != atom_parent)
+		ingredient.forceMove(atom_parent)
 
 ///Rebuilds the custom materials the holder is composed of based on the materials of each ingredient
-/datum/component/ingredients_holder/proc/handle_materials()
+/datum/component/ingredients_holder/proc/handle_materials(obj/item/ingredient, remove = FALSE)
+	if(!ingredient.custom_materials)
+		return
 	var/atom/atom_parent = parent
-	var/list/mats = base_materials?.Copy() || list()
-	for(var/obj/item/ingredient as anything in atom_parent)
-		if(!ingredient.custom_materials)
-			continue
-		for(var/mat in ingredient.custom_materials)
-			base_materials[mat] += ingredient.custom_materials[mat]
-	atom_parent.material_flags |= MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_NO_EDIBILITY //we want these
-	atom_parent.material_flags &= ~MATERIAL_ADD_PREFIX|MATERIAL_COLOR // while we've fillings and examine strings for these.
-	atom_parent.set_custom_materials(mats)
+	var/list/new_materials = atom_parent.custom_materials?.Copy() || list()
+	for(var/mat in ingredient.custom_materials)
+		new_materials[mat] += ingredient.custom_materials[mat] * (remove ? -1 : 1)
+	atom_parent.set_custom_materials(new_materials)
 
 ///Gives an adjective to describe the size of the custom food.
 /datum/component/ingredients_holder/proc/custom_adjective()
@@ -253,34 +254,29 @@
 
 
 ///Gives the type of custom food (based on what the first ingredient was).
-/datum/component/ingredients_holder/proc/custom_type()
-	var/custom_type = "empty"
-	if (LAZYLEN(ingredients))
-		var/obj/item/first_ingredient = ingredients[1]
-		if (istype(first_ingredient, /obj/item/food/meat))
-			var/obj/item/food/meat/meat = first_ingredient
-			if (meat.subjectname)
-				custom_type = meat.subjectname
-			else if (meat.subjectjob)
-				custom_type = meat.subjectjob
-		if (custom_type == "empty" && first_ingredient.name)
-			custom_type = first_ingredient.name
-	return custom_type
-
+/datum/component/ingredients_holder/proc/set_custom_name(obj/item/ingredient)
+	if (istype(ingredient, /obj/item/food/meat))
+		var/obj/item/food/meat/meat = ingredient
+		if (meat.subjectname)
+			custom_name = meat.subjectname
+			return
+		if (meat.subjectjob)
+			custom_name = meat.subjectjob
+			return
+	custom_name = ingredient.name
 
 ///Returns the color of the input mixed with the top_overlay's color.
 /datum/component/ingredients_holder/proc/mix_color(color)
-	if(LAZYLEN(ingredients) == 1 || !top_overlay)
+	if(length(filling_colors) == 1 || !top_overlay)
 		return color
-	else
-		var/list/rgbcolor = list(0,0,0,0)
-		var/customcolor = GetColors(color)
-		var/ingcolor = GetColors(top_overlay.color)
-		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
-		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
-		rgbcolor[3] = (customcolor[3]+ingcolor[3])/2
-		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
-		return rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
+	var/list/rgbcolor = list(0,0,0,0)
+	var/customcolor = GetColors(color)
+	var/ingcolor = GetColors(top_overlay.color)
+	rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
+	rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
+	rgbcolor[3] = (customcolor[3]+ingcolor[3])/2
+	rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
+	return rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
 
 ///Copies over the parent's fillings and name of ingredients to the processing results (such as slices when the parent is cut).
@@ -314,6 +310,5 @@
 /// Clear refs if our food "goes away" somehow
 /datum/component/ingredients_holder/proc/food_exited(datum/source, atom/movable/gone)
 	SIGNAL_HANDLER
-	LAZYREMOVE(ingredients, gone)
 	LAZYREMOVE(ingredient_names, "\a [gone.name]")
-	handle_materials()
+	handle_materials(gone, remove = TRUE)

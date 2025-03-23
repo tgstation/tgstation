@@ -98,12 +98,14 @@
 		var/datum/material/main_material = materials[1] //The list is sorted by amount so the first of the list is the main mat
 		if(!is_type_in_typecache(main_material, intrisic_food_materials))
 			material_flags |= MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_ADD_PREFIX|MATERIAL_COLOR
+	else
+		//food items with the ingredients holders component are still affected by the materials stats and effects wise.
+		material_flags |= MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS
 	return ..()
 
 /obj/item/food/remove_material_effects(replace_mats = TRUE)
 	. = ..()
-	if(!HAS_TRAIT(src, TRAIT_INGREDIENTS_HOLDER))
-		material_flags &= ~(MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_ADD_PREFIX|MATERIAL_COLOR)
+	material_flags &= ~(MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_ADD_PREFIX|MATERIAL_COLOR)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/make_edible()
