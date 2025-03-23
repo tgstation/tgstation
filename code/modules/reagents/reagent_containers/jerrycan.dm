@@ -1,7 +1,18 @@
+#define LABEL_TEXT "text"
+#define LABEL_TEXT_OLD "old"
+#define LABEL_INFLAMMABLE "inflammable"
+#define LABEL_NT "nt"
+#define LABEL_NT_MINI "nt_mini"
+#define LABEL_SUSPICIOUS "sus"
+#define LABEL_SUSPICIOUS_MINI "sus_mini"
+#define LABEL_EZ_NUTRIENT "ez"
+#define LABEL_ROBUST_HARVEST "robust"
+#define LABEL_LEFT_4_ZED "l4z"
+
 /obj/item/reagent_containers/cup/jerrycan
 	name = "plastic jerrycan"
 	desc = "A robust portable container used for storing bulk liquids."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "jerrycan"
 	custom_materials = list(/datum/material/plastic=4000)
 	w_class = WEIGHT_CLASS_BULKY
@@ -11,14 +22,18 @@
 	spillable = FALSE
 	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
 	possible_transfer_amounts = list(5, 10, 15, 30, 50, 100, 200)
+	//If we want the can to have a label. Ust the defines at the top, add new ones if you add new labels.
+	var/label_type
 
 /obj/item/reagent_containers/cup/jerrycan/update_icon()
 	..()
 	add_overlay("[initial(icon_state)]_shine")
+	if(label_type)
+		add_overlay("[initial(icon_state)]_label_[label_type]")
 
-/obj/item/reagent_containers/cup/jerrycan/Initialize()
-	update_appearances()
-	..()
+/obj/item/reagent_containers/cup/jerrycan/Initialize(mapload)
+	. = ..()
+	update_appearance()
 
 /obj/item/reagent_containers/cup/jerrycan/eznutriment
 	name = "E-Z-Nutrient can"
