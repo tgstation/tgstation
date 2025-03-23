@@ -674,3 +674,23 @@
       such a plasteel and plasmaglass.
   Melbert:
   - bugfix: Failing to inject no longer prints a strange message
+2025-03-23:
+  ArcaneMusic:
+  - image: The civilian bounty teleporter pad and pirate bounty pads now have new
+      sprites.
+  Ghommie:
+  - balance: Makes fishing rods with higher (or lower) bait speed a smidge easier
+      to control during the minigame
+  - balance: Made fish traits inheritability easier. They're now guaranteed to be
+      passed down to offsprings if both parents have them.
+  OrionTheFox:
+  - rscadd: Added greyscale Fedoras, available in the Clothesmate!
+  - image: Resprited most of the Fedoras - now they'll all be much more consistent
+      with the detective's updated and sleek ones. They also all have a hairmask now,
+      so hair will no longer clip with them!
+  - image: To pair with this, the Beige suit has been just slightly tweaked and the
+      Curator's "Treasure Hunter Jacket" entirely recolored to better match their
+      fedoras.
+  jlsnow301:
+  - bugfix: The air alarm has been refactored and had some slight UI improvements.
+      Please report any issues to the github!
