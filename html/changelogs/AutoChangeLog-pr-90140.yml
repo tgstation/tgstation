@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed an edge-case where, if two heretics of different paths applied a mark to the same person, the effects from the first mark (i.e moon path's pacifism) would likely be permanent."
