@@ -199,6 +199,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	icon_state = "table"
+	base_icon_state = "table"
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
