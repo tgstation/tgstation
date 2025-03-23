@@ -317,7 +317,7 @@
 		if(QDELETED(hit_mineral))
 			return ..()
 		new /obj/effect/temp_visual/kinetic_blast(hit_mineral)
-		hit_mineral.gets_drilled(firer, TRUE)
+		hit_mineral.gets_drilled(firer, 1)
 		if(!iscarbon(firer))
 			return ..()
 		var/mob/living/carbon/carbon_firer = firer

@@ -2,7 +2,8 @@
 
 /obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
-	icon_state = "smooth"
+	icon_state = "canister-0"
+	base_icon_state = "canister"
 
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
@@ -20,13 +21,14 @@
 	initialize_directions = NONE
 	custom_reconcilation = TRUE
 
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_OBJ
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
 	smoothing_groups = SMOOTH_GROUP_GAS_TANK
 	canSmoothWith = SMOOTH_GROUP_GAS_TANK
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 
 	greyscale_config = /datum/greyscale_config/stationary_canister
 	greyscale_colors = "#ffffff"
+	var/overlay_greyscale_config = /datum/greyscale_config/stationary_canister_overlays
 
 	///The image showing the gases inside of the tank
 	var/image/window
@@ -69,7 +71,7 @@
 	if(!knob_overlays)
 		knob_overlays = list()
 		for(var/dir in GLOB.cardinals)
-			knob_overlays["[dir]"] = image('icons/obj/pipes_n_cables/stationary_canisters.dmi', icon_state = "knob", dir = dir, layer = FLOAT_LAYER)
+			knob_overlays["[dir]"] = image('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', icon_state = "knob", dir = dir, layer = FLOAT_LAYER)
 
 	if(!crack_states)
 		crack_states = list()
@@ -81,7 +83,7 @@
 
 	AddComponent(/datum/component/gas_leaker, leak_rate = 0.05)
 	AddElement(/datum/element/volatile_gas_storage)
-	AddElement(/datum/element/crackable, 'icons/obj/pipes_n_cables/stationary_canisters.dmi', crack_states)
+	AddElement(/datum/element/crackable, 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', crack_states)
 
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
@@ -318,12 +320,13 @@
 	if(!air_contents)
 		window = null
 		return
+	var/icon/greyscaled_icon = SSgreyscale.GetColoredIconByType(overlay_greyscale_config, greyscale_colors)
 
-	window = image(icon, icon_state = "window-bg", layer = FLOAT_LAYER)
+	window = image(greyscaled_icon, icon_state = "window-bg", layer = FLOAT_LAYER)
 
 	var/static/alpha_filter
 	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
-		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/stationary_canisters.dmi', "window-bg"))
+		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', "window-bg"))
 
 	var/list/new_underlays = list()
 	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
@@ -331,7 +334,7 @@
 		new_underlay.filters = alpha_filter
 		new_underlays += new_underlay
 
-	var/image/foreground = image(icon, icon_state = "window-fg", layer = FLOAT_LAYER)
+	var/image/foreground = image(greyscaled_icon, icon_state = "window-fg", layer = FLOAT_LAYER)
 	foreground.underlays = new_underlays
 	window.overlays = list(foreground)
 
@@ -500,7 +503,7 @@
 // Tank Frame Structure
 
 /obj/structure/tank_frame
-	icon = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
+	icon = 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi'
 	icon_state = "frame"
 	anchored = FALSE
 	density = TRUE

@@ -1,0 +1,45 @@
+name: Collect Data
+
+on:
+  workflow_call:
+    outputs:
+      maps:
+        description: "The maps that were found"
+        value: ${{ jobs.collect_data.outputs.maps }}
+      alternate_tests:
+        description: "The alternate tests that were found"
+        value: ${{ jobs.collect_data.outputs.alternate_tests }}
+      max_required_byond_client:
+        description: "The max required byond client version"
+        value: ${{ jobs.collect_data.outputs.max_required_byond_client }}
+
+jobs:
+  collect_data:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    outputs:
+      maps: ${{ steps.map_finder.outputs.maps }}
+      alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
+      max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find Maps
+        id: map_finder
+        run: |
+          echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
+          sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
+          echo "Maps: $(cat maps_output.txt)"
+          echo "maps={\"paths\":[$(cat maps_output.txt)]}" >> $GITHUB_OUTPUT
+      - name: Find Alternate Tests
+        id: alternate_test_finder
+        run: |
+          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
+          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
+      - name: Collect byond client version configuration
+        id: max_required_byond_client
+        #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
+        run: |
+          echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
+      - name: Set up BYOND cache
+        uses: ./.github/actions/restore_or_install_byond

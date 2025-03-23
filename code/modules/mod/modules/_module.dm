@@ -330,6 +330,7 @@
 	SIGNAL_HANDLER
 
 	if(source == device)
+		device.moveToNullspace()
 		device = null
 		qdel(src)
 

@@ -165,7 +165,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/turf/open/floor/grass/Airless,
+/turf/open/floor/grass/airless,
 /area/station/hallway/primary/central/aft)
 "aej" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -8447,7 +8447,6 @@
 	},
 /obj/structure/closet{
 	anchored = 1;
-	can_be_unanchored = 1;
 	name = "Cold protection gear"
 	},
 /obj/item/clothing/suit/hooded/wintercoat/science,
@@ -13801,7 +13800,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/grass/Airless,
+/turf/open/floor/grass/airless,
 /area/station/hallway/primary/central/aft)
 "eVY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15548,7 +15547,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/turf/open/floor/grass/Airless,
+/turf/open/floor/grass/airless,
 /area/station/hallway/primary/central/aft)
 "fBO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -30550,7 +30549,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/turf/open/floor/grass/Airless,
+/turf/open/floor/grass/airless,
 /area/station/hallway/primary/central/aft)
 "kik" = (
 /obj/structure/chair/stool/directional/east,
@@ -40263,7 +40262,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/floor/grass/Airless,
+/turf/open/floor/grass/airless,
 /area/station/hallway/primary/central/aft)
 "nuo" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -49695,7 +49694,7 @@
 /obj/effect/dummy/lighting_obj,
 /obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/grass/Airless,
+/turf/open/floor/grass/airless,
 /area/station/hallway/primary/central/aft)
 "qGk" = (
 /obj/effect/turf_decal/stripes/line{

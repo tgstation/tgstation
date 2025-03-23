@@ -55,6 +55,7 @@
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
+	. += span_notice("It has [pictures_left] photos left.")
 	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
 
 /obj/item/camera/proc/adjust_zoom(mob/user)
@@ -100,10 +101,6 @@
 			to_chat(user, span_warning("There's already a disk inside [src]."))
 		return TRUE //no afterattack
 	..()
-
-/obj/item/camera/examine(mob/user)
-	. = ..()
-	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
 /obj/item/camera/proc/can_target(atom/target, mob/user)

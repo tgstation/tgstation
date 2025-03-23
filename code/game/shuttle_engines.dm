@@ -53,10 +53,10 @@
 		return FALSE
 	connected_ship_ref = WEAKREF(port)
 	port.engine_list += src
-	if(engine_state == ENGINE_WELDED)
-		alter_engine_power(engine_power)
 	if(mapload)
 		port.initial_engine_power += engine_power
+	if(engine_state == ENGINE_WELDED)
+		alter_engine_power(engine_power)
 
 /obj/machinery/power/shuttle_engine/Destroy()
 	if(engine_state == ENGINE_WELDED)

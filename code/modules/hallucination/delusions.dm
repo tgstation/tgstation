@@ -1,6 +1,7 @@
 /// A hallucination that makes us and (possibly) other people look like something else.
 /datum/hallucination/delusion
 	abstract_hallucination_parent = /datum/hallucination/delusion
+	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 
 	/// The duration of the delusions
 	var/duration = 30 SECONDS
@@ -249,6 +250,7 @@
 	delusion_name = "Syndicate"
 	affects_others = TRUE
 	affects_us = FALSE
+	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/delusion/preset/syndies/make_delusion_image(mob/over_who)
 	delusion_appearance = get_dynamic_human_appearance(

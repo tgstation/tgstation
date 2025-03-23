@@ -38,10 +38,13 @@
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
 
-/obj/structure/table/Initialize(mapload, _buildstack)
+/obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
-	if(_buildstack)
-		buildstack = _buildstack
+	if(frame_used)
+		apply_frame_properties(frame_used)
+	if(stack_used)
+		apply_stack_properties(stack_used)
+
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
 	make_climbable()
@@ -56,6 +59,16 @@
 	register_context()
 
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
+/// Applies additional properties based on the frame used to construct this table.
+/obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
+	frame = frame_used.type
+	framestack = frame_used.framestack
+	framestackamount = frame_used.framestackamount
+
+/// Applies additional properties based on the stack used to construct this table.
+/obj/structure/table/proc/apply_stack_properties(obj/item/stack/stack_used)
+	return
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
@@ -358,6 +371,11 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
+/obj/structure/table/greyscale/apply_stack_properties(obj/item/stack/stack_used)
+	if(!stack_used.material_type)
+		return
+	set_custom_materials(list(stack_used.material_type = SHEET_MATERIAL_AMOUNT))
+
 /obj/structure/table/greyscale/finalize_material_effects(list/materials)
 	. = ..()
 	var/english_list = get_material_english_list(materials)
@@ -376,7 +394,7 @@
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 
-/obj/structure/table/rolling/Initialize(mapload)
+/obj/structure/table/rolling/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
 
@@ -459,7 +477,7 @@
 	fire = 80
 	acid = 100
 
-/obj/structure/table/glass/Initialize(mapload)
+/obj/structure/table/glass/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -554,6 +572,9 @@
 	base_icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
 
+/obj/structure/table/wood/poker/apply_stack_properties(obj/item/stack/stack_used)
+	buildstack = stack_used.type
+
 /obj/structure/table/wood/poker/narsie_act()
 	..(FALSE)
 
@@ -570,13 +591,16 @@
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/Initialize(mapload)
+/obj/structure/table/wood/fancy/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that
 	// size so that the north/south corners look nice - examine the detail on
 	// the sprites in the editor to see why.
 	icon = smooth_icon
+
+/obj/structure/table/wood/fancy/apply_stack_properties(obj/item/stack/stack_used)
+	buildstack = stack_used.type
 
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
@@ -806,7 +830,7 @@
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/Initialize(mapload)
+/obj/structure/table/optable/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	for(var/direction in GLOB.alldirs)
 		computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)

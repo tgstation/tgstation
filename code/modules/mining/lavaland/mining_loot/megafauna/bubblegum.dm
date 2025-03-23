@@ -121,7 +121,7 @@
 	var/health_consumed = butchered.maxHealth * 0.1
 	user.heal_ordered_damage(health_consumed, list(BRUTE, BURN, TOX))
 	to_chat(user, span_notice("You heal from the corpse of [butchered]."))
-	var/datum/client_colour/color_effect = user.add_client_colour(/datum/client_colour/bloodlust)
+	var/datum/client_colour/color_effect = user.add_client_colour(/datum/client_colour/bloodlust, HELMET_TRAIT)
 	QDEL_IN(color_effect, 1 SECONDS)
 
 // Soulscythe

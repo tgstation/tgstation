@@ -64,7 +64,7 @@
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
-	icon = 'icons/effects/dirt.dmi'
+	icon = 'icons/effects/dirt_misc.dmi'
 	icon_state = "dirt-flat-0"
 	base_icon_state = "dirt"
 	smoothing_flags = NONE
@@ -83,6 +83,8 @@
 		return
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt && is_tileable)
+		icon = 'icons/effects/dirt.dmi'
+		icon_state = "dirt-0"
 		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
 	if(smoothing_flags & USES_SMOOTHING)

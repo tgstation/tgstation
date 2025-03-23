@@ -381,7 +381,7 @@
 				var/turf/closed/mineral/dest_mineral_turf = dest_turf
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(dest_mineral_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
 					shake_camera(client_mob, duration = 2, strength = 3)
-				dest_mineral_turf.gets_drilled(give_exp = FALSE)
+				dest_mineral_turf.gets_drilled()
 
 			for(var/obj/structure/victim_structure in dest_turf.contents)
 				if(QDELING(victim_structure))
