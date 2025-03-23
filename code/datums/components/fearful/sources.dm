@@ -112,7 +112,7 @@
 
 /// Makes the owner afraid of certain jolly figures
 /datum/terror_handler/simple_source/clausophobia
-	buildup_per_second = 10
+	buildup_per_second = 20
 
 /datum/terror_handler/simple_source/clausophobia/check_condition(seconds_per_tick, terror_buildup)
 	. = ..()
@@ -139,5 +139,27 @@
 
 	if (SPT_PROB(15, seconds_per_tick))
 		to_chat(owner, span_warning("Santa Claus is here! I gotta get out of here!"))
+
+	return TRUE
+
+/// Makes the owner afraid of being alone
+/datum/terror_handler/simple_source/monophobia
+	buildup_per_second = 2.5 // Pretty low, ~4 minutes to reach passive cap
+
+/datum/terror_handler/simple_source/monophobia/check_condition(seconds_per_tick, terror_buildup)
+	. = ..()
+	if (!.)
+		return
+
+	var/check_radius = 7
+	if (owner.is_blind())
+		check_radius = 1
+
+	for (var/mob/living/friend in view(check_radius, owner))
+		if (friend == owner)
+			continue
+
+		if (istype(friend, /mob/living/basic/pet) || friend.ckey)
+			return FALSE
 
 	return TRUE
