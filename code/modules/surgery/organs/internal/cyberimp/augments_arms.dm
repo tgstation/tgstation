@@ -2,9 +2,14 @@
 	name = "arm-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_R_ARM
+	slot = ORGAN_SLOT_RIGHT_ARM_AUG
 	icon_state = "toolkit_generic"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
+	valid_zones = list(
+		BODY_ZONE_R_ARM = ORGAN_SLOT_RIGHT_ARM_AUG,
+		BODY_ZONE_L_ARM = ORGAN_SLOT_LEFT_ARM_AUG,
+	)
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
 	//A list of typepaths to create and insert into ourself on init
@@ -17,10 +22,8 @@
 	var/extend_sound = 'sound/vehicles/mecha/mechmove03.ogg'
 	/// Sound played when retracting
 	var/retract_sound = 'sound/vehicles/mecha/mechmove03.ogg'
-	/// Organ slot that the implant occupies for the right arm
-	var/right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_AUG
-	/// Organ slot that the implant occupies for the left arm
-	var/left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_AUG
+	/// Do we have a separate icon_state for the hand overlay?
+	var/hand_state = TRUE
 
 /obj/item/organ/cyberimp/arm/Initialize(mapload)
 	. = ..()
@@ -31,8 +34,6 @@
 	for(var/typepath in items_to_create)
 		var/atom/new_item = new typepath(src)
 		items_list += WEAKREF(new_item)
-
-	SetSlotFromZone()
 
 /obj/item/organ/cyberimp/arm/Destroy()
 	hand = null
@@ -47,28 +48,6 @@
 
 /datum/action/item_action/organ_action/toggle/toolkit
 	desc = "You can also activate your empty hand or the tool in your hand to open the tools radial menu."
-
-/obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
-	switch(zone)
-		if(BODY_ZONE_L_ARM)
-			slot = left_arm_organ_slot
-		if(BODY_ZONE_R_ARM)
-			slot = right_arm_organ_slot
-		else
-			CRASH("Invalid zone for [type]")
-	update_appearance()
-
-/obj/item/organ/cyberimp/arm/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
-	// Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
-	if (target_zone != BODY_ZONE_R_ARM && target_zone != BODY_ZONE_L_ARM)
-		return FALSE
-
-	zone = target_zone
-	SetSlotFromZone()
-	return ..()
-
-/obj/item/organ/cyberimp/arm/zones_tip()
-	return span_notice("It should be inserted in the [parse_zone(right_arm_organ_slot)] or [parse_zone(left_arm_organ_slot)].")
 
 /obj/item/organ/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
@@ -112,6 +91,25 @@
 		// give the owner an idea about why his implant is glitching
 		Retract()
 
+/obj/item/organ/cyberimp/arm/get_overlay_state(image_layer, obj/item/bodypart/limb)
+	return "[aug_overlay][zone == BODY_ZONE_L_ARM ? "_left" : "_right"]"
+
+/obj/item/organ/cyberimp/arm/get_overlay(image_layer, obj/item/bodypart/limb)
+	if (!hand_state)
+		return ..()
+
+	var/mutable_appearance/arm_overlay = mutable_appearance(
+		icon = aug_icon,
+		icon_state = get_overlay_state(),
+		layer = image_layer,
+	)
+	var/mutable_appearance/hand_overlay = mutable_appearance(
+		icon = aug_icon,
+		icon_state = "[get_overlay_state()]_hand",
+		layer = -BODYPARTS_HIGH_LAYER,
+	)
+	return list(arm_overlay, hand_overlay)
+
 /**
  * Called when the mob uses the "drop item" hotkey
  *
@@ -134,8 +132,8 @@
 	active_item.resistance_flags = active_item::resistance_flags
 	if(owner)
 		owner.visible_message(
-			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-			span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [parse_zone(zone)]."),
+			span_notice("[active_item] snaps back into your [parse_zone(zone)]."),
 			span_hear("You hear a short mechanical noise."),
 		)
 
@@ -154,13 +152,12 @@
 		return
 
 	active_item = augment
-
 	active_item.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	ADD_TRAIT(active_item, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	active_item.slot_flags = null
 	active_item.set_custom_materials(null)
 
-	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
+	var/side = zone == BODY_ZONE_R_ARM ? RIGHT_HANDS : LEFT_HANDS
 	var/hand = owner.get_empty_held_index_for_side(side)
 	if(hand)
 		owner.put_in_hand(active_item, hand)
@@ -180,8 +177,8 @@
 			for(var/i in failure_message)
 				to_chat(owner, i)
 			return
-	owner.visible_message(span_notice("[owner] extends [active_item] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-		span_notice("You extend [active_item] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+	owner.visible_message(span_notice("[owner] extends [active_item] from [owner.p_their()] [parse_zone(zone)]."),
+		span_notice("You extend [active_item] from your [parse_zone(zone)]."),
 		span_hear("You hear a short mechanical noise."))
 	playsound(get_turf(owner), extend_sound, 50, TRUE)
 
@@ -217,21 +214,19 @@
 	else
 		Retract()
 
-
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
-		owner.visible_message(span_danger("A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!"))
+		owner.visible_message(span_danger("A loud bang comes from [owner]\'s [parse_zone(zone)]!"))
 		playsound(get_turf(owner), 'sound/items/weapons/flashbang.ogg', 100, TRUE)
-		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!"))
+		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [parse_zone(zone)] as your implant breaks!"))
 		owner.adjust_fire_stacks(20)
 		owner.ignite_mob()
 		owner.adjustFireLoss(25)
 		organ_flags |= ORGAN_FAILING
-
 
 /obj/item/organ/cyberimp/arm/gun/laser
 	name = "arm-mounted laser implant"
@@ -239,22 +234,17 @@
 	icon_state = "arm_laser"
 	items_to_create = list(/obj/item/gun/energy/laser/mounted/augment)
 
-/obj/item/organ/cyberimp/arm/gun/laser/l
-	zone = BODY_ZONE_L_ARM
-
 /obj/item/organ/cyberimp/arm/gun/taser
 	name = "arm-mounted taser implant"
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
 	items_to_create = list(/obj/item/gun/energy/e_gun/advtaser/mounted)
 
-/obj/item/organ/cyberimp/arm/gun/taser/l
-	zone = BODY_ZONE_L_ARM
-
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
 	icon_state = "toolkit_engineering"
+	aug_overlay = "toolkit_engi"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/screwdriver/cyborg,
@@ -265,14 +255,12 @@
 		/obj/item/multitool/cyborg,
 	)
 
-/obj/item/organ/cyberimp/arm/toolset/l
-	zone = BODY_ZONE_L_ARM
-
 //The order of the item list for this implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
 /obj/item/organ/cyberimp/arm/paperwork
 	name = "integrated paperwork implant"
 	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necessary for paperwork handy"
 	icon_state = "toolkit_engineering"
+	aug_overlay = "toolkit_engi"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/pen/fountain,
@@ -283,9 +271,6 @@
 		/obj/item/stamp,
 		/obj/item/stamp/denied,
 	)
-
-/obj/item/organ/cyberimp/arm/paperwork/l
-	zone = BODY_ZONE_L_ARM
 
 /obj/item/organ/cyberimp/arm/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
@@ -315,12 +300,14 @@
 /obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
+	icon_state = "toolkit_surgical"
+	aug_overlay = "toolkit_med"
 	items_to_create = list(/obj/item/gun/medbeam)
-
 
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
+	aug_overlay = "toolkit"
 	items_to_create = list(/obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/flash/Initialize(mapload)
@@ -345,11 +332,13 @@
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
+	aug_overlay = "toolkit"
 	items_to_create = list(/obj/item/borg/stun)
 
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
+	aug_overlay = "toolkit"
 	items_to_create = list(
 		/obj/item/melee/energy/blade/hardlight,
 		/obj/item/gun/medbeam,
@@ -370,6 +359,7 @@
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	icon_state = "toolkit_surgical"
+	aug_overlay = "toolkit_med"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/retractor/augment,
@@ -384,6 +374,7 @@
 /obj/item/organ/cyberimp/arm/surgery/emagged
 	name = "hacked surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm. This one seems to have been tampered with."
+	aug_overlay = "toolkit_med"
 	items_to_create = list(
 		/obj/item/retractor/augment,
 		/obj/item/hemostat/augment,
@@ -407,10 +398,14 @@
 
 	zone = BODY_ZONE_R_ARM
 	slot = ORGAN_SLOT_RIGHT_ARM_MUSCLE
-	right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_MUSCLE
-	left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_MUSCLE
+	valid_zones = list(
+		BODY_ZONE_R_ARM = ORGAN_SLOT_RIGHT_ARM_MUSCLE,
+		BODY_ZONE_L_ARM = ORGAN_SLOT_LEFT_ARM_MUSCLE,
+	)
 
 	actions_types = list()
+	aug_overlay = "strongarm"
+	hand_state = FALSE
 
 	///The amount of damage the implant adds to our unarmed attacks.
 	var/punch_damage = 5
@@ -432,9 +427,6 @@
 	var/slam_cooldown_duration = 5 SECONDS
 	///Tracks how soon we can perform another slam attack
 	COOLDOWN_DECLARE(slam_cooldown)
-
-/obj/item/organ/cyberimp/arm/strongarm/l
-	zone = BODY_ZONE_L_ARM
 
 /obj/item/organ/cyberimp/arm/strongarm/Initialize(mapload)
 	. = ..()

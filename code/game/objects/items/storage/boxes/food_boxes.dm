@@ -46,6 +46,12 @@
 	icon_state = "donkpocketboxbanana"
 	donktype = /obj/item/food/donkpocket/honk
 
+/obj/item/storage/box/donkpockets/donkpocketshell
+	name = "box of Donk Co. 'Donk Spike' flechette shells"
+	desc = "Instructions: DO NOT heat in microwave. Product will remove all hostile threats with cutting edge Donk Co. technology."
+	icon_state = "donkpocketboxshell"
+	donktype = /obj/item/ammo_casing/shotgun/flechette/donk
+
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."

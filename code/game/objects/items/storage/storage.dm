@@ -3,6 +3,7 @@
 	icon = 'icons/obj/storage/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	interaction_flags_click = ALLOW_RESTING|FORBID_TELEKINESIS_REACH
+	action_slots = ALL
 	var/rummage_if_nodrop = TRUE
 	/// Should we preload the contents of this type?
 	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH

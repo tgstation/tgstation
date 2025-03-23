@@ -823,8 +823,8 @@
 		if(length(fish_traits & trait.incompatible_traits))
 			continue
 		// If there's no partner, we've been reated through parthenogenesis or growth, therefore, traits are copied
-		// Otherwise, we do some probability checks.
-		if(!y_traits || ((trait_type in same_traits) ? prob(trait.inheritability) : prob(trait.diff_traits_inheritability)))
+		// Otherwise, we check if both have the trait or perform a probability check.
+		if(!y_traits || (trait_type in same_traits) || prob(trait.inheritability))
 			fish_traits |= trait_type
 			incompatible_traits |= trait.incompatible_traits
 
@@ -1071,13 +1071,13 @@
 	SIGNAL_HANDLER
 	var/avg_width = round(sprite_width * 0.5)
 	var/avg_height = round(sprite_height * 0.5)
-	var/px_min = visual.aquarium_zone_min_px + avg_width - 16
-	var/px_max = visual.aquarium_zone_max_px - avg_width - 16
-	var/py_min = visual.aquarium_zone_min_py + avg_height - 16
-	var/py_max = visual.aquarium_zone_max_py - avg_height - 16
+	var/pw_min = visual.aquarium_zone_min_pw + avg_width - 16
+	var/pw_max = visual.aquarium_zone_max_pw - avg_width - 16
+	var/pz_min = visual.aquarium_zone_min_pz + avg_height - 16
+	var/pz_max = visual.aquarium_zone_max_pz - avg_height - 16
 
-	visual.pixel_x = visual.base_pixel_x = rand(px_min,px_max)
-	visual.pixel_y = visual.base_pixel_y = rand(py_min,py_max)
+	visual.pixel_w = visual.base_pixel_w = rand(pw_min,pw_max)
+	visual.pixel_z = visual.base_pixel_z = rand(pz_min,pz_max)
 
 /obj/item/fish/proc/update_aquarium_animation(datum/source, current_animation, obj/effect/visual, fluid_type)
 	SIGNAL_HANDLER
@@ -1101,40 +1101,40 @@
 	var/avg_width = round(sprite_width / 2)
 	var/avg_height = round(sprite_height / 2)
 
-	var/px_min = visual.aquarium_zone_min_px + avg_width - 16
-	var/px_max = visual.aquarium_zone_max_px - avg_width - 16
-	var/py_min = visual.aquarium_zone_min_py + avg_height - 16
-	var/py_max = visual.aquarium_zone_max_py - avg_width - 16
+	var/pw_min = visual.aquarium_zone_min_pw + avg_width - 16
+	var/pw_max = visual.aquarium_zone_max_pw - avg_width - 16
+	var/pz_min = visual.aquarium_zone_min_pz + avg_height - 16
+	var/pz_max = visual.aquarium_zone_max_pz - avg_width - 16
 
-	var/origin_x = visual.base_pixel_x
-	var/origin_y = visual.base_pixel_y
-	var/prev_x = origin_x
-	var/prev_y = origin_y
-	animate(visual, pixel_x = origin_x, time = 0, loop = -1) //Just to start the animation
+	var/origin_w = visual.base_pixel_w
+	var/origin_z = visual.base_pixel_z
+	var/prev_w = origin_w
+	var/prev_z = origin_z
+	animate(visual, pixel_w = origin_w, time = 0, loop = -1) //Just to start the animation
 	var/move_number = rand(3, 5) //maybe unhardcode this
 	for(var/i in 1 to move_number)
 		//If it's last movement, move back to start otherwise move to some random point
-		var/target_x = i == move_number ? origin_x : rand(px_min,px_max) //could do with enforcing minimal delta for prettier zigzags
-		var/target_y = i == move_number ? origin_y : rand(py_min,py_max)
-		var/dx = prev_x - target_x
-		var/dy = prev_y - target_y
-		prev_x = target_x
-		prev_y = target_y
-		var/dist = abs(dx) + abs(dy)
+		var/target_w = i == move_number ? origin_w : rand(pw_min,pw_max) //could do with enforcing minimal delta for prettier zigzags
+		var/target_z = i == move_number ? origin_z : rand(pz_min,pz_max)
+		var/dist_w = prev_w - target_w
+		var/dist_z = prev_z - target_z
+		prev_w = target_w
+		prev_z = target_z
+		var/dist = abs(dist_w) + abs(dist_z)
 		var/eyeballed_time = dist * 2 //2ds per px
 		//Face the direction we're going
 		var/matrix/dir_mx = matrix(visual.transform)
-		if(dx <= 0) //assuming default sprite is facing left here
+		if(dist_w <= 0) //assuming default sprite is facing left here
 			dir_mx.Scale(-1, 1)
 		animate(transform = dir_mx, time = 0, loop = -1)
-		animate(pixel_x = target_x, pixel_y = target_y, time = eyeballed_time, loop = -1)
+		animate(pixel_w = target_w, pixel_z = target_z, time = eyeballed_time, loop = -1)
 
 /obj/item/fish/proc/dead_animation(obj/effect/aquarium/visual)
 	//Set base_pixel_y to lowest possible value
 	var/avg_height = round(sprite_height / 2)
-	var/py_min = visual.aquarium_zone_min_py + avg_height - 16
-	visual.base_pixel_y = py_min
-	animate(visual, pixel_y = py_min, time = 1) //flop to bottom and end current animation.
+	var/pz_min = visual.aquarium_zone_min_pz + avg_height - 16
+	visual.base_pixel_z = pz_min
+	animate(visual, pixel_z = pz_min, time = 1) //flop to bottom and end current animation.
 
 ///Malus to the beauty value if the fish content is dead
 #define DEAD_FISH_BEAUTY -500

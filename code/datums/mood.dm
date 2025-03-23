@@ -354,7 +354,7 @@
 			if(0 to NUTRITION_LEVEL_STARVING)
 				msg += "[span_boldwarning("I'm starving!")]<br>"
 
-	var/drunkness = mob_parent.get_timed_status_effect_duration(/datum/status_effect/inebriated)
+	var/drunkness = mob_parent.get_drunk_amount()
 	if(drunkness >= 1)
 		msg += span_notice("My current drunkenness: ")
 		switch(drunkness)
@@ -549,7 +549,7 @@
 			sanity_level = SANITY_LEVEL_GREAT
 
 	// Crazy or insane = add some uncommon hallucinations
-	if(sanity_level >= SANITY_CRAZY)
+	if(sanity_level >= SANITY_LEVEL_CRAZY)
 		mob_parent.apply_status_effect(/datum/status_effect/hallucination/sanity)
 	else
 		mob_parent.remove_status_effect(/datum/status_effect/hallucination/sanity)
