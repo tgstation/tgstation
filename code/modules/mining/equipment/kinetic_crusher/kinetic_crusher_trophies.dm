@@ -13,6 +13,8 @@
 	var/trophy_id
 	/// what type of trophies will block this trophy from being added, must be overriden
 	var/denied_type = /obj/item/crusher_trophy
+	/// what item will drop if you cut it with wildhunter's knife
+	var/wildhunter_drop = null
 
 /obj/item/crusher_trophy/examine(mob/living/user)
 	. = ..()

@@ -103,7 +103,7 @@
 
 	var/list/cameras
 
-	///Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
+	/// Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
 	var/area/area_limited_icon_smoothing
 
 	/// The energy usage of the area in the last machines SS tick.
