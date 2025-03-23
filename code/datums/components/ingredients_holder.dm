@@ -53,7 +53,7 @@
 	src.ingredient_type = ingredient_type
 	src.screentip_verb = screentip_verb
 
-	if(!processed_holder)
+	if(!processed_holder || !length(processed_holder.ingredient_names))
 		return
 
 	ingredient_names = processed_holder.ingredient_names
