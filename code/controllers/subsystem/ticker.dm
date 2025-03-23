@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(ticker)
 		"aiff" = TRUE,
 	)
 
-	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
+	var/list/provisional_title_music = flist("[global.config.directory]/title_music/music/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
 
@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(ticker)
 			music -= old_login_music
 		set_lobby_music(pick(music))
 	else
-		set_lobby_music("[global.config.directory]/title_music/sounds/[pick(music)]")
+		set_lobby_music("[global.config.directory]/title_music/music/[pick(music)]")
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase = generate_code_phrase(return_list=TRUE)
