@@ -1195,7 +1195,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
-		if(istext(file)) // ensure that it's actually a file, and not a runtime icon
+		if(isfile(file) && length("[file]")) // ensure that it's actually a file, and not a runtime icon
 			for(var/istate in json_decode(rustg_dmi_icon_states(file)))
 				icon_states_cache[file][istate] = TRUE
 		else // Otherwise, we have to use the slower BYOND proc
