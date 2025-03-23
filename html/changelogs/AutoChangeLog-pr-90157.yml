@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "You can no longer craft balloon armor and weapons without knowing Balloon Sutra"
+  - bugfix: "Air sensors now show up in atmospherics category"
+  - spellcheck: "Fixed grammar/capitalization in crafter/slapcrafting error messages"
+  - code_imp: "Cleaned up some crafting code"

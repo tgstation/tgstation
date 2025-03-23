@@ -5,6 +5,7 @@
 	desc = "A bag for storing extra clothes and shoes."
 	slot_flags = NONE
 	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/bag/garment
 
 /obj/item/storage/bag/garment/captain
 	name = "captain's garment bag"
@@ -38,120 +39,127 @@
 	name = "quartermasters's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the quartermaster."
 
-/obj/item/storage/bag/garment/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.numerical_stacking = FALSE
-	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 15
-	atom_storage.insert_preposition = "in"
-	atom_storage.set_holdable(/obj/item/clothing)
-
 /obj/item/storage/bag/garment/captain/PopulateContents()
-	new /obj/item/clothing/under/rank/captain(src)
-	new /obj/item/clothing/under/rank/captain/skirt(src)
-	new /obj/item/clothing/under/rank/captain/parade(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
-	new /obj/item/clothing/suit/jacket/capjacket(src)
-	new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
-	new /obj/item/clothing/gloves/captain(src)
-	new /obj/item/clothing/head/costume/crown/fancy(src)
-	new /obj/item/clothing/head/hats/caphat(src)
-	new /obj/item/clothing/head/hats/caphat/parade(src)
-	new /obj/item/clothing/neck/cloak/cap(src)
-	new /obj/item/clothing/shoes/laceup(src)
+	return list(
+		/obj/item/clothing/under/rank/captain,
+		/obj/item/clothing/under/rank/captain/skirt,
+		/obj/item/clothing/under/rank/captain/parade,
+		/obj/item/clothing/suit/armor/vest/capcarapace,
+		/obj/item/clothing/suit/armor/vest/capcarapace/captains_formal,
+		/obj/item/clothing/suit/hooded/wintercoat/captain,
+		/obj/item/clothing/suit/jacket/capjacket,
+		/obj/item/clothing/glasses/sunglasses/gar/giga,
+		/obj/item/clothing/gloves/captain,
+		/obj/item/clothing/head/costume/crown/fancy,
+		/obj/item/clothing/head/hats/caphat,
+		/obj/item/clothing/head/hats/caphat/parade,
+		/obj/item/clothing/neck/cloak/cap,
+		/obj/item/clothing/shoes/laceup,
+	)
 
 /obj/item/storage/bag/garment/hop/PopulateContents()
-	new /obj/item/clothing/under/rank/civilian/head_of_personnel(src)
-	new /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt(src)
-	new /obj/item/clothing/suit/armor/vest/hop(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/hop(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/clothing/head/hats/hopcap(src)
-	new /obj/item/clothing/neck/cloak/hop(src)
-	new /obj/item/clothing/shoes/laceup(src)
+	return list(
+		/obj/item/clothing/under/rank/civilian/head_of_personnel,
+		/obj/item/clothing/under/rank/civilian/head_of_personnel/skirt,
+		/obj/item/clothing/suit/armor/vest/hop,
+		/obj/item/clothing/suit/hooded/wintercoat/hop,
+		/obj/item/clothing/glasses/sunglasses,
+		/obj/item/clothing/head/hats/hopcap,
+		/obj/item/clothing/neck/cloak/hop,
+		/obj/item/clothing/shoes/laceup,
+	)
 
 /obj/item/storage/bag/garment/hos/PopulateContents()
-	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/alt(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/alt/skirt(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/grey(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/parade(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
-	new /obj/item/clothing/gloves/tackler/combat(src)
-	new /obj/item/clothing/suit/armor/hos(src)
-	new /obj/item/clothing/suit/armor/hos/hos_formal(src)
-	new /obj/item/clothing/suit/armor/hos/trenchcoat/winter(src)
-	new /obj/item/clothing/suit/armor/vest/leather(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga(src)
-	new /obj/item/clothing/head/hats/hos/beret(src)
-	new /obj/item/clothing/head/hats/hos/cap(src)
-	new /obj/item/clothing/mask/gas/sechailer/swat(src)
-	new /obj/item/clothing/neck/cloak/hos(src)
+	return list(
+		/obj/item/clothing/under/rank/security/head_of_security/skirt,
+		/obj/item/clothing/under/rank/security/head_of_security/alt,
+		/obj/item/clothing/under/rank/security/head_of_security/alt/skirt,
+		/obj/item/clothing/under/rank/security/head_of_security/grey,
+		/obj/item/clothing/under/rank/security/head_of_security/parade,
+		/obj/item/clothing/under/rank/security/head_of_security/parade/female,
+		/obj/item/clothing/gloves/tackler/combat,
+		/obj/item/clothing/suit/armor/hos,
+		/obj/item/clothing/suit/armor/hos/hos_formal,
+		/obj/item/clothing/suit/armor/hos/trenchcoat/winter,
+		/obj/item/clothing/suit/armor/vest/leather,
+		/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch,
+		/obj/item/clothing/glasses/hud/security/sunglasses/gars/giga,
+		/obj/item/clothing/head/hats/hos/beret,
+		/obj/item/clothing/head/hats/hos/cap,
+		/obj/item/clothing/mask/gas/sechailer/swat,
+		/obj/item/clothing/neck/cloak/hos,
+	)
 
 /obj/item/storage/bag/garment/warden/PopulateContents()
-	new /obj/item/clothing/suit/armor/vest/warden(src)
-	new /obj/item/clothing/head/hats/warden(src)
-	new /obj/item/clothing/head/hats/warden/drill(src)
-	new /obj/item/clothing/head/beret/sec/navywarden(src)
-	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
-	new /obj/item/clothing/under/rank/security/warden/formal(src)
-	new /obj/item/clothing/under/rank/security/warden/skirt(src)
-	new /obj/item/clothing/gloves/krav_maga/sec(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
+	return list(
+		/obj/item/clothing/suit/armor/vest/warden,
+		/obj/item/clothing/head/hats/warden,
+		/obj/item/clothing/head/hats/warden/drill,
+		/obj/item/clothing/head/beret/sec/navywarden,
+		/obj/item/clothing/suit/armor/vest/warden/alt,
+		/obj/item/clothing/under/rank/security/warden/formal,
+		/obj/item/clothing/under/rank/security/warden/skirt,
+		/obj/item/clothing/gloves/krav_maga/sec,
+		/obj/item/clothing/glasses/hud/security/sunglasses,
+		/obj/item/clothing/mask/gas/sechailer,
+	)
 
 /obj/item/storage/bag/garment/research_director/PopulateContents()
-	new /obj/item/clothing/under/rank/rnd/research_director(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/skirt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt/skirt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)
-	new /obj/item/clothing/head/beret/science/rd(src)
-	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/clothing/neck/cloak/rd(src)
-	new /obj/item/clothing/shoes/jackboots(src)
+	return list(
+		/obj/item/clothing/under/rank/rnd/research_director,
+		/obj/item/clothing/under/rank/rnd/research_director/skirt,
+		/obj/item/clothing/under/rank/rnd/research_director/alt,
+		/obj/item/clothing/under/rank/rnd/research_director/alt/skirt,
+		/obj/item/clothing/under/rank/rnd/research_director/turtleneck,
+		/obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt,
+		/obj/item/clothing/suit/hooded/wintercoat/science/rd,
+		/obj/item/clothing/head/beret/science/rd,
+		/obj/item/clothing/gloves/color/black,
+		/obj/item/clothing/neck/cloak/rd,
+		/obj/item/clothing/shoes/jackboots,
+	)
 
 /obj/item/storage/bag/garment/chief_medical/PopulateContents()
-	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
-	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
-	new /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs(src)
-	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck(src)
-	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
-	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
-	new /obj/item/clothing/gloves/latex/nitrile(src)
-	new /obj/item/clothing/head/beret/medical/cmo(src)
-	new /obj/item/clothing/head/utility/surgerycap/cmo(src)
-	new /obj/item/clothing/neck/cloak/cmo(src)
-	new /obj/item/clothing/shoes/sneakers/blue (src)
+	return list(
+		/obj/item/clothing/under/rank/medical/chief_medical_officer,
+		/obj/item/clothing/under/rank/medical/chief_medical_officer/skirt,
+		/obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs,
+		/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
+		/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt,
+		/obj/item/clothing/suit/hooded/wintercoat/medical/cmo,
+		/obj/item/clothing/suit/toggle/labcoat/cmo,
+		/obj/item/clothing/gloves/latex/nitrile,
+		/obj/item/clothing/head/beret/medical/cmo,
+		/obj/item/clothing/head/utility/surgerycap/cmo,
+		/obj/item/clothing/neck/cloak/cmo,
+		/obj/item/clothing/shoes/sneakers/blue ,
+	)
 
 /obj/item/storage/bag/garment/engineering_chief/PopulateContents()
-	new /obj/item/clothing/under/rank/engineering/chief_engineer(src)
-	new /obj/item/clothing/under/rank/engineering/chief_engineer/skirt(src)
-	new /obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck(src)
-	new /obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/engineering/ce(src)
-	new /obj/item/clothing/glasses/meson/engine(src)
-	new /obj/item/clothing/gloves/chief_engineer(src)
-	new /obj/item/clothing/head/utility/hardhat/white(src)
-	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
-	new /obj/item/clothing/neck/cloak/ce(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	return list(
+		/obj/item/clothing/under/rank/engineering/chief_engineer,
+		/obj/item/clothing/under/rank/engineering/chief_engineer/skirt,
+		/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck,
+		/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt,
+		/obj/item/clothing/suit/hooded/wintercoat/engineering/ce,
+		/obj/item/clothing/glasses/meson/engine,
+		/obj/item/clothing/gloves/chief_engineer,
+		/obj/item/clothing/head/utility/hardhat/white,
+		/obj/item/clothing/head/utility/hardhat/welding/white,
+		/obj/item/clothing/neck/cloak/ce,
+		/obj/item/clothing/shoes/sneakers/brown,
+	)
 
 /obj/item/storage/bag/garment/quartermaster/PopulateContents()
-	new /obj/item/clothing/under/rank/cargo/qm(src)
-	new /obj/item/clothing/under/rank/cargo/qm/skirt(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/cargo/qm(src)
-	new /obj/item/clothing/suit/utility/fire/firefighter(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/suit/jacket/quartermaster(src)
-	new /obj/item/clothing/head/soft(src)
-	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/clothing/neck/cloak/qm(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	return list(
+		/obj/item/clothing/under/rank/cargo/qm,
+		/obj/item/clothing/under/rank/cargo/qm/skirt,
+		/obj/item/clothing/suit/hooded/wintercoat/cargo/qm,
+		/obj/item/clothing/suit/utility/fire/firefighter,
+		/obj/item/clothing/gloves/fingerless,
+		/obj/item/clothing/suit/jacket/quartermaster,
+		/obj/item/clothing/head/soft,
+		/obj/item/clothing/mask/gas,
+		/obj/item/clothing/neck/cloak/qm,
+		/obj/item/clothing/shoes/sneakers/brown,
+	)

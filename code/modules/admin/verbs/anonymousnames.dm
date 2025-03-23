@@ -196,51 +196,64 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 
 /obj/item/storage/box/wizard_kit
 	name = "Generic Wizard Cosplay Kit"
+	storage_type = /datum/storage/box/wizard
 
 /obj/item/storage/box/wizard_kit/PopulateContents()
-	new /obj/item/clothing/head/wizard(src)
-	new /obj/item/clothing/suit/wizrobe(src)
-	new /obj/item/clothing/shoes/sandal(src)
+	return list(
+		/obj/item/clothing/head/wizard,
+		/obj/item/clothing/suit/wizrobe,
+		/obj/item/clothing/shoes/sandal,
+	)
 
 /obj/item/storage/box/wizard_kit/red
 	name = "Evocation Wizard Cosplay Kit"
 
 /obj/item/storage/box/wizard_kit/red/PopulateContents()
-	new /obj/item/clothing/head/wizard/red(src)
-	new /obj/item/clothing/suit/wizrobe/red(src)
-	new /obj/item/clothing/shoes/sandal(src)
+	return list(
+		/obj/item/clothing/head/wizard/red,
+		/obj/item/clothing/suit/wizrobe/red,
+		/obj/item/clothing/shoes/sandal,
+	)
 
 /obj/item/storage/box/wizard_kit/yellow
 	name = "Translocation Wizard Cosplay Kit"
 
 /obj/item/storage/box/wizard_kit/yellow/PopulateContents()
-	new /obj/item/clothing/head/wizard/yellow(src)
-	new /obj/item/clothing/suit/wizrobe/yellow(src)
-	new /obj/item/clothing/shoes/sandal(src)
+	return list(
+		/obj/item/clothing/head/wizard/yellow,
+		/obj/item/clothing/suit/wizrobe/yellow,
+		/obj/item/clothing/shoes/sandal,
+	)
 
 /obj/item/storage/box/wizard_kit/magusred
 	name = "Conjuration Wizard Cosplay Kit"
 
-/obj/item/storage/box/wizard_kit/yellow/PopulateContents()
-	new /obj/item/clothing/head/wizard/magus(src)
-	new /obj/item/clothing/suit/wizrobe/magusred(src)
-	new /obj/item/clothing/shoes/sandal(src)
+/obj/item/storage/box/wizard_kit/magusred/PopulateContents()
+	return list(
+		/obj/item/clothing/head/wizard/magus,
+		/obj/item/clothing/suit/wizrobe/magusred,
+		/obj/item/clothing/shoes/sandal,
+	)
 
 /obj/item/storage/box/wizard_kit/magusblue
 	name = "Transmutation Wizard Cosplay Kit"
 
-/obj/item/storage/box/wizard_kit/yellow/PopulateContents()
-	new /obj/item/clothing/head/wizard/magus(src)
-	new /obj/item/clothing/suit/wizrobe/magusblue(src)
-	new /obj/item/clothing/shoes/sandal(src)
+/obj/item/storage/box/wizard_kit/magusblue/PopulateContents()
+	return list(
+		/obj/item/clothing/head/wizard/magus,
+		/obj/item/clothing/suit/wizrobe/magusblue,
+		/obj/item/clothing/shoes/sandal,
+	)
 
 /obj/item/storage/box/wizard_kit/black
 	name = "Necromancy Wizard Cosplay Kit"
 
 /obj/item/storage/box/wizard_kit/black/PopulateContents()
-	new /obj/item/clothing/head/wizard/black(src)
-	new /obj/item/clothing/suit/wizrobe/black(src)
-	new /obj/item/clothing/shoes/sandal(src)
+	return list(
+		/obj/item/clothing/head/wizard/black,
+		/obj/item/clothing/suit/wizrobe/black,
+		/obj/item/clothing/shoes/sandal,
+	)
 
 /datum/anonymous_theme/spider_clan
 	name = "Spider Clan"
