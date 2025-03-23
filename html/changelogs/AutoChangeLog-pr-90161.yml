@@ -1,0 +1,4 @@
+author: "MelokGleb"
+delete-after: True
+changes:
+  - spellcheck: "fixed a typo in actor role conditions"
