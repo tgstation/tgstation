@@ -429,25 +429,24 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				to_chat(holder, span_warning("Number of portals and mobs to spawn must be at least 1."), confidential = TRUE)
 				return
 
-			var/mob/pathToSpawn = prefs["typepath"]["value"]
-			if (!ispath(pathToSpawn))
-				pathToSpawn = text2path(pathToSpawn)
+			var/mob/path_to_spawn = prefs["typepath"]["value"]
+			if (!ispath(path_to_spawn))
+				path_to_spawn = text2path(path_to_spawn)
 
-			if (!ispath(pathToSpawn))
-				to_chat(holder, span_notice("Invalid path [pathToSpawn]."), confidential = TRUE)
+			if (!ispath(path_to_spawn))
+				to_chat(holder, span_notice("Invalid path [path_to_spawn]."), confidential = TRUE)
 				return
 
 			var/list/candidates = list()
 
 			if (prefs["offerghosts"]["value"] == "Yes")
-				candidates = SSpolling.poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), check_jobban = ROLE_TRAITOR, alert_pic = pathToSpawn, role_name_text = "portal storm")
-
-			if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
-				message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
-				return
+				candidates = SSpolling.poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(path_to_spawn.name)), check_jobban = ROLE_TRAITOR, alert_pic = path_to_spawn, role_name_text = "portal storm")
+				if (length(candidates) < prefs["minplayers"]["value"])
+					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
+					return
 
 			if (prefs["announce_players"]["value"] == "Yes")
-				portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
+				portal_announce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
 
 			var/list/storm_appearances = list()
 			for(var/offset in 0 to SSmapping.max_plane_offset)
@@ -456,8 +455,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				storm.color = prefs["color"]["value"]
 				storm_appearances += storm
 
-			message_admins("[key_name_admin(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
-			log_admin("[key_name(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
+			message_admins("[key_name_admin(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [path_to_spawn]")
+			log_admin("[key_name(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [path_to_spawn]")
 
 			var/outfit = prefs["humanoutfit"]["value"]
 			if (!ispath(outfit))
@@ -468,9 +467,9 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					var/ghostcandidates = list()
 					for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
 						ghostcandidates += pick_n_take(candidates)
-						addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(doPortalSpawn), get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm_appearances, ghostcandidates, outfit), i*prefs["delay"]["value"])
+						addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(do_portal_spawn), get_random_station_turf(), path_to_spawn, length(ghostcandidates), storm_appearances, ghostcandidates, outfit), i * prefs["delay"]["value"])
 				else if (prefs["playersonly"]["value"] != "Yes")
-					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(doPortalSpawn), get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm_appearances, null, outfit), i*prefs["delay"]["value"])
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(do_portal_spawn), get_random_station_turf(), path_to_spawn, prefs["amount"]["value"], storm_appearances, null, outfit), i * prefs["delay"]["value"])
 
 		if("changebombcap")
 			if(!is_funmin)
@@ -687,7 +686,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 #undef THUNDERDOME_TEMPLATE_FILE
 #undef HIGHLANDER_DELAY_TEXT
 
-/proc/portalAnnounce(announcement, playlightning)
+/proc/portal_announce(announcement, playlightning)
 	set waitfor = FALSE
 	if (playlightning)
 		sound_to_playing_players('sound/effects/magic/lightning_chargeup.ogg')
@@ -699,7 +698,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 
 /// Spawns a portal storm that spawns in sentient/non sentient mobs
 /// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use
-/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
+/proc/do_portal_spawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
 	for (var/i in 1 to numtospawn)
 		var/mob/spawnedMob = new mobtype(loc)
 		if (length(players))

@@ -124,16 +124,15 @@
 	ertemplate.use_custom_shuttle = prefs["use_custom_shuttle"]["value"] == "Yes"
 	ertemplate.mob_type = prefs["mob_type"]["value"]
 
-	var/list/spawnpoints = GLOB.emergencyresponseteamspawn
-	var/index = 0
+	var/list/spawn_points = GLOB.emergencyresponseteamspawn
 
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [span_notice(ertemplate.polldesc)]?", check_jobban = "deathsquad", alert_pic = /obj/item/card/id/advanced/centcom/ert, role_name_text = "emergency response team")
-	var/teamSpawned = FALSE
+	var/team_spawned = 0
 
-	// This list will take priority over spawnpoints if not empty
+	// This list will take priority over spawn_points if not empty
 	var/list/spawn_turfs = list()
 
-	// Takes precedence over spawnpoints[1] if not null
+	// Takes precedence over spawn_points[1] if not null
 	var/turf/brief_spawn
 
 	if(!length(candidates))
@@ -162,7 +161,7 @@
 				brief_spawn = get_turf(locate(/obj/effect/landmark/ert_shuttle_brief_spawn) in affected_turf)
 
 		if(!length(spawn_turfs))
-			stack_trace("ERT shuttle loaded but found no spawnpoints, placing the ERT at wherever inside the shuttle instead.")
+			stack_trace("ERT shuttle loaded but found no spawn points, placing the ERT at wherever inside the shuttle instead.")
 
 			for(var/turf/open/floor/open_turf in shuttle_turfs)
 				if(!is_safe_turf(open_turf))
@@ -172,7 +171,7 @@
 
 	if(ertemplate.spawn_admin)
 		if(isobserver(usr))
-			var/mob/living/carbon/human/admin_officer = new (brief_spawn || spawnpoints[1])
+			var/mob/living/carbon/human/admin_officer = new (brief_spawn || spawn_points[1])
 			var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
 			usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
 			admin_officer.equipOutfit(chosen_outfit)
@@ -213,14 +212,14 @@
 	else
 		earmarked_leader = pick(candidates)
 
+	var/spawn_index = 0
 	while(numagents && candidates.len)
 		var/turf/spawnloc
 		if(length(spawn_turfs))
 			spawnloc = pick(spawn_turfs)
 		else
-			spawnloc = spawnpoints[index+1]
-			//loop through spawnpoints one at a time
-			index = (index + 1) % spawnpoints.len
+			spawnloc = spawn_points[spawn_index+1]
+			spawn_index = WRAP_UP(spawn_index, spawn_points.len)
 
 		var/mob/dead/observer/chosen_candidate = earmarked_leader || pick(candidates) // this way we make sure that our leader gets chosen
 		candidates -= chosen_candidate
@@ -257,9 +256,9 @@
 		//Logging and cleanup
 		ert_operative.log_message("has been selected as \a [ert_antag.name].", LOG_GAME)
 		numagents--
-		teamSpawned++
+		team_spawned++
 
-	if (teamSpawned)
+	if (team_spawned != 0)
 		message_admins("[ertemplate.polldesc] has spawned with the mission: [ertemplate.mission]")
 
 	//Open the Armory doors
