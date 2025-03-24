@@ -30,7 +30,7 @@
 
 /// Makes the owner terrified of darkness
 /datum/terror_handler/simple_source/nyctophobia
-	buildup_per_second = 10 // Takes about a minute to reach maximum
+	buildup_per_second = 5 // Takes about two minutes to reach maximum
 
 /datum/terror_handler/simple_source/nyctophobia/Destroy(force)
 	owner.clear_mood_event("nyctophobia")
