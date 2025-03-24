@@ -3,9 +3,6 @@
 /// increasing this too high can result in severe lag so please be careful
 #define MAX_TURFS_PER_TICK 500
 
-/// Weather reagent volume applied to randomly selected turfs/objects is scaled by this multiplier to compensate for reduced processing frequency.
-#define TURF_REAGENT_VOLUME_MULTIPLIER 3
-
 /**
  * Causes weather to occur on a z level in certain area types
  *
@@ -122,6 +119,9 @@
 	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
 	var/list/subsystem_tasks = list()
 
+	/// The temperature of our weather that is applied to weather reagents and mobs using adjust_bodytemperature()
+	var/weather_temperature = T20C
+
 	/// A list (supports regular, nested, and weighted) of possible reagents that will rain down from the sky.
 	/// Only one of these will be selected to be used as the reagent
 	var/list/whitelist_weather_reagents
@@ -156,6 +156,7 @@
 		weather_reagent_holder = new(null) // spawns in nullspace
 		weather_reagent_holder.create_reagents(WEATHER_REAGENT_VOLUME, NO_REACT)
 		weather_reagent_holder.reagents.add_reagent(reagent_id, WEATHER_REAGENT_VOLUME)
+		weather_reagent_holder.reagents.set_temperature(weather_temperature)
 
 	if(weather_flags & (WEATHER_MOBS))
 		subsystem_tasks += SSWEATHER_MOBS
@@ -364,6 +365,18 @@
  * Affects the mob with whatever the weather does
  */
 /datum/weather/proc/weather_act_mob(mob/living/living)
+	var/temperature_delta = weather_temperature - living.bodytemperature
+	if(iscarbon(living))
+		var/mob/living/carbon/carbon_living = living
+		var/insulation_flag = !(weather_flags & WEATHER_TEMPERATURE_BYPASS_CLOTHING)
+		carbon_living.adjust_bodytemperature(temperature_delta, use_insulation=insulation_flag, use_steps=TRUE)
+	else // stolen from carbon/adjust_bodytemperature() which should really be universally applied to living/adjust_bodytemperature()
+		// Use the bodytemp divisors to get the change step, with max step size
+		temperature_delta = (temperature_delta > 0) ? (temperature_delta / BODYTEMP_HEAT_DIVISOR) : (temperature_delta / BODYTEMP_COLD_DIVISOR)
+		// Clamp the results to the min and max step size
+		temperature_delta = (temperature_delta > 0) ? min(temperature_delta, BODYTEMP_HEATING_MAX) : max(temperature_delta, BODYTEMP_COOLING_MAX)
+		living.adjust_bodytemperature(temperature_delta)
+
 	if(!weather_reagent || !weather_reagent_holder || living.IsObscured())
 		return
 
@@ -496,4 +509,3 @@
 	return gen_overlay_cache
 
 #undef MAX_TURFS_PER_TICK
-#undef TURF_REAGENT_VOLUME_MULTIPLIER
