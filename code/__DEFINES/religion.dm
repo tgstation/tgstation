@@ -54,3 +54,10 @@
 #define PUNISHMENT_LIGHTNING "lightningbolt"
 ///brands the sinner
 #define PUNISHMENT_BRAND "brand"
+
+/// Failed to bless the target, beat them over the head
+#define BLESSING_FAILED "failed"
+/// Blessed unsuccessfully, no limbs to heal, robotic limbs, etc
+#define BLESSING_IGNORED "ignored"
+/// Blessed successfully by healing or whatever
+#define BLESSING_SUCCESS "success"
