@@ -46,6 +46,10 @@
 	var/is_flipped = FALSE
 	/// Whether or not when flipped, it ignores PASS_GLASS flag
 	var/is_transparent = FALSE
+	/// Whether or not to use an override sprite for flipped tables, else. uses matrices.
+	var/override_sprite = FALSE
+	/// Matrix to return to on unflipping table
+	var/matrix/original_matrix
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -54,7 +58,9 @@
 	if(stack_used)
 		apply_stack_properties(stack_used)
 
+	original_matrix = transform
 	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
+
 	if(can_flip)
 		if(!is_flipped)
 			unflip_table()
@@ -102,7 +108,10 @@
 	layer = TABLE_LAYER
 	smoothing_flags |= SMOOTH_BITMASK
 	pass_flags_self |= PASSTABLE
-	icon = initial(icon)
+	if(override_sprite)
+		icon = initial(icon)
+	else
+		animate(src, transform = original_matrix, time = 0)
 	icon_state = initial(icon_state)
 	smoothing_groups = on_init_smoothed_vars[1]
 	canSmoothWith = on_init_smoothed_vars[2]
@@ -137,8 +146,23 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	pass_flags_self &= ~PASSTABLE
-	icon = 'icons/obj/flipped_tables.dmi'
-	icon_state = base_icon_state
+
+	if(override_sprite)
+		icon = 'icons/obj/flipped_tables.dmi'
+		icon_state = base_icon_state
+	else
+		icon_state = initial(icon_state)
+		original_matrix = transform
+		var/matrix/transform_matrix = matrix(1, 0, 0, 0, 0.350, 9) // "flips" the table
+		//there's probably a nicer way to do this but whatever. rotates the table according to the dir
+		if(dir == EAST)
+			transform_matrix.Turn(90)
+		if(dir == SOUTH)
+			transform_matrix.Turn(180)
+		if(dir == WEST)
+			transform_matrix.Turn(270)
+		animate(src, transform = transform_matrix, time = 0)
+
 	update_appearance()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	is_flipped = TRUE
@@ -745,6 +769,7 @@
 	buildstack = /obj/item/stack/tile/carpet
 	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
+	override_sprite = TRUE //looks shit if we used matrices on these
 
 /obj/structure/table/wood/fancy/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()

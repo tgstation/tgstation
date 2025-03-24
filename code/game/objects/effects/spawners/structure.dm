@@ -380,6 +380,7 @@ again.
 /obj/effect/spawner/structure/flipped_table
 	name = "flipped table spawner"
 	icon = 'icons/obj/flipped_tables.dmi'
+	icon_state = "table"
 	///just change this whatever table type you want, has to be a table subtype though.
 	var/table_to_spawn = /obj/structure/table
 
