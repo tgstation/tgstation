@@ -36,9 +36,13 @@
 
 /datum/unit_test/design_source/Run()
 	var/list/all_designs = list()
+	var/list/exceptions = list(
+		/datum/design/surgery/healing, // Ignored due to the above test
+	)
+
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
 		var/design_id = design::id
-		if (design_id == DESIGN_ID_IGNORE)
+		if (design_id == DESIGN_ID_IGNORE || (design in exceptions))
 			continue
 		if (design_id in all_designs)
 			TEST_FAIL("Design [design] shares an ID \"[design_id]\" with another design")
