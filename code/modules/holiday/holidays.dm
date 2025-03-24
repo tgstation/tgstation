@@ -1,3 +1,6 @@
+/// List of all holiday-related mail. Do not edit this directly, instead add to var/list/holiday_mail
+GLOBAL_LIST_INIT(holiday_mail, list())
+
 /datum/holiday
 	///Name of the holiday itself. Visible to players.
 	var/name = "If you see this the holiday calendar code is broken"
@@ -20,8 +23,10 @@
 	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
 	///If this is defined, drones/assistants without a default hat will spawn with this item in their head clothing slot.
 	var/obj/item/holiday_hat
-	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
-	var/mail_holiday = FALSE
+	///When this holiday is active, does this prevent mail from arriving to cargo? Overrides var/list/holiday_mail. Try not to use this for longer holidays.
+	var/no_mail_holiday = FALSE
+	/// The list of items we add to the mail pool. Can either be a weighted list or a normal list. Leave empty for nothing.
+	var/list/holiday_mail = list()
 	var/poster_name = "generic celebration poster"
 	var/poster_desc = "A poster for celebrating some holiday. Unfortunately, its unfinished, so you can't see what the holiday is."
 	var/poster_icon = "holiday_unfinished"
@@ -32,8 +37,10 @@
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
-	if(mail_holiday)
+	if(no_mail_holiday)
 		SSeconomy.mail_blocked = TRUE
+	if(LAZYLEN(holiday_mail) && !no_mail_holiday)
+		GLOB.holiday_mail += holiday_mail
 	return
 
 // When the round starts, this proc is ran to get a text message to display to everyone to wish them a happy holiday
@@ -155,6 +162,7 @@
 	begin_day = 13
 	end_day = 15
 	begin_month = FEBRUARY
+	holiday_mail = list(/obj/item/food/chocolatebar)
 	poster_name = "lovey poster"
 	poster_desc = "A poster celebrating all the relationships built today. Of course, you probably don't have one."
 	poster_icon = "holiday_love"
@@ -253,6 +261,7 @@
 	begin_day = 1
 	end_day = 2
 	holiday_hat = /obj/item/clothing/head/chameleon/broken
+	holiday_mail = list(/obj/effect/spawner/random/cube_all)
 	always_celebrate = TRUE
 
 /datum/holiday/april_fools/celebrate()
@@ -329,7 +338,7 @@
 	begin_day = 1
 	begin_month = MAY
 	holiday_hat = /obj/item/clothing/head/utility/hardhat
-	mail_holiday = TRUE
+	no_mail_holiday = TRUE
 
 //Draconic Day is celebrated on May 3rd, the date on which the Draconic language was merged (#26780)
 /datum/holiday/draconic_day
@@ -427,7 +436,7 @@
 	timezones = list(TIMEZONE_EDT, TIMEZONE_CDT, TIMEZONE_MDT, TIMEZONE_MST, TIMEZONE_PDT, TIMEZONE_AKDT, TIMEZONE_HDT, TIMEZONE_HST)
 	begin_day = 4
 	begin_month = JULY
-	mail_holiday = TRUE
+	no_mail_holiday = TRUE
 	holiday_hat = /obj/item/clothing/head/cowboy/brown
 	holiday_colors = list(
 		COLOR_OLD_GLORY_BLUE,
@@ -452,7 +461,7 @@
 	begin_day = 14
 	begin_month = JULY
 	holiday_hat = /obj/item/clothing/head/beret
-	mail_holiday = TRUE
+	no_mail_holiday = TRUE
 	holiday_colors = list(
 		COLOR_FRENCH_BLUE,
 		COLOR_WHITE,
@@ -719,7 +728,7 @@
 	begin_month = DECEMBER
 	end_day = 27
 	holiday_hat = /obj/item/clothing/head/costume/santa
-	mail_holiday = TRUE
+	no_mail_holiday = TRUE
 	holiday_colors = list(
 		COLOR_CHRISTMAS_GREEN,
 		COLOR_CHRISTMAS_RED,
@@ -760,7 +769,7 @@
 	end_day = 2
 	end_month = JANUARY
 	holiday_hat = /obj/item/clothing/head/costume/festive
-	mail_holiday = TRUE
+	no_mail_holiday = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
 	return pick("Party","New","Hangover","Resolution", "Auld")

@@ -37,7 +37,7 @@
 		'sound/items/bikehorn.ogg'
 	)
 
-
+/// If you put this in an Initialize() function, be sure to put `ismapload = mapload.`
 /datum/component/cuboid/Initialize(cube_rarity = COMMON_CUBE, isreference = FALSE, ismapload = FALSE)
 	. = ..()
 	update_rarity(cube_rarity, isreference, ismapload)

@@ -40,21 +40,41 @@
 	loot = all_cubelists[cube_rarity]
 	return ..()
 
+/obj/effect/spawner/random/cube/three
+	name = "cube spawner (Common)x3"
+	spawn_loot_count = 3
+
 /obj/effect/spawner/random/cube/uncommon
 	name = "cube spawner (Uncommon)"
 	cube_rarity = UNCOMMON_CUBE
+
+/obj/effect/spawner/random/cube/uncommon/three
+	name = "cube spawner (Uncommon)x3"
+	spawn_loot_count = 3
 
 /obj/effect/spawner/random/cube/rare
 	name = "cube spawner (Rare)"
 	cube_rarity = RARE_CUBE
 
+/obj/effect/spawner/random/cube/rare/three
+	name = "cube spawner (Rare)x3"
+	spawn_loot_count = 3
+
 /obj/effect/spawner/random/cube/epic
 	name = "cube spawner (Epic)"
 	cube_rarity = EPIC_CUBE
 
+/obj/effect/spawner/random/cube/epic/three
+	name = "cube spawner (Epic)x3"
+	spawn_loot_count = 3
+
 /obj/effect/spawner/random/cube/legendary
 	name = "cube spawner (Legendary)"
 	cube_rarity = LEGENDARY_CUBE
+
+/obj/effect/spawner/random/cube/legendary/three
+	name = "cube spawner (Legendary)x3"
+	spawn_loot_count = 3
 
 /obj/effect/spawner/random/cube/mythical
 	name = "cube spawner (Mythical)"

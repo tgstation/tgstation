@@ -321,10 +321,10 @@
 				M.mineralAmt = scale_ore_to_vent()
 				GLOB.post_ore_random["[M.mineralAmt]"] += 1
 				src = M
-				M.levelupdate()
+				M.levelupdate(mapload)
 			else
 				src = T
-				T.levelupdate()
+				T.levelupdate(mapload)
 
 		else
 			Change_Ore(path, FALSE)

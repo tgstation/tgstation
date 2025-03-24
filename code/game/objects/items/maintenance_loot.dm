@@ -52,6 +52,8 @@
 	AddComponent(/datum/component/loads_avatar_gear, \
 		load_callback = CALLBACK(src, PROC_REF(shockingly_improve_avatar)), \
 	)
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE, ismapload = mapload)
 
 // Give our owner shock touch when entering the digital realm
 /obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)

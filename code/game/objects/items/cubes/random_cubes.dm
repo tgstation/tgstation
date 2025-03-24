@@ -3,6 +3,7 @@
 	name = "random Common Cube"
 	desc = "A cube that's full of surprises!"
 	tool_behaviour = null
+	light_system = OVERLAY_LIGHT
 	/// Used for cubes that create more cubes
 	var/static/list/random_rarity_list = list(
 		/obj/effect/spawner/random/cube,
@@ -25,8 +26,6 @@
 	var/lasergun = FALSE
 	/// If this is true, we wait for someone to pick us up and then register a leash component to them.
 	var/ready_leash = FALSE
-	/// If we have a bane, the species that we are baneful to
-	var/datum/species/bane
 	/// If we're going to reverse the holder's movements
 	var/reverse_movements = FALSE
 	/// Speen
@@ -53,6 +52,8 @@
 
 /obj/item/cube/random/Destroy(force)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	QDEL_NULL(light)
+	handle_dropping()
 	return ..()
 
 /obj/item/cube/random/examine(mob/user)
@@ -64,8 +65,6 @@
 			for(var/tbehavior in cube_tools)
 				cube_tool_examine += "- [tbehavior]\n"
 		. += boxed_message(cube_tool_examine)
-	if((cube_examine_flags & CUBE_IGNITER))
-		. += span_warning("It will ignite anything it hits!")
 	if((cube_examine_flags & CUBE_EGG))
 		. += span_notice("It's going to hatch!")
 	if((cube_examine_flags & CUBE_BUTCHER))
@@ -78,8 +77,6 @@
 		. += span_sans("It looks pretty funny!")
 	if((cube_examine_flags & CUBE_SURGICAL))
 		. += span_notice("It can be used to start surgery!")
-	if(bane)
-		. += span_warning("It deals extra damage to [bane.plural_form ? bane.plural_form : bane.name]")
 	if((cube_examine_flags & CUBE_VAMPIRIC))
 		. += span_warning("It heals you when you hit enemies!")
 	if((cube_examine_flags & CUBE_GPS))
@@ -91,7 +88,7 @@
 	if((cube_examine_flags & CUBE_WEAPON))
 		. += span_warning("It's much more powerful!")
 	if((cube_examine_flags & CUBE_FISH))
-		. += span_notice("It's moving around like deep water...")
+		. += span_notice("It's rippling like deep water. It looks like something's moving inside...")
 	if((cube_examine_flags & CUBE_FAITH))
 		. += span_notice("It's emitting a holy light!")
 	if(ready_leash)
@@ -130,143 +127,55 @@
 /// Random cube effects
 /obj/item/cube/random/proc/give_random_effects()
 	if(prob(10*rarity))
-		// A little something for free that barely anyone will notice
+		// I'll be surprised if anyone even tests for this, but I still think it's funny
 		AddElement(/datum/element/ignites_matches)
 	/// All the possible effects random cubes can have. Gets pick()-ed once per rarity level, removing previous picks to not have repeats
 	var/list/possible_cube_effects = list(
-	"Edible",
-	"Chemical",
-	"Circuit",
-	"Boomerang",
-	"Tool",
-	"Laser Gun",
-	"Melee",
-	"Storage",
-	"Weight",
-	"Butcher",
-	"Bake",
-	"Egg",
-	"Fishing Spot",
-	"GPS",
-	"Igniter",
-	"Leashed",
-	"Religious",
-	"Scope",
-	"Funny",
-	"Squeak",
-	"Surgical",
-	"Bane",
-	"Reverse",
-	"Vampire",
-	"Speen",
-	"Material",
-	"Lamp",
-	"Gravity",
+		PROC_REF(make_food),
+		PROC_REF(make_reagents),
+		PROC_REF(make_circuit),
+		PROC_REF(make_boomerang),
+		PROC_REF(make_tool),
+		PROC_REF(make_laser),
+		PROC_REF(make_melee),
+		PROC_REF(make_storage),
+		PROC_REF(make_weight),
+		PROC_REF(make_butcher),
+		PROC_REF(make_bake),
+		PROC_REF(make_egg),
+		PROC_REF(make_fishing),
+		PROC_REF(make_gps),
+		PROC_REF(make_fantasy),
+		PROC_REF(make_leashed),
+		PROC_REF(make_holy),
+		PROC_REF(make_scope),
+		PROC_REF(make_funny),
+		PROC_REF(make_toy),
+		PROC_REF(make_surgical),
+		PROC_REF(make_reverse),
+		PROC_REF(make_vampire),
+		PROC_REF(make_speen),
+		PROC_REF(make_material),
+		PROC_REF(make_lamp),
+		PROC_REF(make_gravity),
 	)
-	// It looks big and scary but it's just a giant switch() function that applies components/elements. If a section would have been too long it was made its own proc.
+
 	for(var/i in 1 to rarity)
 		var/rand_swap = pick(possible_cube_effects)
-		switch(rand_swap)
-			if("Edible")
-				make_food()
-			if("Chemical")
-				make_reagents()
-			if("Circuit")
-				AddComponent(/datum/component/shell, list(
-				new /obj/item/circuit_component/cube()
-				), SHELL_CAPACITY_SMALL)
-				cube_examine_flags |= CUBE_CIRCUIT
-			if("Boomerang")
-				AddComponent(/datum/component/boomerang, boomerang_throw_range = (throw_range + rarity), examine_message = "When thrown, [src] will return after [rarity] meters!")
-			if("Tool")
-				make_tool()
-			if("Laser Gun")
-				cube_examine_flags |= CUBE_LASER
-				lasergun = TRUE
-			if("Melee")
-				cube_examine_flags |= CUBE_WEAPON
-				AddElement(/datum/element/kneecapping)
-				force = 3 * rarity
-				wound_bonus = rarity
-				throwforce = 3*rarity
-				demolition_mod = 1.05*round(rarity/4)
-			if("Storage")
-				create_storage(rarity, rarity, (rarity * 7))
-				cube_examine_flags |= CUBE_STORAGE
-			if("Weight")
-				w_class = clamp(6-rarity, 1, 5)
-				AddElement(/datum/element/falling_hazard, damage = 2 * rarity, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
-			if("Butcher")
-				AddComponent(/datum/component/butchering, speed = round(10 SECONDS/rarity), effectiveness = 100-round(50/rarity))
-				cube_examine_flags |= CUBE_BUTCHER
-			if("Bake")
-				AddComponent( /datum/component/bakeable, random_rarity_list[rarity], rand(15 SECONDS, 15 * clamp(round(7-rarity), COMMON_CUBE, MYTHICAL_CUBE)), TRUE, TRUE)
-			if("Egg")
-				AddComponent( /datum/component/fertile_egg, embryo_type = random_rarity_list[rarity], minimum_growth_rate = 1*rarity, maximum_growth_rate = 2*rarity, total_growth_required = round(1000/rarity), current_growth = 0)
-				cube_examine_flags |= CUBE_EGG
-			if("Fishing Spot")
-				AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/cube])
-				cube_examine_flags |= CUBE_FISH
-			if("GPS")
-				AddComponent(/datum/component/gps, "[src]")
-				cube_examine_flags |= CUBE_GPS
-			if("Igniter")
-				AddComponent(/datum/component/igniter, rarity)
-				cube_examine_flags |= CUBE_IGNITER
-			if("Leashed")
-				ready_leash = TRUE
-			if("Religious")
-				AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, force_catalyst_afterattack = FALSE, charges = rarity)
-				cube_examine_flags |= CUBE_FAITH
-			if("Scope")
-				AddComponent(/datum/component/scope, range_modifier = rarity)
-			if("Funny")
-				AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
-				cube_examine_flags |= CUBE_FUNNY
-				AddComponent(/datum/component/slippery, knockdown = rarity SECONDS, lube_flags = NO_SLIP_WHEN_WALKING)
-			if("Squeak")
-				AddComponent(/datum/component/squeak)
-				AddElement(/datum/element/toy_talk)
-			if("Surgical")
-				AddComponent(/datum/component/surgery_initiator)
-				cube_examine_flags |= CUBE_SURGICAL
-			if("Bane")
-				bane = pick(typecacheof(/datum/species, ignore_root_path = TRUE))
-				AddElement(/datum/element/bane, target_type = bane, damage_multiplier = round(rarity/10,0.1))
-			if("Reverse")
-				reverse_movements = TRUE
-			if("Vampire")
-				AddElement(/datum/element/lifesteal, flat_heal = rarity)
-				cube_examine_flags |= CUBE_VAMPIRIC
-			if("Speen")
-				speen = TRUE
-			if("Material")
-				make_material()
-			if("Lamp")
-				light_range = rarity
-				light_power = 1 + round(rarity/10,0.1)
-				light_color = cube_color
-				light_system = OVERLAY_LIGHT
-				update_light()
-			if("Gravity")
-				var/list/gravweights = list()
-				gravweights[ZERO_GRAVITY] = 90
-				gravweights[NEGATIVE_GRAVITY] = rarity
-				funnygrav = pick_weight(gravweights)
-
+		call(src, rand_swap)()
 		possible_cube_effects -= rand_swap
 
 /// Make the cube a food w/ random consumable reagents
 /obj/item/cube/random/proc/make_food()
 	if(!reagents)
 		create_reagents(50, INJECTABLE | DRAWABLE | pick(AMOUNT_VISIBLE, TRANSPARENT) | pick(SEALED_CONTAINER, OPENCONTAINER))
-	var/list/cube_reagents
+	var/list/cube_reagents = list()
 	var/cube_foodtypes
-	var/list/cube_tastes
+	var/list/cube_tastes = list()
 	for(var/r in 1 to rarity)
-		cube_reagents += list(subtypesof(/datum/reagent/consumable) = rand(2,5*rarity))
+		cube_reagents[get_random_consumable_reagent_id()] += rand(2,5*rarity)
 		cube_foodtypes |= get_random_bitflag("foodtypes")
-		cube_tastes += list("[pick(GLOB.adjectives)]" = rand(1,rarity))
+		cube_tastes[pick(GLOB.adjectives)] += rand(1,rarity)
 
 	AddComponentFrom(
 		SOURCE_EDIBLE_INNATE,\
@@ -289,6 +198,131 @@
 	/// Try to make it less likely to explode you by normalizing the temp
 	var/temp_raw = rand(0, rarity*150)
 	reagents.set_temperature(round((temp_raw/(rarity*150))**2*(rarity*150)))
+
+/// Makes it a circuit shell
+/obj/item/cube/random/proc/make_circuit()
+	AddComponent(/datum/component/shell, list(
+	new /obj/item/circuit_component/cube()
+	), SHELL_CAPACITY_SMALL)
+	cube_examine_flags |= CUBE_CIRCUIT
+
+/// Makes it a boomerang. For some reason a lot of these component procs won't work if I break it into lines like lists, so they're a bit wide
+/obj/item/cube/random/proc/make_boomerang()
+	AddComponent(/datum/component/boomerang, boomerang_throw_range = max(throw_range + (rarity-6),1), examine_message = "When thrown, [src] will return after [max(throw_range + (rarity-6),1)] meters!")
+
+/// Makes it shoot lasers
+/obj/item/cube/random/proc/make_laser()
+	cube_examine_flags |= CUBE_LASER
+	lasergun = TRUE
+
+/// Increases melee damage
+/obj/item/cube/random/proc/make_melee()
+	cube_examine_flags |= CUBE_WEAPON
+	AddElement(/datum/element/kneecapping)
+	force = 3 * rarity
+	wound_bonus = rarity
+	throwforce = 3*rarity
+	demolition_mod = 1.05*round(rarity/4)
+
+/// Makes it a storage object
+/obj/item/cube/random/proc/make_storage()
+	create_storage(rarity, rarity, (rarity * 7))
+	cube_examine_flags |= CUBE_STORAGE
+
+/// Edits the weight of the cube based off the rarity, and forces it to be dense
+/obj/item/cube/random/proc/make_weight()
+	w_class = clamp(7-rarity, 1, 5)
+	AddElement(/datum/element/falling_hazard, damage = 2 * rarity, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
+
+/// Lets you butcher mobs wtih it
+/obj/item/cube/random/proc/make_butcher()
+	AddComponent(/datum/component/butchering, speed = round(10 SECONDS/rarity), effectiveness = 100-round(50/rarity))
+	cube_examine_flags |= CUBE_BUTCHER
+
+/// You can bake it to reroll it
+/obj/item/cube/random/proc/make_bake()
+	AddComponent( /datum/component/bakeable, random_rarity_list[rarity], rand(15 SECONDS, 15 * clamp(round(7-rarity), COMMON_CUBE, MYTHICAL_CUBE)), TRUE, TRUE)
+
+/// It will hatch and reroll in a certain amount of time.
+/obj/item/cube/random/proc/make_egg()
+	AddComponent( /datum/component/fertile_egg, embryo_type = random_rarity_list[rarity], minimum_growth_rate = 1*rarity, maximum_growth_rate = 2*rarity, total_growth_required = round(5000/rarity), current_growth = 0)
+	cube_examine_flags |= CUBE_EGG
+
+/// You can fish in the cube to get more cubes of a lower rarity
+/obj/item/cube/random/proc/make_fishing()
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/cube])
+	cube_examine_flags |= CUBE_FISH
+
+/// The cube now outputs its location. Honestly can be pretty bad if you don't want to give up your good cube, but that's funny so whatever
+/obj/item/cube/random/proc/make_gps()
+	AddComponent(/datum/component/gps, "[src]")
+	cube_examine_flags |= CUBE_GPS
+
+/// This one probably accounts for half of the item effects
+/obj/item/cube/random/proc/make_fantasy()
+	var/fantasy_quality = rand(rarity, 15)
+	if(prob(50-(rarity*5)))
+		fantasy_quality = -fantasy_quality
+	AddComponent(/datum/component/fantasy, fantasy_quality)
+
+/// Preps us so the next mob to pick us up becomes leashed
+/obj/item/cube/random/proc/make_leashed()
+	if(cube_examine_flags & CUBE_LEASHED)
+		return
+	ready_leash = TRUE
+
+/// You can edit religions using the cube
+/obj/item/cube/random/proc/make_holy()
+	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, force_catalyst_afterattack = FALSE, charges = rarity)
+	cube_examine_flags |= CUBE_FAITH
+
+/// Makes it work as a scope
+/obj/item/cube/random/proc/make_scope()
+	var/rangemod = 2+round((-3+rarity)/5,0.1)
+	AddComponent(/datum/component/scope, range_modifier = rangemod)
+
+/// Slips whoever walks on it, and if they're holding it while they fall from something it laughs.
+/obj/item/cube/random/proc/make_funny()
+	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
+	cube_examine_flags |= CUBE_FUNNY
+	AddComponent(/datum/component/slippery, knockdown = rarity SECONDS, lube_flags = NO_SLIP_WHEN_WALKING)
+
+/// Make it squeaky & let you talk out of it like a puppet
+/obj/item/cube/random/proc/make_toy()
+	AddComponent(/datum/component/squeak)
+	AddElement(/datum/element/toy_talk)
+
+/// Let you start surgeries with it like drapes
+/obj/item/cube/random/proc/make_surgical()
+	AddComponent(/datum/component/surgery_initiator)
+	cube_examine_flags |= CUBE_SURGICAL
+
+/// Makes picking it up reverse your control scheme
+/obj/item/cube/random/proc/make_reverse()
+	reverse_movements = TRUE
+
+/// Makes hitting people with it steal life from them
+/obj/item/cube/random/proc/make_vampire()
+	AddElement(/datum/element/lifesteal, flat_heal = rarity)
+	cube_examine_flags |= CUBE_VAMPIRIC
+
+/// Makes you spin.
+/obj/item/cube/random/proc/make_speen()
+	speen = TRUE
+
+/// Makes it output light
+/obj/item/cube/random/proc/make_lamp()
+	set_light_range_power_color(
+		max(round(rarity/2, 0.1), 1.4),
+		(1 + round(rarity/5, 0.1)),
+		BlendRGB(cube_color, COLOR_VERY_LIGHT_GRAY, 0.3))
+
+/// Makes it either negate your gravity or RARELY flip you upside down.
+/obj/item/cube/random/proc/make_gravity()
+	var/list/gravweights = list()
+	gravweights[ZERO_GRAVITY] = 150
+	gravweights[NEGATIVE_GRAVITY] = rarity*5
+	funnygrav = pick_weight(gravweights)
 
 /// Makes the cube into a random tool
 /obj/item/cube/random/proc/make_tool()
@@ -357,7 +391,7 @@
 	var/mob/living/holder = get_held_mob()
 	if(existing_user)
 		if(!holder)
-			handle_dropping(existing_user)
+			handle_dropping()
 			return
 		if(existing_user == holder)
 			return
@@ -368,7 +402,7 @@
 	owner = WEAKREF(user)
 	// If we have the leash effect but haven't been leashed yet, then leash to the first person that picks us up
 	if(ready_leash)
-		AddComponent(/datum/component/leash, user, 6, /obj/effect/decal/cleanable/confetti)
+		AddComponent(/datum/component/leash, user, rarity+1, /obj/effect/decal/cleanable/confetti)
 		cube_examine_flags |= CUBE_LEASHED
 		ready_leash = FALSE
 	// Self-explanitory
@@ -386,7 +420,10 @@
 		user.AddElement(/datum/element/forced_gravity, funnygrav)
 
 // It's at least not permanent
-/obj/item/cube/random/proc/handle_dropping(mob/living/user)
+/obj/item/cube/random/proc/handle_dropping()
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
 	user.RemoveElement(/datum/element/inverted_movement)
 	user.RemoveElement(/datum/element/wheel)
 	user.RemoveElement(/datum/element/forced_gravity, funnygrav)

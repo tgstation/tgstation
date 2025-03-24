@@ -1,6 +1,7 @@
 // Cubes that are a reference to something else
 
-// Puzzle
+// Puzzle Cube
+/// Lament Configuration (Hellraiser)
 /obj/item/cube/puzzle
 	name = "\improper Lament Configuration"
 	desc = "A strange box of metal and wood, you get a strange feeling looking at it."
@@ -51,6 +52,7 @@
 	else
 		. += span_nicegreen("It's already been solved!")
 
+/// Rubiks (Real Life)
 /obj/item/cube/puzzle/rubiks
 	name = "\improper Rubik's Cube"
 	desc = "A famous cube housing a small sliding puzzle."
@@ -58,7 +60,7 @@
 	rarity = RARE_CUBE
 	eldritchsolve = FALSE
 
-// Craft
+// Grass (Minecraft)
 /obj/item/cube/craft
 	name = "grass cube"
 	desc = "Despite being made of solid soil, you can dig inside to find the occasional diamond!"
@@ -110,7 +112,7 @@
 
 	COOLDOWN_START(src, cube_diamond_cooldown, mine_cooldown)
 
-// Generic cube
+// Generic cube (Homestuck)
 /obj/item/cube/generic
 	name = "perfectly generic cube"
 	desc = "It's entirely non-noteworthy."
@@ -118,48 +120,108 @@
 	rarity = MYTHICAL_CUBE
 	reference = TRUE
 
-// Cell Cubes
-/// Energon cube
-/obj/item/stock_parts/power_store/cell/energon
+// Stock part cubes
+/// Energon cube (Transformers)
+/obj/item/stock_parts/capacitor/energon
 	name = "energon cube"
-	desc = "A rechargable power cell drawing upon the powers of the 3rd dimension to store extra charge."
+	desc = "A capacitor which transports power through the 3rd dimension for higher throughput."
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "energon"
-	charge_light_type = null
-	connector_type = null
-	maxcharge = STANDARD_CELL_CHARGE * 50
-	custom_materials = list(/datum/material/alloy/plasmaglass=SMALL_MATERIAL_AMOUNT*4)
-	chargerate = STANDARD_CELL_RATE * 2.5
+	rating = 5
+	energy_rating = 15
+	custom_materials = list(/datum/material/alloy/plasmaglass=SMALL_MATERIAL_AMOUNT)
 	light_range = 2
-	light_power = 1
-	light_color = COLOR_LIGHT_PINK
+	light_power = 0.5
 	light_system = OVERLAY_LIGHT
+	light_color = COLOR_LIGHT_PINK
 
-/obj/item/stock_parts/power_store/cell/energon/Initialize(mapload)
+/obj/item/stock_parts/capacitor/energon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, isreference = TRUE, ismapload = mapload)
 
-/// Tesseract
+/datum/stock_part/capacitor/energon
+	tier = 5
+	physical_object_type = /obj/item/stock_parts/capacitor/energon
+
+/// Tesseract (Marvel)
 /obj/item/stock_parts/power_store/cell/tesseract
 	name = "tesseract"
-	desc = "A rechargable power cell which pulls charge from the 4th dimension to generate new electricity out of thin air."
+	desc = "A rechargable power cell which pulls charge from the 3rd dimension to generate new electricity out of thin air."
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "tesseract"
 	charge_light_type = null
 	connector_type = null
-	maxcharge = STANDARD_CELL_CHARGE * 40
+	maxcharge = STANDARD_CELL_CHARGE * 50
 	custom_materials = list(/datum/material/bluespace=SMALL_MATERIAL_AMOUNT*4)
-	chargerate = STANDARD_CELL_RATE * 1.5
+	chargerate = STANDARD_CELL_RATE * 2
 	light_range = 2
-	light_power = 1
-	light_color = COLOR_BRIGHT_BLUE
+	light_power = 0.5
 	light_system = OVERLAY_LIGHT
+	light_color = COLOR_BRIGHT_BLUE
 
 /obj/item/stock_parts/power_store/cell/tesseract/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, isreference = TRUE, ismapload = mapload)
 	START_PROCESSING(SSobj, src)
 
-// Welcome back Hypercharged Yellow Slime Core
+/// Welcome back Hypercharged Yellow Slime Core
 /obj/item/stock_parts/power_store/cell/tesseract/process(seconds_per_tick)
-	give(chargerate * seconds_per_tick)
+	give(0.1 * chargerate * seconds_per_tick)
+
+/// Holocron (Star Wars)
+/obj/item/stock_parts/scanning_module/holocron
+	name = "holocron cube"
+	desc = "A compact scanning module capable of scanning in the 3rd dimension to create data unobservable to conventional technology."
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "holocron"
+	rating = 5
+	energy_rating = 15
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
+	light_range = 1
+	light_power = 0.5
+	light_system = OVERLAY_LIGHT
+	light_color = COLOR_BRIGHT_BLUE
+
+/obj/item/stock_parts/scanning_module/holocron/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, isreference = TRUE, ismapload = mapload)
+
+/datum/stock_part/scanning_module/holocron
+	tier = 5
+	physical_object_type = /obj/item/stock_parts/scanning_module/holocron
+
+/// Piston (Minecraft)
+/obj/item/stock_parts/servo/piston
+	name = "cubic piston"
+	desc = "A servo motor capable of moving objects in and out of the 3rd dimension for increased precision."
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "piston"
+	rating = 5
+	energy_rating = 15
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.6)
+
+/obj/item/stock_parts/servo/piston/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, isreference = TRUE, ismapload = mapload)
+
+/datum/stock_part/servo/piston
+	tier = 5
+	physical_object_type = /obj/item/stock_parts/servo/piston
+
+/// Moving Box (The Binding of Isaac)
+/obj/item/stock_parts/matter_bin/moving
+	name = "moving box"
+	desc = "A container capable of shunting matter into the 3rd dimension to await later retrieval."
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "moving"
+	rating = 5
+	energy_rating = 15
+	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*4)
+
+/obj/item/stock_parts/matter_bin/moving/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, isreference = TRUE, ismapload = mapload)
+
+/datum/stock_part/matter_bin/moving
+	tier = 5
+	physical_object_type = /obj/item/stock_parts/matter_bin/moving

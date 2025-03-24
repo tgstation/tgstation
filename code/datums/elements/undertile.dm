@@ -19,7 +19,7 @@
 	///Will hiding the object tilt the tile it is beneath?
 	var/tilt_tile
 
-/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE, tilt_tile = FALSE)
+/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE, tilt_tile = FALSE, bulge_overlay = FALSE)
 	. = ..()
 
 	if(!ismovable(target))
@@ -64,7 +64,10 @@
 			T.appearance_flags |= PIXEL_SCALE
 
 		if(use_anchor)
-			source.set_anchored(TRUE)
+			if(ismob(source))
+				ADD_TRAIT(source, TRAIT_IMMOBILIZED, ELEMENT_TRAIT(type))
+			else
+				source.set_anchored(TRUE)
 
 		if(underfloor_accessibility < UNDERFLOOR_VISIBLE)
 			if(use_alpha)
@@ -82,7 +85,7 @@
 			REMOVE_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
 
 		if(tile_overlay)
-			T.overlays -= tile_overlay
+			T.cut_overlay(tile_overlay)
 
 		if(tilt_tile)
 			T.transform = matrix()
@@ -93,7 +96,10 @@
 			source.alpha = initial(source.alpha)
 
 		if(use_anchor)
-			source.set_anchored(FALSE)
+			if(ismob(source))
+				REMOVE_TRAIT(source, TRAIT_IMMOBILIZED, ELEMENT_TRAIT(type))
+			else
+				source.set_anchored(FALSE)
 
 	SEND_SIGNAL(source, COMSIG_UNDERTILE_UPDATED)
 

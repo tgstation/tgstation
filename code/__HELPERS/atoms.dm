@@ -58,15 +58,21 @@
 
 /// Returns the living mob that is currently holding us if we are either in their inventory or a backpack analogue.
 /// Returns null if it's in an invalid location, so that we can check explicitly for null later.
-/atom/movable/proc/get_held_mob()
+/// get_last_mob = TRUE will return the final mob, while FALSE will return the first. Only there in the rare case that we're in nested mobs.
+/atom/movable/proc/get_held_mob(get_last_mob = TRUE)
 	if(isnull(loc))
 		return null
 	if(isliving(loc))
 		return loc
 	var/list/nested_locs = get_nested_locs(src)
+	var/list/all_held_mobs = list()
 	for(var/mob/nest_check in nested_locs)
 		if(isliving(nest_check))
-			return nest_check
+			all_held_mobs += nest_check
+	if(LAZYLEN(all_held_mobs))
+		if(get_last_mob)
+			return peek(all_held_mobs)
+		return all_held_mobs[1]
 	return null
 
 ///Step-towards method of determining whether one atom can see another. Similar to viewers()
