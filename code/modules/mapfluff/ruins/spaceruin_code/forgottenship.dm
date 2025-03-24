@@ -19,8 +19,8 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	products = list(
 		/obj/item/reagent_containers/syringe = 4,
 		/obj/item/healthanalyzer = 4,
-		/obj/item/reagent_containers/pill/patch/libital = 5,
-		/obj/item/reagent_containers/pill/patch/aiuri = 5,
+		/obj/item/reagent_containers/applicator/patch/libital = 5,
+		/obj/item/reagent_containers/applicator/patch/aiuri = 5,
 		/obj/item/reagent_containers/cup/bottle/multiver = 1,
 		/obj/item/reagent_containers/cup/bottle/syriniver = 1,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
@@ -94,8 +94,9 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	desc = "A box full of special syndicate firing pins which allow only syndicate operatives to use weapons with those firing pins."
 
 /obj/item/storage/box/firingpins/syndicate/PopulateContents()
+	. = list()
 	for(var/i in 1 to 5)
-		new /obj/item/firing_pin/implant/pindicate(src)
+		. += /obj/item/firing_pin/implant/pindicate
 
 /////////// AI Laws
 

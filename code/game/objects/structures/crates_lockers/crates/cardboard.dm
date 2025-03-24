@@ -13,6 +13,7 @@
 	paint_jobs = null
 	cutting_tool = /obj/item/wirecutters
 	can_weld_shut = FALSE
+	lid_icon_state = "cardboardopen"
 
 /obj/structure/closet/crate/cardboard/mothic
 	name = "\improper Mothic Fleet box"
@@ -25,3 +26,8 @@
 	desc = "For holding lizards, presumably."
 	icon_state = "cardboard_tiziran"
 	base_icon_state = "cardboard_tiziran"
+
+/obj/structure/closet/crate/cardboard/update_icon_state()
+	. = ..()
+	if(opened)
+		icon_state = "[base_icon_state]"

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed failed wrench/welder interaction attempts resulting in you attacking reflectors"

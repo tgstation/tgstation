@@ -208,6 +208,9 @@
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Someone forgot to make their organ do something when you implant it.")
 
+/obj/item/organ/monster_core/feel_for_damage(self_aware)
+	return ""
+
 /**
  * Boilerplate to set the name and icon of the cooldown action.
  * Makes it call 'ui_action_click' when the action is activated.

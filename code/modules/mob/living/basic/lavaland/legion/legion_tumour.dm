@@ -72,7 +72,7 @@
 		return FALSE
 
 	if (target.stat <= SOFT_CRIT && !(organ_flags & ORGAN_FAILING))
-		target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
+		target.add_mood_event("legion_core", /datum/mood_event/healsbadman)
 		target.apply_status_effect(applied_status)
 
 		if (target != user)
@@ -164,3 +164,7 @@
 	to_chat(finder, span_notice("Its pulsing tendrils reach all throughout the body."))
 	if(prob(stage * 2))
 		infest()
+
+/obj/item/organ/legion_tumour/feel_for_damage(self_aware)
+	// keep stealthy for now, revisit later
+	return ""
