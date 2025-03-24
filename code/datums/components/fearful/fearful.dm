@@ -44,10 +44,11 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(comfort_owner))
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_FEARLESS), PROC_REF(fearless_added))
+	RegisterSignal(parent, COMSIG_CARBON_MOOD_CHECK, PROC_REF(on_mood_check))
 
 /datum/component/fearful/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_CARBON_PRE_MISC_HELP, SIGNAL_ADDTRAIT(TRAIT_FEARLESS)))
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_CARBON_PRE_MISC_HELP, SIGNAL_ADDTRAIT(TRAIT_FEARLESS), COMSIG_CARBON_MOOD_CHECK))
 
 /datum/component/fearful/on_source_add(source, list/handler_types, initial_buildup, add_defaults = TRUE)
 	. = ..()
@@ -178,3 +179,17 @@
 /datum/component/fearful/proc/fearless_added(datum/source)
 	SIGNAL_HANDLER
 	terror_buildup = 0
+
+/datum/component/fearful/proc/on_mood_check(mob/living/source, list/mood_list)
+	SIGNAL_HANDLER
+
+	if(terror_buildup >= TERROR_BUILDUP_HEART_ATTACK)
+		mood_list += span_boldwarning("You are about to collapse in fear!")
+	else if(terror_buildup > TERROR_BUILDUP_PANIC)
+		mood_list += span_boldwarning("You are shaking in fear!")
+	else if(terror_buildup >= TERROR_BUILDUP_TERROR)
+		mood_list += span_warning("You are trembling in fear.")
+	else if(terror_buildup >= TERROR_BUILDUP_FEAR)
+		mood_list += span_warning("You feel scared.")
+	else if (terror_buildup)
+		mood_list += span_notice("You feel on the edge.")
