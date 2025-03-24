@@ -226,10 +226,16 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
-	if(isAI(user))
-		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
-	else if(in_range(user, src) || isobserver(user))
+	if(isAI(user) || in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
+
+	if(!isAI(user))
+		return
+
+	. += span_info("Use :[/datum/saymode/holopad::key] to speak through the projection.")
+	. += span_info("Right-click to project or cancel a projection.")
+	. += span_info("Alt-click to hangup all active and incomming calls.")
+	. += span_info("Ctrl-click to end projection without jumping to your last location.")
 
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -622,9 +628,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return TRUE
 
 /obj/machinery/holopad/proc/clear_holo(datum/owner)
-	if(!disk || !disk.record)
-		return FALSE
-
 	qdel(masters[owner])
 	unset_holo(owner)
 	return TRUE

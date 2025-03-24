@@ -131,15 +131,26 @@
 	variance = 25
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
-/obj/item/ammo_casing/shotgun/fletchette
-	name = "\improper Donk Co Flechette Shell"
-	desc = "A shotgun casing filled with small metal darts. Has poor armor penetration and velocity, but is good at destroying most electronic devices and injuring unarmored humanoids."
-	icon_state = "fletchette"
+/obj/item/ammo_casing/shotgun/flechette
+	name = "flechette shell"
+	desc = "A shotgun casing filled with small metal darts. Pokes many tiny holes into meat and kevlar alike. Useful for turning someones insides \
+		into outsides."
+	icon_state = "flechette"
 	projectile_type = /obj/projectile/bullet/pellet/flechette
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
-	pellets = 6
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	pellets = 8
 	variance = 10
-	randomspread = TRUE
+
+/obj/item/ammo_casing/shotgun/flechette/donk
+	name = "\improper Donk Co. 'Donk Spike' Shell"
+	desc = "Donk Co., looking to create a new and exciting shell to move onto the open market, invented what they call the 'Donk Spike'. \
+		A flechette not made from standard ferrous metals. But...plastic. It was a financial failure due to a complete lack of \
+		confidence in the product. Now there are millions of these things in landfills across the sector. This is one such example. \
+		Looks like a donk-pocket! Tastes like death!"
+	icon_state = "flechette_donk"
+	projectile_type = /obj/projectile/bullet/pellet/flechette/donk
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	pellets = 5
 
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
