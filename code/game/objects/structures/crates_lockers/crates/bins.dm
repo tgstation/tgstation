@@ -33,7 +33,7 @@
 		return
 	. += base_icon_state + "_some"
 
-/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/storage/bag/trash) && !opened)
 		var/obj/item/storage/bag/trash/T = W
 		to_chat(user, span_notice("You fill the bag."))

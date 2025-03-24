@@ -105,7 +105,7 @@
 	if(accessory_overlay)
 		. += accessory_overlay
 
-/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(repair_sensors(attacking_item, user))
 		return TRUE
 

@@ -26,7 +26,7 @@
 	QDEL_NULL(current_plate)
 	. = ..()
 
-/obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, list/modifiers)
 	if(!is_operational)
 		to_chat(user, span_warning("[src] has to be on to do this!"))
 		return FALSE

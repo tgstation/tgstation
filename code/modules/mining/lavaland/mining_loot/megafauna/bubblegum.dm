@@ -172,7 +172,7 @@
 	. = ..()
 	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
 
-/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, params)
+/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, list/modifiers)
 	. = ..()
 	if(attacked.stat != DEAD)
 		give_blood(10)

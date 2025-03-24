@@ -71,7 +71,7 @@
 	balloon_alert(user, "no quantum pad data found!")
 	return NONE
 
-/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, list/modifiers)
 	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", weapon))
 		return
 

@@ -347,7 +347,7 @@
 
 // attack with item - insert light (if right type), otherwise try to break the light
 
-/obj/machinery/light/attackby(obj/item/tool, mob/living/user, params)
+/obj/machinery/light/attackby(obj/item/tool, mob/living/user, list/modifiers)
 	// attempt to insert light
 	if(istype(tool, /obj/item/light))
 		if(status == LIGHT_OK)

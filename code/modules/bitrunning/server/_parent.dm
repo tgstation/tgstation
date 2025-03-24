@@ -125,7 +125,7 @@
 	return ..()
 
 
-/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, list/modifiers)
 	. = ..()
 
 	if(!istype(weapon, /obj/item/bitrunning_debug))

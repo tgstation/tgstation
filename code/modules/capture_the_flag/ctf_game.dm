@@ -171,7 +171,7 @@
 	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
 	return player_mob //used in medisim_game.dm
 
-/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, params)
+/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/ctf_flag))
 		var/obj/item/ctf_flag/flag = item
 		if(flag.team != team)
@@ -268,7 +268,7 @@
 	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 
-/obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
+/obj/item/ctf_flag/attackby(obj/item/item, mob/user, list/modifiers)
 	if(!istype(item, /obj/item/ctf_flag))
 		return ..()
 
@@ -367,7 +367,7 @@
 			scores += UNLINT("<span style='color: [ctf_team.team_color]'>[ctf_team.team_color] - [ctf_team.points]/[ctf_game.points_to_win]</span>\n")
 		balloon_alert_to_viewers(scores)
 
-/obj/machinery/ctf/control_point/attackby(obj/item/item, mob/user, params)
+/obj/machinery/ctf/control_point/attackby(obj/item/item, mob/user, list/modifiers)
 	capture(user)
 
 /obj/machinery/ctf/control_point/attack_hand(mob/user, list/modifiers)

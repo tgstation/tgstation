@@ -49,7 +49,7 @@
 	if(brain)
 		. += "mmi_dead"
 
-/obj/item/mmi/attackby(obj/item/O, mob/user, params)
+/obj/item/mmi/attackby(obj/item/O, mob/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O

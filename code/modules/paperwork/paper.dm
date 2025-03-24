@@ -429,7 +429,7 @@
 	fire_act(attacking_item.get_temperature())
 	return TRUE
 
-/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(burn_paper_product_attackby_check(attacking_item, user))
 		SStgui.close_uis(src)
 		return

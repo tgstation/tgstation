@@ -334,7 +334,7 @@
 	internals.forceMove(get_turf(src))
 	internals = null
 
-/obj/item/trapdoor_remote/attackby(obj/item/assembly/trapdoor/assembly, mob/living/user, params)
+/obj/item/trapdoor_remote/attackby(obj/item/assembly/trapdoor/assembly, mob/living/user, list/modifiers)
 	. = ..()
 	if(. || !istype(assembly))
 		return

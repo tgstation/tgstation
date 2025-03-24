@@ -61,7 +61,7 @@
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 
-/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, params)
+/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, list/modifiers)
 	if(!istype(W, /obj/item/food/grown/banana))
 		return ..()
 	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!

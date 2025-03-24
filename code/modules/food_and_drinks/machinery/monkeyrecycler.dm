@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		power_change()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
+/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, list/modifiers)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 

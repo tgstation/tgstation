@@ -80,13 +80,12 @@
 		update_appearance()
 		SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
+/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, list/modifiers)
 	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
 			return ..()
-		var/list/modifiers = params2list(params)
 		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
 			held_item.interact_with_atom_secondary(beaker, user)
 		else

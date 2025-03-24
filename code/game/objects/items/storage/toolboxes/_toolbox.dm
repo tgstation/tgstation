@@ -96,7 +96,7 @@
 
 /obj/item/storage/toolbox/proc/use_tool_on(atom/interacting_with, mob/living/user, list/modifiers, obj/item/picked_tool)
 	current_interactions += 1
-	picked_tool.melee_attack_chain(user, interacting_with, list2params(modifiers))
+	picked_tool.melee_attack_chain(user, interacting_with, modifiers)
 	current_interactions -= 1
 
 	if (QDELETED(picked_tool) || picked_tool.loc != user || !user.CanReach(picked_tool))

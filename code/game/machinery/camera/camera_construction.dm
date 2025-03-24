@@ -119,7 +119,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/obj/machinery/camera/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/camera/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(camera_construction_state != CAMERA_STATE_FINISHED || panel_open)
 		if(attacking_item.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability

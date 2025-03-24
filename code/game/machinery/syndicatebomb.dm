@@ -189,7 +189,7 @@
 	return TRUE
 
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
+/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, list/modifiers)
 
 	if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
@@ -533,7 +533,7 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
-/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
+/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, list/modifiers)
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
 		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)

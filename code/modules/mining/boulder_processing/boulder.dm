@@ -86,7 +86,7 @@
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
 		manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)

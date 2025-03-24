@@ -171,7 +171,7 @@
 		var/obj/item/focused_item = focus
 		apply_focus_overlay()
 		if(interacting_with.Adjacent(focus))
-			. = focused_item.melee_attack_chain(user, interacting_with, list2params(modifiers)) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+			. = focused_item.melee_attack_chain(user, interacting_with, modifiers) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 			if(check_if_focusable(focus))
 				focus.do_attack_animation(interacting_with, null, focus)
 
