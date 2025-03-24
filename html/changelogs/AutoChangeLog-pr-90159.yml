@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Smartfridges and Vending machines no longer have a setting to change the list/grid mode, it instead updates automatically as you swap the mode in-game."

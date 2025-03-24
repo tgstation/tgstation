@@ -694,3 +694,48 @@
   jlsnow301:
   - bugfix: The air alarm has been refactored and had some slight UI improvements.
       Please report any issues to the github!
+2025-03-24:
+  Absolucy:
+  - bugfix: Fixed an edge-case where, if two heretics of different paths applied a
+      mark to the same person, the effects from the first mark (i.e moon path's pacifism)
+      would likely be permanent.
+  Ghommie:
+  - balance: Autoreel fishing lines do what their name implies and nudges the bait
+      towards the fish a little during the minigame when you're not pressing the mouse
+      button. Also cloaked lines are more transparent, and better at catching a certain
+      fish...
+  Jacquerel:
+  - bugfix: Disks will now be inserted into the autolathe if you successfully insert
+      them, rather than if you do not succeed in inserting them.
+  - balance: The action animation indicating someone is performing an action with
+      a progress bar now inherits how visible they are. You won't easily see a pair
+      of gears floating in space if a Voidwalker starts diving under the station.
+  - qol: It is now easier to see where you currently are while jaunting
+  JohnFulpWillard:
+  - qol: Smartfridges and Vending machines no longer have a setting to change the
+      list/grid mode, it instead updates automatically as you swap the mode in-game.
+  Melbert:
+  - bugfix: Being atrocinated ignores elevation from tables and such
+  - qol: Mappers can now disable bookshelf randomization
+  - qol: Random books found via mail or in maint will no longer random into books
+      from the "adult" section
+  - qol: Bookshelf randomization will now exclude adult books unless marked as adult
+  MelokGleb:
+  - spellcheck: fixed a typo in actor role conditions
+  SmArtKar:
+  - bugfix: Being at low sanity will actually give your hallucinations as intended.
+  - bugfix: Fixed jittering resetting the wrong pair of visual offsets
+  - bugfix: You can no longer craft balloon armor and weapons without knowing Balloon
+      Sutra
+  - bugfix: Air sensors now show up in atmospherics category
+  - spellcheck: Fixed grammar/capitalization in crafter/slapcrafting error messages
+  - code_imp: Cleaned up some crafting code
+  SyncIt21:
+  - bugfix: storages are no longer initialized with items that can't be put back in
+      after taking them out
+  - refactor: storage initialization has been refactored. Please report bugs on github
+  mcbalaam:
+  - refactor: Reworked the Big Manipulators UI
+  zxaber:
+  - qol: Cyborg PDAs' home screens now have Robotact at the top of the screen.
+  - bugfix: Sheets of materials with NODROP can no longer be given to repair bots.
