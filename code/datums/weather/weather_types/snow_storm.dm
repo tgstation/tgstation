@@ -25,7 +25,8 @@
 
 	immunity_type = TRAIT_SNOWSTORM_IMMUNE
 
-	weather_temperature = ICEBOX_MIN_TEMPERATURE
+	// snowstorms should be colder than default icebox atmos
+	weather_temperature = ICEBOX_MIN_TEMPERATURE - 40
 	// snowstorms temperature ignores any clothing insulation
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_TEMPERATURE_BYPASS_CLOTHING)
 
@@ -68,4 +69,4 @@
 	weather_flags = parent_type::weather_flags | WEATHER_ENDLESS
 
 	probability = 0
-	weather_temperature = ICEBOX_MIN_TEMPERATURE - 20 // faster cooling effects at lower temps
+	weather_temperature = parent_type::weather_temperature - 40 // faster cooling effects at lower temps
