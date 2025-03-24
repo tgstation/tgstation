@@ -72,7 +72,6 @@
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
-	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
 
@@ -94,10 +93,15 @@
 /obj/structure/table/proc/apply_stack_properties(obj/item/stack/stack_used)
 	return
 
+///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
+/obj/structure/table/proc/make_climbable()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+
 //proc that adds elements present in normal tables
 /obj/structure/table/proc/unflip_table()
 	playsound(src, 'sound/items/trayhit/trayhit2.ogg', 100)
-	AddElement(/datum/element/elevation, pixel_shift = 12)
+	make_climbable()
 	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	//resets vars from table being flipped
@@ -117,6 +121,7 @@
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table(new_dir)
 	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
+	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
 	RemoveElement(/datum/element/elevation, pixel_shift = 12)
@@ -1015,7 +1020,6 @@
 			computer.table = src
 			break
 
-	RemoveElement(/datum/element/climbable)
 	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
 	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
 
@@ -1027,6 +1031,8 @@
 	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
 	return ..()
 
+/obj/structure/table/optable/make_climbable()
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
