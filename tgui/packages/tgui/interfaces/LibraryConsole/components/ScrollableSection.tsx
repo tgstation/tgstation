@@ -1,7 +1,7 @@
 import { Box, Section } from 'tgui-core/components';
 
 export function ScrollableSection(props) {
-  const { header, contents } = props;
+  const { contents, header } = props;
 
   return (
     <Section fill scrollable>

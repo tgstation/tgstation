@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import { sanitizeText } from 'tgui/sanitize';
 import {
   Box,
   Button,
@@ -11,8 +13,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
-import { sanitizeText } from '../../../sanitize';
 import { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
 
@@ -24,9 +24,9 @@ export function Upload(props) {
     cache_content,
     cache_title,
     can_db_request,
+    cooldown_string,
     has_cache,
     has_scanner,
-    cooldown_string,
   } = data;
 
   const { uploadToDBState } = useLibraryContext();

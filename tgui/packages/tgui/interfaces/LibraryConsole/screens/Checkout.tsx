@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Button,
   Dropdown,
@@ -10,8 +11,8 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
-import { PageSelect, ScrollableSection } from '../components/PageSelect';
+import { PageSelect } from '../components/PageSelect';
+import { ScrollableSection } from '../components/ScrollableSection';
 import { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
 

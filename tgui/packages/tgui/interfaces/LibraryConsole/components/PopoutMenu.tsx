@@ -1,11 +1,11 @@
+import { useBackend } from 'tgui/backend';
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
 import { LibraryConsoleData } from '../types';
 
 export function PopoutMenu(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
-  const { screen_state, show_dropdown, display_lore } = data;
+  const { display_lore, screen_state, show_dropdown } = data;
 
   return (
     <Section fill maxWidth={show_dropdown ? '150px' : '36px'}>
@@ -44,7 +44,7 @@ export function PopoutEntry(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
 
   const { id, text, icon, color, font } = props;
-  const { show_dropdown, screen_state } = data;
+  const { screen_state, show_dropdown } = data;
 
   const selected_color = color || 'good';
   const deselected_color = color || '';

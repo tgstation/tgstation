@@ -2,11 +2,11 @@ import { Button, Input, Stack } from 'tgui-core/components';
 
 export function PageSelect(props) {
   const {
+    call_on_change,
+    current_page,
+    disabled,
     minimum_page_count,
     page_count,
-    current_page,
-    call_on_change,
-    disabled,
   } = props;
 
   if (page_count === 1) return;

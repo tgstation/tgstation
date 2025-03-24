@@ -1,3 +1,4 @@
+import { useBackend } from 'tgui/backend';
 import {
   Button,
   Dropdown,
@@ -7,7 +8,6 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
 import { LibraryConsoleData } from '../types';
 
 export function SearchAndDisplay(props) {
@@ -26,13 +26,13 @@ export function SearchAndDisplay(props) {
 function SearchTabs(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
   const {
-    search_categories = [],
-    book_id,
-    title,
-    category,
     author,
+    book_id,
     can_db_request,
+    category,
     params_changed,
+    search_categories = [],
+    title,
   } = data;
 
   return (

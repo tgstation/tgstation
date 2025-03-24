@@ -1,6 +1,6 @@
+import { useBackend } from 'tgui/backend';
 import { NoticeBox, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
 import { PageSelect } from '../components/PageSelect';
 import { SearchAndDisplay } from '../components/Search';
 import { LibraryConsoleData } from '../types';

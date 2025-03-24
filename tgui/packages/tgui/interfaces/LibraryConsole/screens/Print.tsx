@@ -1,13 +1,13 @@
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Section, Stack, Tabs } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { useBackend } from '../../../backend';
 import { LibraryConsoleData } from '../types';
 
 export function Print(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
-  const { deity, religion, bible_name, bible_sprite, posters } = data;
+  const { bible_name, bible_sprite, deity, posters, religion } = data;
 
   const [selectedPoster, setSelectedPoster] = useState(posters[0]);
 
