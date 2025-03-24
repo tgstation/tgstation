@@ -605,7 +605,9 @@
 	return ..()
 
 /obj/structure/mining_bomb/proc/generate_image()
-	explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion", pixel_w = -32, pixel_z = -32)
+	explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
+	explosion_image.pixel_w = -32
+	explosion_image.pixel_z = -32
 	SET_PLANE_EXPLICIT(explosion_image, ABOVE_GAME_PLANE, src)
 
 /obj/structure/mining_bomb/proc/prime(atom/movable/firer)
