@@ -55,6 +55,11 @@
 /datum/weather/rain_storm/plasma
 	whitelist_weather_reagents = list(/datum/reagent/toxin/plasma)
 
+/datum/weather/rain_storm/deep_fried
+	weather_temperature = 455 // just hot enough to apply the fried effect
+	whitelist_weather_reagents = list(/datum/reagent/consumable/nutriment/fat)
+	weather_flags = (WEATHER_TURFS | WEATHER_INDOORS)
+
 /datum/weather/rain_storm/acid
 	desc = "The planet's thunderstorms are by nature acidic, and will incinerate anyone standing beneath them without protection."
 
