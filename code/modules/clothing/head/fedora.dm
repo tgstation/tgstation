@@ -1,10 +1,10 @@
 /obj/item/clothing/head/fedora
 	name = "fedora"
+	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	icon_state = "fedora"
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
-	icon_state = "fedora"
-	inhand_icon_state = "fedora"
-	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/fedora/Initialize(mapload)
 	. = ..()
@@ -45,3 +45,11 @@
 	desc = "A beige fedora with a piece of paper saying \"PRESS\" stuck in its rim."
 	icon_state = "fedora_press"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/fedora/greyscale
+	icon_state = "fedora_greyscale"
+	inhand_icon_state = null
+	greyscale_colors = "#F0DAB4#794D2E"
+	greyscale_config = /datum/greyscale_config/fedora
+	greyscale_config_worn = /datum/greyscale_config/fedora/worn
+	flags_1 = IS_PLAYER_COLORABLE_1

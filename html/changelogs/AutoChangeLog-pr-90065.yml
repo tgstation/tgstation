@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "HoP now spawns with a platinum ID card which can hold infinite common access slots, but is still limited in amount of command slots."
