@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Audited all remaining coloring code - among noticeable changes, blood should no longer get colored or \"leak out\" of item bounds, atmos pipes no longer color weirdly and repairbots are white again."

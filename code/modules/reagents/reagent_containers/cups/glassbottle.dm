@@ -948,7 +948,7 @@
 		log_bomber(user, "has primed a", src, "for detonation")
 
 		to_chat(user, span_info("You light [src] on fire."))
-		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		add_overlay(custom_fire_overlay() || GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, PROC_REF(explode)), 5 SECONDS)
 
@@ -970,7 +970,7 @@
 			to_chat(user, span_danger("The flame's spread too far on it!"))
 			return
 		to_chat(user, span_info("You snuff out the flame on [src]."))
-		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		cut_overlay(custom_fire_overlay() || GLOB.fire_overlay)
 		active = FALSE
 		return
 	return ..()
