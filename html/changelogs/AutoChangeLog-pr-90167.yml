@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Space Crawl now functions if you are on a space tile, or if you are in an outdoor area with low air pressure."

@@ -53,7 +53,7 @@
 		alpha = 0,
 	)
 	cog.pixel_y = ICON_SIZE_Y + offset_y
-	animate(cog, alpha = 255, time = COGBAR_ANIMATION_TIME)
+	animate(cog, alpha = user.alpha, time = COGBAR_ANIMATION_TIME)
 
 	if(isnull(user_client))
 		return

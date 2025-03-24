@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Custom material toolboxes and fishing rods can now be printed with alloys such a plasteel and plasmaglass."
