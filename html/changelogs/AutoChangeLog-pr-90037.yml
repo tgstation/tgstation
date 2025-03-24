@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Corpses spawned from human-like NPCs will spawn damaged according to how they died (or will even gib if the npc was gibbed)"
-  - bugfix: "Maint Russians with guns will now spawn corpses instead of vanishing"

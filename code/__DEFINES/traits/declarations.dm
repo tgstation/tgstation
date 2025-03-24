@@ -216,8 +216,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGICALLY_GIFTED "magically_gifted"
 /// This object innately spawns with fantasy variables already applied (the magical component is given to it on initialize), and thus we never want to give it the component again.
 #define TRAIT_INNATELY_FANTASTICAL_ITEM "innately_fantastical_item"
-#define TRAIT_DEPRESSION "depression"
-#define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
 /// Prevents shovies and some strong blows such as unarmed punches and (unreliably) tackles the owner down
 #define TRAIT_BRAWLING_KNOCKDOWN_BLOCKED "brawling_knockdown_blocked"
@@ -1180,6 +1178,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_AI_ACCESS "ai_access_trait"
 ///The entity should have `SPAN_COMMAND` in binary the same way as AI does.
 #define TRAIT_LOUD_BINARY "loud_binary_trait"
+///The entity is able to receive a tracking button in chat
+#define TRAIT_CAN_GET_AI_TRACKING_MESSAGE "can_get_ai_tracking_message"
 
 ///Used by wearable_client_colour to determine whether the mob wants to have the colours of the screen affected by worn items (some still do regardless).
 #define TRAIT_SEE_WORN_COLOURS "see_worn_colour"

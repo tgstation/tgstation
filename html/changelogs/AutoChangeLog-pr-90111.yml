@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Remove redundant NOT operator from CALCULATE_ADJACENT_TURFS"
