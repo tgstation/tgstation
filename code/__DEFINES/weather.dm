@@ -12,6 +12,8 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 
 /// The amount of reagent units that is applied when an object comes into contact with rain
 #define WEATHER_REAGENT_VOLUME 5
+/// Weather reagent volume applied to randomly selected turfs/objects is scaled by this multiplier to compensate for reduced processing frequency
+#define TURF_REAGENT_VOLUME_MULTIPLIER 3
 
 /// 1 / 400 chance for a turf to get a thunder strike per tick (death and destruction to mobs/equipment in area)
 #define THUNDER_CHANCE_INSANE 0.0025
@@ -49,6 +51,8 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 #define WEATHER_BAROMETER (1<<5)
 /// If weather provides a notification message to mobs
 #define WEATHER_NOTIFICATION (1<<6)
+/// If weather temperature ignores clothing insulation when adjusting bodytemperature
+#define WEATHER_TEMPERATURE_BYPASS_CLOTHING (1<<7)
 
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
 #define FUNCTIONAL_WEATHER (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)
