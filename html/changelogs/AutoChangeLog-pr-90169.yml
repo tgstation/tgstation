@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - qol: "Users of Ashen Passage and Phase Shift will be able to move instantly upon cast rather than after a delay"
