@@ -112,7 +112,7 @@
 
 	for(var/trait_type in fishie.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.diff_traits_inheritability))
+		fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.inheritability))
 
 	data["fish_list"] += list(list(
 		"fish_name" = fishie.name,

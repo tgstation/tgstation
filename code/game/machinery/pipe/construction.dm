@@ -96,7 +96,7 @@ Buildable meters
 /obj/item/pipe/quaternary/pipe/crafted/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	. = ..()
 	pipe_type = /obj/machinery/atmospherics/pipe/smart
-	pipe_color = COLOR_VERY_LIGHT_GRAY
+	pipe_color = ATMOS_COLOR_OMNI
 	p_init_dir = ALL_CARDINALS
 	setDir(SOUTH)
 	update()

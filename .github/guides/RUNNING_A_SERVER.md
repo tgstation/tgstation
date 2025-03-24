@@ -70,13 +70,13 @@ If you decide to go this route, here are /tg/ specific details on hosting with T
 - We have two directories which should be setup in the instance's `Configuration/GameStaticFiles` directory:
 	- `config` should be where you place your production configuration. Overwrites the default contents of the repo's [config](../../config) directory.
 	- `data` should be initially created as an empty directory. The game stores persistent data here.
-- You should incorporate our [custom build scripts for TGS4](../../tools/tgs4_scripts) in the instance's `Configuration/EventScripts` directory. These handle including TGUI in the build and setting up rust-g on Linux.
+- You should incorporate our [custom build scripts for TGS](../../tools/tgs_scripts) in the instance's `Configuration/EventScripts` directory. These handle including TGUI in the build and setting up rust-g on Linux.
 - Deployment security level must be set to `Trusted` or it will likely fail due to our native library usage.
 - We highly recommend using the BYOND version specified in [dependencies.sh](../../dependencies.sh) to avoid potential unrecorded issues.
 
 ## SQL SETUP
 
-The SQL backend requires a Mariadb server running 10.2 or later. Mysql is not supported but Mariadb is a drop in replacement for mysql. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: https://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
+The SQL backend requires a Mariadb server running 10.2 or later. Mysql is not supported but Mariadb is a drop in replacement for mysql. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: https://tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
 If you are hosting a testing server on windows you can use a standalone version of MariaDB pre load with a blank (but initialized) tgdb database. Find them here: https://tgstation13.download/database/ Just unzip and run for a working (but insecure) database server. Includes a zipped copy of the data folder for easy resetting back to square one.
 
@@ -115,7 +115,7 @@ It is highly recommended to reference AWS support documentation while reading th
 **Required Software**
 1. Microsoft Windows
 1. MariaDB
-1. TGS4
+1. tgstation-server (TGS)
 1. Notepad++ or other code editor for writing batch scripts
 1. AWS Command Line V2
 
@@ -130,7 +130,7 @@ It is highly recommended to reference AWS support documentation while reading th
 1. In Route 53 you will register a domain name. The you will create a hosted zone and tell your domain to use the IP address you used for your EC2 instance.
 1. Install the required software
 	* AWSCL2 you will need to run the configuration using the IAM User you created above.
-	* TGS4: Make sure the TGS4 scripts from /tools/ are installed per tgs 4 instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
+	* TGS: Make sure the scripts from /tools/tgs_scripts are installed per instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
 	* Copy `compile_options.dm` into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
 	* Filename: DeploymentComplete.bat
 ```Batch
@@ -139,10 +139,10 @@ cd "C:\Program Files\Amazon\AWSCLIV2"
 aws s3 cp "C:\Instance_Path\Game\Live\tgstation.rsc" s3://BucketName/tgstation.rsc --acl public-read
 ```
 
-7. In your TGS4's instance's static config files edit resources.txt to point to the resource file uploaded by the batch file. it should resemble `http://BucketName.s3.AWSRegion.amazonaws.com/tgstation.rsc` You can get this url from the S3 object management page after its been uploaded for the first time. *Make sure you do not use use HTTPS. Byond can not do encryption*
-7. Tell TGS4 to fetch and deploy. If everything goes according to plan, your server will be compiled and the resource uploaded automatically to amazon S3. You can verify that by checking on the file your bucket via aws web management.
+7. In your TGS's instance's static config files edit resources.txt to point to the resource file uploaded by the batch file. it should resemble `http://BucketName.s3.AWSRegion.amazonaws.com/tgstation.rsc` You can get this url from the S3 object management page after its been uploaded for the first time. *Make sure you do not use use HTTPS. Byond can not do encryption*
+7. Tell TGS to fetch and deploy. If everything goes according to plan, your server will be compiled and the resource uploaded automatically to amazon S3. You can verify that by checking on the file your bucket via aws web management.
 7. Test your client side connection.
-	* Tell TGS4 to run the compiled server
+	* Tell TGS to run the compiled server
 	* Attempt to log in. AWS has a stupid fast transfer speed. you should download client side data faster than you can recognize it happened.
 
 ## IRC BOT SETUP

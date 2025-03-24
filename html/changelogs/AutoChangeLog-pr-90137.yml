@@ -1,0 +1,4 @@
+author: "imedial"
+delete-after: True
+changes:
+  - bugfix: "bloodless species no longer have a free bonechiller"
