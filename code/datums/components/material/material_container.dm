@@ -787,7 +787,9 @@
 			continue
 		return NONE
 
-	context[SCREENTIP_CONTEXT_LMB] = "Insert"
+	if (isstack(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert stack"
+	context[SCREENTIP_CONTEXT_RMB] = "Insert"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
