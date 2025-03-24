@@ -46,8 +46,8 @@
 	var/is_flipped = FALSE
 	/// Whether or not when flipped, it ignores PASS_GLASS flag
 	var/is_transparent = FALSE
-	/// Whether or not to use an override sprite for flipped tables, else. uses matrices.
-	var/override_sprite = FALSE
+	/// If you don't have sprites for flipped tables, you can use matrices instead. looks ever-slightly worse.
+	var/use_matrices_instead = FALSE
 	/// Matrix to return to on unflipping table
 	var/matrix/original_matrix
 
@@ -108,10 +108,10 @@
 	layer = TABLE_LAYER
 	smoothing_flags |= SMOOTH_BITMASK
 	pass_flags_self |= PASSTABLE
-	if(override_sprite)
-		icon = initial(icon)
-	else
+	if(use_matrices_instead)
 		animate(src, transform = original_matrix, time = 0)
+	else
+		icon = initial(icon)
 	icon_state = initial(icon_state)
 	smoothing_groups = on_init_smoothed_vars[1]
 	canSmoothWith = on_init_smoothed_vars[2]
@@ -147,10 +147,7 @@
 	canSmoothWith = null
 	pass_flags_self &= ~PASSTABLE
 
-	if(override_sprite)
-		icon = 'icons/obj/flipped_tables.dmi'
-		icon_state = base_icon_state
-	else
+	if(use_matrices_instead)
 		icon_state = initial(icon_state)
 		original_matrix = transform
 		var/matrix/transform_matrix = matrix(1, 0, 0, 0, 0.350, 9) // "flips" the table
@@ -162,9 +159,13 @@
 		if(dir == WEST)
 			transform_matrix.Turn(270)
 		animate(src, transform = transform_matrix, time = 0)
+	else
+		icon = 'icons/obj/flipped_tables.dmi'
+		icon_state = base_icon_state
 
 	update_appearance()
 	QUEUE_SMOOTH_NEIGHBORS(src)
+
 	is_flipped = TRUE
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -769,7 +770,6 @@
 	buildstack = /obj/item/stack/tile/carpet
 	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
-	override_sprite = TRUE //looks shit if we used matrices on these
 
 /obj/structure/table/wood/fancy/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
