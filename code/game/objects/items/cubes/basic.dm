@@ -78,14 +78,14 @@
 		owner = WEAKREF(holder)
 		holder_overlay = make_mutable_bulge_overlay(holder)
 		holder.AddElement(/datum/element/undertile, invisibility_trait = TRAIT_T_RAY_VISIBLE, invisibility_level = INVISIBILITY_OBSERVER, use_anchor = TRUE, tile_overlay = holder_overlay)
-		RegisterSignal(holder, COMSIG_OBJ_HIDE, PROC_REF(move_alpha))
+		RegisterSignal(holder, COMSIG_OBJ_HIDE, PROC_REF(go_under))
 		balloon_alert(holder, "you feel flatter")
 
 /// For that "popping out of the floor" look
 /obj/item/cube/colorful/pixel/proc/make_mutable_bulge_overlay(mob/user)
 	// Needs to be a physical object for us to get its render_target
 	// This has snowflake cases for mobs who's held/worn overlays are rendered strangely, but for /human/ subtypes it works fine
-	// Sorry drones & gorillas :(.
+	// Sorry drones & gorillas :[.
 	mob_alpha = new /obj/effect/abstract/underfloor_bulge(get_turf(src))
 	mob_alpha.appearance = user.appearance
 	mob_alpha.setDir(SOUTH)
@@ -101,7 +101,7 @@
 	return owner_overlay
 
 
-// like dropped() but only if it leaves the inventory
+// like [/dropped()] but only if it leaves the inventory
 /obj/item/cube/colorful/pixel/proc/handle_dropping()
 	var/mob/living/carbon/human/user = owner?.resolve()
 	if(!user)
@@ -113,14 +113,15 @@
 	QDEL_NULL(holder_overlay)
 	owner = null
 
-/obj/item/cube/colorful/pixel/proc/move_alpha()
+/obj/item/cube/colorful/pixel/proc/go_under(atom/movable/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/human/user = owner?.resolve()
 	if(!user)
 		return
-	if(mob_alpha)
-		mob_alpha.forceMove(get_turf(user))
+	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		if(mob_alpha)
+			mob_alpha.forceMove(get_turf(user))
 
 /obj/effect/abstract/underfloor_bulge
 	name = "underfloor bulge"
@@ -128,6 +129,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
+
 
 /obj/item/cube/colorful/plane
 	name = "plane"
@@ -149,7 +151,7 @@
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER)
 
-// Sphere (disgusting)
+// Sphere [disgusting]
 /obj/item/cube/colorful/sphere
 	name = "sphere"
 	desc = "I think I'm gonna be sick."

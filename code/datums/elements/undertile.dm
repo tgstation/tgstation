@@ -12,6 +12,8 @@
 	var/invisibility_level
 	///an overlay for the tile if we wish to apply that
 	var/tile_overlay
+	///has it been applied already? Prevents the same icon being applied 20 times
+	var/overlay_applied = FALSE
 	///whether we use alpha or not. TRUE uses ALPHA_UNDERTILE because otherwise we have 200 different instances of this element for different alphas
 	var/use_alpha
 	///We will switch between anchored and unanchored. for stuff like satchels that shouldn't be pullable under tiles but are otherwise unanchored
@@ -19,7 +21,7 @@
 	///Will hiding the object tilt the tile it is beneath?
 	var/tilt_tile
 
-/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE, tilt_tile = FALSE, bulge_overlay = FALSE)
+/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE, tilt_tile = FALSE)
 	. = ..()
 
 	if(!ismovable(target))
@@ -55,8 +57,9 @@
 
 		ADD_TRAIT(source, TRAIT_UNDERFLOOR, REF(src))
 
-		if(tile_overlay)
+		if(tile_overlay && !overlay_applied)
 			T.add_overlay(tile_overlay)
+			overlay_applied = TRUE
 
 		if(tilt_tile)
 			T.transform = T.transform.Turn(2)
@@ -84,8 +87,9 @@
 		if(invisibility_trait)
 			REMOVE_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
 
-		if(tile_overlay)
+		if(overlay_applied)
 			T.cut_overlay(tile_overlay)
+			overlay_applied = FALSE
 
 		if(tilt_tile)
 			T.transform = matrix()
@@ -105,8 +109,8 @@
 
 /datum/element/undertile/Detach(atom/movable/source, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)
 	. = ..()
-
 	hide(source, UNDERFLOOR_INTERACTABLE)
+	UnregisterSignal(source, COMSIG_OBJ_HIDE)
 	source.RemoveInvisibility(type)
 
 #undef ALPHA_UNDERTILE
