@@ -9,6 +9,7 @@
 		"c38_rubber",
 		"c38_rubber_mag",
 		"c38",
+		"c38_sec",
 		"c38_mag",
 		"capbox",
 		"foam_dart",
