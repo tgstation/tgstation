@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(weather)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.currentpart = WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)
+			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
 
 		if(weather_event.currentpart == SSWEATHER_TURFS)
 			if(!resumed)
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(weather)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.currentpart = WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)
+			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
 
 		if(weather_event.currentpart == SSWEATHER_THUNDER)
 			if(!resumed)
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(weather)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.currentpart = WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)
+			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
