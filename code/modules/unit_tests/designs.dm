@@ -66,7 +66,7 @@
 		for (var/surgery_type as anything in design_disk.surgeries)
 			for (var/design_id in all_designs)
 				var/datum/design/surgery/design = all_designs[design_id]
-				if (istype(design) && design::surgery == surgery_type)
+				if (ispath(design, /datum/design/surgery) && design::surgery == surgery_type)
 					all_designs -= design::id
 		qdel(design_disk)
 
