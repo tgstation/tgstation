@@ -528,54 +528,38 @@
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 
-	var/human_authority_setting = CONFIG_GET(string/human_authority)
-	var/require_human = FALSE
+	// They hate me but this fucking works fuck the config we plasmeme in this house
+	var/require_plasmaman = FALSE
 
 	// If the job in question is a head of staff,
 	// check the config to see if we should force the player onto a human character or not
 	if(job.job_flags & JOB_HEAD_OF_STAFF)
-		switch(human_authority_setting)
-
-			// If non-humans are the norm and jobs must be forced to be only for humans
-			// then we only force the player to be a human if the job exclusively allows humans
-			if(HUMAN_AUTHORITY_HUMAN_WHITELIST)
-				require_human = job.human_authority == JOB_AUTHORITY_HUMANS_ONLY
-
-			// If humans are the norm and jobs must be allowed to be played by non-humans
-			// then we only force the player to be a human if the job doesn't allow for non-humans to play it
-			if(HUMAN_AUTHORITY_NON_HUMAN_WHITELIST)
-				require_human = job.human_authority != JOB_AUTHORITY_NON_HUMANS_ALLOWED
-
-			// If humans are the norm and there is no chance that a non-human can be a head of staff
-			// always return true, since there is no chance that a non-human can be a head of staff.
-			if(HUMAN_AUTHORITY_ENFORCED)
-				require_human = TRUE
+		require_plasmaman = TRUE
 
 	src.job = job.title
 
 	if(fully_randomize)
 		player_client.prefs.apply_prefs_to(src)
 
-		if(require_human)
+		if(require_plasmaman)
 			randomize_human_appearance(~RANDOMIZE_SPECIES)
 		else
 			randomize_human_appearance()
 
-		if (require_human)
-			set_species(/datum/species/human)
+		if (require_plasmaman)
+			set_species(/datum/species/plasmaman)
 			dna.species.roundstart_changed = TRUE
 
 		if(GLOB.current_anonymous_theme)
 			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
 	else
 		var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
-		if(require_human)
+		if(require_plasmaman)
 			player_client.prefs.randomise["species"] = FALSE
 		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
-		if(require_human && !ishumanbasic(src))
-			set_species(/datum/species/human)
+		if(require_plasmaman && !isplasmaman(src))
+			set_species(/datum/species/plasmaman)
 			dna.species.roundstart_changed = TRUE
-			apply_pref_name(/datum/preference/name/backup_human, player_client)
 		if(CONFIG_GET(flag/force_random_names))
 			real_name = generate_random_name_species_based(
 				player_client.prefs.read_preference(/datum/preference/choiced/gender),
