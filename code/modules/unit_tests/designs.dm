@@ -63,8 +63,11 @@
 
 	for (var/obj/item/disk/surgery/design_disk as anything in subtypesof(/obj/item/disk/surgery))
 		design_disk = new design_disk()
-		for (var/datum/design/design as anything in design_disk.surgeries)
-			all_designs -= design::id
+		for (var/datum/surgery/surgery as anything in design_disk.surgeries)
+			for (var/design_id in all_designs)
+				var/datum/design/surgery/design = all_designs[design_id]
+				if (istype(design) && design.surgery == surgery)
+					all_designs -= design::id
 		qdel(design_disk)
 
 	// Or machine-exclusive
@@ -79,4 +82,4 @@
 		qdel(techweb)
 
 	for (var/missing_id in all_designs)
-		TEST_FAIL("Design [all_designs[missing_id]] has an ID \"[missing_id]\" which is not in any of the techweb nodes or tech disks!")
+		TEST_FAIL("Design [all_designs[missing_id]] has an ID \"[missing_id]\" which is not in any of the techweb nodes or tech disks, or it is possibly misconfigured!")
