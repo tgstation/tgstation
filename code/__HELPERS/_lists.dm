@@ -96,6 +96,15 @@
 	LAZYINITLIST(lazy_list); \
 	LAZYINITLIST(lazy_list[key]); \
 	lazy_list[key] |= value;
+/// Calls Insert on the lazy list if it exists, otherwise initializes it with the value
+#define LAZYINSERT(lazylist, index, value) \
+	if (!lazylist) { \
+		lazylist = list(value); \
+	} else if (index == 0 && index > length(lazylist)) { \
+		lazylist += value; \
+	} else { \
+		lazylist.Insert(index, value); \
+	}
 
 ///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
 #define LISTASSERTLEN(L, I, V...) \
@@ -879,6 +888,18 @@
 	. = list()
 	for(var/key in key_list)
 		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
+
+/**
+ * Flattens a keyed list(key = some item, value = quantity of item required) into a list of its contents where each
+ * item of the list is duplicated as per the quantity required
+ */
+/proc/flatten_quantified_list(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		for(var/_ in 1 to key_list[key])
+			UNTYPED_LIST_ADD(., key)
 
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)

@@ -318,7 +318,7 @@
 		return list("button" = window.selected_button, "values" = window.values_list)
 
 /proc/input_bitfield(mob/user, title, bitfield, current_value, width = 350, height = 350, slide_color, allowed_edit_field = ALL)
-	var/list/bitflags = GLOB.bitfields[bitfield]
+	var/list/bitflags = get_valid_bitflags(bitfield)
 	if (!user || !length(bitflags))
 		return
 	var/list/picker_list = list()
@@ -334,7 +334,7 @@
 		return
 	if (result["button"] == 2) // If the user pressed the cancel button
 		return
-		
+
 	var/result_bitfield = NONE
 	for (var/flag_name in result["values"])
 		result_bitfield |= bitflags[flag_name]

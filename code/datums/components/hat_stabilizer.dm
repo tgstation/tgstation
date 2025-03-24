@@ -10,10 +10,10 @@
 	var/former_visor_flags
 	/// If true, add_overlay will use worn overlay instead of item appearance
 	var/use_worn_icon = TRUE
-	/// Pixel_y offset for the hat
-	var/pixel_y_offset
+	/// Pixel z offset for the hat
+	var/pixel_z_offset
 
-/datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_y_offset = 0, loose_hat = FALSE)
+/datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_z_offset = 0, loose_hat = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -21,7 +21,7 @@
 	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.use_worn_icon = use_worn_icon
-	src.pixel_y_offset = pixel_y_offset
+	src.pixel_z_offset = pixel_z_offset
 	src.loose_hat = loose_hat
 	// Examine signals
 	RegisterSignal(source, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -41,7 +41,7 @@
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_qdel))
 
 // Inherit the new values passed to the component
-/datum/component/hat_stabilizer/InheritComponent(datum/component/hat_stabilizer/new_comp, original, use_worn_icon, pixel_y_offset, loose_hat)
+/datum/component/hat_stabilizer/InheritComponent(datum/component/hat_stabilizer/new_comp, original, use_worn_icon, pixel_z_offset, loose_hat)
 	if(!original)
 		return
 
@@ -49,8 +49,8 @@
 		src.use_worn_icon = use_worn_icon
 	if(!isnull(use_worn_icon))
 		src.use_worn_icon = use_worn_icon
-	if(!isnull(pixel_y_offset))
-		src.pixel_y_offset = pixel_y_offset
+	if(!isnull(pixel_z_offset))
+		src.pixel_z_offset = pixel_z_offset
 	if(!isnull(loose_hat))
 		src.loose_hat = loose_hat
 
@@ -114,7 +114,7 @@
 			var/angle = 5
 			tilt_trix.Turn(angle * pick(1, -1))
 			worn_overlay.transform = tilt_trix
-		worn_overlay.pixel_y = pixel_y_offset + attached_hat.worn_y_offset
+		worn_overlay.pixel_z = pixel_z_offset + attached_hat.worn_y_offset
 		overlays += worn_overlay
 
 /datum/component/hat_stabilizer/proc/on_qdel(atom/movable/source)

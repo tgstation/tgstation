@@ -575,8 +575,10 @@
 	name = "syndicate teleporter kit"
 
 /obj/item/storage/box/syndie_kit/syndicate_teleporter/PopulateContents()
-	new /obj/item/syndicate_teleporter(src)
-	new /obj/item/paper/syndicate_teleporter(src)
+	return list(
+		/obj/item/syndicate_teleporter,
+		/obj/item/paper/syndicate_teleporter,
+	)
 
 /obj/effect/temp_visual/teleport_abductor/syndi_teleporter
 	duration = 5
