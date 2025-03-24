@@ -6602,6 +6602,7 @@
 #include "modular_doppler\administration\code\sooc.dm"
 #include "modular_doppler\administration\code\whitelisting.dm"
 #include "modular_doppler\advanced_reskin\code\advanced_reskin.dm"
+#include "modular_doppler\ai_brain_shit\ai_brain.dm"
 #include "modular_doppler\ai_qol\code\eye.dm"
 #include "modular_doppler\alt_job_titles\alt_job_titles.dm"
 #include "modular_doppler\alt_job_titles\job.dm"
