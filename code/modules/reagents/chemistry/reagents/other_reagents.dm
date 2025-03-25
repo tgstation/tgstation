@@ -1329,7 +1329,7 @@
 
 /datum/reagent/bluespace/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	if(!methods & (VAPOR|TOUCH))
+	if(!(methods & (VAPOR|TOUCH)))
 		return
 
 	var/exposure_probability = min(100 - (touch_protection * 100), 0, 100)
@@ -1385,7 +1385,7 @@
 
 /datum/reagent/fuel/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	. = ..()
-	if(!methods & (TOUCH|VAPOR))
+	if(!(methods & (VAPOR|TOUCH)))
 		return
 
 	exposed_mob.adjust_fire_stacks(reac_volume / 10)
@@ -1438,7 +1438,7 @@
 
 /datum/reagent/space_cleaner/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	if(!methods & (TOUCH|VAPOR))
+	if(!(methods & (VAPOR|TOUCH)))
 		return
 
 	exposed_mob.wash(clean_types)
@@ -3069,7 +3069,7 @@
 		return
 	if(methods & INGEST)
 		exposed_mob.check_allergic_reaction(BUGS, chance = reac_volume * 10, histamine_add = min(10, reac_volume))
-	if(!methods & (PATCH|TOUCH|VAPOR))
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
 
 	amount_left = round(reac_volume,0.1) * (1 - touch_protection)
