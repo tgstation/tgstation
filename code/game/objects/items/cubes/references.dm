@@ -8,6 +8,7 @@
 	icon_state = "lament"
 	rarity = EPIC_CUBE
 	reference = TRUE
+	overwrite_held_color = COLOR_LIGHT_BROWN
 	/// Have we solved the puzzle?
 	var/solved = FALSE
 	/// Swaps our message & summons a silly little guy
@@ -59,6 +60,7 @@
 	icon_state = "rubik"
 	rarity = RARE_CUBE
 	eldritchsolve = FALSE
+	overwrite_held_color = COLOR_BRIGHT_BLUE
 
 // Grass (Minecraft)
 /obj/item/cube/craft
@@ -67,6 +69,7 @@
 	icon_state = "craft"
 	rarity = MYTHICAL_CUBE
 	reference = TRUE
+	overwrite_held_color = COLOR_LIGHT_BROWN
 	/// How much is a full stack of diamonds?
 	var/full_stack = 64
 	/// How long does it take for us to mine diamonds? Default: 15 SECONDS
@@ -119,6 +122,7 @@
 	icon_state = "generic_object"
 	rarity = MYTHICAL_CUBE
 	reference = TRUE
+	overwrite_held_color = COLOR_LIME
 
 // Stock part cubes
 /// Energon cube (Transformers)
@@ -127,6 +131,9 @@
 	desc = "A capacitor which transports power through the 3rd dimension for higher throughput."
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "energon"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
 	rating = 5
 	energy_rating = 15
 	custom_materials = list(/datum/material/alloy/plasmaglass=SMALL_MATERIAL_AMOUNT)
@@ -143,12 +150,18 @@
 	tier = 5
 	physical_object_type = /obj/item/stock_parts/capacitor/energon
 
+/obj/item/stock_parts/capacitor/energon/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_LIGHT_PINK))
+
 /// Tesseract (Marvel)
 /obj/item/stock_parts/power_store/cell/tesseract
 	name = "tesseract"
 	desc = "A rechargable power cell which pulls charge from the 3rd dimension to generate new electricity out of thin air."
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "tesseract"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
 	charge_light_type = null
 	connector_type = null
 	maxcharge = STANDARD_CELL_CHARGE * 50
@@ -168,12 +181,18 @@
 /obj/item/stock_parts/power_store/cell/tesseract/process(seconds_per_tick)
 	give(0.1 * chargerate * seconds_per_tick)
 
+/obj/item/stock_parts/power_store/cell/tesseract/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_BRIGHT_BLUE))
+
 /// Holocron (Star Wars)
 /obj/item/stock_parts/scanning_module/holocron
 	name = "holocron cube"
 	desc = "A compact scanning module capable of scanning in the 3rd dimension to create data unobservable to conventional technology."
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "holocron"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
 	rating = 5
 	energy_rating = 15
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
@@ -190,12 +209,18 @@
 	tier = 5
 	physical_object_type = /obj/item/stock_parts/scanning_module/holocron
 
+/obj/item/stock_parts/scanning_module/holocron/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_BRIGHT_BLUE))
+
 /// Piston (Minecraft)
 /obj/item/stock_parts/servo/piston
 	name = "cubic piston"
 	desc = "A servo motor capable of moving objects in and out of the 3rd dimension for increased precision."
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "piston"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
 	rating = 5
 	energy_rating = 15
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.6)
@@ -208,11 +233,17 @@
 	tier = 5
 	physical_object_type = /obj/item/stock_parts/servo/piston
 
+/obj/item/stock_parts/servo/piston/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_GRAY))
+
 /// Moving Box (The Binding of Isaac)
 /obj/item/stock_parts/matter_bin/moving
 	name = "moving box"
 	desc = "A container capable of shunting matter into the 3rd dimension to await later retrieval."
 	icon = 'icons/obj/cubes.dmi'
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
 	icon_state = "moving"
 	rating = 5
 	energy_rating = 15
@@ -225,3 +256,54 @@
 /datum/stock_part/matter_bin/moving
 	tier = 5
 	physical_object_type = /obj/item/stock_parts/matter_bin/moving
+
+/obj/item/stock_parts/matter_bin/moving/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_LIGHT_BROWN))
+
+// Charged Blaster Cannon (Terraria)
+/obj/item/stock_parts/micro_laser/charged_blaster
+	name = "charged blaster cube"
+	icon_state = "charged_blaster"
+	desc = "A tiny device which routes light through the 3rd dimension in order to charge a powerful and precise laser beam!"
+	icon = 'icons/obj/cubes.dmi'
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
+	rating = 5
+	energy_rating = 15
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
+
+/obj/item/stock_parts/micro_laser/charged_blaster/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, isreference = TRUE, ismapload = mapload)
+
+/datum/stock_part/micro_laser/charged_blaster
+	tier = 5
+	physical_object_type = /obj/item/stock_parts/micro_laser/charged_blaster
+
+/obj/item/stock_parts/micro_laser/charged_blaster/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_SILVER))
+
+/// Question Mark Block (Mario)
+/obj/item/gift/anything/questionmark
+	name = "\improper ? cube"
+	desc = "A cube is fine and all, but breaking it open could result in anything! It could even be a cube!"
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "question"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
+	resistance_flags = INDESTRUCTIBLE
+	random_icon = FALSE
+	random_pixshift = FALSE
+	unwrap_trash = /obj/effect/decal/cleanable/rubble
+	tearsound = list('sound/effect/rock/rock_break.ogg' = 50)
+	unwrap_time = 3 SECONDS
+	unwrap_verbs = list("crushes", "breaks open", "fractures")
+
+/obj/item/gift/anything/questionmark/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, isreference = TRUE, ismapload = mapload)
+
+/obj/item/gift/anything/questionmark/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_GOLD))

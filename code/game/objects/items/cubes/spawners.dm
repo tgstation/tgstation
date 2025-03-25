@@ -1,10 +1,13 @@
 //* Randomized cube spawners (not to be confused with random cubes)
+// see code/_globalvars/lists/holiday_loot.dm for loot tables
 /obj/effect/spawner/random/cube_all
 	name = "cube spawner (All Rarities)"
 	desc = "Roll the small cubes to see if you get the good cubes or the bad cubes."
+	/// It was admittedly already a cube but I want a clean looking one damnit
+	icon = 'icons/obj/cubes.dmi'
 	icon_state = "loot"
 	remove_if_cant_spawn = FALSE //don't remove stuff from the global list, which other can use.
-	// see code/_globalvars/lists/objects.dm for loot table
+
 
 /obj/effect/spawner/random/cube_all/Initialize(mapload)
 	loot = GLOB.all_cubes
@@ -21,6 +24,7 @@
 /obj/effect/spawner/random/cube
 	name = "cube spawner (Common)"
 	desc = "Used to roll for those delicious cubes."
+	icon = 'icons/obj/cubes.dmi'
 	icon_state = "loot"
 	remove_if_cant_spawn = FALSE
 

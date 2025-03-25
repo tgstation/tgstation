@@ -43,12 +43,25 @@
 
 /obj/item/cube/random/Initialize(mapload)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	give_random_icon(TRUE)
+	give_random_icon()
 	apply_rand_size()
 	cube_color = randcolor()
 	create_random_name()
 	. = ..()
 	give_random_effects()
+
+/obj/item/cube/fetch_cube_list()
+	var/list/possible_random_cube_visuals = list(
+		"cube" = 500,
+		"isometric" = 250,
+		"small" = 15*rarity,
+		"massive" = 10*rarity,
+		"plane" = 6*rarity,
+		"voxel" = 5+rarity,
+		"sphere" = 1+rarity,
+		"pixel" = 1
+	)
+	return possible_random_cube_visuals
 
 /obj/item/cube/random/Destroy(force)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)

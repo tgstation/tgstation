@@ -2511,6 +2511,7 @@
 #include "code\game\objects\items\circuitboards\machines\machine_circuitboards.dm"
 #include "code\game\objects\items\cubes\_cubes.dm"
 #include "code\game\objects\items\cubes\basic.dm"
+#include "code\game\objects\items\cubes\quartic_reliquary.dm"
 #include "code\game\objects\items\cubes\random_cubes.dm"
 #include "code\game\objects\items\cubes\references.dm"
 #include "code\game\objects\items\cubes\spawners.dm"

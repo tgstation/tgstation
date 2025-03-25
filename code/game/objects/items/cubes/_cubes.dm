@@ -4,6 +4,7 @@
 	desc = "You shouldn't be seeing this cube!"
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "cube"
+	inhand_icon_state = "cuboid"
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("cubes", "squares", "deducts")
 	attack_verb_simple = list("cube", "square", "deduct")
@@ -15,6 +16,8 @@
 	var/rarity = COMMON_CUBE
 	/// If this cube is a reference to something else. Same rule on updating applies.
 	var/reference = FALSE
+	/// Set this to the color we want to apply to the held icon, or leave null to just leave it the default color.
+	var/overwrite_held_color = null
 
 /obj/item/cube/Initialize(mapload)
 	. = ..()
@@ -26,33 +29,35 @@
 /// Randomize the color for the cube
 /obj/item/cube/proc/randcolor()
 	var/mycolor = ready_random_color()
-	add_filter("cubecolor", 1, color_matrix_filter(mycolor))
+	atom_colours[FIXED_COLOUR_PRIORITY] = list(mycolor, ATOM_COLOR_TYPE_FILTER)
+	update_atom_colour()
 	return mycolor
 
-/// Randomize icons. HEAVILY skewed in favor of normally sized cubes
-/// set true_random to TRUE to get states other than "cube" and "isometric"
-/obj/item/cube/proc/give_random_icon(true_random = FALSE)
-	var/list/possible_visuals
-	if(true_random)
-		possible_visuals = list(
-			"cube" = 500,
-			"isometric" = 250,
-			"small" = 15*rarity,
-			"massive" = 10*rarity,
-			"plane" = 6*rarity,
-			"voxel" = 5+rarity,
-			"sphere" = 1+rarity,
-			"pixel" = 1
-		)
-	else
-		possible_visuals = list(
+/// Randomize icons. Only random cubes get the longer list of random ones.
+/obj/item/cube/proc/give_random_icon()
+	icon_state = pick_weight(fill_with_ones(fetch_cube_list()))
+	var/list/smallones = list("pixel", "voxel")
+	if(smallones.Find(icon_state))
+		inhand_icon_state = null
+
+/// Overwritten for cube/randoms
+/obj/item/cube/proc/fetch_cube_list()
+	/// Since we don't edit this one at all it's just a static list
+	var/static/list/possible_normal_cube_visuals
+	if(!possible_normal_cube_visuals)
+		possible_normal_cube_visuals = list(
 			"cube",
 			"isometric"
 		)
-	icon_state = pick_weight(fill_with_ones(possible_visuals))
+	return possible_normal_cube_visuals
 
 /// Updates the cube rarity & the cuboid rarity without deleting the cube
 /obj/item/cube/proc/update_cube_rarity(updated_rarity = COMMON_CUBE, updated_reference)
 	rarity = updated_rarity
 	var/datum/component/cuboid/cuboid = GetComponent(/datum/component/cuboid)
 	cuboid.update_rarity(new_rarity = rarity, new_reference = updated_reference)
+
+/obj/item/cube/color_atom_overlay(mutable_appearance/cubelay)
+	if(overwrite_held_color)
+		return filter_appearance_recursive(cubelay, color_matrix_filter(overwrite_held_color))
+	return ..()

@@ -31,6 +31,7 @@
 	icon_state = "voxel"
 	w_class = WEIGHT_CLASS_SMALL
 	rarity = RARE_CUBE
+	inhand_icon_state = null
 
 /obj/item/cube/colorful/voxel/Initialize(mapload)
 	. = ..()
@@ -42,6 +43,7 @@
 	icon_state = "pixel"
 	w_class = WEIGHT_CLASS_TINY
 	rarity = EPIC_CUBE
+	inhand_icon_state = null
 	/// Who is holding the cube
 	var/datum/weakref/owner
 	/// Used for the render_target of the underfloor overlay
@@ -191,6 +193,7 @@
 	fill_icon_thresholds = list(0)
 	/// Pass for the component
 	var/cube_rarity = COMMON_CUBE
+	inhand_icon_state = null
 
 /obj/item/reagent_containers/applicator/pill/cube/Initialize(mapload)
 	. = ..()
@@ -245,15 +248,16 @@
 	list_reagents = list(/datum/reagent/consumable/frostoil = 15)
 	cube_rarity = UNCOMMON_CUBE
 
+/obj/item/reagent_containers/applicator/pill/cube/random
+	name = "random condiment cube"
+	desc = "Perfect for those who want a <span class='papyrus'>surprising</span> cup of tea."
+	icon_state = "small"
+	cube_rarity = UNCOMMON_CUBE
 
-// Stock part cubes
-/obj/item/stock_parts/micro_laser/cubic
-	name = "cubic micro-laser"
-	icon_state = "quadultra_micro_laser"
-	desc = "A tiny laser used in certain devices."
-	rating = 5
-	energy_rating = 10
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
+/obj/item/reagent_containers/applicator/pill/cube/random/Initialize(mapload)
+	list_reagents[get_random_consumable_reagent_id()] = 15
+	. = ..()
+
 
 /// Monkeycube subtypes
 /obj/item/food/monkeycube/spaceman
@@ -261,6 +265,9 @@
 	desc = "Did it just blink at you?"
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "spaceman"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
 	bite_consumption = 20
 	food_reagents = list(
 		/datum/reagent/consumable/liquidgibs = 30,
@@ -277,12 +284,18 @@
 	. = ..()
 	. += span_tinynotice("The bottom says: <b>Just add water!</b>")
 
+/obj/item/food/monkeycube/spaceman/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter("#FFBE79"))
+
 // So ffreracking souvvl.....
 /obj/item/food/monkeycube/spessman
 	name = "spessman cube"
 	desc = "Where have you seen this before...?"
 	icon = 'icons/obj/cubes.dmi'
 	icon_state = "spessman"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
 	bite_consumption = 20
 	food_reagents = list(
 		/datum/reagent/medicine/omnizine = 30,
@@ -298,3 +311,6 @@
 /obj/item/food/monkeycube/spessman/examine(mob/user)
 	. = ..()
 	. += span_tinynotice("The bottom says: <b>Just add water!</b>")
+
+/obj/item/food/monkeycube/spessman/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_BLUE))

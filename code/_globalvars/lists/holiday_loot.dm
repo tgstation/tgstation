@@ -1,9 +1,9 @@
 //* APRIL FOOLS
 
-/// Random cubes have 30 weight, other cubes have 25 weight, and each list has a spawner of higher rarity at 1 weight
+/// Random cubes have 30 weight, other cubes have 25 weight
+/// Each list also has a chance to give 3 lower rarity cubes (5 weight) or give 1 cube of even higher rarity (1 weight)
 /// List of Common Cubes
-/// I could have made only_root_path = FALSE but I realized that would include EVERY box.
-GLOBAL_LIST_INIT(common_cubes, typecacheof(list(
+GLOBAL_LIST_INIT(common_cubes, list(
 	// Vanilla
 	/obj/item/dice/d6 = 25,
 	/obj/item/dice/d6/ebony = 25,
@@ -19,10 +19,10 @@ GLOBAL_LIST_INIT(common_cubes, typecacheof(list(
 	// Custom
 	/obj/item/cube/random = 30,
 	/obj/effect/spawner/random/cube/uncommon = 1,
-), only_root_path = TRUE))
+))
 
 /// List of Uncommon Cubes
-GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
+GLOBAL_LIST_INIT(uncommon_cubes, list(
 	// Vanilla
 	/obj/item/bounty_cube = 25,
 	/obj/item/food/monkeycube/chicken = 25,
@@ -43,13 +43,14 @@ GLOBAL_LIST_INIT(uncommon_cubes, typecacheof(list(
 	/obj/item/reagent_containers/applicator/pill/cube/pepper = 25,
 	/obj/item/reagent_containers/applicator/pill/cube/chili = 25,
 	/obj/item/reagent_containers/applicator/pill/cube/chilly = 25,
-)))
+	/obj/item/reagent_containers/applicator/pill/cube/random = 25,
+))
 
 /// List of Rare Cubes
-GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
+GLOBAL_LIST_INIT(rare_cubes, list(
 	// Vanilla
 	/obj/item/food/monkeycube/gorilla = 25,
-	/obj/item/warp_cube = 25,
+	/obj/item/warp_cube/red = 25,
 	// Custom
 	/obj/effect/spawner/random/cube/uncommon/three = 5,
 	/obj/effect/spawner/random/cube/epic = 1,
@@ -58,10 +59,10 @@ GLOBAL_LIST_INIT(rare_cubes, typecacheof(list(
 	/obj/item/cube/colorful/voxel = 25,
 	/obj/item/cube/puzzle/rubiks = 25,
 	/obj/item/cube/material = 25,
-)))
+))
 
 /// List of Epic Cubes
-GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
+GLOBAL_LIST_INIT(epic_cubes, list(
 	// Vanilla
 	/obj/item/freeze_cube = 25,
 	// Custom
@@ -74,10 +75,10 @@ GLOBAL_LIST_INIT(epic_cubes, typecacheof(list(
 	// Oxygen cube, generates oxygen
 	//Nitrous boxes (Crash bandicoot) impact grenade
 	/obj/item/food/monkeycube/spaceman = 25,
-	), only_root_path = TRUE))
+	), only_root_path = TRUE)
 
 /// List of Legendary Cubes
-GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
+GLOBAL_LIST_INIT(legendary_cubes, list(
 	// Vanilla
 	/obj/item/blackbox = 25,
 	/obj/item/prisoncube = 25,
@@ -91,11 +92,12 @@ GLOBAL_LIST_INIT(legendary_cubes, typecacheof(list(
 	/obj/item/stock_parts/servo/piston = 25,
 	/obj/item/stock_parts/matter_bin/moving = 25,
 	/obj/item/food/monkeycube/spessman = 25,
+	/obj/item/stock_parts/micro_laser/charged_blaster = 25,
 	//Pain Box(Dune) maxes out your pain, immediately fills you with a lot of determination
-)))
+))
 
 /// List of Mythical Cubes
-GLOBAL_LIST_INIT(mythical_cubes, typecacheof(list(
+GLOBAL_LIST_INIT(mythical_cubes, list(
 	/obj/effect/spawner/random/cube/legendary/three = 5,
 	/obj/item/cube/random/mythical = 30,
 	/obj/item/cube/craft = 25,
@@ -106,8 +108,8 @@ GLOBAL_LIST_INIT(mythical_cubes, typecacheof(list(
 	//Time Cube (time cube) wizard time-stop spell w/ longer cooldown
 	//Escafil Device (Animorphs) morph belt/spell w/ cooldown
 	/obj/item/stock_parts/power_store/cell/tesseract = 25,
-	//Question mark block(reskin a christmas gift box)
-)))
+	/obj/item/gift/anything/questionmark = 25,
+))
 
 
 /// Loot pool used by the All Rarities cube spawner

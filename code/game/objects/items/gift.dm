@@ -14,12 +14,26 @@
 
 	/// What type of thing are we guaranteed to spawn in with?
 	var/obj/item/contains_type = null
+	/// Sound that plays when you tear into the gift, along with the volume it plays at
+	var/list/tearsound = list('sound/items/poster/poster_ripped.ogg' = 50)
+	/// Random icon on init?
+	var/random_icon = TRUE
+	/// Do we shift pixels around on init?
+	var/random_pixshift = TRUE
+	/// The debris we leave when we unwrap a gift. That paper gets EVERYWHERE, man
+	var/obj/effect/decal/unwrap_trash = /obj/effect/decal/cleanable/wrapping
+	/// Still almost instant, but the little bar adds to the anticipation and thus the dopamine when you get your gift
+	var/unwrap_time = 5 DECISECONDS
+	/// Pretty much here just for /obj/item/gift/anything/questionmark, but also adds a little more variation to basic gifts
+	var/list/unwrap_verbs = list("unwraps", "tears into", "peels open")
 
 /obj/item/gift/Initialize(mapload)
 	. = ..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
-	icon_state = "giftdeliverypackage[rand(1,5)]"
+	if(random_pixshift)
+		pixel_x = rand(-10,10)
+		pixel_y = rand(-10,10)
+	if(random_icon)
+		icon_state = "giftdeliverypackage[rand(1,5)]"
 
 	if(isnull(contains_type))
 		contains_type = get_gift_type()
@@ -38,14 +52,20 @@
 		to_chat(user, span_warning("You're supposed to be spreading gifts, not opening them yourself!"))
 		return
 
+	if(!do_after(user, unwrap_time, timed_action_flags = IGNORE_USER_LOC_CHANGE))
+		return
+
 	moveToNullspace()
 
 	var/obj/item/thing = new contains_type(get_turf(user))
-
+	if(LAZYLEN(tearsound))
+		playsound(get_turf(user), tearsound[1], tearsound[tearsound[1]], TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	if(unwrap_trash)
+		new unwrap_trash(get_turf(user))
 	if (QDELETED(thing)) //might contain something like metal rods that might merge with a stack on the ground
-		user.visible_message(span_danger("Oh no! The present that [user] opened had nothing inside it!"))
+		user.visible_message(span_danger("Oh no! \The [src] that [user] opened had nothing inside it!"))
 	else
-		user.visible_message(span_notice("[user] unwraps \the [src], finding \a [thing] inside!"))
+		user.visible_message(span_notice("[user] [pick(unwrap_verbs)] \the [src], finding \a [thing] inside!"))
 		user.investigate_log("has unwrapped a present containing [thing.type].", INVESTIGATE_PRESENTS)
 		user.put_in_hands(thing)
 		thing.add_fingerprint(user)
