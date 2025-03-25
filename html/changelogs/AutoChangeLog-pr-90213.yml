@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Large internals station trait no longer prevents admin-specific internals boxes from spawning"
