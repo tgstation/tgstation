@@ -46,7 +46,7 @@
 /** TOPICS
  * These are the handlers for world.Export() -> World.Topic() server communication.
  * Double check to ensure any calls are correct and the query is legit.
- * World.Topic() exploits can be very devistating since these can be called via the player connection without a client.
+ * World.Topic() exploits can be very devistating since these can be called via a normal player connection without a client.
  * https://secure.byond.com/docs/ref/index.html#/world/proc/Topic
 */
 
