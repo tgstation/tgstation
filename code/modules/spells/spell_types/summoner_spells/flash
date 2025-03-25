@@ -1,20 +1,18 @@
 /datum/action/cooldown/spell/summoner_spells/radius_turf/flash
 	name = "Flash"
 	desc = "Blinks you a short distance toward the target location."
-	button_icon_state = "blink"
-	sound = 'sound/effects/magic/blink.ogg'
+	button_icon_state = "flash"
+	sound = 'sound/effects/magic/flash.ogg'
 
 	school = SCHOOL_TRANSLOCATION
 	cooldown_time = 300 SECONDS
 
 	invocation_type = INVOCATION_NONE
 
-	smoke_type = /datum/effect_system/fluid_spread/smoke
-	smoke_amt = 0
+	//smoke_type = /datum/effect_system/fluid_spread/smoke
+	//smoke_amt = 0
 
 	inner_tele_radius = 0
-	outer_tele_radius = 6
-
-	post_teleport_sound = 'sound/effects/magic/blink.ogg'
+	outer_tele_radius = 4
 
 	spell_max_level = 1
