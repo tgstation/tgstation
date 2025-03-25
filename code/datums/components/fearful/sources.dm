@@ -31,6 +31,8 @@
 /// Makes the owner terrified of darkness
 /datum/terror_handler/simple_source/nyctophobia
 	buildup_per_second = 5 // Takes about two minutes to reach maximum
+	/// Are we counteracted by mesons?
+	var/meson_negated = TRUE
 
 /datum/terror_handler/simple_source/nyctophobia/Destroy(force)
 	owner.clear_mood_event("nyctophobia")
@@ -46,15 +48,15 @@
 		if(as_human.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
 			return FALSE
 
-	if((owner.sight & SEE_TURFS) == SEE_TURFS)
+	if (meson_negated && (owner.sight & SEE_TURFS))
 		return FALSE
 
 	var/lit_tiles = 0
 	var/unlit_tiles = 0
 
-	for(var/turf/open/turf_to_check in range(1, owner))
+	for (var/turf/open/turf_to_check in range(1, owner))
 		var/light_amount = turf_to_check.get_lumcount()
-		if(light_amount > LIGHTING_TILE_IS_DARK)
+		if (light_amount > LIGHTING_TILE_IS_DARK)
 			lit_tiles++
 		else
 			unlit_tiles++
@@ -75,6 +77,7 @@
 	buildup_per_second = 15
 	// Overrides the base type with slower buildup
 	overrides = list(/datum/terror_handler/simple_source/nyctophobia)
+	meson_negated = FALSE
 
 /datum/terror_handler/simple_source/nyctophobia/terrified/tick(seconds_per_tick, terror_buildup)
 	. = ..()
