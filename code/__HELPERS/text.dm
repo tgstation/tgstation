@@ -1249,10 +1249,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		input = copytext(input, 1, -1)
 		last_char = copytext_char(input, -1)
 
-	var/first_char = copytext_char(input, 1)
+	var/first_char = copytext_char(input, 1, 2)
 	while(first_char in bad_punctuation)
 		input = copytext(input, 2)
-		first_char = copytext_char(input, 1)
+		first_char = copytext_char(input, 1, 2)
 
 	// one last trim so we wend up with "hey"
 	input = trim(input)
