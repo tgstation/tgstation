@@ -1238,19 +1238,24 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
 	return grawlix
 
-/// Goes through the input and removes any punctuation from the end of the string.
+/// Goes through the input and removes any punctuation from the start and end of the string.
 /proc/strip_punctuation(input)
-	// Makes sure "hey - " properly drops the hyphen
-	input = trim_right(input)
+	// Makes sure " hey - " properly drops the hyphen
+	input = trim(input)
 
-	var/static/list/bad_punctuation = list("!", "?", ".", "~", ";", ":", "-")
+	var/static/list/bad_punctuation = list("!", "?", ".", "~", ";", ":", "-", "|", "+", "_", ",")
 	var/last_char = copytext_char(input, -1)
 	while(last_char in bad_punctuation)
 		input = copytext(input, 1, -1)
 		last_char = copytext_char(input, -1)
 
+	var/first_char = copytext_char(input, 1)
+	while(first_char in bad_punctuation)
+		input = copytext(input, 2)
+		first_char = copytext_char(input, 1)
+
 	// one last trim so we wend up with "hey"
-	input = trim_right(input)
+	input = trim(input)
 	return input
 
 /// Find what punctuation is at the end of the input, returns it.

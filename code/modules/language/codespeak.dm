@@ -8,25 +8,20 @@
 	always_use_default_namelist = TRUE // No syllables anyways
 
 /datum/language/codespeak/scramble_sentence(input, list/mutual_languages)
-	. = read_word_cache(input)
-	if(.)
-		return .
+	var/sentence = read_word_cache(input)
+	if(sentence)
+		return sentence
 
-	. = ""
+	sentence = ""
 	var/list/words = list()
-	while(length_char(.) < length_char(input))
+	while(length_char(sentence) < length_char(input))
 		words += generate_code_phrase(return_list=TRUE)
-		. = jointext(words, ", ")
+		sentence = jointext(words, ", ")
 
-	. = capitalize(.)
+	sentence = capitalize(sentence)
 
-	var/input_ending = copytext_char(input, -1)
+	sentence += find_last_punctuation(input)
 
-	var/static/list/endings
-	if(!endings)
-		endings = list("!", "?", ".")
+	write_word_cache(input, sentence)
 
-	if(input_ending in endings)
-		. += input_ending
-
-	write_word_cache(input, .)
+	return sentence

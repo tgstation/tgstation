@@ -5,6 +5,12 @@
 	key = "0"
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_UNDERSTOOD
 	default_priority = 100
+	space_chance = 20
+	sentence_chance = 0
+	between_word_sentence_chance = 10
+	between_word_space_chance = 75
+	additional_syllable_low = 0
+	additional_syllable_high = 0
 
 	icon_state = "galcom"
 	// Default namelist is the human namelist, and common is the human language, so might as well.

@@ -18,18 +18,23 @@
 	var/list/syllables
 	/// List of characters that will randomly be inserted between syllables.
 	var/list/special_characters
+
+	// These modify how syllables are combined.
 	/// Likelihood of making a new sentence after each syllable.
-	var/sentence_chance = 5
+	var/sentence_chance = 2
 	/// Likelihood of making a new sentence after each word.
 	var/between_word_sentence_chance = 0
-	/// Likelihood of getting a space in the random scramble string
-	var/space_chance = 55
-	/// Likelyhood of getting a space between words
+	/// Likelihood of adding a space between syllables.
+	var/space_chance = 20
+	/// Likelyhood of adding a space between words.
 	var/between_word_space_chance = 100
 	/// Scramble word interprets the word as this much longer than it really is (low end)
+	/// You can set this to an arbitarily large negative number to make all words only one syllable.
 	var/additional_syllable_low = -1
 	/// Scramble word interprets the word as this much longer than it really is (high end)
+	/// You can set this to an arbitarily large negative number to make all words only one syllable.
 	var/additional_syllable_high = 3
+
 	/// Spans to apply from this language
 	var/list/spans
 	/**
@@ -86,6 +91,24 @@
 	 * Not sure why you would do that though.
 	 */
 	var/list/mutual_understanding
+
+// Primarily for debugging, allows for easy iteration and testing of languages.
+/datum/language/vv_edit_var(var_name, var_value)
+	. = ..()
+	var/list/delete_cache = list(
+		NAMEOF(src, additional_syllable_high),
+		NAMEOF(src, additional_syllable_low),
+		NAMEOF(src, between_word_sentence_chance),
+		NAMEOF(src, between_word_space_chance),
+		NAMEOF(src, sentence_chance),
+		NAMEOF(src, space_chance),
+		NAMEOF(src, special_characters),
+		NAMEOF(src, syllables),
+	)
+	if(var_name in delete_cache)
+		scramble_cache.Cut()
+		most_common_cache.Cut()
+		last_sentence_cache.Cut()
 
 /// Checks whether we should display the language icon to the passed hearer.
 /datum/language/proc/display_icon(atom/movable/hearer)
@@ -154,6 +177,8 @@
 /// Checks the word cache for a word
 /datum/language/proc/read_word_cache(input)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	// we generally want "The" and "the" to translate to the same thing.
+	// so we lowercase everything, making it case insensitive.
 	var/lowertext_input = LOWER_TEXT(input)
 	if(most_common_cache[lowertext_input])
 		return most_common_cache[lowertext_input]
@@ -181,18 +206,22 @@
 /// Checks the sentence cache for a sentence
 /datum/language/proc/read_sentence_cache(input)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	. = last_sentence_cache[input]
-	if(. && last_sentence_cache[1] != input)
+	// the only handling we do is capitalizing the first word, as say auto-capitalizes the first word anyway
+	// the actual structure of the sentence is otherwise case sensitive so it's preserved
+	var/input_capitalized = capitalize(input)
+	. = last_sentence_cache[input_capitalized]
+	if(. && last_sentence_cache[1] != input_capitalized)
 		// bumps it to the top of the cache (don't anticipate this happening often)
-		last_sentence_cache -= input
-		last_sentence_cache[input] = .
+		last_sentence_cache -= input_capitalized
+		last_sentence_cache[input_capitalized] = .
 	return .
 
 /// Adds a sentence to the cache, though the sentence should be modified with a key
 /datum/language/proc/write_sentence_cache(input, key, result_scramble)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	var/input_capitalized = capitalize(input)
 	// Add to the cache (the cache being an assoc list of assoc lists), cutting old entries if the list is too long
-	LAZYSET(last_sentence_cache[input], key, result_scramble)
+	LAZYSET(last_sentence_cache[input_capitalized], key, result_scramble)
 	if(length(last_sentence_cache) > SENTENCE_CACHE_LEN)
 		last_sentence_cache.Cut(1, last_sentence_cache.len - SENTENCE_CACHE_LEN + 1)
 
@@ -228,6 +257,7 @@
 	for(var/word in scrambled_words)
 		if(prob(between_word_sentence_chance))
 			sentence += ". "
+			word = capitalize(word)
 		else if(prob(between_word_space_chance))
 			sentence += " "
 
@@ -257,17 +287,18 @@
 		var/add_space = FALSE
 		var/add_period = FALSE
 		word = ""
-		while(length_char(.) < input_size)
+		while(length_char(word) < input_size)
 			// add in the last syllable's period or space first
 			if(add_period)
 				word += ". "
 			else if(add_space)
 				word += " "
+			// insert special chars if we're not at the start of the word
+			else if(word && prob(1) && length(special_characters))
+				word += pick(special_characters)
 			// generate the next syllable (capitalize if we just added a period)
-			var/next = (. && length(special_characters) && prob(1)) ? pick(special_characters) : pick_weight_recursive(syllables)
-			if(add_period)
-				next = capitalize(next)
-			word += next
+			var/next = pick_weight_recursive(syllables)
+			word += add_period ? capitalize(next) : next
 			// determine if the next syllable gets a period or space
 			add_period = prob(sentence_chance)
 			add_space = prob(space_chance)
