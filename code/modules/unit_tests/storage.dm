@@ -75,7 +75,7 @@
 /// Tests that quick equip respects storage blacklists
 /datum/unit_test/quick_equip_respects_storage
 
-/datum/unit_test/quick_equip_respects_storage
+/datum/unit_test/quick_equip_respects_storage/Run()
 	var/obj/item/storage/backpack/storage_item =  allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left)
 	var/mob/living/carbon/human/consistent/dummy = allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left)
 
