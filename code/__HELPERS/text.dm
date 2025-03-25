@@ -1028,7 +1028,11 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return corrupted_text
 
-#define is_alpha(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
+/// Checks if the char is lowercase
+#define is_lowercase_character(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
+/// Checks if the char is uppercase
+#define is_uppercase_character(X) ((text2ascii(X) <= 90) && (text2ascii(X) >= 65))
+/// Checks if the char is a digit
 #define is_digit(X) ((length(X) == 1) && (length(text2num(X)) == 1))
 
 //json decode that will return null on parse error instead of runtiming.
@@ -1233,3 +1237,45 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	for(var/iteration in 1 to length_char(text))
 		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
 	return grawlix
+
+/// Goes through the input and removes any punctuation from the end of the string.
+/proc/strip_punctuation(input)
+	// Makes sure "hey - " properly drops the hyphen
+	input = trim_right(input)
+
+	var/static/list/bad_punctuation = list("!", "?", ".", "~", ";", ":", "-")
+	var/last_char = copytext_char(input, -1)
+	while(last_char in bad_punctuation)
+		input = copytext(input, 1, -1)
+		last_char = copytext_char(input, -1)
+
+	// one last trim so we wend up with "hey"
+	input = trim_right(input)
+	return input
+
+/// Find what punctuation is at the end of the input, returns it.
+/proc/find_last_punctuation(input)
+	// make sure we're not checking "hey - " for a hyphen
+	input = trim_right(input)
+
+	var/last_three = copytext_char(input, -3)
+	if(last_three == "...")
+		return last_three
+	var/last_two = copytext_char(input, -2)
+	switch(last_two)
+		if("!!", "??", "..", "?!", "!?")
+			return last_two
+	var/last_one = copytext_char(input, -1)
+	switch(last_one)
+		if("!", "?" ,".", "~", ";", ":", "-")
+			return last_one
+
+	return ""
+
+/// Checks if the passed string is all uppercase, ignoring punctuation and numbers and symbols
+/proc/is_uppercase(input)
+	for(var/i in 1 to length_char(input))
+		var/i_char = copytext_char(input, i, i + 1)
+		if(is_lowercase_character(i_char))
+			return FALSE
+	return TRUE

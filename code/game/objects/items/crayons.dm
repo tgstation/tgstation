@@ -483,7 +483,7 @@
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
-	if(ascii && is_alpha(drawing))
+	if(ascii && is_lowercase_character(drawing))
 		temp = "letter"
 	else if(ascii && is_digit(drawing))
 		temp = "number"

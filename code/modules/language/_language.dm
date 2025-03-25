@@ -168,29 +168,6 @@
 	if(length(last_sentence_cache) > SENTENCE_CACHE_LEN)
 		last_sentence_cache.Cut(1, last_sentence_cache.len - SENTENCE_CACHE_LEN + 1)
 
-/// Goes through the input and removes any punctuation from the end of the string.
-/proc/strip_punctuation(input)
-	var/static/list/bad_punctuation = list("!", "?", ".", "~", ";", ":", "-")
-	var/last_char = copytext_char(input, -1)
-	while(last_char in bad_punctuation)
-		input = copytext(input, 1, -1)
-		last_char = copytext_char(input, -1)
-
-	return trim_right(input)
-
-/// Find what punctuation is at the end of the input, returns it.
-/proc/find_last_punctuation(input)
-	. = copytext_char(input, -3)
-	if(. == "...")
-		return .
-	. = copytext_char(input, -2)
-	if(. in list("!!", "??", "..", "?!", "!?"))
-		return .
-	. = copytext_char(input, -1)
-	if(. in list("!", "?" ,".", "~", ";", ":", "-"))
-		return .
-	return ""
-
 /// Scrambles a sentence in this language.
 /// Takes into account any languages the hearer knows that has mutual understanding with this language.
 /datum/language/proc/scramble_sentence(input, list/mutual_languages)
@@ -226,7 +203,7 @@
 		. += word
 
 	// scrambling the words will drop punctuation, so re-add it at the end
-	. += find_last_punctuation(trim_right(input))
+	. += find_last_punctuation(input)
 
 	write_sentence_cache(input, cache_key, .)
 
@@ -263,6 +240,10 @@
 			add_space = prob(space_chance)
 
 	write_word_cache(input, .)
+
+	// If they're shouting, we're shouting
+	if(is_uppercase(input))
+		. = uppertext(.)
 
 	return .
 
