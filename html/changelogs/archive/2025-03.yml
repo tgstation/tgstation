@@ -739,3 +739,38 @@
   zxaber:
   - qol: Cyborg PDAs' home screens now have Robotact at the top of the screen.
   - bugfix: Sheets of materials with NODROP can no longer be given to repair bots.
+2025-03-25:
+  Absolucy:
+  - code_imp: Slightly improved the code for the Cortex Imprint bioware.
+  Capsandi:
+  - bugfix: "live donk Fr\xE9chette rounds and m12gsl bulldog magazine sprites look\
+      \ less like ERRORs."
+  Jacquerel:
+  - qol: Users of Ashen Passage and Phase Shift will be able to move instantly upon
+      cast rather than after a delay
+  - balance: Space Crawl now functions if you are on a space tile, or if you are in
+      an outdoor area with low air pressure.
+  Neuroplasty:
+  - spellcheck: Fixed a typo for the Chemical Separator
+  SmArtKar:
+  - code_imp: Removed the 516 beta warning entirely
+  - qol: Moved material item insertion to right click for material containers
+  - bugfix: Adjusting sanity over the allowed maximum will no longer completely halt
+      the change, and instead actually cap it at the maximum value.
+  - code_imp: Cleaned up mood and mood-adjacent code.
+  - refactor: Audited all remaining coloring code - among noticeable changes, blood
+      should no longer get colored or "leak out" of item bounds, atmos pipes no longer
+      color weirdly and repairbots are white again.
+  - bugfix: Fixed incorrect offsets on wide items' attack animations
+  - bugfix: Fixed darkness adaptation not refreshing eye status correctly
+  - bugfix: Fixed failed wrench/welder interaction attempts resulting in you attacking
+      reflectors
+  TealSeer:
+  - bugfix: fixed the ship ambience volume slider not working properly
+  combustor:
+  - bugfix: Fixes the det's shutters on icebox
+  imedial:
+  - qol: AI shells can track people now too
+  - bugfix: bloodless species no longer have a free bonechiller
+  subject217:
+  - spellcheck: fixed a typo and a grammar error
