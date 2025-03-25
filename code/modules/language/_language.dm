@@ -26,16 +26,38 @@
 	var/space_chance = 55
 	/// Likelyhood of getting a space between words
 	var/between_word_space_chance = 100
+	/// Scramble word interprets the word as this much longer than it really is (low end)
+	var/additional_syllable_low = -1
+	/// Scramble word interprets the word as this much longer than it really is (high end)
+	var/additional_syllable_high = 3
 	/// Spans to apply from this language
 	var/list/spans
-	/// Cache of recently scrambled text
-	/// This allows commonly reused words to not require a full re-scramble every time.
-	var/list/scramble_cache = list()
-	/// Cache of recently spoken sentences
-	/// So if one person speaks over the radio, everyone hears the same thing.
-	var/list/last_sentence_cache = list()
-	/// The 1000 most common words get permanently cached
-	var/list/most_common_cache = list()
+	/**
+	 * Cache of recently scrambled text
+	 * This allows commonly reused words to not require a full re-scramble every time.
+	 * Is limited to the last SCRAMBLE_CACHE_LEN words spoken. After surpassing this limit,
+	 * the oldest word will be removed from the cache and rescrambled if spoken again.
+	 *
+	 * Case insensitive, punctuation insensitive.
+	 */
+	VAR_PRIVATE/list/scramble_cache = list()
+	/**
+	 * Scramble cache, but for the 1000 most common words in the English language.
+	 * These are never rescrambled, so they will consistently be the same thing.
+	 *
+	 * Case insensitive, punctuation insensitive.
+	 */
+	VAR_PRIVATE/list/most_common_cache = list()
+	/**
+	 * Cache of recently spoken sentences
+	 * So if one person speaks over the radio, everyone hears the same thing.
+	 *
+	 * This is an assoc list [sentence] = [key, scrambled_text]
+	 * Where key is a string that is used to determine context about the listener (like what languages they know)
+	 *
+	 * Case sensitive, punctuation sensitive.
+	 */
+	VAR_PRIVATE/list/last_sentence_cache = list()
 
 	/// The language that an atom knows with the highest "default_priority" is selected by default.
 	var/default_priority = 0
@@ -57,9 +79,12 @@
 	/// What char to place in between randomly generated names
 	var/random_name_spacer = " "
 
-	/// Assoc Lazylist of other language types that would have a degree of mutual understanding with this language.
-	/// For example, you could do `list(/datum/language/common = 50)` to say that this language has a 50% chance to understand common words
-	/// And yeah if you give a 100% chance, they can basically just understand the language
+	/**
+	 * Assoc Lazylist of other language types that would have a degree of mutual understanding with this language.
+	 * For example, you could do `list(/datum/language/common = 50)` to say that this language has a 50% chance to understand common words
+	 * And yeah if you give a 100% chance, they can basically just understand the language.
+	 * Not sure why you would do that though.
+	 */
 	var/list/mutual_understanding
 
 /// Checks whether we should display the language icon to the passed hearer.
@@ -129,24 +154,27 @@
 /// Checks the word cache for a word
 /datum/language/proc/read_word_cache(input)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if(most_common_cache[input])
-		return most_common_cache[input]
+	var/lowertext_input = LOWER_TEXT(input)
+	if(most_common_cache[lowertext_input])
+		return most_common_cache[lowertext_input]
 
-	. = scramble_cache[input]
-	if(. && scramble_cache[1] != input)
+	. = scramble_cache[lowertext_input]
+	if(. && scramble_cache[1] != lowertext_input)
 		// bumps it to the top of the cache
-		scramble_cache -= input
-		scramble_cache[input] = .
+		scramble_cache -= lowertext_input
+		scramble_cache[lowertext_input] = .
 	return .
 
 /// Adds a word to the cache
 /datum/language/proc/write_word_cache(input, scrambled_text)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if(GLOB.most_common_words[LOWER_TEXT(input)])
-		most_common_cache[input] = scrambled_text
+	var/lowertext_input = LOWER_TEXT(input)
+	// The most common words are always cached
+	if(GLOB.most_common_words[lowertext_input])
+		most_common_cache[lowertext_input] = scrambled_text
 		return
 	// Add it to cache, cutting old entries if the list is too long
-	scramble_cache[input] = scrambled_text
+	scramble_cache[lowertext_input] = scrambled_text
 	if(length(scramble_cache) > SCRAMBLE_CACHE_LEN)
 		scramble_cache.Cut(1, scramble_cache.len - SCRAMBLE_CACHE_LEN + 1)
 
@@ -168,8 +196,11 @@
 	if(length(last_sentence_cache) > SENTENCE_CACHE_LEN)
 		last_sentence_cache.Cut(1, last_sentence_cache.len - SENTENCE_CACHE_LEN + 1)
 
-/// Scrambles a sentence in this language.
-/// Takes into account any languages the hearer knows that has mutual understanding with this language.
+/**
+ * Scrambles a sentence in this language.
+ *
+ * Takes into account any languages the hearer knows that has mutual understanding with this language.
+ */
 /datum/language/proc/scramble_sentence(input, list/mutual_languages)
 	var/cache_key = "[mutual_languages?[type] || 0]-understanding"
 	var/list/cache = read_sentence_cache(cache_key)
@@ -180,71 +211,70 @@
 	var/list/scrambled_words = list()
 	for(var/word in real_words)
 		var/translate_prob = mutual_languages?[type] || 0
+		var/base_word = strip_punctuation(word)
 		if(translate_prob > 0)
-			var/base_word = lowertext(strip_punctuation(word))
 			// the probability of managing to understand a word is based on how common it is
 			// 1000 words in the list, so words outside the list are just treated as "the 1500th most common word"
-			var/commonness = GLOB.most_common_words[base_word] || 1500
+			var/commonness = GLOB.most_common_words[LOWER_TEXT(base_word)] || 1500
 			translate_prob += (translate_prob * 0.2 * (1 - (min(commonness, 1500) / 500)))
 			if(prob(translate_prob))
 				scrambled_words += base_word
 				continue
 
-		scrambled_words += scramble_word(word)
+		scrambled_words += scramble_word(base_word)
 
-	// start building the word. first word is capitalized and otherwise untouched
-	. = capitalize(popleft(scrambled_words))
+	// start building the new sentence. first word is capitalized and otherwise untouched
+	var/sentence = capitalize(popleft(scrambled_words))
 	for(var/word in scrambled_words)
 		if(prob(between_word_sentence_chance))
-			. += ". "
+			sentence += ". "
 		else if(prob(between_word_space_chance))
-			. += " "
+			sentence += " "
 
-		. += word
+		sentence += word
 
 	// scrambling the words will drop punctuation, so re-add it at the end
-	. += find_last_punctuation(input)
+	sentence += find_last_punctuation(input)
 
-	write_sentence_cache(input, cache_key, .)
+	write_sentence_cache(input, cache_key, sentence)
 
-	return .
+	return sentence
 
-/// Scrambles a single word in this language.
+/**
+ * Scrambles a single word in this language.
+ */
 /datum/language/proc/scramble_word(input)
 	// If the input is cached already, move it to the end of the cache and return it
-	. = read_word_cache(input)
-	if(.)
-		return .
+	var/word = read_word_cache(input)
+	if(word)
+		return is_uppercase(input) ? uppertext(word) : word
 
 	if(!length(syllables))
-		. = stars(input)
+		word = stars(input)
 
 	else
-		var/input_size = length_char(input)
+		var/input_size = max(length_char(input) + rand(additional_syllable_low, additional_syllable_high), 1)
 		var/add_space = FALSE
 		var/add_period = FALSE
-		. = ""
+		word = ""
 		while(length_char(.) < input_size)
 			// add in the last syllable's period or space first
 			if(add_period)
-				. += ". "
+				word += ". "
 			else if(add_space)
-				. += " "
+				word += " "
 			// generate the next syllable (capitalize if we just added a period)
 			var/next = (. && length(special_characters) && prob(1)) ? pick(special_characters) : pick_weight_recursive(syllables)
 			if(add_period)
 				next = capitalize(next)
-			. += next
+			word += next
 			// determine if the next syllable gets a period or space
 			add_period = prob(sentence_chance)
 			add_space = prob(space_chance)
 
-	write_word_cache(input, .)
+	write_word_cache(input, word)
 
 	// If they're shouting, we're shouting
-	if(is_uppercase(input))
-		. = uppertext(.)
-
-	return .
+	return is_uppercase(input) ? uppertext(word) : word
 
 #undef SCRAMBLE_CACHE_LEN
