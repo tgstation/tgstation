@@ -1009,6 +1009,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	for(var/mob/user as anything in is_using)
 		hide_contents(user)
 
+/// Closes the storage UIs of this and everything inside the parent for everyone viewing them.
 /datum/storage/proc/close_all_recursive()
 	close_all()
 	for(var/atom/movable/movable as anything in parent.get_all_contents())
@@ -1195,6 +1196,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	changed.visible_message(span_warning("[changed] falls out of [parent]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
+///Assign a new value to the locked variable. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
 /datum/storage/proc/set_locked(new_locked)
 	if(locked == new_locked)
 		return
