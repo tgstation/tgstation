@@ -40,5 +40,7 @@
 		quirk_holder.grant_partial_language(language_type, text2num(language_skill), source = LANGUAGE_QUIRK)
 
 /datum/quirk/bilingual/remove()
+	if(QDELING(quirk_holder))
+		return
 	quirk_holder.remove_all_languages(source = LANGUAGE_QUIRK)
 	quirk_holder.remove_all_partial_languages(source = LANGUAGE_QUIRK)
