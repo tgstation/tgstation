@@ -97,7 +97,7 @@
 
 /obj/item/cain_and_abel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!istype(target) || target.mob_size < MOB_SIZE_LARGE || target.stat == DEAD)
-		attack_speed = 8
+		attack_speed = CLICK_CD_MELEE
 		return ..()
 
 	attack_speed = initial(attack_speed)
