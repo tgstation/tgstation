@@ -1167,6 +1167,7 @@
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\hide_highest_offset.dm"
 #include "code\datums\components\hide_weather_planes.dm"
+#include "code\datums\components\hitsplat.dm"
 #include "code\datums\components\holderloving.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
