@@ -43,10 +43,20 @@
 /datum/component/New(list/raw_args)
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
-	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+
+	var/result = Initialize(arglist(arguments))
+
+	if(result == COMPONENT_INCOMPATIBLE)
 		stack_trace("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
 		qdel(src, TRUE, TRUE)
 		return
+
+	if(result == COMPONENT_REDUNDANT)
+		qdel(src, TRUE, TRUE)
+		return
+
+	if(QDELETED(src) || QDELETED(parent))
+		CRASH("Component [type] was created with a deleted parent or was deleted itself before it could be added to a parent")
 
 	_JoinParent()
 

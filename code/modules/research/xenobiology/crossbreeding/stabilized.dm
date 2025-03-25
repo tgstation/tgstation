@@ -110,7 +110,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/red
 	colour = SLIME_TYPE_RED
-	effect_desc = "Nullifies all equipment based slowdowns."
+	effect_desc = "Nullifies all equipment based speed change."
 
 /obj/item/slimecross/stabilized/green
 	colour = SLIME_TYPE_GREEN
