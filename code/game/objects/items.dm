@@ -2041,7 +2041,7 @@
 	return get_embed()?.embed_into(victim, target_limb)
 
 /// Toggles whether hair_mask should be applied to the character
-/obj/item/proc/toggle_hair_mask(toggle = null)
+/obj/item/proc/toggle_hair_mask(toggle = null, need_update = TRUE)
 	if(!hair_mask)
 		return
 
@@ -2049,3 +2049,6 @@
 		hair_mask_enabled = toggle
 	else
 		hair_mask_enabled = !hair_mask_enabled
+
+	if(need_update)
+		update_slot_icon()

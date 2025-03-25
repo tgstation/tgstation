@@ -236,6 +236,12 @@
 	QDEL_NULL(moth_snack)
 	return ..()
 
+/obj/item/clothing/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(hair_mask)
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = hair_mask_enabled ? "Hide hair" : "Show hair"
+
 /obj/item/clothing/dropped(mob/living/user)
 	..()
 	if(!istype(user))
