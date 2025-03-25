@@ -2045,7 +2045,7 @@
 	if(!hair_mask)
 		return
 
-	if(toggle != null)
+	if(!isnull(toggle))
 		if(toggle != hair_mask_enabled)
 			hair_mask_enabled = toggle
 		else
