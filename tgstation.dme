@@ -3059,6 +3059,7 @@
 #include "code\modules\admin\verbs\mapping.dm"
 #include "code\modules\admin\verbs\maprotation.dm"
 #include "code\modules\admin\verbs\panicbunker.dm"
+#include "code\modules\admin\verbs\path_debugger.dm"
 #include "code\modules\admin\verbs\plane_debugger.dm"
 #include "code\modules\admin\verbs\player_ticket_history.dm"
 #include "code\modules\admin\verbs\playsound.dm"
