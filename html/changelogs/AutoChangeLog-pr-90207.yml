@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "The _ispath SDQL2/Lua wrapper can now be used to actually check if something is a path."
+  - code_imp: "Added the _is_type_in_typecache wrapper, for SDQL2 / Lua scripts."
