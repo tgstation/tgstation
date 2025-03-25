@@ -228,7 +228,6 @@
 		if(3 to INFINITY) // take better care of your shit, dude
 			name = "tattered [initial(name)]"
 
-	register_context()
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
 	update_appearance()
 
@@ -236,14 +235,6 @@
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	QDEL_NULL(moth_snack)
 	return ..()
-
-/obj/item/clothing/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	if(hair_mask)
-		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = hair_mask_enabled ? "Hide hair" : "Show hair"
-
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/dropped(mob/living/user)
 	..()
