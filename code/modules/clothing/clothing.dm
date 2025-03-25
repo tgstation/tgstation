@@ -228,6 +228,7 @@
 		if(3 to INFINITY) // take better care of your shit, dude
 			name = "tattered [initial(name)]"
 
+	register_context()
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
 	update_appearance()
 
@@ -241,6 +242,8 @@
 
 	if(hair_mask)
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = hair_mask_enabled ? "Hide hair" : "Show hair"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/dropped(mob/living/user)
 	..()
