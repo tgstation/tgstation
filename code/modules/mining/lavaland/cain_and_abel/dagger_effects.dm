@@ -12,7 +12,7 @@
 	base_pixel_x = -64
 	duration = 1.75 SECONDS
 
-/obj/effect/temp_visual/dagger_slash/Initialize()
+/obj/effect/temp_visual/dagger_slash/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = 1.75 SECONDS)
 
