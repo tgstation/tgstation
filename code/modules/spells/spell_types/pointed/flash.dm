@@ -1,21 +1,22 @@
 /datum/action/cooldown/spell/pointed/flash
 	name = "Flash"
 	desc = "Blinks you a short distance toward the target location."
-	button_icon_state = "blink"
-	sound = 'sound/effects/magic/blink.ogg'
+	button_icon_state = "flash"
+	sound = 'sound/effects/magic/flash.ogg'
 
 	school = SCHOOL_TRANSLOCATION
-	cooldown_time = 5 SECONDS
+	cooldown_time = 300 SECONDS
 
 	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
 
 	spell_max_level = 1
 
-	cast_range = 5
+	cast_range = 4
 
-	var/post_teleport_sound = 'sound/items/weapons/zapbang.ogg'
 	var/teleport_channel = TELEPORT_CHANNEL_MAGIC
 	var/force_teleport = TRUE
+	var/post_teleport_sound = NONE
 
 /datum/action/cooldown/spell/pointed/flash/cast(atom/cast_on)
 	. = ..()
