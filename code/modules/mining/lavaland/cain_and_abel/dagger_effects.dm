@@ -1,5 +1,6 @@
 //effect when we're swinging wildly around
 /obj/effect/temp_visual/dagger_slash
+	name = "Blood Wisp"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
@@ -178,13 +179,13 @@
 
 /obj/effect/temp_visual/dagger_crystal/proc/on_entered(datum/source, mob/living/entered_living)
 	SIGNAL_HANDLER
-	if(!istype(entered_living) || entered_living.mob_size < MOB_SIZE_LARGE)
-		return
-	apply_crystal_effects(entered_living)
+	if(istype(entered_living))
+		apply_crystal_effects(entered_living)
 
 /obj/effect/temp_visual/dagger_crystal/proc/apply_crystal_effects(mob/living/victim)
 	victim.apply_status_effect(/datum/status_effect/dagger_stun)
-	victim.apply_damage(applied_damage, BRUTE)
+	playsound(victim, 'sound/items/weapons/bladeslice.ogg', 50, FALSE)
+	victim.apply_damage(victim.mob_size >= MOB_SIZE_LARGE ? applied_damage : applied_damage / 10, BRUTE)
 
 /obj/effect/temp_visual/dagger_crystal/proc/dissappear_gracefully()
 	animate(src, alpha = 0, time = 0.9 SECONDS)

@@ -97,8 +97,10 @@
 
 /obj/item/cain_and_abel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!istype(target) || target.mob_size < MOB_SIZE_LARGE || target.stat == DEAD)
+		attack_speed = 8
 		return ..()
 
+	attack_speed = initial(attack_speed)
 	var/old_force = force
 	var/bonus_value = combo_count || 1
 	force = CEILING((bonus_value * damage_boost) * force, 1)
