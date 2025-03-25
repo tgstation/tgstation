@@ -8,3 +8,5 @@
 	lose_text = span_danger("You no longer feel HONGRY.")
 	medical_record_text = "Patient has an above average appreciation for food and drink."
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/dinner)
+	species_whitelist = list(SPECIES_MOTH)
+
