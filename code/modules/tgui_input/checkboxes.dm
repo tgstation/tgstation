@@ -74,7 +74,6 @@
 	SStgui.close_uis(src)
 	state = null
 	items?.Cut()
-	choices?.Cut()
 	return ..()
 
 /datum/tgui_checkbox_input/proc/wait()
