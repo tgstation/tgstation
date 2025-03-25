@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Adjusting sanity over the allowed maximum will no longer completely halt the change, and instead actually cap it at the maximum value."
-  - code_imp: "Cleaned up mood and mood-adjacent code."
