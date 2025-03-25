@@ -119,7 +119,7 @@
 		qdel(src)
 		return
 
-	if(tick_interval = STATUS_EFFECT_AUTO_TICK)
+	if(tick_interval == STATUS_EFFECT_AUTO_TICK)
 		tick(seconds_per_tick)
 	else if(tick_interval != STATUS_EFFECT_NO_TICK && tick_interval < world.time)
 		var/tick_length = (tick_interval_upperbound && tick_interval_lowerbound) ? rand(tick_interval_lowerbound, tick_interval_upperbound) : initial(tick_interval)
