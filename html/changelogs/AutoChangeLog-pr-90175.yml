@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Sheets of materials with NODROP can no longer be given to repair bots."

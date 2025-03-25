@@ -20,7 +20,7 @@
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose), TRUE)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlays_updated))
-	RegisterSignal(parent, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(on_worn_overlays))
+	RegisterSignal(parent, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, PROC_REF(on_separate_worn_overlays))
 
 /datum/component/clothing_dirt/UnregisterFromParent()
 	var/obj/item/clothing/clothing = parent
@@ -37,6 +37,7 @@
 		COMSIG_MOB_UNEQUIPPED_ITEM,
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
+		COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS,
 	))
 	return ..()
 
@@ -70,13 +71,13 @@
 	dirt_overlay.color = dirt_color
 	overlays += dirt_overlay
 
-/datum/component/clothing_dirt/proc/on_worn_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+/datum/component/clothing_dirt/proc/on_separate_worn_overlays(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	SIGNAL_HANDLER
 
 	if (isinhands || !dirtiness || !dirt_state || !(source.flags_cover & PEPPERPROOF))
 		return
 
-	var/mutable_appearance/dirt_overlay = mutable_appearance(source.worn_icon, dirt_state, appearance_flags = KEEP_APART|RESET_COLOR)
+	var/mutable_appearance/dirt_overlay = mutable_appearance(source.worn_icon, dirt_state)
 	dirt_overlay.color = dirt_color
 	overlays += dirt_overlay
 

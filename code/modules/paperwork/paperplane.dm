@@ -4,7 +4,6 @@
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paperplane"
 	base_icon_state = "paperplane"
-	custom_fire_overlay = "paperplane_onfire"
 	throw_range = 7
 	throw_speed = 1
 	throwforce = 0
@@ -47,6 +46,11 @@
 /obj/item/paperplane/Destroy()
 	internal_paper = null
 	return ..()
+
+/obj/item/paperplane/custom_fire_overlay()
+	if (!custom_fire_overlay)
+		custom_fire_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paperplane_onfire", appearance_flags = RESET_COLOR|KEEP_APART)
+	return custom_fire_overlay
 
 /obj/item/paperplane/suicide_act(mob/living/user)
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)

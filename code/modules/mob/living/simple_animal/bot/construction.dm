@@ -192,9 +192,9 @@
 
 //Repairbot assemblies
 /obj/item/bot_assembly/repairbot
-	desc = "It's a toolbox with tiles sticking out the top."
 	name = "Repairbot Chasis"
-	icon_state = "repairbot_base"
+	desc = "It's a toolbox with tiles sticking out the top."
+	icon_state = "repairbot_box"
 	throwforce = 10
 	created_name = "Repairbot"
 	///the toolbox our repairbot is made of
@@ -221,9 +221,9 @@
 /obj/item/bot_assembly/repairbot/update_overlays()
 	. = ..()
 	if(build_step >= ASSEMBLY_FIRST_STEP)
-		. += mutable_appearance(icon, "repairbot_base_sensor", appearance_flags = RESET_COLOR)
+		. += mutable_appearance(icon, "repairbot_base_sensor", appearance_flags = RESET_COLOR|KEEP_APART)
 	if(build_step >= ASSEMBLY_SECOND_STEP)
-		. += mutable_appearance(icon, "repairbot_base_arms", appearance_flags = RESET_COLOR)
+		. += mutable_appearance(icon, "repairbot_base_arms", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/item/bot_assembly/repairbot/attackby(obj/item/item, mob/user, params)
 	..()
