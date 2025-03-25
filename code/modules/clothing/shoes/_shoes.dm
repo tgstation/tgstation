@@ -300,7 +300,7 @@
 	return ..()
 
 /// Returns appropriate description for unfastened shoes
-/obj/item/clothing/shoes/verb/untied_adjective()
+/obj/item/clothing/shoes/proc/untied_adjective()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "untied"
@@ -310,7 +310,7 @@
 	return "nonexistant"
 
 /// Returns appropriate verb for how to fasten shoes
-/obj/item/clothing/shoes/verb/fasten_verb()
+/obj/item/clothing/shoes/proc/fasten_verb()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "tie"
@@ -320,7 +320,7 @@
 	return "do something mysterious to"
 
 /// Returns appropriate verb for fastening shoes
-/obj/item/clothing/shoes/verb/fastening_verb()
+/obj/item/clothing/shoes/proc/fastening_verb()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "tying"
