@@ -201,7 +201,7 @@ Key procs
 	return pick(understood_languages)
 
 /// Gets a list of all mutually understood languages.
-/datum/language_holder/proc/get_mutually_understood_languages()
+/datum/language_holder/proc/get_partially_understood_languages()
 	var/list/mutual_languages = list()
 	for(var/language_type in understood_languages)
 		var/datum/language/language_instance = GLOB.language_datum_instances[language_type]

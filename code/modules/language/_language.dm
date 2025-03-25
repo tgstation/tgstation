@@ -73,7 +73,7 @@
 	/// if you are seeing someone speak popcorn language, then something is wrong.
 	var/icon = 'icons/ui/chat/language.dmi'
 	/// Icon state displayed in the chat window when speaking this language.
-	var/icon_state = "popcorn"
+	var/icon_state = "unknown"
 
 	/// By default, random names picks this many names
 	var/default_name_count = 2

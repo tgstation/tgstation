@@ -21,6 +21,7 @@ type Language = {
   can_speak: BooleanLike; // mentally, we know how to speak it
   could_speak: BooleanLike; // physically, we are capable of speaking it
   can_understand: BooleanLike; // we can understand it regardless
+  partial_understanding: number; // how much of the language we understand
   icon: string;
   icon_state: string;
 };
@@ -61,6 +62,20 @@ const LangSpeakIcon = (props: LanguagePropsPassRest) => {
 
 const LangUnderstandIcon = (props: LanguageProps) => {
   const { language } = props;
+  if (!language.can_understand && language.partial_understanding > 0) {
+    return (
+      <Tooltip content={`You can only partially understand ${language.name}.`}>
+        <Box
+          inline
+          style={{
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+          }}
+        >
+          {language.partial_understanding}%
+        </Box>
+      </Tooltip>
+    );
+  }
   return <Icon name="brain" color={language.can_understand ? 'good' : 'bad'} />;
 };
 
@@ -202,7 +217,11 @@ export const LanguageMenu = (props) => {
   // also, push all languages we can speak to the top, then all languagse we can only understand, then alphabetize
   const shown_languages = languages
     .filter(
-      (language) => admin_mode || language.can_speak || language.can_understand,
+      (language) =>
+        admin_mode ||
+        language.can_speak ||
+        language.can_understand ||
+        language.partial_understanding > 0,
     )
     .sort(
       (a, b) =>
