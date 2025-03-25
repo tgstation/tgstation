@@ -89,26 +89,6 @@
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
 		if(overslot)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-			if(istype(overslot, /obj/item/mod))
-				balloon_alert(user, "can't overslot MOD suit parts!")
-				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-				return FALSE
-			if(HAS_TRAIT(overslot, TRAIT_NODROP))
-				balloon_alert(user, "can't remove [overslot]!")
-				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-				return FALSE
-			if(!overslot.forceMove(src))
-				balloon_alert(user, "failed to store old part!")
-				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-				return FALSE
-			part_datum.overslotting = overslot
-			wearer.transferItemToLoc(overslot, part, force = TRUE)
-			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit), override = TRUE)
-=======
-=======
->>>>>>> Stashed changes
 			// Only check clothing_flags for clothing items
 			if(istype(overslot, /obj/item/clothing))
 				var/obj/item/clothing/clothing_item = overslot
@@ -123,10 +103,6 @@
 			wearer.transferItemToLoc(overslot, part, force = TRUE)
 			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		wearer.update_clothing(slot_flags)
