@@ -1268,7 +1268,7 @@
 		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
 	)
 
-/datum/reagent/uranium/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+/datum/reagent/uranium/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 
 	if(!SSradiation.can_irradiate_basic(exposed_mob))
@@ -2565,7 +2565,7 @@
 	taste_description = "brains"
 	ph = 0.5
 
-/datum/reagent/romerol/expose_mob(mob/living/carbon/human/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/romerol/expose_mob(mob/living/carbon/human/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	// Silently add the zombie infection organ to be activated upon death
 	if(exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
