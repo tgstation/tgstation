@@ -66,8 +66,7 @@
 /proc/_ispath(path, type)
 	if(isnull(type))
 		return ispath(path)
-	else
-		return ispath(path, type)
+	return ispath(path, type)
 
 /proc/_length(E)
 	return length(E)
