@@ -149,15 +149,15 @@
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
 	explosion.start(src)
 
-/obj/effect/visible_heretic_influence/examine(mob/user)
+/obj/effect/visible_heretic_influence/examine(mob/living/user)
 	. = ..()
+	. += span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "examine"))
 	if(IS_HERETIC(user) || !ishuman(user))
 		return
 
-	var/mob/living/carbon/human/human_user = user
-	to_chat(human_user, span_userdanger("Your mind burns as you stare at the tear!"))
-	human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
-	human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	. += span_userdanger("Your mind burns as you stare at the tear!")
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/heretic_influence
 	name = "reality smash"
