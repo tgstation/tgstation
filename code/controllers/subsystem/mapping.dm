@@ -1,6 +1,10 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
-	init_order = INIT_ORDER_MAPPING
+	dependencies = list(
+		/datum/controller/subsystem/job,
+		/datum/controller/subsystem/processing/station,
+		/datum/controller/subsystem/processing/reagents
+	)
 	runlevels = ALL
 
 	var/list/nuke_tiles = list()

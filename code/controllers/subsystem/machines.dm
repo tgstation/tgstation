@@ -1,6 +1,8 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	init_order = INIT_ORDER_MACHINES
+	dependencies = list(
+		/datum/controller/subsystem/atoms
+	)
 	flags = SS_KEEP_TIMING
 	wait = 2 SECONDS
 

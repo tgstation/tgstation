@@ -27,8 +27,7 @@ SUBSYSTEM_DEF(garbage)
 	wait = 2 SECONDS
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	init_order = INIT_ORDER_GARBAGE
-	init_stage = INITSTAGE_EARLY
+	init_stage = INITSTAGE_FIRST
 
 	var/list/collection_timeout = list(GC_FILTER_QUEUE, GC_CHECK_QUEUE, GC_DEL_QUEUE) // deciseconds to wait before moving something up in the queue to the next level
 
