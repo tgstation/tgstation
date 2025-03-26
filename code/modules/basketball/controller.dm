@@ -25,19 +25,22 @@ GLOBAL_VAR(basketball_game)
 	var/game_duration = 3 MINUTES
 
 	/// List of all players ckeys involved in the minigame
-	var/list/minigame_players = list()
+	var/list/minigame_players_ckeys = list()
+	/// List of all player mobs involved in the minigame
+	var/list/minigame_basketball_mobs = list()
 
 	/// Spawn points for home team players
 	var/list/home_team_landmarks = list()
 	/// List of home team players ckeys
-	var/list/home_team_players = list()
+	var/list/home_team_ckeys = list()
+
 	/// The basketball hoop used by home team
 	var/obj/structure/hoop/minigame/home_hoop
 
 	/// Spawn points for away team players
 	var/list/away_team_landmarks = list()
 	/// List of away team players ckeys
-	var/list/away_team_players = list()
+	var/list/away_team_ckeys = list()
 	/// The basketball hoop used by away team
 	var/obj/structure/hoop/minigame/away_hoop
 
@@ -153,7 +156,7 @@ GLOBAL_VAR(basketball_game)
 
 	for(var/player_key in ready_players)
 		player_count++
-		minigame_players |= player_key
+		minigame_players_ckeys |= player_key
 
 		var/is_player_referee = (player_count == length(ready_players) && minigame_has_referee)
 
@@ -162,13 +165,13 @@ GLOBAL_VAR(basketball_game)
 			team_uniform = /datum/outfit/basketball/referee
 		else if(player_count % 2) // odd is home team
 			spawn_landmark = pick_n_take(home_spawnpoints)
-			home_team_players |= player_key
+			home_team_ckeys |= player_key
 			away_hoop.team_ckeys |= player_key // to restrict scoring on opponents hoop rapidly
 			team_uniform = current_map.home_team_uniform
 			team_name = current_map.team_name
 		else // even is away team
 			spawn_landmark = pick_n_take(away_spawnpoints)
-			away_team_players |= player_key
+			away_team_ckeys |= player_key
 			home_hoop.team_ckeys |= player_key // to restrict scoring on opponents hoop rapidly
 			team_uniform = away_map::home_team_uniform
 			team_name = away_map::team_name
@@ -196,6 +199,7 @@ GLOBAL_VAR(basketball_game)
 				old_body = player_client.mob.mind.current, \
 			)
 		baller.PossessByPlayer(player_key)
+		minigame_basketball_mobs |= baller
 
 		SEND_SOUND(baller, sound('sound/items/whistle/whistle.ogg', volume=30))
 		if(is_player_referee)
@@ -218,34 +222,31 @@ GLOBAL_VAR(basketball_game)
 
 	if(home_hoop.total_score == away_hoop.total_score)
 		is_game_draw = TRUE
-		winner_team_ckeys |= home_team_players
-		winner_team_ckeys |= away_team_players
+		winner_team_ckeys |= home_team_ckeys
+		winner_team_ckeys |= away_team_ckeys
 	else if(home_hoop.total_score > away_hoop.total_score)
-		winner_team_ckeys = away_team_players
+		winner_team_ckeys = away_team_ckeys
 		winner_team_name = away_hoop.name
-		loser_team_ckeys = home_team_players
+		loser_team_ckeys = home_team_ckeys
 	else if(home_hoop.total_score < away_hoop.total_score)
-		winner_team_ckeys = home_team_players
+		winner_team_ckeys = home_team_ckeys
 		winner_team_name = home_hoop.name
-		loser_team_ckeys = away_team_players
+		loser_team_ckeys = away_team_ckeys
 
 	if(is_game_draw)
 		for(var/ckey in winner_team_ckeys)
 			var/mob/living/competitor = get_mob_by_ckey(ckey)
-			var/area/mob_area = get_area(competitor)
-			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
+			if(competitor in minigame_basketball_mobs)
 				to_chat(competitor, span_hypnophrase("The game resulted in a draw!"))
 	else
 		for(var/ckey in winner_team_ckeys)
 			var/mob/living/competitor = get_mob_by_ckey(ckey)
-			var/area/mob_area = get_area(competitor)
-			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
+			if(competitor in minigame_basketball_mobs)
 				to_chat(competitor, span_hypnophrase("[winner_team_name] team wins!"))
 
 		for(var/ckey in loser_team_ckeys)
 			var/mob/living/competitor = get_mob_by_ckey(ckey)
-			var/area/mob_area = get_area(competitor)
-			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
+			if(competitor in minigame_basketball_mobs)
 				to_chat(competitor, span_hypnophrase("[winner_team_name] team wins!"))
 				competitor.dust()
 
@@ -255,15 +256,17 @@ GLOBAL_VAR(basketball_game)
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
  */
 /datum/basketball_controller/proc/end_game()
-	for(var/ckey in minigame_players)
-		var/mob/living/competitor = get_mob_by_ckey(ckey)
-		var/area/mob_area = get_area(competitor)
-		if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
-			QDEL_NULL(competitor)
-
+	for(var/mob/living/living in minigame_basketball_mobs)
+		living.ghostize(can_reenter_corpse = FALSE) // avoids runtimes when a cliented mob is qdel'd
+	QDEL_LIST(minigame_basketball_mobs)
 	QDEL_LIST(home_team_landmarks)
 	QDEL_LIST(away_team_landmarks)
 	QDEL_LIST(referee_landmark)
+	for(var/obj/effect/landmark/basketball/team_spawn/hoop in GLOB.landmarks_list)
+		qdel(hoop)
+
+	for(var/turf/victimized_turf as anything in location.reserved_turfs) //remove this once clearing turf reservations is actually reliable
+		victimized_turf.empty()
 	current_map.reservations -= location
 	current_map = null
 	QDEL_NULL(location)
