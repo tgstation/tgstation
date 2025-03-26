@@ -375,6 +375,43 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
 	return understood && show_message_success
 
+/// Try and cast a spell
+/mob/living/proc/check_spell_invoked(message)
+	message = html_decode(message)
+	if (!length(GLOB.spells_by_invocation))
+		generate_invokable_spells()
+
+	var/spell_type = GLOB.spells_by_invocation[message]
+	if (spell_type)
+		var/datum/action/cooldown/spell/invoked = new spell_type(src)
+		invoked.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
+		invoked.owner_has_control = FALSE
+		invoked.Grant(src)
+		RegisterSignal(invoked, COMSIG_SPELL_AFTER_CAST, PROC_REF(after_spell_invoked))
+		if (invoked.click_to_activate)
+			invoked.set_click_ability(src)
+		else
+			invoked.Trigger(NONE, src)
+
+/// When we're done casting a spell get rid of it
+/mob/living/proc/after_spell_invoked(datum/action/cooldown/spell/invoked)
+	SIGNAL_HANDLER
+	invoked.Remove(src)
+	qdel(invoked)
+
+/// Make our big old list
+/mob/living/proc/generate_invokable_spells()
+	for (var/datum/action/cooldown/spell/spell as anything in subtypesof(/datum/action/cooldown/spell))
+		var/invocation = spell::invocation
+		if (!invocation)
+			continue
+		var/invocation_type = spell::invocation_type
+		if (invocation_type == INVOCATION_EMOTE || invocation_type == INVOCATION_NONE)
+			continue
+		if (GLOB.spells_by_invocation[invocation])
+			continue
+		GLOB.spells_by_invocation[invocation] = spell
+
 /mob/living/send_speech(message_raw, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, list/message_mods = list(), forced = null, tts_message, list/tts_filter)
 	var/whisper_range = 0
 	var/is_speaker_whispering = FALSE
@@ -445,6 +482,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/voice_to_use = get_tts_voice(filter, special_filter)
 		if (!CONFIG_GET(flag/tts_no_whisper) || (CONFIG_GET(flag/tts_no_whisper) && !message_mods[WHISPER_MODE]))
 			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
+
+	check_spell_invoked(message_raw)
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)

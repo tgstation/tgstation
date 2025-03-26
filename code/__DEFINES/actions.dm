@@ -13,6 +13,8 @@
 ///Action button checks if user is not on an open turf
 #define AB_CHECK_OPEN_TURF (1<<6)
 
+GLOBAL_LIST_EMPTY(spells_by_invocation)
+
 DEFINE_BITFIELD(check_flags, list(
 	"CHECK IF HANDS BLOCKED" = AB_CHECK_HANDS_BLOCKED,
 	"CHECK IF IMMOBILIZED" = AB_CHECK_IMMOBILE,
