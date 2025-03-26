@@ -6,7 +6,7 @@
 		"Hello, world!" = "Hello, world",
 		"|Who are you?|" = "Who are you",
 		"Oh wow..." = "Oh wow",
-		"My name is E.T.!" = "My name is E.T",
+		"My name is E.T, the alien!" = "My name is E.T",
 		"I'm +YELLING+ at you!" = "I'm +YELLING+ at you",
 		"+I'm REALLY yelling!+" = "I'm REALLY yelling",
 	)
@@ -23,7 +23,7 @@
 		"|Who are you?|" = "?",
 		"Really, |WHO are you|?" = "?",
 		"Oh wow..." = "...",
-		"My name is E.T.!" = "!",
+		"My name is E.T, the alien!" = "!",
 	)
 
 	for(var/sample in sample_to_expected)
