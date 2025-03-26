@@ -1238,49 +1238,37 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
 	return grawlix
 
-/// Goes through the input and removes any punctuation from the start and end of the string.
-/proc/strip_punctuation(input)
-	// Makes sure " hey - " properly drops the hyphen
-	input = trim(input)
+/// All punctuation that can be stripped in strip_outer_punctuation()
+#define STRIPPED_PUNCTUATION (REGEX_QUOTE("!?.~;:,|+_`-"))
 
-	var/static/list/bad_punctuation = list("!", "?", ".", "~", ";", ":", "-", "|", "+", "_", ",", "`")
-	var/last_char = copytext_char(input, -1)
-	while(last_char in bad_punctuation)
-		input = copytext(input, 1, -1)
-		last_char = copytext_char(input, -1)
+/// Removes all punctuation sequences from the beginning and the end of the input string.
+/// Includes emphasis (|, +, _) and whitespace.
+/// Anything punctuation in the middle of the input will be maintained.
+/proc/strip_outer_punctuation(input)
+	var/static/regex/pre_word_regex = new("^(?:\[[STRIPPED_PUNCTUATION]\]{0,3})(.*)", "m")
+	if(pre_word_regex.Find(input))
+		input = pre_word_regex.group[1]
 
-	var/first_char = copytext_char(input, 1, 2)
-	while(first_char in bad_punctuation)
-		input = copytext(input, 2)
-		first_char = copytext_char(input, 1, 2)
+	var/static/regex/post_word_regex = new("^(.*?)(?:\[[STRIPPED_PUNCTUATION]\]{0,3})$", "m")
+	if(post_word_regex.Find(input))
+		return trim(post_word_regex.group[1])
 
-	// one last trim so we wend up with "hey"
-	input = trim(input)
-	return input
+	return trim(input)
+
+#undef STRIPPED_PUNCTUATION
 
 /// Find what punctuation is at the end of the input, returns it.
+/// Ignores emphasis (|, +, _)
 /proc/find_last_punctuation(input)
-	// make sure we're not checking "hey - " for a hyphen
-	input = trim_right(input)
-
-	var/last_three = copytext_char(input, -3)
-	if(last_three == "...")
-		return last_three
-	var/last_two = copytext_char(input, -2)
-	switch(last_two)
-		if("!!", "??", "..", "?!", "!?")
-			return last_two
-	var/last_one = copytext_char(input, -1)
-	switch(last_one)
-		if("!", "?" ,".", "~", ";", ":", "-")
-			return last_one
+	var/static/regex/punctuation_regex = new(@"([!?.~;:,-]{1,3})\s*$", "m")
+	if(punctuation_regex.Find(input))
+		return punctuation_regex.group[1]
 
 	return ""
 
 /// Checks if the passed string is all uppercase, ignoring punctuation and numbers and symbols
 /proc/is_uppercase(input)
-	for(var/i in 1 to length_char(input))
-		var/i_char = copytext_char(input, i, i + 1)
-		if(is_lowercase_character(i_char))
-			return FALSE
+	var/static/regex/lowercase_regex = new(@"[a-z]", "g")
+	if(lowercase_regex.Find(input))
+		return FALSE
 	return TRUE

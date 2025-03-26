@@ -240,7 +240,7 @@
 	var/list/scrambled_words = list()
 	for(var/word in real_words)
 		var/translate_prob = mutual_languages?[type] || 0
-		var/base_word = strip_punctuation(word)
+		var/base_word = strip_outer_punctuation(word)
 		if(translate_prob > 0)
 			// the probability of managing to understand a word is based on how common it is
 			// 1000 words in the list, so words outside the list are just treated as "the 1500th most common word"
@@ -309,3 +309,18 @@
 	return (is_uppercase(input) && length_char(input) >= 2) ? uppertext(word) : word
 
 #undef SCRAMBLE_CACHE_LEN
+
+GLOBAL_LIST_INIT(test_profile_costs, list())
+GLOBAL_LIST_INIT(test_profile_counts, list())
+
+/proc/language_test()
+
+	INIT_COST_GLOBAL(GLOB.test_profile_costs, GLOB.test_profile_counts)
+	var/sentence_one = "The quick brown fox jumps over the lazy dog."
+	var/sentence_two = "The lazy dog sleeps soundly under the midnight moon."
+	for(var/langtype in GLOB.language_datum_instances)
+		var/datum/language/lang = GLOB.language_datum_instances[langtype]
+
+		to_chat(usr, span_green(lang.scramble_sentence(sentence_one)))
+		to_chat(usr, span_red(lang.scramble_sentence(sentence_two)))
+	SET_COST("new translation")
