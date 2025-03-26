@@ -277,7 +277,7 @@
 	// If the input is cached already, move it to the end of the cache and return it
 	var/word = read_word_cache(input)
 	if(word)
-		return is_uppercase(input) ? uppertext(word) : word
+		return (is_uppercase(input) && length_char(input) >= 2) ? uppertext(word) : word
 
 	if(!length(syllables))
 		word = stars(input)
@@ -306,6 +306,6 @@
 	write_word_cache(input, word)
 
 	// If they're shouting, we're shouting
-	return is_uppercase(input) ? uppertext(word) : word
+	return (is_uppercase(input) && length_char(input) >= 2) ? uppertext(word) : word
 
 #undef SCRAMBLE_CACHE_LEN

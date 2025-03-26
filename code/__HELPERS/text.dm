@@ -1243,7 +1243,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	// Makes sure " hey - " properly drops the hyphen
 	input = trim(input)
 
-	var/static/list/bad_punctuation = list("!", "?", ".", "~", ";", ":", "-", "|", "+", "_", ",")
+	var/static/list/bad_punctuation = list("!", "?", ".", "~", ";", ":", "-", "|", "+", "_", ",", "`")
 	var/last_char = copytext_char(input, -1)
 	while(last_char in bad_punctuation)
 		input = copytext(input, 1, -1)
