@@ -125,11 +125,6 @@
 /// Successfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
 #define SS_INIT_NO_MESSAGE 4
 
-//! ### SS initialization load orders
-// Subsystem init_order, from highest priority to lowest priority
-// Subsystems shutdown in the reverse of the order they initialize in
-// Subsystem ordering is automatically handled using a dependency tree.
-
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 #define FIRE_PRIORITY_UNPLANNED_NPC 3
