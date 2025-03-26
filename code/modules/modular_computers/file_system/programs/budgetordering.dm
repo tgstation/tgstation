@@ -260,15 +260,16 @@
 				if(isnull(reason) || ..())
 					return
 
-			if(id_card)
-				if(id_card.registered_account && id_card.registered_account?.account_job) //Might need an extra condition
+			if(id_card && id_card?.registered_account)
+				if(id_card.registered_account?.account_job)
 					var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
-					var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Department", "[personal_department.account_holder]"))
-					if(!choice)
-						return
-					if(choice != "Cargo Department")
-						account = personal_department
-					name = id_card.registered_account?.account_holder
+					if(!(personal_department.account_holder == "Cargo Budget"))
+						var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
+						if(!choice)
+							return
+						if(choice != "Cargo Budget")
+							account = personal_department
+						name = id_card.registered_account?.account_holder
 
 			if(pack.goody && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
