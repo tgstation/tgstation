@@ -39,7 +39,7 @@
 /obj/machinery/quartic_reliquary
 	name = "quartic reliquary"
 	desc = "A machine capable of utilizing 4th-dimensional mathematical formulas to fold some 3rd dimensional objects into higher quality ones."
-	icon = 'icons/obj/cubes.dmi'
+	icon = 'icons/obj/machines/quartic_reliquary.dmi'
 	base_icon_state = "quartic_reliquary"
 	icon_state = "quartic_reliquary"
 	density = TRUE
@@ -59,9 +59,15 @@
 	/// The added chance to get a cube 1 stage higher than we were going for. Affected by scanners.
 	var/bonus_chance = 0
 	/// The currently inserted cubes. Max of 3.
-	var/list/current_cubes = list(null, null, null)
+	var/list/current_cubes = list()
 	/// If this isn't null, then cubes must be of this specified rarity to be placed inside
 	var/current_rarity = null
+
+	COOLDOWN_DECLARE(cube_upgrade)
+
+/obj/machinery/quartic_reliquary/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, ismapload = mapload)
 
 /obj/machinery/quartic_reliquary/RefreshParts()
 	. = ..()
@@ -77,13 +83,21 @@
 
 /obj/machinery/quartic_reliquary/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		return NONE
 	if(!isnull(held_item))
+		var/datum/component/cuboid/is_cube = held_item.GetComponent(/datum/component/cuboid)
+		var/update_tip = NONE
+		if(is_cube)
+			context[SCREENTIP_CONTEXT_LMB] = "Insert Cube"
+			update_tip = CONTEXTUAL_SCREENTIP_SET
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] panel"
-			return CONTEXTUAL_SCREENTIP_SET
+			update_tip = CONTEXTUAL_SCREENTIP_SET
 		else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
 			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
-			return CONTEXTUAL_SCREENTIP_SET
+			update_tip = CONTEXTUAL_SCREENTIP_SET
+		return update_tip
 
 /obj/machinery/quartic_reliquary/examine(mob/user)
 	. += ..()
@@ -93,12 +107,34 @@
 	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		. += span_notice("It will finish folding its cubes in [DisplayTimeText(COOLDOWN_TIMELEFT(src, cube_upgrade))].")
+		return
+	if(LAZYLEN(current_cubes))
+		. += span_notice("It is holding [jointext(current_cubes, ",")].")
+		var/empty_slots = 3-LAZYLEN(current_cubes)
+		. += span_notice("It can hold [empty_slots ? empty_slots : "no more"] cubes.")
+		if(current_rarity)
+			. += span_notice("Only [] can be inserted.")
 
 /// Use secondaries since cubes can also be tools sometimes
 /obj/machinery/quartic_reliquary/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		return ITEM_INTERACT_FAILURE
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/flatpacker/crowbar_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/quartic_reliquary/on_set_panel_open()
+	update_appearance()
+	return ..()
+
+/obj/machinery/quartic_reliquary/update_overlays()
+	. = ..()
+	if(panel_open)
+		. += "[base_icon_state]-open"
+
+/obj/machinery/quartic_reliquary/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		return ITEM_INTERACT_FAILURE
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
