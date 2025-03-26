@@ -103,7 +103,10 @@
 /datum/storage/box/lights/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
-	set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
+	set_holdable(list(
+		/obj/item/light/tube,
+		/obj/item/light/bulb
+	))
 
 ///Balloon box
 /datum/storage/box/balloons
