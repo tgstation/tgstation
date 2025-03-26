@@ -309,18 +309,3 @@
 	return (is_uppercase(input) && length_char(input) >= 2) ? uppertext(word) : word
 
 #undef SCRAMBLE_CACHE_LEN
-
-GLOBAL_LIST_INIT(test_profile_costs, list())
-GLOBAL_LIST_INIT(test_profile_counts, list())
-
-/proc/language_test()
-
-	INIT_COST_GLOBAL(GLOB.test_profile_costs, GLOB.test_profile_counts)
-	var/sentence_one = "The quick brown fox jumps over the lazy dog."
-	var/sentence_two = "The lazy dog sleeps soundly under the midnight moon."
-	for(var/langtype in GLOB.language_datum_instances)
-		var/datum/language/lang = GLOB.language_datum_instances[langtype]
-
-		to_chat(usr, span_green(lang.scramble_sentence(sentence_one)))
-		to_chat(usr, span_red(lang.scramble_sentence(sentence_two)))
-	SET_COST("new translation")
