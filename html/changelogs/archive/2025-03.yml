@@ -774,3 +774,20 @@
   - bugfix: bloodless species no longer have a free bonechiller
   subject217:
   - spellcheck: fixed a typo and a grammar error
+2025-03-26:
+  Absolucy:
+  - qol: Players with the Prosopagnosia quirk will now see the ID name (if there is
+      one) examining someone, instead of ALWAYS Unknown, altho it'll have a question
+      mark, i.e "John Doe?"
+  - qol: Prosopagnosia no longer makes you see yourself as Unknown.
+  - bugfix: The _ispath SDQL2/Lua wrapper can now be used to actually check if something
+      is a path.
+  - code_imp: Added the _is_type_in_typecache wrapper, for SDQL2 / Lua scripts.
+  OrionTheFox:
+  - bugfix: fixed some tiny sprite flickering on two atmos wallmounts
+  SmArtKar:
+  - bugfix: Fixed vendor machine glass shards being permanently stuck in people
+  - bugfix: Large internals station trait no longer prevents admin-specific internals
+      boxes from spawning
+  StrangeWeirdKitten:
+  - code_imp: do_after() can now hold custom cog icons. Add some today!
