@@ -6,6 +6,7 @@ import {
   Input,
   LabeledList,
   Modal,
+  NoticeBox,
   NumberInput,
   Stack,
   Table,
@@ -157,39 +158,46 @@ function CheckoutModal(props) {
 
 export function CheckoutEntries(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
-  const { checkouts, has_checkout } = data;
-
-  if (!has_checkout) return;
+  const { checkouts = [] } = data;
 
   return (
     <Table>
-      <Table.Row header>
-        <Table.Cell>Check-In</Table.Cell>
+      <Table.Row header className="candystripe">
         <Table.Cell>Title</Table.Cell>
         <Table.Cell>Author</Table.Cell>
         <Table.Cell>Borrower</Table.Cell>
         <Table.Cell>Time Left</Table.Cell>
+        <Table.Cell>Check-In</Table.Cell>
       </Table.Row>
-      {checkouts.map((entry) => (
-        <Table.Row key={entry.id}>
-          <Table.Cell>
-            <Button
-              onClick={() =>
-                act('checkin', {
-                  checked_out_id: entry.ref,
-                })
-              }
-              icon="box-open"
-            />
-          </Table.Cell>
-          <Table.Cell>{entry.title}</Table.Cell>
-          <Table.Cell>{entry.author}</Table.Cell>
-          <Table.Cell>{entry.borrower}</Table.Cell>
-          <Table.Cell backgroundColor={entry.overdue ? 'bad' : 'good'}>
-            {entry.overdue ? 'Overdue' : entry.due_in_minutes + ' Minutes'}
+      {checkouts.length === 0 ? (
+        <Table.Row>
+          <Table.Cell textAlign="center" colSpan={5}>
+            <NoticeBox>No books checked out.</NoticeBox>
           </Table.Cell>
         </Table.Row>
-      ))}
+      ) : (
+        checkouts.map((entry) => (
+          <Table.Row key={entry.id} className="candystripe">
+            <Table.Cell>{entry.title}</Table.Cell>
+            <Table.Cell>{entry.author}</Table.Cell>
+            <Table.Cell>{entry.borrower}</Table.Cell>
+            <Table.Cell backgroundColor={entry.overdue ? 'bad' : 'good'}>
+              {entry.overdue ? 'Overdue' : entry.due_in_minutes + ' Minutes'}
+            </Table.Cell>
+            <Table.Cell width="70px" textAlign="center">
+              <Button
+                mb={1}
+                onClick={() =>
+                  act('checkin', {
+                    checked_out_id: entry.ref,
+                  })
+                }
+                icon="box-open"
+              />
+            </Table.Cell>
+          </Table.Row>
+        ))
+      )}
     </Table>
   );
 }

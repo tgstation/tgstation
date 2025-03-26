@@ -1,5 +1,5 @@
 import { useBackend } from 'tgui/backend';
-import { Button, NoticeBox, Section, Stack, Table } from 'tgui-core/components';
+import { Button, NoticeBox, Stack, Table } from 'tgui-core/components';
 
 import { PageSelect } from '../components/PageSelect';
 import { ScrollableSection } from '../components/ScrollableSection';
@@ -41,7 +41,7 @@ export function Inventory(props) {
 
 function InventoryDetails(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
-  const { inventory } = data;
+  const { inventory = [] } = data;
 
   const sorted = inventory
     .map((book, i) => ({
@@ -52,33 +52,32 @@ function InventoryDetails(props) {
     .sort((a, b) => a.key - b.key);
 
   return (
-    <Section>
-      <Table>
-        <Table.Row header>
-          <Table.Cell>Remove</Table.Cell>
-          <Table.Cell>Title</Table.Cell>
-          <Table.Cell>Author</Table.Cell>
+    <Table>
+      <Table.Row header className="candystripe">
+        <Table.Cell>Title</Table.Cell>
+        <Table.Cell>Author</Table.Cell>
+        <Table.Cell textAlign="center">Remove</Table.Cell>
+      </Table.Row>
+      {sorted.map((book) => (
+        <Table.Row key={book.key} className="candystripe">
+          <Table.Cell>{book.title}</Table.Cell>
+          <Table.Cell>{book.author}</Table.Cell>
+          <Table.Cell collapsing>
+            <Button
+              mb={1}
+              color="bad"
+              onClick={() =>
+                act('inventory_remove', {
+                  book_id: book.ref,
+                })
+              }
+              icon="times"
+            >
+              Clear Record
+            </Button>
+          </Table.Cell>
         </Table.Row>
-        {sorted.map((book) => (
-          <Table.Row key={book.key}>
-            <Table.Cell>
-              <Button
-                color="bad"
-                onClick={() =>
-                  act('inventory_remove', {
-                    book_id: book.ref,
-                  })
-                }
-                icon="times"
-              >
-                Clear Record
-              </Button>
-            </Table.Cell>
-            <Table.Cell>{book.title}</Table.Cell>
-            <Table.Cell>{book.author}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table>
-    </Section>
+      ))}
+    </Table>
   );
 }

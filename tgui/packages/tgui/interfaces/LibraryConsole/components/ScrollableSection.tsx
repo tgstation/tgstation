@@ -1,16 +1,26 @@
-import { Box, Section } from 'tgui-core/components';
+import { ReactNode } from 'react';
+import { Section, Stack } from 'tgui-core/components';
 
-export function ScrollableSection(props) {
+type Props = {
+  contents: ReactNode;
+  header: ReactNode;
+};
+
+export function ScrollableSection(props: Props) {
   const { contents, header } = props;
 
   return (
-    <Section fill scrollable>
-      <Box fontSize="20px" textAlign="center">
-        {header}
-      </Box>
-      <Box position="relative" top="10px">
-        {contents}
-      </Box>
-    </Section>
+    <Stack fill vertical>
+      <Stack.Item>
+        <Section fontSize="20px" textAlign="center" color="label">
+          {header}
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section fill scrollable>
+          {contents}
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 }
