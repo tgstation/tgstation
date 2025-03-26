@@ -123,7 +123,7 @@
 				var/done = FALSE
 
 				while(!done)
-					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
+					to_chat(usr, "You have a total player count of [counterlist_sum(debug_setup)] in this setup.")
 					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
 					if(!chosen_role_name)
 						return

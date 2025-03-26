@@ -298,7 +298,6 @@
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
 	inhand_icon_state = "satchel-norm"
-	storage_type = /datum/storage/backpack/satchel
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
@@ -385,6 +384,7 @@
 	icon_state = "satchel-flat"
 	inhand_icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
+	storage_type = /datum/storage/backpack/satchel
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents(datum/storage_config/config)
 	config.contents_are_exceptions = TRUE

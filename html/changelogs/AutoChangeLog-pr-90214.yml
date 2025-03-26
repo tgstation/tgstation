@@ -1,0 +1,4 @@
+author: "Goat"
+delete-after: True
+changes:
+  - bugfix: "Clown biodome on lavaland uses lavaland turf now for the bananium ore."

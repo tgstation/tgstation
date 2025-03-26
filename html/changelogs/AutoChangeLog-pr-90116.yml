@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "MODsuits should now be affected by stabilized red crossbreeds"
+  - bugfix: "MODsuit slowdowns should no longer behave weirdly with ash accretion/magboots/armor booster modules."
+  - refactor: "Refactored MODsuit slowdown calculations to be query-based instead of modules directly modifying part speed values."
