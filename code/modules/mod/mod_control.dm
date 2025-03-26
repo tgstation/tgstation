@@ -60,8 +60,6 @@
 	var/charge_drain = DEFAULT_CHARGE_DRAIN
 	/// Slowdown of the MOD when all of its pieces are deployed.
 	var/slowdown_deployed = 0.75
-	/// Have we had a speed potion applied to us?
-	var/prevent_slowdown = FALSE
 	/// How long this MOD takes each part to seal.
 	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Extended description of the theme.
@@ -687,6 +685,7 @@
 
 /obj/item/mod/control/proc/update_speed()
 	var/total_slowdown = 0
+	var/prevent_slowdown = HAS_TRAIT(src, TRAIT_SPEED_POTIONED)
 	if (!prevent_slowdown)
 		total_slowdown += slowdown_deployed
 
@@ -758,7 +757,7 @@
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(prevent_slowdown)
+	if(HAS_TRAIT(src, TRAIT_SPEED_POTIONED))
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
 		return SPEED_POTION_STOP
 
@@ -768,7 +767,7 @@
 
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
 	set_mod_color(color_transition_filter(COLOR_RED))
-	prevent_slowdown = TRUE
+	ADD_TRAIT(src, TRAIT_SPEED_POTIONED, SLIME_POTION_TRAIT)
 	update_speed()
 	qdel(speed_potion)
 	return SPEED_POTION_STOP
