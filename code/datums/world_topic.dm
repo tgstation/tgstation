@@ -23,7 +23,7 @@
 	var/keyword
 	var/log = TRUE
 	var/key_valid
-	/// If the comms.txt config key is required. If you flip this to false, ensure the code is correct and the query you recieve is legit.
+	/// If the comms.txt config key is required. If you flip this to false, ensure the code is correct and the query you receive is legit.
 	var/require_comms_key = TRUE
 
 /datum/world_topic/proc/TryRun(list/input)
