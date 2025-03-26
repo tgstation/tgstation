@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Button, Icon } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from 'tgui-core/constants';
-import { classes } from 'tgui-core/react';
+import { BooleanLike, classes } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
 import { globalStore } from '../backend';
@@ -12,13 +12,13 @@ type TitleBarProps = Partial<{
   title: string;
   status: number;
   fancy: boolean;
-  canClose: boolean;
+  canClose: BooleanLike;
   onClose: (e) => void;
   onDragStart: (e) => void;
 }> &
   PropsWithChildren;
 
-const statusToColor = (status) => {
+function statusToColor(status: number): string {
   switch (status) {
     case UI_INTERACTIVE:
       return 'good';
@@ -28,7 +28,7 @@ const statusToColor = (status) => {
     default:
       return 'bad';
   }
-};
+}
 
 export function TitleBar(props: TitleBarProps) {
   const {

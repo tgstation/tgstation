@@ -14,7 +14,7 @@ import {
 } from 'react';
 import { Box } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
-import { classes } from 'tgui-core/react';
+import { BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { backendSuspendStart, globalStore, useBackend } from '../backend';
@@ -34,7 +34,7 @@ const DEFAULT_SIZE: [number, number] = [400, 600];
 
 type Props = Partial<{
   buttons: ReactNode;
-  canClose: boolean;
+  canClose: BooleanLike;
   height: number;
   theme: string;
   title: string;
