@@ -5,5 +5,5 @@
 	icon_state = "ultdoorjack"
 	charges = 6
 	max_charges = 6
-	list/charge_timers = list()
+	charge_timers = list()
 	charge_time = 3000 //five minutes
