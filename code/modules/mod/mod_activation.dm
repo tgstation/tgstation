@@ -83,26 +83,12 @@
 			return FALSE
 		balloon_alert(user, "already deployed!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return FALSE
-
-	// Check for overslotting - modified to account for CLOTHING_MOD_OVERSLOTTING flag
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
 		if(overslot)
-			// Only check clothing_flags for clothing items
-			if(istype(overslot, /obj/item/clothing))
-				var/obj/item/clothing/clothing_item = overslot
-				if(clothing_item.clothing_flags & CLOTHING_MOD_OVERSLOTTING)
-					if(!user)
-						return FALSE
-					balloon_alert(user, "can't deploy over [overslot]!")
-					playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-					return FALSE
-
 			part_datum.overslotting = overslot
 			wearer.transferItemToLoc(overslot, part, force = TRUE)
 			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
-
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		wearer.update_clothing(slot_flags)
@@ -122,10 +108,12 @@
 		balloon_alert(user, "can't seal, retracting!")
 		retract(user, part, instant = TRUE)
 	else
-		if(part_datum.overslotting)
-			var/obj/item/overslot = part_datum.overslotting
-			if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-				wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
+		var/obj/item/overslot = part_datum.overslotting
+		if(istype(overslot, /obj/item/clothing))
+			var/obj/item/clothing/clothing = overslot
+			if(clothing.clothing_flags & CLOTHING_MOD_OVERSLOTTING)
+				if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+					wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 		if(!user)
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")

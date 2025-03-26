@@ -117,7 +117,7 @@
 	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = parent_type::clothing_flags | THICKMATERIAL
 	body_parts_covered = FEET|LEGS
 	resistance_flags = NONE
 
