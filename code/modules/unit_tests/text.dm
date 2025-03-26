@@ -6,7 +6,7 @@
 		"Hello, world!" = "Hello, world",
 		"|Who are you?|" = "Who are you",
 		"Oh wow..." = "Oh wow",
-		"My name is E.T, the alien!" = "My name is E.T",
+		"My name is E.T, the alien!" = "My name is E.T, the alien",
 		"I'm +YELLING+ at you!" = "I'm +YELLING+ at you",
 		"+I'm REALLY yelling!+" = "I'm REALLY yelling",
 	)
