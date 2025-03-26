@@ -1260,7 +1260,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /// Find what punctuation is at the end of the input, returns it.
 /// Ignores emphasis (|, +, _)
 /proc/find_last_punctuation(input)
-	var/static/regex/punctuation_regex = new(@"([!?.~;:,-]{1,3})\s*$", "m")
+	var/static/regex/punctuation_regex = new(@"([!?.~;:,-]{1,3})[|+_\s]*$", "m")
 	if(punctuation_regex.Find(input))
 		return punctuation_regex.group[1]
 
