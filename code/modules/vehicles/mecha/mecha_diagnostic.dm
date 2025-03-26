@@ -16,6 +16,10 @@
 	. = ..()
 	set_light_on(TRUE)
 
+/obj/item/mecha_diagnostic/Destroy(force)
+	. = ..()
+	mech_data = null
+
 /obj/item/mecha_diagnostic/examine(mob/user)
 	. = ..()
 	if(mech_data)

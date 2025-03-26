@@ -231,6 +231,7 @@
 				return FALSE
 			var/obj/item/mecha_diagnostic/diagnostic = new /obj/item/mecha_diagnostic(get_turf(src))
 			diagnostic.name = "mecha holodiagnostic ([src.name])"
+			diagnostic.mech_data += src
 			ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src))
 	return TRUE
 
