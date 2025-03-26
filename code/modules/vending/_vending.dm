@@ -787,8 +787,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if(record.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
 			// Always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-			var/returned_available = (record.amount <= LAZYLEN(record.returned_products))
-			dispense(record, get_turf(src), silent = TRUE, dispense_returned = returned_available)
+			var/only_returned_left = (record.amount <= LAZYLEN(record.returned_products))
+			dispense(record, get_turf(src), silent = TRUE, dispense_returned = only_returned_left)
 			break
 	deploy_credits()
 
