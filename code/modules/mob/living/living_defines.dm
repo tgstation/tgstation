@@ -239,3 +239,8 @@
 	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
 	/// Reference handling is done by the martial arts themselves
 	var/list/datum/martial_art/martial_arts
+
+	/// Spell we're currently casting
+	var/datum/action/cooldown/spell/invoked_spell
+	/// Cooldown between spells
+	COOLDOWN_DECLARE(invoke_spell_cooldown)

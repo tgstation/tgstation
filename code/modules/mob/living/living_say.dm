@@ -377,27 +377,49 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 /// Try and cast a spell
 /mob/living/proc/check_spell_invoked(message)
+	if (!COOLDOWN_FINISHED(src, invoke_spell_cooldown))
+		balloon_alert(src, "too soon!") // Executus, what is the meaning of this intrusion?
+		return
+
 	message = html_decode(message)
 	if (!length(GLOB.spells_by_invocation))
 		generate_invokable_spells()
 
 	var/spell_type = GLOB.spells_by_invocation[message]
-	if (spell_type)
-		var/datum/action/cooldown/spell/invoked = new spell_type(src)
-		invoked.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
-		invoked.owner_has_control = FALSE
-		invoked.Grant(src)
-		RegisterSignal(invoked, COMSIG_SPELL_AFTER_CAST, PROC_REF(after_spell_invoked))
-		if (invoked.click_to_activate)
-			invoked.set_click_ability(src)
-		else
-			invoked.Trigger(NONE, src)
+	if (!spell_type)
+		return
+
+	COOLDOWN_START(src, invoke_spell_cooldown, INFINITY)
+	invoked_spell = new spell_type(src)
+	invoked_spell.invocation_type = INVOCATION_NONE // We already did it
+	invoked_spell.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
+	invoked_spell.owner_has_control = FALSE
+	invoked_spell.Grant(src)
+	RegisterSignals(src, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(after_other_spell_invoked))
+	RegisterSignal(invoked_spell, COMSIG_SPELL_AFTER_CAST, PROC_REF(remove_invoked_spell))
+	if (invoked_spell.click_to_activate)
+		invoked_spell.set_click_ability(src)
+	else
+		invoked_spell.Trigger(NONE, src)
+
+/// If we cast another spell cancel this one
+/mob/living/proc/after_other_spell_invoked(mob/living/source, datum/action/cooldown/spell/spell)
+	SIGNAL_HANDLER
+	if (spell != invoked_spell)
+		remove_invoked_spell(invoked_spell)
 
 /// When we're done casting a spell get rid of it
-/mob/living/proc/after_spell_invoked(datum/action/cooldown/spell/invoked)
+/mob/living/proc/remove_invoked_spell(datum/action/cooldown/spell/invoked)
 	SIGNAL_HANDLER
+	COOLDOWN_START(src, invoke_spell_cooldown, invoked.cooldown_time)
+	addtimer(CALLBACK(src, PROC_REF(spells_recharged)), invoked.cooldown_time, TIMER_DELETE_ME)
+	UnregisterSignal(src, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED))
 	invoked.Remove(src)
-	qdel(invoked)
+	QDEL_NULL(invoked_spell)
+
+/// Notify that we can cast spells
+/mob/living/proc/spells_recharged()
+	balloon_alert(src, "mana returned")
 
 /// Make our big old list
 /mob/living/proc/generate_invokable_spells()
@@ -483,7 +505,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if (!CONFIG_GET(flag/tts_no_whisper) || (CONFIG_GET(flag/tts_no_whisper) && !message_mods[WHISPER_MODE]))
 			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
 
-	check_spell_invoked(message_raw)
+	if (!forced) // Avoid loops and triggering from like, actual wizards
+		check_spell_invoked(message_raw)
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)
