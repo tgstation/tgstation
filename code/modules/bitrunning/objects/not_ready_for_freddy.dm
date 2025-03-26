@@ -33,14 +33,26 @@
 
 /obj/bitrunning/animatronic_phone/Initialize(mapload)
 	. = ..()
+	start_ringing()
+
+/obj/bitrunning/animatronic_phone/proc/shake_phone()
+	SIGNAL_HANDLER
+	Shake(3, 0, 0.6 SECONDS)
+
+/obj/bitrunning/animatronic_phone/proc/start_ringing()
 	phone_ring = new(src, TRUE)
+	RegisterSignal(phone_ring, COMSIG_SOUND_LOOPED, PROC_REF(shake_phone))
+
+/obj/bitrunning/animatronic_phone/proc/stop_ringing()
+	UnregisterSignal(phone_ring, COMSIG_SOUND_LOOPED)
+	QDEL_NULL(phone_ring)
 
 /obj/bitrunning/animatronic_phone/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!started_night)
 		started_night = TRUE
 		current_line = 1
-		QDEL_NULL(phone_ring)
+		stop_ringing()
 		speech_loop = addtimer(CALLBACK(src, PROC_REF(phone_guy)), 3 SECONDS, TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
 		our_controller.start_night()
 
@@ -564,21 +576,35 @@
 			if(markiplier.hud_used)
 				markiplier.hud_used.show_hud(HUD_STYLE_NOHUD)
 			var/image/jumpscare = image(icon = killer_robot.icon, loc = markiplier, icon_state = killer_robot.icon_state, dir = SOUTH)
+			jumpscare.appearance_flags |= PIXEL_SCALE
 			jumpscare.transform = jumpscare.transform.Scale(16, 16)
 			SET_PLANE(jumpscare, ABOVE_HUD_PLANE, markiplier)
 			markiplier.client.images += jumpscare
-			jumpscare.Shake(5, 5, 2 SECONDS)
-			markiplier.playsound_local(get_turf(src), 'sound/effects/explosion/explosion1.ogg', 100, FALSE)
-			addtimer(CALLBACK(src, PROC_REF(delete_jumpscare), markiplier, jumpscare), 2 SECONDS, TIMER_DELETE_ME | TIMER_CLIENT_TIME)
+			jumpscare.Shake(5, 5, 1.5 SECONDS)
+			markiplier.playsound_local(get_turf(src), 'sound/misc/bitrunner/robot_scream.ogg', 100, FALSE)
+			if(ishuman(markiplier))
+				var/mob/living/carbon/human/markiplier_human = markiplier
+				markiplier_human.Stun(5 SECONDS)
+				markiplier_human.set_temp_blindness(1.5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(delete_jumpscare), markiplier, jumpscare), 1.5 SECONDS, TIMER_DELETE_ME | TIMER_CLIENT_TIME)
 		INVOKE_ASYNC(markiplier, TYPE_PROC_REF(/mob, emote), "scream")
+	addtimer(CALLBACK(src, PROC_REF(reset_phone)), 5.5 SECONDS, TIMER_DELETE_ME | TIMER_CLIENT_TIME)
+
+/obj/bitrunning/animatronic_controller/proc/reset_phone()
 	our_phone.started_night = FALSE
-	our_phone.phone_ring = new(our_phone, TRUE)
+	our_phone.start_ringing()
 
 /obj/bitrunning/animatronic_controller/proc/delete_jumpscare(mob/markiplier, image/jumpscare)
 	markiplier?.client?.images -= jumpscare
 	qdel(jumpscare)
+	markiplier.playsound_local(get_turf(src), 'sound/misc/bitrunner/jumpscare_static.ogg', 100, FALSE)
+	markiplier.overlay_fullscreen("bite_of_87", /atom/movable/screen/fullscreen/static_vision/jumpscare)
+	addtimer(CALLBACK(src, PROC_REF(end_jumpscare), markiplier), 3.5 SECONDS, TIMER_DELETE_ME | TIMER_CLIENT_TIME)
+
+/obj/bitrunning/animatronic_controller/proc/end_jumpscare(mob/markiplier)
 	if(markiplier.hud_used && markiplier.client)
 		markiplier.hud_used.show_hud(HUD_STYLE_STANDARD)
+	markiplier.clear_fullscreen("bite_of_87")
 
 /obj/bitrunning/animatronic
 	name = "Frederick Fastbearington"
