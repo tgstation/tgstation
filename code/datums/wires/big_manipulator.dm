@@ -21,7 +21,7 @@
 /datum/wires/big_manipulator/get_status()
 	var/obj/machinery/big_manipulator/manipulator_big = holder
 	var/list/status = list()
-	status += "The big light bulb is [manipulator_big.power_access_wire_cut ? "went out" : manipulator_big.on ? "green" : "red"]."
+	status += "The big light bulb [manipulator_big.power_access_wire_cut ? "has went out" : "is glowing [manipulator_big.on ? "green" : "red"]"]."
 	status += "The small red light shows: [isnull(manipulator_big.containment_obj) ? "empty" : "full"]."
 	status += "Text on the yellow board shows: [manipulator_big.selected_type.name]."
 	status += "There are [manipulator_big.interaction_mode] text on the small blue panel."
