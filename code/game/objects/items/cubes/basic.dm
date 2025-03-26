@@ -252,6 +252,7 @@
 	name = "random condiment cube"
 	desc = "Perfect for those who want a <span class='papyrus'>surprising</span> cup of tea."
 	icon_state = "small"
+	list_reagents = list()
 	cube_rarity = UNCOMMON_CUBE
 
 /obj/item/reagent_containers/applicator/pill/cube/random/Initialize(mapload)

@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(epic_cubes, list(
 	// Oxygen cube, generates oxygen
 	//Nitrous boxes (Crash bandicoot) impact grenade
 	/obj/item/food/monkeycube/spaceman = 25,
-	), only_root_path = TRUE)
+	))
 
 /// List of Legendary Cubes
 GLOBAL_LIST_INIT(legendary_cubes, list(
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(mythical_cubes, list(
 	/obj/item/cube/craft = 25,
 	/obj/item/cube/generic = 25,
 	//Dehydration cube(megamind) monkey cube but random! Take from gold slime pool.
-	//Blender default cube (z level manip? jacobs ladder?)
+	/obj/item/cube/blender = 25,
 	//Companion cube (portal) mood buff & crushing weight
 	//Time Cube (time cube) wizard time-stop spell w/ longer cooldown
 	//Escafil Device (Animorphs) morph belt/spell w/ cooldown

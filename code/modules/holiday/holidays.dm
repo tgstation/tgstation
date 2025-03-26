@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	var/list/holiday_colors
 	/// The default pattern of the holiday, if the requested pattern is null.
 	var/holiday_pattern = PATTERN_DEFAULT
+	/// List of all holiday-related techweb node ids. Leave empty for none.
+	var/list/holiday_techweb_nodes = list()
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -110,6 +112,23 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		if(!holiday_real.holiday_colors)
 			continue
 		return holiday_real.get_holiday_colors(thing_to_color, pattern || holiday_real.holiday_pattern)
+
+/// Un-hides any node from an associated ID in holiday_techweb_nodes
+/datum/holiday/proc/unhide_holiday_nodes()
+	if(!LAZYLEN(holiday_techweb_nodes))
+		return FALSE
+	var/revealed_nodes = 0
+	var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
+	for(var/node_id in holiday_techweb_nodes)
+		var/datum/techweb_node/node_to_discover = SSresearch.techweb_node_by_id(node_id)
+		if(!istype(node_to_discover))
+			continue
+		science_web.unhide_node(node_to_discover)
+		revealed_nodes++
+	if(!revealed_nodes)
+		return FALSE
+	return TRUE
+
 
 // The actual holidays
 
@@ -262,6 +281,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	end_day = 2
 	holiday_hat = /obj/item/clothing/head/chameleon/broken
 	holiday_mail = list(/obj/effect/spawner/random/cube_all)
+	holiday_techweb_nodes = list(TECHWEB_NODE_CUBOIDS)
 	always_celebrate = TRUE
 
 /datum/holiday/april_fools/celebrate()
@@ -272,6 +292,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
+
 	// maint_holiday_weight is divided by 5 since the only thing in here is cubes. 25% of everything being a random cube is WAY too much.
 	GLOB.maintenance_loot += list(
 		list(

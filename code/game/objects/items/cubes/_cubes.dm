@@ -18,6 +18,8 @@
 	var/reference = FALSE
 	/// Set this to the color we want to apply to the held icon, or leave null to just leave it the default color.
 	var/overwrite_held_color = null
+	/// The color that this cube gets given when in-hand. If you want to change the color of a cube manually, use `change_cubecolor()`
+	var/cube_color = COLOR_WHITE
 
 /obj/item/cube/Initialize(mapload)
 	. = ..()
@@ -26,12 +28,13 @@
 	AddElement(/datum/element/beauty, 25*rarity)
 	AddComponent(/datum/component/cuboid, cube_rarity = rarity, isreference = reference, ismapload = mapload)
 
+/obj/item/cube/proc/update_cubecolor(new_cubecolor)
+	cube_color = new_cubecolor
+	add_filter("cube color", 1, color_matrix_filter(cube_color))
+
 /// Randomize the color for the cube
 /obj/item/cube/proc/randcolor()
-	var/mycolor = ready_random_color()
-	atom_colours[FIXED_COLOUR_PRIORITY] = list(mycolor, ATOM_COLOR_TYPE_FILTER)
-	update_atom_colour()
-	return mycolor
+	update_cubecolor(ready_random_color())
 
 /// Randomize icons. Only random cubes get the longer list of random ones.
 /obj/item/cube/proc/give_random_icon()
@@ -58,6 +61,6 @@
 	cuboid.update_rarity(new_rarity = rarity, new_reference = updated_reference)
 
 /obj/item/cube/color_atom_overlay(mutable_appearance/cubelay)
-	if(overwrite_held_color)
-		return filter_appearance_recursive(cubelay, color_matrix_filter(overwrite_held_color))
+	if(cube_color)
+		return filter_appearance_recursive(cubelay, color_matrix_filter(cube_color))
 	return ..()

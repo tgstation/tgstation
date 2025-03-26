@@ -15,8 +15,7 @@
 	)
 	/// Flags for anything that doesn't inherently have an examine string
 	var/cube_examine_flags = NONE
-		/// The color we were randomly assigned
-	var/cube_color = COLOR_WHITE
+	cube_color = COLOR_WHITE
 	/// The person that picked us up, if anything requires it.
 	var/datum/weakref/owner
 
@@ -45,7 +44,7 @@
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	give_random_icon()
 	apply_rand_size()
-	cube_color = randcolor()
+	randcolor()
 	create_random_name()
 	. = ..()
 	give_random_effects()

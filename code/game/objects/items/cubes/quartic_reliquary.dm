@@ -8,10 +8,37 @@
 		/datum/stock_part/scanning_module = 3,
 		/obj/item/stack/sheet/cardboard = 9)
 
+/// Here so it doesn't mess with any other actually important node files
+/datum/design/board/quartic_reliquary
+	name = "Quartic Reliquary Board"
+	desc = "The circuit board for a quartic reliquary."
+	id = "quartic_reliquary"
+	build_path = /obj/item/circuitboard/machine/quartic_reliquary
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/techweb_node/cuboids
+	id = TECHWEB_NODE_CUBOIDS
+	display_name = "Applied 4th-Dimensional Calculus"
+	description = "A machine capable of utilizing abstract and arcane 4th-dimensional mathematical formulas to rearrange the fabric of volumetric entities."
+	design_ids = list(
+		"quartic_reliquary",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	prereq_ids = list(TECHWEB_NODE_APPLIED_BLUESPACE)
+	hidden = TRUE
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING)
+	show_on_wiki = FALSE
+	autounlock_by_boost = FALSE
+
+
+
 /// The Quartic Reliquary takes in 3 cubes of the same rarity and outputs one cube a rarity higher.
 /obj/machinery/quartic_reliquary
 	name = "quartic reliquary"
-	desc = "A machine capable of utilizing 4th dimensional mathematical formulas to fold some 3rd dimensional objects into higher quality ones."
+	desc = "A machine capable of utilizing 4th-dimensional mathematical formulas to fold some 3rd dimensional objects into higher quality ones."
 	icon = 'icons/obj/cubes.dmi'
 	base_icon_state = "quartic_reliquary"
 	icon_state = "quartic_reliquary"
@@ -31,6 +58,10 @@
 	var/upgrade_speed = 10 SECONDS
 	/// The added chance to get a cube 1 stage higher than we were going for. Affected by scanners.
 	var/bonus_chance = 0
+	/// The currently inserted cubes. Max of 3.
+	var/list/current_cubes = list(null, null, null)
+	/// If this isn't null, then cubes must be of this specified rarity to be placed inside
+	var/current_rarity = null
 
 /obj/machinery/quartic_reliquary/RefreshParts()
 	. = ..()
@@ -43,3 +74,31 @@
 	for(var/datum/stock_part/servo/new_servo in component_parts)
 		upgrade_speed_mod += new_servo.tier
 	upgrade_speed = round(30 SECONDS / upgrade_speed_mod)
+
+/obj/machinery/quartic_reliquary/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(!isnull(held_item))
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] panel"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+			return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/quartic_reliquary/examine(mob/user)
+	. += ..()
+	if(!in_range(user, src) && !isobserver(user))
+		return
+
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
+	if(panel_open)
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+
+/// Use secondaries since cubes can also be tools sometimes
+/obj/machinery/quartic_reliquary/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/flatpacker/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS

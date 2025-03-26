@@ -295,6 +295,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, span_notice("and..."))
 		for(var/holidayname in GLOB.holidays)
 			var/datum/holiday/holiday = GLOB.holidays[holidayname]
+			holiday.unhide_holiday_nodes()
 			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()

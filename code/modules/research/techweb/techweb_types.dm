@@ -10,7 +10,7 @@
 	. = ..()
 	if(.)
 		node.on_station_research(research_source)
-
+unhide_holiday_nodes
 /datum/techweb/oldstation
 	id = "CHARLIE"
 	organization = "Nanotrasen"

@@ -30,6 +30,7 @@
 #define TECHWEB_NODE_CONSOLES "consoles"
 #define TECHWEB_NODE_CONSTRUCTION "construction"
 #define TECHWEB_NODE_CRYOSTASIS "cryostasis"
+#define TECHWEB_NODE_CUBOIDS "cuboids"
 #define TECHWEB_NODE_CYBER_IMPLANTS "cyber_implants"
 #define TECHWEB_NODE_CYBER_ORGANS "cyber_organs"
 #define TECHWEB_NODE_CYBER_ORGANS_ADV "cyber_organs_adv"
