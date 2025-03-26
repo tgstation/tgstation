@@ -1,5 +1,28 @@
 import { BooleanLike } from 'tgui-core/react';
 
+type CheckoutEntry = {
+  author: string;
+  borrower: string;
+  due_in_minutes: number;
+  id: string;
+  overdue: BooleanLike;
+  ref: string;
+  title: string;
+};
+
+type InventoryEntry = {
+  author: string;
+  ref: string;
+  title: string;
+};
+
+type Page = {
+  author: string;
+  category: string;
+  id: string;
+  title: string;
+};
+
 export type LibraryConsoleData = {
   active_newscaster_cooldown: BooleanLike;
   author: string;
@@ -14,7 +37,7 @@ export type LibraryConsoleData = {
   category: string;
   checkout_page_count: number;
   checkout_page: number;
-  checkouts: any[];
+  checkouts: CheckoutEntry[];
   cooldown_string: string;
   default_category: string;
   deity: string;
@@ -25,10 +48,10 @@ export type LibraryConsoleData = {
   has_scanner: BooleanLike;
   inventory_page_count: number;
   inventory_page: number;
-  inventory: any[];
+  inventory: InventoryEntry[];
   our_page: number;
   page_count: number;
-  pages: any[];
+  pages: Page[];
   params_changed: BooleanLike;
   posters: string[];
   religion: string;
