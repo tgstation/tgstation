@@ -1,3 +1,12 @@
+/world/New()
+		. = ..()
+
+		GLOB.special_roles += list(
+				ROLE_BLOODSUCKER = 0,
+				ROLE_VAMPIRICACCIDENT = 0,
+				ROLE_BLOODSUCKERBREAKOUT = 0,
+		)
+
 ///Вызывается когда вампир повышает ранг: (datum/bloodsucker_datum, mob/owner, mob/target)
 #define BLOODSUCKER_RANK_UP "bloodsucker_rank_up"
 ///Вызывается когда вампир взаимодействует с подданым на стойке подношения.
