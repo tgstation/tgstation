@@ -1,7 +1,10 @@
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
+
+// This should always be the VERY FIRST THING. No exceptions. Read the file for more info, but basically, this needs to be here so that we can ensure specific code is always the very first thing to execute.
 #include "code\genesis_call.dme"
+// Again, DO NOT MOVE IT OR ALLOW ANY OTHER #include TO PRECEDE THE ONE ABOVE.
 
 // BEGIN_INTERNALS
 // END_INTERNALS
