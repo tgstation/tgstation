@@ -86,8 +86,8 @@ export function TechwebOverview(props) {
         </Flex>
       </Flex.Item>
       <Flex.Item className="Techweb__OverviewNodes" height="100%">
-        <Section fill scrollable height="100%">
-          <VirtualList key={tabIndex + searchText}>
+        <Section fill scrollable>
+          <VirtualList>
             {displayedNodes.map((n) => (
               <TechNode node={n} key={n.id} />
             ))}
