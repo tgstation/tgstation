@@ -51,7 +51,7 @@
 		return
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id = living_user.get_idcard()
-	if(!id || !id?.registered_account)
+	if(!id?.registered_account)
 		return
 	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
 	var/datum/bounty/new_chore = text2path("[choice]")
