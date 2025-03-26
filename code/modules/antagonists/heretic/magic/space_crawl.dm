@@ -7,7 +7,7 @@
  */
 /datum/action/cooldown/spell/jaunt/space_crawl
 	name = "Space Phase"
-	desc = "Allows you to phase in and out of existence while in space or misc tiles."
+	desc = "Allows you to phase in and out of existence while in space or a low-pressure, outdoor area."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 
@@ -35,10 +35,14 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(isspaceturf(get_turf(owner)) || ismiscturf(get_turf(owner)))
+	var/turf/my_turf = get_turf(owner)
+	if(isspaceturf(my_turf))
+		return TRUE
+	var/area/my_area = get_area(owner)
+	if (isopenturf(my_turf) && my_area.outdoors && lavaland_equipment_pressure_check(my_turf))
 		return TRUE
 	if(feedback)
-		to_chat(owner, span_warning("You must stand on a space or misc turf!"))
+		to_chat(owner, span_warning("You must stand in space, or an outdoor area with low pressure!"))
 	return FALSE
 
 /datum/action/cooldown/spell/jaunt/space_crawl/cast(mob/living/cast_on)

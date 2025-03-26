@@ -4269,7 +4269,7 @@
 #include "code\modules\fishing\fish\types\tiziran.dm"
 #include "code\modules\fishing\sources\_fish_source.dm"
 #include "code\modules\fishing\sources\source_types.dm"
-#include "code\modules\flufftext\Dreaming.dm"
+#include "code\modules\flufftext\dreaming.dm"
 #include "code\modules\food_and_drinks\pizzabox.dm"
 #include "code\modules\food_and_drinks\plate.dm"
 #include "code\modules\food_and_drinks\machinery\coffeemaker.dm"

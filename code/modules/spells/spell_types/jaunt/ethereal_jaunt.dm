@@ -14,8 +14,6 @@
 	var/jaunt_duration = 5 SECONDS
 	/// For how long we become immobilized after exiting the jaunt.
 	var/jaunt_in_time = 0.5 SECONDS
-	/// For how long we become immobilized when using this spell.
-	var/jaunt_out_time = 0 SECONDS
 	/// Visual for jaunting
 	var/obj/effect/jaunt_in_type = /obj/effect/temp_visual/wizard
 	/// Visual for exiting the jaunt
@@ -40,11 +38,8 @@
 /**
  * Begin the jaunt, and the entire jaunt chain.
  * Puts cast_on in the phased mob holder here.
- *
- * Calls do_jaunt_out:
- * - if jaunt_out_time is set to more than 0,
- * Or immediately calls start_jaunt:
- * - if jaunt_out_time = 0
+ * Sets up the signals and exit points and
+ * starts the timer until the end.
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt(mob/living/cast_on)
 	// Makes sure they don't die or get jostled or something during the jaunt entry
@@ -55,36 +50,6 @@
 
 	if(!holder)
 		CRASH("[type] attempted do_jaunt but failed to create a jaunt holder via enter_jaunt.")
-
-	if(jaunt_out_time > 0)
-		ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
-		addtimer(CALLBACK(src, PROC_REF(do_jaunt_out), cast_on, holder), jaunt_out_time)
-	else
-		start_jaunt(cast_on, holder)
-
-/**
- * The wind-up to the jaunt.
- * Optional, only called if jaunt_out_time is set.
- *
- * Calls start_jaunt.
- */
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt_out(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
-	if(QDELETED(cast_on) || QDELETED(holder) || QDELETED(src))
-		return
-
-	REMOVE_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
-	start_jaunt(cast_on, holder)
-
-/**
- * The actual process of starting the jaunt.
- * Sets up the signals and exit points and allows
- * the caster to actually start moving around.
- *
- * Calls stop_jaunt after the jaunt runs out.
- */
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/start_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
-	if(QDELETED(cast_on) || QDELETED(holder) || QDELETED(src))
-		return
 
 	LAZYINITLIST(exit_point_list)
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_exit_point), target)
@@ -219,7 +184,6 @@
 
 	jaunt_duration = 5 SECONDS
 	jaunt_in_time = 0.6 SECONDS
-	jaunt_out_time = 0.6 SECONDS
 	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt/red
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out

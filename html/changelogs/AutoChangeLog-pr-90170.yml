@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Disks will now be inserted into the autolathe if you successfully insert them, rather than if you do not succeed in inserting them."

@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - balance: "Door remotes now match the access of their owner (except for the Captain, whose remote access is unchanged). Door remotes, however, respect the high security area control of other remotes; as such, even if a Head can enter an area like the brig, only the Security remote works to open the entrance."
