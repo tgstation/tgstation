@@ -289,6 +289,24 @@
 	plane = FLOOR_PLANE
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	deconstructible = FALSE
+	can_buckle = TRUE
+	buckle_requires_restraints = TRUE
+	buckle_lying = 90
+
+/obj/structure/fluff/tram_rail/post_buckle_mob(mob/living/target)
+	. = ..()
+	target.pixel_y += dir == SOUTH ? -3 : 14
+	RegisterSignal(target, COMSIG_LIVING_HIT_BY_TRAM, PROC_REF(on_buckled_tram_smashed))
+
+/obj/structure/fluff/tram_rail/post_unbuckle_mob(mob/living/target)
+	. = ..()
+	target.pixel_y -= dir == SOUTH ? -3 : 14
+	UnregisterSignal(target, COMSIG_LIVING_HIT_BY_TRAM)
+
+/// If someone gets hit by the tram while buckled to us (mission accomplished) unbuckle them so that they can fly away
+/obj/structure/fluff/tram_rail/proc/on_buckled_tram_smashed(mob/living/smashed)
+	SIGNAL_HANDLER
+	unbuckle_mob(smashed, force = TRUE, can_fall = FALSE) // Make sure they don't fall down a z-level until they've been thrown
 
 /obj/structure/fluff/tram_rail/floor
 	name = "tram rail protective cover"
@@ -311,6 +329,14 @@
 /obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
 	if(user.electrocute_act(75, src))
 		do_sparks(5, TRUE, src)
+
+/obj/structure/fluff/tram_rail/electric/post_buckle_mob(mob/living/target)
+	. = ..()
+	target.apply_status_effect(/datum/status_effect/repeatedly_electrocute, src, 5) // Don't do too much damage because we probably want the tram to hit them
+
+/obj/structure/fluff/tram_rail/electric/post_unbuckle_mob(mob/living/target)
+	. = ..()
+	target.remove_status_effect(/datum/status_effect/repeatedly_electrocute)
 
 /obj/structure/fluff/broken_canister_frame
 	name = "broken canister frame"

@@ -690,6 +690,33 @@
 	desc = "You've been zapped with something and your hands can't stop shaking! You can't seem to hold on to anything."
 	icon_state = "convulsing"
 
+/datum/status_effect/repeatedly_electrocute
+	id = "repeated_electrocution"
+	tick_interval = 6 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/repeatedly_electrocute
+	/// How much damage to we do every time?
+	var/damage
+	/// What do we print as our damage source?
+	var/shock_source
+	/// Flags to use for shock details
+	var/shock_flags = SHOCK_NOSTUN
+
+/datum/status_effect/repeatedly_electrocute/on_creation(mob/living/new_owner, shock_source = "something", damage = 30)
+	. = ..()
+	if (!.)
+		return
+	src.damage = damage
+	src.shock_source = shock_source
+	owner.electrocute_act(shock_damage = damage, source = shock_source, flags = shock_flags)
+
+/datum/status_effect/repeatedly_electrocute/tick(seconds_between_ticks)
+	owner.electrocute_act(shock_damage = damage, source = shock_source, flags = shock_flags)
+
+/atom/movable/screen/alert/status_effect/repeatedly_electrocute
+	name = "Electrocuted"
+	desc = "You're being electrocuted!"
+	icon_state = "electrocuted"
+
 /datum/status_effect/dna_melt
 	id = "dna_melt"
 	duration = 600
