@@ -46,9 +46,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
 /datum/component/cuboid/UnregisterFromParent()
-	UnregisterSignal(parent, list(
-		COMSIG_ATOM_EXAMINE
-	))
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 
 /// Updates the rarity of the cube & its outline, then plays a little jingle. Seperate proc from init so we can use it outside the component as well
 /datum/component/cuboid/proc/update_rarity(new_rarity = COMMON_CUBE, new_reference, mapload)

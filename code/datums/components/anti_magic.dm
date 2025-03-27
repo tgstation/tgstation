@@ -14,6 +14,10 @@
 	/// Whether we should, on equipping, alert the caster that this item can block any of their spells
 	/// This changes between true and false on equip and drop, don't set it outright to something
 	var/alert_caster_on_equip = TRUE
+	/// Set to an amount of time to make the item have a cooldown for when it can protect from a magic attack.
+	var/cooldown_speed
+
+	COOLDOWN_DECLARE(antimagic_cooldown)
 
 /**
  * Adds magic resistances to an object
@@ -27,6 +31,8 @@
  * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
  * * drain_antimagic (optional) The proc that is triggered when an object has been drained a antimagic charge
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
+ * * cooldown_speed (optional) The amount of time that the cooldown on magic protection lasts
+ * * can_examine (optional) Whether or not the user is able to examine the object to see its remaining charge/cooldown
  * *
  * antimagic bitflags: (see code/__DEFINES/magic.dm)
  * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
@@ -39,6 +45,8 @@
 		inventory_flags = ~ITEM_SLOT_BACKPACK, // items in a backpack won't activate, anywhere else is fine
 		datum/callback/drain_antimagic,
 		datum/callback/expiration,
+		cooldown_speed = null,
+		can_examine = FALSE,
 	)
 
 
@@ -64,11 +72,15 @@
 	if(!compatible)
 		return COMPONENT_INCOMPATIBLE
 
+	if(can_examine)
+		RegisterSignal(movable, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
 	src.antimagic_flags = antimagic_flags
 	src.charges = charges
 	src.inventory_flags = inventory_flags
 	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
+	src.cooldown_speed = cooldown_speed
 
 /datum/component/anti_magic/Destroy(force)
 	drain_antimagic = null
@@ -132,15 +144,22 @@
 	if(parent in antimagic_sources)
 		return NONE
 
+	// We don't have a charge yet!
+	if(!COOLDOWN_FINISHED(src, antimagic_cooldown))
+		return NONE
+
 	// Block success! Add this parent to the list of antimagic sources
 	antimagic_sources += parent
 
 	if((charges != INFINITY) && charge_cost > 0)
 		drain_antimagic?.Invoke(source, parent)
 		charges -= charge_cost
-		if(charges <= 0)
+		if(charges <= 0 && !cooldown_speed)
 			expiration?.Invoke(source, parent)
 			qdel(src) // no more antimagic
+
+	if(cooldown_speed)
+		COOLDOWN_START(src, antimagic_cooldown, cooldown_speed)
 
 	return COMPONENT_MAGIC_BLOCKED
 
@@ -158,3 +177,12 @@
 /datum/component/anti_magic/proc/on_attack(atom/movable/source, atom/target, mob/user)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(target, COMSIG_ATOM_HOLYATTACK, source, user, antimagic_flags)
+
+/datum/component/anti_magic/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(charges != INFINITY)
+		examine_list += span_notice("It can block magic [charges] more times.")
+
+	if(!COOLDOWN_FINISHED(src, antimagic_cooldown))
+		examine_list += span_notice("It will be able to block magic again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, antimagic_cooldown))].")

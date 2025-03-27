@@ -45,6 +45,7 @@
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/quartic_reliquary
+	SET_BASE_PIXEL(0, 16)
 	/// Reference for the possible items we'll get when we create a new cube. Common is there just in case someone SOMEHOW combines something with 0 rarity
 	var/static/list/all_possible_cube_returns = list(
 		GLOB.common_cubes,
@@ -54,20 +55,54 @@
 		GLOB.legendary_cubes,
 		GLOB.mythical_cubes,
 		)
+	/// All cube rarities, as names
+	var/static/list/all_rarenames = list(
+		span_bold("Common"),
+		span_boldnicegreen("Uncommon"),
+		span_boldnotice("Rare"),
+		span_hierophant("Epic"),
+		span_bolddanger("Legendary"),
+		span_clown("Mythical")
+		)
+	/// Used for updating the cube overlays & any other visuals that need color changes
+	var/static/list/all_rarecolors = list(
+		COLOR_WHITE,
+		COLOR_VIBRANT_LIME,
+		COLOR_DARK_CYAN,
+		COLOR_VIOLET,
+		COLOR_RED,
+		COLOR_PINK,
+		)
 	/// The speed at which we upgrade our cube. Affected by servos.
 	var/upgrade_speed = 10 SECONDS
 	/// The added chance to get a cube 1 stage higher than we were going for. Affected by scanners.
 	var/bonus_chance = 0
 	/// The currently inserted cubes. Max of 3.
-	var/list/current_cubes = list()
-	/// If this isn't null, then cubes must be of this specified rarity to be placed inside
+	var/list/current_cubes
+	/// Cubes must all be of this specified rarity in order to be processed. Takes from the top slot in current_cubes. Update via update_current_rarity()
 	var/current_rarity = null
+	/// name of current_rarity
+	var/current_rarity_name = null
+	/// The rarity we are attempting to pull
+	var/desired_rarity = null
+	/// name of desired_rarity
+	var/desired_rarity_name = null
+	/// The overlays applied to the reliquary depending on cube rarity.
+	var/mutable_appearance/floating_cube
+	var/floating_color_filter
+	///direction we output onto (if 0, on top of us)
+	var/drop_direction = 0
 
+	/// Even though we use a callback timer for the actual upgrading process, the cooldown lets us check the status of the timer easily
 	COOLDOWN_DECLARE(cube_upgrade)
+	COOLDOWN_DECLARE(cube_spin_flick)
 
 /obj/machinery/quartic_reliquary/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, ismapload = mapload)
+	if(!floating_cube)
+		floating_cube = mutable_appearance(icon, "idle")
+	LAZYINITLIST(current_cubes)
 
 /obj/machinery/quartic_reliquary/RefreshParts()
 	. = ..()
@@ -82,22 +117,33 @@
 	upgrade_speed = round(30 SECONDS / upgrade_speed_mod)
 
 /obj/machinery/quartic_reliquary/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = NONE
+	. = ..()
 	if(!COOLDOWN_FINISHED(src, cube_upgrade))
 		return NONE
 	if(!isnull(held_item))
 		var/datum/component/cuboid/is_cube = held_item.GetComponent(/datum/component/cuboid)
-		var/update_tip = NONE
 		if(is_cube)
-			context[SCREENTIP_CONTEXT_LMB] = "Insert Cube"
-			update_tip = CONTEXTUAL_SCREENTIP_SET
+			if(is_cube.rarity < MYTHICAL_CUBE && LAZYLEN(current_cubes) < 3)
+				context[SCREENTIP_CONTEXT_LMB] = "Insert Cube"
+				. = CONTEXTUAL_SCREENTIP_SET
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] panel"
-			update_tip = CONTEXTUAL_SCREENTIP_SET
+			. = CONTEXTUAL_SCREENTIP_SET
 		else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
 			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
-			update_tip = CONTEXTUAL_SCREENTIP_SET
-		return update_tip
+			. = CONTEXTUAL_SCREENTIP_SET
+	else
+		if(drop_direction)
+			context[SCREENTIP_CONTEXT_ALT_RMB] = "Reset Drop"
+			. = CONTEXTUAL_SCREENTIP_SET
+		var/cubelength = LAZYLEN(current_cubes)
+		if(cubelength)
+			context[SCREENTIP_CONTEXT_LMB] = "Remove [thtotext(cubelength)] Cube"
+			. = CONTEXTUAL_SCREENTIP_SET
+		if(cubelength >= 3)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Activate"
+			. = CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
 
 /obj/machinery/quartic_reliquary/examine(mob/user)
 	. += ..()
@@ -107,6 +153,11 @@
 	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+	if(drop_direction)
+		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
+		. += span_notice("[EXAMINE_HINT("Alt-Right-click")] to reset.")
+	else
+		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
 	if(!COOLDOWN_FINISHED(src, cube_upgrade))
 		. += span_notice("It will finish folding its cubes in [DisplayTimeText(COOLDOWN_TIMELEFT(src, cube_upgrade))].")
 		return
@@ -115,13 +166,44 @@
 		var/empty_slots = 3-LAZYLEN(current_cubes)
 		. += span_notice("It can hold [empty_slots ? empty_slots : "no more"] cubes.")
 		if(current_rarity)
-			. += span_notice("Only [] can be inserted.")
+			. += span_notice("It will only process if all cubes are of [current_rarity_name] rarity.")
+			. += span_notice("The resulting cube will be [desired_rarity_name].")
+
+/// Handles the spinning cube & its emmissive. Could probably do this outside of a process, I realize, but getting that floor() is important
+/obj/machinery/quartic_reliquary/process()
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		if(!COOLDOWN_FINISHED(src, cube_spin_flick))
+			return
+		// Not enough time left to get a nice looking flick
+		if(!floor(COOLDOWN_TIMELEFT(src, cube_upgrade)/3 SECONDS))
+			floating_color_filter = FALSE
+			floating_cube.remove_filter("new_rarity_pulse")
+			return
+		if(!floating_color_filter)
+			floating_cube.add_filter("new_rarity_pulse", 1, apply_matrix_to_color())
+			transition_filter("new_rarity_pulse", color_matrix_filter(all_rarecolors[desired_rarity]), 3 SECONDS, easing = CUBIC_EASING, loop = TRUE)
+			floating_color_filter = TRUE
+		COOLDOWN_START(src, cube_spin_flick, 3 SECONDS)
+		flick("active", floating_cube)
+		flick_overlay(emissive_appearance(icon, icon_state = "active_emissive"), duration = 3 SECONDS)
+		return
+	floating_color_filter = FALSE
+	floating_cube.remove_filter("new_rarity_pulse")
+
 
 /// Use secondaries since cubes can also be tools sometimes
 /obj/machinery/quartic_reliquary/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(LAZYLEN(current_cubes))
+		balloon_alert(user, "remove cubes first!")
+		return ITEM_INTERACT_FAILURE
 	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		balloon_alert(user, "busy processing!")
 		return ITEM_INTERACT_FAILURE
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/quartic_reliquary/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/quartic_reliquary/on_set_panel_open()
@@ -130,11 +212,168 @@
 
 /obj/machinery/quartic_reliquary/update_overlays()
 	. = ..()
+	. += floating_cube
 	if(panel_open)
 		. += "[base_icon_state]-open"
+	if(LAZYLEN(current_cubes))
+		var/cube_index = 0
+		for(var/cube_in_list in current_cubes)
+			cube_index++
+			var/mutable_appearance/inserted_overlay = mutable_appearance(icon, "cube_[cube_index]")
+			inserted_overlay.add_filter("overlay_color", 1, color_matrix_filter(LAZYACCESS(all_rarecolors,LAZYACCESS(current_cubes, cube_in_list))))
+			. += inserted_overlay
+	if(desired_rarity)
+		var/mutable_appearance/runic_pattern = mutable_appearance(icon, "runic_pattern")
+		runic_pattern.add_filter("overlay_color", 1, color_matrix_filter(LAZYACCESS(all_rarecolors, desired_rarity)))
+		. += runic_pattern
 
-/obj/machinery/quartic_reliquary/crowbar_act_secondary(mob/living/user, obj/item/tool)
-	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+/obj/machinery/quartic_reliquary/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	return cube_insert(user, tool, TRUE)
+
+/// Add the cube to the machine.
+/obj/machinery/quartic_reliquary/proc/cube_insert(mob/living/user, obj/item/item_to_add)
+	if(panel_open)
+		balloon_alert(user, "close panel first!")
+		return NONE
+	if(LAZYLEN(current_cubes) >= 3)
+		balloon_alert(user, "already full!")
 		return ITEM_INTERACT_FAILURE
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	var/datum/component/cuboid/attempted_cube = item_to_add.GetComponent(/datum/component/cuboid)
+	if(!attempted_cube)
+		balloon_alert(user, "not a cube!")
+		return NONE
+	if(attempted_cube.rarity == MYTHICAL_CUBE)
+		balloon_alert(user, "no mythical cubes!")
+		return ITEM_INTERACT_FAILURE
+	if(!user.transferItemToLoc(item_to_add, src))
+		balloon_alert(user, "couldn't add!")
+		return ITEM_INTERACT_FAILURE
+	LAZYSET(current_cubes, item_to_add, attempted_cube.rarity)
+	update_current_rarity()
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/// Updates both the rarity and the name of the required cubes.
+/obj/machinery/quartic_reliquary/proc/update_current_rarity()
+	var/new_rarity = LAZYACCESS(current_cubes, LAZYACCESS(current_cubes, 1))
+	if(!new_rarity)
+		current_rarity = null
+		current_rarity_name = null
+		desired_rarity = null
+		desired_rarity_name = null
+		return
+
+	current_rarity = new_rarity
+	current_rarity_name = all_rarenames[current_rarity]
+	desired_rarity = current_rarity+1
+	desired_rarity_name = all_rarenames[desired_rarity]
+
+/obj/machinery/quartic_reliquary/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	var/cubelist_len = LAZYLEN(current_cubes)
+	if(cubelist_len)
+		return remove_cube_hand(user)
+
+///Take the top cube from the stack
+/obj/machinery/quartic_reliquary/proc/remove_cube_hand(mob/living/user)
+	if(!LAZYLEN(current_cubes))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	var/atom/movable/cube_to_remove = pop(current_cubes)
+	if(!cube_to_remove)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(!user.put_in_hands(cube_to_remove))
+		cube_to_remove.forceMove(get_turf(src))
+	update_current_rarity()
+	update_static_data_for_all_viewers()
+	balloon_alert(user, "cube removed")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/quartic_reliquary/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
+		return
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		balloon_alert(user, "busy!")
+		return
+	var/direction = get_dir(src, over_location)
+	if(!direction)
+		return
+	drop_direction = direction
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+
+/obj/machinery/quartic_reliquary/click_alt_secondary(mob/user)
+	. = ..()
+	if(drop_direction == 0)
+		return CLICK_ACTION_BLOCKING
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		balloon_alert(user, "busy!")
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "drop direction reset")
+	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/quartic_reliquary/click_alt(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, cube_upgrade))
+		balloon_alert(user, "already active!")
+		return CLICK_ACTION_BLOCKING
+
+	return begin_cube_roll(user)
+
+/// Gambling for cubes! Checks to see if we're able to run, and if we are then deletes our current cubes and starts our timers
+/obj/machinery/quartic_reliquary/proc/begin_cube_roll(mob/user)
+	if(!LAZYLEN(current_cubes))
+		return CLICK_ACTION_BLOCKING
+	for(var/cube_to_check in current_cubes)
+		if(current_cubes[cube_to_check] != current_rarity)
+			balloon_alert(user, "wrong rarities!")
+			return CLICK_ACTION_BLOCKING
+		if(current_cubes[cube_to_check] == MYTHICAL_CUBE)
+			balloon_alert(user, "no mythical cubes!")
+			return CLICK_ACTION_BLOCKING
+	QDEL_LAZYLIST(current_cubes)
+	COOLDOWN_START(src, cube_upgrade, upgrade_speed)
+	addtimer(CALLBACK(src, PROC_REF(finish_cube_roll)))
+	update_use_power(ACTIVE_POWER_USE)
+	return CLICK_ACTION_SUCCESS
+
+/// Handles the actual rolling of the cubes
+/obj/machinery/quartic_reliquary/proc/finish_cube_roll()
+	if(prob(bonus_chance) && desired_rarity != MYTHICAL_CUBE)
+		desired_rarity += 1
+	update_use_power(IDLE_POWER_USE)
+	var/list/all_picked_cubes = list()
+	var/atom/movable/picked_cube = pick_weight_recursive(all_possible_cube_returns[desired_rarity])
+	if(istype(picked_cube, /obj/effect/spawner/random/cube))
+		handle_cube_reroll(picked_cube, all_picked_cubes)
+	update_current_rarity()
+	var/turf/target_location
+	if(drop_direction)
+		target_location = get_step(src, drop_direction)
+		if(isclosedturf(target_location))
+			target_location = get_turf(src)
+	else
+		target_location = get_turf(src)
+	for(var/atom/movable/our_cube in all_picked_cubes)
+		our_cube = new()
+		// If spawners somehow get through the reroll then we have a problem
+		if(QDELETED(our_cube))
+			stack_trace("[our_cube] deleted before it could be forcemoved.")
+		our_cube.forceMove(target_location)
+
+/// Snowflake for if people get spawner cubes, or even if those spawner cubes give spawner cubes.
+/obj/machinery/quartic_reliquary/proc/handle_cube_reroll(obj/effect/spawner/random/cube/spawnercube, list/rerolled_cubes)
+	var/atom/movable/picked_cube
+	if(spawnercube.cube_rarity < desired_rarity)
+		for(var/downgrade in 1 to 3)
+			picked_cube = pick_weight_recursive(all_possible_cube_returns[spawnercube.cube_rarity])
+			if(istype(picked_cube, /obj/effect/spawner/random/cube))
+				handle_cube_reroll(picked_cube, rerolled_cubes)
+			else
+				rerolled_cubes.Add(picked_cube)
+	else
+		picked_cube = pick_weight_recursive(all_possible_cube_returns[desired_rarity])
+		if(istype(picked_cube, /obj/effect/spawner/random/cube))
+			handle_cube_reroll(picked_cube, rerolled_cubes)
+		else
+			rerolled_cubes.Add(picked_cube)

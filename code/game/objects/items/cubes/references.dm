@@ -124,6 +124,16 @@
 	reference = TRUE
 	overwrite_held_color = COLOR_LIME
 
+/obj/item/cube/generic/Initialize(mapload)
+	. = ..()
+	/// It's PERFECTLY generic.
+	AddComponent(/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE | MAGIC_RESISTANCE_MIND | MAGIC_RESISTANCE_HOLY, \
+		inventory_flags = ITEM_SLOT_HANDS, \
+		cooldown_speed = 10 SECONDS, \
+		can_examine = TRUE\
+	)
+
 // Stock part cubes
 /// Energon cube (Transformers)
 /obj/item/stock_parts/capacitor/energon
@@ -399,13 +409,12 @@
 	ADD_TRAIT(src, TRAIT_NODROP, NEGATIVE_GRAVITY_TRAIT)
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	to_chat(user, span_userdanger("[src] is pulling you into space! You can't let go!"))
-	investigate_log("has flown off into space due to [src].", INVESTIGATE_DEATHS)
 	user.Stun(FLY_TIME, ignore_canstun = TRUE)
 	animate(user, FLY_TIME, pixel_z = 300, alpha = 0)
 	addtimer(CALLBACK(src, PROC_REF(initiate_fall)), FLY_TIME)
 
 #undef FLY_TIME
-#define FALL_TIME 0.5 SECONDS
+#define FALL_TIME 3 DECISECONDS
 
 /// We're pretty high up huh
 /obj/item/cube/blender/proc/initiate_fall()
@@ -429,8 +438,7 @@
 	REMOVE_TRAIT(src, TRAIT_NODROP, NEGATIVE_GRAVITY_TRAIT)
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/effects/gravhit.ogg', 75)
-	forceMove(get_turf(src))
-	throw_at(pick(oview(10,user)), 10, rand(3,8))
+	investigate_log("was sent plummeting to [user.p_their()] death by [src].", INVESTIGATE_DEATHS)
 	user.gib(DROP_ALL_REMAINS)
 
 /obj/item/cube/blender/proc/handle_neggrav_remove()
