@@ -56,9 +56,13 @@
 	. = ..()
 	if(isinhands)
 		return
-
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
+
+/obj/item/clothing/shoes/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+	. = ..()
+	if(isinhands)
+		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		if(clothing_flags & LARGE_WORN_ICON)
 			. += mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
@@ -296,7 +300,7 @@
 	return ..()
 
 /// Returns appropriate description for unfastened shoes
-/obj/item/clothing/shoes/verb/untied_adjective()
+/obj/item/clothing/shoes/proc/untied_adjective()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "untied"
@@ -306,7 +310,7 @@
 	return "nonexistant"
 
 /// Returns appropriate verb for how to fasten shoes
-/obj/item/clothing/shoes/verb/fasten_verb()
+/obj/item/clothing/shoes/proc/fasten_verb()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "tie"
@@ -316,7 +320,7 @@
 	return "do something mysterious to"
 
 /// Returns appropriate verb for fastening shoes
-/obj/item/clothing/shoes/verb/fastening_verb()
+/obj/item/clothing/shoes/proc/fastening_verb()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "tying"

@@ -196,7 +196,7 @@
 /turf/open/indestructible/white,
 /area/ruin/powered/clownplanet)
 "bp" = (
-/turf/closed/mineral/bananium,
+/turf/closed/mineral/bananium/volcanic,
 /area/ruin/powered/clownplanet)
 "bq" = (
 /obj/item/pickaxe,
