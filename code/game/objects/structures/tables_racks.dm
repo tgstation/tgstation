@@ -593,10 +593,8 @@
 
 	playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
 
-	new frame(loc)
-
-	victim.Paralyze(200)
-	qdel(src)
+	victim.Paralyze(20 SECONDS)
+	atom_deconstruct(disassembled = FALSE)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
