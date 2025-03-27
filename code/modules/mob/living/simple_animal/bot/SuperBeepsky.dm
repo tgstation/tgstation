@@ -31,14 +31,14 @@
 		return NONE
 
 	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
-	playsound(source, 'sound/weapons/blade1.ogg', 50, TRUE)
+	playsound(source, 'sound/items/weapons/blade1.ogg', 50, TRUE)
 	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/simple_animal/bot/secbot/grievous/on_entered(datum/source, atom/movable/AM)
 	. = ..()
 	if(ismob(AM) && AM == target)
 		visible_message(span_warning("[src] flails his swords and cuts [AM]!"))
-		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
+		playsound(src,'sound/mobs/non-humanoids/beepsky/beepskyspinsabre.ogg',100,TRUE,-1)
 		INVOKE_ASYNC(src, PROC_REF(stun_attack), AM)
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
@@ -54,14 +54,14 @@
 		return
 	if(prob(block_chance))
 		visible_message(span_warning("[src] deflects [user]'s attack with his energy swords!"))
-		playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
+		playsound(src, 'sound/items/weapons/blade1.ogg', 50, TRUE, -1)
 		return TRUE
 
 /mob/living/simple_animal/bot/secbot/grievous/stun_attack(mob/living/carbon/C) //Criminals don't deserve to live
 	weapon.attack(C, src)
-	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 2)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 0.2 SECONDS)
 		back_to_idle()
 
 
@@ -71,16 +71,16 @@
 	switch(mode)
 		if(BOT_IDLE) // idle
 			update_appearance()
-			SSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 		if(BOT_HUNT) // hunting for perp
 			update_appearance()
-			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
+			playsound(src,'sound/mobs/non-humanoids/beepsky/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
-				SSmove_manager.stop_looping(src)
+				GLOB.move_manager.stop_looping(src)
 				back_to_idle()
 				return
 			if(target) // make sure target exists
@@ -91,7 +91,7 @@
 					return
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					SSmove_manager.move_to(src, target, 1, 4)
+					GLOB.move_manager.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
@@ -124,8 +124,12 @@
 		target = C
 		oldtarget_name = C.name
 		speak("Level [threatlevel] infraction alert!")
-		playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-		playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
+		playsound(src, pick(
+			'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+			'sound/mobs/non-humanoids/beepsky/justice.ogg',
+			'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		), 50, FALSE)
+		playsound(src,'sound/items/weapons/saberon.ogg',50,TRUE,-1)
 		visible_message(span_warning("[src] ignites his energy swords!"))
 		icon_state = "grievous-c"
 		visible_message("<b>[src]</b> points at [C.name]!")

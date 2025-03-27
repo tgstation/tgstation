@@ -8,3 +8,4 @@
 	name = "trenchcoat"
 	desc = "A long, black trenchcoat. Makes you feel like you're the one, but you're not."
 	icon_state = "trenchcoat"
+	flags_inv = HIDEBELT

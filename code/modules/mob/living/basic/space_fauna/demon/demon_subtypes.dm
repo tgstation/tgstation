@@ -45,7 +45,7 @@
 	var/static/list/droppable_loot = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/blood/innards,
-		/obj/item/organ/internal/heart/demon,
+		/obj/item/organ/heart/demon,
 	)
 
 	return droppable_loot
@@ -66,7 +66,7 @@
 
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/basic/demon/slaughter/proc/bodyslam(atom/attack_target)
-	if(!isliving(attack_target))
+	if(!isliving(attack_target) || attack_target == src)
 		return
 
 	if(!Adjacent(attack_target))

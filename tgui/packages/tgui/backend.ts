@@ -13,9 +13,9 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
+import { globalEvents } from 'tgui-core/events';
 
 import { setupDrag } from './drag';
-import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
@@ -177,7 +177,7 @@ export const backendMiddleware = (store) => {
       Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
-      setImmediate(() => focusMap());
+      setTimeout(() => focusMap());
     }
 
     if (type === 'backend/update') {
@@ -207,7 +207,7 @@ export const backendMiddleware = (store) => {
       setupDrag();
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
-      setImmediate(() => {
+      setTimeout(() => {
         perf.mark('resume/start');
         // Doublecheck if we are not re-suspended.
         const { suspended } = selectBackend(store.getState());
@@ -252,7 +252,10 @@ type BackendState<TData> = {
   config: {
     title: string;
     status: number;
-    interface: string;
+    interface: {
+      name: string;
+      layout: string;
+    };
     refreshing: boolean;
     window: {
       key: string;
@@ -274,10 +277,6 @@ type BackendState<TData> = {
   shared: Record<string, any>;
   suspending: boolean;
   suspended: boolean;
-  debug?: {
-    debugLayout: boolean;
-    kitchenSink: boolean;
-  };
 };
 
 /**

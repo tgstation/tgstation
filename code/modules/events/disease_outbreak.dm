@@ -102,7 +102,7 @@
 	var/list/afflicted = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
-	if(isnull(illness_type))
+	if(!illness_type)
 		var/list/virus_candidates = list(
 			/datum/disease/anxiety,
 			/datum/disease/beesease,
@@ -111,6 +111,7 @@
 			/datum/disease/flu,
 			/datum/disease/fluspanish,
 			/datum/disease/magnitis,
+			/datum/disease/weightlessness,
 			/// And here are some that will never roll for real, just to mess around.
 			/datum/disease/death_sandwich_poisoning,
 			/datum/disease/dna_retrovirus,
@@ -138,7 +139,7 @@
 		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
 
 		//The wacky ones
-		virus_candidates += list(/datum/disease/magnitis, /datum/disease/anxiety)
+		virus_candidates += list(/datum/disease/magnitis, /datum/disease/anxiety, /datum/disease/weightlessness)
 
 		//The rest of the diseases either aren't conventional "diseases" or are too unique/extreme to be considered for a normal event
 		virus_type = pick(virus_candidates)
@@ -450,13 +451,13 @@
 /datum/disease/advance/random/event/set_spread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_text = "Fluids"
 		if(DISEASE_SPREAD_CONTACT_SKIN)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN)
 			spread_text = "Skin contact"
 		if(DISEASE_SPREAD_AIRBORNE)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE)
 			spread_text = "Respiration"
 
 /**

@@ -92,7 +92,7 @@
 	food_image.pixel_x = 16
 	SET_PLANE_EXPLICIT(food_image, HUD_PLANE, customer_pawn)
 	food_image.plane = HUD_PLANE
-	food_image.appearance_flags = RESET_COLOR
+	food_image.appearance_flags = RESET_COLOR|KEEP_APART
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", food_image)
 
 	return order
@@ -271,10 +271,10 @@
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
 	return
 
-/obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(I.type == projector?.type && !linked_venue.linked_seats[src])
+/obj/structure/holosign/robot_seat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.type == projector?.type && !linked_venue.linked_seats[src])
 		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/holosign/robot_seat/Destroy()
 	linked_venue.linked_seats -= src

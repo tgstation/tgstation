@@ -106,7 +106,7 @@
 	action_comp.granted_to[REF(user)] = src
 	circuit_component = action_comp
 	name = action_comp.button_name.value
-	button_icon_state = "bci_[replacetextEx(lowertext(action_comp.icon_options.value), " ", "_")]"
+	button_icon_state = "bci_[replacetextEx(LOWER_TEXT(action_comp.icon_options.value), " ", "_")]"
 
 /datum/action/item_action/mod/pinnable/circuit/Destroy()
 	circuit_component.granted_to -= REF(pinner)
@@ -114,17 +114,17 @@
 
 	return ..()
 
-/datum/action/item_action/mod/pinnable/circuit/Trigger(trigger_flags)
+/datum/action/item_action/mod/pinnable/circuit/do_effect(trigger_flags)
 	. = ..()
 	if(!.)
 		return
 	var/obj/item/mod/control/mod = module.mod
 	if(!istype(mod))
-		return
+		return FALSE
 	if(!mod.active || mod.activating)
 		if(mod.wearer)
 			module.balloon_alert(mod.wearer, "not active!")
-		return
+		return FALSE
 	circuit_component.user.set_output(owner)
 	circuit_component.signal.set_output(COMPONENT_SIGNAL)
 
@@ -271,7 +271,7 @@
 	SIGNAL_HANDLER
 	var/string_list = list()
 	var/is_deployed = TRUE
-	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+	for(var/obj/item/part as anything in attached_module.mod.get_parts())
 		if(part.loc == attached_module.mod)
 			is_deployed = FALSE
 		else

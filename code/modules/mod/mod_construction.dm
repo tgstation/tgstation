@@ -58,9 +58,10 @@
 	icon_state = "plasma-flower"
 	desc = "A strange flower from the desolate wastes of lavaland. It pulses with a bright purple glow.  \
 		Its shape is remarkably similar to that of a MOD core."
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_color = "#cc00cc"
-	light_range = 2
+	light_range = 2.5
+	light_power = 1.5
 
 /obj/item/mod/construction/lavalandcore/examine(mob/user)
 	. = ..()
@@ -90,6 +91,9 @@
 	name = "MOD [used_theme.name] external plating"
 	desc = "[desc] [used_theme.desc]"
 	icon_state = "[used_theme.default_skin]-plating"
+
+/obj/item/mod/construction/plating/civilian
+	theme = /datum/mod_theme/civilian
 
 /obj/item/mod/construction/plating/engineering
 	theme = /datum/mod_theme/engineering
@@ -158,7 +162,7 @@
 			if(!istype(part, /obj/item/mod/core))
 				return
 			if(!user.transferItemToLoc(part, src))
-				balloon_alert(user, "core stuck to your hand!")
+				balloon_alert(user, "it's stuck!")
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 			balloon_alert(user, "core inserted")
@@ -177,7 +181,7 @@
 		if(SCREWED_CORE_STEP)
 			if(istype(part, /obj/item/mod/construction/helmet)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "helmet stuck to your hand!")
+					balloon_alert(user, "it's stuck!")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, "helmet added")
@@ -190,7 +194,7 @@
 		if(HELMET_STEP)
 			if(istype(part, /obj/item/mod/construction/chestplate)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "chestplate stuck to your hand!")
+					balloon_alert(user, "it's stuck!")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, "chestplate added")
@@ -205,7 +209,7 @@
 		if(CHESTPLATE_STEP)
 			if(istype(part, /obj/item/mod/construction/gauntlets)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "gauntlets stuck to your hand!")
+					balloon_alert(user, "it's stuck!")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, "gauntlets added")
@@ -220,10 +224,10 @@
 		if(GAUNTLETS_STEP)
 			if(istype(part, /obj/item/mod/construction/boots)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "boots added")
+					balloon_alert(user, "it's stuck!")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "fit [part.name]")
+				balloon_alert(user, "boots added")
 				boots = part
 				step = BOOTS_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
@@ -256,13 +260,14 @@
 			if(istype(part, /obj/item/mod/construction/plating)) //Construct
 				var/obj/item/mod/construction/plating/external_plating = part
 				if(!user.transferItemToLoc(part, src))
+					balloon_alert(user, "it's stuck!")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
 				core = null
 				qdel(src)
 				user.put_in_hands(mod)
-				mod.balloon_alert(user, "suit finished")
+				mod.balloon_alert(user, "unit finished")
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
 					balloon_alert(user, "assembly unscrewed")

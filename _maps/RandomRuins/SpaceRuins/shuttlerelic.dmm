@@ -63,7 +63,7 @@
 /obj/structure/chair/old{
 	dir = 1
 	},
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/twenty_force,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "o" = (
@@ -74,7 +74,7 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "t" = (
-/obj/machinery/power/generator,
+/obj/machinery/power/thermoelectric_generator,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "u" = (

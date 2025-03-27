@@ -5,8 +5,8 @@
 	icon_state = "bodybag"
 	density = FALSE
 	mob_storage_capacity = 2
-	open_sound = 'sound/items/zip.ogg'
-	close_sound = 'sound/items/zip.ogg'
+	open_sound = 'sound/items/zip/zip.ogg'
+	close_sound = 'sound/items/zip/zip.ogg'
 	open_sound_volume = 15
 	close_sound_volume = 15
 	integrity_failure = 0
@@ -47,7 +47,7 @@
 	return ..()
 
 /obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
-	if (istype(interact_tool, /obj/item/pen) || istype(interact_tool, /obj/item/toy/crayon))
+	if (IS_WRITING_UTENSIL(interact_tool))
 		if(!user.can_write(interact_tool))
 			return
 		var/t = tgui_input_text(user, "What would you like the label to be?", name, max_length = 53)
@@ -65,6 +65,7 @@
 
 ///Handles renaming of the bodybag's examine tag.
 /obj/structure/closet/body_bag/proc/handle_tag(new_name)
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	tag_name = new_name
 	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
 	update_appearance()
@@ -116,8 +117,22 @@
 		*/
 /obj/structure/closet/body_bag/proc/perform_fold(mob/living/carbon/human/the_folder)
 	visible_message(span_notice("[the_folder] folds up [src]."))
-	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path
-	the_folder.put_in_hands(folding_bodybag)
+	the_folder.put_in_hands(undeploy_bodybag(the_folder.loc))
+
+/// Makes the bag into an item, returns that item
+/obj/structure/closet/body_bag/proc/undeploy_bodybag(atom/fold_loc)
+	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path()
+	if(fold_loc)
+		folding_bodybag.forceMove(fold_loc)
+	return folding_bodybag
+
+/obj/structure/closet/body_bag/container_resist_act(mob/living/user, loc_required = TRUE)
+	// ideally we support this natively but i guess that's for a later time
+	if(!istype(loc, /obj/machinery/disposal))
+		return ..()
+	for(var/atom/movable/thing as anything in src)
+		thing.forceMove(loc)
+	undeploy_bodybag(loc)
 
 /obj/structure/closet/body_bag/bluespace
 	name = "bluespace body bag"
@@ -152,7 +167,7 @@
 
 /obj/structure/closet/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
 	visible_message(span_notice("[the_folder] folds up [src]."))
-	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path
+	var/obj/item/bodybag/folding_bodybag = undeploy_bodybag(the_folder.loc)
 	var/max_weight_of_contents = initial(folding_bodybag.w_class)
 	for(var/am in contents)
 		var/atom/movable/content = am
@@ -171,7 +186,7 @@
 		if(A_is_item.w_class < max_weight_of_contents)
 			continue
 		max_weight_of_contents = A_is_item.w_class
-	folding_bodybag.w_class = max_weight_of_contents
+	folding_bodybag.update_weight_class(max_weight_of_contents)
 	the_folder.put_in_hands(folding_bodybag)
 
 /// Environmental bags. They protect against bad weather.
@@ -186,7 +201,7 @@
 	contents_thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental
 	/// The list of weathers we protect from.
-	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_VOIDSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
+	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
 	/// The contents of the gas to be distributed to an occupant. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
@@ -276,19 +291,10 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
-	/// copy-pasted with changes because flavor text as well as some other misc stuff
-	if(opened)
-		return
-	if(ismovable(loc))
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
-		var/atom/movable/location = loc
-		location.relay_container_resist_act(user, src)
-		return
-	if(!sinched)
-		open(user)
-		return
+/obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user, loc_required = TRUE)
+	// copy-pasted with changes because flavor text as well as some other misc stuff
+	if(opened || ismovable(loc) || !sinched)
+		return ..()
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -301,6 +307,8 @@
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
 							span_notice("You successfully break out of [src]!"))
+		if(istype(loc, /obj/machinery/disposal))
+			return ..()
 		bust_open()
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
@@ -369,11 +377,11 @@
 	icon_state = "holobag_med"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
-	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
+	weather_protection = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
-		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
+		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight
 	name = "hardlight prisoner bodybag"
@@ -381,8 +389,8 @@
 	icon_state = "holobag_sec"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
-	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
+	weather_protection = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
-		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
+		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)

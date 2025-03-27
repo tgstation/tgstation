@@ -1,7 +1,5 @@
 import { sortBy } from 'common/collections';
 import { useState } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   BlockQuote,
   Button,
@@ -12,7 +10,9 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -63,7 +63,7 @@ export const WarrantConsole = (props) => {
 const RecordList = (props) => {
   const { act, data } = useBackend<Data>();
   const { records = [] } = data;
-  const sorted = sortBy((record: WarrantRecord) => record.crew_name)(records);
+  const sorted = sortBy(records, (record) => record.crew_name);
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     WarrantRecord | undefined

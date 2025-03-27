@@ -1,6 +1,6 @@
 /obj/item/clothing/under/syndicate
 	name = "tactical turtleneck"
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
+	desc = "A nondescript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
 	icon_state = "syndicate"
 	inhand_icon_state = "bl_suit"
 	has_sensor = NO_SENSORS
@@ -8,7 +8,6 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION
 
 /datum/armor/clothing_under/syndicate
 	melee = 10
@@ -18,7 +17,7 @@
 
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"
-	desc = "A non-descript and slightly suspicious looking skirtleneck."
+	desc = "A nondescript and slightly suspicious looking skirtleneck."
 	icon_state = "syndicate_skirt"
 	inhand_icon_state = "bl_suit"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
@@ -34,6 +33,10 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
 	supports_variations_flags = NONE
+
+/obj/item/clothing/under/syndicate/bloodred/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //extra-tactical
 
 /datum/armor/clothing_under/syndicate_bloodred
 	melee = 10
@@ -111,6 +114,19 @@
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 
+/obj/item/clothing/under/syndicate/floortilecamo
+	name = "floortile camouflage fatigues"
+	desc = "The newest floortile camouflage fatigues used for hallway warfare. \
+		The best breathability, flexibility and comfort. Designed by Camo-J's."
+	icon_state = "camofloortile"
+	inhand_icon_state = "gy_suit"
+	can_adjust = FALSE
+	supports_variations_flags = NONE
+
+/obj/item/clothing/under/syndicate/floortilecamo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
+
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
@@ -151,6 +167,10 @@
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 	armor_type = /datum/armor/clothing_under/syndicate_scrubs
+
+/obj/item/clothing/under/syndicate/scrubs/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /datum/armor/clothing_under/syndicate_scrubs
 	melee = 10

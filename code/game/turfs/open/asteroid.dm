@@ -14,7 +14,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	/// Base turf type to be created by the tunnel
 	var/turf_type = /turf/open/misc/asteroid
 			/// Whether this turf has different icon states
@@ -49,9 +49,6 @@
 	name = proper_name
 	if(has_floor_variance && prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,12)]"
-
-/turf/open/misc/asteroid/burn_tile()
-	return
 
 /turf/open/misc/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -154,7 +151,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/refill_dug()
 	. = ..()
 	GLOB.dug_up_basalt -= src
-	set_basalt_light(src)
+	set_basalt_light()
 
 /turf/open/misc/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
@@ -165,14 +162,14 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/basalt/Initialize(mapload)
 	. = ..()
-	set_basalt_light(src)
+	set_basalt_light()
 
-/proc/set_basalt_light(turf/open/floor/B)
-	switch(B.icon_state)
+/turf/open/misc/asteroid/basalt/proc/set_basalt_light()
+	switch(icon_state)
 		if("basalt1", "basalt2", "basalt3")
-			B.set_light(2, 0.6, LIGHT_COLOR_LAVA) //more light
+			set_light(BASALT_LIGHT_RANGE_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA) //more light
 		if("basalt5", "basalt9")
-			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
+			set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA) //barely anything!
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
@@ -183,6 +180,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /// Used for the lavaland icemoon ruin.
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
+/// A turf that can't we can't build openspace chasms on or spawn ruins in.
+/turf/closed/mineral/volcanic/lava_land_surface/do_not_chasm
 	turf_flags = NO_RUINS
 
 /turf/open/misc/asteroid/lowpressure
@@ -222,7 +223,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 		return TRUE
 	return FALSE
 
-/turf/open/misc/grass/burnt_states()
+/turf/open/misc/asteroid/snow/burnt_states()
 	return list("snow_dug")
 
 /turf/open/misc/asteroid/snow/icemoon
@@ -310,3 +311,18 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	floor_variance = 0
 	base_icon_state = "moon_dug"
 	icon_state = "moon_dug"
+
+	//used in outpost45
+
+/turf/open/misc/asteroid/plasma //floor piece
+	gender = PLURAL
+	name = "asteroid gravel"
+	desc = "It's coarse and rough and gets everywhere."
+	baseturfs = /turf/open/misc/asteroid
+	icon = 'icons/turf/floors.dmi'
+	damaged_dmi = 'icons/turf/floors.dmi'
+	icon_state = "asteroid"
+	base_icon_state = "asteroid"
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9"
+	planetary_atmos = TRUE
+

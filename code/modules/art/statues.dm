@@ -26,38 +26,32 @@
 	AddElement(art_type, impressiveness)
 	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/marionette)
 
 /obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=1))
-				return FALSE
-			user.balloon_alert(user, "slicing apart...")
-			if(W.use_tool(src, user, 40, volume=50))
-				deconstruct(TRUE)
-			return
+	if(W.tool_behaviour == TOOL_WELDER)
+		if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+			return FALSE
+		user.balloon_alert(user, "slicing apart...")
+		if(W.use_tool(src, user, 40, volume=50))
+			deconstruct(TRUE)
+		return
 	return ..()
 
-/obj/structure/statue/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
-/obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/amount_mod = disassembled ? 0 : -2
-		for(var/mat in custom_materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
-			var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
-			if(amount > 0)
-				new custom_material.sheet_type(drop_location(), amount)
-	qdel(src)
+/obj/structure/statue/atom_deconstruct(disassembled = TRUE)
+	var/amount_mod = disassembled ? 0 : -2
+	for(var/mat in custom_materials)
+		var/datum/material/custom_material = GET_MATERIAL_REF(mat)
+		var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
+		if(amount > 0)
+			new custom_material.sheet_type(drop_location(), amount)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
@@ -271,6 +265,7 @@
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "chisel"
 	inhand_icon_state = "screwdriver_nuke"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -283,10 +278,10 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.75)
 	attack_verb_continuous = list("stabs")
 	attack_verb_simple = list("stab")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
-	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
-	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	usesound = list('sound/effects/pickaxe/picaxe1.ogg', 'sound/effects/pickaxe/picaxe2.ogg', 'sound/effects/pickaxe/picaxe3.ogg')
+	drop_sound = 'sound/items/handling/tools/screwdriver_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_RUSTSCRAPER
 	toolspeed = 3 // You're gonna have a bad time
@@ -316,12 +311,11 @@ Point with the chisel at the target to choose what to sculpt or hit block to cho
 Hit block again to start sculpting.
 Moving interrupts
 */
-/obj/item/chisel/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
+/obj/item/chisel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(sculpting)
-		return TRUE
-	if(istype(target, /obj/structure/carving_block))
-		var/obj/structure/carving_block/sculpt_block = target
+		return ITEM_INTERACT_BLOCKING
+	if(istype(interacting_with, /obj/structure/carving_block))
+		var/obj/structure/carving_block/sculpt_block = interacting_with
 
 		if(sculpt_block.completion) // someone already started sculpting this so just finish
 			set_block(sculpt_block, user, silent = TRUE)
@@ -332,19 +326,20 @@ Moving interrupts
 			set_block(sculpt_block, user)
 		else if(sculpt_block == prepared_block)
 			show_generic_statues_prompt(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
 	else if(prepared_block) //We're aiming at something next to us with block prepared
-		prepared_block.set_target(target, user)
-		return TRUE
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 // We aim at something distant.
-/obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-
-	if (!sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
-		prepared_block.set_target(target,user)
-
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/chisel/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!sculpting && prepared_block && ismovable(interacting_with) && prepared_block.completion == 0)
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /// Starts or continues the sculpting action on the carving block material
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
@@ -354,7 +349,7 @@ Moving interrupts
 	//How long whole process takes
 	var/sculpting_time = 30 SECONDS
 	//Single interruptible progress period
-	var/sculpting_period = round(sculpting_time / world.icon_size) //this is just so it reveals pixels line by line for each.
+	var/sculpting_period = round(sculpting_time / ICON_SIZE_Y) //this is just so it reveals pixels line by line for each.
 	var/interrupted = FALSE
 	var/remaining_time = sculpting_time - (prepared_block.completion * sculpting_time)
 
@@ -479,7 +474,7 @@ Moving interrupts
 		return FALSE
 	//No big icon things
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
-	if(icon_dimensions["width"] != world.icon_size || icon_dimensions["height"] != world.icon_size)
+	if(icon_dimensions["width"] != ICON_SIZE_X || icon_dimensions["height"] != ICON_SIZE_Y)
 		user.balloon_alert(user, "sculpt target is too big!")
 		return FALSE
 	return TRUE
@@ -515,7 +510,7 @@ Moving interrupts
 			remove_filter("partial_uncover")
 			target_appearance_with_filters = null
 		else
-			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
+			var/mask_offset = min(ICON_SIZE_Y,round(completion * ICON_SIZE_Y))
 			remove_filter("partial_uncover")
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
@@ -563,33 +558,10 @@ Moving interrupts
 /obj/structure/statue/custom/proc/set_visuals(model_appearance)
 	if(content_ma)
 		QDEL_NULL(content_ma)
-	content_ma = new
-	content_ma.appearance = model_appearance
+	content_ma = copy_appearance_filter_overlays(model_appearance)
 	content_ma.pixel_x = 0
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
-
-	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
-
-	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
-	var/list/overlays_to_remove = list()
-	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
-		var/mutable_appearance/real = new()
-		real.appearance = special_overlay
-		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		overlays_to_remove += real
-	content_ma.overlays -= overlays_to_remove
-
-	var/list/underlays_to_remove = list()
-	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
-		var/mutable_appearance/real = new()
-		real.appearance = special_underlay
-		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		underlays_to_remove += real
-	content_ma.underlays -= underlays_to_remove
-
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	update_content_planes()

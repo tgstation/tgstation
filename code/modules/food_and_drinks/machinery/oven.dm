@@ -31,6 +31,8 @@
 	var/datum/looping_sound/oven/oven_loop
 	///Current state of smoke coming from the oven
 	var/smoke_state = OVEN_SMOKE_STATE_NONE
+	///Currently used particle type, if any
+	var/particle_type
 
 /obj/machinery/oven/Initialize(mapload)
 	. = ..()
@@ -40,7 +42,8 @@
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
-	QDEL_NULL(particles)
+	if (particle_type)
+		remove_shared_particles(particle_type)
 	return ..()
 
 /// Used to determine if the oven appears active and cooking, or offline.
@@ -90,19 +93,32 @@
 		baked_item.fire_act(1000) //Hot hot hot!
 
 		if(SPT_PROB(10, seconds_per_tick))
-			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
+			var/list/asomnia_hadders = list()
+			for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
+				if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
+					asomnia_hadders += smeller
+			visible_message(span_danger("You smell a burnt smell coming from [src]!"), ignored_mobs = asomnia_hadders)
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
-
-/obj/machinery/oven/attackby(obj/item/I, mob/user, params)
-	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
-		if(user.transferItemToLoc(I, src, silent = FALSE))
-			to_chat(user, span_notice("You put [I] in [src]."))
-			add_tray_to_oven(I, user)
-	else
+/obj/machinery/oven/attackby(obj/item/item, mob/user, params)
+	if(!open || used_tray || !istype(item, /obj/item/plate/oven_tray))
 		return ..()
+
+	if(user.transferItemToLoc(item, src, silent = FALSE))
+		to_chat(user, span_notice("You put [item] in [src]."))
+		add_tray_to_oven(item, user)
+
+/obj/machinery/oven/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(open && used_tray && item.atom_storage)
+		return used_tray.item_interaction(user, item, modifiers)
+	return NONE
+
+/obj/machinery/oven/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(open && used_tray && tool.atom_storage)
+		return used_tray.item_interaction_secondary(user, tool, modifiers)
+	return NONE
 
 ///Adds a tray to the oven, making sure the shit can get baked.
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)
@@ -197,16 +213,22 @@
 /obj/machinery/oven/proc/set_smoke_state(new_state)
 	if(new_state == smoke_state)
 		return
-	smoke_state = new_state
 
-	QDEL_NULL(particles)
+	smoke_state = new_state
+	if (particle_type)
+		remove_shared_particles(particle_type)
+		particle_type = null
+
 	switch(smoke_state)
 		if(OVEN_SMOKE_STATE_BAD)
-			particles = new /particles/smoke()
+			particle_type = /particles/smoke
 		if(OVEN_SMOKE_STATE_NEUTRAL)
-			particles = new /particles/smoke/steam()
+			particle_type = /particles/smoke/steam
 		if(OVEN_SMOKE_STATE_GOOD)
-			particles = new /particles/smoke/steam/mild()
+			particle_type = /particles/smoke/steam/mild
+
+	if (particle_type)
+		add_shared_particles(particle_type)
 
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)
@@ -238,6 +260,43 @@
 	icon_state = "oven_tray"
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/plate/oven_tray/item_interaction_secondary(mob/living/user, obj/item/item, list/modifiers)
+	if(isnull(item.atom_storage))
+		return NONE
+
+	for(var/obj/tray_item in src)
+		item.atom_storage.attempt_insert(tray_item, user, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(isnull(item.atom_storage))
+		return NONE
+
+	if(length(contents) >= max_items)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!istype(item, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = item))
+			return ITEM_INTERACT_BLOCKING
+
+	var/loaded = 0
+	for(var/obj/tray_item in item)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(length(contents) >= max_items)
+			break
+		if(item.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			AddToPlate(tray_item, user)
+	if(loaded)
+		to_chat(user, span_notice("You insert [loaded] item\s into [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 #undef OVEN_SMOKE_STATE_NONE
 #undef OVEN_SMOKE_STATE_GOOD

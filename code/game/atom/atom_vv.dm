@@ -67,14 +67,10 @@
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
 	if(href_list[VV_HK_TRIGGER_EXPLOSION])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_explosion(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_explosion, src)
 
 	if(href_list[VV_HK_TRIGGER_EMP])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_emp(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_emp, src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS])
 		if(!check_rights(R_ADMIN))
@@ -155,8 +151,8 @@
 			num_spins = -1
 		if(!num_spins)
 			return
-		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
-		if(!spin_speed)
+		var/spins_per_sec = input(usr, "How many spins per second?", "Spin Animation") as null|num
+		if(!spins_per_sec)
 			return
 		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
 		switch(direction)
@@ -166,7 +162,7 @@
 				direction = 0
 			else
 				return
-		SpinAnimation(spin_speed, num_spins, direction)
+		SpinAnimation(1 SECONDS / spins_per_sec, num_spins, direction)
 
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
 		if(!check_rights(R_VAREDIT))
@@ -203,7 +199,7 @@
 	. = ..()
 	var/refid = REF(src)
 	. += "[VV_HREF_TARGETREF(refid, VV_HK_AUTO_RENAME, "<b id='name'>[src]</b>")]"
-	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+	. += "<br><font size='1'><a href='byond://?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='byond://?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='byond://?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 /**
  * call back when a var is edited on this atom
@@ -222,37 +218,37 @@
 	light_flags &= ~LIGHT_FROZEN
 	switch(var_name)
 		if(NAMEOF(src, light_range))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_range = var_value)
 			else
 				set_light_range(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_power))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_power = var_value)
 			else
 				set_light_power(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_color))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_color = var_value)
 			else
 				set_light_color(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_angle))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_angle = var_value)
 				. = TRUE
 		if(NAMEOF(src, light_dir))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_dir = var_value)
 				. = TRUE
 		if(NAMEOF(src, light_height))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_height = var_value)
 				. = TRUE
 		if(NAMEOF(src, light_on))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_on = var_value)
 			else
 				set_light_on(var_value)
@@ -273,6 +269,12 @@
 			. = TRUE
 		if(NAMEOF(src, base_pixel_y))
 			set_base_pixel_y(var_value)
+			. = TRUE
+		if(NAMEOF(src, material_flags))
+			toggle_material_flags(var_value)
+			. = TRUE
+		if(NAMEOF(src, material_modifier))
+			change_material_modifier(var_value)
 			. = TRUE
 
 	light_flags = old_light_flags

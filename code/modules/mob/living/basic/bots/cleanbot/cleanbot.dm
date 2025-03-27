@@ -5,13 +5,11 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "cleanbot0"
-	pass_flags = PASSMOB | PASSFLAPS
-	density = FALSE
-	anchored = FALSE
 	health = 25
 	maxHealth = 25
+	light_color = "#99ccff"
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = CLEAN_BOT
@@ -25,8 +23,6 @@
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
 	///Options: CLEANBOT_CLEAN_BLOOD | CLEANBOT_CLEAN_TRASH | CLEANBOT_CLEAN_PESTS | CLEANBOT_CLEAN_DRAWINGS
 	var/janitor_mode_flags = CLEANBOT_CLEAN_BLOOD
-	///should other bots salute us?
-	var/comissioned = FALSE
 	///the base icon state, used in updating icons.
 	var/base_icon = "cleanbot"
 	/// if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
@@ -99,7 +95,6 @@
 	var/static/list/cleanable_blood = typecacheof(list(
 		/obj/effect/decal/cleanable/xenoblood,
 		/obj/effect/decal/cleanable/blood,
-		/obj/effect/decal/cleanable/trail_holder,
 	))
 	///pests we hunt
 	var/static/list/huntable_pests = typecacheof(list(
@@ -131,7 +126,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/clean,
+		/datum/pet_command/clean,
 	)
 
 /mob/living/basic/bot/cleanbot/Initialize(mapload)
@@ -203,15 +198,11 @@
 	if(var_name == NAMEOF(src, base_icon))
 		update_appearance(UPDATE_ICON)
 
-/mob/living/basic/bot/cleanbot/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	if(!(bot_access_flags & BOT_COVER_EMAGGED))
-		return
+/mob/living/basic/bot/cleanbot/emag_effects(mob/user)
 	if(weapon)
 		weapon.force = initial(weapon.force)
 	balloon_alert(user, "safeties disabled")
 	audible_message(span_danger("[src] buzzes oddly!"))
-	return TRUE
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
@@ -232,7 +223,7 @@
 // Variables sent to TGUI
 /mob/living/basic/bot/cleanbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !issilicon(user) && !isAdminGhostAI(user))
+	if((bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return data
 	data["custom_controls"]["clean_blood"] = janitor_mode_flags & CLEANBOT_CLEAN_BLOOD
 	data["custom_controls"]["clean_trash"] = janitor_mode_flags & CLEANBOT_CLEAN_TRASH
@@ -243,7 +234,8 @@
 // Actions received from TGUI
 /mob/living/basic/bot/cleanbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !ui.user.has_unlimited_silicon_privilege)
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
 
 	switch(action)
@@ -298,8 +290,8 @@
 		return
 
 	stolen_valor += new_job_title
-	if(!comissioned && (new_job_title in officers_titles))
-		comissioned = TRUE
+	if(!HAS_TRAIT(src, TRAIT_COMMISSIONED) && (new_job_title in officers_titles))
+		ADD_TRAIT(src, TRAIT_COMMISSIONED, INNATE_TRAIT)
 
 	var/name_to_add = job_titles[new_job_title]
 	name = (new_job_title in suffix_job_titles) ? "[name] " + name_to_add : name_to_add + " [name]"
@@ -331,7 +323,7 @@
 		INVOKE_ASYNC(our_mop, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!iscarbon(target) && !is_type_in_typecache(target, huntable_trash))
+	if(!(iscarbon(target) && (bot_access_flags & BOT_COVER_EMAGGED)) && !is_type_in_typecache(target, huntable_trash))
 		return NONE
 
 	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
@@ -352,5 +344,5 @@
 
 /mob/living/basic/bot/cleanbot/medbay
 	name = "Scrubs, MD"
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)

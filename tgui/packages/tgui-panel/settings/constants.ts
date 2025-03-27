@@ -18,6 +18,10 @@ export const SETTINGS_TABS = [
     id: 'chatPage',
     name: 'Chat Tabs',
   },
+  {
+    id: 'statPanel',
+    name: 'Stat Panel',
+  },
 ];
 
 export const FONTS_DISABLED = 'Default';
@@ -36,4 +40,4 @@ export const FONTS = [
   'Lucida Console',
 ];
 
-export const MAX_HIGHLIGHT_SETTINGS = 10;
+export const WARN_AFTER_HIGHLIGHT_AMT = 10;

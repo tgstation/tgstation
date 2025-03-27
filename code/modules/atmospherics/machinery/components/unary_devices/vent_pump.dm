@@ -5,7 +5,7 @@
 
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
-
+	construction_type = /obj/item/pipe/directional/vent
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	can_unwrench = TRUE
@@ -14,9 +14,11 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 	pipe_state = "uvent"
+	has_cap_visuals = TRUE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	// vents are more complex machinery and so are less resistant to damage
 	max_integrity = 100
+	interaction_flags_click = NEED_VENTCRAWL
 
 	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
@@ -203,12 +205,14 @@
 			return
 
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
-			icon_state = "vent_out-off"
+			icon_state = "vent_off"
+			flick("vent_out-shutdown", src)
 		else // pump_direction == SIPHONING
-			icon_state = "vent_in-off"
+			icon_state = "vent_off"
+			flick("vent_in-shutdown", src)
 		return
 
-	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+	if(icon_state == "vent_off")
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
 			icon_state = "vent_out"
 			flick("vent_out-starting", src)
@@ -226,7 +230,7 @@
 	fan_overclocked = !fan_overclocked
 
 	if(from_break)
-		playsound(src, 'sound/machines/fan_break.ogg', 100)
+		playsound(src, 'sound/machines/fan/fan_break.ogg', 100)
 		fan_overclocked = FALSE
 
 	if(fan_overclocked)
@@ -349,14 +353,14 @@
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
-	if(!welded || !(do_after(user, 20, target = src)))
+	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
 	update_appearance()
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 100, TRUE)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"

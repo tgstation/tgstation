@@ -14,17 +14,13 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 	//Can this plating have reinforced floors placed ontop of it
 	var/attachment_holes = TRUE
 
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
-
-	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
-	/// And if our baseturfs are compatible.
-	/// See [/obj/item/stack/tile/proc/place_tile].
-	var/allow_replacement = TRUE
 
 /turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
@@ -62,7 +58,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin reinforcing the floor..."))
-			if(do_after(user, 30, target = src))
+			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -121,19 +117,17 @@
 
 #undef PLATE_REINFORCE_COST
 
-/turf/open/floor/plating/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	return ..()
+
 
 /turf/open/floor/plating/make_plating(force = FALSE)
 	return
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
-	desc = "Thin, fragile flooring created with metal foam."
+	desc = "Thin, fragile flooring created with metal foam. Designed to be easily replacable by tiling when applied to in a combat stance."
 	icon_state = "foam_plating"
 	upgradable = FALSE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/foam/burn_tile()
 	return //jetfuel can't melt steel foam
@@ -141,26 +135,28 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/iron))
-		var/obj/item/stack/tile/iron/P = I
-		if(P.use(1))
-			var/obj/L = locate(/obj/structure/lattice) in src
-			if(L)
-				qdel(L)
-			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
-			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, params)
+	if(ismetaltile(attacking_item))
+		var/obj/item/stack/tile/tiles = attacking_item
+		if(!tiles.use(1))
+			return
+		var/obj/lattice = locate(/obj/structure/lattice) in src
+		if(lattice)
+			qdel(lattice)
+		to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+		playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
+		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		return
+
+	playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(prob(attacking_item.force * 20 - 25))
+		user.visible_message(span_danger("[user] smashes through [src]!"), \
+						span_danger("You smash through [src] with [attacking_item]!"))
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else
-		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if(prob(I.force * 20 - 25))
-			user.visible_message(span_danger("[user] smashes through [src]!"), \
-							span_danger("You smash through [src] with [I]!"))
-			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		else
-			to_chat(user, span_danger("You hit [src], to no effect!"))
+		to_chat(user, span_danger("You hit [src], to no effect!"))
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
@@ -177,8 +173,7 @@
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	SHOULD_CALL_PARENT(FALSE)
+/turf/open/floor/plating/foam/welder_act(mob/living/user, obj/item/I)
 	return NONE // Fuck you
 
 //reinforced plating deconstruction states
@@ -195,9 +190,9 @@
 	heat_capacity = INFINITY
 
 	baseturfs = /turf/open/floor/plating
-	allow_replacement = FALSE
 	rcd_proof = TRUE
 	upgradable = FALSE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 	//Used to track which stage of deconstruction the plate is currently in, Intact > Bolts Loosened > Cut
 	var/deconstruction_state = PLATE_INTACT
@@ -308,12 +303,14 @@
 		new /obj/effect/decal/cleanable/glass/plastitanium/screws(below_turf)
 		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
 
+/turf/open/floor/plating/reinforced/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 ///not an actual turf its used just for rcd ui purposes
 /turf/open/floor/plating/rcd
 	name = "Floor/Wall"
 	icon = 'icons/hud/radial.dmi'
 	icon_state = "wallfloor"
-
 
 #undef PLATE_INTACT
 #undef PLATE_BOLTS_LOOSENED

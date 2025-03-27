@@ -63,7 +63,7 @@
 "oj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/iron/grimy{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -311,7 +311,7 @@
 	},
 /obj/structure/rack,
 /obj/item/wrench,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/twenty_force,
 /obj/machinery/light/small/built/directional/south,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)

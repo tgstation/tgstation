@@ -20,7 +20,7 @@
 	if(user.mind.has_antag_datum(/datum/antagonist/fallen_changeling))
 		to_chat(user, span_changeling("<b>We're cut off from the hivemind! We've lost everything! EVERYTHING!!</b>"))
 		return FALSE
-	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/ling_sender = IS_CHANGELING(user)
 	if(!ling_sender)
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_CHANGELING_HIVEMIND_MUTE))
@@ -41,10 +41,10 @@
 		// can't receive messages on the hivemind right now
 		if(HAS_TRAIT(ling_mob, TRAIT_CHANGELING_HIVEMIND_MUTE))
 			continue
-		to_chat(ling_mob, msg)
+		to_chat(ling_mob, msg, type = MESSAGE_TYPE_RADIO, avoid_highlighting = ling_mob == user)
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
-		to_chat(ghost, "[FOLLOW_LINK(ghost, user)] [msg]")
+		to_chat(ghost, "[FOLLOW_LINK(ghost, user)] [msg]", type = MESSAGE_TYPE_RADIO)
 	return FALSE
 
 /datum/saymode/xeno
@@ -64,7 +64,7 @@
 /datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/organ/internal/vocal_cords/V = C.get_organ_slot(ORGAN_SLOT_VOICE)
+		var/obj/item/organ/vocal_cords/V = C.get_organ_slot(ORGAN_SLOT_VOICE)
 		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action

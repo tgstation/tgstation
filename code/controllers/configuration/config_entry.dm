@@ -11,7 +11,7 @@
 	var/modified = FALSE
 	/// The config name of a configuration type that depricates this, if it exists
 	var/deprecated_by
-	/// The /datum/config_entry type that supercedes this one
+	/// The /datum/config_entry type that supersedes this one
 	var/protection = NONE
 	/// Do not instantiate if type matches this
 	var/abstract_type = /datum/config_entry
@@ -25,7 +25,7 @@
 /datum/config_entry/New()
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")
-	name = lowertext(type2top(type))
+	name = LOWER_TEXT(type2top(type))
 	default_protection = protection
 	set_default()
 
@@ -100,7 +100,7 @@
 		return FALSE
 	config_entry_value = auto_trim ? trim(str_val) : str_val
 	if(lowercase)
-		config_entry_value = lowertext(config_entry_value)
+		config_entry_value = LOWER_TEXT(config_entry_value)
 	return TRUE
 
 /datum/config_entry/number
@@ -148,7 +148,7 @@
 		return FALSE
 	str_val = trim(str_val)
 	if (str_val != "")
-		config_entry_value += lowercase ? lowertext(str_val) : str_val
+		config_entry_value += lowercase ? LOWER_TEXT(str_val) : str_val
 	return TRUE
 
 /datum/config_entry/number_list
@@ -246,7 +246,7 @@
 		config_key = jointext(config_entry_words, splitter)
 
 		if(lowercase_key)
-			config_key = lowertext(config_key)
+			config_key = LOWER_TEXT(config_key)
 
 		is_ambiguous = (length(config_entry_words) > 2)
 

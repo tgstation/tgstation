@@ -1,7 +1,4 @@
-import { shallowDiffers } from 'common/react';
 import { Component } from 'react';
-
-import { resolveAsset } from '../../assets';
 import {
   Button,
   Dropdown,
@@ -9,8 +6,11 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../../components';
-import { fetchRetry } from '../../http';
+} from 'tgui-core/components';
+import { fetchRetry } from 'tgui-core/http';
+import { shallowDiffers } from 'tgui-core/react';
+
+import { resolveAsset } from '../../assets';
 import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 import { DisplayComponent } from './DisplayComponent';
 
@@ -120,7 +120,8 @@ export class ComponentMenu extends Component {
                   currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
                 })
               }
-              displayText={`Category: ${selectedTab}`}
+              selected={selectedTab}
+              placeholder="Category"
               color="transparent"
               className="IntegratedCircuit__BlueBorder"
             />

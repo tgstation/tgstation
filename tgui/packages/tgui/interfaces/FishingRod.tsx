@@ -1,5 +1,6 @@
+import { Box, Button, Flex, Image, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -64,7 +65,7 @@ export const FishingRod = (props) => {
   } = data;
 
   return (
-    <Window height={300} width={300}>
+    <Window height={450} width={400}>
       <Window.Content>
         <Section>
           <FishingRodSlot

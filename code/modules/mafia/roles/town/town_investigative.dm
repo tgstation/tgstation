@@ -20,7 +20,7 @@
 	hud_icon = "hudpsychologist"
 	revealed_icon = "psychologist"
 
-	role_unique_actions = list(/datum/mafia_ability/reaveal_role)
+	role_unique_actions = list(/datum/mafia_ability/reveal_role)
 
 /datum/mafia_role/chaplain
 	name = "Chaplain"

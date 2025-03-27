@@ -33,7 +33,7 @@
 			return FALSE
 
 		var/mob/living/carbon/human/human_invoker = invoker
-		if(human_invoker.incapacitated())
+		if(human_invoker.incapacitated)
 			if(feedback)
 				to_chat(human_invoker, span_warning("You can't properly point your fingers while incapacitated."))
 			return FALSE
@@ -46,4 +46,7 @@
 
 /datum/action/cooldown/spell/pointed/projectile/finger_guns/before_cast(atom/cast_on)
 	. = ..()
-	invocation = span_notice("<b>[cast_on]</b> fires [cast_on.p_their()] finger gun!")
+	if(isnull(owner))
+		invocation = initial(invocation)
+	else
+		invocation = span_notice("<b>[owner]</b> fires [owner.p_their()] finger gun!")

@@ -24,7 +24,7 @@
 	. = ..()
 	materials = AddComponent(/datum/component/remote_materials, mapload)
 
-/obj/machinery/component_printer/LateInitialize()
+/obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
@@ -66,6 +66,19 @@
 		return
 	current_unlocked_designs -= added_design.build_path
 
+/obj/machinery/component_printer/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//to allow quick recycling of circuits
+	if(istype(tool, /obj/item/circuit_component))
+		var/amount_inserted = materials.insert_item(tool)
+
+		if(amount_inserted)
+			to_chat(user, span_notice("[tool] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [src]"))
+		else
+			to_chat(user, span_warning("[tool] was rejected by [src]"))
+
+		return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+	return ..()
 
 /obj/machinery/component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -75,7 +88,8 @@
 
 /obj/machinery/component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/component_printer/RefreshParts()
@@ -117,7 +131,7 @@
 	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 	return new design.build_path(drop_location())
 
-/obj/machinery/component_printer/ui_act(action, list/params)
+/obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -164,7 +178,7 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
@@ -184,8 +198,7 @@
 			"cost" = cost,
 			"id" = researched_design_id,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = -1
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
 		)
 
 	data["designs"] = designs
@@ -193,13 +206,22 @@
 	return data
 
 /obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
-	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
-		var/obj/item/integrated_circuit/circuit = weapon
-		circuit.linked_component_printer = WEAKREF(src)
-		circuit.update_static_data_for_all_viewers()
-		balloon_alert(user, "successfully linked to the integrated circuit")
-		return
-	return ..()
+	if (user.combat_mode)
+		return ..()
+
+	var/obj/item/integrated_circuit/circuit
+	if(istype(weapon, /obj/item/integrated_circuit))
+		circuit = weapon
+	else if (istype(weapon, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = weapon
+		circuit = module.internal_circuit
+	if (isnull(circuit))
+		return ..()
+
+	circuit.linked_component_printer = WEAKREF(src)
+	circuit.update_static_data_for_all_viewers()
+	balloon_alert(user, "successfully linked to the integrated circuit")
+
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
@@ -264,11 +286,11 @@
 
 /obj/machinery/debug_component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
-/obj/machinery/debug_component_printer/ui_act(action, list/params)
+/obj/machinery/debug_component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -329,8 +351,8 @@
 
 /obj/machinery/module_duplicator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/module_duplicator/RefreshParts()
@@ -356,7 +378,7 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/module_duplicator/ui_act(action, list/params)
+/obj/machinery/module_duplicator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

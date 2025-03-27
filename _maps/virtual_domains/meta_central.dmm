@@ -1,0 +1,8427 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/machinery/newscaster/directional/west,
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -4
+	},
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"ac" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Command Hallway"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ai" = (
+/obj/structure/broken_flooring/corner/always_floorplane/directional/south,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"an" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Showroom Shutters"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"as" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	name = "Showroom Shutters"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"at" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/item/storage/box/mothic_rations{
+	pixel_y = -9;
+	pixel_x = 6
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"au" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/toy/figure/detective{
+	pixel_y = 13
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"av" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"aw" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor/right/directional/north{
+	name = "Head of Personnel's Desk";
+	req_access = list("hop")
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "hop";
+	name = "Privacy Shutters"
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ay" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/surgicaldrill,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"aA" = (
+/obj/item/restraints/legcuffs/beartrap/prearmed,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"aC" = (
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"aO" = (
+/obj/structure/toilet{
+	pixel_y = 13
+	},
+/obj/machinery/light/directional/south,
+/obj/machinery/light_switch/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"aQ" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"aT" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"aV" = (
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"aZ" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/machinery/exoscanner,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ba" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"bb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bd" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"bf" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor7"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bg" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/shard{
+	icon_state = "medium";
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bl" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/status_display/evac/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bm" = (
+/obj/item/clothing/mask/surgical,
+/obj/effect/mob_spawn/corpse/human/doctor,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"br" = (
+/obj/effect/spawner/random/decoration/showcase,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"bs" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/assembly/flash,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bu" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/bonfire/prelit,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"bw" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"bO" = (
+/obj/structure/bed/maint,
+/obj/item/bedsheet/pirate,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"bP" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bQ" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/malf,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bR" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bT" = (
+/obj/effect/turf_decal/bot_white/right,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stock_parts/subspace/filter{
+	pixel_x = 15
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"bU" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"bW" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"bZ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/effect/turf_decal/caution/red,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cj" = (
+/obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ck" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L3"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "w";
+	pixel_y = -15;
+	pixel_x = -17
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "e";
+	pixel_y = -16;
+	pixel_x = -2
+	},
+/obj/effect/decal/cleanable/blood{
+	pixel_y = -13
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cp" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/holosign/barrier,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cr" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/tank/jetpack/carbondioxide{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cx" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/item/kirbyplants/organic/plant16,
+/obj/item/radio/intercom/directional/north,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cB" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cC" = (
+/obj/structure/sign/map/left{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-left-MS";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cD" = (
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"cF" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"cH" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"cI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/shard{
+	icon_state = "medium";
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cK" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/obj/structure/railing,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cN" = (
+/obj/structure/sign/departments/court/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/barricade/security,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"cO" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/item/trash/fleet_ration,
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"cW" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"cZ" = (
+/obj/machinery/button/door/directional/west{
+	name = "Privacy Shutters Control"
+	},
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"db" = (
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"dc" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"dd" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"di" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"dk" = (
+/obj/machinery/button/door/directional/south{
+	name = "E.V.A. Storage Shutter Control"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/suit_storage_unit/void_old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"dl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"dz" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/structure/bed/dogbed/ian,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"dA" = (
+/obj/structure/holosign/barrier/medical,
+/turf/closed/indestructible/fakedoor,
+/area/virtual_domain)
+"dC" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"dD" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"dE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"dP" = (
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4
+	},
+/obj/structure/sign/directions/command{
+	pixel_y = -8
+	},
+/turf/closed/wall/r_wall,
+/area/virtual_domain)
+"dU" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"dX" = (
+/obj/structure/sign/warning/electric_shock/directional/north,
+/obj/effect/turf_decal/bot,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"dY" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/banner/medical,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"dZ" = (
+/obj/item/storage/belt/utility,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/structure/rack,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Gateway Shutter Control"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ej" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ek" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ep" = (
+/obj/structure/table/wood,
+/obj/item/storage/briefcase/secure{
+	desc = "A large briefcase with a digital locking system, and the Nanotrasen logo emblazoned on the sides.";
+	name = "\improper Nanotrasen-brand secure briefcase exhibit";
+	pixel_y = 2
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"er" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"eu" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ey" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ez" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/wrench,
+/obj/item/multitool,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/incident_display/delam/directional/south,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"eA" = (
+/obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/bookcase/random,
+/obj/machinery/light/broken/directional/west,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"eB" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"eD" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L3"
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"eG" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"eN" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"eR" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"eV" = (
+/obj/machinery/light/directional/west,
+/obj/structure/table,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"eX" = (
+/obj/structure/meateor_fluff/abandoned_headcrab_egg,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"eZ" = (
+/obj/structure/meateor_fluff/eyeball,
+/obj/effect/mob_spawn/corpse/human/doctor,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"fc" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/barricade/sandbags,
+/obj/structure/railing,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fh" = (
+/turf/open/floor/plating,
+/area/virtual_domain)
+"fj" = (
+/obj/structure/closet/crate/cargo,
+/obj/effect/spawner/random/maintenance/no_decals/seven,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fn" = (
+/obj/item/camera/detective{
+	pixel_y = 4;
+	pixel_x = 9
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fr" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fz" = (
+/obj/machinery/pdapainter{
+	pixel_y = 2
+	},
+/obj/machinery/requests_console/directional/north{
+	department = "Head of Personnel's Desk";
+	name = "Head of Personnel's Requests Console"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"fB" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fC" = (
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/screwdriver,
+/obj/effect/turf_decal/tile/brown/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 16;
+	icon_state = "candle2_lit";
+	pixel_x = 17
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fD" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/armory/laser_gun,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"fF" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"fG" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/decal/cleanable/glass,
+/obj/item/clothing/head/costume/party,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fK" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fN" = (
+/obj/structure/sign/directions/science{
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/evac,
+/turf/closed/wall/r_wall,
+/area/virtual_domain)
+"fP" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"fQ" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"gb" = (
+/obj/structure/flora/rock/pile/jungle,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ge" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/tree/jungle/small/style_4,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"gg" = (
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"gj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"gk" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"gt" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"gC" = (
+/obj/item/kirbyplants/synthetic,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"gE" = (
+/turf/open/floor/wood,
+/area/virtual_domain)
+"gM" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/bodypart/head/robot,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/digital_clock/directional/north,
+/obj/item/knife/combat/cyborg{
+	pixel_x = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"gU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"hb" = (
+/obj/structure/table/wood,
+/obj/item/camera{
+	pixel_y = 4
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"hc" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hd" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hg" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hh" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"hi" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/obj/structure/holosign/barrier,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"hj" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Command Hallway"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ht" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L13"
+	},
+/obj/effect/spawner/random/trash,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hv" = (
+/obj/structure/bed/medical/emergency,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hw" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hz" = (
+/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
+/obj/structure/meateor_fluff/eyeball,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"hF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hG" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Gateway Chamber"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hR" = (
+/obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hU" = (
+/obj/structure/frame/computer,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"hV" = (
+/obj/machinery/status_display/ai/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/closet/crate/secure/syndicrate,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"hX" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"hZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"id" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"ie" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ii" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/holosign/barrier/atmos,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"il" = (
+/obj/structure/table,
+/obj/machinery/newscaster/directional/north,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"im" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"iv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ix" = (
+/obj/item/trash/fleet_ration,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"iy" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"iA" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"iH" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/item/trash/can,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"iI" = (
+/obj/structure/closet/crate,
+/obj/item/stack/cable_coil,
+/obj/item/crowbar,
+/obj/item/screwdriver{
+	pixel_y = 16
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"iK" = (
+/obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"iP" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"iQ" = (
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/structure/table,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"iY" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/status_display/evac/directional/east,
+/obj/item/stock_parts/subspace/crystal{
+	pixel_y = -12;
+	pixel_x = 6
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"iZ" = (
+/obj/item/storage/box/mothic_rations{
+	pixel_y = -7
+	},
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ja" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"jc" = (
+/obj/item/shard,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"jd" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/chair{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"jh" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"jk" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "E.V.A. Storage"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"jm" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"jt" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"jx" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "med"
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"jy" = (
+/obj/machinery/status_display/ai/directional/north,
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"jz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"jC" = (
+/obj/item/ammo_box/magazine/wt550m9,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"jD" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"jF" = (
+/obj/machinery/holopad/secure,
+/obj/item/storage/box/lethalshot{
+	pixel_y = 7
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"jG" = (
+/obj/machinery/light_switch/directional/east,
+/obj/structure/table/glass,
+/obj/item/clothing/head/utility/chefhat{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/condiment/saltshaker,
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"jR" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kc" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mine/gas/plasma,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"kd" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kg" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/trash/boritos/red,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"ki" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 2
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"km" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	dir = 8;
+	name = "Vacant Commissary Shutter"
+	},
+/obj/structure/noticeboard/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	name = "Bridge Blast Door"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"kt" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"kv" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4-old"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kx" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"kI" = (
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kK" = (
+/obj/structure/sign/directions/command{
+	dir = 4;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/virtual_domain)
+"kM" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kN" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	name = "E.V.A. Storage Shutter"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kW" = (
+/obj/structure/table,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"lb" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ld" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	dir = 8;
+	name = "Vacant Commissary Shutter"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lk" = (
+/obj/item/grenade/c4/x4,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"lt" = (
+/obj/machinery/camera/motion/directional/east{
+	c_tag = "E.V.A. Storage"
+	},
+/obj/machinery/requests_console/directional/east{
+	department = "EVA";
+	name = "EVA Requests Console"
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lu" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lv" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/pickaxe/rusted,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lC" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Command Hallway"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lD" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "E.V.A. Storage"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lE" = (
+/obj/structure/sign/departments/science,
+/turf/closed/wall,
+/area/virtual_domain)
+"lG" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lJ" = (
+/obj/item/tank/internals/oxygen,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/gibspawner/human,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"lK" = (
+/obj/structure/table/wood,
+/obj/structure/sign/picture_frame/showroom/one{
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/structure/sign/picture_frame/showroom/two{
+	pixel_x = 8;
+	pixel_y = 32
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"lL" = (
+/obj/structure/table,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/south,
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"lM" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "c";
+	pixel_x = -11;
+	pixel_y = 16
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "o";
+	pixel_y = 16;
+	pixel_x = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"lN" = (
+/obj/item/bodybag{
+	pixel_y = 5;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"lQ" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/closed/wall,
+/area/virtual_domain)
+"lT" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain)
+"lU" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"lY" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mb" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Gateway Shutter Control";
+	pixel_y = -34
+	},
+/obj/machinery/button/door/directional/south{
+	name = "E.V.A. Storage Shutter Control"
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"mc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mf" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L4"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mi" = (
+/obj/machinery/light/directional/south,
+/obj/machinery/firealarm/directional/south,
+/obj/structure/rack,
+/obj/item/storage/briefcase/secure,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"mj" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -13;
+	pixel_y = 8;
+	icon_state = "candle3_lit"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"mo" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	name = "Showroom Shutters"
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"mq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mt" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mw" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"my" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/computer/records/security/laptop/syndie,
+/obj/structure/sign/poster/official/state_laws/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mI" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mO" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/bush/large/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"mP" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"mQ" = (
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mR" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"mW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"nq" = (
+/obj/effect/mob_spawn/corpse/human/scientist,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"nw" = (
+/obj/structure/punji_sticks/spikes,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ny" = (
+/obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light/broken/directional/west,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"nz" = (
+/obj/effect/decal/cleanable/glass,
+/obj/item/clothing/head/costume/party,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"nO" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"nP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/barricade/sandbags,
+/obj/structure/railing,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"nS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"nU" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/sign/departments/aiupload/directional/north,
+/obj/effect/decal/cleanable/shreds,
+/obj/item/card/emag,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"nW" = (
+/obj/machinery/light_switch{
+	pixel_x = 38;
+	pixel_y = -35
+	},
+/obj/machinery/button/flasher{
+	pixel_x = 38;
+	pixel_y = -25
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/bed/maint,
+/obj/item/bedsheet/pirate{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"nY" = (
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"nZ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/item/book,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"od" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ok" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/borg/upgrade/pinpointer,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ol" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor6"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/item/modular_computer/laptop{
+	icon_state = "laptop";
+	pixel_y = 12;
+	pixel_x = 2
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"on" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"oo" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Gateway Maintenance"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"op" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/obj/structure/closet/body_bag,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"oy" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"oA" = (
+/obj/structure/table,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"oD" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"oH" = (
+/obj/structure/sign/plaques/kiddie/perfect_man{
+	pixel_y = 32
+	},
+/obj/effect/spawner/random/decoration/showcase,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"oI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Corporate Showroom"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"oM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"oO" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"oQ" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"oS" = (
+/obj/structure/barricade/sandbags,
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pb" = (
+/obj/item/radio/intercom/directional/north{
+	pixel_y = 34
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/computer/old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"pc" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/item/book,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pd" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"pr" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/structure/closet/crate/cargo,
+/obj/effect/spawner/random/maintenance/no_decals/seven,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ps" = (
+/turf/closed/wall,
+/area/virtual_domain)
+"pv" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/trash/fleet_ration,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pA" = (
+/obj/structure/broken_flooring/side/directional/west,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"pB" = (
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = -8
+	},
+/turf/closed/wall,
+/area/virtual_domain)
+"pD" = (
+/turf/closed/indestructible/fakedoor/maintenance,
+/area/virtual_domain)
+"pE" = (
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pI" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"pJ" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"pK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"pL" = (
+/obj/item/extinguisher,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"pN" = (
+/obj/structure/meateor_fluff/eyeball,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"pO" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pP" = (
+/obj/machinery/button/door/directional/north{
+	name = "Privacy Shutters Control"
+	},
+/obj/machinery/computer/old,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"pQ" = (
+/obj/machinery/ticket_machine/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pR" = (
+/obj/structure/broken_flooring/pile/directional/north,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"pT" = (
+/obj/structure/barricade/sandbags,
+/obj/machinery/deployable_turret/hmg,
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"pW" = (
+/obj/structure/alien/weeds,
+/obj/item/flamethrower/full/tank,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"pX" = (
+/obj/item/photo/old{
+	pixel_y = 14
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"qa" = (
+/obj/item/radio/intercom/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor5"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"qk" = (
+/obj/structure/chair/comfy/beige,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"qq" = (
+/obj/structure/broken_flooring/side/directional/west,
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"qr" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"qu" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/chair{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"qv" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/structure/sign/departments/botany/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"qz" = (
+/obj/structure/table/wood,
+/obj/machinery/light_switch/directional/west,
+/obj/item/storage/briefcase/secure{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"qI" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"qJ" = (
+/obj/machinery/light/floor,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"qL" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/trash/semki/healthy,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"qM" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/mop,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"qP" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"qS" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/requests_console/directional/east{
+	department = "Captain's Desk";
+	name = "Captain's Requests Console"
+	},
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/obj/item/shard{
+	icon_state = "medium";
+	pixel_x = 5
+	},
+/obj/item/stack/cable_coil/cut,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"qY" = (
+/obj/item/reagent_containers/cup/bottle/random_virus,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ra" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L13"
+	},
+/obj/effect/decal/cleanable/crayon/x{
+	pixel_x = -6;
+	pixel_y = -15
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rb" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"re" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rf" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/ammo_casing/spent{
+	dir = 9
+	},
+/obj/item/ammo_casing/spent{
+	dir = 10;
+	pixel_x = -13;
+	pixel_y = -8
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"rh" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rm" = (
+/obj/structure/lattice,
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/space/basic,
+/area/virtual_domain)
+"ro" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rq" = (
+/obj/machinery/vending/cigarette,
+/obj/item/gun/ballistic/shotgun/lethal{
+	pixel_y = 13
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rr" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rs" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"rt" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"rv" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ry" = (
+/obj/structure/sign/map/left{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-left-MS";
+	pixel_y = 32
+	},
+/obj/structure/showcase/machinery/tv/broken,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rz" = (
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rC" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rJ" = (
+/obj/effect/spawner/random/trash,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"rO" = (
+/obj/item/disk/nuclear/fake/obvious,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"rP" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"rQ" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rW" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rX" = (
+/obj/machinery/photocopier,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"sa" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"sc" = (
+/obj/machinery/cell_charger{
+	pixel_y = 4
+	},
+/obj/structure/table/glass,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"se" = (
+/obj/effect/mine/explosive/flame,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"sf" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/flora/rock/icy,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"si" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"sm" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/suit_storage_unit/void_old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"sr" = (
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ss" = (
+/obj/item/stock_parts/micro_laser/high,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"st" = (
+/obj/item/seeds/coffee,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"sz" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/safe/floor,
+/obj/item/stack/spacecash/c10000,
+/obj/item/stack/spacecash/c10000,
+/obj/item/stack/spacecash/c10000,
+/obj/item/stack/sheet/mineral/gold,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"sA" = (
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"sB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"sF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/storage/briefcase/lawyer,
+/obj/structure/noticeboard/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"sI" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"sS" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/bronze,
+/turf/open/space/basic,
+/area/virtual_domain)
+"sX" = (
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/effect/turf_decal/caution/red,
+/obj/item/clothing/suit/caution{
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"sZ" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/banner/science,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"te" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Head of Personnel"
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"tf" = (
+/obj/effect/rune,
+/obj/item/knife/envy,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"th" = (
+/obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tj" = (
+/obj/structure/bed/dogbed/renault,
+/mob/living/basic/pet/fox,
+/obj/item/stack/spacecash/c1000{
+	pixel_y = 15;
+	pixel_x = 5
+	},
+/obj/item/storage/briefcase/secure/syndie{
+	pixel_y = 13;
+	pixel_x = -6
+	},
+/obj/item/stack/sheet/mineral/diamond{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"tk" = (
+/obj/machinery/button/door/directional/west{
+	id = "bridge blast";
+	name = "Bridge Access Blast Door Control"
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"tl" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"tn" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"to" = (
+/obj/item/boulder{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/boulder{
+	icon_state = "rock_medium";
+	pixel_x = -12;
+	pixel_y = 8
+	},
+/obj/item/boulder{
+	icon_state = "boulder_medium";
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"tq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tu" = (
+/obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tw" = (
+/obj/structure/flora/rock/pile/jungle,
+/obj/effect/mob_spawn/corpse/human/scientist,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ty" = (
+/obj/effect/spawner/random/vending/colavend,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"tF" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"tI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/trash/can/food/pine_nuts,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tM" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/crowbar,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tO" = (
+/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/medical{
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/science{
+	pixel_y = -8
+	},
+/turf/closed/wall,
+/area/virtual_domain)
+"tR" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tS" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tV" = (
+/obj/structure/table/wood,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/item/folder/blue,
+/obj/item/clothing/head/collectable/hop{
+	name = "novelty HoP hat"
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"tW" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/mob_spawn/corpse/human/scientist,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"ub" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mine/explosive/flame,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ud" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/trash/cheesie,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"uf" = (
+/obj/structure/plasticflaps/opaque,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ug" = (
+/obj/structure/holosign/barrier/wetsign,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"uk" = (
+/obj/structure/marker_beacon/bronze,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain)
+"ul" = (
+/obj/machinery/door/poddoor/preopen{
+	name = "Bridge Blast Door"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge Access"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"up" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"uq" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/tree/jungle/small/style_4,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ut" = (
+/obj/structure/sign/directions/engineering{
+	dir = 4
+	},
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/command{
+	dir = 8;
+	pixel_y = -8
+	},
+/turf/closed/wall,
+/area/virtual_domain)
+"uw" = (
+/obj/item/clothing/shoes/magboots{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ux" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"uz" = (
+/turf/template_noop,
+/area/template_noop)
+"uA" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"uB" = (
+/turf/closed/indestructible/meat,
+/area/virtual_domain)
+"uD" = (
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"uH" = (
+/obj/structure/bookcase,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"uP" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/item/radio/intercom/directional/west,
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 2
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"uS" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain)
+"uT" = (
+/obj/structure/mop_bucket/janitorialcart{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"uX" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/computer/old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"uY" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/blood,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/exoscanner,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vf" = (
+/obj/structure/broken_flooring/corner/directional/east,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"vg" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/chair/pew/right,
+/obj/item/reagent_containers/cup/glass/coffee,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vi" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/book/manual/wiki/detective,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vn" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vo" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vt" = (
+/obj/machinery/bluespace_beacon,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"vw" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"vy" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L12"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/trash/candle,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"vI" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/button/door/directional/east{
+	name = "Teleporter Shutter Control";
+	pixel_y = 5
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vK" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"vM" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"vN" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"vO" = (
+/obj/item/book/manual/wiki/security_space_law,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vU" = (
+/obj/machinery/recharger,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"vV" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"vW" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"wa" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/trash/popcorn/caramel,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"wi" = (
+/obj/machinery/holopad,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"wj" = (
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"wl" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/rock/pile/jungle,
+/obj/structure/flora/bush/leavy/style_3,
+/obj/structure/flora/tree/jungle/small/style_2,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"wn" = (
+/obj/machinery/light_switch/directional/south,
+/obj/structure/table/wood,
+/obj/item/razor{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/glass/flask/gold,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"wo" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/north,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"wq" = (
+/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
+/obj/item/clothing/mask/surgical,
+/obj/structure/meateor_fluff/abandoned_headcrab_egg,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"wu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ww" = (
+/obj/item/knife/shiv/plastitanium,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"wA" = (
+/obj/structure/table/glass,
+/obj/structure/safe,
+/obj/item/storage/toolbox/guncase/cqc,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"wB" = (
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = -8
+	},
+/turf/closed/wall/r_wall,
+/area/virtual_domain)
+"wD" = (
+/obj/machinery/airalarm/directional/north,
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/spawner/random/bureaucracy/briefcase,
+/obj/effect/turf_decal/tile/brown/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"wH" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"wL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Bridge Access Blast Door Control"
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Council Chamber Blast Door Control";
+	pixel_y = -34
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"wN" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"wP" = (
+/obj/structure/sign/directions/medical{
+	dir = 8;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/science{
+	dir = 4;
+	pixel_y = -8
+	},
+/turf/closed/wall,
+/area/virtual_domain)
+"wV" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"wY" = (
+/obj/machinery/status_display/ai/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"xb" = (
+/obj/structure/sign/map/right{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-right-MS";
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"xd" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"xe" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"xj" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"xu" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"xI" = (
+/obj/item/disk/data{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/disk/tech_disk{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/disk/design_disk{
+	name = "component design disk";
+	pixel_y = 6
+	},
+/obj/structure/table/wood,
+/obj/item/toy/talking/ai{
+	name = "\improper Nanotrasen-brand toy AI";
+	pixel_y = 6
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"xK" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"xV" = (
+/obj/machinery/button/door/directional/west{
+	name = "Council Chamber Blast Door Control"
+	},
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"xW" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
+/obj/item/stack/rods,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"yc" = (
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"yh" = (
+/obj/structure/chair/office{
+	dir = 1;
+	pixel_x = -11
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"yn" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "E.V.A. Storage Shutter"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"yq" = (
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2;
+	pixel_x = 7
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"yt" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/grille/broken,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"yw" = (
+/obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/trash/popcorn,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"yx" = (
+/obj/structure/grille/broken,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mine/explosive/flame,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"yy" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"yz" = (
+/turf/closed/indestructible/fakedoor,
+/area/virtual_domain)
+"yC" = (
+/obj/structure/showcase/machinery/tv/broken,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"yD" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"yE" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"yH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"yI" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/bikehorn/rubberducky,
+/obj/machinery/light_switch/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"yK" = (
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"yM" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"yN" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/bed/medical/emergency,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"yO" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"yP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "hop";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"yT" = (
+/obj/item/seeds/cucumber,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"zb" = (
+/obj/item/clothing/head/costume/party,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ze" = (
+/obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"zg" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/glass,
+/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/suture,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"zj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"zo" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -4
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"zq" = (
+/obj/structure/mop_bucket,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"zw" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/trash/ready_donk{
+	pixel_y = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"zx" = (
+/obj/structure/grille/broken,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
+/obj/item/stack/rods,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"zA" = (
+/obj/machinery/firealarm/directional/east,
+/obj/structure/table/glass,
+/obj/item/papercutter,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"zB" = (
+/obj/structure/broken_flooring/side/directional/north,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "m";
+	pixel_y = 17;
+	pixel_x = -13
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"zE" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"zL" = (
+/obj/item/reagent_containers/cup/bottle/random_virus,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"zO" = (
+/obj/item/stack/rods/ten,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"zP" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/computer/old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"zQ" = (
+/obj/item/storage/belt/security/full{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/obj/item/storage/belt/security/full,
+/obj/item/storage/belt/security/full{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/structure/table/reinforced,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"zR" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"zT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/closet/body_bag,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ad" = (
+/obj/item/clothing/head/cone{
+	pixel_y = -5;
+	pixel_x = 7
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Ah" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ao" = (
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Ar" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Ax" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/item/radio/off,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ay" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"AA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"AC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain)
+"AD" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/clothing/head/cone{
+	pixel_y = 3;
+	pixel_x = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"AM" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"AN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/clothing/suit/caution{
+	pixel_y = -9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"AP" = (
+/obj/structure/grille,
+/obj/item/shard{
+	icon_state = "medium";
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"AQ" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/ammo_casing/spent{
+	dir = 10
+	},
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_x = -19;
+	pixel_y = -5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"AR" = (
+/obj/structure/table,
+/obj/item/folder/yellow,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"AV" = (
+/obj/item/radio/intercom/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"AX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Bd" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Bg" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/chair,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Bh" = (
+/obj/machinery/status_display/ai/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Bj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/broken/directional/south,
+/obj/item/stack/rods,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Bn" = (
+/obj/item/ammo_casing/spent,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Bp" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Bt" = (
+/obj/machinery/status_display/ai/directional/north,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Bv" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Bw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"BF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning/corner,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"BJ" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L1"
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"BK" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/computer/old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"BM" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"BN" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L14"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"BP" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Captain's Quarters"
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"BZ" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"Ca" = (
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/shotgun/riot,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"Cb" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Cc" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/leavy/style_2,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Cd" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Cg" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/item/restraints/legcuffs/beartrap/prearmed,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Cn" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/closet/crate/cargo,
+/obj/effect/spawner/random/maintenance/no_decals/seven,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Cr" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L10"
+	},
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Cw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Cx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = -6
+	},
+/obj/machinery/recharger{
+	pixel_x = 6
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"Cy" = (
+/obj/machinery/light_switch/directional/south,
+/obj/effect/spawner/random/vending/colavend,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Cz" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"CA" = (
+/obj/structure/flora/rock/pile/jungle,
+/obj/structure/barricade/sandbags,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"CC" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"CJ" = (
+/obj/structure/holosign/barrier,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"CK" = (
+/obj/structure/sign/map/left{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-left-MS";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/item/banner/security,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"CL" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor3-old"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"CM" = (
+/obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"CQ" = (
+/obj/effect/decal/cleanable/xenoblood,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Dc" = (
+/obj/effect/turf_decal/bot_white/right,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/clothing/head/cone{
+	pixel_y = 3;
+	pixel_x = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Dk" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Dl" = (
+/obj/structure/water_source/puddle,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"Dp" = (
+/obj/structure/chair/sofa/bench/solo,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Dx" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"DA" = (
+/obj/item/seeds/cocoapod,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"DC" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"DF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/detective_scanner{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"DL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Showroom Shutters"
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"DM" = (
+/turf/closed/indestructible/fakedoor/engineering,
+/area/virtual_domain)
+"DO" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"DP" = (
+/obj/machinery/holopad,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"DQ" = (
+/obj/machinery/power/shieldwallgen,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"DU" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/item/knife/butcher,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"DV" = (
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"DW" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ec" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/tree/jungle/small/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Ed" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"El" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/structure/meateor_fluff/flesh_pod_open,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"En" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Er" = (
+/obj/structure/rack,
+/obj/item/tank/jetpack/carbondioxide{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Es" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/mecha_wreckage/ripley/paddy,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Eu" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"EC" = (
+/obj/item/flashlight/lamp/green{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ED" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"EF" = (
+/obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/closet/crate/cardboard,
+/obj/effect/spawner/random/maintenance/no_decals/seven,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"EH" = (
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"EK" = (
+/obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/reagent_containers/spray/chemsprayer/party,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"EQ" = (
+/obj/machinery/door/poddoor/preopen{
+	name = "Bridge Blast Door"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ET" = (
+/obj/structure/table/glass,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"EV" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L7"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "e";
+	pixel_y = -16;
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "guy";
+	pixel_y = -5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Fc" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/clothing/suit/bio_suit/virology,
+/obj/item/clothing/head/bio_hood/virology{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/structure/sign/warning/biohazard/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Fd" = (
+/turf/open/space/basic,
+/area/space)
+"Ff" = (
+/obj/machinery/firealarm/directional/south,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Fg" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/banner/medical,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"Fh" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Fj" = (
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Fl" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/decal/cleanable/vomit/toxic,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Fp" = (
+/obj/structure/showcase/machinery/tv{
+	dir = 1;
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Fr" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Fw" = (
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"FA" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"FC" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/window{
+	name = "Gateway Access Shutter"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"FF" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/r_wall,
+/area/virtual_domain)
+"FG" = (
+/obj/effect/turf_decal/trimline/green/filled/corner,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"FI" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
+/obj/machinery/light_switch/directional/east,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"FK" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/stack/sheet/iron,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"FN" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/storage/toolbox/emergency,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"FO" = (
+/obj/structure/flora/rock/pile/jungle,
+/obj/structure/flora/tree/jungle/small/style_6,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"FR" = (
+/obj/item/storage/toolbox/drone,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"FS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"FT" = (
+/obj/item/clothing/mask/surgical,
+/obj/structure/meateor_fluff/eyeball,
+/obj/effect/decal/cleanable/vomit/toxic,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"FV" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"FZ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Gi" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Gk" = (
+/obj/machinery/door/window/left/directional/south{
+	name = "HoP's Desk"
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Gm" = (
+/obj/structure/meateor_fluff/flesh_pod_open,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"Gn" = (
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Gq" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Gr" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Gs" = (
+/obj/item/clothing/mask/gas,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Gx" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Head of Personnel"
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Gy" = (
+/obj/structure/flora/rock/pile/jungle/large/style_random,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"GA" = (
+/obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"GD" = (
+/obj/structure/lattice,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/space/basic,
+/area/virtual_domain)
+"GG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/sandbags,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"GJ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/cardboard/mothic{
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"GQ" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"GS" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"GT" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Hb" = (
+/obj/effect/spawner/random/trash,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Hc" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/revolver/golden,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Hd" = (
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Hg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = -9;
+	icon_state = "candle2_lit"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Hh" = (
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"Hl" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Hs" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ht" = (
+/obj/machinery/firealarm/directional/north,
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Hv" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge"
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Hw" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair/office{
+	dir = 4;
+	pixel_x = -10
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"HC" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/item/trash/fleet_ration,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"HG" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"HH" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Secure Network Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"HM" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain)
+"HP" = (
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"HS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 13;
+	pixel_y = 8;
+	icon_state = "candle3_lit"
+	},
+/obj/item/trash/candle,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"HX" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/banner/command,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Ie" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/ammo_casing/spent{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Ii" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Ij" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Il" = (
+/obj/structure/lattice,
+/obj/item/ammo_box/strilka310/surplus,
+/turf/open/space/basic,
+/area/virtual_domain)
+"Io" = (
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Iq" = (
+/obj/structure/table/wood,
+/obj/machinery/recharger,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ir" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Iw" = (
+/obj/structure/closet/crate/cardboard{
+	pixel_y = 8
+	},
+/obj/item/spear/explosive,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"IC" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"IH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"IJ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"IL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/barricade/sandbags,
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"IM" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent{
+	dir = 10;
+	pixel_x = -13;
+	pixel_y = -8
+	},
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_x = -13;
+	pixel_y = 9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"IS" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Teleport Access"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"IU" = (
+/obj/item/radio/off,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Jh" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "Captain's Bedroom"
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ji" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Jm" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"JD" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"JG" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"JK" = (
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/structure/table/glass,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"JL" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/barricade/sandbags,
+/obj/structure/railing,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"JM" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"JP" = (
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"JR" = (
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution/red{
+	dir = 8
+	},
+/obj/item/clothing/suit/caution{
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"JY" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/item/banner/engineering,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ka" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ke" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Kf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Kh" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Kl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Km" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Kn" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/item/storage/cans/sixbeer,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Kq" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Kr" = (
+/obj/item/clothing/head/utility/hardhat,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Kv" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L9"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4";
+	pixel_y = -15
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Kw" = (
+/obj/structure/plaque/static_plaque/golden/commission/meta,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"KA" = (
+/obj/item/chair,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"KF" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"KM" = (
+/obj/structure/sign/warning/pods,
+/turf/closed/wall,
+/area/virtual_domain)
+"KN" = (
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"KP" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/closet/body_bag,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"KQ" = (
+/obj/structure/rack,
+/obj/item/assembly/signaler,
+/obj/item/assembly/signaler,
+/obj/item/assembly/timer,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"KR" = (
+/obj/machinery/newscaster/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"KT" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"KW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Lg" = (
+/obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Lh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ll" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Lm" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Lq" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/night/colorless{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/night/colorless,
+/obj/item/clothing/glasses/night/colorless{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"Ls" = (
+/obj/modular_map_root/safehouse{
+	key = "shuttle_space"
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"Lu" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Lz" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/machinery/jukebox/disco{
+	anchored = 1;
+	req_access = null
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"LB" = (
+/obj/structure/lattice,
+/obj/item/gun/ballistic/rifle/boltaction/surplus,
+/turf/open/space/basic,
+/area/virtual_domain)
+"LD" = (
+/obj/item/kirbyplants/random/dead/research_director,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"LG" = (
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"LJ" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	name = "E.V.A. Storage Shutter Control"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/bio_suit/virology{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"LK" = (
+/obj/machinery/button/door/directional/east{
+	name = "Bridge Access Blast Door Control"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/flora/rock/icy/style_2,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"LL" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"LN" = (
+/obj/item/kirbyplants,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"LP" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"LS" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"LV" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Mb" = (
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Mj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Mk" = (
+/obj/structure/table/wood,
+/obj/machinery/light/directional/south,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
+/obj/item/paper/fluff/ids_for_dummies,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ml" = (
+/obj/effect/decal/cleanable/crayon/x,
+/turf/closed/wall/rust,
+/area/virtual_domain)
+"Mm" = (
+/obj/structure/lattice,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/space/basic,
+/area/virtual_domain)
+"Mn" = (
+/obj/machinery/holopad,
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Mo" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/computer/old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Mq" = (
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Mr" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ms" = (
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Mt" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Council Chamber"
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Mu" = (
+/obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/item/clothing/head/bio_hood/virology{
+	pixel_y = 10
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Mz" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"MC" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"MF" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"MG" = (
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"MJ" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"ML" = (
+/obj/structure/bed/maint,
+/obj/item/bedsheet/pirate,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"MM" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/storage/toolbox/emergency,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"MN" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"MP" = (
+/obj/structure/sign/picture_frame/showroom/three{
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/structure/sign/picture_frame/showroom/four{
+	pixel_x = 8;
+	pixel_y = 32
+	},
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"MS" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/screwdriver,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"MZ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/bookcase/random,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ne" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/flasher/directional/east{
+	pixel_y = -26
+	},
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Nh" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Nl" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_y = 3
+	},
+/obj/item/radio/intercom/command/directional/north,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Nm" = (
+/obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"No" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "HoP Queue Shutters"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Nq" = (
+/obj/item/stock_parts/scanning_module/triphasic{
+	pixel_x = 4
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Nr" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/status_display/ai/directional/north,
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_y = -6
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Nu" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ny" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/barricade/security,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Nz" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "council blast";
+	name = "Council Blast Doors"
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ND" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/digital_clock/directional/north,
+/obj/item/light/bulb/broken{
+	pixel_x = 15
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"NG" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"NN" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"NO" = (
+/obj/machinery/airalarm/directional/west,
+/obj/structure/broken_flooring/singular/always_floorplane/directional/east,
+/obj/effect/spawner/surgery_tray/full/deployed,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"NR" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"NZ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/barricade/sandbags,
+/obj/structure/railing,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Oc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/clothing/mask/party_horn,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Od" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Oe" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Of" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Oh" = (
+/obj/effect/spawner/random/decoration/microwave{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Oi" = (
+/obj/structure/holosign/barrier/atmos,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Oj" = (
+/obj/item/ammo_box/magazine/wt550m9,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Ol" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Om" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L8"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Oq" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Or" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/item/evidencebag,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Os" = (
+/obj/structure/rack,
+/obj/item/aicard,
+/obj/item/radio/off,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Ou" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ov" = (
+/obj/machinery/vending/boozeomat,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ox" = (
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"OC" = (
+/obj/structure/tank_dispenser/oxygen{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"OD" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"OE" = (
+/obj/machinery/door/airlock/silver{
+	name = "Bathroom"
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"OS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"OU" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/trash/popcorn/caramel,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"OV" = (
+/obj/item/flashlight/flare{
+	icon_state = "flare-on";
+	light_on = 1
+	},
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"OX" = (
+/obj/machinery/fax{
+	pixel_y = 9
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Pa" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L4"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "l";
+	pixel_x = 10;
+	pixel_y = 16
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Pd" = (
+/obj/item/cigbutt,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Pg" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Pk" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Pq" = (
+/obj/item/ammo_casing/spent{
+	dir = 1
+	},
+/obj/item/ammo_casing/spent{
+	dir = 10;
+	pixel_x = -13;
+	pixel_y = -8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Py" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/item/radio/intercom/directional/west,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/clothing/mask/facehugger/dead,
+/obj/structure/displaycase,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"PC" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"PG" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L10"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"PP" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/machinery/light/small/directional/west,
+/obj/item/paper/fluff/gateway,
+/obj/item/coin/plasma,
+/obj/item/melee/chainofcommand,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"PQ" = (
+/obj/item/radio/intercom/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"PR" = (
+/obj/machinery/vending/boozeomat/syndicate,
+/obj/effect/turf_decal/tile/bar,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"PT" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"PU" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"PY" = (
+/obj/item/restraints/legcuffs/beartrap/prearmed,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Qc" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Qg" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/item/folder/yellow{
+	pixel_y = 4
+	},
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Qh" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/obj/structure/railing,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Qm" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Qp" = (
+/obj/structure/noticeboard/directional/north,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Qq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Qw" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L5"
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"QA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	name = "Bridge Blast Door"
+	},
+/obj/structure/barricade/wooden/crude,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"QM" = (
+/obj/machinery/light_switch/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/suit_storage_unit/void_old,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"QN" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/item/restraints/handcuffs/cable/white,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"QQ" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Ra" = (
+/obj/structure/sign/map/right{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-right-MS";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Rg" = (
+/obj/machinery/light/cold/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Rj" = (
+/obj/structure/broken_flooring/side/directional/north,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Rl" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/warning/secure_area/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Rn" = (
+/obj/item/clothing/head/cone{
+	pixel_y = 3;
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = -5;
+	pixel_x = -2
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Rx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Rz" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/trash/energybar,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"RB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/holosign/barrier,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"RD" = (
+/obj/structure/lattice,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/space/basic,
+/area/virtual_domain)
+"RE" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/frame/machine/secured,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"RI" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/spawner/random/decoration/showcase,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"RJ" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"RL" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/ammo_casing/spent{
+	dir = 4
+	},
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_x = -13;
+	pixel_y = 9
+	},
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = -19;
+	pixel_y = -5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"RR" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/ammo_casing/spent,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"RT" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "HoP Queue Shutters"
+	},
+/obj/effect/turf_decal/loading_area,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"RV" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/item/banner/security,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"RX" = (
+/obj/effect/spawner/random/decoration/showcase,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"RZ" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Sa" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/suit_storage_unit{
+	state_open = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Sj" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Sl" = (
+/obj/effect/spawner/random/vending/snackvend,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Sm" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Sq" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/structure/frame/computer,
+/obj/item/shard{
+	icon_state = "medium";
+	pixel_x = 5
+	},
+/obj/item/stack/cable_coil/cut,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Sr" = (
+/obj/item/radio/intercom/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ss" = (
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Sx" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Sz" = (
+/obj/item/seeds/eggplant,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"SC" = (
+/obj/structure/marker_beacon/bronze,
+/obj/structure/broken_flooring/side/directional/north,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"SF" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/item/flashlight/flare{
+	icon_state = "flare-on";
+	light_on = 1
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"SG" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/structure/frame/computer,
+/obj/item/shard,
+/obj/item/stack/cable_coil/cut,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"SH" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"SJ" = (
+/obj/machinery/airalarm/directional/north,
+/obj/item/kirbyplants/organic/applebush,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"SK" = (
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"SN" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/virtual_domain)
+"SP" = (
+/obj/effect/turf_decal/tile/neutral,
+/mob/living/basic/bot/cleanbot/autopatrol,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"SR" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ST" = (
+/obj/structure/alien/weeds,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"SY" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/syringe/lethal/execution,
+/obj/item/reagent_containers/syringe/lethal/execution{
+	pixel_y = 7;
+	pixel_x = -4
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Te" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/effect/mob_spawn/corpse/human/doctor,
+/turf/open/indestructible/meat,
+/area/virtual_domain)
+"Tm" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"To" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/item/stack/rods,
+/obj/effect/mine/explosive/flame,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Ty" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L14"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"TC" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"TH" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/chair/pew/left,
+/obj/item/newspaper,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"TJ" = (
+/obj/structure/grille,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"TL" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"TN" = (
+/obj/structure/table/wood,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/machinery/button/door/directional/east{
+	name = "corporate showroom shutters control"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"TP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"TT" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Gateway Shutter Control"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"TW" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ua" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ue" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Ui" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/banner/engineering,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Uj" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Un" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Uo" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Uq" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/syringe,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Ur" = (
+/obj/machinery/vending/cart{
+	req_access = list("hop")
+	},
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Uv" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ux" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain)
+"Uz" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"UF" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/item/banner/science,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"UJ" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 2
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"UP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"UT" = (
+/obj/structure/flora/bush/leavy/style_3,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/effect/mob_spawn/corpse/human/scientist,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Ve" = (
+/obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Vk" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Vr" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/gelpod,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Vs" = (
+/turf/closed/indestructible/rock,
+/area/virtual_domain)
+"Vw" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Vz" = (
+/obj/structure/barricade/security,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"VD" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"VG" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/trash/flare,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"VH" = (
+/obj/item/storage/box/lights/mixed,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 16;
+	icon_state = "candle2_lit";
+	pixel_x = -17
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"VO" = (
+/obj/machinery/door/airlock{
+	name = "Central Emergency Storage"
+	},
+/obj/effect/mapping_helpers/airlock/unres,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"VP" = (
+/obj/structure/rack,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"VT" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/chair,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"VZ" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Wf" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/crowbar,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Wh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Wl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Wm" = (
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/light/small/directional/north,
+/obj/structure/table/wood,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/under/suit/black_really,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Wt" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain)
+"Wv" = (
+/obj/machinery/door/firedoor,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"WF" = (
+/obj/structure/table/wood,
+/obj/machinery/button/ticket_machine{
+	pixel_x = 38
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 6;
+	pixel_y = -34
+	},
+/obj/machinery/button/door/directional/south{
+	pixel_x = -6
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/hop{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/machinery/button/door/directional/south{
+	pixel_x = -6;
+	pixel_y = -34
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/machinery/button/photobooth{
+	pixel_x = 26
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"WH" = (
+/obj/item/clothing/head/cone{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/crowbar/hammer{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"WL" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/assembly/flash,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"WM" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/trash/chips,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Xa" = (
+/obj/machinery/requests_console/directional/east{
+	department = "Bridge";
+	name = "Bridge Requests Console"
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/computer/old,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Xj" = (
+/obj/machinery/light/directional/north,
+/obj/structure/sign/map/right{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-right-MS";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Xn" = (
+/obj/structure/bed/maint,
+/obj/item/bedsheet/pirate{
+	dir = 4
+	},
+/obj/item/knife/hunting{
+	pixel_y = -4
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Xp" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L2"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Xs" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mine/explosive,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Xw" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/item/boulder{
+	icon_state = "boulder_large";
+	pixel_y = 7
+	},
+/obj/item/boulder{
+	icon_state = "boulder_small";
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Xx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"XD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"XI" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/shard{
+	icon_state = "medium";
+	pixel_x = 5
+	},
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"XJ" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"XK" = (
+/obj/structure/grille,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"XL" = (
+/obj/structure/barricade/sandbags,
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"XM" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/photo/old{
+	pixel_x = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"XN" = (
+/obj/item/radio/intercom/directional/north,
+/obj/effect/turf_decal/bot,
+/obj/item/wallframe/light_fixture/small,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"XW" = (
+/obj/structure/frame/machine/secured,
+/obj/structure/marker_beacon/teal,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Yc" = (
+/obj/structure/bed/medical/emergency,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Yd" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Yf" = (
+/obj/machinery/recharger{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/structure/secure_safe/directional/east,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Yg" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Yi" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Yl" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/virtual_domain)
+"Yn" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Yo" = (
+/obj/structure/sign/plaques/kiddie/perfect_drone{
+	pixel_y = 32
+	},
+/obj/structure/table/wood,
+/obj/item/storage/backpack/duffelbag/drone,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Yr" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/newscaster/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ys" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Yt" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor1-old"
+	},
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Yv" = (
+/obj/effect/turf_decal/bot_white/left,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/directional/west,
+/obj/item/clothing/head/cone{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"YA" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"YB" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/bluespace_vendor/directional/east,
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"YD" = (
+/obj/item/clothing/head/cone{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"YG" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"YN" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor7"
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"YQ" = (
+/obj/structure/mirror/directional/north,
+/obj/structure/sink/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/weather/dirt,
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"YR" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Command Hallway"
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"YU" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Za" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Zb" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/potassium{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/phosphorus{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/sodium{
+	pixel_x = 1
+	},
+/obj/machinery/light/directional/east,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"Zc" = (
+/obj/effect/turf_decal/trimline/blue/filled/warning/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Zh" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Zi" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Zl" = (
+/obj/machinery/airalarm/directional/south,
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/crowbar,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Zm" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Zp" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Zq" = (
+/obj/structure/sign/poster/random/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Zu" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Zx" = (
+/obj/machinery/disposal/bin,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ZC" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ZD" = (
+/obj/item/trash/candy,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ZF" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"ZG" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ZH" = (
+/obj/item/clothing/head/cone{
+	pixel_y = 3;
+	pixel_x = 7
+	},
+/obj/structure/grille/broken,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"ZK" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ZM" = (
+/obj/item/book/manual/wiki/security_space_law{
+	name = "space law";
+	pixel_y = 2
+	},
+/obj/item/toy/gun,
+/obj/item/restraints/handcuffs,
+/obj/structure/table/wood,
+/obj/item/clothing/head/collectable/hos{
+	name = "novelty HoS hat"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"ZP" = (
+/obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ZR" = (
+/obj/machinery/door/airlock/command{
+	name = "Command Desk"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ZS" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/machinery/light_switch/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ZT" = (
+/obj/machinery/door/airlock/command{
+	name = "Captain's Quarters"
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"ZV" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ZY" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/virtual_domain)
+
+(1,1,1) = {"
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+uz
+HM
+HM
+HM
+HM
+HM
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(2,1,1) = {"
+uz
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+Vs
+Vs
+Vs
+Vs
+Vs
+ps
+ps
+ps
+ps
+ps
+HM
+HM
+HM
+ps
+ps
+pD
+ps
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(3,1,1) = {"
+uz
+HM
+Vs
+Vs
+Vs
+Vs
+Hl
+Hl
+Hl
+Vs
+Vs
+Vs
+ps
+ps
+ps
+ps
+tO
+ps
+ps
+ps
+Hl
+Vs
+Vs
+Hl
+ps
+Ao
+vM
+eB
+ps
+ps
+ps
+ps
+ps
+Zx
+Ii
+ps
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(4,1,1) = {"
+uz
+HM
+Vs
+Vs
+Vs
+DW
+bl
+pr
+Vs
+Vs
+Vs
+Cn
+cK
+Uj
+vN
+Ah
+nP
+nS
+gk
+eA
+Vs
+Vs
+MZ
+nZ
+Lg
+nS
+nS
+Jm
+dU
+xK
+ux
+CM
+KR
+nS
+ro
+ps
+HM
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(5,1,1) = {"
+uz
+HM
+ps
+Vs
+yH
+Hd
+KT
+mc
+Hd
+fj
+dD
+Hd
+oS
+hw
+IL
+Pq
+pT
+dD
+KT
+pc
+mI
+pE
+SR
+dD
+mK
+tR
+Hd
+JD
+Zp
+jR
+Hd
+hw
+Hd
+MG
+kd
+ps
+ps
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(6,1,1) = {"
+HM
+HM
+pD
+yD
+mc
+Lu
+PU
+Ol
+Ol
+Ol
+FV
+Nm
+lY
+Lu
+JL
+RL
+RR
+Ol
+Wv
+Ol
+on
+dd
+Ol
+dd
+ZV
+AX
+Cz
+jt
+rP
+km
+cj
+dd
+dd
+Hd
+pN
+LN
+Hl
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(7,1,1) = {"
+HM
+uS
+uS
+er
+Hb
+Ol
+ps
+Cb
+xj
+xj
+GT
+uS
+uS
+yP
+uS
+uS
+Gx
+uS
+uS
+ps
+kK
+lC
+ac
+fN
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+qq
+kI
+eZ
+eX
+uB
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(8,1,1) = {"
+HM
+uS
+yc
+th
+Hd
+LS
+ps
+ps
+kn
+ld
+ps
+uS
+pP
+EC
+rQ
+cZ
+db
+dc
+uS
+Zu
+ps
+pQ
+nS
+uS
+rt
+Sa
+Fw
+eV
+iQ
+Ij
+sm
+uS
+hR
+pN
+Fl
+Yc
+Hl
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(9,1,1) = {"
+HM
+Hl
+eB
+Uz
+kv
+SP
+ps
+wD
+FS
+Cw
+dD
+Wh
+dc
+ZF
+Gk
+gU
+YG
+fh
+To
+GT
+No
+cI
+ZY
+lD
+cz
+Bw
+cw
+zj
+zE
+hF
+mW
+kN
+mq
+MG
+NN
+ps
+uB
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(10,1,1) = {"
+HM
+uS
+eB
+WL
+KT
+KP
+ps
+il
+TP
+KW
+fh
+uS
+Yf
+nY
+GS
+rX
+Ue
+ZF
+uS
+dX
+XK
+tq
+tI
+FF
+mq
+oA
+wj
+OC
+uw
+qP
+fK
+yn
+BF
+mw
+BZ
+uB
+HM
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(11,1,1) = {"
+HM
+uS
+uS
+ol
+Mz
+uY
+ps
+iv
+dl
+HS
+fC
+uS
+uS
+uS
+uS
+ML
+DP
+Mk
+uS
+ND
+AP
+rb
+nS
+jk
+Ax
+Wl
+Wl
+lt
+bb
+si
+IH
+kN
+ED
+El
+wq
+ps
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(12,1,1) = {"
+HM
+HM
+uS
+gM
+CL
+aZ
+ps
+ps
+Hg
+tf
+fh
+ps
+rv
+uS
+Ur
+VD
+Xn
+XI
+uS
+XN
+OV
+vN
+Bj
+uS
+QM
+GA
+OD
+ps
+Er
+Sa
+dk
+uS
+LJ
+bm
+zL
+uB
+HM
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(13,1,1) = {"
+uz
+HM
+HH
+JM
+Kl
+VZ
+ps
+Yi
+vA
+mj
+VH
+lJ
+Oq
+uS
+fz
+oM
+db
+rz
+To
+fQ
+TJ
+OU
+Qm
+uS
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+uS
+Fc
+BZ
+hz
+ps
+uB
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(14,1,1) = {"
+uz
+HM
+uS
+nU
+pO
+bs
+VO
+ey
+sr
+fh
+Gs
+pL
+IU
+uS
+dz
+bO
+ww
+nW
+aw
+Ne
+RT
+bg
+Ed
+uS
+kW
+lL
+pI
+Qc
+Fr
+DQ
+Pk
+uS
+Mu
+qY
+ay
+im
+Hl
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(15,1,1) = {"
+uz
+HM
+uS
+qa
+Yt
+uD
+ps
+uS
+hZ
+uS
+uS
+ps
+uf
+uS
+cD
+Kh
+yq
+WF
+uS
+YB
+uS
+TH
+nS
+uS
+ZS
+jD
+kx
+vt
+PT
+pV
+mW
+Pg
+AN
+bZ
+Te
+Gm
+dA
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(16,1,1) = {"
+uz
+HM
+ps
+my
+iy
+Hs
+dE
+SN
+SN
+SN
+uS
+uS
+EQ
+uS
+ps
+ps
+te
+ps
+uS
+uS
+wB
+vg
+pA
+IS
+jm
+cW
+Cd
+CQ
+Lm
+jD
+IH
+vI
+mq
+vn
+Sj
+FT
+dA
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(17,1,1) = {"
+HM
+HM
+ps
+hV
+Hd
+bQ
+hZ
+ii
+SN
+SN
+kp
+sI
+Un
+pJ
+oQ
+Hv
+Xw
+sf
+ny
+JP
+ul
+tq
+Rz
+FF
+iI
+MM
+Vr
+PT
+VP
+Rg
+Gq
+uS
+AV
+Ll
+sX
+Fg
+Hl
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+Yl
+"}
+(18,1,1) = {"
+HM
+ps
+ps
+Rl
+Hd
+cr
+FZ
+fh
+QA
+kp
+uS
+uX
+xu
+JP
+oy
+Hv
+to
+ze
+Bv
+LK
+ul
+pR
+tu
+uS
+uS
+dE
+tn
+cW
+cW
+ps
+ps
+uS
+vW
+wH
+Zc
+JR
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+HM
+"}
+(19,1,1) = {"
+HM
+uS
+SJ
+bS
+pA
+lT
+fh
+fh
+yt
+fh
+Ox
+gg
+Yn
+SK
+ZP
+ps
+ps
+ps
+Mt
+ps
+uS
+PQ
+nS
+dE
+SN
+SN
+as
+tl
+pW
+ST
+tV
+DL
+rr
+Hd
+dD
+ZG
+Za
+sS
+SN
+sS
+SN
+sS
+SN
+sS
+ps
+HM
+"}
+(20,1,1) = {"
+HM
+Hl
+Es
+mc
+Hd
+Ux
+Ux
+lT
+AC
+lT
+vw
+fh
+ug
+ba
+mi
+ps
+uH
+ZK
+JP
+xV
+uS
+WM
+Kf
+uS
+hZ
+hZ
+uS
+Yo
+jh
+pK
+ep
+FF
+GJ
+FR
+Hd
+Ka
+ps
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+ps
+HM
+"}
+(21,1,1) = {"
+HM
+uS
+RV
+BJ
+Xp
+Ol
+Ad
+vw
+ZH
+uk
+NG
+aA
+SK
+up
+Os
+ps
+ps
+Nl
+YG
+iH
+FF
+dd
+FK
+Of
+qu
+nS
+as
+RX
+Bn
+OS
+ZF
+oI
+MF
+vf
+Xp
+ZG
+ps
+hX
+hX
+hX
+hX
+hX
+Ls
+Fd
+ps
+HM
+"}
+(22,1,1) = {"
+HM
+dP
+tS
+eD
+mf
+Ke
+dE
+ii
+uS
+Qg
+ug
+uT
+qM
+zq
+sc
+Cy
+ps
+Mn
+db
+id
+Nz
+MF
+Hd
+bU
+Mr
+VT
+uS
+lK
+rf
+Ie
+Oh
+uS
+Qp
+ck
+Pa
+oD
+pB
+hX
+zQ
+Lq
+hX
+hX
+hX
+Fd
+ps
+HM
+"}
+(23,1,1) = {"
+HM
+yz
+Vz
+Qw
+bP
+Ol
+hZ
+SN
+kp
+zP
+xu
+Mb
+RJ
+JP
+YG
+wL
+ps
+Dp
+qk
+UJ
+Nz
+cp
+ub
+ZD
+lb
+LP
+uS
+wo
+Ar
+jC
+Zh
+an
+PC
+pA
+lM
+Bp
+LD
+hX
+hX
+hX
+hX
+hX
+hX
+Fd
+ps
+HM
+"}
+(24,1,1) = {"
+HM
+yz
+Vz
+wN
+Om
+wi
+dE
+SN
+kp
+SG
+Vw
+bW
+MC
+hU
+TL
+DP
+ZR
+JP
+kg
+zo
+zx
+AD
+iy
+Kw
+yH
+Dx
+oI
+ZF
+vw
+Km
+fh
+MS
+mt
+EV
+zB
+Io
+vw
+hX
+hX
+fD
+Cx
+hX
+hX
+Fd
+ps
+HM
+"}
+(25,1,1) = {"
+HM
+yz
+Vz
+wN
+Cr
+nS
+hZ
+SN
+kp
+zP
+JP
+yh
+Hw
+wA
+hh
+mb
+ps
+nw
+se
+xW
+lk
+Ad
+CJ
+Hd
+KA
+lG
+uS
+Wm
+Mj
+fh
+Oj
+vw
+fh
+Kv
+PG
+KF
+gC
+hX
+hX
+hX
+hX
+hX
+hX
+Fd
+ps
+HM
+"}
+(26,1,1) = {"
+HM
+tO
+Oe
+wN
+vy
+Wf
+dE
+LB
+uS
+Bt
+gt
+Xx
+HX
+ET
+JK
+Sl
+ps
+wY
+YG
+Gr
+yx
+Or
+ie
+bU
+qJ
+bR
+uS
+MP
+fh
+GG
+Fp
+uS
+wN
+wN
+Rj
+fB
+wP
+hX
+hX
+hX
+Ca
+hX
+hX
+Fd
+ps
+HM
+"}
+(27,1,1) = {"
+HM
+ps
+CK
+ht
+Ty
+YA
+hZ
+Il
+kp
+BK
+di
+Mb
+Yd
+cO
+KQ
+ps
+ps
+Ht
+rJ
+VG
+FF
+RB
+qL
+jd
+LP
+Bg
+mo
+br
+ZF
+rW
+Mj
+oI
+MF
+ra
+BN
+yK
+ps
+hX
+hX
+hX
+hX
+hX
+rs
+Fd
+ps
+HM
+"}
+(28,1,1) = {"
+HM
+ps
+Xj
+Hd
+Hd
+Ua
+hZ
+SN
+kp
+Sq
+Eu
+ix
+iP
+aQ
+ez
+ps
+uH
+FI
+Ms
+KN
+uS
+Bh
+re
+uS
+dE
+dE
+uS
+oH
+Mj
+gE
+xI
+FF
+Gi
+Hd
+aC
+Uo
+lE
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+ps
+HM
+"}
+(29,1,1) = {"
+HM
+ps
+cx
+rj
+kI
+ZY
+dE
+SN
+kp
+Mo
+Kn
+Ss
+at
+yy
+HC
+ps
+ps
+ps
+Mt
+ps
+uS
+zw
+Ol
+hZ
+SN
+SN
+as
+RI
+Pd
+TN
+ZM
+an
+sB
+kI
+Hd
+Cg
+Za
+sS
+SN
+sS
+SN
+sS
+SN
+sS
+ps
+HM
+"}
+(30,1,1) = {"
+HM
+ps
+ps
+hi
+Hd
+hg
+dE
+SN
+kp
+kp
+uS
+pb
+iZ
+bu
+kt
+Hv
+EF
+SK
+SK
+tk
+ul
+dd
+yw
+uS
+uS
+dE
+uS
+ps
+ps
+ps
+ps
+uS
+rh
+PY
+Ou
+CA
+lQ
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+HM
+"}
+(31,1,1) = {"
+HM
+HM
+ps
+sF
+pX
+vi
+hZ
+SN
+SN
+Mm
+kp
+Xa
+fF
+DU
+RZ
+Hv
+Iw
+qI
+Bv
+Bv
+ul
+wa
+tM
+Nh
+zg
+Fj
+NO
+hv
+uA
+yN
+Ff
+uS
+tq
+Hd
+DV
+UF
+Zm
+Vs
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+"}
+(32,1,1) = {"
+uz
+HM
+Hl
+Ny
+yH
+DF
+dE
+SN
+GD
+RD
+uS
+uS
+uS
+zA
+jG
+uS
+uS
+uS
+BP
+uS
+wB
+dd
+pA
+Nh
+Uq
+Rj
+wu
+XD
+wu
+Rx
+jx
+uS
+cC
+HG
+Gy
+mO
+wl
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(33,1,1) = {"
+uz
+HM
+yz
+Ny
+fn
+Mq
+uS
+uS
+uS
+uS
+uS
+Hh
+uS
+uS
+uS
+uS
+Ov
+rq
+db
+LG
+uS
+hd
+Ol
+wN
+vU
+hp
+lu
+ok
+hc
+fK
+op
+uS
+Ra
+nq
+Cc
+zR
+ge
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(34,1,1) = {"
+uz
+HM
+ps
+cN
+vO
+XM
+uS
+uP
+ab
+hb
+ps
+YQ
+ps
+Py
+PP
+qz
+jF
+QQ
+YG
+YG
+BP
+Yg
+pv
+uS
+FN
+AR
+eR
+Zb
+zT
+IH
+dZ
+uS
+PQ
+DV
+ej
+tw
+Zm
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(35,1,1) = {"
+uz
+HM
+ps
+au
+Ay
+TW
+uS
+Zi
+vK
+wn
+ps
+aO
+ps
+ry
+ZF
+gE
+mP
+vV
+vV
+FA
+uS
+TC
+mQ
+uS
+uS
+AA
+AA
+uS
+hZ
+hG
+hZ
+uS
+TT
+Gy
+aV
+yO
+lQ
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(36,1,1) = {"
+uz
+HM
+ps
+LL
+KT
+LV
+uS
+yC
+jc
+UP
+ps
+OE
+ps
+xb
+XJ
+Iq
+sA
+MJ
+SY
+tj
+uS
+dd
+ai
+ty
+uS
+bT
+ss
+Yv
+dY
+Dk
+Vk
+FC
+mq
+UT
+SF
+MN
+lQ
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(37,1,1) = {"
+uz
+HM
+Hl
+dd
+Hd
+nS
+pd
+YN
+dc
+rO
+yI
+gE
+ZT
+kc
+yM
+ki
+vw
+vK
+QN
+Ir
+uS
+ud
+xd
+sa
+uS
+Nr
+XW
+Kq
+Ii
+Hd
+fK
+FC
+mq
+cH
+gb
+ZC
+Ec
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(38,1,1) = {"
+uz
+HM
+yz
+dd
+Hd
+FZ
+WH
+Oi
+tF
+YU
+Jh
+gE
+ps
+jy
+qS
+Sr
+fh
+fh
+aT
+SH
+uS
+Fh
+Ol
+Gn
+uS
+Nq
+iY
+Dc
+dC
+jz
+qr
+FC
+mq
+Gy
+DC
+od
+FO
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(39,1,1) = {"
+uz
+HM
+yz
+fh
+mc
+yE
+Oi
+SN
+Oi
+YD
+zO
+sz
+ps
+ps
+uS
+uS
+OX
+Xs
+fh
+uS
+uS
+dd
+iK
+uS
+uS
+uS
+uS
+uS
+uS
+oo
+uS
+FF
+fr
+DV
+MN
+EH
+iA
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(40,1,1) = {"
+uz
+HM
+Hl
+pA
+Hd
+Kr
+Oi
+GD
+rm
+Oi
+bd
+Zl
+ps
+Hc
+uS
+ek
+vw
+eG
+xe
+Ji
+DO
+dd
+Ol
+DO
+ey
+eu
+fh
+wV
+vw
+ja
+Tm
+DO
+tq
+Hd
+tW
+lQ
+uq
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(41,1,1) = {"
+uz
+HM
+KM
+dd
+Hd
+lU
+Rn
+Oi
+Oi
+AM
+CC
+uS
+uS
+Ml
+uS
+DO
+ps
+ps
+ps
+ps
+ut
+hj
+YR
+tO
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+JG
+Hd
+sZ
+ps
+lQ
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(42,1,1) = {"
+uz
+HM
+ps
+nO
+kI
+nS
+FZ
+bw
+lN
+IC
+SC
+gj
+Qq
+lv
+Lg
+Oc
+IJ
+Ys
+EK
+Zq
+En
+tq
+bf
+tq
+av
+Qh
+Sx
+Ve
+tq
+Uv
+BM
+DA
+fP
+NR
+eN
+FG
+Vs
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(43,1,1) = {"
+uz
+HM
+ps
+dd
+mR
+mc
+Hd
+KT
+Ay
+fh
+Hd
+vw
+mc
+KT
+Lh
+nz
+oO
+Lz
+zb
+vw
+Hd
+Hd
+kI
+XL
+KT
+oS
+mR
+XL
+GQ
+fP
+fP
+Sz
+fP
+Dl
+Wt
+yT
+Vs
+HM
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(44,1,1) = {"
+uz
+HM
+ps
+dd
+jt
+km
+dd
+Nu
+JY
+HP
+HP
+vo
+Ui
+Yr
+Bd
+PR
+Vs
+Vs
+Sm
+fG
+Bd
+Od
+rC
+NZ
+kM
+IM
+AQ
+fc
+cB
+Vs
+Vs
+cF
+qv
+fP
+st
+RE
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(45,1,1) = {"
+uz
+HM
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+DM
+DM
+DM
+ps
+ps
+Hl
+Hl
+Vs
+Vs
+Vs
+Hl
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+ps
+Vs
+Vs
+ps
+Hl
+Vs
+Vs
+Vs
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}
+(46,1,1) = {"
+uz
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+uz
+"}

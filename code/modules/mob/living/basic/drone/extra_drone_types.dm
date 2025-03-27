@@ -33,7 +33,7 @@
 /mob/living/basic/drone/syndrone/Initialize(mapload)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.set_telecrystals(telecrystal_count)
+	hidden_uplink.uplink_handler.set_telecrystals(telecrystal_count)
 
 /obj/effect/mob_spawn/ghost_role/drone/syndrone
 	name = "syndrone shell"
@@ -126,7 +126,7 @@
 	"<span class='notice'>     - Going to the main station in search of materials.</span>\n"+\
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
-	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	span_warning("<u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u>")
 	shy = FALSE
 
 /mob/living/basic/drone/derelict/Initialize(mapload)

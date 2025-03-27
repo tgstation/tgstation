@@ -9,17 +9,16 @@
 	var/lifespan_postmortem = 10 MINUTES
 
 /obj/item/implant/tracking/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp EYE-5 Convict Parole Implant<BR>
-				<b>Life:</b> 10 minutes after death of host.<BR>
-				<HR>
-				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Continuously transmits low power signal. Can be tracked from a prisoner management console.<BR>
-				<b>Special Features:</b><BR>
-				<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-				a malfunction occurs thereby securing safety of subject. The implant will melt and
-				disintegrate into bio-safe elements.<BR>"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Robust Corp EYE-5 Convict Parole Implant<BR> \
+		<b>Life:</b> 10 minutes after death of host.<BR> \
+		<HR> \
+		<b>Implant Details:</b> <BR> \
+		<b>Function:</b> Continuously transmits low power signal. Can be tracked from a prisoner management console.<BR> \
+		<b>Special Features:</b><BR> \
+		<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if \
+		a malfunction occurs thereby securing safety of subject. The implant will melt and \
+		disintegrate into bio-safe elements.<BR>"
 
 /obj/item/implant/tracking/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
 	if(imp_in.stat == DEAD && imp_in.timeofdeath + lifespan_postmortem < world.time)
@@ -49,7 +48,7 @@
 		return
 
 	if(params["implant_action"] == "warn")
-		var/warning = tgui_input_text(user, "What warning do you want to send to [imp_in.name]?", "Messaging")
+		var/warning = tgui_input_text(user, "What warning do you want to send to [imp_in.name]?", "Messaging", max_length = MAX_MESSAGE_LEN)
 		if(!warning || QDELETED(src) || QDELETED(user) || QDELETED(console) || isnull(imp_in))
 			return TRUE
 		if(!console.is_operational || !user.can_perform_action(console, NEED_DEXTERITY|ALLOW_SILICON_REACH))

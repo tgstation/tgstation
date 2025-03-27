@@ -5,8 +5,8 @@
  */
 
 import { useState } from 'react';
+import { Box, Button, ByondUi, Section } from 'tgui-core/components';
 
-import { Box, Button, ByondUi, Section } from '../components';
 import { logger } from '../logging';
 
 export const meta = {
@@ -34,7 +34,7 @@ const Story = (props) => {
           <Button
             icon="chevron-right"
             onClick={() =>
-              setImmediate(() => {
+              setTimeout(() => {
                 try {
                   const result = new Function('return (' + code + ')')();
                   if (result && result.then) {

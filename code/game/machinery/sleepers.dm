@@ -7,6 +7,7 @@
 	density = FALSE
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/sleeper
 
 	payment_department = ACCOUNT_MED
@@ -114,9 +115,8 @@
 	if(is_operational && occupant)
 		open_machine()
 
-
-/obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/sleeper/mouse_drop_receive(atom/target, mob/user, params)
+	if(!iscarbon(target))
 		return
 	close_machine(target)
 
@@ -147,7 +147,7 @@
 	return FALSE
 
 /obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (obj_flags & NO_DECONSTRUCTION)) && I.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
@@ -164,21 +164,19 @@
 		ui = new(user, src, "Sleeper", name)
 		ui.open()
 
-/obj/machinery/sleeper/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/obj/machinery/sleeper/click_alt(mob/user)
 	if(state_open)
 		close_machine()
 	else
 		open_machine()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/sleeper/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
 
 /obj/machinery/sleeper/process()
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)
 	. = ..()
@@ -239,7 +237,7 @@
 
 	return data
 
-/obj/machinery/sleeper/ui_act(action, params)
+/obj/machinery/sleeper/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -302,14 +300,24 @@
  * Can be controlled from the inside and can be deconstructed.
  */
 /obj/machinery/sleeper/syndie
+	name = "syndicate sleeper"
 	icon_state = "sleeper_s"
 	base_icon_state = "sleeper_s"
 	controls_inside = TRUE
 	deconstructable = TRUE
+	circuit = /obj/item/circuitboard/machine/sleeper/syndie
 
 ///Fully upgraded variant, the circuit using tier 4 parts.
 /obj/machinery/sleeper/syndie/fullupgrade
+	name = "upgraded syndicate sleeper"
 	circuit = /obj/item/circuitboard/machine/sleeper/fullupgrade
+
+///Fully upgraded, not deconstructable, while using the normal sprite.
+/obj/machinery/sleeper/syndie/fullupgrade/nt
+	name = "\improper Nanotrasen sleeper"
+	icon_state = "sleeper"
+	base_icon_state = "sleeper"
+	deconstructable = FALSE
 
 /obj/machinery/sleeper/self_control
 	controls_inside = TRUE

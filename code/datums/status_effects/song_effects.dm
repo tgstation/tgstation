@@ -24,12 +24,12 @@
 	aura_desc = "dull"
 
 /datum/status_effect/song/antimagic/on_apply()
-	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_STATUS_EFFECT(id))
+	playsound(owner, 'sound/items/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/song/antimagic/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/song/antimagic/get_examine_text()
@@ -44,8 +44,8 @@
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
 
 /datum/status_effect/song/light/on_apply()
-	mob_light_obj = owner.mob_light(3, color = LIGHT_COLOR_DIM_YELLOW)
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	mob_light_obj = owner.mob_light(3, 1.5, color = LIGHT_COLOR_DIM_YELLOW)
+	playsound(owner, 'sound/items/weapons/fwoosh.ogg', 75, FALSE)
 	return TRUE
 
 /datum/status_effect/song/light/on_remove()

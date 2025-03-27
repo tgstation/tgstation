@@ -1,6 +1,5 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = TRUE
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -8,7 +7,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	death_sound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -38,9 +37,7 @@
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
-	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
-	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
+	var/list/silicon_huds = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_DIAGNOSTIC)
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
@@ -75,9 +72,17 @@
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
 		TRAIT_NOFIRE_SPREAD,
+		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
+		TRAIT_FENCE_CLIMBER,
+		TRAIT_SILICON_ACCESS,
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_UNOBSERVANT,
+		TRAIT_NO_SLIP_ALL,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -88,6 +93,14 @@
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+/mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
+	SIGNAL_HANDLER
+	for(var/mob/living/living_mob in buckled_mobs)
+		unbuckle_mob(living_mob)
+		living_mob.electrocute_act(shock_damage/100, shock_source, siemens_coeff, flags) //Hard metal shell conducts!
+
+	return COMPONENT_LIVING_BLOCK_SHOCK //So borgs don't die trying to fix wiring
 
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
@@ -141,7 +154,7 @@
 		for(var/alarm_type in alarm_types_show)
 			msg += "[uppertext(alarm_type)]: [alarm_types_show[alarm_type]] alarms detected. - "
 
-		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
+		msg += "<A href=byond://?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
 
 	if(length(alarms_to_clear) < 3)
@@ -154,7 +167,7 @@
 		for(var/alarm_type in alarm_types_clear)
 			msg += "[uppertext(alarm_type)]: [alarm_types_clear[alarm_type]] alarms cleared. - "
 
-		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
+		msg += "<A href=byond://?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
 
 
@@ -230,6 +243,21 @@
 			return
 		to_chat(usr, href_list["printlawtext"])
 
+	if(href_list["track"])
+		if(!can_track(href_list["track"]))
+			to_chat(src, span_info("This person is not currently on cameras."))
+			return
+		var/mob/living/silicon/ai/AI
+		var/mob/living/silicon/robot/shell/shell
+		if(!isAI(src))
+			shell = src
+			AI = shell.mainframe
+			AI.deployed_shell.undeploy()
+		else
+			AI = src
+
+		AI.ai_tracking_tool.track_name(src, href_list["track"])
+
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)
@@ -252,7 +280,7 @@
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
-			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
+			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
 			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_hacked))
@@ -261,7 +289,7 @@
 		if (length(law) <= 0)
 			continue
 		if (force || (law in lawcache_hackedcheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			say("[radiomod] [num]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
 			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_ion))
@@ -270,7 +298,7 @@
 		if (length(law) <= 0)
 			return
 		if (force || (law in lawcache_ioncheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			say("[radiomod] [num]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
 			sleep(1 SECONDS)
 
 	var/number = 1
@@ -279,7 +307,7 @@
 		if (length(law) <= 0)
 			continue
 		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			say("[radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
 			number++
 			sleep(1 SECONDS)
 
@@ -289,7 +317,7 @@
 		if (length(law) <= 0)
 			continue
 		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			say("[radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
 			number++
 			sleep(1 SECONDS)
 
@@ -302,7 +330,7 @@
 	if (laws.zeroth)
 		if (!(laws.zeroth in lawcheck))
 			law_display = "No"
-		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
+		list += {"<a href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</a> <font color='#ff0000'><b>[laws.zeroth]</b></font><br>"}
 
 	for (var/index in 1 to length(laws.hacked))
 		law_display = "Yes"
@@ -310,7 +338,7 @@
 		if (length(law) > 0)
 			if (!(law in hackedcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</a> <font color='#660000'>[law]</font><br>"}
 
 	for (var/index in 1 to length(laws.ion))
 		law_display = "Yes"
@@ -318,7 +346,7 @@
 		if (length(law) > 0)
 			if(!(law in ioncheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</A> <font color='#547DFE'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</a> <font color='#547DFE'>[law]</font><br>"}
 
 	var/number = 1
 	for (var/index in 1 to length(laws.inherent))
@@ -327,7 +355,7 @@
 		if (length(law) > 0)
 			if (!(law in lawcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</A> [law]<BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</a> [law]<br>"}
 			number++
 
 	for (var/index in 1 to length(laws.supplied))
@@ -336,11 +364,13 @@
 		if (length(law) > 0)
 			if (!(law in lawcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</A> <font color='#990099'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</a> <font color='#990099'>[law]</font><br>"}
 			number++
-	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
+	list += {"<br><br><a href='byond://?src=[REF(src)];laws=1'>State Laws</a>"}
 
-	usr << browse(list, "window=laws")
+	var/datum/browser/browser = new(usr, "laws")
+	browser.set_content(list)
+	browser.open()
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)
@@ -380,23 +410,17 @@
 	return -10
 
 /mob/living/silicon/proc/remove_sensors()
-	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.hide_from(src)
-	medsensor.hide_from(src)
-	diagsensor.hide_from(src)
+	for (var/hud_type in silicon_huds)
+		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		silicon_hud.hide_from(src)
 
 /mob/living/silicon/proc/add_sensors()
-	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.show_to(src)
-	medsensor.show_to(src)
-	diagsensor.show_to(src)
+	for (var/hud_type in silicon_huds)
+		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		silicon_hud.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
-	if(incapacitated())
+	if(incapacitated)
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
@@ -430,6 +454,9 @@
 
 /mob/living/silicon/on_standing_up()
 	return // Silicons are always standing by default.
+
+/mob/living/silicon/get_butt_sprite()
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_QR_CODE)
 
 /**
  * Records an IC event log entry in the cyborg's internal tablet.
@@ -467,3 +494,22 @@
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
 	modularInterface.imprint_id(name = newname)
+
+/mob/living/silicon/can_track(mob/living/user)
+	//if their camera is online, it's safe to assume they are in cameranets
+	//since it takes a while for camera vis to update, this lets us bypass that so AIs can always see their borgs,
+	//without making cameras constantly update every time a borg moves.
+	if(builtInCamera && builtInCamera.can_use())
+		return TRUE
+	return ..()
+
+///Places laws on the status panel for silicons
+/mob/living/silicon/get_status_tab_items()
+	. = ..()
+	var/list/law_list = list("Obey these laws:")
+	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
+	for(var/borg_laws in law_list)
+		. += borg_laws
+
+/mob/living/silicon/get_access()
+	return REGION_ACCESS_ALL_STATION

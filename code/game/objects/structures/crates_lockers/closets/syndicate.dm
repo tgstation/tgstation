@@ -20,7 +20,7 @@
 /obj/structure/closet/syndicate/personal/PopulateContents()
 	..()
 	new /obj/item/trench_tool(src)
-	new /obj/item/clothing/glasses/night(src)
+	new /obj/item/clothing/glasses/night/colorless(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/storage/belt/holster/nukie(src)

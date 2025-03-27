@@ -3,22 +3,15 @@
 	/// Stops the rest of the help
 	#define COMPONENT_BLOCK_HELP_ACT (1<<0)
 
-///Called from /mob/living/carbon/help_shake_act, before any hugs have ocurred. (mob/living/helper)
+///Called from /mob/living/carbon/help_shake_act, before any hugs have occurred. (mob/living/helper)
 #define COMSIG_CARBON_PRE_MISC_HELP "carbon_pre_misc_help"
-	/// Stops the rest of help act (hugging, etc) from occuring
+	/// Stops the rest of help act (hugging, etc) from occurring
 	#define COMPONENT_BLOCK_MISC_HELP (1<<0)
 
-///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have ocurred. (mob/living/helper)
+///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have occurred. (mob/living/helper)
 #define COMSIG_CARBON_HELP_ACT "carbon_help"
-///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have ocurred. (mob/living/helped)
+///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have occurred. (mob/living/helped)
 #define COMSIG_CARBON_HELPED "carbon_helped_someone"
-
-///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
-#define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
-	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
-///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
-#define COMSIG_CARBON_DISARM_COLLIDE "carbon_disarm_collision"
-	#define COMSIG_CARBON_SHOVE_HANDLED (1<<0)
 
 ///When a carbon slips. Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
@@ -46,11 +39,14 @@
 
 /// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
 #define COMSIG_BODYPART_CHANGED_OWNER "bodypart_changed_owner"
+/// Called from /obj/item/bodypart/proc/update_part_wound_overlay()
+#define COMSIG_BODYPART_UPDATE_WOUND_OVERLAY "bodypart_update_wound_overlay"
+	#define COMPONENT_PREVENT_WOUND_OVERLAY_UPDATE (1 << 0)
 
 /// Called from update_health_hud, whenever a bodypart is being updated on the health doll
 #define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
-	/// Return to override that bodypart's health hud with your own icon
-	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+	/// Return to override that bodypart's health hud with whatever is returned by the list
+	#define OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
 
 /// Called from /obj/item/bodypart/check_for_injuries (mob/living/carbon/examiner, list/check_list)
 #define COMSIG_BODYPART_CHECKED_FOR_INJURY "bodypart_injury_checked"
@@ -77,10 +73,6 @@
 ///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
 #define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
-///defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
-#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
-///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
-#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
@@ -92,8 +84,10 @@
 #define COMSIG_CARBON_GAIN_ADDICTION "carbon_gain_addiction"
 ///Called when a carbon is no longer addicted (source = what addiction datum was lost, addicted_mind = mind of the freed carbon)
 #define COMSIG_CARBON_LOSE_ADDICTION "carbon_lose_addiction"
-///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added) - this is before on_gain()
+///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added, resilience = the resilience of the trauma given, if set differently from the default) - this is before on_gain()
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
+	/// Return if you want to prevent the carbon from gaining the brain trauma.
+	#define COMSIG_CARBON_BLOCK_TRAUMA (1 << 0)
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
@@ -102,11 +96,11 @@
 	#define COMPONENT_OVERRIDE_HEALTH_HUD (1<<0)
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
-///Called when a carbon attempts to breath, before the breath has actually occured
+///Called when a carbon attempts to breath, before the breath has actually occurred
 #define COMSIG_CARBON_ATTEMPT_BREATHE "carbon_attempt_breathe"
 	// Prevents the breath
 	#define COMSIG_CARBON_BLOCK_BREATH (1 << 0)
-///Called when a carbon breathes, before the breath has actually occured
+///Called when a carbon breathes, before the breath has actually occurred
 #define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
 ///Called when a carbon updates their mood
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
@@ -125,9 +119,7 @@
 
 ///Applied preferences to a human
 #define COMSIG_HUMAN_PREFS_APPLIED "human_prefs_applied"
-///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
-#define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
-///Whenever EquipRanked is called, called after job is set
+///Whenever equip_rank is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
@@ -142,6 +134,10 @@
 	#define VISIBLE_NAME_FACE 1
 	//Index for the name of the id
 	#define VISIBLE_NAME_ID 2
+	//Index for whether their name is being overridden instead of obfuscated
+	#define VISIBLE_NAME_FORCED 3
+///from /mob/living/carbon/human/get_id_name; only returns if the mob has TRAIT_UNKNOWN and it's being overridden: (identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
@@ -157,3 +153,32 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
+#define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
+	/// Return to prevent all default blood handling
+	#define HANDLE_BLOOD_HANDLED (1<<0)
+	/// Return to skip default nutrition -> blood conversion
+	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
+	/// Return to skip oxyloss and similar effects from blood level
+	#define HANDLE_BLOOD_NO_OXYLOSS (1<<2)
+
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it should go
+#define COMSIG_CARBON_LIMPING "mob_limp_check"
+	#define COMPONENT_CANCEL_LIMP (1<<0)
+
+/// from /obj/item/toy/crayon/spraycan/use_on(target, user, modifiers): (atom/target, mob/user)
+#define COMSIG_CARBON_SPRAYPAINTED "comsig_carbon_spraypainted"
+	#define COMPONENT_CANCEL_SPRAYPAINT (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"
+
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+#define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
+
+/// Called at the very end of human character setup
+/// At this point all quirks are assigned and the mob has a mind / client
+#define COMSIG_HUMAN_CHARACTER_SETUP_FINISHED "human_character_setup_finished"

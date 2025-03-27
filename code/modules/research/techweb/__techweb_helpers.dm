@@ -23,7 +23,7 @@
 /proc/techweb_point_display_generic(pointlist)
 	var/list/ret = list()
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i])
+		if(i in SSresearch.point_types)
 			ret += "[SSresearch.point_types[i]]: [pointlist[i]]"
 		else
 			ret += "ERRORED POINT TYPE: [pointlist[i]]"
@@ -32,7 +32,7 @@
 /proc/techweb_point_display_rdconsole(pointlist, last_pointlist)
 	var/list/ret = list()
 	for(var/i in pointlist)
-		var/research_line = "[SSresearch.point_types[i] || "ERRORED POINT TYPE"]: [pointlist[i]]"
+		var/research_line = "[(i in SSresearch.point_types) || "ERRORED POINT TYPE"]: [pointlist[i]]"
 		if(last_pointlist[i] > 0)
 			research_line += " (+[(last_pointlist[i]) * ((SSresearch.flags & SS_TICKER)? (600 / (world.tick_lag * SSresearch.wait)) : (600 / SSresearch.wait))]/ minute)"
 		ret += research_line

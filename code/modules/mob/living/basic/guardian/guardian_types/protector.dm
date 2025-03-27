@@ -16,7 +16,6 @@
 /mob/living/basic/guardian/protector/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
 	shield = new(src)
-	shield.owner_has_control = FALSE // Hide it from the user, it's integrated with guardian UI
 	shield.Grant(src)
 
 /mob/living/basic/guardian/protector/Destroy()
@@ -49,6 +48,7 @@
 	background_icon_state = "base"
 	cooldown_time = 1 SECONDS
 	click_to_activate = FALSE
+	owner_has_control = FALSE // Hide it from the user, it's integrated with guardian UI
 
 /datum/action/cooldown/mob_cooldown/protector_shield/Activate(mob/living/target)
 	if (!isliving(target))

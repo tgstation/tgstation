@@ -205,3 +205,25 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_too_late = "You were not ready then, and now that time has passed. We can only go forward, never back."
 	response_not_enough = "You have insulted us, but there shall be no feud, only swift justice!"
 	announcement_color = "purple"
+
+//medieval militia, from OUTER SPACE!
+/datum/pirate_gang/medieval
+	name = "Medieval Warmongers"
+
+	is_heavy_threat = TRUE
+	ship_template_id = "medieval"
+	ship_name_pool = "medieval_names"
+
+	threat_title = "HOMAGE PAYMENT REQUEST"
+	threat_content = "SALUTATIONS, THIS IS %SHIPNAME AND WE ARE COLLECTING MONEY \
+		FROM THE VASSALS IN OUR TERRITORY, YOU JUST SO HAPPEN TO BE IN IT TOO!! NORMALLY \
+		WE SLAUGHTER WEAKLINGS LIKE YOU FOR TRESPASING ON OUR LAND, BUT WE ARE WILLING \
+		TO WELCOME YOU INTO OUR SPACE IF YOU PAY %PAYOFF AS HOMAGE TO OUR LAW. BE WISE ON YOUR CHOICE!! \
+		(send message. send message. why message not sent?)."
+	arrival_announcement = "I FIGURED OUT HOW TO FLY MY SHIP, WE WILL BE DOCKING NEXT TO YOU IN A MINUTE!!"
+	possible_answers = list("Alright, i like my skull intact.","You are dumb, go larp somewhere else.")
+
+	response_received = "THIS WILL SUFFICE, REMEMBER WHO OWNS YOU!!"
+	response_rejected = "FOOLISH DECISION, I'LL MAKE AN EXAMPLE OUT OF YOUR CARCASS!! (does anyone remember how to pilot our ship?)"
+	response_too_late = "YOU ARE ALREADY UNDER SIEGE YOU BUFFON, ARE YOU BRAINSICK OR IGNORANT?!!"
+	response_not_enough = "DO THINK OF ME AS A JESTER? YOU ARE DEAD MEAT!! (i forgot how to fly the ship, tarnation.)"

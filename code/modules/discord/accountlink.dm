@@ -13,6 +13,7 @@
 	var/prefix = CONFIG_GET(string/discordbotcommandprefix)
 	if(!prefix)
 		to_chat(src, span_warning("This feature is disabled."))
+		return
 
 	if(!SSdiscord || !SSdiscord.reverify_cache)
 		to_chat(src, span_warning("Wait for the Discord subsystem to finish initialising"))

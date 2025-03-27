@@ -46,6 +46,8 @@
 	rpg_title = "Head Crystallomancer"
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
+	human_authority = JOB_AUTHORITY_HUMANS_ONLY
+
 	voice_of_god_power = 1.4 //Command staff has authority
 
 
@@ -65,13 +67,13 @@
 	id_trim = /datum/id_trim/job/chief_engineer
 	uniform = /obj/item/clothing/under/rank/engineering/chief_engineer
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/silver = 1,
 		/obj/item/construction/rcd/ce = 1,
 	)
 	belt = /obj/item/storage/belt/utility/chief/full
 	ears = /obj/item/radio/headset/heads/ce
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/utility/hardhat/white
+	head = /obj/item/clothing/head/utility/hardhat/welding/white/up
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_pocket = /obj/item/modular_computer/pda/heads/ce
 

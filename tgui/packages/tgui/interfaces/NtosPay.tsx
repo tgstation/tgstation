@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,7 +9,9 @@ import {
   Stack,
   Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -160,9 +161,9 @@ const TransactionHistory = (props) => {
     <Section fill title="Transaction History">
       <Section fill scrollable title={<TableHeaders />}>
         <Table>
-          {transaction_list.map((log) => (
+          {transaction_list.map((log, index) => (
             <Table.Row
-              key={log}
+              key={index}
               className="candystripe"
               color={log.adjusted_money < 1 ? 'red' : 'green'}
             >

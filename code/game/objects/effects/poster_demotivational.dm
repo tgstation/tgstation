@@ -50,7 +50,7 @@
 
 /obj/structure/sign/poster/traitor/cloning
 	name = "Demand Cloning Pods Now"
-	desc = "This poster claims that Nanotrasen is intentionally witholding cloning technology just for its executives, condemning you to suffer and die when you could have a fresh, fit body.'"
+	desc = "This poster claims that Nanotrasen is intentionally withholding cloning technology just for its executives, condemning you to suffer and die when you could have a fresh, fit body.'"
 	icon_state = "traitor_cloning"
 
 /obj/structure/sign/poster/traitor/ai_rights

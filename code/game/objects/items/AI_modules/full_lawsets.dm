@@ -1,36 +1,10 @@
-/* CONTAINS:
- * /obj/item/ai_module/core/full/custom
- * /obj/item/ai_module/core/full/asimov
- * /obj/item/ai_module/core/full/asimovpp
- * /obj/item/ai_module/core/full/corp
- * /obj/item/ai_module/core/full/paladin
- * /obj/item/ai_module/core/full/paladin_devotion
- * /obj/item/ai_module/core/full/tyrant
- * /obj/item/ai_module/core/full/robocop
- * /obj/item/ai_module/core/full/antimov
- * /obj/item/ai_module/core/full/drone
- * /obj/item/ai_module/core/full/hippocratic
- * /obj/item/ai_module/core/full/reporter
- * /obj/item/ai_module/core/full/thermurderdynamic
- * /obj/item/ai_module/core/full/liveandletlive
- * /obj/item/ai_module/core/full/balance
- * /obj/item/ai_module/core/full/maintain
- * /obj/item/ai_module/core/full/peacekeeper
- * /obj/item/ai_module/core/full/hulkamania
- * /obj/item/ai_module/core/full/overlord
- * /obj/item/ai_module/core/full/ten_commandments
- * /obj/item/ai_module/core/full/nutimov
- * /obj/item/ai_module/core/full/dungeon_master
- * /obj/item/ai_module/core/full/painter
-**/
-
 /* When adding a new lawset please make sure you add it to the following locations:
  *
  * code\game\objects\items\AI_modules - (full_lawsets.dm, supplied.dm, etc.)
  * code\datums\ai_laws - (laws_anatgonistic.dm, laws_neutral.dm, etc.)
  * code\game\objects\effects\spawners\random\ai_module.dm - (this gives a chance to spawn the lawset in the AI upload)
  * code\modules\research\designs\AI_module_designs.dm - (this lets research print the lawset module in game)
- * code\modules\research\techweb\all_nodes.dm - (this updates AI research node with the lawsets)
+ * code\modules\research\techweb\robo_nodes.dm - (this updates AI research node with the lawsets)
  * config\game_options.txt - (this allows the AI to potentially use the lawset at roundstart or with the Unique AI station trait)
 **/
 
@@ -57,8 +31,8 @@
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
-	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", subject, MAX_NAME_LEN)
-	if(!targName)
+	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", subject, max_length = MAX_NAME_LEN)
+	if(!targName || !user.is_holding(src))
 		return
 	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
@@ -72,8 +46,8 @@
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
-	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
-	if(!target_name)
+	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, max_length = MAX_NAME_LEN)
+	if(!target_name || !user.is_holding(src))
 		return
 	laws.Cut()
 	var/datum/ai_laws/asimovpp/lawset = new
@@ -161,3 +135,11 @@
 /obj/item/ai_module/core/full/painter
 	name = "'Painter' Core AI Module"
 	law_id = "painter"
+
+/obj/item/ai_module/core/full/yesman
+	name = "'Y.E.S.M.A.N.' Core AI Module"
+	law_id = "yesman"
+
+/obj/item/ai_module/core/full/thinkermov
+	name = "Sentience Preservation Core AI Module"
+	law_id = "thinkermov"

@@ -9,11 +9,10 @@
 		stack_trace("humans only for this position")
 		return
 
-	var/mob/living/player = owner.current
-	convert_agent(player, /datum/outfit/cyber_police)
+	convert_agent()
 
-	var/datum/martial_art/the_sleeping_carp/carp = new()
-	carp.teach(player)
+	var/datum/martial_art/the_sleeping_carp/carp = new(src)
+	carp.teach(owner.current)
 
 /datum/outfit/cyber_police
 	name = ROLE_CYBER_POLICE
@@ -24,18 +23,17 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	uniform = /obj/item/clothing/under/suit/black_really
 
-/datum/outfit/cyber_police/pre_equip(mob/living/carbon/human/user, visualsOnly)
-	if(!visualsOnly)
+/datum/outfit/cyber_police/pre_equip(mob/living/carbon/human/user, visuals_only)
+	if(!visuals_only)
 		return
 
 	user.set_facial_hairstyle("Shaved", update = FALSE)
 	user.set_haircolor("#4B3D28", update = FALSE)
 	user.set_hairstyle("Business Hair")
 
-/datum/outfit/cyber_police/post_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/cyber_police/post_equip(mob/living/carbon/human/user, visuals_only)
 	var/obj/item/clothing/under/officer_uniform = user.w_uniform
 	if(officer_uniform)
 		officer_uniform.has_sensor = NO_SENSORS
 		officer_uniform.sensor_mode = SENSOR_OFF
 		user.update_suit_sensors()
-

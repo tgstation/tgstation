@@ -14,7 +14,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/byteforge/LateInitialize()
+/obj/machinery/byteforge/post_machine_initialize()
 	. = ..()
 
 	setup_particles()
@@ -26,7 +26,7 @@
 
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)
-	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
 	sparks.set_up(5, 1, loc)
@@ -63,5 +63,5 @@
 /obj/machinery/byteforge/proc/start_to_spawn(obj/cache)
 	flicker()
 
-	addtimer(CALLBACK(src, PROC_REF(spawn_cache), cache), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(spawn_cache), cache), 1 SECONDS)
 

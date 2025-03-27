@@ -8,6 +8,7 @@
 	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 10
 	tgui_id = "NtosCargo"
+	program_icon = FA_ICON_CART_FLATBED
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE
 	///Can the tablet see or buy illegal stuff?
@@ -34,7 +35,7 @@
 	var/cargo_account = ACCOUNT_CAR
 
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
-	if(issilicon(user)) //Borgs can't buy things.
+	if(HAS_SILICON_ACCESS(user)) //Borgs can't buy things.
 		return FALSE
 	if(computer.obj_flags & EMAGGED)
 		return TRUE
@@ -57,7 +58,7 @@
 
 	return FALSE
 
-/datum/computer_file/program/budgetorders/ui_data()
+/datum/computer_file/program/budgetorders/ui_data(mob/user)
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
@@ -79,12 +80,12 @@
 	if(buyer)
 		data["points"] = buyer.account_balance
 
-//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
+	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(usr, P.access_view , null, P.contraband) || P.hidden)
+		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
@@ -93,16 +94,21 @@
 			)
 		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
 			continue
+
+		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.get_cost(),
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = P.goody,
-			"access" = P.access
+			"access" = P.access,
+			"contains" = P.get_contents_ui_data(),
 		))
 
-//Data regarding the User's capability to buy things.
+	//Data regarding the User's capability to buy things.
 	data["has_id"] = id_card
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
@@ -166,7 +172,8 @@
 	data["max_order"] = CARGO_MAX_ORDER
 	return data
 
-/datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
+/datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -238,17 +245,17 @@
 
 			var/reason = ""
 			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
-				reason = tgui_input_text(usr, "Reason", name)
+				reason = tgui_input_text(usr, "Reason", name, max_length = MAX_MESSAGE_LEN)
 				if(isnull(reason) || ..())
 					return
 
 			if(pack.goody && !self_paid)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
 			if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 				return
 

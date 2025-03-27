@@ -1,18 +1,16 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Button,
   NumberInput,
   ProgressBar,
   Section,
   Stack,
-} from '../components';
-import { Table, TableCell, TableRow } from '../components/Table';
+  Table,
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
 
@@ -50,10 +48,10 @@ export const BluespaceVendor = (props) => {
     tank_full,
   } = data;
 
-  const gases: Gas[] = flow([
-    filter<Gas>((gas) => gas.amount >= 0.01),
-    sortBy<Gas>((gas) => -gas.amount),
-  ])(bluespace_network_gases);
+  const gases: Gas[] = sortBy(
+    filter(bluespace_network_gases, (gas) => gas.amount >= 0.01),
+    (gas) => -gas.amount,
+  );
 
   const gasMax = Math.max(1, ...gases.map((gas) => gas.amount));
 
@@ -88,11 +86,12 @@ export const BluespaceVendor = (props) => {
                   <NumberInput
                     animated
                     value={tank_filling_amount}
+                    step={1}
                     width="63px"
                     unit="% tank filling goal"
                     minValue={0}
                     maxValue={100}
-                    onDrag={(e, value) =>
+                    onDrag={(value) =>
                       act('pumping_rate', {
                         rate: value,
                       })
@@ -124,7 +123,7 @@ export const BluespaceVendor = (props) => {
                   color="transparent"
                   icon="info"
                   tooltipPosition="bottom-start"
-                  tooltip={multiline`
+                  tooltip={`
                   Quick guide for machine use: Prepare a tank to create a
                   new one in the machine, pick how much you want it filled,
                   and finally press start on the gas of your choice!
@@ -134,19 +133,19 @@ export const BluespaceVendor = (props) => {
             >
               <Table>
                 <thead>
-                  <TableRow>
-                    <TableCell collapsing bold>
+                  <Table.Row>
+                    <Table.Cell collapsing bold>
                       Gas
-                    </TableCell>
-                    <TableCell bold collapsing>
+                    </Table.Cell>
+                    <Table.Cell bold collapsing>
                       Price
-                    </TableCell>
-                    <TableCell bold>Total</TableCell>
-                    <TableCell bold collapsing textAlign="right">
+                    </Table.Cell>
+                    <Table.Cell bold>Total</Table.Cell>
+                    <Table.Cell bold collapsing textAlign="right">
                       Moles
-                    </TableCell>
-                    <TableCell bold collapsing />
-                  </TableRow>
+                    </Table.Cell>
+                    <Table.Cell bold collapsing />
+                  </Table.Row>
                 </thead>
                 <tbody>
                   {gases.map((gas, index) => (
@@ -171,25 +170,25 @@ const GasDisplay = (props: GasDisplayProps) => {
   } = props;
 
   return (
-    <TableRow className="candystripe" height={2}>
-      <TableCell collapsing color="label">
+    <Table.Row className="candystripe" height={2}>
+      <Table.Cell collapsing color="label">
         {name}
-      </TableCell>
-      <TableCell color="yellow" collapsing textAlign="right">
+      </Table.Cell>
+      <Table.Cell color="yellow" collapsing textAlign="right">
         {price} cr
-      </TableCell>
-      <TableCell>
+      </Table.Cell>
+      <Table.Cell>
         <ProgressBar
           color={getGasColor(id)}
           value={amount}
           minValue={0}
           maxValue={gasMax}
         />
-      </TableCell>
-      <TableCell collapsing color="label" textAlign="right">
+      </Table.Cell>
+      <Table.Cell collapsing color="label" textAlign="right">
         {toFixed(amount, 2)}
-      </TableCell>
-      <TableCell collapsing textAlign="center">
+      </Table.Cell>
+      <Table.Cell collapsing textAlign="center">
         {(!pumping && selected_gas !== id && (
           <Button
             icon="play"
@@ -215,7 +214,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             }
           />
         )}
-      </TableCell>
-    </TableRow>
+      </Table.Cell>
+    </Table.Row>
   );
 };

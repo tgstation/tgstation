@@ -73,7 +73,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
-/obj/effect/countdown/singularity_pull()
+/obj/effect/countdown/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/countdown/singularity_act()
@@ -160,19 +160,6 @@
 		return
 	else
 		var/time_left = max(0, (H.finish_time - world.time) / 10)
-		return round(time_left)
-
-/obj/effect/countdown/arena
-	invisibility = INVISIBILITY_NONE
-	name = "arena countdown"
-
-/obj/effect/countdown/arena/get_value()
-	var/obj/machinery/arena_spawn/A = attached_to
-	if(!istype(A))
-		return
-	else
-		var/obj/machinery/computer/arena/C = A.get_controller()
-		var/time_left = max(0, (C.start_time - world.time) / 10)
 		return round(time_left)
 
 /obj/effect/countdown/flower_bud

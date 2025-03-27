@@ -2,9 +2,9 @@
 	name = "ectoplasm anomaly"
 	desc = "It looks like the souls of the damned are trying to break into the realm of the living again. How upsetting."
 	icon_state = "ectoplasm"
-	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
+	anomaly_core = /obj/item/assembly/signaler/anomaly/ectoplasm
 	lifespan = ANOMALY_COUNTDOWN_TIMER + 2 SECONDS //This one takes slightly longer, because it can run away.
-	immobile = TRUE //prevents it from moving around so ghosts can actually move it with decent accuracy
+	move_chance = 0 //prevents it from moving around so ghosts can actually move it with decent accuracy
 
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
@@ -13,7 +13,7 @@
 	///The actual number of ghosts orbiting the anomaly.
 	var/ghosts_orbiting = 0
 
-/obj/effect/anomaly/ectoplasm/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/ectoplasm/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	AddComponent(/datum/component/deadchat_control/cardinal_movement, _deadchat_mode = ANARCHY_MODE, _inputs = list(), _input_cooldown = 7 SECONDS)
@@ -132,11 +132,11 @@
 	icon_state = "anom"
 	anchored = TRUE
 	var/static/list/spooky_noises = list(
-		'sound/hallucinations/growl1.ogg',
-		'sound/hallucinations/growl2.ogg',
-		'sound/hallucinations/growl3.ogg',
-		'sound/hallucinations/veryfar_noise.ogg',
-		'sound/hallucinations/wail.ogg'
+		'sound/effects/hallucinations/growl1.ogg',
+		'sound/effects/hallucinations/growl2.ogg',
+		'sound/effects/hallucinations/growl3.ogg',
+		'sound/effects/hallucinations/veryfar_noise.ogg',
+		'sound/effects/hallucinations/wail.ogg'
 	)
 	var/list/ghosts_spawned = list()
 
@@ -178,12 +178,12 @@
 		candidate_list += GLOB.current_observers_list
 		candidate_list += GLOB.dead_player_list
 
-	var/list/candidates = SSpolling.poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, group = candidate_list, pic_source = src, role_name_text = "ghost swarm")
+	var/list/candidates = SSpolling.poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, group = candidate_list, alert_pic = src, role_name_text = "ghost swarm")
 	for(var/mob/dead/observer/candidate_ghost as anything in candidates)
 		var/mob/living/basic/ghost/swarm/new_ghost = new(get_turf(src))
 		ghosts_spawned += new_ghost
 		new_ghost.ghostize(FALSE)
-		new_ghost.key = candidate_ghost.key
+		new_ghost.PossessByPlayer(candidate_ghost.key)
 		var/policy = get_policy(ROLE_ANOMALY_GHOST)
 		if(policy)
 			to_chat(new_ghost, policy)

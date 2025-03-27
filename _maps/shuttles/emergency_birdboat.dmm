@@ -158,7 +158,8 @@
 /obj/docking_port/mobile/emergency{
 	dir = 8;
 	name = "Birdboat emergency escape shuttle";
-	port_direction = 4
+	port_direction = 2;
+	preferred_direction = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

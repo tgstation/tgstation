@@ -102,7 +102,8 @@
 		crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, crate)
-	announce_to_ghosts(landing_marker)
+	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
+	notify_ghosts("[control.name] has summoned a supply crate!", source = get_turf(landing_marker), header = "Cargo Inbound", alert_overlay = target_appearance)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
@@ -148,7 +149,7 @@
 	var/admin_selected_pack = tgui_alert(usr,"Customize Pod contents?", "Pod Contents", list("Yes", "No", "Cancel"))
 	switch(admin_selected_pack)
 		if("Yes")
-			override_contents()
+			return override_contents()
 		if("No")
 			pack_type_override = null
 		else
@@ -160,7 +161,13 @@
 	var/pack_telecrystals = tgui_input_number(usr, "Please input crate's value in telecrystals.", "Set Telecrystals.", 30)
 	if(isnull(pack_telecrystals))
 		return ADMIN_CANCEL_EVENT
-	var/list/possible_uplinks = list("Traitor" = UPLINK_TRAITORS, "Nuke Op" = UPLINK_NUKE_OPS, "Clown Op" = UPLINK_CLOWN_OPS)
+	var/list/possible_uplinks = list(
+		"Traitor" = UPLINK_TRAITORS,
+		"Nuke Op" = UPLINK_NUKE_OPS,
+		"Clown Op" = UPLINK_CLOWN_OPS,
+		"Lone Op" = UPLINK_LONE_OP,
+		"Spy" = UPLINK_SPY
+		)
 	var/uplink_type = tgui_input_list(usr, "Choose uplink to draw items from.", "Choose uplink type.", possible_uplinks)
 	var/selection
 	if(!isnull(uplink_type))
@@ -182,5 +189,5 @@
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()
 	var/obj/structure/closet/supplypod/S = new
-	S.setStyle(STYLE_SYNDICATE)
+	S.setStyle(/datum/pod_style/syndicate)
 	return S

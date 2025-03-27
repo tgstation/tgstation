@@ -18,7 +18,7 @@
 
 /// How often will we try to perform our ranged attack?
 /datum/ai_behavior/ranged_skirmish
-	action_cooldown = 1 SECONDS
+	action_cooldown = 0.5 SECONDS
 
 /datum/ai_behavior/ranged_skirmish/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, max_range, min_range)
 	. = ..()
@@ -26,16 +26,13 @@
 	return !QDELETED(target)
 
 /datum/ai_behavior/ranged_skirmish/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, max_range, min_range)
-	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	if(!targeting_strategy.can_attack(controller.pawn, target))
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target)
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
@@ -44,9 +41,10 @@
 
 	var/distance = get_dist(controller.pawn, target)
 	if (distance > max_range || distance < min_range)
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/mob/living/basic/gunman = controller.pawn
-	gunman.RangedAttack(target)
-	finish_action(controller, succeeded = TRUE)
+	controller.ai_interact(target = target, combat_mode = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/ai_planning_subtree/ranged_skirmish/no_minimum
+	min_range = 0

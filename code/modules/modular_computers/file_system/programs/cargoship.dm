@@ -26,7 +26,8 @@
 	data["barcode_split"] = cut_multiplier * 100
 	return data
 
-/datum/computer_file/program/shipping/ui_act(action, list/params)
+/datum/computer_file/program/shipping/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	if(!computer.computer_id_slot) //We need an ID to successfully run
 		return FALSE
 
@@ -35,7 +36,7 @@
 			computer.RemoveID(usr)
 		if("selectid")
 			if(!computer.computer_id_slot.registered_account)
-				playsound(get_turf(computer.ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
+				playsound(get_turf(computer.ui_host()), 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, -1)
 				return TRUE
 			payments_acc = computer.computer_id_slot.registered_account
 			playsound(get_turf(computer.ui_host()), 'sound/machines/ping.ogg', 50, TRUE, -1)

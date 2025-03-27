@@ -1,5 +1,5 @@
 ///How many research points you gain from dissecting a Human.
-#define BASE_HUMAN_REWARD 500
+#define BASE_HUMAN_REWARD 10
 
 /datum/surgery/advanced/experimental_dissection
 	name = "Experimental Dissection"
@@ -10,16 +10,19 @@
 		/datum/surgery_step/experimental_dissection,
 		/datum/surgery_step/close,
 	)
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_MORBID_CURIOSITY
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_CHEST)
 	target_mobtypes = list(/mob/living)
 
 /datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/target)
 	. = ..()
+	if(!.)
+		return .
 	if(HAS_TRAIT_FROM(target, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT))
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
+	return .
 
 /datum/surgery_step/experimental_dissection
 	name = "dissection"
@@ -33,27 +36,26 @@
 	silicons_obey_prob = TRUE
 
 /datum/surgery_step/experimental_dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] starts dissecting [target].</span>", "<span class='notice'>You start dissecting [target].</span>")
+	user.visible_message(span_notice("[user] starts dissecting [target]."), span_notice("You start dissecting [target]."))
 
 /datum/surgery_step/experimental_dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/points_earned = check_value(target)
-	user.visible_message("<span class='notice'>[user] dissects [target], discovering [points_earned] point\s of data!</span>", "<span class='notice'>You dissect [target], finding [points_earned] point\s worth of discoveries, you also write a few notes.</span>")
+	user.visible_message(span_notice("[user] dissects [target], discovering [points_earned] point\s of data!"), span_notice("You dissect [target], finding [points_earned] point\s worth of discoveries, you also write a few notes."))
 
 	var/obj/item/research_notes/the_dossier = new /obj/item/research_notes(user.loc, points_earned, "biology")
 	if(!user.put_in_hands(the_dossier) && istype(user.get_inactive_held_item(), /obj/item/research_notes))
 		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
 		hand_dossier.merge(the_dossier)
 
-	var/obj/item/bodypart/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, target_chest)
+	target.apply_damage(80, BRUTE, BODY_ZONE_CHEST)
 	ADD_TRAIT(target, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT)
 	return ..()
 
 /datum/surgery_step/experimental_dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/points_earned = round(check_value(target) * 0.01)
 	user.visible_message(
-		"<span class='notice'>[user] dissects [target]!</span>",
-		"<span class='notice'>You dissect [target], but do not find anything particularly interesting.</span>",
+		span_notice("[user] dissects [target]!"),
+		span_notice("You dissect [target], but do not find anything particularly interesting."),
 	)
 
 	var/obj/item/research_notes/the_dossier = new /obj/item/research_notes(user.loc, points_earned, "biology")
@@ -61,8 +63,7 @@
 		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
 		hand_dossier.merge(the_dossier)
 
-	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, BODY_ZONE_CHEST)
 	return TRUE
 
 ///Calculates how many research points dissecting 'target' is worth.

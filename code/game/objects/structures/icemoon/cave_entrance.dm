@@ -40,18 +40,17 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			var/turf/closed/mineral/clearable = potential
 			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
-/obj/structure/spawner/ice_moon/deconstruct(disassembled)
+/obj/structure/spawner/ice_moon/atom_deconstruct(disassembled)
 	destroy_effect()
 	drop_loot()
-	return ..()
 
 /**
  * Effects and messages created when the spawner is destroyed
  *
  */
 /obj/structure/spawner/ice_moon/proc/destroy_effect()
-	playsound(loc,'sound/effects/explosionfar.ogg', 200, TRUE)
-	visible_message(span_boldannounce("[src] collapses, sealing everything inside!</span>\n<span class='warning'>Ores fall out of the cave as it is destroyed!"))
+	playsound(loc,'sound/effects/explosion/explosionfar.ogg', 200, TRUE)
+	visible_message(span_bolddanger("[src] collapses, sealing everything inside!</span>\n<span class='warning'>Ores fall out of the cave as it is destroyed!"))
 
 /**
  * Drops items after the spawner is destroyed
@@ -124,7 +123,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 /obj/effect/collapsing_demonic_portal/Initialize(mapload)
 	. = ..()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
-	visible_message(span_boldannounce("[src] begins to collapse, cutting it off from this world!"))
+	visible_message(span_bolddanger("[src] begins to collapse, cutting it off from this world!"))
 	animate(src, transform = matrix().Scale(0, 1), alpha = 50, time = 5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)
 
@@ -151,7 +150,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(3)
 			new /obj/item/reagent_containers/cup/bottle/potion/flight(loc)
 		if(4)
-			new /obj/item/organ/internal/heart/cursed/wizard(loc)
+			new /obj/item/organ/heart/cursed/wizard(loc)
 		if(5)
 			new /obj/item/jacobs_ladder(loc)
 		if(6)
@@ -179,7 +178,8 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(16)
 			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
 		if(17)
-			new /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola(loc)
+			new /obj/item/clothing/gloves/fingerless/punch_mitts(loc)
+			new /obj/item/clothing/head/cowboy(loc)
 		if(18)
 			new /obj/item/soulstone/anybody(loc)
 		if(19)

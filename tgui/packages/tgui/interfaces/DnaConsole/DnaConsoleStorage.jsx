@@ -1,6 +1,4 @@
 import { uniqBy } from 'common/collections';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -9,7 +7,9 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import {
   STORAGE_CONS_SUBMODE_CHROMOSOMES,
   STORAGE_CONS_SUBMODE_MUTATIONS,
@@ -211,7 +211,7 @@ const StorageButtons = (props) => {
 const StorageChromosomes = (props) => {
   const { data, act } = useBackend();
   const chromos = data.chromoStorage ?? [];
-  const uniqueChromos = uniqBy((chromo) => chromo.Name)(chromos);
+  const uniqueChromos = uniqBy(chromos, (chromo) => chromo.Name);
   const chromoName = data.view.storageChromoName;
   const chromo = chromos.find((chromo) => chromo.Name === chromoName);
 

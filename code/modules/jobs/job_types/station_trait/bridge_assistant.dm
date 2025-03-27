@@ -33,11 +33,13 @@
 	rpg_title = "Royal Guard"
 	allow_bureaucratic_error = FALSE
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
-	ignore_human_authority = TRUE
+	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
 /datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
-	ADD_TRAIT(spawned, TRAIT_NO_TWOHANDING, JOB_TRAIT)
+	var/mob/living/carbon/bridgie = spawned
+	if(istype(bridgie))
+		bridgie.gain_trauma(/datum/brain_trauma/special/axedoration)
 
 /datum/job/bridge_assistant/get_roundstart_spawn_point()
 	var/list/chair_turfs = list()
@@ -45,13 +47,14 @@
 	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
 	if(isnull(bridge))
 		return ..() //if no bridge, spawn on the arrivals shuttle (but also what the fuck)
-	for(var/turf/possible_turf as anything in bridge.get_contained_turfs())
-		if(possible_turf.is_blocked_turf())
-			continue
-		if(locate(/obj/structure/chair) in possible_turf)
-			chair_turfs += possible_turf
-			continue
-		possible_turfs += possible_turf
+	for (var/list/zlevel_turfs as anything in bridge.get_zlevel_turf_lists())
+		for (var/turf/possible_turf as anything in zlevel_turfs)
+			if(possible_turf.is_blocked_turf())
+				continue
+			if(locate(/obj/structure/chair) in possible_turf)
+				chair_turfs += possible_turf
+				continue
+			possible_turfs += possible_turf
 	if(length(chair_turfs))
 		return pick(chair_turfs) //prioritize turfs with a chair
 	if(length(possible_turfs))

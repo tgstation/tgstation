@@ -11,7 +11,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*3, /datum/material/glass = SMALL_MATERIAL_AMOUNT*3)
-	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_system = OVERLAY_LIGHT //Used as a flash here.
 	light_range = FLASH_LIGHT_RANGE
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
@@ -43,7 +43,7 @@
 	flashing = flash
 	. = ..()
 	if(flash)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 5)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 0.5 SECONDS)
 	holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()
@@ -109,7 +109,7 @@
 	if(burnt_out || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	set_light_on(TRUE)
 	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
@@ -128,7 +128,7 @@
 /**
  * Handles actual flashing part of the attack
  *
- * This proc is awful in every sense of the way, someone should definately refactor this whole code.
+ * This proc is awful in every sense of the way, someone should definitely refactor this whole code.
  * Arguments:
  * * M - Victim
  * * user - Attacker
@@ -161,7 +161,7 @@
 		else if(sigreturn & DEVIATION_OVERRIDE_NONE)
 			deviation = DEVIATION_NONE
 
-	//If you face away from someone they shouldnt notice any effects.
+	//If you face away from someone they shouldn't notice any effects.
 	if(deviation == DEVIATION_FULL)
 		return
 
@@ -171,7 +171,7 @@
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
-			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
+			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 
 		else if(user)
@@ -185,7 +185,7 @@
 /**
  * Handles the directionality of the attack
  *
- * Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+ * Returns the amount of 'deviation', 0 being facing each other, 1 being sideways, 2 being facing away from each other.
  * Arguments:
  * * victim - Victim
  * * attacker - Attacker
@@ -313,7 +313,7 @@
 	var/datum/weakref/arm
 
 /obj/item/assembly/flash/armimplant/burn_out()
-	var/obj/item/organ/internal/cyberimp/arm/flash/real_arm = arm.resolve()
+	var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
 	if(real_arm?.owner)
 		to_chat(real_arm.owner, span_warning("Your photon projector implant overheats and deactivates!"))
 		real_arm.Retract()
@@ -322,13 +322,13 @@
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		var/obj/item/organ/internal/cyberimp/arm/flash/real_arm = arm.resolve()
+		var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
 		if(real_arm?.owner)
 			to_chat(real_arm.owner, span_warning("Your photon projector is running too hot to be used again so quickly!"))
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	update_icon(ALL, TRUE)
 	return TRUE
 

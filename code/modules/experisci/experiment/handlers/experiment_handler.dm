@@ -89,16 +89,12 @@
 /**
  * Provides feedback when an item isn't related to an experiment, and has fully passed the attack chain
  */
-/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, proximity_flag, params)
+/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
-	if (!proximity_flag)
+	if ((isnull(selected_experiment) && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || (config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		return
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
-	if ((selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || config_flags & EXPERIMENT_CONFIG_SILENT_FAIL)
-		return .
-	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
+	playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
-	return .
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
@@ -134,9 +130,8 @@
 		playsound(user, 'sound/machines/ping.ogg', 25)
 		to_chat(user, span_notice("You scan [target]."))
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
-
 
 /**
  * Hooks on destructive scans to try and run an experiment (When using a handheld handler)
@@ -146,19 +141,18 @@
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
 		if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-			playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
+			playsound(our_scanner, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 			to_chat(our_scanner, span_notice("No experiment selected!"))
 		return
 	var/successful_scan
 	for(var/scan_target in scanned_atoms)
 		if(action_experiment(source, scan_target))
 			successful_scan = TRUE
-			break
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
 		to_chat(our_scanner, span_notice("The scan succeeds."))
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
 
 /// Hooks on a successful autopsy experiment
@@ -216,7 +210,7 @@
 				any_success = TRUE
 		return any_success
 	else
-		// Returns true if the experiment was succesfuly handled
+		// Returns true if the experiment was successfuly handled
 		return selected_experiment.actionable(arglist(arguments)) && selected_experiment.perform_experiment(arglist(arguments))
 
 /**
@@ -237,6 +231,7 @@
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Attempts to show the user the experiment configuration panel
@@ -279,6 +274,7 @@
  */
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
 	if (can_select_experiment(experiment))
+		unlink_experiment()
 		selected_experiment = experiment
 		selected_experiment.on_selected(src)
 
@@ -359,7 +355,7 @@
 			)
 			.["experiments"] += list(data)
 
-/datum/component/experiment_handler/ui_act(action, params)
+/datum/component/experiment_handler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

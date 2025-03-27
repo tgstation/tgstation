@@ -1,8 +1,15 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Input,
+  NoticeBox,
+  Stack,
+  TextArea,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Input, NoticeBox, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type AdminhelpData = {

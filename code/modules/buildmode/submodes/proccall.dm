@@ -6,7 +6,7 @@
 	var/list/proc_args = null
 
 /datum/buildmode_mode/proccall/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Choose procedure and arguments")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Apply procedure on object")] -> Left Mouse Button on machinery"))
 	)

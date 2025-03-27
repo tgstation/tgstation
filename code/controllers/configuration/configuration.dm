@@ -165,7 +165,26 @@
 	if(IsAdminAdvancedProcCall())
 		return
 
-	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
+	var/list/separate_levels = splittext(filename, "/")
+	// allows for inheriting our folder from the thing that included us
+	var/subfolder = ""
+	// do we have an actual directory or is this just one file
+	if(length(separate_levels) > 1)
+		var/actual_filename = separate_levels[length(separate_levels)]
+		// We need to sanitize out .. to ensure filename_to_test doesn't accidentially an infinte loop here
+		// Need filename in absolute form
+		var/list/parsed_folder_bits = list()
+		// look at just the relative directory referenced
+		for(var/entry in separate_levels - actual_filename)
+			if(entry == ".." && length(parsed_folder_bits))
+				parsed_folder_bits.Cut(length(parsed_folder_bits), 0)
+			else
+				parsed_folder_bits += entry
+		if(length(parsed_folder_bits))
+			subfolder = "[parsed_folder_bits.Join("/")]/"
+		filename = "[subfolder][actual_filename]"
+
+	var/filename_to_test = world.system_type == MS_WINDOWS ? LOWER_TEXT(filename) : filename
 	if(filename_to_test in stack)
 		log_config_error("Warning: Config recursion detected ([english_list(stack)]), breaking!")
 		return
@@ -192,10 +211,10 @@
 		var/value = null
 
 		if(pos)
-			entry = lowertext(copytext(L, 1, pos))
+			entry = LOWER_TEXT(copytext(L, 1, pos))
 			value = copytext(L, pos + length(L[pos]))
 		else
-			entry = lowertext(L)
+			entry = LOWER_TEXT(L)
 
 		if(!entry)
 			continue
@@ -204,13 +223,13 @@
 			if(!value)
 				log_config_error("Warning: Invalid $include directive: [value]")
 			else
-				LoadEntries(value, stack)
+				LoadEntries("[subfolder][value]", stack)
 				++.
 			continue
 
 		// Reset directive, used for setting a config value back to defaults. Useful for string list config types
 		if (entry == "$reset")
-			var/datum/config_entry/resetee = _entries[lowertext(value)]
+			var/datum/config_entry/resetee = _entries[LOWER_TEXT(value)]
 			if (!value || !resetee)
 				log_config_error("Warning: invalid $reset directive: [value]")
 				continue
@@ -364,10 +383,10 @@ Example config:
 		var/data = null
 
 		if(pos)
-			command = lowertext(copytext(t, 1, pos))
+			command = LOWER_TEXT(copytext(t, 1, pos))
 			data = copytext(t, pos + length(t[pos]))
 		else
-			command = lowertext(t)
+			command = LOWER_TEXT(t)
 
 		if(!command)
 			continue
@@ -471,7 +490,7 @@ Example config:
 	var/list/formatted_banned_words = list()
 
 	for (var/banned_word in banned_words)
-		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
+		formatted_banned_words[LOWER_TEXT(banned_word)] = banned_words[banned_word]
 	return formatted_banned_words
 
 /datum/controller/configuration/proc/compile_filter_regex(list/banned_words)
@@ -506,7 +525,7 @@ Example config:
 
 	if(!fexists(file(config_toml)))
 		SSjob.legacy_mode = TRUE
-		message += "jobconfig.toml not found, falling back to legacy mode (using jobs.txt). To surpress this warning, generate a jobconfig.toml by running the verb 'Generate Job Configuration' in the Server tab.\n\
+		message += "jobconfig.toml not found, falling back to legacy mode (using jobs.txt). To suppress this warning, generate a jobconfig.toml by running the verb 'Generate Job Configuration' in the Server tab.\n\
 			From there, you can then add it to the /config folder of your server to have it take effect for future rounds."
 
 		if(!fexists(file(config_txt)))

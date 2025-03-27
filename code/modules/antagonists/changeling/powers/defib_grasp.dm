@@ -6,6 +6,7 @@
 		while we are dead or in stasis. Will also stun cyborgs momentarily."
 	owner_has_control = FALSE
 	dna_cost = 0
+	disabled_by_fire = FALSE
 
 	/// Flags to pass to fully heal when we get zapped
 	var/heal_flags = HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS
@@ -37,12 +38,12 @@
 	changeling.set_resting(FALSE)
 	changeling.adjust_jitter(20 SECONDS)
 	changeling.emote("scream")
-	playsound(changeling, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(changeling, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 	// Mimics some real defib stuff (wish this was more generalized)
 	playsound(defib, SFX_BODYFALL, 50, TRUE)
-	playsound(defib, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
-	playsound(defib, 'sound/machines/defib_success.ogg', 50, FALSE) // I guess
+	playsound(defib, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
+	playsound(defib, 'sound/machines/defib/defib_success.ogg', 50, FALSE) // I guess
 	defib.shock_pulling(30, changeling)
 
 /// Removes the arms of the defibber if they're a carbon, and stuns them for a bit.

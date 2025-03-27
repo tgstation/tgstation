@@ -7,32 +7,19 @@
 #define WIZARD_PRESET "The Wizard Federation"
 #define CUSTOM_PRESET "Custom Command Name"
 
-/// Verb to change the global command name.
-/client/proc/cmd_change_command_name()
-	set category = "Admin.Events"
-	set name = "Change Command Name"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
+ADMIN_VERB(change_command_name, R_ADMIN, "Change Command Name", "Change the name of Central Command.", ADMIN_CATEGORY_EVENTS)
+	var/input = input(user, "Please input a new name for Central Command.", "What?", "") as text|null
 	if(!input)
 		return
 	change_command_name(input)
-	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
-	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
+	message_admins("[key_name_admin(user)] has changed Central Command's name to [input]")
+	log_admin("[key_name(user)] has changed the Central Command name to: [input]")
 
 /// Verb to open the create command report window and send command reports.
-/client/proc/cmd_admin_create_centcom_report()
-	set category = "Admin.Events"
-	set name = "Create Command Report"
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a command report to be sent to the station.", ADMIN_CATEGORY_EVENTS)
 	BLACKBOX_LOG_ADMIN_VERB("Create Command Report")
-	var/datum/command_report_menu/tgui = new(usr)
-	tgui.ui_interact(usr)
+	var/datum/command_report_menu/tgui = new /datum/command_report_menu(user.mob)
+	tgui.ui_interact(user.mob)
 
 /// Datum for holding the TGUI window for command reports.
 /datum/command_report_menu
@@ -64,7 +51,7 @@
 		preset_names.Insert(1, command_name())
 
 /datum/command_report_menu/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/command_report_menu/ui_close()
 	qdel(src)
@@ -164,7 +151,10 @@
 	change_command_name(original_command_name)
 
 	log_admin("[key_name(ui_user)] has created a command report: \"[command_report_content]\", sent from \"[command_name]\" with the sound \"[played_sound]\".")
+
 	message_admins("[key_name_admin(ui_user)] has created a command report, sent from \"[command_name]\" with the sound \"[played_sound]\"")
+	if(!announce_contents)
+		message_admins("The message was: [command_report_content]")
 
 
 #undef DEFAULT_ANNOUNCEMENT_SOUND

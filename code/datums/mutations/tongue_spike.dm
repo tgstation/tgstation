@@ -3,7 +3,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can throw your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINI // worthless. also serves as a bit of a hint that it's not good
 	power_path = /datum/action/cooldown/spell/tongue_spike
 
 	energy_coeff = 1
@@ -30,7 +30,7 @@
 		to_chat(cast_on, span_notice("You concentrate really hard, but nothing happens."))
 		return
 
-	var/obj/item/organ/internal/tongue/to_fire = locate() in cast_on.organs
+	var/obj/item/organ/tongue/to_fire = locate() in cast_on.organs
 	if(!to_fire)
 		to_chat(cast_on, span_notice("You don't have a tongue to shoot!"))
 		return
@@ -45,16 +45,11 @@
 	desc = "Hardened biomass, shaped into a spike. Very pointy!"
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "tonguespike"
+	icon_angle = 45
 	force = 2
 	throwforce = 25
 	throw_speed = 4
-	embedding = list(
-		"impact_pain_mult" = 0,
-		"embedded_pain_multiplier" = 15,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,
-	)
+	embed_type = /datum/embedding/tongue_spike
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
@@ -66,30 +61,38 @@
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
 	src.fired_by_ref = WEAKREF(source)
-	addtimer(CALLBACK(src, PROC_REF(check_embedded)), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_morph)), 5 SECONDS)
 
-/obj/item/hardened_spike/proc/check_embedded()
-	if(missed)
-		unembedded()
+/obj/item/hardened_spike/proc/check_morph()
+	// Failed to embed, morph back
+	if (!embed_data?.owner)
+		morph_back()
 
-/obj/item/hardened_spike/embedded(atom/target)
-	. = ..()
-	if(isbodypart(target))
-		missed = FALSE
-
-/obj/item/hardened_spike/unembedded()
+/obj/item/hardened_spike/proc/morph_back()
 	visible_message(span_warning("[src] cracks and twists, changing shape!"))
 	for(var/obj/tongue as anything in contents)
 		tongue.forceMove(get_turf(src))
-
 	qdel(src)
+
+/datum/embedding/tongue_spike
+	impact_pain_mult = 0
+	pain_mult = 15
+	embed_chance = 100
+	fall_chance = 0
+	ignore_throwspeed_threshold = TRUE
+
+/datum/embedding/tongue_spike/stop_embedding()
+	. = ..()
+	var/obj/item/hardened_spike/tongue_spike = parent
+	if (!QDELETED(tongue_spike)) // This can cause a qdel loop
+		tongue_spike.morph_back()
 
 /datum/mutation/human/tongue_spike/chem
 	name = "Chem Spike"
 	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can really connect with people by throwing your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINOR // slightly less worthless. slightly.
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/tongue_spike/chem
 	energy_coeff = 1
@@ -110,42 +113,35 @@
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
 	throwforce = 2
-	embedding = list(
-		"impact_pain_mult" = 0,
-		"embedded_pain_multiplier" = 0,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_pain_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,  //never hurts once it's in you
-	)
-	/// Whether the tongue's already embedded in a target once before
-	var/embedded_once_alread = FALSE
+	embed_type = /datum/embedding/tongue_spike/chem
 
-/obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
-	. = ..()
-	if(embedded_once_alread)
-		return
-	embedded_once_alread = TRUE
+/datum/embedding/tongue_spike/chem
+	pain_mult = 0
+	pain_chance = 0
 
-	var/mob/living/carbon/fired_by = fired_by_ref?.resolve()
-	if(!fired_by)
+/datum/embedding/tongue_spike/chem/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+	var/obj/item/hardened_spike/chem/tongue_spike = parent
+	var/mob/living/carbon/fired_by = tongue_spike.fired_by_ref?.resolve()
+	if(!istype(fired_by))
 		return
 
-	var/datum/action/send_chems/chem_action = new(src)
-	chem_action.transferred_ref = WEAKREF(embedded_mob)
+	var/datum/action/send_chems/chem_action = new(tongue_spike)
+	chem_action.transferred_ref = WEAKREF(victim)
 	chem_action.Grant(fired_by)
 
 	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability \
 		to send your chemicals to the linked target!"))
 
-/obj/item/hardened_spike/chem/unembedded()
-	var/mob/living/carbon/fired_by = fired_by_ref?.resolve()
-	if(fired_by)
-		to_chat(fired_by, span_warning("Link lost!"))
-		var/datum/action/send_chems/chem_action = locate() in fired_by.actions
-		QDEL_NULL(chem_action)
+/datum/embedding/tongue_spike/chem/stop_embedding()
+	. = ..()
+	var/obj/item/hardened_spike/chem/tongue_spike = parent
+	var/mob/living/carbon/fired_by = tongue_spike.fired_by_ref?.resolve()
+	if(!istype(fired_by))
+		return
 
-	return ..()
+	to_chat(fired_by, span_warning("Link lost!"))
+	var/datum/action/send_chems/chem_action = locate() in fired_by.actions
+	qdel(chem_action)
 
 /datum/action/send_chems
 	name = "Transfer Chemicals"
@@ -178,9 +174,11 @@
 	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
-	var/obj/item/bodypart/spike_location = chem_spike.check_embedded()
 
-	//this is where it would deal damage, if it transfers chems it removes itself so no damage
-	chem_spike.forceMove(get_turf(spike_location))
-	chem_spike.visible_message(span_notice("[chem_spike] falls out of [spike_location]!"))
+	// This is where it would deal damage, if it transfers chems it removes itself so no damage
+	var/mob/living/carbon/spike_owner = chem_spike.get_embed()?.owner
+	// Message first because it'll shift back into a tongue right after moving
+	if (istype(spike_owner))
+		spike_owner.visible_message(span_notice("[chem_spike] falls out of [spike_owner]!"))
+	chem_spike.forceMove(get_turf(chem_spike))
 	return TRUE

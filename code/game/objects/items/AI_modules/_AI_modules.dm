@@ -36,7 +36,7 @@
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
-	to_chat(user, examine_block(display_laws()))
+	to_chat(user, boxed_message(display_laws()))
 
 /// Returns a text display of the laws for the module.
 /obj/item/ai_module/proc/display_laws()
@@ -165,7 +165,7 @@
 	name = "ai default lawset spawner"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 
 /obj/effect/spawner/round_default_module/Initialize(mapload)
 	. = ..()

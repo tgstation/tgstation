@@ -34,7 +34,7 @@
 
 	var/processing = FALSE
 
-/obj/machinery/airlock_controller/LateInitialize()
+/obj/machinery/airlock_controller/post_machine_initialize()
 	. = ..()
 
 	var/obj/machinery/door/interior_door = GLOB.objects_by_id_tag[interior_door_tag]
@@ -244,7 +244,7 @@
 
 	return data
 
-/obj/machinery/airlock_controller/ui_act(action, params)
+/obj/machinery/airlock_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

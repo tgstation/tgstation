@@ -50,7 +50,6 @@
 	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED
 	panel = "Spells"
-	melee_cooldown_time = 0 SECONDS
 
 	/// The sound played on cast.
 	var/sound = null
@@ -246,7 +245,11 @@
 		return target // They're just standing around, proceed as normal
 
 	if(HAS_TRAIT(cast_loc, TRAIT_CASTABLE_LOC))
-		return cast_loc // They're in an atom which allows casting, so redirect the caster to loc
+		if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
+			return cast_loc.loc
+		else
+			return cast_loc
+	// They're in an atom which allows casting, so redirect the caster to loc
 
 	return null
 
@@ -375,7 +378,8 @@
 
 	///even INVOCATION_NONE should go through this because the signal might change that
 	invocation(invoker)
-	playsound(invoker, sound, 50, vary = TRUE)
+	if(sound)
+		playsound(invoker, sound, 50, vary = TRUE)
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation(mob/living/invoker)

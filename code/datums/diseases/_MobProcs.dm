@@ -94,24 +94,19 @@
 	if(passed)
 		disease.try_infect(src)
 
-/mob/living/proc/AirborneContractDisease(datum/disease/disease, force_spread)
-	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
-		return
-
-	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob(min((50*disease.spreading_modifier - 1), 50)))
-		ForceContractDisease(disease)
-
-/mob/living/carbon/AirborneContractDisease(datum/disease/disease, force_spread)
-	if(internal)
-		return
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		return
-
+/**
+ * Handle being contracted a disease via airborne transmission
+ *
+ * * disease - the disease datum that's infecting us
+ */
+/mob/living/proc/contract_airborne_disease(datum/disease/disease)
+	if(!can_be_spread_airborne_disease())
+		return FALSE
+	if(!prob(min((50 * disease.spreading_modifier - 1), 50)))
+		return FALSE
 	if(!disease.has_required_infectious_organ(src, ORGAN_SLOT_LUNGS))
-		return
-
-	..()
-
+		return FALSE
+	return ForceContractDisease(disease)
 
 //Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
 /mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
@@ -136,8 +131,56 @@
 
 	return ..()
 
-/mob/living/proc/CanSpreadAirborneDisease()
-	return !is_mouth_covered()
+/// Checks if this mob can currently spread air based diseases.
+/// Nondeterministic
+/mob/living/proc/can_spread_airborne_diseases()
+	SHOULD_CALL_PARENT(TRUE)
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return FALSE
+	if(losebreath >= 1)
+		return FALSE
+	// I don't know how you are spreading via air with no head but sure
+	if(!get_bodypart(BODY_ZONE_HEAD))
+		return TRUE
+	// Check both hat and mask for bio protection
+	// Anything above 50 individually is a shoe-in, and stacking two items at 25 is also a shoe-in
+	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
+	var/obj/item/clothing/mask = is_mouth_covered(ITEM_SLOT_MASK)
+	var/total_prot = 2 * (hat?.get_armor_rating(BIO) + mask?.get_armor_rating(BIO))
+	if(prob(total_prot))
+		return FALSE
 
-/mob/living/carbon/CanSpreadAirborneDisease()
-	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.get_armor_rating(BIO) >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.get_armor_rating(BIO) >= 25)))
+	return TRUE
+
+/mob/living/carbon/can_spread_airborne_diseases()
+	if(internal || external)
+		return FALSE
+
+	return ..()
+
+/// Checks if this mob can currently be infected by air based diseases
+/// Nondeterministic
+/mob/living/proc/can_be_spread_airborne_disease()
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return FALSE
+	if(losebreath >= 1)
+		return FALSE
+	// Spaceacillin for infection resistance
+	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
+		return FALSE
+	// Bio check for head AND mask
+	// Meaning if we're masked up and wearing a dome, we are very likely never getting sick
+	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
+	var/obj/item/clothing/mask = is_mouth_covered(ITEM_SLOT_MASK)
+	var/total_prot = (hat?.get_armor_rating(BIO) + mask?.get_armor_rating(BIO))
+	if(prob(total_prot))
+		return FALSE
+
+	return TRUE
+
+/mob/living/carbon/can_be_spread_airborne_disease()
+	// Using an isolated air supply is also effective
+	if((internal || external) && prob(75))
+		return FALSE
+
+	return ..()

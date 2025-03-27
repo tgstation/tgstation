@@ -44,7 +44,7 @@
 
 /obj/item/pinpointer/proc/toggle_on()
 	active = !active
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
 	else
@@ -78,7 +78,7 @@
 
 ///Called by update_icon after sanity. There is a target
 /obj/item/pinpointer/proc/get_direction_icon(here, there)
-	if(get_dist_euclidian(here,there) <= minimum_range)
+	if(get_dist_euclidean(here,there) <= minimum_range)
 		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))
@@ -95,7 +95,7 @@
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 	worn_icon_state = "pinpointer_crew"
-	custom_price = PAYCHECK_CREW * 4
+	custom_price = PAYCHECK_CREW * 6
 	custom_premium_price = PAYCHECK_CREW * 6
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
@@ -152,7 +152,7 @@
 		return
 	if(isnull(names[pinpoint_target]))
 		return
-	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated)
 		return
 	target = names[pinpoint_target]
 	toggle_on()
@@ -192,11 +192,13 @@
 	name = "pinpointer pair box"
 
 /obj/item/storage/box/pinpointer_pairs/PopulateContents()
-	var/obj/item/pinpointer/pair/A = new(src)
-	var/obj/item/pinpointer/pair/B = new(src)
+	var/obj/item/pinpointer/pair/A = new(null)
+	var/obj/item/pinpointer/pair/B = new(null)
 
 	A.other_pair = B
 	B.other_pair = A
+
+	return list(A, B)
 
 /obj/item/pinpointer/shuttle
 	name = "bounty shuttle pinpointer"

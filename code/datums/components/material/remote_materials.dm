@@ -29,7 +29,7 @@ handles linking back and forth.
 	allow_standalone = TRUE,
 	force_connect = FALSE,
 	mat_container_flags = NONE,
-	list/mat_container_signals = null
+	list/mat_container_signals = null,
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -44,11 +44,9 @@ handles linking back and forth.
 	var/connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
 		connect_to_silo = TRUE
-		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 
 	if(mapload) // wait for silo to initialize during mapload
-		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
+		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
 	else //directly register in round
 		_PrepareStorage(connect_to_silo)
 
@@ -66,17 +64,20 @@ handles linking back and forth.
 		silo = GLOB.ore_silo_default
 		if (silo)
 			silo.ore_connected_machines += src
-			mat_container = silo.GetComponent(/datum/component/material_container)
+			mat_container = silo.materials
+			if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
+
 	if (!mat_container && allow_standalone)
 		_MakeLocal()
 
 /datum/component/remote_materials/Destroy()
-	if (silo)
-		silo.ore_connected_machines -= src
-		silo.holds -= src
-		silo.updateUsrDialog()
-		silo = null
+	if(silo)
+		allow_standalone = FALSE
+		disconnect_from(silo)
 	mat_container = null
+
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()
@@ -84,40 +85,31 @@ handles linking back and forth.
 
 	silo = null
 
-	var/static/list/allowed_mats = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-		/datum/material/plastic,
-	)
-
 	mat_container = parent.AddComponent( \
 		/datum/component/material_container, \
-		allowed_mats, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		local_size, \
 		mat_container_flags, \
 		container_signals = mat_container_signals, \
 		allowed_items = /obj/item/stack \
 	)
 
-/datum/component/remote_materials/proc/toggle_holding(force_hold = FALSE)
+/// Adds/Removes this connection from the silo
+/datum/component/remote_materials/proc/toggle_holding()
 	if(isnull(silo))
 		return
 
-	if(force_hold)
-		silo.holds[src] = TRUE
-	else if(!silo.holds[src])
+	if(!silo.holds[src])
 		silo.holds[src] = TRUE
 	else
 		silo.holds -= src
 
+/**
+ * Sets the storage size for local materials when not linked with silo
+ * Arguments
+ *
+ * * size - the new size for local storage. measured in SHEET_MATERIAL_SIZE units
+ */
 /datum/component/remote_materials/proc/set_local_size(size)
 	local_size = size
 	if (!silo && mat_container)
@@ -130,33 +122,21 @@ handles linking back and forth.
  * old_silo- The silo we are trying to disconnect from
  */
 /datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
-	if (!old_silo || silo != old_silo)
+	if (QDELETED(old_silo) || silo != old_silo)
 		return
+
+	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
+
 	if (allow_standalone)
 		_MakeLocal()
 
-///Insert mats into silo
-/datum/component/remote_materials/proc/SiloAttackBy(datum/source, obj/item/target, mob/living/user)
+/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/M)
 	SIGNAL_HANDLER
 
-	//Allows you to attack the machine with iron sheets for e.g.
-	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
-		return
-
-	if(silo)
-		mat_container.user_insert(target, user, parent)
-
-	return COMPONENT_NO_AFTERATTACK
-
-/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
-	SIGNAL_HANDLER
-
-	if(!I.multitool_check_buffer(user, I))
-		return ITEM_INTERACT_BLOCKING
-	var/obj/item/multitool/M = I
+	. = NONE
 	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 		if (silo == M.buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
@@ -170,7 +150,6 @@ handles linking back and forth.
 		if (silo)
 			silo.ore_connected_machines -= src
 			silo.holds -= src
-			silo.updateUsrDialog()
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -183,12 +162,31 @@ handles linking back and forth.
 			qdel(mat_container)
 		silo = new_silo
 		silo.ore_connected_machines += src
-		silo.updateUsrDialog()
 		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+
+/datum/component/remote_materials/proc/on_item_insert(datum/source, mob/living/user, obj/item/target)
+	SIGNAL_HANDLER
+	// Only insert stacks with left click
+	if(isstack(target))
+		return attempt_insert(user, target)
+
+/datum/component/remote_materials/proc/on_secondary_insert(datum/source, mob/living/user, obj/item/target)
+	SIGNAL_HANDLER
+	return attempt_insert(user, target)
+
+/// Insert mats into silo
+/datum/component/remote_materials/proc/attempt_insert(mob/living/user, obj/item/target)
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
+		return
+
+	if(silo)
+		mat_container.user_insert(target, user, parent)
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc
@@ -210,7 +208,7 @@ handles linking back and forth.
 	return check_z_level() ? silo.holds[src] : FALSE
 
 /**
- * Internal proc to check if this connection can use any materials from the silo
+ * Check if this connection can use any materials from the silo
  * Returns true only if
  * - The parent is of type movable atom
  * - A mat container is actually present
@@ -218,9 +216,7 @@ handles linking back and forth.
  * Arguments
  * * check_hold - should we check if the silo is on hold
  */
-/datum/component/remote_materials/proc/_can_use_resource(check_hold = TRUE)
-	PRIVATE_PROC(TRUE)
-
+/datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE)
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return FALSE
@@ -234,7 +230,7 @@ handles linking back and forth.
 
 /**
  * Use materials from either the silo(if connected) or from the local storage. If silo then this action
- * is logged else not e.g. action="build" & name="matter bin" means you are trying to build an matter bin
+ * is logged else not e.g. action="build" & name="matter bin" means you are trying to build a matter bin
  *
  * Arguments
  * [mats][list]- list of materials to use
@@ -244,7 +240,7 @@ handles linking back and forth.
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
  */
 /datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design")
-	if(!_can_use_resource())
+	if(!can_use_resource())
 		return 0
 
 	var/amount_consumed = mat_container.use_materials(mats, coefficient, multiplier)
@@ -266,7 +262,7 @@ handles linking back and forth.
  * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
  */
 /datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null)
-	if(!_can_use_resource())
+	if(!can_use_resource())
 		return 0
 
 	var/atom/movable/movable_parent = parent
@@ -283,7 +279,7 @@ handles linking back and forth.
  * * multiplier - the multiplier applied on the materials consumed
  */
 /datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1)
-	if(!_can_use_resource(FALSE))
+	if(!can_use_resource(FALSE))
 		return MATERIAL_INSERT_ITEM_FAILURE
 
 	return mat_container.insert_item(weapon, multiplier, parent)

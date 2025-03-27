@@ -14,11 +14,11 @@
 	else
 		deploy_bodybag(user, get_turf(src))
 
-/obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(proximity)
-		if(isopenturf(target))
-			deploy_bodybag(user, target)
+/obj/item/bodybag/interact_with_atom(atom/interacting_with, mob/living/user, flags)
+	if(isopenturf(interacting_with))
+		deploy_bodybag(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/bodybag/attempt_pickup(mob/user)
 	// can't pick ourselves up if we are inside of the bodybag, else very weird things may happen
@@ -46,7 +46,7 @@
 		R.add_fingerprint(user)
 		qdel(src)
 		user.forceMove(R)
-		playsound(src, 'sound/items/zip.ogg', 15, TRUE, -3)
+		playsound(src, 'sound/items/zip/zip.ogg', 15, TRUE, -3)
 		return OXYLOSS
 
 // Bluespace bodybag
@@ -86,7 +86,7 @@
 	return item_bag
 
 /obj/item/bodybag/bluespace/container_resist_act(mob/living/user)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		to_chat(user, span_warning("You can't get out while you're restrained like this!"))
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -97,7 +97,7 @@
 		return
 	// you are still in the bag? time to go unless you KO'd, honey!
 	// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.
-	if(user.incapacitated())
+	if(user.incapacitated)
 		to_chat(loc, span_warning("The pressure subsides. It seems that they've stopped resisting..."))
 		return
 	loc.visible_message(span_warning("[user] suddenly appears in front of [loc]!"), span_userdanger("[user] breaks free of [src]!"))

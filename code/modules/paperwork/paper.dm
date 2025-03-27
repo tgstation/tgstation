@@ -17,7 +17,6 @@
 	icon_state = "paper"
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
-	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -30,6 +29,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -63,6 +63,9 @@
 	///If TRUE, staff can read paper everywhere, but usually from requests panel.
 	var/request_state = FALSE
 
+	///If this paper can be selected as a candidate for a future message in a bottle when spawned outside of mapload. Doesn't affect manually doing that.
+	var/can_become_message_in_bottle = TRUE
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -73,10 +76,19 @@
 
 	update_appearance()
 
+	if(can_become_message_in_bottle && !mapload && prob(MESSAGE_BOTTLE_CHANCE))
+		LAZYADD(SSpersistence.queued_message_bottles, src)
+
 /obj/item/paper/Destroy()
-	. = ..()
 	camera_holder = null
 	clear_paper()
+	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
+	return ..()
+
+/obj/item/paper/custom_fire_overlay()
+	if (!custom_fire_overlay)
+		custom_fire_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_onfire_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
+	return custom_fire_overlay
 
 /// Determines whether this paper has been written or stamped to.
 /obj/item/paper/proc/is_empty()
@@ -154,7 +166,7 @@
 	new_paper.raw_stamp_data = copy_raw_stamps()
 	new_paper.stamp_cache = stamp_cache?.Copy()
 	new_paper.update_icon_state()
-	copy_overlays(new_paper, TRUE)
+	new_paper.copy_overlays(src)
 	return new_paper
 
 /**
@@ -204,8 +216,17 @@
 	var/datum/paper_field/field_data_datum = null
 
 	var/is_signature = ((text == "%sign") || (text == "%s"))
+	var/is_date = ((text == "%date") || (text == "%d"))
+	var/is_time = ((text == "%time") || (text == "%t"))
 
-	var/field_text = is_signature ? signature_name : text
+	var/field_text = text
+	if(is_signature)
+		field_text = signature_name
+	else if(is_date)
+		field_text = "[time2text(world.timeofday, "DD/MM")]/[CURRENT_STATION_YEAR]"
+	else if(is_time)
+		field_text = time2text(world.timeofday, "hh:mm")
+
 	var/field_font = is_signature ? SIGNATURE_FONT : font
 
 	for(var/datum/paper_field/field_input in raw_field_input_data)
@@ -261,9 +282,9 @@
 	if(LAZYLEN(stamp_cache) > MAX_PAPER_STAMPS_OVERLAYS)
 		return
 
-	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]")
-	stamp_overlay.pixel_x = rand(-2, 2)
-	stamp_overlay.pixel_y = rand(-3, 2)
+	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]", appearance_flags = KEEP_APART | RESET_COLOR)
+	stamp_overlay.pixel_w = rand(-2, 2)
+	stamp_overlay.pixel_z = rand(-3, 2)
 	add_overlay(stamp_overlay)
 	LAZYADD(stamp_cache, stamp_icon_state)
 
@@ -289,6 +310,8 @@
 /obj/item/paper/update_icon_state()
 	if(LAZYLEN(raw_text_inputs) && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
+	else
+		icon_state = initial(icon_state)
 	return ..()
 
 /obj/item/paper/verb/rename()
@@ -296,7 +319,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.can_read(src) || usr.is_blind() || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
+	if(!usr.can_read(src) || usr.is_blind() || INCAPACITATED_IGNORING(usr, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -319,6 +342,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
+	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 	if(!in_range(user, src) && !isobserver(user))
 		. += span_warning("You're too far away to read it!")
 		return
@@ -332,7 +356,7 @@
 		return
 	. += span_warning("You cannot read it!")
 
-/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+/obj/item/paper/ui_status(mob/user, datum/ui_state/state)
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
@@ -340,7 +364,7 @@
 		return UI_UPDATE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
-	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
+	if(INCAPACITATED_IGNORING(user, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
 	// Even harder to read if your blind...braile? humm
 	// .. or if you cannot read
@@ -349,7 +373,7 @@
 		return UI_CLOSE
 	if(!user.can_read(src))
 		return UI_CLOSE
-	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard))
+	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard) || in_contents_of(/obj/item/folder))
 		return UI_INTERACTIVE
 	return ..()
 
@@ -357,6 +381,31 @@
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
 	return ..()
+
+/obj/item/paper/click_alt(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_PAPER_MASTER))
+		make_plane(user, /obj/item/paperplane/syndicate)
+		return CLICK_ACTION_SUCCESS
+	make_plane(user, /obj/item/paperplane)
+	return CLICK_ACTION_SUCCESS
+
+
+
+/**
+ * Paper plane folding
+ * Makes a paperplane depending on args and returns it.
+ *
+ * Arguments:
+ * * mob/living/user - who's folding
+ * * plane_type - what it will be folded into (path)
+ */
+/obj/item/paper/proc/make_plane(mob/living/user, plane_type = /obj/item/paperplane)
+	loc.balloon_alert(user, "folded into a plane")
+	user.temporarilyRemoveItemFromInventory(src)
+	var/obj/item/paperplane/new_plane = new plane_type(loc, src)
+	if(user.Adjacent(new_plane))
+		user.put_in_hands(new_plane)
+	return new_plane
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
 	//can't be put on fire!
@@ -414,8 +463,8 @@
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind())
-			//The paper's stampable window area is assumed approx 400x500
-			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
+			//The paper's stampable window area is assumed approx 300x400
+			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
@@ -427,6 +476,25 @@
 	ui_interact(user)
 	return ..()
 
+/// Secondary right click interaction to quickly stamp things
+/obj/item/paper/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	var/list/writing_stats = tool.get_writing_implement_details()
+
+	if(!length(writing_stats))
+		return NONE
+	if(writing_stats["interaction_mode"] != MODE_STAMPING)
+		return NONE
+	if(!user.can_read(src) || user.is_blind()) // Just leftclick instead
+		return NONE
+
+	add_stamp(writing_stats["stamp_class"], rand(1, 300), rand(1, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
+	user.visible_message(
+		span_notice("[user] quickly stamps [src] with [tool] without looking."),
+		span_notice("You quickly stamp [src] with [tool] without looking."),
+	)
+	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+
+	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
  * to make sure the camera still exists via the weakref and that this paper is still
@@ -472,28 +540,53 @@
 
 	static_data["user_name"] = user.real_name
 
-	static_data["raw_text_input"] = list()
-	for(var/datum/paper_input/text_input as anything in raw_text_inputs)
-		static_data["raw_text_input"] += list(text_input.to_list())
-
-	static_data["raw_field_input"] = list()
-	for(var/datum/paper_field/field_input as anything in raw_field_input_data)
-		static_data["raw_field_input"] += list(field_input.to_list())
-
-	static_data["raw_stamp_input"] = list()
-	for(var/datum/paper_stamp/stamp_input as anything in raw_stamp_data)
-		static_data["raw_stamp_input"] += list(stamp_input.to_list())
+	static_data += convert_to_data()
 
 	static_data["max_length"] = MAX_PAPER_LENGTH
 	static_data["max_input_field_length"] = MAX_PAPER_INPUT_FIELD_LENGTH
-	static_data["paper_color"] = color ? color : COLOR_WHITE
-	static_data["paper_name"] = name
 
 	static_data["default_pen_font"] = PEN_FONT
 	static_data["default_pen_color"] = COLOR_BLACK
 	static_data["signature_font"] = FOUNTAIN_PEN_FONT
 
 	return static_data;
+
+/obj/item/paper/proc/convert_to_data()
+	var/list/data = list()
+
+	data[LIST_PAPER_RAW_TEXT_INPUT] = list()
+	for(var/datum/paper_input/text_input as anything in raw_text_inputs)
+		data[LIST_PAPER_RAW_TEXT_INPUT] += list(text_input.to_list())
+
+	data[LIST_PAPER_RAW_FIELD_INPUT] = list()
+	for(var/datum/paper_field/field_input as anything in raw_field_input_data)
+		data[LIST_PAPER_RAW_FIELD_INPUT] += list(field_input.to_list())
+
+	data[LIST_PAPER_RAW_STAMP_INPUT] = list()
+	for(var/datum/paper_stamp/stamp_input as anything in raw_stamp_data)
+		data[LIST_PAPER_RAW_STAMP_INPUT] += list(stamp_input.to_list())
+
+	data[LIST_PAPER_COLOR] = color ? color : COLOR_WHITE
+	data[LIST_PAPER_NAME] = name
+
+	return data
+
+/obj/item/paper/proc/write_from_data(list/data)
+	for(var/list/input as anything in data[LIST_PAPER_RAW_TEXT_INPUT])
+		add_raw_text(input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], input[LIST_PAPER_ADVANCED_HTML])
+
+	for(var/list/field as anything in data[LIST_PAPER_RAW_FIELD_INPUT])
+		var/list/input = field[LIST_PAPER_FIELD_DATA]
+		add_field_input(field[LIST_PAPER_FIELD_INDEX], input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], field[LIST_PAPER_IS_SIGNATURE])
+
+	for(var/list/stamp as anything in data[LIST_PAPER_RAW_STAMP_INPUT])
+		add_stamp(stamp[LIST_PAPER_CLASS], stamp[LIST_PAPER_STAMP_X], stamp[LIST_PAPER_STAMP_Y], stamp[LIST_PAPER_ROTATION])
+
+	var/new_color = data[LIST_PAPER_COLOR]
+	if(new_color != COLOR_WHITE)
+		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+
+	name = data[LIST_PAPER_NAME]
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -547,7 +640,7 @@
 			var/stamp_icon_state = stamp_info["stamp_icon_state"]
 
 			if (LAZYLEN(raw_stamp_data) >= MAX_PAPER_STAMPS)
-				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
+				to_chat(usr, pick("You try to stamp but you miss!", "There is nowhere else you can stamp!"))
 				return TRUE
 
 			add_stamp(stamp_class, stamp_x, stamp_y, stamp_rotation, stamp_icon_state)
@@ -562,7 +655,7 @@
 			var/this_input_length = length_char(paper_input)
 
 			if(this_input_length == 0)
-				to_chat(user, pick("Writing block strikes again!", "You forgot to write anthing!"))
+				to_chat(user, pick("Writing block strikes again!", "You forgot to write anything!"))
 				return TRUE
 
 			// If the paper is on an unwritable noticeboard, this usually shouldn't be possible.
@@ -595,6 +688,8 @@
 
 			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
 			var/writing_implement_data = holding.get_writing_implement_details()
+
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 
 			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN))
 
@@ -698,11 +793,11 @@
 
 /datum/paper_input/proc/to_list()
 	return list(
-		raw_text = raw_text,
-		font = font,
-		color = colour,
-		bold = bold,
-		advanced_html = advanced_html,
+		LIST_PAPER_RAW_TEXT = raw_text,
+		LIST_PAPER_FONT = font,
+		LIST_PAPER_FIELD_COLOR = colour,
+		LIST_PAPER_BOLD = bold,
+		LIST_PAPER_ADVANCED_HTML = advanced_html,
 	)
 
 /// Returns the raw contents of the input as html, with **ZERO SANITIZATION**
@@ -738,10 +833,10 @@
 
 /datum/paper_stamp/proc/to_list()
 	return list(
-		class = class,
-		x = stamp_x,
-		y = stamp_y,
-		rotation = rotation,
+		LIST_PAPER_CLASS = class,
+		LIST_PAPER_STAMP_X = stamp_x,
+		LIST_PAPER_STAMP_Y = stamp_y,
+		LIST_PAPER_ROTATION = rotation,
 	)
 
 /// A reference to some data that replaces a modifiable input field at some given index in paper raw input parsing.
@@ -763,9 +858,9 @@
 
 /datum/paper_field/proc/to_list()
 	return list(
-		field_index = field_index,
-		field_data = field_data.to_list(),
-		is_signature = is_signature,
+		LIST_PAPER_FIELD_INDEX = field_index,
+		LIST_PAPER_FIELD_DATA = field_data.to_list(),
+		LIST_PAPER_IS_SIGNATURE = is_signature,
 	)
 
 /obj/item/paper/construction

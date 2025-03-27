@@ -8,9 +8,9 @@
 	dismemberment = 0
 	paralyze = 5 SECONDS
 	stutter = 20 SECONDS
-	embedding = null
+	embed_type = null
 	hitsound = 'sound/effects/meteorimpact.ogg'
-	hitsound_wall = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound_wall = 'sound/items/weapons/sonic_jackhammer.ogg'
 	/// If our cannonball hits something, it reduces the damage by this value.
 	var/damage_decrease_on_hit = 10
 	/// This is the cutoff point of our cannonball, so that it stops piercing past this value.
@@ -42,7 +42,7 @@
 
 /obj/projectile/bullet/cannonball/explosive
 	name = "explosive shell"
-	color = "#FF0000"
+	color = COLOR_RED
 	projectile_piercing = NONE
 	damage = 40 //set to 30 before first mob impact, but they're gonna be gibbed by the explosion
 

@@ -59,12 +59,6 @@
 /datum/mood_event/withdrawal_severe/add_effects(drug_name)
 	description = "Oh god, I need some of that [drug_name]!"
 
-/datum/mood_event/withdrawal_critical
-	mood_change = -10
-
-/datum/mood_event/withdrawal_critical/add_effects(drug_name)
-	description = "[drug_name]! [drug_name]! [drug_name]!"
-
 /datum/mood_event/happiness_drug
 	description = "Can't feel a thing..."
 	mood_change = 50

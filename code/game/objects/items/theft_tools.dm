@@ -61,7 +61,7 @@
 	core = ncore
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
 /obj/item/nuke_core_container/proc/seal()
@@ -158,10 +158,22 @@
 	pulseicon = "supermatter_sliver_pulse"
 	layer = ABOVE_MOB_LAYER
 
+/obj/item/nuke_core/supermatter_sliver/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(on_hook))
+
+/obj/item/nuke_core/supermatter_sliver/proc/on_hook(obj/item/nuke_core/supermatter_sliver/source, obj/item/fishing_rod/rod, mob/user)
+	SIGNAL_HANDLER
+
+	//hook gets dusted but the rod remains intact
+	attackby(rod.hook, user)
+
+	return FISHING_ROD_CAST_HANDLED
+
 /obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes
 	return
 
-/obj/item/nuke_core/supermatter_sliver/can_be_pulled(user) // no drag memes
+/obj/item/nuke_core/supermatter_sliver/can_be_pulled(user, force) // no drag memes
 	return FALSE
 
 /obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)
@@ -187,7 +199,7 @@
 	if(!isliving(hit_atom))
 		return ..()
 	var/mob/living/victim = hit_atom
-	if(victim.incorporeal_move || victim.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
+	if(victim.incorporeal_move || HAS_TRAIT(victim, TRAIT_GODMODE)) //try to keep this in sync with supermatter's consume fail conditions
 		return ..()
 	var/mob/thrower = throwingdatum?.get_thrower()
 	if(thrower)
@@ -208,7 +220,7 @@
 
 /obj/item/nuke_core/supermatter_sliver/pickup(mob/living/user)
 	..()
-	if(!isliving(user) || user.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
+	if(!isliving(user) || HAS_TRAIT(user, TRAIT_GODMODE)) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
 	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
 			span_userdanger("You reach for [src] with your hands. That was dumb."),\
@@ -236,7 +248,7 @@
 	T.icon_state = "supermatter_tongs"
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
 /obj/item/nuke_core_container/supermatter/seal()
@@ -247,13 +259,6 @@
 		if(ismob(loc))
 			to_chat(loc, span_warning("[src] is permanently sealed, [sliver] is safely contained."))
 
-/obj/item/nuke_core_container/supermatter/attackby(obj/item/hemostat/supermatter/tongs, mob/user)
-	if(istype(tongs))
-		//try to load shard into core
-		load(tongs, user)
-	else
-		return ..()
-
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
 	desc = "A scalpel with a fragile tip of condensed hyper-noblium gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
@@ -261,7 +266,7 @@
 	icon_state = "supermatter_scalpel"
 	toolspeed = 0.5
 	damtype = BURN
-	usesound = 'sound/weapons/bladeslice.ogg'
+	usesound = 'sound/items/weapons/bladeslice.ogg'
 	var/usesLeft
 
 /obj/item/scalpel/supermatter/Initialize(mapload)
@@ -293,16 +298,17 @@
 	inhand_icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
 	return ..()
 
-/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
-	. = ..()
+/obj/item/hemostat/supermatter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!sliver)
-		return
-	if (!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(ismovable(O) && O != sliver)
-		Consume(O, user)
-	return .
+		return ..()
+	if (istype(interacting_with, /obj/item/nuke_core_container/supermatter))
+		var/obj/item/nuke_core_container/supermatter/container = interacting_with
+		container.load(src, user)
+		return ITEM_INTERACT_SUCCESS
+	if(ismovable(interacting_with) && interacting_with != sliver)
+		Consume(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)
@@ -317,7 +323,7 @@
 		if(!isliving(AM))
 			return
 		var/mob/living/victim = AM
-		if(victim.incorporeal_move || victim.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
+		if(victim.incorporeal_move || HAS_TRAIT(victim, TRAIT_GODMODE)) //try to keep this in sync with supermatter's consume fail conditions
 			return
 		victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		victim.dust()

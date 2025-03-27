@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Button, ByondUi, Stack, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, ByondUi, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

@@ -4,14 +4,12 @@
 		return FALSE
 	return TRUE
 
-///Remove target limb from it's owner, with side effects.
+///Remove target limb from its owner, with side effects.
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
-	if(limb_owner.status_flags & GODMODE)
-		return FALSE
-	if(HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(limb_owner, TRAIT_GODMODE) || HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = limb_owner.get_bodypart(BODY_ZONE_CHEST)
@@ -26,7 +24,7 @@
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
-	drop_limb()
+	drop_limb(dismembered = TRUE)
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 	var/turf/owner_location = limb_owner.loc
@@ -63,16 +61,19 @@
 		return FALSE
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
+
 	. = list()
 	if(wounding_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
+
 	for(var/obj/item/organ/organ in contents)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		organ.Remove(chest_owner)
-		organ.forceMove(chest_owner.loc)
+		if(chest_owner.loc)
+			organ.forceMove(chest_owner.loc)
 		. += organ
 
 	if(cavity_item)
@@ -88,7 +89,6 @@
 
 	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, special, dismembered)
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, special, dismembered)
-	update_limb(dropping_limb = TRUE)
 	bodypart_flags &= ~BODYPART_IMPLANTED //limb is out and about, it can't really be considered an implant
 	owner.remove_bodypart(src, special)
 
@@ -97,6 +97,7 @@
 		LAZYREMOVE(owner.all_scars, scar)
 
 	var/mob/living/carbon/phantom_owner = update_owner(null) // so we can still refer to the guy who lost their limb after said limb forgets 'em
+	update_limb(dropping_limb = TRUE)
 
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
@@ -107,8 +108,6 @@
 			qdel(surgery)
 			break
 
-	for(var/obj/item/embedded in embedded_objects)
-		embedded.forceMove(src) // It'll self remove via signal reaction, just need to move it
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		phantom_owner.clear_mood_event("embedded")
@@ -123,7 +122,8 @@
 	update_icon_dropped()
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
-	phantom_owner.update_body_parts()
+	if(!special)
+		phantom_owner.hud_used?.update_locked_slots()
 
 	if(bodypart_flags & BODYPART_PSEUDOPART)
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
@@ -185,38 +185,6 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-/obj/item/organ/internal/eyes/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.eyes = src
-	..()
-
-/obj/item/organ/internal/ears/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.ears = src
-	..()
-
-/obj/item/organ/internal/tongue/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.tongue = src
-	..()
-
-/obj/item/organ/internal/brain/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.brain = src
-	..()
-
-/obj/item/organ/internal/eyes/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.eyes = null
-	..()
-
-/obj/item/organ/internal/ears/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.ears = null
-	..()
-
-/obj/item/organ/internal/tongue/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.tongue = null
-	..()
-
-/obj/item/organ/internal/brain/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.brain = null
-	..()
-
 /obj/item/bodypart/chest/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(special)
 		return ..()
@@ -225,14 +193,13 @@
 
 /obj/item/bodypart/arm/drop_limb(special, dismembered, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
-
 	if(special || !arm_owner)
 		return ..()
-
 	if(arm_owner.hand_bodyparts[held_index] == src)
 		// We only want to do this if the limb being removed is the active hand part.
 		// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1)
+	. = ..()
 	if(arm_owner.handcuffed)
 		arm_owner.handcuffed.forceMove(drop_location())
 		arm_owner.handcuffed.dropped(arm_owner)
@@ -241,21 +208,22 @@
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
-	if(arm_owner.gloves)
-		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
+	if(arm_owner.num_hands == 0)
+		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
-	return ..()
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
-	if(owner && !special)
-		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
-			owner.legcuffed.dropped(owner)
-			owner.legcuffed = null
-			owner.update_worn_legcuffs()
-		if(owner.shoes)
-			owner.dropItemToGround(owner.shoes, TRUE)
-	return ..()
+	var/mob/living/carbon/leg_owner = owner
+	. = ..()
+	if(special || !leg_owner)
+		return
+	if(leg_owner.legcuffed)
+		leg_owner.legcuffed.forceMove(drop_location())
+		leg_owner.legcuffed.dropped(leg_owner)
+		leg_owner.legcuffed = null
+		leg_owner.update_worn_legcuffs()
+	if(leg_owner.shoes)
+		leg_owner.dropItemToGround(leg_owner.shoes, force = TRUE)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!special)
@@ -263,10 +231,8 @@
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE)
 
-	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
-
 	//Handle dental implants
-	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in owner.actions)
+	for(var/datum/action/item_action/activate_pill/pill_action in owner.actions)
 		pill_action.Remove(owner)
 		var/obj/pill = pill_action.target
 		if(pill)
@@ -302,7 +268,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !(mob_chest.acceptable_bodyshape & bodyshape) && !special)
 		return FALSE
 	return TRUE
 
@@ -356,6 +322,8 @@
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
+	if(!special)
+		new_limb_owner.hud_used?.update_locked_slots()
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special)
 	return TRUE
 
@@ -373,8 +341,8 @@
 	real_name = new_head_owner.real_name
 
 	//Handle dental implants
-	for(var/obj/item/reagent_containers/pill/pill in src)
-		for(var/datum/action/item_action/hands_free/activate_pill/pill_action in pill.actions)
+	for(var/obj/item/reagent_containers/applicator/pill/pill in src)
+		for(var/datum/action/item_action/activate_pill/pill_action in pill.actions)
 			pill.forceMove(new_head_owner)
 			pill_action.Grant(new_head_owner)
 			break
@@ -386,8 +354,8 @@
 		sexy_chad.hair_color = hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
 		sexy_chad.facial_hair_color = facial_hair_color
-		sexy_chad.grad_style = gradient_styles?.Copy()
-		sexy_chad.grad_color = gradient_colors?.Copy()
+		sexy_chad.grad_style = gradient_styles.Copy()
+		sexy_chad.grad_color = gradient_colors.Copy()
 		sexy_chad.lip_style = lip_style
 		sexy_chad.lip_color = lip_color
 
@@ -395,9 +363,17 @@
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
 
+/obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special = FALSE)
+	. = ..()
+
+	if(!.)
+		return
+
+	new_arm_owner.update_worn_gloves() // To apply bloody hands overlay
+
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)
-	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/zone_list = GLOB.all_body_zones.Copy()
 
 	var/list/dismembered_by_copy = body_zone_dismembered_by?.Copy()
 
@@ -428,12 +404,12 @@
 				qdel(phantom_loss)
 
 		//Copied from /datum/species/proc/on_species_gain()
-		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
+		for(var/obj/item/organ/organ_path as anything in dna.species.mutant_organs)
 			//Load a persons preferences from DNA
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)
 				continue
-			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
+			var/obj/item/organ/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(src)
 
 		update_body_parts()

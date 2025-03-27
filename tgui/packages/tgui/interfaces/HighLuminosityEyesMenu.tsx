@@ -1,5 +1,3 @@
-import { BooleanLike } from '../../common/react';
-import { useBackend } from '../backend';
 import {
   Button,
   ColorBox,
@@ -7,7 +5,10 @@ import {
   LabeledList,
   NumberInput,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type EyeColorData = {
@@ -83,7 +84,7 @@ const RangeDisplay = (props) => {
         value={range}
         minValue={0}
         maxValue={5}
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('set_range', {
             new_range: value,
           })

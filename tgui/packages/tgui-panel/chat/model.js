@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { createUuid } from 'common/uuid';
+import { createUuid } from 'tgui-core/uuid';
 
 import { MESSAGE_TYPE_INTERNAL, MESSAGE_TYPES } from './constants';
 
@@ -19,10 +19,12 @@ export const createPage = (obj) => {
   }
 
   return {
+    isMain: false,
     id: createUuid(),
     name: 'New Tab',
     acceptedTypes: acceptedTypes,
     unreadCount: 0,
+    hideUnreadCount: false,
     createdAt: Date.now(),
     ...obj,
   };
@@ -34,6 +36,7 @@ export const createMainPage = () => {
     acceptedTypes[typeDef.type] = true;
   }
   return createPage({
+    isMain: true,
     name: 'Main',
     acceptedTypes,
   });

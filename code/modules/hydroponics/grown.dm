@@ -104,7 +104,7 @@
 
 	return new trash_type(location || drop_location())
 
-/obj/item/food/grown/grind_requirements()
+/obj/item/food/grown/blend_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
 		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
 		return
@@ -118,7 +118,7 @@
 	var/quality_max = DRINK_FANTASTIC
 	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
 	for(var/datum/reagent/reagent in reagents.reagent_list)
-		if(!istype(reagent, /datum/reagent/consumable))
+		if(reagent.type != /datum/reagent/consumable/nutriment && reagent.type != /datum/reagent/consumable/nutriment/vitamin)
 			continue
 		if(distill_reagent)
 			var/data = list()
@@ -139,10 +139,7 @@
 			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data, added_purity = reagent_purity)
 		reagents.del_reagent(reagent.type)
 
-/obj/item/food/grown/grind(datum/reagents/target_holder, mob/user)
-	if(on_grind() == -1)
-		return FALSE
-
+/obj/item/food/grown/grind_atom(datum/reagents/target_holder, mob/user)
 	var/grind_results_num = LAZYLEN(grind_results)
 	if(grind_results_num)
 		var/average_purity = reagents.get_average_purity()
@@ -152,9 +149,7 @@
 		for(var/reagent in grind_results)
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
 
-	if(reagents && target_holder)
-		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
-	return TRUE
+	return reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER
 #undef BITE_SIZE_VOLUME_MULTIPLIER

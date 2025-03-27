@@ -52,8 +52,15 @@
       : null;
   })();
 
+  // Blink engine version
+  Byond.BLINK = (function () {
+    var groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
+    var majorVersion = groups && groups[1];
+    return majorVersion ? parseInt(majorVersion, 10) : null;
+  })();
+
   // Basic checks to detect whether this page runs in BYOND
-  var isByond = (Byond.TRIDENT !== null || window.cef_to_byond)
+  var isByond = (Byond.TRIDENT !== null || Byond.BLINK !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
     && location.search !== '?external';
     //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
@@ -61,10 +68,6 @@
 
   // Version constants
   Byond.IS_BYOND = isByond;
-  Byond.IS_LTE_IE8 = Byond.TRIDENT !== null && Byond.TRIDENT <= 4;
-  Byond.IS_LTE_IE9 = Byond.TRIDENT !== null && Byond.TRIDENT <= 5;
-  Byond.IS_LTE_IE10 = Byond.TRIDENT !== null && Byond.TRIDENT <= 6;
-  Byond.IS_LTE_IE11 = Byond.TRIDENT !== null && Byond.TRIDENT <= 7;
 
   // Strict mode flag
   Byond.strictMode = Boolean(Number(parseMetaTag('tgui:strictMode')));
@@ -73,17 +76,12 @@
   Byond.__callbacks__ = [];
 
   // Reviver for BYOND JSON
-  // IE8: No reviver for you!
-  // See: https://stackoverflow.com/questions/1288962
-  var byondJsonReviver;
-  if (!Byond.IS_LTE_IE8) {
-    byondJsonReviver = function (key, value) {
-      if (typeof value === 'object' && value !== null && value.__number__) {
-        return parseFloat(value.__number__);
-      }
-      return value;
-    };
-  }
+  var byondJsonReviver = function (key, value) {
+    if (typeof value === 'object' && value !== null && value.__number__) {
+      return parseFloat(value.__number__);
+    }
+    return value;
+  };
 
   // Makes a BYOND call.
   // See: https://secure.byond.com/docs/ref/skinparams.html
@@ -244,23 +242,10 @@
   var loadedAssetByUrl = {};
 
   var isStyleSheetLoaded = function (node, url) {
-    // Method #1 (works on IE10+)
     var styleSheet = node.sheet;
     if (styleSheet) {
       return styleSheet.rules.length > 0;
     }
-    // Method #2
-    var styleSheets = document.styleSheets;
-    var len = styleSheets.length;
-    for (var i = 0; i < len; i++) {
-      var styleSheet = styleSheets[i];
-      if(styleSheet.href === undefined)
-        continue;
-      if (styleSheet.href.indexOf(url) !== -1) {
-        return styleSheet.rules.length > 0;
-      }
-    }
-    // All methods failed
     return false;
   };
 
@@ -308,10 +293,7 @@
       var node = document.createElement('script');
       node.type = 'text/javascript';
       node.crossOrigin = 'anonymous';
-      // IE8: Prefer non-https protocols
-      node.src = Byond.IS_LTE_IE9
-        ? url.replace('https://', 'http://')
-        : url;
+      node.src = url;
       if (sync) {
         node.defer = true;
       }
@@ -332,14 +314,23 @@
       var node = document.createElement('link');
       node.type = 'text/css';
       node.rel = 'stylesheet';
-      // IE8: Prefer non-https protocols
-      node.href = Byond.IS_LTE_IE9
-        ? url.replace('https://', 'http://')
-        : url;
+      node.href = url;
       // Temporarily set media to something inapplicable
       // to ensure it'll fetch without blocking render
       if (!sync) {
         node.media = 'only x';
+      }
+      var removeNodeAndRetry = function () {
+        node.parentNode.removeChild(node);
+        node = null;
+        retry();
+      }
+      // 516: Chromium won't call onload() if there is a 404 error
+      // Legacy IE doesn't use onerror, so we retain that
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#stylesheet_load_events
+      node.onerror = function () {
+        node.onerror = null;
+        removeNodeAndRetry();
       }
       node.onload = function () {
         node.onload = null;
@@ -348,10 +339,7 @@
           node.media = 'all';
           return;
         }
-        // Try again
-        node.parentNode.removeChild(node);
-        node = null;
-        retry();
+        removeNodeAndRetry();
       };
       injectNode(node);
       return;
@@ -365,6 +353,40 @@
   Byond.loadCss = function (url, sync) {
     loadAsset({ url: url, sync: sync, type: 'css' });
   };
+
+  Byond.saveBlob = function (blob, filename, ext) {
+    if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, filename);
+    } else if (window.showSaveFilePicker) {
+      var accept = {};
+      accept[blob.type] = [ext];
+
+      var opts = {
+        suggestedName: filename,
+        types: [
+          {
+            description: 'SS13 file',
+            accept: accept,
+          },
+        ],
+      };
+
+      window
+        .showSaveFilePicker(opts)
+        .then(function (file) {
+          return file.createWritable();
+        })
+        .then(function (file) {
+          return file.write(blob).then(function () {
+            return file.close();
+          });
+        })
+        .catch(function () {});
+    }
+  };
+
+  // Icon cache
+  Byond.iconRefMap = {};
 })();
 
 // Error handling
@@ -395,7 +417,7 @@ window.onerror = function (msg, url, line, col, error) {
       else {
         window.onerror.__stack__ = stack;
       }
-      var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
+      var textProp = 'textContent';
       errorStack[textProp] = window.onerror.__stack__;
     }
     // Set window geometry

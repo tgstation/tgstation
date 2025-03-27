@@ -1,8 +1,13 @@
-import { BooleanLike } from 'common/react';
-import { decodeHtmlEntities } from 'common/string';
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
 
 export type VentProps = {
@@ -138,7 +143,7 @@ export const Vent = (props: VentProps) => {
               minValue={0}
               step={10}
               maxValue={5066}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_internal_pressure', {
                   ref: refID,
                   value,
@@ -166,7 +171,7 @@ export const Vent = (props: VentProps) => {
               minValue={0}
               step={10}
               maxValue={5066}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_external_pressure', {
                   ref: refID,
                   value,

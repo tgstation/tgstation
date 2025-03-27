@@ -40,7 +40,7 @@
 	internal = new
 	register_context()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction()	
+/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(loc)
 	if(internal.total_moles())
 		local_turf.assume_air(internal)
@@ -55,7 +55,7 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
@@ -67,11 +67,10 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
-	return crowbar_deconstruction_act(user, tool, internal.return_pressure())	
+	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
-	cut_overlays()
 	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
 	pipe_appearance1.color = COLOR_LIME
 	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[REVERSE_DIR(dir)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
@@ -88,17 +87,17 @@
 	else
 		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
-	if(!can_interact(user))
-		return
+/obj/machinery/atmospherics/components/binary/crystallizer/click_ctrl(mob/user)
+	if(!is_operational)
+		return CLICK_ACTION_BLOCKING
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
+		return CLICK_ACTION_BLOCKING
 	on = !on
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
@@ -106,7 +105,7 @@
 		return TRUE
 	return FALSE
 
-///Injects the gases from the input inside the internal gasmix, the amount is dependant on the gas_input var
+///Injects the gases from the input inside the internal gasmix, the amount is dependent on the gas_input var
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
@@ -228,8 +227,8 @@
 			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] [creation.name]"
 			if(selected_recipe.dangerous)
-				investigate_log("has been created in the crystallizer.", INVESTIGATE_ENGINE)
-				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
+				investigate_log("[creation.name] has been created in the crystallizer.", INVESTIGATE_ENGINE)
+				message_admins("[creation.name] has been created in the crystallizer [ADMIN_JMP(src)].")
 
 
 	quality_loss = 0
@@ -300,7 +299,7 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

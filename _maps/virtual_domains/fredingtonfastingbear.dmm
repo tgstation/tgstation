@@ -1,0 +1,2602 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aV" = (
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"bu" = (
+/obj/machinery/oven/range,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"bL" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/mop_bucket/janitorialcart,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"bP" = (
+/obj/structure/sign/poster/official/report_crimes,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
+"bR" = (
+/obj/machinery/chem_dispenser/drinks/beer,
+/obj/structure/table/wood,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"bW" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/table,
+/obj/item/food/pizza{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"cn" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/item/toy/balloon{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"cp" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/mob/living/basic/bear/snow,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"cY" = (
+/obj/structure/sign/poster/official/no_erp/directional/north,
+/obj/structure/sign/poster/official/no_erp/directional/north,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"dl" = (
+/obj/structure/sign/poster/contraband/blood_geometer/directional/south,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"dz" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"dN" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/blood/xtracks,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"dV" = (
+/obj/structure/table/glass,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ex" = (
+/obj/structure/sign/poster/contraband/bountyhunters/directional/south,
+/turf/template_noop,
+/area/virtual_domain)
+"eE" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/closet/gmcloset,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"eW" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"fd" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"fo" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = 5
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"fy" = (
+/obj/machinery/stove,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"fz" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/table,
+/obj/item/pizzabox/bomb/armed{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"fU" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"gl" = (
+/obj/structure/sign/poster/contraband/blasto_detergent,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"gL" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/item/toy/balloon/heart,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/light/built/directional/east,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"hq" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/seclite{
+	pixel_y = 9
+	},
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"hI" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"hK" = (
+/obj/item/trash/popcorn,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"hR" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/table,
+/obj/item/food/pizzaslice/mothic_margherita,
+/obj/effect/decal/cleanable/confetti,
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"jE" = (
+/obj/structure/sign/poster/abductor/ayy_over_tizira,
+/obj/structure/sign/poster/official/the_owl,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
+"jZ" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/structure/fake_stairs/wood{
+	dir = 4
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"kf" = (
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"km" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"kL" = (
+/obj/machinery/light/built/directional/west,
+/obj/item/light/tube/broken,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"lc" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"lL" = (
+/obj/structure/table,
+/obj/item/kitchen/rollingpin/illegal,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"lP" = (
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"lS" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ma" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/table,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ms" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"mC" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/table,
+/obj/item/food/pizza,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"mX" = (
+/obj/machinery/computer/arcade/amputation{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ng" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"nF" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/floor/iron,
+/area/virtual_domain/protected_space/fullbright)
+"nP" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/closet/gmcloset,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/item/clothing/mask/animal/small/bear/cursed,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"nX" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ob" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"of" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"oO" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 4
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"pr" = (
+/obj/machinery/light/built/directional/east,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"pK" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"pX" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/item/restraints/legcuffs/beartrap/prearmed,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ql" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/plush/nukeplushie{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/phone{
+	base_pixel_w = 4;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"qK" = (
+/turf/closed/indestructible/fakedoor,
+/area/virtual_domain)
+"rc" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"re" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ri" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"rB" = (
+/obj/item/trash/boritos/green{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"rD" = (
+/obj/machinery/door/poddoor{
+	id = "door2"
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/protected_space/fullbright)
+"rY" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"sg" = (
+/turf/template_noop,
+/area/virtual_domain)
+"si" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/table,
+/obj/item/balloon_mallet,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"sk" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"sl" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/sign/poster/contraband/space_cola/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain/protected_space/fullbright)
+"sR" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"td" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/chempuff,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"to" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"tC" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/table,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"tI" = (
+/obj/item/trash/can,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"tN" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"tZ" = (
+/obj/structure/table/wood/poker,
+/obj/item/trash/ready_donk,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ud" = (
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"ur" = (
+/obj/structure/chair/sofa/corp{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"uZ" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"ve" = (
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"vk" = (
+/obj/structure/railing,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"vm" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"vs" = (
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"vw" = (
+/mob/living/basic/bear/butter,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"vy" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"vz" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"vF" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/button/door/directional/west{
+	id = "door2"
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"vG" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"vR" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/table,
+/obj/item/trash/tray,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"vT" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"wM" = (
+/obj/item/toy/balloon/heart,
+/obj/machinery/light/built/directional/west,
+/obj/structure/fake_stairs/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"xa" = (
+/obj/structure/railing,
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"xk" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/table,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"xv" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/sign/poster/official/moth_hardhat/directional/west,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"xY" = (
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"yz" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"yB" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"zU" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Ag" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 4
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Ak" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"AF" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/goldschlager{
+	pixel_y = 11;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
+	pixel_x = -4
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Bc" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"Bf" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Bj" = (
+/obj/machinery/computer/arcade/amputation,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Bo" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"BU" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"Ce" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Cm" = (
+/turf/template_noop,
+/area/template_noop)
+"Ct" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/built/directional/east,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Dx" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"Dz" = (
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"DV" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"EO" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"EP" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/leaper_sludge,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Fc" = (
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
+"Fy" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/machinery/light/built/directional/west,
+/obj/structure/fake_stairs/wood,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"FA" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"Gb" = (
+/obj/item/trash/peanuts,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Gn" = (
+/obj/machinery/light/built/directional/east,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"GD" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"GK" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Hi" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/closet/gmcloset,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Ho" = (
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"HE" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/laser{
+	pixel_x = -4
+	},
+/obj/item/gun/energy/laser{
+	pixel_y = 2
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/machinery/button/door/directional/east{
+	id = "door2"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"HG" = (
+/obj/structure/curtain/cloth/fancy/mechanical,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"If" = (
+/mob/living/basic/bear/russian,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Io" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"IX" = (
+/obj/machinery/computer/arcade/amputation,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"IY" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/syndicate,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Jh" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/table,
+/obj/item/food/pizza/energy/raw{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"JD" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"JF" = (
+/obj/modular_map_root/safehouse{
+	key = "wood"
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"JW" = (
+/obj/structure/sign/poster/official/the_owl,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
+"Ke" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/item/trash/pistachios,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"KJ" = (
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"Ln" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"LP" = (
+/obj/item/trash/shrimp_chips,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"LU" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/button/door/directional/east{
+	id = "door1"
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Mc" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/structure/fake_stairs/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Mm" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Mq" = (
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/west,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"ML" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"MO" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"MS" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/item/toy/balloon{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Ne" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Nz" = (
+/obj/structure/sign/poster/official/pda_ad/directional/north,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"NA" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"NE" = (
+/obj/structure/sign/poster/abductor/ayy_cops/directional/north,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"Od" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Ox" = (
+/obj/structure/sign/poster/official/the_owl,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"OB" = (
+/turf/open/floor/wood,
+/area/virtual_domain)
+"OD" = (
+/mob/living/basic/bear/russian,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"OM" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"Pm" = (
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"PK" = (
+/obj/structure/curtain/cloth/fancy/mechanical,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Qg" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/item/toy/balloon/heart,
+/obj/machinery/light/built/directional/west,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"RB" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/built/directional/west,
+/obj/effect/decal/cleanable/glass/plastitanium,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Sp" = (
+/obj/structure/chair/sofa/corp,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Sr" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"SE" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/built/directional/east,
+/obj/effect/decal/cleanable/glass/plastitanium,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"SW" = (
+/obj/machinery/door/poddoor{
+	id = "door1"
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/protected_space/fullbright)
+"Ti" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Tp" = (
+/obj/structure/sign/poster/official/soft_cap_pop_art,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"Tq" = (
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"TG" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"TR" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/ants/fire,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"TW" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/mob/living/basic/bear/snow,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Uj" = (
+/obj/structure/curtain/bounty/start_closed,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Ux" = (
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"UR" = (
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"UW" = (
+/obj/structure/sign/poster/official/no_erp/directional/north,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
+"Vd" = (
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"Ve" = (
+/obj/structure/table,
+/obj/item/kitchen/tongs,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"Vs" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/machinery/light/built/directional/west,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"VS" = (
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/laptop/preset/civilian,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"VW" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Wj" = (
+/obj/structure/sign/poster/contraband/free_key/directional,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
+"Wy" = (
+/obj/effect/decal/cleanable/molten_object/large,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"WG" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"XG" = (
+/obj/machinery/roulette,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Yd" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Ye" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/soda_cans/grey_bull,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Yy" = (
+/obj/machinery/computer/arcade/amputation{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"YK" = (
+/obj/effect/spawner/random/trash,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"YL" = (
+/obj/item/trash/raisins,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"YT" = (
+/obj/machinery/button/door/directional/west{
+	id = "door1"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
+"Zf" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"Zj" = (
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Zp" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ZL" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"ZU" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ZZ" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+
+(1,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(2,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Uj
+Uj
+Uj
+Uj
+Uj
+Uj
+Uj
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(3,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Uj
+MO
+OB
+OB
+OB
+OB
+Uj
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(4,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Uj
+OB
+OB
+OB
+OB
+Zj
+Uj
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(5,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Uj
+vm
+OB
+OB
+OB
+vm
+Uj
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(6,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+ve
+ve
+ve
+ve
+ve
+Ox
+ve
+ve
+ve
+ve
+ve
+OB
+OB
+OB
+ve
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(7,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+sk
+Ux
+Ux
+kL
+Ux
+Ux
+UR
+Ux
+Ux
+Ux
+Fy
+EP
+ZL
+ZL
+wM
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(8,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+GK
+Gb
+Ux
+IX
+rB
+YL
+mX
+UR
+Ux
+Ux
+Ux
+UR
+UR
+Ux
+Ux
+ve
+Cm
+Cm
+ve
+ve
+ve
+ve
+ve
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(9,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+gl
+GK
+Ux
+Ux
+Bj
+Ux
+Ux
+Yy
+Bf
+Ux
+Ux
+Ux
+Zp
+rc
+re
+Ux
+ve
+Cm
+Cm
+ve
+Ux
+Ux
+Ux
+Ux
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(10,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+GK
+Ux
+Ux
+Bj
+UR
+Ux
+Yy
+Ux
+Ux
+Ux
+Ux
+Ke
+re
+re
+Ux
+Tp
+Cm
+Cm
+ve
+Ux
+vw
+Ux
+Ux
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(11,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+sk
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+re
+re
+re
+Ux
+ve
+Cm
+Cm
+ve
+Ux
+Ux
+Ux
+Ux
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(12,1,1) = {"
+Cm
+Uj
+Uj
+Uj
+Uj
+ve
+ve
+ve
+ve
+Ux
+Ux
+Ux
+Wy
+ve
+ve
+NE
+Ux
+Ux
+Ux
+Ux
+Ho
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+UW
+UW
+cY
+UW
+ve
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(13,1,1) = {"
+Cm
+Uj
+OB
+OB
+dl
+hI
+to
+Vs
+dN
+vT
+oO
+ML
+EO
+WG
+Qg
+ve
+Ux
+xY
+Ux
+Ux
+NA
+NA
+NA
+NA
+RB
+NA
+NA
+zU
+NA
+NA
+NA
+yz
+yz
+yz
+yz
+nP
+ve
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+"}
+(14,1,1) = {"
+Cm
+Uj
+OB
+OB
+OB
+xa
+jZ
+to
+eW
+bW
+ma
+to
+hR
+tC
+MS
+ve
+Ux
+XG
+XG
+Ux
+NA
+pX
+NA
+NA
+NA
+NA
+NA
+NA
+NA
+NA
+td
+yz
+LU
+yz
+ob
+bL
+ve
+Ne
+Bc
+Bc
+Bc
+Bc
+Bc
+JF
+Ne
+"}
+(15,1,1) = {"
+Cm
+Uj
+OB
+OB
+OB
+HG
+of
+ML
+ZU
+mC
+vR
+ML
+tC
+Jh
+to
+Ux
+Ux
+Od
+tZ
+Ux
+TR
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+Fc
+Fc
+sl
+SW
+Fc
+Wj
+Fc
+ve
+ve
+ve
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
+"}
+(16,1,1) = {"
+Cm
+Uj
+OB
+OB
+OB
+HG
+vk
+to
+ML
+Ln
+ZZ
+to
+ZZ
+Yd
+eW
+Ux
+hK
+fd
+Ux
+Ux
+NA
+vz
+tI
+VW
+ve
+sg
+sg
+sg
+Fc
+hq
+ud
+Dx
+YT
+Vd
+Fc
+Tq
+Tq
+Tq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
+"}
+(17,1,1) = {"
+Cm
+Uj
+OB
+OB
+OB
+HG
+vk
+ML
+to
+ML
+cn
+ML
+to
+ML
+ZU
+Ux
+Ux
+fd
+Ux
+Ux
+NA
+Ux
+Ux
+lP
+qK
+sg
+sg
+ex
+jE
+VS
+Vd
+Vd
+Vd
+Vd
+DV
+Tq
+Tq
+Tq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
+"}
+(18,1,1) = {"
+Cm
+Uj
+OB
+OB
+pK
+PK
+yB
+to
+ML
+EO
+Ag
+to
+Ag
+EO
+eW
+Ux
+Ux
+fd
+Ux
+Ux
+NA
+vz
+LP
+lc
+ve
+sg
+sg
+sg
+JW
+ql
+BU
+ud
+HE
+Vd
+Fc
+Io
+Tq
+Tq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
+"}
+(19,1,1) = {"
+Cm
+Uj
+OB
+OB
+pK
+xa
+Mc
+JD
+ZU
+xk
+tC
+ML
+si
+ma
+ZU
+YK
+Ux
+fd
+IY
+Ux
+NA
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+Fc
+Fc
+nF
+rD
+Fc
+bP
+Fc
+ve
+ve
+ve
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
+"}
+(20,1,1) = {"
+Cm
+Uj
+OB
+OB
+If
+ve
+ML
+rY
+ML
+tC
+Jh
+to
+ma
+fz
+TW
+ve
+Ux
+XG
+XG
+Ux
+NA
+NA
+NA
+NA
+NA
+NA
+NA
+xv
+NA
+NA
+NA
+yz
+vF
+yz
+yz
+Hi
+ve
+Ne
+Bc
+Bc
+Bc
+Bc
+Bc
+tN
+Ne
+"}
+(21,1,1) = {"
+Cm
+Uj
+OB
+OB
+vm
+ve
+lS
+gL
+ms
+ri
+TG
+eW
+Yd
+Ce
+Ct
+ve
+Ux
+Ux
+Ux
+Ux
+cp
+NA
+NA
+NA
+SE
+NA
+NA
+vy
+NA
+NA
+NA
+yz
+yz
+yz
+yz
+eE
+ve
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+"}
+(22,1,1) = {"
+Cm
+Uj
+Uj
+Uj
+Uj
+ve
+ve
+ve
+ve
+GD
+Ux
+Ux
+Ux
+ve
+ve
+ve
+Ux
+Ux
+Ux
+Ux
+Ux
+ve
+ve
+ve
+ve
+ve
+ve
+qK
+ve
+ve
+Nz
+ve
+ve
+ve
+ve
+ve
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(23,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+OD
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(24,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+kf
+kf
+kf
+kf
+kf
+kf
+Ux
+Ux
+Ux
+Ux
+Ux
+Pm
+Ye
+km
+Ux
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(25,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+dz
+dz
+dz
+dz
+dz
+dz
+Mm
+Ux
+Ux
+Ux
+Ux
+Sp
+dV
+ur
+Ux
+Bo
+aV
+uZ
+KJ
+Ve
+lL
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(26,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Mq
+bR
+Ux
+Ux
+Ux
+Ux
+dz
+Mm
+Ux
+Ux
+Ux
+Dz
+nX
+Ti
+sR
+Ux
+Bo
+aV
+aV
+FA
+aV
+OM
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(27,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+lc
+Ux
+fo
+AF
+pr
+dz
+Mm
+Ux
+Ux
+ng
+fU
+fU
+pr
+Ux
+Ux
+ve
+ve
+ve
+vG
+aV
+Zf
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(28,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+ve
+qK
+ve
+ve
+ve
+ve
+ve
+ve
+Ux
+Sr
+ve
+ve
+ve
+ve
+ve
+ve
+Cm
+ve
+vG
+aV
+fy
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(29,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+Ux
+Sr
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+vs
+Gn
+bu
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(30,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+Ux
+Ux
+ve
+ve
+ve
+ve
+ve
+ve
+Cm
+ve
+ve
+ve
+ve
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(31,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+Ux
+Ux
+Ux
+Ux
+Ux
+Dz
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(32,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+Ak
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(33,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+ve
+ve
+qK
+qK
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+qK
+qK
+ve
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}

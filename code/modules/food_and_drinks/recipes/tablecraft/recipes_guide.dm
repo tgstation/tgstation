@@ -827,7 +827,7 @@
 
 // Machinery: Drying rack
 /datum/crafting_recipe/food/drying
-	machinery = list(/obj/machinery/smartfridge/drying_rack)
+	machinery = list(/obj/machinery/smartfridge/drying)
 	steps = list("Put into the rack and dry")
 	category = CAT_MISCFOOD
 	non_craftable = TRUE

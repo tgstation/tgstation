@@ -67,7 +67,7 @@
 	QDEL_NULL(stored_id_card)
 	return ..()
 
-/obj/machinery/pdapainter/on_deconstruction()
+/obj/machinery/pdapainter/on_deconstruction(disassembled)
 	// Don't use ejection procs as we're gonna be destroyed anyway, so no need to update icons or anything.
 	if(stored_pda)
 		stored_pda.forceMove(loc)
@@ -279,7 +279,7 @@
 
 	return data
 
-/obj/machinery/pdapainter/ui_act(action, params)
+/obj/machinery/pdapainter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -347,7 +347,7 @@
 
 			var/selection = params["selection"]
 			for(var/path in card_trims)
-				if(!(card_trims[path] == selection))
+				if(card_trims[path] != selection)
 					continue
 
 				if(SSid_access.apply_trim_to_card(stored_id_card, path, copy_access = FALSE))

@@ -3,6 +3,7 @@
 /datum/status_effect/spacer
 	id = "spacer_gravity_effects"
 	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
 	/// Essentially, tracks whether this is a planetary map.
 	/// It'd be pretty miserable if you're playing a planetary map and getting the worse of all effects, so we handwave it a bit.
 	VAR_FINAL/nerfed_effects_because_planetary = FALSE
@@ -42,7 +43,7 @@
 		// This has some interesting side effects with gravitum or similar negating effects that may be worth nothing
 		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick)
 		owner.AdjustAllImmobility(-1 * stun_heal_per_tick)
-		// For comparison: Ephedrine heals 1 stamina per tick / 0.5 per second
+		// For comparison: Ephedrine heals 4 stamina per tick / 2 per second
 		// and Nicotine heals 5 seconds of stun per tick / 2.5 per second
 
 // The bad side (being on a planet)

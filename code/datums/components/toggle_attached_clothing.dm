@@ -48,7 +48,7 @@
 	if (!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (!deployable_type || !equipped_slot)
-		return COMPONENT_INCOMPATIBLE // Not strictly true but INITIALIZE_HINT_QDEL doesn't work from components
+		return COMPONENT_REDUNDANT
 	src.deployable_type = deployable_type
 	src.equipped_slot = equipped_slot
 	src.destroy_on_removal = destroy_on_removal
@@ -198,9 +198,9 @@
 	on_removed?.Invoke(deployable)
 
 	var/obj/item/parent_gear = parent
-	if (destroy_on_removal)
+	if(destroy_on_removal)
 		QDEL_NULL(deployable)
-	else if (parent_icon_state_suffix)
+	if(parent_icon_state_suffix)
 		parent_gear.icon_state = "[initial(parent_gear.icon_state)]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()

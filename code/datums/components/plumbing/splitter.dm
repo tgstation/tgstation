@@ -29,7 +29,7 @@
 	return FALSE
 
 
-/datum/component/plumbing/splitter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/splitter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	var/direction
 	for(var/A in ducts)
 		if(ducts[A] == net)
@@ -43,5 +43,6 @@
 		if(EAST)
 			if(amount >= S.transfer_side)
 				amount = S.transfer_side
+	S.use_energy(S.active_power_usage)
 	return ..()
 

@@ -11,7 +11,7 @@
 		ui.open()
 
 /datum/adventure_browser/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_DEBUG)
 
 /// Handles finishing adventure
 /datum/adventure_browser/proc/resolve_adventure(datum/source,result)
@@ -83,11 +83,6 @@
 	. = ..()
 	QDEL_NULL(temp_adventure)
 
-/client/proc/adventure_manager()
-	set category = "Debug"
-	set name = "Adventure Manager"
-
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(adventure_manager, R_DEBUG, "Adventure Manager", "View and edit adventures.", ADMIN_CATEGORY_DEBUG)
 	var/datum/adventure_browser/browser = new()
-	browser.ui_interact(usr)
+	browser.ui_interact(user.mob)

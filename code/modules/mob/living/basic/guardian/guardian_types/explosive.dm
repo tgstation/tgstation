@@ -35,7 +35,6 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "smoke"
 	cooldown_time = 20 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
 	/// After this amount of time passses, bomb deactivates.

@@ -15,12 +15,17 @@
 	var/poll_role = "split personality"
 
 /datum/brain_trauma/severe/split_personality/on_gain()
-	var/mob/living/M = owner
-	if(M.stat == DEAD || !M.client) //No use assigning people to a corpse or braindead
+	var/mob/living/brain_owner = owner
+	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner)) //No use assigning people to a corpse or braindead
 		qdel(src)
 		return
 	..()
 	make_backseats()
+
+#ifdef UNIT_TESTS
+	return // There's no ghosts in the unit test
+#endif
+
 	get_ghost()
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
@@ -34,13 +39,16 @@
 
 /// Attempts to get a ghost to play the personality
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(schism))
-	owner.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SPLITPERSONALITY, \
-		job_bans = ROLE_PAI, \
-		title = "[owner.real_name]'s [poll_role]", \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_SPLITPERSONALITY,
+		alert_pic = owner,
+		role_name_text = poll_role,
 	)
+	schism(chosen_one)
 
 /// Ghost poll has concluded
 /datum/brain_trauma/severe/split_personality/proc/schism(mob/dead/observer/ghost)
@@ -48,7 +56,7 @@
 		qdel(src)
 		return
 
-	stranger_backseat.key = ghost.key
+	stranger_backseat.PossessByPlayer(ghost.ckey)
 	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
@@ -168,7 +176,8 @@
 	to_chat(src, span_notice("As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality."))
 	to_chat(src, span_warning("<b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b>"))
 
-/mob/living/split_personality/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/living/split_personality/try_speak(message, ignore_spam, forced, filterproof)
+	SHOULD_CALL_PARENT(FALSE)
 	to_chat(src, span_warning("You cannot speak, your other self is controlling your body!"))
 	return FALSE
 
@@ -187,7 +196,7 @@
 	var/codeword
 	var/objective
 
-/datum/brain_trauma/severe/split_personality/brainwashing/New(obj/item/organ/internal/brain/B, _permanent, _codeword, _objective)
+/datum/brain_trauma/severe/split_personality/brainwashing/New(obj/item/organ/brain/B, _permanent, _codeword, _objective)
 	..()
 	if(_codeword)
 		codeword = _codeword
@@ -211,10 +220,9 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", poll_time = 7.5 SECONDS, target_mob = stranger_backseat, pic_source = owner, role_name_text = "brainwashed mind")
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
+	if(chosen_one)
+		stranger_backseat.PossessByPlayer(chosen_one.ckey)
 	else
 		qdel(src)
 
@@ -228,7 +236,7 @@
 	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	if(findtext(message, codeword))
 		hearing_args[HEARING_RAW_MESSAGE] = replacetext(message, codeword, span_warning("[codeword]"))
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/brain_trauma/severe/split_personality, switch_personalities)), 10)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/brain_trauma/severe/split_personality, switch_personalities)), 1 SECONDS)
 
 /datum/brain_trauma/severe/split_personality/brainwashing/handle_speech(datum/source, list/speech_args)
 	if(findtext(speech_args[SPEECH_MESSAGE], codeword))
@@ -262,6 +270,10 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
+
+	if(QDELETED(src))
+		return
+
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
 	notify_ghosts(
 		"[owner] is blacking out!",
@@ -302,9 +314,12 @@
 		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT), 10 SECONDS)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "dexterity regained!"), 10 SECONDS)
 	if(prob(15))
-		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
+		playsound(owner,'sound/mobs/humanoids/human/hiccup/sf_hiccup_male_01.ogg', 50)
 		owner.emote("hiccup")
-	owner.adjustStaminaLoss(-5) //too drunk to feel anything
+	//too drunk to feel anything
+	//if they're to this point, they're likely dying of liver damage
+	//and not accounting for that, the split personality is temporary
+	owner.adjustStaminaLoss(-25)
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
@@ -316,7 +331,7 @@
 	if(!. || !client)
 		return FALSE
 	to_chat(src, span_notice("You're the incredibly inebriated leftovers of your host's consciousness! Make sure to act the part and leave a trail of confusion and chaos in your wake."))
-	to_chat(src, span_boldwarning("Do not commit suicide or put the body in danger, you have a minor liscense to grief just like a clown, do not kill anyone or create a situation leading to the body being in danger or in harm ways. While you're drunk, you're not suicidal."))
+	to_chat(src, span_boldwarning("While you're drunk, you're not suicidal. Do not commit suicide or put the body in danger. You have a minor license to grief just like a clown, but do not kill anyone or create a situation leading to the body being put in danger or at risk of being harmed."))
 
 #undef OWNER
 #undef STRANGER

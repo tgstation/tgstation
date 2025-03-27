@@ -6,13 +6,13 @@
 	density = FALSE
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
-	var/flare_message = "<span class='warning'>the trap flares brightly!</span>"
+	var/flare_message = span_warning("the trap flares brightly!")
 	var/last_trigger = 0
 	var/time_between_triggers = 1 MINUTES
 	var/charges = INFINITY
 	var/antimagic_flags = MAGIC_RESISTANCE
 
-	var/list/static/ignore_typecache
+	var/static/list/ignore_typecache
 	var/list/mob/immune_minds = list()
 
 	var/sparks = TRUE
@@ -20,7 +20,7 @@
 
 /obj/structure/trap/Initialize(mapload)
 	. = ..()
-	flare_message = "<span class='warning'>[src] flares brightly!</span>"
+	flare_message = span_warning("[src] flares brightly!")
 	spark_system = new
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
@@ -30,7 +30,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	if(!ignore_typecache)
+	if(isnull(ignore_typecache))
 		ignore_typecache = typecacheof(list(
 			/obj/effect,
 			/mob/dead,
@@ -102,7 +102,7 @@
 /obj/structure/trap/stun/hunter
 	name = "bounty trap"
 	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. You'd better avoid it."
-	icon = 'icons/obj/restraints.dmi'
+	icon = 'icons/obj/weapons/restraints.dmi'
 	icon_state = "bounty_trap_on"
 	stun_time = 20 SECONDS
 	sparks = FALSE //the item version gives them off to prevent runtimes (see Destroy())
@@ -113,7 +113,7 @@
 /obj/structure/trap/stun/hunter/Initialize(mapload)
 	. = ..()
 	time_between_triggers = 1 SECONDS
-	flare_message = "<span class='warning'>[src] snaps shut!</span>"
+	flare_message = span_warning("[src] snaps shut!")
 
 /obj/structure/trap/stun/hunter/Destroy()
 	if(!QDELETED(stored_item))
@@ -143,7 +143,7 @@
 /obj/item/bountytrap
 	name = "bounty trap"
 	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. It's currently inactive."
-	icon = 'icons/obj/restraints.dmi'
+	icon = 'icons/obj/weapons/restraints.dmi'
 	icon_state = "bounty_trap_off"
 	var/obj/structure/trap/stun/hunter/stored_trap
 	var/obj/item/radio/radio
@@ -200,6 +200,8 @@
 	icon_state = "trap-frost"
 
 /obj/structure/trap/chill/trap_effect(mob/living/victim)
+	if(HAS_TRAIT(victim, TRAIT_RESISTCOLD))
+		return
 	to_chat(victim, span_bolddanger("You're frozen solid!"))
 	victim.Paralyze(2 SECONDS)
 	victim.adjust_bodytemperature(-300)

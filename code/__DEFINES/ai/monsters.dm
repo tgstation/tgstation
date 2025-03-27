@@ -10,6 +10,16 @@
 /// Key where we keep the spine traps ability
 #define BB_METEOR_HEART_SPINE_TRAPS "BB_meteor_spine_traps"
 
+// Cybersun AI core AI keys
+///key for lightning strike attack
+#define BB_CYBERSUN_CORE_LIGHTNING "BB_lightning_strike"
+///key for big laser attack
+#define BB_CYBERSUN_CORE_BARRAGE "BB_cybersun_barrage"
+
+// Donk Exenteration Drone keys
+// key for aoe slash attack
+#define BB_DEDBOT_SLASH "BB_dedbot_exenterate"
+
 // Spider AI keys
 /// Key where we store a turf to put webs on
 #define BB_SPIDER_WEB_TARGET "BB_spider_web_target"
@@ -60,6 +70,11 @@
 #define BB_LOBSTROSITY_TARGET_LIMB "BB_lobstrosity_target_limb"
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
+/// Does this carp still target lying mobs even if they aren't stunned, and flee from sary fishermen?
+#define BB_LOBSTROSITY_NAIVE_HUNTER "BB_lobstrosity_naive_hunter"
+
+/// Does this carp run from scary fishermen?
+#define BB_CARPS_FEAR_FISHERMAN "BB_carp_fear_fisherman"
 
 // eyeball keys
 ///the death glare ability
@@ -116,6 +131,10 @@
 #define BB_ORE_TARGET "BB_ore_target"
 /// which ore types we will not eat
 #define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"
+/// key that holds the boulder we will break
+#define BB_BOULDER_TARGET "BB_boulder_target"
+/// key that holds the ore_vent we will harvest boulders from
+#define BB_VENT_TARGET "BB_vent_target"
 
 // minebot keys
 /// key that stores our toggle light ability
@@ -124,6 +143,10 @@
 #define BB_MINEBOT_DUMP_ABILITY "minebot_dump_ability"
 /// key that stores our target turf
 #define BB_TARGET_MINERAL_TURF "target_mineral_turf"
+///key that holds our missile ability
+#define BB_MINEBOT_MISSILE_ABILITY "minebot_missile_ability"
+///key that holds our landmine ability
+#define BB_MINEBOT_LANDMINE_ABILITY "minebot_landmine_ability"
 /// key that stores list of the turfs we ignore
 #define BB_BLACKLIST_MINERAL_TURFS "blacklist_mineral_turfs"
 /// key that stores the previous blocked wall
@@ -132,6 +155,20 @@
 #define BB_AUTOMATED_MINING "automated_mining"
 /// key that stores the nearest dead human
 #define BB_NEARBY_DEAD_MINER "nearby_dead_miner"
+///key that holds the drone we defend
+#define BB_DRONE_DEFEND "defend_drone"
+///key that holds the minimum distance before we flee
+#define BB_MINIMUM_SHOOTING_DISTANCE "minimum_shooting_distance"
+///key that holds the miner we must befriend
+#define BB_MINER_FRIEND "miner_friend"
+///key that holds the missile target
+#define BB_MINEBOT_MISSILE_TARGET "minebot_missile_target"
+///should we auto protect?
+#define BB_MINEBOT_AUTO_DEFEND "minebot_auto_defend"
+///should we repair drones?
+#define BB_MINEBOT_REPAIR_DRONE "minebot_repair_drone"
+///should we plant mines?
+#define BB_MINEBOT_PLANT_MINES "minebot_plant_mines"
 
 //seedling keys
 /// the water can we will pick up
@@ -251,3 +288,43 @@
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"
+
+//deer
+///our water target
+#define BB_DEER_WATER_TARGET "deer_water_target"
+///our grass target
+#define BB_DEER_GRASS_TARGET "deer_grass_target"
+///our tree target
+#define BB_DEER_TREE_TARGET "deer_tree_target"
+///our temporary playmate
+#define BB_DEER_PLAYFRIEND "deer_playfriend"
+///our home target
+#define BB_DEER_TREEHOME "deer_home"
+///our resting duration
+#define BB_DEER_RESTING "deer_resting"
+///time till our next rest duration
+#define BB_DEER_NEXT_REST_TIMER "deer_next_rest_timer"
+
+//the thing boss
+#define BB_THETHING_CHARGE "BB_THETHING_CHARGE"
+#define BB_THETHING_DECIMATE "BB_THETHING_DECIMATE"
+#define BB_THETHING_BIGTENDRILS "BB_THETHING_BIGTENDRILS"
+#define BB_THETHING_SHRIEK "BB_THETHING_SHRIEK"
+#define BB_THETHING_CARDTENDRILS "BB_THETHING_CARDTENDRILS"
+#define BB_THETHING_ACIDSPIT "BB_THETHING_ACIDSPIT"
+/// Blackboard key for The Thing boss that determines attack mode. TRUE means it will focus on closing the distance and murdering the person in question. Otherwise AOE.
+#define BB_THETHING_ATTACKMODE "BB_THETHING_ATTACKMODE"
+/// The Thing will be in attack mode forever if true
+#define BB_THETHING_NOAOE "BB_THETHING_NOAOE"
+/// What (first in combo) attack was last executed
+#define BB_THETHING_LASTAOE "BB_THETHING_LASTAOE"
+
+//turtle
+///our tree's ability
+#define BB_TURTLE_TREE_ABILITY "turtle_tree_ability"
+///people we headbutt!
+#define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"
+///flore we must smell
+#define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
+
+#define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"

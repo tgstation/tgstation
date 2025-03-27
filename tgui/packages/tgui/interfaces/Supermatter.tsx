@@ -1,10 +1,5 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
 import { ReactNode, useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +7,11 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { getGasFromPath } from '../constants';
 import { Window } from '../layouts';
 
@@ -123,10 +122,14 @@ export const SupermatterContent = (props: SupermatterProps) => {
     gas_metadata,
   } = props;
   const [allGasActive, setAllGasActive] = useState(false);
-  const gas_composition: [gas_path: string, amount: number][] = flow([
-    !allGasActive && filter(([gas_path, amount]) => amount !== 0),
-    sortBy(([gas_path, amount]) => -amount),
-  ])(Object.entries(props.gas_composition));
+  let gas_composition = Object.entries(props.gas_composition);
+  if (!allGasActive) {
+    gas_composition = filter(
+      gas_composition,
+      ([gas_path, amount]) => amount !== 0,
+    );
+  }
+  gas_composition = sortBy(gas_composition, ([gas_path, amount]) => -amount);
 
   return (
     <Stack height="100%">

@@ -52,7 +52,7 @@
 		if(BRUTE)
 			playsound(src, 'sound/effects/piano_hit.ogg', 100, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/musician/piano/atom_break(damage_flag)
 	. = ..()

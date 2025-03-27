@@ -1,11 +1,12 @@
 import { perf } from 'common/perf';
-import { render } from 'react-dom';
+import { ReactNode } from 'react';
+import { createRoot, Root } from 'react-dom/client';
 
 import { createLogger } from './logging';
 
 const logger = createLogger('renderer');
 
-let reactRoot: any;
+let reactRoot: Root;
 let initialRender: string | boolean = true;
 let suspended = false;
 
@@ -20,7 +21,7 @@ export const suspendRenderer = () => {
 };
 
 type CreateRenderer = <T extends unknown[] = [unknown]>(
-  getVNode?: (...args: T) => any,
+  getVNode?: (...args: T) => ReactNode,
 ) => (...args: T) => void;
 
 enum Render {
@@ -33,13 +34,14 @@ export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   perf.mark(Render.Start);
   // Start rendering
   if (!reactRoot) {
-    reactRoot = document.getElementById('react-root');
+    const element = document.getElementById('react-root');
+    reactRoot = createRoot(element!);
   }
   if (getVNode) {
-    render(getVNode(...args), reactRoot);
+    reactRoot.render(getVNode(...args));
   }
   else {
-    render(args[0] as any, reactRoot);
+    reactRoot.render(args[0] as any);
   }
   perf.mark(Render.Finish);
   if (suspended) {

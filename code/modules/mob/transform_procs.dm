@@ -17,7 +17,7 @@
 
 	//Make mob invisible and spawn animation
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+	Stun(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 
@@ -29,12 +29,13 @@
 
 /mob/living/carbon/proc/finish_monkeyize()
 	transformation_timer = null
-	to_chat(src, span_boldnotice("You are now a monkey."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	RemoveInvisibility(type)
 	set_species(/datum/species/monkey)
-	name = "monkey"
+	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
+	name = LOWER_TEXT(dna.species.name)
+	regenerate_icons()
 	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
@@ -56,7 +57,7 @@
 
 	//Make mob invisible and spawn animation
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+	Stun(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 
@@ -66,15 +67,22 @@
 
 	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_humanize), species), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
+
 /mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
 	transformation_timer = null
-	to_chat(src, span_boldnotice("You are now a human."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	RemoveInvisibility(type)
 	set_species(species)
+	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	return src
+
+/mob/living/carbon/human/finish_humanize(species = /datum/species/human)
+	underwear = "Nude"
+	undershirt = "Nude"
+	socks = "Nude"
+	return ..()
 
 /mob/proc/AIize(client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()
@@ -139,15 +147,15 @@
 	new_borg.gender = gender
 	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
-	if(client)
-		new_borg.updatename(client)
+	if(client?.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
+		new_borg.apply_pref_name(/datum/preference/name/cyborg, client)
 
 	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
-		mind.transfer_to(new_borg)
+		mind.transfer_to(new_borg, TRUE)
 	else if(transfer_after)
-		new_borg.key = key
+		new_borg.PossessByPlayer(key)
 
 	if(new_borg.mmi)
 		new_borg.mmi.name = "[initial(new_borg.mmi.name)]: [real_name]"
@@ -184,11 +192,10 @@
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
 	ghostize(FALSE)
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [src]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, target_mob = src, pic_source = src, role_name_text = "cyborg")
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/chosen_candidate = pick(candidates)
-		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
-		key = chosen_candidate.key
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(name)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg")
+	if(chosen_one)
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
+		key = chosen_one.key
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -215,7 +222,7 @@
 			new_xeno = new /mob/living/carbon/alien/adult/drone(loc)
 
 	new_xeno.set_combat_mode(TRUE)
-	new_xeno.key = key
+	new_xeno.PossessByPlayer(key)
 
 	to_chat(new_xeno, span_boldnotice("You are now an alien."))
 	qdel(src)
@@ -234,28 +241,28 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/simple_animal/slime/new_slime
+	var/mob/living/basic/slime/new_slime
 	if(reproduce)
 		var/number = pick(14;2,3,4) //reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i in 1 to number)
-			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
+			var/mob/living/basic/slime/M = new/mob/living/basic/slime(loc)
 			M.set_nutrition(round(nutrition/number))
 			step_away(M,src)
 			babies += M
 		new_slime = pick(babies)
 	else
-		new_slime = new /mob/living/simple_animal/slime(loc)
+		new_slime = new /mob/living/basic/slime(loc)
 	new_slime.set_combat_mode(TRUE)
-	new_slime.key = key
+	new_slime.PossessByPlayer(key)
 
 	to_chat(new_slime, span_boldnotice("You are now a slime. Skreee!"))
 	qdel(src)
 	return new_slime
 
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
-	B.key = key
+	var/mob/eye/blob/B = new /mob/eye/blob(get_turf(src), starting_points)
+	B.PossessByPlayer(key)
 	. = B
 	qdel(src)
 
@@ -275,13 +282,36 @@
 
 	var/mob/living/basic/pet/dog/corgi/new_corgi = new /mob/living/basic/pet/dog/corgi (loc)
 	new_corgi.set_combat_mode(TRUE)
-	new_corgi.key = key
+	new_corgi.PossessByPlayer(key)
 
 	to_chat(new_corgi, span_boldnotice("You are now a Corgi. Yap Yap!"))
 	qdel(src)
 	return new_corgi
 
-/mob/living/carbon/proc/gorillize()
+/**
+ * Turns the source atom into a crab crab, the peak of evolutionary design.
+ */
+/mob/living/carbon/human/proc/crabize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(1, ignore_canstun = TRUE)
+	for(var/obj/item/objeto in src)
+		dropItemToGround(objeto)
+	regenerate_icons()
+	icon = null
+	SetInvisibility(INVISIBILITY_MAXIMUM)
+
+	var/mob/living/basic/crab/new_crab = new (loc)
+	new_crab.set_combat_mode(TRUE) // snip snip
+	if(mind)
+		mind.transfer_to(new_crab)
+
+	to_chat(new_crab, span_boldnotice("You have evolved into a crab!"))
+	qdel(src)
+	return new_crab
+
+/mob/living/carbon/proc/gorillize(genetics_gorilla = FALSE)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
@@ -289,7 +319,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items(include_pockets = TRUE)
+	var/Itemlist = get_equipped_items(INCLUDE_POCKETS)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)
@@ -297,12 +327,13 @@
 	regenerate_icons()
 	icon = null
 	SetInvisibility(INVISIBILITY_MAXIMUM)
-	var/mob/living/basic/gorilla/new_gorilla = new (get_turf(src))
+	var/gorilla_type = genetics_gorilla ? /mob/living/basic/gorilla/genetics : /mob/living/basic/gorilla
+	var/mob/living/basic/gorilla/new_gorilla = new gorilla_type(get_turf(src))
 	new_gorilla.set_combat_mode(TRUE)
 	if(mind)
 		mind.transfer_to(new_gorilla)
 	else
-		new_gorilla.key = key
+		new_gorilla.PossessByPlayer(key)
 	to_chat(new_gorilla, span_boldnotice("You are now a gorilla. Ooga ooga!"))
 	qdel(src)
 	return new_gorilla
@@ -334,7 +365,7 @@
 
 	var/mob/living/new_mob = new mobpath(src.loc)
 
-	new_mob.key = key
+	new_mob.PossessByPlayer(key)
 	new_mob.set_combat_mode(TRUE)
 
 	to_chat(new_mob, span_boldnotice("You suddenly feel more... animalistic."))
@@ -353,7 +384,7 @@
 
 	var/mob/living/new_mob = new mobpath(src.loc)
 
-	new_mob.key = key
+	new_mob.PossessByPlayer(key)
 	new_mob.set_combat_mode(TRUE)
 	to_chat(new_mob, span_boldnotice("You feel more... animalistic."))
 

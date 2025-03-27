@@ -1,4 +1,3 @@
-import { multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
   BlockQuote,
@@ -10,7 +9,7 @@ import {
   Tabs,
   TextArea,
   Tooltip,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { getMedicalRecord } from './helpers';
 import { MedicalNote, MedicalRecordData } from './types';
@@ -118,7 +117,7 @@ const NoteTabs = (props) => {
         </Tabs.Tab>
       ))}
       <Tooltip
-        content={multiline`Add a new note. Press enter or escape to exit view.`}
+        content={`Add a new note. Press enter or escape to exit view.`}
         position="bottom"
       >
         <Tabs.Tab onClick={composeNew} selected={writing}>

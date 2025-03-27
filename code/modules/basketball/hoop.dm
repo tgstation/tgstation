@@ -17,6 +17,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
+	interaction_flags_click = NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
@@ -24,7 +25,7 @@
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, AfterRotation = CALLBACK(src, PROC_REF(reset_appearance)))
+	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, post_rotation = CALLBACK(src, PROC_REF(reset_appearance)))
 	update_appearance()
 	register_context()
 
@@ -37,7 +38,7 @@
 
 /obj/structure/hoop/proc/score(obj/item/toy/basketball/ball, mob/living/baller, points)
 	// we still play buzzer sound regardless of the object
-	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 
 	if(!istype(ball))
 		return
@@ -97,22 +98,18 @@
 
 	var/dunk_dir = get_dir(baller, src)
 
-	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
-	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
+	var/dunk_pixel_z = (dunk_dir & SOUTH) ? -16 : 16
+	var/dunk_pixel_w = ((dunk_dir & EAST) && 16) || ((dunk_dir & WEST) && -16) || 0
 
-	INVOKE_ASYNC(src, PROC_REF(dunk_animation), baller, dunk_pixel_y, dunk_pixel_x)
+	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL)
+
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
 		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
-
-/// This bobs the mob in the hoop direction for the dunk animation
-/obj/structure/hoop/proc/dunk_animation(mob/living/baller, dunk_pixel_y, dunk_pixel_x)
-	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
-	sleep(0.5 SECONDS)
-	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
@@ -129,20 +126,17 @@
 	loser.forceMove(loc)
 	loser.Paralyze(100)
 	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
-	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
-/obj/structure/hoop/CtrlClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|NEED_HANDS))
-		return
-
+/obj/structure/hoop/click_ctrl(mob/user)
 	user.balloon_alert_to_viewers("resetting score...")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(do_after(user, 5 SECONDS, target = src))
 		total_score = 0
 		update_appearance()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/hoop/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(!isitem(AM))
@@ -182,8 +176,8 @@
 	return NONE
 
 // No resetting the score for minigame hoops
-/obj/structure/hoop/minigame/CtrlClick(mob/living/user)
-	return
+/obj/structure/hoop/minigame/click_ctrl(mob/user)
+	return CLICK_ACTION_BLOCKING
 
 /obj/structure/hoop/minigame/score(obj/item/toy/basketball/ball, mob/living/baller, points)
 	var/is_team_hoop = !(baller.ckey in team_ckeys)

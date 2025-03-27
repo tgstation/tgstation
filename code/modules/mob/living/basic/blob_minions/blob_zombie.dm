@@ -18,7 +18,7 @@
 	obj_damage = 20
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = 'sound/items/weapons/genhit1.ogg'
 	death_message = "collapses to the ground!"
 	gold_core_spawnable = NO_SPAWN
 	basic_mob_flags = DEL_ON_DEATH
@@ -51,13 +51,13 @@
 	. = ..()
 	death()
 
-/mob/living/basic/blob_minion/zombie/update_overlays()
-	. = ..()
+//Sets up our appearance
+/mob/living/basic/blob_minion/zombie/proc/set_up_zombie_appearance()
 	copy_overlays(corpse, TRUE)
 	var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
 	blob_head_overlay.color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_WHITE
 	color = initial(color) // reversing what our component did lol, but we needed the value for the overlay
-	. += blob_head_overlay
+	overlays += blob_head_overlay
 
 /// Create an explosion of spores on death
 /mob/living/basic/blob_minion/zombie/proc/death_burst()
@@ -73,6 +73,7 @@
 	new_corpse.forceMove(src)
 	corpse = new_corpse
 	update_appearance(UPDATE_ICON)
+	set_up_zombie_appearance()
 	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
 
 /// Dynamic changeling reentry
@@ -86,7 +87,7 @@
 
 /mob/living/basic/blob_minion/zombie/controlled/consume_corpse(mob/living/carbon/human/new_corpse)
 	. = ..()
-	if (!isnull(client))
+	if (!isnull(client) || SSticker.current_state == GAME_STATE_FINISHED)
 		return
 	AddComponent(\
 		/datum/component/ghost_direct_control,\

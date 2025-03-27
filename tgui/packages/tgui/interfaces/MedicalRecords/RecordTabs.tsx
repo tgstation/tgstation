@@ -1,7 +1,6 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { useState } from 'react';
-import { useBackend } from 'tgui/backend';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -11,7 +10,7 @@ import {
   Section,
   Stack,
   Tabs,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { JOB2ICON } from '../common/JobToIcon';
 import { isRecordMatch } from '../SecurityRecords/helpers';
@@ -28,10 +27,10 @@ export const MedicalRecordTabs = (props) => {
 
   const [search, setSearch] = useState('');
 
-  const sorted: MedicalRecord[] = flow([
-    filter((record: MedicalRecord) => isRecordMatch(record, search)),
-    sortBy((record: MedicalRecord) => record.name?.toLowerCase()),
-  ])(records);
+  const sorted: MedicalRecord[] = sortBy(
+    filter(records, (record) => isRecordMatch(record, search)),
+    (record) => record.name?.toLowerCase(),
+  );
 
   return (
     <Stack fill vertical>
@@ -83,14 +82,14 @@ export const MedicalRecordTabs = (props) => {
 
 /** Individual crew tab */
 const CrewTab = (props: { record: MedicalRecord }) => {
-  const [selectedRecord, setSelectedRecord] = useState<
+  const [selectedRecord, setSelectedRecord] = useLocalState<
     MedicalRecord | undefined
-  >();
+  >('medicalRecord', undefined);
 
   const { act, data } = useBackend<MedicalRecordData>();
   const { assigned_view } = data;
   const { record } = props;
-  const { crew_ref, name, rank } = record;
+  const { crew_ref, name, trim } = record;
 
   /** Sets the record to preview */
   const selectRecord = (record: MedicalRecord) => {
@@ -109,7 +108,7 @@ const CrewTab = (props: { record: MedicalRecord }) => {
       selected={selectedRecord?.crew_ref === crew_ref}
     >
       <Box>
-        <Icon name={JOB2ICON[rank] || 'question'} /> {name}
+        <Icon name={JOB2ICON[trim] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>
   );

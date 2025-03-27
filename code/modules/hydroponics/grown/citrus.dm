@@ -9,7 +9,7 @@
 
 // Lime
 /obj/item/seeds/lime
-	name = "pack of lime seeds"
+	name = "lime seed pack"
 	desc = "These are very sour seeds."
 	icon_state = "seed-lime"
 	species = "lime"
@@ -33,7 +33,7 @@
 
 // Orange
 /obj/item/seeds/orange
-	name = "pack of orange seeds"
+	name = "orange seed pack"
 	desc = "Sour seeds."
 	icon_state = "seed-orange"
 	species = "orange"
@@ -55,13 +55,13 @@
 	name = "orange"
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
-	foodtypes = ORANGES
+	foodtypes = ORANGES | FRUIT
 	juice_typepath = /datum/reagent/consumable/orangejuice
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 
 // Lemon
 /obj/item/seeds/lemon
-	name = "pack of lemon seeds"
+	name = "lemon seed pack"
 	desc = "These are sour seeds."
 	icon_state = "seed-lemon"
 	species = "lemon"
@@ -86,7 +86,7 @@
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
-	name = "pack of combustible lemon seeds"
+	name = "combustible lemon seed pack"
 	desc = "When life gives you lemons, don't make lemonade. Make life take the lemons back! Get mad! I don't want your damn lemons!"
 	icon_state = "seed-firelemon"
 	species = "firelemon"
@@ -112,7 +112,7 @@
 
 //3D Orange
 /obj/item/seeds/orange_3d
-	name = "pack of extradimensional orange seeds"
+	name = "extradimensional orange seed pack"
 	desc = "Polygonal seeds."
 	icon_state = "seed-orange"
 	species = "orange"

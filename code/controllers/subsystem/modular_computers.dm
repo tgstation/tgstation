@@ -1,4 +1,4 @@
-s///The maximum amount of logs that can be generated before they start overwriting eachother.
+///The maximum amount of logs that can be generated before they start overwriting each other.
 #define MAX_LOG_COUNT 300
 
 SUBSYSTEM_DEF(modular_computers)
@@ -41,13 +41,13 @@ SUBSYSTEM_DEF(modular_computers)
 ///Generate new coupon codes that can be redeemed with the Coupon Master App
 /datum/controller/subsystem/modular_computers/proc/announce_coupon()
 	//If there's no way to announce the coupon, we may as well skip it.
-	if(!length(GLOB.announcement_systems))
+	var/obj/machinery/announcement_system/announcement_system = get_announcement_system()
+	if(!announcement_system)
 		return
-	var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
 
 	var/static/list/discounts = list("0.10" = 7, "0.15" = 16, "0.20" = 20, "0.25" = 16, "0.50" = 8, "0.66" = 1)
 	var/static/list/flash_discounts = list("0.30" = 3, "0.40" = 8, "0.50" = 8, "0.66" = 2, "0.75" = 1)
-	///Eliminates non-alphanumeri characters, as well as the word "Single-Pack" or "Pack" or "Crate" from the coupon code
+	///Eliminates non-alphanumeric characters, as well as the word "Single-Pack" or "Pack" or "Crate" from the coupon code
 	var/static/regex/strip_pack_name = regex("\[^a-zA-Z0-9]|(Single-)?Pack|Crate", "g")
 
 	var/datum/supply_pack/discounted_pack = pick(GLOB.discountable_packs[pick_weight(GLOB.pack_discount_odds)])
@@ -57,10 +57,10 @@ SUBSYSTEM_DEF(modular_computers)
 	if(prob(75))
 		chosen_discount = text2num(pick_weight(discounts))
 		if(prob(20))
-			expires_in = rand(8,10)
+			expires_in = rand(8,10) MINUTES
 	else
 		chosen_discount = text2num(pick_weight(flash_discounts))
-		expires_in = rand(2, 4)
+		expires_in = rand(2, 4) MINUTES
 	var/coupon_code = "[uppertext(strip_pack_name.Replace(pack_name, ""))][chosen_discount*100]"
 
 	var/list/targets = list()
@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(modular_computers)
 	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
 		"fakename" = "Coupon Master",
 		"fakejob" = "Goodies Promotion",
-		"message" = "[chosen_promo_message] [pick(code_messages)]: [coupon_code][expires_in ? " (EXPIRES IN [expires_in] MINUTES)" : ""].",
+		"message" = "[chosen_promo_message] [pick(code_messages)]: [coupon_code][expires_in ? " (EXPIRES IN [uppertext(DisplayTimeText(expires_in))])" : ""].",
 		"targets" = targets,
 		"automated" = TRUE,
 	))

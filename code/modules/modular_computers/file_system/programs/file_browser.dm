@@ -13,6 +13,7 @@
 	var/error
 
 /datum/computer_file/program/filemanager/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PRG_deletefile")
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"])
@@ -34,7 +35,7 @@
 				return
 			var/newname = reject_bad_name(params["new_name"])
 			if(!newname || newname != params["new_name"])
-				playsound(computer, 'sound/machines/terminal_error.ogg', 25, FALSE)
+				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname
 			return TRUE
@@ -46,7 +47,7 @@
 				return
 			var/newname = reject_bad_name(params["new_name"])
 			if(!newname || newname != params["new_name"])
-				playsound(computer, 'sound/machines/terminal_error.ogg', 25, FALSE)
+				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname
 			return TRUE

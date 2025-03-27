@@ -73,6 +73,7 @@
 
 /obj/structure/mop_bucket/janitorialcart/Initialize(mapload)
 	. = ..()
+	reagents.maximum_volume *= 2.5
 	GLOB.janitor_devices += src
 
 /obj/structure/mop_bucket/janitorialcart/Destroy()
@@ -199,7 +200,12 @@
 	if(istype(attacking_item, /obj/item/storage/bag/trash))
 		if(mybag)
 			balloon_alert(user, "already has \a [mybag]!")
-		else if(user.transferItemToLoc(attacking_item, src))
+			return
+		var/obj/item/storage/bag/trash/bag = attacking_item
+		if(!bag.insertable)
+			balloon_alert(user, "cannot be inserted!")
+			return
+		if(user.transferItemToLoc(attacking_item, src))
 			balloon_alert(user, "attached [attacking_item]")
 		return
 
@@ -336,7 +342,7 @@
  * * user The mob interacting with a menu
  */
 /obj/structure/mop_bucket/janitorialcart/proc/check_menu(mob/living/user)
-	return istype(user) && !user.incapacitated()
+	return istype(user) && !user.incapacitated
 
 /obj/structure/mop_bucket/janitorialcart/update_overlays()
 	. = ..()

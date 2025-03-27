@@ -26,6 +26,7 @@
 	alerts = null
 	screens = null
 	client_colours = null
+	color_filter_store = null
 	hud_possible = null
 	/// references to everything "on" the turf we are assigned to, that we care about. populated in assign() and cleared in unassign().
 	/// movables iside of other movables count as being "on" if they have get_turf(them) == our turf. intentionally not a lazylist
@@ -78,8 +79,9 @@
  *
  * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
  */
-/proc/get_hearers_in_view(view_radius, atom/source)
+/proc/get_hearers_in_view(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -88,12 +90,12 @@
 
 	if(view_radius <= 0)//special case for if only source cares
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
 			if(recursive_contents)
 				. += recursive_contents
 		return .
 
-	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, view_radius)
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
@@ -126,8 +128,9 @@
  *
  * * radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
  */
-/proc/get_hearers_in_range(range, atom/source)
+/proc/get_hearers_in_range(range, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -136,12 +139,12 @@
 
 	if(range <= 0)//special case for if only source cares
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
 			if(recursive_contents)
 				. += recursive_contents
 		return .
 
-	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, range)
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, range)
 
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
@@ -161,7 +164,7 @@
  * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  */
-/proc/get_hearers_in_LOS(view_radius, atom/source)
+/proc/get_hearers_in_LOS(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -169,12 +172,12 @@
 	if(view_radius <= 0)//special case for if only source cares
 		. = list()
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/hearing_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/hearing_contents = target.important_recursive_contents?[contents_type]
 			if(hearing_contents)
 				. += hearing_contents
 		return
 
-	. = SSspatial_grid.orthogonal_range_search(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius)
+	. = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	for(var/atom/movable/target as anything in .)
 		var/turf/target_turf = get_turf(target)
@@ -209,39 +212,51 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
-		. |= get_hearers_in_LOS(radio.canhear_range, radio, FALSE)
+		. |= get_hearers_in_LOS(radio.canhear_range, radio)
+
+//Used when converting pixels to tiles to make them accurate
+#define OFFSET_X (0.5 / ICON_SIZE_X)
+#define OFFSET_Y (0.5 / ICON_SIZE_Y)
 
 ///Calculate if two atoms are in sight, returns TRUE or FALSE
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
-	var/turf/T
+	var/turf/current_turf
 	if(X1 == X2)
 		if(Y1 == Y2)
 			return TRUE //Light cannot be blocked on same tile
 		else
-			var/s = SIGN(Y2-Y1)
-			Y1+=s
+			var/sign = SIGN(Y2-Y1)
+			Y1 += sign
 			while(Y1 != Y2)
-				T=locate(X1,Y1,Z)
-				if(IS_OPAQUE_TURF(T))
+				current_turf = locate(X1, Y1, Z)
+				if(IS_OPAQUE_TURF(current_turf))
 					return FALSE
-				Y1+=s
+				Y1 += sign
 	else
-		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+		//This looks scary but we're just calculating a linear function (y = mx + b)
+
+		//m = y/x
+		var/m = (ICON_SIZE_Y*(Y2-Y1) + (PY2-PY1)) / (ICON_SIZE_X*(X2-X1) + (PX2-PX1))//In pixels
+
+		//b = y - mx
+		var/b = (Y1 + PY1/ICON_SIZE_Y - OFFSET_Y) - m*(X1 + PX1/ICON_SIZE_X - OFFSET_X)//In tiles
+
 		var/signX = SIGN(X2-X1)
 		var/signY = SIGN(Y2-Y1)
-		if(X1<X2)
-			b+=m
+		if(X1 < X2)
+			b += m
 		while(X1 != X2 || Y1 != Y2)
-			if(round(m*X1+b-Y1))
-				Y1+=signY //Line exits tile vertically
+			if(round(m*X1 + b - Y1)) // Basically, if y >= mx+b
+				Y1 += signY //Line exits tile vertically
 			else
-				X1+=signX //Line exits tile horizontally
-			T=locate(X1,Y1,Z)
-			if(IS_OPAQUE_TURF(T))
+				X1 += signX //Line exits tile horizontally
+			current_turf = locate(X1, Y1, Z)
+			if(IS_OPAQUE_TURF(current_turf))
 				return FALSE
 	return TRUE
 
+#undef OFFSET_X
+#undef OFFSET_Y
 
 /proc/is_in_sight(atom/first_atom, atom/second_atom)
 	var/turf/first_turf = get_turf(first_atom)
@@ -283,7 +298,7 @@
 	return atoms
 
 ///Returns the distance between two atoms
-/proc/get_dist_euclidian(atom/first_location as turf|mob|obj, atom/second_location as turf|mob|obj)
+/proc/get_dist_euclidean(atom/first_location, atom/second_location)
 	var/dx = first_location.x - second_location.x
 	var/dy = first_location.y - second_location.y
 
@@ -431,6 +446,16 @@
 		)
 	list_clear_nulls(.)
 
+///Returns a list of all turfs that are adjacent to the center atom's turf, clear the list of nulls at the end.
+/proc/get_adjacent_turfs(atom/center)
+	. = list(
+		get_step(center, NORTH),
+		get_step(center, SOUTH),
+		get_step(center, EAST),
+		get_step(center, WEST)
+		)
+	list_clear_nulls(.)
+
 ///Checks if the mob provided (must_be_alone) is alone in an area
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
 	var/area/our_area = get_area(the_area)
@@ -440,5 +465,52 @@
 		if(carbon == must_be_alone)
 			continue
 		if(our_area == get_area(carbon))
+			return FALSE
+	return TRUE
+
+/**
+ * Behaves like the orange() proc, but only looks in the outer range of the function (The "peel" of the orange).
+ * This is useful for things like checking if a mob is in a certain range, but not within a smaller range.
+ *
+ * @params outer_range - The outer range of the cicle to pull from.
+ * @params inner_range - The inner range of the circle to NOT pull from.
+ * @params center - The center of the circle to pull from, can be an atom (we'll apply get_turf() to it within circle_x_turfs procs.)
+ * @params view_based - If TRUE, we'll use circle_view_turfs instead of circle_range_turfs procs.
+ */
+/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
+	if(inner_range > outer_range) // If the inner range is larger than the outer range, you're using this wrong.
+		CRASH("Turf peel inner range is larger than outer range!")
+	var/list/peel = list()
+	var/list/outer
+	var/list/inner
+	if(view_based)
+		outer = circle_view_turfs(center, outer_range)
+		inner = circle_view_turfs(center, inner_range)
+	else
+		outer = circle_range_turfs(center, outer_range)
+		inner = circle_range_turfs(center, inner_range)
+	for(var/turf/possible_spawn as anything in outer)
+		if(possible_spawn in inner)
+			continue
+		peel += possible_spawn
+
+	if(!length(peel))
+		return center //Offer the center only as a default case when we don't have a valid circle.
+	return peel
+
+///check if 2 diagonal turfs are blocked by dense objects
+/proc/diagonally_blocked(turf/our_turf, turf/dest_turf)
+	if(get_dist(our_turf, dest_turf) != 1)
+		return FALSE
+	var/direction_to_turf = get_dir(dest_turf, our_turf)
+	if(!ISDIAGONALDIR(direction_to_turf))
+		return FALSE
+	for(var/direction_check in GLOB.cardinals)
+		if(!(direction_check & direction_to_turf))
+			continue
+		var/turf/test_turf = get_step(dest_turf, direction_check)
+		if(isnull(test_turf))
+			continue
+		if(!test_turf.is_blocked_turf(exclude_mobs = TRUE))
 			return FALSE
 	return TRUE

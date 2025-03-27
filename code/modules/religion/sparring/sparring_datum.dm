@@ -60,7 +60,6 @@
 	UnregisterSignal(sparring, list(
 		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_GRENADE_ARMED,
-		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_POST_TELEPORT,
 		COMSIG_MOB_STATCHANGE,
@@ -228,9 +227,9 @@
 	cleanup_sparring_match()
 
 	if(chaplain) //flubing means we don't know who is still standing
-		to_chat(chaplain, span_boldannounce("The match was flub'd! No winners, no losers. You may restart the match with another contract."))
+		to_chat(chaplain, span_bolddanger("The match was flub'd! No winners, no losers. You may restart the match with another contract."))
 	if(opponent)
-		to_chat(opponent, span_boldannounce("The match was flub'd! No winners, no losers."))
+		to_chat(opponent, span_bolddanger("The match was flub'd! No winners, no losers."))
 	qdel(src)
 
 ///helper to remove all the effects after a match ends
@@ -244,8 +243,8 @@
 
 /datum/sparring_match/proc/end_match(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory = FALSE)
 	cleanup_sparring_match()
-	to_chat(chaplain, span_boldannounce("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
-	to_chat(opponent, span_boldannounce("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
+	to_chat(chaplain, span_bolddanger("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
+	to_chat(opponent, span_bolddanger("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
 	win(winner, loser, violation_victory)
 	lose(loser, winner)
 	if(stakes_condition != STAKES_YOUR_SOUL)
@@ -301,4 +300,4 @@
 				return
 			to_chat(loser, span_userdanger("You've lost ownership over your soul to [winner]!"))
 			var/obj/item/soulstone/anybody/chaplain/sparring/shard = new(shard_turf)
-			shard.capture_soul(loser, winner, forced = TRUE)
+			INVOKE_ASYNC(shard, TYPE_PROC_REF(/obj/item/soulstone, capture_soul), loser, winner, forced = TRUE)

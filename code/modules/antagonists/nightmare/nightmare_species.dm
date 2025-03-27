@@ -24,8 +24,8 @@
 		TRAIT_NEVER_WOUNDED,
 	)
 
-	mutantheart = /obj/item/organ/internal/heart/nightmare
-	mutantbrain = /obj/item/organ/internal/brain/shadow/nightmare
+	mutantheart = /obj/item/organ/heart/nightmare
+	mutantbrain = /obj/item/organ/brain/shadow/nightmare
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/shadow/nightmare,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/shadow/nightmare,
@@ -35,11 +35,10 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
 	)
 
-/datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 
 	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
-	C.set_safe_hunger_level()
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
 	return FALSE

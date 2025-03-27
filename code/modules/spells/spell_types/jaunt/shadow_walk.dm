@@ -45,7 +45,7 @@
 		exit_jaunt(cast_on)
 		return
 
-	playsound(get_turf(owner), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+	playsound(get_turf(owner), 'sound/effects/nightmare_poof.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
 	cast_on.SetAllImmobility(0)
 	cast_on.setStaminaLoss(0, FALSE)
@@ -53,6 +53,7 @@
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
+	phased_mob_icon_state = "purple_laser"
 	/// Max amount of light permitted before being kicked out
 	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
@@ -107,7 +108,7 @@
 			reveal_turf.visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
 		else
 			reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
-		playsound(reveal_turf, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+		playsound(reveal_turf, 'sound/effects/nightmare_reappear.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 
 	return ..()
 

@@ -34,23 +34,25 @@
 	if(isnull(op_datum))
 		balloon_alert(user, "invalid access!")
 		return
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, op_datum)
-	AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SYNDICATE, \
-		job_bans = ROLE_OPERATIVE, \
-		to_call = to_call, \
-		title = "Nuclear Operative Modsuit AI" \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = list(ROLE_OPERATIVE, JOB_AI),
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_SYNDICATE,
+		alert_pic = src,
+		role_name_text = "Nuclear Operative Modsuit AI",
+		chat_text_border_icon = mutable_appearance(icon, "syndicard-full"),
 	)
+	on_poll_concluded(user, op_datum, chosen_one)
 
 /// Poll has concluded with a ghost, create the AI
 /obj/item/aicard/syndie/loaded/proc/on_poll_concluded(mob/user, datum/antagonist/nukeop/op_datum, mob/dead/observer/ghost)
-	if(isnull(ghost))
+	if(!ismob(ghost))
 		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))
 		return
 
 	// pick ghost, create AI and transfer
-	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(get_turf(src), new /datum/ai_laws/syndicate_override, ghost)
+	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(null, new /datum/ai_laws/syndicate_override, ghost)
 	// create and apply syndie datum
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
@@ -60,6 +62,11 @@
 	// Make it look evil!!!
 	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
 	new_ai.icon_state = resolve_ai_icon("hades")
+	// Hide PDA from messenger
+	var/datum/computer_file/program/messenger/msg = locate() in new_ai.modularInterface.stored_files
+	if(msg)
+		msg.invisible = TRUE
+
 	// Transfer the AI from the core we created into the card, then delete the core
 	capture_ai(new_ai, user)
 	var/obj/structure/ai_core/deactivated/detritus = locate() in get_turf(src)
@@ -95,13 +102,13 @@
 	else
 		AI = locate() in A
 	if(!AI || AI.interaction_range == INFINITY)
-		playsound(src,'sound/machines/buzz-sigh.ogg',50,FALSE)
+		playsound(src,'sound/machines/buzz/buzz-sigh.ogg',50,FALSE)
 		to_chat(user, span_notice("Error! Incompatible object!"))
 		return ..()
 	AI.interaction_range += 2
 	if(AI.interaction_range > 7)
 		AI.interaction_range = INFINITY
-	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
 	to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
 	to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
 	qdel(src)

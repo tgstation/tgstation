@@ -66,34 +66,33 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
 
-/obj/item/reagent_containers/condiment/afterattack(obj/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/condiment/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
 		if(!target.reagents.total_volume)
 			to_chat(user, span_warning("[target] is empty!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, span_warning("[src] is full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+		var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
+		return ITEM_INTERACT_SUCCESS
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	else if(target.is_drainable() || IS_EDIBLE(target))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, span_warning("you can't add anymore to [target]!"))
-			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
+			return ITEM_INTERACT_BLOCKING
+		var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		to_chat(user, span_notice("You transfer [trans] units of the condiment to [target]."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/reagent_containers/condiment/enzyme
 	name = "universal enzyme"
@@ -149,11 +148,10 @@
 	desc = "Salt. From dead crew, presumably."
 	return TOXLOSS
 
-/obj/item/reagent_containers/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
+/obj/item/reagent_containers/condiment/saltshaker/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 	if(isturf(target))
 		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
 			to_chat(user, span_warning("You don't have enough salt to make a pile!"))
@@ -161,7 +159,8 @@
 		user.visible_message(span_notice("[user] shakes some salt onto [target]."), span_notice("You shake some salt onto [target]."))
 		reagents.remove_reagent(/datum/reagent/consumable/salt, 2)
 		new/obj/effect/decal/cleanable/food/salt(target)
-		return
+		return ITEM_INTERACT_SUCCESS
+	return .
 
 /obj/item/reagent_containers/condiment/peppermill
 	name = "pepper mill"
@@ -369,6 +368,13 @@
 	list_reagents = list(/datum/reagent/consumable/grounding_solution = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/protein
+	name = "protein powder"
+	desc = "Fuel for your inner Hulk - because you can't spell 'swole' without 'whey'!"
+	icon_state = "protein"
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 40)
+	fill_icon_thresholds = null
+
 //technically condiment packs but they are non transparent
 
 /obj/item/reagent_containers/condiment/creamer
@@ -381,7 +387,7 @@
 
 /obj/item/reagent_containers/condiment/chocolate
 	name = "chocolate sprinkle pack"
-	desc= "The amount of sugar thats already there wasn't enough for you?"
+	desc= "The amount of sugar that's already there wasn't enough for you?"
 	icon_state = "condi_chocolate"
 	list_reagents = list(/datum/reagent/consumable/choccyshake = 10)
 
@@ -424,14 +430,14 @@
 		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
 		/datum/reagent/consumable/peanut_butter = list("condi_peanutbutter", "Peanut Butter", "A creamy paste made from ground peanuts."),
 		/datum/reagent/consumable/cherryjelly = list("condi_cherryjelly", "Cherry Jelly", "A jar of super-sweet cherry jelly."),
+		/datum/reagent/consumable/mayonnaise = list("condi_mayo", "Mayonnaise", "Not an instrument."),
 	)
 	/// Can't use initial(name) for this. This stores the name set by condimasters.
 	var/originalname = "condiment"
 
 /obj/item/reagent_containers/condiment/pack/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_add), TRUE)
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del), TRUE)
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_update), TRUE)
 
 /obj/item/reagent_containers/condiment/pack/update_icon()
 	SHOULD_CALL_PARENT(FALSE)
@@ -440,47 +446,40 @@
 /obj/item/reagent_containers/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
-/obj/item/reagent_containers/condiment/pack/afterattack(obj/target, mob/user , proximity)
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/condiment/pack/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(IS_EDIBLE(target))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("You tear open [src], but there's nothing in it."))
 			qdel(src)
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, span_warning("You tear open [src], but [target] is stacked so high that it just drips off!") )
 			qdel(src)
-			return
-		else
-			to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
-			src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-			qdel(src)
-			return
-	return . | ..()
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
+		reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /// Handles reagents getting added to the condiment pack.
-/obj/item/reagent_containers/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)
+/obj/item/reagent_containers/condiment/pack/proc/on_reagent_update(datum/reagents/reagents)
 	SIGNAL_HANDLER
 
+	if(!reagents.total_volume)
+		icon_state = "condi_empty"
+		desc = "A small condiment pack. It is empty."
+		return
 	var/datum/reagent/main_reagent = reagents.get_master_reagent()
 
-	var/main_reagent_type = main_reagent?.type
-	if(main_reagent_type in possible_states)
-		var/list/temp_list = possible_states[main_reagent_type]
+	var/list/temp_list = possible_states[main_reagent.type]
+	if(length(temp_list))
 		icon_state = temp_list[1]
 		desc = temp_list[3]
 	else
 		icon_state = "condi_mixed"
 		desc = "A small condiment pack. The label says it contains [originalname]"
-
-/// Handles reagents getting removed from the condiment pack.
-/obj/item/reagent_containers/condiment/pack/proc/on_reagent_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	icon_state = "condi_empty"
-	desc = "A small condiment pack. It is empty."
 
 //Ketchup
 /obj/item/reagent_containers/condiment/pack/ketchup
@@ -516,3 +515,15 @@
 	originalname = "sugar"
 	volume = 5
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
+
+/obj/item/reagent_containers/condiment/pack/soysauce
+	name = "soy sauce pack"
+	originalname = "soy sauce"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/soysauce = 5)
+
+/obj/item/reagent_containers/condiment/pack/mayonnaise
+	name = "mayonnaise pack"
+	originalname = "mayonnaise"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/mayonnaise = 5)

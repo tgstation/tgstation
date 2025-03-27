@@ -44,6 +44,7 @@
 	)
 
 /datum/computer_file/program/portrait_printer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("search")
 			if(search_string != params["to_search"])
@@ -95,6 +96,6 @@
 	printed_canvas.no_save = TRUE
 	printed_canvas.update_icon()
 	to_chat(usr, span_notice("You have printed [chosen_portrait.title] onto a new canvas."))
-	playsound(computer.physical, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	playsound(computer.physical, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 
 #undef CANVAS_PAPER_COST

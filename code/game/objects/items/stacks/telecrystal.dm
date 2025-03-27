@@ -11,7 +11,7 @@
 	merge_type = /obj/item/stack/telecrystal
 	novariants = FALSE
 
-/obj/item/stack/telecrystal/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/stack/telecrystal/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(interacting_with != user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 		return NONE
 
@@ -21,7 +21,7 @@
 
 		var/datum/component/uplink/hidden_uplink = uplink.GetComponent(/datum/component/uplink)
 		if(hidden_uplink)
-			hidden_uplink.add_telecrystals(amount)
+			hidden_uplink.uplink_handler.add_telecrystals(amount)
 			use(amount)
 			to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
 	return ITEM_INTERACT_SUCCESS

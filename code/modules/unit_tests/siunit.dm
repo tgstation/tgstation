@@ -12,4 +12,4 @@
 	TEST_ASSERT_EQUAL(siunit_pressure(999.9e3), "999.9 MPa" , "")
 	TEST_ASSERT_EQUAL(siunit_pressure(999.9e3, 0), "1 GPa", "")
 	TEST_ASSERT_EQUAL(siunit_pressure(1e6), "1 GPa", "")
-	TEST_ASSERT_EQUAL(siunit_pressure(3e17), "300000 PPa", "")
+	TEST_ASSERT_EQUAL(siunit_pressure(3e32), "300000 QPa", "")

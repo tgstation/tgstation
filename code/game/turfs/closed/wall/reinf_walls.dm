@@ -14,6 +14,7 @@
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
 	rad_insulation = RAD_HEAVY_INSULATION
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
@@ -75,7 +76,7 @@
 
 		if(COVER)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin slicing through the metal cover..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -108,7 +109,7 @@
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin welding the metal cover back to the frame..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -142,7 +143,7 @@
 
 		if(SUPPORT_RODS)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin slicing through the support rods..."))
 				if(W.use_tool(src, user, 100, volume=100))
@@ -175,7 +176,7 @@
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin welding the support rods back together..."))
 				if(W.use_tool(src, user, 100, volume=100))
@@ -214,19 +215,21 @@
 			dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.canRturf || the_rcd.construction_mode == RCD_WALLFRAME)
+	if (the_rcd.construction_mode == RCD_WALLFRAME)
 		return ..()
-
+	if(!the_rcd.canRturf)
+		return
+	. = ..()
+	if (.)
+		.["delay"] *= RCD_RWALL_DELAY_MULT
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(the_rcd.canRturf || rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
 		return ..()
 
-/turf/closed/wall/r_wall/rust_heretic_act()
-	if(prob(50))
-		return
+/turf/closed/wall/r_wall/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
-		ScrapeAway()
+		ChangeTurf(/turf/closed/wall/rust)
 		return
 	return ..()
 
@@ -243,6 +246,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SYNDICATE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
+	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
@@ -252,11 +256,6 @@
 	icon_state = "map-shuttle_nd"
 	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BITMASK
-
-/turf/closed/wall/r_wall/syndicate/nosmooth
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	smoothing_flags = NONE
 
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"

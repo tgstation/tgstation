@@ -9,6 +9,7 @@
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen) // epinephrine medipen stops allergic reactions
+	no_process_traits = list(TRAIT_STASIS)
 	var/list/allergies = list()
 	var/list/blacklist = list(
 		/datum/reagent/medicine/c2,
@@ -45,24 +46,20 @@
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
 /datum/quirk/item_quirk/allergic/process(seconds_per_tick)
-	if(!iscarbon(quirk_holder))
-		return
-
-	if(HAS_TRAIT(quirk_holder, TRAIT_STASIS))
-		return
-
-	if(quirk_holder.stat == DEAD)
-		return
-
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
+	//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
+	if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+		for(var/allergy in allergies)
+			var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(allergy)
+			if(!instantiated_med)
+				continue
+			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
+		return //block damage so long as epinephrine exists
+
 	for(var/allergy in allergies)
 		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(allergy)
 		if(!instantiated_med)
 			continue
-		//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
-		if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
-			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
-			return //intentionally stops the entire proc so we avoid the organ damage after the loop
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
 		carbon_quirk_holder.adjustToxLoss(3 * seconds_per_tick)
 		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * seconds_per_tick)

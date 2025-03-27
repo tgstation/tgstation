@@ -28,7 +28,7 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_HOSTILE)
@@ -61,7 +61,9 @@
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 
 /mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
+	. = ..()
+	if(!.) //dead or deleted
+		return
 	if(!isopenturf(loc))
 		return
 	var/turf/open/our_turf = src.loc

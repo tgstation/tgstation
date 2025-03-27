@@ -31,7 +31,7 @@
 
 /obj/item/book/granter/action/spell/can_learn(mob/living/user)
 	if(!granted_action)
-		CRASH("Someone attempted to learn [type], which did not have an spell set.")
+		CRASH("Someone attempted to learn [type], which did not have a spell set.")
 	if(locate(granted_action) in user.actions)
 		if(HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 			to_chat(user, span_warning("You're already far more versed in the spell [action_name] \
@@ -91,4 +91,4 @@
 				spell_options -= spell
 
 	granted_action = pick(spell_options)
-	action_name = lowertext(initial(granted_action.name))
+	action_name = LOWER_TEXT(initial(granted_action.name))

@@ -3,7 +3,7 @@
 /**
  * Uplinks
  *
- * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
+ * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in its contents). Then add 'uses.'
  * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
@@ -66,8 +66,6 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(new_message))
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, PROC_REF(pen_rotation))
-	else if(istype(parent, /obj/item/uplink/replacement))
-		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(on_heard))
 
 	if(owner)
 		src.owner = owner
@@ -81,7 +79,6 @@
 	src.active = enabled
 	if(!uplink_handler_override)
 		uplink_handler = new()
-		uplink_handler.has_objectives = FALSE
 		uplink_handler.uplink_flag = uplink_flag
 		uplink_handler.telecrystals = starting_tc
 		uplink_handler.has_progression = has_progression
@@ -89,7 +86,6 @@
 	else
 		uplink_handler = uplink_handler_override
 	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, PROC_REF(handle_uplink_handler_update))
-	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED, PROC_REF(handle_uplink_replaced))
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -99,28 +95,6 @@
 /datum/component/uplink/proc/handle_uplink_handler_update()
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
-
-/// When a new uplink is made via the syndicate beacon it locks all lockable uplinks and destroys replacement uplinks
-/datum/component/uplink/proc/handle_uplink_replaced()
-	SIGNAL_HANDLER
-	if(lockable)
-		lock_uplink()
-	if(!istype(parent, /obj/item/uplink/replacement))
-		return
-	var/obj/item/uplink_item = parent
-	do_sparks(number = 3, cardinal_only = FALSE, source = uplink_item)
-	uplink_item.visible_message(span_warning("The [uplink_item] suddenly combusts!"), vision_distance = COMBAT_MESSAGE_RANGE)
-	new /obj/effect/decal/cleanable/ash(get_turf(uplink_item))
-	qdel(uplink_item)
-
-/// Adds telecrystals to the uplink. It is bad practice to use this outside of the component itself.
-/datum/component/uplink/proc/add_telecrystals(telecrystals_added)
-	set_telecrystals(uplink_handler.telecrystals + telecrystals_added)
-
-/// Sets the telecrystals of the uplink. It is bad practice to use this outside of the component itself.
-/datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
-	uplink_handler.telecrystals = new_telecrystal_amount
-	uplink_handler.on_update()
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
@@ -135,7 +109,7 @@
 	if(!silent)
 		to_chat(user, span_notice("You slot [telecrystals] into [parent] and charge its internal uplink."))
 	var/amt = telecrystals.amount
-	uplink_handler.telecrystals += amt
+	uplink_handler.add_telecrystals(amt)
 	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
@@ -194,13 +168,10 @@
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
 	data["progression_points"] = uplink_handler.progression_points
-	data["current_expected_progression"] = SStraitor.current_global_progression
-	data["maximum_active_objectives"] = uplink_handler.maximum_active_objectives
-	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
+	data["joined_population"] = length(GLOB.joined_player_list)
 	data["current_progression_scaling"] = SStraitor.current_progression_scaling
 
-	data["maximum_potential_objectives"] = uplink_handler.maximum_potential_objectives
-	if(uplink_handler.has_objectives)
+	if(uplink_handler.primary_objectives)
 		var/list/primary_objectives = list()
 		for(var/datum/objective/task as anything in uplink_handler.primary_objectives)
 			var/list/task_data = list()
@@ -210,25 +181,8 @@
 				task_data["task_name"] = "DIRECTIVE [uppertext(GLOB.phonetic_alphabet[length(primary_objectives) + 1])]"
 			task_data["task_text"] = task.explanation_text
 			primary_objectives += list(task_data)
-
-		var/list/potential_objectives = list()
-		for(var/index in 1 to uplink_handler.potential_objectives.len)
-			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]
-			var/list/objective_data = objective.uplink_ui_data(user)
-			objective_data["id"] = index
-			potential_objectives += list(objective_data)
-
-		var/list/active_objectives = list()
-		for(var/index in 1 to uplink_handler.active_objectives.len)
-			var/datum/traitor_objective/objective = uplink_handler.active_objectives[index]
-			var/list/objective_data = objective.uplink_ui_data(user)
-			objective_data["id"] = index
-			active_objectives += list(objective_data)
-
 		data["primary_objectives"] = primary_objectives
-		data["potential_objectives"] = potential_objectives
-		data["active_objectives"] = active_objectives
-		data["completed_final_objective"] = uplink_handler.final_objective
+
 
 	var/list/stock_list = uplink_handler.item_stock.Copy()
 	var/list/extra_purchasable_stock = list()
@@ -236,9 +190,12 @@
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
 		if(item.stock_key in stock_list)
 			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
+		var/atom/actual_item = item.item
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
+			"icon" = actual_item.icon,
+			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
 			"category" = item.category ? initial(item.category.name) : null,
@@ -248,6 +205,7 @@
 			"restricted_roles" = item.restricted_roles,
 			"restricted_species" = item.restricted_species,
 			"progression_minimum" = item.progression_minimum,
+			"population_minimum" = item.population_minimum,
 			"ref" = REF(item),
 		))
 
@@ -266,7 +224,6 @@
 	var/list/data = list()
 	data["uplink_flag"] = uplink_handler.uplink_flag
 	data["has_progression"] = uplink_handler.has_progression
-	data["has_objectives"] = uplink_handler.has_objectives
 	data["lockable"] = lockable
 	data["assigned_role"] = uplink_handler.assigned_role
 	data["assigned_species"] = uplink_handler.assigned_species
@@ -275,7 +232,7 @@
 
 /datum/component/uplink/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/json/uplink)
+		get_asset_datum(/datum/asset/json/uplink),
 	)
 
 /datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -297,6 +254,13 @@
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item, parent)
+		if("buy_raw_tc")
+			if (uplink_handler.telecrystals <= 0)
+				return
+			var/desired_amount = tgui_input_number(ui.user, "How many raw telecrystals to buy?", "Buy Raw TC", default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
+			if(!desired_amount || desired_amount < 1)
+				return
+			uplink_handler.purchase_raw_tc(ui.user, desired_amount, parent)
 		if("lock")
 			if(!lockable)
 				return TRUE
@@ -304,46 +268,8 @@
 		if("renegotiate_objectives")
 			uplink_handler.replace_objectives?.Invoke()
 			SStgui.update_uis(src)
-
-	if(!uplink_handler.has_objectives)
-		return TRUE
-
-	if(uplink_handler.owner?.current != ui.user || !uplink_handler.can_take_objectives)
-		return TRUE
-
-	switch(action)
-		if("regenerate_objectives")
-			uplink_handler.generate_objectives()
-			return TRUE
-
-	var/list/objectives
-	switch(action)
-		if("start_objective")
-			objectives = uplink_handler.potential_objectives
-		if("objective_act", "finish_objective", "objective_abort")
-			objectives = uplink_handler.active_objectives
-
-	if(!objectives)
-		return
-
-	var/objective_index = round(text2num(params["index"]))
-	if(objective_index < 1 || objective_index > length(objectives))
-		return TRUE
-	var/datum/traitor_objective/objective = objectives[objective_index]
-
-	// Objective actions
-	switch(action)
-		if("start_objective")
-			uplink_handler.take_objective(ui.user, objective)
-		if("objective_act")
-			uplink_handler.ui_objective_act(ui.user, objective, params["objective_action"])
-		if("finish_objective")
-			if(!objective.finish_objective(ui.user))
-				return
-			uplink_handler.complete_objective(objective)
-		if("objective_abort")
-			uplink_handler.abort_objective(objective)
 	return TRUE
+
 
 /// Proc that locks uplinks
 /datum/component/uplink/proc/lock_uplink()
@@ -387,14 +313,15 @@
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	SIGNAL_HANDLER
 
-	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
-		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
+	if(trim(LOWER_TEXT(new_ring_text)) != trim(LOWER_TEXT(unlock_code)))
+		if(trim(LOWER_TEXT(new_ring_text)) == trim(LOWER_TEXT(failsafe_code)))
 			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
-	interact(null, user)
-	to_chat(user, span_hear("The computer softly beeps."))
+	if(ismob(user))
+		interact(null, user)
+		to_chat(user, span_hear("The computer softly beeps."))
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()
@@ -423,8 +350,8 @@
 	if(channel != RADIO_CHANNEL_UPLINK)
 		return
 
-	if(!findtext(lowertext(message), lowertext(unlock_code)))
-		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
+	if(!findtext(LOWER_TEXT(message), LOWER_TEXT(unlock_code)))
+		if(failsafe_code && findtext(LOWER_TEXT(message), LOWER_TEXT(failsafe_code)))
 			failsafe(user)  // no point returning cannot radio, youre probably ded
 		return
 	locked = FALSE
@@ -489,25 +416,22 @@
 
 	return returnable_code
 
-/// Proc that unlocks a locked replacement uplink when it hears the unlock code from their datum
-/datum/component/uplink/proc/on_heard(datum/source, list/hearing_args)
-	SIGNAL_HANDLER
-	if(!locked)
-		return
-	if(!findtext(hearing_args[HEARING_RAW_MESSAGE], unlock_code))
-		return
-	var/atom/replacement_uplink = parent
-	locked = FALSE
-	replacement_uplink.balloon_alert_to_viewers("beep", vision_distance = COMBAT_MESSAGE_RANGE)
-
-/datum/component/uplink/proc/failsafe(mob/living/carbon/user)
+/datum/component/uplink/proc/failsafe(atom/source)
 	if(!parent)
 		return
 	var/turf/T = get_turf(parent)
 	if(!T)
 		return
-	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
-	user.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	var/user_deets = "an uplink failsafe explosion has been triggered"
+	if(ismob(source))
+		user_deets = "[ADMIN_LOOKUPFLW(source)] has triggered an uplink failsafe explosion"
+		source.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	else if(istype(source, /obj/item/circuit_component))
+		var/obj/item/circuit_component/circuit = source
+		user_deets = "[circuit.parent.get_creator_admin()] has triggered an uplink failsafe explosion"
+	else
+		source?.log_message("somehow triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	message_admins("[user_deets] at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
 
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.

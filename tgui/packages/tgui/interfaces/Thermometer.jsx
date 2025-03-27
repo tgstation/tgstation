@@ -1,7 +1,7 @@
 import { Component } from 'react';
+import { Box, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Stack } from '../components';
 import { Window } from '../layouts';
 
 export class Thermometer extends Component {

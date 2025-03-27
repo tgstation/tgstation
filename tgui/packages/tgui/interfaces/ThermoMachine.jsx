@@ -1,13 +1,13 @@
-import { toFixed } from 'common/math';
-
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Button,
   LabeledList,
   NumberInput,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const ThermoMachine = (props) => {
@@ -55,7 +55,7 @@ export const ThermoMachine = (props) => {
                 maxValue={Math.round(data.max)}
                 step={5}
                 stepPixelSize={3}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('target', {
                     target: value,
                   })

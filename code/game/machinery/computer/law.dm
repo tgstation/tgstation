@@ -7,7 +7,6 @@
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gps, "Encrypted Upload")
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
@@ -29,6 +28,7 @@
 			current = null
 			return
 		M.install(current.laws, user)
+		imprint_gps("Weak Upload Signal")
 	else
 		return ..()
 
@@ -42,8 +42,13 @@
 	desc = "Used to upload laws to the AI."
 	circuit = /obj/item/circuitboard/computer/aiupload
 
+/obj/machinery/computer/upload/ai/Initialize(mapload)
+	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		return INITIALIZE_HINT_QDEL
+
 /obj/machinery/computer/upload/ai/interact(mob/user)
-	current = select_active_ai(user, z)
+	current = select_active_ai(user, z, TRUE)
 
 	if (!current)
 		to_chat(user, span_alert("No active AIs detected!"))

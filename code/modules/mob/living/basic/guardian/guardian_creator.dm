@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	if(length(guardians) && !allow_multiple)
 		balloon_alert(user, "already have one!")
 		return
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
+	if(IS_CHANGELING(user) && !allow_changeling)
 		to_chat(user, ling_failure)
 		return
 	if(used)
@@ -87,17 +87,18 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	used = TRUE
 	to_chat(user, use_message)
 	var/guardian_type_name = random ? "Random" : capitalize(initial(guardian_path.creator_name))
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as [user.real_name]'s [guardian_type_name] [mob_name]?",
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
+		"Do you want to play as [span_danger("[user.real_name]'s")] [span_notice("[guardian_type_name] [mob_name]")]?",
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_HOLOPARASITE,
-		pic_source = src,
-		role_name_text = "guardian spirit",
+		alert_pic = guardian_path,
+		jump_target = src,
+		role_name_text = guardian_type_name,
+		amount_to_pick = 1,
 	)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/candidate = pick(candidates)
-		spawn_guardian(user, candidate, guardian_path)
+	if(chosen_one)
+		spawn_guardian(user, chosen_one, guardian_path)
 		used = TRUE
 		SEND_SIGNAL(src, COMSIG_TRAITOR_ITEM_USED(type))
 	else
@@ -116,7 +117,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	var/datum/guardian_fluff/guardian_theme = GLOB.guardian_themes[theme]
 	var/mob/living/basic/guardian/summoned_guardian = new guardian_path(user, guardian_theme)
 	summoned_guardian.set_summoner(user, different_person = TRUE)
-	summoned_guardian.key = candidate.key
+	summoned_guardian.PossessByPlayer(candidate.key)
 	user.log_message("has summoned [key_name(summoned_guardian)], a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	summoned_guardian.log_message("was summoned as a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
@@ -128,7 +129,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 /obj/item/guardian_creator/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(src) || used)
+	if(user.incapacitated || !user.is_holding(src) || used)
 		return FALSE
 	return TRUE
 

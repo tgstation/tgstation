@@ -73,8 +73,8 @@
 				if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				used_item.pixel_x = used_item.base_pixel_x + clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-				used_item.pixel_y = used_item.base_pixel_y + clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+				used_item.pixel_x = used_item.base_pixel_x + clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+				used_item.pixel_y = used_item.base_pixel_y + clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 		else
 			return ..()
 
@@ -85,7 +85,7 @@
 	if(burning)
 		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs() && do_after(user, 5 SECONDS, target = src))
 		for(var/obj/item/grown/log/bonfire_log in contents)
 			bonfire_log.forceMove(drop_location())
 			bonfire_log.pixel_x += rand(1,4)
@@ -185,13 +185,19 @@
 /obj/structure/bonfire/dense
 	density = TRUE
 
+/obj/structure/bonfire/dense/prelit/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/bonfire/dense/prelit/LateInitialize()
+	start_burning()
+
 /obj/structure/bonfire/prelit/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 // Late init so that we can wait for air to exist in lazyloaded templates
 /obj/structure/bonfire/prelit/LateInitialize()
-	. = ..()
 	start_burning()
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

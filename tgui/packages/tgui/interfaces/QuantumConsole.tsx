@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Collapsible,
@@ -10,11 +7,14 @@ import {
   Section,
   Stack,
   Table,
+  Tabs,
   Tooltip,
-} from '../components';
-import { TableCell, TableRow } from '../components/Table';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
-import { LoadingScreen } from './common/LoadingToolbox';
+import { LoadingScreen } from './common/LoadingScreen';
 
 type Data =
   | {
@@ -28,6 +28,8 @@ type Data =
       ready: BooleanLike;
       retries_left: number;
       scanner_tier: number;
+      broadcasting: BooleanLike;
+      broadcasting_on_cd: BooleanLike;
     }
   | {
       connected: 0;
@@ -44,11 +46,13 @@ type Avatar = {
 };
 
 type Domain = {
+  announce_ghosts: BooleanLike;
   cost: number;
   desc: string;
   difficulty: number;
   id: string;
   is_modular: BooleanLike;
+  has_secondary_objectives: BooleanLike;
   name: string;
   reward: number | string;
 };
@@ -70,10 +74,11 @@ enum Difficulty {
   High,
 }
 
-const isConnected = (data: Data): data is Data & { connected: 1 } =>
-  data.connected === 1;
+function isConnected(data: Data): data is Data & { connected: 1 } {
+  return data.connected === 1;
+}
 
-const getColor = (difficulty: number) => {
+function getColor(difficulty: number) {
   switch (difficulty) {
     case Difficulty.Low:
       return 'yellow';
@@ -82,11 +87,11 @@ const getColor = (difficulty: number) => {
     case Difficulty.High:
       return 'bad';
     default:
-      return '';
+      return 'green';
   }
-};
+}
 
-export const QuantumConsole = (props) => {
+export function QuantumConsole(props) {
   const { data } = useBackend<Data>();
 
   return (
@@ -97,10 +102,11 @@ export const QuantumConsole = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
 
-const AccessView = (props) => {
+function AccessView(props) {
   const { act, data } = useBackend<Data>();
+  const [tab, setTab] = useSharedState('tab', 0);
 
   if (!isConnected(data)) {
     return <NoticeBox danger>No server connected!</NoticeBox>;
@@ -108,14 +114,20 @@ const AccessView = (props) => {
 
   const {
     available_domains = [],
+    broadcasting,
+    broadcasting_on_cd,
     generated_domain,
-    ready,
     occupants,
     points,
     randomized,
+    ready,
   } = data;
 
   const sorted = available_domains.sort((a, b) => a.cost - b.cost);
+
+  const filtered = sorted.filter((domain) => {
+    return domain.difficulty === tab;
+  });
 
   let selected;
   if (generated_domain) {
@@ -132,6 +144,15 @@ const AccessView = (props) => {
         <Section
           buttons={
             <>
+              <Button.Checkbox
+                checked={broadcasting}
+                disabled={broadcasting_on_cd}
+                onClick={() => act('broadcast')}
+                tooltip="Toggles whether you broadcast your
+                  bitrun to station Entertainment Monitors."
+              >
+                Broadcast
+              </Button.Checkbox>
               <Button
                 disabled={
                   !ready || occupants > 0 || points < 1 || !!generated_domain
@@ -139,7 +160,8 @@ const AccessView = (props) => {
                 icon="random"
                 onClick={() => act('random_domain')}
                 mr={1}
-                tooltip="Get a random domain for more rewards. Weighted towards your current points. Minimum: 1 point."
+                tooltip="Get a random domain for more rewards.
+                  Weighted towards your current points. Minimum: 1 point."
               >
                 Randomize
               </Button>
@@ -153,7 +175,45 @@ const AccessView = (props) => {
           scrollable
           title="Virtual Domains"
         >
-          {sorted.map((domain) => (
+          <Tabs fluid>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.None)}
+              textColor="white"
+              selected={tab === 0}
+              onClick={() => setTab(0)}
+              icon="chevron-down"
+            >
+              Peaceful
+            </Tabs.Tab>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.Low)}
+              textColor="black"
+              selected={tab === 1}
+              onClick={() => setTab(1)}
+              icon="chevron-down"
+            >
+              Easy
+            </Tabs.Tab>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.Medium)}
+              textColor="white"
+              selected={tab === 2}
+              onClick={() => setTab(2)}
+              icon="chevron-down"
+            >
+              Medium
+            </Tabs.Tab>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.High)}
+              textColor="white"
+              selected={tab === 3}
+              onClick={() => setTab(3)}
+              icon="chevron-down"
+            >
+              Hard <Icon name="skull" ml={1} />{' '}
+            </Tabs.Tab>
+          </Tabs>
+          {filtered.map((domain) => (
             <DomainEntry key={domain.id} domain={domain} />
           ))}
         </Section>
@@ -169,22 +229,33 @@ const AccessView = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Button.Confirm
-                content="Stop Domain"
                 disabled={!ready || !generated_domain}
                 onClick={() => act('stop_domain')}
                 tooltip="Begins shutdown. Will notify anyone connected."
-              />
+              >
+                Stop Domain
+              </Button.Confirm>
             </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
     </Stack>
   );
-};
+}
 
-const DomainEntry = (props: DomainEntryProps) => {
+function DomainEntry(props: DomainEntryProps) {
   const {
-    domain: { cost, desc, difficulty, id, is_modular, name, reward },
+    domain: {
+      announce_ghosts,
+      cost,
+      desc,
+      difficulty,
+      id,
+      is_modular,
+      has_secondary_objectives,
+      name,
+      reward,
+    },
   } = props;
   const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
@@ -207,6 +278,8 @@ const DomainEntry = (props: DomainEntryProps) => {
     buttonName = 'Deploy';
   }
 
+  const canView = name !== '???';
+
   return (
     <Collapsible
       buttons={
@@ -223,8 +296,9 @@ const DomainEntry = (props: DomainEntryProps) => {
       title={
         <>
           {name}
-          {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
-          {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
+          {!!is_modular && canView && <Icon name="cubes" ml={1} />}
+          {!!has_secondary_objectives && canView && <Icon name="gem" ml={1} />}
+          {!!announce_ghosts && canView && <Icon name="ghost" ml={1} />}
         </>
       }
     >
@@ -232,26 +306,28 @@ const DomainEntry = (props: DomainEntryProps) => {
         <Stack.Item color="label" grow={4}>
           {desc}
           {!!is_modular && ' (Modular)'}
-          {difficulty === Difficulty.High && ' (Hard)'}
+          {!!has_secondary_objectives && ' (Secondary Objective Available)'}
+          {!!announce_ghosts && ' (Ghost Interaction)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
           <Table>
-            <TableRow>
-              <DisplayDetails amount={cost} color="pink" icon="star" />
-            </TableRow>
-            <TableRow>
-              <DisplayDetails amount={difficulty} color="white" icon="skull" />
-            </TableRow>
-            <TableRow>
-              <DisplayDetails amount={reward} color="gold" icon="coins" />
-            </TableRow>
+            <Table.Row>
+              <Tooltip content="Points cost for deploying domain.">
+                <DisplayDetails amount={cost} color="pink" icon="star" />
+              </Tooltip>
+            </Table.Row>
+            <Table.Row>
+              <Tooltip content="Reward for competing domain.">
+                <DisplayDetails amount={reward} color="gold" icon="coins" />
+              </Tooltip>
+            </Table.Row>
           </Table>
         </Stack.Item>
       </Stack>
     </Collapsible>
   );
-};
+}
 
 const AvatarDisplay = (props) => {
   const { act, data } = useBackend<Data>();
@@ -291,12 +367,12 @@ const AvatarDisplay = (props) => {
     >
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
-          <TableRow key={name}>
-            <TableCell color="label">
+          <Table.Row key={name}>
+            <Table.Cell color="label">
               {pilot} as{' '}
               <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
-            </TableCell>
-            <TableCell collapsing>
+            </Table.Cell>
+            <Table.Cell collapsing>
               <Stack>
                 {brute === 0 && burn === 0 && tox === 0 && oxy === 0 && (
                   <Stack.Item>
@@ -319,8 +395,8 @@ const AvatarDisplay = (props) => {
                   <Icon color={oxy > 50 ? 'blue' : 'gray'} name="lungs" />
                 </Stack.Item>
               </Stack>
-            </TableCell>
-            <TableCell>
+            </Table.Cell>
+            <Table.Cell>
               <ProgressBar
                 minValue={-100}
                 maxValue={100}
@@ -331,8 +407,8 @@ const AvatarDisplay = (props) => {
                 }}
                 value={health}
               />
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         ))}
       </Table>
     </Section>
@@ -343,28 +419,28 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <TableCell color="label">None</TableCell>;
+    return <Table.Cell color="label">None</Table.Cell>;
   }
 
   if (typeof amount === 'string') {
-    return <TableCell color="label">{String(amount)}</TableCell>; // don't ask
+    return <Table.Cell color="label">{String(amount)}</Table.Cell>; // don't ask
   }
 
   if (amount > 4) {
     return (
-      <TableCell>
+      <Table.Cell>
         <Stack>
           <Stack.Item>{amount}</Stack.Item>
           <Stack.Item>
             <Icon color={color} name={icon} />
           </Stack.Item>
         </Stack>
-      </TableCell>
+      </Table.Cell>
     );
   }
 
   return (
-    <TableCell>
+    <Table.Cell>
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
           <Stack.Item key={index}>
@@ -372,6 +448,6 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
           </Stack.Item>
         ))}
       </Stack>
-    </TableCell>
+    </Table.Cell>
   );
 };

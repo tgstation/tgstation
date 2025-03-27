@@ -95,7 +95,7 @@
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
+	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + DEFAULT_TRAM_MIDPOINT))
 
 	// Check if our victim is in the active path of the tram.
 	if(!tram.controller_active)
@@ -106,15 +106,10 @@
 		return FALSE
 	if((tram.travel_direction & EAST) && outbound > tram.destination_platform.platform_code)
 		return FALSE
-	if(approach_distance >= AMBER_THRESHOLD_DEGRADED)
+	if(approach_distance >= XING_THRESHOLD_AMBER)
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
-	notify_ghosts(
-		"[future_tram_victim] has fallen in the path of an oncoming tram!",
-		source = future_tram_victim,
-		header = "Electrifying!",
-	)
 	do_sparks(4, FALSE, source)
 	playsound(parent, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))

@@ -10,9 +10,9 @@
 	name = "Unmelting Protection"
 	desc = "Grants fire immunity to any piece of clothing."
 	ritual_length = 12 SECONDS
-	ritual_invocations = list("And so to support the holder of the Ever-Burning candle...",
+	ritual_invocations = list("And so to support the holder of the Ever-Burning candle ...",
 	"... allow this unworthy apparel to serve you ...",
-	"... make it strong enough to burn a thousand time and more ...")
+	"... make it strong enough to burn a thousand times and more ...")
 	invoke_msg = "... Come forth in your new form, and join the unmelting wax of the one true flame!"
 	favor_cost = 1000
 ///the piece of clothing that will be fireproofed, only one per rite
@@ -33,7 +33,7 @@
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)
-		playsound(get_turf(religious_tool), 'sound/magic/fireball.ogg', 50, TRUE)
+		playsound(get_turf(religious_tool), 'sound/effects/magic/fireball.ogg', 50, TRUE)
 		chosen_clothing = null //our lord and savior no longer cares about this apparel
 		return TRUE
 	chosen_clothing = null
@@ -110,7 +110,7 @@
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
 		new /obj/item/flashlight/flare/candle/infinite(altar_turf)
-	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
+	playsound(altar_turf, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 	return TRUE
 
 /datum/religion_rites/blazing_star

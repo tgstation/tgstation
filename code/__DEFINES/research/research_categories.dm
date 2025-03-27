@@ -134,6 +134,7 @@
 #define RND_CATEGORY_MECHFAB_PHAZON "/Phazon"
 #define RND_CATEGORY_MECHFAB_CLARKE "/Clarke"
 #define RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV "/Savannah-Ivanov"
+#define RND_CATEGORY_MECHFAB_JUSTICE "/Justice"
 #define RND_SUBCATEGORY_MECHFAB_CHASSIS "/Chassis"
 #define RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT "/Supported Equipment"
 #define RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES "/Control Interfaces"
@@ -187,6 +188,7 @@
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS "/Cybernetic Implanting Tools"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY "/Cybernetic Utility Implants"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC "/Cybernetic Miscellaneous Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY "/Cybernetic Security Implants"
 #define RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS "/Cybernetic Advanced Limbs"
 
 // Limb Categories

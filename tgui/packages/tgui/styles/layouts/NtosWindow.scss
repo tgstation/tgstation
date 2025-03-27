@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
+@use '../base';
 
 .NtosWindow__header {
   position: absolute;
@@ -12,7 +12,7 @@
   right: 0;
   height: 2em;
   line-height: 1.928em;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: hsla(0, 0%, 0%, 0.5);
   font-family: Consolas, monospace;
   font-size: base.em(14px);
   user-select: none;

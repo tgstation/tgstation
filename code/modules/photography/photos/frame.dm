@@ -173,18 +173,15 @@
 	if(framed)
 		. += framed
 
-/obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
-		if(framed)
-			F.displayed = framed
-			set_and_save_framed(null)
-		if(contents.len)
-			var/obj/item/I = pick(contents)
-			I.forceMove(F)
-		F.update_appearance()
-	qdel(src)
-
+/obj/structure/sign/picture_frame/atom_deconstruct(disassembled = TRUE)
+	var/obj/item/wallframe/picture/showcase = new /obj/item/wallframe/picture(loc)
+	if(framed)
+		showcase.displayed = framed
+		set_and_save_framed(null)
+	if(contents.len)
+		var/obj/item/I = pick(contents)
+		I.forceMove(showcase)
+	showcase.update_appearance()
 
 /obj/structure/sign/picture_frame/showroom
 	name = "distinguished crew display"
@@ -281,6 +278,6 @@
 
 ///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
 /obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)
-	if(SSmapping.config.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
-		persistence_id = "frame_bar_[SSmapping.config.map_name]"
+	if(SSmapping.current_map.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
+		persistence_id = "frame_bar_[SSmapping.current_map.map_name]"
 	return ..()

@@ -405,7 +405,7 @@
 /turf/open/floor/wood,
 /area/centcom/basketball)
 "Ax" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/centcom/basketball)
 "AC" = (
@@ -489,10 +489,6 @@
 /obj/structure/hoop/minigame{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/centcom/basketball)
-"Ev" = (
-/mob/living/simple_animal/robot_customer,
 /turf/open/floor/wood,
 /area/centcom/basketball)
 "Gh" = (
@@ -983,7 +979,7 @@ nE
 pu
 ZM
 kc
-Ev
+tX
 Cw
 ku
 xP
@@ -1199,7 +1195,7 @@ nE
 pu
 pu
 kc
-Ev
+tX
 Cw
 HH
 dJ

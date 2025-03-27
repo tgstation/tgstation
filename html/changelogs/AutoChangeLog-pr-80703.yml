@@ -1,6 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - balance: "Instead of too much damage to the head beheading someone, it will now split their skull in half. While their skull is open, you can rip out their eyes with your hands. and they will spill their brain out of their head if they slip."
-  - balance: "The Path of Blades ascension will accept either a beheaded person, or someone with their skull split open."
-  - rscdel: "Removed the beheading objectives from traitor."

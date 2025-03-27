@@ -88,7 +88,7 @@
 	. = list()
 	.["possible_types"] = GLOB.wiremod_fundamental_types
 
-/obj/item/circuit_component/proccall/ui_status(mob/user)
+/obj/item/circuit_component/proccall/ui_status(mob/user, datum/ui_state/state)
 	if(!check_rights_for(user.client, R_VAREDIT))
 		return UI_CLOSE
 	return UI_INTERACTIVE
@@ -114,7 +114,7 @@
 		arguments += add_input_port(data["name"], data["datatype"])
 	return ..()
 
-/obj/item/circuit_component/proccall/ui_act(action, list/params)
+/obj/item/circuit_component/proccall/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

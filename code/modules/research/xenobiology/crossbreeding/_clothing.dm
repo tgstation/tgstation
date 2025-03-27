@@ -16,6 +16,7 @@ Slimecrossing Armor
 	armor_type = /datum/armor/mask_nobreath
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+	interaction_flags_mouse_drop = NEED_HANDS
 
 /datum/armor/mask_nobreath
 	bio = 50
@@ -37,11 +38,13 @@ Slimecrossing Armor
 	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "prismglasses"
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
-	var/glasses_color = "#FFFFFF"
 
-/obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
+	forced_glass_color = TRUE
+	var/glasses_color = COLOR_WHITE
+
+/obj/item/clothing/glasses/prism_glasses/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, glasses_color, forced_glass_color)
 
 /obj/structure/light_prism
 	name = "light prism"
@@ -68,23 +71,21 @@ Slimecrossing Armor
 	button_icon = 'icons/obj/science/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
-/datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return
+/datum/action/item_action/change_prism_colour/do_effect(trigger_flags)
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
 	if(!new_color)
 		return
+	RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, glasses.glasses_color, glasses.forced_glass_color)
 	glasses.glasses_color = new_color
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, new_color, glasses.forced_glass_color)
 
 /datum/action/item_action/place_light_prism
 	name = "Fabricate Light Prism"
 	button_icon = 'icons/obj/science/slimecrossing.dmi'
 	button_icon_state = "lightprism"
 
-/datum/action/item_action/place_light_prism/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return
+/datum/action/item_action/place_light_prism/do_effect(trigger_flags)
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(locate(/obj/structure/light_prism) in get_turf(owner))
 		to_chat(owner, span_warning("There isn't enough ambient energy to fabricate another light prism here."))
@@ -125,8 +126,8 @@ Slimecrossing Armor
 		return
 	return ..()
 
-/obj/item/clothing/head/peaceflower/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	if(at_peace_check(usr))
+/obj/item/clothing/head/peaceflower/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(at_peace_check(user))
 		return
 	return ..()
 
@@ -138,12 +139,16 @@ Slimecrossing Armor
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = null
 	flags_inv = NONE
-	obj_flags = IMMUTABLE_SLOW
+	item_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40
 
+/obj/item/clothing/suit/armor/heavy/adamantine/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
-	if(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) && prob(hit_reflect_chance))
+	if((def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)) && prob(hit_reflect_chance))
 		return TRUE
 	else
 		return FALSE

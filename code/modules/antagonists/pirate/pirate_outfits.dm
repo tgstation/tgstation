@@ -55,6 +55,12 @@
 
 	head = /obj/item/clothing/head/helmet/space/pirate
 
+	id_trim = /datum/id_trim/pirate/captain
+
+/datum/outfit/pirate/space/captain/cardboard
+	name = "Space Pirate Captain (EVA)"
+	l_hand = /obj/item/nullrod/claymore/saber/pirate
+
 /datum/outfit/pirate/silverscale
 	name = "Silver Scale Member"
 
@@ -62,17 +68,19 @@
 	id_trim = /datum/id_trim/pirate/silverscale
 	uniform = /obj/item/clothing/under/syndicate/sniper
 	suit = /obj/item/clothing/suit/armor/vest/alt
+	back = /obj/item/storage/backpack/satchel
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/collectable/tophat
 	shoes = /obj/item/clothing/shoes/laceup
+	implants = list(/obj/item/implant/explosive)
 
 /datum/outfit/pirate/silverscale/captain
 	name = "Silver Scale Captain"
 
 	id_trim = /datum/id_trim/pirate/captain/silverscale
 	head = /obj/item/clothing/head/costume/crown
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 
 /datum/outfit/pirate/interdyne
@@ -148,3 +156,39 @@
 	glasses = null
 	suit = /obj/item/clothing/suit/jacket/oversized
 	head = /obj/item/clothing/head/costume/crown
+
+	id_trim = /datum/id_trim/pirate/captain
+
+/datum/outfit/pirate/medieval
+	name = "Medieval Warmonger"
+
+	id = null
+	glasses = null
+	uniform = /obj/item/clothing/under/costume/gamberson/military
+	suit = /obj/item/clothing/suit/armor/vest/military
+	suit_store = /obj/item/spear/military
+	back = /obj/item/storage/backpack/satchel/leather
+	gloves = /obj/item/clothing/gloves/color/brown
+	head = /obj/item/clothing/head/helmet/military
+	mask = /obj/item/clothing/mask/balaclava
+	shoes = /obj/item/clothing/shoes/workboots
+	belt = /obj/item/claymore/shortsword
+	l_pocket = /obj/item/flashlight/flare/torch
+
+/datum/outfit/pirate/medieval/warlord
+	name = "Medieval Warlord"
+
+	neck = /obj/item/bedsheet/pirate
+	suit = /obj/item/clothing/suit/armor/riot/knight/warlord
+	suit_store = null
+	back = /obj/item/fireaxe/boardingaxe
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/helmet/knight/warlord
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/bronze
+	belt = /obj/item/gun/magic/hook
+	l_pocket = /obj/item/tank/internals/emergency_oxygen
+	r_pocket = /obj/item/flashlight/lantern
+
+
+	skillchips = list(/obj/item/skillchip/big_pointer) //they don't have an id, so this is needed

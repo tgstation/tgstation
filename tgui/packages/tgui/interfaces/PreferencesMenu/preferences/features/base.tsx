@@ -1,8 +1,12 @@
-import { sortBy, sortStrings } from 'common/collections';
-import { BooleanLike, classes } from 'common/react';
-import { ComponentType, createElement, ReactNode, useState } from 'react';
-
-import { sendAct, useBackend } from '../../../../backend';
+import { sortBy } from 'common/collections';
+import {
+  ComponentType,
+  createElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -11,11 +15,15 @@ import {
   NumberInput,
   Slider,
   Stack,
-} from '../../../../components';
-import { createSetPreference, PreferencesMenuData } from '../../data';
-import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
-export const sortChoices = sortBy<[string, ReactNode]>(([name]) => name);
+import { createSetPreference, PreferencesMenuData } from '../../types';
+import { useServerPrefs } from '../../useServerPrefs';
+
+export function sortChoices(array: [string, ReactNode][]) {
+  return sortBy(array, ([name]) => name);
+}
 
 export type Feature<
   TReceiving,
@@ -45,7 +53,6 @@ export type FeatureValueProps<
   TSending = TReceiving,
   TServerData = undefined,
 > = Readonly<{
-  act: typeof sendAct;
   featureId: string;
   handleSetValue: (newValue: TSending) => void;
   serverData: TServerData | undefined;
@@ -53,12 +60,15 @@ export type FeatureValueProps<
   value: TReceiving;
 }>;
 
-export const FeatureColorInput = (props: FeatureValueProps<string>) => {
+export function FeatureColorInput(props: FeatureValueProps<string>) {
+  const { act } = useBackend<PreferencesMenuData>();
+  const { featureId, shrink, value } = props;
+
   return (
     <Button
       onClick={() => {
-        props.act('set_color_preference', {
-          preference: props.featureId,
+        act('set_color_preference', {
+          preference: featureId,
         });
       }}
     >
@@ -66,14 +76,12 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
         <Stack.Item>
           <Box
             style={{
-              background: props.value.startsWith('#')
-                ? props.value
-                : `#${props.value}`,
+              background: value.startsWith('#') ? value : `#${value}`,
               border: '2px solid white',
               boxSizing: 'content-box',
               height: '11px',
               width: '11px',
-              ...(props.shrink
+              ...(shrink
                 ? {
                     margin: '1px',
                   }
@@ -82,51 +90,54 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
           />
         </Stack.Item>
 
-        {!props.shrink && <Stack.Item>Change</Stack.Item>}
+        {!shrink && <Stack.Item>Change</Stack.Item>}
       </Stack>
     </Button>
   );
-};
+}
 
 export type FeatureToggle = Feature<BooleanLike, boolean>;
 
-export const CheckboxInput = (
-  props: FeatureValueProps<BooleanLike, boolean>,
-) => {
+export function CheckboxInput(props: FeatureValueProps<BooleanLike, boolean>) {
+  const { handleSetValue, value } = props;
+
   return (
     <Button.Checkbox
-      checked={!!props.value}
+      checked={!!value}
       onClick={() => {
-        props.handleSetValue(!props.value);
+        handleSetValue(!value);
       }}
     />
   );
-};
+}
 
-export const CheckboxInputInverse = (
+export function CheckboxInputInverse(
   props: FeatureValueProps<BooleanLike, boolean>,
-) => {
+) {
+  const { handleSetValue, value } = props;
+
   return (
     <Button.Checkbox
-      checked={!props.value}
+      checked={!value}
       onClick={() => {
-        props.handleSetValue(!props.value);
+        handleSetValue(!value);
       }}
     />
   );
-};
+}
 
-export const createDropdownInput = <T extends string | number = string>(
+export function createDropdownInput<T extends string | number = string>(
   // Map of value to display texts
   choices: Record<T, ReactNode>,
   dropdownProps?: Record<T, unknown>,
-): FeatureValue<T> => {
+): FeatureValue<T> {
   return (props: FeatureValueProps<T>) => {
+    const { handleSetValue, value } = props;
+
     return (
       <Dropdown
-        selected={props.value}
-        displayText={choices[props.value]}
-        onSelected={props.handleSetValue}
+        selected={choices[value] as string}
+        onSelected={handleSetValue}
         width="100%"
         options={sortChoices(Object.entries(choices)).map(
           ([dataValue, label]) => {
@@ -140,7 +151,7 @@ export const createDropdownInput = <T extends string | number = string>(
       />
     );
   };
-};
+}
 
 export type FeatureChoicedServerData = {
   choices: string[];
@@ -150,136 +161,6 @@ export type FeatureChoicedServerData = {
 
 export type FeatureChoiced = Feature<string, string, FeatureChoicedServerData>;
 
-const capitalizeFirstLetter = (text: string) =>
-  text.toString().charAt(0).toUpperCase() + text.toString().slice(1);
-
-export const StandardizedDropdown = (props: {
-  choices: string[];
-  disabled?: boolean;
-  displayNames: Record<string, ReactNode>;
-  onSetValue: (newValue: string) => void;
-  value: string;
-  buttons?: boolean;
-}) => {
-  const { choices, disabled, buttons, displayNames, onSetValue, value } = props;
-
-  return (
-    <Dropdown
-      disabled={disabled}
-      buttons={buttons}
-      selected={value}
-      onSelected={onSetValue}
-      width="100%"
-      displayText={displayNames[value]}
-      options={choices.map((choice) => {
-        return {
-          displayText: displayNames[choice],
-          value: choice,
-        };
-      })}
-    />
-  );
-};
-
-export const FeatureDropdownInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData> & {
-    disabled?: boolean;
-    buttons?: boolean;
-  },
-) => {
-  const serverData = props.serverData;
-  if (!serverData) {
-    return null;
-  }
-
-  const displayNames =
-    serverData.display_names ||
-    Object.fromEntries(
-      serverData.choices.map((choice) => [
-        choice,
-        capitalizeFirstLetter(choice),
-      ]),
-    );
-
-  return (
-    <StandardizedDropdown
-      choices={sortStrings(serverData.choices)}
-      disabled={props.disabled}
-      buttons={props.buttons}
-      displayNames={displayNames}
-      onSetValue={props.handleSetValue}
-      value={props.value}
-    />
-  );
-};
-
-export type FeatureWithIcons<T> = Feature<
-  { value: T },
-  T,
-  FeatureChoicedServerData
->;
-
-export const FeatureIconnedDropdownInput = (
-  props: FeatureValueProps<
-    {
-      value: string;
-    },
-    string,
-    FeatureChoicedServerData
-  >,
-) => {
-  const serverData = props.serverData;
-  if (!serverData) {
-    return null;
-  }
-
-  const icons = serverData.icons;
-
-  const textNames =
-    serverData.display_names ||
-    Object.fromEntries(
-      serverData.choices.map((choice) => [
-        choice,
-        capitalizeFirstLetter(choice),
-      ]),
-    );
-
-  const displayNames = Object.fromEntries(
-    Object.entries(textNames).map(([choice, textName]) => {
-      let element: ReactNode = textName;
-
-      if (icons && icons[choice]) {
-        const icon = icons[choice];
-        element = (
-          <Stack>
-            <Stack.Item>
-              <Box
-                className={classes(['preferences32x32', icon])}
-                style={{
-                  transform: 'scale(0.8)',
-                }}
-              />
-            </Stack.Item>
-
-            <Stack.Item grow>{element}</Stack.Item>
-          </Stack>
-        );
-      }
-
-      return [choice, element];
-    }),
-  );
-
-  return (
-    <StandardizedDropdown
-      choices={sortStrings(serverData.choices)}
-      displayNames={displayNames}
-      onSetValue={props.handleSetValue}
-      value={props.value.value}
-    />
-  );
-};
-
 export type FeatureNumericData = {
   minimum: number;
   maximum: number;
@@ -288,100 +169,94 @@ export type FeatureNumericData = {
 
 export type FeatureNumeric = Feature<number, number, FeatureNumericData>;
 
-export const FeatureNumberInput = (
+export function FeatureNumberInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
-) => {
-  if (!props.serverData) {
-    return <Box>Loading...</Box>;
-  }
+) {
+  const { serverData, handleSetValue, value } = props;
 
   return (
     <NumberInput
-      onChange={(e, value) => {
-        props.handleSetValue(value);
-      }}
-      minValue={props.serverData.minimum}
-      maxValue={props.serverData.maximum}
-      step={props.serverData.step}
-      value={props.value}
+      onChange={(value) => handleSetValue(value)}
+      disabled={!serverData}
+      minValue={serverData?.minimum || 0}
+      maxValue={serverData?.maximum || 100}
+      step={serverData?.step || 1}
+      value={value}
     />
   );
-};
+}
 
-export const FeatureSliderInput = (
+export function FeatureSliderInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
-) => {
-  if (!props.serverData) {
-    return <Box>Loading...</Box>;
-  }
+) {
+  const { serverData, handleSetValue, value } = props;
 
   return (
     <Slider
       onChange={(e, value) => {
-        props.handleSetValue(value);
+        handleSetValue(value);
       }}
-      minValue={props.serverData.minimum}
-      maxValue={props.serverData.maximum}
-      step={props.serverData.step}
-      value={props.value}
+      disabled={!serverData}
+      minValue={serverData?.minimum || 0}
+      maxValue={serverData?.maximum || 100}
+      step={serverData?.step || 1}
+      value={value}
       stepPixelSize={10}
     />
   );
-};
+}
 
-export const FeatureValueInput = (props: {
+type FeatureValueInputProps = {
   feature: Feature<unknown>;
   featureId: string;
   shrink?: boolean;
   value: unknown;
+};
 
-  act: typeof sendAct;
-}) => {
-  const { data } = useBackend<PreferencesMenuData>();
+export function FeatureValueInput(props: FeatureValueInputProps) {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
   const feature = props.feature;
 
   const [predictedValue, setPredictedValue] = useState(props.value);
 
-  const changeValue = (newValue: unknown) => {
+  function changeValue(newValue: unknown) {
     setPredictedValue(newValue);
-    createSetPreference(props.act, props.featureId)(newValue);
-  };
+    createSetPreference(act, props.featureId)(newValue);
+  }
 
-  return (
-    <ServerPreferencesFetcher
-      render={(serverData) => {
-        return createElement(feature.component, {
-          act: props.act,
-          featureId: props.featureId,
-          serverData: serverData?.[props.featureId] as any,
-          shrink: props.shrink,
+  useEffect(() => {
+    setPredictedValue(props.value);
+  }, [data.active_slot, props.value]);
 
-          handleSetValue: changeValue,
-          value: predictedValue,
-        });
-      }}
-    />
-  );
-};
+  const serverData = useServerPrefs();
 
-export type FeatureShortTextData = {
+  return createElement(feature.component, {
+    featureId: props.featureId,
+    serverData: serverData?.[props.featureId] as any,
+    shrink: props.shrink,
+    handleSetValue: changeValue,
+    value: predictedValue,
+  });
+}
+
+type FeatureShortTextData = {
   maximum_length: number;
 };
 
-export const FeatureShortTextInput = (
+export function FeatureShortTextInput(
   props: FeatureValueProps<string, string, FeatureShortTextData>,
-) => {
-  if (!props.serverData) {
-    return <Box>Loading...</Box>;
-  }
+) {
+  const { serverData, value, handleSetValue } = props;
 
   return (
     <Input
+      disabled={!serverData}
       width="100%"
-      value={props.value}
-      maxLength={props.serverData.maximum_length}
-      onChange={(_, value) => props.handleSetValue(value)}
+      value={value}
+      maxLength={serverData?.maximum_length}
+      updateOnPropsChange
+      onChange={(_, value) => handleSetValue(value)}
     />
   );
-};
+}

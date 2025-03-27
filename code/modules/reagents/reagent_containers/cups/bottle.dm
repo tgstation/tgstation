@@ -37,6 +37,11 @@
 	desc = "A small bottle of spewium."
 	list_reagents = list(/datum/reagent/toxin/spewium = 30)
 
+/obj/item/reagent_containers/cup/bottle/syndol
+	name = "syndol bottle"
+	desc = "A small bottle of syndol."
+	list_reagents = list(/datum/reagent/drug/syndol = 30)
+
 /obj/item/reagent_containers/cup/bottle/morphine
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."
@@ -58,6 +63,11 @@
 	name = "multiver bottle"
 	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
 	list_reagents = list(/datum/reagent/medicine/c2/multiver = 30)
+
+/obj/item/reagent_containers/cup/bottle/calomel
+	name = "calomel bottle"
+	desc = "A small bottle of calomel, a toxic drug which quickly removes chemicals from the bloodstream. Does not cause additional harm in heavily-injured people."
+	list_reagents = list(/datum/reagent/medicine/calomel = 30)
 
 /obj/item/reagent_containers/cup/bottle/phlogiston
 	name = "Phlogiston bottle"
@@ -123,6 +133,16 @@
 	name = "Frost Oil Bottle"
 	desc = "A small bottle. Contains cold sauce."
 	list_reagents = list(/datum/reagent/consumable/frostoil = 30)
+
+/obj/item/reagent_containers/cup/bottle/strange_reagent
+	name = "Strange Reagent Bottle"
+	desc = "A small bottle. May be used to revive people."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent = 30)
+
+/obj/item/reagent_containers/cup/bottle/fishy_reagent
+	name = "Fishy Reagent Bottle"
+	desc = "A small bottle. May be used to revive fish."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 30)
 
 /obj/item/reagent_containers/cup/bottle/traitor
 	name = "syndicate bottle"
@@ -244,6 +264,12 @@
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."
 	list_reagents = list(/datum/reagent/romerol = 30)
+
+/obj/item/reagent_containers/cup/bottle/moltobeso
+	name = "Molt'Obeso bottle"
+	desc = "The revolutionary new sauce from Syndicate's culinary experts, designed to instantly reshape your figure! \
+			The key to the effectiveness of this product lies in its unique formulation, which combines carefully selected ingredients to stimulate appetite and enhance the absorption of calories."
+	list_reagents = list(/datum/reagent/consumable/moltobeso = 50)
 
 /obj/item/reagent_containers/cup/bottle/random_virus
 	name = "Experimental disease culture bottle"
@@ -426,7 +452,7 @@
 
 /obj/item/reagent_containers/cup/bottle/thermite
 	name = "thermite bottle"
-	list_reagents = list(/datum/reagent/thermite = 30)
+	list_reagents = list(/datum/reagent/thermite = 50)
 
 // Bottles for mail goodies.
 
@@ -457,7 +483,7 @@
 
 /obj/item/reagent_containers/cup/bottle/caramel
 	name = "bottle of caramel"
-	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 30)
 
 /*
@@ -501,11 +527,11 @@
 			balloon_alert(user, "container full!")
 			return TRUE
 
-		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user)
+		var/transfer_amount = round(reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 
-	if(istype(attacking_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(attacking_item))
 		rename(user, attacking_item)
 
 	attacking_item.update_appearance()
@@ -513,7 +539,7 @@
 
 	return TRUE
 
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/click_alt(mob/user)
 	cap_on = !cap_on
 	if(!cap_on)
 		icon_state = "syrup_open"
@@ -522,7 +548,7 @@
 		icon_state = "syrup"
 		balloon_alert(user, "put pump cap on")
 	update_icon_state()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/rename(mob/user, obj/item/writing_instrument)
 	if(!user.can_write(writing_instrument))
@@ -534,13 +560,14 @@
 		return
 
 	if(user.can_perform_action(src))
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
 
 //types of syrups
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel
 	name = "bottle of caramel syrup"
-	desc = "A pump bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A pump bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 50)
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur

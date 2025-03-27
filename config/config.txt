@@ -8,6 +8,7 @@ $include resources.txt
 $include interviews.txt
 $include lua.txt
 $include auxtools.txt
+$include map_vote.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -143,16 +144,26 @@ GUEST_BAN
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
-## Rating to warn at: (0.9 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
-#IPINTEL_RATING_BAD 0.9
+## Rating to warn at: (0.8 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.8
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
 #IPINTEL_EMAIL ch@nge.me
-## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
-#IPINTEL_SAVE_GOOD 12
-## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
-#IPINTEL_SAVE_BAD 3
-## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
-#IPINTEL_DOMAIN check.getipintel.net
+## Query base, if you pay for more queries this is what you want to change.
+#IPINTEL_BASE check.getipintel.net
+## Maximum number of queries in a minute
+#IPINTEL_MAX_QUERY_MINUTE 15
+## Maximum number of queries in a day
+#IPINTEL_MAX_QUERY_DAY 500
+## Whether clients which cannot be checked due to a rate limit will be denied
+#IPINTEL_REJECT_RATE_LIMITED
+## Whether clients which are flagged as a VPN will be denied
+IPINTEL_REJECT_BAD
+## Whether clients which cannot be checked due to an error of some form will be denied
+#IPINTEL_REJECT_UNKNOWN
+## How long to store results in the cache before they must be retrieved again. IN DAYS.
+#IPINTEL_CACHE_LENGTH 7
+## How many minutes of living playtime to be automatically exempt from IPIntel. 0 for never.
+#IPINTEL_EXEMPT_PLAYTIME_LIVING 0
 
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
@@ -165,18 +176,22 @@ GUEST_BAN
 ## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
 #USEWHITELIST
 
+## The address shown for the game server in the TGS check command
+# PUBLIC_ADDRESS ss13.example.com:2506
+
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
+## This is also used to show the server's address in the TGS check command if the public address isn't set
 # SERVER ss13.example.com:2506
 
 ## forum address
 # FORUMURL http://tgstation13.org/phpBB/index.php
 
 ## Wiki address
-# WIKIURL http://www.tgstation13.org/wiki
+# WIKIURL http://tgstation13.org/wiki
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+# RULESURL http://tgstation13.org/wiki/Rules
 
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
@@ -198,19 +213,19 @@ GUEST_BAN
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
 
-## System command that invokes youtube-dl, used by Play Internet Sound.
-## You can install youtube-dl with
-## "pip install youtube-dl" if you have pip installed
-## from https://github.com/rg3/youtube-dl/releases
+## System command that invokes yt-dlp, used by Play Internet Sound.
+## You can install yt-dlp with
+## "pip install yt-dlp" if you have pip installed
+## from https://github.com/yt-dlp/yt-dlp/releases
 ## or your package manager
-## The default value assumes youtube-dl is in your system PATH
-# INVOKE_YOUTUBEDL youtube-dl
+## The default value assumes yt-dlp is in your system PATH
+# INVOKE_YOUTUBEDL yt-dlp
 
 ## Comment this out to disable users ability to use the request internet sounds to be played.
 REQUEST_INTERNET_SOUND
 
 ## Request Internet Sound Allowed URL'S comma separated, urls here are the only sites allowed through Request Internet Sound, Add more to allow more, or remove to disallow.
-## The Defaults here are all supported by youtube-dl
+## The Defaults here are all supported by yt-dlp
 ## Ensure . and / are escaped with \
 REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,bandcamp\.com\/track\/
 
@@ -220,6 +235,8 @@ REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,ba
 ## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
 ## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
 ## Playtime Requirements is in minutes, Required Account Age is in days.
+## Human Authority Whitelist Setting can either be 0 or 1.
+## Make sure to read the start of the file to get a more in-depth explanation of what each entry does!
 #LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
@@ -259,7 +276,7 @@ NOTE_FRESH_DAYS 91.31055
 ## Notes older then this will be completely faded out.
 NOTE_STALE_DAYS 365.2422
 
-## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
+## Uncomment to allow drastic performance enhancement measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
 #AUTO_LAG_SWITCH_POP 75
 
 ##Note: all population caps can be used with each other if desired.
@@ -286,7 +303,7 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 BYOND_MEMBER_BYPASS_POPCAP
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
-##	Requres database
+##	Requires database
 NOTIFY_NEW_PLAYER_AGE 0
 
 ## Notify admins when a player connects if their byond account was created in the last X days
@@ -294,7 +311,7 @@ NOTIFY_NEW_PLAYER_AGE 0
 NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 
 ## Notify the irc channel when a new player makes their first connection
-##	Requres database
+##	Requires database
 #IRC_FIRST_CONNECTION_ALERT
 
 ## Discord ID of a role that should be pinged when a new player makes their first connection
@@ -351,8 +368,11 @@ AUTOADMIN_RANK Game Master
 #AUTOADMIN
 
 
-## Uncomment to automatically deadmin players when the game starts.
-#AUTO_DEADMIN_PLAYERS
+## Uncomment to automatically deadmin players whenever they are controlling a mob.
+#AUTO_DEADMIN_ALWAYS
+
+## Uncomment to automatically deadmin players when they click to ready up or join game. For latejoining, does it before they pick a role because it's best done early to limit metainfo.
+#AUTO_DEADMIN_ON_READY_OR_LATEJOIN
 
 ## Uncomment to automatically deadmin antagonists when they gain the role.
 #AUTO_DEADMIN_ANTAGONISTS
@@ -368,14 +388,14 @@ AUTOADMIN_RANK Game Master
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 ## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
-#CLIENT_WARN_VERSION 511
-#CLIENT_WARN_BUILD 1421
+#CLIENT_WARN_VERSION 515
+#CLIENT_WARN_BUILD 1635
 #CLIENT_WARN_POPUP
-#CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
-CLIENT_ERROR_VERSION 511
+#CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including image generation for UIs and :: operators.
+CLIENT_ERROR_VERSION 515
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
-## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
-CLIENT_ERROR_BUILD 1421
+## The minimum build needed for joining the server.
+CLIENT_ERROR_BUILD 1590
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
@@ -398,13 +418,13 @@ SECOND_CLICK_LIMIT 15
 MINUTE_CLICK_LIMIT 400
 
 ##Error handling related options
-## The "cooldown" time for each occurence of a unique error
+## The "cooldown" time for each occurrence of a unique error
 #ERROR_COOLDOWN 600
-## How many occurences before the next will silence them
+## How many occurrences before the next will silence them
 #ERROR_LIMIT 90
 ## How long a unique error will be silenced for
 #ERROR_SILENCE_TIME 6000
-##How long to wait between messaging admins about occurences of a unique error
+##How long to wait between messaging admins about occurrences of a unique error
 #ERROR_MSG_DELAY 50
 
 
@@ -412,18 +432,20 @@ MINUTE_CLICK_LIMIT 400
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS>=4.
 ## If using TGS>=4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
-## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
+## You can also specify multiple channel tags by using the config option multiple times,
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag_1
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag_2
 
-## Which channel will have a message about a new game starting, message includes the station name.
+## Which channels will have a message about a new game starting, message includes the station name.
 #CHANNEL_ANNOUNCE_NEW_GAME
 
-## Which channel will have a message about a new game starting, message includes the round ID of the game that has just ended.
+## Which channels will have a message about a new game starting, message includes the round ID of the game that has just ended.
 #CHANNEL_ANNOUNCE_END_GAME
 
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
 
-## Uncomment this to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
+## Uncomment this flag to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
 # SECURE_CHAT_COMMANDS
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
@@ -471,6 +493,9 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
+
+## Determines the interval between each saved profiler snapshot (in deciseconds).
+#PROFILER_INTERVAL 3000
 
 ## Threshold (in deciseconds) for real time between ticks before we start dumping profiles
 DRIFT_DUMP_THRESHOLD 40
@@ -532,12 +557,20 @@ URGENT_AHELP_COOLDOWN 300
 MOTD motd.txt
 #MOTD motd_extra.txt
 
-## Assets can opt-in to caching their results into `tmp`.
+## Assets can opt-in to caching their results into `cache/`.
 ## This is important, as preferences assets take upwards of 30 seconds (without sleeps) to collect.
-## The cache is assumed to be cleared by TGS recompiling, which deletes `tmp`.
+## The cache is assumed to be cleared by TGS recompiling, which deletes `cache/`.
 ## This should be disabled (through `CACHE_ASSETS 0`) on development,
 ## but enabled on production (the default).
 CACHE_ASSETS 0
+
+## Enables 'smart' asset caching, for assets that support it.
+## This is a type of asset cache that automatically invalidates itself based on inputs to the asset generation.
+## The cache is stored in `data/spritesheets/smart_cache/`.
+## It lowers the generation cost and is safe to enable on development and production.
+## This cache is only cleared by the game or manually, but it shouldn't affect the results.
+## This setting is independent of `CACHE_ASSETS`, they do not affect each other whatsoever.
+SMART_CACHE_ASSETS
 
 ## If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
 ## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
@@ -568,6 +601,9 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
 #FORBID_ADMIN_PROFILING
 
+## Uncomment to disable TTS messages on whispering, such as radio messages or the whisper verb. Useful for reducing your TTS load.
+#TTS_NO_WHISPER
+
 ## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
 #TTS_HTTP_URL http://localhost:5002
 
@@ -593,3 +629,9 @@ UPLOAD_LIMIT 524288
 
 ## Restricts admin client uploads to the server, defined in bytes, default is 5MB
 UPLOAD_LIMIT_ADMIN 5242880
+
+## Uncomment to allow admins with +DEBUG to start the byond-tracy profiler during the round.
+#ALLOW_TRACY_START
+
+## Uncomment to allow admins with +DEBUG to queue the next round to run the byond-tracy profiler.
+#ALLOW_TRACY_QUEUE

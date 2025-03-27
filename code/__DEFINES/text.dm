@@ -58,6 +58,16 @@
 /// Removes everything enclose in < and > inclusive of the bracket, and limits the length of the message.
 #define STRIP_HTML_FULL(text, limit) (GLOB.html_tags.Replace(copytext(text, 1, limit), ""))
 
+/**
+ * stuff like `copytext(input, length(input))` will trim the last character of the input,
+ * because DM does it so it copies until the char BEFORE the `end` arg, so we need to bump `end` by 1 in these cases.
+ */
+#define PREVENT_CHARACTER_TRIM_LOSS(integer) (integer + 1)
+
+/// BYOND's string procs don't support being used on datum references (as in it doesn't look for a name for stringification)
+/// We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.
+#define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
+
 /// Folder directory for strings
 #define STRING_DIRECTORY "strings"
 
@@ -102,3 +112,7 @@
 #define SPLASH_FILE "splashes.json"
 ///File location for mother hallucination lines
 #define MOTHER_FILE "mother.json"
+
+#define ALPHABET list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+#define VOWELS list("a", "e", "i", "o", "u")
+#define CONSONANTS (ALPHABET - VOWELS)

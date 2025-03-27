@@ -37,14 +37,36 @@
 	var/special_pod
 	/// Was this spawned through an admin proc?
 	var/admin_spawned = FALSE
-	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
+	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the crate price min doesn't apply
 	var/goody = FALSE
 	/// Can coupons target this pack? If so, how rarely?
 	var/discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
+	/// Is this supply pack considered unpredictable for the purposes of testing unit testing? Examples include the stock market, or miner supply crates. If true, exempts from unit testing
+	var/abstract = FALSE
 
 /datum/supply_pack/New()
 	id = type
 
+/// Returns data used for cargo purchasing UI
+/datum/supply_pack/proc/get_contents_ui_data()
+	var/list/data = list()
+	for(var/obj/item/item as anything in contains)
+		var/list/item_data = list(
+			"name" = item.name,
+			"icon" = item.greyscale_config ? null : item.icon,
+			"icon_state" = item.greyscale_config ? null : item.icon_state,
+			"amount" = contains[item]
+		)
+		UNTYPED_LIST_ADD(data, item_data)
+
+	return data
+
+/**
+ * Proc that takes a given supply_pack, and attempts to create a crate containing the pack's contents as determined by fill()
+ *
+ * @ atom/A: The location or turf that the pack is being generated onto. Cargo shuttle provides an empty turf, other generate()s call this either null or otherwise.
+ * @ datum/bank_account/paying_account: The account to associate the supply pack with when going and generating the crate. Only the paying account can open said secure crate/case.
+ */
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
@@ -77,6 +99,7 @@
 				continue
 			A.flags_1 |= ADMIN_SPAWNED_1
 
+
 /// For generating supply packs at runtime. Returns a list of supply packs to use instead of this one.
 /datum/supply_pack/proc/generate_supply_packs()
 	return
@@ -105,7 +128,8 @@
 	name = "mining order"
 	hidden = TRUE
 	crate_name = "shaft mining delivery crate"
-	access = list(ACCESS_MINING)
+	access = ACCESS_MINING
+	abstract = TRUE
 
 /datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()
@@ -116,7 +140,7 @@
 /datum/supply_pack/custom/minerals
 	name = "materials order"
 	crate_name = "galactic materials market delivery crate"
-	access = list()
+	access = FALSE
 	crate_type = /obj/structure/closet/crate/cardboard
 
 /datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)
@@ -148,6 +172,7 @@
 		var/fraction = available_quantity
 		if(market_quantity != available_quantity) //to avoid division by zero error
 			fraction /= (market_quantity - available_quantity)
-		SSstock_market.materials_prices[material_type] += round(SSstock_market.materials_prices[material_type] * fraction)
+		SSstock_market.adjust_material_price(material_type, SSstock_market.materials_prices[material_type] * fraction)
+
 		//We decrease the quantity only after adjusting our prices for accurate values
-		SSstock_market.materials_quantity[material_type] -= available_quantity
+		SSstock_market.adjust_material_quantity(material_type, -available_quantity)

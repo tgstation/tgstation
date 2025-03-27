@@ -1,7 +1,7 @@
 /obj/item/circuit_component/equipment_action
 	display_name = "Equipment Action"
 	desc = "Represents an action the user can take when using supported shells."
-	required_shells = list(/obj/item/organ/internal/cyberimp/bci, /obj/item/mod/module/circuit)
+	required_shells = list(/obj/item/organ/cyberimp/bci, /obj/item/mod/module/circuit)
 
 	/// The icon of the button
 	var/datum/port/input/option/icon_options
@@ -89,4 +89,4 @@
 	for(var/ref in granted_to)
 		var/datum/action/granted_action = granted_to[ref]
 		granted_action.name = button_name.value || "Action"
-		granted_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
+		granted_action.button_icon_state = "bci_[replacetextEx(LOWER_TEXT(icon_options.value), " ", "_")]"

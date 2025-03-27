@@ -32,7 +32,7 @@
 /obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
 	if(rip_open)
-		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
 		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
@@ -51,23 +51,22 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += contents
 
-/obj/item/delivery/deconstruct()
+/obj/item/delivery/atom_deconstruct(dissambled = TRUE)
 	unwrap_contents()
 	post_unwrap_contents()
-	return ..()
 
 /obj/item/delivery/examine(mob/user)
 	. = ..()
 	if(note)
 		if(!in_range(user, src))
-			. += "There's a [note.name] attached to it. You can't read it from here."
+			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it. You can't read it from here.")
 		else
-			. += "There's a [note.name] attached to it..."
+			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it...")
 			. += note.examine(user)
 	if(sticker)
-		. += "There's a barcode attached to the side."
+		. += span_notice("There's a [EXAMINE_HINT("barcode")] attached to the side. The package is marked for [EXAMINE_HINT("export.")]")
 	if(sort_tag)
-		. += "There's a sorting tag with the destination set to [GLOB.TAGGERLOCATIONS[sort_tag]]."
+		. += span_notice("There's a [EXAMINE_HINT("sorting tag")] with the destination set to [EXAMINE_HINT("[GLOB.TAGGERLOCATIONS[sort_tag]].")]")
 
 /obj/item/delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
@@ -80,7 +79,7 @@
 		movable_loc.relay_container_resist_act(user, object)
 		return
 	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 50, target = object))
+	if(do_after(user, 5 SECONDS, target = object))
 		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
 		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))
@@ -102,7 +101,7 @@
 	if(note)
 		. += "[base_icon_state]_note"
 	if(sticker)
-		. += "[base_icon_state]_tag"
+		. += "[base_icon_state]_barcode"
 
 /obj/item/delivery/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/dest_tagger))
@@ -112,9 +111,9 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[dest_tagger.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = dest_tagger.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-	else if(istype(item, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
@@ -123,6 +122,7 @@
 		if(!str || !length(str))
 			to_chat(user, span_warning("Invalid text!"))
 			return
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		user.visible_message(span_notice("[user] labels [src] as [str]."))
 		name = "[name] ([str])"
 
@@ -217,6 +217,7 @@
 	layer = BELOW_OBJ_LAYER
 	pass_flags_self = PASSSTRUCTURE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+	w_class = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/delivery/big/interact(mob/user)
 	if(!attempt_pre_unwrap_contents(user))
@@ -253,7 +254,7 @@
 
 	unwrap_contents()
 	post_unwrap_contents(user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/dest_tagger
 	name = "destination tagger"
@@ -280,7 +281,7 @@
 		to_chat(user, span_notice("*HELL*"))//lizard nerf
 	else
 		to_chat(user, span_notice("*HEAVEN*"))
-	playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
 /** Standard TGUI actions */
@@ -310,7 +311,7 @@
 	return data
 
 /** User clicks a button on the tagger */
-/obj/item/dest_tagger/ui_act(action, params)
+/obj/item/dest_tagger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -396,15 +397,15 @@
 	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
 	user.put_in_hands(new_barcode)
 
-/obj/item/sales_tagger/CtrlClick(mob/user)
-	. = ..()
+/obj/item/sales_tagger/item_ctrl_click(mob/user)
 	payments_acc = null
 	to_chat(user, span_notice("You clear the registered account."))
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/sales_tagger/AltClick(mob/user)
-	. = ..()
+/obj/item/sales_tagger/click_alt(mob/user)
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
+	return CLICK_ACTION_SUCCESS

@@ -278,7 +278,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "sand"
 	},
 /area/ruin/powered/beach)
@@ -286,7 +286,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/bed{
@@ -320,9 +320,9 @@
 /area/ruin/powered/beach)
 "hO" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hS" = (
@@ -344,7 +344,7 @@
 /area/ruin/powered/beach)
 "jc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -405,6 +405,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
+/area/ruin/powered/beach)
+"mv" = (
+/obj/effect/spawner/message_in_a_bottle/low_prob,
+/turf/open/misc/beach/coast,
 /area/ruin/powered/beach)
 "mw" = (
 /obj/structure/flora/coconuts,
@@ -479,7 +483,7 @@
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron{
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "sand"
 	},
 /area/ruin/powered/beach)
@@ -511,9 +515,9 @@
 /area/ruin/powered/beach)
 "qy" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "qF" = (
@@ -524,8 +528,8 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "qK" = (
-/obj/structure/closet/secure_closet/bar/lavaland_bartender_clothes,
 /obj/machinery/light/small/directional/east,
+/obj/structure/closet/secure_closet/bar/lavaland_bartender_clothes,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "qT" = (
@@ -549,9 +553,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "rU" = (
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5
-	},
+/obj/item/reagent_containers/condiment/enzyme,
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
@@ -692,9 +694,9 @@
 /area/ruin/powered/beach)
 "zm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "zv" = (
@@ -920,9 +922,7 @@
 /area/ruin/powered/beach)
 "GA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/chair/stool/directional/south,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/red,
@@ -989,6 +989,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/spawner/message_in_a_bottle/low_prob,
 /turf/open/misc/beach/coast/corner{
 	dir = 8
 	},
@@ -1342,7 +1343,7 @@
 /area/ruin/powered/beach)
 "Wd" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/happy,
+/obj/item/reagent_containers/applicator/pill/happy,
 /obj/item/toy/figure/bartender{
 	pixel_x = -8;
 	pixel_y = -1
@@ -1994,7 +1995,7 @@ bG
 bL
 VI
 VI
-yT
+mv
 pz
 Eu
 pz

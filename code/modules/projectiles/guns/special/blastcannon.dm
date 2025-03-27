@@ -23,7 +23,7 @@
 	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
-	fire_sound = 'sound/weapons/blastcannon.ogg'
+	fire_sound = 'sound/items/weapons/blastcannon.ogg'
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
@@ -49,8 +49,6 @@
 
 /obj/item/gun/blastcannon/Initialize(mapload)
 	. = ..()
-	if(!pin)
-		pin = new
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(channel_blastwave))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
@@ -110,10 +108,8 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	if((!bomb && bombcheck) || !target || (get_dist(get_turf(target), get_turf(user)) <= 2))
+/obj/item/gun/blastcannon/try_fire_gun(atom/target, mob/living/user, params)
+	if((!bomb && bombcheck) || isnull(target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 
 	cached_target = WEAKREF(target)
@@ -123,12 +119,12 @@
 			span_danger("[user] points [src] at [target]!"),
 			span_danger("You point [src] at [target]!")
 		)
-		return
+		return FALSE
 
 	cached_firer = WEAKREF(user)
 	if(!bomb)
-		fire_debug(target, user, flag, params)
-		return
+		fire_debug(target, user, params)
+		return TRUE
 
 	playsound(src, dry_fire_sound, 30, TRUE) // *click
 	user.visible_message(
@@ -141,8 +137,7 @@
 	user.log_message("opened blastcannon transfer valve at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).", LOG_GAME)
 	bomb.toggle_valve()
 	update_appearance()
-	return
-
+	return TRUE
 
 /**
  * Channels an internal explosion into a blastwave projectile.
@@ -196,7 +191,7 @@
 	SSexplosions.shake_the_room(start_turf, max(heavy, medium, light, 0), (capped_heavy * 15) + (capped_medium * 20), capped_heavy, capped_medium)
 
 	var/obj/projectile/blastwave/blastwave = new(loc, heavy, medium, light)
-	blastwave.preparePixelProjectile(target, start_turf, params2list(modifiers), spread)
+	blastwave.aim_projectile(target, start_turf, params2list(modifiers), spread)
 	blastwave.fire()
 	cached_firer = null
 	cached_target = null
@@ -266,7 +261,7 @@
  * - light: The light impact range of the blastwave.
  */
 /obj/item/gun/blastcannon/proc/fire_dropped(heavy, medium, light)
-	src.visible_message("<span class='danger'>[src] suddenly goes off!")
+	src.visible_message(span_danger("[src] suddenly goes off!"))
 	var/turf/target = get_edge_target_turf(src, dir)
 	var/mob/firer = cached_firer.resolve()
 	var/turf/start_turf = get_turf(src)
@@ -317,7 +312,7 @@
 /obj/projectile/blastwave/is_hostile_projectile()
 	return TRUE
 
-/obj/projectile/blastwave/Range()
+/obj/projectile/blastwave/reduce_range()
 	. = ..()
 	if(QDELETED(src))
 		return

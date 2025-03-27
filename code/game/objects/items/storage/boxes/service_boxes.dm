@@ -7,16 +7,19 @@
 	illustration = "drinkglass"
 
 /obj/item/storage/box/drinkingglasses/PopulateContents()
+	. = list()
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/cup/glass/drinkingglass(src)
+		. += /obj/item/reagent_containers/cup/glass/drinkingglass
+
 /obj/item/storage/box/cups
 	name = "box of paper cups"
 	desc = "It has pictures of paper cups on the front."
 	illustration = "cup"
 
 /obj/item/storage/box/cups/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/cup/glass/sillycup(src)
+		. += /obj/item/reagent_containers/cup/glass/sillycup
 
 //Some spare PDAs in a box
 /obj/item/storage/box/pdas
@@ -25,8 +28,9 @@
 	illustration = "pda"
 
 /obj/item/storage/box/pdas/PopulateContents()
+	. = list()
 	for(var/i in 1 to 4)
-		new /obj/item/modular_computer/pda(src)
+		. += /obj/item/modular_computer/pda
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -34,25 +38,29 @@
 	illustration = "id"
 
 /obj/item/storage/box/ids/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/card/id/advanced(src)
+		. += /obj/item/card/id/advanced
+
 /obj/item/storage/box/silver_ids
 	name = "box of spare silver IDs"
 	desc = "Shiny IDs for important people."
 	illustration = "id"
 
 /obj/item/storage/box/silver_ids/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/card/id/advanced/silver(src)
+		. += /obj/item/card/id/advanced/silver
 
 /obj/item/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
-	desc = "<span class='alert'>Keep out of reach of children.</span>"
+	desc = span_alert("Keep out of reach of children.")
 	illustration = "mousetrap"
 
 /obj/item/storage/box/mousetraps/PopulateContents()
+	. = list()
 	for(var/i in 1 to 6)
-		new /obj/item/assembly/mousetrap(src)
+		. += /obj/item/assembly/mousetrap
 
 /obj/item/storage/box/snappops
 	name = "snap pop box"
@@ -60,15 +68,12 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "spbox"
 	illustration = ""
-
-/obj/item/storage/box/snappops/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(list(/obj/item/toy/snappop))
-	atom_storage.max_slots = 8
+	storage_type = /datum/storage/box/snappops
 
 /obj/item/storage/box/snappops/PopulateContents()
+	. = list()
 	for(var/i in 1 to 8)
-		new /obj/item/toy/snappop(src)
+		. += /obj/item/toy/snappop
 
 /obj/item/storage/box/matches
 	name = "matchbox"
@@ -86,19 +91,16 @@
 	custom_price = PAYCHECK_CREW * 0.4
 	base_icon_state = "matchbox"
 	illustration = null
+	storage_type = /datum/storage/box/matches
 
 /obj/item/storage/box/matches/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 10
-	atom_storage.set_holdable(list(/obj/item/match))
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/storage/box/matches/PopulateContents()
+	. = list()
 	for(var/i in 1 to 10)
-		new /obj/item/match(src)
-
-/obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/match))
-		W.matchignite()
+		. += /obj/item/match
 
 /obj/item/storage/box/matches/update_icon_state()
 	. = ..()
@@ -120,61 +122,62 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable_result = /obj/item/stack/sheet/cardboard //BubbleWrap
 	illustration = "light"
-
-/obj/item/storage/box/lights/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 21
-	atom_storage.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
-	atom_storage.max_total_storage = 21
-	atom_storage.allow_quick_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
+	storage_type = /datum/storage/box/lights
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
+	. = list()
 	for(var/i in 1 to 21)
-		new /obj/item/light/bulb(src)
+		. += /obj/item/light/bulb
 
 /obj/item/storage/box/lights/tubes
 	name = "box of replacement tubes"
 	illustration = "lighttube"
 
 /obj/item/storage/box/lights/tubes/PopulateContents()
+	. = list()
 	for(var/i in 1 to 21)
-		new /obj/item/light/tube(src)
+		. += /obj/item/light/tube
 
 /obj/item/storage/box/lights/mixed
 	name = "box of replacement lights"
 	illustration = "lightmixed"
 
 /obj/item/storage/box/lights/mixed/PopulateContents()
-	for(var/i in 1 to 14)
-		new /obj/item/light/tube(src)
-	for(var/i in 1 to 7)
-		new /obj/item/light/bulb(src)
+	return flatten_quantified_list(list(
+		/obj/item/light/tube = 14,
+		/obj/item/light/bulb = 7,
+	))
 
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 	illustration = "fpen"
 
 /obj/item/storage/box/fountainpens/PopulateContents()
+	. = list()
 	for(var/i in 1 to 7)
-		new /obj/item/pen/fountain(src)
+		. += /obj/item/pen/fountain
 
 /obj/item/storage/box/dishdrive
 	name = "DIY Dish Drive Kit"
 	desc = "Contains everything you need to build your own Dish Drive!"
 	custom_premium_price = PAYCHECK_CREW * 3
 
-/obj/item/storage/box/dishdrive/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/circuitboard/machine/dish_drive = 1,
-		/obj/item/screwdriver = 1,
-		/obj/item/stack/cable_coil/five = 1,
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stack/sheet/iron/five = 1,
-		/obj/item/stock_parts/servo = 1,
-		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/wrench = 1,
+/obj/item/storage/box/dishdrive/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_count = TRUE
+
+	var/static/list/obj/item/items_inside = list(
+		/obj/item/circuitboard/machine/dish_drive,
+		/obj/item/screwdriver,
+		/obj/item/stack/cable_coil/five,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/iron/five,
+		/obj/item/stock_parts/servo,
+		/obj/item/stock_parts/matter_bin,
+		/obj/item/stock_parts/matter_bin,
+		/obj/item/wrench,
 	)
-	generate_items_inside(items_inside,src)
+
+	return items_inside
 
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"
@@ -182,9 +185,11 @@
 	icon_state = "box"
 
 /obj/item/storage/box/actionfigure/PopulateContents()
+	. = list()
+
+	var/static/list/obj/item/toy/figure/types = subtypesof(/obj/item/toy/figure)
 	for(var/i in 1 to 4)
-		var/random_figure = pick(subtypesof(/obj/item/toy/figure))
-		new random_figure(src)
+		. += pick(types)
 
 /obj/item/storage/box/tail_pin
 	name = "pin the tail on the corgi supplies"
@@ -192,40 +197,81 @@
 	custom_price = PAYCHECK_COMMAND * 1.25
 
 /obj/item/storage/box/tail_pin/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/poster/tail_board(src)
-		new /obj/item/tail_pin(src)
+	return flatten_quantified_list(list(
+		/obj/item/poster/tail_board = 3,
+		/obj/item/tail_pin = 3,
+	))
 
 /obj/item/storage/box/party_poppers
 	name = "box of party poppers"
 	desc = "Turn any event into a celebration and ensure the janitor stays busy."
 
 /obj/item/storage/box/party_poppers/PopulateContents()
+	. = list()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
+		. += /obj/item/reagent_containers/spray/chemsprayer/party
+
+/obj/item/storage/box/balloons
+	name = "box of long balloons"
+	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
+	illustration = "balloon"
+	storage_type = /datum/storage/box/balloons
+
+/obj/item/storage/box/balloons/PopulateContents()
+	. = list()
+	for(var/i in 1 to 24)
+		. += /obj/item/toy/balloon/long
 
 /obj/item/storage/box/stickers
-	name = "box of stickers"
-	desc = "A box full of random stickers. Do give to the clown."
+	name = "sticker pack"
+	desc = "A pack of removable stickers. Removable? What a rip off!<br>On the back, <b>DO NOT GIVE TO THE CLOWN!</b> is printed in large lettering."
+	icon = 'icons/obj/toys/stickers.dmi'
+	icon_state = "stickerpack"
+	illustration = null
+	w_class = WEIGHT_CLASS_TINY
+	storage_type = /datum/storage/box/stickers
+
+	///Laels to pick from for this box illustration
+	var/static/list/pack_labels = list(
+		"smile",
+		"frown",
+		"heart",
+		"silentman",
+		"tider",
+		"star",
+	)
+
+/obj/item/storage/box/stickers/Initialize(mapload)
+	. = ..()
+	if(isnull(illustration))
+		illustration = pick(pack_labels)
+		update_appearance()
 
 /obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
-	. = list()
+	var/list/allowed_stickers = list()
+
 	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
-		if(!initial(sticker_type.contraband))
-			. += sticker_type
-	return .
+		if(!sticker_type::exclude_from_random)
+			allowed_stickers += sticker_type
+
+	return allowed_stickers
+
 /obj/item/storage/box/stickers/PopulateContents()
 	var/static/list/non_contraband
-	if(!non_contraband)
+
+	if(isnull(non_contraband))
 		non_contraband = generate_non_contraband_stickers_list()
-	for(var/i in 1 to rand(4,8))
-		var/type = pick(non_contraband)
-		new type(src)
+
+	. = list()
+	for(var/i in 1 to rand(4, 8))
+		. += pick(non_contraband)
 
 /obj/item/storage/box/stickers/googly
-	name = "box of googly eye stickers"
+	name = "googly eye sticker pack"
 	desc = "Turn anything and everything into something vaguely alive!"
+	illustration = "googly-alt"
 
 /obj/item/storage/box/stickers/googly/PopulateContents()
+	. = list()
 	for(var/i in 1 to 6)
-		new /obj/item/sticker/googly(src)
+		. += /obj/item/sticker/googly

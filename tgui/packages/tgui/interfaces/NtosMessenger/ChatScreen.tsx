@@ -1,8 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef, RefObject } from 'react';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -13,7 +9,10 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../../backend';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 
 type ChatScreenProps = {
@@ -402,12 +401,14 @@ const ChatMessage = (props: ChatMessageProps) => {
   const { message, everyone, outgoing, photoPath, timestamp, onPreviewImage } =
     props;
 
-  const displayMessage = decodeHtmlEntities(message);
+  const messageHTML = {
+    __html: `${message}`,
+  };
 
   return (
     <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
       <Box className="NtosChatMessage__content">
-        <Box as="span">{displayMessage}</Box>
+        <Box as="span" dangerouslySetInnerHTML={messageHTML} />
         <Tooltip content={timestamp} position={outgoing ? 'left' : 'right'}>
           <Icon
             className="NtosChatMessage__timestamp"

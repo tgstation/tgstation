@@ -1,4 +1,3 @@
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -10,7 +9,9 @@ import {
   NumberInput,
   Section,
   Stack,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
 import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 
@@ -294,11 +295,12 @@ const PulseSettings = (props) => {
           <NumberInput
             animated
             width="32px"
+            step={1}
             stepPixelSize={10}
             value={pulseStrength}
             minValue={1}
             maxValue={PULSE_STRENGTH_MAX}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('set_pulse_strength', {
                 val: value,
               })
@@ -309,11 +311,12 @@ const PulseSettings = (props) => {
           <NumberInput
             animated
             width="32px"
+            step={1}
             stepPixelSize={10}
             value={pulseDuration}
             minValue={1}
             maxValue={PULSE_DURATION_MAX}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('set_pulse_duration', {
                 val: value,
               })

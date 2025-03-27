@@ -77,7 +77,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/template_noop)
 "z" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Secure Evidence Lockup";
 	req_one_access = list("armory","detective")
 	},

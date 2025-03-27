@@ -61,9 +61,9 @@
 
 /obj/item/wallframe/screwdriver_act(mob/living/user, obj/item/tool)
 	// For camera-building borgs
-	var/turf/T = get_step(get_turf(user), user.dir)
-	if(iswallturf(T))
-		T.attackby(src, user)
+	var/turf/wall_turf = get_step(get_turf(user), user.dir)
+	if(iswallturf(wall_turf))
+		wall_turf.item_interaction(user, src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)

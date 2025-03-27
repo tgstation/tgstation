@@ -5,22 +5,17 @@
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
 
-	hitsound = 'sound/hallucinations/growl1.ogg'
+	hitsound = 'sound/effects/hallucinations/growl1.ogg'
 	force = 21 // Just enough to break airlocks with melee attacks
 	wound_bonus = -30
 	bare_wound_bonus = 15
 	sharpness = SHARP_EDGED
 
-/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/living/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag)
-		return
+/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, click_parameters)
+	if(ishuman(target))
+		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))
-		if(ishuman(target))
-			try_to_zombie_infect(target, user, user.zone_selected)
-		else
-			. |= AFTERATTACK_PROCESSED_ITEM
-			check_feast(target, user)
+		check_feast(target, user)
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST)
 	CHECK_DNA_AND_SPECIES(target)
@@ -56,7 +51,7 @@
 	if(limb_armor > limb_damage)
 		return
 
-	var/obj/item/organ/internal/zombie_infection/infection
+	var/obj/item/organ/zombie_infection/infection
 	infection = target.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()

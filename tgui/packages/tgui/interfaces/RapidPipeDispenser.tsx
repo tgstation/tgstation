@@ -1,9 +1,4 @@
-import { BooleanLike, classes } from 'common/react';
-import { multiline } from 'common/string';
-import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -13,7 +8,11 @@ import {
   Stack,
   Table,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'];
@@ -48,29 +47,6 @@ const TOOLS = [
     bitmask: 8,
   },
 ];
-
-const LAYERS = [
-  {
-    name: '1',
-    bitmask: 1,
-  },
-  {
-    name: '2',
-    bitmask: 2,
-  },
-  {
-    name: '3',
-    bitmask: 4,
-  },
-  {
-    name: '4',
-    bitmask: 8,
-  },
-  {
-    name: '5',
-    bitmask: 16,
-  },
-] as const;
 
 type DirectionsAllowed = {
   north: BooleanLike;
@@ -114,19 +90,19 @@ type Preview = {
 };
 
 type Data = {
+  // Static
+  paint_colors: Colors;
+  max_pipe_layers: number;
   // Dynamic
   category: number;
   pipe_layers: number;
   multi_layer: BooleanLike;
-  ducting_layer: number;
   categories: Category[];
   selected_recipe: string;
   selected_color: string;
   selected_category: string;
   mode: number;
   init_directions: DirectionsAllowed;
-  // Static
-  paint_colors: Colors;
 };
 
 export const ColorItem = (props) => {
@@ -169,13 +145,14 @@ const ModeItem = (props) => {
         <Button.Checkbox
           key={tool.bitmask}
           checked={mode & tool.bitmask}
-          content={tool.name}
           onClick={() =>
             act('mode', {
               mode: tool.bitmask,
             })
           }
-        />
+        >
+          {tool.name}
+        </Button.Checkbox>
       ))}
     </LabeledList.Item>
   );
@@ -202,7 +179,7 @@ const CategoryItem = (props) => {
 };
 
 const SelectionSection = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <Section fill>
@@ -218,37 +195,46 @@ const SelectionSection = (props) => {
 
 const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
-  const { pipe_layers } = data;
-  const { multi_layer } = data;
+  const { pipe_layers, multi_layer, max_pipe_layers } = data;
+  const layer_to_bitmask = (layer: number) => {
+    return 1 << layer;
+  };
+
   return (
     <LabeledList.Item label="Layer">
-      {LAYERS.map((layer) => (
-        <Button.Checkbox
-          key={layer.bitmask}
-          checked={
-            multi_layer
-              ? pipe_layers & layer.bitmask
-              : layer.bitmask === pipe_layers
-          }
-          content={layer.name}
-          onClick={() => act('pipe_layers', { pipe_layers: layer.bitmask })}
-        />
-      ))}
+      {Array(max_pipe_layers)
+        .keys()
+        .map((layer) => (
+          <Button.Checkbox
+            key={layer}
+            checked={
+              multi_layer
+                ? pipe_layers & layer_to_bitmask(layer)
+                : layer_to_bitmask(layer) === pipe_layers
+            }
+            onClick={() =>
+              act('pipe_layers', { pipe_layers: layer_to_bitmask(layer) })
+            }
+          >
+            {layer + 1}
+          </Button.Checkbox>
+        ))}
       <Button.Checkbox
         key="multilayer"
         checked={multi_layer}
-        content="Multi"
         tooltip="Build on multiple pipe layers simultaneously"
         onClick={() => {
           act('toggle_multi_layer');
         }}
-      />
+      >
+        Multi
+      </Button.Checkbox>
     </LabeledList.Item>
   );
 };
 
 const PreviewSelect = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act } = useBackend<Data>();
   return (
     <Box>
       {props.previews.map((preview) => (
@@ -289,8 +275,8 @@ const PreviewSelect = (props) => {
 };
 
 const PipeTypeSection = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { categories = [], selected_category, selected_recipe } = data;
+  const { data } = useBackend<Data>();
+  const { categories = [], selected_category } = data;
   const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
@@ -347,11 +333,10 @@ export const SmartPipeBlockSection = (props) => {
                 color="transparent"
                 icon="info"
                 tooltipPosition="right"
-                tooltip={multiline`
-                This is a panel for blocking certain connection
+                tooltip="This is a panel for blocking certain connection
                 directions for the smart pipes.
                 The button in the center resets to
-                default (all directions can connect)`}
+                default (all directions can connect)"
               />
             </Stack.Item>
             <Stack.Item>
@@ -413,7 +398,7 @@ export const SmartPipeBlockSection = (props) => {
 };
 
 export const RapidPipeDispenser = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <Window width={550} height={580}>

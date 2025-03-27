@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	if(!user.say(message, spans = span_list, sanitize = FALSE, ignore_spam = ignore_spam, forced = forced))
 		return
 
-	message = lowertext(message)
+	message = LOWER_TEXT(message)
 
 	var/list/mob/living/listeners = list()
 	//used to check if the speaker specified a name or a job to focus on
@@ -51,13 +51,13 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 			listeners += candidate
 
-			//Let's ensure the listener's name is not matched within another word or command (and viceversa). e.g. "Saul" in "somersault"
-			var/their_first_name = candidate.first_name()
+			//Let's ensure the listener's name is not matched within another word or command (and vice-versa). e.g. "Saul" in "somersault"
+			var/their_first_name = first_name(candidate.name)
 			if(!GLOB.all_voice_of_god_triggers.Find(their_first_name) && findtext(message, regex("(\\L|^)[their_first_name](\\L|$)", "i")))
 				specific_listeners += candidate //focus on those with the specified name
 				to_remove_string += "[to_remove_string ? "|" : null][their_first_name]"
 				continue
-			var/their_last_name = candidate.last_name()
+			var/their_last_name = last_name(candidate.name)
 			if(their_last_name != their_first_name && !GLOB.all_voice_of_god_triggers.Find(their_last_name) && findtext(message, regex("(\\L|^)[their_last_name](\\L|$)", "i")))
 				specific_listeners += candidate // Ditto
 				to_remove_string += "[to_remove_string ? "|" : null][their_last_name]"
@@ -295,8 +295,13 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/say_my_name/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
+	var/regex/smartass_regex = regex(@"^say my name[.!]*$")
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), user.name), 0.5 SECONDS * iteration)
+		var/to_say = user.name
+		// 0.1% chance to be a smartass
+		if(findtext(LOWER_TEXT(message), smartass_regex) && prob(0.1))
+			to_say = "My name"
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), to_say), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to say "Who's there?".

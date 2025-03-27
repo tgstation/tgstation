@@ -38,6 +38,7 @@
 			spark_system.start()
 
 /datum/computer_file/program/revelation/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PRG_arm")
 			armed = !armed

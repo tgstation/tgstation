@@ -1,6 +1,6 @@
 /datum/language/nekomimetic
 	name = "Nekomimetic"
-	desc = "To the casual observer, this langauge is an incomprehensible mess of broken Japanese. To the felinids, it's somehow comprehensible."
+	desc = "To the casual observer, this language is an incomprehensible mess of broken Japanese. To the felinids, it's somehow comprehensible."
 	key = "f"
 	space_chance = 70
 	syllables = list(
@@ -12,3 +12,16 @@
 	)
 	icon_state = "neko"
 	default_priority = 90
+	default_name_syllable_min = 2
+	default_name_syllable_max = 2
+
+/datum/language/nekomimetic/get_random_name(
+	gender = NEUTER,
+	name_count = default_name_count,
+	syllable_min = default_name_syllable_min,
+	syllable_max = default_name_syllable_max,
+	force_use_syllables = FALSE,
+)
+	if(prob(33))
+		return default_name(gender)
+	return ..()
