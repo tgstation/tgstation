@@ -210,9 +210,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			live_guy.fully_heal()
 
-	for(var/area/check_area in GLOB.areas)
-		if(!is_type_in_list(check_area, GLOB.the_station_areas))
-			continue
+	for(var/area_type in GLOB.the_station_areas)
+		var/area/check_area = GLOB.areas_by_type[area_type]
 		if(!(check_area.area_flags & BLOBS_ALLOWED))
 			continue
 		check_area.color = blobstrain.color
