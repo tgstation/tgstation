@@ -1239,7 +1239,7 @@
 	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
 		effective_grab_state++
 
-	if(HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) //If we have grab weakness from some source, treat the grab state as one higher
+	if(HAS_TRAIT(src, TRAIT_GRABWEAKNESS) && moving_resist) //If we have grab weakness from some source, and are not manually resisting, treat the grab state as one higher
 		effective_grab_state++
 
 	if(get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss() + getBruteLoss()) >= 40) //If we are staggered, and we have at least 40 damage, treat the grab state as one higher.
