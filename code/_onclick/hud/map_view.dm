@@ -28,7 +28,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	assigned_map = map_key
 	set_position(1, 1)
 
-/atom/movable/screen/map_view/proc/display_to(mob/show_to, is_tgui)
+/atom/movable/screen/map_view/proc/display_to(mob/show_to, is_tgui = TRUE)
 	if(is_tgui)
 		RegisterSignal(show_to.client, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible))
 	else
