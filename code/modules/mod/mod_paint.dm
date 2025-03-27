@@ -29,8 +29,8 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MODpaint", name)
-		proxy_view.display_to(user, ui.window)
 		ui.open()
+		proxy_view.display_to(user, ui.window)
 
 /obj/item/mod/paint/ui_host()
 	return editing_mod

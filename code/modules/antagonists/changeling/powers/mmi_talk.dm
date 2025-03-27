@@ -95,9 +95,9 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LingMMITalk")
+		ui.open()
 		// Open map view
 		mmi_view.display_to(user, ui.window)
-		ui.open()
 
 /datum/action/changeling/mmi_talk/ui_close(mob/user)
 	var/obj/item/mmi/mmi = brain_ref.loc

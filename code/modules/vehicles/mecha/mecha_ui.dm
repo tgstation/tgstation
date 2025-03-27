@@ -6,8 +6,8 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Mecha", name)
-		ui_view.display_to(user, ui.window)
 		ui.open()
+		ui_view.display_to(user, ui.window)
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user, datum/ui_state/state)
 	var/common_status = min(

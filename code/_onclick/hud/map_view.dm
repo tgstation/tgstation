@@ -41,14 +41,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
  */
 /atom/movable/screen/map_view/proc/display_to(mob/show_to, datum/tgui_window/window)
 	if(window && !window.visible)
-		RegisterSignal(show_to.client, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible))
+		RegisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible))
 	else
 		display_to_client(show_to.client)
 
-/atom/movable/screen/map_view/proc/display_on_ui_visible(client/show_to)
+/atom/movable/screen/map_view/proc/display_on_ui_visible(datum/tgui_window/window, client/show_to)
 	SIGNAL_HANDLER
 	display_to_client(show_to)
-	UnregisterSignal(show_to, COMSIG_TGUI_WINDOW_VISIBLE)
+	UnregisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE)
 
 /atom/movable/screen/map_view/proc/display_to_client(client/show_to)
 	show_to.register_map_obj(src)

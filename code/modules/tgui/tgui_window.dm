@@ -383,7 +383,7 @@
 			send_message("ping/reply", payload)
 		if("visible")
 			visible = TRUE
-			SEND_SIGNAL(client, COMSIG_TGUI_WINDOW_VISIBLE)
+			SEND_SIGNAL(src, COMSIG_TGUI_WINDOW_VISIBLE, client)
 		if("suspend")
 			close(can_be_suspended = TRUE)
 		if("close")
