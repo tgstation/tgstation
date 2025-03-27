@@ -150,11 +150,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	if(istype(item, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/iron = item
 		if (iron.use(1))
-			user.balloon_alert(user, "sheet inserted"))
+			user.balloon_alert(user, "sheet inserted")
 			empty_tanks++
 			return TRUE
 	if(istype(item, /obj/item/tank) && !inserted_tank && !(mode == BS_MODE_OFF))
-		if(!user.transferItemtoLoc(item, src))
+		if(!user.transferItemToLoc(item, src))
 			user.balloon_alert(user, "it's stuck!")
 			return
 		inserted_tank = TRUE
