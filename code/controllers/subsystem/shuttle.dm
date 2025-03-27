@@ -11,7 +11,8 @@ SUBSYSTEM_DEF(shuttle)
 	wait = 1 SECONDS
 	dependencies = list(
 		/datum/controller/subsystem/mapping,
-		/datum/controller/subsystem/atoms
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/air
 	)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
