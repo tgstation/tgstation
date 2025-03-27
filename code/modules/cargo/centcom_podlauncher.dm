@@ -109,7 +109,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	cam_screen = new
 	cam_screen.generate_view(map_name)
 
-	var/datum/plane_master_group/planes = cam_screen.display_to(holder.mob)
+	var/datum/plane_master_group/planes = cam_screen.display_to(holder.mob, TRUE)
 
 	if(!renderLighting)
 		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))

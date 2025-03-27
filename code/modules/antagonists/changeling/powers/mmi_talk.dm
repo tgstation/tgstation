@@ -84,7 +84,7 @@
 		update_view_tracker = new(brain_ref, CALLBACK(src, PROC_REF(update_mmi_view)))
 
 	// Shows the view to the user foremost
-	mmi_view.display_to(user)
+	mmi_view.display_to(user, TRUE)
 	user.client.register_map_obj(mmi_view_background)
 	update_mmi_view()
 	// Makes the MMI relay heard messages

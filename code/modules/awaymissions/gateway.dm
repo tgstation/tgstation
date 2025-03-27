@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		G.portal_visuals.display_to(user)
+		G.portal_visuals.display_to(user, TRUE)
 		ui = new(user, src, "Gateway", name)
 		ui.open()
 
