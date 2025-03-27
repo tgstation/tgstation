@@ -433,6 +433,7 @@
 	desc = "A box containing an assortment of fresh Tiziran goods- perfect for making the foods of the Lizard Empire."
 	icon_state = "lizard_package"
 	illustration = null
+	storage_type = /datumn/storage/box/tiziran_goods
 
 /obj/item/storage/box/tiziran_goods/PopulateContents()
 	var/static/list/obj/item/food = list(
