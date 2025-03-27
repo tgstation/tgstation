@@ -239,6 +239,7 @@
 		log_tgui(client,
 			context = "[id]/close (suspending)",
 			window = src)
+		visible = FALSE
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
