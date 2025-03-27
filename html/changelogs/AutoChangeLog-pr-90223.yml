@@ -1,0 +1,4 @@
+author: "norsvenska"
+delete-after: True
+changes:
+  - bugfix: "Wawastation's port bow solar array now has a cable under all panels by default."
