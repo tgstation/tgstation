@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Examining a heretic influence gives you a sp00ky message rather than an empty box"
