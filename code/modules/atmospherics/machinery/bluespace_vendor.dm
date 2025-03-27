@@ -27,8 +27,10 @@
 	var/obj/machinery/atmospherics/components/unary/bluespace_sender/connected_machine
 	///Amount of usable tanks inside the machine
 	var/empty_tanks = 10
+	///Reference to the tanks that vendor will make
+	var/obj/item/tank/internals/generic/new_tank
 	///Reference to the current in use tank to be filled
-	var/obj/item/tank/internals/generic/internal_tank
+	var/obj/item/tank/internal_tank
 	///Path of the gas selected from the UI to be pumped inside the tanks
 	var/selected_gas
 	///Is the vendor trying to move gases from the network to the tanks?
@@ -39,12 +41,18 @@
 	var/tank_filling_amount = 0
 	///Base price of the tank
 	var/tank_cost = 10
+	///Has a tank been dispensed from the machine?
+	var/tank_purchased = FALSE
 	///Stores the current price of the gases inside the tank
 	var/gas_price = 0
 	///Helper for mappers, will automatically connect to the sender (ensure to only place one sender per map)
 	var/map_spawned = TRUE
 	///Current operating mode of the vendor
 	var/mode = BS_MODE_OFF
+	///Sound effcts just taken from canisters
+	var/insert_sound = 'sound/effects/compressed_air/tank_insert_clunky.ogg'
+	var/remove_sound = 'sound/effects/compressed_air/tank_remove_thunk.ogg'
+	var/sound_vol = 50
 
 //The one that the players make
 /obj/machinery/bluespace_vendor/built
@@ -68,7 +76,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
+	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 	find_and_hang_on_wall( FALSE)
 
 /obj/machinery/bluespace_vendor/post_machine_initialize()
@@ -142,8 +150,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	if(istype(item, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/iron = item
 		if (iron.use(1))
+			user.balloon_alert(user, "sheet inserted"))
 			empty_tanks++
 			return TRUE
+	if(istype(item, /obj/item/tank) && !inserted_tank && !(mode == BS_MODE_OFF))
+		if(!user.transferItemtoLoc(item, src))
+			user.balloon_alert(user, "it's stuck!")
+			return
+		inserted_tank = TRUE
+		internal_tank = item
+		playsound(src, insert_sound, sound_vol)
+		to_chat(user, span_notice("You insert [item] into the vendor."))
+		return TRUE
+
 	return ..()
 
 /obj/machinery/bluespace_vendor/examine(mob/user)
@@ -192,15 +211,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		temp_price += gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
+	if(tank_purchased)
+		gas_price += tank_cost
+
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
 		var/datum/gas_mixture/remove = working_mix.remove_ratio(1)
 		connected_machine.bluespace_network.merge(remove)
 		return
-	connected_machine.credits_gained += gas_price + tank_cost
+	connected_machine.credits_gained += gas_price
 
 	if(internal_tank && Adjacent(user)) //proper capitalysm take money before goods
 		inserted_tank = FALSE
+		tank_purchased = FALSE
 		user.put_in_hands(internal_tank)
+		internal_tank = null
+		playsound(src, remove_sound, sound_vol)
 
 /obj/machinery/bluespace_vendor/ui_interact(mob/user, datum/tgui/ui)
 	if(!connected_machine || mode == BS_MODE_OPEN)
@@ -273,7 +298,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		if("tank_prepare")
 			if(empty_tanks && !inserted_tank)
 				inserted_tank = TRUE
-				internal_tank = new(src)
+				tank_purchased = TRUE
+				internal_tank = new(new_tank)
 				empty_tanks = max(empty_tanks - 1, 0)
 			. = TRUE
 		if("tank_expel")
