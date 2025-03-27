@@ -102,7 +102,7 @@
 	if(is_living)
 		concurrent_users += user_ref
 	// Register map objects
-	cam_screen.display_to(user, TRUE)
+	cam_screen.display_to(user)
 	user.client.register_map_obj(cam_background)
 
 /datum/computer_file/program/secureye/ui_status(mob/user, datum/ui_state/state)

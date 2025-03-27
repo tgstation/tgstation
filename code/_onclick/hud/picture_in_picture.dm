@@ -182,7 +182,7 @@
 	if(usr.client.screen_maps["camera-[REF(src)]_map"])
 		return
 	usr.client.setup_popup("camera-[REF(src)]", width, height, 2, "1984")
-	popup_screen.display_to(usr)
+	popup_screen.display_to(usr, FALSE)
 	RegisterSignal(usr.client, COMSIG_POPUP_CLEARED, PROC_REF(on_popup_clear))
 
 /atom/movable/screen/movable/pic_in_pic/proc/on_popup_clear(client/source, window)

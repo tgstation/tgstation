@@ -25,7 +25,7 @@
 
 	proxy_view.appearance = view
 	proxy_view.color = current_color
-	proxy_view.display_to(owner.mob, TRUE)
+	proxy_view.display_to(owner.mob)
 
 /datum/color_matrix_editor/Destroy(force)
 	QDEL_NULL(proxy_view)

@@ -113,7 +113,7 @@
 
 	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
 	new_view.generate_view(assigned_view)
-	new_view.display_to(user, TRUE)
+	new_view.display_to(user)
 	return new_view
 
 /// Takes a record and updates the character preview view to match it.

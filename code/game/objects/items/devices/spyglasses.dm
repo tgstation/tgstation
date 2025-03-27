@@ -14,7 +14,7 @@
 	if(cool_guy.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
 	cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
-	linked_bug.cam_screen.display_to(user)
+	linked_bug.cam_screen.display_to(user, FALSE)
 	RegisterSignal(cool_guy, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
 
 	linked_bug.update_view()
