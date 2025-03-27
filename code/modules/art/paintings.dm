@@ -432,6 +432,105 @@
 
 	return FALSE
 
+
+#define CANVAS_FILL_R_MATCH (1<<0)
+#define CANVAS_FILL_L_MATCH (1<<1)
+
+#define CANVAS_COORD(x, y) "[x]-[y]"
+#define STACK_CANVAS_COORD(x, y, stack) \
+	if(y && !stack[CANVAS_COORD(x, y)]) {\
+		stack[CANVAS_COORD(x, y)] = list(x, y);\
+	}
+
+/obj/item/canvas/proc/canvas_fill(c_x, c_y, new_color)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/prev_color = grid[c_x][c_y]
+	if(prev_color == new_color)
+		return
+
+	var/list/stack_right = list()
+	var/list/stack_left = list()
+	var/go_right = TRUE
+
+	var/list/coords = list(c_x, c_y)
+
+	while(coords)
+		var/list/curr_line = grid[c_x]
+		var/list/right_line = c_x < width ? grid[c_x+1] : null
+		var/list/left_line = c_x > 1 ? grid[c_x-1] : null
+		var/list/curr_stack = go_right ? stack_right : stack_left
+		var/r_line_start
+		var/l_line_start
+
+		while(c_y >= 1 && curr_line[c_y] == prev_color)
+			var/return_flags = canvas_scan_step(c_x, c_y, stack_left, stack_right, left_line, right_line, l_line_start, r_line_start, prev_color)
+			if(return_flags & CANVAS_FILL_R_MATCH)
+				r_line_start = c_y
+			else
+				r_line_start = null
+			if(return_flags & CANVAS_FILL_L_MATCH)
+				l_line_start = c_y
+			else
+				l_line_start = null
+			curr_line[c_y] = new_color
+			curr_stack -= CANVAS_COORD(c_x, c_y)
+			c_y--
+
+		STACK_CANVAS_COORD(c_x + 1, r_line_start, stack_right)
+		STACK_CANVAS_COORD(c_x - 1, l_line_start, stack_left)
+
+		c_y = coords[2] + 1
+		r_line_start = l_line_start = null
+
+		while(c_y <= height && curr_line[c_y] == prev_color)
+			var/return_flags = canvas_scan_step(c_x, c_y, stack_left, stack_right, left_line, right_line, l_line_start, r_line_start, prev_color)
+			if(!(return_flags & CANVAS_FILL_R_MATCH))
+				r_line_start = null
+			else if(!r_line_start)
+				r_line_start = c_y
+			if(!(return_flags & CANVAS_FILL_L_MATCH))
+				l_line_start = null
+			else if(!l_line_start)
+				l_line_start = c_y
+			curr_line[c_y] = new_color
+			curr_stack -= CANVAS_COORD(c_x, c_y)
+			c_y++
+
+		STACK_CANVAS_COORD(c_x + 1, r_line_start, stack_right)
+		STACK_CANVAS_COORD(c_x - 1, l_line_start, stack_left)
+
+		if(!length(curr_stack))
+			var/list/other_stack = go_right ? stack_left : stack_right
+			coords = other_stack[other_stack[1]]
+			other_stack.Cut(1, 2)
+			go_right = !go_right
+		else
+			coords = curr_stack[curr_stack[1]]
+			curr_stack.Cut(1, 2)
+
+		c_x = coords?[1]
+		c_y = coords?[2]
+
+/proc/canvas_scan_step(c_x, c_y, list/stack_left, list/stack_right, list/left_line, list/right_line, left_pos, right_pos, prev_color)
+	if(left_line)
+		if(left_line[c_y] == prev_color)
+			. += CANVAS_FILL_L_MATCH
+		else
+			STACK_CANVAS_COORD(c_x - 1, left_pos, stack_left)
+
+	if(!right_line)
+		return
+
+	if(right_line[c_y] == prev_color)
+		. += CANVAS_FILL_R_MATCH
+	else
+		STACK_CANVAS_COORD(c_x + 1, right_pos, stack_right)
+
+#undef CANVAS_FILL_R_MATCH
+#undef CANVAS_FILL_L_MATCH
+#undef CANVAS_COORD
+#undef STACK_CANVAS_COORD
+
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"
 	icon_state = "19x19"
