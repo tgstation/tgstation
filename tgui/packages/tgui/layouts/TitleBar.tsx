@@ -11,7 +11,7 @@ type TitleBarProps = Partial<{
   className: string;
   title: string;
   status: number;
-  fancy: boolean;
+  fancy: BooleanLike;
   canClose: BooleanLike;
   onClose: (e) => void;
   onDragStart: (e) => void;
