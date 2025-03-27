@@ -136,7 +136,7 @@
 	if(user.zone_selected != BODY_ZONE_HEAD)
 		return FALSE
 
-	var/obj/item/organ/internal/brain/brain = victim?.get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/brain = victim?.get_organ_by_type(/obj/item/organ/brain)
 	if(isnull(brain))
 		victim.balloon_alert(user, "no brain to scoop out!")
 		return TRUE
@@ -170,9 +170,9 @@
 
 	return victim?.get_organ_by_type(/obj/item/organ/eyes) == eyes
 
-/datum/wound/cranial_fissure/proc/still_has_brain(obj/item/organ/internal/brain/brain)
+/datum/wound/cranial_fissure/proc/still_has_brain(obj/item/organ/brain/brain)
 	PRIVATE_PROC(TRUE)
 
-	return victim?.get_organ_by_type(/obj/item/organ/internal/brain) == brain
+	return victim?.get_organ_by_type(/obj/item/organ/brain) == brain
 
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT
