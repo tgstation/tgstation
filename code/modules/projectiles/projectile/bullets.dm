@@ -18,10 +18,11 @@
 	damage = 10
 
 /datum/embedding/bullet
-	embed_chance=20
-	fall_chance=2
-	jostle_chance=0
-	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.5
-	pain_mult=3
-	rip_time=10
+	embed_chance = 20
+	fall_chance = 2
+	jostle_chance = 0
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.5
+	pain_mult = 3
+	rip_time = 1 SECONDS
+	stealthy_embed = TRUE

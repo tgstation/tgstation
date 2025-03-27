@@ -867,6 +867,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
 
+	if(grappled)
+		var/pummel_bonus = attacking_bodypart.unarmed_pummeling_bonus
+		damage = floor(damage * pummel_bonus)
+		limb_accuracy = floor(limb_accuracy * pummel_bonus)
+
 	//Get our puncher's combined brute and burn damage.
 	var/puncher_brute_and_burn = (user.getFireLoss() + user.getBruteLoss())
 
@@ -943,16 +948,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/attack_direction = get_dir(user, target)
 	var/attack_type = attacking_bodypart.attack_type
-	if(atk_effect == ATTACK_EFFECT_KICK || grappled) //kicks and punches when grappling bypass armor slightly.
+	var/kicking = (atk_effect == ATTACK_EFFECT_KICK)
+	var/final_armor_block = armor_block
+	if(kicking || grappled) //kicks and punches when grappling bypass armor slightly.
 		if(damage >= 9)
 			target.force_say()
 		log_combat(user, target, grappled ? "grapple punched" : "kicked")
-		target.apply_damage(damage, attack_type, affecting, armor_block - limb_accuracy, attack_direction = attack_direction)
+		final_armor_block -= limb_accuracy
+		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction)
 	else // Normal attacks do not gain the benefit of armor penetration.
 		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 		if(damage >= 9)
 			target.force_say()
 		log_combat(user, target, "punched")
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
 	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.
@@ -1032,7 +1042,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!istype(owner)) //sanity check for drones.
 		return
 	if(owner.mind)
-		attacker_style = owner.mind.martial_art
+		attacker_style = GET_ACTIVE_MARTIAL_ART(owner)
 	if((owner != target) && target.check_block(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
 		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \

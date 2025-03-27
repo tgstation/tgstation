@@ -96,6 +96,15 @@
 	LAZYINITLIST(lazy_list); \
 	LAZYINITLIST(lazy_list[key]); \
 	lazy_list[key] |= value;
+/// Calls Insert on the lazy list if it exists, otherwise initializes it with the value
+#define LAZYINSERT(lazylist, index, value) \
+	if (!lazylist) { \
+		lazylist = list(value); \
+	} else if (index == 0 && index > length(lazylist)) { \
+		lazylist += value; \
+	} else { \
+		lazylist.Insert(index, value); \
+	}
 
 ///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
 #define LISTASSERTLEN(L, I, V...) \
@@ -845,6 +854,21 @@
 			.[i] = key
 			.[key] = value
 
+/// A version of deep_copy_list that actually supports associative list nesting: list(list(list("a" = "b"))) will actually copy correctly.
+/proc/deep_copy_list_alt(list/inserted_list)
+	if(!islist(inserted_list))
+		return inserted_list
+	var/copied_list = inserted_list.Copy()
+	. = copied_list
+	for(var/key_or_value in inserted_list)
+		if(isnum(key_or_value) || !inserted_list[key_or_value])
+			continue
+		var/value = inserted_list[key_or_value]
+		var/new_value = value
+		if(islist(value))
+			new_value = deep_copy_list_alt(value)
+		copied_list[key_or_value] = new_value
+
 ///takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
 ///use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
 /proc/avoid_assoc_duplicate_keys(input_key, list/used_key_list)
@@ -864,6 +888,18 @@
 	. = list()
 	for(var/key in key_list)
 		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
+
+/**
+ * Flattens a keyed list(key = some item, value = quantity of item required) into a list of its contents where each
+ * item of the list is duplicated as per the quantity required
+ */
+/proc/flatten_quantified_list(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		for(var/_ in 1 to key_list[key])
+			UNTYPED_LIST_ADD(., key)
 
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
@@ -920,13 +956,6 @@
 		if(value?.locked)
 			continue
 		UNTYPED_LIST_ADD(keys, key)
-	return keys
-
-///Gets the total amount of everything in the associative list.
-/proc/assoc_value_sum(list/input)
-	var/keys = 0
-	for(var/key in input)
-		keys += input[key]
 	return keys
 
 ///compare two lists, returns TRUE if they are the same

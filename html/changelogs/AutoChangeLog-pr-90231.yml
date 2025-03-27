@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix storage whitelists / blacklists being ignored in some contexts (hotkeys)"

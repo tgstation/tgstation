@@ -19,6 +19,8 @@
 		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/omelette
+	added_foodtypes = BREAKFAST
+	removed_foodtypes = RAW
 	category = CAT_EGG
 
 /datum/crafting_recipe/food/chocolateegg
@@ -28,6 +30,7 @@
 		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/food/chocolateegg
+	removed_foodtypes = MEAT|BREAKFAST //This recipe is very wrong, please change it ffs
 	category = CAT_EGG
 
 /datum/crafting_recipe/food/eggsbenedict
@@ -50,6 +53,7 @@
 		/obj/item/food/grown/corn = 1
 	)
 	result = /obj/item/food/salad/eggbowl
+	removed_foodtypes = BREAKFAST
 	category = CAT_EGG
 
 /datum/crafting_recipe/food/wrap
@@ -59,6 +63,7 @@
 		/obj/item/food/grown/cabbage = 1,
 	)
 	result = /obj/item/food/eggwrap
+	removed_foodtypes = BREAKFAST
 	category = CAT_EGG
 
 /datum/crafting_recipe/food/chawanmushi
@@ -70,5 +75,6 @@
 		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/food/chawanmushi
+	removed_foodtypes = BREAKFAST
 	category = CAT_EGG
 

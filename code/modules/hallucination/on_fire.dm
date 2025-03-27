@@ -3,6 +3,7 @@
 
 /datum/hallucination/fire
 	random_hallucination_weight = 3
+	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 
 	/// Are we currently burning our mob?
 	var/active = TRUE
@@ -27,20 +28,29 @@
 	/// How long have we spent on fire?
 	var/time_spent = 0
 
-/datum/hallucination/fire/New(mob/living/hallucinator)
-	if(ismonkey(hallucinator))
-		fire_icon_state = "monkey_big_fire"
+	var/fake_firestacks = 0
 
-	else if(!ishuman(hallucinator))
-		fire_icon_state = "generic_fire"
+/datum/hallucination/fire/proc/make_overlay()
+	var/mutable_appearance/real_overlay = hallucinator.get_fire_overlay(fake_firestacks)
+	if(!real_overlay)
+		return null
+	if(real_overlay.icon_state == fire_overlay?.icon_state)
+		return fire_overlay
 
-	return ..()
+	var/image/new_overlay = image(real_overlay.icon, hallucinator, real_overlay.icon_state, real_overlay.layer)
+	new_overlay.appearance_flags = real_overlay.appearance_flags
+	return new_overlay
 
 /datum/hallucination/fire/start()
-	fire_overlay = image(fire_icon, hallucinator, fire_icon_state, ABOVE_MOB_LAYER)
+	fake_firestacks = rand(5, 15)
+	fire_overlay = make_overlay()
+	if(!fire_overlay)
+		return FALSE
+
 	hallucinator.client?.images |= fire_overlay
 	to_chat(hallucinator, span_userdanger("You're set on fire!"))
-	hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire, override = TRUE)
+	var/atom/movable/screen/alert/fire/fake/alert = hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire/fake, override = TRUE)
+	alert.hallucination_weakref = WEAKREF(src)
 	times_to_lower_stamina = rand(5, 10)
 	addtimer(CALLBACK(src, PROC_REF(start_expanding)), 2 SECONDS)
 	return TRUE
@@ -65,8 +75,15 @@
 	if(QDELETED(src))
 		return
 
-	if(hallucinator.fire_stacks <= 0)
+	fake_firestacks -= (0.25 * seconds_per_tick)
+	if(fake_firestacks <= 0)
 		clear_fire()
+	else
+		var/new_overlay = make_overlay()
+		if(new_overlay && new_overlay != fire_overlay)
+			hallucinator.client?.images -= fire_overlay
+			fire_overlay = new_overlay
+			hallucinator.client?.images |= fire_overlay
 
 	time_spent += seconds_per_tick
 
@@ -99,6 +116,8 @@
 /datum/hallucination/fire/proc/update_temp()
 	if(stage <= 0)
 		hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
+		if(!active)
+			qdel(src)
 	else
 		hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
 		hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, stage, override = TRUE)
@@ -116,3 +135,11 @@
 
 #undef RAISE_FIRE_COUNT
 #undef RAISE_FIRE_TIME
+
+/// This alert is thrown when hallucinating fire
+/atom/movable/screen/alert/fire/fake
+	/// We need to track the original hallucination so we can pass it to the status effect
+	var/datum/weakref/hallucination_weakref
+
+/atom/movable/screen/alert/fire/fake/handle_stop_drop_roll(mob/living/roller)
+	return !!roller.apply_status_effect(/datum/status_effect/stop_drop_roll/hallucinating, hallucination_weakref)

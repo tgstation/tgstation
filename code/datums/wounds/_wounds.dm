@@ -19,6 +19,8 @@
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
+	/// Optional, what is the wound named when someone is checking themselves (IE, no scanner - just with their eyes and hands)
+	var/undiagnosed_name
 	/// The description shown on the scanners
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
@@ -601,7 +603,7 @@
 /datum/wound/proc/get_examine_description(mob/user)
 	. = get_wound_description(user)
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		. += span_notice("\nThere is a holo-image next to the wound that seems to contain indications for treatment.")
+		. += span_notice("<br>There is a holo-image next to the wound that seems to contain indications for treatment.")
 
 	return .
 
@@ -617,6 +619,30 @@
 	desc = modify_desc_before_span(desc, user)
 
 	return get_desc_intensity(desc)
+
+/**
+ * Used when a mob is examining themselves / their limbs
+ *
+ * Reports what this wound looks like to them
+ *
+ * It should be formatted as an extension of the limb:
+ * Input is something like "Your chest is bruised.",
+ * you would add something like "It is bleeding."
+ *
+ * * self_aware - if TRUE, the examiner is more aware of themselves and thus may get more detailed information
+ *
+ * Return a string, to be concatenated with other organ / limb status strings. Include spans and punctuation.
+ */
+/datum/wound/proc/get_self_check_description(self_aware)
+	switch(severity)
+		if(WOUND_SEVERITY_TRIVIAL)
+			return span_danger("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_MODERATE)
+			return span_warning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_SEVERE)
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!")
+		if(WOUND_SEVERITY_CRITICAL)
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!!")
 
 /// A hook proc used to modify desc before it is spanned via [get_desc_intensity]. Useful for inserting spans yourself.
 /datum/wound/proc/modify_desc_before_span(desc, mob/user)

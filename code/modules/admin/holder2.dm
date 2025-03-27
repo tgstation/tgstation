@@ -172,18 +172,18 @@ GLOBAL_PROTECT(href_token)
 		return cached_feedback_link
 
 	if (!SSdbcore.IsConnected())
-		return FALSE
+		return null
 
 	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
 		qdel(feedback_query)
-		return FALSE
+		return null
 
 	if(!feedback_query.NextRow())
 		qdel(feedback_query)
-		return FALSE // no feedback link exists
+		return null // no feedback link exists
 
 	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
 	qdel(feedback_query)
