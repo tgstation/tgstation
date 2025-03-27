@@ -418,7 +418,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	QDEL_NULL(cam_background)
 	return ..()
 
-/atom/movable/screen/map_view/gateway_port/display_to(mob/show_to)
+/atom/movable/screen/map_view/gateway_port/display_on_ui_visible(mob/show_to)
 	. = ..()
 	show_to.client.register_map_obj(cam_background)
 
