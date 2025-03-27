@@ -106,7 +106,7 @@
 	return FALSE
 
 /// Creates a character preview view for the UI.
-/obj/machinery/computer/records/proc/create_character_preview_view(mob/user, var/datum/tgui_window/window)
+/obj/machinery/computer/records/proc/create_character_preview_view(mob/user, datum/tgui_window/window)
 	var/assigned_view = USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
 	if(user.client?.screen_maps[assigned_view])
 		return
