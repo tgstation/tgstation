@@ -173,42 +173,48 @@
 	var/max_lunatics = ceil(max(length(GLOB.manifest.locked), length(lunatic_candidates)) * 0.2)
 
 	for(var/mob/living/carbon/human/crewmate as anything in lunatic_candidates)
-		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
-		if(IS_HERETIC_OR_MONSTER(crewmate))
-			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
-			continue
-		// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
-		if(HAS_MIND_TRAIT(crewmate, TRAIT_UNCONVERTABLE) || crewmate.can_block_magic(MAGIC_RESISTANCE))
-			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
-			continue
 		if(amount_of_lunatics > max_lunatics)
 			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you."))
 			continue
-		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
-		lunatic.set_master(user.mind, user)
-		var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(crewmate.drop_location())
-		var/static/list/slots = list(
-			"neck" = ITEM_SLOT_NECK,
-			"hands" = ITEM_SLOT_HANDS,
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"right pocket" = ITEM_SLOT_RPOCKET,
-			"left pocket" = ITEM_SLOT_RPOCKET,
-		)
-		crewmate.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
-		crewmate.emote("laugh")
-		amount_of_lunatics++
+		if(attempt_conversion(crewmate, user))
+			amount_of_lunatics++
+
+/datum/heretic_knowledge/ultimate/moon_final/proc/attempt_conversion(mob/living/carbon/convertee, mob/user)
+	// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
+	if(IS_HERETIC_OR_MONSTER(convertee))
+		to_chat(convertee, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
+		return FALSE
+	// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
+	if(HAS_MIND_TRAIT(convertee, TRAIT_UNCONVERTABLE) || convertee.can_block_magic(MAGIC_RESISTANCE))
+		to_chat(convertee, span_boldwarning("You feel shielded from something." ))
+		return FALSE
+
+	var/datum/antagonist/lunatic/lunatic = convertee.mind.add_antag_datum(/datum/antagonist/lunatic)
+	lunatic.set_master(user.mind, user)
+	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(convertee.drop_location())
+	var/static/list/slots = list(
+		"neck" = ITEM_SLOT_NECK,
+		"hands" = ITEM_SLOT_HANDS,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"right pocket" = ITEM_SLOT_RPOCKET,
+		"left pocket" = ITEM_SLOT_RPOCKET,
+	)
+	convertee.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
+	INVOKE_ASYNC(convertee, TYPE_PROC_REF(/mob, emote), "laugh")
+	return TRUE
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	SIGNAL_HANDLER
+	source.adjustOrganLoss(ORGAN_SLOT_BRAIN, -25)
 
+	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,
 		hallucination_duration = 60 SECONDS
 	)
 
-	for(var/mob/living/carbon/carbon_view in view(5, source))
+	for(var/mob/living/carbon/carbon_view in range(10, source))
 		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(carbon_view.stat != CONSCIOUS)
 			continue
@@ -218,17 +224,27 @@
 			continue
 		new moon_effect(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
-		if(carbon_sanity < 30)
-			if(SPT_PROB(20, seconds_per_tick))
-				to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
-			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-		if(carbon_sanity < 10)
-			if(SPT_PROB(20, seconds_per_tick))
-				to_chat(carbon_view, span_warning("it echoes through you!"))
-			visible_hallucination_pulse(
-				center = get_turf(carbon_view),
-				radius = 7,
-				hallucination_duration = 50 SECONDS
-			)
-			carbon_view.adjust_temp_blindness(5 SECONDS)
+		carbon_view.mob_mood.set_sanity(carbon_sanity - 25)
+
+		if(carbon_sanity >= 10)
+			return
+		// So our sanity is dead, time to fuck em up
+		if(SPT_PROB(20, seconds_per_tick))
+			to_chat(carbon_view, span_warning("it echoes through you!"))
+		visible_hallucination_pulse(
+			center = get_turf(carbon_view),
+			radius = 7,
+			hallucination_duration = 50 SECONDS
+		)
+		carbon_view.adjust_temp_blindness(5 SECONDS)
+		if(HAS_TRAIT(carbon_view, TRAIT_MINDSHIELD))
+			var/obj/item/bodypart/head/head = locate() in carbon_view.bodyparts
+			if(head)
+				head.dismember()
+			else
+				carbon_view.gib(DROP_ALL_REMAINS)
+			var/datum/effect_system/reagents_explosion/explosion = new()
+			explosion.set_up(1, get_turf(carbon_view), TRUE, 0)
+			explosion.start(src)
+		else
+			attempt_conversion(carbon_view, source)

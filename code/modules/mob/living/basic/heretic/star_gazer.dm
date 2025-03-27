@@ -40,7 +40,9 @@
 	/// Reference to the mob which summoned us
 	var/datum/weakref/summoner
 	/// How far we can go before being pulled back
-	var/range = 20
+	var/leash_range = 20
+	/// Timer for finding a ghost so it doesn't spam dead chat with requests
+	var/begging_timer
 
 	//---- Abilities given to the star gazer mob
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/expansion
@@ -58,6 +60,7 @@
 	recall.Grant(src)
 	giga_laser = new(src)
 	giga_laser.Grant(src)
+	giga_laser.our_master = summoner
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
@@ -75,25 +78,26 @@
 	set_light(4, l_color = "#dcaa5b")
 	INVOKE_ASYNC(src, PROC_REF(beg_for_ghost))
 	RegisterSignal(src, COMSIG_MOB_GHOSTIZED, PROC_REF(beg_for_ghost))
-	var/owner = summoner.resolve()
-	if(!owner)
-		return
-	leash_to(src, owner)
+
+/mob/living/basic/heretic_summon/star_gazer/Destroy()
+	deltimer(begging_timer)
+	return ..()
 
 /// Tries to find a ghost to take control of the mob. If no ghost accepts, ask again in a bit
 /mob/living/basic/heretic_summon/star_gazer/proc/beg_for_ghost()
 	var/mob/chosen_ghost = SSpolling.poll_ghost_candidates("Do you want to play as an ascended heretic's stargazer?", check_jobban = ROLE_HERETIC, poll_time = 20 SECONDS, ignore_category = POLL_IGNORE_HERETIC_MONSTER, alert_pic = mutable_appearance('icons/mob/nonhuman-player/96x96eldritch_mobs.dmi', "star_gazer"), jump_target = src, role_name_text = "star gazer", amount_to_pick = 1)
 	if(chosen_ghost)
 		PossessByPlayer(chosen_ghost.key)
+		deltimer(begging_timer)
 	else
-		addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES) // Keep begging until someone accepts
+		begging_timer = addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES, TIMER_STOPPABLE) // Keep begging until someone accepts
 
 /// Connects these two mobs by a leash
 /mob/living/basic/heretic_summon/star_gazer/proc/leash_to(atom/movable/leashed, atom/movable/leashed_to)
 	leashed.AddComponent(\
 		/datum/component/leash,\
 		owner = leashed_to,\
-		distance = range,\
+		distance = leash_range,\
 		force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out,\
 		force_teleport_in_effect = /obj/effect/temp_visual/guardian/phase,\
 	)
@@ -150,6 +154,8 @@
 	var/datum/beam/giga_laser
 	/// Timer that handles the damage ticking
 	var/damage_timer
+	/// Reference to our summoner so that we don't disintegrate them by accident
+	var/datum/weakref/our_master
 
 /datum/action/cooldown/stargazer_laser/Activate(atom/target)
 	. = ..()
@@ -181,7 +187,7 @@
 	giga_laser = owner.Beam(targets[length(targets)], icon_state = "darkbeam", icon = 'icons/effects/beam.dmi', beam_type = /obj/effect/ebeam/phased_in, override_origin_pixel_x = 1)
 	targets += targets_left
 	targets += targets_right
-	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE, COMSIG_QDELETING), PROC_REF(stop_beaming))
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_beaming))
 	process_beam()
 
 /obj/effect/ebeam/phase_in // Beam subtype that has a "windup" phase
@@ -212,6 +218,8 @@
 					continue
 				to_obliterate.atom_destruction(FIRE)
 			if(isliving(victim))
+				if(victim == our_master?.resolve())
+					continue
 				var/mob/living/living_victim = victim
 				if(living_victim.stat > CONSCIOUS)
 					playsound(living_victim, 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -224,7 +232,7 @@
 /// Stops the beam after we cancel it
 /datum/action/cooldown/stargazer_laser/proc/stop_beaming()
 	SIGNAL_HANDLER
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE, COMSIG_QDELETING))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(giga_laser)
 	deltimer(damage_timer)
 	damage_timer = null

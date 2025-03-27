@@ -75,6 +75,8 @@
 		COMSIG_ATOM_EXITED = PROC_REF(on_exited)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	for(var/mob/living/mobs in get_turf(src))
+		RegisterSignal(mobs, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_self))
 
 /obj/effect/cosmic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)

@@ -1,10 +1,11 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
-	desc = "Manifests cosmic fields on tiles next to you while marking the victim with a star mark \
-		or consuming an already present star mark to put them to sleep for 4 seconds. \
-		They will then be linked to you with a cosmic ray, burning them for up to a minute, or \
-		until they can escape your sight. Star Touch can also remove Cosmic Runes, or teleport you \
-		to your Star Gazer when used on yourself."
+	// XANTODO DESC
+	//desc = "Manifests cosmic fields on tiles next to you while marking the victim with a star mark
+	//	or consuming an already present star mark to put them to sleep for 4 seconds.
+	//	They will then be linked to you with a cosmic ray, burning them for up to a minute, or
+	//	until they can escape your sight. Star Touch can also remove Cosmic Runes, or teleport you
+	//	to your Star Gazer when used on yourself."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -35,11 +36,10 @@
 	)
 
 /datum/action/cooldown/spell/touch/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
-	if(victim.has_status_effect(/datum/status_effect/star_mark))
-		victim.apply_effect(4 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
-		victim.remove_status_effect(/datum/status_effect/star_mark)
-	else
-		victim.apply_status_effect(/datum/status_effect/star_mark, caster)
+	if(!victim.has_status_effect(/datum/status_effect/star_mark))
+		return FALSE
+	victim.remove_status_effect(/datum/status_effect/star_mark)
+	victim.adjust_drowsiness(8 SECONDS)
 	for(var/turf/cast_turf as anything in get_turfs(victim))
 		new /obj/effect/forcefield/cosmic_field(cast_turf)
 	caster.apply_status_effect(/datum/status_effect/cosmic_beam, victim)
@@ -82,6 +82,17 @@
 		effects_we_clear = list(/obj/effect/cosmic_rune), \
 	)
 
+/obj/item/melee/touch_attack/star_touch/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!isliving(interacting_with))
+		return
+	var/mob/living/living_target = interacting_with
+	if(!living_target.has_status_effect(/datum/status_effect/star_mark))
+		return
+	if(get_dist(living_target, user) > 3)
+		return
+	return melee_attack_chain(user, living_target, modifiers)
+
 /*
  * Callback for effect_remover component.
  */
@@ -118,7 +129,7 @@
 /datum/status_effect/cosmic_beam
 	id = "cosmic_beam"
 	tick_interval = 0.2 SECONDS
-	duration = 1 MINUTES
+	duration = 8 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	/// Stores the current beam target
@@ -133,11 +144,21 @@
 	var/active = FALSE
 	/// The storage for the beam
 	var/datum/beam/current_beam = null
+	/// The timer for the teleport effect
+	var/teleport_timer
 
 /datum/status_effect/cosmic_beam/on_creation(mob/living/new_owner, mob/living/current_target)
 	src.current_target = current_target
 	start_beam(current_target, new_owner)
+	ADD_TRAIT(current_target, TRAIT_NO_TELEPORT, REF(src))
+	teleport_timer = addtimer(CALLBACK(src, PROC_REF(yoink_victim), new_owner), 8 SECONDS, TIMER_STOPPABLE)
 	return ..()
+
+/// Puts the victim to sleep and teleports them to the casters' location
+/datum/status_effect/cosmic_beam/proc/yoink_victim(mob/living/carbon/caster)
+	current_target.apply_effect(8 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
+	REMOVE_TRAIT(current_target, TRAIT_NO_TELEPORT, REF(src))
+	do_teleport(current_target, caster, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
 
 /datum/status_effect/cosmic_beam/be_replaced()
 	if(active)
@@ -155,17 +176,15 @@
 
 	last_check = world.time
 
-	if(!los_check(owner, current_target))
+	if(!get_dist(owner, current_target) > 8)
 		QDEL_NULL(current_beam)//this will give the target lost message
 		return
-
-	if(current_target)
-		on_beam_tick(current_target)
 
 /**
  * Proc that always is called when we want to end the beam and makes sure things are cleaned up, see beam_died()
  */
 /datum/status_effect/cosmic_beam/proc/lose_target()
+	deltimer(teleport_timer)
 	if(active)
 		QDEL_NULL(current_beam)
 		active = FALSE
@@ -194,7 +213,7 @@
 
 	current_target = target
 	active = TRUE
-	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
+	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 8 SECONDS, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
@@ -205,11 +224,6 @@
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
-
-/// What to process when the beam is connected to a target
-/datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
-	if(target.adjustFireLoss(3, updating_health = FALSE))
-		target.updatehealth()
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)

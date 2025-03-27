@@ -72,7 +72,7 @@
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/after_cast(atom/cast_on)
 	. = ..()
-	unset_click_ability() // Unselect because we will re-select it to teleport
+	unset_click_ability(owner) // Unselect because we will re-select it to teleport
 
 /obj/projectile/magic/star_ball
 	name = "star ball"
