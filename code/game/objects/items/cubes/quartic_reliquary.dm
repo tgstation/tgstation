@@ -55,7 +55,7 @@
 		GLOB.mythical_cubes,
 		)
 	/// The speed at which we upgrade our cube. Affected by servos.
-	var/upgrade_speed = 10 SECONDS
+	var/upgrade_speed = 2 MINUTES
 	/// The added chance to get a cube 1 stage higher than we were going for. Affected by scanners.
 	var/bonus_chance = 0
 	/// The currently inserted cubes. Max of 3.
@@ -69,8 +69,8 @@
 	/// name of desired_rarity
 	var/desired_rarity_name = null
 	/// The overlays applied to the reliquary depending on cube rarity.
-	var/mutable_appearance/floating_cube
-	var/floating_color_filter
+	var/obj/effect/abstract/quartic_cube/floating_cube
+	var/floating_color_filter = FALSE
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
 
@@ -80,12 +80,20 @@
 
 /obj/machinery/quartic_reliquary/Initialize(mapload)
 	. = ..()
-	/// For the tech node this has a display icon w/ the full thing
-	icon_state = "quartic_reliquary"
 	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, ismapload = mapload)
 	if(!floating_cube)
-		floating_cube = mutable_appearance(icon, "idle", ABOVE_ALL_MOB_LAYER)
+		initiate_floating_cube()
 	LAZYINITLIST(current_cubes)
+
+/obj/effect/abstract/quartic_cube'
+	icon = 'icons/obj/machines/quartic_reliquary.dmi'
+	icon_state = "idle"
+	layer = ABOVE_ALL_MOB_LAYER
+
+/// Create the cube and set all its defaults to what we need
+/obj/machinery/quartic_reliquary/proc/initiate_floating_cube()
+	floating_cube = new /obj/effect/abstract/quartic_cube(get_turf(src))
+	icon_state = "quartic_reliquary"
 
 /obj/machinery/quartic_reliquary/RefreshParts()
 	. = ..()
@@ -97,7 +105,7 @@
 	var/upgrade_speed_mod = 1
 	for(var/datum/stock_part/servo/new_servo in component_parts)
 		upgrade_speed_mod += new_servo.tier
-	upgrade_speed = round(30 SECONDS / upgrade_speed_mod)
+	upgrade_speed = round(2 MINUTES / upgrade_speed_mod)
 
 /obj/machinery/quartic_reliquary/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -161,7 +169,7 @@
 			update_appearance()
 			return
 		// Not enough time left to get a nice looking flick
-		if(!floor(COOLDOWN_TIMELEFT(src, cube_upgrade)/3 SECONDS))
+		if(COOLDOWN_TIMELEFT(src, cube_upgrade) <= 3 SECONDS)
 			floating_color_filter = FALSE
 			floating_cube.remove_filter("new_rarity_pulse")
 			update_appearance()
@@ -190,6 +198,10 @@
 /obj/machinery/quartic_reliquary/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/quartic_reliquary/atom_deconstruct(disassembled = TRUE)
+	if(floating_cube)
+		qdel(floating_cube)
 
 /obj/machinery/quartic_reliquary/on_set_panel_open()
 	update_appearance()
