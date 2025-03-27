@@ -39,7 +39,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
  * * show_to - Mob which needs map view
  * * window - Optional. TGUI window which needs map view
  */
-/atom/movable/screen/map_view/proc/display_to(mob/show_to, var/datum/tgui_window/window)
+/atom/movable/screen/map_view/proc/display_to(mob/show_to, datum/tgui_window/window)
 	if(window && !window.visible)
 		RegisterSignal(show_to.client, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible))
 	else
