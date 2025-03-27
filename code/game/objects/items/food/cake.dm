@@ -47,7 +47,7 @@
 
 /obj/item/food/cake/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/cake/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/cake/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
 
 /obj/item/food/cakeslice/plain
 	name = "plain cake slice"
@@ -71,7 +71,7 @@
 
 /obj/item/food/cakeslice/empty/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
 
 /obj/item/food/cake/carrot
 	name = "carrot cake"
@@ -485,6 +485,7 @@
 	foodtypes = GRAIN|DAIRY|SUGAR|GROSS
 	slice_type = /obj/item/food/cakeslice/hardware_cake_slice
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/food/cakeslice/hardware_cake_slice
 	name = "hardware cake slice"

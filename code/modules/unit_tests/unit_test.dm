@@ -275,7 +275,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
 		//The abstract grown item expects a seed, but doesn't have one
-
 		/obj/item/food/grown,
 	)
 
