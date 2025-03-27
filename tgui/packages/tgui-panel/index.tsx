@@ -26,7 +26,7 @@ import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 
-perf.mark('inception', window.performance?.timing?.navigationStart);
+perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
 const store = configureStore({

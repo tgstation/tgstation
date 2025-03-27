@@ -37,7 +37,7 @@ import { captureExternalLinks } from './links';
 import { render } from './renderer';
 import { configureStore } from './store';
 
-perf.mark('inception', window.performance?.timing?.navigationStart);
+perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
 const store = configureStore();
