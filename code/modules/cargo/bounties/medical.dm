@@ -120,7 +120,7 @@
 	if(!report)
 		return FALSE
 
-	var/mob/living/patient = report.last_scanned_mob?.resolve()
+	var/mob/living/patient = report.last_healthy_scanned_mob?.resolve()
 	if(patient)
 		return TRUE
 	return FALSE
