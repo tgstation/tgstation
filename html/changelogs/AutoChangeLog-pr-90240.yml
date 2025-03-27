@@ -1,4 +1,0 @@
-author: "mcbalaam"
-delete-after: True
-changes:
-  - refactor: "Minor Big Manipulator code refactoring"
