@@ -109,8 +109,8 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	cam_screen = new
 	cam_screen.generate_view(map_name)
 
-	var/datum/plane_master_group/planes = cam_screen.display_to(holder.mob, FALSE) // Yes, thats TGUI, but signal broke refreshing and render lighting...
-
+	// Yes, thats TGUI, but signal broke everyting and preview contains only 1 tile... so we don't use display_to
+	var/datum/plane_master_group/planes = cam_screen.display_to_client(holder)
 	if(!renderLighting)
 		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
 			instance.set_alpha(100)
