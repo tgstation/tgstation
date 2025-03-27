@@ -70,7 +70,7 @@
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 			use_energy(active_power_usage)
 		// Register map objects
-		cam_screen.display_to(user)
+		cam_screen.display_to(user, TRUE)
 		user.client.register_map_obj(cam_background)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)

@@ -341,6 +341,8 @@
 			if(initialized)
 				send_full_update()
 			initialized = TRUE
+		if("visible")
+			SEND_SIGNAL(user.client, COMSIG_TGUI_WINDOW_VISIBLE)
 		if("ping/reply")
 			initialized = TRUE
 		if("suspend")
