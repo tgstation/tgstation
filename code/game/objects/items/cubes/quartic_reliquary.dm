@@ -172,7 +172,7 @@
 			floating_color_filter = TRUE
 		COOLDOWN_START(src, cube_spin_flick, 3 SECONDS)
 		flick("active", floating_cube)
-		flick_overlay(emissive_appearance(icon, icon_state = "active_emissive", layer = ABOVE_ALL_MOB_LAYER), duration = 3 SECONDS)
+		flick_overlay(emissive_appearance(icon, icon_state = "active_emissive", offset_spokesman = src, layer = ABOVE_ALL_MOB_LAYER), duration = 3 SECONDS)
 		update_appearance()
 		return
 
