@@ -692,7 +692,7 @@
 
 /datum/status_effect/repeatedly_electrocute
 	id = "repeated_electrocution"
-	tick_interval = 6 SECONDS
+	tick_interval = 8 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/repeatedly_electrocute
 	/// How much damage to we do every time?
 	var/damage
