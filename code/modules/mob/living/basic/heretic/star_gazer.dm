@@ -39,6 +39,8 @@
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
 	/// Reference to the mob which summoned us
 	var/datum/weakref/summoner
+	/// How far we can go before being pulled back
+	var/range = 20
 
 	//---- Abilities given to the star gazer mob
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/expansion
@@ -73,6 +75,10 @@
 	set_light(4, l_color = "#dcaa5b")
 	INVOKE_ASYNC(src, PROC_REF(beg_for_ghost))
 	RegisterSignal(src, COMSIG_MOB_GHOSTIZED, PROC_REF(beg_for_ghost))
+	var/owner = summoner.resolve()
+	if(!owner)
+		return
+	leash_to(src, owner)
 
 /// Tries to find a ghost to take control of the mob. If no ghost accepts, ask again in a bit
 /mob/living/basic/heretic_summon/star_gazer/proc/beg_for_ghost()
@@ -81,6 +87,16 @@
 		PossessByPlayer(chosen_ghost.key)
 	else
 		addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES) // Keep begging until someone accepts
+
+/// Connects these two mobs by a leash
+/mob/living/basic/heretic_summon/star_gazer/proc/leash_to(atom/movable/leashed, atom/movable/leashed_to)
+	leashed.AddComponent(\
+		/datum/component/leash,\
+		owner = leashed_to,\
+		distance = range,\
+		force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out,\
+		force_teleport_in_effect = /obj/effect/temp_visual/guardian/phase,\
+	)
 
 // Star gazer attacks everything around itself applies a spooky mark
 /mob/living/basic/heretic_summon/star_gazer/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)

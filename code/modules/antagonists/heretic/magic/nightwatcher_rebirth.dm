@@ -35,8 +35,6 @@
 	for(var/mob/living/carbon/nearby_mob in range(aoe_radius, center))
 		if(nearby_mob == owner || nearby_mob == center)
 			continue
-		if(!nearby_mob.mind || !nearby_mob.client)
-			continue
 		if(IS_HERETIC_OR_MONSTER(nearby_mob))
 			continue
 		if(nearby_mob.stat == DEAD || !nearby_mob.on_fire)

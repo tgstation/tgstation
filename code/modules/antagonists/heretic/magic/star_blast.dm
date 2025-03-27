@@ -39,7 +39,6 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast/set_click_ability(mob/on_who)
 	var/obj/projectile/magic/star_ball/active_ball = projectile_weakref?.resolve()
 	if(!active_ball)
-		StartCooldown(30 SECONDS)
 		build_all_button_icons(UPDATE_OVERLAYS)
 		return ..()
 

@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	name = "Ashen Passage"
-	desc = "A short range spell that allows you to pass unimpeded through walls."
+	desc = "A short range spell that allows you to pass unimpeded through walls, removing restraints in the process."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

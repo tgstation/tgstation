@@ -57,5 +57,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(owner, COMSIG_FINISHED_CHARGE)
 	for(var/mob/living/nearby_mob in view(1, owner))
+		if(nearby_mob == owner)
+			continue
 		nearby_mob.apply_damage(charge_damage, BRUTE, wound_bonus = CANT_WOUND)
 		nearby_mob.Knockdown(5 SECONDS)

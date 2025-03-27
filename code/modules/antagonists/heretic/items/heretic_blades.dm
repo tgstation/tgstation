@@ -174,16 +174,13 @@
 	if(!heretic_datum)
 		return
 
-	//Apply our heretic mark
-	var/datum/heretic_knowledge/limited_amount/starting/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting)
+	// Apply our heretic mark
+	var/datum/heretic_knowledge/limited_amount/starting/base_blade/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_blade)
 	if(!mark_to_apply)
 		return
 	mark_to_apply.create_mark(user, living_target)
-
-	//Remove the infusion from any blades we own (and update their sprite)
-	for(var/obj/item/melee/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/melee/sickly_blade/dark))
-		to_infuse.infused = FALSE
-		to_infuse.update_appearance(UPDATE_ICON)
+	infused = FALSE
+	update_appearance(UPDATE_ICON)
 	user.update_held_items()
 
 	if(!check_behind(user, living_target))

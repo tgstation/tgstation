@@ -171,7 +171,7 @@
 
 /datum/heretic_knowledge/spell/cosmic_expansion
 	name = "Cosmic Expansion"
-	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
+	desc = "Grants you Cosmic Expansion, a spell that creates a 5x5 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
@@ -241,3 +241,42 @@
 
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/cosmic_expansion_spell = locate() in user.actions
 	cosmic_expansion_spell?.ascended = TRUE
+
+	var/datum/action/cooldown/mob_cooldown/replace_star_gazer/replace_gazer = new(src)
+	replace_gazer.Grant(user)
+	replace_gazer.bad_dog = WEAKREF(star_gazer_mob)
+
+/// Replace an annoying griefer you were paired up to with a different but probably no less annoying player.
+/datum/action/cooldown/mob_cooldown/replace_star_gazer
+	name = "Reset Star Gazer Consciousness"
+	desc = "Replaces the mind of your summon with that of a different ghost."
+	button_icon = 'icons/mob/simple/mob.dmi'
+	button_icon_state = "ghost"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	check_flags = NONE
+	click_to_activate = FALSE
+	cooldown_time = 5 SECONDS
+	melee_cooldown_time = 0
+	shared_cooldown = NONE
+	/// Weakref to the stargazer we care about
+	var/datum/weakref/bad_dog
+
+/datum/action/cooldown/mob_cooldown/replace_star_gazer/Activate(atom/target)
+	StartCooldown(5 MINUTES)
+
+	var/mob/living/to_reset = bad_dog.resolve()
+
+	to_chat(owner, span_holoparasite("You attempt to reset [to_reset]'s personality..."))
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(to_reset.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = to_reset, jump_target = owner, role_name_text = to_reset.name, amount_to_pick = 1)
+	if(isnull(chosen_one))
+		to_chat(owner, span_holoparasite("Your attempt to reset the personality of [to_reset] appears to have failed... Looks like you're stuck with it for now."))
+		StartCooldown()
+		return FALSE
+	to_chat(to_reset, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
+	to_chat(owner, span_boldholoparasite("The personality of [to_reset] has been successfully reset."))
+	message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(to_reset)])")
+	to_reset.ghostize(FALSE)
+	to_reset.PossessByPlayer(chosen_one.key)
+	StartCooldown()
+	return TRUE

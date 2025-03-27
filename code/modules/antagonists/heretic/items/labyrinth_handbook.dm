@@ -2,14 +2,14 @@
 	name = "labyrinth pages"
 	desc = "A field of papers flying in the air, repulsing heathens with impossible force."
 	icon_state = "lintel"
-	initial_duration = 8 SECONDS
+	initial_duration = 15 SECONDS
 
 /obj/effect/forcefield/wizard/heretic/Bumped(mob/living/bumpee)
 	. = ..()
 	if(!istype(bumpee) || IS_HERETIC_OR_MONSTER(bumpee))
 		return
 	var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
-	bumpee.safe_throw_at(throwtarget, 10, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
+	bumpee.safe_throw_at(throwtarget, 10, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
 	visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
 
 ///A heretic item that spawns a barrier at the clicked turf, 3 uses
@@ -38,7 +38,7 @@
 	/// List that contains each timer for the charge
 	var/list/charge_timers = list()
 	/// How long before a charge is restored
-	var/charge_time = 8 SECONDS
+	var/charge_time = 15 SECONDS
 
 /obj/item/heretic_labyrinth_handbook/examine(mob/user)
 	. = ..()
@@ -60,6 +60,10 @@
 			human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 30, 190)
 			human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 			human_user.dropItemToGround(src)
+		return ITEM_INTERACT_BLOCKING
+
+	if(charges <= 0)
+		balloon_alert(user, "No charges!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/turf_target = get_turf(interacting_with)

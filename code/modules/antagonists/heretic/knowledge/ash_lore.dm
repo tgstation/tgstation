@@ -51,7 +51,7 @@
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
+	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, allowing you to escape restraints and traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
