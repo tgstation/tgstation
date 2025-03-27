@@ -108,3 +108,7 @@
 	new /obj/item/melee/secblade/training(src)
 	new /obj/item/melee/baton/doppler_security/loaded(src)
 	update_appearance()
+
+/obj/item/storage/belt/secsword/deathmatch/PopulateContents()
+	new /obj/item/melee/secblade(src) // No way attack on titan
+	new /obj/item/melee/secblade(src)

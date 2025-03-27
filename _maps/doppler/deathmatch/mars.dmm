@@ -1,0 +1,1959 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/effect/spawner/random/structure/shipping_container,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"ay" = (
+/obj/structure/closet,
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"aF" = (
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"aV" = (
+/obj/effect/spawner/random/vending/colavend,
+/obj/machinery/light/red/dim/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"bc" = (
+/turf/open/indestructible/tram/plate,
+/area/deathmatch)
+"bw" = (
+/obj/structure/table,
+/obj/effect/spawner/random/vendor_meal_sides/marsian{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"bG" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 9
+	},
+/mob/living/basic/bot/medbot/nukie,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"bR" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/caution_sign{
+	pixel_y = -11
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"bV" = (
+/obj/structure/table,
+/obj/effect/spawner/random/vendor_tray_meal/burger_blind_bag{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"cs" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"cF" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/light_emitter/fake_outdoors{
+	light_color = "#d99f3a"
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"cH" = (
+/obj/structure/fake_stairs/directional/east,
+/obj/machinery/light/red/dim/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"cP" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"df" = (
+/obj/structure/fluff/tram_rail/floor,
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"eG" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 5
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"eW" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/fake_stairs/directional/north,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"fu" = (
+/obj/machinery/door/poddoor/shutters/window/indestructible,
+/turf/open/indestructible/rockyground,
+/area/deathmatch)
+"fv" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"fx" = (
+/obj/structure/chair/sofa/corp/corner,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"fC" = (
+/obj/structure/fluff/tram_rail/floor,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"fE" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"fI" = (
+/obj/structure/chair/sofa/corp{
+	dir = 8
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"fJ" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"fL" = (
+/obj/structure/table,
+/obj/effect/spawner/random/vendor_tray_meal/burger_blind_bag{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"fN" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"fT" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/anchor,
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"fU" = (
+/obj/structure/table,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"fX" = (
+/obj/structure/bed/double/pod{
+	dir = 1
+	},
+/obj/effect/spawner/random/bedsheet/any/double{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"gg" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"gv" = (
+/obj/effect/spawner/random/trash/crushed_can,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"gA" = (
+/obj/effect/spawner/random/trash/box,
+/obj/machinery/light/blacklight/directional/north,
+/mob/living/basic/bot/medbot/sapper,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"gG" = (
+/obj/effect/light_emitter/fake_outdoors{
+	light_color = "#d99f3a"
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"gL" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"hC" = (
+/obj/effect/spawner/random/trash/caution_sign{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"hN" = (
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"id" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"im" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"in" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end,
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"iv" = (
+/obj/effect/spawner/random/trash/box,
+/obj/machinery/light/red/dim/directional/south,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"iQ" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 4
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"iS" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"jy" = (
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/bin,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"jz" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"jH" = (
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"kc" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"ki" = (
+/obj/structure/fluff/tram_rail/floor,
+/obj/effect/spawner/random/structure/syndicate,
+/obj/effect/light_emitter/fake_outdoors{
+	light_color = "#d99f3a"
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"ku" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end,
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"kA" = (
+/obj/structure/bed/double/pod,
+/obj/effect/spawner/random/bedsheet/any/double,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"kU" = (
+/obj/machinery/griddle,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"lr" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"mg" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"ms" = (
+/obj/structure/chair/stool/bar/directional/south{
+	pixel_y = -3
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"mB" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"mR" = (
+/obj/structure/table,
+/obj/machinery/light/warm/dim/directional/north,
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"nD" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"nS" = (
+/obj/structure/chair/sofa/corp/right,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"of" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/caution_sign{
+	pixel_y = -9;
+	pixel_x = -3
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"oo" = (
+/obj/structure/table,
+/obj/effect/spawner/random/vendor_tray_meal/burger_blind_bag{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"oU" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"pc" = (
+/obj/structure/chair/sofa/bench/left,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"pQ" = (
+/obj/effect/spawner/random/trash/bin,
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"qP" = (
+/obj/structure/table,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"qS" = (
+/obj/machinery/light/warm/dim/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"re" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"sd" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"sR" = (
+/obj/structure/fake_stairs/directional/west,
+/obj/machinery/light/red/dim/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"tz" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"tH" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/fake_stairs/directional/north,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"tK" = (
+/obj/structure/fake_stairs/directional/east,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"tQ" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"ub" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"un" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"uB" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/turf/open/indestructible/tram/plate,
+/area/deathmatch)
+"uW" = (
+/obj/structure/fake_stairs/directional/east,
+/obj/machinery/light/red/dim/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"uY" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end,
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"vf" = (
+/obj/effect/spawner/random/trash/box,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"vw" = (
+/obj/structure/table,
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"vV" = (
+/obj/structure/fluff/tram_rail/floor,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 4
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"wt" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"wY" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"xp" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"xy" = (
+/obj/effect/spawner/structure/window/hollow/middle,
+/obj/structure/curtain/bounty/start_closed,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"xA" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"xG" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"zl" = (
+/obj/effect/spawner/random/trash/moisture,
+/obj/machinery/light/warm/dim/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"zr" = (
+/obj/effect/spawner/random/trash/deluxe_garbage,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"zP" = (
+/turf/closed/indestructible/binary,
+/area/deathmatch)
+"zQ" = (
+/obj/structure/chair/sofa/corp/right,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"AZ" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Bf" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Bh" = (
+/obj/structure/table,
+/obj/effect/spawner/random/trash/botanical_waste{
+	pixel_x = -8
+	},
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"BC" = (
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Cd" = (
+/obj/machinery/light/red/dim/directional/south,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Ce" = (
+/obj/machinery/door/airlock/colony_prefab,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"Ch" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Cj" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Cq" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/indestructible/tram/plate,
+/area/deathmatch)
+"CJ" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"CP" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/turf/open/indestructible/tram/plate,
+/area/deathmatch)
+"Dq" = (
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/ghetto_containers,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"DE" = (
+/obj/machinery/door/airlock/colony_prefab,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"DJ" = (
+/obj/structure/chair/stool/bar/directional/east{
+	pixel_x = 9
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Eb" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Ei" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"En" = (
+/obj/structure/table/wood,
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"EF" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/spawner/random/structure/shipping_container,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"EL" = (
+/obj/effect/turf_decal/trimline/electric_yellow/end,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"EY" = (
+/obj/structure/chair/sofa/bench/right,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"EZ" = (
+/obj/structure/table,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Fx" = (
+/obj/structure/chair/sofa/corp/left,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"FF" = (
+/obj/structure/chair/stool/bar/directional/west{
+	pixel_x = -10
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"FP" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"GB" = (
+/obj/machinery/light/warm/dim/directional/east,
+/obj/structure/chair/stool/bar/directional/west{
+	pixel_x = -10
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ip" = (
+/obj/effect/spawner/random/trash/mopbucket{
+	pixel_y = 17
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"ID" = (
+/obj/structure/table,
+/obj/effect/spawner/random/vendor_meal_sides/marsian{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"IR" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 9
+	},
+/obj/effect/spawner/random/trash/bin{
+	pixel_x = -9
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Je" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/fake_stairs/directional/south,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Jp" = (
+/obj/structure/table,
+/obj/effect/spawner/random/epic_loot/pocket_da_money{
+	pixel_y = 5
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Jt" = (
+/obj/effect/spawner/random/trash/bin,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"JD" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 1
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"JR" = (
+/obj/structure/table,
+/obj/effect/spawner/random/epic_loot/pocket_da_money{
+	pixel_y = 10;
+	pixel_x = 3
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"JX" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Kh" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 13
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Kp" = (
+/obj/structure/table,
+/obj/effect/spawner/random/epic_loot/pocket_da_money{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/effect/spawner/random/epic_loot/pocket_da_money{
+	pixel_y = -3;
+	pixel_x = 6
+	},
+/obj/effect/spawner/random/epic_loot/pocket_da_money{
+	pixel_y = 9
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"KL" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 13
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Lb" = (
+/obj/structure/fluff/tram_rail/floor,
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Mh" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"MF" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/epic_loot/pocket_da_money{
+	pixel_y = 13;
+	pixel_x = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"MJ" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/line,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Nn" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 13
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Nw" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/fake_stairs/directional/south,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"NT" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/indestructible/tram/plate,
+/area/deathmatch)
+"NZ" = (
+/obj/structure/fluff/tram_rail/floor,
+/obj/effect/light_emitter/fake_outdoors{
+	light_color = "#d99f3a"
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Oc" = (
+/obj/structure/chair/sofa/bench,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"Ol" = (
+/obj/structure/table,
+/obj/effect/spawner/random/vendor_meal_sides/marsian{
+	pixel_y = 8;
+	pixel_x = -9
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Oz" = (
+/obj/effect/spawner/random/trash/caution_sign{
+	pixel_x = -12;
+	pixel_y = -5
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"OJ" = (
+/obj/structure/curtain/bounty/start_closed,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"OQ" = (
+/obj/structure/fake_stairs/directional/west,
+/obj/machinery/light/red/dim/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Pb" = (
+/obj/structure/closet,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Pi" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Ps" = (
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"PB" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"PN" = (
+/obj/structure/fluff/tram_rail/floor,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/caution_sign{
+	pixel_y = 17;
+	pixel_x = -5
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"PP" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Qa" = (
+/turf/closed/indestructible/riveted,
+/area/deathmatch)
+"QY" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Re" = (
+/obj/structure/chair/sofa/bench{
+	dir = 1
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"RD" = (
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"RE" = (
+/obj/structure/closet/crate/trashcart/laundry,
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"RX" = (
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"Sf" = (
+/obj/structure/table,
+/obj/effect/spawner/random/epic_loot/pocket_da_money{
+	pixel_y = -3;
+	pixel_x = -11
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"Sr" = (
+/obj/machinery/washing_machine,
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"Sv" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"SB" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/effect/light_emitter/fake_outdoors{
+	light_color = "#d99f3a"
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"SG" = (
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 4
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Tr" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"TE" = (
+/obj/structure/table,
+/obj/effect/spawner/random/vendor_meal_sides/marsian{
+	pixel_y = 9
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"TK" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/spawner/random/structure/billboard{
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"TS" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/chair/stool/bar/directional/west{
+	pixel_x = -10
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ud" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/indestructible/tram/plate,
+/area/deathmatch)
+"UB" = (
+/obj/machinery/oven/range_frontier,
+/turf/open/indestructible/kitchen,
+/area/deathmatch)
+"UI" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Vh" = (
+/obj/effect/turf_decal/trimline/electric_yellow/end,
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Vy" = (
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/electric_yellow/warning{
+	dir = 4
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Wa" = (
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"WB" = (
+/obj/structure/marker_beacon/fuchsia,
+/turf/open/indestructible/tram/plate,
+/area/deathmatch)
+"XD" = (
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Yf" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Yg" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 1
+	},
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+"Yw" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"YU" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 13
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"YV" = (
+/obj/structure/curtain/bounty/start_closed,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Zd" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/indestructible/tram,
+/area/deathmatch)
+"Ze" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/misc/ironsand{
+	baseturfs = /turf/open/indestructible/binary
+	},
+/area/deathmatch)
+
+(1,1,1) = {"
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+zP
+zP
+zP
+zP
+zP
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+"}
+(2,1,1) = {"
+Qa
+Cj
+BC
+En
+kU
+kU
+Qa
+Qa
+Qa
+fv
+fu
+Cq
+fu
+fv
+Qa
+Qa
+Qa
+sR
+Qa
+SG
+SG
+SG
+Vh
+Qa
+"}
+(3,1,1) = {"
+Qa
+XD
+XD
+iS
+XD
+XD
+Qa
+sR
+Qa
+Lb
+gL
+uB
+un
+fN
+Qa
+OQ
+Qa
+hN
+JD
+bG
+Yf
+Yf
+Yf
+Qa
+"}
+(4,1,1) = {"
+Qa
+YV
+Qa
+BC
+MF
+BC
+Qa
+hN
+xp
+Ps
+Bf
+bc
+JX
+Eb
+fE
+hN
+Qa
+hN
+sd
+wY
+Wa
+gG
+Wa
+Qa
+"}
+(5,1,1) = {"
+Qa
+hN
+Qa
+FF
+FF
+FF
+Qa
+Qa
+xp
+NZ
+fT
+WB
+MJ
+cF
+fE
+Qa
+Qa
+hN
+JD
+eG
+kc
+kc
+kc
+Qa
+"}
+(6,1,1) = {"
+Qa
+hN
+hN
+hN
+DJ
+DJ
+DJ
+hN
+xp
+vV
+ku
+CP
+CJ
+bR
+fE
+hN
+hN
+hN
+Qa
+jy
+SG
+SG
+EL
+Qa
+"}
+(7,1,1) = {"
+Qa
+hN
+Qa
+Qa
+ID
+oo
+Jp
+Nn
+xp
+Nw
+re
+Ud
+Tr
+tH
+FP
+Qa
+Qa
+qS
+JD
+IR
+Yf
+Yf
+Yf
+Qa
+"}
+(8,1,1) = {"
+Qa
+hN
+lr
+hN
+hN
+hN
+TE
+KL
+xp
+fC
+Yg
+uB
+wt
+mB
+fE
+fJ
+EY
+hN
+JD
+wY
+Wa
+gG
+Wa
+Qa
+"}
+(9,1,1) = {"
+Qa
+Qa
+ms
+bw
+hN
+hN
+hN
+RD
+xp
+Ps
+fT
+WB
+MJ
+TK
+fE
+Re
+Oc
+hN
+JD
+eG
+kc
+kc
+kc
+Qa
+"}
+(10,1,1) = {"
+Qa
+id
+ms
+EZ
+fL
+bV
+Qa
+Qa
+xp
+ki
+in
+bc
+tz
+SB
+fE
+gg
+pc
+hN
+Qa
+Vy
+SG
+Dq
+EL
+Qa
+"}
+(11,1,1) = {"
+Qa
+aV
+hN
+FF
+TS
+GB
+hN
+hN
+xp
+Ps
+Pi
+bc
+AZ
+Zd
+FP
+Qa
+Qa
+zl
+Qa
+Qa
+tK
+QY
+tK
+Qa
+"}
+(12,1,1) = {"
+Qa
+cs
+hN
+Qa
+Qa
+Qa
+Qa
+Qa
+xp
+vV
+oU
+CP
+nD
+iQ
+fE
+hN
+hN
+hN
+hN
+hN
+hN
+hN
+hN
+Qa
+"}
+(13,1,1) = {"
+Qa
+Qa
+Ce
+Qa
+nS
+fU
+im
+xy
+xp
+Nw
+re
+Ud
+re
+tH
+fE
+Qa
+Qa
+jH
+Jt
+Qa
+gv
+jH
+jH
+Qa
+"}
+(14,1,1) = {"
+Qa
+gA
+jH
+Qa
+Fx
+Ol
+jz
+xy
+xp
+PN
+uY
+uB
+Mh
+mB
+fE
+at
+zr
+jH
+jH
+mg
+jH
+hC
+Cd
+Qa
+"}
+(15,1,1) = {"
+Qa
+vf
+jH
+OJ
+jH
+jH
+jH
+xy
+xp
+Ps
+Pi
+bc
+AZ
+Eb
+EF
+jH
+Qa
+Ce
+Qa
+Qa
+jH
+jH
+PP
+Qa
+"}
+(16,1,1) = {"
+Qa
+Qa
+OJ
+Qa
+Qa
+Ip
+aF
+Qa
+xp
+NZ
+Bf
+bc
+JX
+cF
+fE
+jH
+Qa
+RX
+Sr
+Qa
+Qa
+Ce
+Qa
+Qa
+"}
+(17,1,1) = {"
+Qa
+fU
+jH
+jH
+qP
+Kh
+jH
+Ce
+xp
+Ps
+fT
+WB
+MJ
+Eb
+fE
+jH
+Ce
+ub
+RE
+Qa
+mR
+ub
+pQ
+Qa
+"}
+(18,1,1) = {"
+Qa
+cP
+jH
+PB
+Sf
+Kh
+Oz
+Qa
+xp
+vV
+ku
+CP
+CJ
+iQ
+fE
+jH
+Qa
+RX
+Sr
+Qa
+Bh
+RX
+UB
+Qa
+"}
+(19,1,1) = {"
+Qa
+Yw
+jH
+jH
+qP
+YU
+jH
+xy
+xp
+Je
+xG
+NT
+Ze
+eW
+fE
+Qa
+Qa
+Ce
+Qa
+Qa
+Qa
+Ce
+Qa
+Qa
+"}
+(20,1,1) = {"
+Qa
+fU
+jH
+jH
+Qa
+jH
+jH
+xy
+xp
+fC
+Yg
+uB
+wt
+of
+fE
+DE
+jH
+Ch
+jH
+mg
+jH
+jH
+Jt
+Qa
+"}
+(21,1,1) = {"
+Qa
+Qa
+Ce
+Qa
+Qa
+OJ
+Qa
+Qa
+xp
+NZ
+fT
+WB
+MJ
+cF
+fE
+Qa
+Qa
+Qa
+Ce
+Qa
+PP
+jH
+iv
+Qa
+"}
+(22,1,1) = {"
+Qa
+jH
+jH
+jH
+jH
+jH
+Qa
+hN
+xp
+Ps
+in
+bc
+tz
+Eb
+fE
+hN
+Qa
+fX
+jH
+Qa
+Qa
+Ce
+Qa
+Qa
+"}
+(23,1,1) = {"
+Qa
+zQ
+Kp
+JR
+jH
+vw
+Qa
+uW
+Qa
+df
+xA
+CP
+Ei
+UI
+Qa
+cH
+Qa
+Pb
+tQ
+Qa
+jH
+PB
+jH
+Qa
+"}
+(24,1,1) = {"
+Qa
+fx
+fI
+Sv
+jH
+fU
+Qa
+Qa
+Qa
+fv
+fu
+Cq
+fu
+fv
+Qa
+Qa
+Qa
+kA
+jH
+Qa
+kA
+ay
+kA
+Qa
+"}
+(25,1,1) = {"
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+zP
+zP
+zP
+zP
+zP
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+Qa
+"}
