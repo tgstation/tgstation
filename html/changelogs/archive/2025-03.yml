@@ -791,3 +791,28 @@
       boxes from spawning
   StrangeWeirdKitten:
   - code_imp: do_after() can now hold custom cog icons. Add some today!
+2025-03-27:
+  Bisar:
+  - balance: Door remotes now match the access of their owner (except for the Captain,
+      whose remote access is unchanged). Door remotes, however, respect the high security
+      area control of other remotes; as such, even if a Head can enter an area like
+      the brig, only the Security remote works to open the entrance.
+  Goat:
+  - bugfix: Clown biodome on lavaland uses lavaland turf now for the bananium ore.
+  Holoo-1:
+  - bugfix: fixed AI multicam room on multiz maps not showing anything
+  Melbert:
+  - bugfix: Fix storage whitelists / blacklists being ignored in some contexts (hotkeys)
+  SmArtKar:
+  - bugfix: Fixed all satchels having reduced storage
+  - bugfix: MODsuits should now be affected by stabilized red crossbreeds
+  - bugfix: MODsuit slowdowns should no longer behave weirdly with ash accretion/magboots/armor
+      booster modules.
+  - refactor: Refactored MODsuit slowdown calculations to be query-based instead of
+      modules directly modifying part speed values.
+  - bugfix: Fixed techweb scrolling cutting off the last node
+  mcbalaam:
+  - refactor: Minor Big Manipulator code refactoring
+  norsvenska:
+  - bugfix: Wawastation's port bow solar array now has a cable under all panels by
+      default.
