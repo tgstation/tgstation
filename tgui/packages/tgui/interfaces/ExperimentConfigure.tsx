@@ -192,6 +192,16 @@ export function ExperimentConfigure(props) {
     }
   }
 
+  let textContent = '';
+  if (experiments.length === 0) {
+    textContent = 'No experiments found on this web';
+  } else if (always_active) {
+    textContent =
+      'This device is configured to attempt to perform all available experiments, so no further configuration is necessary.';
+  } else {
+    textContent = 'Select one of the following experiments...';
+  }
+
   return (
     <Window width={600} height={735}>
       <Window.Content>
@@ -218,13 +228,7 @@ export function ExperimentConfigure(props) {
                 className="ExperimentConfigure__ExperimentsContainer"
               >
                 <Box mb={1} color="label">
-                  {(experiments.length &&
-                    always_active &&
-                    'This device is configured to attempt to perform all available' +
-                      ' experiments, so no further configuration is necessary.') ||
-                    (experiments.length &&
-                      'Select one of the following experiments...') ||
-                    'No experiments found on this web'}
+                  {textContent}
                 </Box>
                 {experiments.map((exp, i) => (
                   <Experiment key={i} exp={exp} />
