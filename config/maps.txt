@@ -65,7 +65,6 @@ endmap
 
 map hotmeta
 	votable
-	min players 25
 endmap
 
 # Debug-only maps.
