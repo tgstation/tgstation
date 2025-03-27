@@ -122,4 +122,24 @@ GLOBAL_LIST_INIT(all_cubes, list(
 	GLOB.epic_cubes = 50, // ~5%
 	GLOB.legendary_cubes = 15, // ~1.5%
 	GLOB.mythical_cubes = 1, // ~0.1%
-	))
+))
+
+/// Names of the rarities w/ spans
+GLOBAL_LIST_INIT(all_rarenames, list(
+	span_bold("Common"),
+	span_boldnicegreen("Uncommon"),
+	span_boldnotice("Rare"),
+	span_hierophant("Epic"),
+	span_bolddanger("Legendary"),
+	span_clown("Mythical")
+))
+
+/// The colors associated with each rarity
+GLOBAL_LIST_INIT(all_rarecolors, list(
+	COLOR_WHITE = "white",
+	COLOR_VIBRANT_LIME = "green",
+	COLOR_DARK_CYAN = "blue",
+	COLOR_VIOLET = "purple",
+	COLOR_RED = "red",
+	COLOR_PINK = "pink",
+))

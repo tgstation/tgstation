@@ -41,11 +41,10 @@
 	desc = "A machine capable of utilizing 4th-dimensional mathematical formulas to fold some 3rd dimensional objects into higher quality ones."
 	icon = 'icons/obj/machines/quartic_reliquary.dmi'
 	base_icon_state = "quartic_reliquary"
-	icon_state = "quartic_reliquary"
+	icon_state = "quartic_reliquary_display"
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/quartic_reliquary
-	SET_BASE_PIXEL(0, 16)
 	/// Reference for the possible items we'll get when we create a new cube. Common is there just in case someone SOMEHOW combines something with 0 rarity
 	var/static/list/all_possible_cube_returns = list(
 		GLOB.common_cubes,
@@ -54,24 +53,6 @@
 		GLOB.epic_cubes,
 		GLOB.legendary_cubes,
 		GLOB.mythical_cubes,
-		)
-	/// All cube rarities, as names
-	var/static/list/all_rarenames = list(
-		span_bold("Common"),
-		span_boldnicegreen("Uncommon"),
-		span_boldnotice("Rare"),
-		span_hierophant("Epic"),
-		span_bolddanger("Legendary"),
-		span_clown("Mythical")
-		)
-	/// Used for updating the cube overlays & any other visuals that need color changes
-	var/static/list/all_rarecolors = list(
-		COLOR_WHITE,
-		COLOR_VIBRANT_LIME,
-		COLOR_DARK_CYAN,
-		COLOR_VIOLET,
-		COLOR_RED,
-		COLOR_PINK,
 		)
 	/// The speed at which we upgrade our cube. Affected by servos.
 	var/upgrade_speed = 10 SECONDS
@@ -99,9 +80,11 @@
 
 /obj/machinery/quartic_reliquary/Initialize(mapload)
 	. = ..()
+	/// For the tech node this has a display icon w/ the full thing
+	icon_state = "quartic_reliquary"
 	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, ismapload = mapload)
 	if(!floating_cube)
-		floating_cube = mutable_appearance(icon, "idle")
+		floating_cube = mutable_appearance(icon, "idle", ABOVE_ALL_MOB_LAYER)
 	LAZYINITLIST(current_cubes)
 
 /obj/machinery/quartic_reliquary/RefreshParts()
@@ -147,12 +130,13 @@
 
 /obj/machinery/quartic_reliquary/examine(mob/user)
 	. += ..()
-	if(!in_range(user, src) && !isobserver(user))
-		return
-
 	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+	if(!in_range(user, src) && !isobserver(user))
+		return
+	. += span_notice("It is able to fold a cube in [EXAMINE_HINT(DisplayTimeText(upgrade_speed))].")
+	. += span_notice("It has a [EXAMINE_HINT("[bonus_chance]%")] chance to give an even rarer cube!")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-Right-click")] to reset.")
@@ -164,32 +148,33 @@
 	if(LAZYLEN(current_cubes))
 		. += span_notice("It is holding [jointext(current_cubes, ",")].")
 		var/empty_slots = 3-LAZYLEN(current_cubes)
-		. += span_notice("It can hold [empty_slots ? empty_slots : "no more"] cubes.")
+		. += span_notice("It can hold [empty_slots ? empty_slots : "no"] more cube[empty_slots>1 ? "s" : ""].")
 		if(current_rarity)
 			. += span_notice("It will only process if all cubes are of [current_rarity_name] rarity.")
 			. += span_notice("The resulting cube will be [desired_rarity_name].")
 
-/// Handles the spinning cube & its emmissive. Could probably do this outside of a process, I realize, but getting that floor() is important
+/// Handles the spinning cube & its emmissive. Could probably do this outside of a process, I realize, but getting that floor() is important damnit
+/// Also it doesn't work anyway, so //!TODO: Figure out how the fuck to make it pulse a color, flick the overlay, and have the emissive I guess
 /obj/machinery/quartic_reliquary/process()
 	if(!COOLDOWN_FINISHED(src, cube_upgrade))
 		if(!COOLDOWN_FINISHED(src, cube_spin_flick))
+			update_appearance()
 			return
 		// Not enough time left to get a nice looking flick
 		if(!floor(COOLDOWN_TIMELEFT(src, cube_upgrade)/3 SECONDS))
 			floating_color_filter = FALSE
 			floating_cube.remove_filter("new_rarity_pulse")
+			update_appearance()
 			return
 		if(!floating_color_filter)
-			floating_cube.add_filter("new_rarity_pulse", 1, apply_matrix_to_color())
-			transition_filter("new_rarity_pulse", color_matrix_filter(all_rarecolors[desired_rarity]), 3 SECONDS, easing = CUBIC_EASING, loop = TRUE)
+			floating_cube.add_filter("new_rarity_pulse", 1, color_matrix_filter(COLOR_WHITE))
+			transition_filter("new_rarity_pulse", color_matrix_filter(GLOB.all_rarecolors[desired_rarity]), 3 SECONDS, easing = CUBIC_EASING, loop = TRUE)
 			floating_color_filter = TRUE
 		COOLDOWN_START(src, cube_spin_flick, 3 SECONDS)
 		flick("active", floating_cube)
-		flick_overlay(emissive_appearance(icon, icon_state = "active_emissive"), duration = 3 SECONDS)
+		flick_overlay(emissive_appearance(icon, icon_state = "active_emissive", layer = ABOVE_ALL_MOB_LAYER), duration = 3 SECONDS)
+		update_appearance()
 		return
-	floating_color_filter = FALSE
-	floating_cube.remove_filter("new_rarity_pulse")
-
 
 /// Use secondaries since cubes can also be tools sometimes
 /obj/machinery/quartic_reliquary/screwdriver_act_secondary(mob/living/user, obj/item/tool)
@@ -220,11 +205,11 @@
 		for(var/cube_in_list in current_cubes)
 			cube_index++
 			var/mutable_appearance/inserted_overlay = mutable_appearance(icon, "cube_[cube_index]")
-			inserted_overlay.add_filter("overlay_color", 1, color_matrix_filter(LAZYACCESS(all_rarecolors,LAZYACCESS(current_cubes, cube_in_list))))
+			inserted_overlay.add_filter("overlay_color", 1, color_matrix_filter(GLOB.all_rarecolors[LAZYACCESS(current_cubes, cube_in_list)]))
 			. += inserted_overlay
 	if(desired_rarity)
 		var/mutable_appearance/runic_pattern = mutable_appearance(icon, "runic_pattern")
-		runic_pattern.add_filter("overlay_color", 1, color_matrix_filter(LAZYACCESS(all_rarecolors, desired_rarity)))
+		runic_pattern.add_filter("overlay_color", 1, color_matrix_filter(GLOB.all_rarecolors[desired_rarity]))
 		. += runic_pattern
 
 /obj/machinery/quartic_reliquary/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -251,7 +236,6 @@
 		return ITEM_INTERACT_FAILURE
 	LAZYSET(current_cubes, item_to_add, attempted_cube.rarity)
 	update_current_rarity()
-	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /// Updates both the rarity and the name of the required cubes.
@@ -262,12 +246,14 @@
 		current_rarity_name = null
 		desired_rarity = null
 		desired_rarity_name = null
+		update_appearance()
 		return
 
 	current_rarity = new_rarity
-	current_rarity_name = all_rarenames[current_rarity]
+	current_rarity_name = GLOB.all_rarenames[current_rarity]
 	desired_rarity = current_rarity+1
-	desired_rarity_name = all_rarenames[desired_rarity]
+	desired_rarity_name = GLOB.all_rarenames[desired_rarity]
+	update_appearance()
 
 /obj/machinery/quartic_reliquary/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -332,8 +318,9 @@
 			balloon_alert(user, "no mythical cubes!")
 			return CLICK_ACTION_BLOCKING
 	QDEL_LAZYLIST(current_cubes)
+	update_appearance()
 	COOLDOWN_START(src, cube_upgrade, upgrade_speed)
-	addtimer(CALLBACK(src, PROC_REF(finish_cube_roll)))
+	addtimer(CALLBACK(src, PROC_REF(finish_cube_roll)), upgrade_speed)
 	update_use_power(ACTIVE_POWER_USE)
 	return CLICK_ACTION_SUCCESS
 
@@ -346,6 +333,8 @@
 	var/atom/movable/picked_cube = pick_weight_recursive(all_possible_cube_returns[desired_rarity])
 	if(istype(picked_cube, /obj/effect/spawner/random/cube))
 		handle_cube_reroll(picked_cube, all_picked_cubes)
+	else
+		all_picked_cubes.Add(picked_cube)
 	update_current_rarity()
 	var/turf/target_location
 	if(drop_direction)

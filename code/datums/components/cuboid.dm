@@ -9,24 +9,6 @@
 	var/rarity_color = COLOR_WHITE
 	/// Is this cube a reference to another property?
 	var/isreference = FALSE
-	/// Unless there's some way to have the defines ALSO have names w/ the numbers, this is the best I can get lol
-	var/static/list/all_rarenames = list(
-		span_bold("Common"),
-		span_boldnicegreen("Uncommon"),
-		span_boldnotice("Rare"),
-		span_hierophant("Epic"),
-		span_bolddanger("Legendary"),
-		span_clown("Mythical")
-		)
-	/// Same as above but with colors
-	var/static/list/all_rarecolors = list(
-		"white" = COLOR_WHITE,
-		"green" = COLOR_VIBRANT_LIME,
-		"blue" = COLOR_DARK_CYAN,
-		"purple" = COLOR_VIOLET,
-		"red" = COLOR_RED,
-		"pink" = COLOR_PINK
-		)
 	/// Anything above common gets a sound when it gains the component. First one is there just in case it messes up
 	var/static/list/gain_sounds = list(
 		'sound/effects/page_turn/pageturn1.ogg',
@@ -55,9 +37,9 @@
 	if(new_reference)
 		src.isreference = new_reference
 	/// We love indexes!!!
-	src.rarity_name = all_rarenames[src.rarity]
-	src.rarity_color_name = all_rarecolors[src.rarity]
-	src.rarity_color = all_rarecolors[src.rarity_color_name]
+	src.rarity_name = GLOB.all_rarenames[src.rarity]
+	src.rarity_color = GLOB.all_rarecolors[src.rarity]
+	src.rarity_color_name = GLOB.all_rarecolors[src.rarity_color]
 	/// Really make it obvious. You can't get 2 feet without seeing an outline.
 	parent.remove_filter("cubeglow")
 	parent.add_filter("cubeglow", 10, outline_filter(color = src.rarity_color, size = 1))
