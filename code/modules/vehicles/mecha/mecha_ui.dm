@@ -5,8 +5,8 @@
 /obj/vehicle/sealed/mecha/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui_view.display_to(user)
 		ui = new(user, src, "Mecha", name)
+		ui_view.display_to(user, ui.window)
 		ui.open()
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user, datum/ui_state/state)

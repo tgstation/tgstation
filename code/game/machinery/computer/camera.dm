@@ -69,12 +69,12 @@
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 			use_energy(active_power_usage)
-		// Register map objects
-		cam_screen.display_to(user)
-		user.client.register_map_obj(cam_background)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
+		// Register map objects
+		cam_screen.display_to(user, ui.window)
+		user.client.register_map_obj(cam_background)
 
 /obj/machinery/computer/security/ui_status(mob/user, datum/ui_state/state)
 	. = ..()

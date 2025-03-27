@@ -28,9 +28,25 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	assigned_map = map_key
 	set_position(1, 1)
 
-/atom/movable/screen/map_view/proc/display_to(mob/show_to, is_tgui = TRUE)
-	if(is_tgui)
+/**
+ * Generates and displays the map view to a client
+ * Make sure you at least try to pass tgui_window if map view needed on UI,
+ * so it will wait a signal from TGUI, which tells windows is fully visible.
+ * If there is no such possibility to pass tgui_window, you need to specify a delay,
+ * usually 1 second is enough to make the map not “small”
+ *
+ * But some UI's needs planes, or map view can be used without UI,
+ * so just call it without arguments
+ *
+ * * show_to - Mob which needs map view
+ * * window - Optional. TGUI window which needs map view
+ * * delay - Optional. Delay before generating and showing
+ */
+/atom/movable/screen/map_view/proc/display_to(mob/show_to, var/datum/tgui_window/window, delay)
+	if(window && !window.visible)
 		RegisterSignal(show_to.client, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible))
+	else if(delay)
+		addtimer(CALLBACK(show_to.client, PROC_REF(display_to_client)), delay)
 	else
 		display_to_client(show_to.client)
 
