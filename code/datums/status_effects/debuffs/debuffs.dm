@@ -714,7 +714,7 @@
 
 /atom/movable/screen/alert/status_effect/repeatedly_electrocute
 	name = "Electrocuted"
-	desc = "You're being electrocuted!"
+	desc = "You're being electrocuted! You should probably stop touching whatever you are touching."
 	icon_state = "electrocuted"
 
 /datum/status_effect/dna_melt
