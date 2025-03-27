@@ -124,7 +124,6 @@
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/medkit/coroner/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
-
 	holdable_override = list(
 		/obj/item/reagent_containers,
 		/obj/item/bodybag,
