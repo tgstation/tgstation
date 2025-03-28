@@ -26,9 +26,9 @@
 			// Why the fuck does this work? This is some byond bug and I honestly have no fucking clue why this works.
 			// I don't think plane master will be affected, I hope.
 			// We're stuck in the belly of this awful machine.
-			sleep(0.1 SECONDS) // If it's too fast, it has a chance to fail? Idk. This seems like a good number.
+			sleep(0.2 SECONDS) // If it's too fast, it has a chance to fail? Idk. This seems like a good number.
 			screen_loc = "[assigned_map]:[x+100]:[px],[y+100]:[py]"
-			sleep(0.1 SECONDS)
+			sleep(0.2 SECONDS)
 			screen_loc = "[assigned_map]:[x]:[px],[y]:[py]"
 	else
 		screen_loc = "[x]:[px],[y]:[py]"

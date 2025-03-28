@@ -3,6 +3,7 @@
 	access = NONE
 	group = "Goodies"
 	goody = TRUE
+	crate_type = null
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/goody/clear_pda
@@ -238,7 +239,7 @@
 	name = "Emergency Mutadone Pill Single-Pack"
 	desc = "A single pill for curing genetic defects. Useful for when you can't procure one from medbay."
 	cost = PAYCHECK_CREW * 2.5
-	contains = list(/obj/item/reagent_containers/pill/mutadone)
+	contains = list(/obj/item/reagent_containers/applicator/pill/mutadone)
 
 /datum/supply_pack/goody/rapid_lighting_device
 	name = "Rapid Lighting Device (RLD) Single-Pack"
@@ -311,6 +312,12 @@
 	desc = "A catalog containing all the fishy info you'll ever need."
 	cost = PAYCHECK_LOWER
 	contains = list(/obj/item/book/manual/fish_catalog)
+
+/datum/supply_pack/goody/aquarium_props
+	name = "Aquarium Props Single-Pack"
+	desc = "A box containing generic aquarium props. You'll still need an aquarium or fish tank for these."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/storage/box/aquarium_props)
 
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug Single-Pack"

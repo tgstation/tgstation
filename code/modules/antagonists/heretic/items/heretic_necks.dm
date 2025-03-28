@@ -193,7 +193,7 @@
 	if(!IS_HERETIC_OR_MONSTER(living_user))
 		living_user.balloon_alert(living_user, "you feel a presence watching you")
 		living_user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		living_user.mob_mood.set_sanity(living_user.mob_mood.sanity - 50)
+		living_user.mob_mood.adjust_sanity(-50)
 		return FALSE
 	if(human_target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		return FALSE
@@ -202,7 +202,7 @@
 	if(human_target.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
 		living_user.balloon_alert(living_user, "their mind is too strong!")
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		human_target.mob_mood.set_sanity(human_target.mob_mood.sanity - sanity_damage)
+		human_target.mob_mood.adjust_sanity(-sanity_damage)
 	else
 		living_user.balloon_alert(living_user, "their mind bends to see the truth!")
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)

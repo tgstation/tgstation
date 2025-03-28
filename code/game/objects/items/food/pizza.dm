@@ -296,8 +296,8 @@
 		/datum/reagent/medicine/omnizine = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "umami" = 1, "laziness" = 1)
+	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD
 	slice_type = /obj/item/food/pizzaslice/donkpocket
 	boxtag = "Bangin' Donk"
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -305,7 +305,7 @@
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
 	icon_state = "donkpocketpizza_raw"
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | RAW
+	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD|RAW
 	slice_type = null
 
 /obj/item/food/pizza/donkpocket/raw/make_bakeable()
@@ -315,8 +315,8 @@
 	name = "donkpocket pizza slice"
 	desc = "Smells like donkpocket."
 	icon_state = "donkpocketpizzaslice"
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "umami" = 1, "laziness" = 1)
+	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD
 
 /obj/item/food/pizza/dank
 	name = "dank pizza"
@@ -458,12 +458,13 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 	slice_type = /obj/item/food/pizzaslice/arnold
 	boxtag = "9mm Pepperoni"
+	foodtypes = MEAT|GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/arnold/raw
 	name = "raw Arnold pizza"
 	icon_state = "arnoldpizza_raw"
-	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
+	foodtypes = MEAT|GRAIN|DAIRY|VEGETABLES|RAW
 	slice_type = null
 
 /obj/item/food/pizza/arnold/raw/make_bakeable()
@@ -539,14 +540,14 @@
 	)
 	tastes = list("pure electricity" = 4, "pizza" = 2)
 	slice_type = /obj/item/food/pizzaslice/energy
-	foodtypes = TOXIC
+	foodtypes = GRAIN|TOXIC
 	boxtag = "24 Hour Energy"
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizza/energy/raw
 	name = "raw energy pizza"
 	icon_state = "energypizza_raw"
-	foodtypes = TOXIC
+	foodtypes = GRAIN|TOXIC|RAW
 	slice_type = null
 
 /obj/item/food/pizza/energy/raw/make_bakeable()
@@ -557,7 +558,7 @@
 	desc = "You're thinking about using this to power your modsuit. You should avoid eating this if you aren't an Ethereal."
 	icon_state ="energypizzaslice"
 	tastes = list("pure electricity" = 4, "pizza" = 2)
-	foodtypes = TOXIC
+	foodtypes = GRAIN|TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_meat_calzone
@@ -570,7 +571,7 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("raw dough" = 1, "raw meat" = 1, "cheese" = 1, "tomato sauce" = 1)
-	foodtypes = GRAIN | RAW | DAIRY | MEAT
+	foodtypes = GRAIN|VEGETABLES|DAIRY|MEAT|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -587,7 +588,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("baked dough" = 1, "juicy meat" = 1, "melted cheese" = 1, "tomato sauce" = 1)
-	foodtypes = GRAIN | DAIRY | MEAT
+	foodtypes = GRAIN|VEGETABLES|DAIRY|MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -600,7 +601,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("raw dough" = 1, "vegetables" = 1, "tomato sauce" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|VEGETABLES|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 

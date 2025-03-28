@@ -44,7 +44,7 @@
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
-	carbon_target.mob_mood.set_sanity(carbon_target.mob_mood.sanity - 30)
+	carbon_target.mob_mood.adjust_sanity(-30)
 
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
@@ -107,7 +107,7 @@
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
-	target.mob_mood.set_sanity(target.mob_mood.sanity - 10)
+	target.mob_mood.adjust_sanity(-10)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
@@ -225,7 +225,7 @@
 			continue
 		new moon_effect(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.set_sanity(carbon_sanity - 25)
+		carbon_view.mob_mood.adjust_sanity(-25)
 
 		if(carbon_sanity >= 10)
 			return

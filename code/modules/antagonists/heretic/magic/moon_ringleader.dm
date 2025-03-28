@@ -65,7 +65,7 @@
 		mob.AdjustKnockdown(1 SECONDS)
 		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
 		if(mob.mob_mood)
-			mob.mob_mood.sanity -= 50
+			mob.mob_mood.adjust_sanity(-50)
 	qdel(victim)
 
 /obj/effect/temp_visual/moon_ringleader

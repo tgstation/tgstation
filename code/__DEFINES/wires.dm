@@ -44,8 +44,7 @@
 #define WIRE_BEACON "Beacon"
 #define WIRE_BOLTLIGHT "Bolt Lights"
 #define WIRE_BOLTS "Bolts"
-#define WIRE_BOOM "Boom Wire 1"
-#define WIRE_BOOM2 "Boom Wire 2"
+#define WIRE_BOOM "Boom Wire"
 #define WIRE_CAMERA "Camera"
 #define WIRE_CONTRABAND "Contraband"
 #define WIRE_DELAY "Delay"
@@ -96,6 +95,8 @@
 #define WIRE_OVERCLOCK "Overclock"
 #define WIRE_EQUIPMENT "Equipment"
 #define WIRE_ENVIRONMENT "Environment"
+#define WIRE_LOOP_MODE "Loop mode"
+#define WIRE_REPLAY_MODE "Replay mode"
 
 // Wire states for the AI
 #define AI_WIRE_NORMAL 0

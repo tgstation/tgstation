@@ -95,7 +95,7 @@
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 	worn_icon_state = "pinpointer_crew"
-	custom_price = PAYCHECK_CREW * 4
+	custom_price = PAYCHECK_CREW * 6
 	custom_premium_price = PAYCHECK_CREW * 6
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
@@ -192,11 +192,13 @@
 	name = "pinpointer pair box"
 
 /obj/item/storage/box/pinpointer_pairs/PopulateContents()
-	var/obj/item/pinpointer/pair/A = new(src)
-	var/obj/item/pinpointer/pair/B = new(src)
+	var/obj/item/pinpointer/pair/A = new(null)
+	var/obj/item/pinpointer/pair/B = new(null)
 
 	A.other_pair = B
 	B.other_pair = A
+
+	return list(A, B)
 
 /obj/item/pinpointer/shuttle
 	name = "bounty shuttle pinpointer"
