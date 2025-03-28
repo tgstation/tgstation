@@ -19,10 +19,44 @@ function SS13.get_runner_client()
 	return dm.global_vars.GLOB.directory[SS13.get_runner_ckey()]
 end
 
+SS13.ispath = dm.global_procs._ispath
 SS13.type = dm.global_procs._text2path
 
 function SS13.istype(thing, type)
 	return dm.global_procs._istype(thing, SS13.type(type)) == 1
+end
+
+function SS13.typecacheof(string_types)
+	local types = {}
+	for _, path in pairs(string_types) do
+		if path == nil then
+			continue
+		elseif SS13.ispath(path) == 1 then
+			table.insert(types, path)
+		else
+			table.insert(types, SS13.type(path))
+		end
+	end
+	return dm.global_procs.typecacheof(types)
+end
+
+SS13.is_type_in_typecache = dm.global_procs._is_type_in_typecache
+
+function SS13.get_turf(thing)
+	return dm.global_procs._get_step(thing, 0)
+end
+
+function SS13.get_area(thing)
+	if SS13.istype(thing, "/area") then
+		return thing
+	else
+		local turf = SS13.get_turf(thing)
+		-- don't bother with SS13.is_valid, turfs don't get destroyed
+		if dm.is_valid_ref(turf) then
+			return turf.loc
+		end
+	end
+	return nil
 end
 
 SS13.new = dm.new
@@ -94,7 +128,7 @@ local function create_qdeleting_callback(datum)
 end
 
 function SS13.register_signal(datum, signal, func)
-	if not type(func) == "function" then
+	if type(func) ~= "function" then
 		return
 	end
 	if not SS13.istype(datum, "/datum") then
