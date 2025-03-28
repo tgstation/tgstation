@@ -201,11 +201,15 @@
 	///Do we not have our own handling for cig overlays?
 	var/display_cigs = TRUE
 
-
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
 
 	register_context()
+
+/obj/item/storage/fancy/cigarettes/PopulateContents(datum/storage_config/config)
+	. = ..()
+
+	config.whitelist_content_types = FALSE
 
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
