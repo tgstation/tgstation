@@ -60,42 +60,43 @@ export function ItemDisplay(props: DisplayProps) {
   const { active, item, scale = 3 } = props;
 
   return (
-    <ImageButton
-      imageSize={scale * 32}
-      color={active ? 'green' : 'default'}
-      style={{ textTransform: 'capitalize', zIndex: '1' }}
-      tooltip={item.name}
-      tooltipPosition={'bottom'}
-      dmIcon={item.icon}
-      dmIconState={item.icon_state}
-      onClick={() =>
-        act('select_item', {
-          path: item.path,
-          deselect: active,
-        })
-      }
-      buttonsAlt={
-        item.information.length > 0 && (
-          <Stack>
-            <Stack.Item grow />
-            <Stack vertical mr={0.3} mt={0.3}>
-              {item.information.map((info) => (
-                <Stack.Item
-                  key={info.icon}
-                  fontSize="14px"
-                  textColor={'darkgray'}
-                  bold
-                >
-                  <Tooltip position="right" content={info.tooltip}>
-                    <Icon name={info.icon} />
-                  </Tooltip>
-                </Stack.Item>
-              ))}
-            </Stack>
+    <div style={{ position: 'relative' }}>
+      <ImageButton
+        imageSize={scale * 32}
+        color={active ? 'green' : 'default'}
+        style={{ textTransform: 'capitalize', zIndex: '1' }}
+        tooltip={item.name}
+        tooltipPosition={'bottom'}
+        dmIcon={item.icon}
+        dmIconState={item.icon_state}
+        onClick={() =>
+          act('select_item', {
+            path: item.path,
+            deselect: active,
+          })
+        }
+      />
+      <div
+        style={{ position: 'absolute', top: '8px', right: '8px', zIndex: '2' }}
+      >
+        {item.information.length > 0 && (
+          <Stack vertical>
+            {item.information.map((info) => (
+              <Stack.Item
+                key={info.icon}
+                fontSize="14px"
+                textColor={'darkgray'}
+                bold
+              >
+                <Tooltip position="right" content={info.tooltip}>
+                  <Icon name={info.icon} />
+                </Tooltip>
+              </Stack.Item>
+            ))}
           </Stack>
-        )
-      }
-    />
+        )}
+      </div>
+    </div>
   );
 }
 
