@@ -635,13 +635,6 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-// /obj/item/flashlight/flare/candle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-// 	if(get_temperature())
-// 		return NONE
-// 	if(try_light_candle(interacting_with, user, quiet = TRUE))
-// 		return ITEM_INTERACT_SUCCESS
-// 	return NONE
-
 /obj/item/flashlight/flare/candle/ignition_effect(atom/A, mob/user)
 	if(!get_temperature())
 		return ""
