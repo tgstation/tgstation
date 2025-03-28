@@ -168,19 +168,26 @@
 	if(action != "zoom_in" && action != "zoom_out" && isobserver(user))
 		return
 	switch(action)
-		if("paint")
+		if("paint", "fill")
 			if(finalized)
 				return TRUE
 			var/obj/item/I = user.get_active_held_item()
 			var/tool_color = get_paint_tool_color(I)
 			if(!tool_color)
 				return FALSE
-			var/list/data = params["data"]
-			//could maybe validate continuity but eh
-			for(var/point in data)
-				var/x = text2num(point["x"])
-				var/y = text2num(point["y"])
-				grid[x][y] = tool_color
+			if(action == "fill")
+				var/x = params["x"]
+				var/y = params["y"]
+				if(!canvas_fill(x, y, tool_color))
+					return FALSE
+			else
+				var/list/data = params["data"]
+				//could maybe validate continuity but eh
+				for(var/point in data)
+					var/x = text2num(point["x"])
+					var/y = text2num(point["y"])
+					if(action == "paint")
+						grid[x][y] = tool_color
 			var/medium = get_paint_tool_medium(I)
 			if(medium && painting_metadata.medium && painting_metadata.medium != medium)
 				painting_metadata.medium = "Mixed medium"
@@ -349,16 +356,16 @@
 	. = ..()
 	if(icon_generated)
 		var/mutable_appearance/detail = mutable_appearance(generated_icon)
-		detail.pixel_x = 1
-		detail.pixel_y = 1
+		detail.pixel_w = 1
+		detail.pixel_z = 1
 		. += detail
 		return
 	if(!used)
 		return
 
 	var/mutable_appearance/detail = mutable_appearance(icon, "[icon_state]wip")
-	detail.pixel_x = 1
-	detail.pixel_y = 1
+	detail.pixel_w = 1
+	detail.pixel_z = 1
 	. += detail
 
 /obj/item/canvas/proc/generate_proper_overlay()
@@ -432,104 +439,146 @@
 
 	return FALSE
 
-
+///The pixel to the right matches the previous color we're flooding over
 #define CANVAS_FILL_R_MATCH (1<<0)
+///The pixel to the left matches the previous color we're flooding over
 #define CANVAS_FILL_L_MATCH (1<<1)
 
+//a macro for the stringized key for coordinates to check later
 #define CANVAS_COORD(x, y) "[x]-[y]"
-#define STACK_CANVAS_COORD(x, y, stack) \
-	if(y && !stack[CANVAS_COORD(x, y)]) {\
-		stack[CANVAS_COORD(x, y)] = list(x, y);\
+///queues a coordinate on the canvas for future cycles.
+#define QUEUE_CANVAS_COORD(x, y, queue) \
+	if(y && !queue[CANVAS_COORD(x, y)]) {\
+		queue[CANVAS_COORD(x, y)] = list(x, y);\
 	}
 
-/obj/item/canvas/proc/canvas_fill(c_x, c_y, new_color)
-	SHOULD_NOT_OVERRIDE(TRUE)
-	var/prev_color = grid[c_x][c_y]
+/**
+ * A proc that adopts a scan-based, 4-dir (correct me if I'm wrong) flood fill algorithm used
+ * by the bucked tool in the UI, to facilitate coloring larger portions of the canvas.
+ * If you have never used the bucket/flood tool on an image editor, I suggest you do it
+ * now so you know what I'm basically talking about.
+ *
+ * @ param x The point on the x axys where we start flooding our canvas. The arg is later used to store the current x
+ * @ param y The point on the y axys where we start flooding the canvas. The arg is later used to store the current y
+ * @ param new_color The new color that floods over the old one
+ */
+/obj/item/canvas/proc/canvas_fill(x, y, new_color)
+	var/prev_color = grid[x][y]
+	//If the colors are the same, don't do anything.
 	if(prev_color == new_color)
-		return
+		return FALSE
 
-	var/list/stack_right = list()
-	var/list/stack_left = list()
+	//The queue for coordinates to the right of the current line
+	var/list/queue_right = list()
+	//Inversely for those to our left
+	var/list/queue_left = list()
+	//Whether we're currently checking the right or left queue.
 	var/go_right = TRUE
 
-	var/list/coords = list(c_x, c_y)
+	//The current coordinates. The only reason this is outside the loop
+	//is because we first go up, then reset our vertical position to just below
+	//the starting position and go down from there.
+	var/list/coords = list(x, y)
 
+	//Basically, the way it works is that each cycle we first go up, then down until we
+	//either reach the vertical borders of the raster or find a pixel that is not of the color we want
+	//to flood. As we do this, we try to queue a minimum of coordinates to our
+	//left and right to use for future cycles, moving horizontally in one direction until there are no
+	//more queued coordinates for that dir. Then we turn around and repeat
+	//until both left and right queues are completely empty.
 	while(coords)
-		var/list/curr_line = grid[c_x]
-		var/list/right_line = c_x < width ? grid[c_x+1] : null
-		var/list/left_line = c_x > 1 ? grid[c_x-1] : null
-		var/list/curr_stack = go_right ? stack_right : stack_left
+		//The current vertical line, the right and the left ones.
+		var/list/curr_line = grid[x]
+		var/list/right_line = x < width ? grid[x+1] : null
+		var/list/left_line = x > 1 ? grid[x-1] : null
+		//the queue we're on, depending on direction
+		var/list/curr_queue = go_right ? queue_right : queue_left
+		//Instead of queueing every point to our left and right that shares our prevous color,
+		//Causing a lot of empty cycles, we only queue an extremity of a vertical segment
+		//delimited by pixels of other colors or the y boundaries of the raster. To do this,
+		//we need to track where the segment (called line for simplicity) starts (or ends).
 		var/r_line_start
 		var/l_line_start
 
-		while(c_y >= 1 && curr_line[c_y] == prev_color)
-			var/return_flags = canvas_scan_step(c_x, c_y, stack_left, stack_right, left_line, right_line, l_line_start, r_line_start, prev_color)
+		//go up first (y = 1 is the upper border is)
+		while(y >= 1 && curr_line[y] == prev_color)
+			var/return_flags = canvas_scan_step(x, y, queue_left, queue_right, left_line, right_line, l_line_start, r_line_start, prev_color)
 			if(return_flags & CANVAS_FILL_R_MATCH)
-				r_line_start = c_y
+				r_line_start = y
 			else
 				r_line_start = null
 			if(return_flags & CANVAS_FILL_L_MATCH)
-				l_line_start = c_y
+				l_line_start = y
 			else
 				l_line_start = null
-			curr_line[c_y] = new_color
-			curr_stack -= CANVAS_COORD(c_x, c_y)
-			c_y--
+			curr_line[y] = new_color
+			curr_queue -= CANVAS_COORD(x, y)
+			y--
 
-		STACK_CANVAS_COORD(c_x + 1, r_line_start, stack_right)
-		STACK_CANVAS_COORD(c_x - 1, l_line_start, stack_left)
-
-		c_y = coords[2] + 1
+		//Any unqueued coordinate is queued and cleared before the next half of the cycle
+		QUEUE_CANVAS_COORD(x + 1, r_line_start, queue_right)
+		QUEUE_CANVAS_COORD(x - 1, l_line_start, queue_left)
 		r_line_start = l_line_start = null
 
-		while(c_y <= height && curr_line[c_y] == prev_color)
-			var/return_flags = canvas_scan_step(c_x, c_y, stack_left, stack_right, left_line, right_line, l_line_start, r_line_start, prev_color)
+		//set y to the pixel immediately below the starting y
+		y = coords[2] + 1
+
+		//then go down (y = height is the bottom border)
+		while(y <= height && curr_line[y] == prev_color)
+			var/return_flags = canvas_scan_step(x, y, queue_left, queue_right, left_line, right_line, l_line_start, r_line_start, prev_color)
 			if(!(return_flags & CANVAS_FILL_R_MATCH))
 				r_line_start = null
 			else if(!r_line_start)
-				r_line_start = c_y
+				r_line_start = y
 			if(!(return_flags & CANVAS_FILL_L_MATCH))
 				l_line_start = null
 			else if(!l_line_start)
-				l_line_start = c_y
-			curr_line[c_y] = new_color
-			curr_stack -= CANVAS_COORD(c_x, c_y)
-			c_y++
+				l_line_start = y
+			curr_line[y] = new_color
+			curr_queue -= CANVAS_COORD(x, y)
+			y++
 
-		STACK_CANVAS_COORD(c_x + 1, r_line_start, stack_right)
-		STACK_CANVAS_COORD(c_x - 1, l_line_start, stack_left)
+		QUEUE_CANVAS_COORD(x + 1, r_line_start, queue_right)
+		QUEUE_CANVAS_COORD(x - 1, l_line_start, queue_left)
 
-		if(!length(curr_stack))
-			var/list/other_stack = go_right ? stack_left : stack_right
-			coords = other_stack[other_stack[1]]
-			other_stack.Cut(1, 2)
+		//Pick the next set of coords from the queue (and change direction if necessary)
+		if(!length(curr_queue))
+			var/list/other_queue = go_right ? queue_left : queue_right
+			coords = other_queue[other_queue[1]]
+			other_queue.Cut(1, 2)
 			go_right = !go_right
 		else
-			coords = curr_stack[curr_stack[1]]
-			curr_stack.Cut(1, 2)
+			coords = curr_queue[curr_queue[1]]
+			curr_queue.Cut(1, 2)
 
-		c_x = coords?[1]
-		c_y = coords?[2]
+		x = coords?[1]
+		y = coords?[2]
 
-/proc/canvas_scan_step(c_x, c_y, list/stack_left, list/stack_right, list/left_line, list/right_line, left_pos, right_pos, prev_color)
+	return TRUE
+
+/**
+ * The step of canvas_fill() that scans the pixels to the immediate right and left of our coord and see if they need to be queue'd or not.
+ * Kept as a separate proc to reduce copypasted code.
+ */
+/proc/canvas_scan_step(x, y, list/queue_left, list/queue_right, list/left_line, list/right_line, left_pos, right_pos, prev_color)
 	if(left_line)
-		if(left_line[c_y] == prev_color)
+		if(left_line[y] == prev_color)
 			. += CANVAS_FILL_L_MATCH
 		else
-			STACK_CANVAS_COORD(c_x - 1, left_pos, stack_left)
+			QUEUE_CANVAS_COORD(x - 1, left_pos, queue_left)
 
 	if(!right_line)
 		return
 
-	if(right_line[c_y] == prev_color)
+	if(right_line[y] == prev_color)
 		. += CANVAS_FILL_R_MATCH
 	else
-		STACK_CANVAS_COORD(c_x + 1, right_pos, stack_right)
+		QUEUE_CANVAS_COORD(x + 1, right_pos, queue_right)
 
 #undef CANVAS_FILL_R_MATCH
 #undef CANVAS_FILL_L_MATCH
 #undef CANVAS_COORD
-#undef STACK_CANVAS_COORD
+#undef QUEUE_CANVAS_COORD
 
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"
