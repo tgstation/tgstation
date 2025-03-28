@@ -204,52 +204,44 @@ export function ExperimentConfigure(props) {
 
   return (
     <Window width={600} height={735}>
-      <Window.Content>
-        <Stack fill vertical>
-          <Stack.Item>
-            <Section title="Servers">
-              <Box color="label">
-                {webs.size > 0
-                  ? 'Please select a techweb to connect to...'
-                  : 'Found no servers connected to a techweb!'}
-              </Box>
-              {webs.size > 0 &&
-                Array.from(webs, ([techweb, techwebs]) => (
-                  <TechwebServer key={techweb} techwebs={techwebs} />
-                ))}
-            </Section>
-          </Stack.Item>
-          <Stack.Item grow>
-            {techwebs.some((e) => e.selected) && (
-              <Section
-                fill
-                scrollable
-                title="Experiments"
-                className="ExperimentConfigure__ExperimentsContainer"
-              >
-                <Box mb={1} color="label">
-                  {textContent}
-                </Box>
-                {experiments.map((exp, i) => (
-                  <Experiment key={i} exp={exp} />
-                ))}
-              </Section>
-            )}
-          </Stack.Item>
-          <Stack.Item>
-            {!!has_start_callback && (
-              <Button
-                fluid
-                className="ExperimentConfigure__PerformExperiment"
-                onClick={() => act('start_experiment_callback')}
-                disabled={!experiments.some((e) => e.selected)}
-                icon="flask"
-              >
-                Perform Experiment
-              </Button>
-            )}
-          </Stack.Item>
-        </Stack>
+      <Window.Content scrollable>
+        <Section title="Servers">
+          <Box color="label">
+            {webs.size > 0
+              ? 'Please select a techweb to connect to...'
+              : 'Found no servers connected to a techweb!'}
+          </Box>
+          {webs.size > 0 &&
+            Array.from(webs, ([techweb, techwebs]) => (
+              <TechwebServer key={techweb} techwebs={techwebs} />
+            ))}
+        </Section>
+
+        {techwebs.some((e) => e.selected) && (
+          <Section
+            title="Experiments"
+            className="ExperimentConfigure__ExperimentsContainer"
+          >
+            <Box mb={1} color="label">
+              {textContent}
+            </Box>
+            {experiments.map((exp, i) => (
+              <Experiment key={i} exp={exp} />
+            ))}
+          </Section>
+        )}
+
+        {!!has_start_callback && (
+          <Button
+            fluid
+            className="ExperimentConfigure__PerformExperiment"
+            onClick={() => act('start_experiment_callback')}
+            disabled={!experiments.some((e) => e.selected)}
+            icon="flask"
+          >
+            Perform Experiment
+          </Button>
+        )}
       </Window.Content>
     </Window>
   );
