@@ -1613,6 +1613,7 @@
 #include "code\datums\elements\uplink_reimburse.dm"
 #include "code\datums\elements\venomous.dm"
 #include "code\datums\elements\volatile_gas_storage.dm"
+#include "code\datums\elements\voucher_redeemer.dm"
 #include "code\datums\elements\waddling.dm"
 #include "code\datums\elements\wall_engraver.dm"
 #include "code\datums\elements\wall_smasher.dm"
