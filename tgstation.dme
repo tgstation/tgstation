@@ -373,6 +373,7 @@
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
 #include "code\__DEFINES\dcs\signals\signals_swab.dm"
 #include "code\__DEFINES\dcs\signals\signals_techweb.dm"
+#include "code\__DEFINES\dcs\signals\signals_tgui.dm"
 #include "code\__DEFINES\dcs\signals\signals_tools.dm"
 #include "code\__DEFINES\dcs\signals\signals_traitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_transform.dm"
