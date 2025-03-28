@@ -23,6 +23,11 @@ export type ReskinOption = {
   skin_icon_state: DmIconState; // The icon is the same as the item icon
 };
 
+export type LoadoutTooltip = {
+  icon: string;
+  tooltip: string;
+};
+
 // Actual item passed in from the loadout
 export type LoadoutItem = {
   name: string;
@@ -31,7 +36,7 @@ export type LoadoutItem = {
   icon_state: DmIconState | null;
   buttons: LoadoutButton[];
   reskins: ReskinOption[] | null;
-  information: string[];
+  information: LoadoutTooltip[];
 };
 
 // Category of items in the loadout

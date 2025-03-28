@@ -16,7 +16,7 @@
 /datum/loadout_item/glasses/prescription_glasses
 	name = "Glasses"
 	item_path = /obj/item/clothing/glasses/regular
-	additional_displayed_text = list("Prescription")
+	additional_info = list(FA_ICON_EYE_LOW_VISION = "Prescription")
 
 /datum/loadout_item/glasses/prescription_glasses/circle_glasses
 	name = "Circle Glasses"

@@ -50,8 +50,8 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/abstract_type = /datum/loadout_item
 	/// The actual item path of the loadout item.
 	var/obj/item/item_path
-	/// Lazylist of additional "information" text to display about this item.
-	var/list/additional_displayed_text
+	/// Assoc lazylist of additional "information" text to display about this item, icon -> text when hovering over it
+	var/list/additional_info
 	/// Icon file (DMI) for the UI to use for preview icons.
 	/// Set automatically if null
 	var/ui_icon
@@ -296,26 +296,30 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 /**
  * Returns a list of information to display about this item in the loadout UI.
- *
- * These should be short strings, sub 14 characters generally.
+ * Icon -> tooltip displayed when its hovered over
  */
 /datum/loadout_item/proc/get_item_information() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/list/displayed_text = list()
-
-	displayed_text += (additional_displayed_text || list())
+	var/list/displayed_text = additional_info || list()
 
 	if(can_be_greyscale)
-		displayed_text += "Recolorable"
+		displayed_text[FA_ICON_PALETTE] = "Recolorable"
 
 	if(can_be_named)
-		displayed_text += "Renamable"
+		displayed_text[FA_ICON_QUOTE_LEFT] = "Renamable"
 
 	if(can_be_reskinned)
-		displayed_text += "Reskinnable"
+		displayed_text[FA_ICON_SWATCHBOOK] = "Reskinnable"
 
-	return displayed_text
+	var/list/return_list = list()
+	for (var/icon_name in displayed_text)
+		return_list += list(list(
+			"icon" = icon_name,
+			"tooltip" = displayed_text[icon_name]
+		))
+
+	return return_list
 
 /**
  * Returns a list of buttons that are shown in the loadout UI for customizing this item.
