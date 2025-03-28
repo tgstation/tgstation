@@ -9,7 +9,9 @@
 	var/donktype = /obj/item/food/donkpocket
 
 /obj/item/storage/box/donkpockets/PopulateContents()
-	return donktype
+	. = list()
+	for(var/_ in 1 to 6)
+		. += donktype
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
