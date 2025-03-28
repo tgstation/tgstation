@@ -631,7 +631,7 @@
 			)
 			return ITEM_INTERACT_SUCCESS
 		return NONE
-	if(try_light_candle(tool, user)) // so we don't double balloon alerts when a candle is used to light another candle
+	if(try_light_candle(tool, user))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
