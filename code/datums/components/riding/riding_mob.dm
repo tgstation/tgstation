@@ -207,6 +207,7 @@
 		human_parent.buckle_lying = 90
 
 /datum/component/riding/creature/handle_buckle(mob/living/rider)
+	. = ..()
 	var/mob/living/ridden = parent
 	if(!require_minigame || ridden.faction.Find(REF(rider)))
 		return
