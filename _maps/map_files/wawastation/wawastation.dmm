@@ -17202,13 +17202,6 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"fYX" = (
-/obj/machinery/power/solar{
-	id = "foreport";
-	name = "Fore-Port Solar Array"
-	},
-/turf/open/floor/iron/solarpanel/airless,
-/area/station/solars/port/fore)
 "fYZ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -78545,7 +78538,7 @@ cLf
 cLf
 rGO
 rGO
-nMk
+sKL
 rGO
 nMk
 rGO
@@ -78802,7 +78795,7 @@ cLf
 rGO
 opZ
 opZ
-fYX
+opZ
 urS
 opZ
 opZ
@@ -79316,7 +79309,7 @@ cLf
 opZ
 opZ
 opZ
-fYX
+opZ
 rGO
 opZ
 opZ
@@ -79830,7 +79823,7 @@ dUc
 opZ
 opZ
 opZ
-fYX
+opZ
 rGO
 opZ
 opZ

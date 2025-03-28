@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - admin: "Added logging to fuel pools being ignited by someone deliberately."

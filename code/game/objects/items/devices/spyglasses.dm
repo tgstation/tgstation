@@ -99,8 +99,13 @@ A shrill beep coming from your SpySpeks means that they can't connect to the inc
 	"}
 
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
-	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
-	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
+	var/obj/item/clothing/accessory/spy_bug/newbug = new(null)
+	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(null)
 	newbug.linked_glasses = newglasses
 	newglasses.linked_bug = newbug
-	new /obj/item/paper/fluff/nerddocs(src)
+
+	return list(
+		newbug,
+		newglasses,
+		/obj/item/paper/fluff/nerddocs
+	)
