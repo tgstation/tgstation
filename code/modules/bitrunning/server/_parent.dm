@@ -58,14 +58,12 @@
 
 
 /obj/machinery/quantum_server/Destroy(force)
-	. = ..()
-
 	mutation_candidate_refs.Cut()
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
-	QDEL_NULL(exit_turfs)
+	exit_turfs.Cut()
 	QDEL_NULL(generated_domain)
-
+	return ..()
 
 /obj/machinery/quantum_server/examine(mob/user)
 	. = ..()
