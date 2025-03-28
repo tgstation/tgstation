@@ -322,7 +322,7 @@ export const Canvas = (props) => {
                   \n Left-Click the palette at the
                   bottom of the UI to select a color,
                   or input a new one with Right-Click. \n
-		          Tools may have key shortcuts.
+                  Tools may have key shortcuts.
                 `
                     : '')
                 }
