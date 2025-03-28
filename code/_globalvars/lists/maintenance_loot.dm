@@ -219,21 +219,24 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/stack/medical/mesh = 1,
 			/obj/item/stack/medical/suture = 1,
 			/obj/item/stack/medical/bandage = 1,
-			) = 1,
+			) = 4,
 		list(//medical chems
 			/obj/item/reagent_containers/cup/bottle/multiver = 1,
 			/obj/item/reagent_containers/hypospray/medipen = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
-			) = 1,
+			) = 4,
 		list(//drinks
 			/obj/item/reagent_containers/cup/glass/bottle/vodka = 1,
 			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
 			/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
-			) = 1,
+			) = 4,
 		list(//sprayers
 			/obj/item/reagent_containers/spray = 1,
 			/obj/item/watertank = 1,
 			/obj/item/watertank/janitor = 1,
+			) = 4,
+		list(//other chems
+			/obj/item/reagent_containers/cup/jerrycan/diethylamine = 1,
 			) = 1,
 		) = 8,
 

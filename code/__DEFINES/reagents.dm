@@ -29,6 +29,8 @@
 #define SEALED_CONTAINER (1<<10)
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
+//Prevents spilling and splashing but does prevent pouring and drinking reagents like the badly named spillable var.
+#define SMART_CAP (1<<11)
 
 // Reagent exposure methods.
 /// Used for splashing.

@@ -39,6 +39,8 @@
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	///The sound this container makes when picked up, dropped if there is liquid inside.
 	var/reagent_container_liquid_sound = null
+	///If we want to the contrast of the reagent overlay if the reagent mix color is very dark.
+	var/adjust_color_contrast = FALSE
 
 /obj/item/reagent_containers/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -126,7 +128,7 @@
 
 /// Tries to splash the target. Used on both right-click and normal click when in combat mode.
 /obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)
-	if (!spillable)
+	if (!spillable || reagent_flags & SMART_CAP)
 		return FALSE
 
 	if (!reagents?.total_volume)
@@ -213,7 +215,7 @@
 		. = TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE, override_spillable = FALSE)
-	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable))
+	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable) || reagent_flags & SMART_CAP)
 		return
 	var/mob/thrown_by = thrownby?.resolve()
 
@@ -284,7 +286,25 @@
 		if(threshold <= percent && percent < threshold_end)
 			filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 
-	filling.color = mix_color_from_reagents(reagents.reagent_list)
+
+	if(adjust_color_contrast)
+		var/list/mix_colors = rgb2num(mix_color_from_reagents(reagents.reagent_list))
+		var/float_r = mix_colors[1] / 255
+		var/float_g = mix_colors[2] / 255
+		var/float_b = mix_colors[3] / 255
+		var/float_a = mix_colors.len > 3 ? mix_colors[4] / 255 : 1
+
+		var/float_v = (float_r + float_g + float_b) / 3
+
+		//contrast adjustment
+		var/c = 1.5 - float_v / 2
+		var/t = (1.5 - c - (float_v / 2)) / 2.0
+
+		var/list/reagent_color_and_contrast_matrix  = list(float_r * c,0,0,0, 0,float_g * c,0,0, 0,0,float_b * c,0, 0,0,0,float_a, t,t,t,0)
+		filling.color = reagent_color_and_contrast_matrix
+	else
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+
 	. += filling
 
 /obj/item/reagent_containers/dropped(mob/user, silent)
