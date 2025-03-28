@@ -1,0 +1,4 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - bugfix: "Donk pocket boxes start with more than one donk pocket again."
