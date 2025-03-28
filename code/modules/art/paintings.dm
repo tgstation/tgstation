@@ -464,7 +464,7 @@
 	}
 
 /**
- * A proc that adopts a scan-based, 4-dir (correct me if I'm wrong) flood fill algorithm used
+ * A proc that adopts a span-based, 4-dir (correct me if I'm wrong) flood fill algorithm used
  * by the bucked tool in the UI, to facilitate coloring larger portions of the canvas.
  * If you have never used the bucket/flood tool on an image editor, I suggest you do it
  * now so you know what I'm basically talking about.
