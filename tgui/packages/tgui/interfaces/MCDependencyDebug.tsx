@@ -51,7 +51,7 @@ type GraphNodeProps = {
   outputRef: (element: HTMLElement) => void;
 };
 
-const GraphNode: React.FC<GraphNodeProps> = (props) => {
+function GraphNode(props: GraphNodeProps) {
   const { name, inputRef, outputRef, x, y } = props;
 
   return (
@@ -135,7 +135,7 @@ const GraphNode: React.FC<GraphNodeProps> = (props) => {
       </Stack>
     </Box>
   );
-};
+}
 
 type SubsystemRef = {
   input?: HTMLElement;
@@ -166,7 +166,7 @@ function evaluateSubsystemLayer(
   }
 }
 
-export const MCDependencyDebug = (props) => {
+export function MCDependencyDebug(props) {
   const { data } = useBackend<DependencyData>();
   const { subsystems } = data;
   const connectionDom = useRef<ConnectionRef>({});
@@ -292,4 +292,4 @@ export const MCDependencyDebug = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
