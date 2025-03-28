@@ -433,6 +433,7 @@
 	desc = "A box containing an assortment of fresh Tiziran goods- perfect for making the foods of the Lizard Empire."
 	icon_state = "lizard_package"
 	illustration = null
+	storage_type = /datum/storage/box/tiziran_goods
 
 /obj/item/storage/box/tiziran_goods/PopulateContents()
 	var/static/list/obj/item/food = list(
@@ -449,7 +450,7 @@
 	)
 
 	var/list/obj/item/insert = list()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 8)
 		insert += pick_weight(food)
 
 	return insert
@@ -463,16 +464,9 @@
 
 /obj/item/storage/box/tiziran_cans/PopulateContents()
 	var/static/list/obj/item/food = list(
-		/obj/item/food/bread/root = 2,
-		/obj/item/food/grown/ash_flora/seraka = 2,
-		/obj/item/food/grown/korta_nut = 10,
-		/obj/item/food/grown/korta_nut/sweet = 2,
-		/obj/item/food/liver_pate = 5,
-		/obj/item/food/lizard_dumplings = 5,
-		/obj/item/food/moonfish_caviar = 5,
-		/obj/item/food/root_flatbread = 5,
-		/obj/item/food/rootroll = 5,
-		/obj/item/food/spaghetti/nizaya = 5,
+		/obj/item/food/canned/jellyfish = 5,
+		/obj/item/food/canned/desert_snails = 5,
+		/obj/item/food/canned/larvae = 5,
 	)
 
 	var/list/obj/item/insert = list()
