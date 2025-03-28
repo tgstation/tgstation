@@ -193,6 +193,9 @@
 	passtable_off(pushed_mob, passtable_key)
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
+	on_mob_tabled(user, pushed_mob)
+
+/obj/structure/table/proc/on_mob_tabled(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
@@ -560,41 +563,26 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
-/obj/structure/table/wood/Initialize(mapload)
+/obj/structure/table/wood/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	wood_table_breakroll(target)
 
-/obj/structure/table/wood/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
+/obj/structure/table/wood/proc/wood_table_breakroll(mob/living/M)
+	var/breakroll = rand(1,3)
+	if(breakroll == 3)
+		wood_table_shatter(M)
+	return
 
-	if(!isliving(AM))
-		return
-	// Don't break if they're just flying past
-	if(AM.throwing)
-		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 0.5 SECONDS)
-	else
-		check_break(AM)
-
-/obj/structure/table/wood/proc/throw_check(mob/living/M)
-	if(M.loc == get_turf(src))
-		check_break(M)
-
-/obj/structure/table/wood/proc/check_break(mob/living/M)
-	var/breakroll = rand(1,5)
-	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && breakroll == 5)
-		table_shatter(M)
-
-/obj/structure/table/wood/proc/table_shatter(mob/living/victim)
+/obj/structure/table/wood/proc/wood_table_shatter(mob/living/victim)
 	visible_message(span_warning("[src] smashes into bits!"),
 		span_danger("You hear the loud cracking of wood being split."))
 
 	playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
+	victim.Paralyze(20 SECONDS) // since its not 100% odds, make it longer than a glass table to compensate.
+	victim_mob.apply_damage(30, BRUTE)
+	new frame(loc)
+	qdel(src)
 
-	victim.Paralyze(20 SECONDS)
-	atom_deconstruct(disassembled = FALSE)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
