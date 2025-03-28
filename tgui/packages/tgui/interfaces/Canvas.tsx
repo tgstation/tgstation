@@ -173,6 +173,11 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   drawPoint(x: number, y: number, color: any) {
+    // Checks whether an element is even
+    const isDupe = (p: PointData) => p.x === x && p.y === y;
+    if (this.modifiedElements.some(isDupe)) {
+      return;
+    }
     let p: PointData = { x, y, color: Color.fromHex(color) };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
@@ -295,7 +300,7 @@ export const Canvas = (props) => {
 
             switch (keyCode) {
               case KEY_F:
-                setFillMode(fillmode ? false : true);
+                setFillMode((prevFill) => !prevFill);
                 break;
 
               case KEY_G:
@@ -317,7 +322,7 @@ export const Canvas = (props) => {
                   \n Left-Click the palette at the
                   bottom of the UI to select a color,
                   or input a new one with Right-Click. \n
-		          Some tools have key shortcuts.
+		          Tools may have key shortcuts.
                 `
                     : '')
                 }

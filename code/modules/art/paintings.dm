@@ -43,6 +43,7 @@
 	icon_state = "11x11"
 	flags_1 = UNPAINTABLE_1
 	resistance_flags = FLAMMABLE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION
 	var/width = 11
 	var/height = 11
 	var/list/grid
@@ -109,13 +110,24 @@
 	. = ..()
 	ui_interact(user)
 
+/obj/item/canvas/ui_host(mob/user)
+	if(istype(loc,/obj/structure/sign/painting))
+		return loc
+	return ..()
+
 /obj/item/canvas/ui_state(mob/user)
 	if(isobserver(user))
 		return GLOB.observer_state
 	if(finalized)
-		return GLOB.physical_obscured_state
-	else
-		return GLOB.default_state
+		return GLOB.hold_or_view_state
+	return GLOB.default_state
+
+/obj/item/canvas/ui_status(mob/user, datum/ui_state/state)
+	if(state == GLOB.default_state || !state)
+		return ..()
+	//Skip the can_interact() check from atom/ui_status() and let them zoom in/out!
+	var/src_object = ui_host(user)
+	return state.can_use_topic(src_object, user)
 
 /obj/item/canvas/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -164,8 +176,8 @@
 	if(.)
 		return
 	var/mob/user = usr
-	///this is here to allow observers to zoom in and out but not do anything else.
-	if(action != "zoom_in" && action != "zoom_out" && isobserver(user))
+	///this is here to allow observers and viewers to zoom in and out regardless of adjacency.
+	if(action != "zoom_in" && action != "zoom_out" && !can_interact(user))
 		return
 	switch(action)
 		if("paint", "fill")
@@ -204,8 +216,9 @@
 			var/obj/item/painting_implement = user.get_active_held_item()
 			if(!painting_implement)
 				return FALSE
-			var/x = text2num(params["px"])
-			var/y = text2num(params["py"])
+			to_chat(world, "hello")
+			var/x = text2num(params["x"])
+			var/y = text2num(params["y"])
 			painting_implement.set_painting_tool_color(grid[x][y])
 			. = TRUE
 		if("change_palette")
@@ -512,7 +525,7 @@
 			else
 				l_line_start = null
 			curr_line[y] = new_color
-			curr_queue -= CANVAS_COORD(x, y)
+			curr_queue -= CANVAS_COORD(x, y) //remove it from the queue if possible.
 			y--
 
 		//Any unqueued coordinate is queued and cleared before the next half of the cycle
