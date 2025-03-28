@@ -51,7 +51,7 @@ type GraphNodeProps = {
   outputRef: (element: HTMLElement) => void;
 };
 
-const GraphNode: React.FC<GraphNodeProps> = (props, context) => {
+const GraphNode: React.FC<GraphNodeProps> = (props) => {
   const { name, inputRef, outputRef, x, y } = props;
 
   return (
@@ -100,7 +100,7 @@ const GraphNode: React.FC<GraphNodeProps> = (props, context) => {
             <span ref={inputRef} className="ObjectComponent__PortPos" />
           </Box>
         </Stack.Item>
-        <Stack.Item grow={1}>{name}</Stack.Item>
+        <Stack.Item grow>{name}</Stack.Item>
         <Stack.Item>
           <Box
             className={classes(['ObjectComponent__Port'])}
@@ -142,39 +142,31 @@ type SubsystemRef = {
   output?: HTMLElement;
 };
 
-type ConnectionRef = {
-  [key: string]: SubsystemRef;
-};
+type ConnectionRef = Record<string, SubsystemRef>;
 
 type SubsystemCoord = {
   input: Coord;
   output: Coord;
 };
 
-type ConnectionData = {
-  [key: string]: SubsystemCoord;
-};
+type ConnectionData = Record<string, SubsystemCoord>;
 
-type SubsystemLayer = {
-  [subsystemName: string]: number;
-};
+type SubsystemLayer = Record<string, number>;
 
-type SubsystemMap = {
-  [subsystemName: string]: Subsystem;
-};
+type SubsystemMap = Record<string, Subsystem>;
 
-function EvaluateSubsystemLayer(
+function evaluateSubsystemLayer(
   subsystem: Subsystem,
   depth: number,
   data: SubsystemLayer,
 ) {
   data[subsystem.name] = Math.max(depth, data[subsystem.name] || 0);
   for (let i = 0; i < subsystem.dependents.length; i++) {
-    EvaluateSubsystemLayer(subsystem.dependents[i], depth + 1, data);
+    evaluateSubsystemLayer(subsystem.dependents[i], depth + 1, data);
   }
 }
 
-export const MCDependencyDebug = (props, context) => {
+export const MCDependencyDebug = (props) => {
   const { data } = useBackend<DependencyData>();
   const { subsystems } = data;
   const connectionDom = useRef<ConnectionRef>({});
@@ -221,7 +213,7 @@ export const MCDependencyDebug = (props, context) => {
     const subsystemLayer: SubsystemLayer = {};
     for (let i = 0; i < subsystemsGraph.length; i++) {
       const subsystem = subsystemsGraph[i];
-      EvaluateSubsystemLayer(subsystem, 1, subsystemLayer);
+      evaluateSubsystemLayer(subsystem, 1, subsystemLayer);
     }
     return subsystemLayer;
   }, [subsystems]);
@@ -251,7 +243,7 @@ export const MCDependencyDebug = (props, context) => {
   }
 
   return (
-    <Window width={1200} height={800} title={'Subsystem Dependency Graph'}>
+    <Window width={1200} height={800} title="Subsystem Dependency Graph">
       <Window.Content
         style={{
           backgroundImage: 'none',
