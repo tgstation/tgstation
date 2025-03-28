@@ -30,6 +30,7 @@
 	if(!ui)
 		ui = new(user, src, "MODpaint", name)
 		ui.open()
+		proxy_view.display_to(user, ui.window)
 
 /obj/item/mod/paint/ui_host()
 	return editing_mod

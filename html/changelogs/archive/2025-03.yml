@@ -774,3 +774,64 @@
   - bugfix: bloodless species no longer have a free bonechiller
   subject217:
   - spellcheck: fixed a typo and a grammar error
+2025-03-26:
+  Absolucy:
+  - qol: Players with the Prosopagnosia quirk will now see the ID name (if there is
+      one) examining someone, instead of ALWAYS Unknown, altho it'll have a question
+      mark, i.e "John Doe?"
+  - qol: Prosopagnosia no longer makes you see yourself as Unknown.
+  - bugfix: The _ispath SDQL2/Lua wrapper can now be used to actually check if something
+      is a path.
+  - code_imp: Added the _is_type_in_typecache wrapper, for SDQL2 / Lua scripts.
+  OrionTheFox:
+  - bugfix: fixed some tiny sprite flickering on two atmos wallmounts
+  SmArtKar:
+  - bugfix: Fixed vendor machine glass shards being permanently stuck in people
+  - bugfix: Large internals station trait no longer prevents admin-specific internals
+      boxes from spawning
+  StrangeWeirdKitten:
+  - code_imp: do_after() can now hold custom cog icons. Add some today!
+2025-03-27:
+  Bisar:
+  - balance: Door remotes now match the access of their owner (except for the Captain,
+      whose remote access is unchanged). Door remotes, however, respect the high security
+      area control of other remotes; as such, even if a Head can enter an area like
+      the brig, only the Security remote works to open the entrance.
+  Goat:
+  - bugfix: Clown biodome on lavaland uses lavaland turf now for the bananium ore.
+  Holoo-1:
+  - bugfix: fixed AI multicam room on multiz maps not showing anything
+  Melbert:
+  - bugfix: Fix storage whitelists / blacklists being ignored in some contexts (hotkeys)
+  SmArtKar:
+  - bugfix: Fixed all satchels having reduced storage
+  - bugfix: MODsuits should now be affected by stabilized red crossbreeds
+  - bugfix: MODsuit slowdowns should no longer behave weirdly with ash accretion/magboots/armor
+      booster modules.
+  - refactor: Refactored MODsuit slowdown calculations to be query-based instead of
+      modules directly modifying part speed values.
+  - bugfix: Fixed techweb scrolling cutting off the last node
+  mcbalaam:
+  - refactor: Minor Big Manipulator code refactoring
+  norsvenska:
+  - bugfix: Wawastation's port bow solar array now has a cable under all panels by
+      default.
+2025-03-28:
+  LemonInTheDark:
+  - bugfix: Fixed our pathfinding logic getting deeply confused by border objects
+  - admin: Added clientside displayed pathfinding debug tools, give em a go
+  Melbert:
+  - qol: Examining a heretic influence gives you a sp00ky message rather than an empty
+      box
+  RandomDudeFromTheRim:
+  - bugfix: fixed an extremely hypothetical, yet possible respawn exploit
+  SmArtKar:
+  - rscadd: Nyctophobia and Claustrophobia quirks now have proper terror effects instead
+      of making you walk/suffocate. Immersion!
+  - refactor: All sources of "terror"/"fear" now use a common component, meaning they
+      share their counters.
+  - bugfix: Fixed shift right clicking shoes giving some interesting options.
+  - bugfix: Fixed blue space on lower Z levels
+  - bugfix: Fixed toolbelts being able to unintended items
+  distributivgesetz:
+  - bugfix: Players on 516 can submit votes for IRV again.

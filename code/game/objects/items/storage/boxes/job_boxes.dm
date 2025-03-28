@@ -19,7 +19,7 @@
 	/// Do we get to benefit from Nanotrasen's largesse?
 	var/give_premium_goods = TRUE
 
-/obj/item/storage/box/survival/Initialize(mapload)
+/obj/item/storage/box/survival/create_storage(max_slots, max_specific_storage, max_total_storage, list/canhold, list/canthold, storage_type)
 	. = ..()
 	if(crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		return

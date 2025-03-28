@@ -47,8 +47,10 @@
 	set_difficulty(ridden, rider)
 	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_minigame))
 	RegisterSignal(ridden, COMSIG_MOVABLE_ATTEMPTED_MOVE, PROC_REF(on_ridden_moved))
-	minigame_holder = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0, pixel_x = 32, pixel_y = 0)
-	heart_counter = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0, pixel_x = 0, pixel_y = -32)
+	minigame_holder = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0)
+	minigame_holder.pixel_w = 32
+	heart_counter = image(icon='icons/effects/effects.dmi', loc=rider,icon_state="nothing", layer = 0)
+	heart_counter.pixel_z = -32
 	SET_PLANE_EXPLICIT(minigame_holder, ABOVE_HUD_PLANE, rider)
 	SET_PLANE_EXPLICIT(heart_counter, ABOVE_HUD_PLANE, rider)
 	generate_heart_counter()
