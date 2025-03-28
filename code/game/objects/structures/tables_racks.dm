@@ -579,7 +579,7 @@
 
 	playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
 	victim.Paralyze(20 SECONDS) // since its not 100% odds, make it longer than a glass table to compensate.
-	victim_mob.apply_damage(30, BRUTE)
+	victim.apply_damage(30, BRUTE)
 	new frame(loc)
 	qdel(src)
 
