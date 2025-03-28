@@ -40,11 +40,7 @@ end
 function SS13.typecacheof(string_types)
 	local types = {}
 	for _, path in string_types do
-		if path == nil then
-			continue
-		elseif SS13.ispath(path) == 1 then
-			table.insert(types, path)
-		else
+		if path ~= nil then
 			table.insert(types, SS13.type(path))
 		end
 	end
