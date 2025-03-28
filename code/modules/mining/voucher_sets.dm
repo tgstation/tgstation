@@ -25,9 +25,9 @@
 		stack_trace("Voucher set [type] has no items set.")
 		return
 	if(isnull(icon))
-		icon ||= initial(set_items[1].icon)
+		icon = initial(set_items[1].icon)
 	if(isnull(icon_state))
-		icon_state ||= initial(set_items[1].icon_state)
+		icon_state = initial(set_items[1].icon_state)
 	if(isnull(name))
 		stack_trace("Voucher set [type] has no name set.")
 
