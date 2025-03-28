@@ -35,7 +35,6 @@
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		character_preview_view = create_character_preview_view(user, ui.window)
 
 /obj/machinery/computer/records/medical/ui_data(mob/user)
 	var/list/data = ..()

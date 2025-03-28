@@ -81,7 +81,6 @@
 		ui = new(user, src, "SecurityRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		character_preview_view = create_character_preview_view(user, ui.window)
 
 /obj/machinery/computer/records/security/ui_data(mob/user)
 	var/list/data = ..()
