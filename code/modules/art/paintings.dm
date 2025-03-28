@@ -194,12 +194,10 @@
 					return FALSE
 			else
 				var/list/data = params["data"]
-				//could maybe validate continuity but eh
 				for(var/point in data)
 					var/x = text2num(point["x"])
 					var/y = text2num(point["y"])
-					if(action == "paint")
-						grid[x][y] = tool_color
+					grid[x][y] = tool_color
 			var/medium = get_paint_tool_medium(I)
 			if(medium && painting_metadata.medium && painting_metadata.medium != medium)
 				painting_metadata.medium = "Mixed medium"

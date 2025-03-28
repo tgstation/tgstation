@@ -36,7 +36,6 @@ type PaintCanvasProps = Partial<{
 type PointData = {
   x: number;
   y: number;
-  color: Color;
 };
 
 const fromDM = (data: string[][]) => {
@@ -178,7 +177,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     if (this.modifiedElements.some(isDupe)) {
       return;
     }
-    let p: PointData = { x, y, color: Color.fromHex(color) };
+    let p: PointData = { x, y };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
