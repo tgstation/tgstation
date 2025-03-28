@@ -79,6 +79,12 @@
 
 /obj/item/reagent_containers/cup/jerrycan/sus
 	name = "NT-AG diethylamine can"
-	label_type = LABEL_SUSPICIOUS_MINI
+	label_type = LABEL_SUSPICIOUS_MINI_BLACK
 	desc = "A large container labled 'NT-AG' diethylamine. A disclaimer written in bold letters reads: FOR AGRICULTURAL USE ONLY. RESALE PROHIBITED."
-	list_reagents = list(/datum/reagent/toxin/curare)
+	list_reagents = list(/datum/reagent/phlogiston = 200)
+
+/obj/item/reagent_containers/cup/jerrycan/oil
+	name = "NT-AG diethylamine can"
+	label_type = LABEL_INFLAMMABLE
+	desc = "A large container labled 'NT-AG' diethylamine. A disclaimer written in bold letters reads: FOR AGRICULTURAL USE ONLY. RESALE PROHIBITED."
+	list_reagents = list(/datum/reagent/fuel/oil = 200)
