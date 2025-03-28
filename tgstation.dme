@@ -1470,6 +1470,7 @@
 #include "code\datums\elements\bsa_blocker.dm"
 #include "code\datums\elements\bugkiller_reagent.dm"
 #include "code\datums\elements\bump_click.dm"
+#include "code\datums\elements\burn_when_item_ignition.dm"
 #include "code\datums\elements\can_barricade.dm"
 #include "code\datums\elements\can_shatter.dm"
 #include "code\datums\elements\caseless.dm"
