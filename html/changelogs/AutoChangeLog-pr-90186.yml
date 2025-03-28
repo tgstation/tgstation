@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "You can pick up desk bells by dragging them onto yourself. This is now how you attach them to wheelchairs, instead of dragging it onto the wheelchair."
+  - bugfix: "Folding a wheelchair with attached bell will drop the bell to the ground instead of deleting it forever."
