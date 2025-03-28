@@ -37,9 +37,9 @@
 	if(new_reference)
 		src.isreference = new_reference
 	/// We love indexes!!!
-	src.rarity_name = GLOB.all_rarenames[src.rarity]
-	src.rarity_color = GLOB.all_rarecolors[src.rarity]
-	src.rarity_color_name = GLOB.all_rarecolors[src.rarity_color]
+	src.rarity_name = GLOB.all_cubenames[src.rarity]
+	src.rarity_color = GLOB.all_cubecolors[src.rarity]
+	src.rarity_color_name = GLOB.all_cubecolors[src.rarity_color]
 	/// Really make it obvious. You can't get 2 feet without seeing an outline.
 	parent.remove_filter("cubeglow")
 	parent.add_filter("cubeglow", 10, outline_filter(color = src.rarity_color, size = 1))

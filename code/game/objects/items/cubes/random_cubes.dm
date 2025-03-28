@@ -71,7 +71,7 @@
 /obj/item/cube/random/examine(mob/user)
 	. = ..()
 	if((cube_examine_flags & CUBE_TOOL))
-		var/cube_tool_examine = span_notice("It can be used as [tool_behaviour_name(tool_behaviour)]")
+		var/cube_tool_examine = span_notice("It can be used as [EXAMINE_HINT("[tool_behaviour_name(tool_behaviour)]")]")
 		if(length(cube_tools) > 1)
 			cube_tool_examine += span_notice("\nIt can be thrown to randomly swap between the following tools:\n")
 			for(var/tbehavior in cube_tools)
@@ -347,6 +347,29 @@
 	tool_behaviour = pick(cube_tools)
 	toolspeed = round(1/rarity, 0.1)
 	cube_examine_flags |= CUBE_TOOL
+	/// All possible sounds that the cubes can have if they are tools
+	var/list/cube_toolsounds = list(
+		'sound/items/tools/jaws_pry.ogg'= 50,
+		'sound/items/weapons/sonic_jackhammer.ogg'= 25,
+		'sound/items/tools/crowbar.ogg'= 50,
+		'sound/items/tools/screwdriver.ogg'= 50,
+		'sound/items/tools/screwdriver2.ogg'= 50,
+		'sound/items/pshoom/pshoom.ogg'= 25,
+		'sound/items/tools/drill_use.ogg'= 50,
+		'sound/items/tools/welder.ogg'= 50,
+		'sound/items/tools/welder2.ogg'= 50,
+		'sound/items/tools/wirecutter.ogg'= 50,
+		'sound/items/tools/ratchet.ogg'= 50,
+		'sound/effects/empulse.ogg'= 25,
+		'sound/items/toy_squeak/toysqueak1.ogg'=rarity,
+		'sound/items/toy_squeak/toysqueak2.ogg'=rarity,
+		'sound/items/toy_squeak/toysqueak3.ogg'=rarity
+	)
+	usesound = list()
+	for(var/newsound in 1 to rarity)
+		var/newcubesound = pick_weight(cube_toolsounds)
+		usesound += newcubesound
+		cube_toolsounds -= newcubesound
 
 /obj/item/cube/random/get_all_tool_behaviours()
 	if(isnull(tool_behaviour))

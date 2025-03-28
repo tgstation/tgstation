@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	assemble_baseturfs()
 
-	levelupdate(mapload)
+	levelupdate()
 
 	SETUP_SMOOTHING()
 
@@ -500,16 +500,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	created_baseturf_lists[new_baseturfs[new_baseturfs.len]] = new_baseturfs.Copy()
 	return new_baseturfs
 
-/turf/proc/levelupdate(maploaded)
-	for(var/obj/object in src)
+/turf/proc/levelupdate()
+	for(var/atom/movable/object in src)
 		if(object.flags_1 & INITIALIZED_1)
 			SEND_SIGNAL(object, COMSIG_OBJ_HIDE, underfloor_accessibility)
-	/// I imagine that without this loadtimes would skyrocket. They probably still did.
-	if(maploaded)
-		return
-	for(var/mob/creature in src)
-		if(creature.flags_1 & INITIALIZED_1)
-			SEND_SIGNAL(creature, COMSIG_OBJ_HIDE, underfloor_accessibility)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()

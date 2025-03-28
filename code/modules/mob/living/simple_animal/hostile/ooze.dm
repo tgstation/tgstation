@@ -42,8 +42,6 @@
 	AddElement(/datum/element/content_barfer)
 
 	grant_actions_by_list(get_innate_actions())
-	if(check_holidays(APRIL_FOOLS))
-		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE, ismapload = mapload)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!eat_atom(I, TRUE))
@@ -125,6 +123,8 @@
 	. = ..()
 	consume = new
 	consume.Grant(src)
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE, ismapload = mapload)
 
 /mob/living/simple_animal/hostile/ooze/gelatinous/get_innate_actions()
 	var/static/list/innate_actions = list(

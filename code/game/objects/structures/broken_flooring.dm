@@ -21,7 +21,7 @@
 		plane = GAME_PLANE
 		layer = LOW_OBJ_LAYER
 		return
-	for(var/obj/object in turf)
+	for(var/atom/movable/object in turf)
 		if(object.flags_1 & INITIALIZED_1)
 			SEND_SIGNAL(object, COMSIG_OBJ_HIDE, UNDERFLOOR_VISIBLE)
 			CHECK_TICK

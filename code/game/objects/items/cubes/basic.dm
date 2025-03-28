@@ -88,7 +88,7 @@
 	// Needs to be a physical object for us to get its render_target
 	// This has snowflake cases for mobs who's held/worn overlays are rendered strangely, but for /human/ subtypes it works fine
 	// Sorry drones & gorillas :[.
-	mob_alpha = new /obj/effect/abstract/underfloor_bulge(get_turf(src))
+	mob_alpha = new(get_turf(src))
 	mob_alpha.appearance = user.appearance
 	mob_alpha.setDir(SOUTH)
 	mob_alpha.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -147,7 +147,7 @@
 	name = "billboarded Cube"
 	desc = "It's always facing directly towards the camera. Rude!"
 	icon_state = "billboard"
-	rarity = EPIC_CUBE
+	rarity = RARE_CUBE
 
 /obj/item/cube/colorful/meta/Initialize(mapload)
 	. = ..()

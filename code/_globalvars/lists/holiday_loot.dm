@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(rare_cubes, list(
 	/obj/item/cube/random/rare = 30,
 	/obj/item/cube/colorful/huge = 25,
 	/obj/item/cube/colorful/voxel = 25,
+	/obj/item/cube/colorful/meta = 25,
 	/obj/item/cube/puzzle/rubiks = 25,
 	/obj/item/cube/material = 25,
 ))
@@ -71,7 +72,6 @@ GLOBAL_LIST_INIT(epic_cubes, list(
 	/obj/item/cube/random/epic = 30,
 	/obj/item/cube/colorful/pixel = 25,
 	/obj/item/cube/puzzle = 25,
-	/obj/item/cube/colorful/meta = 25,
 	//Skub cube(Skub)
 	//Oxygen cube, generates oxygen
 	//Nitrous boxes (Crash bandicoot) impact grenade
@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(all_cubes, list(
 ))
 
 /// Names of the rarities w/ spans
-GLOBAL_LIST_INIT(all_rarenames, list(
+GLOBAL_LIST_INIT(all_cubenames, list(
 	span_bold("Common"),
 	span_boldnicegreen("Uncommon"),
 	span_boldnotice("Rare"),
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(all_rarenames, list(
 ))
 
 /// The colors associated with each rarity
-GLOBAL_LIST_INIT(all_rarecolors, list(
+GLOBAL_LIST_INIT(all_cubecolors, list(
 	COLOR_WHITE = "white",
 	COLOR_VIBRANT_LIME = "green",
 	COLOR_DARK_CYAN = "blue",
