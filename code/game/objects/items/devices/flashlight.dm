@@ -44,7 +44,9 @@
 		set_light_on(TRUE)
 	update_brightness()
 	register_context()
+	init_slapcrafting()
 
+/obj/item/flashlight/proc/init_slapcrafting()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
 
 	AddElement(
@@ -446,19 +448,20 @@
 		damtype = BURN
 		update_brightness()
 
+/obj/item/flashlight/flare/init_slapcrafting()
+	return
+
 /obj/item/flashlight/flare/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/flashlight/flare/attack(mob/living/carbon/victim, mob/living/carbon/user)
-	if(!isliving(victim))
-		return ..()
-
-	if(light_on && victim.ignite_mob())
+/obj/item/flashlight/flare/afterattack(atom/target, mob/user, click_parameters)
+	if(!isliving(target))
+		return
+	var/mob/living/victim = target
+	if(get_temperature() && victim.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(victim)] on fire with [src] at [AREACOORD(user)]")
 		user.log_message("set [key_name(victim)] on fire with [src]", LOG_ATTACK)
-
-	return ..()
 
 /obj/item/flashlight/flare/toggle_light()
 	if(light_on || !fuel)
@@ -624,14 +627,28 @@
 			if(cig.lit)
 				return NONE
 			cig.light()
-			user.visible_message(
-				span_rose("[user] holds [user.p_their()] [cig.name] to [src] and lights it, like a true romantic."),
-				span_rose("You hold your [cig.name] to [src] and light it, like a true romantic."),
-				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-			)
+			if(cig.loc == user)
+				user.visible_message(
+					span_rose("[user] holds [user.p_their()] [cig.name] to [src] and lights it, like a true romantic."),
+					span_rose("You hold your [cig.name] to [src] and light it, like a true romantic."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
+			else
+				user.visible_message(
+					span_rose("[user] lights [cig] with [src], like a true romantic."),
+					span_rose("You light [cig] with [src], like a true romantic."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
 			return ITEM_INTERACT_SUCCESS
 		return NONE
 	if(try_light_candle(tool, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/flashlight/flare/candle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(get_temperature())
+		return NONE
+	if(try_light_candle(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
