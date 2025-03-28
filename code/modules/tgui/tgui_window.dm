@@ -452,7 +452,7 @@
 		return
 	var/list/chunks = payload["chunks"]
 	chunks += chunk
-	if(chunks.len >= payload["count"])
+	if(length(chunks) >= payload["count"])
 		deltimer(payload["timeout"])
 		var/message_type = payload["type"]
 		var/final_payload = chunks.Join()
