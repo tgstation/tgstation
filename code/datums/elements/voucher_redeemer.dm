@@ -62,7 +62,7 @@
 	chosen_set.spawn_set(source.drop_location())
 	if(chosen_set.blackbox_key)
 		SSblackbox.record_feedback("tally", chosen_set.blackbox_key, 1, selection)
-	source.balloon_alert("redeemed [LOWER_TEXT(selection)]")
+	source.balloon_alert(redeemer, "redeemed [LOWER_TEXT(selection)]")
 	qdel(voucher)
 
 /datum/element/voucher_redeemer/proc/check_menu(obj/item/voucher, mob/living/redeemer)
