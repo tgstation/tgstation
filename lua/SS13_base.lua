@@ -19,8 +19,19 @@ function SS13.get_runner_client()
 	return dm.global_vars.GLOB.directory[SS13.get_runner_ckey()]
 end
 
-SS13.ispath = dm.global_procs._ispath
-SS13.type = dm.global_procs._text2path
+function SS13.ispath(thing, path)
+	return dm.global_procs._ispath(thing, path) == 1
+end
+
+function SS13.type(typepath)
+	if type(typepath) == "string" then
+		return dm.global_procs._text2path(typepath)
+	elseif SS13.ispath(typepath) then
+		return typepath
+	else
+		return nil
+	end
+end
 
 function SS13.istype(thing, type)
 	return dm.global_procs._istype(thing, SS13.type(type)) == 1
@@ -28,7 +39,7 @@ end
 
 function SS13.typecacheof(string_types)
 	local types = {}
-	for _, path in pairs(string_types) do
+	for _, path in string_types do
 		if path == nil then
 			continue
 		elseif SS13.ispath(path) == 1 then
@@ -40,7 +51,9 @@ function SS13.typecacheof(string_types)
 	return dm.global_procs.typecacheof(types)
 end
 
-SS13.is_type_in_typecache = dm.global_procs._is_type_in_typecache
+function SS13.is_type_in_typecache(thing, typecache)
+	return dm.global_procs._is_type_in_typecache(thing, typecache) == 1
+end
 
 function SS13.get_turf(thing)
 	return dm.global_procs._get_step(thing, 0)
