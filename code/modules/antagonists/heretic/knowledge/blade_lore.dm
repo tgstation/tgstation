@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/blade
+/datum/heretic_knowledge_tree_column/blade
 	route = PATH_BLADE
 	ui_bgr = "node_blade"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
-	tier1 = /datum/heretic_knowledge/spell/realignment
-	unique_ability = /datum/heretic_knowledge/duel_stance
-	tier2 = /datum/heretic_knowledge/spell/furious_steel
+	knowledge_tier1 = /datum/heretic_knowledge/spell/realignment
+	knowledge_tier2 = /datum/heretic_knowledge/duel_stance
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/spell/furious_steel
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
-	tier3 = /datum/heretic_knowledge/spell/wolves_among_sheep
+	knowledge_tier4 = /datum/heretic_knowledge/spell/wolves_among_sheep
 	ascension = /datum/heretic_knowledge/ultimate/blade_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade

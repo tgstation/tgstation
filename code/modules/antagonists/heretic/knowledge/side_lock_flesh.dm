@@ -1,9 +1,11 @@
+/*
 /datum/heretic_knowledge_tree_column/lock_to_flesh
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/phylactery
 	tier2 = /datum/heretic_knowledge/spell/opening_blast
 	tier3 = /datum/heretic_knowledge/spell/apetra_vulnera
+*/
 
 /**
  * Phylactery of Damnation

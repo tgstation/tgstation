@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/lock
+/datum/heretic_knowledge_tree_column/lock
 	route = PATH_LOCK
 	ui_bgr = "node_lock"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
-	tier1 = /datum/heretic_knowledge/key_ring
-	unique_ability = /datum/heretic_knowledge/limited_amount/concierge_rite
-	tier2 = /datum/heretic_knowledge/spell/burglar_finesse
+	knowledge_tier1 = /datum/heretic_knowledge/key_ring
+	knowledge_tier2 = /datum/heretic_knowledge/limited_amount/concierge_rite
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/spell/burglar_finesse
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
-	tier3 = /datum/heretic_knowledge/spell/caretaker_refuge
+	knowledge_tier4 = /datum/heretic_knowledge/spell/caretaker_refuge
 	ascension = /datum/heretic_knowledge/ultimate/lock_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_knock

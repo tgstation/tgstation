@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/flesh
+/datum/heretic_knowledge_tree_column/flesh
 	route = PATH_FLESH
 	ui_bgr = "node_flesh"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
-	tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul
-	unique_ability = /datum/heretic_knowledge/spell/flesh_surgery
-	tier2 = /datum/heretic_knowledge/summon/raw_prophet
+	knowledge_tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul
+	knowledge_tier2 = /datum/heretic_knowledge/spell/flesh_surgery
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/summon/raw_prophet
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh
-	tier3 = /datum/heretic_knowledge/summon/stalker
+	knowledge_tier4 = /datum/heretic_knowledge/summon/stalker
 	ascension = /datum/heretic_knowledge/ultimate/flesh_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh

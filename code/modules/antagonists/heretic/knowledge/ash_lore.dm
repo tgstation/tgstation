@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/ash
+/datum/heretic_knowledge_tree_column/ash
 	route = PATH_ASH
 	ui_bgr = "node_ash"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
-	tier1 = /datum/heretic_knowledge/spell/ash_passage
-	unique_ability = /datum/heretic_knowledge/spell/fire_blast
-	tier2 = /datum/heretic_knowledge/mad_mask
+	knowledge_tier1 = /datum/heretic_knowledge/spell/ash_passage
+	knowledge_tier2 = /datum/heretic_knowledge/spell/fire_blast
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/mad_mask
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
-	tier3 = /datum/heretic_knowledge/spell/flame_birth
+	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
 	ascension = /datum/heretic_knowledge/ultimate/ash_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash

@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/void
+/datum/heretic_knowledge_tree_column/void
 	route = PATH_VOID
 	ui_bgr = "node_void"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
-	tier1 = /datum/heretic_knowledge/spell/void_phase
-	unique_ability = /datum/heretic_knowledge/spell/void_prison
-	tier2 = /datum/heretic_knowledge/spell/void_pull
+	knowledge_tier1 = /datum/heretic_knowledge/spell/void_phase
+	knowledge_tier2 = /datum/heretic_knowledge/spell/void_prison
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/spell/void_pull
 	blade = /datum/heretic_knowledge/blade_upgrade/void
-	tier3 = /datum/heretic_knowledge/spell/void_conduit
+	knowledge_tier4 = /datum/heretic_knowledge/spell/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void

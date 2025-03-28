@@ -1,10 +1,11 @@
+/*
 /datum/heretic_knowledge_tree_column/cosmic_to_ash
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/summon/fire_shark
 	tier2 = /datum/heretic_knowledge/spell/space_phase
 	tier3 = /datum/heretic_knowledge/eldritch_coin
-
+*/
 
 // Sidepaths for knowledge between Cosmos and Ash.
 

@@ -1,9 +1,11 @@
+/*
 /datum/heretic_knowledge_tree_column/flesh_to_void
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/void_cloak
 	tier2 = /datum/heretic_knowledge/spell/blood_siphon
 	tier3 = /datum/heretic_knowledge/spell/cleave
+*/
 
 // Sidepaths for knowledge between Flesh and Void.
 

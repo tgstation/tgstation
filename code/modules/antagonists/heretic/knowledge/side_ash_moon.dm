@@ -1,9 +1,11 @@
+/*
 /datum/heretic_knowledge_tree_column/ash_to_moon
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/medallion
 	tier2 = /datum/heretic_knowledge/ether
 	tier3 = /datum/heretic_knowledge/summon/ashy
+*/
 
 // Sidepaths for knowledge between Ash and Flesh.
 /datum/heretic_knowledge/medallion

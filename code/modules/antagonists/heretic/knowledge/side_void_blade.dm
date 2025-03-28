@@ -1,13 +1,11 @@
-// Sidepaths for knowledge between Void and Blade.
-
+/*
 /datum/heretic_knowledge_tree_column/void_to_blade
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/limited_amount/risen_corpse
 	tier2 = /datum/heretic_knowledge/rune_carver
 	tier3 = /datum/heretic_knowledge/summon/maid_in_mirror
-
-
+*/
 
 /// The max health given to Shattered Risen
 #define RISEN_MAX_HEALTH 125

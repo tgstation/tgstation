@@ -1,9 +1,11 @@
+/*
 /datum/heretic_knowledge_tree_column/moon_to_lock
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/amber_focus // XANTODO This is placeholder
 	tier2 = list(/datum/heretic_knowledge/unfathomable_curio, /datum/heretic_knowledge/painting)
 	tier3 = /datum/heretic_knowledge/codex_morbus
+*/
 
 // Sidepaths for knowledge between Knock and Moon.
 

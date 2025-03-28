@@ -9,24 +9,24 @@ GLOBAL_LIST(heretic_research_tree)
 	var/route
 	///Used to determine if this is a side path or a main path
 	var/abstract_parent_type = /datum/heretic_knowledge_tree_column
-	///Tier1 knowledge (or knowledges)
-	var/tier1
-	///Tier2 knowledge (or knowledges)
-	var/tier2
-	///Tier3 knowledge (or knowledges)
-	var/tier3
 	///UI background
 	var/ui_bgr = "node_side"
 
-/datum/heretic_knowledge_tree_column/main
-	abstract_parent_type = /datum/heretic_knowledge_tree_column/main
-
-	///Starting knowledge - first thing you pick
+	//-- Knowledge in order of unlocking
+	///Starting knowledge - first thing you pick. Gives you access to blades, grasp, mark and passive
 	var/start
-	///Path specific unique ability
-	var/unique_ability
+	///Tier1 knowledge
+	var/knowledge_tier1
+	///Tier2 knowledge
+	var/knowledge_tier2
+	///Path-Specific Heretic robes
+	var/robes
+	///Tier3 knowledge
+	var/knowledge_tier3
 	///Blade upgrade
 	var/blade
+	///Tier4 knowledge
+	var/knowledge_tier4
 	///Ascension
 	var/ascension
 
@@ -62,9 +62,9 @@ GLOBAL_LIST(heretic_research_tree)
 	var/list/asc_blacklist = list()
 
 	for(var/id in paths)
-		if(!istype(paths[id],/datum/heretic_knowledge_tree_column/main))
+		if(!istype(paths[id],/datum/heretic_knowledge_tree_column))
 			continue
-		var/datum/heretic_knowledge_tree_column/main/column = paths[id]
+		var/datum/heretic_knowledge_tree_column/column = paths[id]
 
 		start_blacklist += column.start
 		blade_blacklist += column.blade
@@ -75,57 +75,74 @@ GLOBAL_LIST(heretic_research_tree)
 	for(var/id in paths)
 		var/datum/heretic_knowledge_tree_column/this_column = paths[id]
 		//horizontal (two way)
-		var/list/tier1 = this_column.tier1
-		var/list/tier2 = this_column.tier2
-		var/list/tier3 = this_column.tier3
+		var/list/knowledge_tier1 = this_column.knowledge_tier1
+		var/list/knowledge_tier2 = this_column.knowledge_tier2
+		var/list/knowledge_tier3 = this_column.knowledge_tier3
+		var/list/knowledge_tier4 = this_column.knowledge_tier4
 
 		//Tier1, 2 and 3 can technically be lists so we handle them here
-		if(!islist(this_column.tier1))
-			tier1 = list(this_column.tier1)
+		if(!islist(this_column.knowledge_tier1))
+			knowledge_tier1 = list(this_column.knowledge_tier1)
 
-		if(!islist(this_column.tier2))
-			tier2 = list(this_column.tier2)
+		if(!islist(this_column.knowledge_tier2))
+			knowledge_tier2 = list(this_column.knowledge_tier2)
 
-		if(!islist(this_column.tier3))
-			tier3 = list(this_column.tier3)
+		if(!islist(this_column.knowledge_tier3))
+			knowledge_tier3 = list(this_column.knowledge_tier3)
 
-		for(var/t1_knowledge in tier1)
+		if(!islist(this_column.knowledge_tier4))
+			knowledge_tier4 = list(this_column.knowledge_tier4)
+
+		for(var/t1_knowledge in knowledge_tier1)
 			heretic_research_tree[t1_knowledge][HKT_ROUTE] = this_column.route
 			heretic_research_tree[t1_knowledge][HKT_UI_BGR] = this_column.ui_bgr
-			heretic_research_tree[t1_knowledge][HKT_DEPTH] = 4
+			heretic_research_tree[t1_knowledge][HKT_DEPTH] = 3
 
-		for(var/t2_knowledge in tier2)
+		for(var/t2_knowledge in knowledge_tier2)
 			heretic_research_tree[t2_knowledge][HKT_ROUTE] = this_column.route
 			heretic_research_tree[t2_knowledge][HKT_UI_BGR] = this_column.ui_bgr
-			heretic_research_tree[t2_knowledge][HKT_DEPTH] = 8
+			heretic_research_tree[t2_knowledge][HKT_DEPTH] = 5
 
-		for(var/t3_knowledge in tier3)
+		for(var/t3_knowledge in knowledge_tier3)
 			heretic_research_tree[t3_knowledge][HKT_ROUTE] = this_column.route
 			heretic_research_tree[t3_knowledge][HKT_UI_BGR] = this_column.ui_bgr
-			heretic_research_tree[t3_knowledge][HKT_DEPTH] = 10
+			heretic_research_tree[t3_knowledge][HKT_DEPTH] = 8
+
+		for(var/t4_knowledge in knowledge_tier4)
+			heretic_research_tree[t4_knowledge][HKT_ROUTE] = this_column.route
+			heretic_research_tree[t4_knowledge][HKT_UI_BGR] = this_column.ui_bgr
+			heretic_research_tree[t4_knowledge][HKT_DEPTH] = 11
 
 		//Everything below this line is considered to be a "main path" and not a side path
 		//Since we are handling the heretic research tree column by column this is required
-		if(this_column.abstract_parent_type != /datum/heretic_knowledge_tree_column/main)
+		if(this_column.abstract_parent_type != /datum/heretic_knowledge_tree_column)
 			continue
 
-		var/datum/heretic_knowledge_tree_column/main/main_column = this_column
+		var/datum/heretic_knowledge_tree_column/main_column = this_column
 		//vertical (one way)
 		heretic_research_tree[/datum/heretic_knowledge/spell/basic] += main_column.start
-		heretic_research_tree[main_column.start][HKT_NEXT] += main_column.tier1
+		heretic_research_tree[main_column.start][HKT_NEXT] += main_column.knowledge_tier1
+
 		//t1 handling
-		for(var/t1_knowledge in tier1)
-			heretic_research_tree[t1_knowledge][HKT_NEXT] += main_column.unique_ability
-
-		heretic_research_tree[main_column.unique_ability][HKT_NEXT] += main_column.tier2
+		for(var/t1_knowledge in knowledge_tier1)
+			heretic_research_tree[t1_knowledge][HKT_NEXT] += main_column.knowledge_tier2
 		//t2 handling
-		for(var/t2_knowledge in tier2)
-			heretic_research_tree[t2_knowledge][HKT_NEXT] += main_column.blade
+		for(var/t2_knowledge in knowledge_tier2)
+			heretic_research_tree[t2_knowledge][HKT_NEXT] += main_column.robes
 
-		heretic_research_tree[main_column.blade][HKT_NEXT] += main_column.tier3
+		// Robes upgrade gives us access to T3
+		heretic_research_tree[main_column.robes][HKT_NEXT] += main_column.knowledge_tier3
+
 		//t3 handling
-		for(var/t3_knowledge in tier3)
-			heretic_research_tree[t3_knowledge][HKT_NEXT] += main_column.ascension
+		for(var/t3_knowledge in knowledge_tier3)
+			heretic_research_tree[t3_knowledge][HKT_NEXT] += main_column.blade
+
+		// Blade upgrade gives us access to T4
+		heretic_research_tree[main_column.blade][HKT_NEXT] += main_column.knowledge_tier4
+
+		//t4 handling
+		for(var/t4_knowledge in knowledge_tier4)
+			heretic_research_tree[t4_knowledge][HKT_NEXT] += main_column.ascension
 
 		//blacklist
 		heretic_research_tree[main_column.start][HKT_BAN] += (start_blacklist - main_column.start) + (asc_blacklist - main_column.ascension)
@@ -133,22 +150,22 @@ GLOBAL_LIST(heretic_research_tree)
 
 		//route stuff
 		heretic_research_tree[main_column.start][HKT_ROUTE] = main_column.route
-		heretic_research_tree[main_column.unique_ability][HKT_ROUTE] = main_column.route
+		heretic_research_tree[main_column.robes][HKT_ROUTE] = main_column.route
 		heretic_research_tree[main_column.blade][HKT_ROUTE] = main_column.route
 		heretic_research_tree[main_column.ascension][HKT_ROUTE] = main_column.route
 
 		heretic_research_tree[main_column.start][HKT_UI_BGR] = main_column.ui_bgr
-		heretic_research_tree[main_column.unique_ability][HKT_UI_BGR] = main_column.ui_bgr
+		heretic_research_tree[main_column.robes][HKT_UI_BGR] = main_column.ui_bgr
 		heretic_research_tree[main_column.blade][HKT_UI_BGR] = main_column.ui_bgr
 		heretic_research_tree[main_column.ascension][HKT_UI_BGR] = main_column.ui_bgr
 		//depth stuff
 		heretic_research_tree[main_column.start][HKT_DEPTH] = 2
-		heretic_research_tree[main_column.unique_ability][HKT_DEPTH] = 7
-		heretic_research_tree[main_column.blade][HKT_DEPTH] = 9
-		heretic_research_tree[main_column.ascension][HKT_DEPTH] = 11
+		heretic_research_tree[main_column.robes][HKT_DEPTH] = 7
+		heretic_research_tree[main_column.blade][HKT_DEPTH] = 10
+		heretic_research_tree[main_column.ascension][HKT_DEPTH] = 13
 
 		//Per path bullshit goes here \/\/\/
-		for(var/t2_knowledge in tier2)
+		for(var/t2_knowledge in knowledge_tier2)
 			heretic_research_tree[t2_knowledge][HKT_NEXT] += /datum/heretic_knowledge/reroll_targets
 
 	// If you want to do any custom bullshit put it here \/\/\/

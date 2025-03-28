@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/cosmic
+/datum/heretic_knowledge_tree_column/cosmic
 	route = PATH_COSMIC
 	ui_bgr = "node_cosmos"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
-	tier1 = /datum/heretic_knowledge/spell/cosmic_runes
-	unique_ability = /datum/heretic_knowledge/spell/star_touch
-	tier2 = /datum/heretic_knowledge/spell/star_blast
+	knowledge_tier1 = /datum/heretic_knowledge/spell/cosmic_runes
+	knowledge_tier2 = /datum/heretic_knowledge/spell/star_touch
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/spell/star_blast
 	blade = /datum/heretic_knowledge/blade_upgrade/cosmic
-	tier3 =	 /datum/heretic_knowledge/spell/cosmic_expansion
+	knowledge_tier4 = /datum/heretic_knowledge/spell/cosmic_expansion
 	ascension = /datum/heretic_knowledge/ultimate/cosmic_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic

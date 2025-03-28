@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/moon
+/datum/heretic_knowledge_tree_column/moon
 	route = PATH_MOON
 	ui_bgr = "node_moon"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
-	tier1 = /datum/heretic_knowledge/spell/mind_gate
-	unique_ability = /datum/heretic_knowledge/spell/moon_parade
-	tier2 = /datum/heretic_knowledge/moon_amulet
+	knowledge_tier1 = /datum/heretic_knowledge/spell/mind_gate
+	knowledge_tier2 = /datum/heretic_knowledge/spell/moon_parade
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/moon_amulet
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
-	tier3 = /datum/heretic_knowledge/spell/moon_ringleader
+	knowledge_tier4 = /datum/heretic_knowledge/spell/moon_ringleader
 	ascension = /datum/heretic_knowledge/ultimate/moon_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon

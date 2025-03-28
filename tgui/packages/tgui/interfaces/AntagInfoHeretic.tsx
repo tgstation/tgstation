@@ -360,7 +360,7 @@ export const AntagInfoHeretic = (props) => {
   const [currentTab, setTab] = useState(0);
 
   return (
-    <Window width={675} height={635}>
+    <Window width={750} height={635}>
       <Window.Content
         style={{
           backgroundImage: 'none',

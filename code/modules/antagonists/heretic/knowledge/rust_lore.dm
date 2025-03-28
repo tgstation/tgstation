@@ -1,13 +1,14 @@
-/datum/heretic_knowledge_tree_column/main/rust
+/datum/heretic_knowledge_tree_column/rust
 	route = PATH_RUST
 	ui_bgr = "node_rust"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
-	tier1 = /datum/heretic_knowledge/spell/area_conversion
-	unique_ability = /datum/heretic_knowledge/spell/rust_construction
-	tier2 = /datum/heretic_knowledge/spell/entropic_plume
+	knowledge_tier1 = /datum/heretic_knowledge/spell/area_conversion
+	knowledge_tier2 = /datum/heretic_knowledge/spell/rust_construction
+	robes = /datum/heretic_knowledge/armor
+	knowledge_tier3 = /datum/heretic_knowledge/spell/entropic_plume
 	blade = /datum/heretic_knowledge/blade_upgrade/rust
-	tier3 = /datum/heretic_knowledge/spell/rust_charge
+	knowledge_tier4 = /datum/heretic_knowledge/spell/rust_charge
 	ascension = /datum/heretic_knowledge/ultimate/rust_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust

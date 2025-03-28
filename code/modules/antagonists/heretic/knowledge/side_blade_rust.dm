@@ -1,9 +1,11 @@
+/*
 /datum/heretic_knowledge_tree_column/blade_to_rust
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/armor
 	tier2 = list(/datum/heretic_knowledge/crucible, /datum/heretic_knowledge/rifle)
 	tier3 = /datum/heretic_knowledge/greaves_of_the_prophet
+*/
 
 // Sidepaths for knowledge between Rust and Blade.
 /datum/heretic_knowledge/armor

@@ -1,10 +1,11 @@
+/*
 /datum/heretic_knowledge_tree_column/rust_to_cosmic
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/essence
 	tier2 = list(/datum/heretic_knowledge/entropy_pulse, /datum/heretic_knowledge/rust_sower)
 	tier3 = /datum/heretic_knowledge/summon/rusty
-
+*/
 
 // Sidepaths for knowledge between Rust and Cosmos.
 
