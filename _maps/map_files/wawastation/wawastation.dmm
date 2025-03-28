@@ -6485,6 +6485,7 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/medical/treatment_center)
 "cnm" = (
@@ -50586,6 +50587,7 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/medical/treatment_center)
 "rCL" = (
