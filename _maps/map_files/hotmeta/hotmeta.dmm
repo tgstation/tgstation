@@ -1509,6 +1509,9 @@
 /area/station/tcommsat/computer)
 "aDQ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "aDR" = (
@@ -6010,6 +6013,7 @@
 "ces" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/processor/slime,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "cez" = (
@@ -29337,6 +29341,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/chair/comfy/black,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "klL" = (
@@ -61519,6 +61524,7 @@
 "vuK" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/structure/chair/comfy/black,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "vuP" = (
@@ -69111,8 +69117,10 @@
 /area/station/maintenance/starboard/greater)
 "yag" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/effect/turf_decal/bot_white,
 /obj/structure/cable,
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "yam" = (
