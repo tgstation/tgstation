@@ -249,9 +249,9 @@
 	. = ..()
 	if(!user.can_read(src) || in_use || (target == user) || !ismob(target))
 		return
-		if(IS_BLOODSUCKER(user))
-			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
-			return
+	if(IS_BLOODSUCKER(user))
+		to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
+		return
 		to_chat(user, span_warning("[src] burns your hands as you try to use it!"))
 		user.apply_damage(3, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		return
