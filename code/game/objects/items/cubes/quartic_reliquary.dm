@@ -363,6 +363,7 @@
 	var/halftime = round(animation_length/2)
 	transition_filter("new_rarity_pulse", color_matrix_filter(color_to_use), halftime, easing = CUBIC_EASING)
 	addtimer(CALLBACK(src, PROC_REF(handle_fadeout), halftime), halftime)
+	glow.set_light_color = color_to_use
 	START_PROCESSING(SSfastprocess, src)
 	COOLDOWN_START(src, color_fade, animation_length)
 
@@ -371,9 +372,13 @@
 	if(animation_length && !COOLDOWN_FINISHED(src, color_fade))
 		if(!glow.light_on)
 			glow.set_light_on(TRUE)
+		/// It works but for some reason the light turns white at the midpoint despite it being clamped at 1.
+		/// Can't think of a fix for that but the fact it works at all is good enough for me
+		/// We're basically just using a square function. f(X) = -((X/(A/2))-1)^2+1 where X is the remaining time and A is animation_length
+		//// This doesn't have a good ease in-out but it works for what we're trying to do
 		var/current_interp = clamp(round(-(((round(COOLDOWN_TIMELEFT(src, color_fade),0.01)/round(animation_length/2,0.01))-1)**2)+1, 0.01), 0, 1)
 		glow.set_light_range_power_color(
-			max(round(6*current_interp, 0.1), 1.4),
+			max(round(5*current_interp, 0.1), 1.4),
 			max(round(3*current_interp, 0.1), 0.1),
 			BlendRGB(COLOR_SILVER, color_to_use, clamp(current_interp, 0, 1)))
 

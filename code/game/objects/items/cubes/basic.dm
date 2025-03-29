@@ -336,7 +336,7 @@
 /// Oxygen cube
 /obj/item/tank/internals/emergency_oxygen/double/cube
 	name = "oxygen cube"
-	desc = "A cubic tank of oxygen. It constantly generates a miniscule amount of oxygen until it's filled up."
+	desc = "A cubic tank of oxygen. It's slowly pulling moles of oxygen out of the 3rd dimension."
 	icon_state = "cube"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -352,9 +352,12 @@
 	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_TRUE_BLUE))
 
 /obj/item/tank/internals/emergency_oxygen/double/cube/process(seconds_per_tick)
-	. = ..()
 	if(air_contents.return_pressure() >= TANK_LEAK_PRESSURE || air_contents.return_volume() >= volume)
+		/// I'm sure that there's a very good reason for it to stop itself from processing but unfortunately I don't have an easy way to
+		/// turn it back on so instead we're just going to stop it altogether if we're full instead of letting to continue.
 		return
 	if(air_contents.has_gas(/datum/gas/oxygen))
-		/// Man I wish we had an easier define for figuring out how many moles to put into a thing
-		air_contents.gases[/datum/gas/oxygen][MOLES] += seconds_per_tick
+		var/datum/gas_mixture/new_mixture = SSair.parse_gas_string("[GAS_O2]=[seconds_per_tick];[TEMP]=[T20C]", /datum/gas_mixture)
+
+		air_contents.merge(new_mixture)
+	return ..()
