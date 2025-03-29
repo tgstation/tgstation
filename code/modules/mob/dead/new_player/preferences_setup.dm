@@ -35,7 +35,7 @@
  * Goes through all quirks that can be used in hardcore mode and select some based on a random budget.
  * Returns the new value to be gained with this setup, plus the previously earned score.
  **/
-/datum/preferences/proc/select_hardcore_quirks(var/species)
+/datum/preferences/proc/select_hardcore_quirks(species)
 	. = 0
 
 	var/quirk_budget = rand(8, 35)
