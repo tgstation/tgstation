@@ -169,7 +169,7 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(play_web_sound)
 
 ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
 	if(!CLIENT_COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
-		if(tgui_alert(user, "Someone else is already playing an Internet sound! It has [DisplayTimeText(COOLDOWN_TIMELEFT(GLOB, web_sound_cooldown), 1)] remaining. \
+		if(tgui_alert(user, "Someone else is already playing an Internet sound! It has [DisplayTimeText(CLIENT_COOLDOWN_TIMELEFT(GLOB, web_sound_cooldown), 1)] remaining. \
 		Would you like to override?", "Musicalis Interruptus", list("No","Yes")) != "Yes")
 			return
 
