@@ -160,16 +160,27 @@
 	desc = "A robot-only gate into the wonders of Space Station cuisine!"
 	icon = 'icons/obj/machines/restaurant_portal.dmi'
 	icon_state = "portal"
+	base_icon_state = "portal"
 	anchored = TRUE
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/restaurant_portal
 	layer = BELOW_OBJ_LAYER
-	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	armor_type = /datum/armor/restaurant_portal
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue = /datum/venue
 
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
+
+/datum/armor/restaurant_portal
+	melee = 50
+	bullet = 30
+	laser = 50
+	energy = 20
+	bomb = 20
+	fire = 100
+	acid = 100
 
 /obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
@@ -243,6 +254,26 @@
 	linked_venue = chosen_venue
 	linked_venue.restaurant_portal = src
 
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/restaurant_portal/screwdriver_act(mob/user, obj/item/tool)
+	if (default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/restaurant_portal/crowbar_act(mob/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/restaurant_portal/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
+	if(!panel_open)
+		balloon_alert(user, "open the panel first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (default_unfasten_wrench(user, tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/holosign_creator/robot_seat
 	name = "seating indicator placer"

@@ -1505,6 +1505,9 @@
 	name = "Restaurant Portal"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/restaurant_portal
+	req_components = list(
+		/datum/stock_part/scanning_module = 2,
+		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/abductor
