@@ -1472,4 +1472,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents items from being speed potion-ed, but allows their speed to be altered in other ways
 #define TRAIT_NO_SPEED_POTION "no_speed_potion"
 
+#define TRAIT_R_WIDE "trait_r_wide"
 // END TRAIT DEFINES
