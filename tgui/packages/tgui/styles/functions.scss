@@ -26,17 +26,6 @@
 //  Color
 // --------------------------------------------------------
 
-// Increases perceptual color lightness.
-@function lighten($color, $percent) {
-  $scaled: hsl(
-    color.channel($color, 'hue', $space: hsl),
-    color.channel($color, 'saturation', $space: hsl),
-    color.channel($color, 'lightness', $space: hsl) * (1 + num($percent))
-  );
-  $mixed: color.mix(hsl(0, 0%, 100%), $color, 100% * num($percent));
-  @return color.mix($scaled, $mixed, 75%);
-}
-
 // Returns the NTSC luminance of `$color` as a float (between 0 and 1).
 // 1 is pure white, 0 is pure black.
 @function luminance($color) {

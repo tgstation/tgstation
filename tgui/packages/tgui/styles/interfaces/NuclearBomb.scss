@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
@@ -27,8 +29,11 @@ $background-beige: hsl(50, 33%, 84%);
   background-color: $background-beige;
   border-color: $background-beige;
   &:hover {
-    background-color: lighten($background-beige, 15%) !important;
-    border-color: lighten($background-beige, 15%) !important;
+    background-color: color.adjust(
+      $background-beige,
+      $lightness: 15%
+    ) !important;
+    border-color: color.adjust($background-beige, $lightness: 15%) !important;
   }
 }
 
@@ -42,8 +47,8 @@ $background-beige: hsl(50, 33%, 84%);
   background-color: $color-caution !important;
   border-color: $color-caution !important;
   &:hover {
-    background-color: lighten($color-caution, 15%) !important;
-    border-color: lighten($color-caution, 15%) !important;
+    background-color: color.adjust($color-caution, $lightness: 15%) !important;
+    border-color: color.adjust($color-caution, $lightness: 15%) !important;
   }
 }
 
@@ -51,8 +56,8 @@ $background-beige: hsl(50, 33%, 84%);
   background-color: $color-danger !important;
   border-color: $color-danger !important;
   &:hover {
-    background-color: lighten($color-danger, 15%) !important;
-    border-color: lighten($color-danger, 15%) !important;
+    background-color: color.adjust($color-danger, $lightness: 15%) !important;
+    border-color: color.adjust($color-danger, $lightness: 15%) !important;
   }
 }
 
