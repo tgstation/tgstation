@@ -123,7 +123,7 @@
 /datum/techweb_node/donk_shell
 	id = TECHWEB_NODE_DONK_PRODUCTS
 	display_name = "Donk Co. Failed Products Schematics"
-	description = "We don't want to know why you're filling up your databanks with known failed products from an enemy corporation. That's your choice. I'm just saying, don't come crying to us\
+	description = "We don't want to know why you're filling up your databanks with known failed products from an enemy corporation. That's your choice. I'm just saying, don't come crying to us \
 		when it turns out you've downloaded some kind of horrible donk-pocket related malware that steals your Starscape password. Those bastards over at Donk Co. WILL delete your character."
 	design_ids = list(
 		"donkshell",
