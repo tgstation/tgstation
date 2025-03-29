@@ -4,3 +4,5 @@
 # We want it to run into the TGUI folder, however.
 !/tgui
 
+# Except on tgui.html, because it would mangle the ascii art
+/tgui/public/tgui.html
