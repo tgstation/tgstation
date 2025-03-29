@@ -121,3 +121,23 @@
 		return; \
 	} \
 	cd_source.cd_index += (cd_increment); \
+
+/*
+ * Same as the above cooldown system, but uses REALTIMEOFDAY
+ * Primarily only used for times that need to be tracked with the client, such as sound or animations
+*/
+
+#define CLIENT_COOLDOWN_DECLARE(cd_index) var/##cd_index = 0
+
+#define CLIENT_STATIC_COOLDOWN_DECLARE(cd_index) var/static/##cd_index = 0
+
+#define CLIENT_COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = REALTIMEOFDAY + (cd_time))
+
+//Returns true if the cooldown has run its course, false otherwise
+#define CLIENT_COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index <= REALTIMEOFDAY)
+
+#define CLIENT_COOLDOWN_RESET(cd_source, cd_index) cd_source.cd_index = 0
+
+#define CLIENT_COOLDOWN_STARTED(cd_source, cd_index) (cd_source.cd_index != 0)
+
+#define CLIENT_COOLDOWN_TIMELEFT(cd_source, cd_index) (max(0, cd_source.cd_index - REALTIMEOFDAY))

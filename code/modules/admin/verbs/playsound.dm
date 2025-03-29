@@ -160,7 +160,7 @@ GLOBAL_VAR_INIT(web_sound_cooldown, 0)
 				else
 					C.tgui_panel?.stop_music()
 
-	COOLDOWN_START(GLOB, web_sound_cooldown, duration)
+	CLIENT_COOLDOWN_START(GLOB, web_sound_cooldown, duration)
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Internet Sound")
 
@@ -168,7 +168,7 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(play_web_sound)
 	return !!CONFIG_GET(string/invoke_youtubedl)
 
 ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
-	if(!COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
+	if(!CLIENT_COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
 		if(tgui_alert(user, "Someone else is already playing an Internet sound! It has [DisplayTimeText(COOLDOWN_TIMELEFT(GLOB, web_sound_cooldown), 1)] remaining. \
 		Would you like to override?", "Musicalis Interruptus", list("No","Yes")) != "Yes")
 			return
@@ -204,7 +204,7 @@ ADMIN_VERB(stop_sounds, R_NONE, "Stop All Playing Sounds", "Stops all playing so
 		var/client/player_client = player.client
 		player_client?.tgui_panel?.stop_music()
 
-	COOLDOWN_RESET(GLOB, web_sound_cooldown)
+	CLIENT_COOLDOWN_RESET(GLOB, web_sound_cooldown)
 	BLACKBOX_LOG_ADMIN_VERB("Stop All Playing Sounds")
 
 //world/proc/shelleo
