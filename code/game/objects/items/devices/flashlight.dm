@@ -972,7 +972,9 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	uses_integrity = FALSE
+	move_resist = INFINITY
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	///Boolean that switches when a full color flip ends, so the light can appear in all colors.
 	var/even_cycle = FALSE
 	///Base light_range that can be set on Initialize to use in smooth light range expansions and contractions.

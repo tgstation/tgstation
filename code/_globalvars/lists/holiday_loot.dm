@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(epic_cubes, list(
 	/obj/item/cube/random/epic = 30,
 	/obj/item/cube/colorful/pixel = 25,
 	/obj/item/cube/puzzle = 25,
-	//Skub cube(Skub)
+	/obj/item/skub/cube = 25,
 	//Oxygen cube, generates oxygen
 	//Nitrous boxes (Crash bandicoot) impact grenade
 	/obj/item/food/monkeycube/spaceman = 25,

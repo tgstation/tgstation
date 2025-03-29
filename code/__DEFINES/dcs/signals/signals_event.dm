@@ -8,3 +8,11 @@
 
 /// Signal sent by round event controls when they create round event datums before calling setup() on them: (datum/round_event_control/source_event_control, datum/round_event/created_event)
 #define COMSIG_CREATED_ROUND_EVENT "creating_round_event"
+
+//* HOLIDAYS
+
+/// April fools
+/// Signal sent when the quartic reliquary updates its input contents
+#define COMSIG_RELIQUARY_CONTENTS_UPDATED "reliquary_contents_updated"
+/// Signal sent when the quartic reliquary finishes folding
+#define COMSIG_RELIQUARY_FOLDING_COMPLETE "reliquary_folding_complete"

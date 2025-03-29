@@ -315,3 +315,46 @@
 
 /obj/item/food/monkeycube/spessman/color_atom_overlay(mutable_appearance/cubelay)
 	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_BLUE))
+
+/// it's skube
+/obj/item/skub/cube
+	name = "skube"
+	desc = "it's skube."
+	icon = 'icons/obj/cubes.dmi'
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
+	icon_state = "skub"
+
+/obj/item/skub/cube/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = EPIC_CUBE, ismapload = mapload)
+
+/obj/item/skub/cube/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_PINK))
+
+/// Oxygen cube
+/obj/item/tank/internals/emergency_oxygen/double/cube
+	name = "oxygen cube"
+	desc = "A cubic tank of oxygen. It constantly generates a miniscule amount of oxygen until it's filled up."
+	icon_state = "cube"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
+	tank_holder_icon_state = "holder_oxygen"
+	dog_fashion = null
+
+/obj/item/tank/internals/emergency_oxygen/double/cube/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = EPIC_CUBE, ismapload = mapload)
+
+/obj/item/tank/internals/emergency_oxygen/double/cube/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_TRUE_BLUE))
+
+/obj/item/tank/internals/emergency_oxygen/double/cube/process(seconds_per_tick)
+	. = ..()
+	if(air_contents.return_pressure() >= TANK_LEAK_PRESSURE || air_contents.return_volume() >= volume)
+		return
+	if(air_contents.has_gas(/datum/gas/oxygen))
+		/// Man I wish we had an easier define for figuring out how many moles to put into a thing
+		air_contents.gases[/datum/gas/oxygen][MOLES] += seconds_per_tick

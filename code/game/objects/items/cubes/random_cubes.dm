@@ -4,6 +4,8 @@
 	desc = "A cube that's full of surprises!"
 	tool_behaviour = null
 	light_system = OVERLAY_LIGHT
+	light_on = FALSE
+
 	/// Used for cubes that create more cubes
 	var/static/list/random_rarity_list = list(
 		/obj/effect/spawner/random/cube,
@@ -328,6 +330,7 @@
 		max(round(rarity/2, 0.1), 1.4),
 		(1 + round(rarity/5, 0.1)),
 		BlendRGB(cube_color, COLOR_VERY_LIGHT_GRAY, 0.3))
+	light_on = TRUE
 
 /// Makes it either negate your gravity or RARELY flip you upside down.
 /obj/item/cube/random/proc/make_gravity()
