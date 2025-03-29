@@ -39,7 +39,7 @@
 	if(fish_type)
 		var/obj/item/fish/spawned_fish = new fish_type(null)
 		spawned_fish.add_traits(list(TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_FISH_LOW_PRICE), INNATE_TRAIT)
-		return spawned_fish
+		spawned_fish.forceMove(src) // trigger storage.handle_entered
 
 /obj/item/storage/fish_case/proc/get_fish_type()
 	return
@@ -191,4 +191,5 @@
 	custom_price = PAYCHECK_LOWER
 
 /obj/item/storage/box/aquarium_props/PopulateContents()
-	return subtypesof(/obj/item/aquarium_prop)
+	for(var/prop_type in subtypesof(/obj/item/aquarium_prop))
+		new prop_type(src)

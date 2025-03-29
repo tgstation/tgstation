@@ -5,12 +5,13 @@
 	illustration = "implant"
 
 /obj/item/storage/box/trackimp/PopulateContents()
-	return flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/implantcase/tracking = 4,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 		/obj/item/locator = 1,
-	))
+	)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/minertracker
 	name = "boxed tracking implant kit"
@@ -18,13 +19,14 @@
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
-	return flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/implantcase/tracking = 2,
 		/obj/item/implantcase/beacon = 2,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 		/obj/item/locator = 1,
-	))
+	)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/chemimp
 	name = "boxed chemical implant kit"
@@ -32,11 +34,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
-	return flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/implantcase/chem = 5,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
-	))
+	)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/exileimp
 	name = "boxed exile implant kit"
@@ -44,11 +47,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
-	return flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/implantcase/exile = 5,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
-	))
+	)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/beaconimp
 	name = "boxed beacon implant kit"
@@ -57,11 +61,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/beaconimp/PopulateContents()
-	return flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/implantcase/beacon = 3,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
-	))
+	)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/teleport_blocker
 	name = "boxed bluespace grounding implant kit"
@@ -69,8 +74,9 @@
 	illustration = "implant"
 
 /obj/item/storage/box/teleport_blocker/PopulateContents()
-	return flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/implantcase/teleport_blocker = 2,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
-	))
+	)
+	generate_items_inside(items_inside,src)

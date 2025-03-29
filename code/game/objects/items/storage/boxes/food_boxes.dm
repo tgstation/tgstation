@@ -9,9 +9,12 @@
 	var/donktype = /obj/item/food/donkpocket
 
 /obj/item/storage/box/donkpockets/PopulateContents()
-	. = list()
-	for(var/_ in 1 to 6)
-		. += donktype
+	for(var/i in 1 to 6)
+		new donktype(src)
+
+/obj/item/storage/box/donkpockets/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(/obj/item/food/donkpocket)
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
@@ -143,24 +146,19 @@
 	desc = "It's slightly moist and smells like a slaughterhouse."
 
 /obj/item/storage/box/papersack/meat/PopulateContents()
-	. = list()
-	for(var/_ in 1 to 7)
-		. += /obj/item/food/meat/slab
+	for(var/i in 1 to 7)
+		new /obj/item/food/meat/slab(src)
 
 /obj/item/storage/box/papersack/wheat
 	desc = "It's a bit dusty, and smells like a barnyard."
 
 /obj/item/storage/box/papersack/wheat/PopulateContents()
-	. = list()
-	for(var/_ in 1 to 7)
-		. += /obj/item/food/grown/wheat
+	for(var/i in 1 to 7)
+		new /obj/item/food/grown/wheat(src)
 
 /obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
-	storage_type = /datum/storage/box/ingredients
-
-	///Used in describing the box
 	var/theme_name
 
 /obj/item/storage/box/ingredients/Initialize(mapload)
@@ -174,175 +172,154 @@
 	theme_name = "wildcard"
 
 /obj/item/storage/box/ingredients/wildcard/PopulateContents()
-	var/static/list/obj/item/foods = list(
-		/obj/item/food/chocolatebar,
-		/obj/item/food/grown/apple,
-		/obj/item/food/grown/banana,
-		/obj/item/food/grown/cabbage,
-		/obj/item/food/grown/carrot,
-		/obj/item/food/grown/cherries,
-		/obj/item/food/grown/chili,
-		/obj/item/food/grown/corn,
-		/obj/item/food/grown/cucumber,
-		/obj/item/food/grown/mushroom/chanterelle,
-		/obj/item/food/grown/mushroom/plumphelmet,
-		/obj/item/food/grown/potato,
-		/obj/item/food/grown/potato/sweet,
-		/obj/item/food/grown/soybeans,
-		/obj/item/food/grown/tomato,
-	)
-
-	var/list/obj/item/insert = list()
 	for(var/i in 1 to 7)
-		insert += pick(foods)
-
-	return insert
+		var/random_food = pick(
+			/obj/item/food/chocolatebar,
+			/obj/item/food/grown/apple,
+			/obj/item/food/grown/banana,
+			/obj/item/food/grown/cabbage,
+			/obj/item/food/grown/carrot,
+			/obj/item/food/grown/cherries,
+			/obj/item/food/grown/chili,
+			/obj/item/food/grown/corn,
+			/obj/item/food/grown/cucumber,
+			/obj/item/food/grown/mushroom/chanterelle,
+			/obj/item/food/grown/mushroom/plumphelmet,
+			/obj/item/food/grown/potato,
+			/obj/item/food/grown/potato/sweet,
+			/obj/item/food/grown/soybeans,
+			/obj/item/food/grown/tomato,
+		)
+		new random_food(src)
 
 /obj/item/storage/box/ingredients/fiesta
 	theme_name = "fiesta"
 
 /obj/item/storage/box/ingredients/fiesta/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/tortilla = 1,
-		/obj/item/food/grown/chili = 2,
-		/obj/item/food/grown/corn = 2,
-		/obj/item/food/grown/soybeans = 2,
-	))
+	new /obj/item/food/tortilla(src)
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/chili(src)
+		new /obj/item/food/grown/corn(src)
+		new /obj/item/food/grown/soybeans(src)
 
 /obj/item/storage/box/ingredients/italian
 	theme_name = "italian"
 
 /obj/item/storage/box/ingredients/italian/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/grown/tomato = 3,
-		/obj/item/food/meatball = 3,
-		/obj/item/reagent_containers/cup/glass/bottle/wine = 1,
-	))
+	for(var/i in 1 to 3)
+		new /obj/item/food/grown/tomato(src)
+		new /obj/item/food/meatball(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
 	theme_name = "vegetarian"
 
 /obj/item/storage/box/ingredients/vegetarian/PopulateContents()
-	return list(
-		/obj/item/food/grown/carrot,
-		/obj/item/food/grown/carrot,
-		/obj/item/food/grown/apple,
-		/obj/item/food/grown/corn,
-		/obj/item/food/grown/eggplant,
-		/obj/item/food/grown/potato,
-		/obj/item/food/grown/tomato,
-	)
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/carrot(src)
+	new /obj/item/food/grown/apple(src)
+	new /obj/item/food/grown/corn(src)
+	new /obj/item/food/grown/eggplant(src)
+	new /obj/item/food/grown/potato(src)
+	new /obj/item/food/grown/tomato(src)
 
 /obj/item/storage/box/ingredients/american
 	theme_name = "american"
 
 /obj/item/storage/box/ingredients/american/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/grown/corn = 2,
-		/obj/item/food/grown/potato = 2,
-		/obj/item/food/grown/tomato = 2,
-		/obj/item/food/meatball = 1,
-	))
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/corn(src)
+		new /obj/item/food/grown/potato(src)
+		new /obj/item/food/grown/tomato(src)
+	new /obj/item/food/meatball(src)
 
 /obj/item/storage/box/ingredients/fruity
 	theme_name = "fruity"
 
-/obj/item/storage/box/ingredients/fruity/PopulateContents(datum/storage_config/config)
-	config.compute_max_total_weight = TRUE
-
-	return flatten_quantified_list(list(
-		/obj/item/food/grown/apple = 2,
-		/obj/item/food/grown/citrus/orange = 2,
-		/obj/item/food/grown/citrus/lemon = 1,
-		/obj/item/food/grown/citrus/lime = 1,
-		/obj/item/food/grown/watermelon = 1,
-	))
+/obj/item/storage/box/ingredients/fruity/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/apple(src)
+		new /obj/item/food/grown/citrus/orange(src)
+	new /obj/item/food/grown/citrus/lemon(src)
+	new /obj/item/food/grown/citrus/lime(src)
+	new /obj/item/food/grown/watermelon(src)
 
 /obj/item/storage/box/ingredients/sweets
 	theme_name = "sweets"
 
 /obj/item/storage/box/ingredients/sweets/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/grown/cherries = 2,
-		/obj/item/food/grown/banana = 2,
-		/obj/item/food/chocolatebar = 1,
-		/obj/item/food/grown/apple = 1,
-		/obj/item/food/grown/cocoapod = 1,
-	))
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/cherries(src)
+		new /obj/item/food/grown/banana(src)
+	new /obj/item/food/chocolatebar(src)
+	new /obj/item/food/grown/apple(src)
+	new /obj/item/food/grown/cocoapod(src)
 
 /obj/item/storage/box/ingredients/delights
 	theme_name = "delights"
 
 /obj/item/storage/box/ingredients/delights/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/grown/bluecherries = 2,
-		/obj/item/food/grown/potato/sweet = 2,
-		/obj/item/food/grown/berries = 1,
-		/obj/item/food/grown/cocoapod = 1,
-		/obj/item/food/grown/vanillapod = 1,
-	))
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/bluecherries(src)
+		new /obj/item/food/grown/potato/sweet(src)
+	new /obj/item/food/grown/berries(src)
+	new /obj/item/food/grown/cocoapod(src)
+	new /obj/item/food/grown/vanillapod(src)
 
 /obj/item/storage/box/ingredients/grains
 	theme_name = "grains"
 
 /obj/item/storage/box/ingredients/grains/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/grown/oat = 3,
-		/obj/item/food/grown/cocoapod = 1,
-		/obj/item/food/grown/wheat = 1,
-		/obj/item/food/honeycomb = 1,
-		/obj/item/seeds/poppy = 1,
-	))
+	for(var/i in 1 to 3)
+		new /obj/item/food/grown/oat(src)
+	new /obj/item/food/grown/cocoapod(src)
+	new /obj/item/food/grown/wheat(src)
+	new /obj/item/food/honeycomb(src)
+	new /obj/item/seeds/poppy(src)
 
 /obj/item/storage/box/ingredients/carnivore
 	theme_name = "carnivore"
 
 /obj/item/storage/box/ingredients/carnivore/PopulateContents()
-	return list(
-		/obj/item/food/meat/slab/bear,
-		/obj/item/food/meat/slab/corgi,
-		/obj/item/food/meat/slab/penguin,
-		/obj/item/food/meat/slab/spider,
-		/obj/item/food/meat/slab/xeno,
-		/obj/item/food/meatball,
-		/obj/item/food/spidereggs,
-	)
+	new /obj/item/food/meat/slab/bear(src)
+	new /obj/item/food/meat/slab/corgi(src)
+	new /obj/item/food/meat/slab/penguin(src)
+	new /obj/item/food/meat/slab/spider(src)
+	new /obj/item/food/meat/slab/xeno(src)
+	new /obj/item/food/meatball(src)
+	new /obj/item/food/spidereggs(src)
 
 /obj/item/storage/box/ingredients/exotic
 	theme_name = "exotic"
 
 /obj/item/storage/box/ingredients/exotic/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/fishmeat/carp = 2,
-		/obj/item/food/grown/cabbage = 2,
-		/obj/item/food/grown/soybeans = 2,
-		/obj/item/food/grown/chili = 1,
-	))
+	for(var/i in 1 to 2)
+		new /obj/item/food/fishmeat/carp(src)
+		new /obj/item/food/grown/cabbage(src)
+		new /obj/item/food/grown/soybeans(src)
+	new /obj/item/food/grown/chili(src)
 
 /obj/item/storage/box/ingredients/seafood
 	theme_name = "seafood"
 
 /obj/item/storage/box/ingredients/seafood/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/fishmeat/armorfish = 2,
-		/obj/item/food/fishmeat/carp = 2,
-		/obj/item/food/fishmeat/moonfish = 2,
-		/obj/item/food/fishmeat/gunner_jellyfish/supply = 1,
-	))
+	for(var/i in 1 to 2)
+		new /obj/item/food/fishmeat/armorfish(src)
+		new /obj/item/food/fishmeat/carp(src)
+		new /obj/item/food/fishmeat/moonfish(src)
+	new /obj/item/food/fishmeat/gunner_jellyfish/supply(src)
 
 /obj/item/storage/box/ingredients/salads
 	theme_name = "salads"
 
 /obj/item/storage/box/ingredients/salads/PopulateContents()
-	return list(
-		/obj/item/food/grown/cabbage,
-		/obj/item/food/grown/carrot,
-		/obj/item/food/grown/olive,
-		/obj/item/food/grown/onion/red,
-		/obj/item/food/grown/onion/red,
-		/obj/item/food/grown/tomato,
-		/obj/item/reagent_containers/condiment/olive_oil,
-	)
+	new /obj/item/food/grown/cabbage(src)
+	new /obj/item/food/grown/carrot(src)
+	new /obj/item/food/grown/olive(src)
+	new /obj/item/food/grown/onion/red(src)
+	new /obj/item/food/grown/onion/red(src)
+	new /obj/item/food/grown/tomato(src)
+	new /obj/item/reagent_containers/condiment/olive_oil(src)
 
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"
@@ -363,12 +340,15 @@
 	illustration = null
 	foldable_result = null
 	custom_price = PAYCHECK_CREW
-	storage_type = /datum/storage/box/bubble_gum
+
+/obj/item/storage/box/gum/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(/obj/item/food/bubblegum)
+	atom_storage.max_slots = 4
 
 /obj/item/storage/box/gum/PopulateContents()
-	. = list()
-	for(var/_ in 1 to 4)
-		. += /obj/item/food/bubblegum
+	for(var/i in 1 to 4)
+		new/obj/item/food/bubblegum(src)
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
@@ -377,9 +357,8 @@
 	custom_premium_price = PAYCHECK_CREW * 1.5
 
 /obj/item/storage/box/gum/nicotine/PopulateContents()
-	. = list()
-	for(var/_ in 1 to 4)
-		. += /obj/item/food/bubblegum/nicotine
+	for(var/i in 1 to 4)
+		new/obj/item/food/bubblegum/nicotine(src)
 
 /obj/item/storage/box/gum/happiness
 	name = "HP+ gum packet"
@@ -394,9 +373,8 @@
 		desc += " You can faintly make out the word 'Hemopagopril' was once scribbled on it."
 
 /obj/item/storage/box/gum/happiness/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/bubblegum/happiness = 4,
-	))
+	for(var/i in 1 to 4)
+		new/obj/item/food/bubblegum/happiness(src)
 
 /obj/item/storage/box/gum/bubblegum
 	name = "bubblegum gum packet"
@@ -404,9 +382,8 @@
 	icon_state = "bubblegum_bubblegum"
 
 /obj/item/storage/box/gum/bubblegum/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/food/bubblegum/bubblegum = 4,
-	))
+	for(var/i in 1 to 4)
+		new/obj/item/food/bubblegum/bubblegum(src)
 
 /obj/item/storage/box/mothic_rations
 	name = "Mothic Rations Pack"
@@ -415,138 +392,107 @@
 	illustration = null
 
 /obj/item/storage/box/mothic_rations/PopulateContents()
-	var/static/list/obj/item/food = list(
-		/obj/item/food/sustenance_bar = 10,
-		/obj/item/food/sustenance_bar/cheese = 5,
-		/obj/item/food/sustenance_bar/mint = 5,
-		/obj/item/food/sustenance_bar/neapolitan = 5,
-		/obj/item/food/sustenance_bar/wonka = 1,
-	)
-
-	var/list/obj/item/insert = list()
 	for(var/i in 1 to 3)
-		insert += pick_weight(food)
-	insert += /obj/item/storage/box/gum/wake_up
-
-	return insert
+		var/random_food = pick_weight(list(
+			/obj/item/food/sustenance_bar = 10,
+			/obj/item/food/sustenance_bar/cheese = 5,
+			/obj/item/food/sustenance_bar/mint = 5,
+			/obj/item/food/sustenance_bar/neapolitan = 5,
+			/obj/item/food/sustenance_bar/wonka = 1,
+			))
+		new random_food(src)
+	new /obj/item/storage/box/gum/wake_up(src)
 
 /obj/item/storage/box/tiziran_goods
 	name = "Tiziran Farm-Fresh Pack"
 	desc = "A box containing an assortment of fresh Tiziran goods- perfect for making the foods of the Lizard Empire."
 	icon_state = "lizard_package"
 	illustration = null
-	storage_type = /datum/storage/box/tiziran_goods
 
 /obj/item/storage/box/tiziran_goods/PopulateContents()
-	var/static/list/obj/item/food = list(
-		/obj/item/food/bread/root = 2,
-		/obj/item/food/grown/ash_flora/seraka = 2,
-		/obj/item/food/grown/korta_nut = 10,
-		/obj/item/food/grown/korta_nut/sweet = 2,
-		/obj/item/food/liver_pate = 5,
-		/obj/item/food/lizard_dumplings = 5,
-		/obj/item/food/moonfish_caviar = 5,
-		/obj/item/food/root_flatbread = 5,
-		/obj/item/food/rootroll = 5,
-		/obj/item/food/spaghetti/nizaya = 5,
-	)
-
-	var/list/obj/item/insert = list()
-	for(var/i in 1 to 8)
-		insert += pick_weight(food)
-
-	return insert
+	for(var/i in 1 to 12)
+		var/random_food = pick_weight(list(
+			/obj/item/food/bread/root = 2,
+			/obj/item/food/grown/ash_flora/seraka = 2,
+			/obj/item/food/grown/korta_nut = 10,
+			/obj/item/food/grown/korta_nut/sweet = 2,
+			/obj/item/food/liver_pate = 5,
+			/obj/item/food/lizard_dumplings = 5,
+			/obj/item/food/moonfish_caviar = 5,
+			/obj/item/food/root_flatbread = 5,
+			/obj/item/food/rootroll = 5,
+			/obj/item/food/spaghetti/nizaya = 5,
+			))
+		new random_food(src)
 
 /obj/item/storage/box/tiziran_cans
 	name = "Tiziran Canned Goods Pack"
 	desc = "A box containing an assortment of canned Tiziran goods- to be eaten as is, or used in cooking."
 	icon_state = "lizard_package"
 	illustration = null
-	storage_type = /datum/storage/box/tiziran_cans
 
 /obj/item/storage/box/tiziran_cans/PopulateContents()
-	var/static/list/obj/item/food = list(
-		/obj/item/food/canned/jellyfish = 5,
-		/obj/item/food/canned/desert_snails = 5,
-		/obj/item/food/canned/larvae = 5,
-	)
-
-	var/list/obj/item/insert = list()
 	for(var/i in 1 to 8)
-		insert += pick_weight(food)
-
-	return insert
+		var/random_food = pick_weight(list(
+			/obj/item/food/canned/jellyfish = 5,
+			/obj/item/food/canned/desert_snails = 5,
+			/obj/item/food/canned/larvae = 5,
+			))
+		new random_food(src)
 
 /obj/item/storage/box/tiziran_meats
 	name = "Tiziran Meatmarket Pack"
 	desc = "A box containing an assortment of fresh-frozen Tiziran meats and fish- the keys to lizard cooking."
 	icon_state = "lizard_package"
 	illustration = null
-	storage_type = /datum/storage/box/tiziran_meats
 
 /obj/item/storage/box/tiziran_meats/PopulateContents()
-	var/static/list/obj/item/food = list(
-		/obj/item/food/fishmeat/armorfish = 5,
-		/obj/item/food/fishmeat/gunner_jellyfish = 5,
-		/obj/item/food/fishmeat/moonfish = 5,
-		/obj/item/food/meat/slab = 5,
-	)
-
-	var/list/obj/item/insert = list()
 	for(var/i in 1 to 10)
-		insert += pick_weight(food)
-
-	return insert
+		var/random_food = pick_weight(list(
+			/obj/item/food/fishmeat/armorfish = 5,
+			/obj/item/food/fishmeat/gunner_jellyfish = 5,
+			/obj/item/food/fishmeat/moonfish = 5,
+			/obj/item/food/meat/slab = 5,
+			))
+		new random_food(src)
 
 /obj/item/storage/box/mothic_goods
 	name = "Mothic Farm-Fresh Pack"
 	desc = "A box containing an assortment of Mothic cooking supplies."
 	icon_state = "moth_package"
 	illustration = null
-	storage_type = /datum/storage/box/mothic_goods
 
-/obj/item/storage/box/mothic_goods/PopulateContents(datum/storage_config/config)
-	config.compute_max_total_weight = TRUE
-
-	var/static/list/obj/item/food = list(
-		/obj/item/food/cheese/cheese_curds = 5,
-		/obj/item/food/cheese/curd_cheese = 5,
-		/obj/item/food/cheese/firm_cheese = 5,
-		/obj/item/food/cheese/mozzarella = 5,
-		/obj/item/food/cheese/wheel = 5,
-		/obj/item/food/grown/toechtauese = 10,
-		/obj/item/reagent_containers/condiment/cornmeal = 5,
-		/obj/item/reagent_containers/condiment/olive_oil = 5,
-		/obj/item/reagent_containers/condiment/yoghurt = 5,
-	)
-
-	var/list/obj/item/insert = list()
+/obj/item/storage/box/mothic_goods/PopulateContents()
 	for(var/i in 1 to 12)
-		insert += pick_weight(food)
-
-	return insert
+		var/random_food = pick_weight(list(
+			/obj/item/food/cheese/cheese_curds = 5,
+			/obj/item/food/cheese/curd_cheese = 5,
+			/obj/item/food/cheese/firm_cheese = 5,
+			/obj/item/food/cheese/mozzarella = 5,
+			/obj/item/food/cheese/wheel = 5,
+			/obj/item/food/grown/toechtauese = 10,
+			/obj/item/reagent_containers/condiment/cornmeal = 5,
+			/obj/item/reagent_containers/condiment/olive_oil = 5,
+			/obj/item/reagent_containers/condiment/yoghurt = 5,
+			))
+		new random_food(src)
 
 /obj/item/storage/box/mothic_cans_sauces
 	name = "Mothic Pantry Pack"
 	desc = "A box containing an assortment of Mothic canned goods and premade sauces."
 	icon_state = "moth_package"
 	illustration = null
-	storage_type = /datum/storage/box/mothic_cans_sauces
 
 /obj/item/storage/box/mothic_cans_sauces/PopulateContents()
-	var/static/list/obj/item/food = list(
-		/obj/item/food/bechamel_sauce = 5,
-		/obj/item/food/canned/pine_nuts = 5,
-		/obj/item/food/canned/tomatoes = 5,
-		/obj/item/food/pesto = 5,
-		/obj/item/food/tomato_sauce = 5,
-	)
-
-	var/list/obj/item/insert = list()
 	for(var/i in 1 to 8)
-		insert += pick_weight(food)
-
-	return insert
+		var/random_food = pick_weight(list(
+			/obj/item/food/bechamel_sauce = 5,
+			/obj/item/food/canned/pine_nuts = 5,
+			/obj/item/food/canned/tomatoes = 5,
+			/obj/item/food/pesto = 5,
+			/obj/item/food/tomato_sauce = 5,
+			))
+		new random_food(src)
 
 /obj/item/storage/box/condimentbottles
 	name = "box of condiment bottles"
@@ -554,9 +500,8 @@
 	illustration = "condiment"
 
 /obj/item/storage/box/condimentbottles/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/reagent_containers/condiment = 6,
-	))
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/condiment(src)
 
 
 /obj/item/storage/box/coffeepack
@@ -565,21 +510,18 @@
 	desc = "A bag containing fresh, dry coffee arabica beans. Ethically sourced and packaged by Waffle Corp."
 	illustration = null
 	icon = 'icons/obj/food/containers.dmi'
-	storage_type = /datum/storage/box/coffee
-
-	/// Bean type to initialize the box with
 	var/beantype = /obj/item/food/grown/coffee
 
-/obj/item/storage/box/coffeepack/PopulateContents()
+/obj/item/storage/box/coffeepack/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(/obj/item/food/grown/coffee)
 
-	var/list/obj/item/food = list()
+/obj/item/storage/box/coffeepack/PopulateContents()
+	atom_storage.max_slots = 5
 	for(var/i in 1 to 5)
-		var/obj/item/food/grown/coffee/bean = new beantype(null)
+		var/obj/item/food/grown/coffee/bean = new beantype(src)
 		ADD_TRAIT(bean, TRAIT_DRIED, ELEMENT_TRAIT(type))
 		bean.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY) //give them the tan just like from the drying rack
-		food += bean
-
-	return food
 
 /obj/item/storage/box/coffeepack/robusta
 	icon_state = "robusta_beans"

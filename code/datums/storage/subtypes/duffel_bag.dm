@@ -1,4 +1,3 @@
-//Regular duffle bag
 /datum/storage/duffel
 	max_total_storage = 30
 	max_slots = 21
@@ -10,8 +9,8 @@
 	max_total_storage,
 )
 	. = ..()
-
-	set_holdable(exception_hold_list = /obj/item/fish_tank)
+	var/static/list/exception_cache = typecacheof(list(/obj/item/fish_tank))
+	exception_hold = exception_cache
 
 // Syndi bags get some FUN extras
 // You can fit any 2 bulky objects (assuming they're in the whitelist)
@@ -69,7 +68,6 @@
 		/obj/item/clothing/suit/utility,
 		// Storage
 		/obj/item/storage/bag/money,
-		/obj/item/storage/belt/utility/syndicate,
 		// Heads!
 		/obj/item/bodypart/head,
 		// Fish
@@ -77,19 +75,9 @@
 		/obj/item/fish_tank,
 	)
 
-	set_holdable(exception_hold_list = exception_type_list)
+	// We keep the type list and the typecache list separate...
+	var/static/list/exception_cache = typecacheof(exception_type_list)
+	exception_hold = exception_cache
 
-///Syndicate firestarter
-/datum/storage/duffel/syndicate/firestarter
-	allow_big_nesting = TRUE
-
-///Syndicate ammo mech box
-/datum/storage/duffel/syndicate/ammo_mech
-	exception_max = 5
-	allow_big_nesting = TRUE
-
-///Syndicate ammo mauler box
-/datum/storage/duffel/syndicate/ammo_mauler
-	exception_max = 9
-	max_total_storage = 36
-	allow_big_nesting = TRUE
+	//...So we can run this without it generating a line for every subtype.
+	can_hold_description = generate_hold_desc(exception_type_list)

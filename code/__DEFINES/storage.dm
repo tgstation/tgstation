@@ -22,6 +22,3 @@
 #define STORAGE_NOT_LOCKED 0
 #define STORAGE_SOFT_LOCKED 1
 #define STORAGE_FULLY_LOCKED 2
-
-// Throw a stack trace in case of failed insertion into storage
-#define STORAGE_ERROR_INSERT -1
