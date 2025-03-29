@@ -305,6 +305,11 @@
 	max_slots = 15
 	max_total_storage = 15 * WEIGHT_CLASS_SMALL
 
+///Tiziran goods box
+/datum/storage/box/tiziran_goods
+	max_slots = 8
+	max_total_storage = 8 * WEIGHT_CLASS_NORMAL
+
 ///Tiziran cans box
 /datum/storage/box/tiziran_cans
 	max_slots = 8

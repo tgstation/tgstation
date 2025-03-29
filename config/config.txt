@@ -613,6 +613,9 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## The maximum number of concurrent tts http requests that can be made by the server at once.
 #TTS_MAX_CONCURRENT_REQUESTS 4
 
+## The number of seconds before tts https requests timeout (0 for infinite not recommended)
+#TTS_HTTP_TIMEOUT_SECONDS 30
+
 ## Add voices to the TTS voice blacklist.
 #TTS_VOICE_BLACKLIST Sans Undertale
 #TTS_VOICE_BLACKLIST Papyrus Undertale

@@ -268,13 +268,13 @@
 	. += our_box
 	if(our_glass)
 		var/mutable_appearance/glass =  mutable_appearance(icon, "repairbot_glass_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR|KEEP_APART)
-		glass.pixel_x = -6
-		glass.pixel_y = -5
+		glass.pixel_w = -6
+		glass.pixel_z = -5
 		. += glass
 	if(our_iron)
 		var/mutable_appearance/iron =  mutable_appearance(icon, "repairbot_iron_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR|KEEP_APART)
-		iron.pixel_y = -5
-		iron.pixel_x = 7
+		iron.pixel_w = 7
+		iron.pixel_z = -5
 		. += iron
 
 /mob/living/basic/bot/repairbot/generate_speak_list()
