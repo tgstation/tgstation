@@ -18,7 +18,7 @@
 #define CAP_GREEN "green"
 #define CAP_BLUE "blue"
 
-	/*The jerrycan is not flavourful, setting appropriate way to store reagents, it offers several design benefits due to its unique combination of high roundstart capacity and bulky size.
+	/*The jerrycan is not only a flavourful, setting appropriate way to store reagents, it offers several design benefits due to its unique combination of high roundstart capacity and bulky size.
 
 	* It prevents one coworker from hogging a shared reagent container.
 	* The high volume eases grinding and mixing without enabling big grenade creation.
@@ -79,7 +79,7 @@
 		. += inhand_reagent_filling
 	if(cap_type)
 		var/mutable_appearance/inhand_cap_overlay = mutable_appearance(icon_file, "[base_icon_state]_cap_[cap_type]")
-		- += inhand_cap_overlay
+		. += inhand_cap_overlay
 
 /obj/item/reagent_containers/cup/jerrycan/Initialize(mapload)
 	. = ..()
