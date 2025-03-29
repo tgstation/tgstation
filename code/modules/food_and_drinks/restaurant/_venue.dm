@@ -187,6 +187,7 @@
 	if(linked_venue)
 		linked_venue = SSrestaurant.all_venues[linked_venue]
 		linked_venue.restaurant_portal = src
+	register_context()
 
 /obj/machinery/restaurant_portal/Destroy()
 	. = ..()
@@ -266,7 +267,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/restaurant_portal/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
+/obj/machinery/restaurant_portal/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "open the panel first!")
 		return ITEM_INTERACT_BLOCKING
@@ -274,6 +275,23 @@
 	if (default_unfasten_wrench(user, tool))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/restaurant_portal/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		return
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/holosign_creator/robot_seat
 	name = "seating indicator placer"
