@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - bugfix: "de-shrunked alternate names modal"
