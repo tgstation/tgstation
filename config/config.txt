@@ -641,4 +641,4 @@ UPLOAD_LIMIT_ADMIN 5242880
 
 ## Tgui payloads larger than the 2kb limit for BYOND topic requests are split into roughly 1kb chunks and sent in sequence.
 ## This config option limits the maximum chunk count for which the server will accept a payload, default is 10
-TGUI_MAX_CHUNK_COUNT 10
+TGUI_MAX_CHUNK_COUNT 32
