@@ -176,7 +176,7 @@
 	set_holdable(/obj/item/food/egg)
 
 ///Fancy holder
-/datum/storage/fancy_holder/New(/obj/item/storage/fancy/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/fancy_holder/New(obj/item/storage/fancy/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
 	set_holdable(parent.spawn_type)
