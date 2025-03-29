@@ -112,7 +112,7 @@
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
-	clothing_flags = THICKMATERIAL
+	clothing_flags = parent_type::clothing_flags | THICKMATERIAL
 
 /obj/item/clothing/gloves/color/light_brown
 	name = "light brown gloves"

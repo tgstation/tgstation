@@ -108,16 +108,17 @@
 		balloon_alert(user, "can't seal, retracting!")
 		retract(user, part, instant = TRUE)
 	else
-		if(part_datum.overslotting)
-			var/obj/item/overslot = part_datum.overslotting
-			if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-				wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
+		var/obj/item/overslot = part_datum.overslotting
+		if(istype(overslot, /obj/item/clothing))
+			var/obj/item/clothing/clothing = overslot
+			if(clothing.clothing_flags & CLOTHING_MOD_OVERSLOTTING)
+				if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+					wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 		if(!user)
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return FALSE
-
 /// Retract a part of the suit from the user.
 /obj/item/mod/control/proc/retract(mob/user, obj/item/part, instant = FALSE)
 	var/datum/mod_part/part_datum = get_part_datum(part)
