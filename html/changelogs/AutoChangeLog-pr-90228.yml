@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Change some hardcoded ice/snow temperature variables that were set to 180 to use `ICEBOX_MIN_TEMPERATURE` instead."

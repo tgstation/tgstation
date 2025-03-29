@@ -835,3 +835,51 @@
   - bugfix: Fixed toolbelts being able to unintended items
   distributivgesetz:
   - bugfix: Players on 516 can submit votes for IRV again.
+2025-03-29:
+  00-Steven:
+  - bugfix: Dispensing a returned item from a vendor actually reduces the amount of
+      stock for that item.
+  - bugfix: Special vendor dispensing behaviours get applied to thrown items.
+  - bugfix: Special vendor dispensing behaviours actually get applied to returned
+      items where applicable.
+  Absolucy:
+  - qol: Reword the Pushover quirk's description to be more accurate to how it actually
+      works.
+  Absolucy, hry-gh:
+  - bugfix: Fixed a potential bluescreen error relating to stylesheets on BYOND 516.
+  AyIong:
+  - bugfix: Fixed small character preview, color matrix preview, mech preview, and
+      other previews with uses ByondUI map
+  Cirrial:
+  - bugfix: Donk pocket boxes start with more than one donk pocket again.
+  Cyberboss:
+  - config: Added `TTS_HTTP_TIMEOUT_SECONDS` for setting the maximum duration TTS
+      HTTP requests can run for before being aborted.
+  FlufflesTheDog:
+  - qol: Drones can use silicon emotes
+  Goat:
+  - bugfix: The Tiziran Empire has now actually puts canned goods in their canned
+      good exports along with putting more food in their farm fresh boxes.
+  Jacquerel:
+  - rscadd: You can pick up desk bells by dragging them onto yourself. This is now
+      how you attach them to wheelchairs, instead of dragging it onto the wheelchair.
+  - bugfix: Folding a wheelchair with attached bell will drop the bell to the ground
+      instead of deleting it forever.
+  Majkl-J:
+  - bugfix: Mystery box items no longer layer on the lowest z_level when in multiz
+  - code_imp: mystery_box_item is now a type of /obj/effect/abstract
+  - code_imp: The mobs subsystem and blood.dm file for living mobs no longer use single
+      letter vars
+  - refactor: Changed many of our use cases for pixel_x and pixel_y correctly into
+      pixel_w and pixel_z, fixing layering issues in the process.
+  SmArtKar:
+  - bugfix: Fixes incorrect indentation in blob victory code which could cause immense
+      lag as a result
+  - bugfix: Fixed weird overlay positioning on dismembered bodyparts
+  jlsnow301:
+  - bugfix: Fixed scrolling the experiscanner UI
+  necromanceranne:
+  - admin: Added logging to fuel pools being ignited by someone deliberately.
+  timothymtorres:
+  - code_imp: Change some hardcoded ice/snow temperature variables that were set to
+      180 to use `ICEBOX_MIN_TEMPERATURE` instead.

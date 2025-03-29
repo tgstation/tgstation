@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes:
-  - config: "Added `TTS_HTTP_TIMEOUT_SECONDS` for setting the maximum duration TTS HTTP requests can run for before being aborted."

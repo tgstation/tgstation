@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixes incorrect indentation in blob victory code which could cause immense lag as a result"

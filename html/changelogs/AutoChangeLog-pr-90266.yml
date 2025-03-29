@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Dispensing a returned item from a vendor actually reduces the amount of stock for that item."
-  - bugfix: "Special vendor dispensing behaviours get applied to thrown items."
-  - bugfix: "Special vendor dispensing behaviours actually get applied to returned items where applicable."
