@@ -27,5 +27,5 @@
 
 	mutual_understanding = list(
 		/datum/language/common = 50,
-		/datum/language/uncommon = 30,
+		/datum/language/uncommon = 33,
 	)

@@ -203,14 +203,14 @@ Key procs
 /// Gets a list of all mutually understood languages.
 /datum/language_holder/proc/get_partially_understood_languages()
 	var/list/mutual_languages = list()
-	for(var/language_type in understood_languages)
+	for(var/language_type in (understood_languages || list()) - blocked_languages)
 		var/datum/language/language_instance = GLOB.language_datum_instances[language_type]
 		for(var/mutual_language_type in language_instance.mutual_understanding)
 			// add it to the list OR override it if it's a stronger mutual understanding
 			if(mutual_languages[mutual_language_type] < language_instance.mutual_understanding[mutual_language_type])
 				mutual_languages[mutual_language_type] = language_instance.mutual_understanding[mutual_language_type]
 
-	for(var/language_type in other_mutual_understanding)
+	for(var/language_type in (other_mutual_understanding || list()) - blocked_languages)
 		for(var/language_source in other_mutual_understanding[language_type])
 			var/understanding_for_type_by_source = other_mutual_understanding[language_type][language_source]
 			if(mutual_languages[language_type] < understanding_for_type_by_source)
