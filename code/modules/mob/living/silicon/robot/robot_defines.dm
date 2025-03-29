@@ -65,7 +65,7 @@
 	var/eye_flash_timer = null
 	// Overlay for borg hat
 	var/mutable_appearance/hat_overlay
-
+	var/mutable_appearance/censor_overlay
 
 	// Hud
 	var/atom/movable/screen/inv1 = null

@@ -53,6 +53,9 @@
 	var/list/ride_offsets
 	///List of skins the borg can be reskinned to, optional
 	var/list/borg_skins
+	/// documentation is for nerds
+	var/list/model_features = list()
+	/// Little too nsfw... let me save your eyes.
 
 /obj/item/robot_model/Initialize(mapload)
 	. = ..()
@@ -260,6 +263,12 @@
 		for(var/skin in borg_skins)
 			var/list/details = borg_skins[skin]
 			reskin_icons[skin] = image(icon = details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = details[SKIN_ICON_STATE])
+			if (!isnull(details[SKIN_FEATURES]))
+				if (TRAIT_R_WIDE in details[SKIN_FEATURES])
+					var/image/reskin = reskin_icons[skin]
+					reskin.pixel_x -= 16
+					apply_wibbly_filters(reskin)
+
 		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), cyborg, old_model), radius = 38, require_near = TRUE)
 		if(!borg_skin)
 			return FALSE
@@ -278,6 +287,9 @@
 			hat_offset = details[SKIN_HAT_OFFSET]
 		if(!isnull(details[SKIN_TRAITS]))
 			model_traits += details[SKIN_TRAITS]
+		if(!isnull(details[SKIN_FEATURES]))
+			model_features += details[SKIN_FEATURES]
+
 	for(var/i in old_model.added_modules)
 		added_modules += i
 		old_model.added_modules -= i
@@ -289,6 +301,7 @@
 		cyborg.hat.forceMove(drop_location())
 
 	cyborg.cut_overlays()
+	cyborg.clear_filters()
 	cyborg.setDir(SOUTH)
 	do_transform_delay()
 
@@ -318,10 +331,16 @@
 	cyborg.set_anchored(FALSE)
 	REMOVE_TRAIT(cyborg, TRAIT_NO_TRANSFORM, REF(src))
 	cyborg.updatehealth()
-	cyborg.update_icons()
 	cyborg.notify_ai(AI_NOTIFICATION_NEW_MODEL)
 	if(cyborg.hud_used)
 		cyborg.hud_used.update_robot_modules_display()
+	if(model_features && (TRAIT_R_WIDE in model_features))
+		apply_wibbly_filters(cyborg)
+		cyborg.add_filter("borg_blur", 1, gauss_blur_filter(4))
+		cyborg.set_base_pixel_x(-16)
+	else
+		cyborg.icon = 'icons/mob/silicon/robots.dmi'
+	cyborg.update_icons()
 	SSblackbox.record_feedback("tally", "cyborg_modules", 1, cyborg.model)
 
 /**
@@ -367,7 +386,10 @@
 	)
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
-	hat_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(4, -2), "west" = list(-4, -2))
+	borg_skins = list(
+		"Standard" = list(SKIN_ICON_STATE = "clown", SKIN_HAT_OFFSET = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(4, -2), "west" = list(-4, -2))),
+		"Dogborg" = list(SKIN_ICON_STATE = "valeservdark", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
+	)
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	. = ..()
@@ -408,7 +430,10 @@
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
-	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))
+	borg_skins = list(
+		"Standard" = list(SKIN_ICON_STATE = "engineer", SKIN_HAT_OFFSET = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))),
+		"Dogborg" = list(SKIN_ICON_STATE = "valeeng", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
+	)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -435,7 +460,10 @@
 	)
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
-	hat_offset = list("north" = list(0, -5), "south" = list(0, -5), "east" = list(4, -5), "west" = list(-4, -5))
+	borg_skins = list(
+		"Standard" = list(SKIN_ICON_STATE = "janitor", SKIN_HAT_OFFSET = list("north" = list(0, -5), "south" = list(0, -5), "east" = list(4, -5), "west" = list(-4, -5))),
+		"Dogborg" = list(SKIN_ICON_STATE = "J9", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
+	)
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
 
@@ -708,6 +736,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical", SKIN_HAT_OFFSET = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(-1, 3), "west" = list(1, 3))),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor", SKIN_HAT_OFFSET = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(1, 3), "west" = list(-1, 3))),
+		"Dogborg" = list(SKIN_ICON_STATE = "valemed", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
 	)
 
 /obj/item/robot_model/miner
@@ -738,6 +767,7 @@
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin", SKIN_HAT_OFFSET = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(-2, -2), "west" = list(2, -2))),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
+		"Dogborg" = list(SKIN_ICON_STATE = "valemine", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
 	)
 
 /obj/item/robot_model/peacekeeper
@@ -756,9 +786,12 @@
 		/obj/item/reagent_containers/borghypo/peace/hacked,
 	)
 	cyborg_base_icon = "peace"
-	model_select_icon = "standard"
+	model_select_icon = "peace"
 	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(1, -2), "west" = list(-1, -2))
+	borg_skins = list(
+		"Standard" = list(SKIN_ICON_STATE = "peace", SKIN_HAT_OFFSET = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(1, -2), "west" = list(-1, -2))),
+		"Dogborg" = list(SKIN_ICON_STATE = "valepeace", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
+	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -841,6 +874,7 @@
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
 		"Gardener" = list(SKIN_ICON_STATE = "gardener", SKIN_HAT_OFFSET = INFINITY),
+		"Dogborg" = list(SKIN_ICON_STATE = "valeservdark", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)

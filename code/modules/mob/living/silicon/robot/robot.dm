@@ -136,6 +136,7 @@
 	QDEL_LIST(upgrades)
 	QDEL_NULL(cell)
 	QDEL_NULL(robot_suit)
+	QDEL_NULL(censor_overlay)
 
 	if (smoke_particles)
 		remove_shared_particles(smoke_particles)
@@ -301,6 +302,14 @@
 	if(stat < UNCONSCIOUS && !HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && !IsStun() && !IsParalyzed() && !low_power_mode) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
+		if(model?.model_features && (TRAIT_R_WIDE in model.model_features))
+			if(!censor_overlay)
+				censor_overlay = new()
+			censor_overlay.icon = 'icons/mob/silicon/robots.dmi'
+			censor_overlay.icon_state = "censor"
+			censor_overlay.pixel_w = 16
+			add_overlay(censor_overlay)
+
 		if(lamp_enabled || lamp_doom)
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]" : "[model.cyborg_base_icon]"]_l"
 			set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))

@@ -755,7 +755,14 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_TURF_IGNORE_SLIPPERY" = TRAIT_TURF_IGNORE_SLIPPERY,
 		"TRAIT_TURF_IGNORE_SLOWDOWN" = TRAIT_TURF_IGNORE_SLOWDOWN,
 	),
+	/obj/item/god_is_not_real = list(
+		"TRAIT_R_WIDE" = TRAIT_R_WIDE
+	),
 ))
+
+/obj/item/god_is_not_real
+	name = "dogborgs"
+	desc = "happy april fools."
 
 /// value -> trait name, list of ALL traits that exist in the game, used for any type of accessing.
 GLOBAL_LIST(global_trait_name_map)
