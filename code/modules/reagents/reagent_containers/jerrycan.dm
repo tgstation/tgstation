@@ -149,3 +149,22 @@
 	cap_type = CAP_RED
 	desc = "Stubborn stains, grease and grime got you cornered? No duty to retreat when you got BLAM!™ on your side!\nBLAM!™ - A WaffleCo product."
 	list_reagents = list(/datum/reagent/space_cleaner = 200)
+
+#undef LABEL_TEXT
+#undef LABEL_TEXT_OLD
+#undef LABEL_INFLAMMABLE
+#undef LABEL_NT
+#undef LABEL_NT_MINI
+#undef LABEL_SUSPICIOUS
+#undef LABEL_SUSPICIOUS_BLACK
+#undef LABEL_SUSPICIOUS_MINI
+#undef LABEL_SUSPICIOUS_MINI_BLACK
+#undef LABEL_EZ_NUTRIENT
+#undef LABEL_ROBUST_HARVEST
+#undef LABEL_LEFT_4_ZED
+#undef LABEL_SPACE_CLEANER
+#undef CAP_BLACK
+#undef CAP_WHITE
+#undef CAP_RED
+#undef CAP_GREEN
+#undef CAP_BLUE
