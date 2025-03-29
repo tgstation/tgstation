@@ -44,7 +44,9 @@
 		set_light_on(TRUE)
 	update_brightness()
 	register_context()
+	init_slapcrafting()
 
+/obj/item/flashlight/proc/init_slapcrafting()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
 
 	AddElement(
@@ -446,19 +448,20 @@
 		damtype = BURN
 		update_brightness()
 
+/obj/item/flashlight/flare/init_slapcrafting()
+	return
+
 /obj/item/flashlight/flare/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/flashlight/flare/attack(mob/living/carbon/victim, mob/living/carbon/user)
-	if(!isliving(victim))
-		return ..()
-
-	if(light_on && victim.ignite_mob())
+/obj/item/flashlight/flare/afterattack(atom/target, mob/user, click_parameters)
+	if(!isliving(target))
+		return
+	var/mob/living/victim = target
+	if(get_temperature() && victim.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(victim)] on fire with [src] at [AREACOORD(user)]")
 		user.log_message("set [key_name(victim)] on fire with [src]", LOG_ATTACK)
-
-	return ..()
 
 /obj/item/flashlight/flare/toggle_light()
 	if(light_on || !fuel)
@@ -592,10 +595,8 @@
  * Arguments:
  * * obj/item/fire_starter - the item being used to ignite the candle.
  * * mob/user - the user to display a message to.
- * * quiet - suppresses the to_chat message.
- * * silent - suppresses the balloon alerts as well as the to_chat message.
  */
-/obj/item/flashlight/flare/candle/proc/try_light_candle(obj/item/fire_starter, mob/user, quiet, silent)
+/obj/item/flashlight/flare/candle/proc/try_light_candle(obj/item/fire_starter, mob/user)
 	if(!istype(fire_starter))
 		return
 	if(!istype(user))
@@ -610,34 +611,53 @@
 	switch(ignition_result)
 		if(SUCCESS)
 			update_appearance(UPDATE_ICON | UPDATE_NAME)
-			if(!quiet && !silent)
-				user.visible_message(success_msg)
+			user.visible_message(success_msg)
 			return SUCCESS
 		if(ALREADY_LIT)
-			if(!silent)
-				balloon_alert(user, "already lit!")
+			balloon_alert(user, "already lit!")
 			return ALREADY_LIT
 		if(NO_FUEL)
-			if(!silent)
-				balloon_alert(user, "out of fuel!")
+			balloon_alert(user, "out of fuel!")
 			return NO_FUEL
 
-/// allows lighting an unlit candle from some fire source by left clicking the candle with the source
-/obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
-	if(try_light_candle(attacking_item, user, silent = istype(attacking_item, src.type))) // so we don't double balloon alerts when a candle is used to light another candle
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else
-		return ..()
+/obj/item/flashlight/flare/candle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(get_temperature())
+		if(istype(tool, /obj/item/cigarette))
+			var/obj/item/cigarette/cig = tool
+			if(cig.lit)
+				return NONE
+			cig.light()
+			if(cig.loc == user)
+				user.visible_message(
+					span_rose("[user] holds [user.p_their()] [cig.name] to [src] and lights it, like a true romantic."),
+					span_rose("You hold your [cig.name] to [src] and light it, like a true romantic."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
+			else
+				user.visible_message(
+					span_rose("[user] lights [cig] with [src], like a true romantic."),
+					span_rose("You light [cig] with [src], like a true romantic."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
+			return ITEM_INTERACT_SUCCESS
+		return NONE
+	if(try_light_candle(tool, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-// allows lighting an unlit candle from some fire source by left clicking the source with the candle
-/obj/item/flashlight/flare/candle/pre_attack(atom/target, mob/living/user, params)
-	if(ismob(target))
-		return ..()
+/obj/item/flashlight/flare/candle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(get_temperature())
+		return NONE
+	if(try_light_candle(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(try_light_candle(target, user, quiet = TRUE))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	return ..()
+/obj/item/flashlight/flare/candle/ignition_effect(atom/A, mob/user)
+	if(!get_temperature())
+		return ""
+	if(isitem(A) && A.loc == user)
+		return span_rose("[user] holds [A] in the flame of [src], letting it catch fire.")
+	return span_rose("[user] lights [A] ablaze with [src], like a true romantic.")
 
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
 	if(light_on && (fuel != INFINITY || !can_be_extinguished)) // can't extinguish eternal candles

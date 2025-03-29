@@ -7,19 +7,23 @@
 	///Has this item been used already.
 	var/used_up = FALSE
 
-#define NICKNAME_CAP (MAX_NAME_LEN/2)
-/obj/item/virgin_mary/attackby(obj/item/potential_lighter, mob/living/user, params)
+/obj/item/virgin_mary/Initialize(mapload)
 	. = ..()
-	if(resistance_flags & ON_FIRE)
-		return
-	if(!istype(user) || !user.mind) //A sentient mob needs to be burning it, ya cheezit.
-		return
+	AddElement(/datum/element/burn_on_item_ignition, bypass_clumsy = TRUE)
+	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(induct_new_initiate))
 
+#define NICKNAME_CAP (MAX_NAME_LEN/2)
+
+/obj/item/virgin_mary/proc/induct_new_initiate(datum/source, mob/living/user, obj/item/burning_tool)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, PROC_REF(induct_new_initiate_async), user, burning_tool)
+
+/obj/item/virgin_mary/proc/induct_new_initiate_async(mob/living/user, obj/item/burning_tool)
+	if(isnull(user.mind))
+		return
 	if(HAS_TRAIT(user, TRAIT_MAFIAINITIATE)) //Only one nickname fuckhead
 		to_chat(user, span_warning("You have already been initiated into the mafioso life."))
-		return
-
-	if(!burn_paper_product_attackby_check(potential_lighter, user, TRUE))
 		return
 	if(used_up)
 		return
