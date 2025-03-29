@@ -168,11 +168,7 @@
 	spawn_count = 5
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
-
-/obj/item/storage/fancy/candle_box/PopulateContents(datum/storage_config/config)
-	config.whitelist_content_types = TRUE
-
-	return ..()
+	storage_type = /datum/storage/fancy_holder
 
 ////////////
 //CIG PACK//
@@ -208,11 +204,6 @@
 	. = ..()
 
 	register_context()
-
-/obj/item/storage/fancy/cigarettes/PopulateContents(datum/storage_config/config)
-	. = ..()
-
-	config.whitelist_content_types = FALSE
 
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
@@ -407,7 +398,7 @@
 	spawn_count = 10
 	custom_price = PAYCHECK_LOWER
 	has_open_closed_states = FALSE
-	storage_type = /datum/storage/rolling_paper_box
+	storage_type = /datum/storage/fancy_holder
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -492,11 +483,8 @@
 	contents_tag = "nugget"
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
+	storage_type = /datum/storage/fancy_holder
 
-/obj/item/storage/fancy/nugget_box/PopulateContents(datum/storage_config/config)
-	config.whitelist_content_types = TRUE
-
-	return ..()
 
 /*
  * Jar of pickles
@@ -515,11 +503,7 @@
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
-
-/obj/item/storage/fancy/pickles_jar/PopulateContents(datum/storage_config/config)
-	config.whitelist_content_types = TRUE
-
-	return ..()
+	storage_type = /datum/storage/fancy_holder
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()
