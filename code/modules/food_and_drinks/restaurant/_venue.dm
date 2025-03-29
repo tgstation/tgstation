@@ -255,8 +255,6 @@
 	linked_venue = chosen_venue
 	linked_venue.restaurant_portal = src
 
-	return ITEM_INTERACT_SUCCESS
-
 /obj/machinery/restaurant_portal/screwdriver_act(mob/user, obj/item/tool)
 	if (default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
