@@ -534,10 +534,12 @@
 /obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/hit_proj)
 	. = ..()
 	ignite()
+	log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
 /obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, params)
 	if(item.ignition_effect(src, user))
 		ignite()
+		log_combat(user, src, "used [item] to ignite")
 	return ..()
 
 /obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/entered_atom)

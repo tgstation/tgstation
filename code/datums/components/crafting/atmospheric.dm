@@ -52,7 +52,7 @@
 /datum/crafting_recipe/spec_pipe/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = pipe_type
-	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.pipe_color = ATMOS_COLOR_OMNI
 	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 

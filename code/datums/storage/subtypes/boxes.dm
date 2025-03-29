@@ -8,15 +8,14 @@
 /datum/storage/box/flat
 	max_slots = 3
 
-///Coffee box
-/datum/storage/box/coffee
-	max_slots = 5
-
 ///Ingredient box
 /datum/storage/box/ingredients
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 ///Coffee box
+/datum/storage/box/coffee
+	max_slots = 5
+
 /datum/storage/box/coffee/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
@@ -104,7 +103,10 @@
 /datum/storage/box/lights/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
-	set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
+	set_holdable(list(
+		/obj/item/light/tube,
+		/obj/item/light/bulb
+	))
 
 ///Balloon box
 /datum/storage/box/balloons
@@ -302,6 +304,11 @@
 /datum/storage/box/stockparts
 	max_slots = 15
 	max_total_storage = 15 * WEIGHT_CLASS_SMALL
+
+///Tiziran goods box
+/datum/storage/box/tiziran_goods
+	max_slots = 8
+	max_total_storage = 8 * WEIGHT_CLASS_NORMAL
 
 ///Tiziran cans box
 /datum/storage/box/tiziran_cans
