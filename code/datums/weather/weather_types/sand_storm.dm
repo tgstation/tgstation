@@ -20,7 +20,7 @@
 	area_type = /area
 	target_trait = ZTRAIT_SANDSTORM
 	immunity_type = TRAIT_SANDSTORM_IMMUNE
-	probability = 0
+	probability = 90
 
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
 
@@ -62,4 +62,5 @@
 	end_message = span_notice("The sandfall slows, stops. Another layer of sand on the mesa beneath your feet.")
 	end_overlay = "dust_low"
 
+	probability = 10
 	weather_flags = parent_type::weather_flags & ~WEATHER_MOBS
