@@ -762,6 +762,7 @@
 	overdose_threshold = 50
 	addiction_types = list(/datum/addiction/maintenance_drugs = 35)
 
+//Kronkaine is a rare natural stimulant that can help you instantly clear stamina damage in combat, but it also greatly aids civilians by letting them perform everyday actions like cleaning, building, pick pocketing and even performing surgery at double speed.
 /datum/reagent/drug/kronkaine
 	name = "Kronkaine"
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
@@ -800,9 +801,20 @@
 	if(!iscarbon(kronkaine_receptacle))
 		return
 	var/mob/living/carbon/druggo = kronkaine_receptacle
-	if(druggo.adjustStaminaLoss(-6 * trans_volume, updating_stamina = FALSE))
+	//The drug is more effective if smoked or injected, restoring more stamina per unit.
+	var/stamina_heal_per_unit
+	if(methods & (INJECT|INHALE))
+		stamina_heal_per_unit = 12
+		if(trans_volume >= 3)
+			SEND_SOUND(druggo, sound('sound/items/weapons/flash_ring.ogg')) //The efffect is often refered to as the "kronkaine bells".
+			to_chat(druggo, span_danger("Your ears ring as your blood pressure suddenly spikes!"))
+		else if(prob(15))
+			to_chat(druggo, span_nicegreen(pick("You feel the cowardice melt away...", "You feel unbothered by the judgements of others.", "My life feels lovely!", "You lower your snout... and suddenly feel more charitable!")))
+	else
+		stamina_heal_per_unit = 6
+	if(druggo.adjustStaminaLoss(-stamina_heal_per_unit * trans_volume))
 		return UPDATE_MOB_HEALTH
-	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
+
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
 	. = ..()
@@ -812,10 +824,14 @@
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	kronkaine_fiend.AdjustSleeping(-2 SECONDS * REM * seconds_per_tick)
 	kronkaine_fiend.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
-	if(volume < 10)
+	// Do not try to cheese the overdose threshhold with purging chems to become stamina immune, if you purge and take stamina damage you will be punished!
+	if(kronkaine_fiend.getStaminaLoss() < 30)
 		return
 	for(var/possible_purger in kronkaine_fiend.reagents.reagent_list)
 		if(istype(possible_purger, /datum/reagent/medicine/c2/multiver) || istype(possible_purger, /datum/reagent/medicine/haloperidol))
+			if(kronkaine_fiend.HasDisease(/datum/disease/adrenal_crisis))
+				break
+			kronkaine_fiend.visible_message(span_bolddanger("[kronkaine_fiend.name] suddenly tenses up, it looks like the shock is causing their body to shut down!"), span_userdanger("You feel your adrenaline peak and then suddenly crash! Maybe you shouldn't have mixed kronkaine and purgatives..."))
 			kronkaine_fiend.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) //We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks. This also has the benefit of making haloperidol a counter, like it is supposed to be.
 			break
 
