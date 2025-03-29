@@ -41,7 +41,8 @@
 	/// A list of traits that should stop this quirk from processing.
 	/// Signals for adding and removing this trait will automatically be added to `process_update_signals`.
 	var/list/no_process_traits
-
+		/// List of species that this quirk is valid for, or empty if it's valid for all species. Only use species ids here.
+	var/list/species_whitelist = list()
 /datum/quirk/New()
 	. = ..()
 	for(var/trait in no_process_traits)
@@ -280,3 +281,20 @@
 	for(var/datum/quirk/quirk as anything in quirks)
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		quirk.add_to_holder(to_mob, quirk_transfer = TRUE, client_source = to_pass)
+
+
+/datum/quirk/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source)
+	if(!can_add(new_holder))
+		CRASH("Attempted to add quirk to holder that can't have it.")
+	. = ..()
+
+/// Returns true if the quirk is valid for the target, call parent so qurk_species_whitelist can be checked.
+/datum/quirk/proc/can_add(mob/target)
+	SHOULD_CALL_PARENT(TRUE)
+	if(length(species_whitelist))
+		if(!ishuman(target))
+			return FALSE
+		var/mob/living/carbon/human = target
+		if(!(human?.dna.species.id in species_whitelist))
+			return FALSE
+	return TRUE
