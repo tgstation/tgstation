@@ -80,6 +80,9 @@
 
 /obj/item/storage/fancy/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	if(!(flags_1 & INITIALIZED_1))
+		return
+
 	if(open_status == FANCY_CONTAINER_CLOSED)
 		open_status = FANCY_CONTAINER_OPEN
 	update_appearance()
