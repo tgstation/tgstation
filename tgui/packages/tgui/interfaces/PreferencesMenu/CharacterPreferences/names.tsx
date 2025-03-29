@@ -67,7 +67,12 @@ export function MultiNameInput(props: MultiNameProps) {
   }
 
   return (
-    <Modal>
+    <Modal
+      style={{
+        margin: '0 auto',
+        width: '40%',
+      }}
+    >
       <TrackOutsideClicks onOutsideClick={props.handleClose}>
         <Section
           buttons={
