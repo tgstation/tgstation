@@ -163,6 +163,18 @@
 	max_slots = 13
 
 //=======================Fancy storages======================
+///Donut Box
+/datum/storage/donut_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/donut)
+
+///Egg Box
+/datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/egg)
+
 ///Cigrate boxes
 /datum/storage/cigarette_box
 	display_contents = FALSE
@@ -174,6 +186,12 @@
 		/obj/item/cigarette,
 		/obj/item/lighter,
 	))
+
+///Rolling Paper box
+/datum/storage/rolling_paper_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/rollingpaper)
 
 ///Coffee condiment display
 /datum/storage/coffee_condi_display
@@ -197,6 +215,12 @@
 	. = ..()
 
 	set_holdable(/obj/item/coffee_cartridge)
+
+///Heart Box
+/datum/storage/heart_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/bonbon)
 
 //=================================================
 
