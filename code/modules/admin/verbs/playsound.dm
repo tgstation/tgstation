@@ -60,6 +60,8 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a soun
 	SEND_SOUND(target, sound)
 	BLACKBOX_LOG_ADMIN_VERB("Play Direct Mob Sound")
 
+GLOBAL_VAR_INIT(web_sound_cooldown, 0)
+
 ///Takes an input from either proc/play_web_sound or the request manager and runs it through yt-dlp and prompts the user before playing it to the server.
 /proc/web_sound(mob/user, input, credit)
 	if(!check_rights(R_SOUND))
@@ -150,12 +152,15 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a soun
 			var/mob/M = m
 			var/client/C = M.client
 			if(C.prefs.read_preference(/datum/preference/numeric/volume/sound_midi))
+				// Stops playing lobby music and admin loaded music automatically.
+				SEND_SOUND(C, sound(null, channel = CHANNEL_LOBBYMUSIC))
+				SEND_SOUND(C, sound(null, channel = CHANNEL_ADMIN))
 				if(!stop_web_sounds)
 					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
 				else
 					C.tgui_panel?.stop_music()
 
-	S_TIMER_COOLDOWN_START(SStimer, COOLDOWN_INTERNET_SOUND, duration)
+	CLIENT_COOLDOWN_START(GLOB, web_sound_cooldown, duration)
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Internet Sound")
 
@@ -163,8 +168,8 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(play_web_sound)
 	return !!CONFIG_GET(string/invoke_youtubedl)
 
 ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
-	if(S_TIMER_COOLDOWN_TIMELEFT(SStimer, COOLDOWN_INTERNET_SOUND))
-		if(tgui_alert(user, "Someone else is already playing an Internet sound! It has [DisplayTimeText(S_TIMER_COOLDOWN_TIMELEFT(SStimer, COOLDOWN_INTERNET_SOUND), 1)] remaining. \
+	if(!CLIENT_COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
+		if(tgui_alert(user, "Someone else is already playing an Internet sound! It has [DisplayTimeText(CLIENT_COOLDOWN_TIMELEFT(GLOB, web_sound_cooldown), 1)] remaining. \
 		Would you like to override?", "Musicalis Interruptus", list("No","Yes")) != "Yes")
 			return
 
@@ -199,7 +204,7 @@ ADMIN_VERB(stop_sounds, R_NONE, "Stop All Playing Sounds", "Stops all playing so
 		var/client/player_client = player.client
 		player_client?.tgui_panel?.stop_music()
 
-	S_TIMER_COOLDOWN_RESET(SStimer, COOLDOWN_INTERNET_SOUND)
+	CLIENT_COOLDOWN_RESET(GLOB, web_sound_cooldown)
 	BLACKBOX_LOG_ADMIN_VERB("Stop All Playing Sounds")
 
 //world/proc/shelleo
