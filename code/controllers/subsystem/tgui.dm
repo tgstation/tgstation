@@ -303,6 +303,9 @@ SUBSYSTEM_DEF(tgui)
 	// If the user exists, remove it from them too.
 	if(ui.user)
 		ui.user.tgui_open_uis -= ui
+		// Sometimes player can close the UI at the same time as pressing the key and the key won'be properly cleared
+		// We need it here to deal with situations like this
+		ui.user.client?.forced_intended_direction = NONE
 	if(ui.src_object)
 		LAZYREMOVE(ui.src_object.open_uis, ui)
 	return TRUE
