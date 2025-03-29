@@ -20,6 +20,9 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 	switch(custom_choice)
 		if("Default")
 			SSweather.run_weather(weather_choice, z_level) // default settings
+			message_admins("[key_name_admin(user)] started weather of type [weather_choice] on the z-level [z_level].")
+			log_admin("[key_name(user)] started weather of type [weather_choice] on the z-level [z_level].")
+			BLACKBOX_LOG_ADMIN_VERB("Run Weather")
 			return
 		if("Cancel")
 			return
