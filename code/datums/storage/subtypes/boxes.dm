@@ -60,7 +60,7 @@
 ///Survival box
 /datum/storage/box/survival/New(obj/item/storage/box/survival/parent, max_slots = src.max_slots, max_specific_storage, max_total_storage = src.max_total_storage)
 	if(parent.crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		return
+		return ..()
 
 	//update storage
 	max_slots += 2
@@ -89,7 +89,7 @@
 /datum/storage/box/monkey_cubes/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
-	set_holdable(/obj/item/food/monkeycube)
+	set_holdable(/obj/item/food/monkeycube, /obj/item/food/monkeycube/gorilla)
 
 ///Gorilla cubes box
 /datum/storage/box/gorilla_cubes
