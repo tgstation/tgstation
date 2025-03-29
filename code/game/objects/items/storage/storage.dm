@@ -58,6 +58,7 @@
 	pre_compute |= !isnull(type_paths)
 
 	//we now begin inserting these items the right way
+	flags_1 &= ~INITIALIZED_1 //Used inside Entered() to know if this object was moved inside during init
 	for(var/obj/item/insert as anything in items)
 		if(ispath(insert))
 			insert = new insert(null)
@@ -74,6 +75,7 @@
 		if(!atom_storage.can_insert(insert, messages = STORAGE_ERROR_INSERT))
 			. = INITIALIZE_HINT_QDEL //this thing was shoved inside & destroyed us. Fix your storage caps and try again
 		insert.forceMove(src)
+	flags_1 |= INITIALIZED_1
 
 	if(!pre_compute || . == INITIALIZE_HINT_QDEL)
 		return
