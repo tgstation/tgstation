@@ -163,6 +163,24 @@
 	max_slots = 13
 
 //=======================Fancy storages======================
+///Donut Box
+/datum/storage/donut_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/donut)
+
+///Egg Box
+/datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/egg)
+
+///Fancy holder
+/datum/storage/fancy_holder/New(obj/item/storage/fancy/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(parent.spawn_type)
+
 ///Cigrate boxes
 /datum/storage/cigarette_box
 	display_contents = FALSE
@@ -197,6 +215,12 @@
 	. = ..()
 
 	set_holdable(/obj/item/coffee_cartridge)
+
+///Heart Box
+/datum/storage/heart_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/bonbon)
 
 //=================================================
 
