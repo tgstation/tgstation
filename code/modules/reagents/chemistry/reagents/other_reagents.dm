@@ -1332,10 +1332,6 @@
 	if(!(methods & (VAPOR|TOUCH)))
 		return
 
-	var/exposure_probability = min(100 - (touch_protection * 100), 0, 100)
-	if(exposure_probability && !prob(exposure_probability))
-		return
-
 	do_teleport(exposed_mob, get_turf(exposed_mob), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //4 tiles per crystal
 
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
