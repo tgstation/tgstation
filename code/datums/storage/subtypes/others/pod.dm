@@ -34,8 +34,7 @@
 	if(always_unlocked)
 		return
 
-	locked = (new_level < SEC_LEVEL_RED) ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED
-	parent.update_appearance(UPDATE_ICON_STATE)
+	set_locked(new_level < SEC_LEVEL_RED ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED)
 	if(locked) // future todo : make `locked` a setter so this behavior can be built in (avoids exploits)
 		close_all()
 
@@ -46,5 +45,4 @@
 		return
 	// If the pod was launched, the storage will always open.
 	always_unlocked = TRUE
-	locked = STORAGE_NOT_LOCKED
-	parent.update_appearance(UPDATE_ICON_STATE)
+	set_locked(STORAGE_NOT_LOCKED)
