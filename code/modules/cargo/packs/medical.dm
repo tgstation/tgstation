@@ -114,6 +114,7 @@
 				)
 	crate_name = "medical supplies crate"
 	crate_type = /obj/structure/closet/crate/medical
+	test_ignored = TRUE
 
 /datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 10)

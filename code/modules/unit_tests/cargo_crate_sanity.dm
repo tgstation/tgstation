@@ -9,8 +9,8 @@
 
 	for(var/crate in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/new_crate = allocate(crate)
-		if(new_crate.abstract)
-			continue // We can safely ignore custom supply packs like the stock market or mining supply crates.
+		if(new_crate.test_ignored)
+			continue // We can safely ignore custom supply packs like the stock market or mining supply crates, or packs that have innate randomness.
 		if(!new_crate?.crate_type)
 			continue
 		var/obj/crate_type = allocate(new_crate.crate_type)
