@@ -67,7 +67,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(lighten(base.$color-bg, 30%), 0.25);
+  background-color: rgba(color.adjust(base.$color-bg, $lightness: 30%), 0.25);
   pointer-events: none;
 }
 
