@@ -5,7 +5,15 @@
 /// opened it up early.
 SUBSYSTEM_DEF(early_assets)
 	name = "Early Assets"
-	init_order = INIT_ORDER_EARLY_ASSETS
+	dependencies = list(
+		/datum/controller/subsystem/processing/reagents,
+		/datum/controller/subsystem/processing/greyscale
+	)
+	dependents = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms
+	)
+	init_stage = INITSTAGE_EARLY
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/early_assets/Initialize()

@@ -89,7 +89,10 @@
 		return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a>"
 
 	// if it's a number, is it a bitflag?
-	var/list/valid_bitflags = get_valid_bitflags(name)
+	var/list/valid_bitflags
+	if(!isnum(name))
+		valid_bitflags = get_valid_bitflags(name)
+
 	if(!length(valid_bitflags))
 		return "<span class='value'>[VV_HTML_ENCODE(value)]</span>"
 

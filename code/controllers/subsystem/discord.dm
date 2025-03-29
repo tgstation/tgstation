@@ -31,7 +31,7 @@
 SUBSYSTEM_DEF(discord)
 	name = "Discord"
 	wait = 3000
-	init_order = INIT_ORDER_DISCORD
+	init_stage = INITSTAGE_EARLY
 
 	/// People to save to notify file
 	var/list/notify_members = list()
