@@ -386,10 +386,7 @@
 	)
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
-	borg_skins = list(
-		"Standard" = list(SKIN_ICON_STATE = "clown", SKIN_HAT_OFFSET = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(4, -2), "west" = list(-4, -2))),
-		"Dogborg" = list(SKIN_ICON_STATE = "valeservdark", SKIN_FEATURES = list(TRAIT_R_WIDE), SKIN_ICON = 'icons/mob/silicon/dogborg.dmi', SKIN_HAT_OFFSET = list("north" = list(16, 3), "south" = list(16, 3), "east" = list(28, 4), "west" = list(4, 4)))
-	)
+	hat_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(4, -2), "west" = list(-4, -2))
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	. = ..()
