@@ -58,7 +58,7 @@
 	pre_compute |= !isnull(type_paths)
 
 	//we now begin inserting these items the right way
-	flags_1 &= ~INITIALIZED_1 ///Used inside Entered() to decide if this object is being moved inside during init
+	flags_1 &= ~INITIALIZED_1 //Used inside Entered() to know if this object was moved inside during init
 	for(var/obj/item/insert as anything in items)
 		if(ispath(insert))
 			insert = new insert(null)
