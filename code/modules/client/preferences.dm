@@ -231,6 +231,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
 
+			for(var/datum/preference_middleware/preference_middleware as anything in middleware)
+				preference_middleware.post_set_preference(ui.user, requested_preference_key, value)
 			return TRUE
 		if ("set_color_preference")
 			var/requested_preference_key = params["preference"]
@@ -419,6 +421,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			.++
 
 /datum/preferences/proc/validate_quirks()
+	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)
+	for(var/quirk_name in all_quirks)
+		var/quirk_path = SSquirks.quirks[quirk_name]
+		var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk_path]
+		if(!quirk_prototype.is_species_appropriate(species_type))
+			all_quirks -= quirk_name
 	if(CONFIG_GET(flag/disable_quirk_points))
 		return
 	if(GetQuirkBalance() < 0)
