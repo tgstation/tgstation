@@ -228,8 +228,8 @@
 			intensity_state = "high"
 	///The froth fountain that we are sticking onto the bottle
 	var/mutable_appearance/froth = mutable_appearance('icons/obj/drinks/drink_effects.dmi', "froth_bottle_[intensity_state]")
-	froth.pixel_x = offset_x
-	froth.pixel_y = offset_y
+	froth.pixel_w = offset_x
+	froth.pixel_z = offset_y
 	add_overlay(froth)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), froth), 2 SECONDS)
 
@@ -625,7 +625,7 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/bitters = 30)
 	drink_type = ALCOHOL
 	//allows for single unit dispensing
-	possible_transfer_amounts = list(1, 2, 3, 4, 5) 
+	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	amount_per_transfer_from_this = 5
 
 /obj/item/reagent_containers/cup/glass/bottle/curacao
@@ -948,7 +948,7 @@
 		log_bomber(user, "has primed a", src, "for detonation")
 
 		to_chat(user, span_info("You light [src] on fire."))
-		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		add_overlay(custom_fire_overlay() || GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, PROC_REF(explode)), 5 SECONDS)
 
@@ -970,7 +970,7 @@
 			to_chat(user, span_danger("The flame's spread too far on it!"))
 			return
 		to_chat(user, span_info("You snuff out the flame on [src]."))
-		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		cut_overlay(custom_fire_overlay() || GLOB.fire_overlay)
 		active = FALSE
 		return
 	return ..()

@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - code_imp: "The mobs subsystem and blood.dm file for living mobs no longer use single letter vars"

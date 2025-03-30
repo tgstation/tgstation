@@ -311,12 +311,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 /datum/embedding/shard
 	embed_chance = 65
 
-/datum/embedding/glass_candy
-	embed_chance = 100
-	ignore_throwspeed_threshold = TRUE
-	impact_pain_mult = 1
-	pain_chance = 5
-
 /datum/armor/item_shard
 	melee = 100
 	energy = 100

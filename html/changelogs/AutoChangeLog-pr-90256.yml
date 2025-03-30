@@ -1,0 +1,4 @@
+author: "Absolucy, hry-gh"
+delete-after: True
+changes:
+  - bugfix: "Fixed a potential bluescreen error relating to stylesheets on BYOND 516."

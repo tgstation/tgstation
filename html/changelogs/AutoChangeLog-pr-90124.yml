@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - refactor: "Changed many of our use cases for pixel_x and pixel_y correctly into pixel_w and pixel_z, fixing layering issues in the process."

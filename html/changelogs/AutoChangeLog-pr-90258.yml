@@ -1,0 +1,5 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "Mystery box items no longer layer on the lowest z_level when in multiz"
+  - code_imp: "mystery_box_item is now a type of /obj/effect/abstract"
