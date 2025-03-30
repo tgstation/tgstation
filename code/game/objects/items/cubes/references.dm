@@ -17,7 +17,7 @@
 /obj/item/cube/puzzle/attack_self(mob/user)
 	. = ..()
 	if(solved)
-		balloon_alert(user, "Already solved")
+		balloon_alert(user, "already solved")
 		return
 	if(!isliving(user))
 		return
@@ -26,7 +26,7 @@
 	var/skill_level = solver?.mind?.get_skill_level(/datum/skill/gaming) || 1
 	to_chat(solver, "You concentrate on solving [src]...")
 	if(!do_after(solver, round((13*rarity) SECONDS / skill_level)))
-		balloon_alert(solver, "Lost concentration!")
+		balloon_alert(solver, "lost concentration!")
 		return
 	solver?.mind?.adjust_experience(/datum/skill/gaming, 15*rarity)
 	var/solve_msg = "Solved!"
