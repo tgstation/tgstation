@@ -21502,16 +21502,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/engine)
-"hvf" = (
-/obj/effect/turf_decal/arrows{
-	dir = 4;
-	pixel_x = -15
-	},
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "hvj" = (
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "gib1-old"
@@ -23681,10 +23671,6 @@
 /turf/open/openspace,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "ilr" = (
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 8;
-	output_dir = 4
-	},
 /obj/structure/sign/poster/random/directional/north,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
@@ -34002,9 +33988,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "lNO" = (
-/obj/effect/turf_decal/arrows{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -148728,7 +148711,7 @@ mLn
 swj
 eFu
 etV
-hvf
+twR
 gDQ
 uyL
 lZP
