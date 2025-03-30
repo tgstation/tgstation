@@ -144,3 +144,9 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 
 /mob/living/carbon/human/species/monkey/kobold
 	race = /datum/species/monkey/kobold
+
+/mob/living/carbon/human/species/monkey/kobold/Initialize(mapload, cubespawned, mob/spawner)
+	. = ..()
+	var/datum/mutation/human/race/race_mut = dna.get_mutation(/datum/mutation/human/race)
+	race_mut.original_species = /datum/species/lizard
+	race_mut.original_name = generate_random_name_species_based(gender, species_type = /datum/species/lizard)
