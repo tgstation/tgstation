@@ -12,7 +12,7 @@
 
 	spell_max_level = 1
 
-	cast_range = 4
+	cast_range = 5
 
 	var/teleport_channel = TELEPORT_CHANNEL_MAGIC
 	var/force_teleport = TRUE
