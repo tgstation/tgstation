@@ -35,7 +35,6 @@
 		return
 
 	config.compute_max_values()
-	config.whitelist_content_types = TRUE
 
 	. = list()
 	for(var/i in 1 to spawn_count)
@@ -86,10 +85,7 @@
 
 #define DONUT_INBOX_SPRITE_WIDTH 4
 
-/*
- * Donut Box
- */
-
+/// Donut Box
 /obj/item/storage/fancy/donut_box
 	name = "donut box"
 	desc = "Mmm. Donuts."
@@ -102,6 +98,7 @@
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
+	storage_type = /datum/storage/donut_box
 
 /obj/item/storage/fancy/donut_box/update_icon_state()
 	. = ..()
@@ -143,6 +140,7 @@
 	spawn_type = /obj/item/food/egg
 	spawn_count = 12
 	contents_tag = "egg"
+	storage_type = /datum/storage/egg_box
 
 /*
  * Fertile Egg Box
@@ -172,6 +170,7 @@
 	spawn_count = 5
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
+	storage_type = /datum/storage/fancy_holder
 
 ////////////
 //CIG PACK//
@@ -202,7 +201,6 @@
 	var/rigged_omen = FALSE
 	///Do we not have our own handling for cig overlays?
 	var/display_cigs = TRUE
-
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
@@ -402,6 +400,7 @@
 	spawn_count = 10
 	custom_price = PAYCHECK_LOWER
 	has_open_closed_states = FALSE
+	storage_type = /datum/storage/fancy_holder
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -475,6 +474,7 @@
 		/obj/item/food/bonbon/peanut_butter_cup,
 	)
 	spawn_count = 8
+	storage_type = /datum/storage/heart_box
 
 /obj/item/storage/fancy/nugget_box
 	name = "nugget box"
@@ -485,6 +485,8 @@
 	contents_tag = "nugget"
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
+	storage_type = /datum/storage/fancy_holder
+
 
 /*
  * Jar of pickles
@@ -503,6 +505,7 @@
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
+	storage_type = /datum/storage/fancy_holder
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()

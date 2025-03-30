@@ -57,6 +57,21 @@
 		/obj/item/crusher_trophy
 	))
 
+///Survival box
+/datum/storage/box/survival/New(obj/item/storage/box/survival/parent, max_slots = src.max_slots, max_specific_storage, max_total_storage = src.max_total_storage)
+	if(parent.crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		return ..()
+
+	//update storage
+	max_slots += 2
+	max_total_storage += 4
+
+	//update parent
+	parent.name = "large [parent.name]"
+	parent.icon_state = "[parent.icon_state]_large"
+
+	return ..()
+
 ///Bandages box
 /datum/storage/box/bandages
 	max_slots = 6
@@ -74,7 +89,7 @@
 /datum/storage/box/monkey_cubes/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
-	set_holdable(/obj/item/food/monkeycube)
+	set_holdable(/obj/item/food/monkeycube, /obj/item/food/monkeycube/gorilla)
 
 ///Gorilla cubes box
 /datum/storage/box/gorilla_cubes
@@ -83,7 +98,7 @@
 /datum/storage/box/gorilla_cubes/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
-	set_holdable(/obj/item/food/monkeycube)
+	set_holdable(/obj/item/food/monkeycube/gorilla)
 
 ///Match box
 /datum/storage/box/matches
