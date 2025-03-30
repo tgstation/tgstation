@@ -223,9 +223,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
 	if(!override_dir)
 		var/realtime = world.realtime
-		var/texttime = time2text(realtime, "YYYY/MM/DD", 0)
+		var/texttime = time2text(realtime, "YYYY/MM/DD", TIMEZONE_UTC)
 		GLOB.log_directory = "data/logs/[texttime]/round-"
-		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD", 0)]_"
+		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD", TIMEZONE_UTC)]_"
 		GLOB.picture_log_directory = "data/picture_logs/[texttime]/round-"
 		if(GLOB.round_id)
 			GLOB.log_directory += "[GLOB.round_id]"

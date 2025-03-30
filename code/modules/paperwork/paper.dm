@@ -223,9 +223,9 @@
 	if(is_signature)
 		field_text = signature_name
 	else if(is_date)
-		field_text = "[time2text(world.timeofday, "DD/MM")]/[CURRENT_STATION_YEAR]"
+		field_text = "[time2text(world.timeofday, "DD/MM", 0)]/[CURRENT_STATION_YEAR]"
 	else if(is_time)
-		field_text = time2text(world.timeofday, "hh:mm")
+		field_text = time2text(world.timeofday, "hh:mm", 0)
 
 	var/field_font = is_signature ? SIGNATURE_FONT : font
 

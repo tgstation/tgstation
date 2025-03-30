@@ -1,6 +1,6 @@
 /// Returns UTC timestamp with the specifified format and optionally deciseconds
 /proc/time_stamp(format = "hh:mm:ss", show_ds)
-	var/time_string = time2text(world.timeofday, format, 0)
+	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
 /// Returns timestamp since the server started, for use with world.time
