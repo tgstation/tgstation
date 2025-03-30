@@ -39,6 +39,11 @@
 	ADD_TRAIT(src, TRAIT_CAN_MOUNT_HUMANS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_CAN_MOUNT_CYBORGS, INNATE_TRAIT)
 
+	var/datum/action/cooldown/spell/pointed/flash/flash = locate() in src.actions
+	if(!flash)
+		flash = new(src.mind)
+		flash.Grant(src)
+
 /mob/living/carbon/human/proc/setup_physiology()
 	physiology = new()
 
