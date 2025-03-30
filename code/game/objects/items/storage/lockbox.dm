@@ -93,6 +93,9 @@
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	if(!(flags_1 & INITIALIZED_1))
+		return
+
 	open = TRUE
 	update_appearance()
 

@@ -79,6 +79,9 @@
 
 /obj/item/storage/fancy/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	if(!(flags_1 & INITIALIZED_1))
+		return
+
 	if(open_status == FANCY_CONTAINER_CLOSED)
 		open_status = FANCY_CONTAINER_OPEN
 	update_appearance()
@@ -94,7 +97,6 @@
 	base_icon_state = "donutbox"
 	spawn_type = /obj/item/food/donut/plain
 	spawn_count = 6
-	open_status = TRUE
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
