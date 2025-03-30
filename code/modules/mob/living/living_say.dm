@@ -377,16 +377,43 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 /// Try and cast a spell
 /mob/living/proc/check_spell_invoked(message)
-	if (!COOLDOWN_FINISHED(src, invoke_spell_cooldown))
-		balloon_alert(src, "too soon!") // Executus, what is the meaning of this intrusion?
-		return
-
 	message = html_decode(message)
 	if (!length(GLOB.spells_by_invocation))
 		generate_invokable_spells()
 
 	var/spell_type = GLOB.spells_by_invocation[message]
 	if (!spell_type)
+		return
+
+	if (!COOLDOWN_FINISHED(src, invoke_spell_cooldown))
+		balloon_alert(src, "too soon!") // Executus, what is the meaning of this intrusion?
+
+		var/static/list/oom_phrases = list(
+			"it didnt work :(",
+			"I can't cast that yet.",
+			"I can't do that right now.",
+			"I don't have enough mana.",
+			"I don't want to do that right now.",
+			"I need to recharge.",
+			"I'm short on mana.",
+			"It's not time for that yet.",
+			"Let's do that again some other time.",
+			"Maybe some other time.",
+			"My mana is low.",
+			"Not enough mana.",
+			"Not enough minerals.",
+			"Not right now.",
+			"Not ready yet.",
+			"Please wait a little longer.",
+			"The stars are not yet in alignment.",
+			"The time is not yet right.",
+			"There's a time and place for everything, but not now.",
+			"Try again later.",
+			"You have cast this too soon.",
+			"You must construct additional pylons.",
+		)
+
+		say(pick(oom_phrases), forced = "spell cast error")
 		return
 
 	COOLDOWN_START(src, invoke_spell_cooldown, INFINITY)
