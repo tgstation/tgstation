@@ -150,6 +150,14 @@
 	desc = "Stubborn stains, grease and grime got you cornered? No duty to retreat when you got BLAM!™ on your side!\nBLAM!™ - A WaffleCo product."
 	list_reagents = list(/datum/reagent/space_cleaner = 200)
 
+/obj/item/reagent_containers/cup/jerrycan/milk
+	name = "milk jug"
+	label_type = LABEL_NT_MINI
+	cap_type = CAP_BLUE
+	desc = "A jug of most wholesome milk."
+	list_reagents = list(/datum/reagent/consumable/milk = 200)
+
+
 #undef LABEL_TEXT
 #undef LABEL_TEXT_OLD
 #undef LABEL_INFLAMMABLE
