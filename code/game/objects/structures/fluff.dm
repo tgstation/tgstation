@@ -315,29 +315,37 @@
 /obj/structure/fluff/tram_rail/end
 	icon_state = "railend"
 
-/obj/structure/fluff/tram_rail/electric
-	desc = "Great for trams, not so great for skating. This one is a power rail."
-
 /obj/structure/fluff/tram_rail/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric
+	desc = "Great for trams, not so great for skating. This one is a power rail."
+	/// What power channel from the APC do we check for power?
+	var/power_channel = AREA_USAGE_ENVIRON
 
 /obj/structure/fluff/tram_rail/electric/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
 
+/obj/structure/fluff/tram_rail/electric/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/electrified_buckle,\
+		input_requirements = SHOCK_REQUIREMENT_AREA_POWER,\
+		shock_immediately = TRUE,\
+		print_message = FALSE,\
+		damage_on_shock = 5,\
+		loop_length = 8 SECONDS,\
+		area_power_channel = power_channel,\
+		shock_flags = SHOCK_NOSTUN\
+	)
+
 /obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(user.electrocute_act(75, src))
+	var/area/our_area = get_area(src)
+	if(our_area?.powered(power_channel) && user.electrocute_act(75, src))
 		do_sparks(5, TRUE, src)
-
-/obj/structure/fluff/tram_rail/electric/post_buckle_mob(mob/living/target)
-	. = ..()
-	target.apply_status_effect(/datum/status_effect/repeatedly_electrocute, src, 5) // Don't do too much damage because we probably want the tram to hit them
-
-/obj/structure/fluff/tram_rail/electric/post_unbuckle_mob(mob/living/target)
-	. = ..()
-	target.remove_status_effect(/datum/status_effect/repeatedly_electrocute)
 
 /obj/structure/fluff/broken_canister_frame
 	name = "broken canister frame"

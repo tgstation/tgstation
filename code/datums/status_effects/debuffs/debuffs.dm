@@ -690,44 +690,6 @@
 	desc = "You've been zapped with something and your hands can't stop shaking! You can't seem to hold on to anything."
 	icon_state = "convulsing"
 
-/datum/status_effect/repeatedly_electrocute
-	id = "repeated_electrocution"
-	tick_interval = 8 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/repeatedly_electrocute
-	/// How much damage to we do every time?
-	var/damage
-	/// What do we print as our damage source?
-	var/atom/shock_source
-	/// Flags to use for shock details
-	var/shock_flags = SHOCK_NOSTUN
-
-/datum/status_effect/repeatedly_electrocute/on_creation(mob/living/new_owner, shock_source = "something", damage = 30)
-	src.damage = damage
-	src.shock_source = shock_source
-	return ..()
-
-/datum/status_effect/repeatedly_electrocute/on_apply()
-	. = ..()
-	owner.electrocute_act(shock_damage = damage, source = shock_source, flags = shock_flags)
-	RegisterSignal(shock_source, COMSIG_QDELETING, PROC_REF(on_source_deleted))
-
-/datum/status_effect/repeatedly_electrocute/on_remove()
-	. = ..()
-	UnregisterSignal(shock_source, COMSIG_QDELETING)
-
-/datum/status_effect/repeatedly_electrocute/tick(seconds_between_ticks)
-	owner.electrocute_act(shock_damage = damage, source = shock_source, flags = shock_flags)
-
-/// If the thing electrocuting us is destroyed, delete this
-/datum/status_effect/repeatedly_electrocute/proc/on_source_deleted()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/atom/movable/screen/alert/status_effect/repeatedly_electrocute
-	name = "Electrocuted"
-	desc = "You're being electrocuted! You should probably stop touching whatever you are touching."
-	icon_state = "electrocuted"
-
 /datum/status_effect/dna_melt
 	id = "dna_melt"
 	duration = 600
