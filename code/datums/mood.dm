@@ -397,6 +397,11 @@
 		if(MOOD_LEVEL_HAPPY4)
 			msg += "[span_boldnicegreen("I love life!")]<br>"
 
+	var/list/additional_lines = list()
+	SEND_SIGNAL(user, COMSIG_CARBON_MOOD_CHECK, additional_lines)
+	if (length(additional_lines))
+		msg += "[additional_lines.Join("<br>")]<br>"
+
 	msg += "[span_notice("Moodlets:")]<br>"//All moodlets
 	if(mood_events.len)
 		for(var/category in mood_events)

@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	/// The box's current state, and whether it can be interacted with in different ways
 	var/box_state = MYSTERY_BOX_STANDBY
 	/// The object that represents the rapidly changing item that will be granted upon being claimed. Is not, itself, an item.
-	var/obj/mystery_box_item/presented_item
+	var/obj/effect/abstract/mystery_box_item/presented_item
 	/// A timer for how long it takes for the box to start its expire animation
 	var/box_expire_timer
 	/// A timer for how long it takes for the box to close itself
@@ -187,7 +187,10 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/proc/activate(mob/living/user)
 	box_state = MYSTERY_BOX_CHOOSING
 	update_icon_state()
-	presented_item = new(loc)
+	presented_item = new(src)
+	presented_item.vis_flags = VIS_INHERIT_PLANE
+	presented_item.flags_1 |= IS_ONTOP_1
+	vis_contents += presented_item
 	presented_item.start_animation(src)
 	current_sound_channel = SSsounds.reserve_sound_channel(src)
 	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
@@ -297,12 +300,12 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	return ..()
 
 /// This represents the item that comes out of the box and is constantly changing before the box finishes deciding. Can probably be just an /atom or /movable.
-/obj/mystery_box_item
+/obj/effect/abstract/mystery_box_item
 	name = "???"
 	desc = "Who knows what it'll be??"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
-	pixel_y = -8
+	pixel_z = -4
 	uses_integrity = FALSE
 
 	/// The currently selected item. Constantly changes while choosing, determines what is spawned if the prize is claimed, and its current icon
@@ -313,36 +316,36 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/claimable = FALSE
 
 
-/obj/mystery_box_item/Initialize(mapload)
+/obj/effect/abstract/mystery_box_item/Initialize(mapload)
 	. = ..()
 	var/matrix/starting = matrix()
 	starting.Scale(0.5,0.5)
 	transform = starting
 	add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = COLOR_VIVID_YELLOW))
 
-/obj/mystery_box_item/Destroy(force)
+/obj/effect/abstract/mystery_box_item/Destroy(force)
 	parent_box = null
 	return ..()
 
 // this way, clicking on the prize will work the same as clicking on the box
-/obj/mystery_box_item/attack_hand(mob/living/user, list/modifiers)
+/obj/effect/abstract/mystery_box_item/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(claimable)
 		parent_box.grant_weapon(user)
 
 /// Start pushing the prize up
-/obj/mystery_box_item/proc/start_animation(atom/parent)
+/obj/effect/abstract/mystery_box_item/proc/start_animation(atom/parent)
 	parent_box = parent
 	loop_icon_changes()
 
 /// Keep changing the icon and selected path
-/obj/mystery_box_item/proc/loop_icon_changes()
+/obj/effect/abstract/mystery_box_item/proc/loop_icon_changes()
 	var/change_delay = 1 // the running count of the delay
 	var/change_delay_delta = 1 // How much to increment the delay per step so the changing slows down
 	var/change_counter = 0 // The running count of the running count
 
 	var/matrix/starting = matrix()
-	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
+	animate(src, pixel_z = 10, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
 
 	while((change_counter + change_delay_delta + change_delay) < MBOX_DURATION_CHOOSING)
 		change_delay += change_delay_delta
@@ -353,12 +356,12 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	addtimer(CALLBACK(src, PROC_REF(present_item)), MBOX_DURATION_CHOOSING)
 
 /// animate() isn't up to the task for queueing up icon changes, so this is the proc we call with timers to update our icon
-/obj/mystery_box_item/proc/update_random_icon(new_item_type)
+/obj/effect/abstract/mystery_box_item/proc/update_random_icon(new_item_type)
 	var/atom/movable/new_item = new_item_type
 	icon = new_item::icon
 	icon_state = new_item::icon_state
 
-/obj/mystery_box_item/proc/present_item()
+/obj/effect/abstract/mystery_box_item/proc/present_item()
 	var/atom/movable/selected_item = selected_path
 	add_filter("ready_outline", 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "size" = 0.2))
 	name = selected_item::name
@@ -366,10 +369,10 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	claimable = TRUE
 
 /// Sink back into the box
-/obj/mystery_box_item/proc/expire_animation()
+/obj/effect/abstract/mystery_box_item/proc/expire_animation()
 	var/matrix/shrink_back = matrix()
 	shrink_back.Scale(0.5,0.5)
-	animate(src, pixel_y = -8, transform = shrink_back, time = MBOX_DURATION_EXPIRING)
+	animate(src, pixel_z = -4, transform = shrink_back, time = MBOX_DURATION_EXPIRING)
 
 #undef MYSTERY_BOX_COOLING_DOWN
 #undef MYSTERY_BOX_STANDBY

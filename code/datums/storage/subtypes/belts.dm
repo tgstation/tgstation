@@ -2,7 +2,7 @@
 /datum/storage/utility_belt
 	max_total_storage = 21
 
-/datum/storage/chief_utility_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/utility_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 
 	set_holdable(GLOB.tool_items + list(

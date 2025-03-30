@@ -14,6 +14,7 @@
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
 import { globalEvents } from 'tgui-core/events';
+import { BooleanLike } from 'tgui-core/react';
 
 import { setupDrag } from './drag';
 import { focusMap } from './focus';
@@ -217,6 +218,7 @@ export const backendMiddleware = (store) => {
         Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
+        Byond.sendMessage('visible');
         perf.mark('resume/finish');
         if (process.env.NODE_ENV !== 'production') {
           logger.log(
@@ -256,12 +258,12 @@ type BackendState<TData> = {
       name: string;
       layout: string;
     };
-    refreshing: boolean;
+    refreshing: BooleanLike;
     window: {
       key: string;
       size: [number, number];
-      fancy: boolean;
-      locked: boolean;
+      fancy: BooleanLike;
+      locked: BooleanLike;
     };
     client: {
       ckey: string;
