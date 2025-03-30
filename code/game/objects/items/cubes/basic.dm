@@ -274,6 +274,7 @@
 		/datum/reagent/consumable/liquidgibs = 30,
 		/datum/reagent/medicine/strange_reagent = 1,
 	)
+	foodtypes = MEAT | GORE | RAW
 	tastes = list("chicken" = 1, "an old lover" = 1, "iron" = 1)
 	spawned_mob = /mob/living/carbon/human/monkeybrain
 
@@ -302,6 +303,7 @@
 		/datum/reagent/medicine/omnizine = 30,
 		/datum/reagent/medicine/strange_reagent = 1,
 	)
+	foodtypes = MEAT | GORE | RAW | SUGAR
 	tastes = list("nostalgia" = 1, "sovl" = 1, "the good times" = 1)
 	spawned_mob = /mob/living/basic/spaceman
 

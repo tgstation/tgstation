@@ -332,29 +332,37 @@
 /obj/machinery/quartic_reliquary/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(LAZYLEN(current_cubes))
-		return remove_cube_hand(user)[1]
+		return remove_cube_hand(user)
 
 ///Take the top cube from the stack
 /obj/machinery/quartic_reliquary/proc/remove_cube_hand(mob/living/user)
+	if(!LAZYLEN(current_cubes))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	var/atom/movable/cube_to_remove = pop(current_cubes)
+	if(!cube_to_remove)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(!user.put_in_hands(cube_to_remove))
+		cube_to_remove.forceMove(get_turf(src))
+	update_current_rarity()
+	balloon_alert(user, "[cube_to_remove] removed")
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/// Pop it out with a circuit (since the circuit hates if we use put_in_hands())
+/obj/machinery/quartic_reliquary/proc/remove_cube_circuit(mob/living/user)
 	var/failtext = ""
 	if(!LAZYLEN(current_cubes))
 		failtext = "no cubes to eject!"
-		return list(SECONDARY_ATTACK_CONTINUE_CHAIN, failtext)
+		return list(FALSE, failtext)
 	var/atom/movable/cube_to_remove = pop(current_cubes)
 	if(!cube_to_remove)
 		failtext = "failed to find a movable cube!"
-		return list(SECONDARY_ATTACK_CONTINUE_CHAIN, failtext)
-	/// Need to put an elseif even though they do effectively the same thing because of the circuit requirement not liking put_in_hands()
-	//! Update: nevermind for some reason it just gets angry either way so fuck it who cares
-	if(!user)
-		cube_to_remove.forceMove(get_turf(src))
-	else if(!user.put_in_hands(cube_to_remove))
-		cube_to_remove.forceMove(get_turf(src))
+		return list(FALSE, failtext)
+	cube_to_remove.forceMove(get_turf(src))
 	update_current_rarity()
-	if(user)
-		balloon_alert(user, "cube removed")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	return list(SECONDARY_ATTACK_CONTINUE_CHAIN, "success!")
+	return list(TRUE, "success!")
+
 
 /obj/machinery/quartic_reliquary/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
@@ -572,18 +580,18 @@
 	CIRCUIT_TRIGGER
 	if(!attatched_reliquary)
 		return
-	var/list/cube_eject_results = attatched_reliquary.remove_cube_hand(null)
-	if(cube_eject_results[2] != "success!")
+	var/list/cube_eject_results = attatched_reliquary.remove_cube_circuit()
+	if(!cube_eject_results[1])
 		why_fail.set_output(cube_eject_results[2])
 		on_fail.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/quartic_reliquary_data/get_ui_notices()
 	. = ..()
 	. += create_table_notices(list("cube", "rarity"))
-	. += create_ui_notice("Rarity to Number Guide:", "orange")
-	. += create_ui_notice("Common = 1", "white")
-	. += create_ui_notice("Uncommon = 2", "green")
-	. += create_ui_notice("Rare = 3", "blue")
-	. += create_ui_notice("Epic = 4", "purple")
-	. += create_ui_notice("Legendary = 5", "red")
-	. += create_ui_notice("Mythical = 6", "pink")
+	. += create_ui_notice("Rarity to Number Guide:", "orange", "info")
+	. += create_ui_notice("Common = [COMMON_CUBE]", "white")
+	. += create_ui_notice("Uncommon = [UNCOMMON_CUBE]", "green")
+	. += create_ui_notice("Rare = [RARE_CUBE]", "blue")
+	. += create_ui_notice("Epic = [EPIC_CUBE]", "purple")
+	. += create_ui_notice("Legendary = [LEGENDARY_CUBE]", "red")
+	. += create_ui_notice("Mythical = [MYTHICAL_CUBE]", "pink")

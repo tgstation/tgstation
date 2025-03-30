@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(legendary_cubes, list(
 	/obj/item/food/monkeycube/spessman = 25,
 	/obj/item/stock_parts/micro_laser/charged_blaster = 25,
 	/obj/item/grenade/impact/nitro = 25,
-	//Pain Box(Dune) maxes out your pain, immediately fills you with a lot of determination
+	/obj/item/cube/pain = 25,
 ))
 
 /// List of Mythical Cubes
@@ -104,11 +104,11 @@ GLOBAL_LIST_INIT(mythical_cubes, list(
 	/obj/item/cube/random/mythical = 30,
 	/obj/item/cube/craft = 25,
 	/obj/item/cube/generic = 25,
-	//Dehydration cube(megamind) monkey cube but random! Take from gold slime pool.
+	/obj/item/food/monkeycube/dehydrated = 25,
 	/obj/item/cube/blender = 25,
 	/obj/item/cube/companion = 25,
 	/obj/item/cube/time_cube = 25,
-	//Escafil Device (Animorphs) morph belt/spell w/ cooldown
+	/obj/item/cube/escafil = 25,
 	/obj/item/stock_parts/power_store/cell/tesseract = 25,
 	/obj/item/gift/anything/questionmark = 25,
 ))

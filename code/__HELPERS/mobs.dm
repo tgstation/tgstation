@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
-/proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
+/proc/create_random_mob(spawn_location, mob_class)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
 	var/static/list/mob_spawn_nicecritters = list() // and possible friendly mobs
 
@@ -431,11 +431,18 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 					mob_spawn_nicecritters += basic_mob
 
 	var/chosen
-	if(mob_class == FRIENDLY_SPAWN)
-		chosen = pick(mob_spawn_nicecritters)
+	switch(mob_class)
+		if(FRIENDLY_SPAWN)
+			chosen = pick(mob_spawn_nicecritters)
+		if(HOSTILE_SPAWN)
+			chosen = pick(mob_spawn_meancritters)
+		else
+			chosen = pick_recursive(unique_merge_list(mob_spawn_nicecritters, mob_spawn_meancritters))
+	var/mob/living/spawned_mob
+	if(spawn_location)
+		spawned_mob = new chosen(spawn_location)
 	else
-		chosen = pick(mob_spawn_meancritters)
-	var/mob/living/spawned_mob = new chosen(spawn_location)
+		spawned_mob = chosen
 	return spawned_mob
 
 /proc/passtable_on(target, source)

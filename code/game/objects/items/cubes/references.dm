@@ -694,6 +694,7 @@
 	/// Who owns us
 	var/datum/weakref/owner
 	/// Handles finding us some cubes
+	/// Finnicky since I believe it only checks if the cubes are the things that move and not you, but whatever it works enough
 	var/datum/proximity_monitor/advanced/cube/mood_buff
 
 /obj/item/cube/vinyl/examine(mob/user)
@@ -764,10 +765,185 @@
 /datum/mood_event/vinyl_cube_seen
 	description = "That cube <i>does</i> look pretty hip!"
 	mood_change = 1
-	timeout = 1 MINUTES
 	category = "nice_cube"
 
 /datum/mood_event/vinyl_cube_seen/add_effects(obj/cube, rarity)
 	mood_change = rarity
 	description = "[cube] <i>does</i> look pretty hip!"
 	return ..()
+
+
+// Dehydrated Cube (Megamind)
+/obj/item/food/monkeycube/dehydrated
+	name = "dehydrated cube"
+	desc = "'olo"
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "dehydrated"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
+	bite_consumption = 1
+	faction = FACTION_NEUTRAL
+	food_reagents = list(
+		/datum/reagent/ash = 30,
+		/datum/reagent/medicine/strange_reagent = 1,
+	)
+	foodtypes = MEAT | TOXIC
+	tastes = list("dust" = 1, "dryness" = 1)
+
+/obj/item/food/monkeycube/dehydrated/Initialize(mapload)
+	spawned_mob = create_random_mob()
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = MYTHICAL_CUBE, isreference = TRUE, ismapload = mapload)
+	add_overlay(emissive_appearance(icon, "dehydrated_glow", src))
+
+/obj/item/food/monkeycube/dehydrated/examine(mob/user)
+	. = ..()
+	. += span_tinynotice("The bottom says: <b>Just add water!</b>")
+
+/obj/item/food/monkeycube/dehydrated/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_CYAN))
+
+/// Escafil Device (Animorphs)
+/obj/item/cube/escafil
+	name = "escafil device"
+	desc = "An ancient cosmic device capable of bestowing upon the holder the ability to change forms at will."
+	icon_state = "escafil"
+	rarity = MYTHICAL_CUBE
+	reference = TRUE
+	overwrite_held_color = COLOR_SAMPLE_PURPLE
+	item_flags = NOBLUDGEON
+	w_class = WEIGHT_CLASS_SMALL
+	/// Typepath of a mob we have scanned, we only store one at a time
+	var/stored_mob_type
+	/// Our current transformation action
+	/// If you don't put it in your pocket you are permanently stuck as that creature until death
+	/// and that's really funny
+	var/datum/action/cooldown/spell/shapeshift/polymorph_belt/transform_action
+
+/obj/item/cube/escafil/Initialize(mapload)
+	. = ..()
+	var/static/cached_texture_icon
+	if(!cached_texture_icon)
+		cached_texture_icon = icon('icons/mob/human/textures.dmi', "spacey")
+
+	add_filter("space_filter", 2, layering_filter(icon = cached_texture_icon, blend_mode = BLEND_INSET_OVERLAY))
+
+/obj/item/cube/escafil/Destroy(force)
+	QDEL_NULL(transform_action)
+	return ..()
+
+/obj/item/cube/escafil/examine(mob/user)
+	. = ..()
+	if (stored_mob_type)
+		var/mob/living/will_become = stored_mob_type
+		. += span_notice("It contains digitised [initial(will_become.name)] DNA.")
+
+/obj/item/cube/escafil/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	if (.)
+		return
+	if (!isliving(target_mob))
+		return
+	if (!isanimal_or_basicmob(target_mob))
+		balloon_alert(user, "target too complex!")
+		return TRUE
+	if (target_mob.mob_biotypes & (MOB_HUMANOID|MOB_ROBOTIC|MOB_SPECIAL|MOB_SPIRIT|MOB_UNDEAD))
+		balloon_alert(user, "incompatible!")
+		return TRUE
+	if (!target_mob.compare_sentience_type(SENTIENCE_ORGANIC))
+		balloon_alert(user, "target too intelligent!")
+		return TRUE
+	if (stored_mob_type == target_mob.type)
+		balloon_alert(user, "already scanned!")
+		return TRUE
+	if (DOING_INTERACTION_WITH_TARGET(user, target_mob))
+		balloon_alert(user, "busy!")
+		return TRUE
+	balloon_alert(user, "scanning...")
+	visible_message(span_notice("[user] begins scanning [target_mob] with [src]."))
+	if (!do_after(user, delay = 5 SECONDS, target = target_mob))
+		return TRUE
+	visible_message(span_notice("[user] scans [target_mob] with [src]."))
+	stored_mob_type = target_mob.type
+	update_transform_action()
+	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+	return TRUE
+
+/// Make sure we can transform into the scanned target
+/obj/item/cube/escafil/proc/update_transform_action()
+	if (isnull(stored_mob_type))
+		return
+	if (isnull(transform_action))
+		transform_action = add_item_action(/datum/action/cooldown/spell/shapeshift/polymorph_belt)
+	transform_action.update_type(stored_mob_type)
+
+
+/// Pain Box (Dune)
+/obj/item/cube/pain
+	name = "nerve inducer box"
+	desc = "A box with a hole at the front, the perfect size for a hand."
+	icon_state = "pain"
+	rarity = MYTHICAL_CUBE
+	reference = TRUE
+	overwrite_held_color = COLOR_TRAM_LIGHT_BLUE
+	/// Time to use for the cooldown
+	var/time_for_cooldown = 5 MINUTES
+
+	COOLDOWN_DECLARE(pain_cooldown)
+
+/obj/item/cube/pain/attack_self(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, pain_cooldown))
+		balloon_alert(user, "not ready!")
+		return
+	if(!ishuman(user))
+		balloon_alert(user, "only humans can use [src]!")
+		return
+	balloon_alert(user, "focusing...")
+	if(!do_after(user, 2 SECONDS))
+		balloon_alert(user, "you lose your nerve and pull away")
+		return
+	var/mob/living/carbon/human/owner = user
+	var/hitzone = owner.held_index_to_dir(owner.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+	var/obj/item/bodypart/affecting = owner.get_active_hand()
+	owner.apply_damage(5, BURN, hitzone)
+	owner.cause_wound_of_type_and_severity(WOUND_PIERCE, affecting, WOUND_SEVERITY_TRIVIAL)
+	owner.emote("scream")
+	owner.reagents.add_reagent(/datum/reagent/determination/painbox, WOUND_DETERMINATION_MAX)
+	COOLDOWN_START(src, pain_cooldown, time_for_cooldown)
+	icon_state = "pain_cooldown"
+	flick("pain_hit", src)
+	balloon_alert_to_viewers("snaps shut!")
+	addtimer(CALLBACK(src, PROC_REF(cooldown_finished_flick)), time_for_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(cracksound)), 8 DECISECONDS)
+
+/// To line up with the flick() we offset this by a few deciseconds
+/obj/item/cube/pain/proc/cracksound()
+	playsound(src, 'sound/effects/wounds/crack2.ogg', 70, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/// Opens back up visually
+/obj/item/cube/pain/proc/cooldown_finished_flick()
+	icon_state = "pain"
+	flick("pain_open", src)
+	balloon_alert_to_viewers("opens up")
+
+/obj/item/cube/pain/examine(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, pain_cooldown))
+		. += span_notice("It will open again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, pain_cooldown))]")
+
+/datum/reagent/determination/painbox/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.clear_mood_event("pain_cube")
+
+/datum/reagent/determination/painbox/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	affected_mob.add_mood_event("pain_cube", /datum/mood_event/pain_cube_used)
+
+/datum/mood_event/pain_cube_used
+	description = "<b>OH GOD MY HAND!</b>"
+	mood_change = -20
+	category = "pain_cube"
+	/// We should ideally remove this anyway from the chem but just in case something causes that to be skipped, do this
+	timeout = 2 MINUTES
