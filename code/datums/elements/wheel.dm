@@ -1,23 +1,19 @@
 /// Element which spins you as you move
 /datum/element/wheel
-	/// Who we hook to
-	var/atom/movable/owner
+
 
 /datum/element/wheel/Attach(datum/target)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	src.owner = target
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /datum/element/wheel/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-	if(isnull(owner))
-		return ..()
+	var/atom/movable/owner = source
 	var/matrix/to_turn = matrix(owner.transform)
 	to_turn = turn(owner.transform, 360 - to_turn.get_angle())
 	animate(src.owner, transform = to_turn, time = 0.1 SECONDS, flags = ANIMATION_PARALLEL)
-	owner = null
 	return ..()
 
 /datum/element/wheel/proc/on_moved(atom/movable/moved, atom/oldloc, direction, forced)
