@@ -53,26 +53,10 @@
 		item_picked.undo_messy(duration = 0)
 
 /// Messes up items when you drop them to the floor
-/mob/dropItemToGround(obj/item/item_dropped, force, silent, invdrop)
+/mob/living/dropItemToGround(obj/item/item_dropped, force, silent, invdrop)
 	. = ..()
-	if(!skew_items)
+	if(combat_mode == FALSE)
 		return
 	if(. && item_dropped)
 		if(!(item_dropped.item_flags & NO_PIXEL_RANDOM_DROP))
 			item_dropped.do_messy(duration = 2)
-
-//What if we made it toggleable
-/mob
-	var/skew_items = TRUE
-
-/mob/verb/item_skew_toggle()
-	set name = "Toggle Item Drop Rotation"
-	set category = "IC"
-	set instant = TRUE
-
-	if (skew_items)
-		skew_items = FALSE
-		to_chat(src, span_notice("You will now gently put items down without skewing them."))
-	else
-		skew_items = TRUE
-		to_chat(src, span_notice("You will now haphazardly drop items everywhere."))
