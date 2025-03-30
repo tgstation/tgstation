@@ -32,6 +32,8 @@ do { \
 	actions_types = list(/datum/action/item_action/chameleon/change/jumpsuit)
 	action_slots = ALL
 
+/obj/item/clothing/under/chameleon/broken
+
 /obj/item/clothing/under/chameleon/broken/Initialize(mapload)
 	. = ..()
 	BREAK_CHAMELEON_ACTION(src)
@@ -278,7 +280,12 @@ do { \
 	desc = "Holds tools."
 	actions_types = list(/datum/action/item_action/chameleon/change/belt)
 	action_slots = ALL
-	storage_type = /datum/storage/chameleon_belt
+
+/obj/item/storage/belt/chameleon/Initialize(mapload)
+	. = ..()
+	atom_storage.silent = TRUE
+
+/obj/item/storage/belt/chameleon/broken
 
 /obj/item/storage/belt/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -290,6 +297,7 @@ do { \
 	actions_types = list(/datum/action/item_action/chameleon/change/headset)
 	action_slots = ALL
 
+/obj/item/radio/headset/chameleon/broken
 
 /obj/item/radio/headset/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -301,6 +309,8 @@ do { \
 	actions_types = list(/datum/action/item_action/chameleon/change/tablet)
 	action_slots = ALL
 
+/obj/item/modular_computer/pda/chameleon/broken
+
 /obj/item/modular_computer/pda/chameleon/broken/Initialize(mapload)
 	. = ..()
 	BREAK_CHAMELEON_ACTION(src)
@@ -309,6 +319,8 @@ do { \
 /obj/item/stamp/chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/stamp)
 	action_slots = ALL
+
+/obj/item/stamp/chameleon/broken
 
 /obj/item/stamp/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -328,6 +340,8 @@ do { \
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/chameleon/change/neck)
 	action_slots = ALL
+
+/obj/item/clothing/neck/chameleon/broken
 
 /obj/item/clothing/neck/chameleon/broken/Initialize(mapload)
 	. = ..()

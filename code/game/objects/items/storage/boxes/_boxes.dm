@@ -10,8 +10,6 @@
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/cardboard_box/cardboardbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/cardboard_box/cardboardbox_pickup.ogg'
-	storage_type = /datum/storage/box
-
 	/// What material do we get when we fold this box?
 	var/foldable_result = /obj/item/stack/sheet/cardboard
 	/// What drawing will we get on the face of the box?
@@ -19,6 +17,10 @@
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	update_appearance()
+	atom_storage.open_sound = 'sound/items/handling/cardboard_box/cardboard_box_open.ogg'
+	atom_storage.rustle_sound = 'sound/items/handling/cardboard_box/cardboard_box_rustle.ogg'
 	if(check_holidays(APRIL_FOOLS))
 		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE, ismapload = mapload)
 

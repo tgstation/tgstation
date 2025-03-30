@@ -1,5 +1,0 @@
-author: "Ezel"
-delete-after: True
-changes:
-  - map: "Hopline looks now more like a line."
-  - bugfix: "medbay grid is wired to eachother again"
