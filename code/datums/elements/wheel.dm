@@ -13,7 +13,7 @@
 	var/atom/movable/owner = source
 	var/matrix/to_turn = matrix(owner.transform)
 	to_turn = turn(owner.transform, 360 - to_turn.get_angle())
-	animate(src.owner, transform = to_turn, time = 0.1 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(owner, transform = to_turn, time = 0.1 SECONDS, flags = ANIMATION_PARALLEL)
 	return ..()
 
 /datum/element/wheel/proc/on_moved(atom/movable/moved, atom/oldloc, direction, forced)
