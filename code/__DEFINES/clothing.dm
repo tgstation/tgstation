@@ -43,4 +43,5 @@
 /// How much integrity does a shirt lose every time we bite it?
 #define MOTH_EATING_CLOTHING_DAMAGE 15
 
-#define CLOTHING_MOD_OVERSLOTTING (1<<15) // Allows this clothing item to overslot other items when equipped
+/// Allows this clothing item to overslot other items when equipped
+#define CLOTHING_MOD_OVERSLOTTING (1<<15)
