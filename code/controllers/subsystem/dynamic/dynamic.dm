@@ -367,23 +367,57 @@ SUBSYSTEM_DEF(dynamic)
 
 	return .
 
-/// Generate the advisory level depending on the shown threat level.
+/// Generate the advisory level depending on whatever annoys Security players
 /datum/controller/subsystem/dynamic/proc/generate_advisory_level()
 	var/advisory_string = ""
-	switch(round(threat_level))
-		if(0 to 65)
-			advisory_string += "Advisory Level: <b>Yellow Star</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
-		if(66 to 79)
-			advisory_string += "Advisory Level: <b>Red Star</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
-		if(80 to 99)
-			advisory_string += "Advisory Level: <b>Black Orbit</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Black Orbit. Your sector's local communications network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert and vigilant against any other potential threats."
-		if(100)
-			advisory_string += "Advisory Level: <b>Midnight Sun</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
+	
+	//Part 1: Making the name of the level
+	var/advisory_name = ""
+	
+	//30% chance for a prefix
+	if (prob(30))
+		//The space is because one of them has a hyphen
+		advisory_name += pick("Bright ","Dark ","Light ","Old ","Natural ","Weird ","Alien ","Dim ","Pale ","Vivid ","Electric ","Powder ","Ruddy ","Neon ","Extremely ","Very ","Slightly ","Off-","Medium ","Russian ","French ","African ","Painfully ","Weirdly ","Rich ","Dusty ","Drab ","Marginally ")	
+	
+	//Initial color
+	advisory_name += pick("Burgundy","Carmine","Cinnabar","Crimson","Garnet","Mahogany","Maroon","Rust","Scarlet","Vermilion","Amaranth","Coral","Fuschia","Lilac","Rose","Peach","Salmon","Amber","Brown","Goldenrod","Saffron","Tangerine","Beige","Chartreuse","Citron","Cream","Ivory","Khaki","Marigold","Mustard","Aquamarine","Celadon","Emerald","Jade","Lime","Mint","Olive","Sage","Viridian","Azure","Cerulean","Teal","Turquoise","Blurple","Denim","Ice","Lapis","Lavender","Navy","Periwinkle","Sapphire","Ultramarine","Amethyst","Carnation","Cerise","Fuchsia","Grape","Indigo","Magenta","Mauve","Orchid","Plum","Violet","Auburn","Bone","Bronze","Caramel","Chocolate","Copper","Khaki","Sand","Tan","Charcoal","Ebony","Jet","Onyx","Vantablack","Silver","Slate","Gunmetal","Alabaster","Pearl","Platinum","Snow","Piss")
 
+	//10% chance for a suffix
+	if (prob(10))
+		advisory_name += pick("-ish","-like","-kinda","-sorta","-adjacent")
+		
+	//Add a celestial body
+	advisory_name += " "
+	advisory_name += pick("Star","Moon","Orbit","Sun","Dwarf","Planet","Meteor","Asteroid","Hole","Ring","Horizon","Galaxy","Constellation","Spiral","Sector","Vortex","Universe","Cluster","Neutron","Disk","Gas","Dust","Ocean","Nebula","Binary","Uranus","Elliptical","Comet","Nugget","Pulsar","Void","Clown")
+	
+	//Part 2: Making the stupid mad-libs threat report
+	var/nt_department = pick("Department of Intelligence","Department of Observation","Department of Ominous Feelings","Department of Statistical Probabilities","Department of Intern Betting","Department of Guessing","Department of Omniscience","Department of Timeline Correction","Department of Better Departments","Department of Advanced Engineering","Department of Stupid Shithead Idiots","Department of Clowns","Department of Knowledge","Department of Spying","Department of Making Shit Up","Department of Divination","Department of Espionage","Department of Oversight","Department of Data Analysis","Department of Asking Questions","Department of Praying","Department of Thinking Too Much")
+	
+	var/evil_threat = pick("Syndicate","Wizard Federation","Nar'Sian Cult","Changeling Coalition","Space Pirate Armada","Rat King Empire","Donk Co.","Waffle Co.","Gorlex Marauder","Tiger Co-Operative","Third Soviet Union","Space American","Cybersun Industries","Blob","Clown Planet","Heretical Coven","Literal Hell","Fugitive State","Space Dragon","Spy Network","Nightmare Enterprises","Mime Homeworld","Greytide","Admin")
+	
+	var/evil_threat_the = pick("the Syndicate","the Wizard Federation","the Cult of Nar'Sie","the Changeling Coalition","the Space Pirate Armada","the Rat King Empire","Donk Co.","Waffle Co.","the Gorlex Marauders","the Tiger Co-Operative","the Third Soviet Union","the United Space of America","Cybersun Industries","the Blob","the Clown Planet","the Heretical Coven","the Forces of Hell","the Fugitive State","the Space Dragons","the Spy Network","Nightmare Enterprises","the Mime Homeworld","the Greytide","the Admins")
+	
+	var/line_one = pick(
+		"Surveillance by " + nt_department + " shows a credible risk of " + evil_threat + " attack against our assets in your sector.",
+		"The " + nt_department + " has decrypted " + evil_threat + " communications suggesting a high likelihood of attack.",
+		"Information passed to us by " + nt_department + " suggests a high amount of " + evil_threat + " activity in the sector.",
+		"Credible information passed to us by " + nt_department + " suggests that " + evil_threat_the + " is preparing to mount a major concerted offensive.")
+		
+	var/line_two = pick(
+		"We advise a heightened level of security alongside maintaining vigilance against potential threats.",
+		"Remain highly vigilant for signs of enemy activity and be on high alert.",
+		"All stations should remain on high alert and prepared to defend themselves.",
+		"No further action is necessary.",
+		"Your station is likely beyond any salvation.",
+		"Full mobilization of Security is recommended.",
+		"No further assistance will be given.",
+		"In the event this assessment is correct, you are advised to lie about the threat level to the crew.",
+		"Good luck.")
+
+	//Part 3: Preparing the Krabby Patty
+	advisory_string += "Advisory Level: <b>" + advisory_name + "</b></center><BR>"
+	advisory_string += "Your sector's advisory level is " + advisory_name + ". " + line_one + " " + line_two
+	
 	return advisory_string
 
 /datum/controller/subsystem/dynamic/proc/show_threatlog(mob/admin)
