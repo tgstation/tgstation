@@ -883,3 +883,13 @@
   timothymtorres:
   - code_imp: Change some hardcoded ice/snow temperature variables that were set to
       180 to use `ICEBOX_MIN_TEMPERATURE` instead.
+2025-03-30:
+  AyIong:
+  - bugfix: de-shrunked alternate names modal
+  Ben10Omintrix:
+  - rscadd: adds the cain and abel to the colossus lootpool!
+  EnterTheJake:
+  - bugfix: Space phase is as fast as it used to be.
+  Ezel:
+  - map: Hopline looks now more like a line.
+  - bugfix: medbay grid is wired to eachother again

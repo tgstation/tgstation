@@ -345,7 +345,18 @@
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
 	custom_premium_price = PAYCHECK_LOWER
-	storage_type = /datum/storage/bag/mail
+
+/obj/item/storage/bag/mail/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 42
+	atom_storage.max_slots = 21
+	atom_storage.numerical_stacking = FALSE
+	atom_storage.set_holdable(list(
+		/obj/item/mail,
+		/obj/item/delivery/small,
+		/obj/item/paper
+	))
 
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"
@@ -484,7 +495,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "mail_counterfeit_device"
-	storage_type = /datum/storage/mail_counterfeit
+
+/obj/item/storage/mail_counterfeit_device/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 1
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
 	. = ..()
@@ -556,17 +572,19 @@
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/advanced
 	name = "GLA-MACRO mail counterfeit device"
-	storage_type = /datum/storage/mail_counterfeit_advanced
 
 /obj/item/storage/mail_counterfeit_device/advanced/Initialize(mapload)
 	. = ..()
 	desc += " This model is highly advanced and capable of compressing items, making mail's storage space comparable to standard backpack."
+	create_storage(max_slots = 21, max_total_storage = 21)
+	atom_storage.allow_big_nesting = TRUE
 
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/bluespace
 	name = "GLA-ULTRA mail counterfeit device"
-	storage_type = /datum/storage/mail_counterfeit_bluespace
 
 /obj/item/storage/mail_counterfeit_device/bluespace/Initialize(mapload)
 	. = ..()
 	desc += " This model is the most advanced and capable of performing crazy bluespace compressions, making mail's storage space comparable to bluespace backpack."
+	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30)
+	atom_storage.allow_big_nesting = TRUE
