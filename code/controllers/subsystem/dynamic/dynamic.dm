@@ -326,7 +326,7 @@ SUBSYSTEM_DEF(dynamic)
 			continue
 		min_threat = min(ruleset.cost, min_threat)
 
-	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat) //if threat is below any ruleset, its extended time
+	var/greenshift = GLOB.dynamic_forced_extended //admin only greenshift, we need the pretty colors
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 
 	var/list/datum/station_goal/goals = SSstation.get_station_goals()
@@ -380,7 +380,7 @@ SUBSYSTEM_DEF(dynamic)
 		advisory_name += pick("Bright ","Dark ","Light ","Old ","Natural ","Weird ","Alien ","Dim ","Pale ","Vivid ","Electric ","Powder ","Ruddy ","Neon ","Extremely ","Very ","Slightly ","Off-","Medium ","Russian ","French ","African ","Painfully ","Weirdly ","Rich ","Dusty ","Drab ","Marginally ")	
 	
 	//Initial color
-	advisory_name += pick("Burgundy","Carmine","Cinnabar","Crimson","Garnet","Mahogany","Maroon","Rust","Scarlet","Vermilion","Amaranth","Coral","Fuschia","Lilac","Rose","Peach","Salmon","Amber","Brown","Goldenrod","Saffron","Tangerine","Beige","Chartreuse","Citron","Cream","Ivory","Khaki","Marigold","Mustard","Aquamarine","Celadon","Emerald","Jade","Lime","Mint","Olive","Sage","Viridian","Azure","Cerulean","Teal","Turquoise","Blurple","Denim","Ice","Lapis","Lavender","Navy","Periwinkle","Sapphire","Ultramarine","Amethyst","Carnation","Cerise","Fuchsia","Grape","Indigo","Magenta","Mauve","Orchid","Plum","Violet","Auburn","Bone","Bronze","Caramel","Chocolate","Copper","Khaki","Sand","Tan","Charcoal","Ebony","Jet","Onyx","Vantablack","Silver","Slate","Gunmetal","Alabaster","Pearl","Platinum","Snow","Piss")
+	advisory_name += pick("Burgundy","Carmine","Cinnabar","Crimson","Garnet","Mahogany","Maroon","Rust","Scarlet","Vermilion","Amaranth","Coral","Fuschia","Lilac","Rose","Peach","Salmon","Amber","Brown","Goldenrod","Saffron","Tangerine","Beige","Chartreuse","Citron","Cream","Ivory","Khaki","Marigold","Mustard","Aquamarine","Celadon","Emerald","Jade","Lime","Mint","Olive","Sage","Viridian","Azure","Cerulean","Teal","Turquoise","Blurple","Denim","Ice","Lapis","Lavender","Navy","Periwinkle","Sapphire","Ultramarine","Amethyst","Carnation","Cerise","Fuchsia","Grape","Indigo","Magenta","Mauve","Orchid","Plum","Violet","Auburn","Bone","Bronze","Caramel","Chocolate","Copper","Khaki","Sand","Tan","Charcoal","Ebony","Jet","Onyx","Vantablack","Silver","Slate","Gunmetal","Alabaster","Pearl","Platinum","Snow","Piss","Rainbow","Clear","Crystal","Transparent","Invisible")
 
 	//10% chance for a suffix
 	if (prob(10))
@@ -393,15 +393,16 @@ SUBSYSTEM_DEF(dynamic)
 	//Part 2: Making the stupid mad-libs threat report
 	var/nt_department = pick("Department of Intelligence","Department of Observation","Department of Ominous Feelings","Department of Statistical Probabilities","Department of Intern Betting","Department of Guessing","Department of Omniscience","Department of Timeline Correction","Department of Better Departments","Department of Advanced Engineering","Department of Stupid Shithead Idiots","Department of Clowns","Department of Knowledge","Department of Spying","Department of Making Shit Up","Department of Divination","Department of Espionage","Department of Oversight","Department of Data Analysis","Department of Asking Questions","Department of Praying","Department of Thinking Too Much")
 	
-	var/evil_threat = pick("Syndicate","Wizard Federation","Nar'Sian Cult","Changeling Coalition","Space Pirate Armada","Rat King Empire","Donk Co.","Waffle Co.","Gorlex Marauder","Tiger Co-Operative","Third Soviet Union","Space American","Cybersun Industries","Blob","Clown Planet","Heretical Coven","Literal Hell","Fugitive State","Space Dragon","Spy Network","Nightmare Enterprises","Mime Homeworld","Greytide","Admin")
+	var/evil_threat = pick("Syndicate","Wizard Federation","Nar'Sian Cult","Changeling Coalition","Space Pirate Armada","Rat King Empire","Donk Co.","Waffle Corp","Gorlex Marauder","Tiger Co-Operative","Third Soviet Union","Space American","Cybersun Industries","Blob","Clown Planet","Heretical Coven","Literal Hell","Fugitive State","Space Dragon","Spy Network","Nightmare Enterprises","Mime Homeworld","Greytide","Admin")
 	
-	var/evil_threat_the = pick("the Syndicate","the Wizard Federation","the Cult of Nar'Sie","the Changeling Coalition","the Space Pirate Armada","the Rat King Empire","Donk Co.","Waffle Co.","the Gorlex Marauders","the Tiger Co-Operative","the Third Soviet Union","the United Space of America","Cybersun Industries","the Blob","the Clown Planet","the Heretical Coven","the Forces of Hell","the Fugitive State","the Space Dragons","the Spy Network","Nightmare Enterprises","the Mime Homeworld","the Greytide","the Admins")
+	var/evil_threat_the = pick("the Syndicate","the Wizard Federation","the Cult of Nar'Sie","the Changeling Coalition","the Space Pirate Armada","the Rat King Empire","Donk Co.","Waffle Corp","the Gorlex Marauders","the Tiger Co-Operative","the Third Soviet Union","the United Space of America","Cybersun Industries","the Blob","the Clown Planet","the Heretical Coven","the Forces of Hell","the Fugitive State","the Space Dragons","the Spy Network","Nightmare Enterprises","the Mime Homeworld","the Greytide","the Admins")
 	
 	var/line_one = pick(
 		"Surveillance by " + nt_department + " shows a credible risk of " + evil_threat + " attack against our assets in your sector.",
 		"The " + nt_department + " has decrypted " + evil_threat + " communications suggesting a high likelihood of attack.",
 		"Information passed to us by " + nt_department + " suggests a high amount of " + evil_threat + " activity in the sector.",
-		"Credible information passed to us by " + nt_department + " suggests that " + evil_threat_the + " is preparing to mount a major concerted offensive.")
+		"Credible information passed to us by " + nt_department + " suggests that " + evil_threat_the + " is preparing to mount a major concerted offensive."
+		"The " + nt_department + " is under attack by the evil forces of " + evil_threat_the ".")
 		
 	var/line_two = pick(
 		"We advise a heightened level of security alongside maintaining vigilance against potential threats.",
@@ -412,7 +413,9 @@ SUBSYSTEM_DEF(dynamic)
 		"Full mobilization of Security is recommended.",
 		"No further assistance will be given.",
 		"In the event this assessment is correct, you are advised to lie about the threat level to the crew.",
-		"Good luck.")
+		"Good luck.",
+		"All crew are to be armed as per emergency mobilization procedure.",
+		"This is not a drill.")
 
 	//Part 3: Preparing the Krabby Patty
 	advisory_string += "Advisory Level: <b>" + advisory_name + "</b></center><BR>"
