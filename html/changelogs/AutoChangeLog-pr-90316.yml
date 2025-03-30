@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - admin: "Added some new Lua functions: SS13.ispath, SS13.typecacheof, SS13.is_type_in_typecache, SS13.get_turf, and SS13.get_area"
+  - bugfix: "Fixed a broken check in the SS13.register_signal Lua function."
