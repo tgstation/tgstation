@@ -304,6 +304,7 @@
 	UnregisterSignal(target, COMSIG_LIVING_HIT_BY_TRAM)
 
 /// If someone gets hit by the tram while buckled to us (mission accomplished) unbuckle them so that they can fly away
+/// Also we rip one of their arms off to "uncuff" them
 /obj/structure/fluff/tram_rail/proc/on_buckled_tram_smashed(mob/living/smashed)
 	SIGNAL_HANDLER
 	unbuckle_mob(smashed, force = TRUE, can_fall = FALSE) // Make sure they don't fall down a z-level until they've been thrown
