@@ -1509,6 +1509,38 @@
 		/datum/stock_part/scanning_module = 2,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = TRUE
+	/// Type of the venue that we're linked to
+	var/venue_type = null
+
+/obj/item/circuitboard/machine/restaurant_portal/multitool_act(mob/living/user)
+	var/list/radial_items = list()
+	var/list/radial_results = list()
+
+	for(var/type_key in SSrestaurant.all_venues)
+		var/datum/venue/venue = SSrestaurant.all_venues[type_key]
+		radial_items[venue.name] = image('icons/obj/machines/restaurant_portal.dmi', venue.name)
+		radial_results[venue.name] = type_key
+
+	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
+
+	if(!choice)
+		return ITEM_INTERACT_BLOCKING
+
+	venue_type = radial_results[choice]
+	to_chat(user, span_notice("You change [src]'s linked venue."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/machine/restaurant_portal/examine(mob/user)
+	. = ..()
+	if (venue_type)
+		var/datum/venue/as_venue = venue_type
+		. += span_notice("[src] is linked to \a [initial(as_venue.name)] venue.")
+
+/obj/item/circuitboard/machine/restaurant_portal/configure_machine(obj/machinery/restaurant_portal/machine)
+	if(!istype(machine))
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+	machine.linked_venue = SSrestaurant.all_venues[venue_type]
+	machine.linked_venue.restaurant_portals |= machine
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"

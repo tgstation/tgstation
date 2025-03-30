@@ -10,8 +10,8 @@
 	var/list/customer_types
 	///Is the venue open at the moment?
 	var/open
-	///Portal linked to this venue at the moment
-	var/obj/machinery/restaurant_portal/restaurant_portal
+	///List of portals linked to this venue at the moment
+	var/list/restaurant_portals = list()
 	///Lists the current visitors of a venue
 	var/list/current_visitors = list()
 	///Cooldown for next guest to arrive
@@ -42,13 +42,14 @@
 /datum/venue/proc/create_new_customer()
 	var/list/customer_types_to_choose = customer_types
 	var/datum/customer_data/customer_type
+	var/obj/machinery/restaurant_portal/chosen_portal = pick(restaurant_portals)
 
 	// In practice, the list will never run out, but this is for sanity.
 	while (customer_types_to_choose.len)
 		customer_type = pick_weight(customer_types_to_choose)
 
 		var/datum/customer_data/customer = SSrestaurant.all_customers[customer_type]
-		if (customer.can_use(src))
+		if (customer.can_use(src, chosen_portal))
 			break
 
 		// Only copy the list once, so that we're not mutating ourselves.
@@ -60,8 +61,8 @@
 	if (initial(customer_type.is_unique))
 		customer_types -= customer_type
 
-	var/mob/living/basic/robot_customer/new_customer = new /mob/living/basic/robot_customer(get_turf(restaurant_portal), customer_type, src)
-	current_visitors += new_customer
+	var/mob/living/basic/robot_customer/new_customer = new /mob/living/basic/robot_customer(get_turf(chosen_portal), customer_type, src)
+	current_visitors[new_customer] = WEAKREF(chosen_portal)
 
 /datum/venue/proc/order_food(mob/living/basic/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/order = pick_weight(customer_data.orderable_objects[venue_type])
@@ -76,7 +77,7 @@
 		order = initial(reagent_order.restaurant_order)
 
 	if(ispath(order, /datum/custom_order)) // generate the special order
-		var/datum/custom_order/custom_order = new order(arglist(order_args || list()))
+		var/datum/custom_order/custom_order = new order(arglist(list("customer" = customer_pawn) + (order_args || list())))
 		food_image = custom_order.get_order_appearance(src)
 		food_line = custom_order.get_order_line(src)
 		order = custom_order.dispense_order()
@@ -144,13 +145,15 @@
 
 /datum/venue/proc/open()
 	open = TRUE
-	restaurant_portal.update_icon()
+	for (var/obj/machinery/restaurant_portal/portal as anything in restaurant_portals)
+		portal.update_icon()
 	COOLDOWN_START(src, visit_cooldown, 4 SECONDS) //First one comes faster
 	START_PROCESSING(SSobj, src)
 
 /datum/venue/proc/close()
 	open = FALSE
-	restaurant_portal.update_icon()
+	for (var/obj/machinery/restaurant_portal/portal as anything in restaurant_portals)
+		portal.update_icon()
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/basic/robot_customer as anything in current_visitors)
 		robot_customer.ai_controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE) //LEAVEEEEEE
@@ -168,7 +171,7 @@
 	armor_type = /datum/armor/restaurant_portal
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
-	var/datum/venue/linked_venue = /datum/venue
+	var/datum/venue/linked_venue
 
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
@@ -184,20 +187,27 @@
 
 /obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
-	if(linked_venue)
-		linked_venue = SSrestaurant.all_venues[linked_venue]
-		linked_venue.restaurant_portal = src
 	register_context()
+	if (!linked_venue)
+		return
+	var/obj/item/circuitboard/machine/restaurant_portal/board = circuit
+	board.venue_type = linked_venue
+	linked_venue = SSrestaurant.all_venues[linked_venue]
+	linked_venue.restaurant_portals |= src
 
 /obj/machinery/restaurant_portal/Destroy()
-	. = ..()
 	turned_on_portal = null
-	linked_venue.restaurant_portal = null
+	linked_venue.restaurant_portals -= src
 	linked_venue = null
+	return ..()
+
+/obj/machinery/restaurant_portal/on_construction(mob/user)
+	. = ..()
+	circuit.configure_machine(src)
 
 /obj/machinery/restaurant_portal/update_overlays()
 	. = ..()
-	if(!linked_venue.open) //Any open venues
+	if(!linked_venue?.open) //Any open venues
 		. += mutable_appearance(icon, "portal_door")
 
 /obj/machinery/restaurant_portal/attack_hand(mob/living/user)
@@ -229,14 +239,17 @@
 	for(var/type_key in SSrestaurant.all_venues)
 		var/datum/venue/venue = SSrestaurant.all_venues[type_key]
 		radial_items[venue.name] = image('icons/obj/machines/restaurant_portal.dmi', venue.name)
-		radial_results[venue.name] = venue
+		radial_results[venue.name] = type_key
 
 	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
 
 	if(!choice)
 		return
 
-	var/datum/venue/chosen_venue = radial_results[choice]
+	var/venue_type = radial_results[choice]
+	var/obj/item/circuitboard/machine/restaurant_portal/board = circuit
+	board.venue_type = venue_type
+	var/datum/venue/chosen_venue = SSrestaurant.all_venues[venue_type]
 
 	turned_on_portal = WEAKREF(user)
 
@@ -246,14 +259,14 @@
 
 	to_chat(user, span_notice("You change the portal's linked venue."))
 
-	if(linked_venue && linked_venue.restaurant_portal) //We're already linked, unlink us.
-		if(linked_venue.open)
+	if(linked_venue && (src in linked_venue.restaurant_portals)) //We're already linked, unlink us.
+		linked_venue.restaurant_portals -= src
+		if(linked_venue.open && !length(linked_venue.restaurant_portals))
 			linked_venue.close()
-		linked_venue.restaurant_portal = null
 		linked_venue = null
 
 	linked_venue = chosen_venue
-	linked_venue.restaurant_portal = src
+	linked_venue.restaurant_portals |= src
 
 /obj/machinery/restaurant_portal/screwdriver_act(mob/user, obj/item/tool)
 	if (default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
@@ -289,6 +302,10 @@
 
 	if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(isidcard(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Change Venue"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/holosign_creator/robot_seat
