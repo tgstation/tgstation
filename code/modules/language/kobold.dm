@@ -3,7 +3,7 @@
 	desc = "Yip yip."
 	key = "k"
 	space_chance = 100
-	syllables = list("yip", "yap", "eep", "mip", "meep", "merp")
+	syllables = list("yip", "yap", "eep", "mip", "meep", "merp", "ree", "ek")
 	default_priority = 80
 
 	icon_state = "animal"
