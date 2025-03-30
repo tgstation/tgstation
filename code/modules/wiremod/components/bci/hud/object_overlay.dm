@@ -104,10 +104,10 @@
 	SET_PLANE_EXPLICIT(cool_overlay, ABOVE_LIGHTING_PLANE, target_atom)
 
 	if(image_pixel_x.value != null)
-		cool_overlay.pixel_x = image_pixel_x.value
+		cool_overlay.pixel_w = image_pixel_x.value
 
 	if(image_pixel_y.value != null)
-		cool_overlay.pixel_y = image_pixel_y.value
+		cool_overlay.pixel_z = image_pixel_y.value
 
 	if(image_rotation.value != null)
 		var/matrix/turn_matrix = cool_overlay.transform

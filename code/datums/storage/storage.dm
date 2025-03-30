@@ -441,7 +441,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 					stack_trace("[parent.type]:[to_insert.type] has TRAIT_NO_STORAGE_INSERT")
 			else if(user)
 				user.balloon_alert(user, "can't hold!")
-			return FALSE
+		return FALSE
 
 	if(HAS_TRAIT(to_insert, TRAIT_NODROP))
 		if(messages)

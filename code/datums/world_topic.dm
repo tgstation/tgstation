@@ -23,7 +23,8 @@
 	var/keyword
 	var/log = TRUE
 	var/key_valid
-	var/require_comms_key = FALSE
+	/// If the comms.txt config key is required. If you flip this to false, ensure the code is correct and the query you receive is legit.
+	var/require_comms_key = TRUE
 
 /datum/world_topic/proc/TryRun(list/input)
 	key_valid = (CONFIG_GET(string/comms_key) == input["key"]) && CONFIG_GET(string/comms_key) && input["key"]
@@ -42,12 +43,18 @@
 /datum/world_topic/proc/Run(list/input)
 	CRASH("Run() not implemented for [type]!")
 
-// TOPICS
+/** TOPICS
+ * These are the handlers for world.Export() -> World.Topic() server communication.
+ * Double check to ensure any calls are correct and the query is legit.
+ * World.Topic() exploits can be very devastating since these can be called via a normal player connection without a client.
+ * https://secure.byond.com/docs/ref/index.html#/world/proc/Topic
+*/
 
 // If you modify the protocol for this, update tools/Tgstation.PRAnnouncer
 /datum/world_topic/ping
 	keyword = "ping"
 	log = FALSE
+	require_comms_key = FALSE
 
 /datum/world_topic/ping/Run(list/input)
 	. = 0
@@ -57,6 +64,7 @@
 /datum/world_topic/playing
 	keyword = "playing"
 	log = FALSE
+	require_comms_key = FALSE
 
 /datum/world_topic/playing/Run(list/input)
 	return GLOB.player_list.len
@@ -64,7 +72,6 @@
 // If you modify the protocol for this, update tools/Tgstation.PRAnnouncer
 /datum/world_topic/pr_announce
 	keyword = "announce"
-	require_comms_key = TRUE
 	var/static/list/PRcounts = list() //PR id -> number of times announced this round
 
 /datum/world_topic/pr_announce/Run(list/input)
@@ -83,14 +90,12 @@
 
 /datum/world_topic/ahelp_relay
 	keyword = "Ahelp"
-	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
 	relay_msg_admins(span_adminnotice("<b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b>"))
 
 /datum/world_topic/comms_console
 	keyword = "Comms_Console"
-	require_comms_key = TRUE
 
 	var/list/timers
 
@@ -161,21 +166,18 @@
 
 /datum/world_topic/news_report
 	keyword = "News_Report"
-	require_comms_key = TRUE
 
 /datum/world_topic/news_report/Run(list/input)
 	minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"
-	require_comms_key = TRUE
 
 /datum/world_topic/adminmsg/Run(list/input)
 	return TgsPm(input[keyword], input["msg"], input["sender"])
 
 /datum/world_topic/namecheck
 	keyword = "namecheck"
-	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
 	log_admin("world/Topic Name Check: [input["sender"]] on [input["namecheck"]]")
@@ -185,13 +187,13 @@
 
 /datum/world_topic/adminwho
 	keyword = "adminwho"
-	require_comms_key = TRUE
 
 /datum/world_topic/adminwho/Run(list/input)
 	return tgsadminwho()
 
 /datum/world_topic/status
 	keyword = "status"
+	require_comms_key = FALSE
 
 /datum/world_topic/status/Run(list/input)
 	. = list()
