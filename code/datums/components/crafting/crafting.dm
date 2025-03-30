@@ -161,6 +161,7 @@
 /datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
 	if(!length(recipe.tool_behaviors) && !length(recipe.tool_paths))
 		return TRUE
+
 	var/list/available_tools = list()
 	var/list/present_qualities = list()
 
@@ -182,9 +183,8 @@
 		available_tools[path] = TRUE
 
 	for(var/required_quality in recipe.tool_behaviors)
-		if(present_qualities[required_quality])
-			continue
-		return FALSE
+		if(!present_qualities[required_quality])
+			return FALSE
 
 	for(var/required_path in recipe.tool_paths)
 		var/found_this_tool = FALSE
@@ -193,9 +193,8 @@
 				continue
 			found_this_tool = TRUE
 			break
-		if(found_this_tool)
-			continue
-		return FALSE
+		if(!found_this_tool)
+			return FALSE
 
 	//add the contents of the assoc list of the surrounding instances to all_instances for the recipe.check_tools() call
 	var/list/surrounding_instances = surroundings[CONTENTS_INSTANCES]
@@ -212,16 +211,71 @@
 		return ", invalid recipe!" // This can happen, I can't really explain why, but it can. Better safe than sorry.
 
 	var/list/contents = get_surroundings(crafter, recipe.blacklist)
+	var/fail_message = perform_all_checks(crafter, recipe, contents, check_tools_last = ignored_flags & CRAFT_IGNORE_DO_AFTER)
+	if(fail_message)
+		return fail_message
 
+	//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
+	if(!(ignored_flags & CRAFT_IGNORE_DO_AFTER))
+		if(!do_after(crafter, recipe.time, target = crafter))
+			return "."
+		contents = get_surroundings(crafter, recipe.blacklist)
+		fail_message = perform_all_checks(crafter, recipe, contents, check_tools_last = TRUE)
+		if(fail_message)
+			return fail_message
+
+	//used to gather the material composition of the utilized requirements to transfer to the result
+	var/list/total_materials = list()
+	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
+	var/atom/result
+	var/turf/craft_turf = get_turf(crafter.loc)
+	var/set_materials = TRUE
+	if(ispath(recipe.result, /turf))
+		result = craft_turf.place_on_top(recipe.result)
+	else if(ispath(recipe.result, /obj/item/stack))
+		//we don't merge the stack right away but try to put it in the hand of the crafter
+		result = new recipe.result(craft_turf, recipe.result_amount || 1, /*merge =*/FALSE)
+		set_materials = FALSE //stacks are bit too complex for it for now, but you're free to change that.
+	else
+		result = new recipe.result(craft_turf)
+		if(result.atom_storage && recipe.delete_contents)
+			for(var/obj/item/thing in result)
+				qdel(thing)
+	result.setDir(crafter.dir)
+	var/datum/reagents/holder = locate() in stuff_to_use
+	if(holder) //transfer reagents from ingredients to result
+		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
+			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
+				result.reagents.clear_reagents()
+			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
+				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		stuff_to_use -= holder //This is the only non-movable in our list, we need to remove it.
+		qdel(holder)
+	result.on_craft_completion(stuff_to_use, recipe, crafter)
+	if(set_materials)
+		result.set_custom_materials(total_materials)
+	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
+		if(component.loc != result || isturf(result))
+			qdel(component)
+	if(!PERFORM_ALL_TESTS(crafting))
+		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
+	return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
+
+///This proc performs all the necessary conditional control statement to ensure that the object is allowed to be crafted by the crafter.
+/datum/component/personal_crafting/proc/perform_all_checks(atom/crafter, datum/crafting_recipe/recipe, list/contents, check_tools_last = FALSE)
 	if(!check_contents(crafter, recipe, contents))
 		return ", missing component."
 
 	var/turf/dest_turf = get_turf(crafter)
 
-	//Tools are the most fundamental aspect of crafting after the components
-	//However this call is redundant during unit tests. There's another one right before we go on
-	//and spawn the object, and that's the only one we need to call anyway.
-	if(!PERFORM_ALL_TESTS(crafting) && !check_tools(crafter, recipe, contents))
+	// Mobs call perform_all_checks() twice since they don't have the CRAFT_IGNORE_DO_AFTER flag,
+	// one before the do_after() and another after that. While other entities may have that flag and therefore only call the proc once.
+	// Check_tools() meanwhile has a final_check arg which, if true, may perform some statements that can
+	// modify some of the tools, like expending charges from a crayon or spraycan, which may make it unable
+	// to meet some criterias afterward, so it's important to call that, last by the end of the final perform_all_checks().
+	// For any non-final perform_all_checks() call, just keep check_tools() here because it's
+	// the most imporant feedback after "missing component".
+	if(!check_tools_last && !check_tools(crafter, recipe, contents, FALSE))
 		return ", missing tool."
 
 	var/considered_flags = recipe.crafting_flags & ~(ignored_flags)
@@ -266,51 +320,8 @@
 		if(!locate(/obj/structure/transport/linear/tram) in dest_turf)
 			return ", must be made on a tram!"
 
-	//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-	if(ismob(crafter))
-		if(!do_after(crafter, recipe.time, target = crafter))
-			return "."
-		contents = get_surroundings(crafter, recipe.blacklist)
-		if(!check_contents(crafter, recipe, contents))
-			return ", missing component."
-	if(!check_tools(crafter, recipe, contents, TRUE)) //This should be the last check before we proceed and spawn the result.
+	if(check_tools_last && !check_tools(crafter, recipe, contents, TRUE))
 		return ", missing tool."
-	//used to gather the material composition of the utilized requirements to transfer to the result
-	var/list/total_materials = list()
-	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
-	var/atom/result
-	var/turf/craft_turf = get_turf(crafter.loc)
-	var/set_materials = TRUE
-	if(ispath(recipe.result, /turf))
-		result = craft_turf.place_on_top(recipe.result)
-	else if(ispath(recipe.result, /obj/item/stack))
-		//we don't merge the stack right away but try to put it in the hand of the crafter
-		result = new recipe.result(craft_turf, recipe.result_amount || 1, /*merge =*/FALSE)
-		set_materials = FALSE //stacks are bit too complex for it for now, but you're free to change that.
-	else
-		result = new recipe.result(craft_turf)
-		if(result.atom_storage && recipe.delete_contents)
-			for(var/obj/item/thing in result)
-				qdel(thing)
-	result.setDir(crafter.dir)
-	var/datum/reagents/holder = locate() in stuff_to_use
-	if(holder) //transfer reagents from ingredients to result
-		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
-			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
-				result.reagents.clear_reagents()
-			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
-				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
-		stuff_to_use -= holder //This is the only non-movable in our list, we need to remove it.
-		qdel(holder)
-	result.on_craft_completion(stuff_to_use, recipe, crafter)
-	if(set_materials)
-		result.set_custom_materials(total_materials)
-	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
-		if(component.loc != result || isturf(result))
-			qdel(component)
-	if(!PERFORM_ALL_TESTS(crafting))
-		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
-	return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 
 /**
  * get_used_reqs works like this:
@@ -344,63 +355,62 @@
 	if(recipe.structures)
 		requirements += recipe.structures
 
-	main_loop:
-		for(var/path_key in requirements)
-			var/list/surroundings
-			var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
-			if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
-				continue main_loop
-			surroundings = get_environment(atom, recipe.blacklist)
-			surroundings -= return_list
-			if(ispath(path_key, /datum/reagent))
-				while(amount > 0)
-					var/obj/item/reagent_containers/container = locate() in surroundings
-					if(QDELETED(container)) //not found
-						surroundings -= container
-						continue
-
-					var/reagent_volume = container.reagents.get_reagent_amount(path_key)
-					if(reagent_volume)
-						if(!holder)
-							holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
-							return_list += holder
-						if(reagent_volume >= amount)
-							container.reagents.trans_to(holder, amount, target_id = path_key, no_react = TRUE)
-							continue main_loop
-						else
-							container.reagents.trans_to(holder, reagent_volume, target_id = path_key, no_react = TRUE)
-							surroundings -= container
-							amount -= reagent_volume
-					else
-						surroundings -= container
-					container.update_appearance(UPDATE_ICON)
-			else if(ispath(path_key, /obj/item/stack))
-				var/obj/item/stack/origin_stack
-				var/obj/item/stack/tally_stack
-				while(amount > 0)
-					origin_stack = locate(path_key) in surroundings
-					if(!tally_stack)
-						tally_stack = new origin_stack.merge_type (null, /*new_amount =*/ 1, /*merge =*/ FALSE)
-						amount -= 1
-						return_list += tally_stack
-					var/amount_to_give = min(origin_stack.amount, amount)
-					origin_stack.use(amount_to_give)
-					if(amount_to_give) // spawning tally_stack already consumes one unit so this isn't needed for a lot of recipes
-						tally_stack.add(amount_to_give)
-						amount -= amount_to_give
-					surroundings -= origin_stack
+	for(var/path_key in requirements)
+		var/list/surroundings
+		var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
+		if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
+			continue
+		surroundings = get_environment(atom, recipe.blacklist)
+		surroundings -= return_list
+		if(ispath(path_key, /datum/reagent))
+			if(!holder)
+				holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
+				return_list += holder
+			while(amount > 0)
+				var/obj/item/reagent_containers/container = locate() in surroundings
+				if(isnull(container)) //This would only happen if the previous checks for contents and tools were flawed.
+					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+				if(QDELING(container)) //it's deleting...
+					surroundings -= container
+					continue
+				var/reagent_volume = container.reagents.get_reagent_amount(path_key)
+				if(reagent_volume)
+					container.reagents.trans_to(holder, min(amount, reagent_volume), target_id = path_key, no_react = TRUE)
+					amount -= reagent_volume
+				surroundings -= container
+				container.update_appearance(UPDATE_ICON)
+		else if(ispath(path_key, /obj/item/stack))
+			var/obj/item/stack/tally_stack
+			while(amount > 0)
+				var/obj/item/stack/origin_stack = locate(path_key) in surroundings
+				if(isnull(origin_stack)) //This would only happen if the previous checks for contents and tools were flawed.
+					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+				if(QDELING(origin_stack))
+					continue
+				var/amount_to_give = min(origin_stack.amount, amount)
+				if(!tally_stack)
+					tally_stack = origin_stack.split_stack(amount = amount_to_give)
+					return_list += tally_stack
+				else
+					origin_stack.merge(tally_stack, amount_to_give)
+				amount -= amount_to_give
+				surroundings -= origin_stack
+			if(!(path_key in recipe.requirements_mats_blacklist))
+				for(var/material in tally_stack.custom_materials)
+					total_materials[material] += tally_stack.custom_materials[material]
+		else
+			while(amount > 0)
+				var/atom/movable/item = locate(path_key) in surroundings
+				if(isnull(item)) //This would only happen if the previous checks for contents and tools were flawed.
+					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+				if(QDELING(item))
+					continue
+				return_list += item
+				surroundings -= item
+				amount--
 				if(!(path_key in recipe.requirements_mats_blacklist))
-					for(var/material in tally_stack.custom_materials)
-						total_materials[material] += tally_stack.custom_materials[material]
-			else
-				while(amount > 0)
-					var/atom/movable/item = locate(path_key) in surroundings
-					return_list += item
-					surroundings -= item
-					amount--
-					if(!(path_key in recipe.requirements_mats_blacklist))
-						for(var/material in item.custom_materials)
-							total_materials[material] += item.custom_materials[material]
+					for(var/material in item.custom_materials)
+						total_materials[material] += item.custom_materials[material]
 
 	return return_list
 
@@ -691,7 +701,7 @@
 	return FALSE
 
 /datum/component/personal_crafting/machine
-	ignored_flags = CRAFT_CHECK_DENSITY
+	ignored_flags = CRAFT_CHECK_DENSITY|CRAFT_IGNORE_DO_AFTER
 
 /datum/component/personal_crafting/machine/get_environment(atom/crafter, list/blacklist = null, radius_range = 1)
 	. = list()
@@ -705,7 +715,7 @@
 				continue
 		. += content
 
-/datum/component/personal_crafting/machine/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+/datum/component/personal_crafting/machine/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
 	return TRUE
 
 #undef CONTENTS_INSTANCES

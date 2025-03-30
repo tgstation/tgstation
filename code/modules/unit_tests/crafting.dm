@@ -64,7 +64,7 @@
 	for(var/spawn_path in recipe.unit_test_spawn_extras)
 		var/amount = recipe.unit_test_spawn_extras[spawn_path]
 		if(ispath(spawn_path, /obj/item/stack))
-			spawned_components += new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+			spawned_components += new spawn_path(turf, new_amount = amount, merge = FALSE)
 			continue
 		for(var/index in 1 to amount)
 			spawned_components += new spawn_path(turf)
@@ -82,7 +82,7 @@
 			continue
 
 		if(ispath(req_path, /obj/item/stack)) //it's a stack
-			spawned_components += new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+			spawned_components += new req_path(turf, new_amount = amount, merge = FALSE)
 			continue
 
 		//it's any other item
@@ -194,6 +194,6 @@
 			qdel(used)
 
 /datum/component/personal_crafting/unit_test
-	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND
+	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND|CRAFT_IGNORE_DO_AFTER
 
 #undef ACCEPTABLE_MATERIAL_DEVIATION

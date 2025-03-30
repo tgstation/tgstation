@@ -338,9 +338,12 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
 	var/list/remaining_parts = current_recipe?.parts?.Copy()
-	for(var/obj/item/item in components) // any machinery or structure in the list is guaranteed to be used up.
+	var/list/parts_by_type = remaining_parts?.Copy()
+	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
+		parts_by_type[parttype] = parttype
+	for(var/obj/item/item in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
 		item.used_in_craft(src, current_recipe)
-		var/matched_type = find_type_match_in_list(item, remaining_parts)
+		var/matched_type = is_type_in_list(item, parts_by_type, zebra = TRUE)
 		if(!matched_type)
 			continue
 
