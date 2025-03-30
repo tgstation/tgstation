@@ -31,7 +31,8 @@
 	var/grenade_sound_vary = TRUE
 	///Is it a cluster grenade? We don't wanna spam admin logs with these.
 	var/type_cluster = FALSE
-	///How long it takes for a grenade to explode after being armed
+	/// How long it takes for a grenade to explode after being armed
+	/// Set to null to make it an impact grenade
 	var/det_time = 5 SECONDS
 	///Will this state what its det_time is when examined?
 	var/display_timer = TRUE
@@ -64,12 +65,18 @@
 	ADD_TRAIT(src, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT, type)
 	RegisterSignal(src, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(on_used_as_ingredient))
 
+/obj/item/grenade/Destroy(force)
+	UnregisterSignal(src, COMSIG_MOVABLE_IMPACT)
+	return ..()
+
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	arm_grenade(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
-	sleep(det_time)//so you don't die instantly
+	sleep(!isnull(det_time) ? det_time : 1 SECONDS)//so you don't die instantly
+	if(isnull(det_time))
+		detonate()
 	return dud_flags ? SHAME : BRUTELOSS
 
 /obj/item/grenade/atom_deconstruct(disassembled = TRUE)
@@ -123,7 +130,9 @@
 /obj/item/grenade/examine(mob/user)
 	. = ..()
 	if(display_timer)
-		if(det_time > 0)
+		if (isnull(det_time))
+			. += "Once activated \the [src] will detonate upon impact."
+		else if(det_time > 0)
 			. += "The timer is set to [DisplayTimeText(det_time)]."
 		else
 			. += "\The [src] is set for instant detonation."
@@ -156,7 +165,7 @@
 	if(user)
 		add_fingerprint(user)
 		if(msg)
-			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
+			to_chat(user, span_warning("You prime [src]![!isnull(det_time) ? " [capitalize(DisplayTimeText(det_time))]!":""]"))
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
@@ -166,7 +175,10 @@
 	active = TRUE
 	icon_state = (base_icon_state || initial(icon_state)) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
-	addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)
+	if(!isnull(det_time))
+		addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)
+	else
+		RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(thrown_impact))
 
 /**
  * detonate (formerly prime) refers to when the grenade actually delivers its payload (whether or not a boom/bang/detonation is involved)
@@ -190,6 +202,13 @@
 		explosion(src, ex_dev, ex_heavy, ex_light, ex_flame)
 
 	return TRUE
+
+/// If det_time is null, then that means we're an impact grenade, and should detonate immediately on impact
+/obj/item/grenade/proc/thrown_impact(atom/source, atom/hit_atom)
+	SIGNAL_HANDLER
+
+	if(detonate())
+		UnregisterSignal(src, COMSIG_MOVABLE_IMPACT)
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))
@@ -215,6 +234,9 @@
 /obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
 		return FALSE
+	if(!isnull(det_time))
+		to_chat(user, span_notice("Impact grenades have no timer!"))
+		return FALSE
 	if(change_det_time())
 		tool.play_tool_sound(src)
 		if(det_time == 0)
@@ -227,7 +249,9 @@
 	. = ..()
 	if(active)
 		return FALSE
-
+	if(!isnull(det_time))
+		to_chat(user, span_notice("Impact grenades have no timer!"))
+		return FALSE
 	. = TRUE
 
 	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", possible_fuse_time)
@@ -251,6 +275,10 @@
 */
 /obj/item/grenade/proc/change_det_time(time)
 	. = TRUE
+	/// Impact grenades cannot have a timer
+	if(!isnull(det_time))
+		return
+
 	//Multitool
 	if(!isnull(time))
 		det_time = round(clamp(time SECONDS, 0, 5 SECONDS)) //This is fine for now but consider making this a variable if you want >5s fuse

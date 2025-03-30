@@ -98,123 +98,6 @@
 	QDEL_NULL(floating_cube)
 	return ..()
 
-/obj/item/circuit_component/quartic_reliquary_data
-	display_name = "Quartic Reliquary Data"
-	desc = "Outputs the cubes held inside of the Quaritic Reliquary, the current desired folding rarity, and all resulting cubes. \
-		Can be used to start folding process & detect when it ends."
-
-	/// Triggers the start of the folding process, if possible
-	var/datum/port/output/begin_folding
-	/// Trigger to pop a cube from the list
-	var/datum/port/output/remove_cube
-
-	/// Table of currently stored cubes
-	var/datum/port/output/stored_cubes
-	/// Current current_rarity
-	var/datum/port/output/required_cube
-	/// Current desired_rarity
-	var/datum/port/output/target_cube
-	/// If the contents of stored_cubes has been updated
-	var/datum/port/output/updated_cubes
-
-	/// The list of cubes that were output
-	var/datum/port/output/output_cubes
-	/// Trigger for when the reliquary finishes folding
-	var/datum/port/output/finished_folding
-	/// If folding the cubes failed, then why
-	var/datum/port/output/why_fail
-	var/datum/port/output/on_fail
-
-	var/obj/machinery/quartic_reliquary/attatched_reliquary
-
-
-/obj/item/circuit_component/quartic_reliquary_data/populate_ports()
-	/// Input signals
-	begin_folding = add_input_port("Begin Folding", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_fold))
-	remove_cube = add_input_port("Eject Last Cube", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_eject))
-	/// Pertains to the input cubes
-	stored_cubes = add_output_port("Contained Cubes", PORT_TYPE_TABLE)
-	required_cube = add_output_port("Required Rarity", PORT_TYPE_NUMBER)
-	target_cube = add_output_port("Target Rarity", PORT_TYPE_NUMBER)
-	updated_cubes = add_output_port("Contained Cubes Altered", PORT_TYPE_INSTANT_SIGNAL)
-	/// Pertains to the output cubes
-	output_cubes = add_output_port("Output Cubes", PORT_TYPE_LIST(PORT_TYPE_ATOM))
-	finished_folding = add_output_port("Finished Folding", PORT_TYPE_INSTANT_SIGNAL)
-	/// Our inputs failed
-	why_fail = add_output_port("Failure Reason", PORT_TYPE_STRING)
-	on_fail = add_output_port("Action Failed", PORT_TYPE_SIGNAL)
-
-
-/obj/item/circuit_component/quartic_reliquary_data/register_usb_parent(atom/movable/shell)
-	. = ..()
-	if(istype(shell, /obj/machinery/quartic_reliquary))
-		attatched_reliquary = shell
-		RegisterSignal(attatched_reliquary, COMSIG_RELIQUARY_CONTENTS_UPDATED, PROC_REF(on_cubedate))
-		RegisterSignal(attatched_reliquary, COMSIG_RELIQUARY_FOLDING_COMPLETE, PROC_REF(on_fold))
-
-/obj/item/circuit_component/quartic_reliquary_data/unregister_usb_parent(atom/movable/shell)
-	UnregisterSignal(attatched_reliquary, list(
-		COMSIG_RELIQUARY_CONTENTS_UPDATED,
-		COMSIG_RELIQUARY_FOLDING_COMPLETE
-	))
-	attatched_reliquary = null
-	return ..()
-
-/// When we update the cube's content we call this
-/obj/item/circuit_component/quartic_reliquary_data/proc/on_cubedate(atom/movable/source, list/current_cubes, current_rarity, desired_rarity)
-	SIGNAL_HANDLER
-
-	var/list/new_table = list()
-	for(var/atom/movable/cube as anything in current_cubes)
-		var/list/entry = list()
-		entry["cube"] = cube
-		entry["rarity"] = current_cubes[cube]
-		new_table += list(entry)
-
-	stored_cubes.set_output(new_table)
-	required_cube.set_output(current_rarity)
-	target_cube.set_output(desired_rarity)
-	updated_cubes.set_output(COMPONENT_SIGNAL)
-
-
-/// When the cube finishes folding it outputs this
-/obj/item/circuit_component/quartic_reliquary_data/proc/on_fold(atom/movable/source, list/all_output_cubes)
-	SIGNAL_HANDLER
-
-	output_cubes.set_output(all_output_cubes)
-	finished_folding.set_output(COMPONENT_SIGNAL)
-
-/// Start the folding process, if we fail then output why
-/obj/item/circuit_component/quartic_reliquary_data/proc/trigger_fold()
-	CIRCUIT_TRIGGER
-	if(!attatched_reliquary)
-		return
-	var/list/cube_roll_results = attatched_reliquary.begin_cube_roll()
-	if(cube_roll_results[1] & CLICK_ACTION_BLOCKING)
-		why_fail.set_output(cube_roll_results[2])
-		on_fail.set_output(COMPONENT_SIGNAL)
-
-/// Pop the top cube from the stack
-/obj/item/circuit_component/quartic_reliquary_data/proc/trigger_eject()
-	CIRCUIT_TRIGGER
-	if(!attatched_reliquary)
-		return
-	var/list/cube_eject_results = attatched_reliquary.remove_cube_hand(null)
-	if(cube_eject_results[2] != "success!")
-		why_fail.set_output(cube_eject_results[2])
-		on_fail.set_output(COMPONENT_SIGNAL)
-
-/obj/item/circuit_component/quartic_reliquary_data/get_ui_notices()
-	. = ..()
-	. += create_table_notices(list("cube", "rarity"))
-	. += create_ui_notice("Rarity to Number Guide:", "orange")
-	. += create_ui_notice("Common = 1", "white")
-	. += create_ui_notice("Uncommon = 2", "green")
-	. += create_ui_notice("Rare = 3", "blue")
-	. += create_ui_notice("Epic = 4", "purple")
-	. += create_ui_notice("Legendary = 5", "red")
-	. += create_ui_notice("Mythical = 6", "pink")
-
 /obj/machinery/quartic_reliquary/RefreshParts()
 	. = ..()
 	var/new_bonus_chance = 0
@@ -347,9 +230,9 @@
 
 /obj/effect/abstract/quartic_cube/Initialize(mapload)
 	. = ..()
-	add_filter("new_rarity_pulse", 1, color_matrix_filter(COLOR_WHITE))
 	add_filter("mythical_glow", 10, outline_filter(color = GLOB.all_cubecolors[MYTHICAL_CUBE], size = 1))
-	glow = new(get_turf(src), 0, 1, COLOR_SILVER)
+	add_filter("new_rarity_pulse", 1, color_matrix_filter(COLOR_WHITE))
+	glow = new(get_turf(src), 0, 1, COLOR_OFF_WHITE)
 	glow.set_light_on(FALSE)
 	glow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	glow.resistance_flags |= SHUTTLE_CRUSH_PROOF
@@ -360,40 +243,34 @@
 
 /// Animate the color of the cube over a set period of time
 /obj/effect/abstract/quartic_cube/proc/animate_color_filter()
-	var/halftime = round(animation_length/2)
-	transition_filter("new_rarity_pulse", color_matrix_filter(color_to_use), halftime, easing = CUBIC_EASING)
-	addtimer(CALLBACK(src, PROC_REF(handle_fadeout), halftime), halftime)
-	glow.set_light_color = color_to_use
+	addtimer(CALLBACK(src, PROC_REF(finish_fadeout)), animation_length)
+	glow.set_light_on(TRUE)
 	START_PROCESSING(SSfastprocess, src)
 	COOLDOWN_START(src, color_fade, animation_length)
-
-/// If I can't interpolate with an easy and clean proc I'll do it myself!
-/obj/effect/abstract/quartic_cube/process(seconds_per_tick)
-	if(animation_length && !COOLDOWN_FINISHED(src, color_fade))
-		if(!glow.light_on)
-			glow.set_light_on(TRUE)
-		/// It works but for some reason the light turns white at the midpoint despite it being clamped at 1.
-		/// Can't think of a fix for that but the fact it works at all is good enough for me
-		/// We're basically just using a square function. f(X) = -((X/(A/2))-1)^2+1 where X is the remaining time and A is animation_length
-		//// This doesn't have a good ease in-out but it works for what we're trying to do
-		var/current_interp = clamp(round(-(((round(COOLDOWN_TIMELEFT(src, color_fade),0.01)/round(animation_length/2,0.01))-1)**2)+1, 0.01), 0, 1)
-		glow.set_light_range_power_color(
-			max(round(5*current_interp, 0.1), 1.4),
-			max(round(3*current_interp, 0.1), 0.1),
-			BlendRGB(COLOR_SILVER, color_to_use, clamp(current_interp, 0, 1)))
-
-/// Second half of the fading color animation
-/obj/effect/abstract/quartic_cube/proc/handle_fadeout(halftime)
-	transition_filter("new_rarity_pulse", color_matrix_filter(COLOR_WHITE), halftime, easing = CUBIC_EASING)
-	addtimer(CALLBACK(src, PROC_REF(finish_fadeout)), halftime)
+	transition_filter_chain(src, "new_rarity_pulse", 0,\
+		FilterChainStep(color_matrix_filter(color_to_use), floor(animation_length/2), CUBIC_EASING),\
+		FilterChainStep(color_matrix_filter(COLOR_WHITE), floor(animation_length/2), CUBIC_EASING))
 
 /// Called to handle the end of the animation
 /obj/effect/abstract/quartic_cube/proc/finish_fadeout()
 	STOP_PROCESSING(SSfastprocess, src)
+	modify_filter("new_rarity_pulse", color_matrix_filter(COLOR_WHITE))
 	animation_length = null
-	glow.set_light_range_power_color(0,1,COLOR_SILVER)
+	glow.set_light_range_power_color(0, 1, COLOR_OFF_WHITE)
 	glow.set_light_on(FALSE)
 
+/// If I can't interpolate with an easy and clean proc I'll do it myself!
+/obj/effect/abstract/quartic_cube/process(seconds_per_tick)
+	if(animation_length && !COOLDOWN_FINISHED(src, color_fade))
+		/// Can't think of a fix for that but the fact it works at all is good enough for me
+		/// We're basically just using a square function. f(X) = -((X/(A/2))-1)^2+1 where X is the remaining time and A is animation_length
+		//// This doesn't have a good ease in-out but it works for what we're trying to do
+		var/current_interp = clamp(round(-(((round(COOLDOWN_TIMELEFT(src, color_fade),0.01)/round(animation_length/2,0.01))-1)**2)+1, 0.01), 0, 1)
+		var/glowcolor = BlendRGB(COLOR_OFF_WHITE, color_to_use, clamp(current_interp, 0.01, 0.99))
+		glow.set_light_range_power_color(
+			max(round(5*current_interp, 0.1), 1.4),
+			max(round(3*current_interp, 0.1), 0.1),
+			glowcolor)
 
 /// Flicks both the icon_state and the emissive overlay
 /obj/effect/abstract/quartic_cube/proc/animate_spin(mut_color = COLOR_WHITE, color_time = 3 SECONDS)
@@ -593,3 +470,120 @@
 			handle_cube_reroll(picked_cube, rerolled_cubes)
 		else
 			rerolled_cubes.Add(picked_cube)
+
+/obj/item/circuit_component/quartic_reliquary_data
+	display_name = "Quartic Reliquary Data"
+	desc = "Outputs the cubes held inside of the Quaritic Reliquary, the current desired folding rarity, and all resulting cubes. \
+		Can be used to start folding process & detect when it ends."
+
+	/// Triggers the start of the folding process, if possible
+	var/datum/port/output/begin_folding
+	/// Trigger to pop a cube from the list
+	var/datum/port/output/remove_cube
+
+	/// Table of currently stored cubes
+	var/datum/port/output/stored_cubes
+	/// Current current_rarity
+	var/datum/port/output/required_cube
+	/// Current desired_rarity
+	var/datum/port/output/target_cube
+	/// If the contents of stored_cubes has been updated
+	var/datum/port/output/updated_cubes
+
+	/// The list of cubes that were output
+	var/datum/port/output/output_cubes
+	/// Trigger for when the reliquary finishes folding
+	var/datum/port/output/finished_folding
+	/// If folding the cubes failed, then why
+	var/datum/port/output/why_fail
+	var/datum/port/output/on_fail
+
+	var/obj/machinery/quartic_reliquary/attatched_reliquary
+
+
+/obj/item/circuit_component/quartic_reliquary_data/populate_ports()
+	/// Input signals
+	begin_folding = add_input_port("Begin Folding", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_fold))
+	remove_cube = add_input_port("Eject Last Cube", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_eject))
+	/// Pertains to the input cubes
+	stored_cubes = add_output_port("Contained Cubes", PORT_TYPE_TABLE)
+	required_cube = add_output_port("Required Rarity", PORT_TYPE_NUMBER)
+	target_cube = add_output_port("Target Rarity", PORT_TYPE_NUMBER)
+	updated_cubes = add_output_port("Contained Cubes Altered", PORT_TYPE_INSTANT_SIGNAL)
+	/// Pertains to the output cubes
+	output_cubes = add_output_port("Output Cubes", PORT_TYPE_LIST(PORT_TYPE_ATOM))
+	finished_folding = add_output_port("Finished Folding", PORT_TYPE_INSTANT_SIGNAL)
+	/// Our inputs failed
+	why_fail = add_output_port("Failure Reason", PORT_TYPE_STRING)
+	on_fail = add_output_port("Action Failed", PORT_TYPE_SIGNAL)
+
+
+/obj/item/circuit_component/quartic_reliquary_data/register_usb_parent(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/quartic_reliquary))
+		attatched_reliquary = shell
+		RegisterSignal(attatched_reliquary, COMSIG_RELIQUARY_CONTENTS_UPDATED, PROC_REF(on_cubedate))
+		RegisterSignal(attatched_reliquary, COMSIG_RELIQUARY_FOLDING_COMPLETE, PROC_REF(on_fold))
+
+/obj/item/circuit_component/quartic_reliquary_data/unregister_usb_parent(atom/movable/shell)
+	UnregisterSignal(attatched_reliquary, list(
+		COMSIG_RELIQUARY_CONTENTS_UPDATED,
+		COMSIG_RELIQUARY_FOLDING_COMPLETE
+	))
+	attatched_reliquary = null
+	return ..()
+
+/// When we update the cube's content we call this
+/obj/item/circuit_component/quartic_reliquary_data/proc/on_cubedate(atom/movable/source, list/current_cubes, current_rarity, desired_rarity)
+	SIGNAL_HANDLER
+
+	var/list/new_table = list()
+	for(var/atom/movable/cube as anything in current_cubes)
+		var/list/entry = list()
+		entry["cube"] = cube
+		entry["rarity"] = current_cubes[cube]
+		new_table += list(entry)
+
+	stored_cubes.set_output(new_table)
+	required_cube.set_output(current_rarity)
+	target_cube.set_output(desired_rarity)
+	updated_cubes.set_output(COMPONENT_SIGNAL)
+
+
+/// When the cube finishes folding it outputs this
+/obj/item/circuit_component/quartic_reliquary_data/proc/on_fold(atom/movable/source, list/all_output_cubes)
+	SIGNAL_HANDLER
+
+	output_cubes.set_output(all_output_cubes)
+	finished_folding.set_output(COMPONENT_SIGNAL)
+
+/// Start the folding process, if we fail then output why
+/obj/item/circuit_component/quartic_reliquary_data/proc/trigger_fold()
+	CIRCUIT_TRIGGER
+	if(!attatched_reliquary)
+		return
+	var/list/cube_roll_results = attatched_reliquary.begin_cube_roll()
+	if(cube_roll_results[1] & CLICK_ACTION_BLOCKING)
+		why_fail.set_output(cube_roll_results[2])
+		on_fail.set_output(COMPONENT_SIGNAL)
+
+/// Pop the top cube from the stack
+/obj/item/circuit_component/quartic_reliquary_data/proc/trigger_eject()
+	CIRCUIT_TRIGGER
+	if(!attatched_reliquary)
+		return
+	var/list/cube_eject_results = attatched_reliquary.remove_cube_hand(null)
+	if(cube_eject_results[2] != "success!")
+		why_fail.set_output(cube_eject_results[2])
+		on_fail.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/quartic_reliquary_data/get_ui_notices()
+	. = ..()
+	. += create_table_notices(list("cube", "rarity"))
+	. += create_ui_notice("Rarity to Number Guide:", "orange")
+	. += create_ui_notice("Common = 1", "white")
+	. += create_ui_notice("Uncommon = 2", "green")
+	. += create_ui_notice("Rare = 3", "blue")
+	. += create_ui_notice("Epic = 4", "purple")
+	. += create_ui_notice("Legendary = 5", "red")
+	. += create_ui_notice("Mythical = 6", "pink")

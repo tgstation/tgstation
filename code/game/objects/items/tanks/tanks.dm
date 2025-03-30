@@ -330,7 +330,7 @@
 	excited = (excited | handle_tolerances(seconds_per_tick))
 	excited = (excited | leaking)
 
-	if(!excited)
+	if(!excited && !istype(src,/obj/item/tank/internals/emergency_oxygen/double/cube))
 		STOP_PROCESSING(SSobj, src)
 	excited = FALSE
 

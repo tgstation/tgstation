@@ -249,7 +249,7 @@
 	cube_rarity = UNCOMMON_CUBE
 
 /obj/item/reagent_containers/applicator/pill/cube/random
-	name = "random condiment cube"
+	name = "surprise condiment cube"
 	desc = "Perfect for those who want a <span class='papyrus'>surprising</span> cup of tea."
 	icon_state = "small"
 	list_reagents = list()
@@ -334,10 +334,12 @@
 	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_PINK))
 
 /// Oxygen cube
+/// This one is honestly really buggy but fuck it
 /obj/item/tank/internals/emergency_oxygen/double/cube
 	name = "oxygen cube"
-	desc = "A cubic tank of oxygen. It's slowly pulling moles of oxygen out of the 3rd dimension."
-	icon_state = "cube"
+	desc = "A cubic tank of oxygen. As long as it has a little oxygen in it, it will slowly pull more moles out of the 3rd dimension."
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "oxygen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	inhand_icon_state = "cuboid"
@@ -352,12 +354,9 @@
 	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_TRUE_BLUE))
 
 /obj/item/tank/internals/emergency_oxygen/double/cube/process(seconds_per_tick)
-	if(air_contents.return_pressure() >= TANK_LEAK_PRESSURE || air_contents.return_volume() >= volume)
-		/// I'm sure that there's a very good reason for it to stop itself from processing but unfortunately I don't have an easy way to
-		/// turn it back on so instead we're just going to stop it altogether if we're full instead of letting to continue.
-		return
+	if(air_contents.return_pressure() >= TANK_LEAK_PRESSURE)
+		return ..()
 	if(air_contents.has_gas(/datum/gas/oxygen))
-		var/datum/gas_mixture/new_mixture = SSair.parse_gas_string("[GAS_O2]=[seconds_per_tick];[TEMP]=[T20C]", /datum/gas_mixture)
-
+		var/datum/gas_mixture/new_mixture = SSair.parse_gas_string("[GAS_O2]=[seconds_per_tick/20]", /datum/gas_mixture)
 		air_contents.merge(new_mixture)
 	return ..()

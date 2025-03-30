@@ -73,9 +73,9 @@ GLOBAL_LIST_INIT(epic_cubes, list(
 	/obj/item/cube/colorful/pixel = 25,
 	/obj/item/cube/puzzle = 25,
 	/obj/item/skub/cube = 25,
-	//Oxygen cube, generates oxygen
-	//Nitrous boxes (Crash bandicoot) impact grenade
+	/obj/item/tank/internals/emergency_oxygen/double/cube = 25,
 	/obj/item/food/monkeycube/spaceman = 25,
+	/obj/item/cube/vinyl = 25,
 	))
 
 /// List of Legendary Cubes
@@ -94,6 +94,7 @@ GLOBAL_LIST_INIT(legendary_cubes, list(
 	/obj/item/stock_parts/matter_bin/moving = 25,
 	/obj/item/food/monkeycube/spessman = 25,
 	/obj/item/stock_parts/micro_laser/charged_blaster = 25,
+	/obj/item/grenade/impact/nitro = 25,
 	//Pain Box(Dune) maxes out your pain, immediately fills you with a lot of determination
 ))
 
@@ -105,8 +106,8 @@ GLOBAL_LIST_INIT(mythical_cubes, list(
 	/obj/item/cube/generic = 25,
 	//Dehydration cube(megamind) monkey cube but random! Take from gold slime pool.
 	/obj/item/cube/blender = 25,
-	//Companion cube (portal) mood buff & crushing weight
-	//Time Cube (time cube) wizard time-stop spell w/ longer cooldown
+	/obj/item/cube/companion = 25,
+	/obj/item/cube/time_cube = 25,
 	//Escafil Device (Animorphs) morph belt/spell w/ cooldown
 	/obj/item/stock_parts/power_store/cell/tesseract = 25,
 	/obj/item/gift/anything/questionmark = 25,

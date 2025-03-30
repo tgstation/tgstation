@@ -43,6 +43,7 @@
 #include "code\__DEFINES\airlock.dm"
 #include "code\__DEFINES\alarm.dm"
 #include "code\__DEFINES\alerts.dm"
+#include "code\__DEFINES\animate.dm"
 #include "code\__DEFINES\announcements.dm"
 #include "code\__DEFINES\anomaly.dm"
 #include "code\__DEFINES\antagonists.dm"

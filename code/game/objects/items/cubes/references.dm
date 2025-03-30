@@ -339,6 +339,11 @@
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 
+/obj/item/cube/blender/Destroy(force)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	handle_dropping()
+	return ..()
+
 /// Check if we were picked up by a mob, and keep that user as a weakref until we're removed
 /obj/item/cube/blender/proc/on_moved(atom/movable/source, atom/oldloc, direction, forced, list/old_locs)
 	SIGNAL_HANDLER
@@ -464,3 +469,305 @@
 		return
 	handle_neggrav_remove()
 	owner = null
+
+// Time cube (time cube)
+/obj/item/cube/time_cube
+	name = "\improper TIME CUBE"
+	desc = "<div class='boxed_message red_box'><center><span class='notice'>STATION HAS 4 CORNER\n\
+	SIMULTANEOUS 4-DAY\n\
+	<b>TIME CUBE</b>\n\
+	IN ONLY 24 HOUR ROTATION\n\
+	<u>4 CORNER DAYS, CUBES 4 QUAD EARTH- No 1 Day God.</u>\n\
+	*********************\n\
+	FREE SPEECH in NANOTRASEN is\n\
+	\"BULLSHIT\",\n\
+	EVIL EDUCATORS\n\
+	block and suppress\n\
+	www.timecube.ntnet.\n\
+	You are educated evil,\n\
+	and might have to kill\n\
+	the evil ONE teaching\n\
+	educators before you\n\
+	can learn that 4 corner\n\
+	days actually exist -but\n\
+	all Cube Truth denied.\n\
+	Dumb ass educators fear\n\
+	me and hide from debate.</span></center></div>"
+	icon_state = "timecube"
+	rarity = MYTHICAL_CUBE
+	reference = TRUE
+	overwrite_held_color = COLOR_OFF_WHITE
+	/// Who owns us - I should really find a way to make this its own datum or something since I'm using it so much
+	var/datum/weakref/owner
+	/// How long we wait between stops
+	var/cooldown_time = 1 MINUTES
+	/// How long the stop lasts
+	var/stop_duration = 10 SECONDS
+	/// The radius of the stop
+	var/radius = 3
+
+	COOLDOWN_DECLARE(stop_time_cooldown)
+
+/obj/item/cube/time_cube/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	register_context()
+	add_overlay(mutable_appearance(icon = icon, icon_state = "timecube_glow", appearance_flags = KEEP_TOGETHER | KEEP_APART))
+
+/obj/item/cube/time_cube/Destroy(force)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	handle_dropping()
+	return ..()
+
+/// Check if we were picked up by a mob, and keep that user as a weakref until we're removed
+/obj/item/cube/time_cube/proc/on_moved(atom/movable/source, atom/oldloc, direction, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	var/mob/living/existing_user = owner?.resolve()
+	var/mob/living/holder = get_held_mob()
+	if(existing_user)
+		if(!holder)
+			handle_dropping()
+			return
+		if(existing_user == holder)
+			return
+	else if(holder)
+		handle_equipping(holder)
+
+/// Make the user immune to timestop
+/obj/item/cube/time_cube/proc/handle_equipping(mob/living/holder)
+	owner = WEAKREF(holder)
+	ADD_TRAIT(holder, TRAIT_TIME_STOP_IMMUNE, REF(src))
+
+/// remove the immunity
+/obj/item/cube/time_cube/proc/handle_dropping()
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	REMOVE_TRAIT(user, TRAIT_TIME_STOP_IMMUNE, REF(src))
+	owner = null
+
+/obj/item/cube/time_cube/attack_self(mob/user)
+	. = ..()
+	if(!isliving(user))
+		return
+	if(!COOLDOWN_FINISHED(src, stop_time_cooldown))
+		balloon_alert(user, "not ready!")
+		to_chat(user, span_notice("[src] will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, stop_time_cooldown))]"))
+		return
+	var/time_immune = list()
+	time_immune += user
+	new /obj/effect/timestop(get_turf(user), radius, stop_duration, time_immune)
+	COOLDOWN_START(src, stop_time_cooldown, cooldown_time)
+
+/obj/item/cube/time_cube/examine(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, stop_time_cooldown))
+		. += span_notice("[src] will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, stop_time_cooldown))]")
+
+/obj/item/cube/time_cube/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		return NONE
+	if(!COOLDOWN_FINISHED(src, stop_time_cooldown))
+		return NONE
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "TIME CUBE"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+
+/// Nitro box (Crash Bandicoot)
+/obj/item/grenade/impact/nitro
+	name = "nitro cube"
+	desc = "A cube prone to explosive results."
+	icon = 'icons/obj/cubes.dmi'
+	icon_state = "nitro"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "cuboid"
+	light_range = 2
+	light_power = 3
+	light_system = OVERLAY_LIGHT
+	light_color = COLOR_LIME
+	light_on = FALSE
+
+/obj/item/grenade/impact/nitro/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cuboid, cube_rarity = LEGENDARY_CUBE, isreference = TRUE, ismapload = mapload)
+	add_filter("armed_glow", 11, rays_filter(1, COLOR_LIME, 0))
+
+/obj/item/grenade/impact/nitro/color_atom_overlay(mutable_appearance/cubelay)
+	return filter_appearance_recursive(cubelay, color_matrix_filter(COLOR_LIME))
+
+/obj/item/grenade/impact/nitro/arm_grenade(mob/user, delayoverride, msg, volume)
+	. = ..()
+	icon_state = initial(icon_state)
+	transition_filter_chain(src, "armed_glow", INDEFINITE,\
+		FilterChainStep(rays_filter(20, COLOR_LIME, 1), 5 SECONDS, CUBIC_EASING),\
+		FilterChainStep(rays_filter(18, COLOR_LIME, 0), 5 SECONDS, CUBIC_EASING))
+	set_light_on(TRUE)
+
+/obj/item/grenade/impact/nitro/thrown_impact(atom/source, atom/hit_atom)
+	. = ..()
+	set_light_on(FALSE)
+	remove_filter("armed_glow")
+
+
+/// Companion Cube (Portal)
+/obj/item/cube/companion
+	name = "weighted companion cube"
+	desc = "Probably the only thing you can trust on this damn station."
+	icon_state = "companion"
+	rarity = MYTHICAL_CUBE
+	reference = TRUE
+	overwrite_held_color = COLOR_SILVER
+	w_class = WEIGHT_CLASS_BULKY
+	/// Who owns us
+	var/datum/weakref/owner
+
+/obj/item/cube/companion/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/beauty, 300)
+	/// It's weighted
+	AddElement(/datum/element/falling_hazard, damage = 25, wound_bonus = 15, hardhat_safety = FALSE, crushes = TRUE)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/obj/item/cube/companion/Destroy(force)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	handle_dropping()
+	return ..()
+
+/// Check if we were picked up by a mob, and keep that user as a weakref until we're removed
+/obj/item/cube/companion/proc/on_moved(atom/movable/source, atom/oldloc, direction, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	var/mob/living/existing_user = owner?.resolve()
+	var/mob/living/holder = get_held_mob()
+	if(existing_user)
+		if(!holder)
+			handle_dropping()
+			return
+		if(existing_user == holder)
+			return
+	else if(holder)
+		handle_equipping(holder)
+
+/// Oh cube, how I love you!
+/obj/item/cube/companion/proc/handle_equipping(mob/living/holder)
+	owner = WEAKREF(holder)
+	holder.clear_mood_event("companion_cube_lose")
+	holder.add_mood_event("companion_cube_get", /datum/mood_event/companion_cube_get)
+
+/// NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+/obj/item/cube/companion/proc/handle_dropping()
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	user.clear_mood_event("companion_cube_get")
+	user.add_mood_event("companion_cube_lose", /datum/mood_event/companion_cube_loss)
+	owner = null
+
+/datum/mood_event/companion_cube_get
+	description = "I love having my weighted companion cube! It's my best friend!"
+	mood_change = 20
+	category = "companion_cube_get"
+
+/datum/mood_event/companion_cube_loss
+	description = "I LOST MY WEIGHTED COMPANION CUBE!!"
+	/// You'd be sad too bro
+	mood_change = -100000
+	/// I genuinely don't know what I was on when I made it but it's here now I guess
+	special_screen_obj = "mood_cube"
+	timeout = 30 SECONDS
+	category = "companion_cube_lose"
+
+
+// Hip to Be Cube (Huey Lewis and The News)
+/obj/item/cube/vinyl
+	name = "Honk Lewis and The Crews - It's Hip To Be Cube (Vinyl Single)"
+	desc = "You like Honk Lewis and the Crews?"
+	icon_state = "vinyl"
+	rarity = EPIC_CUBE
+	reference = TRUE
+	overwrite_held_color = COLOR_SILVER
+	/// Who owns us
+	var/datum/weakref/owner
+	/// Handles finding us some cubes
+	var/datum/proximity_monitor/advanced/cube/mood_buff
+
+/obj/item/cube/vinyl/examine(mob/user)
+	. = ..()
+	/// Adjust the dates in respect to the gameyear
+	. += "Their early work was a little too new wave for my taste. But when Spess came out in '[abs((CURRENT_STATION_YEAR-17) % 100)], \
+	I think they really came into their own, commercially and artistically. The whole album has a clear, crisp sound, \
+	and a new sheen of consummate professionalism that really gives the songs a big boost. He's been compared to J'alvis Cousteau, \
+	but I think Honk has a far more bitter, cynical sense of humor. In '[abs((CURRENT_STATION_YEAR-13) % 100)], Honk released this; Slip!, their most accomplished album. \
+	I think their undisputed masterpiece is \"Hip To Be Cube\". A song so catchy, most people probably don't listen to the lyrics. \
+	But they should, because it's not just about the pleasures of conformity and the importance of trends. It's also a personal statement about the band itself!"
+
+/obj/item/cube/vinyl/Initialize(mapload)
+	. = ..()
+	mood_buff = new(_host = src, range = 4, _ignore_if_not_on_turf = FALSE)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/obj/item/cube/vinyl/Destroy(force)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	handle_dropping()
+	QDEL_NULL(mood_buff)
+	return ..()
+
+/// Check if we were picked up by a mob, and keep that user as a weakref until we're removed
+/obj/item/cube/vinyl/proc/on_moved(atom/movable/source, atom/oldloc, direction, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	var/mob/living/existing_user = owner?.resolve()
+	var/mob/living/holder = get_held_mob()
+	if(existing_user)
+		if(!holder)
+			handle_dropping()
+			return
+		if(existing_user == holder)
+			return
+	else if(holder)
+		handle_equipping(holder)
+
+/obj/item/cube/vinyl/proc/handle_equipping(mob/living/holder)
+	owner = WEAKREF(holder)
+
+/obj/item/cube/vinyl/proc/handle_dropping()
+	var/mob/living/user = owner?.resolve()
+	if(!user)
+		return
+	owner = null
+
+/datum/proximity_monitor/advanced/cube/field_turf_crossed(atom/movable/crossed, turf/old_location, turf/new_location)
+	if (!isobj(crossed)|| !can_see(crossed, host, current_range))
+		return
+	on_seen(crossed)
+
+/datum/proximity_monitor/advanced/cube/proc/on_seen(obj/seen_obj)
+	if(!istype(host, /obj/item/cube/vinyl))
+		return
+	var/obj/item/cube/vinyl/host_vinyl = host
+	var/mob/living/viewer = host_vinyl.owner?.resolve()
+	if(!viewer)
+		return
+	if(!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
+		return
+	var/datum/component/cuboid/is_cube = seen_obj.GetComponent(/datum/component/cuboid)
+	if(!is_cube)
+		return
+	to_chat(viewer, span_notice("Woah, that's a good lookin' cube!"))
+	viewer.add_mood_event("nice_cube", /datum/mood_event/vinyl_cube_seen, seen_obj, is_cube.rarity)
+
+/datum/mood_event/vinyl_cube_seen
+	description = "That cube <i>does</i> look pretty hip!"
+	mood_change = 1
+	timeout = 1 MINUTES
+	category = "nice_cube"
+
+/datum/mood_event/vinyl_cube_seen/add_effects(obj/cube, rarity)
+	mood_change = rarity
+	description = "[cube] <i>does</i> look pretty hip!"
+	return ..()

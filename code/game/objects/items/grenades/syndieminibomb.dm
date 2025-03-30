@@ -50,6 +50,15 @@
 	update_mob()
 	qdel(src)
 
+/obj/item/grenade/impact
+	name = "impact grenade"
+	desc = "A compact grenade that detonates upon impact once activated. Try not to drop it!"
+	det_time = null
+	icon_state = "concussion"
+	ex_heavy = 1
+	ex_light = 3
+	ex_flame = 4
+
 /obj/item/grenade/gluon
 	desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby. These gluon streams will also make victims feel exhausted, and induce shivering. This extreme coldness will also likely wet any nearby floors."
 	name = "gluon frag grenade"
