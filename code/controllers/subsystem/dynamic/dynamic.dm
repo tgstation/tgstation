@@ -401,7 +401,7 @@ SUBSYSTEM_DEF(dynamic)
 		"Surveillance by " + nt_department + " shows a credible risk of " + evil_threat + " attack against our assets in your sector.",
 		"The " + nt_department + " has decrypted " + evil_threat + " communications suggesting a high likelihood of attack.",
 		"Information passed to us by " + nt_department + " suggests a high amount of " + evil_threat + " activity in the sector.",
-		"Credible information passed to us by " + nt_department + " suggests that " + evil_threat_the + " is preparing to mount a major concerted offensive."
+		"Credible information passed to us by " + nt_department + " suggests that " + evil_threat_the + " is preparing to mount a major concerted offensive.",
 		"The " + nt_department + " is under attack by the evil forces of " + evil_threat_the + ".")
 		
 	var/line_two = pick(
