@@ -28,9 +28,9 @@ SUBSYSTEM_DEF(tgui)
 	basehtml = file2text('tgui/public/tgui.html')
 
 	// Inject inline helper functions
-	var/functions = file2text('tgui/public/functions.min.js')
-	functions = "<script type='text/javascript'>\n[functions]\n</script>"
-	basehtml = replacetextEx(basehtml, "<!-- tgui:functions -->", functions)
+	var/helpers = file2text('tgui/public/helpers.min.js')
+	helpers = "<script type='text/javascript'>\n[helpers]\n</script>"
+	basehtml = replacetextEx(basehtml, "<!-- tgui:helpers -->", helpers)
 
 	// Inject inline ntos-error styles
 	var/ntos_error = file2text('tgui/public/ntos-error.min.css')
