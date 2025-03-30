@@ -84,6 +84,12 @@
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
+	var/datum/action/cooldown/spell/pointed/flash/flash = locate() in src.actions
+	if(!flash)
+		flash = new(src.mind)
+		flash.Grant(src)
+		flash.cast_range = 500
+
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)

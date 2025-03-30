@@ -25,4 +25,3 @@
 		CRASH("[type] failed to find a flash destination.")
 
 	do_teleport(owner, destination, asoundout = post_teleport_sound, channel = teleport_channel, forced = force_teleport)
-
