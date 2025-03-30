@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
 	gulag_valid = TRUE
-	tableVariant = /obj/structure/table
+	table_type = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
 	cost = SHEET_MATERIAL_AMOUNT
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	gulag_valid = TRUE
-	tableVariant = /obj/structure/table/reinforced
+	table_type = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12
 
@@ -763,7 +763,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	novariants = FALSE
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/copper = 12) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/sheet/bronze
-	tableVariant = /obj/structure/table/bronze
+	table_type = /obj/structure/table/bronze
 	material_type = /datum/material/bronze
 	walltype = /turf/closed/wall/mineral/bronze
 	has_unique_girder = TRUE
@@ -929,9 +929,9 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 5
 
 /obj/item/stack/sheet/pizza
-	name = "pepperoni sheetzzas"
-	desc = "It's a delicious pepperoni sheetzza!"
-	singular_name = "pepperoni sheetzza"
+	name = "sheet pizza"
+	desc = "It's a deliciously rectangular sheet of pizza!"
+	singular_name = "sheet pizza"
 	icon_state = "sheet-pizza"
 	mats_per_unit = list(/datum/material/pizza = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/pizza

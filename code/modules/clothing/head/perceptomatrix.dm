@@ -64,7 +64,6 @@
 
 /obj/item/clothing/head/helmet/perceptomatrix/Initialize(mapload)
 	. = ..()
-
 	update_appearance(UPDATE_ICON_STATE)
 	update_anomaly_state()
 	AddComponent(/datum/component/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
@@ -74,9 +73,11 @@
 	. = ..()
 	if(slot & ITEM_SLOT_HEAD)
 		RegisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(pre_cast_core_check))
+		user.update_sight()
 
 /obj/item/clothing/head/helmet/perceptomatrix/dropped(mob/living/user, silent)
 	UnregisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST)
+	user.update_sight()
 	..()
 
 // Prevent casting the spell w/o the core.
@@ -93,7 +94,7 @@
 		clothing_flags = PERCEPTOMATRIX_INACTIVE_FLAGS
 		detach_clothing_traits(additional_clothing_traits)
 		QDEL_LIST(active_components)
-		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, forced = TRUE)
+		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 		return
 
 	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
@@ -107,7 +108,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = ITEM_SLOT_HEAD, \
 	)
-	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, forced = TRUE)
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 
 	update_icon_state()
 
@@ -119,9 +120,6 @@
 	. = ..()
 	if (!core_installed)
 		. += span_warning("It requires a hallucination anomaly core in order to function.")
-
-/obj/item/clothing/head/helmet/perceptomatrix/item_action_slot_check(slot, mob/user, datum/action/action)
-	return slot & ITEM_SLOT_HEAD
 
 /obj/item/clothing/head/helmet/perceptomatrix/update_icon_state()
 	icon_state = base_icon_state + (core_installed ? "" : "_inactive")
@@ -242,10 +240,7 @@
 	cast_on.emote("scream")
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	cast_on.adjust_staggered(stagger_duration)
-	cast_on.apply_status_effect(/datum/status_effect/hallucination, hallucination_duration, \
-		hallucination_duration * 0.2, hallucination_duration) // lower/upper hallucination freq. bound
-
-	return
+	cast_on.apply_status_effect(/datum/status_effect/hallucination/perceptomatrix, hallucination_duration, HALLUCINATION_TIER_RARE)
 
 #undef PERCEPTOMATRIX_INACTIVE_FLAGS
 #undef PERCEPTOMATRIX_ACTIVE_FLAGS

@@ -138,17 +138,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-
-		// HACK: Without this the character starts out really tiny because of some BYOND bug.
-		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
-		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
-		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
-		// I hate this place
-		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/atom/movable/screen/map_view/char_preview, update_body)), 1 SECONDS)
+		character_preview_view.display_to(user, ui.window)
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
@@ -192,7 +185,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/ui_assets(mob/user)
 	var/list/assets = list(
-		get_asset_datum(/datum/asset/spritesheet/preferences),
+		get_asset_datum(/datum/asset/spritesheet_batched/preferences),
 		get_asset_datum(/datum/asset/json/preferences),
 	)
 
@@ -294,7 +287,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character_preview_view = new(null, src)
 	character_preview_view.generate_view("character_preview_[REF(character_preview_view)]")
 	character_preview_view.update_body()
-	character_preview_view.display_to(user)
 
 	return character_preview_view
 

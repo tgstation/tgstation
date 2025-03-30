@@ -219,8 +219,8 @@
 		C.Scale(19,19)
 		var/mutable_appearance/puzzle_small = new(C)
 		puzzle_small.layer = layer + 0.1
-		puzzle_small.pixel_x = 7
-		puzzle_small.pixel_y = 7
+		puzzle_small.pixel_w = 7
+		puzzle_small.pixel_z = 7
 		add_overlay(puzzle_small)
 
 /obj/structure/puzzle_element/update_icon(updates=ALL) // to prevent update_appearance calls from cutting the overlays and not adding them back

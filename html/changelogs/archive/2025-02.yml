@@ -545,3 +545,153 @@
       x1 multiplier.
   - balance: Polonium no longer guarantees instant irradiation when the reagent is
       inside a mob.
+2025-02-24:
+  DaCoolBoss:
+  - map: '[Birdshot] Deleted some badly-placed resin tiles in eastern maints.'
+  - map: '[Birdshot] Shuffled the items inside the Gold Standard Law Firm room to
+      look better.'
+  Ghommie:
+  - bugfix: cult slurring/stuttering now removed before the april fools punch line
+      upon conversion, thus untarnishing the Rick and Morty reference.
+  - bugfix: Fixing loaded trophy fishes possibly not having materials.
+  Hatterhat:
+  - rscadd: Glaive retool kits for proto-kinetic crushers are now in mining vendors'
+      ordering lists.
+  - code_imp: Proto-kinetic crusher retool kits now have support for alternate inhand
+      icon files with alternate dimensions.
+  K4rlox:
+  - rscadd: Human plushie has been added to the game, Obtainable thru Cargo, Loadouts
+      and Spawners.
+  Likteer:
+  - rscadd: Grown grass can be dryed (rack/dehumidifier) to make hay tiles.
+  SmArtKar:
+  - bugfix: Hitscan projectiles like emitter beams should look less weird during extreme
+      lag spikes
+  - bugfix: Moon amulet now properly turns insane people into converts and drains
+      sanity of sane people, instead of doing the inverse
+  StrangeWeirdKitten:
+  - bugfix: You can no longer be immune to megafauna with a polybelt as a mining mob.
+  Time-Green:
+  - rscadd: Taking plant or shadow limbs will now behave as expected! Take a plant
+      arm, and it will heal in light! Or take plant and shadow limbs and be in constant
+      agony as you realize this world was not made for you
+  - refactor: Refactors how we handle photosynthesis/nyxosynthesis by moving it into
+      a new status_effect framework controlled by podyparts
+  Y0SH1_M4S73R (with special thanks to Vect0r, whose original PR inspired the implementation of these changes):
+  - rscadd: Shuttle blueprints, the tool used to construct and modify custom shuttles.
+      Print a set at a science, engineering, or cargo techfab after researching Shuttle
+      Engineering, or craft a crude set from the crafting menu.
+  - rscadd: Shuttle blueprint database upgrade for engineering cyborgs, printable
+      from the Exosuit Fabricator after researching Shuttle Engineering. A version
+      of shuttle blueprints designed for use by cyborgs.
+  - rscadd: Shuttle frame rods, usable to construct custom shuttles. Hand-craft by
+      using 5 rods on 1 titanium sheet, or by printing them at a science, engineering,
+      or cargo techfab after researching Shuttle Engineering.
+  - rscadd: Custom shuttle flight control and navigation boards, printable from a
+      science, engineering, or cargo techfab after researching Shuttle Engineering.
+  - rscadd: Shuttle engine boards can be printed from a science, engineering, or cargo
+      techfab after researching shuttle engineering.
+  - rscadd: The shuttle engine supply pack is no longer locked behind the purchase
+      of the Build Your Own Shuttle kit.
+  - rscadd: Shuttle Construction Starter Kit goodie pack, containing a set of shuttle
+      blueprints, flight control and navigation console boards, and two engine boards,
+      can be purchased from cargo for 1200 credits. Requires aux base access to purchase.
+  - refactor: Shuttles now keep track of what areas are underneath each of their individual
+      turfs, so that the areas left behind on movement are consistent with what they
+      were beforehand.
+  - refactor: Shuttle ceilings now place themselves down as baseturfs, instead of
+      only appearing if the turf above is open space.
+  grungussuss:
+  - qol: ghost poll sound can now be disabled
+  - qol: ghost poll sound volume can now be tweaked
+  - sound: added new ghost poll sound.
+  - sound: normalised volume of ghost poll sounds
+2025-02-25:
+  EOBGames:
+  - rscadd: 'No longer content to speak purely in Galactic Common, the Space Russians
+      have begun to use their own language: Spinwarder Russian. Best of luck in understanding
+      them; we sure don''t!'
+  Jacquerel:
+  - balance: Foam now passes through tables, grilles, computers, and several other
+      dense structures. You can still escape foam by mantling onto tables and such.
+  - balance: MODSuit parts now slow you only when deployed, regardless of whether
+      they are sealed.
+  - balance: MODSuit parts no longer slow you when they aren't deployed.
+  Melbert, Absolucy:
+  - qol: Touches up the language menu
+  SmArtKar:
+  - image: Resprited advanced robotic limbs
+  SmArtKar, PiotrTheTchaikowsky:
+  - image: Resprited boxing gloves
+  combustor:
+  - map: Added an air alarm to birdshot's engine room
+2025-02-26:
+  Dmeto:
+  - bugfix: Nebulastation Supermatter is no longer hotwired roundstart.
+  Jacquerel:
+  - balance: The part of a MODsuit that the other parts deploy from always counts
+      as deployed for the purposes of speed calculation.
+  KingkumaArt:
+  - image: Cooked bacon resprited to be more visually clear that it's cooked
+  Melbert:
+  - rscadd: The Kitchen Coldroom, RND Server Room, Xenobio Kill Room, and Telecomms
+      on all maps now come equipped with walkable, transparent airtight plastic flaps.
+  - rscadd: Medbay Coldrooms are now consistently cold across all maps that has one.
+      They, too, now have plastic flaps.
+  - rscadd: Plastic flaps will now melt in hot environments / active fires. Cargo
+      flaps are more resilient to fire than kitchen flaps.
+  - qol: Open doors no longer layer beneath plastic flaps, in other words you can
+      actually click on them to shut them.
+  - qol: Plastic flaps may be less irritating to traverse for things which can already
+      pass through glass
+  - sound: Walking out of plastic flaps now has sfx. Crawling out is still silent.
+  SmArtKar:
+  - image: Resprited tinkerer gloves
+  - rscadd: You can use tables as makeshift lava bridges
+  - bugfix: Fixed crusher retool kits turning crushers invisible
+  SmArtKar, CoiledLamb:
+  - image: Resprited the handheld crew monitor
+  TealSeer:
+  - qol: The RCD examine text now lists any upgrades it has installed.
+  TiviPlus:
+  - code_imp: The Discord Announcer for PRs is back
+  necromanceranne:
+  - balance: Mech PKA low-pressure damage has been reduced to 50, from 80. Increased
+      the attack cooldown to match the standard PKA.
+  - balance: Mech PKA AOE blast does not mine turfs, and only does 30% of the main
+      projectiles damage to mining mobs in the AOE effect.
+  - bugfix: The mech PKA AOE blast visual effect now properly appears when hitting
+      a mob directly.
+  - code_imp: MOB_MINING and MOB_CRUSTACEAN are now defined biotypes.
+  - code_imp: Audits some mining mob biotypes to make more sense based on what kind
+      of creature they are and to include MOB_MINING in their defines.
+  possiblepossibility:
+  - bugfix: fixes slaughter demon roundend report
+  - bugfix: Fixes (most) emergency access on maintenance airlocks on WawaStation
+  - bugfix: wizard statues are gray
+2025-02-27:
+  DaCoolBoss:
+  - balance: Trash items now contain small amounts of material.
+  Hatterhat:
+  - code_imp: Guns now have burst delay and fire delay variables instead of fire delay
+      affecting both. If a weapon's burst feels off, please submit an issue report.
+  Majkl-J:
+  - bugfix: The charging defib mount no longer runtimes when there's no defib
+  SmArtKar:
+  - bugfix: Fixed flesh reshaper not being placeable on table
+  - bugfix: Sphere transform module no longer makes you spin permanently
+  - bugfix: You can now lean on falsewalls
+  - bugfix: You can no longer activate anomalock heart's voltaic overdrive/tenacity
+      trauma by pulling off some surgery shenanigans
+  - bugfix: You no longer lose tenacity trauma gained via lobotomy after losing voltaic
+      override
+2025-02-28:
+  Profakos:
+  - bugfix: Request consoles once again enter emergency mode when you hit an emergency
+      button
+  SmArtKar:
+  - image: Resprited GPSs
+  - bugfix: You can no longer try to occupy an AI uplink brain already occupied by
+      another AI
+  - bugfix: Armsy (aka Lord Of The Night (aka flesh snek (aka heretic ascention)))
+      no longer affects itself with its own spells

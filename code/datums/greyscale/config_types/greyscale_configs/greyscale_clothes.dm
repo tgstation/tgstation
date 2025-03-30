@@ -832,3 +832,12 @@
 /datum/greyscale_config/jester_hat/worn
 	name = "Jester Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+/datum/greyscale_config/fedora
+	name = "Fedora"
+	icon_file = 'icons/obj/clothing/head/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fedora.json'
+
+/datum/greyscale_config/fedora/worn
+	name = "Fedora (Worn)"
+	icon_file = 'icons/mob/clothing/head/hats.dmi'

@@ -7,6 +7,7 @@
 	name = "nutriment pump implant"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "nutriment_implant"
+	aug_overlay = "nutripump"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
@@ -37,6 +38,7 @@
 	name = "nutriment pump implant PLUS"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "adv_nutriment_implant"
+	aug_overlay = "nutripump_adv"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 
@@ -44,6 +46,8 @@
 	name = "reviver implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart!"
 	icon_state = "reviver_implant"
+	aug_overlay = "reviver"
+	emissive_overlay = TRUE
 	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = FALSE
@@ -159,7 +163,8 @@
 	slot = ORGAN_SLOT_THRUSTERS
 	icon_state = "imp_jetpack"
 	base_icon_state = "imp_jetpack"
-	implant_color = null
+	aug_overlay = "imp_jetpack"
+	emissive_overlay = TRUE
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
 	var/on = FALSE
@@ -208,6 +213,7 @@
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set on."))
 	update_appearance()
+	owner.update_body_parts()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/deactivate(silent = FALSE)
 	if(!on)
@@ -218,6 +224,7 @@
 		to_chat(owner, span_notice("You turn your thrusters set off."))
 	on = FALSE
 	update_appearance()
+	owner.update_body_parts()
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
 	icon_state = "[base_icon_state][on ? "-on" : null]"
@@ -257,6 +264,14 @@
 
 	deactivate(silent = TRUE)
 	return FALSE
+
+/obj/item/organ/cyberimp/chest/thrusters/get_overlay_state(image_layer, obj/item/bodypart/limb)
+	return "[aug_overlay][on ? "_on" : ""]"
+
+/obj/item/organ/cyberimp/chest/thrusters/get_overlay(image_layer, obj/item/bodypart/limb)
+	. = ..()
+	for (var/image/overlay as anything in .)
+		overlay.layer = -BODYPARTS_HIGH_LAYER // makes absolutely zero sense why it would layer ontop of jumpsuits but it looks cool
 
 /obj/item/organ/cyberimp/chest/spine
 	name = "\improper Herculean gravitronic spinal implant"
@@ -304,23 +319,24 @@
 		remove_organ_trait(TRAIT_STURDY_FRAME)
 
 /obj/item/organ/cyberimp/chest/spine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/grav))
+		return NONE
+
 	if(core_applied)
 		user.balloon_alert(user, "core already installed!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/assembly/signaler/anomaly/grav))
-		user.balloon_alert(user, "core installed.")
-		name = /obj/item/organ/cyberimp/chest/spine/atlas::name
-		desc = /obj/item/organ/cyberimp/chest/spine/atlas::desc
-		athletics_boost_multiplier = /obj/item/organ/cyberimp/chest/spine/atlas::athletics_boost_multiplier
-		added_throw_range = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_range
-		added_throw_speed = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_speed
-		strength_bonus = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
-		core_applied = TRUE
-		update_appearance()
-		qdel(tool)
-		return ITEM_INTERACT_SUCCESS
+	user.balloon_alert(user, "core installed")
+	name = /obj/item/organ/cyberimp/chest/spine/atlas::name
+	desc = /obj/item/organ/cyberimp/chest/spine/atlas::desc
+	athletics_boost_multiplier = /obj/item/organ/cyberimp/chest/spine/atlas::athletics_boost_multiplier
+	added_throw_range = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_range
+	added_throw_speed = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_speed
+	strength_bonus = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
+	core_applied = TRUE
+	update_appearance()
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/cyberimp/chest/spine/atlas
 	name = "\improper Atlas gravitonic spinal implant"

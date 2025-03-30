@@ -227,14 +227,35 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/indestructible/hierophant
+	name = "palestone floor"
+	desc = "A tiled floor made out of an odd pale stone."
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
+	icon_state = "hierophant_floor-255"
+	base_icon_state = "hierophant_floor"
 	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
-	smoothing_flags = SMOOTH_CORNERS
-	tiled_dirt = FALSE
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_HIEROPHANT
+	canSmoothWith = SMOOTH_GROUP_HIEROPHANT
+	/// Icon for the emissive overlay
+	var/emissive_icon = 'icons/turf/floors/hierophant_floor_e.dmi'
+
+/turf/open/indestructible/hierophant/set_smoothed_icon_state(new_junction)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/turf/open/indestructible/hierophant/update_overlays()
+	. = ..()
+	. += emissive_appearance(emissive_icon, icon_state, src)
 
 /turf/open/indestructible/hierophant/two
+	name = "runic palestone floor"
+	desc = "A tiled floor made out of an odd pale stone, inscribed with odd runes."
+	icon = 'icons/turf/floors/hierophant_floor_alt.dmi'
+	icon_state = "hierophant_floor_alt-255"
+	base_icon_state = "hierophant_floor_alt"
+	emissive_icon = 'icons/turf/floors/hierophant_floor_alt_e.dmi'
 
 /turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE

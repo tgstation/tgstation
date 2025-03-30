@@ -72,6 +72,7 @@
 			data["area_notice"] = "You are now in \the [current_area.name]"
 	var/area/area_inside_of = get_area(user)
 	data["area_name"] = html_encode(area_inside_of.name)
+	data["area_allows_shuttle_docking"] = area_inside_of.allow_shuttle_docking
 	data["legend"] = legend_viewing
 	data["viewing"] = !!viewing
 	data["wire_data"] = list()
@@ -128,6 +129,11 @@
 			in_use = TRUE
 			edit_area(user)
 			in_use = FALSE
+		if("toggle_allow_shuttle_docking")
+			if(get_area_type(user) != AREA_STATION)
+				return
+			var/area/area = get_area(src)
+			area.allow_shuttle_docking = !area.allow_shuttle_docking
 		if("exit_legend")
 			legend_viewing = LEGEND_OFF
 		if("view_legend")

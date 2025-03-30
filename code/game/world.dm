@@ -177,7 +177,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	SetupLogs()
 
-	load_admins()
+	load_admins(initial = TRUE)
 
 	load_poll_data()
 
@@ -335,9 +335,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 	return
 	#else
 	if(TgsAvailable())
-		if(!fast_track)
-			TgsTriggerEvent("tg-PreReboot", wait_for_completion = TRUE)
-
 		var/do_hard_reboot
 		// check the hard reboot counter
 		var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)

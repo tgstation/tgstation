@@ -11,7 +11,7 @@
 	combat_mode = FALSE
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH
 	speak_emote = list("warbles", "quavers")
 	faction = list(FACTION_ASHWALKER)

@@ -38,7 +38,7 @@
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
-		MATCONTAINER_EXAMINE, \
+		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
 	)
 	. = ..()
@@ -80,7 +80,7 @@
 		return NONE
 
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] Panel"
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
@@ -92,7 +92,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/autolathe/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/autolathe/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
 		return ITEM_INTERACT_SUCCESS
@@ -139,7 +139,7 @@
 
 	var/list/output = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	for(var/design_id in designs)
@@ -191,8 +191,8 @@
 
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 /obj/machinery/autolathe/ui_data(mob/user)
@@ -419,47 +419,55 @@
 	drop_direction = 0
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(user.combat_mode) //so we can hit the machine
+/obj/machinery/autolathe/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
 		return ..()
 
 	if(busy)
 		balloon_alert(user, "it's busy!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
-	if(panel_open && is_wire_tool(attacking_item))
+	if(panel_open && is_wire_tool(tool))
 		wires.interact(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	if(machine_stat)
-		return TRUE
+		return ..()
 
-	if(istype(attacking_item, /obj/item/disk/design_disk))
-		user.visible_message(span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
-			balloon_alert(user, "uploading design..."),
-			span_hear("You hear the chatter of a floppy drive."))
-		busy = TRUE
-		if(do_after(user, 14.4, target = src))
-			var/obj/item/disk/design_disk/disky = attacking_item
-			var/list/not_imported
-			for(var/datum/design/blueprint as anything in disky.blueprints)
-				if(!blueprint)
-					continue
-				if(blueprint.build_type & AUTOLATHE)
-					imported_designs[blueprint.id] = TRUE
-				else
-					LAZYADD(not_imported, blueprint.name)
-			if(not_imported)
-				to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
-		busy = FALSE
-		update_static_data_for_all_viewers()
-		return TRUE
+	if(!istype(tool, /obj/item/disk/design_disk))
+		return ..()
 
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
+		balloon_alert(user, "uploading design..."),
+		span_hear("You hear the chatter of a floppy drive."))
+	busy = TRUE
+
+	if(!do_after(user, 1.5 SECONDS, target = src))
+		busy = FALSE
+		update_static_data_for_all_viewers()
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/disk/design_disk/disky = tool
+	var/list/not_imported
+	for(var/datum/design/blueprint as anything in disky.blueprints)
+		if(!blueprint)
+			continue
+		if(blueprint.build_type & AUTOLATHE)
+			imported_designs[blueprint.id] = TRUE
+		else
+			LAZYADD(not_imported, blueprint.name)
+
+	if(not_imported)
+		to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
+
+	busy = FALSE
+	update_static_data_for_all_viewers()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/autolathe/RefreshParts()
 	. = ..()

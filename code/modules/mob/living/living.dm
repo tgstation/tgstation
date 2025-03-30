@@ -1487,7 +1487,7 @@
 /mob/living/carbon/alien/update_stamina()
 	return
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	stop_pulling()
 	. = ..()
 
@@ -1781,7 +1781,7 @@
 
 	// Well, no mmind, guess we should try to move a key over
 	else if(key)
-		new_mob.key = key
+		new_mob.PossessByPlayer(key)
 
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
@@ -2796,8 +2796,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	mob_mood.clear_mood_event(category)
 
-/mob/living/played_game()
-	. = ..()
+/// This should be called by games when the gamer reaches a winning state, just sends a signal
+/mob/living/proc/won_game()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_WON_VIDEOGAME)
+
+/// This should be called by games when the gamer reaches a losing state, just sends a signal
+/mob/living/proc/lost_game()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_LOST_VIDEOGAME)
+
+/// This should be called by games whenever the gamer interacts with the device, sends a signal and grants us a moodlet
+/mob/living/proc/played_game()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_PLAYED_VIDEOGAME)
 	add_mood_event("gaming", /datum/mood_event/gaming)
 
 /**
@@ -2932,7 +2944,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		summoned_guardian.fully_replace_character_name(null, picked_name)
 	if(picked_color)
 		summoned_guardian.set_guardian_colour(picked_color)
-	summoned_guardian.key = guardian_client?.key
+	summoned_guardian.PossessByPlayer(guardian_client?.key)
 	guardian_client?.init_verbs()
 	if(del_mob)
 		qdel(old_mob)
@@ -2983,7 +2995,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /**
  * Totals the physical cash on the mob and returns the total.
  */
-/mob/living/verb/tally_physical_credits()
+/mob/living/proc/tally_physical_credits()
 	//Here is all the possible non-ID payment methods.
 	var/list/counted_money = list()
 	var/physical_cash_total = 0

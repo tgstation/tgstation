@@ -267,6 +267,7 @@
 		part.cold_protection = NONE
 		part.alternate_worn_layer = part_datum.unsealed_layer
 	generate_suit_mask()
+	update_speed()
 	wearer.update_clothing(part.slot_flags | slot_flags)
 	wearer.update_obscured_slots(part.visor_flags_inv)
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
@@ -310,7 +311,6 @@
 			if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
 				continue
 			module.deactivate(display_message = FALSE)
-	update_speed()
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)
 	generate_suit_mask()
