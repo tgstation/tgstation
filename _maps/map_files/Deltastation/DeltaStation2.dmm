@@ -2521,11 +2521,18 @@
 /area/station/engineering/main)
 "aEQ" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/storage/toolbox/electrical,
-/obj/item/multitool,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stock_parts/subspace/transmitter,
+/obj/item/stock_parts/subspace/transmitter,
+/obj/item/stock_parts/subspace/treatment,
+/obj/item/stock_parts/subspace/treatment,
+/obj/item/stock_parts/subspace/treatment,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "aEV" = (
@@ -4146,8 +4153,6 @@
 /area/station/security/mechbay)
 "aZo" = (
 /obj/structure/table/reinforced,
-/obj/item/electronics/airalarm,
-/obj/item/electronics/apc,
 /obj/machinery/camera/directional/west{
 	c_tag = "Technology Storage";
 	name = "engineering camera"
@@ -4155,6 +4160,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/book/manual/wiki/engineering_hacking{
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "aZp" = (
@@ -51528,10 +51539,12 @@
 /area/station/command/heads_quarters/captain/private)
 "mPA" = (
 /obj/structure/table/reinforced,
-/obj/item/assembly/timer,
-/obj/item/assembly/timer,
-/obj/item/assembly/voice,
-/obj/item/assembly/voice,
+/obj/item/stock_parts/subspace/analyzer,
+/obj/item/stock_parts/subspace/analyzer,
+/obj/item/stock_parts/subspace/analyzer,
+/obj/item/stock_parts/subspace/amplifier,
+/obj/item/stock_parts/subspace/amplifier,
+/obj/item/stock_parts/subspace/amplifier,
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "mPF" = (
@@ -59383,10 +59396,13 @@
 /area/station/engineering/atmos)
 "oUk" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/engineering_hacking{
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stock_parts/subspace/ansible,
+/obj/item/stock_parts/subspace/ansible,
+/obj/item/stock_parts/subspace/ansible,
+/obj/item/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/crystal,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "oUm" = (
@@ -81487,6 +81503,12 @@
 /obj/item/electronics/airlock,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/directional/west,
+/obj/item/electronics/apc,
+/obj/item/electronics/airalarm,
+/obj/item/assembly/voice,
+/obj/item/assembly/voice,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "urF" = (
