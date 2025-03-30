@@ -6912,6 +6912,8 @@
 #include "modular_doppler\loud_asay\code\loud_asay.dm"
 #include "modular_doppler\modsuit_pda_app\tap_to_control.dm"
 #include "modular_doppler\modular_antagonists\_dynamic_rulesets.dm"
+#include "modular_doppler\modular_antagonists\cantina\cantina_roles.dm"
+#include "modular_doppler\modular_antagonists\cantina\spawners.dm"
 #include "modular_doppler\modular_antagonists\changeling\changeling.dm"
 #include "modular_doppler\modular_antagonists\datums\antag_recipes.dm"
 #include "modular_doppler\modular_antagonists\sapper_gang\sapper.dm"
