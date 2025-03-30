@@ -8,8 +8,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	req_access = list(ACCESS_ARMORY)
-	storage_type = /datum/storage/lockbox
-
 	var/broken = FALSE
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
@@ -19,23 +17,13 @@
 
 /obj/item/storage/lockbox/Initialize(mapload)
 	. = ..()
-
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 14
+	atom_storage.max_slots = 4
 	atom_storage.locked = STORAGE_FULLY_LOCKED
 
 	register_context()
-
 	update_appearance()
-
-///screentips for lockboxes
-/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!held_item)
-		return NONE
-	if(src.broken)
-		return NONE
-	if(!held_item.GetID())
-		return NONE
-	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/card/card = tool.GetID()
@@ -93,9 +81,6 @@
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(!(flags_1 & INITIALIZED_1))
-		return
-
 	open = TRUE
 	update_appearance()
 
@@ -109,10 +94,9 @@
 	req_access = list(ACCESS_SECURITY)
 
 /obj/item/storage/lockbox/loyalty/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/implantcase/mindshield
-	. += /obj/item/implanter/mindshield
+		new /obj/item/implantcase/mindshield(src)
+	new /obj/item/implanter/mindshield(src)
 
 /obj/item/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
@@ -120,7 +104,7 @@
 	req_access = list(ACCESS_SECURITY)
 
 /obj/item/storage/lockbox/clusterbang/PopulateContents()
-	return  /obj/item/grenade/clusterbuster
+	new /obj/item/grenade/clusterbuster(src)
 
 /obj/item/storage/lockbox/medal
 	name = "medal box"
@@ -135,7 +119,13 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 	icon_open = "medalboxopen"
-	storage_type = /datum/storage/lockbox/medal
+
+/obj/item/storage/lockbox/medal/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 10
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(/obj/item/clothing/accessory/medal)
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
@@ -149,14 +139,15 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/lockbox/medal/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/clothing/accessory/medal/gold/captain = 1,
-		/obj/item/clothing/accessory/medal/silver/valor = 2,
-		/obj/item/clothing/accessory/medal/silver/security = 1,
-		/obj/item/clothing/accessory/medal/bronze_heart = 1,
-		/obj/item/clothing/accessory/medal/plasma/nobel_science = 2,
-		/obj/item/clothing/accessory/medal/conduct = 3,
-	))
+	new /obj/item/clothing/accessory/medal/gold/captain(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+	new /obj/item/clothing/accessory/medal/bronze_heart(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/accessory/medal/conduct(src)
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()
@@ -181,10 +172,9 @@
 	req_access = list(ACCESS_HOP)
 
 /obj/item/storage/lockbox/medal/hop/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/clothing/accessory/medal/silver/bureaucracy
-	. += /obj/item/clothing/accessory/medal/gold/ordom
+		new /obj/item/clothing/accessory/medal/silver/bureaucracy(src)
+	new /obj/item/clothing/accessory/medal/gold/ordom(src)
 
 /obj/item/storage/lockbox/medal/sec
 	name = "security medal box"
@@ -197,16 +187,14 @@
 	req_access = list(ACCESS_CMO)
 
 /obj/item/storage/lockbox/medal/med/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/clothing/accessory/medal/med_medal = 1,
-		/obj/item/clothing/accessory/medal/med_medal2 = 1,
-		/obj/item/clothing/accessory/medal/silver/emergency_services/medical = 3,
-	))
+	new /obj/item/clothing/accessory/medal/med_medal(src)
+	new /obj/item/clothing/accessory/medal/med_medal2(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/accessory/medal/silver/emergency_services/medical(src)
 
 /obj/item/storage/lockbox/medal/sec/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/clothing/accessory/medal/silver/security
+		new /obj/item/clothing/accessory/medal/silver/security(src)
 
 /obj/item/storage/lockbox/medal/cargo
 	name = "cargo award box"
@@ -214,7 +202,7 @@
 	req_access = list(ACCESS_QM)
 
 /obj/item/storage/lockbox/medal/cargo/PopulateContents()
-	return  /obj/item/clothing/accessory/medal/ribbon/cargo
+	new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
 
 /obj/item/storage/lockbox/medal/service
 	name = "service award box"
@@ -222,7 +210,7 @@
 	req_access = list(ACCESS_HOP)
 
 /obj/item/storage/lockbox/medal/service/PopulateContents()
-	return /obj/item/clothing/accessory/medal/silver/excellence
+	new /obj/item/clothing/accessory/medal/silver/excellence(src)
 
 /obj/item/storage/lockbox/medal/sci
 	name = "science medal box"
@@ -230,9 +218,8 @@
 	req_access = list(ACCESS_RD)
 
 /obj/item/storage/lockbox/medal/sci/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/clothing/accessory/medal/plasma/nobel_science
+		new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
 
 /obj/item/storage/lockbox/medal/engineering
 	name = "engineering medal box"
@@ -240,10 +227,9 @@
 	req_access = list(ACCESS_CE)
 
 /obj/item/storage/lockbox/medal/engineering/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/clothing/accessory/medal/silver/emergency_services/engineering
-	. += /obj/item/clothing/accessory/medal/silver/elder_atmosian
+		new /obj/item/clothing/accessory/medal/silver/emergency_services/engineering(src)
+	new /obj/item/clothing/accessory/medal/silver/elder_atmosian(src)
 
 /obj/item/storage/lockbox/order
 	name = "order lockbox"
@@ -257,8 +243,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-
-	///The bank account of the mob who purchased this lockbox
 	var/datum/bank_account/buyer_account
 
 /obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
@@ -274,24 +258,13 @@
 		balloon_alert(user, "incorrect bank account!")
 	return FALSE
 
-//Storage case.
-/obj/item/storage/lockbox/dueling
-	name = "dueling pistol case"
-	desc = "Let's solve this like gentlespacemen."
-	icon_state = "medalbox+l"
-	inhand_icon_state = "syringe_kit"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
-	req_access = list(ACCESS_CAPTAIN)
-	icon_locked = "medalbox+l"
-	icon_closed = "medalbox"
-	icon_broken = "medalbox+b"
-	base_icon_state = "medalbox"
-	icon_open = "medalboxopen"
-	storage_type = /datum/storage/lockbox/dueling
-
-/obj/item/storage/lockbox/dueling/PopulateContents()
-	var/obj/item/gun/energy/dueling/gun_A = new(null)
-	var/obj/item/gun/energy/dueling/gun_B = new(null)
-	new /datum/duel(gun_A, gun_B)
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(src.broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
