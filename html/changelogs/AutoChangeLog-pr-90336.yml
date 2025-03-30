@@ -1,0 +1,5 @@
+author: "Kashargul"
+delete-after: True
+changes:
+  - bugfix: "confirm buttons on the chat window"
+  - bugfix: "scroll tracking failing on large display counts when large messages blocks where received"
