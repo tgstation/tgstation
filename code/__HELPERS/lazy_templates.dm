@@ -9,6 +9,8 @@ GLOBAL_LIST_INIT(lazy_templates, generate_lazy_template_map())
 	. = list()
 	for(var/datum/lazy_template/template as anything in subtypesof(/datum/lazy_template))
 		var/key = initial(template.key)
+		if(!key) // some subtypes like basketball and deathmatch have a base datum with no key
+			continue
 		if(key in .)
 			stack_trace("Found multiple lazy templates with the same key! '[key]'")
 		.[key] = new template
