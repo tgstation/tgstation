@@ -159,4 +159,4 @@
 
 	//Here we make the changes for the atom, we apply a filter and change the name to indicate rarity.
 	beautiful_mutant.add_filter("shiny mutation", 15, color_matrix_filter(mutant_shift_matrix, FILTER_COLOR_HSL))
-	beautiful_mutant.name = "[rarity_affix] [beautiful_mutant.name]"
+	beautiful_mutant.real_name = beautiful_mutant.name = "[rarity_affix] [beautiful_mutant.name]"
