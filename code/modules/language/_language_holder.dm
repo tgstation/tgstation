@@ -291,6 +291,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/slime = list(LANGUAGE_ATOM),
 	)
 
+/datum/language_holder/kobold
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+		/datum/language/kobold = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/kobold = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/lightbringer
 	understood_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))

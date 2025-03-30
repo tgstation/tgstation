@@ -431,6 +431,12 @@
 	poll_ignore_category = POLL_IGNORE_SYNDICATE
 	fail_text = "Unable to connect to the Animal Rights Consortium's Banana Ops. Please wait and try again later or use the beacon on your uplink to get your points refunded."
 
+/obj/item/antag_spawner/loadout/monkey_man/Initialize(mapload)
+	. = ..()
+	if(prob(50))
+		spawn_type = /mob/living/carbon/human/species/monkey/kobold
+		species_type = /datum/species/monkey/kobold
+
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
 
 	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))

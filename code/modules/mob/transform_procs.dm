@@ -32,7 +32,7 @@
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	RemoveInvisibility(type)
-	set_species(/datum/species/monkey)
+	set_species(dna.species.monkey_species)
 	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
 	name = LOWER_TEXT(dna.species.name)
 	regenerate_icons()

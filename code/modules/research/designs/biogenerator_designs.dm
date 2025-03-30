@@ -74,6 +74,14 @@
 	build_path = /obj/item/food/monkeycube
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
+/datum/design/kobold_cube
+	name = "Kobold Kube"
+	id = "kcube"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 50)
+	build_path = /obj/item/food/monkeycube/kobold
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
 /datum/design/seaweed_sheet
 	name = "Seaweed Sheet"
 	id = "seaweedsheet"

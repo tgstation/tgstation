@@ -44,12 +44,12 @@
 	storage_type = /datum/storage/box/monkey_cubes
 
 	/// Which type of cube are we spawning in this box?
-	var/cube_type = /obj/item/food/monkeycube
+	var/cube_type = list(/obj/item/food/monkeycube = 66, /obj/item/food/monkeycube/kobold = 33)
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	. = list()
 	for(var/i in 1 to 5)
-		. += cube_type
+		. += islist(cube_type) ? pick_weight(cube_type) : cube_type
 
 /obj/item/storage/box/monkeycubes/syndicate
 	desc = "Waffle Corp. brand monkey cubes. Just add water and a dash of subterfuge!"
