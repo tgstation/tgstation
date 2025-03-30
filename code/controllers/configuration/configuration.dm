@@ -67,20 +67,23 @@
 	var/static/list/configuration_errors
 
 /datum/controller/configuration/proc/admin_reload()
-	if(IsAdminAdvancedProcCall())
+	if(IsAdminAdvancedProcCall() || !PreConfigReload())
 		return
 
-	if(reload_in_progress)
-		to_chat(usr, span_warning("Another user is already reloading the config!"))
-		return
-
-	reload_in_progress = TRUE
 	log_admin("[key_name_admin(usr)] has forcefully reloaded the configuration from disk.")
 	message_admins("[key_name_admin(usr)] has forcefully reloaded the configuration from disk.")
-	world.TgsTriggerEvent("tg-PreConfigReload", wait_for_completion = TRUE)
 	full_wipe()
 	Load(world.params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
+
+/datum/controller/configuration/proc/PreConfigReload()
+	if(reload_in_progress)
+		to_chat(usr, span_warning("Another user is already reloading the config!"))
+		return FALSE
+
+	reload_in_progress = TRUE
+	world.TgsTriggerEvent("tg-PreConfigReload", wait_for_completion = TRUE)
 	reload_in_progress = FALSE
+	return TRUE
 
 /datum/controller/configuration/proc/Load(_directory)
 	if(IsAdminAdvancedProcCall()) //If admin proccall is detected down the line it will horribly break everything.
