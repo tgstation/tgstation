@@ -15,10 +15,17 @@
 	var/list/tool_behaviors
 	/// Type paths of items needed but not consumed. Lazy list.
 	var/list/tool_paths
+	/**
+	 * If defined, it'll spawn paths in this list first during the unit test.
+	 * This is an assoc list, with the key being the paths and the value being the amount (e.g. list(/obj/item = 2))
+	 */
+	var/list/unit_test_spawn_extras
 	///time in seconds. Remember to use the SECONDS define!
 	var/time = 3 SECONDS
-	///type paths of items that will be forceMoved() into the result, or added to the reagents of it
+	///type paths of items that will be forceMoved() into the result instead of being deleted
 	var/list/parts = list()
+	///items, structures and machineries of types that are in this list won't transfer their materials to the result
+	var/list/requirements_mats_blacklist
 	///like tool_behaviors but for reagents
 	var/list/chem_catalysts = list()
 	///where it shows up in the crafting UI
@@ -71,6 +78,10 @@
 		tool_behaviors = string_list(tool_behaviors)
 	if(tool_paths)
 		tool_paths = string_list(tool_paths)
+	for(var/key in parts)
+		if(!parts[key])
+			//ensure every single, same-type part used for the recipe will be transferred if the value is otherwise not specified
+			parts[key] = INFINITY
 
 /datum/crafting_recipe/stack/New(obj/item/stack/material, datum/stack_recipe/stack_recipe)
 	if(!material || !stack_recipe || !stack_recipe.result_type)
@@ -86,6 +97,9 @@
 	src.category = stack_recipe.category || CAT_MISC
 	src.placement_checks = stack_recipe.placement_checks
 
+	if(!(stack_recipe.crafting_flags & CRAFT_APPLIES_MATS))
+		requirements_mats_blacklist = list(material) //the item is not intended to have mats :shrug:
+
 /**
  * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client
  *
@@ -95,8 +109,9 @@
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
 
-/datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
-	return
+///Run custom pre-craft checks for this recipe for tools, rather than consumed requirements.
+/datum/crafting_recipe/proc/check_tools(atom/source, list/collected_tools, final_check = FALSE)
+	return TRUE
 
 /// Additional UI data to be passed to the crafting UI for this recipe
 /datum/crafting_recipe/proc/crafting_ui_data()
