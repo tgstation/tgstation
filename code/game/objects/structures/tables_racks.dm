@@ -61,12 +61,6 @@
 	original_matrix = transform
 	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
 
-	if(can_flip)
-		if(!is_flipped)
-			unflip_table()
-		else
-			flip_table()
-
 	var/static/list/loc_connections = list(
 		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
@@ -82,6 +76,14 @@
 		)
 
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
+	if(can_flip && is_flipped)
+		flip_table()
+		return
+
+	make_climbable()
+	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
 /// Applies additional properties based on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
