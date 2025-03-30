@@ -114,54 +114,49 @@
 
 //RPED with tiered contents
 /obj/item/storage/part_replacer/bluespace/tier1/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/stock_parts/capacitor = 10,
-		/obj/item/stock_parts/scanning_module = 10,
-		/obj/item/stock_parts/servo = 10,
-		/obj/item/stock_parts/micro_laser = 10,
-		/obj/item/stock_parts/matter_bin = 10,
-		/obj/item/stock_parts/power_store/cell/high = 10,
-	))
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor(src)
+		new /obj/item/stock_parts/scanning_module(src)
+		new /obj/item/stock_parts/servo(src)
+		new /obj/item/stock_parts/micro_laser(src)
+		new /obj/item/stock_parts/matter_bin(src)
+		new /obj/item/stock_parts/power_store/cell/high(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/stock_parts/capacitor/adv = 10,
-		/obj/item/stock_parts/scanning_module/adv = 10,
-		/obj/item/stock_parts/servo/nano = 10,
-		/obj/item/stock_parts/micro_laser/high = 10,
-		/obj/item/stock_parts/matter_bin/adv = 10,
-		/obj/item/stock_parts/power_store/cell/super = 10,
-	))
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor/adv(src)
+		new /obj/item/stock_parts/scanning_module/adv(src)
+		new /obj/item/stock_parts/servo/nano(src)
+		new /obj/item/stock_parts/micro_laser/high(src)
+		new /obj/item/stock_parts/matter_bin/adv(src)
+		new /obj/item/stock_parts/power_store/cell/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/stock_parts/capacitor/super = 10,
-		/obj/item/stock_parts/scanning_module/phasic = 10,
-		/obj/item/stock_parts/servo/pico = 10,
-		/obj/item/stock_parts/micro_laser/ultra = 10,
-		/obj/item/stock_parts/matter_bin/super = 10,
-		/obj/item/stock_parts/power_store/cell/hyper = 10,
-	))
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor/super(src)
+		new /obj/item/stock_parts/scanning_module/phasic(src)
+		new /obj/item/stock_parts/servo/pico(src)
+		new /obj/item/stock_parts/micro_laser/ultra(src)
+		new /obj/item/stock_parts/matter_bin/super(src)
+		new /obj/item/stock_parts/power_store/cell/hyper(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/stock_parts/capacitor/quadratic = 10,
-		/obj/item/stock_parts/scanning_module/triphasic = 10,
-		/obj/item/stock_parts/servo/femto = 10,
-		/obj/item/stock_parts/micro_laser/quadultra = 10,
-		/obj/item/stock_parts/matter_bin/bluespace = 10,
-		/obj/item/stock_parts/power_store/cell/bluespace = 10,
-	))
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor/quadratic(src)
+		new /obj/item/stock_parts/scanning_module/triphasic(src)
+		new /obj/item/stock_parts/servo/femto(src)
+		new /obj/item/stock_parts/micro_laser/quadultra(src)
+		new /obj/item/stock_parts/matter_bin/bluespace(src)
+		new /obj/item/stock_parts/power_store/cell/bluespace(src)
 
 //used in a cargo crate
 /obj/item/storage/part_replacer/cargo/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/stock_parts/capacitor = 10,
-		/obj/item/stock_parts/scanning_module = 10,
-		/obj/item/stock_parts/servo = 10,
-		/obj/item/stock_parts/micro_laser = 10,
-		/obj/item/stock_parts/matter_bin = 10,
-	))
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor(src)
+		new /obj/item/stock_parts/scanning_module(src)
+		new /obj/item/stock_parts/servo(src)
+		new /obj/item/stock_parts/micro_laser(src)
+		new /obj/item/stock_parts/matter_bin(src)
 
 ///Cyborg variant
 /obj/item/storage/part_replacer/cyborg
