@@ -78,7 +78,6 @@
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
 	if(!psyker_head.replace_limb(src, special = TRUE))
 		return FALSE
-	qdel(old_head)
 	var/obj/item/organ/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)

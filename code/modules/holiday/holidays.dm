@@ -262,6 +262,8 @@
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
+	if (prob(60))
+		SSstation.setup_trait(/datum/station_trait/nonhuman_heads)
 
 /datum/holiday/april_fools/get_holiday_colors(atom/thing_to_color)
 	return "#[random_short_color()]"

@@ -242,7 +242,7 @@
 	return ..()
 
 ///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
-/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special)
+/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special, delete_previous = TRUE)
 	if(!istype(limb_owner))
 		return
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
@@ -250,8 +250,11 @@
 		old_limb.drop_limb(TRUE)
 
 	. = try_attach_limb(limb_owner, special)
+
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
-		old_limb.try_attach_limb(limb_owner, TRUE)
+		old_limb?.try_attach_limb(limb_owner, TRUE)
+	else if (old_limb && delete_previous)
+		qdel(old_limb)
 
 ///Checks if a limb qualifies as a BODYPART_IMPLANTED
 /obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)

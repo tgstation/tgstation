@@ -152,7 +152,7 @@
 
 	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
-	new_bodypart.replace_limb(target, TRUE)
+	new_bodypart.replace_limb(target, TRUE, delete_previous = FALSE)
 	register_to_limb(new_bodypart)
 
 /mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)

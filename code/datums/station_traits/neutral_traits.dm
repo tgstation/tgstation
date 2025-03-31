@@ -565,3 +565,53 @@
 	show_in_report = TRUE
 
 	dynamic_threat_id = "GMM Econ Spotlight"
+
+/datum/station_trait/nonhuman_heads
+	name = "Nonhuman Heads"
+	report_message = "HQ would like to remind the crew that getting cosmetic surgery as part of a fad can have serious long-term medical consequences."
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 0
+	show_in_report = TRUE
+	sign_up_button = TRUE
+	/// Who signed up to this in the lobby
+	var/list/lobby_candidates
+
+/datum/station_trait/nonhuman_heads/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/nonhuman_heads/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	lobby_button.desc = "Click here if you are interested in nonhuman heads."
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	return ..()
+
+/datum/station_trait/nonhuman_heads/can_display_lobby_button(client/player)
+	return sign_up_button
+
+/datum/station_trait/nonhuman_heads/on_round_start()
+	return
+
+/datum/station_trait/nonhuman_heads/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
+	LAZYOR(lobby_candidates, user.ckey) // No turning back
+
+/// When we spawn someone check their nonhuman head preferences
+/datum/station_trait/nonhuman_heads/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/carbon/human/spawned, client/player_client)
+	SIGNAL_HANDLER
+	if (!length(lobby_candidates))
+		return
+	if (!(player_client.ckey in lobby_candidates) || !istype(spawned))
+		return
+
+	var/head_type = pick(GLOB.nonhuman_heads_to_organs)
+	var/obj/item/bodypart/head/new_head = new head_type()
+	if (!new_head.replace_limb(spawned, special = TRUE))
+		return
+
+	for (var/organ_path in GLOB.nonhuman_heads_to_organs[head_type])
+		var/obj/item/organ/new_organ = new organ_path()
+		new_organ.replace_into(spawned)
+
+	spawned.update_body(TRUE)
+
+/datum/station_trait/nonhuman_heads/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	overlays += "pun_pun_hat"
