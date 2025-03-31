@@ -54,3 +54,6 @@
 	if(check_holidays(GARBAGEDAY))
 		. += /obj/item/gun/ballistic/revolver
 		. += /obj/item/ammo_box/a357
+
+/datum/outfit/job/janitor/preview
+	head = /obj/item/clothing/head/soft/purple

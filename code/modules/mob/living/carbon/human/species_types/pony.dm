@@ -62,8 +62,9 @@
 	human_for_preview.dna.features["mcolor"] = "#FFFFFF"
 	human_for_preview.dna.features["pony_archetype"] = "Unicorn"
 	human_for_preview.hair_color = "#990000"
-	human_for_preview.hairstyle = "Emo Fringe"
-
+	human_for_preview.hairstyle = "Soldier (Equestrian)"
+	var/obj/item/organ/pony_horn/horn = new(human_for_preview)
+	horn.Insert(human_for_preview)
 	var/obj/item/organ/eyes/pony/pony_eyes = human_for_preview.get_organ_by_type(/obj/item/organ/eyes/pony)
 	if (pony_eyes)
 		pony_eyes.eye_color_left = "#3366CC"
@@ -85,7 +86,7 @@
 	"Changing the world with just the power of thought sounds pretty neat: until it's someone else doing it, and now everybody's scared.",
 
 	"Equestrians are small, long-lived, alien ungulates, and the only all-psychic species on the galactic stage. \
-	Desired one hand and feared on the other for their capacity for the impossible. They come in three kinds (pegasi, unicorns, Earth ponies) \
+	Desired on one hand and feared on the other for their capacity for the impossible. They come in three kinds (pegasi, unicorns, Earth ponies) \
 	that served different social roles in their primitive society, and are still today distinguished by their particular psionic talents — flight and cloudwalking, \
 	telekinesis and complex formulae, and other respectively. ",
 

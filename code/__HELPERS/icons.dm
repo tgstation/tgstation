@@ -501,7 +501,8 @@ world
 		PROCESS_OVERLAYS_OR_UNDERLAYS(flat, appearance.overlays, 1)
 
 		var/icon/add // Icon of overlay being added
-
+		var/xo = 0
+		var/yo = 0
 		var/flatX1 = 1
 		var/flatX2 = flat.Width()
 		var/flatY1 = 1
@@ -568,9 +569,29 @@ world
 				flatX2 = addY1
 				flatY1 = addX2
 				flatY2 = addY2
+			xo = layer_image.pixel_x + 2 - flatX1
+			yo = layer_image.pixel_y + 2 - flatY1
+			if(layer_image.transform) // getFlatIcon doesn't give a snot about transforms.
+				var/datum/decompose_matrix/decompose = layer_image.transform.decompose()
+				// Scale in X, Y
+				if(decompose.scale_x != 1 || decompose.scale_y != 1)
+					var/base_w = add.Width()
+					var/base_h = add.Height()
+					// scale_x can be negative
+					add.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
+					if(decompose.scale_x < 0)
+						add.Flip(EAST)
+					xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
+					yo -= base_h * (decompose.scale_y - 1) / 2
+				// Rotation
+				if(decompose.rotation != 0)
+					add.Turn(decompose.rotation)
+				// Shift
+				xo += decompose.shift_x
+				yo += decompose.shift_y
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
+			flat.Blend(add, blendMode2iconMode(curblend), xo, yo)
 
 
 		if(appearance.alpha < 255)

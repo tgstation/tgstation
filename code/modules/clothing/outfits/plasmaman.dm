@@ -100,9 +100,6 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/engineer
 	head = /obj/item/clothing/head/helmet/space/plasmaman/engineering
 
-/datum/outfit/plasmaman/engineering/so_no_head
-	head = null
-
 /datum/outfit/plasmaman/atmospherics
 	name = "Atmospherics Plasmaman"
 

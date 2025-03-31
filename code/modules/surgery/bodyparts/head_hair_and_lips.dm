@@ -126,7 +126,7 @@
 			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
 			//Offsets
-			if(!(hair_sprite_accessory.compatible_bodyshapes & owner.bodyshape))
+			if(owner && !(hair_sprite_accessory.compatible_bodyshapes & owner.bodyshape))
 				worn_face_offset?.apply_offset(hair_overlay)
 			. += hair_overlay
 			//Gradients
@@ -207,7 +207,7 @@
 	temp.Blend(temp_hair, ICON_ADD)
 	gradient_overlay.icon = temp
 	gradient_overlay.color = grad_color
-	if(base_sprite && !(base_sprite.compatible_bodyshapes & owner.bodyshape))
+	if(owner && base_sprite && !(base_sprite.compatible_bodyshapes & owner.bodyshape))
 		worn_face_offset?.apply_offset(gradient_overlay)
 	return gradient_overlay
 

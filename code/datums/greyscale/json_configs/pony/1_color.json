@@ -115,5 +115,38 @@
 				"blend_mode": "multiply"
 			}
 		]
+	],
+	"medical": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "medical_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "medical_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "medical_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "medical_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "belt_highlight",
+			"blend_mode": "overlay"
+		}
 	]
 }

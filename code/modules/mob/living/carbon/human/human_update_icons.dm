@@ -337,7 +337,7 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SHOES_FILE
 		if(bodyshape & BODYSHAPE_PONY)
 			var/static/list/pony_shoe_cache = list()
-			var/index = "[shoes.icon]-[shoes.icon_state]"
+			var/index = "[shoes.icon]-[shoes.icon_state]-[shoes.greyscale_colors]"
 			var/icon/resulting_icon = pony_shoe_cache[index]
 			if(!resulting_icon)
 				var/static/icon/toe_mask

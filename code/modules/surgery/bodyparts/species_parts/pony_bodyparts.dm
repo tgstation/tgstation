@@ -881,6 +881,7 @@
 	school = SCHOOL_PSYCHIC
 	cooldown_time = 20 SECONDS
 	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
 	hand_path = /obj/item/melee/touch_attack/pony_kick
 
 /datum/action/cooldown/spell/touch/pony_kick/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/movable/victim, mob/living/carbon/caster)
@@ -923,10 +924,13 @@
 /obj/item/organ/brain/pony
 	name = "pony brain"
 	desc = "Has an enlarged, overly active pineal gland."
+	var/static/regex/how_hungry
 	var/datum/action/cooldown/spell/pointed/telepathy/telepathy_power
 
 /obj/item/organ/brain/pony/Initialize(mapload)
 	. = ..()
+	if(!how_hungry)
+		how_hungry = regex(@"(so hungry)", "i")
 	telepathy_power = new(src)
 	telepathy_power.background_icon_state = "bg_tech_blue"
 	telepathy_power.base_background_icon_state = telepathy_power.background_icon_state
@@ -945,6 +949,7 @@
 	telepathy_power.Grant(organ_owner)
 	RegisterSignal(organ_owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_moodlets))
 	RegisterSignal(organ_owner, COMSIG_CARBON_SEE_GAIN_WOUND, PROC_REF(mirror_neuron))
+	RegisterSignal(organ_owner, COMSIG_MOVABLE_HEAR, PROC_REF(how_hungry))
 
 /obj/item/organ/brain/pony/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
@@ -952,6 +957,19 @@
 	telepathy_power.Remove(organ_owner)
 	UnregisterSignal(organ_owner, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(organ_owner, COMSIG_CARBON_SEE_GAIN_WOUND)
+	UnregisterSignal(organ_owner, COMSIG_MOVABLE_HEAR)
+
+/obj/item/organ/brain/pony/proc/how_hungry(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+		return
+
+	var/mob/hungry_person = hearing_args[HEARING_SPEAKER]
+	var/mob/living/carbon/possible_food = owner
+	if(how_hungry.Find(hearing_args[HEARING_RAW_MESSAGE]))
+		possible_food.setDir(get_dir(possible_food, hungry_person))
+		INVOKE_ASYNC(possible_food, TYPE_PROC_REF(/mob, emote), "stare")
 
 /obj/item/organ/brain/pony/proc/mirror_neuron(mob/living/carbon/wound_seer, mob/living/carbon/wounded, datum/wound/W, obj/item/bodypart/L)
 	SIGNAL_HANDLER
