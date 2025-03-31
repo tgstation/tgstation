@@ -128,7 +128,7 @@
 
 /mob/living/carbon/human/get_visible_items()
 	var/list/visible_items = ..()
-	if(is_species(src, /datum/species/pony))
+	if(bodyshape & BODYSHAPE_PONY)
 		visible_items += ITEM_SLOT_BACK_ALT
 	var/obj/item/clothing/under/under = w_uniform
 	if(istype(under) && length(under.attached_accessories) && (under in visible_items))

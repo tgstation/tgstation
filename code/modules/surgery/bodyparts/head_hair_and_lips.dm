@@ -126,13 +126,14 @@
 			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
 			//Offsets
-			worn_face_offset?.apply_offset(hair_overlay)
+			if(!(hair_sprite_accessory.compatible_bodyshapes & owner.bodyshape))
+				worn_face_offset?.apply_offset(hair_overlay)
 			. += hair_overlay
 			//Gradients
 			var/hair_gradient_style = gradient_styles[GRADIENT_HAIR_KEY]
 			if(hair_gradient_style != "None")
 				var/hair_gradient_color = gradient_colors[GRADIENT_HAIR_KEY]
-				var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, -HAIR_LAYER, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, image_dir)
+				var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, -HAIR_LAYER, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, image_dir, hair_sprite_accessory)
 				if(!(owner.bodyshape & BODYSHAPE_PONY))
 					hair_gradient_overlay.pixel_y = hair_sprite_accessory.y_offset
 				. += hair_gradient_overlay
@@ -197,7 +198,7 @@
 	return eyeless_overlay
 
 /// Returns an appropriate hair/facial hair gradient overlay
-/obj/item/bodypart/head/proc/get_gradient_overlay(icon/base_icon, layer, datum/sprite_accessory/gradient, grad_color, image_dir)
+/obj/item/bodypart/head/proc/get_gradient_overlay(icon/base_icon, layer, datum/sprite_accessory/gradient, grad_color, image_dir, datum/sprite_accessory/base_sprite)
 	RETURN_TYPE(/mutable_appearance)
 
 	var/mutable_appearance/gradient_overlay = mutable_appearance(layer = layer)
@@ -206,7 +207,8 @@
 	temp.Blend(temp_hair, ICON_ADD)
 	gradient_overlay.icon = temp
 	gradient_overlay.color = grad_color
-	worn_face_offset?.apply_offset(gradient_overlay)
+	if(base_sprite && !(base_sprite.compatible_bodyshapes & owner.bodyshape))
+		worn_face_offset?.apply_offset(gradient_overlay)
 	return gradient_overlay
 
 /**

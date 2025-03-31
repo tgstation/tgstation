@@ -8,10 +8,6 @@
 	return list(MALE, FEMALE, PLURAL, NEUTER)
 
 /datum/preference/choiced/gender/apply_to_human(mob/living/carbon/human/target, value)
-	if(target.dna.species.sexes == WOMAN_ONLY)
-		value = FEMALE
-	if(target.dna.species.sexes == MAN_ONLY)
-		value = MALE
 	if(!target.dna.species.sexes)
 		value = PLURAL //disregard gender preferences on this species
 	target.gender = value

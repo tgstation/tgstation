@@ -1044,6 +1044,3 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Distance which you can see someone's ID card
 /// Short enough that you can inspect over tables (bartender checking age)
 #define ID_EXAMINE_DISTANCE 3
-
-#define WOMAN_ONLY 2
-#define MAN_ONLY 3

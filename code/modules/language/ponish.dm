@@ -1,6 +1,6 @@
 /datum/language/ponish
 	name = "Ponish"
-	desc = "TODO: GET WRITEUP FROM WINTERSSHIELD"
+	desc = "A pretty, flowing tonal language spoken by ponies. It is known for its profound metaphors and vibrant vocabulary."
 	key = "p"
 	space_chance = 75
 	default_priority = 90

@@ -1,6 +1,6 @@
 /datum/species/pony
-	name = "\improper Pony"
-	plural_form = "Ponies"
+	name = "\improper Equestrian"
+	plural_form = "Equestrians"
 	id = SPECIES_PONY
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -8,7 +8,6 @@
 		TRAIT_NO_UNDERSHIRT_ONLY,
 		TRAIT_PONY_PREFS, // provides access to the preference for selecting what organ to have
 	)
-	sexes = WOMAN_ONLY
 	inherent_biotypes = MOB_ORGANIC
 	mutant_organs = list(
 		/obj/item/organ/ears/pony = "Pony",
@@ -21,6 +20,9 @@
 	)
 	mutanteyes = /obj/item/organ/eyes/pony
 	mutantears = /obj/item/organ/ears/pony
+	mutanttongue = /obj/item/organ/tongue/pony
+	mutantbrain = /obj/item/organ/brain/pony
+	mutantlungs = /obj/item/organ/lungs/pony
 
 	payday_modifier = 0.8
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -37,38 +39,7 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/pony,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/pony,
 	)
-
-/datum/species/pony/randomize_features()
-	var/list/features = ..()
-	//features["lizard_markings"] = pick(SSaccessories.lizard_markings_list)
-	return features
-
-/datum/species/pony/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
-	. = ..()
-	RegisterSignal(human_who_gained_species, COMSIG_MOB_UPDATE_HELD_ITEMS, PROC_REF(on_updated_held_items))
-
-/datum/species/pony/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
-	. = ..()
-	UnregisterSignal(human, COMSIG_MOB_UPDATE_HELD_ITEMS)
-
-/datum/species/pony/proc/update_movespeed(mob/living/holding_mob)
-	holding_mob.remove_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
-	holding_mob.remove_movespeed_modifier(/datum/movespeed_modifier/pony_holding_two_items)
-	if(HAS_TRAIT(holding_mob, TRAIT_FLOATING_HELD))
-		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
-		return
-	var/amount_of_held_items = 0
-	for(var/obj/item/held in holding_mob.held_items)
-		amount_of_held_items++
-	if(amount_of_held_items >= 2)
-		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_two_items)
-	else if(amount_of_held_items == 0)
-		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
-
-
-/datum/species/pony/proc/on_updated_held_items(mob/living/holding_mob)
-	SIGNAL_HANDLER
-	update_movespeed(holding_mob)
+	used_outfit_for_preview = /datum/outfit/deathmatch_loadout/naked
 
 /datum/species/pony/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current, list/excluded_zones, visual_only)
 	. = ..()
@@ -87,32 +58,115 @@
 			var/obj/item/organ/earth_pony_core/core = new(organ_holder)
 			core.Insert(organ_holder)
 
-// TODO: GET WRITEUPS FROM WINTERSSHIELD ON THESE
+/datum/species/pony/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	human_for_preview.dna.features["mcolor"] = "#FFFFFF"
+	human_for_preview.dna.features["pony_archetype"] = "Unicorn"
+	human_for_preview.hair_color = "#990000"
+	human_for_preview.hairstyle = "Emo Fringe"
+
+	var/obj/item/organ/eyes/pony/pony_eyes = human_for_preview.get_organ_by_type(/obj/item/organ/eyes/pony)
+	if (pony_eyes)
+		pony_eyes.eye_color_left = "#3366CC"
+		pony_eyes.eye_color_right = "#3366CC"
+	human_for_preview.update_body(TRUE)
+
 /datum/species/pony/get_physical_attributes()
-	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
-		and can't regulate their body-temperature internally, making the vacuum of space extremely deadly to them."
+	return "Equestrians are a species of small, long-lived, colorful, psychic quadrupeds, with big eyes and no hands, that bear superficial resemblance to \
+	Old Earth's equines. They are quick on their feet in both senses and can do impossible things, but they struggle with accessibility generally \
+	when living or working among aliens."
 
 /datum/species/pony/get_species_description()
-	return "The militaristic Lizardpeople hail originally from Tizira, but have grown \
-		throughout their centuries in the stars to possess a large spacefaring \
-		empire: though now they must contend with their younger, more \
-		technologically advanced Human neighbours."
+	return "Born from an anomalous garden world of their name sake, Equestrians lived under a primitive but global feudal empire for centuries until fairly recently, \
+	when they were liberated by TerraGov as part of Operation Swift Sword. Today, they live in diaspora and under human rule, struggling to integrate into a \
+	galactic community that doesn't care."
 
 /datum/species/pony/get_species_lore()
 	return list(
-		"The face of conspiracy theory was changed forever the day mankind met the lizards.",
+	"Changing the world with just the power of thought sounds pretty neat: until it's someone else doing it, and now everybody's scared.",
 
-		"Hailing from the arid world of Tizira, lizards were travelling the stars back when mankind was first discovering how neat trains could be. \
-		However, much like the space-fable of the space-tortoise and space-hare, lizards have rejected their kin's motto of \"slow and steady\" \
-		in favor of resting on their laurels and getting completely surpassed by 'bald apes', due in no small part to their lack of access to plasma.",
+	"Equestrians are small, long-lived, alien ungulates, and the only all-psychic species on the galactic stage. \
+	Desired one hand and feared on the other for their capacity for the impossible. They come in three kinds (pegasi, unicorns, Earth ponies) \
+	that served different social roles in their primitive society, and are still today distinguished by their particular psionic talents — flight and cloudwalking, \
+	telekinesis and complex formulae, and other respectively. ",
 
-		"The history between lizards and humans has resulted in many conflicts that lizards ended on the losing side of, \
-		with the finale being an explosive remodeling of their moon. Today's lizard-human relations are seeing the continuance of a record period of peace.",
+	"TerraGov liberated them from a \"dictatorship of daisy-chained psionic malefactors\" some decades ago, as part of a brutally efficient first \
+	strike called Operation Swift Sword. Broad resistance to TerraGov occupation lasted days, sometimes a few weeks in some locations, but guerrilla \
+	fighting upon the part of some of the primitive military and subordinate paramilitaries continues to today.",
 
-		"Lizard culture is inherently militaristic, though the influence the military has on lizard culture \
-		begins to lessen the further colonies lie from their homeworld - \
-		with some distanced colonies finding themselves subsumed by the cultural practices of other species nearby.",
+	"What became of Equestria's world government has since fallen into TerraGov's sphere influence, and is following through on a commitment \
+	to integrate with the galactic community. The flagship program of this push is the Modern Citizenship Academy, which has campuses across Equestria \
+	and beyond. These schools provide various forms and levels of education, to both rear the youth up \"right\", and upskill the existing Equestrian \
+	workforce to meet the demands of a galactic market.",
 
-		"On their homeworld, lizards celebrate their 16th birthday by enrolling in a mandatory 5 year military tour of duty. \
-		Roles range from combat to civil service and everything in between. As the old slogan goes: \"Your place will be found!\"",
+	"While the most obvious place for working ponies is as professional psions (of some description) or weather engineers, they are also found in all \
+	manner of positions within TerraGov's public services — specifically the military, first responder orgs — and (now, increasingly) major human corporations.",
 	)
+
+/datum/species/pony/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-wand-magic-sparkles",
+			SPECIES_PERK_NAME = "Unicorn Kinesis",
+			SPECIES_PERK_DESC = "Equestrians of the Unicorn tribe can use their heightened psionics to hold things telekinetically and grab items from a distance. \
+				They are, however, more vulnerable to EMPs.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-feather",
+			SPECIES_PERK_NAME = "Pegasus Flight",
+			SPECIES_PERK_DESC = "Equestrians of the Pegasus tribe can use their psionically-enhanced wings to take flight over obstacles and fly in zero-gravity. \
+				Take care not to get yourself stuck somewhere dangerous, especially near moving vehicles.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-apple-whole",
+			SPECIES_PERK_NAME = "Earth Endurance",
+			SPECIES_PERK_DESC = "Equestrians of the Earth tribe have significantly better constitution than their bretheren, recovering faster with hearty meals, \
+				lack the disease weakness of their bretheren, and have strong hind-legs that they can utilize in combat and for tree harvesting.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "fa-horse",
+			SPECIES_PERK_NAME = "Quadrupedal",
+			SPECIES_PERK_DESC = "Equestrians are quadrupedal beings, and their speed is impacted by this. Keeping their hooves empty allows them to traverse \
+			faster than the average crewmember, but they lose this advantage if they try to hold anything with their fore-hooves.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-handshake-slash",
+			SPECIES_PERK_NAME = "No Gloves",
+			SPECIES_PERK_DESC = "Equestrians don't have hands, and thus, don't wear gloves. \
+				They also move slower if their hooves are full, or if they lost a fore-leg.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-head-side-cough",
+			SPECIES_PERK_NAME = "Disease Weakness",
+			SPECIES_PERK_DESC = "Equestrians aren't used to the germ ecosystem of the station, and thus are far more susceptible to disease.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-computer",
+			SPECIES_PERK_NAME = "Can't Reach The Keyboard",
+			SPECIES_PERK_DESC = "Equestrians aren't the right height to comfortably reach the keyboard on most computers, \
+				and will need a chair or elevation to use them.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-biohazard",
+			SPECIES_PERK_NAME = "Sensitive Smell",
+			SPECIES_PERK_DESC = "Equestrian lungs are used to crisp, clean air. Bad smells will disgust them quickly and heavily.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-heart-crack",
+			SPECIES_PERK_NAME = "Mirror Neurons",
+			SPECIES_PERK_DESC = "Equestrians react negatively to seeing people wounded due to their latent psionics. \
+				They feel the pain emotionally, if not physically.",
+		),
+	)
+
+	return to_add

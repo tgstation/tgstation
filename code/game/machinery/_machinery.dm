@@ -669,6 +669,28 @@
 		if(!(living_user.mobility_flags & MOBILITY_MOVE))
 			return FALSE
 
+	if(istype(user, /mob/living/carbon/human) && interaction_flags_machine & INTERACT_MACHINE_PONY_REQUIRES_SITTING)
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.bodyshape & BODYSHAPE_PONY)
+			var/found_elevation = FALSE
+			if(human_user.buckled)
+				found_elevation = TRUE
+			else
+				for(var/obj/found_object in get_turf(user))
+					if(is_type_in_list(found_object, list(
+						/obj/structure/chair,
+						/obj/structure/bed,
+						/obj/structure/rack,
+						/obj/structure/table
+					)))
+						found_elevation = TRUE
+						break
+			if(!found_elevation)
+				to_chat(user, span_warning("You can't reach the controls on [src]! Get some elevation with a chair or something to buckle yourself to."))
+				balloon_alert(user, "can't reach controls, need chair!")
+				return FALSE
+
+
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
 /**

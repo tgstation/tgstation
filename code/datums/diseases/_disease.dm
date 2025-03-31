@@ -100,6 +100,8 @@
 ///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_WEAKNESS))
+		slowdown *= 3 // speed that MF up
 	var/recovery_prob = 0
 	var/cure_mod
 

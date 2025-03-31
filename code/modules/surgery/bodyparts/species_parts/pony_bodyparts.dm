@@ -11,6 +11,7 @@
 
 /obj/item/bodypart/head/pony/Initialize(mapload)
 	. = ..()
+	QDEL_NULL(worn_face_offset)
 /*
 	worn_ears_offset = new(
 		attached_part = src,
@@ -94,6 +95,40 @@
 	is_dimorphic = FALSE
 	bodyshape = BODYSHAPE_PONY
 
+/obj/item/bodypart/chest/pony/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.hug_verb = "nudge"
+	RegisterSignal(new_owner, COMSIG_MOB_UPDATE_HELD_ITEMS, PROC_REF(on_updated_held_items))
+	RegisterSignal(new_owner, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(on_removed_limb))
+
+/obj/item/bodypart/chest/pony/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	old_owner.hug_verb = initial(old_owner.hug_verb)
+	UnregisterSignal(old_owner, COMSIG_MOB_UPDATE_HELD_ITEMS)
+	UnregisterSignal(old_owner, COMSIG_CARBON_POST_REMOVE_LIMB)
+
+/obj/item/bodypart/chest/pony/proc/update_movespeed(mob/living/holding_mob)
+	holding_mob.remove_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
+	holding_mob.remove_movespeed_modifier(/datum/movespeed_modifier/pony_holding_two_items)
+	if(HAS_TRAIT(holding_mob, TRAIT_FLOATING_HELD) && holding_mob.num_hands == 2)
+		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
+		return
+	var/amount_of_held_items = 0
+	for(var/obj/item/held in holding_mob.held_items)
+		amount_of_held_items++
+	if(amount_of_held_items >= 2 || holding_mob.num_hands == 0) // no front legs, gonna have a hard time getting around
+		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_two_items)
+	else if(amount_of_held_items == 0 && holding_mob.num_hands == 2) // still got both of your front legs
+		holding_mob.add_movespeed_modifier(/datum/movespeed_modifier/pony_holding_no_items)
+
+/obj/item/bodypart/chest/pony/proc/on_updated_held_items(mob/living/holding_mob)
+	SIGNAL_HANDLER
+	update_movespeed(holding_mob)
+
+/obj/item/bodypart/chest/pony/proc/on_removed_limb(datum/source, obj/item/bodypart/removed_limb, special, dismembered, mob/living/carbon/limb_owner)
+	SIGNAL_HANDLER
+	update_movespeed(limb_owner)
+
 /obj/item/bodypart/chest/pony/Initialize(mapload)
 	. = ..()
 	worn_back_offset = new(
@@ -132,8 +167,8 @@
 /obj/item/bodypart/arm/left/pony
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
 	limb_id = SPECIES_PONY
-	unarmed_attack_verbs = list("kicks", "hoofs", "stomps")
-	grappled_attack_verb = "stomps"
+	unarmed_attack_verbs = list("kick", "hoof", "stomp")
+	grappled_attack_verb = "stomp"
 	bodyshape = BODYSHAPE_PONY
 
 /obj/item/bodypart/arm/left/pony/Initialize(mapload)
@@ -155,8 +190,8 @@
 /obj/item/bodypart/arm/right/pony
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
 	limb_id = SPECIES_PONY
-	unarmed_attack_verbs = list("kicks", "hoofs", "stomps")
-	grappled_attack_verb = "stomps"
+	unarmed_attack_verbs = list("kick", "hoof", "stomp")
+	grappled_attack_verb = "stomp"
 	bodyshape = BODYSHAPE_PONY
 
 /obj/item/bodypart/arm/right/pony/Initialize(mapload)
@@ -225,7 +260,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_ears
 
 /datum/bodypart_overlay/mutant/pony_ears
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 	color_source = ORGAN_COLOR_INHERIT
 	feature_key = "pony_ears"
 	dyable = TRUE
@@ -284,7 +319,7 @@
 	target.dna.features["pony_archetype"] = value
 
 /datum/preference/choiced/pony_choice/create_default_value()
-	return "Unicorn"
+	return pick(list("Unicorn", "Pegasus", "Earth"))
 
 /datum/preference/color/unicorn_tk_color
 	savefile_key = "unicorn_tk_color"
@@ -322,17 +357,17 @@
 			REMOVE_TRAIT(owner, TRAIT_FLOATING_HELD, ORGAN_TRAIT)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/owner_human = owner
-				if(is_species(owner_human, /datum/species/pony))
-					var/datum/species/pony/pony_species = owner_human.dna.species
-					pony_species.update_movespeed(owner_human)
+				var/obj/item/bodypart/chest/pony/pony_bodypart = owner_human.get_bodypart(BODY_ZONE_CHEST)
+				if(pony_bodypart && istype(pony_bodypart))
+					pony_bodypart.update_movespeed(owner_human)
 				owner_human.update_held_items()
 		else
 			ADD_TRAIT(owner, TRAIT_FLOATING_HELD, ORGAN_TRAIT)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/owner_human = owner
-				if(is_species(owner_human, /datum/species/pony))
-					var/datum/species/pony/pony_species = owner_human.dna.species
-					pony_species.update_movespeed(owner_human)
+				var/obj/item/bodypart/chest/pony/pony_bodypart = owner_human.get_bodypart(BODY_ZONE_CHEST)
+				if(pony_bodypart && istype(pony_bodypart))
+					pony_bodypart.update_movespeed(owner_human)
 				owner_human.update_held_items()
 	return TRUE
 
@@ -379,11 +414,13 @@
 	toggle = new
 	toggle.my_horn = src
 	toggle.Grant(organ_owner)
+	add_organ_trait(TRAIT_VIRUS_WEAKNESS)
 	RegisterSignal(organ_owner, COMSIG_MOB_CLICKON, PROC_REF(start_kinesis))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /obj/item/organ/pony_horn/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
+	remove_organ_trait(TRAIT_VIRUS_WEAKNESS)
 	qdel(toggle)
 	clear_grab(playsound = FALSE)
 	UnregisterSignal(organ_owner, COMSIG_MOB_CLICKON)
@@ -394,16 +431,16 @@
 	if(protection & EMP_PROTECT_SELF)
 		return
 	if(grabbed_atom || HAS_TRAIT(owner, TRAIT_FLOATING_HELD))
-		new /obj/effect/temp_visual/pony_aura_feedback(get_turf(owner), owner.dna.features["pony_unicorn_tk_color"])
+		new /obj/effect/temp_visual/pony_aura_feedback(get_turf(owner), owner.dna.features["pony_unicorn_tk_color"] ? owner.dna.features["pony_unicorn_tk_color"] : "#FF99FF")
 		owner.flash_act(1, TRUE, FALSE, TRUE)
 		to_chat(owner, span_userdanger("Your brain flashes with every color imaginable as sharp, searing pain runs through your skull through your horn!"))
 		if(HAS_TRAIT(owner, TRAIT_FLOATING_HELD))
 			REMOVE_TRAIT(owner, TRAIT_FLOATING_HELD, ORGAN_TRAIT)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/owner_human = owner
-				if(is_species(owner_human, /datum/species/pony))
-					var/datum/species/pony/pony_species = owner_human.dna.species
-					pony_species.update_movespeed(owner_human)
+				var/obj/item/bodypart/chest/pony/pony_bodypart = owner_human.get_bodypart(BODY_ZONE_CHEST)
+				if(pony_bodypart && istype(pony_bodypart))
+					pony_bodypart.update_movespeed(owner_human)
 				owner_human.update_held_items()
 		if(grabbed_atom)
 			clear_grab(playsound = FALSE)
@@ -420,7 +457,7 @@
 
 /obj/item/organ/pony_horn/proc/start_kinesis(mob/living/source, atom/clicked_on, modifiers)
 	SIGNAL_HANDLER
-	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && !LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(!COOLDOWN_FINISHED(src, psionic_cooldown))
 			balloon_alert(owner, "still recovering!")
 			return COMSIG_MOB_CANCEL_CLICKON
@@ -444,7 +481,9 @@
 	return ..()
 
 /obj/item/organ/pony_horn/process(seconds_per_tick)
-	if(!owner.client || INCAPACITATED_IGNORING(owner, INCAPABLE_GRAB))
+	if(!owner)
+		return
+	if(!owner?.client || INCAPACITATED_IGNORING(owner, INCAPABLE_GRAB))
 		clear_grab()
 		return
 	if(!range_check(grabbed_atom))
@@ -526,7 +565,7 @@
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_setanchored))
 	playsound(grabbed_atom, 'sound/effects/magic.ogg', 75, TRUE)
 	kinesis_icon = mutable_appearance(icon = 'icons/mob/human/species/pony/bodyparts.dmi', icon_state = "telekinesis_throw", layer = grabbed_atom.layer - 0.1)
-	kinesis_icon.color = owner.dna.features["pony_unicorn_tk_color"]
+	kinesis_icon.color = owner.dna.features["pony_unicorn_tk_color"] ? owner.dna.features["pony_unicorn_tk_color"] : "#FF99FF"
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	kinesis_icon.overlays += emissive_appearance(icon = 'icons/mob/human/species/pony/bodyparts.dmi', icon_state = "telekinesis_throw", offset_spokesman = grabbed_atom)
 	grabbed_atom.add_overlay(kinesis_icon)
@@ -534,7 +573,7 @@
 	kinesis_catcher.assign_to_mob(owner)
 	var/datum/bodypart_overlay/mutant/pony_horn/horn_overlay = bodypart_overlay
 	horn_overlay.doing_tk = TRUE
-	horn_overlay.tk_color = owner.dna.features["pony_unicorn_tk_color"]
+	horn_overlay.tk_color = owner.dna.features["pony_unicorn_tk_color"] ? owner.dna.features["pony_unicorn_tk_color"] : "#FF99FF"
 	owner.update_body_parts()
 	RegisterSignal(kinesis_catcher, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(on_catcher_click))
 	soundloop.start()
@@ -573,7 +612,6 @@
 	if(!can_see(owner, target, grab_range))
 		return FALSE
 	return TRUE
-
 
 /obj/item/organ/pony_horn/proc/on_catcher_click(atom/source, location, control, params, user)
 	SIGNAL_HANDLER
@@ -632,9 +670,36 @@
 	color_source = ORGAN_COLOR_INHERIT
 	feature_key = "pony_horn"
 	layers = EXTERNAL_FRONT
+	use_feature_offset = TRUE
 	var/doing_tk = FALSE
 	var/tk_color = "#FF99FF"
 
+/datum/bodypart_overlay/mutant/pony_horn/New(obj/item/organ/attached_organ)
+	bodyshape_offsets = list(
+		"[BODYSHAPE_HUMANOID]" = list(
+			"offset_x" = list("north" = 0, "south" = 0, "east" = -6, "west" = 6),
+			"offset_y" = list("north" = 0, "south" = 2, "east" = 1, "west" = 1),
+			"size_modifier" = list("north" = 1, "south" = 1, "east" = 1, "west" = 1),
+			"rotation_modifier" = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
+			"update_body_parts" = TRUE
+		),
+		"[BODYSHAPE_DIGITIGRADE]" = list(
+			"offset_x" = list("north" = 0, "south" = 0, "east" = -6, "west" = 6),
+			"offset_y" = list("north" = 0, "south" = 2, "east" = 1, "west" = 1),
+			"size_modifier" = list("north" = 1, "south" = 1, "east" = 1, "west" = 1),
+			"rotation_modifier" = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
+			"update_body_parts" = TRUE
+		),
+		"[BODYSHAPE_MONKEY]" = list(
+			"offset_x" = list("north" = 0, "south" = 0, "east" = -6, "west" = 6),
+			"offset_y" = list("north" = 0, "south" = 2, "east" = 1, "west" = 1),
+			"size_modifier" = list("north" = 1, "south" = 1, "east" = 1, "west" = 1),
+			"rotation_modifier" = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
+			"update_body_parts" = TRUE
+		)
+	)
+
+	. = ..()
 /datum/bodypart_overlay/mutant/pony_horn/get_global_feature_list()
 	return SSaccessories.pony_horn_list
 
@@ -693,6 +758,7 @@
 	. = ..()
 	add_organ_trait(TRAIT_CATLIKE_GRACE)
 	add_organ_trait(TRAIT_SOFT_FALL)
+	add_organ_trait(TRAIT_VIRUS_WEAKNESS)
 	tackler = organ_owner.AddComponent(/datum/component/tackler, stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 1, min_distance = 0)
 	jumping_power.Grant(organ_owner)
 
@@ -700,6 +766,7 @@
 	. = ..()
 	remove_organ_trait(TRAIT_CATLIKE_GRACE)
 	remove_organ_trait(TRAIT_SOFT_FALL)
+	remove_organ_trait(TRAIT_VIRUS_WEAKNESS)
 	jumping_power.Remove(organ_owner)
 
 /datum/bodypart_overlay/mutant/pony_wings
@@ -726,7 +793,7 @@
 
 /datum/action/cooldown/spell/icarian_flight
 	name = "Icarian Flight"
-	desc = "Take flight with your wings and fly over obstacles and through windows!"
+	desc = "Take flight with your wings and fly over obstacles!"
 	button_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
 	button_icon_state = "m_pony_wings_pony_FRONT"
 	cooldown_time = 7 SECONDS
@@ -737,27 +804,16 @@
 /datum/action/cooldown/spell/icarian_flight/cast(mob/living/cast_on)
 	. = ..()
 	last_caster = cast_on
-	var/hindered = FALSE
 	var/mob/living/carbon/human/pegasus = cast_on
-	if(pegasus.getStaminaLoss() > 0 || pegasus.legcuffed) // cannot reach maximum jump if you have any stamina loss or are legcuffed(bola, bear trap, etc.)
-		hindered = TRUE
-		pegasus.visible_message(span_warning("[pegasus] weakly flies with their wings, hampered by their lack of stamina!"))
-		pegasus.balloon_alert_to_viewers("weakly flies")
-	else
-		pegasus.visible_message(span_warning("[pegasus] flies with their wings!"))
-		pegasus.balloon_alert_to_viewers("flies")
+	pegasus.visible_message(span_warning("[pegasus] flies with their wings!"))
+	pegasus.balloon_alert_to_viewers("flies")
 	playsound(pegasus, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
 
 	var/datum/bodypart_overlay/mutant/pony_wings/wings_overlay = our_wings.bodypart_overlay
 	wings_overlay.unfurled = TRUE
 	pegasus.update_body_parts()
 	pegasus.layer = ABOVE_MOB_LAYER
-	if(!hindered)
-		pegasus.pass_flags |= PASSTABLE|PASSGRILLE|PASSWINDOW|PASSMACHINE|PASSSTRUCTURE
-		RegisterSignal(pegasus, COMSIG_MOVABLE_MOVED, PROC_REF(break_glass))
-	else
-		pegasus.pass_flags |= PASSTABLE|PASSGRILLE|PASSMACHINE|PASSSTRUCTURE
-		RegisterSignal(pegasus, COMSIG_MOVABLE_MOVED, PROC_REF(break_grilles))
+	pegasus.pass_flags |= PASSTABLE|PASSMACHINE|PASSSTRUCTURE
 	ADD_TRAIT(pegasus, TRAIT_SILENT_FOOTSTEPS, ICARIAN_FLIGHT)
 	ADD_TRAIT(pegasus, TRAIT_MOVE_FLYING, ICARIAN_FLIGHT)
 	pegasus.zMove(UP)
@@ -774,36 +830,6 @@
 
 	addtimer(CALLBACK(src, PROC_REF(end_jump), cast_on), jump_duration)
 
-/datum/action/cooldown/spell/icarian_flight/proc/break_glass(atom/movable/mover, atom/oldloc, direction)
-	SIGNAL_HANDLER
-	var/mob/living/carbon/human/pegasus = mover
-	for(var/obj/structure/window/window in get_turf(pegasus))
-		window.deconstruct(disassembled = FALSE)
-		mover.balloon_alert_to_viewers("smashed through!")
-		pegasus.apply_damage(damage = rand(5,15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
-		new /obj/effect/decal/cleanable/glass(get_step(pegasus, pegasus.dir))
-	for(var/obj/machinery/door/window/windoor in get_turf(pegasus))
-		windoor.deconstruct(disassembled = FALSE)
-		mover.balloon_alert_to_viewers("smashed through!")
-		pegasus.apply_damage(damage = rand(5,15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(windoor, oldloc))
-		new /obj/effect/decal/cleanable/glass(get_step(pegasus, pegasus.dir))
-	for(var/obj/structure/grille/grille in get_turf(pegasus))
-		grille.shock(pegasus, 70)
-		grille.deconstruct(disassembled = FALSE)
-		mover.balloon_alert_to_viewers("smashed through!")
-		pegasus.apply_damage(damage = rand(5,10), damagetype = BRUTE, wound_bonus = 5, bare_wound_bonus = 15, attack_direction = get_dir(grille, oldloc))
-		new /obj/effect/decal/cleanable/generic(get_step(pegasus, pegasus.dir))
-
-/datum/action/cooldown/spell/icarian_flight/proc/break_grilles(atom/movable/mover, atom/oldloc, direction)
-	SIGNAL_HANDLER
-	var/mob/living/carbon/human/pegasus = mover
-	for(var/obj/structure/grille/grille in get_turf(pegasus))
-		grille.shock(pegasus, 70)
-		grille.deconstruct(disassembled = FALSE)
-		mover.balloon_alert_to_viewers("smashed through!")
-		pegasus.apply_damage(damage = rand(5,10), damagetype = BRUTE, wound_bonus = 5, bare_wound_bonus = 15, attack_direction = get_dir(grille, oldloc))
-		new /obj/effect/decal/cleanable/generic(get_step(pegasus, pegasus.dir))
-
 ///Ends the jump
 /datum/action/cooldown/spell/icarian_flight/proc/end_jump(mob/living/jumper)
 	var/datum/bodypart_overlay/mutant/pony_wings/wings_overlay = our_wings.bodypart_overlay
@@ -815,8 +841,6 @@
 	REMOVE_TRAIT(jumper, TRAIT_SILENT_FOOTSTEPS, ICARIAN_FLIGHT)
 	REMOVE_TRAIT(jumper, TRAIT_MOVE_FLYING, ICARIAN_FLIGHT)
 	new /obj/effect/temp_visual/mook_dust(get_turf(jumper))
-	UnregisterSignal(jumper, COMSIG_MOVABLE_MOVED)
-
 
 /obj/item/organ/earth_pony_core
 	name = "beating core of earth"
@@ -827,3 +851,218 @@
 	organ_flags = ORGAN_ORGANIC | ORGAN_VIRGIN | ORGAN_EDIBLE | ORGAN_VITAL
 	slot = ORGAN_SLOT_PONY_EARTH
 	zone = BODY_ZONE_CHEST
+
+/obj/item/organ/brain/pony
+	name = "pony brain"
+	desc = "Has an enlarged, overly active pineal gland."
+	var/datum/action/cooldown/spell/pointed/telepathy/telepathy_power
+
+/obj/item/organ/brain/pony/Initialize(mapload)
+	. = ..()
+	telepathy_power = new(src)
+	telepathy_power.background_icon_state = "bg_tech_blue"
+	telepathy_power.base_background_icon_state = telepathy_power.background_icon_state
+	telepathy_power.active_background_icon_state = "[telepathy_power.base_background_icon_state]_active"
+	telepathy_power.overlay_icon_state = "bg_tech_blue_border"
+	telepathy_power.active_overlay_icon_state = null
+	telepathy_power.panel = "Genetic"
+
+/obj/item/organ/brain/pony/Destroy()
+	qdel(telepathy_power)
+	. = ..()
+
+/obj/item/organ/brain/pony/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	add_organ_trait(TRAIT_EMPATH)
+	telepathy_power.Grant(organ_owner)
+	RegisterSignal(organ_owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_moodlets))
+	RegisterSignal(organ_owner, COMSIG_CARBON_SEE_GAIN_WOUND, PROC_REF(mirror_neuron))
+
+/obj/item/organ/brain/pony/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	remove_organ_trait(TRAIT_EMPATH)
+	telepathy_power.Remove(organ_owner)
+	UnregisterSignal(organ_owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(organ_owner, COMSIG_CARBON_SEE_GAIN_WOUND)
+
+/obj/item/organ/brain/pony/proc/mirror_neuron(mob/living/carbon/wound_seer, mob/living/carbon/wounded, datum/wound/W, obj/item/bodypart/L)
+	SIGNAL_HANDLER
+	if(!LAZYLEN(wound_seer.all_wounds))
+		wound_seer.add_mood_event("mirror_neuron", /datum/mood_event/mirror_neuron, wounded)
+
+/obj/item/organ/brain/pony/proc/check_moodlets(mob/living/source)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/my_pony = source
+	var/static/list/pony_friendly_turfs = list(
+		/turf/open/misc/basalt,
+		/turf/open/misc/ashplanet,
+		/turf/open/misc/asteroid,
+		/turf/open/misc/grass,
+		/turf/open/floor/grass,
+		/turf/open/floor/hay, // also for horses
+		/turf/open/floor/fake_snow,
+		/turf/open/floor/fakebasalt,
+		/turf/open/misc/hay, // also for horses
+		/turf/open/misc/dirt,
+		/turf/open/misc/beach,
+		/turf/open/misc/snow,
+		/turf/open/water,
+	)
+	if(is_type_in_list(get_turf(source), pony_friendly_turfs))
+		my_pony.add_mood_event("pony_brain_grounded", /datum/mood_event/pony_grounded)
+	else
+		my_pony.clear_mood_event("pony_brain_grounded")
+
+/datum/action/cooldown/spell/pointed/telepathy
+	name = "Telepathic Communication"
+	desc = "<b>Left click</b>: point target to project a thought to them. <b>Right click</b>: project to your last thought target, if in range."
+	button_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "r_transmit"
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	antimagic_flags = MAGIC_RESISTANCE_MIND
+	cooldown_time = 1 SECONDS
+	cast_range = 7
+	/// What's the last mob we point-targeted with this ability?
+	var/datum/weakref/last_target_ref
+	/// The message we send
+	var/message
+	/// Are we blocking casts?
+	var/blocked = FALSE
+
+/datum/action/cooldown/spell/pointed/telepathy/is_valid_target(atom/cast_on)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	if (!isliving(cast_on))
+		to_chat(owner, span_warning("Inanimate objects can't hear your thoughts."))
+		owner.balloon_alert(owner, "not a thing with thoughts!")
+		return FALSE
+
+	var/mob/living/living_target = cast_on
+	if (living_target.stat == DEAD)
+		to_chat(owner, span_warning("The disruptive noise of departed resonance inhibits your ability to communicate with the dead."))
+		owner.balloon_alert(owner, "can't transmit to the dead!")
+		return FALSE
+
+	if (get_dist(living_target, owner) > cast_range)
+		owner.balloon_alert(owner, "too far away!")
+		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/telepathy/before_cast(atom/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST || blocked)
+		return
+
+	message = capitalize(tgui_input_text(owner, "What do you wish to whisper to [cast_on]?", "[src]", max_length = MAX_MESSAGE_LEN))
+	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
+		return . | SPELL_CANCEL_CAST
+
+	if(get_dist(cast_on, owner) > cast_range)
+		owner.balloon_alert(owner, "they're too far!")
+		return . | SPELL_CANCEL_CAST
+
+	if(!message || length(message) == 0)
+		reset_spell_cooldown()
+		return . | SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/pointed/telepathy/Trigger(trigger_flags, atom/target)
+	if (trigger_flags & TRIGGER_SECONDARY_ACTION)
+		var/mob/living/last_target = last_target_ref?.resolve()
+
+		if(isnull(last_target))
+			last_target_ref = null
+			owner.balloon_alert(owner, "last target is not available!")
+			return
+		else if(get_dist(last_target, owner) > cast_range)
+			owner.balloon_alert(owner, "[last_target] is too far away!")
+			return
+
+		blocked = TRUE
+
+		message = capitalize(tgui_input_text(owner, "What do you wish to whisper to [last_target]?", "[src]", max_length = MAX_MESSAGE_LEN))
+		if(QDELETED(src) || QDELETED(owner) || QDELETED(last_target) || !can_cast_spell())
+			blocked = FALSE
+			return
+		send_thought(owner, last_target, message)
+		src.StartCooldown()
+		blocked = FALSE
+		return
+
+	. = ..()
+
+/datum/action/cooldown/spell/pointed/telepathy/cast(mob/living/cast_on)
+	. = ..()
+	send_thought(owner, cast_on, message)
+
+/datum/action/cooldown/spell/pointed/telepathy/proc/send_thought(mob/living/caster, mob/living/target, message)
+	log_directed_talk(caster, target, message, LOG_SAY, tag = "telepathy")
+
+	last_target_ref = WEAKREF(target)
+
+	to_chat(owner, span_boldnotice("You reach out and convey to [target]: \"[span_purple(message)]\""))
+	// flub a runechat chat message, do something with the language later
+	if(owner.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+		owner.create_chat_message(owner, owner.get_selected_language(), message, list("italics"))
+	if(!target.can_block_magic(antimagic_flags, charge_cost = 0) && target.client) //make sure we've got a client before we bother sending anything
+		to_chat(target, span_boldnotice("A voice echoes in your head: \"[span_purple(message)]\""))
+
+		if(target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+			target.create_chat_message(target, target.get_selected_language(), message, list("italics")) // it appears over them since they hear it in their head
+	else
+		owner.balloon_alert(owner, "something blocks your thoughts!")
+		to_chat(owner, span_warning("Your mind encounters impassable resistance: the thought was blocked!"))
+		return
+
+	// send to ghosts as well i guess
+	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
+		if(!isobserver(ghost))
+			continue
+
+		var/from_link = FOLLOW_LINK(ghost, owner)
+		var/from_mob_name = span_boldnotice("[owner]")
+		var/to_link = FOLLOW_LINK(ghost, target)
+		var/to_mob_name = span_name("[target]")
+
+		to_chat(ghost, "[from_link] " + span_purple("<b>\[Telepathy\]</b> [from_mob_name] transmits, \"[message]\"") + " to [to_mob_name] [to_link]")
+
+/obj/item/organ/tongue/pony
+	name = "pony tongue"
+	desc = "A tongue with a light psionic aura. Overly large tastebuds for sweet flavors."
+	taste_sensitivity = 50 // very sensitive to bad tastes
+	liked_foodtypes = VEGETABLES | FRUIT | JUNKFOOD | SUGAR
+	disliked_foodtypes = RAW | GROSS | CLOTH
+	toxic_foodtypes = TOXIC | GROSS | BUGS | GORE | MEAT | SEAFOOD
+
+/obj/item/organ/lungs/pony
+	name = "pony lungs"
+	desc = "A pair of lungs belonging to a pony. Used to the crisp, fresh air of their home planet. Doesn't react well to miasma."
+
+/obj/item/organ/lungs/pony/too_much_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, miasma_pp, old_miasma_pp)
+	breathe_gas_volume(breath, /datum/gas/miasma)
+	if (HAS_TRAIT(breather, TRAIT_ANOSMIA))
+		return
+	switch(miasma_pp)
+		if(0.25 to 5)
+			to_chat(breather, span_warning("You smell something horribly decayed inside this room."))
+			breather.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
+		if(5 to 15)
+			to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
+			breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
+			if(prob(10))
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
+		if(15 to 30)
+			to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
+			breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
+			if(prob(30))
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
+		if(30 to INFINITY)
+			to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
+			breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
+			if(prob(50))
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
+		else
+			breather.clear_mood_event("smell")
+	breather.adjust_disgust(0.25 * miasma_pp)

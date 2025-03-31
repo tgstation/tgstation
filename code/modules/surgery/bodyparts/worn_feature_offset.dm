@@ -20,7 +20,7 @@
 
 /datum/worn_feature_offset/New(
 	obj/item/bodypart/attached_part,
-	feature_key,
+	feature_key = null,
 	list/offset_x = list("south" = 0),
 	list/offset_y = list("south" = 0),
 	list/size_modifier = list("south" = 1),

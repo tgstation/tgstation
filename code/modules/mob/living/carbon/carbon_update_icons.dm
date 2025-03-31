@@ -540,6 +540,11 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(owner))
 			continue
+		if(overlay.use_feature_offset)
+			if(owner)
+				. += "-[owner.dir]"
+			else
+				. += "-[SOUTH]"
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner

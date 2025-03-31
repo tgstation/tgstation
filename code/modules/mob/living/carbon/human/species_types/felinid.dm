@@ -23,6 +23,7 @@
 	var/original_felinid = TRUE
 	/// Yummy!
 	species_cookie = /obj/item/food/nugget
+	used_outfit_for_preview = /datum/outfit/job/assistant/consistent
 
 // Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)

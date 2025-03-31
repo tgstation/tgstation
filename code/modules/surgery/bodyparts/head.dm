@@ -211,6 +211,13 @@
 /obj/item/bodypart/head/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/toy_talk)
+	worn_face_offset = new( // todo: redo this to not be hardcoded for pony hair -> human head
+		attached_part = src,
+		feature_key = OFFSET_FACE,
+		offset_x = list("north" = 0, "south" = 0, "east" = -5, "west" = 5),
+		offset_y = list("north" = 4, "south" = 4, "east" = 4, "west" = 4),
+		size_modifier = list("north" = 0.8, "south" = 0.8, "east" = 0.8, "west" = 0.8)
+	)
 
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"

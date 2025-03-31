@@ -37,16 +37,21 @@
 		return FALSE
 
 	var/passed = TRUE
+	var/weak_immune_system = HAS_TRAIT(src, TRAIT_VIRUS_WEAKNESS)
 
 	var/head_chance = 80
 	var/body_chance = 100
 	var/hands_chance = 35/2
 	var/feet_chance = 15/2
-
-	if(prob(15/disease.spreading_modifier))
+	if(weak_immune_system)
+		head_chance = 100
+		body_chance = 100
+		hands_chance = 100
+		feet_chance = 100
+	if(prob(15/disease.spreading_modifier) && !weak_immune_system)
 		return
 
-	if(satiety>0 && prob(satiety/2)) // positive satiety makes it harder to contract the disease.
+	if(satiety>0 && prob(satiety/2) && !weak_immune_system) // positive satiety makes it harder to contract the disease.
 		return
 
 	if(!target_zone)
@@ -70,26 +75,26 @@
 		switch(target_zone)
 			if(BODY_ZONE_HEAD)
 				if(isobj(infecting_human.head))
-					passed = prob(100-infecting_human.head.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.head.get_armor_rating(BIO) * 0.5 : infecting_human.head.get_armor_rating(BIO)))
 				if(passed && isobj(infecting_human.wear_mask))
-					passed = prob(100-infecting_human.wear_mask.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.wear_mask.get_armor_rating(BIO) * 0.5 : infecting_human.wear_mask.get_armor_rating(BIO)))
 				if(passed && isobj(infecting_human.wear_neck))
-					passed = prob(100-infecting_human.wear_neck.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.wear_neck.get_armor_rating(BIO) * 0.5 : infecting_human.wear_neck.get_armor_rating(BIO)))
 			if(BODY_ZONE_CHEST)
 				if(isobj(infecting_human.wear_suit))
-					passed = prob(100-infecting_human.wear_suit.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.wear_suit.get_armor_rating(BIO) * 0.5 : infecting_human.wear_suit.get_armor_rating(BIO)))
 				if(passed && isobj(infecting_human.w_uniform))
-					passed = prob(100-infecting_human.w_uniform.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.w_uniform.get_armor_rating(BIO) * 0.5 : infecting_human.w_uniform.get_armor_rating(BIO)))
 			if(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 				if(isobj(infecting_human.wear_suit) && infecting_human.wear_suit.body_parts_covered&HANDS)
-					passed = prob(100-infecting_human.wear_suit.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.wear_suit.get_armor_rating(BIO) * 0.5 : infecting_human.wear_suit.get_armor_rating(BIO)))
 				if(passed && isobj(infecting_human.gloves))
-					passed = prob(100-infecting_human.gloves.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.gloves.get_armor_rating(BIO) * 0.5 : infecting_human.gloves.get_armor_rating(BIO)))
 			if(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				if(isobj(infecting_human.wear_suit) && infecting_human.wear_suit.body_parts_covered&FEET)
-					passed = prob(100-infecting_human.wear_suit.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.wear_suit.get_armor_rating(BIO) * 0.5 : infecting_human.wear_suit.get_armor_rating(BIO)))
 				if(passed && isobj(infecting_human.shoes))
-					passed = prob(100-infecting_human.shoes.get_armor_rating(BIO))
+					passed = prob(100-(weak_immune_system ? infecting_human.shoes.get_armor_rating(BIO) * 0.5 : infecting_human.shoes.get_armor_rating(BIO)))
 
 	if(passed)
 		disease.try_infect(src)

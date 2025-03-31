@@ -47,6 +47,8 @@
 	/// Determines if this is considered "sane" for the purpose of [/proc/randomize_human_normie]
 	/// Basically this is to blacklist the extremely wacky stuff from being picked in random human generation.
 	var/natural_spawn = TRUE
+	/// What bodyshape are we built for? Used for pony hair offsets.
+	var/compatible_bodyshapes = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE | BODYSHAPE_MONKEY | BODYSHAPE_SNOUTED
 
 /datum/sprite_accessory/blank
 	name = SPRITE_ACCESSORY_NONE
@@ -718,6 +720,11 @@
 /datum/sprite_accessory/hair/spiky
 	name = "Spiky"
 	icon_state = "hair_spikey"
+
+/datum/sprite_accessory/hair/wintersshield
+	name = "Soldier (Equestrian)"
+	icon_state = "hair_wintersshield"
+	compatible_bodyshapes = BODYSHAPE_PONY
 
 /datum/sprite_accessory/hair/spiky2
 	name = "Spiky 2"

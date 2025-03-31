@@ -810,6 +810,8 @@ There are several things that need to be remembered:
 				var/mutable_appearance/hover_effect = mutable_appearance(held_left.icon, "hover_right", HANDS_LAYER)
 				if(dna.features["pony_unicorn_tk_color"])
 					hover_effect.color = dna.features["pony_unicorn_tk_color"]
+				else
+					hover_effect.color = "#FF99FF"
 				held_right.underlays += hover_effect
 				var/list/offset = held_in_hand?.held_hand_offset?.get_offset()
 				if(offset)

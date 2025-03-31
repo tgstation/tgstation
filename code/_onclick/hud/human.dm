@@ -172,7 +172,7 @@
 	inv_box.slot_id = ITEM_SLOT_RPOCKET
 	static_inventory += inv_box
 
-	if(is_species(owner, /datum/species/pony))
+	if(owner.bodyshape & BODYSHAPE_PONY)
 		inv_box = new /atom/movable/screen/inventory(null, src)
 		inv_box.name = "back_alt"
 		inv_box.icon = ui_style

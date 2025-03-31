@@ -152,6 +152,12 @@
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
 
+	if((supports_variations_flags & CLOTHING_PONY_MASK) && ishuman(user))
+		var/mob/living/carbon/human/wearer = user
+		if(wearer.bodyshape & BODYSHAPE_PONY)
+			adjusted = DIGITIGRADE_STYLE // block adjustment options, ponies can't roll their jumpsuit down
+			update_appearance()
+
 /obj/item/clothing/under/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
 	return replace_icon_legs(base_icon, legs)

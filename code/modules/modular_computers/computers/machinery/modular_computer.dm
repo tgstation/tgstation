@@ -10,6 +10,7 @@
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.5
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_PONY_REQUIRES_SITTING
 
 	///A flag that describes this device type
 	var/hardware_flag = PROGRAM_CONSOLE

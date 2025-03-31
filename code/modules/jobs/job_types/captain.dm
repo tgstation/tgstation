@@ -93,6 +93,10 @@
 
 	var/special_charter
 
+/datum/outfit/job/captain/human_preview
+	suit = null
+	head = null
+
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
 	special_charter = CHECK_MAP_JOB_CHANGE(JOB_CAPTAIN, "special_charter")
