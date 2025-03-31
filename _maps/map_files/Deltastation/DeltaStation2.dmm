@@ -51756,9 +51756,6 @@
 	dir = 4
 	},
 /area/station/security/execution/transfer)
-"mXh" = (
-/turf/open/space/basic,
-/area/station/service/library)
 "mXr" = (
 /obj/structure/cable,
 /obj/structure/table/wood,
@@ -143321,7 +143318,7 @@ cao
 bge
 oqn
 fPA
-mXh
+wBG
 xBw
 wBG
 wBG
