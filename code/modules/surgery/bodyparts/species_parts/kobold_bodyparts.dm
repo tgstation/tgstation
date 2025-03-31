@@ -88,7 +88,7 @@
 	icon_greyscale = 'icons/mob/human/species/kobold/bodyparts.dmi'
 	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
-	icon_state = "default_kobold_r_leg"
+	icon_state = "kobold_r_leg"
 	limb_id = SPECIES_KOBOLD
 	should_draw_greyscale = TRUE
 	bodyshape = BODYSHAPE_MONKEY
