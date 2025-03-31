@@ -1,4 +1,0 @@
-author: "StrangeWeirdKitten"
-delete-after: True
-changes:
-  - code_imp: "do_after() can now hold custom cog icons. Add some today!"

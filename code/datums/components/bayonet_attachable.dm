@@ -178,8 +178,8 @@
 		return
 
 	var/mutable_appearance/bayonet_appearance = mutable_appearance(bayonet_overlay_icon, bayonet_overlay)
-	bayonet_appearance.pixel_x = offset_x
-	bayonet_appearance.pixel_y = offset_y
+	bayonet_appearance.pixel_w = offset_x
+	bayonet_appearance.pixel_z = offset_y
 	overlays += bayonet_appearance
 
 /datum/component/bayonet_attachable/proc/on_update_icon_state(obj/item/source)

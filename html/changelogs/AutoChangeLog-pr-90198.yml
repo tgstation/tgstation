@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Players with the Prosopagnosia quirk will now see the ID name (if there is one) examining someone, instead of ALWAYS Unknown, altho it'll have a question mark, i.e \"John Doe?\""
-  - qol: "Prosopagnosia no longer makes you see yourself as Unknown."
