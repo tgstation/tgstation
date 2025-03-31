@@ -32,6 +32,12 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_NO_VARIATION
+	pony_clothing_sample_pixels = list(
+		list(16,17),
+		list(16,18)
+	)
+	pony_icon_state = "clown"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/civilian/clown/Initialize(mapload)
 	. = ..()
@@ -82,6 +88,10 @@
 	greyscale_config = /datum/greyscale_config/jester_suit
 	greyscale_config_worn = /datum/greyscale_config/jester_suit/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(17,19)
+	)
 
 /obj/item/clothing/under/rank/civilian/clown/jesteralt
 	name = "jester suit"

@@ -3,12 +3,24 @@
 /obj/item/clothing/under/rank/civilian
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
+	pony_clothing_sample_pixels = list(
+		list(14,16),
+		list(12,20)
+	)
+	pony_icon_state = "janitor"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/civilian/purple_bartender
 	desc = "It looks like it has lots of flair!"
 	name = "purple bartender's uniform"
 	icon_state = "purplebartender"
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(14,16),
+		list(12,20)
+	)
+	pony_icon_state = "janitor"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/civilian/chaplain
 	desc = "It's a black jumpsuit, often worn by religious folk."
@@ -16,6 +28,12 @@
 	icon_state = "chaplain"
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(16,21),
+		list(16,18)
+	)
+	pony_icon_state = "janitor"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/civilian/chaplain/skirt
 	name = "chaplain's jumpskirt"
@@ -25,13 +43,22 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "janitor_skirt"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel
 	desc = "A slick uniform worn by those to earn the position of \"Head of Personnel\"."
 	name = "head of personnel's uniform"
 	icon_state = "hop"
 	inhand_icon_state = "b_suit"
+	pony_clothing_sample_pixels = list(
+		list(12,22),
+		list(15,19),
+		list(13,9)
+	)
+	pony_icon_state = "centcom"
+	pony_config_path = /datum/greyscale_config/pony_clothes_3_color
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt
 	name = "head of personnel's skirt"
@@ -41,7 +68,13 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,22),
+		list(15,19),
+		list(13,10)
+	)
+	pony_icon_state = "centcom_skirt"
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/suit
 	name = "head of personnel's suit"
@@ -49,6 +82,11 @@
 	icon_state = "teal_suit"
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(16,19),
+		list(15,16),
+		list(14,18)
+	)
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt
 	name = "teal suitskirt"
@@ -58,7 +96,13 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(16,19),
+		list(15,16),
+		list(13,10)
+	)
+	pony_icon_state = "centcom_skirt"
 
 /obj/item/clothing/under/rank/civilian/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
@@ -66,6 +110,12 @@
 	icon_state = "hydroponics"
 	inhand_icon_state = "g_suit"
 	armor_type = /datum/armor/clothing_under/civilian_hydroponics
+	pony_clothing_sample_pixels = list(
+		list(10,18),
+		list(15,17)
+	)
+	pony_icon_state = "janitor"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /datum/armor/clothing_under/civilian_hydroponics
 	bio = 50
@@ -78,7 +128,12 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(10,18),
+		list(15,19)
+	)
+	pony_icon_state = "janitor_skirt"
 
 /obj/item/clothing/under/rank/civilian/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
@@ -86,6 +141,12 @@
 	icon_state = "janitor"
 	inhand_icon_state = "janitor"
 	armor_type = /datum/armor/clothing_under/civilian_janitor
+	pony_clothing_sample_pixels = list(
+		list(11,20),
+		list(13,19)
+	)
+	pony_icon_state = "janitor"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /datum/armor/clothing_under/civilian_janitor
 	bio = 10
@@ -97,7 +158,12 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(11,20),
+		list(13,19)
+	)
+	pony_icon_state = "janitor_skirt"
 
 /obj/item/clothing/under/rank/civilian/janitor/maid
 	name = "maid uniform"
@@ -107,6 +173,11 @@
 	body_parts_covered = CHEST|GROIN
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(10,18),
+		list(16,17)
+	)
+	pony_icon_state = "janitor_skirt"
 
 /obj/item/clothing/under/rank/civilian/lawyer
 	name = "Lawyer suit"
@@ -114,6 +185,12 @@
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,8)
+	)
+	pony_icon_state = "shirt_and_pants"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/civilian/lawyer/dye_item(dye_color, dye_key_override)
 	if(dye_color == DYE_COSMIC || dye_color == DYE_SYNDICATE)
@@ -135,7 +212,13 @@
 	inhand_icon_state = "lawyer_black"
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
+
 
 /obj/item/clothing/under/rank/civilian/lawyer/beige
 	name = "good lawyer's suit"
@@ -150,7 +233,12 @@
 	inhand_icon_state = "good_suit"
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/lawyer/red
 	name = "lawyer red suit"
@@ -163,7 +251,12 @@
 	inhand_icon_state = "lawyer_red"
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/lawyer/blue
 	name = "lawyer blue suit"
@@ -176,7 +269,12 @@
 	inhand_icon_state = "lawyer_blue"
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	name = "blue buttondown suit"
@@ -188,6 +286,7 @@
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#2B65A8"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	pony_clothing_sample_pixels = null
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt
 	name = "blue buttondown suitskirt"
@@ -197,7 +296,9 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
 	name = "purple suit"
@@ -214,7 +315,12 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/lawyer/galaxy
 	icon = 'icons/obj/clothing/under/lawyer_galaxy.dmi'
@@ -229,7 +335,12 @@
 	icon_state = "lawyer_galaxy_blue_skirt"
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
 	name = "red galaxy suit"
@@ -241,7 +352,12 @@
 	icon_state = "lawyer_galaxy_red_skirt"
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/cookjorts
 	name = "grilling shorts"
@@ -250,3 +366,9 @@
 	inhand_icon_state = "cookjorts"
 	can_adjust = FALSE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	pony_clothing_sample_pixels = list(
+		list(16,18),
+		list(13,7)
+	)
+	pony_icon_state = "shirt_and_pants"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color

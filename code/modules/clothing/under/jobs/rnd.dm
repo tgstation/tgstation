@@ -62,6 +62,9 @@
 	greyscale_colors = "#ffeeb6#c2d3da#402912#615233"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "shirt_and_pants"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/rnd/research_director/alt/skirt
 	name = "research director's tan suitskirt"

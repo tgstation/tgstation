@@ -1,12 +1,25 @@
 /obj/item/clothing/under/rank/cargo
 	icon = 'icons/obj/clothing/under/cargo.dmi'
 	worn_icon = 'icons/mob/clothing/under/cargo.dmi'
+	pony_clothing_sample_pixels = list(
+		list(15,20),
+		list(13,8)
+	)
+	pony_icon_state = "cargotech"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/cargo/qm
 	name = "quartermaster's uniform"
 	desc = "A brown dress shirt, coupled with a pair of black slacks. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	inhand_icon_state = "lb_suit"
+	pony_clothing_sample_pixels = list(
+		list(10,16),
+		list(14,20),
+		list(14,9)
+	)
+	pony_icon_state = "centcom"
+	pony_config_path = /datum/greyscale_config/pony_clothes_3_color
 
 /obj/item/clothing/under/rank/cargo/qm/skirt
 	name = "quartermaster's skirt"
@@ -15,7 +28,13 @@
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(10,16),
+		list(14,20),
+		list(15,10)
+	)
+	pony_icon_state = "centcom_skirt"
 
 /obj/item/clothing/under/rank/cargo/tech
 	name = "cargo technician's uniform"
@@ -37,7 +56,12 @@
 	icon_state = "cargo_skirt"
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(15,20),
+		list(13,9)
+	)
+	pony_icon_state = "cargo_skirt"
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 

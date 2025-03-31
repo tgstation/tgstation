@@ -644,6 +644,11 @@
 	icon_file = 'icons/mob/clothing/pony_template.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pony/2_color.json'
 
+/datum/greyscale_config/pony_clothes_3_color
+	name = "Pony Clothes (3 Color)"
+	icon_file = 'icons/mob/clothing/pony_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pony/3_color.json'
+
 
 //
 // SUIT + HEAD
