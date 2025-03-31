@@ -2,7 +2,6 @@
 	name = "Carp infestation"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "Dangerous fauna is present in the area of this station."
 	trait_to_give = STATION_TRAIT_CARP_INFESTATION
 
@@ -10,7 +9,6 @@
 	name = "Distant supply lines"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 3
-	show_in_report = TRUE
 	report_message = "Due to the distance to our normal supply lines, cargo orders are more expensive."
 	blacklist = list(/datum/station_trait/strong_supply_lines)
 
@@ -22,7 +20,6 @@
 	name = "Postal workers strike"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
-	show_in_report = TRUE
 	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
 
 /datum/station_trait/mail_blocked/on_round_start()
@@ -35,7 +32,7 @@
 		our_event.unavailable_situations -= /datum/shuttle_loan_situation/mail_strike
 	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
 
-/datum/station_trait/mail_blocked/hangover/revert()
+/datum/station_trait/mail_blocked/revert()
 	var/datum/round_event_control/shuttle_loan/our_event = locate() in SSevents.control
 	our_event.unavailable_situations |= /datum/shuttle_loan_situation/mail_strike
 	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
@@ -45,28 +42,25 @@
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
-	show_in_report = TRUE
 	report_message = "Sorry for that, we didn't expect to fly into that vomiting goose while bringing you to your new station."
 	trait_to_give = STATION_TRAIT_LATE_ARRIVALS
-	blacklist = list(/datum/station_trait/random_spawns, /datum/station_trait/hangover)
+	blacklist = list(/datum/station_trait/random_spawns, /datum/station_trait/hangover, /datum/station_trait/april_fools/shuffe_job_landmarks)
 
 /datum/station_trait/random_spawns
 	name = "Drive-by landing"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
-	show_in_report = TRUE
 	report_message = "Sorry for that, we missed your station by a few miles, so we just launched you towards your station in pods. Hope you don't mind!"
 	trait_to_give = STATION_TRAIT_RANDOM_ARRIVALS
-	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/hangover)
+	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/hangover, /datum/station_trait/april_fools/shuffe_job_landmarks)
 
 /datum/station_trait/hangover
 	name = "Hangover"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
-	show_in_report = TRUE
 	report_message = "Ohh....Man....That mandatory office party from last shift...God that was awesome..I woke up in some random toilet 3 sectors away..."
 	trait_to_give = STATION_TRAIT_HANGOVER
-	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/random_spawns)
+	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/random_spawns, /datum/station_trait/april_fools/shuffe_job_landmarks)
 
 /datum/station_trait/hangover/New()
 	. = ..()
@@ -95,12 +89,10 @@
 	hat = new hat(spawned_mob)
 	spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_HEAD)
 
-
 /datum/station_trait/blackout
 	name = "Blackout"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 3
-	show_in_report = TRUE
 	report_message = "Station lights seem to be damaged, be safe when starting your shift today."
 
 /datum/station_trait/blackout/on_round_start()
@@ -114,7 +106,6 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW //Most of maints is literal trash anyway
-	show_in_report = TRUE
 	report_message = "Our workers cleaned out most of the junk in the maintenace areas."
 	blacklist = list(/datum/station_trait/filled_maint)
 	trait_to_give = STATION_TRAIT_EMPTY_MAINT
@@ -126,7 +117,6 @@
 	name = "Overflow bureaucracy mistake"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
-	show_in_report = TRUE
 	var/chosen_job_name
 
 /datum/station_trait/overflow_job_bureaucracy/New()
@@ -146,7 +136,6 @@
 	name = "Slow Shuttle"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
 	blacklist = list(/datum/station_trait/quick_shuttle)
 
@@ -159,7 +148,6 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 4
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
 	trait_to_give = STATION_TRAIT_BOTS_GLITCHED
 
@@ -180,7 +168,6 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	cost = STATION_TRAIT_COST_FULL
-	show_in_report = TRUE
 	report_message = "Your station's machines have had their language matrix fried due to an event, \
 		resulting in some strange and unfamiliar speech patterns."
 	trait_to_give = STATION_TRAIT_MACHINES_GLITCHED
@@ -289,7 +276,6 @@
 /datum/station_trait/random_event_weight_modifier
 	name = "Random Event Modifier"
 	report_message = "A random event has been modified this shift! Someone forgot to set this!"
-	show_in_report = TRUE
 	abstract_type = /datum/station_trait/random_event_weight_modifier
 	weight = 0
 
@@ -345,14 +331,12 @@
 	name = "Cramped Escape Pods"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "Due to budget cuts, we have downsized your escape pods."
 	trait_to_give = STATION_TRAIT_SMALLER_PODS
 	blacklist = list(/datum/station_trait/luxury_escape_pods)
 
 /datum/station_trait/revolutionary_trashing
 	name = "Post-Revolutionary Fervor"
-	show_in_report = TRUE
 	report_message = "Your station was recently reclaimed from a revolutionary commune. We couldn't clean up after them in time."
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_to_give = STATION_TRAIT_REVOLUTIONARY_TRASHING
@@ -466,8 +450,6 @@
 	abstract_type = /datum/station_trait/nebula
 	weight = 0
 
-	show_in_report = TRUE
-
 	///The parallax layer of the nebula
 	var/nebula_layer = /atom/movable/screen/parallax_layer/random/space_gas
 	///If set, gives the basic carp different colors
@@ -554,7 +536,6 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_flags = STATION_TRAIT_SPACE_BOUND //maybe when we can LOOK UP
 	weight = 1
-	show_in_report = TRUE
 	report_message = "This station is located inside a radioactive nebula. Setting up nebula shielding is top-priority."
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
 
@@ -737,7 +718,6 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_flags = STATION_TRAIT_PLANETARY
 	weight = 3
-	show_in_report = TRUE
 	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
 	storm_type = /datum/weather/snow_storm/forever_storm
 
@@ -751,7 +731,6 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 3
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
 	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 

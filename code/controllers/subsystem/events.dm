@@ -159,22 +159,10 @@ GLOBAL_LIST(holidays)
 	GLOB.holidays = list()
 	for(var/holiday_type in subtypesof(/datum/holiday))
 		var/datum/holiday/holiday = new holiday_type()
-		var/delete_holiday = TRUE
-		for(var/timezone in holiday.timezones)
-			var/time_in_timezone = world.realtime + timezone HOURS
-
-			var/YYYY = text2num(time2text(time_in_timezone, "YYYY")) // get the current year
-			var/MM = text2num(time2text(time_in_timezone, "MM")) // get the current month
-			var/DD = text2num(time2text(time_in_timezone, "DD")) // get the current day
-			var/DDD = time2text(time_in_timezone, "DDD") // get the current weekday
-
-			if(holiday.shouldCelebrate(DD, MM, YYYY, DDD))
-				holiday.celebrate()
-				GLOB.holidays[holiday.name] = holiday
-				delete_holiday = FALSE
-				break
-		if(delete_holiday)
+		if(!holiday.should_be_celebrated)
 			qdel(holiday)
+		else
+			holiday.celebrate()
 
 	if(GLOB.holidays.len)
 		shuffle_inplace(GLOB.holidays)

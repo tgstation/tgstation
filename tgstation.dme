@@ -1909,6 +1909,7 @@
 #include "code\datums\skills\mining.dm"
 #include "code\datums\station_traits\_station_trait.dm"
 #include "code\datums\station_traits\admin_panel.dm"
+#include "code\datums\station_traits\april_fools_traits.dm"
 #include "code\datums\station_traits\job_traits.dm"
 #include "code\datums\station_traits\negative_traits.dm"
 #include "code\datums\station_traits\neutral_traits.dm"

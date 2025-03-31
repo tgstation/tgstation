@@ -5,7 +5,6 @@
 	name = "Lucky winner"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 1
-	show_in_report = TRUE
 	report_message = "Your station has won the grand prize of the annual station charity event. Free snacks will be delivered to the bar every now and then."
 	trait_processes = TRUE
 	COOLDOWN_DECLARE(party_cooldown)
@@ -45,7 +44,6 @@
 	name = "Galactic grant"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "Your station has been selected for a special grant. Some extra funds has been made available to your cargo department."
 
 /datum/station_trait/galactic_grant/on_round_start()
@@ -56,7 +54,6 @@
 	name = "Premium internals boxes"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "The internals boxes for your crew have been upsized and filled with bonus equipment."
 	trait_to_give = STATION_TRAIT_PREMIUM_INTERNALS
 
@@ -65,7 +62,6 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 	report_message = "It seems collectors in this system are extra keen to on bounties, and will pay more to see their completion."
 
 /datum/station_trait/bountiful_bounties/on_round_start()
@@ -76,7 +72,6 @@
 	name = "Glowsticks party"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 2
-	show_in_report = TRUE
 	report_message = "We've glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
 
 /datum/station_trait/glowsticks/New()
@@ -123,7 +118,6 @@
 	name = "Strong supply lines"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "Prices are low in this system, BUY BUY BUY!"
 	blacklist = list(/datum/station_trait/distant_supply_lines)
 
@@ -135,7 +129,6 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 	report_message = "Our workers accidentally forgot more of their personal belongings in the maintenace areas."
 	blacklist = list(/datum/station_trait/empty_maint)
 	trait_to_give = STATION_TRAIT_FILLED_MAINT
@@ -147,7 +140,6 @@
 	name = "Quick Shuttle"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "Due to proximity to our supply station, the cargo shuttle will have a quicker flight time to your cargo department."
 	blacklist = list(/datum/station_trait/slow_shuttle)
 
@@ -158,7 +150,6 @@
 /datum/station_trait/deathrattle_department
 	name = "deathrattled department"
 	trait_type = STATION_TRAIT_POSITIVE
-	show_in_report = TRUE
 	abstract_type = /datum/station_trait/deathrattle_department
 	blacklist = list(/datum/station_trait/deathrattle_all)
 
@@ -230,7 +221,6 @@
 /datum/station_trait/deathrattle_all
 	name = "Deathrattled Station"
 	trait_type = STATION_TRAIT_POSITIVE
-	show_in_report = TRUE
 	weight = 1
 	report_message = "All members of the station have received an implant to notify each other if one of them dies. This should help improve job-safety!"
 	var/datum/deathrattle_group/deathrattle_group
@@ -251,7 +241,6 @@
 /datum/station_trait/cybernetic_revolution
 	name = "Cybernetic Revolution"
 	trait_type = STATION_TRAIT_POSITIVE
-	show_in_report = TRUE
 	weight = 1
 	report_message = "The new trends in cybernetics have come to the station! Everyone has some form of cybernetic implant."
 	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
@@ -318,7 +307,6 @@
 	name = "Luxury Escape Pods"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
-	show_in_report = TRUE
 	report_message = "Due to good performance, we've provided your station with luxury escape pods."
 	trait_to_give = STATION_TRAIT_BIGGER_PODS
 	blacklist = list(/datum/station_trait/cramped_escape_pods)
@@ -328,7 +316,6 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 	report_message = "Your station's medibots have received a hardware upgrade, enabling expanded healing capabilities."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
 
@@ -361,7 +348,6 @@
 	report_message = "The stars shine bright and the clouds are scarcer than usual. It's a bright day here on the Ice Moon's surface."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
-	show_in_report = TRUE
 	trait_flags = STATION_TRAIT_PLANETARY
 	trait_to_give = STATION_TRAIT_BRIGHT_DAY
 
@@ -371,7 +357,6 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 4
 	trait_to_give = STATION_TRAIT_SHUTTLE_SALE
-	show_in_report = TRUE
 
 /datum/station_trait/missing_wallet
 	name = "Misplaced Wallet"
@@ -379,7 +364,6 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 
 /datum/station_trait/missing_wallet/on_round_start()
 	. = ..()
@@ -420,7 +404,6 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 3
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
-	show_in_report = TRUE
 	blacklist = list(/datum/station_trait/colored_assistants)
 
 /datum/station_trait/random_event_weight_modifier/assistant_gimmicks/get_pulsar_message()

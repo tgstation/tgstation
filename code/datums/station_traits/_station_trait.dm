@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	///Whether this trait is always enabled; generally used for debugging
 	var/force = FALSE
 	///Does this trait show in the centcom report?
-	var/show_in_report = FALSE
+	var/show_in_report = TRUE
 	///What message to show in the centcom report?
 	var/report_message
 	///What code-trait does this station trait give? gives none if null

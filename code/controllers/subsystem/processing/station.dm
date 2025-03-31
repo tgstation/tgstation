@@ -158,7 +158,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 			return
 		//Rolls from the table for the specific trait type
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits)
-		selectable_traits -= trait_type
 		budget -= initial(trait_type.cost)
 		setup_trait(trait_type)
 
@@ -166,6 +165,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/proc/setup_trait(datum/station_trait/trait_type)
 	if(locate(trait_type) in station_traits)
 		return
+	selectable_traits_by_types[initial(trait_type.trait_type)] -= trait_type
 	var/datum/station_trait/trait_instance = new trait_type()
 	station_traits += trait_instance
 	log_game("Station Trait: [trait_instance.name] chosen for this round.")

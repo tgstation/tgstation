@@ -457,6 +457,14 @@
 	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
 	return TRUE
 
+///A proc that calls equip_to_slot_if_possible() for each slot in a list until it succeeds for one of them.
+/mob/proc/equip_in_one_of_slots(obj/item/equipping, list/slots, qdel_on_fail = TRUE, indirect_action = FALSE)
+	for(var/slot in slots)
+		if(equip_to_slot_if_possible(equipping, slots[slot], disable_warning = TRUE, indirect_action = indirect_action))
+			return slot
+	if(qdel_on_fail)
+		qdel(equipping)
+	return null
 /**
  * Actually equips an item to a slot (UNSAFE)
  *

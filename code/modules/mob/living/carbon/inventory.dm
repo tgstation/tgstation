@@ -104,14 +104,6 @@
 		visible_items += held
 	return visible_items
 
-/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/equipping, list/slots, qdel_on_fail = TRUE, indirect_action = FALSE)
-	for(var/slot in slots)
-		if(equip_to_slot_if_possible(equipping, slots[slot], disable_warning = TRUE, indirect_action = indirect_action))
-			return slot
-	if(qdel_on_fail)
-		qdel(equipping)
-	return null
-
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!slot)

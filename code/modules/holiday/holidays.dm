@@ -10,8 +10,8 @@
 	var/end_day = 0
 	/// What month does the holiday end on?
 	var/end_month = 0
-	/// for christmas neverending, or testing. Forces a holiday to be celebrated.
-	var/always_celebrate = FALSE
+	/// Set on New by ShouldCelebrate()
+	var/should_be_celebrated = TRUE
 	/// Held variable to better calculate when certain holidays may fall on, like easter.
 	var/current_year = 0
 	/// How many years are you offsetting your calculations for begin_day and end_day on. Used for holidays like easter.
@@ -30,15 +30,28 @@
 	/// The default pattern of the holiday, if the requested pattern is null.
 	var/holiday_pattern = PATTERN_DEFAULT
 
+/datum/holiday/New()
+	for(var/timezone in timezones)
+		var/time_in_timezone = world.realtime + timezone HOURS
+
+		var/YYYY = text2num(time2text(time_in_timezone, "YYYY")) // get the current year
+		var/MM = text2num(time2text(time_in_timezone, "MM")) // get the current month
+		var/DD = text2num(time2text(time_in_timezone, "DD")) // get the current day
+		var/DDD = time2text(time_in_timezone, "DDD") // get the current weekday
+
+		if(shouldCelebrate(DD, MM, YYYY, DDD))
+			should_be_celebrated = TRUE
+			break
+
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
 	if(mail_holiday)
 		SSeconomy.mail_blocked = TRUE
-	return
+	GLOB.holidays[name] = src
 
 // When the round starts, this proc is ran to get a text message to display to everyone to wish them a happy holiday
 /datum/holiday/proc/greet()
-	return "Have a happy [name]!"
+	return "Have a happy [name][should_be_celebrated ? "!" : "?!?"]"
 
 // Returns special prefixes for the station name on certain days. You wind up with names like "Christmas Object Epsilon". See new_station_name()
 /datum/holiday/proc/getStationPrefix()
@@ -48,9 +61,6 @@
 
 // Return 1 if this holidy should be celebrated today
 /datum/holiday/proc/shouldCelebrate(dd, mm, yyyy, ddd)
-	if(always_celebrate)
-		return TRUE
-
 	if(!end_day)
 		end_day = begin_day
 	if(!end_month)
@@ -116,7 +126,8 @@
 	holiday_hat = /obj/item/clothing/head/mothcap
 
 /datum/holiday/fleet_day/greet()
-	return "This day commemorates another year of successful survival aboard the Mothic Grand Nomad Fleet. Moths galaxywide are encouraged to eat, drink, and be merry."
+	. = "This day commemorates another year of successful survival aboard the Mothic Grand Nomad Fleet. Moths galaxywide are encouraged"
+	. += should_be_celebrated ? " to eat, drink, and be merry." : "...hold on, wrong festivity!"
 
 /datum/holiday/fleet_day/getStationPrefix()
 	return pick("Moth", "Fleet", "Nomadic")
@@ -148,7 +159,8 @@
 
 /datum/holiday/nz/greet()
 	var/nz_age = text2num(time2text(world.timeofday, "YYYY")) - 1840
-	return "On this day [nz_age] years ago, New Zealand's Treaty of Waitangi, the founding document of the nation, was signed!"
+	. = "On this day [nz_age] years ago, New Zealand's Treaty of Waitangi, the founding document of the nation, was signed"
+	. += should_be_celebrated ? "!" : "... or was it?"
 
 /datum/holiday/valentines
 	name = VALENTINES
@@ -173,30 +185,30 @@
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
-	var/Fact
+	var/fact
 	switch(game_age)
 		if(16)
-			Fact = " SS13 is now old enough to drive!"
+			fact = "SS13 is now old enough to drive!"
 		if(18)
-			Fact = " SS13 is now legal!"
+			fact = "SS13 is now legal!"
 		if(21)
-			Fact = " SS13 can now drink!"
+			fact = "SS13 can now drink!"
 		if(26)
-			Fact = " SS13 can now rent a car!"
+			fact = "SS13 can now rent a car!"
 		if(30)
-			Fact = " SS13 can now go home and be a family man!"
+			fact = "SS13 can now go home and be a family man!"
 		if(35)
-			Fact = " SS13 can now run for President of the United States!"
+			fact = "SS13 can now run for President of the United States!"
 		if(40)
-			Fact = " SS13 can now suffer a midlife crisis!"
+			fact = "SS13 can now suffer a midlife crisis!"
 		if(50)
-			Fact = " Happy golden anniversary!"
+			fact = "Happy golden anniversary!"
 		if(65)
-			Fact = " SS13 can now start thinking about retirement!"
-	if(!Fact)
-		Fact = " SS13 is now [game_age] years old!"
+			fact = "SS13 can now start thinking about retirement!"
+		else
+			fact = "SS13 is now [game_age] years old!"
 
-	return "Say 'Happy Birthday' to Space Station 13, first publicly playable on February 16th, 2003![Fact]"
+	return "Say '[should_be_celebrated ? "" : "Not "]Happy Birthday' to Space Station 13, first publicly playable on February 16th, 2003! [fact]"
 
 /datum/holiday/random_kindness
 	name = "Random Acts of Kindness Day"
@@ -253,6 +265,7 @@
 	begin_day = 1
 	end_day = 2
 	holiday_hat = /obj/item/clothing/head/chameleon/broken
+	holiday_colors = TRUE
 
 /datum/holiday/april_fools/celebrate()
 	. = ..()
@@ -262,6 +275,16 @@
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
+
+	if(prob(40))
+		return
+
+	var/list/available_traits = subtypesof(/datum/station_trait/april_fools)
+	var/list/selectable_traits = SSstation.selectable_traits_by_types[/datum/station_trait/april_fools::trait_type]
+	for(var/trait in available_traits)
+		if(!(trait in selectable_traits))
+			available_traits -= trait
+	SSstation.setup_trait(pick(available_traits))
 
 /datum/holiday/april_fools/get_holiday_colors(atom/thing_to_color)
 	return "#[random_short_color()]"
@@ -273,7 +296,8 @@
 	holiday_hat = /obj/item/clothing/head/syndicatefake
 
 /datum/holiday/spess/greet()
-	return "On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space!"
+	. = "On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space"
+	. += should_be_celebrated? "!" : "... wait, I misread that, it's actually on 12th April."
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
@@ -328,7 +352,7 @@
 	begin_day = 3
 
 /datum/holiday/draconic_day/greet()
-	return "On this day, Lizardkind celebrates their language with literature and other cultural works."
+	return "On this day, Lizardkind celebrates their language with literature and other[should_be_celebrated ? " cultural works" : "... oops, wrong day"]."
 
 /datum/holiday/draconic_day/getStationPrefix()
 	return pick("Draconic", "Literature", "Reading")
@@ -359,7 +383,8 @@
 	begin_day = 15
 
 /datum/holiday/atrakor_festival/greet()
-	return "On this day, the Lizards traditionally celebrate the Festival of Atrakor's Might, where they honour the moon god with lavishly adorned clothing, large portions of food, and a massive celebration into the night."
+	. += "On this day, the Lizards traditionally celebrate the Festival of Atrakor's Might, where they honour the moon"
+	. += should_be_celebrated ? " god with lavishly adorned clothing, large portions of food, and a massive celebration into the night." : "- Oh wait, that's on June 15."
 
 /datum/holiday/atrakor_festival/getStationPrefix()
 	return pick("Moon", "Night Sky", "Celebration")
@@ -454,7 +479,9 @@
 	return pick("Francais", "Fromage", "Zut", "Merde", "Sacrebleu")
 
 /datum/holiday/france/greet()
-	return "Do you hear the people sing?"
+	. = "Do you hear the people sing?"
+	if(!should_be_celebrated)
+		. += " ...No, I don't."
 
 /datum/holiday/hotdogday
 	name = HOTDOG_DAY
@@ -525,7 +552,7 @@
 	end_day = 10
 
 /datum/holiday/ianbirthday/greet()
-	return "Happy birthday, Ian!"
+	return "Happy [!should_be_celebrated ? "not-" : ""]birthday, Ian!"
 
 /datum/holiday/ianbirthday/getStationPrefix()
 	return pick("Ian", "Corgi", "Erro")
@@ -548,7 +575,7 @@
 	begin_month = SEPTEMBER
 
 /datum/holiday/questions/greet()
-	return "Are you having a happy [name]?"
+	return "Are you having a happy [should_be_celebrated ? name : APRIL_FOOLS]?"
 
 // OCTOBER
 
@@ -658,7 +685,7 @@
 	begin_month = NOVEMBER
 
 /datum/holiday/hello/greet()
-	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy", "Ni hao", "Guten Tag", "Konnichiwa", "G'day cunt"))]! " + ..()
+	return "[pick(list("Aloha", "Ciao", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy", "Ni hao", "Guten Tag", "Konnichiwa", "G'day cunt"))]! " + ..()
 
 //The Festival of Holy Lights is celebrated on Nov 28th, the date on which ethereals were merged (#40995)
 /datum/holiday/holy_lights

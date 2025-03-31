@@ -17,7 +17,6 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 	report_message = "System's local planet has irregular atmospherical properties."
 	trait_to_give = STATION_TRAIT_UNNATURAL_ATMOSPHERE
 
@@ -36,7 +35,6 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	weight = 5
-	show_in_report = TRUE
 	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
 		access to your set of alternative upload modules because we know you're already thinking about meddling with this experiment."
 	trait_to_give = STATION_TRAIT_UNIQUE_AI
@@ -52,7 +50,6 @@
 	weight = 5
 	show_in_report = FALSE
 	cost = STATION_TRAIT_COST_LOW
-	report_message = "Ian has gone exploring somewhere in the station."
 
 /datum/station_trait/ian_adventure/on_round_start()
 	for(var/mob/living/basic/pet/dog/corgi/dog in GLOB.mob_list)
@@ -110,7 +107,6 @@
 	name = "PDA glitch"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
-	show_in_report = TRUE
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Something seems to be wrong with the PDAs issued to you all this shift. Nothing too bad though."
 	trait_to_give = STATION_TRAIT_PDA_GLITCHED
@@ -119,7 +115,6 @@
 	name = "Announcement Intern"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
-	show_in_report = TRUE
 	report_message = "Please be nice to him."
 	blacklist = list(/datum/station_trait/announcement_medbot, /datum/station_trait/birthday)
 
@@ -136,7 +131,6 @@
 	name = "Announcement \"System\""
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
-	show_in_report = TRUE
 	report_message = "Our announcement system is under scheduled maintanance at the moment. Thankfully, we have a backup."
 	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/birthday)
 
@@ -148,7 +142,6 @@
 	name = "Colored Assistants"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 10
-	show_in_report = TRUE
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Due to a shortage in standard issue jumpsuits, we have provided your assistants with one of our backup supplies."
 	blacklist = list(/datum/station_trait/assistant_gimmicks)
@@ -163,7 +156,6 @@
 	name = "Employee Birthday"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 2
-	show_in_report = TRUE
 	report_message = "We here at Nanotrasen would all like to wish Employee Name a very happy birthday"
 	trait_to_give = STATION_TRAIT_BIRTHDAY
 	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot) //Overiding the annoucer hides the birthday person in the annoucement message.
@@ -296,7 +288,6 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 2
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 	report_message = "Nanotrasen has chosen your station for an experiment - everyone has free scryers! Use these to talk to other people easily and privately."
 
 /datum/station_trait/scryers/New()
@@ -324,7 +315,6 @@
 /datum/station_trait/wallets
 	name = "Wallets!"
 	trait_type = STATION_TRAIT_NEUTRAL
-	show_in_report = TRUE
 	weight = 5
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
@@ -368,13 +358,11 @@
 	trait_to_give = STATION_TRAIT_FORESTED
 	trait_flags = STATION_TRAIT_PLANETARY
 	weight = 10
-	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
 
 /datum/station_trait/linked_closets
 	name = "Closet Anomaly"
 	trait_type = STATION_TRAIT_NEUTRAL
-	show_in_report = TRUE
 	weight = 1
 	report_message = "We've reports of high amount of trace eigenstasium on your station. Ensure that your closets are working correctly."
 
@@ -403,7 +391,6 @@
 /datum/station_trait/skub
 	name = "The Great Skub Contention"
 	trait_type = STATION_TRAIT_NEUTRAL
-	show_in_report = FALSE
 	weight = 2
 	sign_up_button = TRUE
 	/// List of people signed up to be either pro_skub or anti_skub
@@ -535,7 +522,6 @@
 	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! That said, our enemies may just find another way to infiltrate the station, so be careful."
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
-	show_in_report = TRUE
 	can_revert = FALSE
 
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
@@ -546,7 +532,6 @@
 /datum/station_trait/pet_day
 	name = "Bring Your Pet To Work Day"
 	trait_type = STATION_TRAIT_NEUTRAL
-	show_in_report = FALSE
 	weight = 2
 	sign_up_button = TRUE
 
@@ -594,6 +579,5 @@
 	trait_to_give = STATION_TRAIT_ECONOMY_ALERTS
 	weight = 2
 	cost = STATION_TRAIT_COST_LOW
-	show_in_report = TRUE
 
 	dynamic_threat_id = "GMM Econ Spotlight"

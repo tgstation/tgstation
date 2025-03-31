@@ -118,7 +118,6 @@
 	button_desc = "Sign up to become the Bridge Assistant and watch over the Bridge."
 	weight = 2
 	report_message = "We have installed a Bridge Assistant on your station."
-	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/bridge_assistant
 
@@ -172,7 +171,6 @@
 	button_desc = "Sign up to become a DISABLED but hard boiled Veteran Advisor of Nanotrasen Security Force. Advise HoS and Captain, train Officers, all while fighting your PTSD."
 	weight = 2
 	report_message = "Veteran Security Advisor has been assigned to your station to help with Security matters."
-	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/veteran_advisor
 
@@ -186,7 +184,6 @@
 	weight = 1
 	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	report_message = "Our recent technological advancements in machine Artificial Intelligence has proven futile. In the meantime, we're sending an Intern to help out."
-	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/human_ai
 	trait_to_give = STATION_TRAIT_HUMAN_AI
@@ -252,7 +249,6 @@
 	button_desc = "Ook ook ah ah, sign up to play as the bartender's monkey."
 	weight = 0 //Unrollable by default, available all day during monkey day.
 	report_message = "We've evaluated the bartender's monkey to have the mental capacity of the average crewmember. As such, we made them one."
-	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_ALWAYS
 	job_to_add = /datum/job/pun_pun
 
