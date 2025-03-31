@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(carpool)
 	plane = GAME_PLANE
 	layer = CAR_LAYER
 	density = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	throwforce = 150
 
 	var/last_vzhzh = 0
@@ -113,8 +113,8 @@ SUBSYSTEM_DEF(carpool)
 	var/stage = 1
 	var/on = FALSE
 
-	var/health = 100
-	var/maxhealth = 100
+	var/health = 400
+	var/maxhealth = 400
 	var/repairing = FALSE
 
 	var/last_beep = 0
@@ -179,7 +179,7 @@ SUBSYSTEM_DEF(carpool)
 				return
 			repairing = TRUE
 
-			var time_to_repair = (maxhealth - health) / 4 //Repair 4hp for every second spent repairing
+			var time_to_repair = (maxhealth - health) / 8 //Repair 4hp for every second spent repairing
 			var start_time = world.time
 
 			user.visible_message("<span class='notice'>[user] begins repairing [src]...</span>", \
@@ -251,11 +251,7 @@ SUBSYSTEM_DEF(carpool)
 		. += "<span class='notice'>\nYou see the following people inside:</span>"
 		for(var/mob/living/rider in src)
 			. += "<span class='notice'>* [rider]</span>"
-
-/obj/vampire_car/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove passenger"
-	return CONTEXTUAL_SCREENTIP_SET
+	. += "You cant Alt-click to remove occupant."
 
 /obj/vampire_car/proc/get_damage(var/cost)
 	if(cost > 0)
@@ -288,8 +284,10 @@ SUBSYSTEM_DEF(carpool)
 					qdel(B)
 			explosion(loc,0,1,3,4)
 			GLOB.car_list -= src
+			qdel(src)
 	else if(prob(50) && health <= maxhealth/2)
 		on = FALSE
+		loc.balloon_alert(driver, "engine stops")
 		set_light(0)
 	return
 
@@ -446,30 +444,35 @@ SUBSYSTEM_DEF(carpool)
 /obj/vampire_car/Bump(atom/A)
 	if(!A)
 		return
-	var/prev_speed = round(abs(speed_in_pixels)/8)
-	if(!prev_speed)
-		return
+
+	var/prev_speed
+	if(!istype(A, /mob/living))
+		prev_speed = round(abs(speed_in_pixels)/8)
 
 	if(istype(A, /mob/living))
+		prev_speed = round(abs(speed_in_pixels)* 0.95)
 		var/mob/living/hit_mob = A
 		switch(hit_mob.mob_size)
 			if(MOB_SIZE_HUGE) 	//gangrel warforms, werewolves, bears, ppl with fortitude
 				playsound(src, 'code/modules/vehicles/cars/bump.ogg', 75, TRUE)
 				speed_in_pixels = 0
 				impact_delay = world.time
-				hit_mob.Paralyze(1 SECONDS)
+				hit_mob.Knockdown(3 SECONDS)
 			if(MOB_SIZE_LARGE)	//ppl with fat bodytype
 				playsound(src, 'code/modules/vehicles/cars/bump.ogg', 60, TRUE)
-				speed_in_pixels = round(speed_in_pixels * 0.35)
-				hit_mob.Knockdown(1 SECONDS)
+				speed_in_pixels = round(speed_in_pixels * 0.9)
+				hit_mob.Knockdown(3 SECONDS)
 			if(MOB_SIZE_SMALL)	//small animals
 				playsound(src, 'code/modules/vehicles/cars/bump.ogg', 40, TRUE)
-				speed_in_pixels = round(speed_in_pixels * 0.75)
-				hit_mob.Knockdown(1 SECONDS)
+				speed_in_pixels = round(speed_in_pixels * 0.9)
+				hit_mob.Paralyze(3 SECONDS)
+				hit_mob.Knockdown(3 SECONDS)
 			else				//everything else
 				playsound(src, 'code/modules/vehicles/cars/bump.ogg', 50, TRUE)
-				speed_in_pixels = round(speed_in_pixels * 0.5)
-				hit_mob.Knockdown(1 SECONDS)
+				speed_in_pixels = round(speed_in_pixels * 0.9)
+				hit_mob.Paralyze(3 SECONDS)
+				hit_mob.Knockdown(3 SECONDS)
+
 	else
 		playsound(src, 'code/modules/vehicles/cars/bump.ogg', 75, TRUE)
 		speed_in_pixels = 0
@@ -489,15 +492,15 @@ SUBSYSTEM_DEF(carpool)
 		var/dam = prev_speed
 		if(driver)
 			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-		get_damage(dam)
+				dam = round(dam*0.5)
+		get_damage(dam*0.5)
 	else
 		var/dam = prev_speed
 		if(driver)
 			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-			driver.apply_damage(prev_speed, BRUTE, BODY_ZONE_CHEST)
-		get_damage(dam)
+				dam = round(dam*0.5)
+			driver.apply_damage(round(dam*0.5), BRUTE, BODY_ZONE_CHEST)
+		get_damage(dam*0.5)
 	return
 
 /obj/vampire_car/retro
@@ -511,17 +514,9 @@ SUBSYSTEM_DEF(carpool)
 /obj/vampire_car/retro/third
 	icon_state = "3"
 
-/obj/vampire_car/retro/rand/New()
-	icon_state = "[pick(1, 3, 5)]"
-	..()
-
 /obj/vampire_car/rand
 	icon_state = "4"
 	dir = WEST
-
-/obj/vampire_car/rand/New()
-	icon_state = "[pick(2, 4, 6)]"
-	..()
 
 /obj/vampire_car/rand/camarilla
 	icon_state = "6"
@@ -591,9 +586,6 @@ SUBSYSTEM_DEF(carpool)
 	icon_state = "track"
 	max_passengers = 6
 	dir = WEST
-
-/obj/vampire_car/track/Initialize()
-	..()
 
 /obj/vampire_car/track/volkswagen
 	icon_state = "volkswagen"
@@ -686,32 +678,47 @@ SUBSYSTEM_DEF(carpool)
 			y + (moved_y < 0 ? -1 : 1) * round(max(abs(moved_y), 36) / 32), \
 			z
 		)
-
-		var/turf/hit_thing
+		//to_chat(world, "--check_turf [check_turf] X: [check_turf.x] Y: [check_turf.y] Z:[z] used_speed:[used_speed]")
+		//to_chat(world, "--moved_x:[moved_x], moved_y:[moved_y] ")
+		var/turf/hit_turf
+		var/mob/living/hit_mob
 		var/list/in_line = get_line(src, check_turf)
 		for(var/turf/T in in_line)
-			for(var/obj/O as obj in T.contents)
-				if(T.density || (O.density && O != src))
-					var/dist_to_hit = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], T.x*32, T.y*32)
-					if(dist_to_hit <= used_speed)
-						if(!hit_thing || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_thing.x*32, hit_thing.y*32))
-							hit_thing = T
+			var/dist_to_hit = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], T.x*32, T.y*32)
+			//to_chat(world, "_dist_to_hit [dist_to_hit] T.density [T.density]")
+			if(T.density)
+				if(dist_to_hit <= used_speed)
+					if(!hit_turf || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32))
+						hit_turf = T
+						//message_admins("ht:[hit_turf], dist_to_hit:[dist_to_hit] ")
+			for(var/obj/O as obj|mob in T.contents)
+				if(istype(O, /mob/living))
+					hit_mob = O
+					hit_turf = null
+				if(O.density && O != src)
+					//to_chat(world, "dist_to_hit [dist_to_hit] O [O] O.density [O.density])]")
+					if(!hit_turf || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32))
+						hit_turf = O.loc
+						//message_admins("hit_mob:[hit_turf] ")
 
-		if(hit_thing)
-			Bump(pick(hit_thing))
-			to_chat(world, "I can't pass that [hit_thing] at [hit_thing.x] x [hit_thing.y] cause of [pick(hit_thing)] FUCK)]")
-			// var/bearing = get_angle_raw(x, y, pixel_x, pixel_y, hit_thing.x, hit_thing.y, 0, 0)
-			var/actual_distance = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_thing.x*32, hit_thing.y*32)-32
+			if(hit_mob)
+				Bump(hit_mob)
+				//to_chat(world, "I can't pass MOB [hit_mob] at [hit_turf.x] x [hit_turf.y] YEAA)]")
+		if(hit_turf)
+			Bump(hit_turf)
+			//to_chat(world, "I can't pass that [hit_turf] at [hit_turf.x] x [hit_turf.y] FUCK)]")
+			// var/bearing = get_angle_raw(x, y, pixel_x, pixel_y, hit_turf.x, hit_turf.y, 0, 0)
+			var/actual_distance = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32)-32
 			moved_x = round(sin(true_movement_angle)*actual_distance)
 			moved_y = round(cos(true_movement_angle)*actual_distance)
-			if(last_pos["x"]*32+last_pos["x_pix"] > hit_thing.x*32)
-				moved_x = max((hit_thing.x*32+32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
-			if(last_pos["x"]*32+last_pos["x_pix"] < hit_thing.x*32)
-				moved_x = min((hit_thing.x*32-32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
-			if(last_pos["y"]*32+last_pos["y_pix"] > hit_thing.y*32)
-				moved_y = max((hit_thing.y*32+32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
-			if(last_pos["y"]*32+last_pos["y_pix"] < hit_thing.y*32)
-				moved_y = min((hit_thing.y*32-32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
+			if(last_pos["x"]*32+last_pos["x_pix"] > hit_turf.x*32)
+				moved_x = max((hit_turf.x*32+32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
+			if(last_pos["x"]*32+last_pos["x_pix"] < hit_turf.x*32)
+				moved_x = min((hit_turf.x*32-32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
+			if(last_pos["y"]*32+last_pos["y_pix"] > hit_turf.y*32)
+				moved_y = max((hit_turf.y*32+32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
+			if(last_pos["y"]*32+last_pos["y_pix"] < hit_turf.y*32)
+				moved_y = min((hit_turf.y*32-32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
 	var/turf/west_turf = get_step(src, WEST)
 	if(length(west_turf))
 		moved_x = max(-8-last_pos["x_pix"], moved_x)

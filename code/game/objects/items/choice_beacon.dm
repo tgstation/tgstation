@@ -232,6 +232,7 @@
 			/obj/vampire_car/retro,
 			/obj/vampire_car/retro/second,
 			/obj/vampire_car/retro/third,
+			/obj/vampire_car/rand,
 			/obj/vampire_car/rand/camarilla,
 			/obj/vampire_car/retro/rand/camarilla,
 			/obj/vampire_car/rand/anarch,
