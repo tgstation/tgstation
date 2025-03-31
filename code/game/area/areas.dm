@@ -124,6 +124,9 @@
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
+	/// This area allowed to dinner here?
+	var/dinner_place = FALSE
+
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
 
