@@ -41,7 +41,7 @@
 
 	var/datum/action/cooldown/spell/pointed/flash/flash = locate() in src.actions
 	if(!flash)
-		flash = new(src.mind)
+		flash = new(src)
 		flash.Grant(src)
 
 /mob/living/carbon/human/proc/setup_physiology()

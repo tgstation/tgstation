@@ -86,7 +86,7 @@
 
 	var/datum/action/cooldown/spell/pointed/flash/flash = locate() in src.actions
 	if(!flash)
-		flash = new(src.mind)
+		flash = new(src)
 		flash.Grant(src)
 		flash.cast_range = 500
 
