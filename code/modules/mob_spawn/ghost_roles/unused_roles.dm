@@ -501,7 +501,7 @@
 
 /datum/component/block_walking_out_early
 	COOLDOWN_DECLARE(spam_cd)
-	var/obj/structure/closet/box
+	VAR_PRIVATE/obj/structure/closet/box
 
 /datum/component/block_walking_out_early/Initialize(obj/structure/closet/box)
 	. = ..()
@@ -524,7 +524,7 @@
 	SIGNAL_HANDLER
 	if(user != parent)
 		return NONE
-	if(!COOLDOWN_FINISHED(src, spam_cd))
+	if(COOLDOWN_FINISHED(src, spam_cd))
 		to_chat(user, span_warning("I don't want to get up yet. It's comfy in here. 5 more minutes..."))
 		COOLDOWN_START(src, spam_cd, 5 SECONDS)
 	return BLOCK_OPEN
