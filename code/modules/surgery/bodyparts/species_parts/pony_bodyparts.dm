@@ -851,6 +851,74 @@
 	organ_flags = ORGAN_ORGANIC | ORGAN_VIRGIN | ORGAN_EDIBLE | ORGAN_VITAL
 	slot = ORGAN_SLOT_PONY_EARTH
 	zone = BODY_ZONE_CHEST
+	var/datum/action/cooldown/spell/touch/pony_kick/hind_kick
+
+/obj/item/organ/earth_pony_core/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	hind_kick.Grant(organ_owner)
+
+/obj/item/organ/earth_pony_core/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	hind_kick.Remove(organ_owner)
+
+/obj/item/organ/earth_pony_core/Initialize(mapload)
+	. = ..()
+	hind_kick = new(src)
+	hind_kick.background_icon_state = "bg_tech_blue"
+	hind_kick.base_background_icon_state = hind_kick.background_icon_state
+	hind_kick.active_background_icon_state = "[hind_kick.base_background_icon_state]_active"
+	hind_kick.overlay_icon_state = "bg_tech_blue_border"
+	hind_kick.active_overlay_icon_state = null
+	hind_kick.panel = "Genetic"
+
+/datum/action/cooldown/spell/touch/pony_kick
+	name = "Hind-leg Kick"
+	desc = "Kick backwards with all your might, throwing the target away and knocking anything loose."
+	sound = null
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "jetboot"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_INCAPACITATED|AB_CHECK_LYING
+	school = SCHOOL_PSYCHIC
+	cooldown_time = 20 SECONDS
+	invocation_type = INVOCATION_NONE
+	hand_path = /obj/item/melee/touch_attack/pony_kick
+
+/datum/action/cooldown/spell/touch/pony_kick/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/movable/victim, mob/living/carbon/caster)
+	if(isliving(victim))
+		var/mob/living/living_victim = victim
+		caster.setDir(turn(get_dir(caster, living_victim), 180))
+		victim.visible_message(span_danger("[caster] rears up and kicks [victim]!"), \
+						span_userdanger("You're kicked away by [caster]!"), span_hear("You hear a sickening sound of hoof hitting flesh!"), COMBAT_MESSAGE_RANGE, caster)
+		to_chat(caster, span_danger("You rear up and kick [victim]!"))
+		caster.do_attack_animation(living_victim)
+		playsound(caster.loc, SFX_SWING_HIT, 50, TRUE)
+		living_victim.apply_damage(
+			damage = rand(10,20),
+			damagetype = BRUTE,
+			def_zone = BODY_ZONE_CHEST,
+			attacking_item = hand,
+			attack_direction = get_dir(caster, living_victim)
+		)
+		var/turf/T = get_edge_target_turf(caster, get_dir(caster, get_step_away(living_victim, caster)))
+		if (T && isturf(T))
+			living_victim.Paralyze(2 SECONDS)
+			living_victim.throw_at(T, 5, 2)
+		log_combat(caster, living_victim, "hind-leg-kicked")
+	else if(istype(victim, /obj/structure/flora/tree))
+		caster.do_attack_animation(victim)
+		playsound(caster.loc, SFX_SWING_HIT, 50, TRUE)
+		victim.Shake(3, 0, duration = 0.3 SECONDS)
+		new /obj/item/food/grown/pineapple(get_turf(victim))
+	return TRUE
+
+/datum/action/cooldown/spell/touch/pony_kick/is_valid_target(atom/cast_on)
+	return isliving(cast_on) || istype(cast_on, /obj/structure/flora/tree)
+
+/obj/item/melee/touch_attack/pony_kick
+	name = "\improper hind-leg kick"
+	desc = "Rear up and kick someone!"
+	icon = 'icons/mob/actions/actions_items.dmi'
+	icon_state = "jetboot"
 
 /obj/item/organ/brain/pony
 	name = "pony brain"
