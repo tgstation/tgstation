@@ -35,6 +35,10 @@
 	var/pain_stam_pct = 0
 	/// Traits which make target immune to us embedding into them, any trait from the list works
 	var/list/immune_traits = list(TRAIT_PIERCEIMMUNE)
+	/// The embed doesn't show up on examine, only on health analyzers.
+	/// (Note: This means you can't rip it out)
+	/// It will also hide its name (and downplay its severity) when referring to in messages.
+	var/stealthy_embed = FALSE
 
 	/// Thing that we're attached to
 	VAR_FINAL/obj/item/parent
@@ -85,6 +89,7 @@
 	brother.jostle_pain_mult = jostle_pain_mult
 	brother.pain_stam_pct = pain_stam_pct
 	brother.immune_traits = immune_traits.Copy()
+	brother.stealthy_embed = stealthy_embed
 	return brother
 
 ///Someone inspected our embeddable item
@@ -142,9 +147,7 @@
 		return
 
 	var/mob/living/carbon/victim = hit
-	var/shrapnel_type = source.shrapnel_type
-	var/obj/item/payload = new shrapnel_type(get_turf(victim))
-	setup_shrapnel(payload, source, victim)
+	var/obj/item/payload = setup_shrapnel(source, victim)
 
 	if (!roll_embed_chance(victim, hit_zone))
 		failed_embed(victim, hit_zone, random = TRUE)
@@ -155,7 +158,9 @@
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 
 /// Used for custom logic while setting up shrapnel payload
-/datum/embedding/proc/setup_shrapnel(obj/item/payload, obj/projectile/source, mob/living/carbon/victim)
+/datum/embedding/proc/setup_shrapnel(obj/projectile/source, mob/living/carbon/victim)
+	var/shrapnel_type = source.shrapnel_type
+	var/obj/item/payload = new shrapnel_type(get_turf(victim))
 	// Detach from parent, we don't want em to delete us
 	source.set_embed(null, dont_delete = TRUE)
 	// Hook signals up first, as payload sends a comsig upon embed update
@@ -203,8 +208,8 @@
 		qdel(parent)
 
 /// Does this item deal any damage when embedding or jostling inside of someone?
-/datum/embedding/proc/is_harmless()
-	return pain_mult == 0 && jostle_pain_mult == 0
+/datum/embedding/proc/is_harmless(consider_stamina = FALSE)
+	return pain_mult == 0 && jostle_pain_mult == 0 && (consider_stamina || pain_stam_pct < 1)
 
 //Handles actual embedding logic.
 /datum/embedding/proc/embed_into(mob/living/carbon/victim, obj/item/bodypart/target_limb)
@@ -221,13 +226,15 @@
 		span_userdanger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
 
 	var/damage = parent.throwforce
-	if (!is_harmless())
-		owner.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
-		playsound(owner,'sound/items/weapons/bladeslice.ogg', 40)
-		if (owner_limb.can_bleed())
-			parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
+	if (!is_harmless(consider_stamina = TRUE))
+		if(!stealthy_embed)
+			owner.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
+			owner.add_mood_event("embedded", /datum/mood_event/embedded)
+		if (!is_harmless())
+			playsound(owner,'sound/items/weapons/bladeslice.ogg', 40)
+			if (owner_limb.can_bleed())
+				parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
 		damage += parent.w_class * impact_pain_mult
-		owner.add_mood_event("embedded", /datum/mood_event/embedded)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
 	on_successful_embed(victim, target_limb)
@@ -378,7 +385,7 @@
 	if(!forced && (owner.move_intent == MOVE_INTENT_WALK || owner.body_position == LYING_DOWN) && !CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		chance *= 0.5
 
-	if(is_harmless() || !prob(chance))
+	if(is_harmless(consider_stamina = TRUE) || !prob(chance))
 		return
 
 	var/damage = parent.w_class * jostle_pain_mult
@@ -396,7 +403,10 @@
 		damagetype = STAMINA,
 	)
 
-	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
+	if(stealthy_embed)
+		to_chat(owner, span_danger("Something in your [owner_limb.plaintext_zone] jostles and stings!"))
+	else
+		to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
 	jostle_effects()
 
 /// Effects which should occur when the owner moves, sometimes
@@ -426,6 +436,9 @@
 		parent.forceMove(get_turf(parent))
 		return
 
+	if (process_effect(seconds_per_tick))
+		return
+
 	if (owner.stat == DEAD)
 		return
 
@@ -445,7 +458,7 @@
 	else if(owner.body_position == LYING_DOWN)
 		pain_chance_current *= 0.2
 
-	if (is_harmless() || !prob(pain_chance_current))
+	if (is_harmless(consider_stamina = TRUE) || !prob(pain_chance_current))
 		return
 
 	owner.apply_damage(
@@ -461,8 +474,14 @@
 		damage = pain_stam_pct * damage,
 		damagetype = STAMINA,
 	)
+	if(stealthy_embed)
+		to_chat(owner, span_danger("Something in your [owner_limb.plaintext_zone] [pain_stam_pct < 1 ? "hurts!" : "weighs you down."]"))
+	else
+		to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] [pain_stam_pct < 1 ? "hurts!" : "weighs you down."]"))
 
-	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] hurts!"))
+/// Called every process, return TRUE in order to abort further processing - if it falls out, etc
+/datum/embedding/proc/process_effect(seconds_per_tick)
+	return
 
 /// Attempt to pluck out the embedded item using tweezers of some kind
 /datum/embedding/proc/try_pluck(obj/item/tool, mob/user)
@@ -505,8 +524,8 @@
 /// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls remove_embedding()
 /datum/embedding/proc/fall_out()
 	if(is_harmless())
-		owner.visible_message(span_danger("[parent] falls off of [owner.name]'s [owner_limb.plaintext_zone]!"),
-			span_userdanger("[parent] falls off of your [owner_limb.plaintext_zone]!"))
+		owner.visible_message(span_warning("[parent] falls off of [owner.name]'s [owner_limb.plaintext_zone]!"),
+			span_warning("[parent] falls off of your [owner_limb.plaintext_zone]!"))
 		remove_embedding()
 		return
 

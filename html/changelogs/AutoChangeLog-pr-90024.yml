@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fish will no longer drown if left half-submerged in a fishable turf on which it can normally be found. Instead it will disperse after a while or if starving. Note that this only happens if the fish is native to such turfs (eg. lavaloop on beach water will still die)."

@@ -1,6 +1,18 @@
 /// A global list of all ongoing hallucinations, primarily for easy access to be able to stop (delete) hallucinations.
 GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
+// Hallucination tiers
+/// Very common hallucinations, minor stuff that'll make you double-take but is otherwise very subtle.
+#define HALLUCINATION_TIER_COMMON 1
+/// Uncommon hallucinations, more noticeable and potentially more impactful (causing temporary stuns or stamina damage).
+#define HALLUCINATION_TIER_UNCOMMON 2
+/// Rarer hallucinations which are usually pretty obvious, but also pretty impactful.
+#define HALLUCINATION_TIER_RARE 3
+/// Hallucinations which are generally just for laughs and are obviously fake
+#define HALLUCINATION_TIER_VERYSPECIAL 4
+/// Hallucinations which are never picked, only forced
+#define HALLUCINATION_TIER_NEVER 5
+
 /// What typepath of the hallucination
 #define HALLUCINATION_ARG_TYPE 1
 /// Where the hallucination came from, for logging
@@ -111,7 +123,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 			to_chat(nearby_living, pick(optional_messages))
 
 /// Global weighted list of all hallucinations that can show up randomly.
-GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weighted_list())
+GLOBAL_LIST_INIT_TYPED(random_hallucination_weighted_list, /list, generate_hallucination_weighted_list())
 
 /// Generates the global weighted list of random hallucinations.
 /proc/generate_hallucination_weighted_list()
@@ -124,49 +136,68 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 		if(weight <= 0)
 			continue
 
-		weighted_list[hallucination_type] = weight
+		LAZYSET(weighted_list["[initial(hallucination_type.hallucination_tier)]"], hallucination_type, weight)
 
 	return weighted_list
+
+/// Select a random hallucination from the hallucination pool
+///
+/// * tier - the tier of hallucination to select from
+/// * strict - if true, only select from the passed tier. If false, select from the passed tier and all tiers below it.
+/proc/get_random_hallucination(tier = HALLUCINATION_TIER_COMMON, strict = FALSE)
+	if(!GLOB.random_hallucination_weighted_list[tier])
+		CRASH("get_random_hallucination - No hallucinations in tier \[[tier]\].")
+
+	var/list/pool = GLOB.random_hallucination_weighted_list["[tier]"].Copy()
+	if(!strict)
+		tier -= 1
+		while(tier >= HALLUCINATION_TIER_COMMON)
+			pool += GLOB.random_hallucination_weighted_list["[tier]"]
+			tier -= 1
+
+	return pick_weight(pool)
 
 /// Debug proc for getting the total weight of the random_hallucination_weighted_list
 /proc/debug_hallucination_weighted_list()
 	var/total_weight = 0
-	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
-		total_weight += GLOB.random_hallucination_weighted_list[hallucination_type]
+	for(var/tier in GLOB.random_hallucination_weighted_list)
+		for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list[tier])
+			total_weight += GLOB.random_hallucination_weighted_list[tier][hallucination_type]
 
 	to_chat(usr, span_boldnotice("The total weight of the hallucination weighted list is [total_weight]."))
 	return total_weight
 
 ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucination Weights", "View the weight of each hallucination subtype in the random weighted list.", ADMIN_CATEGORY_DEBUG)
-	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Percent</th>"
+	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Tier</th> <th>Percent</th>"
 
 	var/total_weight = debug_hallucination_weighted_list()
 	var/list/all_weights = list()
 	var/datum/hallucination/last_type
 	var/last_type_weight = 0
-	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
-		var/this_weight = GLOB.random_hallucination_weighted_list[hallucination_type]
-		// Last_type is the abstract parent of the last hallucination type we iterated over
-		if(last_type)
-			// If this hallucination is the same path as the last type (subtype), add it to the total of the last type weight
-			if(ispath(hallucination_type, last_type))
-				last_type_weight += this_weight
-				continue
+	for(var/tier in GLOB.random_hallucination_weighted_list)
+		for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list[tier])
+			var/this_weight = GLOB.random_hallucination_weighted_list[tier][hallucination_type]
+			// Last_type is the abstract parent of the last hallucination type we iterated over
+			if(last_type)
+				// If this hallucination is the same path as the last type (subtype), add it to the total of the last type weight
+				if(ispath(hallucination_type, last_type))
+					last_type_weight += this_weight
+					continue
 
-			// Otherwise we moved onto the next hallucination subtype so we can stop
+				// Otherwise we moved onto the next hallucination subtype so we can stop
+				else
+					all_weights["<tr><td>[last_type]</td> <td>[last_type_weight] / [total_weight]</td> <td>[initial(hallucination_type.hallucination_tier)]</td> <td>[round(100 * (last_type_weight / total_weight), 0.01)]% chance</td></tr>"] = last_type_weight
+
+			// Set last_type to the abstract parent of this hallucination
+			last_type = initial(hallucination_type.abstract_hallucination_parent)
+			// If last_type is the base hallucination it has no distinct subtypes so we can total it up immediately
+			if(last_type == /datum/hallucination)
+				all_weights["<tr><td>[hallucination_type]</td> <td>[this_weight] / [total_weight]</td> <td>[initial(hallucination_type.hallucination_tier)]</td> <td>[round(100 * (this_weight / total_weight), 0.01)]% chance</td></tr>"] = this_weight
+				last_type = null
+
+			// Otherwise we start the weight sum for the next entry here
 			else
-				all_weights["<tr><td>[last_type]</td> <td>[last_type_weight] / [total_weight]</td> <td>[round(100 * (last_type_weight / total_weight), 0.01)]% chance</td></tr>"] = last_type_weight
-
-		// Set last_type to the abstract parent of this hallucination
-		last_type = initial(hallucination_type.abstract_hallucination_parent)
-		// If last_type is the base hallucination it has no distinct subtypes so we can total it up immediately
-		if(last_type == /datum/hallucination)
-			all_weights["<tr><td>[hallucination_type]</td> <td>[this_weight] / [total_weight]</td> <td>[round(100 * (this_weight / total_weight), 0.01)]% chance</td></tr>"] = this_weight
-			last_type = null
-
-		// Otherwise we start the weight sum for the next entry here
-		else
-			last_type_weight = this_weight
+				last_type_weight = this_weight
 
 	// Sort by weight descending, where weight is the values (not the keys). We assoc_to_keys later to get JUST the text
 	sortTim(all_weights, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)

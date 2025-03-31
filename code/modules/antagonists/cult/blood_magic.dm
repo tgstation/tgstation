@@ -386,12 +386,13 @@
 	cast_spell(user, user)
 
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
+	if(!cast_spell(M, user))
+		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 	user.do_attack_animation(M)
-	cast_spell(M, user)
 
 /obj/item/melee/blood_magic/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iscarbon(user) || !IS_CULTIST(user))
@@ -402,10 +403,12 @@
 	if(isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
+	if(!cast_spell(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+
 	user.do_attack_animation(interacting_with)
 	log_combat(user, interacting_with, "used a cult spell on", source.name, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
-	cast_spell(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/blood_magic/proc/cast_spell(atom/target, mob/living/carbon/user)
@@ -418,10 +421,12 @@
 			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM, wound_bonus = CANT_WOUND)
 	if(uses <= 0)
 		qdel(src)
-	else if(source)
+		return TRUE
+	if(source)
 		source.desc = source.base_desc
 		source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
 		source.build_all_button_icons()
+	return TRUE
 
 //Stun
 /obj/item/melee/blood_magic/stun
@@ -448,6 +453,7 @@
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
+	uses--
 	// Heretics are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
 	// Heretics have an identical effect on their grasp. The cultist's worse spell preparation is offset by their extra gear and teammates.
 	if(IS_HERETIC(target))
@@ -466,22 +472,24 @@
 		to_chat(user, span_warning("An eldritch force intervenes as you touch [target], absorbing most of the effects!"))
 		to_chat(target, span_warning("As [user] touches you with vile magicks, the Mansus absorbs most of the effects!"))
 		target.balloon_alert_to_viewers("absorbed!")
-	else if(target.can_block_magic())
+		return ..()
+
+	if(target.can_block_magic())
 		to_chat(user, span_warning("The spell had no effect!"))
-	else
-		to_chat(user, span_cult_italic("In a brilliant flash of red, [target] falls to the ground!"))
-		target.Paralyze(16 SECONDS * effect_coef)
-		target.flash_act(1, TRUE)
-		if(issilicon(target))
-			var/mob/living/silicon/silicon_target = target
-			silicon_target.emp_act(EMP_HEAVY)
-		else if(iscarbon(target))
-			var/mob/living/carbon/carbon_target = target
-			carbon_target.adjust_silence(12 SECONDS * effect_coef)
-			carbon_target.adjust_stutter(30 SECONDS * effect_coef)
-			carbon_target.adjust_timed_status_effect(30 SECONDS * effect_coef, /datum/status_effect/speech/slurring/cult)
-			carbon_target.set_jitter_if_lower(30 SECONDS * effect_coef)
-	uses--
+		return ..()
+
+	to_chat(user, span_cult_italic("In a brilliant flash of red, [target] falls to the ground!"))
+	target.Paralyze(16 SECONDS * effect_coef)
+	target.flash_act(1, TRUE)
+	if(issilicon(target))
+		var/mob/living/silicon/silicon_target = target
+		silicon_target.emp_act(EMP_HEAVY)
+	else if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.adjust_silence(12 SECONDS * effect_coef)
+		carbon_target.adjust_stutter(30 SECONDS * effect_coef)
+		carbon_target.adjust_timed_status_effect(30 SECONDS * effect_coef, /datum/status_effect/speech/slurring/cult)
+		carbon_target.set_jitter_if_lower(30 SECONDS * effect_coef)
 	return ..()
 
 //Teleportation
@@ -748,22 +756,26 @@
  * '/obj/item/melee/blood_magic/manipulator/proc/blood_draw' handles blood pools/trails and does not affect parent proc
  */
 /obj/item/melee/blood_magic/manipulator/cast_spell(mob/living/target, mob/living/carbon/user)
-	if((isconstruct(target) || isshade(target)) && !heal_construct(target, user))
+	if(isconstruct(target) || isshade(target))
+		if (heal_construct(target, user))
+			return ..()
 		return
 	if(istype(target, /obj/effect/decal/cleanable/blood) || isturf(target))
 		blood_draw(target, user)
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_bloodbag = target
-		if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
-			human_bloodbag.balloon_alert(user, "no blood!")
-			return
-		if(human_bloodbag.stat == DEAD)
-			human_bloodbag.balloon_alert(user, "dead!")
-			return
-		if(IS_CULTIST(human_bloodbag) && !heal_cultist(human_bloodbag, user))
-			return
-		if(!IS_CULTIST(human_bloodbag) && !drain_victim(human_bloodbag, user))
-			return
+		return ..()
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/human_bloodbag = target
+	if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
+		human_bloodbag.balloon_alert(user, "no blood!")
+		return
+	if(human_bloodbag.stat == DEAD)
+		human_bloodbag.balloon_alert(user, "dead!")
+		return
+	if(IS_CULTIST(human_bloodbag) && !heal_cultist(human_bloodbag, user))
+		return
+	if(!IS_CULTIST(human_bloodbag) && !drain_victim(human_bloodbag, user))
+		return
 	return ..()
 
 /**

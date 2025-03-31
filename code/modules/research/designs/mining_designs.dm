@@ -255,3 +255,37 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/unique_modkit
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+	)
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/unique_modkit/offensive_turf_aoe
+	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
+	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
+	id = "hyperaoemod"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/borg/upgrade/modkit/aoe/mobs/andturfs
+
+/datum/design/unique_modkit/rapid_repeater
+	name = "Kinetic Accelerator Rapid Repeater Mod"
+	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
+	id = "repeatermod"
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT*4, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
+
+/datum/design/unique_modkit/resonator_blast
+	name = "Kinetic Accelerator Resonator Blast Mod"
+	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
+	id = "resonatormod"
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 2.5)
+	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
+
+/datum/design/unique_modkit/bounty
+	name = "Kinetic Accelerator Death Syphon Mod"
+	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
+	id = "bountymod"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/gold = SHEET_MATERIAL_AMOUNT*2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/borg/upgrade/modkit/bounty

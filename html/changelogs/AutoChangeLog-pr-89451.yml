@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - rscadd: "Glaive retool kits for proto-kinetic crushers are now in mining vendors' ordering lists."
-  - code_imp: "Proto-kinetic crusher retool kits now have support for alternate inhand icon files with alternate dimensions."
