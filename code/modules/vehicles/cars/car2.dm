@@ -54,8 +54,6 @@ SUBSYSTEM_DEF(carpool)
 
 /obj/item/gas_can/full
 	stored_gasoline = 1000
-	icon_state = "gasoline"
-	icon = 'code/modules/vehicles/cars/items.dmi'
 
 /obj/item/gas_can/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -609,7 +607,7 @@ SUBSYSTEM_DEF(carpool)
 	var/impact_delay = 0
 	glide_size = 96
 
-/obj/vampire_car/Initialize()
+/obj/vampire_car/Initialize(mapload)
 	. = ..()
 	Fari = new (src)
 	Fari.icon = 'code/modules/vehicles/cars/light_cone_car.dmi'
