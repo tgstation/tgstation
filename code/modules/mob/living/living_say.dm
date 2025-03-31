@@ -434,7 +434,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/proc/after_other_spell_invoked(mob/living/source, datum/action/cooldown/spell/spell)
 	SIGNAL_HANDLER
 	if (spell != invoked_spell)
-		remove_invoked_spell(invoked_spell)
+		on_spell_invoked(invoked_spell)
 
 /// When we're done casting a spell get rid of it
 /mob/living/proc/on_spell_invoked(datum/action/cooldown/spell/invoked)
@@ -447,6 +447,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /// I don't want to play with you any more
 /mob/living/proc/remove_invoked_spell()
 	SIGNAL_HANDLER
+	if(isnull(invoked_spell))
+		return
 	UnregisterSignal(invoked_spell, list(COMSIG_SPELL_AFTER_CAST, COMSIG_QDELETING))
 	invoked_spell.Remove(src)
 	QDEL_NULL(invoked_spell)
