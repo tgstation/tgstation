@@ -7,15 +7,16 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-   $primary: #1596b6,
-   $fg-map-keys: (),
-   $bg-map-keys: (),
- );
+  // convert to hsl
+  $primary: hsl(191.93, 79.31%, 39.8%),
+  $fg-map-keys: (),
+  $bg-map-keys: ()
+);
 @use '../base.scss' with (
-   $color-bg: #29333a,
-   $color-bg-grad-spread: 6%,
-   $border-radius: 2px,
- );
+  $color-bg: hsl(204.7, 17.2%, 19.4%),
+  $color-bg-grad-spread: 6%,
+  $border-radius: 2px
+);
 
 .theme-admin {
   // Atomic classes

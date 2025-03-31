@@ -10,8 +10,6 @@
 	var/load = 0 // the current load on the powernet, increased by each machine at processing
 	var/newavail = 0 // what available power was gathered last tick, then becomes...
 	var/avail = 0 //...the current available power in the powernet
-	var/viewavail = 0 // the available power as it appears on the power console (gradually updated)
-	var/viewload = 0 // the load as it appears on the power console (gradually updated)
 	var/netexcess = 0 // excess power on the powernet (typically avail-load)///////
 	var/delayedload = 0 // load applied to powernet between power ticks.
 
@@ -37,6 +35,7 @@
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the cable exists
 /datum/powernet/proc/remove_cable(obj/structure/cable/C)
+	SEND_SIGNAL(C, COMSIG_CABLE_REMOVED_FROM_POWERNET)
 	cables -= C
 	C.powernet = null
 	if(is_empty())//the powernet is now empty...
@@ -52,6 +51,7 @@
 			C.powernet.remove_cable(C) //..remove it
 	C.powernet = src
 	cables +=C
+	SEND_SIGNAL(C, COMSIG_CABLE_ADDED_TO_POWERNET)
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
@@ -84,10 +84,6 @@
 		for(var/obj/machinery/power/smes/S in nodes) // find the SMESes in the network
 			S.restore() // and restore some of the power that was used
 
-	// update power consoles
-	viewavail = round(0.8 * viewavail + 0.2 * avail)
-	viewload = round(0.8 * viewload + 0.2 * load)
-
 	// reset the powernet
 	load = delayedload
 	delayedload = 0
@@ -95,7 +91,8 @@
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
-	if(avail >= 1000)
-		return clamp(20 + round(avail/25000), 20, 195) + rand(-5,5)
-	else
-		return 0
+	return ELECTROCUTE_DAMAGE(energy_to_power(avail)) // Assuming 1 second of contact.
+
+// Mostly just a wrapper for sending the COMSIG_POWERNET_CIRCUIT_TRANSMISSION signal, but could be retooled in the future to give it other uses
+/datum/powernet/proc/data_transmission(list/data, encryption_key, datum/weakref/port)
+	SEND_SIGNAL(src, COMSIG_POWERNET_CIRCUIT_TRANSMISSION, list("data" = data, "enc_key" = encryption_key, "port" = port))

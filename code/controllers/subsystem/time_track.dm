@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(time_track)
 	)
 
 /datum/controller/subsystem/time_track/Initialize()
-	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.config?.map_name].csv"
+	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.current_map.map_name].csv"
 	world.Profile(PROFILE_RESTART, type = "sendmaps")
 	//Need to do the sendmaps stuff in its own file, since it works different then everything else
 	var/list/sendmaps_headers = list()
@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(time_track)
 		text2file(sendmaps_json,"bad_sendmaps.json")
 		can_fire = FALSE
 		return
-	var/send_maps_sort = send_maps_data.Copy() //Doing it like this guarentees us a properly sorted list
+	var/send_maps_sort = send_maps_data.Copy() //Doing it like this guarantees us a properly sorted list
 
 	for(var/list/packet in send_maps_data)
 		send_maps_sort[packet["name"]] = packet
@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(time_track)
 		send_maps_values += packet["value"]
 		send_maps_values += packet["calls"]
 
-	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[SQLtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
+	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[ISOtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
 	log_perf(
 		list(
 			world.time,

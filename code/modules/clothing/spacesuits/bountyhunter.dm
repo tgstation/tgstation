@@ -7,7 +7,7 @@
 	armor_type = /datum/armor/space_hunter
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 
 /datum/armor/space_hunter
 	melee = 60

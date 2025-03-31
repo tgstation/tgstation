@@ -1,7 +1,7 @@
 
 #define ROBOTIC_LIGHT_BRUTE_MSG "marred"
 #define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
-#define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
+#define ROBOTIC_HEAVY_BRUTE_MSG "like its falling apart"
 
 #define ROBOTIC_LIGHT_BURN_MSG "scorched"
 #define ROBOTIC_MEDIUM_BURN_MSG "charred"
@@ -19,11 +19,12 @@
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_static = 'icons/mob/augmentation/augments.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -40,7 +41,7 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
 
@@ -52,11 +53,12 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -75,7 +77,7 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot
@@ -86,11 +88,12 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -109,10 +112,10 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
-/obj/item/bodypart/leg/left/robot/emp_act(severity)
+/obj/item/bodypart/leg/left/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
@@ -121,9 +124,10 @@
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
-	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	return
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -133,11 +137,12 @@
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -156,10 +161,10 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
-/obj/item/bodypart/leg/right/robot/emp_act(severity)
+/obj/item/bodypart/leg/right/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
@@ -168,9 +173,10 @@
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
-	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	return
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -179,11 +185,12 @@
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -200,17 +207,17 @@
 
 	biological_state = (BIO_ROBOTIC)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
 	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
-	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
+	wing_types = list(/obj/item/organ/wings/functional/robotic)
 
 	var/wired = FALSE
-	var/obj/item/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/power_store/cell = null
 
-/obj/item/bodypart/chest/robot/emp_act(severity)
+/obj/item/bodypart/chest/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
@@ -231,6 +238,7 @@
 		to_chat(owner, span_danger("Your [plaintext_zone]'s logic boards temporarily become unresponsive!"))
 		owner.Stun(stun_time)
 	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
+	return
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -283,7 +291,7 @@
 			), AUGMENTATION_TRAIT)
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/stock_parts/cell))
+	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("You have already inserted a cell!"))
 			return
@@ -353,11 +361,12 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -374,7 +383,7 @@
 
 	biological_state = (BIO_ROBOTIC)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 
 	head_flags = HEAD_EYESPRITES
 	bodypart_flags = BODYPART_UNHUSKABLE
@@ -384,7 +393,7 @@
 
 #define EMP_GLITCH "EMP_GLITCH"
 
-/obj/item/bodypart/head/robot/emp_act(severity)
+/obj/item/bodypart/head/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
@@ -395,9 +404,7 @@
 	if (severity == EMP_HEAVY)
 		glitch_duration *= 2
 
-	owner.add_client_colour(/datum/client_colour/malfunction)
-
-	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon/human, remove_client_colour), /datum/client_colour/malfunction), glitch_duration)
+	QDEL_IN(owner.add_client_colour(/datum/client_colour/malfunction, HEAD_TRAIT), glitch_duration)
 
 #undef EMP_GLITCH
 
@@ -465,10 +472,8 @@
 	return ..()
 
 // Prosthetics - Cheap, mediocre, and worse than organic limbs
-// The fact they dont have a internal biotype means theyre a lot weaker defensively,
-// since they skip slash and go right to blunt
-// They are VERY easy to delimb as a result
-// HP is also reduced just in case this isnt enough
+// Actively make you less healthy by being on your body, contributing a whopping 250% to overall health at only 20 max health
+// They also suck to punch with.
 
 /obj/item/bodypart/arm/left/robot/surplus
 	name = "surplus prosthetic left arm"
@@ -477,7 +482,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0 //Bro, you look huge.
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -488,7 +497,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -499,7 +512,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -510,9 +527,63 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+
+// Advanced Limbs: More durable, high punching force
+
+/obj/item/bodypart/arm/left/robot/advanced
+	name = "advanced robotic left arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
+
+/obj/item/bodypart/arm/right/robot/advanced
+	name = "advanced robotic right arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
+
+/obj/item/bodypart/leg/left/robot/advanced
+	name = "advanced robotic left leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
+
+/obj/item/bodypart/leg/right/robot/advanced
+	name = "advanced robotic right leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	is_emissive = TRUE
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

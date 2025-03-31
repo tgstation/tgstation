@@ -1,6 +1,6 @@
 // For any /obj/vehicle's that can be ridden
 
-/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS), potion_boost = FALSE)
+/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS))
 	if(!isvehicle(parent))
 		return COMPONENT_INCOMPATIBLE
 	return ..()
@@ -15,19 +15,19 @@
 
 	if(!keycheck(rider))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='warning'>[movable_parent] has no key inserted!</span>")
+			to_chat(rider, span_warning("[movable_parent] has no key inserted!"))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	if(HAS_TRAIT(rider, TRAIT_INCAPACITATED))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='warning'>You cannot operate [movable_parent] right now!</span>")
+			to_chat(rider, span_warning("You cannot operate [movable_parent] right now!"))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	if(ride_check_flags & RIDER_NEEDS_LEGS && HAS_TRAIT(rider, TRAIT_FLOORED))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move [movable_parent]...</span>")
+			to_chat(rider, span_warning("You can't seem to manage that while unable to stand up enough to move [movable_parent]..."))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	if(ride_check_flags & RIDER_NEEDS_ARMS && HAS_TRAIT(rider, TRAIT_HANDS_BLOCKED))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='warning'>You can't seem to hold onto [movable_parent] to move it...</span>")
+			to_chat(rider, span_warning("You can't seem to hold onto [movable_parent] to move it..."))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
@@ -97,13 +97,11 @@
 		return
 
 	step(movable_parent, direction)
-	last_move_diagonal = ((direction & (direction - 1)) && (movable_parent.loc == next))
-	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, vehicle_move_delay)
 
 	if(QDELETED(src))
 		return
-	handle_vehicle_layer(movable_parent.dir)
-	handle_vehicle_offsets(movable_parent.dir)
+	update_parent_layer_and_offsets(movable_parent.dir)
 	return TRUE
 
 /datum/component/riding/vehicle/atv
@@ -111,38 +109,62 @@
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 1.5
 
-/datum/component/riding/vehicle/atv/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
-	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+/datum/component/riding/vehicle/atv/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 4),
+		TEXT_SOUTH = list(0, 4),
+		TEXT_EAST =  list(0, 4),
+		TEXT_WEST =  list(0, 4),
+	)
+
+/datum/component/riding/vehicle/atv/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, OBJ_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_EAST =  list(0, 0, OBJ_LAYER),
+		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+	)
 
 /datum/component/riding/vehicle/bicycle
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 0
 
-/datum/component/riding/vehicle/bicycle/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
-
+/datum/component/riding/vehicle/bicycle/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 4),
+		TEXT_SOUTH = list(0, 4),
+		TEXT_EAST =  list(0, 4),
+		TEXT_WEST =  list(0, 4),
+	)
 
 /datum/component/riding/vehicle/lavaboat
 	ride_check_flags = NONE // not sure
 	keytype = /obj/item/oar
+	/// The one turf we can move on.
 	var/allowed_turf = /turf/open/lava
 
-/datum/component/riding/vehicle/lavaboat/handle_specials()
+/datum/component/riding/vehicle/lavaboat/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
 	allowed_turf_typecache = typecacheof(allowed_turf)
+
+/datum/component/riding/vehicle/lavaboat/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+	)
 
 /datum/component/riding/vehicle/lavaboat/dragonboat
 	vehicle_move_delay = 1
 
-/datum/component/riding/vehicle/lavaboat/dragonboat/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 2), TEXT_SOUTH = list(1, 2), TEXT_EAST = list(1, 2), TEXT_WEST = list( 1, 2)))
+/datum/component/riding/vehicle/lavaboat/dragonboat/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(1, 2),
+		TEXT_SOUTH = list(1, 2),
+		TEXT_EAST =  list(1, 2),
+		TEXT_WEST =  list(1, 2),
+	)
 
 /datum/component/riding/vehicle/lavaboat/dragonboat
 	vehicle_move_delay = 1
@@ -152,37 +174,169 @@
 /datum/component/riding/vehicle/janicart
 	keytype = /obj/item/key/janitor
 
-/datum/component/riding/vehicle/janicart/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
+/datum/component/riding/vehicle/janicart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list( 0, 4),
+		TEXT_SOUTH = list( 0, 7),
+		TEXT_EAST =  list(-12, 7),
+		TEXT_WEST =  list( 12, 7),
+	)
 
 /datum/component/riding/vehicle/scooter
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/vehicle/scooter/handle_specials(mob/living/riding_mob)
-	. = ..()
-	if(iscyborg(riding_mob))
-		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(2)))
-	else
-		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(2), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list(2)))
+/datum/component/riding/vehicle/scooter/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	if(iscyborg(offsetter))
+		return list(
+			TEXT_NORTH = list(0, 2),
+			TEXT_SOUTH = list(0, 2),
+			TEXT_EAST =  list(0, 2),
+			TEXT_WEST =  list(2, 2),
+		)
+	return list(
+		TEXT_NORTH = list( 2, 2),
+		TEXT_SOUTH = list(-2, 2),
+		TEXT_EAST =  list( 0, 2),
+		TEXT_WEST =  list( 2, 2),
+	)
 
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
 	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER
+	///If TRUE, the vehicle will be slower (but safer) to ride on walk intent.
+	var/can_slow_down = TRUE
 
-/datum/component/riding/vehicle/scooter/skateboard/handle_specials()
+/datum/component/riding/vehicle/scooter/skateboard/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 5),
+		TEXT_SOUTH = list(0, 5),
+		TEXT_EAST =  list(0, 5),
+		TEXT_WEST =  list(2, 5),
+	)
+
+/datum/component/riding/vehicle/scooter/skateboard/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_EAST =  list(0, 0, OBJ_LAYER),
+		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+	)
+
+/datum/component/riding/vehicle/scooter/skateboard/RegisterWithParent()
 	. = ..()
-	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	if(can_slow_down)
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	var/obj/vehicle/ridden/scooter/skateboard/board = parent
+	if(istype(board))
+		board.can_slow_down = can_slow_down
+
+/datum/component/riding/vehicle/scooter/skateboard/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_notice("Going slow and nice at [EXAMINE_HINT("walk")] speed will prevent crashing into things.")
+
+/datum/component/riding/vehicle/scooter/skateboard/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
+	. = ..()
+	if(can_slow_down)
+		RegisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED, PROC_REF(toggle_move_delay))
+		toggle_move_delay(rider)
+
+/datum/component/riding/vehicle/scooter/skateboard/handle_unbuckle(mob/living/rider)
+	. = ..()
+	if(can_slow_down)
+		toggle_move_delay(rider)
+		UnregisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED)
+
+/datum/component/riding/vehicle/scooter/skateboard/proc/toggle_move_delay(mob/living/rider)
+	SIGNAL_HANDLER
+	vehicle_move_delay = initial(vehicle_move_delay)
+	if(rider.move_intent == MOVE_INTENT_WALK)
+		vehicle_move_delay += 0.6
+
+/datum/component/riding/vehicle/scooter/skateboard/pro
+	vehicle_move_delay = 1
+
+///This one lets the rider ignore gravity, move in zero g and son on, but only on ground turfs or at most one z-level above them.
+/datum/component/riding/vehicle/scooter/skateboard/hover
+	vehicle_move_delay = 1
+	override_allow_spacemove = TRUE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_ATOM_HAS_GRAVITY, PROC_REF(check_grav))
+	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(check_drifting))
+	hover_check()
+
+///Makes sure that the vehicle is grav-less if capable of zero-g movement. Forced gravity will honestly screw this.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_grav(datum/source, turf/gravity_turf, list/gravs)
+	SIGNAL_HANDLER
+	if(override_allow_spacemove)
+		gravs += 0
+
+///Makes sure the vehicle isn't drifting while it can be maneuvered.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_drifting(datum/source, movement_dir, continuous_move)
+	SIGNAL_HANDLER
+	if(override_allow_spacemove)
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/vehicle_moved(atom/movable/source, oldloc, dir, forced)
+	. = ..()
+	hover_check(TRUE)
+
+///Makes sure that the hoverboard can move in zero-g in (open) space but only there's a ground turf on the z-level below.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/hover_check(is_moving = FALSE)
+	var/atom/movable/movable = parent
+	if(!is_space_or_openspace(movable.loc))
+		on_hover_enabled()
+		return
+	var/turf/open/our_turf = movable.loc
+	var/turf/below = GET_TURF_BELOW(our_turf)
+
+	if(!check_space_turf(our_turf))
+		on_hover_fail()
+		return
+	//it's open space without support and the turf below is null or space without lattice, or if it'd fall several z-levels.
+	if(isopenspaceturf(our_turf) && our_turf.zPassOut(DOWN) && (isnull(below) || !check_space_turf(below) || (below.zPassOut(DOWN) && below.zPassIn(DOWN))))
+		on_hover_fail(our_turf, below, is_moving)
+		return
+	on_hover_enabled()
+
+///Part of the hover_check proc that returns false if it's a space turf without lattice or such.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_space_turf(turf/turf)
+	if(!isspaceturf(turf))
+		return TRUE
+	for(var/obj/object in turf.contents)
+		if(object.obj_flags & BLOCK_Z_OUT_DOWN)
+			return TRUE
+	return FALSE
+
+///Called by hover_check() when the hoverboard is on a valid turf.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/on_hover_enabled()
+	override_allow_spacemove = TRUE
+
+///Called by hover_check() when the hoverboard is on space or open space turf without a support underneath it.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/on_hover_fail(turf/open/our_turf, turf/turf_below, is_moving)
+	override_allow_spacemove = FALSE
+	if(turf_below)
+		our_turf.zFall(parent, falling_from_move = is_moving)
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy
+	var/is_slown_down = FALSE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy/on_hover_enabled()
+	if(!is_slown_down)
+		return
+	is_slown_down = FALSE
+	vehicle_move_delay -= 1
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy/on_hover_fail(turf/open/our_turf, turf/turf_below, is_moving)
+	if(is_slown_down)
+		return
+	is_slown_down = TRUE
+	vehicle_move_delay += 1
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys
 	vehicle_move_delay = 0
-
-/datum/component/riding/vehicle/scooter/skateboard/wheelys/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
+	can_slow_down = FALSE
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/rollerskates
 	vehicle_move_delay = 1.5
@@ -190,7 +344,7 @@
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes
 	vehicle_move_delay = 1
 
-/datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes/handle_specials()
+/datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
 	allowed_turf_typecache = typecacheof(list(/turf/open/misc/asteroid/snow, /turf/open/misc/snow, /turf/open/floor/holofloor/snow, /turf/open/misc/ice, /turf/open/floor/fake_snow))
 
@@ -199,10 +353,13 @@
 	vehicle_move_delay = 1.75
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/vehicle/secway/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
-	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+/datum/component/riding/vehicle/secway/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 4),
+		TEXT_SOUTH = list(0, 4),
+		TEXT_EAST =  list(0, 4),
+		TEXT_WEST =  list(0, 4),
+	)
 
 /datum/component/riding/vehicle/secway/driver_move(mob/living/user, direction)
 	var/obj/vehicle/ridden/secway/the_secway = parent
@@ -220,55 +377,91 @@
 	override_allow_spacemove = TRUE
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/vehicle/speedbike/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, -8), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-10, 5), TEXT_WEST = list( 10, 5)))
-	set_vehicle_dir_offsets(NORTH, -16, -16)
-	set_vehicle_dir_offsets(SOUTH, -16, -16)
-	set_vehicle_dir_offsets(EAST, -18, 0)
-	set_vehicle_dir_offsets(WEST, -18, 0)
+/datum/component/riding/vehicle/speedbike/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list( 0, -8),
+		TEXT_SOUTH = list( 0,  4),
+		TEXT_EAST =  list(-10, 5),
+		TEXT_WEST =  list( 10, 5),
+	)
+
+/datum/component/riding/vehicle/speedbike/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(-16, -16),
+		TEXT_SOUTH = list(-16, -16),
+		TEXT_EAST =  list(-18,   0),
+		TEXT_WEST =  list(-18,   0),
+	)
 
 /datum/component/riding/vehicle/speedwagon
 	vehicle_move_delay = 0
 
-/datum/component/riding/vehicle/speedwagon/handle_specials()
-	. = ..()
-	set_riding_offsets(1, list(TEXT_NORTH = list(-10, -4), TEXT_SOUTH = list(16, 3), TEXT_EAST = list(-4, 30), TEXT_WEST = list(4, -3)))
-	set_riding_offsets(2, list(TEXT_NORTH = list(19, -5, 4), TEXT_SOUTH = list(-13, 3, 4), TEXT_EAST = list(-4, -3, 4.1), TEXT_WEST = list(4, 28, 3.9)))
-	set_riding_offsets(3, list(TEXT_NORTH = list(-10, -18, 4.2), TEXT_SOUTH = list(16, 25, 3.9), TEXT_EAST = list(-22, 30), TEXT_WEST = list(22, -3, 4.1)))
-	set_riding_offsets(4, list(TEXT_NORTH = list(19, -18, 4.2), TEXT_SOUTH = list(-13, 25, 3.9), TEXT_EAST = list(-22, 3, 3.9), TEXT_WEST = list(22, 28)))
-	set_vehicle_dir_offsets(NORTH, -48, -48)
-	set_vehicle_dir_offsets(SOUTH, -48, -48)
-	set_vehicle_dir_offsets(EAST, -48, -48)
-	set_vehicle_dir_offsets(WEST, -48, -48)
-	for(var/i in GLOB.cardinals)
-		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+/datum/component/riding/vehicle/speedwagon/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	switch(pass_index)
+		if(1)
+			return list(
+				TEXT_NORTH = list(-10, -4),
+				TEXT_SOUTH = list( 16, -4),
+				TEXT_EAST =  list( -4, 30),
+				TEXT_WEST =  list(  4, -3),
+			)
+		if(2)
+			return list(
+				TEXT_NORTH = list( 19, -5),
+				TEXT_SOUTH = list(-13,  3),
+				TEXT_EAST =  list( -4, -3),
+				TEXT_WEST =  list(  4, 28),
+			)
+		if(3)
+			return list(
+				TEXT_NORTH = list(-10, -18),
+				TEXT_SOUTH = list( 16,  25),
+				TEXT_EAST =  list(-22,  30),
+				TEXT_WEST =  list( 22,  -3,),
+			)
+		if(4)
+			return list(
+				TEXT_NORTH = list( 19, -18),
+				TEXT_SOUTH = list(-13,  25),
+				TEXT_EAST =  list(-22,   3),
+				TEXT_WEST =  list( 22,  28),
+			)
 
+/datum/component/riding/vehicle/speedwagon/get_parent_offsets_and_layers()
+	. = ..()
+	return list(
+		TEXT_NORTH = list(-48, -48, BELOW_MOB_LAYER),
+		TEXT_SOUTH = list(-48, -48, BELOW_MOB_LAYER),
+		TEXT_EAST =  list(-48, -48, BELOW_MOB_LAYER),
+		TEXT_WEST =  list(-48, -48, BELOW_MOB_LAYER),
+	)
 
 /datum/component/riding/vehicle/wheelchair
 	vehicle_move_delay = 0
 	ride_check_flags = RIDER_NEEDS_ARMS
 
-/datum/component/riding/vehicle/wheelchair/handle_specials()
-	. = ..()
-	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+/datum/component/riding/vehicle/wheelchair/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0),
+		TEXT_SOUTH = list(0, 0),
+		TEXT_EAST =  list(0, 0),
+		TEXT_WEST =  list(0, 0),
+	)
 
-// special messaging for those without arms
+/datum/component/riding/vehicle/wheelchair/hand
+	/// Magic number used in calculating the speed of the wheelchair
+	var/delay_multiplier = 6.7
+
 /datum/component/riding/vehicle/wheelchair/hand/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
-	var/delay_multiplier = 6.7 // magic number from wheelchair code
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)
 	return ..()
 
-/datum/component/riding/vehicle/wheelchair/motorized/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
-	var/speed = 1 // Should never be under 1
-	var/delay_multiplier = 6.7 // magic number from wheelchair code
+/datum/component/riding/vehicle/wheelchair/motorized
 
+/datum/component/riding/vehicle/wheelchair/motorized/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
-	for(var/datum/stock_part/servo/servo in our_chair.component_parts)
-		speed += servo.tier
+	var/speed = our_chair.speed
+	var/delay_multiplier = our_chair.delay_multiplier
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
 	return ..()
 
@@ -276,4 +469,4 @@
 	. = ..()
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
 	if(istype(our_chair) && our_chair.power_cell)
-		our_chair.power_cell.use(our_chair.power_usage / max(our_chair.power_efficiency, 1) * 0.05)
+		our_chair.power_cell.use(our_chair.energy_usage / max(our_chair.power_efficiency, 1) * 0.05)

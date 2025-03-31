@@ -143,7 +143,6 @@
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "watcher_baby"
 	layer = EDGED_TURF_LAYER // Don't render under lightbulbs
-	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	alpha = 0
@@ -154,7 +153,7 @@
 	/// Type of projectile we fire
 	var/projectile_type = /obj/projectile/baby_watcher_blast
 	/// Sound to make when we shoot
-	var/projectile_sound = 'sound/weapons/pierce.ogg'
+	var/projectile_sound = 'sound/items/weapons/pierce.ogg'
 	/// Time between taking potshots at goliaths
 	var/fire_delay = 5 SECONDS
 	/// How much faster do we shoot when avenging our parent?
@@ -255,8 +254,7 @@
 	icon_state = "ice_2"
 	damage = 10
 	damage_type = BRUTE // Mining mobs don't take a lot of burn damage so we'll pretend
-	speed = 1
-	pixel_speed_multiplier = 0.5
+	speed = 0.5
 
 /obj/projectile/baby_watcher_blast/Initialize(mapload)
 	. = ..()

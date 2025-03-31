@@ -1,6 +1,3 @@
-#define MAX_DENT_DECALS 15
-#define LEANING_OFFSET 11
-
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of iron used to separate rooms."
@@ -8,6 +5,7 @@
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	explosive_resistance = 1
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
@@ -31,67 +29,10 @@
 	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
 	var/decon_type
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 	var/list/dent_decals
-
-/turf/closed/wall/MouseDrop_T(atom/dropping, mob/user, params)
-	..()
-	if(dropping != user)
-		return
-	if(!iscarbon(dropping) && !iscyborg(dropping))
-		return
-	var/mob/living/leaner = dropping
-	if(leaner.incapacitated(IGNORE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
-		return
-	if(!leaner.density || leaner.pulledby || leaner.buckled || !(leaner.mobility_flags & MOBILITY_STAND))
-		return
-	if(HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
-		return
-	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
-	if(checked_turf != src)
-		return
-	leaner.start_leaning(src)
-
-/mob/living/proc/start_leaning(turf/closed/wall/wall)
-	var/new_y = base_pixel_y + pixel_y
-	var/new_x = base_pixel_x + pixel_x
-	switch(dir)
-		if(SOUTH)
-			new_y += LEANING_OFFSET
-		if(NORTH)
-			new_y -= LEANING_OFFSET
-		if(WEST)
-			new_x += LEANING_OFFSET
-		if(EAST)
-			new_x -= LEANING_OFFSET
-
-	animate(src, 0.2 SECONDS, pixel_x = new_x, pixel_y = new_y)
-	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	visible_message(
-		span_notice("[src] leans against [wall]."),
-		span_notice("You lean against [wall]."),
-	)
-	RegisterSignals(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_HUMAN_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	), PROC_REF(stop_leaning))
-	update_fov()
-
-/mob/living/proc/stop_leaning()
-	SIGNAL_HANDLER
-	UnregisterSignal(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_HUMAN_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	))
-	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
-	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
@@ -100,7 +41,7 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
-		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
+		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = LOW_FLOOR_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
 			generate_space_underlay(underlay_appearance, src)
 		else
@@ -108,6 +49,18 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+	register_context()
+
+/turf/closed/wall/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(!isnull(held_item))
+		if((initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS) && held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Adjust Wall Corner"
+			return CONTEXTUAL_SCREENTIP_SET
+
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of walls & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
 
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
@@ -118,9 +71,10 @@
 		GLOB.station_turfs -= src
 	return ..()
 
-
 /turf/closed/wall/examine(mob/user)
-	. += ..()
+	. = ..()
+	if(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS)
+		. += span_notice("You could adjust its corners with a <b>wrench</b>.")
 	. += deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
@@ -133,7 +87,7 @@
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
@@ -141,7 +95,7 @@
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
-			P.roll_and_drop(src)
+			INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/structure/sign/poster, roll_and_drop), src)
 	if(decon_type)
 		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
 	else
@@ -224,7 +178,7 @@
  **arg2 is the hulk
  */
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
-	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
+	hulkman.apply_damage(damage, BRUTE, arm, wound_bonus = CANT_WOUND)
 	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
 	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
 		return
@@ -236,26 +190,21 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, span_notice("You push the wall but nothing happens!"))
-	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
+/turf/closed/wall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
-		return
-
-	//get the user's location
-	if(!isturf(user.loc))
-		return //can't do this stuff whilst inside objects and such
+		return ITEM_INTERACT_BLOCKING
 
 	add_fingerprint(user)
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
-		return
+	if(try_clean(tool, user) || try_wallmount(tool, user) || try_decon(tool, user))
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user)
 	if((user.combat_mode) || !LAZYLEN(dent_decals))
@@ -291,7 +240,7 @@
 
 /turf/closed/wall/proc/try_decon(obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(!I.tool_start_check(user, amount=round(slicing_duration / 50)))
+		if(!I.tool_start_check(user, amount=round(slicing_duration / 50), heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return FALSE
 
 		to_chat(user, span_notice("You begin slicing through the outer plating..."))
@@ -303,7 +252,7 @@
 
 	return FALSE
 
-/turf/closed/wall/singularity_pull(S, current_size)
+/turf/closed/wall/singularity_pull(atom/singularity, current_size)
 	..()
 	wall_singularity_pull(current_size)
 
@@ -357,8 +306,8 @@
 		if(WALL_DENT_HIT)
 			decal.icon_state = "impact[rand(1, 3)]"
 
-	decal.pixel_x = x
-	decal.pixel_y = y
+	decal.pixel_w = x
+	decal.pixel_z = y
 
 	if(LAZYLEN(dent_decals))
 		cut_overlay(dent_decals)
@@ -368,12 +317,11 @@
 
 	add_overlay(dent_decals)
 
-/turf/closed/wall/rust_heretic_act()
+/turf/closed/wall/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ScrapeAway()
 		return
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
+
 	return ..()
 
 /turf/closed/wall/metal_foam_base
@@ -387,5 +335,14 @@
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
 
-#undef MAX_DENT_DECALS
-#undef LEANING_OFFSET
+/turf/closed/wall/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode || !(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+		smoothing_flags &= ~SMOOTH_DIAGONAL_CORNERS
+	else
+		smoothing_flags |= SMOOTH_DIAGONAL_CORNERS
+	QUEUE_SMOOTH(src)
+	to_chat(user, span_notice("You adjust [src]."))
+	tool.play_tool_sound(src)
+	return ITEM_INTERACT_SUCCESS

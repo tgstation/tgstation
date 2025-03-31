@@ -56,7 +56,7 @@ GLOBAL_VAR_INIT(message_delay, FALSE)
 	/* --- Do a snazzy animation! --- */
 	flick("broadcaster_send", src)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /**
  * Simply resets the message delay and the recent messages list, to ensure that

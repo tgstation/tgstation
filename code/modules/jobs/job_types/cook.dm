@@ -46,6 +46,9 @@
 	)
 
 	rpg_title = "Tavern Chef"
+	alternate_titles = list(
+		JOB_CHEF,
+	)
 	job_flags = STATION_JOB_FLAGS
 
 /datum/job/cook/award_service(client/winner, award)
@@ -77,16 +80,27 @@
 
 	skillchips = list(/obj/item/skillchip/job/chef)
 
-/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
-	var/datum/job/cook/other_chefs = SSjob.GetJobType(jobtype)
+	var/datum/job/cook/other_chefs = SSjob.get_job_type(jobtype)
 	if(other_chefs) // If there's other Chefs, you're a Cook
 		if(other_chefs.cooks > 0)//Cooks
 			id_trim = /datum/id_trim/job/cook
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
-		if(!visualsOnly)
+		if(!visuals_only)
 			other_chefs.cooks++
+
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visuals_only = FALSE)
+	. = ..()
+	// Update PDA to match possible new trim.
+	var/obj/item/card/id/worn_id = user.wear_id
+	var/obj/item/modular_computer/pda/pda = user.get_item_by_slot(pda_slot)
+	if(!istype(worn_id) || !istype(pda))
+		return
+	var/assignment = worn_id.get_trim_assignment()
+	if(!isnull(assignment))
+		pda.imprint_id(user.real_name, assignment, worn_id)
 
 /datum/outfit/job/cook/get_types_to_preload()
 	. = ..()

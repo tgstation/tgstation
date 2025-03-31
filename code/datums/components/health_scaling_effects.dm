@@ -53,7 +53,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE)
 	return ..()
 
-/datum/component/health_scaling_effects/Destroy(force, silent)
+/datum/component/health_scaling_effects/Destroy(force)
 	additional_status_callback = null
 	return ..()
 

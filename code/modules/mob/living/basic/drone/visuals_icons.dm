@@ -27,7 +27,7 @@
 		client.screen += internal_storage
 
 
-/mob/living/basic/drone/update_worn_head()
+/mob/living/basic/drone/update_worn_head(update_obscured = TRUE)
 	remove_overlay(DRONE_HEAD_LAYER)
 
 	if(head)
@@ -38,13 +38,13 @@
 		if(istype(head, /obj/item/clothing/mask))
 			used_head_icon = 'icons/mob/clothing/mask.dmi'
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = DRONE_HEAD_LAYER, default_icon_file = used_head_icon)
-		head_overlay.pixel_y -= 15
+		head_overlay.pixel_z -= 15
 
 		drone_overlays[DRONE_HEAD_LAYER] = head_overlay
 
 	apply_overlay(DRONE_HEAD_LAYER)
 
-/mob/living/basic/drone/update_worn_mask()
+/mob/living/basic/drone/update_worn_mask(update_obscured = TRUE)
 	update_worn_head()
 
 /mob/living/basic/drone/regenerate_icons()
@@ -108,7 +108,7 @@
 /mob/living/basic/drone/proc/check_menu()
 	if(!istype(src))
 		return FALSE
-	if(incapacitated())
+	if(incapacitated)
 		return FALSE
 	return TRUE
 

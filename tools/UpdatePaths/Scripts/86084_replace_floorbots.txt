@@ -1,0 +1,2 @@
+/mob/living/simple_animal/bot/floorbot : /mob/living/basic/bot/repairbot {@OLD}
+/obj/item/bot_assembly/floorbot : /obj/item/bot_assembly/repairbot {@OLD}

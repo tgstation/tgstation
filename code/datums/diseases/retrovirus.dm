@@ -12,6 +12,7 @@
 	spreading_modifier = 0.4
 	stage_prob = 1
 	var/restcure = 0
+	bypasses_immunity = TRUE
 
 /datum/disease/dna_retrovirus/New()
 	..()

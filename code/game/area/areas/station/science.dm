@@ -72,6 +72,10 @@
 	name = "\improper Robotics Lab"
 	icon_state = "ass_line"
 
+/area/station/science/robotics/storage
+	name = "\improper Robotics Storage"
+	icon_state = "ass_line"
+
 /area/station/science/robotics/augments
 	name = "\improper Augmentation Theater"
 	icon_state = "robotics"
@@ -122,4 +126,7 @@
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | NO_GRAVITY
+
+/area/station/science/ordnance/bomb/planet
+	area_flags = /area/station/science/ordnance/bomb::area_flags & ~NO_GRAVITY

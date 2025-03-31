@@ -17,15 +17,29 @@
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
 
-///A negative trait that reduces the amount of products available from vending machines throughout the station.
-/datum/station_trait/vending_shortage
-	name = "Vending products shortage"
+///A negative trait that stops mail from arriving (or the inverse if on holiday). It also enables a specific shuttle loan situation.
+/datum/station_trait/mail_blocked
+	name = "Postal workers strike"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 3
+	weight = 2
 	show_in_report = TRUE
-	can_revert = FALSE //Because it touches every maploaded vending machine on the station.
-	report_message = "We haven't had the time to take care of the station's vending machines. Some may be tilted, and some products may be unavailable."
-	trait_to_give = STATION_TRAIT_VENDING_SHORTAGE
+	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
+
+/datum/station_trait/mail_blocked/on_round_start()
+	//This is either a holiday or Sunday... well then, let's flip the situation.
+	if(SSeconomy.mail_blocked)
+		name = "Postal system overtime"
+		report_message = "Despite being a day off, the postal system is working overtime today. Mail will be delivered this shift."
+	else
+		var/datum/round_event_control/shuttle_loan/our_event = locate() in SSevents.control
+		our_event.unavailable_situations -= /datum/shuttle_loan_situation/mail_strike
+	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
+
+/datum/station_trait/mail_blocked/hangover/revert()
+	var/datum/round_event_control/shuttle_loan/our_event = locate() in SSevents.control
+	our_event.unavailable_situations |= /datum/shuttle_loan_situation/mail_strike
+	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
+	return ..()
 
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
@@ -99,6 +113,7 @@
 	name = "Cleaned out maintenance"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW //Most of maints is literal trash anyway
 	show_in_report = TRUE
 	report_message = "Our workers cleaned out most of the junk in the maintenace areas."
 	blacklist = list(/datum/station_trait/filled_maint)
@@ -123,8 +138,8 @@
 
 /datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source)
 	SIGNAL_HANDLER
-	var/datum/job/picked_job = pick(SSjob.joinable_occupations)
-	chosen_job_name = lowertext(picked_job.title) // like Chief Engineers vs like chief engineers
+	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
+	chosen_job_name = LOWER_TEXT(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
 
 /datum/station_trait/slow_shuttle
@@ -143,6 +158,7 @@
 	name = "Bot Language Matrix Malfunction"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 4
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
 	trait_to_give = STATION_TRAIT_BOTS_GLITCHED
@@ -156,13 +172,30 @@
 /datum/station_trait/bot_languages/on_round_start()
 	. = ..()
 	// All bots that exist round start on station Z OR on the escape shuttle have their set language randomized.
-	for(var/mob/living/simple_animal/bot/found_bot as anything in GLOB.bots_list)
+	for(var/mob/living/found_bot as anything in GLOB.bots_list)
 		found_bot.randomize_language_if_on_station()
+
+/datum/station_trait/machine_languages
+	name = "Machine Language Matrix Malfunction"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 2
+	cost = STATION_TRAIT_COST_FULL
+	show_in_report = TRUE
+	report_message = "Your station's machines have had their language matrix fried due to an event, \
+		resulting in some strange and unfamiliar speech patterns."
+	trait_to_give = STATION_TRAIT_MACHINES_GLITCHED
+
+/datum/station_trait/machine_languages/New()
+	. = ..()
+	// What "caused" our machines to go haywire (fluff)
+	var/event_source = pick("an ion storm", "a malfunction", "a software update", "a power surge", "a computer virus", "a subdued machine uprising", "a clown's prank")
+	report_message = "Your station's machinery have had their language matrix fried due to [event_source], resulting in some strange and unfamiliar speech patterns."
 
 /datum/station_trait/revenge_of_pun_pun
 	name = "Revenge of Pun Pun"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
+	cost = STATION_TRAIT_COST_LOW
 
 	// Way too much is done on atoms SS to be reverted, and it'd look
 	// kinda clunky on round start. It's not impossible to make this work,
@@ -202,6 +235,9 @@
 
 	weapon?.add_mob_blood(punpun)
 	punpun.add_mob_blood(punpun)
+
+	if(!isnull(punpun.ai_controller)) // In case punpun somehow lacks AI
+		QDEL_NULL(punpun.ai_controller)
 
 	new /datum/ai_controller/monkey/angry(punpun)
 
@@ -254,11 +290,11 @@
 	name = "Random Event Modifier"
 	report_message = "A random event has been modified this shift! Someone forgot to set this!"
 	show_in_report = TRUE
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/random_event_weight_modifier
 	weight = 0
 
 	/// The path to the round_event_control that we modify.
-	var/event_control_path
+	var/datum/round_event_control/event_control_path
 	/// Multiplier applied to the weight of the event.
 	var/weight_multiplier = 1
 	/// Flat modifier added to the amount of max occurances the random event can have.
@@ -277,16 +313,19 @@
 	name = "Ionic Stormfront"
 	report_message = "An ionic stormfront is passing over your station's system. Expect an increased likelihood of ion storms afflicting your station's silicon units."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
+
+/datum/station_trait/random_event_weight_modifier/ion_storms/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>ERROR</b></center><BR>"
+	advisory_string += scramble_message_replace_chars("Your sector's advisory level is ERROR. An electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data.", 35)
+	return advisory_string
 
 /datum/station_trait/random_event_weight_modifier/rad_storms
 	name = "Radiation Stormfront"
 	report_message = "A radioactive stormfront is passing through your station's system. Expect an increased likelihood of radiation storms passing over your station, as well the potential for multiple radiation storms to occur during your shift."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 2
 	event_control_path = /datum/round_event_control/radiation_storm
 	weight_multiplier = 1.5
@@ -294,10 +333,10 @@
 
 /datum/station_trait/random_event_weight_modifier/dust_storms
 	name = "Dust Stormfront"
-	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelyhood of space dust storms damaging the station hull."
+	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelihood of space dust storms damaging the station hull."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 2
+	cost = STATION_TRAIT_COST_LOW
 	event_control_path = /datum/round_event_control/meteor_wave/dust_storm
 	weight_multiplier = 2
 	max_occurrences_modifier = 3
@@ -357,74 +396,74 @@
 
 /datum/station_trait/revolutionary_trashing/proc/trash_this_place()
 	for(var/area/station/command/area_to_trash in GLOB.areas)
+		for (var/list/zlevel_turfs as anything in area_to_trash.get_zlevel_turf_lists())
+			for (var/turf/current_turf as anything in zlevel_turfs)
+				if(isclosedturf(current_turf))
+					continue
+				if(prob(25))
+					var/obj/effect/decal/cleanable/crayon/created_art
+					created_art = new(current_turf, RANDOM_COLOUR, pick(trash_talk))
+					created_art.pixel_x = rand(-10, 10)
+					created_art.pixel_y = rand(-10, 10)
 
-		for(var/turf/current_turf as anything in area_to_trash.get_contained_turfs())
-			if(isclosedturf(current_turf))
-				continue
-			if(prob(25))
-				var/obj/effect/decal/cleanable/crayon/created_art
-				created_art = new(current_turf, RANDOM_COLOUR, pick(trash_talk))
-				created_art.pixel_x = rand(-10, 10)
-				created_art.pixel_y = rand(-10, 10)
-
-			if(prob(0.01))
-				new /obj/effect/mob_spawn/corpse/human/assistant(current_turf)
-				continue
-
-			for(var/atom/current_thing as anything in current_turf.contents)
-				if(istype(current_thing, /obj/machinery/light) && prob(40))
-					var/obj/machinery/light/light_to_smash = current_thing
-					light_to_smash.break_light_tube(skip_sound_and_sparks = TRUE)
+				if(prob(0.01))
+					new /obj/effect/mob_spawn/corpse/human/assistant(current_turf)
 					continue
 
-				if(istype(current_thing, /obj/structure/window))
-					if(prob(15))
-						current_thing.take_damage(rand(30, 90))
-					continue
+				for(var/atom/current_thing as anything in current_turf.contents)
+					if(istype(current_thing, /obj/machinery/light) && prob(40))
+						var/obj/machinery/light/light_to_smash = current_thing
+						light_to_smash.break_light_tube(skip_sound_and_sparks = TRUE)
+						continue
 
-				if(istype(current_thing, /obj/structure/table) && prob(40))
-					current_thing.take_damage(100)
-					continue
+					if(istype(current_thing, /obj/structure/window))
+						if(prob(15))
+							current_thing.take_damage(rand(30, 90))
+						continue
 
-				if(istype(current_thing, /obj/structure/chair) && prob(60))
-					current_thing.take_damage(150)
-					continue
+					if(istype(current_thing, /obj/structure/table) && prob(40))
+						current_thing.take_damage(100)
+						continue
 
-				if(istype(current_thing, /obj/machinery/computer) && prob(30))
-					if(istype(current_thing, /obj/machinery/computer/communications))
-						continue //To prevent the shuttle from getting autocalled at the start of the round
-					current_thing.take_damage(160)
-					continue
+					if(istype(current_thing, /obj/structure/chair) && prob(60))
+						current_thing.take_damage(150)
+						continue
 
-				if(istype(current_thing, /obj/machinery/vending) && prob(45))
-					var/obj/machinery/vending/vendor_to_trash = current_thing
-					if(prob(50))
-						vendor_to_trash.tilt(get_turf(vendor_to_trash), 0) // crit effects can do some real weird shit, lets disable it
+					if(istype(current_thing, /obj/machinery/computer) && prob(30))
+						if(istype(current_thing, /obj/machinery/computer/communications))
+							continue //To prevent the shuttle from getting autocalled at the start of the round
+						current_thing.take_damage(160)
+						continue
 
-					if(prob(50))
-						vendor_to_trash.take_damage(150)
-					continue
+					if(istype(current_thing, /obj/machinery/vending) && prob(45))
+						var/obj/machinery/vending/vendor_to_trash = current_thing
+						if(prob(50))
+							vendor_to_trash.tilt(get_turf(vendor_to_trash), 0) // crit effects can do some real weird shit, lets disable it
 
-				if(istype(current_thing, /obj/structure/fireaxecabinet)) //A staple of revolutionary behavior
-					current_thing.take_damage(90)
-					continue
+						if(prob(50))
+							vendor_to_trash.take_damage(150)
+						continue
 
-				if(istype(current_thing, /obj/item/bedsheet/captain))
-					new /obj/item/bedsheet/rev(current_thing.loc)
-					qdel(current_thing)
-					continue
+					if(istype(current_thing, /obj/structure/fireaxecabinet)) //A staple of revolutionary behavior
+						current_thing.take_damage(90)
+						continue
 
-				if(istype(current_thing, /obj/item/bedsheet/captain/double))
-					new /obj/item/bedsheet/rev/double(current_thing.loc)
-					qdel(current_thing)
-					continue
+					if(istype(current_thing, /obj/item/bedsheet/captain))
+						new /obj/item/bedsheet/rev(current_thing.loc)
+						qdel(current_thing)
+						continue
 
-			CHECK_TICK
+					if(istype(current_thing, /obj/item/bedsheet/captain/double))
+						new /obj/item/bedsheet/rev/double(current_thing.loc)
+						qdel(current_thing)
+						continue
+
+				CHECK_TICK
 
 ///Station traits that influence the space background and apply some unique effects!
 /datum/station_trait/nebula
 	name = "Nebula"
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/nebula
 	weight = 0
 
 	show_in_report = TRUE
@@ -445,7 +484,7 @@
 
 ///Station nebula that incur some sort of effect if no shielding is created
 /datum/station_trait/nebula/hostile
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/nebula/hostile
 	trait_processes = TRUE
 
 	///Intensity of the nebula
@@ -453,7 +492,7 @@
 	///The max intensity of a nebula
 	VAR_PROTECTED/maximum_nebula_intensity = 2 HOURS
 	///How long it takes to go to the next nebula level/intensity
-	VAR_PROTECTED/intensity_increment_time = INFINITE
+	VAR_PROTECTED/intensity_increment_time = 30 MINUTES
 	///Objects that we use to calculate the current shielding level
 	var/list/shielding = list()
 
@@ -473,7 +512,7 @@
 
 ///Calculate how strong we currently are
 /datum/station_trait/nebula/hostile/proc/calculate_nebula_strength()
-	nebula_intensity = min(STATION_TIME_PASSED() / intensity_increment_time, maximum_nebula_intensity)
+	nebula_intensity = min(STATION_TIME_PASSED(), maximum_nebula_intensity) / intensity_increment_time
 
 ///Check how strong the stations shielding is
 /datum/station_trait/nebula/hostile/proc/get_shielding_level()
@@ -545,6 +584,8 @@
 /datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
 
+	RegisterSignal(SSdcs, COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS, PROC_REF(on_spawned_mob))
+
 	for(var/area/target as anything in get_areas(radioactive_areas))
 		RegisterSignal(target, COMSIG_AREA_ENTERED, PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
@@ -563,12 +604,18 @@
 	//Send a nebula shielding unit to engineering
 	var/datum/supply_pack/supply_pack_shielding = new /datum/supply_pack/engineering/rad_nebula_shielding_kit()
 	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
-		//if engineering isnt valid, just send it to the bridge
+		//if engineering isn't valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
 
-	// Let the viro know resistence is futile
-	send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
-	force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
+	// Let medical know resistance is futile
+	if (/area/station/medical/virology in GLOB.areas_by_type)
+		send_fax_to_area(
+			new /obj/item/paper/fluff/radiation_nebula_virologist,
+			/area/station/medical/virology,
+			"NT Virology Department",
+			force = TRUE,
+			force_pod_type = /obj/structure/closet/supplypod/centcompod,
+		)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
@@ -592,9 +639,22 @@
 
 	// The component handles its own removal
 
+/// When a mob is spawned by dynamic, intercept and give it a little radiation shield. Only works for dynamic mobs!
+/datum/station_trait/nebula/hostile/radiation/proc/on_spawned_mob(datum/source, mob/spawned_mob)
+	SIGNAL_HANDLER
+
+	if(!istype(get_area(spawned_mob), radioactive_areas)) //only if you're spawned in the radioactive areas
+		return
+
+	if(!isliving(spawned_mob)) // Dynamic shouldn't spawn non-living but uhhhhhhh why not
+		return
+
+	var/mob/living/spawnee = spawned_mob
+	spawnee.apply_status_effect(/datum/status_effect/radiation_immunity/radnebula)
+
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
-	if(effect_strength > 0)
+	if(effect_strength > 0 && !SSmapping.is_planetary()) //admins can force this
 		if(!SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
 			COOLDOWN_START(src, send_care_package_at, send_care_package_time)
 			SSweather.run_weather(/datum/weather/rad_storm/nebula)
@@ -621,12 +681,12 @@
 
 ///Send a care package because it is not going well
 /datum/station_trait/nebula/hostile/radiation/proc/send_care_package()
-	new /obj/effect/pod_landingzone (get_safe_random_station_turf(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/emergency/radiation ())
+	new /obj/effect/pod_landingzone (get_safe_random_station_turf_equal_weight(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/emergency/radiation ())
 
 /datum/station_trait/nebula/hostile/radiation/send_instructions()
 	var/obj/machinery/nebula_shielding/shielder = /obj/machinery/nebula_shielding/radiation
 	var/obj/machinery/gravity_generator/main/innate_shielding = /obj/machinery/gravity_generator/main
-	//How long do we have untill the first shielding unit needs to be up?
+	//How long do we have until the first shielding unit needs to be up?
 	var/deadline = "[(initial(innate_shielding.radioactive_nebula_shielding) * intensity_increment_time) / (1 MINUTES)] minute\s"
 	//For how long each shielding unit will protect for
 	var/shielder_time = "[(initial(shielder.shielding_strength) * intensity_increment_time) / (1 MINUTES)] minute\s"
@@ -643,7 +703,7 @@
 		Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
 	"}
 
-	priority_announce(announcement, sound = 'sound/misc/notice1.ogg')
+	priority_announce(announcement, sound = 'sound/announcer/notice/notice1.ogg')
 
 	//Set the display screens to the radiation alert
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
@@ -663,7 +723,7 @@
 
 ///Starts a storm on roundstart
 /datum/station_trait/storm
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/storm
 	var/datum/weather/storm_type
 
 /datum/station_trait/storm/on_round_start()
@@ -679,7 +739,20 @@
 	weight = 3
 	show_in_report = TRUE
 	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
-
 	storm_type = /datum/weather/snow_storm/forever_storm
+
+/datum/station_trait/storm/foreverstorm/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Ice Giant</b></center><BR>"
+	advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
+	return advisory_string
+
+/datum/station_trait/spiked_drinks
+	name = "Spiked Drinks"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
+	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
 #undef GLOW_NEBULA

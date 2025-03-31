@@ -16,7 +16,7 @@
 	var/deactive_msg
 	/// The casting range of our spell
 	var/cast_range = 7
-	/// Variable dictating if the spell will use turf based aim assist
+	/// If aim asisst is used. Disable to disable
 	var/aim_assist = TRUE
 
 /datum/action/cooldown/spell/pointed/New(Target)
@@ -64,17 +64,18 @@
 	build_all_button_icons()
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
-
+/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/clicker, params, atom/target)
 	var/atom/aim_assist_target
-	if(aim_assist && isturf(target))
-		// Find any human in the list. We aren't picky, it's aim assist after all
-		aim_assist_target = locate(/mob/living/carbon/human) in target
-		if(!aim_assist_target)
-			// If we didn't find a human, we settle for any living at all
-			aim_assist_target = locate(/mob/living) in target
+	if(aim_assist)
+		aim_assist_target = aim_assist(clicker, target)
+	return ..(clicker, params, aim_assist_target || target)
 
-	return ..(caller, params, aim_assist_target || target)
+/datum/action/cooldown/spell/pointed/proc/aim_assist(mob/living/clicker, atom/target)
+	if(!isturf(target))
+		return
+
+	// Find any human, or if that fails, any living target
+	return locate(/mob/living/carbon/human) in target || locate(/mob/living) in target
 
 /datum/action/cooldown/spell/pointed/is_valid_target(atom/cast_on)
 	if(cast_on == owner)
@@ -100,7 +101,7 @@
  */
 /datum/action/cooldown/spell/pointed/projectile
 	/// What projectile we create when we shoot our spell.
-	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
+	var/obj/projectile/projectile_type = /obj/projectile/magic/teleport
 	/// How many projectiles we can fire per cast. Not all at once, per click, kinda like charges
 	var/projectile_amount = 1
 	/// How many projectiles we have yet to fire, based on projectile_amount
@@ -142,7 +143,7 @@
 	var/turf/caster_front_turf = get_step(owner, owner.dir)
 
 	fire_projectile(cast_on)
-	owner.newtonian_move(get_dir(caster_front_turf, caster_turf))
+	owner.newtonian_move(get_angle(caster_front_turf, caster_turf))
 	if(current_amount <= 0)
 		unset_click_ability(owner, refund_cooldown = FALSE)
 
@@ -167,7 +168,7 @@
 /datum/action/cooldown/spell/pointed/projectile/proc/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	to_fire.firer = owner
 	to_fire.fired_from = src
-	to_fire.preparePixelProjectile(target, owner)
+	to_fire.aim_projectile(target, owner)
 	RegisterSignal(to_fire, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_cast_hit))
 
 	if(istype(to_fire, /obj/projectile/magic))

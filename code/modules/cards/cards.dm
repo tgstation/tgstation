@@ -27,7 +27,8 @@
 	if(. || !istype(target)) // was it caught or is the target not a living mob
 		return .
 
-	if(!throwingdatum?.thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	var/mob/thrower = throwingdatum?.get_thrower()
+	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
 	if(count_cards() == 0)
@@ -49,7 +50,7 @@
 		card.transform = Matrix
 		card.update_appearance()
 
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
@@ -124,7 +125,7 @@
 	cards -= card
 
 	update_appearance()
-	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
+	playsound(src, 'sound/items/cards/cardflip.ogg', 50, TRUE)
 	return card
 
 /// Returns the cards in this deck.

@@ -6,22 +6,22 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$light-gray: #c3c3c3;
-$dark-gray: #858585;
+$light-gray: hsl(0, 0%, 76%);
+$dark-gray: hsl(0, 0%, 52%);
 $scrollbar-color-multiplier: 1;
 
 @use '../colors.scss' with (
-   $primary: #000000,
-   $good: #007c11,
-   $average: #f0ec11,
-   $bad: #db2828,
-   $label: #000000,
- );
+  $primary: hsl(0, 0%, 0%),
+  $good: hsl(134, 100%, 24.3%),
+  $average: hsl(56, 88%, 50%),
+  $bad: hsl(0, 72%, 50%),
+  $label: hsl(0, 0%, 0%)
+);
 @use '../base.scss' with (
-   $color-bg: #008081,
-   $color-bg-grad-spread: 0%,
-   $border-radius: 0,
- );
+  $color-bg: hsl(180, 100%, 25.3%),
+  $color-bg-grad-spread: 0%,
+  $border-radius: 0
+);
 
 .theme-ntOS95 {
   // Atomic classes
@@ -29,59 +29,59 @@ $scrollbar-color-multiplier: 1;
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
-      'color-default': #e8e4c9,
-      'color-disabled': #707070,
-      'color-selected': #007c11,
-      'color-caution': #be6209,
-      'color-danger': #9d0808
+      'color-default': hsl(52.3, 40.3%, 84.9%),
+      'color-disabled': hsl(0, 0%, 43.9%),
+      'color-selected': hsl(128.2, 100%, 24.3%),
+      'color-caution': hsl(29.5, 91%, 39%),
+      'color-danger': hsl(0, 90.3%, 32.4%)
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    '~tgui-core/styles/components/ProgressBar',
     $with: ('background-color': rgba(0, 0, 0, 0.5))
   );
   @include meta.load-css(
-    '../components/Section.scss',
+    '~tgui-core/styles/components/Section',
     $with: ('background-color': rgba(0, 0, 0, 0.4))
   );
 
   @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': #ecee9e)
+    '~tgui-core/styles/components/Tooltip',
+    $with: ('background-color': hsl(61.5, 70.2%, 77.6%))
   );
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #000080)
+    $with: ('background-color': hsl(240, 100%, 25.1%))
   );
 
   .Button {
-    color: #161613;
-    background-color: #c2c2c2;
-    //border: base.em(2px) outset #E8E4C9;
-    outline: base.em(2px) outset #c3c3c3;
+    color: hsl(60, 7.3%, 8%);
+    background-color: hsl(0, 0%, 76.1%);
+    //border: base.em(2px) outset hsl(52.3, 40.3%, 84.9%);
+    outline: base.em(2px) outset hsl(0, 0%, 76.5%);
   }
   .Button:hover {
-    background-color: #002ead;
+    background-color: hsl(224, 100%, 33.9%);
     transition: 0.1s;
   }
 
   .Section {
+    color: black;
+    background-color: hsl(0, 0%, 75.3%);
+    outline: base.em(2px) outset hsl(0, 0%, 76.5%);
     &__titleText {
       color: black;
     }
-    color: black;
-    background-color: #c0c0c0;
-    outline: base.em(2px) outset #c3c3c3;
   }
 
   .Input {
     background-color: white;
-    outline: base.em(2px) inset #c3c3c3;
+    outline: base.em(2px) inset hsl(0, 0%, 76.5%);
     color: black;
     &__input:-ms-input-placeholder {
       color: black;
@@ -90,7 +90,7 @@ $scrollbar-color-multiplier: 1;
 
   .TextArea {
     background-color: white;
-    outline: base.em(2px) inset #c3c3c3;
+    outline: base.em(2px) inset hsl(0, 0%, 76.5%);
   }
 
   .Layout__content {
@@ -131,13 +131,13 @@ $scrollbar-color-multiplier: 1;
   }
 
   .Tab {
-    color: #000000;
-    background-color: #ecee9e;
+    color: hsl(0, 0%, 0%);
+    background-color: hsl(61.5, 70.2%, 77.6%);
   }
 
   .Tab--selected {
-    color: #9d0808;
-    background-color: #c3c3c3;
+    color: hsl(0, 90.3%, 32.4%);
+    background-color: hsl(0, 0%, 76.5%);
   }
 
   body {
@@ -151,11 +151,11 @@ $scrollbar-color-multiplier: 1;
   .Table__cell {
     display: table-cell;
     padding: 0 0.25em;
-    background-color: #c3c3c3;
-    //outline: base.em(3px) outset #c0c0c0
+    background-color: hsl(0, 0%, 76.5%);
+    //outline: base.em(3px) outset hsl(0.0, 0.0%, 75.3%)
   }
   .Box {
-    outline: base.em(3px) outset #c0c0c0;
+    outline: base.em(3px) outset hsl(0, 0%, 75.3%);
   }
   .Tooltip {
     color: black;

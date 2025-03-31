@@ -31,6 +31,10 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
+// We WANT to call on_remove when replaced, else effects might not be cleaned up in the case where a mark is applied while a different mark is active.
+/datum/status_effect/eldritch/be_replaced()
+	qdel(src)
+
 /**
  * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
  *
@@ -47,10 +51,10 @@
 /datum/status_effect/eldritch/proc/on_effect()
 	SHOULD_CALL_PARENT(TRUE)
 
-	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
+	playsound(owner, 'sound/effects/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
-//Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
+//Each mark has different effects when it is destroyed that combine with the mansus grasp effect.
 
 // MARK OF FLESH
 
@@ -95,28 +99,8 @@
 	effect_icon_state = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		var/static/list/organs_to_damage = list(
-			ORGAN_SLOT_BRAIN,
-			ORGAN_SLOT_EARS,
-			ORGAN_SLOT_EYES,
-			ORGAN_SLOT_LIVER,
-			ORGAN_SLOT_LUNGS,
-			ORGAN_SLOT_STOMACH,
-			ORGAN_SLOT_HEART,
-		)
-
-		// Roughly 75% of their organs will take a bit of damage
-		for(var/organ_slot in organs_to_damage)
-			if(prob(75))
-				carbon_owner.adjustOrganLoss(organ_slot, 20)
-
-		// And roughly 75% of their items will take a smack, too
-		for(var/obj/item/thing in carbon_owner.get_all_gear())
-			if(!QDELETED(thing) && prob(75))
-				thing.take_damage(100)
-
+	owner.adjust_disgust(100)
+	owner.adjust_confusion(10 SECONDS)
 	return ..()
 
 // MARK OF VOID
@@ -125,7 +109,7 @@
 	effect_icon_state = "emark4"
 
 /datum/status_effect/eldritch/void/on_effect()
-	owner.apply_status_effect(/datum/status_effect/void_chill/major)
+	owner.apply_status_effect(/datum/status_effect/void_chill, 3)
 	owner.adjust_silence(10 SECONDS)
 	return ..()
 
@@ -255,8 +239,60 @@
 
 /datum/status_effect/eldritch/lock/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	RegisterSignal(owner, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 
 /datum/status_effect/eldritch/lock/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	UnregisterSignal(owner, COMSIG_MOB_TRIED_ACCESS)
 	return ..()
+
+/datum/status_effect/eldritch/lock/proc/attempt_access(datum/source, obj/door_attempt)
+	SIGNAL_HANDLER
+	return ACCESS_DISALLOWED
+
+// MARK OF MOON
+
+/datum/status_effect/eldritch/moon
+	effect_icon_state = "emark8"
+	///Used for checking if the pacifism effect should end early
+	var/damage_sustained = 0
+
+/datum/status_effect/eldritch/moon/on_apply()
+	. = ..()
+	if(owner.can_block_magic(MAGIC_RESISTANCE_MIND))
+		return FALSE
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
+	owner.emote(pick("giggle", "laugh"))
+	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
+	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	return TRUE
+
+/// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
+/datum/status_effect/eldritch/moon/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// The grasp itself deals stamina damage so we will ignore it
+	if(damagetype == STAMINA)
+		return
+
+	damage_sustained += damage
+
+	if(damage_sustained < 15)
+		return
+
+	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
+	owner.balloon_alert(owner, "you feel able to once again strike!")
+
+/datum/status_effect/eldritch/moon/on_effect()
+	owner.adjust_confusion(30 SECONDS)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25, 160)
+	owner.emote(pick("giggle", "laugh"))
+	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	return ..()
+
+/datum/status_effect/eldritch/moon/on_remove()
+	. = ..()
+	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+
+	// In case the trait was not removed earlier
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))

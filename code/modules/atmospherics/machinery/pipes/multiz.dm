@@ -9,7 +9,7 @@
 	initialize_directions = SOUTH
 
 	layer = HIGH_OBJ_LAYER
-	device_type = UNARY
+	device_type = TRINARY
 	paintable = FALSE
 
 	construction_type = /obj/item/pipe/directional
@@ -42,10 +42,11 @@
 
 /obj/machinery/atmospherics/pipe/multiz/update_overlays()
 	. = ..()
-	pipe.color = front_node ? front_node.pipe_color : rgb(255, 255, 255)
+	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
+	pipe.color = front_node ? front_node.pipe_color : ATMOS_COLOR_OMNI
 	pipe.icon_state = "pipe-[piping_layer]"
 	. += pipe
-	center.pixel_x = PIPING_LAYER_P_X * (piping_layer - PIPING_LAYER_DEFAULT)
+	center.pixel_w = PIPING_LAYER_P_X * (piping_layer - PIPING_LAYER_DEFAULT)
 	. += center
 
 ///Attempts to locate a multiz pipe that's above us, if it finds one it merges us into its pipenet
@@ -54,8 +55,8 @@
 	for(var/obj/machinery/atmospherics/pipe/multiz/above in GET_TURF_ABOVE(local_turf))
 		if(!is_connectable(above, piping_layer))
 			continue
-		nodes += above
-		above.nodes += src //Two way travel :)
+		nodes[2] = above
+		above.nodes[3] = src //Two way travel :)
 	for(var/obj/machinery/atmospherics/pipe/multiz/below in GET_TURF_BELOW(local_turf))
 		if(!is_connectable(below, piping_layer))
 			continue

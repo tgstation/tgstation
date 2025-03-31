@@ -39,8 +39,7 @@
 	if(!sample)
 		return
 	var/reagentcolor = sample.sample_color
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "petri_dish_overlay")
-	base_overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "petri_dish_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 	base_overlay.color = reagentcolor
 	. += base_overlay
 	var/mutable_appearance/overlay2 = mutable_appearance(icon, "petri_dish_overlay2")
@@ -59,6 +58,7 @@
 		list(CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7),
 		list(CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	)
+	name = "basic sample petri dish"
 
 /obj/item/petri_dish/random/Initialize(mapload)
 	. = ..()

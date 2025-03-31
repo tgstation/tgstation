@@ -1,6 +1,13 @@
-import { BooleanLike } from 'common/react';
+import {
+  Button,
+  Collapsible,
+  NoticeBox,
+  Section,
+  Table,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Button, Collapsible, Section, Table, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -31,8 +38,8 @@ type LogData = {
   node_research_location: string;
 };
 
-export const ServerControl = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ServerControl = (props) => {
+  const { act, data } = useBackend<Data>();
   const { server_connected, servers, consoles, logs } = data;
   if (!server_connected) {
     return (
@@ -46,7 +53,7 @@ export const ServerControl = (props, context) => {
     );
   }
   return (
-    <Window width={575} height={400} scrollable fill>
+    <Window width={575} height={400}>
       <Window.Content scrollable>
         {!servers ? (
           <NoticeBox mt={2} info>
@@ -54,13 +61,17 @@ export const ServerControl = (props, context) => {
           </NoticeBox>
         ) : (
           <Section>
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Servers</Table.Cell>
               </Table.Row>
               {servers.map((server) => (
                 <>
-                  <Table.Row header key={server} className="candystripe" />
+                  <Table.Row
+                    header
+                    key={server.server_ref}
+                    className="candystripe"
+                  />
                   <Table.Cell> {server.server_name}</Table.Cell>
                   <Button
                     mt={1}
@@ -87,13 +98,17 @@ export const ServerControl = (props, context) => {
           </NoticeBox>
         ) : (
           <Section align="right">
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Consoles</Table.Cell>
               </Table.Row>
               {consoles.map((console) => (
                 <>
-                  <Table.Row header key={console} className="candystripe" />
+                  <Table.Row
+                    header
+                    key={console.console_ref}
+                    className="candystripe"
+                  />
                   <Table.Cell>
                     {' '}
                     {console.console_name} - Location:{' '}
@@ -135,7 +150,8 @@ export const ServerControl = (props, context) => {
                   <Table.Row
                     mt={1}
                     key={server_log.node_name}
-                    className="candystripe">
+                    className="candystripe"
+                  >
                     <Table.Cell>{server_log.node_name}</Table.Cell>
                     <Table.Cell>{server_log.node_cost}</Table.Cell>
                     <Table.Cell>{server_log.node_researcher}</Table.Cell>

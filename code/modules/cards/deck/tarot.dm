@@ -40,7 +40,7 @@
 	. = ..()
 	AddComponent( \
 		/datum/component/two_handed, \
-		attacksound = 'sound/items/cardflip.ogg', \
+		attacksound = 'sound/items/cards/cardflip.ogg', \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
@@ -59,7 +59,6 @@
 		header = "Haunted Tarot Deck",
 		ghost_sound = 'sound/effects/ghost2.ogg',
 		notify_volume = 75,
-		action = NOTIFY_ORBIT,
 	)
 
 /obj/item/toy/cards/deck/tarot/haunted/proc/on_unwield(obj/item/source, mob/living/carbon/user)

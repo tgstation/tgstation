@@ -1,6 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
 /obj/item/trash/semki/healthy,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "ap" = (
@@ -23,7 +24,6 @@
 	pixel_x = -9;
 	pixel_y = 2
 	},
-/obj/item/stack/rods/ten,
 /obj/structure/closet/crate/preopen,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -45,6 +45,7 @@
 	pixel_y = 4
 	},
 /obj/item/popsicle_stick,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "bP" = (
@@ -141,7 +142,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "ih" = (
 /obj/item/bedsheet/purple,
-/obj/item/clothing/mask/cigarette/space_cigarette,
+/obj/item/cigarette/space_cigarette,
 /obj/structure/bed/maint,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/fuel_pool,
@@ -186,22 +187,22 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "kb" = (
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/item/stock_parts/cell/crap/empty,
+/obj/item/stock_parts/power_store/cell/crap/empty,
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "kR" = (
-/obj/item/tank/internals/oxygen/yellow,
 /obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/spawner/random/maintenance,
+/obj/item/sticker/toolbox,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "la" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "le" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
@@ -228,7 +229,6 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "lA" = (
-/obj/item/sticker/toolbox,
 /obj/structure/closet/crate/cardboard,
 /obj/item/book/manual/wiki/engineering_guide,
 /obj/item/book/manual/wiki/engineering_construction,
@@ -276,15 +276,17 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/item/trash/boritos/purple,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pd" = (
-/obj/item/stack/rods/ten,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/tank/internals/oxygen/yellow,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pk" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pC" = (
 /obj/effect/decal/cleanable/fuel_pool,
@@ -320,14 +322,20 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/dogbed,
 /turf/open/floor/plating/dumpsterair,
-/area/space)
+/area/ruin/space/has_grav/garbagetruck/squat)
 "sb" = (
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/item/boxcutter,
-/obj/item/boxcutter,
 /obj/item/folder/yellow,
 /obj/item/geiger_counter,
-/obj/item/stack/sticky_tape,
+/obj/item/boxcutter{
+	pixel_x = 5
+	},
+/obj/item/boxcutter{
+	pixel_x = 10
+	},
+/obj/item/stack/sticky_tape{
+	pixel_x = -5
+	},
 /obj/structure/closet/crate/preopen,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -365,7 +373,7 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "tu" = (
-/obj/item/clothing/mask/cigarette/robust,
+/obj/item/cigarette/robust,
 /obj/structure/closet/emcloset,
 /obj/item/clothing/suit/utility/fire/heavy,
 /obj/item/clothing/head/utility/hardhat/welding/atmos,
@@ -439,7 +447,7 @@
 /obj/structure/broken_flooring/pile,
 /obj/item/food/deadmouse/moldy,
 /obj/item/stock_parts/water_recycler,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "vW" = (
@@ -462,7 +470,6 @@
 	},
 /obj/machinery/light/warm,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
 	locked = 0;
 	pixel_y = -25;
 	start_charge = 0
@@ -506,7 +513,7 @@
 "zC" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "zN" = (
 /obj/structure/table/reinforced,
@@ -520,6 +527,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "zY" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods/ten,
 /obj/item/toy/minimeteor,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -531,10 +539,12 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Cm" = (
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/item/mod/module/jetpack,
+/obj/item/mod/module/jetpack{
+	pixel_y = 2;
+	pixel_x = -6
+	},
 /obj/item/stock_parts/servo,
 /obj/item/stock_parts/subspace/filter,
-/obj/structure/fluff/oldturret,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Dq" = (
@@ -632,6 +642,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Hk" = (
 /obj/item/food/pizzaslice/moldy/bacteria,
+/obj/item/stack/rods/ten,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Hn" = (
@@ -651,13 +662,13 @@
 /obj/structure/mecha_wreckage/ripley,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/molten_object,
-/obj/item/organ/internal/tongue/robot,
+/obj/item/organ/tongue/robot,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "HN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "HZ" = (
@@ -705,8 +716,8 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "JX" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Ko" = (
 /obj/machinery/computer/terminal{
 	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
@@ -721,7 +732,10 @@
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/airlock_painter,
-/obj/item/pen/screwdriver,
+/obj/item/pen/screwdriver{
+	pixel_y = -2;
+	pixel_x = 8
+	},
 /obj/item/rcd_ammo,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -737,14 +751,14 @@
 "MJ" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "MQ" = (
-/obj/item/stock_parts/cell/crap/empty{
+/obj/item/stock_parts/power_store/cell/crap/empty{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/clothing/mask/cigarette/space_cigarette{
+/obj/item/cigarette/space_cigarette{
 	pixel_x = -5;
 	pixel_y = 7
 	},
@@ -755,7 +769,7 @@
 	},
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis{
 	pixel_x = 6;
-	pixel_y = 2
+	pixel_y = -2
 	},
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -871,8 +885,8 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "WK" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/clothing/shoes/workboots{
@@ -891,7 +905,7 @@
 "Xv" = (
 /obj/item/food/deadmouse,
 /obj/item/clothing/shoes/sneakers/red,
-/obj/item/clothing/mask/cigarette/carp,
+/obj/item/cigarette/carp,
 /obj/item/extinguisher/mini,
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
@@ -907,7 +921,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Zu" = (
 /obj/item/food/candy,
@@ -1066,7 +1080,7 @@ RD
 To
 Xt
 TD
-pd
+Xt
 JR
 Kq
 sb
@@ -1088,7 +1102,7 @@ iU
 Xt
 Xt
 ac
-Xt
+To
 bb
 jN
 lA
@@ -1114,7 +1128,7 @@ Xt
 Rw
 To
 Ol
-To
+pd
 mV
 "}
 (10,1,1) = {"

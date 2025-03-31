@@ -48,9 +48,11 @@
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
 
-//blast door (de)construction states
+///The blast door is missing wires, first step of construction.
 #define BLASTDOOR_NEEDS_WIRES 0
+///The blast door needs electronics, second step of construction.
 #define BLASTDOOR_NEEDS_ELECTRONICS 1
+///The blast door is fully constructed.
 #define BLASTDOOR_FINISHED 2
 
 //floodlights because apparently we use defines now
@@ -62,7 +64,33 @@
 #define GEAR_SECURE 1
 #define GEAR_LOOSE 2
 
-// Stationary gas tanks
+//Stationary gas tanks
 #define TANK_FRAME 0
 #define TANK_PLATING_UNSECURED 1
 
+// Frame (de/con)struction states
+/// Frame is empty, no wires no board
+#define FRAME_STATE_EMPTY 0
+/// Frame has been wired
+#define FRAME_STATE_WIRED 1
+/// Frame has a board installed, it is safe to assume if in this state then circuit is non-null (but you never know)
+#define FRAME_STATE_BOARD_INSTALLED 2
+/// Frame is empty, no circuit board yet
+#define FRAME_COMPUTER_STATE_EMPTY FRAME_STATE_EMPTY
+/// Frame now has a board installed, it is safe to assume beyond this state, circuit is non-null (but you never know)
+#define FRAME_COMPUTER_STATE_BOARD_INSTALLED 1
+/// Board has been secured
+#define FRAME_COMPUTER_STATE_BOARD_SECURED 2
+/// Frame has been wired
+#define FRAME_COMPUTER_STATE_WIRED 3
+/// Frame has had glass applied to it
+#define FRAME_COMPUTER_STATE_GLASSED 4
+
+///The camera assembly is wrenched in (aka placed on the wall), and wrenching will deconstruct.
+#define CAMERA_STATE_WRENCHED 1
+///The camera assembly is welded in place, so won't come off from wrench anymore.
+#define CAMERA_STATE_WELDED 2
+///The camera assembly is wired and ready to finish construction.
+#define CAMERA_STATE_WIRED 3
+///The camera assembly is finished construction fully, and is currently chilling in the camera machine.
+#define CAMERA_STATE_FINISHED 4

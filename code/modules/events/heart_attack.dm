@@ -9,7 +9,7 @@
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/heart_attack, /datum/event_admin_setup/input_number/heart_attack)
-	///Candidates for recieving a healthy dose of heart disease
+	///Candidates for receiving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
 
 /datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE)
@@ -24,7 +24,7 @@
  * Performs initial analysis of which living players are eligible to be selected for a heart attack.
  *
  * Traverses player_list and checks entries against a series of reviews to see if they should even be considered for a heart attack,
- * and at what weight should they be eligible to recieve it. The check for whether or not a heart attack should be "blocked" by something is done
+ * and at what weight should they be eligible to receive it. The check for whether or not a heart attack should be "blocked" by something is done
  * later, at the round_event level, so this proc mostly just checks users for whether or not a heart attack should be possible.
  */
 /datum/round_event_control/heart_attack/proc/generate_candidates()
@@ -59,7 +59,7 @@
  * Picks a victim from a list and attempts to give them a heart attack
  *
  * Performs a pick_weight on a list of potential victims. Once selected, the "winner"
- * will recieve heart disease. Returns TRUE if a heart attack is successfully given, and
+ * will receive heart disease. Returns TRUE if a heart attack is successfully given, and
  * FALSE if something blocks it.
  */
 /datum/round_event/heart_attack/proc/attack_heart()
@@ -67,7 +67,7 @@
 	if(winner.has_status_effect(/datum/status_effect/exercised)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
 		winner.visible_message(span_warning("[winner] grunts and clutches their chest for a moment, catching [winner.p_their()] breath."), span_medal("Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster."), span_hear("You hear someone's breathing sharpen for a moment, followed by a sigh of relief."), 4)
-		winner.playsound_local(get_turf(winner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+		winner.playsound_local(get_turf(winner), 'sound/effects/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		winner.Stun(3 SECONDS)
 		if(winner.client)
 			winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
@@ -82,7 +82,7 @@
 	return FALSE
 
 /datum/event_admin_setup/minimum_candidate_requirement/heart_attack
-	output_text = "There are no candidates eligible to recieve a heart attack!"
+	output_text = "There are no candidates eligible to receive a heart attack!"
 
 /datum/event_admin_setup/minimum_candidate_requirement/heart_attack/count_candidates()
 	var/datum/round_event_control/heart_attack/heart_control = event_control

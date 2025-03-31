@@ -90,7 +90,7 @@
 /area/template_noop)
 "n" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -131,7 +131,7 @@
 /area/template_noop)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -174,6 +174,12 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark/textured_large,
 /area/template_noop)
+"x" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/arrows,
+/turf/open/floor/plating/rust,
+/area/template_noop)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/box,
@@ -195,6 +201,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/template_noop)
+"A" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/template_noop)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
@@ -207,6 +218,14 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
+/area/template_noop)
+"C" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
 /area/template_noop)
 "D" = (
 /obj/effect/decal/cleanable/dirt,
@@ -231,7 +250,7 @@
 /area/template_noop)
 "F" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/tool,
@@ -288,7 +307,7 @@
 /area/template_noop)
 "L" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
@@ -326,7 +345,7 @@
 /area/template_noop)
 "P" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/vending_restock,
@@ -355,7 +374,7 @@
 /area/template_noop)
 "S" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/plating,
@@ -378,14 +397,14 @@
 /area/template_noop)
 "W" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/rust,
 /area/template_noop)
 "X" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/west,
@@ -422,7 +441,7 @@ j
 "}
 (2,1,1) = {"
 e
-e
+T
 T
 T
 T
@@ -430,12 +449,12 @@ s
 s
 s
 T
-e
+T
 e
 "}
 (3,1,1) = {"
 e
-e
+A
 T
 l
 X
@@ -443,7 +462,7 @@ H
 W
 k
 T
-e
+C
 e
 "}
 (4,1,1) = {"
@@ -513,7 +532,7 @@ e
 "}
 (9,1,1) = {"
 e
-e
+A
 T
 c
 F
@@ -521,12 +540,12 @@ P
 S
 r
 T
-e
+x
 e
 "}
 (10,1,1) = {"
 e
-e
+T
 T
 s
 o
@@ -534,7 +553,7 @@ T
 s
 s
 T
-e
+T
 e
 "}
 (11,1,1) = {"

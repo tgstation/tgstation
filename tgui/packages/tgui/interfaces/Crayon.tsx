@@ -1,6 +1,7 @@
-import { BooleanLike } from 'common/react';
+import { Button, LabeledList, Section } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 import { ColorItem } from './RapidPipeDispenser';
 
@@ -10,6 +11,7 @@ type Data = {
   drawables: Drawable[];
   is_capped: BooleanLike;
   selected_stencil: string;
+  is_literate_user: BooleanLike;
   text_buffer: string;
 };
 
@@ -18,14 +20,15 @@ type Drawable = {
   name: string;
 };
 
-export const Crayon = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const Crayon = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     has_cap,
     can_change_colour,
     drawables = [],
     is_capped,
     selected_stencil,
+    is_literate_user,
     text_buffer,
   } = data;
   const capOrChanges = has_cap || can_change_colour;
@@ -77,14 +80,16 @@ export const Crayon = (props, context) => {
             })}
           </LabeledList>
         </Section>
-        <Section title="Text">
-          <LabeledList>
-            <LabeledList.Item label="Current Buffer">
-              {text_buffer}
-            </LabeledList.Item>
-          </LabeledList>
-          <Button content="New Text" onClick={() => act('enter_text')} />
-        </Section>
+        {!!is_literate_user && (
+          <Section title="Text">
+            <LabeledList>
+              <LabeledList.Item label="Current Buffer">
+                {text_buffer}
+              </LabeledList.Item>
+            </LabeledList>
+            <Button content="New Text" onClick={() => act('enter_text')} />
+          </Section>
+        )}
       </Window.Content>
     </Window>
   );

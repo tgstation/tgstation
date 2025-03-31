@@ -45,10 +45,10 @@
 		COMSIG_LIVING_START_PULL), PROC_REF(trigger_reaction))
 	RegisterSignal(targ, COMSIG_ATOM_EXAMINE, PROC_REF(examine_target))
 	RegisterSignal(targ, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(block_bumps_target))
-	RegisterSignals(targ, list(COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED), PROC_REF(cancel))
+	RegisterSignals(targ, list(COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_GET_PULLED), PROC_REF(cancel))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
-	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
+	var/distance = max(get_dist(shooter, target), 1) // treat 0 distance as adjacent
 	var/distance_description = (distance <= 1 ? "point blank " : "")
 
 	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"),
@@ -73,7 +73,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(update_stage), 2), GUNPOINT_DELAY_STAGE_2)
 
-/datum/component/gunpoint/Destroy(force, silent)
+/datum/component/gunpoint/Destroy(force)
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(/datum/status_effect/holdup)
 	target.remove_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
@@ -88,7 +88,7 @@
 	RegisterSignals(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), PROC_REF(check_bump))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(block_bumps_parent))
-	RegisterSignal(parent, COMSIG_HUMAN_DISARM_HIT, PROC_REF(cancel))
+	RegisterSignal(parent, COMSIG_LIVING_DISARM_HIT, PROC_REF(cancel))
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
@@ -98,7 +98,7 @@
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(parent, COMSIG_LIVING_PRE_MOB_BUMP)
-	UnregisterSignal(parent, COMSIG_HUMAN_DISARM_HIT)
+	UnregisterSignal(parent, COMSIG_LIVING_DISARM_HIT)
 
 ///If the shooter bumps the target, cancel the holdup to avoid cheesing and forcing the charged shot
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)
@@ -194,7 +194,7 @@
 		return
 
 	var/flinch_chance = 50
-	var/gun_hand = (source.get_held_index_of_item(weapon) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+	var/gun_hand = IS_LEFT_INDEX(source.get_held_index_of_item(weapon)) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/hitting = def_zone

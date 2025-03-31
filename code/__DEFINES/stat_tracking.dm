@@ -54,7 +54,8 @@
 #define EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, proc) \
 	do { \
 		var/static/last_export = 0; \
-		if (world.time - last_export > 1.1 SECONDS) { \
+		/* Need to always run if we haven't yet, since this code can be placed ANYWHERE */ \
+		if (world.time - last_export > 1.1 SECONDS || (last_export == 0)) { \
 			last_export = world.time; \
 			/* spawn() is used here because this is often used to track init times, where timers act oddly. */ \
 			/* I was making timers and even after init times were complete, the timers didn't run :shrug: */ \

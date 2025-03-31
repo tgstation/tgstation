@@ -1,6 +1,6 @@
 /// Strikes the target with a lightning bolt
 /datum/smite/lightning
-	name = "Lightning bolt"
+	name = "Lightning Bolt"
 
 /datum/smite/lightning/effect(client/user, mob/living/target)
 	. = ..()
@@ -12,7 +12,11 @@
 	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
 	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
 	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
-	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_target = user
 		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
+
+/datum/smite/lightning/divine
+	name = "Lightning Bolt (Divine)"
+	smite_flags = SMITE_DIVINE

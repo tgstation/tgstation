@@ -1,6 +1,6 @@
 // Pumpkin
 /obj/item/seeds/pumpkin
-	name = "pack of pumpkin seeds"
+	name = "pumpkin seed pack"
 	desc = "These seeds grow into pumpkin vines."
 	icon_state = "seed-pumpkin"
 	plant_icon_offset = 4
@@ -23,7 +23,7 @@
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
 	bite_consumption_mod = 2
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	juice_typepath = /datum/reagent/consumable/pumpkinjuice
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.
@@ -40,7 +40,7 @@
 
 // Blumpkin
 /obj/item/seeds/pumpkin/blumpkin
-	name = "pack of blumpkin seeds"
+	name = "blumpkin seed pack"
 	desc = "These seeds grow into blumpkin vines."
 	icon_state = "seed-blumpkin"
 	species = "blumpkin"
@@ -56,7 +56,6 @@
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
 	bite_consumption_mod = 3
-	foodtypes = FRUIT
 	juice_typepath = /datum/reagent/consumable/blumpkinjuice
 	wine_power = 50
 	carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin

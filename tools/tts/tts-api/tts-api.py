@@ -15,7 +15,7 @@ app = Flask(__name__)
 segmenter = pysbd.Segmenter(language="en", clean=True)
 radio_starts = ["./on1.wav", "./on2.wav"]
 radio_ends = ["./off1.wav", "./off2.wav", "./off3.wav", "./off4.wav"]
-authorization_token = os.getenv("TTS_AUTHORIZATION_TOKEN", "vote_goof_2024")
+authorization_token = os.getenv("TTS_AUTHORIZATION_TOKEN", "coolio")
 def hhmmss_to_seconds(string):
 	new_time = 0
 	separated_times = string.split(":")

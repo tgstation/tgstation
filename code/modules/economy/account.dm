@@ -35,6 +35,8 @@
 	var/pay_token
 	///List with a transaction history for NT pay app
 	var/list/transaction_history = list()
+	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
+	var/list/redeemed_coupons
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -42,11 +44,14 @@
 	payday_modifier = modifier
 	add_to_accounts = player_account
 	setup_unique_account_id()
+	update_account_job_lists(job)
 	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
 		SSeconomy.bank_accounts_by_id -= "[account_id]"
+		SSeconomy.bank_accounts_by_job[account_job.type] -= src
+	QDEL_LIST(redeemed_coupons)
 	return ..()
 
 /**
@@ -68,8 +73,22 @@
 		stack_trace("Unable to find a unique account ID, substituting currently existing account of id [account_id].")
 	SSeconomy.bank_accounts_by_id["[account_id]"] = src
 
+/**
+ * Proc places this account into the right place in the `SSeconomy.bank_accounts_by_job` list, if needed.
+ * If an old job is given, it removes it from its previous place first.
+ */
+/datum/bank_account/proc/update_account_job_lists(datum/job/new_job, datum/job/old_job)
+	if(!add_to_accounts)
+		return
+
+	if(old_job)
+		SSeconomy.bank_accounts_by_job[old_job.type] -= src
+	if(new_job)
+		LAZYADD(SSeconomy.bank_accounts_by_job[new_job.type], src)
+
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id
+	var/datum/job/old_job = account_job
 	var/old_balance = account_balance
 	. = ..()
 	switch(var_name)
@@ -77,11 +96,15 @@
 			if(add_to_accounts)
 				SSeconomy.bank_accounts_by_id -= "[old_id]"
 				setup_unique_account_id()
+		if(NAMEOF(src, account_job))
+			update_account_job_lists(account_job, old_job)
 		if(NAMEOF(src, add_to_accounts))
 			if(add_to_accounts)
 				setup_unique_account_id()
+				update_account_job_lists(account_job)
 			else
 				SSeconomy.bank_accounts_by_id -= "[account_id]"
+				SSeconomy.bank_accounts_by_job[account_job.type] -= src
 		if(NAMEOF(src, account_balance))
 			add_log_to_history(var_value - old_balance, "Nanotrasen: Moderator Action")
 
@@ -211,7 +234,7 @@
 				return
 
 			if(card_holder.can_hear())
-				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(card.loc)) //If on the ground
 			var/turf/card_location = card.loc
@@ -219,7 +242,7 @@
 				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
 				if(potential_hearer.can_hear())
-					potential_hearer.playsound_local(card_location, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+					potential_hearer.playsound_local(card_location, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 		else
 			var/atom/sound_atom
@@ -229,7 +252,7 @@
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(potential_hearer.can_hear())
-					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 
 /**

@@ -4,11 +4,9 @@
 	actions_types = null
 
 /obj/item/implant/sad_trombone/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Honk Co. Sad Trombone Implant<BR>
-				<b>Life:</b> Activates upon death.<BR>
-				"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Honk Co. Sad Trombone Implant<BR> \
+		<b>Life:</b> Activates upon death.<BR>"
 
 /obj/item/implant/sad_trombone/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

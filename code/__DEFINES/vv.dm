@@ -1,6 +1,6 @@
 #define VV_NUM "Number"
 #define VV_TEXT "Text"
-#define VV_MESSAGE "Mutiline Text"
+#define VV_MESSAGE "Multiline Text"
 #define VV_COLOR "Color"
 #define VV_COLOR_MATRIX "Color Matrix"
 #define VV_ICON "Icon"
@@ -39,8 +39,8 @@
 #define IS_VALID_ASSOC_KEY(V) (!isnum(V)) //hhmmm..
 
 //General helpers
-#define VV_HREF_TARGET_INTERNAL(target, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
-#define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
+#define VV_HREF_TARGET_INTERNAL(target, href_key) "byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
+#define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
 #define VV_HREF_TARGET(target, href_key, text) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)]'>[text]</a>"
 #define VV_HREF_TARGETREF(targetref, href_key, text) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)]'>[text]</a>"
 #define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>" //for stuff like basic varedits, one variable
@@ -50,7 +50,7 @@
 #define GET_VV_VAR_TARGET href_list[VV_HK_VARNAME]
 
 //Helper for getting something to vv_do_topic in general
-#define VV_TOPIC_LINK(datum, href_key, text) "<a href='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
+#define VV_TOPIC_LINK(datum, href_key, text) "<a href='byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
 
 //Helpers for vv_get_dropdown()
 #define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
@@ -103,6 +103,8 @@
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
 // /atom/movable
+#define VV_HK_OBSERVE_FOLLOW "observe_follow"
+#define VV_HK_GET_MOVABLE "get_movable"
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
 
 // /obj
@@ -111,6 +113,9 @@
 
 // /obj/item
 #define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
+
+// /obj/narsie
+#define VV_HK_BEGIN_NARSIE_ROUNDEND "begin_narsie_roundend"
 
 // /mob
 #define VV_HK_GIB "gib"
@@ -122,15 +127,19 @@
 #define VV_HK_GODMODE "godmode"
 #define VV_HK_DROP_ALL "dropall"
 #define VV_HK_REGEN_ICONS "regen_icons"
+#define VV_HK_REGEN_ICONS_FULL "regen_icons_full"
 #define VV_HK_PLAYER_PANEL "player_panel"
 #define VV_HK_BUILDMODE "buildmode"
 #define VV_HK_DIRECT_CONTROL "direct_control"
 #define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
 #define VV_HK_VIEW_PLANES "view_planes"
+#define VV_HK_GIVE_AI "give_ai"
+#define VV_HK_GIVE_AI_SPEECH "give_ai_speech"
 
 // /mob/living
 #define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
+#define VV_HK_ADMIN_RENAME "admin_rename"
 #define VV_HK_ADD_MOOD "addmood"
 #define VV_HK_REMOVE_MOOD "removemood"
 #define VV_HK_GIVE_HALLUCINATION "give_hallucination"
@@ -138,7 +147,6 @@
 #define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
 
 // /mob/living/carbon
-#define VV_HK_MAKE_AI "aiify"
 #define VV_HK_MODIFY_BODYPART "mod_bodypart"
 #define VV_HK_MODIFY_ORGANS "organs_modify"
 #define VV_HK_MARTIAL_ART "give_martial_art"
@@ -152,6 +160,7 @@
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
 #define VV_HK_APPLY_DNA_INFUSION "apply_dna_infusion"
+#define VV_HK_TURN_INTO_MMI "turn_into_mmi"
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"

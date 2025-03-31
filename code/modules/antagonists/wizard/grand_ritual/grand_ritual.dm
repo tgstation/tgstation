@@ -191,7 +191,7 @@
 		possible_obstacle.atom_destruction("magic")
 
 	if (evaporated_obstacles)
-		playsound(target_turf, 'sound/magic/blind.ogg', 100, TRUE)
+		playsound(target_turf, 'sound/effects/magic/blind.ogg', 100, TRUE)
 
 	target_turf.balloon_alert(owner, "rune created")
 	var/obj/effect/grand_rune/new_rune = new next_rune_typepath(target_turf, times_completed)
@@ -295,11 +295,12 @@
 /obj/effect/temp_visual/wizard_rune
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = null
-	pixel_x = -28
-	pixel_y = -33
+	pixel_x = -33
+	pixel_y = 16
+	pixel_z = -48
 	anchored = TRUE
-	layer = SIGIL_LAYER
-	plane = GAME_PLANE
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	duration = 0 SECONDS
 
 /obj/effect/temp_visual/wizard_rune/Initialize(mapload)

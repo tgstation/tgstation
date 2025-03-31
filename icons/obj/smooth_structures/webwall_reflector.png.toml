@@ -1,0 +1,2 @@
+output_name = "webwall_reflector"
+template = "bitmask/diagonal_32x32.toml"

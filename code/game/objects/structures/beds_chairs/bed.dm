@@ -15,6 +15,7 @@
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
+	buckle_dir = SOUTH
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
@@ -22,20 +23,29 @@
 	var/build_stack_type = /obj/item/stack/sheet/iron
 	/// How many mats to drop when deconstructed
 	var/build_stack_amount = 2
+	/// Mobs standing on it are nudged up by this amount. Also used to align the person back when buckled to it after init.
+	var/elevation = 8
+	/// If this bed can be deconstructed using a wrench
+	var/can_deconstruct = TRUE
+	/// Directions in which the bed has its headrest on the left side.
+	var/left_headrest_dirs = NORTHEAST
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/soft_landing)
+	if(elevation)
+		AddElement(/datum/element/elevation, pixel_shift = elevation)
+	update_buckle_vars(dir)
 	register_context()
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if (can_deconstruct)
 		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(held_item.tool_behaviour != TOOL_WRENCH || flags_1 & NODECONSTRUCT_1)
+		if(held_item.tool_behaviour != TOOL_WRENCH)
 			return
 
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
@@ -45,19 +55,23 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(build_stack_type)
-			new build_stack_type(loc, build_stack_amount)
-	..()
+/obj/structure/bed/setDir(newdir)
+	. = ..()
+	update_buckle_vars(newdir)
+
+/obj/structure/bed/proc/update_buckle_vars(newdir)
+	buckle_lying = newdir & left_headrest_dirs ? 270 : 90
+
+/obj/structure/bed/atom_deconstruct(disassembled = TRUE)
+	if(build_stack_type)
+		new build_stack_type(loc, build_stack_amount)
 
 /obj/structure/bed/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1 & NODECONSTRUCT_1)
-		return TRUE
-
+	if (!can_deconstruct)
+		return NONE
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
@@ -71,9 +85,14 @@
 	icon_state = "med_down"
 	base_icon_state = "med"
 	anchored = FALSE
+	left_headrest_dirs = SOUTHWEST
+	buckle_lying = 270
 	resistance_flags = NONE
 	build_stack_type = /obj/item/stack/sheet/mineral/titanium
 	build_stack_amount = 1
+	elevation = 0
+	buckle_sound = SFX_SEATBELT_BUCKLE
+	unbuckle_sound = SFX_SEATBELT_UNBUCKLE
 	/// The item it spawns when it's folded up.
 	var/foldable_type
 
@@ -111,17 +130,22 @@
 	if(!isnull(foldable_type))
 		. += span_notice("You can fold it up with a Right-click.")
 
-/obj/structure/bed/medical/AltClick(mob/user)
-	. = ..()
+/obj/structure/bed/medical/click_alt(mob/user)
+	if(has_buckled_mobs() && (user in buckled_mobs))
+		return CLICK_ACTION_BLOCKING
+
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
-/obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
+/obj/structure/bed/medical/post_buckle_mob(mob/living/buckled)
+	. = ..()
 	set_density(TRUE)
 	update_appearance()
 
-/obj/structure/bed/medical/post_unbuckle_mob(mob/living/patient)
+/obj/structure/bed/medical/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
 	set_density(FALSE)
 	update_appearance()
 
@@ -135,7 +159,6 @@
 				patient.pixel_y = patient.base_pixel_y
 		else
 			buckled_mobs[1].pixel_y = buckled_mobs[1].base_pixel_y
-
 	else
 		icon_state = "[base_icon_state]_down"
 
@@ -215,13 +238,12 @@
 /obj/item/emergency_bed/attack_self(mob/user)
 	deploy_bed(user, user.loc)
 
-/obj/item/emergency_bed/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/emergency_bed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_bed(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(isopenturf(target))
-		deploy_bed(user, target)
 
 /obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location)
 	var/obj/structure/bed/medical/emergency/deployed = new /obj/structure/bed/medical/emergency(location)
@@ -257,6 +279,7 @@
 	anchored = FALSE
 	build_stack_type = /obj/item/stack/sheet/mineral/wood
 	build_stack_amount = 10
+	elevation = 0
 	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
@@ -267,6 +290,11 @@
 /obj/structure/bed/dogbed/cayenne
 	desc = "Seems kind of... fishy."
 	name = "Cayenne's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/misha
+	desc = "There is fur all over it, and some blood..."
+	name = "Misha's bed"
 	anchored = TRUE
 
 /obj/structure/bed/dogbed/lia
@@ -306,6 +334,7 @@
 	name = "dirty mattress"
 	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
 	icon_state = "dirty_mattress"
+	elevation = 7
 
 /obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
@@ -322,11 +351,13 @@
 	var/mob/living/goldilocks
 
 /obj/structure/bed/double/post_buckle_mob(mob/living/target)
+	. = ..()
 	if(buckled_mobs.len > 1 && !goldilocks) // Push the second buckled mob a bit higher from the normal lying position
-		target.pixel_y = target.base_pixel_y + 6
+		target.pixel_y += 6
 		goldilocks = target
 
 /obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
-	target.pixel_y = target.base_pixel_y + target.body_position_pixel_y_offset
+	. = ..()
 	if(target == goldilocks)
+		target.pixel_y -= 6
 		goldilocks = null

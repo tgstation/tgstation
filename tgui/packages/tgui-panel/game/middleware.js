@@ -6,8 +6,8 @@
 
 import { pingSoft, pingSuccess } from '../ping/actions';
 import { connectionLost, connectionRestored, roundRestarted } from './actions';
-import { selectGame } from './selectors';
 import { CONNECTION_LOST_AFTER } from './constants';
+import { selectGame } from './selectors';
 
 const withTimestamp = (action) => ({
   ...action,

@@ -103,6 +103,7 @@
 	contains = list(/obj/item/stack/tile/carpet/fifty = 2,
 					/obj/item/stack/tile/carpet/black/fifty = 2)
 	crate_name = "premium carpet crate"
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/service/carpet_exotic
 	name = "Exotic Carpet Crate"
@@ -119,6 +120,7 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty = 2,
 				)
 	crate_name = "exotic carpet crate"
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/service/carpet_neon
 	name = "Simple Neon Carpet Crate"
@@ -140,6 +142,7 @@
 					/obj/item/stack/tile/carpet/neon/simple/pink/sixty = 2,
 				)
 	crate_name = "neon carpet crate"
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
@@ -190,9 +193,9 @@
 
 /// Box of 7 grey IDs.
 /datum/supply_pack/service/greyidbox
-	name = "Grey ID Card Multipack Cate"
+	name = "Grey ID Card Multipack Crate"
 	desc = "A convenient crate containing a box of seven cheap ID cards in a handy wallet-sized form factor. \
-		Cards come in every colour you can imagne, as long as it's grey."
+		Cards come in every colour you can imagine, as long as it's grey."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/storage/box/ids)
 	crate_name = "basic id card crate"
@@ -234,15 +237,20 @@
 
 /datum/supply_pack/service/randomized/ready_donk
 	name = "Ready-Donk Variety Crate"
-	desc = "Featuring a line up of Donk Co.'s most popular pastry! Contains \
+	desc = "Featuring a line up of Donk Co.'s fan-favourite microwave meal! Contains \
 		a random assortment of Ready Donk products."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/food/ready_donk,
 					/obj/item/food/ready_donk/mac_n_cheese,
 					/obj/item/food/ready_donk/donkhiladas,
+					/obj/item/food/ready_donk/nachos_grandes,
+					/obj/item/food/ready_donk/donkrange_chicken,
+					/obj/item/food/ready_donk/salisbury_steak,
+					/obj/item/food/ready_donk/country_chicken,
 				)
 	crate_name = "\improper Ready-Donk crate"
-	crate_type = /obj/structure/closet/crate/freezer/food
+	crate_type = /obj/structure/closet/crate/freezer/donk
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 3)
@@ -265,6 +273,8 @@
 		/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel, //one extra syrup as a treat
 	)
 	crate_name = "coffee equipment crate"
+	crate_type = /obj/structure/closet/crate/robust
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/service/coffeemaker
 	name = "Impressa Coffeemaker Crate"
@@ -273,17 +283,34 @@
 	contains = list(/obj/machinery/coffeemaker/impressa)
 	crate_name = "coffeemaker crate"
 	crate_type = /obj/structure/closet/crate/large
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
-/datum/supply_pack/service/aquarium_kit
-	name = "Aquarium Kit"
-	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, \
-		fish catalog, fish food and three freshwater fish from our collection."
+/// Spare bar sign wallmount
+/datum/supply_pack/service/bar_sign
+	name = "Bar Sign Replacement Kit"
+	desc = "A replacement bar sign, perfect for drawing in customers to your bar, tavern, inn, nightclub, or even coffeehouse!"
+	cost = CARGO_CRATE_VALUE * 14
+	contains = list(/obj/item/wallframe/barsign/all_access)
+	crate_name = "bar sign crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/service/bowmaking
+	name = "Fletching and Bow-Making Starter Kit"
+	desc = "A fairly outdated copy of 'Whittle Me This: Fletching for the Modern Spacer', along with some useful materials. \
+		For those looking to get into bow-making, or give their LARPing a little more edge, you can't go wrong. Also has \
+		instructions for making violins."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/book/manual/fish_catalog,
-					/obj/item/storage/fish_case/random/freshwater = 3,
-					/obj/item/fish_feed,
-					/obj/item/storage/box/aquarium_props,
-					/obj/item/aquarium_kit,
-				)
-	crate_name = "aquarium kit crate"
+	contains = list(
+		/obj/item/book/granter/crafting_recipe/fletching = 1,
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/stack/sheet/cloth = 10,
+	)
+	crate_name = "bowmaking starter kit crate"
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/service/mousetraps
+	name = "Pest-B-Gon Mousetraps"
+	desc = "Three boxes of handy little spring-loaded traps for catching pesty rodents. Keep out of reach of children!"
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/box/mousetraps = 3)
+	crate_name = "mousetraps crate"

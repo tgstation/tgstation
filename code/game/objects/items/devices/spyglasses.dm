@@ -10,6 +10,7 @@
 		return
 	if(!linked_bug)
 		user.audible_message(span_warning("[src] lets off a shrill beep!"))
+		return
 	if(cool_guy.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
 	cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
@@ -20,7 +21,8 @@
 
 /obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
-	linked_bug.cam_screen.hide_from(source.mob)
+	linked_bug.cam_screen.hide_from_client(source)
+	UnregisterSignal(source, COMSIG_POPUP_CLEARED)
 
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
@@ -33,10 +35,6 @@
 
 /obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
 	show_to_user(user)
-
-/obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
 
 /obj/item/clothing/glasses/sunglasses/spy/Destroy()
 	if(linked_bug)
@@ -52,14 +50,18 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
 	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
+	/// The glasses that you can use to see what this can see
 	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
+	/// Our camera display popup
 	var/atom/movable/screen/map_view/cam_screen
-	// Ranges higher than one can be used to see through walls.
+	/// How far can we actually see? Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
+	/// Detects when we move to update the camera view
 	var/datum/movement_detector/tracker
 
 /obj/item/clothing/accessory/spy_bug/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/pinnable_accessory)
 	tracker = new /datum/movement_detector(src, CALLBACK(src, PROC_REF(update_view)))
 	cam_screen = new
 	cam_screen.generate_view("spypopup_map")
@@ -83,12 +85,12 @@
 
 /obj/item/paper/fluff/nerddocs
 	name = "Espionage For Dummies"
-	color = "#FFFF00"
-	desc = "An eye gougingly yellow pamphlet with a badly designed image of a detective on it. the subtext says \" The Latest way to violate privacy guidelines!\" "
+	color = COLOR_YELLOW
+	desc = "An eye-gougingly yellow pamphlet with a badly designed image of a detective on it. The subtext says \"The latest way to violate privacy guidelines!\" "
 	default_raw_text = @{"
 
 Thank you for your purchase of the Nerd Co SpySpeks <small>tm</small>, this paper will be your quick-start guide to violating the privacy of your crewmates in three easy steps!<br><br>Step One: Nerd Co SpySpeks <small>tm</small> upon your face. <br>
-Step Two: Place the included "ProfitProtektor <small>tm</small>" camera assembly in a place of your choosing - make sure to make heavy use of it's inconspicous design!
+Step Two: Place the included "ProfitProtektor <small>tm</small>" camera assembly in a place of your choosing - make sure to make heavy use of its inconspicous design!
 
 Step Three: Press the "Activate Remote View" Button on the side of your SpySpeks <small>tm</small> to open a movable camera display in the corner of your vision, it's just that easy!<br><br><br><center><b>TROUBLESHOOTING</b><br></center>
 My SpySpeks <small>tm</small> Make a shrill beep while attempting to use!

@@ -1,0 +1,1215 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/effect/spawner/random/bedsheet{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/turf/open/floor/carpet/purple,
+/area/centcom/basketball)
+"ao" = (
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"at" = (
+/obj/item/flashlight/flare/torch{
+	pixel_x = 10;
+	pixel_y = -4
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"bA" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/sign/poster/contraband/have_a_puff/directional/east,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"cc" = (
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/sign/poster/contraband/have_a_puff/directional/west,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"cw" = (
+/obj/structure/flora/rock/style_random{
+	desc = "A volcanic rock.";
+	name = "coastal rock"
+	},
+/obj/structure/flora/bush/stalky/style_random{
+	desc = "It can't be smoked.";
+	name = "sea weed"
+	},
+/turf/open/water/beach,
+/area/centcom/basketball)
+"cX" = (
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"dC" = (
+/obj/structure/fluff/beach_umbrella/cap,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"eC" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"eM" = (
+/obj/item/storage/cans/sixbeer,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"fj" = (
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"fu" = (
+/obj/item/flashlight/flare/torch{
+	pixel_x = 15;
+	pixel_y = -7
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"gY" = (
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"hZ" = (
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/centcom/basketball)
+"ie" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/misc/beach/coast,
+/area/centcom/basketball)
+"iB" = (
+/obj/item/reagent_containers/cup/glass/colocup{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/cup/glass/colocup{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/rum{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/basketball)
+"jb" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"jq" = (
+/obj/structure/fence,
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/centcom/basketball)
+"kv" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"ld" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"lD" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"lQ" = (
+/obj/item/toy/seashell,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"nE" = (
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/centcom/basketball)
+"oR" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/centcom/basketball)
+"qF" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"rU" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"un" = (
+/obj/structure/flora/tree/palm,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"uH" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"vo" = (
+/obj/item/toy/plush/carpplushie,
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/centcom/basketball)
+"vq" = (
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"wg" = (
+/turf/open/misc/beach/coast,
+/area/centcom/basketball)
+"wN" = (
+/obj/machinery/jukebox,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"xe" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
+/area/centcom/basketball)
+"xG" = (
+/obj/structure/fence/corner{
+	dir = 5
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"xI" = (
+/obj/structure/table,
+/obj/item/clothing/under/color/rainbow,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/head/collectable/petehat{
+	pixel_y = 5
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"yk" = (
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/structure/flora/rock/style_random{
+	desc = "A volcanic rock.";
+	name = "coastal rock"
+	},
+/turf/open/water/beach,
+/area/centcom/basketball)
+"yO" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/centcom/basketball)
+"yY" = (
+/mob/living/basic/crab,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"zk" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 1
+	},
+/area/centcom/basketball)
+"zU" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/sign/poster/contraband/have_a_puff/directional/west,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"zZ" = (
+/obj/structure/fence,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Aj" = (
+/turf/open/water/beach,
+/area/centcom/basketball)
+"Aw" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/centcom/basketball)
+"BD" = (
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"BM" = (
+/turf/closed/indestructible/sandstone,
+/area/centcom/basketball)
+"BW" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"Cv" = (
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"Cw" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/item/fishing_rod{
+	pixel_x = 18
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"CI" = (
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/sign/picture_frame{
+	pixel_y = 32
+	},
+/turf/open/water/beach,
+/area/centcom/basketball)
+"Di" = (
+/obj/item/clothing/neck/necklace/dope,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Dt" = (
+/obj/item/clothing/mask/gas/tiki_mask,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"DN" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/beach/coast,
+/area/centcom/basketball)
+"DP" = (
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"EX" = (
+/obj/structure/fence/corner,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Fh" = (
+/obj/structure/fluff/beach_umbrella/security,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Fi" = (
+/obj/structure/sign/picture_frame{
+	pixel_y = 32
+	},
+/turf/open/water/beach,
+/area/centcom/basketball)
+"Fy" = (
+/mob/living/basic/crab/kreb,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"FS" = (
+/obj/item/clothing/neck/beads,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Ho" = (
+/obj/structure/fence,
+/turf/open/misc/beach/coast,
+/area/centcom/basketball)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/basketball)
+"Hx" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"HA" = (
+/obj/structure/flora/bush/stalky/style_random,
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/centcom/basketball)
+"IM" = (
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Jb" = (
+/obj/effect/spawner/random/bedsheet{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/basketball)
+"Kf" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"Kh" = (
+/obj/structure/fluff/beach_umbrella/science,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Lu" = (
+/obj/effect/spawner/random/bedsheet{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/basketball)
+"LV" = (
+/obj/item/clothing/head/collectable/paper{
+	desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from fire, Curators, and ocean waves."
+	},
+/turf/open/water/beach,
+/area/centcom/basketball)
+"MA" = (
+/obj/item/flashlight/flare/torch{
+	pixel_x = 12;
+	pixel_y = 9
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"MR" = (
+/obj/structure/bonfire/dense,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Nc" = (
+/turf/open/misc/beach/coast{
+	dir = 9
+	},
+/area/centcom/basketball)
+"Nt" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/misc/beach/coast,
+/area/centcom/basketball)
+"Nw" = (
+/turf/open/misc/beach/coast{
+	dir = 6
+	},
+/area/centcom/basketball)
+"NX" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"Oj" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/soda_cans/sodawater,
+/obj/item/reagent_containers/cup/soda_cans/shamblers,
+/obj/item/reagent_containers/cup/soda_cans/pwr_game,
+/obj/item/reagent_containers/cup/soda_cans/air,
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter,
+/obj/item/reagent_containers/cup/soda_cans/tonic,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"OF" = (
+/obj/structure/flora/bush/stalky/style_random,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"OG" = (
+/obj/structure/closet/crate/freezer{
+	name = "Cooler"
+	},
+/obj/item/reagent_containers/cup/glass/ice,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"OS" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 9
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"Ql" = (
+/obj/item/toy/plush/carpplushie,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"QF" = (
+/obj/item/bait_can/worm{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/item/fishing_line{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Rc" = (
+/turf/open/misc/beach/coast/corner,
+/area/centcom/basketball)
+"Ry" = (
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/structure/flora/rock/style_random{
+	desc = "A volcanic rock.";
+	name = "coastal rock"
+	},
+/obj/structure/flora/bush/stalky/style_random{
+	desc = "It can't be smoked.";
+	name = "sea weed"
+	},
+/turf/open/water/beach,
+/area/centcom/basketball)
+"Se" = (
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"Tc" = (
+/obj/item/flashlight/flare/torch{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Ul" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Uv" = (
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/centcom/basketball)
+"UL" = (
+/obj/item/clothing/glasses/sunglasses/big,
+/turf/open/floor/carpet/purple,
+/area/centcom/basketball)
+"UT" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/centcom/basketball)
+"Vc" = (
+/obj/item/clothing/shoes/sandal,
+/turf/open/floor/carpet/blue,
+/area/centcom/basketball)
+"Vf" = (
+/obj/structure/fence,
+/turf/open/water/beach,
+/area/centcom/basketball)
+"Vm" = (
+/obj/structure/sign/picture_frame{
+	pixel_y = -32
+	},
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/centcom/basketball)
+"VI" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/centcom/basketball)
+"VM" = (
+/obj/item/flashlight/flare/torch{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"VY" = (
+/obj/structure/sign/picture_frame{
+	pixel_y = -32
+	},
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/centcom/basketball)
+"WH" = (
+/turf/open/misc/beach/coast{
+	dir = 10
+	},
+/area/centcom/basketball)
+"Xq" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"XQ" = (
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/centcom/basketball)
+"XT" = (
+/obj/item/toy/beach_ball,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Yl" = (
+/turf/open/misc/beach/coast{
+	dir = 5
+	},
+/area/centcom/basketball)
+"Yv" = (
+/obj/structure/fluff/beach_umbrella,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
+"Yx" = (
+/obj/item/toy/basketball,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/centcom/basketball)
+"YI" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/basketball)
+"Zc" = (
+/obj/structure/stone_tile/slab,
+/turf/closed/indestructible/sandstone,
+/area/centcom/basketball)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+gY
+gY
+gY
+gY
+Hu
+"}
+(3,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+BM
+Aj
+Ql
+Aj
+cc
+Aj
+Aj
+LV
+Aj
+Aj
+zU
+Aj
+Aj
+Aj
+BM
+gY
+gY
+gY
+gY
+Hu
+"}
+(4,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+BM
+Aj
+Nc
+XQ
+XQ
+WH
+Aj
+Aj
+Aj
+Nc
+XQ
+XQ
+WH
+Aj
+BM
+gY
+gY
+gY
+gY
+Hu
+"}
+(5,1,1) = {"
+Hu
+gY
+BM
+BM
+BM
+BM
+Aj
+HA
+vq
+zZ
+Ho
+Vf
+Vf
+Vf
+jq
+zZ
+qF
+wg
+Ql
+BM
+BM
+BM
+BM
+gY
+Hu
+"}
+(6,1,1) = {"
+Hu
+gY
+BM
+Aj
+Aj
+Aj
+eC
+Uv
+lD
+IM
+wg
+Aj
+Cv
+Aj
+Uv
+Ul
+lD
+wg
+BD
+Aj
+Aj
+Aj
+BM
+gY
+Hu
+"}
+(7,1,1) = {"
+Hu
+gY
+BM
+Aj
+Nc
+XQ
+XQ
+Aw
+lD
+fj
+Nt
+Aj
+Aj
+Aj
+oR
+IM
+lD
+wg
+Nc
+XQ
+WH
+OF
+BM
+gY
+Hu
+"}
+(8,1,1) = {"
+Hu
+BM
+BM
+Fi
+Uv
+un
+eM
+Ul
+lD
+IM
+zk
+yO
+yO
+yO
+Aw
+IM
+lD
+zk
+Aw
+IM
+zk
+VY
+BM
+BM
+Hu
+"}
+(9,1,1) = {"
+Hu
+BM
+cw
+Aj
+Uv
+IM
+IM
+IM
+lD
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+lD
+lQ
+IM
+Fh
+OG
+IM
+IM
+BM
+Hu
+"}
+(10,1,1) = {"
+Hu
+BM
+Aj
+Ql
+Uv
+IM
+MA
+IM
+lD
+ao
+OS
+YI
+YI
+YI
+BW
+ao
+lD
+un
+IM
+iB
+Jb
+Fy
+IM
+BM
+Hu
+"}
+(11,1,1) = {"
+Hu
+BM
+Ry
+eC
+Uv
+at
+MR
+Tc
+lD
+ao
+NX
+nE
+nE
+nE
+Kf
+ao
+lD
+XT
+IM
+Kh
+IM
+FS
+rU
+BM
+Hu
+"}
+(12,1,1) = {"
+Hu
+Zc
+Se
+Aj
+Uv
+IM
+Dt
+IM
+lD
+ao
+NX
+nE
+Yx
+nE
+Kf
+ao
+lD
+wN
+cX
+UL
+af
+IM
+xI
+BM
+Hu
+"}
+(13,1,1) = {"
+Hu
+BM
+yk
+Aj
+Uv
+fu
+MR
+jb
+lD
+ao
+NX
+nE
+nE
+nE
+Kf
+ao
+lD
+IM
+IM
+dC
+Xq
+IM
+Oj
+BM
+Hu
+"}
+(14,1,1) = {"
+Hu
+BM
+Aj
+Ql
+Uv
+IM
+VM
+IM
+lD
+ao
+Hx
+ld
+ld
+ld
+uH
+ao
+lD
+un
+IM
+Vc
+Lu
+IM
+Ul
+BM
+Hu
+"}
+(15,1,1) = {"
+Hu
+BM
+kv
+Aj
+Uv
+Yv
+QF
+Yv
+lD
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+lD
+IM
+yY
+IM
+IM
+Xq
+Di
+BM
+Hu
+"}
+(16,1,1) = {"
+Hu
+BM
+BM
+CI
+Uv
+Cw
+Cw
+Cw
+lD
+Ul
+Rc
+VI
+VI
+VI
+xe
+IM
+lD
+Rc
+xe
+un
+Rc
+Vm
+BM
+BM
+Hu
+"}
+(17,1,1) = {"
+Hu
+gY
+BM
+Aj
+Yl
+hZ
+hZ
+xe
+lD
+Ul
+ie
+Aj
+Aj
+Aj
+UT
+IM
+lD
+DN
+Yl
+hZ
+Nw
+Aj
+BM
+gY
+Hu
+"}
+(18,1,1) = {"
+Hu
+gY
+BM
+Aj
+eC
+Aj
+eC
+Uv
+lD
+IM
+wg
+Aj
+DP
+Aj
+Uv
+fj
+lD
+wg
+Aj
+Aj
+OF
+Aj
+BM
+gY
+Hu
+"}
+(19,1,1) = {"
+Hu
+gY
+BM
+BM
+BM
+BM
+Aj
+Uv
+xG
+zZ
+Ho
+Vf
+Vf
+Vf
+jq
+zZ
+EX
+wg
+OF
+BM
+BM
+BM
+BM
+gY
+Hu
+"}
+(20,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+BM
+Ql
+Yl
+hZ
+hZ
+Nw
+Aj
+Aj
+Aj
+Yl
+vo
+hZ
+Nw
+Aj
+BM
+gY
+gY
+gY
+gY
+Hu
+"}
+(21,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+BM
+OF
+Aj
+Aj
+bA
+Aj
+Aj
+Aj
+Aj
+Aj
+bA
+Aj
+Ql
+Aj
+BM
+gY
+gY
+gY
+gY
+Hu
+"}
+(22,1,1) = {"
+Hu
+gY
+gY
+gY
+gY
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+gY
+gY
+gY
+gY
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}

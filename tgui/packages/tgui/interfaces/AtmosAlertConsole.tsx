@@ -1,5 +1,6 @@
+import { Button, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -7,8 +8,8 @@ type Data = {
   minor: string[];
 };
 
-export const AtmosAlertConsole = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosAlertConsole = (props) => {
+  const { act, data } = useBackend<Data>();
   const { priority = [], minor = [] } = data;
 
   return (

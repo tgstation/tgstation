@@ -2,11 +2,15 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
-
 	hud_type = /datum/hud/living
+	interaction_flags_click = ALLOW_RESTING
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
-	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
+	///Tracks the scale of the mob transformation matrix in relation to its identity. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
+	///How the mob transformation matrix is scaled on init.
+	var/initial_size = RESIZE_DEFAULT_SIZE
+
 	var/lastattacker = null
 	var/lastattackerckey = null
 
@@ -30,8 +34,6 @@
 	var/toxloss = 0
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
-	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/cloneloss = 0
 
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN
@@ -146,7 +148,7 @@
 	///if a mob's name should be appended with an id when created e.g. Mob (666)
 	var/unique_name = FALSE
 	///the id a mob gets when it's created
-	var/numba = 0
+	var/identifier = 0
 
 	///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
 	var/list/butcher_results = null
@@ -202,10 +204,6 @@
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 
-	///The x amount a mob's sprite should be offset due to the current position they're in
-	var/body_position_pixel_x_offset = 0
-	///The y amount a mob's sprite should be offset due to the current position they're in or size (e.g. lying down moves your sprite down)
-	var/body_position_pixel_y_offset = 0
 	///The height offset of a mob's maptext due to their current size.
 	var/body_maptext_height_offset = 0
 
@@ -216,6 +214,9 @@
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
 
+	/// Is the mob looking vertically
+	var/looking_vertically = FALSE
+
 	/// Living mob's mood datum
 	var/datum/mood/mob_mood
 
@@ -225,3 +226,16 @@
 
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
+
+	/// How long it takes to return to 0 stam
+	var/stamina_regen_time = 10 SECONDS
+
+	/// Lazylists of pixel offsets this mob is currently using
+	/// Modify this via add_offsets and remove_offsets,
+	/// NOT directly (and definitely avoid modifying offsets directly)
+	VAR_PRIVATE/list/offsets
+
+	/// Lazylist of martial arts this mob knows
+	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
+	/// Reference handling is done by the martial arts themselves
+	var/list/datum/martial_art/martial_arts

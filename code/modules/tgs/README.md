@@ -1,6 +1,6 @@
 # DMAPI Internals
 
-This folder should be placed on it's own inside a codebase that wishes to use the TGS DMAPI. Warranty void if modified.
+This folder should be placed on its own inside a codebase that wishes to use the TGS DMAPI. Warranty void if modified.
 
 - [includes.dm](./includes.dm) is the file that should be included by DM code, it handles including the rest.
 - The [core](./core) folder includes all code not directly part of any API version.

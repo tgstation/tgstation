@@ -1,6 +1,6 @@
 // Grass
 /obj/item/seeds/grass
-	name = "pack of grass seeds"
+	name = "grass seed pack"
 	desc = "These seeds grow into grass. Yummy!"
 	icon_state = "seed-grass"
 	species = "grass"
@@ -40,9 +40,12 @@
 	new stacktype(user.drop_location(), grassAmt)
 	qdel(src)
 
+/obj/item/food/grown/grass/make_dryable()
+	AddElement(/datum/element/dryable, /obj/item/stack/tile/hay)
+
 //Fairygrass
 /obj/item/seeds/grass/fairy
-	name = "pack of fairygrass seeds"
+	name = "fairygrass seed pack"
 	desc = "These seeds grow into a more mystical grass."
 	icon_state = "seed-fairygrass"
 	species = "fairygrass"
@@ -58,14 +61,14 @@
 /obj/item/food/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
 	name = "fairygrass"
-	desc = "Blue, glowing, and smells fainly of mushrooms."
+	desc = "Blue, glowing, and smells faintly of mushrooms."
 	icon_state = "fairygrassclump"
 	bite_consumption_mod = 1
 	stacktype = /obj/item/stack/tile/fairygrass
 
 // Carpet
 /obj/item/seeds/grass/carpet
-	name = "pack of carpet seeds"
+	name = "carpet seed pack"
 	desc = "These seeds grow into stylish carpet samples."
 	icon_state = "seed-carpet"
 	species = "carpet"

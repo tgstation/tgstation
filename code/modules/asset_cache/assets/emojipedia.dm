@@ -1,7 +1,5 @@
-/datum/asset/spritesheet/emojipedia
+/datum/asset/spritesheet_batched/emojipedia
 	name = "emojipedia"
-	cross_round_cachable = TRUE // The Emoji DMI is static and doesn't change without a commit mis-match.
 
-/datum/asset/spritesheet/emojipedia/create_spritesheets()
-	InsertAll("", EMOJI_SET)
-
+/datum/asset/spritesheet_batched/emojipedia/create_spritesheets()
+	insert_all_icons("", EMOJI_SET)

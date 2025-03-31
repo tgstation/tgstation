@@ -1,0 +1,2 @@
+output_name = "tinted_window"
+template = "bitmask/diagonal_32x32.toml"

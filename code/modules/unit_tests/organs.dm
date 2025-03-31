@@ -8,31 +8,14 @@
 	// List of organ typepaths which cause species change.
 	// Species change swaps out all the organs, making test_organ un-usable after insertion.
 	var/static/list/species_changing_organs = typecacheof(list(
-		/obj/item/organ/internal/brain/shadow/nightmare,
-	))
-	// List of organ typepaths which are not test-able, such as certain class prototypes.
-	var/static/list/test_organ_blacklist = typecacheof(list(
-		/obj/item/organ/internal,
-		/obj/item/organ/external,
-		/obj/item/organ/external/wings,
-		/obj/item/organ/internal/cyberimp,
-		/obj/item/organ/internal/cyberimp/brain,
-		/obj/item/organ/internal/cyberimp/mouth,
-		/obj/item/organ/internal/cyberimp/arm,
-		/obj/item/organ/internal/cyberimp/chest,
-		/obj/item/organ/internal/cyberimp/eyes,
-		/obj/item/organ/internal/alien,
+		/obj/item/organ/brain/shadow/nightmare,
 	))
 
 /datum/unit_test/organ_sanity/Run()
-	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ))
+	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		organ_test_insert(organ_type)
 
 /datum/unit_test/organ_sanity/proc/organ_test_insert(obj/item/organ/organ_type)
-	// Skip prototypes.
-	if(test_organ_blacklist[organ_type])
-		return
-
 	// Appropriate mob (Human) which will receive organ.
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/test_organ = new organ_type()
@@ -41,8 +24,8 @@
 	var/mob/living/basic/pet/dog/lab_dog = allocate(/mob/living/basic/pet/dog/corgi)
 	var/obj/item/organ/reject_organ = new organ_type()
 
-	TEST_ASSERT(test_organ.Insert(lab_rat, special = TRUE, drop_if_replaced = FALSE), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should return TRUE to indicate success."))
-	TEST_ASSERT(!reject_organ.Insert(lab_dog, special = TRUE, drop_if_replaced = FALSE), TEST_ORGAN_INSERT_MESSAGE(test_organ, "shouldn't return TRUE when inserting into a basic mob (Corgi)."))
+	TEST_ASSERT(test_organ.Insert(lab_rat, special = TRUE, movement_flags = DELETE_IF_REPLACED), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should return TRUE to indicate success."))
+	TEST_ASSERT(!reject_organ.Insert(lab_dog, special = TRUE, movement_flags = DELETE_IF_REPLACED), TEST_ORGAN_INSERT_MESSAGE(test_organ, "shouldn't return TRUE when inserting into a basic mob (Corgi)."))
 
 	// Species change swaps out all the organs, making test_organ un-usable by this point.
 	if(species_changing_organs[test_organ.type])
@@ -89,10 +72,10 @@
 
 /datum/unit_test/organ_damage/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
-	for(var/obj/item/organ/internal/organ_to_test in dummy.organs)
+	for(var/obj/item/organ/organ_to_test in dummy.organs)
 		test_organ(dummy, organ_to_test)
 
-/datum/unit_test/organ_damage/proc/test_organ(mob/living/carbon/human/dummy, obj/item/organ/internal/test_organ)
+/datum/unit_test/organ_damage/proc/test_organ(mob/living/carbon/human/dummy, obj/item/organ/test_organ)
 	var/slot_to_use = test_organ.slot
 
 	// Tests [mob/living/proc/adjustOrganLoss]
@@ -115,3 +98,23 @@
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
 	dummy.fully_heal(HEAL_ORGANS)
+
+///Allocate a human mob, give 'em a skillchip and a generic trauma, then see if it throws any error when the brain is removed.
+/datum/unit_test/chipped_traumatized_brain_removal
+
+/datum/unit_test/chipped_traumatized_brain_removal/Run()
+	var/mob/living/carbon/human/dummy/dummy = allocate(__IMPLIED_TYPE__)
+
+	//add the chip and activate it
+	var/obj/item/skillchip/basketweaving/chip = new(dummy.loc)
+	dummy.implant_skillchip(chip, force = TRUE)
+	TEST_ASSERT(chip.holding_brain, "Skillchip couldn't be implanted successfully, 'holding_brain' is null")
+	chip.try_activate_skillchip(force = TRUE)
+	TEST_ASSERT(chip.active, "Skillchip couldn't be activated")
+
+	//add a trauma
+	dummy.gain_trauma_type(BRAIN_TRAUMA_MILD)
+
+	var/obj/item/organ/brain = locate() in dummy.organs
+	brain.forceMove(dummy.loc)
+	allocated += brain

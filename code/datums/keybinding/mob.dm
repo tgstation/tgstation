@@ -80,6 +80,8 @@
 	switch(keybind_signal)
 		if(COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN)
 			user.body_toggle_head()
+		if(COMSIG_KB_MOB_TARGETHEAD_DOWN)
+			user.body_head()
 		if(COMSIG_KB_MOB_TARGETEYES_DOWN)
 			user.body_eyes()
 		if(COMSIG_KB_MOB_TARGETMOUTH_DOWN)
@@ -107,6 +109,13 @@
 	full_name = "Target: Cycle Head"
 	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
+
+/datum/keybinding/mob/target/head
+	hotkey_keys = list("Unbound")
+	name = "target_head"
+	full_name = "Target: Head"
+	description = "Pressing this key targets the head. This will impact where you hit people, and can be used for surgery."
+	keybind_signal = COMSIG_KB_MOB_TARGETHEAD_DOWN
 
 /datum/keybinding/mob/target/eyes
 	hotkey_keys = list("Numpad7")
@@ -182,3 +191,10 @@
 	if(.)
 		return
 	user.movement_locked = FALSE
+
+/datum/keybinding/living/view_pet_data
+	hotkey_keys = list("Shift")
+	name = "view_pet_commands"
+	full_name = "View Pet Commands"
+	description = "Hold down to see all the commands you can give your pets!"
+	keybind_signal = COMSIG_KB_LIVING_VIEW_PET_COMMANDS

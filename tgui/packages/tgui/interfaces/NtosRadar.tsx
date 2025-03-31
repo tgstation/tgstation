@@ -1,7 +1,15 @@
-import { BooleanLike, classes } from 'common/react';
+import {
+  Button,
+  Icon,
+  Image,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -27,7 +35,7 @@ type Target = {
   locx: number;
 };
 
-export const NtosRadar = (props, context) => {
+export const NtosRadar = (props) => {
   return (
     <NtosWindow width={800} height={600} theme="ntos">
       <NtosRadarContent />
@@ -35,7 +43,7 @@ export const NtosRadar = (props, context) => {
   );
 };
 
-export const NtosRadarContent = (props, context) => {
+export const NtosRadarContent = (props) => {
   return (
     <Stack fill>
       <Stack.Item position="relative" width={20.5}>
@@ -43,16 +51,17 @@ export const NtosRadarContent = (props, context) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          'background-image':
+          backgroundImage:
             'url("' + resolveAsset('ntosradarbackground.png') + '")',
-          'background-position': 'center',
-          'background-repeat': 'no-repeat',
-          'top': '20px',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          top: '20px',
         }}
         position="relative"
         m={1.5}
         width={45}
-        height={45}>
+        height={45}
+      >
         <TargetDisplay />
       </Stack.Item>
     </Stack>
@@ -60,8 +69,8 @@ export const NtosRadarContent = (props, context) => {
 };
 
 /** Returns object information */
-const ObjectDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ObjectDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { object = [], scanning, selected } = data;
 
   return (
@@ -91,7 +100,8 @@ const ObjectDisplay = (props, context) => {
                 act('selecttarget', {
                   ref: object.ref,
                 });
-              }}>
+              }}
+            >
               {object.name}
             </div>
           ))}
@@ -101,8 +111,8 @@ const ObjectDisplay = (props, context) => {
 };
 
 /** Returns target information */
-const TargetDisplay = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TargetDisplay = (props) => {
+  const { data } = useBackend<Data>();
   const { selected, target } = data;
 
   if (!selected || !target) {
@@ -116,20 +126,20 @@ const TargetDisplay = (props, context) => {
         left={1.35}
         width={42}
         fontSize="30px"
-        textAlign="center">
+        textAlign="center"
+      >
         Signal Lost
       </NoticeBox>
     );
   }
   return target.userot ? (
-    <Box
-      as="img"
+    <Image
       src={resolveAsset(target.arrowstyle)}
       position="absolute"
       top="20px"
       left="243px"
       style={{
-        'transform': `rotate(${target.rot}deg)`,
+        transform: `rotate(${target.rot}deg)`,
       }}
     />
   ) : (

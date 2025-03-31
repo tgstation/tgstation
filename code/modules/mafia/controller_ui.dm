@@ -29,6 +29,8 @@
 	if(turn)
 		data["turn"] = " - Day [turn]"
 
+	if(phase == MAFIA_PHASE_JUDGEMENT)
+		data["person_voted_up_ref"] = REF(on_trial)
 	if(phase == MAFIA_PHASE_SETUP)
 		data["lobbydata"] = list()
 		for(var/key in GLOB.mafia_signup + GLOB.mafia_bad_signup + GLOB.pda_mafia_signup)
@@ -41,8 +43,10 @@
 	data["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0
 
 	var/datum/mafia_role/user_role = get_role_player(user)
+
 	if(user_role)
 		data["user_notes"] = user_role.written_notes
+		data["player_voted_up"] = (user_role == on_trial)
 		var/list/ui_messages = list()
 		for(var/i = user_role.role_messages.len to 1 step -1)
 			ui_messages.Add(list(list(
@@ -56,6 +60,9 @@
 		player_info["name"] = role.body.real_name
 		player_info["ref"] = REF(role)
 		player_info["alive"] = role.game_status == MAFIA_ALIVE
+		player_info["role_revealed"] = FALSE
+		if(role.role_flags & ROLE_REVEALED)
+			player_info["role_revealed"] = role.name
 		player_info["possible_actions"] = list()
 
 		if(user_role) //not observer
@@ -70,7 +77,7 @@
 
 /datum/mafia_controller/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/mafia),
+		get_asset_datum(/datum/asset/spritesheet_batched/mafia),
 	)
 
 /datum/mafia_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -116,7 +123,7 @@
 				var/done = FALSE
 
 				while(!done)
-					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
+					to_chat(usr, "You have a total player count of [counterlist_sum(debug_setup)] in this setup.")
 					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
 					if(!chosen_role_name)
 						return

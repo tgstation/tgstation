@@ -24,28 +24,28 @@
 
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
-	volume = 35 * device_type
+	if (!volume) // Pipes can have specific volumes or have it determined by their device_type.
+		volume = UNARY_PIPE_VOLUME * device_type
 	. = ..()
 
-///I have no idea why there's a new and at this point I'm too afraid to ask
-/obj/machinery/atmospherics/pipe/Initialize(mapload)
-	. = ..()
+/obj/machinery/atmospherics/pipe/setup_hiding()
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
-	if(hide)
-		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+	// Registering on `COMSIG_OBJ_HIDE` would cause order of operations issues with undertile, so we register to run when undertile updates instead
+	RegisterSignal(src, COMSIG_UNDERTILE_UPDATED, PROC_REF(on_hide))
+
+/obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
+	//we delete the parent here so it initializes air_temporary for us. See /datum/pipeline/Destroy() which calls temporarily_store_air()
+	QDEL_NULL(parent)
+
+	if(air_temporary)
+		var/turf/T = loc
+		T.assume_air(air_temporary)
+
+	return ..()
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	QDEL_NULL(parent)
-
-	releaseAirToTurf()
-
-	var/turf/local_turf = loc
-	for(var/obj/machinery/meter/meter in local_turf)
-		if(meter.target != src)
-			continue
-		var/obj/item/pipe_meter/meter_object = new (local_turf)
-		meter.transfer_fingerprints_to(meter_object)
-		qdel(meter)
 	return ..()
 
 //-----------------
@@ -65,11 +65,6 @@
 		return
 	replace_pipenet(parent, new /datum/pipeline)
 	return list(parent)
-
-/obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
-	if(air_temporary)
-		var/turf/T = loc
-		T.assume_air(air_temporary)
 
 /obj/machinery/atmospherics/pipe/return_air()
 	if(air_temporary)
@@ -144,4 +139,4 @@
 		current_node.update_icon()
 
 /obj/machinery/atmospherics/pipe/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)

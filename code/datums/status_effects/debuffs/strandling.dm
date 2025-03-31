@@ -38,7 +38,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(try_remove_effect), user, tool)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Signal proc for [COMSIG_CARBON_PRE_MISC_HELP], allowing someone to remove the effect by hand
 /datum/status_effect/strandling/proc/on_self_check(mob/living/carbon/source, mob/living/helper)
@@ -57,7 +57,7 @@
  * tool - the tool the user's using to remove the strange. Can be null.
  */
 /datum/status_effect/strandling/proc/try_remove_effect(mob/user, obj/item/tool)
-	if(user.incapacitated() || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(user.incapacitated || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
 	user.visible_message(
@@ -88,6 +88,7 @@
 	desc = "Strands of Durathread are wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()

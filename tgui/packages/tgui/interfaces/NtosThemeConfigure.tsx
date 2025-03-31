@@ -1,5 +1,6 @@
+import { Button, Flex } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Flex } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -12,8 +13,8 @@ type ThemeInfo = {
   theme_ref: string;
 };
 
-export const NtosThemeConfigure = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const NtosThemeConfigure = (props) => {
+  const { act, data } = useBackend<Data>();
   const { PC_device_theme, themes } = data;
   return (
     <NtosWindow width={400} height={600}>
@@ -23,7 +24,8 @@ export const NtosThemeConfigure = (props, context) => {
           grow
           direction="column"
           textAlign="center"
-          align-items="center">
+          align-items="center"
+        >
           {themes.map((theme) => (
             <Flex.Item key={theme} width="100%" grow={1}>
               <Button.Checkbox

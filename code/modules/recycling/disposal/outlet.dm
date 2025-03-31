@@ -83,10 +83,10 @@
 
 /obj/structure/disposaloutlet/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(!I.tool_start_check(user, amount=1))
+	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return TRUE
 
-	playsound(src, 'sound/items/welder2.ogg', 100, TRUE)
+	playsound(src, 'sound/items/tools/welder2.ogg', 100, TRUE)
 	to_chat(user, span_notice("You start slicing the floorweld off [src]..."))
 	if(I.use_tool(src, user, 20))
 		to_chat(user, span_notice("You slice the floorweld off [src]."))
@@ -136,6 +136,24 @@
 	eject_speed = EJECT_SPEED_YEET
 	eject_range = EJECT_RANGE_YEET
 	return TRUE
+
+/obj/structure/disposaloutlet/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	if(!isnull(stored))
+		stored.forceMove(loc)
+		transfer_fingerprints_to(stored)
+		stored = null
+		visible_message(span_warning("[src] is ripped free from the floor!"))
+		qdel(src)
+
+/obj/structure/disposaloutlet/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	if(!isnull(stored))
+		stored.forceMove(loc)
+		transfer_fingerprints_to(stored)
+		stored = null
+		visible_message(span_warning("[src] is ripped free from the floor!"))
+		qdel(src)
 
 #undef EJECT_SPEED_SLOW
 #undef EJECT_SPEED_MED

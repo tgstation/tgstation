@@ -7,9 +7,11 @@
 	name = "Domain Completed"
 	desc = "The domain is completed. Activate to exit."
 	timeout = 20 SECONDS
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/bitrunning/qserver_domain_complete/Click(location, control, params)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	var/mob/living/living_owner = owner

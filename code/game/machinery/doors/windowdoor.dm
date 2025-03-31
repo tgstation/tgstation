@@ -6,7 +6,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY | BLOCKS_CONSTRUCTION_DIR
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
@@ -14,17 +14,21 @@
 	visible = FALSE
 	flags_1 = ON_BORDER_1
 	opacity = FALSE
-	pass_flags_self = PASSGLASS
+	pass_flags_self = PASSGLASS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	set_dir_on_move = FALSE
 	opens_with_door_remote = TRUE
+	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
+	/// If the door is considered reinforced. If TRUE, the door will resist twice as much heat (1600 deg C vs 800 deg C).
 	var/reinf = 0
+	/// On deconstruction, how many shards to drop.
 	var/shards = 2
+	/// On deconstruction, how many rods to drop.
 	var/rods = 2
+	/// On deconstruction, how much cable to drop.
 	var/cable = 1
-	var/list/debris = list()
 
 /datum/armor/door_window
 	melee = 20
@@ -66,22 +70,45 @@
 
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
-	if(atom_integrity == 0)
-		playsound(src, SFX_SHATTER, 70, TRUE)
 	electronics = null
-	var/turf/floor = get_turf(src)
-	floor.air_update_turf(TRUE, FALSE)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
 	. = ..()
-	icon_state = "[base_state][density ? null : "open"]"
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "[base_state]opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "[base_state]closing"
+		if(DOOR_DENY_ANIMATION)
+			icon_state = "[base_state]deny"
+		else
+			icon_state = "[base_state][density ? null : "open"]"
 
 	if(hasPower() && unres_sides)
 		set_light(l_range = 2, l_power = 1)
 		return
 
 	set_light(l_range = 0)
+
+/obj/machinery/door/window/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 0.9 SECONDS
+
+/obj/machinery/door/window/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.7 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 0.9 SECONDS
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
@@ -93,20 +120,20 @@
 		if(NORTH,SOUTH)
 			if(unres_sides & NORTH)
 				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
-				side_overlay.pixel_y = dir == NORTH ? 31 : 6
+				side_overlay.pixel_z = dir == NORTH ? 31 : 6
 				. += side_overlay
 			if(unres_sides & SOUTH)
 				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
-				side_overlay.pixel_y = dir == NORTH ? -6 : -31
+				side_overlay.pixel_z = dir == NORTH ? -6 : -31
 				. += side_overlay
 		if(EAST,WEST)
 			if(unres_sides & EAST)
 				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
-				side_overlay.pixel_x = dir == EAST ? 31 : 6
+				side_overlay.pixel_w = dir == EAST ? 31 : 6
 				. += side_overlay
 			if(unres_sides & WEST)
 				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
-				side_overlay.pixel_x = dir == EAST ? -6 : -31
+				side_overlay.pixel_w = dir == EAST ? -6 : -31
 				. += side_overlay
 
 /obj/machinery/door/window/proc/open_and_close()
@@ -114,9 +141,9 @@
 		return
 	autoclose = TRUE
 	if(check_access(null))
-		sleep(5 SECONDS)
+		sleep(8 SECONDS)
 	else //secure doors close faster
-		sleep(2 SECONDS)
+		sleep(5 SECONDS)
 	if(!density && autoclose) //did someone change state while we slept?
 		close()
 
@@ -134,7 +161,7 @@
 				if(allowed(occupant))
 					open_and_close()
 					return
-			do_animate("deny")
+			run_animation(DOOR_DENY_ANIMATION)
 		return
 	if(!SSticker)
 		return
@@ -158,7 +185,7 @@
 		open_and_close()
 
 	else
-		do_animate("deny")
+		run_animation(DOOR_DENY_ANIMATION)
 
 	return
 
@@ -217,11 +244,13 @@
 	if(!operating) //in case of emag
 		operating = TRUE
 
-	do_animate("opening")
+	run_animation(DOOR_OPENING_ANIMATION)
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	icon_state ="[base_state]open"
-	sleep(1 SECONDS)
+	var/passable_delay = animation_segment_delay(DOOR_OPENING_PASSABLE)
+	sleep(passable_delay)
 	set_density(FALSE)
+	var/open_delay = animation_segment_delay(DOOR_OPENING_FINISHED) - passable_delay
+	sleep(open_delay)
 	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
 
@@ -260,14 +289,15 @@
 		return FALSE
 
 	operating = TRUE
-	do_animate("closing")
+	run_animation(DOOR_CLOSING_ANIMATION)
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	icon_state = base_state
-
+	var/unpassable_delay = animation_segment_delay(DOOR_CLOSING_UNPASSABLE)
+	sleep(unpassable_delay)
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
-	sleep(1 SECONDS)
+	var/close_delay = animation_segment_delay(DOOR_CLOSING_FINISHED) - unpassable_delay
+	sleep(close_delay)
 
 	operating = FALSE
 	return TRUE
@@ -296,27 +326,36 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
+			playsound(src, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
+/obj/machinery/door/window/on_deconstruction(disassembled)
+	if(disassembled)
+		return
 
-/obj/machinery/door/window/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
-		for(var/i in 1 to shards)
-			drop_debris(new /obj/item/shard(src))
-		if(rods)
-			drop_debris(new /obj/item/stack/rods(src, rods))
-		if(cable)
-			drop_debris(new /obj/item/stack/cable_coil(src, cable))
-	qdel(src)
+	playsound(src, SFX_SHATTER, 70, TRUE)
+
+	for(var/i in 1 to shards)
+		drop_debris(new /obj/item/shard(src))
+	if(rods)
+		drop_debris(new /obj/item/stack/rods(src, rods))
+	if(cable)
+		drop_debris(new /obj/item/stack/cable_coil(src, cable))
 
 /obj/machinery/door/window/proc/drop_debris(obj/item/debris)
 	debris.forceMove(loc)
 	transfer_fingerprints_to(debris)
 
 /obj/machinery/door/window/narsie_act()
-	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
+	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
+
+/obj/machinery/door/window/rust_heretic_act()
+	add_atom_colour(COLOR_RUSTED_GLASS, FIXED_COLOUR_PRIORITY)
+	AddElement(/datum/element/rust)
+	set_armor(/datum/armor/none)
+	take_damage(get_integrity() * 0.5)
+	modify_max_integrity(max_integrity * 0.5)
 
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
@@ -343,11 +382,13 @@
 	. = ..()
 	if(obj_flags & EMAGGED)
 		. += span_warning("Its access panel is smoking slightly.")
+	if(!density)
+		if(panel_open)
+			. += span_notice("The [span_boldnotice("airlock electronics")] could be [span_boldnotice("levered")] out.")
+
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return
 	if(density || operating)
 		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
 		return
@@ -359,13 +400,11 @@
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return
 	if(!panel_open || density || operating)
 		return
 	add_fingerprint(user)
-	user.visible_message(span_notice("[user] removes the electronics from the [name]."), \
-	span_notice("You start to remove electronics from the [name]..."))
+	user.visible_message(span_notice("[user] removes the electronics from \the [src]."), \
+	span_notice("You start to remove electronics from \the [src]..."))
 	if(!tool.use_tool(src, user, 40, volume=50))
 		return
 	if(!panel_open || density || operating || !loc)
@@ -428,15 +467,6 @@
 			close(BYPASS_DOOR_CHECKS)
 	else
 		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
-
-/obj/machinery/door/window/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("[base_state]opening", src)
-		if("closing")
-			flick("[base_state]closing", src)
-		if("deny")
-			flick("[base_state]deny", src)
 
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

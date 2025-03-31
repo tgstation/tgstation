@@ -2,6 +2,7 @@
 /datum/hallucination/hazard
 	abstract_hallucination_parent = /datum/hallucination/hazard
 	random_hallucination_weight = 5
+	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 
 	/// The type of effect we create
 	var/hazard_type = /obj/effect/client_image_holder/hallucination/danger
@@ -29,7 +30,8 @@
 
 /// These hallucination effects cause side effects when the hallucinator walks into them.
 /obj/effect/client_image_holder/hallucination/danger
-	image_layer = TURF_LAYER
+	image_layer = LOW_FLOOR_LAYER
+	image_plane = FLOOR_PLANE
 
 /obj/effect/client_image_holder/hallucination/danger/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()

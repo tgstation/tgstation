@@ -2,7 +2,7 @@
 
 ///from base of datum/action/proc/Trigger(): (datum/action)
 #define COMSIG_ACTION_TRIGGER "action_trigger"
-	// Return to block the trigger from occuring
+	// Return to block the trigger from occurring
 	#define COMPONENT_ACTION_BLOCK_TRIGGER (1<<0)
 /// From /datum/action/Grant(): (mob/grant_to)
 #define COMSIG_ACTION_GRANTED "action_grant"
@@ -48,3 +48,6 @@
 
 /// From /datum/action/cooldown/manual_heart/Activate(): ()
 #define COMSIG_HEART_MANUAL_PULSE "heart_manual_pulse"
+
+/// From /datum/action/cooldown/mob_cooldown/capture_photo/Activate():
+#define COMSIG_ACTION_PHOTO_CAPTURED "action_photo_captured"

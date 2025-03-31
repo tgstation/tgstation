@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/key_bindings_by_key = list()
 
 	var/toggles = TOGGLES_DEFAULT
-	var/db_flags
+	var/db_flags = NONE
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 
@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
 
-/datum/preferences/Destroy(force, ...)
+/datum/preferences/Destroy(force)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
@@ -105,9 +105,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		load_path(parent.ckey)
 		if(load_and_save && !fexists(path))
 			try_savefile_type_migration()
-		unlock_content = !!parent.IsByondMember()
-		if(unlock_content)
-			max_save_slots = 8
+
+		refresh_membership()
 	else
 		CRASH("attempted to create a preferences datum without a client or mock!")
 	load_savefile()
@@ -139,17 +138,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-
-		// HACK: Without this the character starts out really tiny because of some BYOND bug.
-		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
-		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
-		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
-		// I hate this place
-		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/atom/movable/screen/map_view/char_preview, update_body)), 1 SECONDS)
+		character_preview_view.display_to(user, ui.window)
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
@@ -181,7 +173,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["character_profiles"] = create_character_profiles()
 
 	data["character_preview_view"] = character_preview_view.assigned_map
-	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
+	data["overflow_role"] = SSjob.get_job_type(SSjob.overflow_role).title
 	data["window"] = current_window
 
 	data["content_unlocked"] = unlock_content
@@ -193,7 +185,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/ui_assets(mob/user)
 	var/list/assets = list(
-		get_asset_datum(/datum/asset/spritesheet/preferences),
+		get_asset_datum(/datum/asset/spritesheet_batched/preferences),
 		get_asset_datum(/datum/asset/json/preferences),
 	)
 
@@ -211,22 +203,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if ("change_slot")
 			// Save existing character
 			save_character()
-
-			// SAFETY: `load_character` performs sanitization the slot number
-			if (!load_character(params["slot"]))
-				tainted_character_profiles = TRUE
-				randomise_appearance_prefs()
-				save_character()
-
-			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
-				preference_middleware.on_new_character(usr)
-
-			character_preview_view.update_body()
-
+			// SAFETY: `switch_to_slot` performs sanitization on the slot number
+			switch_to_slot(params["slot"])
+			return TRUE
+		if ("remove_current_slot")
+			remove_current_slot()
 			return TRUE
 		if ("rotate")
-			character_preview_view.dir = turn(character_preview_view.dir, -90)
-
+			character_preview_view.setDir(turn(character_preview_view.dir, -90))
 			return TRUE
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
@@ -303,7 +287,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character_preview_view = new(null, src)
 	character_preview_view.generate_view("character_preview_[REF(character_preview_view)]")
 	character_preview_view.update_body()
-	character_preview_view.display_to(user)
 
 	return character_preview_view
 
@@ -351,6 +334,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/mob/living/carbon/human/dummy/body
 	/// The preferences this refers to
 	var/datum/preferences/preferences
+	/// Whether we show current job clothes or nude/loadout only
+	var/show_job_clothes = TRUE
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
@@ -368,15 +353,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		create_body()
 	else
 		body.wipe_state()
-	appearance = preferences.render_new_preview_appearance(body)
+
+	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
 
 	body = new
-
-	// Without this, it doesn't show up in the menu
-	body.appearance_flags &= ~KEEP_TOGETHER
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
@@ -436,6 +419,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			.++
 
 /datum/preferences/proc/validate_quirks()
+	if(CONFIG_GET(flag/disable_quirk_points))
+		return
 	if(GetQuirkBalance() < 0)
 		all_quirks = list()
 
@@ -515,7 +500,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
 	if(!read_preference(/datum/preference/toggle/random_hardcore))
 		return FALSE
-	if(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) //No command staff
+	if(job.job_flags & JOB_HEAD_OF_STAFF) //No heads of staff
 		return FALSE
 	for(var/datum/antagonist/antag as anything in mind.antag_datums)
 		if(antag.get_team()) //No team antags
@@ -542,3 +527,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			default_randomization[preference_key] = RANDOM_ENABLED
 
 	return default_randomization
+
+/datum/preferences/proc/refresh_membership()
+	var/byond_member = parent.IsByondMember()
+	if(isnull(byond_member)) // Connection failure, retry once
+		byond_member = parent.IsByondMember()
+		var/static/admins_warned = FALSE
+		if(!admins_warned)
+			admins_warned = TRUE
+			message_admins("BYOND membership lookup had a connection failure for a user. This is most likely an issue on the BYOND side but if this consistently happens you should bother your server operator to look into it.")
+		if(isnull(byond_member)) // Retrying didn't work, warn the user
+			log_game("BYOND membership lookup for [parent.ckey] failed due to a connection error.")
+		else
+			log_game("BYOND membership lookup for [parent.ckey] failed due to a connection error but succeeded after retry.")
+
+	if(isnull(byond_member))
+		to_chat(parent, span_warning("There's been a connection failure while trying to check the status of your BYOND membership. Reconnecting may fix the issue, or BYOND could be experiencing downtime."))
+
+	unlock_content = !!byond_member
+	if(unlock_content)
+		max_save_slots = 8

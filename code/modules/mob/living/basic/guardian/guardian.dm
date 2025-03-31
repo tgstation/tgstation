@@ -19,7 +19,7 @@
 	speed = 0
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
 	health = INFINITY
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
@@ -31,7 +31,7 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	combat_mode = TRUE
@@ -39,7 +39,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	melee_attack_cooldown = CLICK_CD_MELEE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 3
 	light_on = FALSE
 

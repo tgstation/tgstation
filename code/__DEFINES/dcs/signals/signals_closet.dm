@@ -1,2 +1,2 @@
 /// Called in /obj/structure/closet/PopulateContents()
-#define COMSIG_CLOSET_POPULATE_CONTENTS "closet_populate_contents"
+#define COMSIG_CLOSET_CONTENTS_INITIALIZED "closet_initialize_contents"

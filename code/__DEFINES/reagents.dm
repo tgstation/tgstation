@@ -1,31 +1,39 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
+//Methods to interact with reagents in the holder
+/// Makes it possible to add reagents through droppers and syringes.
+#define INJECTABLE (1<<0)
+/// Makes it possible to remove reagents through syringes.
+#define DRAWABLE (1<<1)
+/// Makes it possible to add reagents through any reagent container.
+#define REFILLABLE (1<<2)
+/// Makes it possible to remove reagents through any reagent container.
+#define DRAINABLE (1<<3)
+/// Allows items to be dunked into this container for transfering reagents. Used in conjunction with the dunkable component.
+#define DUNKABLE (1<<4)
 
-#define INJECTABLE (1<<0) // Makes it possible to add reagents through droppers and syringes.
-#define DRAWABLE (1<<1) // Makes it possible to remove reagents through syringes.
+//Methods to examine reagents in the container
+/// Used on containers which you want to be able to see the reagents of.
+#define TRANSPARENT (1<<5)
+/// For non-transparent containers that still have the general amount of reagents in them visible.
+#define AMOUNT_VISIBLE (1<<6)
 
-#define REFILLABLE (1<<2) // Makes it possible to add reagents through any reagent container.
-#define DRAINABLE (1<<3) // Makes it possible to remove reagents through any reagent container.
-#define DUNKABLE (1<<4) // Allows items to be dunked into this container for transfering reagents. Used in conjunction with the dunkable component.
-
-#define TRANSPARENT (1<<5) // Used on containers which you want to be able to see the reagents of.
-#define AMOUNT_VISIBLE (1<<6) // For non-transparent containers that still have the general amount of reagents in them visible.
-#define NO_REACT (1<<7) // Applied to a reagent holder, the contents will not react with each other.
-#define REAGENT_HOLDER_INSTANT_REACT (1<<8)  // Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+//Reaction flags
+/// Applied to a reagent holder, the contents will not react with each other.
+#define NO_REACT (1<<7)
+/// Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+#define REAGENT_HOLDER_INSTANT_REACT (1<<8)
 ///If the holder is "alive" (i.e. mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
 #define REAGENT_HOLDER_ALIVE (1<<9)
 
+//Special properties
 ///If the holder a sealed container - Used if you don't want reagent contents boiling out (plasma, specifically, in which case it only bursts out when at ignition temperatures)
 #define SEALED_CONTAINER (1<<10)
-
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
 
 // Reagent exposure methods.
 /// Used for splashing.
 #define TOUCH (1<<0)
-/// Used for ingesting the reagents. Food, drinks, inhaling smoke.
+/// Used for ingesting the reagents. Food and drinks.
 #define INGEST (1<<1)
 /// Used by foams, sprays, and blob attacks.
 #define VAPOR (1<<2)
@@ -33,6 +41,10 @@
 #define PATCH (1<<3)
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
+/// Exclusive to just plumbing. if set we use the round robin technique else we use proportional
+#define LINEAR (1<<5)
+/// Used by smoke or inhaling from a source. Smoke and cigarettes.
+#define INHALE (1<<6)
 
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1
@@ -42,7 +54,8 @@
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone
-#define SYNTHFLESH_UNHUSK_AMOUNT 100
+#define SYNTHFLESH_UNHUSK_AMOUNT 60
+#define SYNTHFLESH_UNHUSK_MAX 100
 
 //used by chem masters and pill presses
 // The categories of reagent packaging
@@ -74,6 +87,10 @@
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 ///The default purity of all non reacted reagents
 #define REAGENT_STANDARD_PURITY 0.75
+/// Starting purity of consumable reagents
+#define CONSUMABLE_STANDARD_PURITY 0.5 // 50% pure by default. Below - synthetic food. Above - natural food.
+/// Starting purity of reagents made in biogenerator
+#define BIOGEN_REAGENT_PURITY 0.3
 /// the default temperature at which chemicals are added to reagent holders at
 #define DEFAULT_REAGENT_TEMPERATURE 300
 
@@ -121,7 +138,7 @@
 #define REACTION_COMPETITIVE (1<<5)
 ///Used to force pH changes to be constant regardless of volume
 #define REACTION_PH_VOL_CONSTANT (1<<6)
-///If a reaction will generate it's impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
+///If a reaction will generate its impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
 #define REACTION_REAL_TIME_SPLIT (1<<7)
 
 ///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
@@ -151,42 +168,48 @@
 #define REACTION_TAG_TOXIN (1<<2)
 /// This reagent does oxy effects (BOTH damaging and healing)
 #define REACTION_TAG_OXY (1<<3)
-/// This reagent does clone effects (BOTH damaging and healing)
-#define REACTION_TAG_CLONE (1<<4)
 /// This reagent primarily heals, or it's supposed to be used for healing (in the case of c2 - they are healing)
-#define REACTION_TAG_HEALING (1<<5)
+#define REACTION_TAG_HEALING (1<<4)
 /// This reagent primarily damages
-#define REACTION_TAG_DAMAGING (1<<6)
-/// This reagent explodes as a part of it's intended effect (i.e. not overheated/impure)
-#define REACTION_TAG_EXPLOSIVE (1<<7)
+#define REACTION_TAG_DAMAGING (1<<5)
+/// This reagent explodes as a part of its intended effect (i.e. not overheated/impure)
+#define REACTION_TAG_EXPLOSIVE (1<<6)
 /// This reagent does things that are unique and special
-#define REACTION_TAG_OTHER (1<<8)
+#define REACTION_TAG_OTHER (1<<7)
 /// This reagent's reaction is dangerous to create (i.e. explodes if you fail it)
-#define REACTION_TAG_DANGEROUS (1<<9)
+#define REACTION_TAG_DANGEROUS (1<<8)
 /// This reagent's reaction is easy
-#define REACTION_TAG_EASY (1<<10)
+#define REACTION_TAG_EASY (1<<9)
 /// This reagent's reaction is difficult/involved
-#define REACTION_TAG_MODERATE (1<<11)
+#define REACTION_TAG_MODERATE (1<<10)
 /// This reagent's reaction is hard
-#define REACTION_TAG_HARD (1<<12)
+#define REACTION_TAG_HARD (1<<11)
 /// This reagent affects organs
-#define REACTION_TAG_ORGAN (1<<13)
+#define REACTION_TAG_ORGAN (1<<12)
 /// This reaction creates a drink reagent
-#define REACTION_TAG_DRINK (1<<14)
+#define REACTION_TAG_DRINK (1<<13)
 /// This reaction has something to do with food
-#define REACTION_TAG_FOOD (1<<15)
+#define REACTION_TAG_FOOD (1<<14)
 /// This reaction is a slime reaction
-#define REACTION_TAG_SLIME (1<<16)
+#define REACTION_TAG_SLIME (1<<15)
 /// This reaction is a drug reaction
-#define REACTION_TAG_DRUG (1<<17)
+#define REACTION_TAG_DRUG (1<<16)
 /// This reaction is a unique reaction
-#define REACTION_TAG_UNIQUE (1<<18)
+#define REACTION_TAG_UNIQUE (1<<17)
 /// This reaction is produces a product that affects reactions
-#define REACTION_TAG_CHEMICAL (1<<19)
+#define REACTION_TAG_CHEMICAL (1<<18)
 /// This reaction is produces a product that affects plants
-#define REACTION_TAG_PLANT (1<<20)
+#define REACTION_TAG_PLANT (1<<19)
 /// This reaction is produces a product that affects plants
-#define REACTION_TAG_COMPETITIVE (1<<21)
+#define REACTION_TAG_COMPETITIVE (1<<20)
+
+//flags used by holder.dm to locate an reagent
+///Direct type
+#define REAGENT_STRICT_TYPE (1<<0)
+///Parent type but not sub types for e.g. if param is obj/item it will look for obj/item/stack but not obj/item/stack/sheet
+#define REAGENT_PARENT_TYPE (1<<1)
+///same as istype() check
+#define REAGENT_SUB_TYPE (1<<2)
 
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"
@@ -218,3 +241,13 @@
 #define GRENADE_WIRED 2
 /// Grenade is ready to be finished
 #define GRENADE_READY 3
+
+/// Maximum amount of layers a pill can hold, aka maximum number of seconds a pill takes to dissolve
+#define PILL_MAX_LAYERS 60
+/// Maximum amount of layers above which you cannot taste the pill's contents
+#define PILL_MAX_TASTE_LAYERS 20
+/// Maximum amount of layers that a ChemMaster can produce
+#define PILL_MAX_PRINTABLE_LAYERS 30
+
+/// Cooldown between patch reagent messages
+#define PATCH_MESSAGE_COOLDOWN 10 SECONDS

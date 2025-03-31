@@ -1,24 +1,33 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/fullbright)
 "b" = (
 /obj/item/pizzabox/bomb/armed,
 /obj/structure/rack,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "c" = (
 /obj/structure/sign/warning/directional/west,
 /turf/open/chasm,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
+"e" = (
+/obj/effect/mob_spawn/corpse/human/cyber_police,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/indestructible/dark,
+/area/virtual_domain)
+"f" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/indestructible/dark,
+/area/virtual_domain/protected_space)
 "h" = (
 /obj/structure/rack,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/protected_space)
 "i" = (
 /obj/structure/sign/warning/directional/east,
 /turf/open/chasm,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
@@ -34,7 +43,7 @@
 	pixel_y = 1
 	},
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "r" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -46,62 +55,71 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "A" = (
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "B" = (
 /obj/machinery/door/airlock/abductor,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
+"D" = (
+/turf/open/indestructible/dark,
+/area/virtual_domain/protected_space)
 "F" = (
 /obj/structure/mystery_box/guns,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/protected_space)
+"J" = (
+/obj/machinery/door/airlock/abductor,
+/turf/open/indestructible/dark,
+/area/virtual_domain/protected_space)
 "K" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/fullbright)
 "M" = (
 /obj/effect/mob_spawn/corpse/human/zombie,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "O" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "bathroom"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "Q" = (
 /turf/open/chasm,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "R" = (
 /obj/effect/mine/explosive/light,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "T" = (
 /obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "U" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "V" = (
 /obj/structure/sign/warning/directional/east,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "W" = (
 /obj/effect/mob_spawn/corpse/human/cyber_police,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "X" = (
-/mob/living/simple_animal/hostile/zombie,
+/mob/living/basic/zombie,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Y" = (
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 
 (1,1,1) = {"
 o
@@ -112,8 +130,6 @@ o
 o
 o
 o
-o
-o
 a
 a
 a
@@ -122,7 +138,6 @@ a
 a
 a
 a
-o
 o
 o
 o
@@ -140,8 +155,6 @@ o
 o
 o
 o
-o
-o
 a
 a
 a
@@ -150,10 +163,9 @@ Y
 Y
 Y
 Y
-Y
+U
 a
 a
-o
 o
 o
 o
@@ -164,8 +176,6 @@ o
 o
 "}
 (3,1,1) = {"
-o
-o
 a
 a
 a
@@ -191,13 +201,10 @@ o
 o
 o
 o
-o
 "}
 (4,1,1) = {"
-o
-o
 a
-W
+e
 X
 Y
 B
@@ -221,11 +228,8 @@ o
 o
 o
 o
-o
 "}
 (5,1,1) = {"
-o
-o
 a
 b
 b
@@ -251,11 +255,8 @@ o
 o
 o
 o
-o
 "}
 (6,1,1) = {"
-o
-o
 a
 a
 a
@@ -275,7 +276,6 @@ a
 Y
 Y
 a
-o
 o
 o
 o
@@ -284,8 +284,6 @@ o
 o
 "}
 (7,1,1) = {"
-o
-o
 a
 a
 a
@@ -305,7 +303,6 @@ Y
 Y
 Y
 a
-o
 o
 o
 o
@@ -314,8 +311,6 @@ o
 o
 "}
 (8,1,1) = {"
-o
-o
 a
 a
 X
@@ -341,11 +336,8 @@ o
 o
 o
 o
-o
 "}
 (9,1,1) = {"
-o
-o
 a
 a
 W
@@ -371,11 +363,8 @@ o
 o
 o
 o
-o
 "}
 (10,1,1) = {"
-o
-o
 a
 a
 Y
@@ -394,7 +383,6 @@ Q
 Q
 Y
 a
-o
 o
 o
 o
@@ -404,8 +392,6 @@ o
 o
 "}
 (11,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -424,7 +410,6 @@ Q
 Q
 Y
 a
-o
 o
 o
 o
@@ -434,8 +419,6 @@ o
 o
 "}
 (12,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -461,11 +444,8 @@ o
 o
 o
 o
-o
 "}
 (13,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -484,7 +464,6 @@ Y
 Y
 Y
 a
-o
 o
 o
 o
@@ -494,8 +473,6 @@ o
 o
 "}
 (14,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -514,7 +491,6 @@ Y
 Y
 Y
 a
-o
 o
 o
 o
@@ -524,8 +500,6 @@ o
 o
 "}
 (15,1,1) = {"
-o
-o
 a
 Y
 R
@@ -551,11 +525,8 @@ o
 o
 o
 o
-o
 "}
 (16,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -581,11 +552,8 @@ a
 a
 a
 a
-o
 "}
 (17,1,1) = {"
-o
-o
 a
 Y
 V
@@ -602,8 +570,8 @@ Y
 Y
 a
 h
-Y
-Y
+D
+f
 t
 t
 t
@@ -611,13 +579,10 @@ t
 t
 O
 a
-o
 "}
 (18,1,1) = {"
-o
-o
 a
-Y
+U
 a
 Q
 a
@@ -632,8 +597,8 @@ Y
 Y
 a
 F
-Y
-Y
+D
+D
 t
 t
 t
@@ -641,11 +606,8 @@ t
 t
 t
 a
-o
 "}
 (19,1,1) = {"
-o
-o
 a
 Q
 Q
@@ -661,9 +623,9 @@ Y
 Y
 Y
 a
-Y
-Y
-Y
+D
+D
+D
 t
 t
 t
@@ -671,17 +633,14 @@ t
 t
 t
 a
-o
 "}
 (20,1,1) = {"
-o
-o
 a
 Q
 Q
 Q
 a
-Y
+U
 Y
 Y
 a
@@ -690,10 +649,10 @@ Y
 Y
 Y
 Y
-T
-Y
-Y
-Y
+J
+D
+D
+D
 t
 t
 t
@@ -701,11 +660,8 @@ t
 t
 t
 a
-o
 "}
 (21,1,1) = {"
-o
-o
 a
 a
 Q
@@ -721,9 +677,9 @@ R
 Y
 Y
 a
-Y
-Y
-Y
+D
+D
+D
 t
 t
 t
@@ -731,11 +687,8 @@ t
 t
 t
 a
-o
 "}
 (22,1,1) = {"
-o
-o
 a
 a
 Q
@@ -752,8 +705,8 @@ Y
 Y
 a
 F
-Y
-Y
+D
+D
 t
 t
 t
@@ -761,11 +714,8 @@ t
 t
 t
 a
-o
 "}
 (23,1,1) = {"
-o
-o
 a
 a
 Q
@@ -782,8 +732,8 @@ Y
 Y
 a
 h
-Y
-Y
+D
+D
 t
 t
 t
@@ -791,11 +741,8 @@ t
 t
 r
 a
-o
 "}
 (24,1,1) = {"
-o
-o
 a
 a
 Q
@@ -821,11 +768,8 @@ a
 a
 a
 a
-o
 "}
 (25,1,1) = {"
-o
-o
 a
 c
 Q
@@ -851,11 +795,8 @@ o
 o
 o
 o
-o
 "}
 (26,1,1) = {"
-o
-o
 a
 Q
 Q
@@ -873,7 +814,6 @@ Y
 Y
 Y
 a
-o
 o
 o
 o
@@ -884,8 +824,6 @@ o
 o
 "}
 (27,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -911,11 +849,8 @@ o
 o
 o
 o
-o
 "}
 (28,1,1) = {"
-o
-o
 a
 Y
 X
@@ -941,11 +876,8 @@ o
 o
 o
 o
-o
 "}
 (29,1,1) = {"
-o
-o
 a
 Y
 a
@@ -962,7 +894,6 @@ a
 a
 a
 a
-o
 o
 o
 o
@@ -974,8 +905,6 @@ o
 o
 "}
 (30,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -992,7 +921,6 @@ Y
 Y
 X
 a
-o
 o
 o
 o
@@ -1004,8 +932,6 @@ o
 o
 "}
 (31,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -1022,7 +948,6 @@ Y
 M
 a
 a
-o
 o
 o
 o
@@ -1034,8 +959,6 @@ o
 o
 "}
 (32,1,1) = {"
-o
-o
 a
 Y
 Y
@@ -1055,7 +978,6 @@ a
 a
 a
 a
-o
 o
 o
 o
@@ -1064,8 +986,6 @@ o
 o
 "}
 (33,1,1) = {"
-o
-o
 a
 a
 R
@@ -1085,7 +1005,6 @@ Y
 Q
 Q
 a
-o
 o
 o
 o
@@ -1094,8 +1013,6 @@ o
 o
 "}
 (34,1,1) = {"
-o
-o
 o
 a
 Y
@@ -1110,7 +1027,7 @@ a
 a
 Y
 M
-Y
+U
 W
 i
 Q
@@ -1121,14 +1038,11 @@ o
 o
 o
 o
-o
 "}
 (35,1,1) = {"
 o
-o
-o
 a
-Y
+U
 Y
 Y
 Y
@@ -1151,12 +1065,9 @@ o
 o
 o
 o
-o
 "}
 (36,1,1) = {"
 o
-o
-o
 a
 a
 a
@@ -1164,37 +1075,6 @@ a
 a
 a
 a
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-"}
-(37,1,1) = {"
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
 o
 o
 o

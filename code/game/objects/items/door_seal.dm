@@ -6,7 +6,7 @@
 	inhand_icon_state = "pneumatic_seal"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force = 5
 	throwforce = 5
@@ -21,6 +21,6 @@
 
 /obj/item/door_seal/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sealing [user.p_them()]self off from the world with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 	return BRUTELOSS
 

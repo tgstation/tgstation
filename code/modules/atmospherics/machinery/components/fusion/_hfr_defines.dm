@@ -21,7 +21,7 @@
 ///Conduction of heat near the external cooling loop
 #define HIGH_EFFICIENCY_CONDUCTIVITY 0.975
 ///Sets the minimum amount of power the machine uses
-#define MIN_POWER_USAGE 50000
+#define MIN_POWER_USAGE (50 KILO WATTS)
 ///Sets the multiplier for the damage
 #define DAMAGE_CAP_MULTIPLIER 0.005
 ///Sets the range of the hallucinations

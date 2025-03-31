@@ -64,10 +64,10 @@
 
 	jaunter.Beam(nearby_reflection, icon_state = "light_beam", time = phase_out_time)
 	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
-	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED))
+	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED, hidden = TRUE))
 		return
 
-	playsound(jaunter, 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+	playsound(jaunter, 'sound/effects/magic/ethereal_enter.ogg', 50, TRUE, -1)
 	jaunter.visible_message(
 		span_boldwarning("[jaunter] phases out of reality, vanishing before your very eyes!"),
 		span_notice("You jump into the reflection coming off of [nearby_reflection], entering the mirror's realm."),
@@ -96,7 +96,7 @@
 
 	nearby_reflection.Beam(phase_turf, icon_state = "light_beam", time = phase_in_time)
 	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
-	if(!do_after(unjaunter, phase_in_time, nearby_reflection))
+	if(!do_after(unjaunter, phase_in_time, nearby_reflection, hidden = TRUE))
 		return FALSE
 
 	// We can move around while phasing in, but we'll always end up where we started it.
@@ -107,7 +107,7 @@
 /datum/action/cooldown/spell/jaunt/mirror_walk/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	. = ..()
 	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
-	playsound(unjaunter, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	playsound(unjaunter, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	var/turf/phase_turf = get_turf(unjaunter)
 
 	// Chilly!

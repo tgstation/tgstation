@@ -5,7 +5,7 @@
  * Teleports the caster to a turf selected by get_destinations().
  */
 /datum/action/cooldown/spell/teleport
-	sound = 'sound/weapons/zapbang.ogg'
+	sound = 'sound/items/weapons/zapbang.ogg'
 
 	school = SCHOOL_TRANSLOCATION
 
@@ -16,7 +16,7 @@
 	/// A list of flags related to determining if our destination target is valid or not.
 	var/destination_flags = NONE
 	/// The sound played on arrival, after the teleport.
-	var/post_teleport_sound = 'sound/weapons/zapbang.ogg'
+	var/post_teleport_sound = 'sound/items/weapons/zapbang.ogg'
 
 /datum/action/cooldown/spell/teleport/cast(atom/cast_on)
 	. = ..()

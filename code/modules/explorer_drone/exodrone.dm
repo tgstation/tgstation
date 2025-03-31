@@ -63,16 +63,18 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/exodrone/Initialize(mapload)
 	. = ..()
-	name = pick(strings(EXODRONE_FILE,"probe_names"))
-	if(name_counter[name])
-		name_counter[name]++
-		name = "[name] \Roman[name_counter[name]]"
+	if(name == /obj/item/exodrone::name)
+		name = pick(strings(EXODRONE_FILE,"probe_names"))
+		if(name_counter[name])
+			name_counter[name]++
+			name = "[name] \Roman[name_counter[name]]"
+		else
+			name_counter[name] = 1
 	else
-		name_counter[name] = 1
+		name = name
 	GLOB.exodrones += src
-	/// Cargo storage
-	create_storage(max_slots = EXODRONE_CARGO_SLOTS)
-	atom_storage.set_holdable(cant_hold_list = GLOB.blacklisted_cargo_types)
+	// Cargo storage
+	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
 
 /obj/item/exodrone/Destroy()
 	. = ..()
@@ -179,7 +181,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Crashes the drone somewhere random if there's no launchpad to be found.
 /obj/item/exodrone/proc/drop_somewhere_on_station()
-	var/turf/random_spot = get_safe_random_station_turf()
+	var/turf/random_spot = get_safe_random_station_turf_equal_weight()
 
 	var/obj/structure/closet/supplypod/pod = podspawn(list(
 		"target" = random_spot,

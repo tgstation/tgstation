@@ -11,43 +11,6 @@
 		return null
 	return format_text ? format_text(checked_area.name) : checked_area.name
 
-/** toggle_organ_decay
- * inputs: first_object (object to start with)
- * outputs:
- * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
- *  within 'first_object', toggling their frozen flag. This check excludes items held within other safe organ
- *  storage units, so that only the lowest level of container dictates whether we do or don't decompose
- */
-/proc/toggle_organ_decay(atom/first_object)
-
-	var/list/processing_list = list(first_object)
-	var/list/processed_list = list()
-	var/index = 1
-	var/obj/item/organ/found_organ
-
-	while(index <= length(processing_list))
-
-		var/atom/object_to_check = processing_list[index]
-
-		if(isorgan(object_to_check))
-			found_organ = object_to_check
-			found_organ.organ_flags ^= ORGAN_FROZEN
-
-		else if(iscarbon(object_to_check))
-			var/mob/living/carbon/mob_to_check = object_to_check
-			for(var/organ in mob_to_check.organs)
-				found_organ = organ
-				found_organ.organ_flags ^= ORGAN_FROZEN
-
-		for(var/atom/contained_to_check in object_to_check) //objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
-			if(!processed_list[contained_to_check] && !istype(contained_to_check, /obj/structure/closet/crate/freezer) && !istype(contained_to_check, /obj/structure/closet/secure_closet/freezer))
-				processing_list+= contained_to_check
-
-		index++
-		processed_list[object_to_check] = object_to_check
-
-	return
-
 ///Tries to move an atom to an adjacent turf, return TRUE if successful
 /proc/try_move_adjacent(atom/movable/atom_to_move, trydir)
 	var/turf/atom_turf = get_turf(atom_to_move)
@@ -112,8 +75,8 @@
 	return !player_mind || !player_mind.current || !player_mind.current.client || player_mind.current.client.is_afk()
 
 ///Return an object with a new maptext (not currently in use)
-/proc/screen_text(obj/object_to_change, maptext = "", screen_loc = "CENTER-7,CENTER-7", maptext_height = 480, maptext_width = 480)
-	if(!isobj(object_to_change))
+/proc/screen_text(atom/movable/object_to_change, maptext = "", screen_loc = "CENTER-7,CENTER-7", maptext_height = 480, maptext_width = 480)
+	if(!istype(object_to_change))
 		object_to_change = new /atom/movable/screen/text()
 	object_to_change.maptext = MAPTEXT(maptext)
 	object_to_change.maptext_height = maptext_height
@@ -192,158 +155,23 @@
 ///Get active players who are playing in the round
 /proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
 	var/active_players = 0
-	for(var/i = 1; i <= GLOB.player_list.len; i++)
-		var/mob/player_mob = GLOB.player_list[i]
+	for(var/mob/player_mob as anything in GLOB.player_list)
 		if(!player_mob?.client)
 			continue
-		if(alive_check && player_mob.stat)
+		if(alive_check && player_mob.stat == DEAD)
 			continue
-		else if(afk_check && player_mob.client.is_afk())
+		if(afk_check && player_mob.client.is_afk())
 			continue
-		else if(human_check && !ishuman(player_mob))
+		if(human_check && !ishuman(player_mob))
 			continue
-		else if(isnewplayer(player_mob)) // exclude people in the lobby
+		if(isnewplayer(player_mob)) // exclude people in the lobby
 			continue
-		else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
+		if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
 			var/mob/dead/observer/ghost_player = player_mob
 			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
 		active_players++
 	return active_players
-
-///Show the poll window to the candidate mobs
-/proc/show_candidate_poll_window(mob/candidate_mob, poll_time, question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
-	set waitfor = 0
-
-	// Universal opt-out for all players.
-	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
-		return
-
-	// Opt-out for admins whom are currently adminned.
-	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
-		return
-
-	SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg') //Alerting them to their consideration
-	if(flashwindow)
-		window_flash(candidate_mob.client)
-	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
-	switch(tgui_alert(candidate_mob, question, "A limited-time offer!", answers, poll_time, autofocus = FALSE))
-		if("Yes")
-			to_chat(candidate_mob, span_notice("Choice registered: Yes."))
-			if(time_passed + poll_time <= world.time)
-				to_chat(candidate_mob, span_danger("Sorry, you answered too late to be considered!"))
-				SEND_SOUND(candidate_mob, 'sound/machines/buzz-sigh.ogg')
-				candidates -= candidate_mob
-			else
-				candidates += candidate_mob
-		if("No")
-			to_chat(candidate_mob, span_danger("Choice registered: No."))
-			candidates -= candidate_mob
-		if("Never for this round")
-			var/list/ignore_list = GLOB.poll_ignore[ignore_category]
-			if(!ignore_list)
-				GLOB.poll_ignore[ignore_category] = list()
-			GLOB.poll_ignore[ignore_category] += candidate_mob.ckey
-			to_chat(candidate_mob, span_danger("Choice registered: Never for this round."))
-			candidates -= candidate_mob
-		else
-			candidates -= candidate_mob
-
-///Wrapper to send all ghosts the poll to ask them if they want to be considered for a mob.
-/proc/poll_ghost_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
-	var/list/candidates = list()
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		return candidates
-
-	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
-		candidates += ghost_player
-
-	return poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
-
-///Calls the show_candidate_poll_window() to all eligible ghosts
-/proc/poll_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
-	if (group.len == 0)
-		return list()
-
-	var/time_passed = world.time
-	if (!question)
-		question = "Would you like to be a special role?"
-	var/list/result = list()
-	for(var/mob/candidate_mob as anything in group)
-		if(!candidate_mob.key || !candidate_mob.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (candidate_mob.ckey in GLOB.poll_ignore[ignore_category])))
-			continue
-		if(be_special_flag)
-			if(!(candidate_mob.client.prefs) || !(be_special_flag in candidate_mob.client.prefs.be_special))
-				continue
-
-			var/required_time = GLOB.special_roles[be_special_flag] || 0
-			if (candidate_mob.client && candidate_mob.client.get_remaining_days(required_time) > 0)
-				continue
-		if(jobban_type)
-			if(is_banned_from(candidate_mob.ckey, list(jobban_type, ROLE_SYNDICATE)) || QDELETED(candidate_mob))
-				continue
-
-		show_candidate_poll_window(candidate_mob, poll_time, question, result, ignore_category, time_passed, flashwindow)
-	sleep(poll_time)
-
-	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
-	for(var/mob/asking_mob in result)
-		if(!asking_mob.key || !asking_mob.client)
-			result -= asking_mob
-
-	list_clear_nulls(result)
-
-	return result
-
-/**
- * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
- *
- * Arguments:
- * * question - question to show players as part of poll
- * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - The required role that the player has to have enabled to see the prompt.
- * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
- * * target_mob - The mob that is being polled for.
- * * ignore_category -  The notification preference that hides the prompt.
- */
-/proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null)
-	var/static/list/mob/currently_polling_mobs = list()
-
-	if(currently_polling_mobs.Find(target_mob))
-		return list()
-
-	currently_polling_mobs += target_mob
-
-	var/list/possible_candidates = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
-
-	currently_polling_mobs -= target_mob
-	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
-		return list()
-
-	return possible_candidates
-
-/**
- * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
- *
- * Arguments:
- * * question - question to show players as part of poll
- * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - The required role that the player has to have enabled to see the prompt.
- * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
- * * mobs - The list of mobs being polled for. This list is mutated and invalid mobs are removed from it before the proc returns.
- * * ignore_category - The notification preference that hides the prompt.
- */
-/proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
-	var/list/candidate_list = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
-
-	for(var/mob/potential_mob as anything in mobs)
-		if(QDELETED(potential_mob) || !potential_mob.loc)
-			mobs -= potential_mob
-
-	if(!length(mobs))
-		return list()
-
-	return candidate_list
 
 ///Uses stripped down and bastardized code from respawn character
 /proc/make_body(mob/dead/observer/ghost_player)
@@ -352,11 +180,11 @@
 
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
-	SSjob.SendToLateJoin(new_character)
+	SSjob.send_to_late_join(new_character)
 
 	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
-	new_character.key = ghost_player.key
+	new_character.PossessByPlayer(ghost_player.ckey)
 
 	return new_character
 
@@ -376,34 +204,40 @@
 		return
 	winset(flashed_client, "mainwindow", "flash=5")
 
-///Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
+///Recursively checks if an item is inside a given type/atom, even through layers of storage. Returns the atom if it finds it.
 /proc/recursive_loc_check(atom/movable/target, type)
-	var/atom/atom_to_find = target
-	if(istype(atom_to_find, type))
-		return atom_to_find
+	var/atom/atom_to_find = null
 
-	while(!istype(atom_to_find.loc, type))
-		if(!atom_to_find.loc)
-			return
-		atom_to_find = atom_to_find.loc
+	if(ispath(type))
+		atom_to_find = target
+		if(istype(atom_to_find, type))
+			return atom_to_find
 
-	return atom_to_find.loc
+		while(!istype(atom_to_find, type))
+			if(!atom_to_find.loc)
+				return
+			atom_to_find = atom_to_find.loc
+	else if(isatom(type))
+		atom_to_find = target
+		if(atom_to_find == type)
+			return atom_to_find
+
+		while(atom_to_find != type)
+			if(!atom_to_find.loc)
+				return
+			atom_to_find = atom_to_find.loc
+
+	return atom_to_find
 
 ///Send a message in common radio when a player arrives
-/proc/announce_arrival(mob/living/carbon/human/character, rank)
+/proc/announce_arrival(mob/living/carbon/human/character, rank, announce_to_ghosts = TRUE)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
-	var/area/player_area = get_area(character)
-	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
-	if(!character.mind)
-		return
-	if(!GLOB.announcement_systems.len)
-		return
-	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
-		return
-
-	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	if (announce_to_ghosts)
+		var/area/player_area = get_area(character)
+		deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if(character.mind && (character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
+		aas_config_announce(/datum/aas_config_entry/arrival, list("PERSON" = character.real_name,"RANK" = rank))
 
 ///Check if the turf pressure allows specialized equipment to work
 /proc/lavaland_equipment_pressure_check(turf/turf_to_check)
@@ -436,13 +270,42 @@
 
 	return pick(possible_loc)
 
+///Checks to see if `atom/source` is behind `atom/target`
+/proc/check_behind(atom/source, atom/target)
+	// Let's see if source is behind target
+	// "Behind" is defined as 3 tiles directly to the back of the target
+	// x . .
+	// x > .
+	// x . .
+
+	// No tactical spinning allowed
+	if(HAS_TRAIT(target, TRAIT_SPINNING))
+		return TRUE
+
+	// We'll take "same tile" as "behind" for ease
+	if(target.loc == source.loc)
+		return TRUE
+
+	// We'll also assume lying down is behind, as mob directions when lying are unclear
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.body_position == LYING_DOWN)
+			return TRUE
+
+	// Exceptions aside, let's actually check if they're, yknow, behind
+	var/dir_target_to_source = get_dir(target, source)
+	if(target.dir & REVERSE_DIR(dir_target_to_source))
+		return TRUE
+
+	return FALSE
+
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
 	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
 		var/area/apc_area = current_apc.area
-		if(GLOB.typecache_powerfailure_safe_areas[apc_area.type])
+		if(is_type_in_typecache(apc_area, GLOB.typecache_powerfailure_safe_areas))
 			continue
 
 		var/duration = rand(duration_min,duration_max)
@@ -453,7 +316,7 @@
  * Tips that starts with the @ character won't be html encoded. That's necessary for any tip containing markup tags,
  * just make sure they don't also have html characters like <, > and ' which will be garbled.
  */
-/proc/send_tip_of_the_round(target, selected_tip)
+/proc/send_tip_of_the_round(target, selected_tip, source = "Tip of the round")
 	var/message
 	if(selected_tip)
 		message = selected_tip
@@ -471,4 +334,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>Tip of the round: </b>[message]</span>")))
+	to_chat(target, custom_boxed_message("purple_box", span_purple("<b>[source]: </b>[message]")), type = MESSAGE_TYPE_INFO)

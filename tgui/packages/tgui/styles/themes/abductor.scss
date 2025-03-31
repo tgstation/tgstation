@@ -6,15 +6,15 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-@use '../colors.scss' with (
-  $primary: #ad2350,
+@use '../colors' with (
+  $primary: hsl(340, 67%, 41%),
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
-@use '../base.scss' with (
-  $color-bg: #2a314a,
+@use '../base' with (
+  $color-bg: hsl(227, 29%, 23%),
   $color-bg-grad-spread: 6%,
-  $border-radius: 2px,
+  $border-radius: 2px
 );
 
 .theme-abductor {
@@ -23,35 +23,35 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': colors.$primary,
-      'color-disabled': #363636,
-      'color-selected': #465899,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00
+      'color-disabled': hsl(0, 0%, 21%),
+      'color-selected': hsl(227, 37%, 45%),
+      'color-caution': hsl(30, 88%, 39%),
+      'color-danger': hsl(62, 100%, 30%)
     )
   );
   @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': #404b6e)
+    '~tgui-core/styles/components/Input',
+    $with: ('border-color': hsl(227, 29%, 27%))
   );
   @include meta.load-css(
-    '../components/NoticeBox.scss',
-    $with: ('background-color': #a82d55)
+    '~tgui-core/styles/components/NoticeBox',
+    $with: ('background-color': hsl(340, 67%, 41%))
   );
   @include meta.load-css(
-    '../components/NumberInput.scss',
-    $with: ('border-color': #404b6e)
+    '~tgui-core/styles/components/NumberInput',
+    $with: ('border-color': hsl(227, 29%, 27%))
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
+    '~tgui-core/styles/components/ProgressBar',
+    $with: ('background-color': hsla(0, 0%, 0%, 0.5))
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('~tgui-core/styles/components/Section');
   @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': #a82d55)
+    '~tgui-core/styles/components/Tooltip',
+    $with: ('background-color': hsl(340, 67%, 41%))
   );
 
   // Layouts
@@ -59,7 +59,7 @@
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #9e1b46)
+    $with: ('background-color': hsl(340, 71%, 36%))
   );
 
   .Layout__content {

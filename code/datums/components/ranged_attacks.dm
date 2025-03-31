@@ -20,7 +20,7 @@
 /datum/component/ranged_attacks/Initialize(
 	casing_type,
 	projectile_type,
-	projectile_sound = 'sound/weapons/gun/pistol/shot.ogg',
+	projectile_sound = 'sound/items/weapons/gun/pistol/shot.ogg',
 	burst_shots,
 	burst_intervals = 0.2 SECONDS,
 	cooldown_time = 3 SECONDS,
@@ -47,6 +47,7 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_RANGED, PROC_REF(fire_ranged_attack))
 	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+	RegisterSignal(parent, COMSIG_MOB_TROPHY_ACTIVATED(TROPHY_WATCHER), PROC_REF(disable_attack))
 
 /datum/component/ranged_attacks/UnregisterFromParent()
 	. = ..()
@@ -55,7 +56,9 @@
 
 /datum/component/ranged_attacks/proc/fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)
 	SIGNAL_HANDLER
-	if (!COOLDOWN_FINISHED(src, fire_cooldown))
+	if(!COOLDOWN_FINISHED(src, fire_cooldown))
+		return
+	if(SEND_SIGNAL(firer, COMSIG_BASICMOB_PRE_ATTACK_RANGED, target, modifiers) & COMPONENT_CANCEL_RANGED_ATTACK)
 		return
 	COOLDOWN_START(src, fire_cooldown, cooldown_time)
 	INVOKE_ASYNC(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers)
@@ -82,7 +85,11 @@
 		target_zone = ran_zone()
 	casing.fire_casing(target, firer, null, null, null, target_zone, 0,  firer)
 	casing.update_appearance()
-	casing.AddElement(/datum/element/temporary_atom, 30 SECONDS)
+	casing.fade_into_nothing(30 SECONDS)
 	SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
 	return
 
+/datum/component/ranged_attacks/proc/disable_attack(obj/item/crusher_trophy/used_trophy, mob/living/user)
+	SIGNAL_HANDLER
+	var/stun_duration = (used_trophy.bonus_value * 0.1) SECONDS
+	COOLDOWN_INCREMENT(src, fire_cooldown, stun_duration)

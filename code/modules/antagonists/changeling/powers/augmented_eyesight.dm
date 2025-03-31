@@ -16,7 +16,7 @@
 
 /datum/action/changeling/augmented_eyesight/on_purchase(mob/user) //The ability starts inactive, so we should be protected from flashes.
 	. = ..()
-	var/obj/item/organ/internal/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	RegisterSignal(user, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(eye_implanted))
 	RegisterSignal(user, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(eye_removed))
 	if(!isnull(ling_eyes))
@@ -27,7 +27,7 @@
 	if(!istype(user))
 		return FALSE
 
-	var/obj/item/organ/internal/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(ling_eyes))
 		user.balloon_alert(user, "no eyes!")
 		return FALSE
@@ -37,20 +37,20 @@
 	if(active)
 		active = FALSE
 		REMOVE_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
-		ling_eyes.flash_protect = FLASH_PROTECTION_WELDER
+		ling_eyes.flash_protect = max(ling_eyes.flash_protect += 3, FLASH_PROTECTION_WELDER)
 		to_chat(user, span_changeling("We adjust our eyes to protect them from bright lights."))
 
 	else
 		active = TRUE
 		ADD_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
-		ling_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
+		ling_eyes.flash_protect = max(ling_eyes.flash_protect += -3, FLASH_PROTECTION_HYPER_SENSITIVE)
 		to_chat(user, span_changeling("We adjust our eyes to sense prey through walls."))
 
 	user.update_sight()
 	return TRUE
 
 /datum/action/changeling/augmented_eyesight/Remove(mob/user)
-	var/obj/item/organ/internal/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!isnull(ling_eyes))
 		ling_eyes.flash_protect = initial(ling_eyes.flash_protect)
 
@@ -64,19 +64,19 @@
 /datum/action/changeling/augmented_eyesight/proc/eye_implanted(mob/living/source, obj/item/organ/gained, special)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/eyes/ling_eyes = gained
+	var/obj/item/organ/eyes/ling_eyes = gained
 	if(!istype(ling_eyes))
 		return
 	if(active)
-		ling_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
+		ling_eyes.flash_protect = max(ling_eyes.flash_protect += -3, FLASH_PROTECTION_HYPER_SENSITIVE)
 	else
-		ling_eyes.flash_protect = FLASH_PROTECTION_WELDER
+		ling_eyes.flash_protect = max(ling_eyes.flash_protect += 3, FLASH_PROTECTION_WELDER)
 
 /// Signal proc to remove flash sensitivity when the eyes are removed
 /datum/action/changeling/augmented_eyesight/proc/eye_removed(mob/living/source, obj/item/organ/removed, special)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/eyes/ling_eyes = removed
+	var/obj/item/organ/eyes/ling_eyes = removed
 	if(!istype(ling_eyes))
 		return
 	ling_eyes.flash_protect = initial(ling_eyes.flash_protect)

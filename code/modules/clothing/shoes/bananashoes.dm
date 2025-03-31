@@ -19,7 +19,13 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	bananium = AddComponent(/datum/component/material_container, list(/datum/material/bananium), 100 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_ANY_INTENT|MATCONTAINER_SILENT, allowed_items=/obj/item/stack)
+	bananium = AddComponent(
+		/datum/component/material_container, \
+		list(/datum/material/bananium), \
+		100 * SHEET_MATERIAL_AMOUNT, \
+		MATCONTAINER_EXAMINE | MATCONTAINER_ANY_INTENT | MATCONTAINER_SILENT, \
+		allowed_items = /obj/item/stack, \
+	)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75, falloff_exponent = 20)
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(on_step))
 	if(always_noslip)

@@ -54,12 +54,6 @@
 /// The APCs external powernet has enough power to charge the APC.
 #define APC_HAS_POWER 2
 
-// Ethereals:
-/// How long it takes an ethereal to drain or charge APCs. Also used as a spam limiter.
-#define APC_DRAIN_TIME (7.5 SECONDS)
-/// How much power ethereals gain/drain from APCs.
-#define APC_POWER_GAIN 200
-
 // Wires & EMPs:
 /// The wire value used to reset the APCs wires after one's EMPed.
 #define APC_RESET_EMP "emp"
@@ -80,10 +74,8 @@
 #define UPSTATE_BROKE (1<<3)
 /// The APC is undergoing maintenance.
 #define UPSTATE_MAINT (1<<4)
-/// The APC is emagged or malfed.
-#define UPSTATE_BLUESCREEN (1<<5)
 /// The APCs wires are exposed.
-#define UPSTATE_WIREEXP (1<<6)
+#define UPSTATE_WIREEXP (1<<5)
 
 // update_overlay
 // Bitflags:

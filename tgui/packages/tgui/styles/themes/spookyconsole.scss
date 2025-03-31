@@ -3,15 +3,15 @@
 @use 'sass:map';
 
 @use '../colors.scss' with (
-  $primary: #3f021a,
-  $good: #010005,
-  $bad: #970934,
+  $primary: hsl(345, 96%, 12%),
+  $good: hsl(240, 100%, 1%),
+  $bad: hsl(340, 91%, 32%),
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
 @use '../base.scss' with (
-  $color-bg: #240101,
-  $color-bg-grad-spread: 12%,
+  $color-bg: hsl(0, 100%, 7%),
+  $color-bg-grad-spread: 12%
 );
 
 $updated-bg-map: colors.$bg-map !default;
@@ -28,35 +28,35 @@ $updated-bg-map: map.set($updated-bg-map, 'bad', colors.$bad);
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
-      'color-default': #7e0322,
-      'color-disabled': #363636,
-      'color-selected': #610a0a,
-      'color-caution': #1416a3,
-      'color-danger': #5c1e80,
+      'color-default': hsl(345, 96%, 25%),
+      'color-disabled': hsl(0, 0%, 21%),
+      'color-selected': hsl(0, 85%, 21%),
+      'color-caution': hsl(240, 80%, 35%),
+      'color-danger': hsl(282, 61%, 30%),
       'bg-map': $updated-bg-map
     )
   );
   @include meta.load-css(
-    '../components/Dimmer.scss',
+    '~tgui-core/styles/components/Dimmer',
     $with: ('background-dimness': 0.45)
   );
   @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': #473a37)
+    '~tgui-core/styles/components/Input',
+    $with: ('border-color': hsl(15, 14%, 26%))
   );
-  @include meta.load-css('../components/Modal.scss');
+  @include meta.load-css('~tgui-core/styles/components/Modal');
   @include meta.load-css(
-    '../components/NoticeBox.scss',
-    $with: ('background-color': #740707)
+    '~tgui-core/styles/components/NoticeBox',
+    $with: ('background-color': hsl(0, 90%, 23%))
   );
-  @include meta.load-css('../components/NumberInput.scss');
-  @include meta.load-css('../components/Section.scss');
-  @include meta.load-css('../components/Table.scss');
+  @include meta.load-css('~tgui-core/styles/components/NumberInput');
+  @include meta.load-css('~tgui-core/styles/components/Section');
+  @include meta.load-css('~tgui-core/styles/components/Table');
   @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': #000000)
+    '~tgui-core/styles/components/Tooltip',
+    $with: ('background-color': hsl(0, 0%, 0%))
   );
 
   // Layouts
@@ -64,7 +64,7 @@ $updated-bg-map: map.set($updated-bg-map, 'bad', colors.$bad);
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #6b0808)
+    $with: ('background-color': hsl(0, 88%, 23%))
   );
 
   .Layout__content {

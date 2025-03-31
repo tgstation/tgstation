@@ -10,10 +10,12 @@ Behavior that's still missing from this component that original food items had t
 
 	Misc:
 	Something for cakes (You can store things inside)
-
 */
+
+#define DEFAULT_EDIBLE_VOLUME 50
+
 /datum/component/edible
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	dupe_mode = COMPONENT_DUPE_SOURCES
 	///Amount of reagents taken per bite
 	var/bite_consumption = 2
 	///Amount of bites taken so far
@@ -23,7 +25,7 @@ Behavior that's still missing from this component that original food items had t
 	///Bitfield of the types of this food
 	var/foodtypes = NONE
 	///Amount of seconds it takes to eat this food
-	var/eat_time = 30
+	var/eat_time = 3 SECONDS
 	///Defines how much it lowers someones satiety (Need to eat, essentialy)
 	var/junkiness = 0
 	///Message to send when eating
@@ -36,16 +38,18 @@ Behavior that's still missing from this component that original food items had t
 	var/datum/callback/check_liked
 	///Last time we checked for food likes
 	var/last_check_time
-	///The initial volume of the foods reagents
-	var/volume = 50
-	///The flavortext for taste (haha get it flavor text)
-	var/list/tastes
+	///Assoc list of sources and their foodtypes
+	var/list/foodtypes_by_source = list()
+	///Assoc list of sources and their food flags
+	var/list/food_flags_by_source = list()
+	///Assoc list of sources and their junkiness
+	var/list/junkiness_by_source = list()
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
 	food_flags = NONE,
 	foodtypes = NONE,
-	volume = 50,
+	volume = DEFAULT_EDIBLE_VOLUME,
 	eat_time = 1 SECONDS,
 	list/tastes,
 	list/eatverbs = list("bite", "chew", "nibble", "gnaw", "gobble", "chomp"),
@@ -59,27 +63,23 @@ Behavior that's still missing from this component that original food items had t
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	// If these args are not explicitly stated when initializing the component
+	// Use the defaults provided in this proc definition, so we don't have to worry
+	// about these being null. We cannot rely on on_add_source() for this lest these
+	// end up being unwantedly overriden by other sources.
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
 	src.foodtypes = foodtypes
-	src.volume = volume
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
-	src.junkiness = junkiness
-	src.after_eat = after_eat
-	src.on_consume = on_consume
-	src.tastes = string_assoc_list(tastes)
-	src.check_liked = check_liked
-
-	setup_initial_reagents(initial_reagents, reagent_purity)
 
 /datum/component/edible/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
-	RegisterSignals(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, PROC_REF(OnCraft))
-	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(OnProcessed))
-	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, PROC_REF(on_ooze_eat))
+	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
+	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(created_by_processing))
 
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
@@ -98,6 +98,9 @@ Behavior that's still missing from this component that original food items had t
 	else if(isturf(parent) || isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(TryToEatIt))
 
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+
 /datum/component/edible/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
@@ -114,12 +117,17 @@ Behavior that's still missing from this component that original food items had t
 
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
-/datum/component/edible/InheritComponent(
-	datum/component/edible/old_comp,
-	i_am_original,
+	if(foodtypes & GORE)
+		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+
+/datum/component/edible/allow_source_update(source)
+	return source == SOURCE_EDIBLE_INNATE
+
+/datum/component/edible/on_source_add(
+	source,
 	list/initial_reagents,
-	food_flags = NONE,
-	foodtypes = NONE,
+	food_flags,
+	foodtypes,
 	volume,
 	eat_time,
 	list/tastes,
@@ -129,22 +137,38 @@ Behavior that's still missing from this component that original food items had t
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
+	reagent_purity = 0.5,
 )
+	. = ..()
 
-	// If we got passed an old comp, take only the values that will not override our current ones
-	if(old_comp)
-		food_flags = old_comp.food_flags
-		foodtypes = old_comp.foodtypes
-		tastes = old_comp.tastes
-		eatverbs = old_comp.eatverbs
+	var/recalculate = FALSE
+	if(!isnull(foodtypes))
+		if(foodtypes_by_source[source]) //foodtypes being overriden
+			recalculate = TRUE
+		foodtypes_by_source[source] = foodtypes
+	if(!isnull(food_flags))
+		if(food_flags_by_source[source]) //food_flags being overriden
+			recalculate = TRUE
+		food_flags_by_source[source] = food_flags
+	if(!isnull(junkiness))
+		src.junkiness += junkiness - junkiness_by_source[source]
+		junkiness_by_source[source] = junkiness
 
-	// only edit if we're OG
-	if(!i_am_original)
+	if(recalculate)
+		recalculate_food_flags()
+	else
+		// nothing is being removed
+		src.food_flags |= food_flags
+		src.foodtypes |= foodtypes
+		if(foodtypes & GORE)
+			ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+
+	// add newly passed in reagents
+	setup_initial_reagents(initial_reagents, reagent_purity, tastes, volume)
+
+	//Only the innate source is allowed to change the following vars if there are a plurality of sources.
+	if(source != SOURCE_EDIBLE_INNATE && length(sources) > 1)
 		return
-
-	// add food flags and types
-	src.food_flags |= food_flags
-	src.foodtypes |= foodtypes
 
 	// add all new eatverbs to the list
 	if(islist(eatverbs))
@@ -154,29 +178,11 @@ Behavior that's still missing from this component that original food items had t
 			src.eatverbs = string_list(cached_verbs | eatverbs)
 		else
 			src.eatverbs = string_list(eatverbs)
-
-	// add all new tastes to the tastes
-	if(islist(tastes))
-		var/list/cached_tastes = src.tastes
-		if(islist(cached_tastes))
-			// tastes becomes a combination of existing tastes and new ones
-			var/list/mixed_tastes = cached_tastes.Copy()
-			for(var/new_taste in tastes)
-				mixed_tastes[new_taste] += tastes[new_taste]
-
-			src.tastes = string_assoc_list(mixed_tastes)
-		else
-			src.tastes = string_assoc_list(tastes)
-
 	// just set these directly
 	if(!isnull(bite_consumption))
 		src.bite_consumption = bite_consumption
-	if(!isnull(volume))
-		src.volume = volume
 	if(!isnull(eat_time))
 		src.eat_time = eat_time
-	if(!isnull(junkiness))
-		src.junkiness = junkiness
 	if(!isnull(after_eat))
 		src.after_eat = after_eat
 	if(!isnull(on_consume))
@@ -184,38 +190,58 @@ Behavior that's still missing from this component that original food items had t
 	if(!isnull(check_liked))
 		src.check_liked = check_liked
 
-	// add newly passed in reagents
-	setup_initial_reagents(initial_reagents)
+/datum/component/edible/on_source_remove(source)
+	//rebuild the foodtypes and food_flags bitfields without the removed source
+	foodtypes_by_source -= source
+	food_flags_by_source -= source
+	junkiness -= junkiness_by_source[source]
+	junkiness_by_source -= source
+	recalculate_food_flags()
+	return ..()
 
-/datum/component/edible/Destroy(force, silent)
+/datum/component/edible/proc/recalculate_food_flags()
+	foodtypes = NONE
+	food_flags = NONE
+	for(var/source_key in foodtypes_by_source)
+		foodtypes |= foodtypes_by_source[source_key]
+		food_flags |= food_flags_by_source[source_key]
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+	else
+		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+
+/datum/component/edible/Destroy(force)
 	after_eat = null
 	on_consume = null
 	check_liked = null
 	return ..()
 
 /// Sets up the initial reagents of the food.
-/datum/component/edible/proc/setup_initial_reagents(list/reagents, reagent_purity)
+/datum/component/edible/proc/setup_initial_reagents(list/reagents, reagent_purity, list/tastes, volume)
 	var/atom/owner = parent
-	if(owner.reagents)
+	if(!owner.reagents)
+		owner.create_reagents(volume || DEFAULT_EDIBLE_VOLUME, INJECTABLE)
+	else if(volume > owner.reagents.maximum_volume)
 		owner.reagents.maximum_volume = volume
-	else
-		owner.create_reagents(volume, INJECTABLE)
 
 	for(var/rid in reagents)
 		var/amount = reagents[rid]
-		if(length(tastes) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-			owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
-		else
-			owner.reagents.add_reagent(rid, amount, added_purity = reagent_purity)
+		if(length(tastes) && ispath(rid, /datum/reagent/consumable/nutriment))
+			var/datum/reagent/consumable/nutriment/nid = rid
+			if(initial(nid.carry_food_tastes))
+				owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
+				continue
+		owner.reagents.add_reagent(rid, amount, added_purity = reagent_purity)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	var/atom/owner = parent
-
+	if(food_flags & FOOD_NO_EXAMINE)
+		return
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		examine_list += span_notice("It is [lowertext(english_list(types))].")
+		examine_list += span_notice("It is [LOWER_TEXT(english_list(types))].")
 
 	var/quality = get_perceived_food_quality(user)
 	if(quality > 0)
@@ -251,7 +277,7 @@ Behavior that's still missing from this component that original food items had t
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch(bitecount)
 			if(0)
-				// pass
+				pass()
 			if(1)
 				examine_list += span_notice("[owner] was bitten by someone!")
 			if(2, 3)
@@ -263,6 +289,16 @@ Behavior that's still missing from this component that original food items had t
 		examine_list += span_notice("Reagent purities:")
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
+
+	if(!HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
+		return
+	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+	checkLiked(fraction, user)
+	if (!owner.reagents.get_reagent_amount(/datum/reagent/consumable/salt))
+		examine_list += span_notice("It could use a little more Sodium Chloride...")
+	if (isliving(user))
+		var/mob/living/living_user = user
+		living_user.taste_container(owner.reagents)
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
@@ -277,7 +313,7 @@ Behavior that's still missing from this component that original food items had t
 	return TryToEat(user, user)
 
 ///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
-/datum/component/edible/proc/OnProcessed(datum/source, atom/original_atom, list/chosen_processing_option)
+/datum/component/edible/proc/created_by_processing(datum/source, atom/original_atom, list/chosen_processing_option)
 	SIGNAL_HANDLER
 
 	if(!original_atom.reagents)
@@ -286,9 +322,9 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/this_food = parent
 
 	//Make sure we have a reagent container large enough to fit the original atom's reagents.
-	volume = max(volume, ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT]))
+	var/volume = ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT])
 
-	this_food.create_reagents(volume)
+	this_food.create_reagents(volume, this_food.reagents?.flags)
 	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], 1)
 
 	if(original_atom.name != initial(original_atom.name))
@@ -301,7 +337,6 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 
 	var/atom/this_food = parent
-
 	for(var/obj/item/food/crafted_part in parts_list)
 		if(!crafted_part.reagents)
 			continue
@@ -310,7 +345,7 @@ Behavior that's still missing from this component that original food items had t
 
 	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
 
-	BLACKBOX_LOG_FOOD_MADE(this_food.type)
+	BLACKBOX_LOG_FOOD_MADE(parent.type)
 
 ///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
@@ -347,12 +382,11 @@ Behavior that's still missing from this component that original food items had t
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
 	var/time_to_eat = (eater == feeder) ? eat_time : EAT_TIME_FORCE_FEED
-	if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+	if(HAS_TRAIT(eater, TRAIT_VORACIOUS) && !HAS_TRAIT(eater, TRAIT_GLUTTON)) //with TRAIT_GLUTTON you consume food without delay
 		if(fullness < NUTRITION_LEVEL_FAT || (eater != feeder)) // No extra delay when being forcefed
 			time_to_eat *= EAT_TIME_VORACIOUS_MULT
 		else
 			time_to_eat *= (fullness / NUTRITION_LEVEL_FAT) * EAT_TIME_VORACIOUS_FULL_MULT // takes longer to eat the more well fed you are
-
 	if(eater == feeder)//If you're eating it yourself.
 		if(eat_time > 0 && !do_after(feeder, time_to_eat, eater, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
 			return
@@ -364,12 +398,12 @@ Behavior that's still missing from this component that original food items had t
 		var/message_to_consumer = ""
 		var/message_to_blind_consumer = ""
 
-		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS))
+		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS) && !HAS_TRAIT(eater, TRAIT_GLUTTON))
 			to_chat(eater, span_warning("You don't feel like eating any more junk food at the moment!"))
 			return
 		else if(fullness > (600 * (1 + eater.overeatduration / (4000 SECONDS)))) // The more you eat - the more you can eat
-			if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
-				message_to_nearby_audience = span_notice("[eater] voraciously forces \the [parent] down [eater.p_their()] throat..")
+			if(HAS_TRAIT(eater, TRAIT_VORACIOUS) || HAS_TRAIT(eater, TRAIT_GLUTTON))
+				message_to_nearby_audience = span_notice("[eater] voraciously forces \the [parent] down [eater.p_their()] throat.")
 				message_to_consumer = span_notice("You voraciously force \the [parent] down your throat.")
 			else
 				message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
@@ -447,7 +481,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(!owner?.reagents)
+	if(!owner.reagents)
 		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
 		return FALSE
 	if(eater.satiety > -200)
@@ -464,7 +498,8 @@ Behavior that's still missing from this component that original food items had t
 	if(bitecount == 0)
 		apply_buff(eater)
 
-	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+	var/fraction = 0.3
+	fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = INGEST)
 	bitecount++
 
@@ -474,13 +509,12 @@ Behavior that's still missing from this component that original food items had t
 		On_Consume(eater, feeder)
 
 	//Invoke our after eat callback if it is valid
-	if(after_eat)
-		after_eat.Invoke(eater, feeder, bitecount)
+	after_eat?.Invoke(eater, feeder, bitecount)
 
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
 		var/mob/living/carbon/carbon_eater = eater
-		var/obj/item/organ/internal/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
 			stomach.after_eat(owner)
 
@@ -513,13 +547,13 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/apply_buff(mob/eater)
 	var/buff
 	var/recipe_complexity = get_recipe_complexity()
-	if(recipe_complexity == 0)
+	if(recipe_complexity <= 0)
 		return
 	var/obj/item/food/food = parent
-	if(!isnull(food.crafted_food_buff))
+	if(istype(food) && !isnull(food.crafted_food_buff))
 		buff = food.crafted_food_buff
 	else
-		buff = pick_weight(GLOB.food_buffs[recipe_complexity])
+		buff = pick_weight(GLOB.food_buffs[min(recipe_complexity, FOOD_COMPLEXITY_5)])
 	if(!isnull(buff))
 		var/mob/living/living_eater = eater
 		var/atom/owner = parent
@@ -546,10 +580,7 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 	var/food_quality = get_perceived_food_quality(gourmand)
-	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
-		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
-			to_chat(gourmand, span_warning("You feel your throat start to itch."))
-			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+	if(food_quality <= FOOD_QUALITY_DANGEROUS && gourmand.check_allergic_reaction(foodtypes, chance = 100, histamine_add = 10))
 		return
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
@@ -567,25 +598,33 @@ Behavior that's still missing from this component that original food items had t
 	if(food_quality == 0)
 		return // meh
 
-	food_quality = min(food_quality, FOOD_QUALITY_TOP)
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-	var/event = GLOB.food_quality_events[food_quality]
-	gourmand.add_mood_event("quality_food", event, timeout_mod)
+	var/datum/mood_event/event = GLOB.food_quality_events[food_quality]
+	event = new event.type
+	event.timeout *= timeout_mod
+	gourmand.add_mood_event("quality_food", event)
 	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 	var/quality_label = GLOB.food_quality_description[food_quality]
 	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
 
 /// Get the complexity of the crafted food
 /datum/component/edible/proc/get_recipe_complexity()
+	var/list/extra_complexity = list(0)
+	SEND_SIGNAL(parent, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, extra_complexity)
+	var/complexity_to_add = extra_complexity[1]
 	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
-		return 0 // It is factory made. Soulless.
+		return complexity_to_add // It is factory made. Soulless.
 	var/obj/item/food/food = parent
-	return food.crafting_complexity
+	return food.crafting_complexity + complexity_to_add
 
 /// Get food quality adjusted according to eater's preferences
-/datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
+/datum/component/edible/proc/get_perceived_food_quality(mob/living/eater)
 	var/food_quality = get_recipe_complexity()
+	var/list/extra_quality = list()
+	SEND_SIGNAL(eater, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, src, extra_quality)
+	for(var/quality in extra_quality)
+		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
@@ -614,7 +653,7 @@ Behavior that's still missing from this component that original food items had t
 		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
 		food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
 
-	return food_quality
+	return min(food_quality, FOOD_QUALITY_TOP)
 
 /// Get the number of matching food types in provided bitfields
 /datum/component/edible/proc/count_matching_foodtypes(bitfield_one, bitfield_two)
@@ -629,6 +668,7 @@ Behavior that's still missing from this component that original food items had t
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
+	SEND_SIGNAL(eater, COMSIG_LIVING_FINISH_EAT, parent, feeder)
 
 	on_consume?.Invoke(eater, feeder)
 	if (QDELETED(parent)) // might be destroyed by the callback
@@ -645,7 +685,7 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/living/basic/pet/dog/doggy)
 	SIGNAL_HANDLER
 
-	if(!isdog(doggy))
+	if(!isdog(doggy) || (food_flags & FOOD_NO_BITECOUNT)) //this entirely relies on bitecounts alas
 		return
 
 	var/atom/food = parent
@@ -660,7 +700,7 @@ Behavior that's still missing from this component that original food items had t
 	bitecount++
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
-	doggy.taste(food.reagents) // why should carbons get all the fun?
+	doggy.taste_container(food.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [food] was.")
 		doggy.manual_emote(satisfaction_text)
@@ -696,7 +736,9 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
-		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
+		eater.visible_message(span_warning("[eater] eats [food]!"), span_notice("You eat [food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(food)
 		return COMPONENT_ATOM_EATEN
+
+#undef DEFAULT_EDIBLE_VOLUME

@@ -9,17 +9,17 @@
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	reagents = /datum/reagents/plumbing/reaction_chamber
 
 	/**
 	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
-	var/list/required_reagents = list()
-
+	var/list/datum/reagent/required_reagents = list()
+	///list of catalyst reagents to take
+	var/list/datum/reagent/catalysts = list()
 	///our reagent goal has been reached, so now we lock our inputs and start emptying
 	var/emptying = FALSE
-
 	///towards which temperature do we build (except during draining)?
 	var/target_temperature = 300
 
@@ -27,47 +27,37 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
-/obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
-	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
-/// Handles properly detaching signal hooks.
-/obj/machinery/plumbing/reaction_chamber/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
-	return NONE
-
 /// Handles stopping the emptying process when the chamber empties.
-/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder)
 	SIGNAL_HANDLER
 
-	if(holder.total_volume <= CHEMICAL_VOLUME_ROUNDING && emptying) //we were emptying, but now we aren't
+	if(!holder.get_catalyst_excluded_volume()) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
-	return NONE
+		UnregisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
-	//half the power for getting reagents in
-	var/power_usage = active_power_usage * 0.5
+	if(!is_operational || !reagents.total_volume)
+		return
 
 	if(!emptying || reagents.is_reacting)
 		//adjust temperature of final solution
-		var/temp_diff = target_temperature - reagents.chem_temp
-		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
-			reagents.adjust_thermal_energy(temp_diff * HEATER_COEFFICIENT * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		var/energy = (target_temperature - reagents.chem_temp) * HEATER_COEFFICIENT * seconds_per_tick * reagents.heat_capacity()
+		reagents.adjust_thermal_energy(energy)
+		use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
 
 		//do other stuff with final solution
 		handle_reagents(seconds_per_tick)
 
-		//full power for doing reactions
-		power_usage *= 2
-
-	use_power(power_usage * seconds_per_tick)
-
-///For subtypes that want to do additional reagent handling
+/**
+ * For subtypes that want to do additional reagent handling
+ * Arguments
+ *
+ * * seconds_per_tick - passed down from process()
+ */
 /obj/machinery/plumbing/reaction_chamber/proc/handle_reagents(seconds_per_tick)
+	PROTECTED_PROC(TRUE)
+
 	return
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
@@ -91,7 +81,15 @@
 		reagent_data["volume"] = required_reagents[required_reagent]
 		reagents_data += list(reagent_data)
 
+	var/list/catalyst_data = list()
+	for(var/datum/reagent/required_catalyst as anything in catalysts)
+		var/list/reagent_data = list()
+		reagent_data["name"] = initial(required_catalyst.name)
+		reagent_data["volume"] = catalysts[required_catalyst]
+		catalyst_data += list(reagent_data)
+
 	.["reagents"] = reagents_data
+	.["catalysts"] = catalyst_data
 	.["emptying"] = emptying
 	.["temperature"] = round(reagents.chem_temp, 0.1)
 	.["targetTemp"] = target_temperature
@@ -107,31 +105,56 @@
 			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
 			if(!selected_reagent)
 				return FALSE
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return FALSE
 
 			var/datum/reagent/input_reagent = GLOB.name2reagent[selected_reagent]
 			if(!input_reagent)
 				return FALSE
 
-			if(!required_reagents.Find(input_reagent))
-				var/input_amount = text2num(params["amount"])
-				if(!isnull(input_amount))
-					required_reagents[input_reagent] = input_amount
-					return TRUE
-			return FALSE
+			if(catalysts[input_reagent])
+				return FALSE
+
+			var/input_amount = text2num(params["amount"])
+			if(!input_amount)
+				return FALSE
+			input_amount = round(input_amount, CHEMICAL_VOLUME_ROUNDING)
+
+			if(!required_reagents[input_reagent])
+				required_reagents[input_reagent] = input_amount
+				return TRUE
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
 				return TRUE
-			return FALSE
 
 		if("temperature")
 			var/target = text2num(params["target"])
 			if(!isnull(target))
 				target_temperature = clamp(target, 0, 1000)
 				return TRUE
-			return FALSE
+
+		if("catalyst")
+			var/reagent = get_chem_id(params["chem"])
+			if(!reagent)
+				return FALSE
+
+			if(!catalysts[reagent])
+				catalysts[reagent] = required_reagents[reagent]
+				required_reagents -= reagent
+				return TRUE
+
+		if("catremove")
+			var/reagent = get_chem_id(params["chem"])
+			if(!reagent)
+				return FALSE
+
+			if(catalysts[reagent])
+				required_reagents[reagent] = catalysts[reagent]
+				catalysts -= reagent
+				return TRUE
 
 	var/result = handle_ui_act(action, params, ui, state)
 	if(isnull(result))
@@ -140,6 +163,8 @@
 
 /// For custom handling of ui actions from inside a subtype
 /obj/machinery/plumbing/reaction_chamber/proc/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	PROTECTED_PROC(TRUE)
+
 	return null
 
 ///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting
@@ -173,10 +198,6 @@
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
 	if(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
-		//no power
-		if(machine_stat & NOPOWER)
-			return
-
 		//nothing to react with
 		var/num_of_reagents = length(reagents.reagent_list)
 		if(!num_of_reagents)
@@ -184,8 +205,8 @@
 
 		/**
 		 * figure out which buffer to transfer to restore balance
-		 * if solution is getting too basic(high ph) add some acid to lower it's value
-		 * else if solution is getting too acidic(low ph) add some base to increase it's value
+		 * if solution is getting too basic(high ph) add some acid to lower its value
+		 * else if solution is getting too acidic(low ph) add some base to increase its value
 		 */
 		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker.reagents : alkaline_beaker.reagents
 		if(!buffer.total_volume)
@@ -198,7 +219,7 @@
 			return
 
 		//some power for accurate ph balancing & keep track of attempts made
-		use_power(active_power_usage * 0.03 * buffer_amount)
+		use_energy(active_power_usage * 0.03 * buffer_amount)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

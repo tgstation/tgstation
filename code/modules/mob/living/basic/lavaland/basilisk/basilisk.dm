@@ -6,7 +6,7 @@
 	icon_living = "basilisk"
 	icon_dead = "basilisk_dead"
 	speak_emote = list("chimes")
-	damage_coeff = list(BRUTE = 1, BURN = 0.1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 0.1, TOX = 1, STAMINA = 0, OXY = 1)
 	speed = 20
 	maxHealth = 200
 	health = 200
@@ -16,7 +16,7 @@
 	attack_verb_continuous = "bites into"
 	attack_verb_simple = "bite into"
 	throw_blocked_message = "bounces off the shell of"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	ai_controller = /datum/ai_controller/basic_controller/basilisk
 	butcher_results = list(
@@ -30,7 +30,7 @@
 /mob/living/basic/mining/basilisk/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
-	ranged_attacks = AddComponent(/datum/component/ranged_attacks, projectile_type = /obj/projectile/temp/watcher, projectile_sound = 'sound/weapons/pierce.ogg')
+	ranged_attacks = AddComponent(/datum/component/ranged_attacks, projectile_type = /obj/projectile/temp/watcher, projectile_sound = 'sound/items/weapons/pierce.ogg')
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_lava))
 
 /mob/living/basic/mining/basilisk/Destroy()

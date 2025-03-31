@@ -1,6 +1,18 @@
-import { NtosWindow } from '../layouts';
+import {
+  Box,
+  Button,
+  Divider,
+  Input,
+  NoticeBox,
+  RestrictedInput,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Stack, Section, Box, Button, Input, Table, Tooltip, NoticeBox, Divider, RestrictedInput } from '../components';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   name: string;
@@ -16,7 +28,7 @@ type Transactions = {
 };
 let name_to_token, money_to_send, token;
 
-export const NtosPay = (props, context) => {
+export const NtosPay = (props) => {
   return (
     <NtosWindow width={495} height={655}>
       <NtosWindow.Content>
@@ -26,8 +38,8 @@ export const NtosPay = (props, context) => {
   );
 };
 
-export const NtosPayContent = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const NtosPayContent = (props) => {
+  const { data } = useBackend<Data>();
   const { name } = data;
 
   if (!name) {
@@ -55,8 +67,8 @@ export const NtosPayContent = (props, context) => {
 };
 
 /** Displays the user's name and balance. */
-const Introduction = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const Introduction = (props) => {
+  const { data } = useBackend<Data>();
   const { name, owner_token, money } = data;
   return (
     <Section textAlign="center">
@@ -72,18 +84,19 @@ const Introduction = (props, context) => {
 };
 
 /** Displays the transfer section. */
-const TransferSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TransferSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { money, wanted_token } = data;
 
   return (
     <Stack>
       <Stack.Item>
-        <Section vertical title="Transfer Money">
+        <Section title="Transfer Money">
           <Box>
             <Tooltip
               content="Enter the pay token of the account you want to transfer credits to."
-              position="top">
+              position="top"
+            >
               <Input
                 placeholder="Pay Token"
                 width="190px"
@@ -93,7 +106,8 @@ const TransferSection = (props, context) => {
           </Box>
           <Tooltip
             content="Enter amount of credits to transfer."
-            position="top">
+            position="top"
+          >
             <RestrictedInput
               width="83px"
               minValue={1}
@@ -139,19 +153,20 @@ const TransferSection = (props, context) => {
 };
 
 /** Displays the transaction history. */
-const TransactionHistory = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TransactionHistory = (props) => {
+  const { data } = useBackend<Data>();
   const { transaction_list = [] } = data;
 
   return (
     <Section fill title="Transaction History">
       <Section fill scrollable title={<TableHeaders />}>
         <Table>
-          {transaction_list.map((log) => (
+          {transaction_list.map((log, index) => (
             <Table.Row
-              key={log}
+              key={index}
               className="candystripe"
-              color={log.adjusted_money < 1 ? 'red' : 'green'}>
+              color={log.adjusted_money < 1 ? 'red' : 'green'}
+            >
               <Table.Cell width="100px">
                 {log.adjusted_money > 1 ? '+' : ''}
                 {log.adjusted_money}
@@ -166,7 +181,7 @@ const TransactionHistory = (props, context) => {
 };
 
 /** Renders a set of sticky headers */
-const TableHeaders = (props, context) => {
+const TableHeaders = (props) => {
   return (
     <Table>
       <Table.Row>

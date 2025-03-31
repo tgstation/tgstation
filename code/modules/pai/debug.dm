@@ -24,11 +24,11 @@
 
 	pai.name = chosen_name
 	pai.real_name = pai.name
-	pai.key = choice.key
+	pai.PossessByPlayer(choice.key)
 	card.set_personality(pai)
 	if(SSpai.candidates[key])
 		SSpai.candidates -= key
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Make pAI")
 
 /**
  * Creates a new pAI.
@@ -38,7 +38,7 @@
 /mob/proc/make_pai(delete_old)
 	var/obj/item/pai_card/card = new(src)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.key = key
+	pai.PossessByPlayer(key)
 	pai.name = name
 	card.set_personality(pai)
 	if(delete_old)

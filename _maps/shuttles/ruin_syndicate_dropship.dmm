@@ -376,9 +376,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Oe" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/super/full,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},

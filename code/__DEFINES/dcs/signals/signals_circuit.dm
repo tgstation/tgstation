@@ -22,6 +22,9 @@
 /// Sent when a circuit is removed from its shell
 #define COMSIG_CIRCUIT_SHELL_REMOVED "circuit_shell_removed"
 
+/// Send to [/obj/item/circuit_component] when it is added to a circuit. (/obj/item/integrated_circuit)
+#define COMSIG_CIRCUIT_COMPONENT_ADDED "circuit_component_added"
+
 /// Sent to [/obj/item/circuit_component] when it is removed from a circuit. (/obj/item/integrated_circuit)
 #define COMSIG_CIRCUIT_COMPONENT_REMOVED "circuit_component_removed"
 
@@ -75,3 +78,17 @@
 
 ///Called when an Ntnet sender is sending Ntnet data
 #define COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT "!circuit_ntnet_data_sent"
+
+/// Called when an equipment action component is added to a shell (/obj/item/circuit_component/equipment_action/action_comp)
+#define COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED "circuit_action_component_registered"
+
+/// Called when an equipment action component is removed from a shell (/obj/item/circuit_component/equipment_action/action_comp)
+#define COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED "circuit_action_component_unregistered"
+
+/// Called when an NFC sender sends data to this circuit
+#define COMSIG_CIRCUIT_NFC_DATA_SENT "circuit_nfc_data_receive"
+
+///Sent to the shell component when a circuit is attached.
+#define COMSIG_SHELL_CIRCUIT_ATTACHED "shell_circuit_attached"
+///Sent to the shell component when a circuit is removed.
+#define COMSIG_SHELL_CIRCUIT_REMOVED "shell_circuit_removed"

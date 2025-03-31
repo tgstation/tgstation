@@ -53,12 +53,12 @@
 	update_appearance()
 	to_chat(user, span_notice("You start pressing a new license plate!"))
 
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, 4 SECONDS, target = src))
 		pressing = FALSE
 		update_appearance()
 		return FALSE
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	to_chat(user, span_notice("You finish pressing a new license plate!"))
 
 	pressing = FALSE

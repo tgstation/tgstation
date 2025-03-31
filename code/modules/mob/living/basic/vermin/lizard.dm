@@ -46,16 +46,25 @@
 		/mob/living/basic/cockroach,
 	))
 
+/datum/emote/lizard
+	mob_type_allowed_typecache = /mob/living/basic/lizard
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/lizard/whicker
+	key = "tongue"
+	message = "sticks its tongue out contentedly!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/lizard/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/pet_bonus, "sticks its tongue out contentedly!")
+	AddElement(/datum/element/pet_bonus, "tongue")
 	AddElement(/datum/element/basic_eating, heal_amt = 5, food_types = edibles)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(edibles))
 
 /datum/ai_controller/basic_controller/lizard
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -63,7 +72,6 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/lizard,
 	)
 

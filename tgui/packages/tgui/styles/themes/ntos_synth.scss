@@ -8,23 +8,23 @@
 //@use 'sass:map';
 
 //palette
-$cyan: #5edba5;
-$pink: #ed12f5;
-$orange: #ff9900;
-$purple: #463191;
+$cyan: hsl(156, 65%, 60%);
+$pink: hsl(300, 91%, 52%);
+$orange: hsl(36, 100%, 50%);
+$purple: hsl(248, 47%, 37%);
 
 @use '../colors.scss' with (
-   $primary: $pink,
-   $label: $orange,
-   $good: $cyan,
-   // $fg-map-keys: (),
-   // $bg-map-keys: (),
- );
+  $primary: $pink,
+  $label: $orange,
+  $good: $cyan,
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
+);
 
 @use '../base.scss' with (
-   $color-bg: $purple,
-   $color-bg-grad-spread: 12%,
- );
+  $color-bg: $purple,
+  $color-bg-grad-spread: 12%
+);
 
 .theme-ntos_synth {
   // Atomic classes
@@ -32,26 +32,26 @@ $purple: #463191;
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': $cyan,
-      'color-transparent-text': rgba(227, 240, 255, 0.75),
-      'color-disabled': #363636,
-      'color-selected': #465899,
-      'color-caution': #be6209
+      'color-transparent-text': hsla(210, 100%, 94%, 0.75),
+      'color-disabled': hsl(0, 0%, 21%),
+      'color-selected': hsl(227, 37%, 45%),
+      'color-caution': hsl(30, 88%, 39%)
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('color-default-fill': rgba(237, 18, 245, 0.75))
+    '~tgui-core/styles/components/ProgressBar',
+    $with: ('color-default-fill': hsla(300, 91%, 52%, 0.75))
   );
   @include meta.load-css(
-    '../components/Section.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.3))
+    '~tgui-core/styles/components/Section',
+    $with: ('background-color': hsla(0, 0%, 0%, 0.3))
   );
   @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': rgba(255, 153, 0, 0.75))
+    '~tgui-core/styles/components/Tooltip',
+    $with: ('background-color': hsla(36, 100%, 50%, 0.75))
   );
 
   // Layouts
@@ -59,15 +59,15 @@ $purple: #463191;
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': rgba(3, 100, 117, 0.75))
+    $with: ('background-color': hsla(185, 95%, 23%, 0.75))
   );
 
   .Section {
     color: $cyan;
     background-image: linear-gradient(
       to right,
-      rgba(194, 0, 219, 0.75),
-      rgba(3, 100, 117, 0.75)
+      hsla(300, 100%, 42%, 0.75),
+      hsla(185, 95%, 23%, 0.75)
     );
   }
   .Button {
@@ -89,8 +89,8 @@ $purple: #463191;
     color: $cyan;
     background-image: linear-gradient(
       to right,
-      rgba(255, 153, 0, 0.4),
-      rgba(194, 0, 219, 0.75)
+      hsla(36, 100%, 50%, 0.4),
+      hsla(300, 100%, 42%, 0.75)
     );
   }
   .Tab--selected {

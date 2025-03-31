@@ -6,35 +6,35 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$neutral: #ffb300;
+$neutral: hsl(42.12, 100%, 50%);
 
 @use '../colors.scss' with (
-   $primary: $neutral,
-   $fg-map-keys: (),
-   $bg-map-keys: (),
- );
+  $primary: $neutral,
+  $fg-map-keys: (),
+  $bg-map-keys: ()
+);
 @use '../base.scss' with (
-   $color-bg: color.scale($neutral, $lightness: -40%),
-   $color-bg-grad-spread: 6%,
- );
+  $color-bg: color.scale($neutral, $lightness: -40%),
+  $color-bg-grad-spread: 6%
+);
 
 .theme-neutral {
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': color.scale($neutral, $lightness: -30%),
       'color-transparent-text': color.scale($neutral, $lightness: 30%)
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    '~tgui-core/styles/components/ProgressBar',
     $with: (
       'color-default-fill': $neutral,
       'background-color': rgba(0, 0, 0, 0.5)
     )
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

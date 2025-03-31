@@ -1,6 +1,6 @@
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
-	ammo_type = /obj/item/ammo_casing/a357
+	ammo_type = /obj/item/ammo_casing/c357
 	caliber = CALIBER_357
 	max_ammo = 7
 
@@ -15,7 +15,14 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/get_round()
 	rotate()
-	return stored_ammo[1]
+	var/casing = stored_ammo[1]
+	if (ispath(casing))
+		casing = new casing(src)
+		stored_ammo[1] = casing
+	return casing
+
+/obj/item/ammo_box/magazine/internal/cylinder/get_and_shuffle_round()
+	return get_round()
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
 	var/b = stored_ammo[1]
@@ -27,7 +34,7 @@
 		rotate()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_list()
-	var/list/no_nulls_ammo = stored_ammo.Copy()
+	var/list/no_nulls_ammo = ..()
 	list_clear_nulls(no_nulls_ammo)
 	return no_nulls_ammo
 
@@ -37,14 +44,15 @@
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if(!bullet || !bullet.loaded_projectile) // found a spent ammo
-			stored_ammo[i] = R
-			R.forceMove(src)
+		if (istype(bullet) && bullet.loaded_projectile)
+			continue
+		// found a spent ammo
+		stored_ammo[i] = R
+		R.forceMove(src)
 
-			if(bullet)
-				bullet.forceMove(drop_location())
-			return TRUE
-
+		if(bullet)
+			bullet.forceMove(drop_location())
+		return TRUE
 	return FALSE
 
 /obj/item/ammo_box/magazine/internal/cylinder/top_off(load_type, starting=FALSE)

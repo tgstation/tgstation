@@ -11,7 +11,7 @@
 	desc = "A vending machine restock cart."
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 7
 	throwforce = 10
 	throw_speed = 1
@@ -19,8 +19,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/item_vending_refill
 
-	// Built automatically from the corresponding vending machine.
-	// If null, considered to be full. Otherwise, is list(/typepath = amount).
+	/**
+	 * Built automatically from the corresponding vending machine.
+	 * If null, considered to be full. Otherwise, is list(/typepath = amount).
+	 */
 	var/list/products
 	var/list/product_categories
 	var/list/contraband

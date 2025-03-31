@@ -1,11 +1,20 @@
-import { Button, Icon, Input, NoticeBox, Section, Stack, Table, Tooltip } from '../components';
-import { TableCell, TableRow } from '../components/Table';
-import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import {
+  Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
+import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
-import { Window } from '../layouts';
 
 type Data = {
   items: string[];
@@ -17,8 +26,8 @@ type Data = {
 };
 
 /** Renders a list of checkboxes per items for input. */
-export const CheckboxInput = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const CheckboxInput = (props) => {
+  const { data } = useBackend<Data>();
   const {
     items = [],
     min_checked,
@@ -28,17 +37,9 @@ export const CheckboxInput = (props, context) => {
     title,
   } = data;
 
-  const [selections, setSelections] = useLocalState<string[]>(
-    context,
-    'selections',
-    []
-  );
+  const [selections, setSelections] = useState<string[]>([]);
 
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    context,
-    'searchQuery',
-    ''
-  );
+  const [searchQuery, setSearchQuery] = useState('');
   const search = createSearch(searchQuery, (item: string) => item);
   const toDisplay = items.filter(search);
 
@@ -49,6 +50,12 @@ export const CheckboxInput = (props, context) => {
 
     setSelections(newSelections);
   };
+
+  const selectionsWithIndexes = (
+    selections: string[],
+    items: string[],
+  ): [string, number][] =>
+    selections.map((selected) => [selected, items.indexOf(selected) + 1]);
 
   return (
     <Window title={title} width={425} height={300}>
@@ -66,8 +73,8 @@ export const CheckboxInput = (props, context) => {
             <Section fill scrollable>
               <Table>
                 {toDisplay.map((item, index) => (
-                  <TableRow className="candystripe" key={index}>
-                    <TableCell>
+                  <Table.Row className="candystripe" key={index}>
+                    <Table.Cell>
                       <Button.Checkbox
                         checked={selections.includes(item)}
                         disabled={
@@ -75,11 +82,12 @@ export const CheckboxInput = (props, context) => {
                           !selections.includes(item)
                         }
                         fluid
-                        onClick={() => selectItem(item)}>
+                        onClick={() => selectItem(item)}
+                      >
                         {item}
                       </Button.Checkbox>
-                    </TableCell>
-                  </TableRow>
+                    </Table.Cell>
+                  </Table.Row>
                 ))}
               </Table>
             </Section>
@@ -100,7 +108,7 @@ export const CheckboxInput = (props, context) => {
           </Stack>
           <Stack.Item mt={0.7}>
             <Section>
-              <InputButtons input={selections} />
+              <InputButtons input={selectionsWithIndexes(selections, items)} />
             </Section>
           </Stack.Item>
         </Stack>

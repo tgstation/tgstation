@@ -19,6 +19,8 @@
 	melee_damage_upper = 25
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
+	bite_injection_flags = INJECT_CHECK_PENETRATE_THICK
+	max_grab = GRAB_AGGRESSIVE
 	/// Actions to grant on Initialize
 	var/list/innate_actions = null
 
@@ -108,6 +110,11 @@
 	. = ..()
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
+///Used in the caves away mission.
+/mob/living/basic/spider/giant/hunter/away_caves
+	minimum_survivable_temperature = 0
+	gold_core_spawnable = NO_SPAWN
+
 /**
  * ### Scout Spider
  * A subtype of the giant spider which is faster, has thermal vision, but less health and damage.
@@ -165,14 +172,20 @@
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
+///Used in the caves away mission.
+/mob/living/basic/spider/giant/nurse/away_caves
+	minimum_survivable_temperature = 0
+	gold_core_spawnable = NO_SPAWN
+
 /mob/living/basic/spider/giant/nurse/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 25,\
-		heal_burn = 25,\
+		heal_brute = 10,\
+		heal_burn = 10,\
+		heal_time = 2.5 SECONDS,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
@@ -253,13 +266,13 @@
 	icon_dead = "tank_dead"
 	maxHealth = 500
 	health = 500
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	obj_damage = 15
 	speed = 5
 	player_speed_modifier = -4
-	menu_description = "Extremly tanky with very poor offence. Able to self heal and lay reflective silk screens."
+	menu_description = "Extremely tanky with very poor offence. Able to self heal and lay reflective silk screens."
 
 /mob/living/basic/spider/giant/tank/Initialize(mapload)
 	. = ..()
@@ -306,7 +319,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
+	minimum_survivable_temperature = 75
 	maximum_survivable_temperature = 700
 	unsuitable_cold_damage = 0
 	wound_bonus = 25
@@ -318,7 +331,7 @@
 	speed = 5
 	player_speed_modifier = -4
 	sight = SEE_TURFS
-	menu_description = "Atmospherically resistant with the ability to destroy walls and limbs, and to send warnings to the nest."
+	menu_description = "Has the ability to destroy walls and limbs, and to send warnings to the nest."
 
 /mob/living/basic/spider/giant/breacher/Initialize(mapload)
 	. = ..()
@@ -349,7 +362,7 @@
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	obj_damage = 100
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 0, OXY = 1)
 	speed = 6
 	player_speed_modifier = -5.5 // Doesn't seem that slow but it gets a debuff off web
 	mob_size = MOB_SIZE_LARGE
@@ -463,7 +476,7 @@
  */
 /mob/living/basic/spider/giant/ice
 	name = "giant ice spider"
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	color = rgb(114,228,250)
@@ -477,7 +490,7 @@
  */
 /mob/living/basic/spider/giant/nurse/ice
 	name = "giant ice spider"
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	poison_type = /datum/reagent/consumable/frostoil
@@ -491,7 +504,7 @@
  */
 /mob/living/basic/spider/giant/hunter/ice
 	name = "giant ice spider"
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	poison_type = /datum/reagent/consumable/frostoil
@@ -561,7 +574,7 @@
 	web_speed = 0.4
 	maxHealth = 80
 	health = 80
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	unsuitable_cold_damage = 1
 	unsuitable_heat_damage = 1
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
@@ -595,6 +608,6 @@
 
 /mob/living/basic/spider/giant/sgt_araneus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "chitters proudly!")
+	AddElement(/datum/element/pet_bonus, "chitter")
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

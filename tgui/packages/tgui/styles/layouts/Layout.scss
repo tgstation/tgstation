@@ -4,13 +4,29 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
+@use '../base';
+@use '../functions.scss' as *;
 
+$luminance: luminance(base.$color-bg);
 $scrollbar-color-multiplier: 1 !default;
+$scrollbar-base: color.scale(
+  base.$color-bg,
+  $lightness: -33% * $scrollbar-color-multiplier
+);
+$scrollbar-face: color.scale(
+  base.$color-bg,
+  $lightness: if($luminance > 0.05, 30%, 10%) * $scrollbar-color-multiplier
+);
 
+// Fancy scrollbar
+html,
+body {
+  scrollbar-color: $scrollbar-face $scrollbar-base;
+}
+
+// Remove with 516, IE legacy code
 .Layout,
 .Layout * {
-  // Fancy scrollbar
   scrollbar-base-color: color.scale(
     base.$color-bg,
     $lightness: -25% * $scrollbar-color-multiplier

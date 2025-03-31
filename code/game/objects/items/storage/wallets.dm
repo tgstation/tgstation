@@ -9,6 +9,7 @@
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
+	var/overlay_icon_state = "wallet_overlay"
 
 /obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
@@ -18,17 +19,15 @@
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
-		/obj/item/clothing/mask/cigarette,
-		/obj/item/coupon,
-		/obj/item/flashlight/pen,
-		/obj/item/folder/biscuit,
-		/obj/item/seeds,
-		/obj/item/stack/medical,
-		/obj/item/toy/crayon,
+		/obj/item/cigarette,
+		/obj/item/clothing/accessory/dogtag,
 		/obj/item/coin,
-		/obj/item/food/chococoin,
+		/obj/item/coupon,
 		/obj/item/dice,
 		/obj/item/disk,
+		/obj/item/flashlight/pen,
+		/obj/item/folder/biscuit,
+		/obj/item/food/chococoin,
 		/obj/item/implanter,
 		/obj/item/laser_pointer,
 		/obj/item/lighter,
@@ -39,10 +38,13 @@
 		/obj/item/photo,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/screwdriver,
+		/obj/item/seeds,
 		/obj/item/spess_knife,
-		/obj/item/stamp),
+		/obj/item/stack/medical,
+		/obj/item/stamp,
+		/obj/item/toy/crayon),
 		list(/obj/item/screwdriver/power))
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
@@ -102,23 +104,21 @@
 		return
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
-	. += mutable_appearance(icon, "wallet_overlay")
+	. += mutable_appearance(icon, overlay_icon_state)
 
 /obj/item/storage/wallet/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
 		cached_flat_icon = getFlatIcon(src)
 	return cached_flat_icon
 
-/obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
-	if(front_id)
-		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
-	return ..()
+/obj/item/storage/wallet/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /obj/item/storage/wallet/proc/update_label()
 	if(front_id)
-		name = "wallet displaying [front_id]"
+		name = "[src::name] displaying [front_id]"
 	else
-		name = "wallet"
+		name = src::name
 
 /obj/item/storage/wallet/examine()
 	. = ..()
@@ -173,4 +173,3 @@
 /obj/item/storage/wallet/money/PopulateContents()
 	for(var/iteration in 1 to pick(3, 4))
 		new /obj/item/holochip(src, rand(50, 450))
-

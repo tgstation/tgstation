@@ -19,7 +19,7 @@
 		return
 	var/area/rift_location = get_area(owner)
 	if(!(rift_location in dragon.chosen_rift_areas))
-		owner.balloon_alert(owner, "can't summon a rift here!")
+		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
 		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
@@ -44,9 +44,8 @@
 	notify_ghosts(
 		"The Space Dragon has opened a rift!",
 		source = new_rift,
-		action = NOTIFY_ORBIT,
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "Carp Rift Opened",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
 	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
@@ -112,6 +111,8 @@
 		healing_color = COLOR_BLUE, \
 	)
 
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/carp_rift)
+
 	gravity_aura = new(
 		/* host = */src,
 		/* range = */15,
@@ -142,7 +143,7 @@
 		. += span_notice("It has [carp_stored] carp available to spawn as.")
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE)
 
 /obj/structure/carp_rift/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -161,7 +162,7 @@
 			newcarp.faction = dragon.owner.current.faction.Copy()
 		if(SPT_PROB(1.5, seconds_per_tick))
 			var/rand_dir = pick(GLOB.cardinals)
-			SSmove_manager.move_to(src, get_step(src, rand_dir), 1)
+			GLOB.move_manager.move_to(src, get_step(src, rand_dir), 1)
 		return
 
 	// Increase time trackers and check for any updated states.
@@ -198,9 +199,8 @@
 		notify_ghosts(
 			"The carp rift can summon an additional carp!",
 			source = src,
-			action = NOTIFY_ORBIT,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 			header = "Carp Spawn Available",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 		last_carp_inc -= carp_interval
 
@@ -265,7 +265,7 @@
 
 	if(!is_listed)
 		ckey_list += user.ckey
-	newcarp.key = user.key
+	newcarp.PossessByPlayer(user.key)
 	newcarp.set_name()
 	var/datum/antagonist/space_carp/carp_antag = new(src)
 	newcarp.mind.add_antag_datum(carp_antag)

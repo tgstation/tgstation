@@ -21,7 +21,6 @@
 		if(SOUTH)
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(EAST)
 			target_pixel_x = 16
 		if(WEST)
@@ -36,12 +35,10 @@
 			target_pixel_x = 16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(SOUTHWEST)
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
@@ -59,6 +56,12 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect"
 	duration = 3
+
+/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
+	. = ..()
+	if (ismovable(loc))
+		var/atom/movable/spawned_inside = loc
+		spawned_inside.vis_contents += src
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
@@ -248,7 +251,7 @@
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "3"
+	icon_state = "heavy"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
@@ -301,14 +304,6 @@
 
 /obj/effect/temp_visual/gib_animation/animal
 	icon = 'icons/mob/simple/animal.dmi'
-
-/obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/simple/mob.dmi'
-	duration = 15
-
-/obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
-	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
-	. = ..()
 
 /obj/effect/temp_visual/mummy_animation
 	icon = 'icons/mob/simple/mob.dmi'
@@ -405,7 +400,12 @@
 	duration = 6
 
 /obj/effect/temp_visual/impact_effect/neurotoxin
-	icon_state = "impact_neurotoxin"
+	icon_state = "impact_spit"
+	color = "#5BDD04"
+
+/obj/effect/temp_visual/impact_effect/ink_spit
+	icon_state = "impact_spit"
+	color = COLOR_NEARLY_ALL_BLACK
 
 /obj/effect/temp_visual/heart
 	name = "heart"
@@ -443,8 +443,7 @@
 	var/size_matrix = matrix()
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
-		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/world.icon_size)
+		size_matrix = matrix() * (size_calc_target.get_visual_height() / ICON_SIZE_Y)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -495,7 +494,7 @@
 	duration = 2 SECONDS
 
 /obj/effect/constructing_effect
-	icon = 'icons/effects/effects_rcd.dmi'
+	icon = 'icons/effects/rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -558,7 +557,7 @@
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
-		addtimer(CALLBACK(src, PROC_REF(end)), 15)
+		addtimer(CALLBACK(src, PROC_REF(end)), 1.5 SECONDS)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
@@ -566,7 +565,7 @@
 /obj/effect/constructing_effect/proc/attacked(mob/user)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
 /obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
@@ -618,8 +617,10 @@
 	creature_x = creature.x
 	creature_y = creature.y
 
-	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER)
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	modsuit_image.pixel_w = (creature.x - looker.x) * 32
+	modsuit_image.pixel_z = (creature.y - looker.y) * 32
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
 	pinged_person = WEAKREF(creature)
@@ -654,8 +655,8 @@
 	if(follow_creature)
 		creature_y = creature.y
 		creature_x = creature.x
-	modsuit_image.pixel_x = ((creature_x - looker.x) * 32)
-	modsuit_image.pixel_y = ((creature_y - looker.y) * 32)
+	modsuit_image.pixel_w = ((creature_x - looker.x) * 32)
+	modsuit_image.pixel_z = ((creature_y - looker.y) * 32)
 
 /obj/effect/temp_visual/block //color is white by default, set to whatever is needed
 	name = "blocking glow"
@@ -686,11 +687,11 @@
 	duration = 0.4 SECONDS
 
 /// Plays a dispersing animation on hivelord and legion minions so they don't just vanish
-/obj/effect/temp_visual/hive_spawn_wither
+/obj/effect/temp_visual/despawn_effect
 	name = "withering spawn"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/hive_spawn_wither/Initialize(mapload, atom/copy_from)
+/obj/effect/temp_visual/despawn_effect/Initialize(mapload, atom/copy_from)
 	if (isnull(copy_from))
 		. = ..()
 		return INITIALIZE_HINT_QDEL
@@ -712,3 +713,37 @@
 		flags = ANIMATION_RELATIVE,
 	)
 	return ..()
+
+/obj/effect/temp_visual/mech_sparks
+	name = "mech sparks"
+	icon_state = "mech_sparks"
+	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/mech_sparks/Initialize(mapload, set_color)
+	. = ..()
+	pixel_x = rand(-16, 16)
+	pixel_y = rand(-8, 8)
+
+/obj/effect/temp_visual/mech_attack_aoe_charge
+	name = "mech attack aoe charge"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "mech_attack_aoe_charge"
+	duration = 1 SECONDS
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/mech_attack_aoe_attack
+	name = "mech attack aoe attack"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "mech_attack_aoe_attack"
+	duration = 0.5 SECONDS
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/spotlight
+	name = "Spotlight"
+	icon = 'icons/effects/light_overlays/light_64.dmi'
+	icon_state = "spotlight"
+	duration = 5 MINUTES
+	pixel_x = -16
+	pixel_y = -8 //32

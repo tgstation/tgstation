@@ -1,15 +1,13 @@
-#define UPPER_LIP "Upper"
-#define MIDDLE_LIP "Middle"
-#define LOWER_LIP "Lower"
-
 /obj/item/lipstick
 	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "lipstick"
+	base_icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/open = FALSE
 	/// Actual color of the lipstick, also gets applied to the human
 	var/lipstick_color = COLOR_RED
@@ -17,6 +15,8 @@
 	var/style = "lipstick"
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
 	var/lipstick_trait
+	/// Can this lipstick spawn randomly
+	var/random_spawn = TRUE
 
 /obj/item/lipstick/Initialize(mapload)
 	. = ..()
@@ -33,8 +33,8 @@
 	. += "Alt-click to change the style."
 
 /obj/item/lipstick/update_icon_state()
-	icon_state = "lipstick[open ? "_uncap" : null]"
-	inhand_icon_state = "lipstick[open ? "open" : null]"
+	icon_state = "[base_icon_state][open ? "_uncap" : null]"
+	inhand_icon_state = "[base_icon_state][open ? "open" : null]"
 	return ..()
 
 /obj/item/lipstick/update_overlays()
@@ -45,15 +45,9 @@
 	colored_overlay.color = lipstick_color
 	. += colored_overlay
 
-/obj/item/lipstick/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return TRUE
-
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
-		return FALSE
-
-	return display_radial_menu(user)
+/obj/item/lipstick/click_alt(mob/user)
+	display_radial_menu(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/lipstick/proc/display_radial_menu(mob/living/carbon/human/user)
 	var/style_options = list(
@@ -77,7 +71,7 @@
 /obj/item/lipstick/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(src))
+	if(user.incapacitated || !user.is_holding(src))
 		return FALSE
 	return TRUE
 
@@ -109,6 +103,16 @@
 	name = "\improper Kiss of Death"
 	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
 	lipstick_trait = TRAIT_KISS_OF_DEATH
+	random_spawn = FALSE
+
+/obj/item/lipstick/syndie
+	name = "syndie lipstick"
+	desc = "Syndicate branded lipstick with a killer dose of kisses. Observe safety regulations!"
+	icon_state = "slipstick"
+	base_icon_state = "slipstick"
+	lipstick_color = COLOR_SYNDIE_RED
+	lipstick_trait = TRAIT_SYNDIE_KISS
+	random_spawn = FALSE
 
 /obj/item/lipstick/random
 	name = "lipstick"
@@ -121,7 +125,7 @@
 	if(!possible_colors)
 		possible_colors = list()
 		for(var/obj/item/lipstick/lipstick_path as anything in (typesof(/obj/item/lipstick) - src.type))
-			if(!initial(lipstick_path.lipstick_color))
+			if(!initial(lipstick_path.lipstick_color) || !initial(lipstick_path.random_spawn))
 				continue
 			possible_colors[initial(lipstick_path.lipstick_color)] = initial(lipstick_path.name)
 	lipstick_color = pick(possible_colors)
@@ -176,7 +180,7 @@
 
 	user.visible_message(span_warning("[user] begins to wipe [target]'s lipstick off with \the [src]."), \
 		span_notice("You begin to wipe off [target]'s lipstick..."))
-	if(!do_after(user, 10, target = target))
+	if(!do_after(user, 1 SECONDS, target = target))
 		return
 	user.visible_message(span_notice("[user] wipes [target]'s lipstick off with \the [src]."), \
 		span_notice("You wipe off [target]'s lipstick."))
@@ -188,13 +192,13 @@
 	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "razor"
 	inhand_icon_state = "razor"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
-	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
+	shave(user, BODY_ZONE_HEAD)//doesn't need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/skinhead, location = BODY_ZONE_PRECISE_MOUTH)
@@ -202,7 +206,7 @@
 		skinhead.set_facial_hairstyle("Shaved", update = TRUE)
 	else
 		skinhead.set_hairstyle("Skinhead", update = TRUE)
-	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
+	playsound(loc, 'sound/items/tools/welder2.ogg', 20, TRUE)
 
 /obj/item/razor/attack(mob/target_mob, mob/living/user, params)
 	if(!ishuman(target_mob))
@@ -222,7 +226,7 @@
 					return
 				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
-				var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+				var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 				if(isnull(new_style))
 					return
 				if(!get_location_accessible(human_target, location))
@@ -235,6 +239,7 @@
 					to_chat(user, span_warning("[human_target] is just way too shaved. Like, really really shaved."))
 					return
 				user.visible_message(span_notice("[user] tries to change [human_target]'s facial hairstyle using [src]."), span_notice("You try to change [human_target]'s facial hairstyle using [src]."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(new_style && do_after(user, 6 SECONDS, target = human_target))
 					user.visible_message(span_notice("[user] successfully changes [human_target]'s facial hairstyle using [src]."), span_notice("You successfully change [human_target]'s facial hairstyle using [src]."))
 					human_target.set_facial_hairstyle(new_style, update = TRUE)
@@ -255,6 +260,7 @@
 			if(human_target == user) //shaving yourself
 				user.visible_message(span_notice("[user] starts to shave [user.p_their()] facial hair with [src]."), \
 					span_notice("You take a moment to shave your facial hair with [src]..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = user))
 					user.visible_message(span_notice("[user] shaves [user.p_their()] facial hair clean with [src]."), \
 						span_notice("You finish shaving with [src]. Fast and clean!"))
@@ -263,6 +269,7 @@
 			else
 				user.visible_message(span_warning("[user] tries to shave [human_target]'s facial hair with [src]."), \
 					span_notice("You start shaving [human_target]'s facial hair..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = human_target))
 					user.visible_message(span_warning("[user] shaves off [human_target]'s facial hair with [src]."), \
 						span_notice("You shave [human_target]'s facial hair clean off."))
@@ -275,7 +282,7 @@
 				return
 			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return
-			var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+			var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", SSaccessories.hairstyles_list)
 			if(isnull(new_style))
 				return
 			if(!get_location_accessible(human_target, location))
@@ -288,6 +295,7 @@
 				to_chat(user, span_warning("[human_target] is just way too bald. Like, really really bald."))
 				return
 			user.visible_message(span_notice("[user] tries to change [human_target]'s hairstyle using [src]."), span_notice("You try to change [human_target]'s hairstyle using [src]."))
+			playsound(src, 'sound/items/hair-clippers.ogg', 50)
 			if(new_style && do_after(user, 6 SECONDS, target = human_target))
 				user.visible_message(span_notice("[user] successfully changes [human_target]'s hairstyle using [src]."), span_notice("You successfully change [human_target]'s hairstyle using [src]."))
 				human_target.set_hairstyle(new_style, update = TRUE)
@@ -306,6 +314,7 @@
 			if(human_target == user) //shaving yourself
 				user.visible_message(span_notice("[user] starts to shave [user.p_their()] head with [src]."), \
 					span_notice("You start to shave your head with [src]..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = user))
 					user.visible_message(span_notice("[user] shaves [user.p_their()] head with [src]."), \
 						span_notice("You finish shaving with [src]."))
@@ -314,6 +323,7 @@
 			else
 				user.visible_message(span_warning("[user] tries to shave [human_target]'s head with [src]!"), \
 					span_notice("You start shaving [human_target]'s head..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = human_target))
 					user.visible_message(span_warning("[user] shaves [human_target]'s head bald with [src]!"), \
 						span_notice("You shave [human_target]'s head bald."))
@@ -329,7 +339,3 @@
 
 /obj/item/razor/surgery/get_surgery_tool_overlay(tray_extended)
 	return "razor"
-
-#undef UPPER_LIP
-#undef MIDDLE_LIP
-#undef LOWER_LIP

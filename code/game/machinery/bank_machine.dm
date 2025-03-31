@@ -73,7 +73,7 @@
 		end_siphon()
 		return
 
-	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 	syphoning_credits += siphon_am
 	synced_bank_account.adjust_money(-siphon_am)
 	if(next_warning < world.time && prob(15))
@@ -105,13 +105,22 @@
 
 	switch(action)
 		if("siphon")
-			say("Siphon of station credits has begun!")
-			start_siphon(ui.user)
+			if(is_station_level(src.z) || is_centcom_level(src.z))
+				say("Siphon of station credits has begun!")
+				start_siphon(ui.user)
+			else
+				say("Error: Console not in reach of station, withdrawal cannot begin.")
 			. = TRUE
 		if("halt")
 			say("Station credit withdrawal halted.")
 			end_siphon()
 			. = TRUE
+
+/obj/machinery/computer/bank_machine/on_changed_z_level()
+	. = ..()
+	if(siphoning && !(is_station_level(src.z) || is_centcom_level(src.z)))
+		say("Error: Console not in reach of station. Siphon halted.")
+		end_siphon()
 
 /obj/machinery/computer/bank_machine/proc/end_siphon()
 	siphoning = FALSE

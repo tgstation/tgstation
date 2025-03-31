@@ -1,13 +1,19 @@
-import { Button, Collapsible, Flex, Section, Stack } from 'tgui/components';
-import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
+import { useBackend } from 'tgui/backend';
+import { Window } from 'tgui/layouts';
+import {
+  Button,
+  Collapsible,
+  Flex,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
-import { BooleanLike } from 'common/react';
+import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 import { HypertorusGases } from './Gases';
 import { HypertorusParameters } from './Parameters';
 import { HypertorusRecipes } from './Recipes';
 import { HypertorusTemperatures } from './Temperatures';
-import { Window } from 'tgui/layouts';
-import { useBackend } from 'tgui/backend';
 
 export type HypertorusData = {
   start_power: number;
@@ -44,8 +50,8 @@ export type HypertorusFuel = {
   temperature_multiplier: number;
 };
 
-const HypertorusMainControls = (props, context) => {
-  const { act, data } = useBackend<HypertorusData>(context);
+const HypertorusMainControls = (props) => {
+  const { act, data } = useBackend<HypertorusData>();
   const {
     start_power,
     start_cooling,
@@ -124,7 +130,7 @@ const HypertorusLayout = () => {
   );
 };
 
-export const Hypertorus = (props, context) => {
+export const Hypertorus = (props) => {
   // The HFR has a ridiculous amount of knobs and information.
   // Ideally we'd display a large window for it all...
   const idealWidth = 850,
@@ -142,7 +148,8 @@ export const Hypertorus = (props, context) => {
     <Window
       title="Hypertorus Fusion Reactor control panel"
       width={width}
-      height={height}>
+      height={height}
+    >
       <Window.Content scrollable>
         <HypertorusLayout />
       </Window.Content>

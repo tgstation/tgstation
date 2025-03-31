@@ -10,7 +10,7 @@
 	L = new()
 	cmp = compare
 
-/datum/heap/Destroy(force, ...)
+/datum/heap/Destroy(force)
 	for(var/i in L) // because this is before the list helpers are loaded
 		qdel(i)
 	L = null
@@ -26,7 +26,7 @@
 	swim(length(L))
 
 //removes and returns the first element of the heap
-//(i.e the max or the min dependant on the comparison function)
+//(i.e the max or the min dependent on the comparison function)
 /datum/heap/proc/pop()
 	if(!length(L))
 		return 0

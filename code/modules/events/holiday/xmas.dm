@@ -14,7 +14,7 @@
 		joke_paper.name = "[pick("awful","terrible","unfunny")] joke"
 		joke_paper.add_raw_text(pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
 			"Why couldn't the snowman get laid?\n\n<i>He was frigid!</i>",
-			"Where are santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
+			"Where are Santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
 			"What happened to the man who stole advent calanders?\n\n<i>He got 25 days.</i>",
 			"What does Santa get when he gets stuck in a chimney?\n\n<i>Claus-trophobia.</i>",
 			"Where do you find chili beans?\n\n<i>The north pole.</i>",
@@ -70,25 +70,25 @@
 /datum/round_event_control/santa
 	name = "Visit by Santa"
 	holidayID = CHRISTMAS
-	typepath = /datum/round_event/santa
+	typepath = /datum/round_event/ghost_role/santa
 	weight = 20
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_HOLIDAY
-	description = "Spawns santa, who shall roam the station, handing out gifts."
+	description = "Spawns Santa, who shall roam the station, handing out gifts."
 
-/datum/round_event/santa
+/datum/round_event/ghost_role/santa
+	role_name = "Santa"
 	var/mob/living/carbon/human/santa //who is our santa?
 
-/datum/round_event/santa/announce(fake)
+/datum/round_event/ghost_role/santa/announce(fake)
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
-/datum/round_event/santa/start()
-	var/list/candidates = poll_ghost_candidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
-		santa.key = C.key
-
-		var/datum/antagonist/santa/A = new
-		santa.mind.add_antag_datum(A)
+/datum/round_event/ghost_role/santa/start()
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Santa is coming to town! Do you want to be [span_notice("Santa")]?", poll_time = 15 SECONDS, alert_pic = /obj/item/clothing/head/costume/santa, role_name_text = "Santa", amount_to_pick = 1)
+	if(isnull(chosen_one))
+		return NOT_ENOUGH_PLAYERS
+	santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
+	santa.PossessByPlayer(chosen_one.key)
+	var/datum/antagonist/santa/A = new
+	santa.mind.add_antag_datum(A)

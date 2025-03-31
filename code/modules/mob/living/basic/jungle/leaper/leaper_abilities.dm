@@ -10,7 +10,6 @@
 	projectile_type = /obj/projectile/leaper
 	projectile_sound = 'sound/effects/snap.ogg'
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 
 // bubble ability objects and effects
 /obj/projectile/leaper
@@ -42,7 +41,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "leaper_bubble_pop"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 3 SECONDS
 
 /obj/effect/temp_visual/leaper_projectile_impact/Initialize(mapload)
@@ -116,11 +114,10 @@
 	button_icon_state = "blood_effect_falling"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
-	desc = "Rain down poisonous dropplets of blood!"
+	desc = "Rain down poisonous droplets of blood!"
 	cooldown_time = 10 SECONDS
 	click_to_activate = FALSE
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	/// how many droplets we will fire
 	var/volley_count = 8
 	/// time between each droplet launched
@@ -138,7 +135,7 @@
 	if(!length(possible_turfs))
 		return FALSE
 
-	playsound(owner, 'sound/magic/fireball.ogg', 70, TRUE)
+	playsound(owner, 'sound/effects/magic/fireball.ogg', 70, TRUE)
 	new /obj/effect/temp_visual/blood_drop_rising(get_turf(owner))
 	addtimer(CALLBACK(src, PROC_REF(fire_droplets), possible_turfs), 1.5 SECONDS)
 	StartCooldown()
@@ -160,7 +157,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "leaper"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 1 SECONDS
 
 /obj/effect/temp_visual/blood_drop_rising/Initialize(mapload)
@@ -172,7 +168,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blood_effect_falling"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 0.7 SECONDS
 	pixel_y = 60
 
@@ -200,7 +195,6 @@
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 
 /datum/action/cooldown/mob_cooldown/belly_flop/Activate(atom/target)
 	var/turf/target_turf = get_turf(target)

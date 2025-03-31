@@ -1,4 +1,4 @@
-/world/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
+/world/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE, datum/tgs_http_handler/http_handler = null)
 	var/current_api = TGS_READ_GLOBAL(tgs)
 	if(current_api)
 		TGS_ERROR_LOG("API datum already set (\ref[current_api] ([current_api]))! Was TgsNew() called more than once?")
@@ -42,11 +42,11 @@
 
 	var/datum/tgs_version/max_api_version = TgsMaximumApiVersion();
 	if(version.suite != null && version.minor != null && version.patch != null && version.deprecated_patch != null && version.deprefixed_parameter > max_api_version.deprefixed_parameter)
-		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
+		TGS_ERROR_LOG("Detected unknown Interop API version! Defaulting to latest. Update the DMAPI to fix this problem.")
 		api_datum = /datum/tgs_api/latest
 
 	if(!api_datum)
-		TGS_ERROR_LOG("Found unsupported API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
+		TGS_ERROR_LOG("Found unsupported Interop API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
 		return
 
 	TGS_INFO_LOG("Activating API for version [version.deprefixed_parameter]")
@@ -55,7 +55,10 @@
 		TGS_ERROR_LOG("Invalid parameter for event_handler: [event_handler]")
 		event_handler = null
 
-	var/datum/tgs_api/new_api = new api_datum(event_handler, version)
+	if(!http_handler)
+		http_handler = new /datum/tgs_http_handler/byond_world_export
+
+	var/datum/tgs_api/new_api = new api_datum(event_handler, version, http_handler)
 
 	TGS_WRITE_GLOBAL(tgs, new_api)
 
@@ -106,6 +109,13 @@
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
 		return api.ApiVersion()
+
+/world/TgsEngine()
+#ifdef OPENDREAM
+	return TGS_ENGINE_TYPE_OPENDREAM
+#else
+	return TGS_ENGINE_TYPE_BYOND
+#endif
 
 /world/TgsInstanceName()
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
@@ -159,3 +169,11 @@
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
 		return api.Visibility()
+
+/world/TgsTriggerEvent(event_name, list/parameters, wait_for_completion = FALSE)
+	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
+	if(api)
+		if(!istype(parameters, /list))
+			parameters = list()
+
+		return api.TriggerEvent(event_name, parameters, wait_for_completion)

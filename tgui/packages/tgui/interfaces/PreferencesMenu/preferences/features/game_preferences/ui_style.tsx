@@ -1,10 +1,16 @@
-import { classes } from 'common/react';
-import { FeatureChoiced, FeatureChoicedServerData, FeatureValueProps, sortChoices } from '../base';
-import { Box, Dropdown, Stack } from '../../../../../components';
+import { Box, Dropdown, Stack } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-const UIStyleInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData>
-) => {
+import {
+  FeatureChoiced,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+  sortChoices,
+} from '../base';
+
+function UIStyleInput(
+  props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+) {
   const { serverData, value } = props;
   if (!serverData) {
     return null;
@@ -25,7 +31,7 @@ const UIStyleInput = (
             <Box
               className={classes(['preferences64x32', icon])}
               style={{
-                'transform': 'scale(0.8)',
+                transform: 'scale(0.8)',
               }}
             />
           </Stack.Item>
@@ -33,14 +39,13 @@ const UIStyleInput = (
           <Stack.Item grow>{name}</Stack.Item>
         </Stack>,
       ];
-    })
+    }),
   );
 
   return (
     <Dropdown
       selected={value}
       clipSelectedText={false}
-      displayText={choices[value]}
       onSelected={props.handleSetValue}
       width="100%"
       options={sortChoices(Object.entries(choices)).map(
@@ -49,11 +54,11 @@ const UIStyleInput = (
             displayText: label,
             value: dataValue,
           };
-        }
+        },
       )}
     />
   );
-};
+}
 
 export const UI_style: FeatureChoiced = {
   name: 'UI Style',

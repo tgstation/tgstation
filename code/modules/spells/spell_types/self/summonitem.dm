@@ -128,18 +128,17 @@
 
 			// If its on someone, properly drop it
 			if(ismob(item_to_retrieve.loc))
-				var/mob/holding_mark = item_to_retrieve.loc
-
-				// Items in silicons warp the whole silicon
-				if(issilicon(holding_mark))
-					holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly disappears!"))
-					holding_mark.forceMove(caster.loc)
-					holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly appears!"))
-					item_to_retrieve = null
+				if(!issilicon(item_to_retrieve.loc))
 					break
 
+				// Items in silicons warp the whole silicon
+				var/mob/holding_mark = item_to_retrieve.loc
+				holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly disappears!"))
+				holding_mark.forceMove(caster.loc)
+				holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly appears!"))
 				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
-				holding_mark.dropItemToGround(item_to_retrieve)
+				playsound(holding_mark, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
+				return
 
 			else if(isobj(item_to_retrieve.loc))
 				var/obj/retrieved_item = item_to_retrieve.loc
@@ -157,17 +156,15 @@
 
 			infinite_recursion += 1
 
-	else
-		// Organs are usually stored in nullspace
-		if(isorgan(item_to_retrieve))
-			var/obj/item/organ/organ = item_to_retrieve
-			if(organ.owner)
-				// If this code ever runs I will be happy
-				log_combat(caster, organ.owner, "magically removed [organ.name] from", addition = "COMBAT MODE: [uppertext(caster.combat_mode)]")
-				organ.Remove(organ.owner)
-
 	if(!item_to_retrieve)
 		return
+
+	SEND_SIGNAL(item_to_retrieve, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
+
+	if (ismob(item_to_retrieve.loc))
+		var/mob/holder = item_to_retrieve.loc
+		if (!holder.dropItemToGround(item_to_retrieve, force = TRUE))
+			return
 
 	item_to_retrieve.loc?.visible_message(span_warning("[item_to_retrieve] suddenly disappears!"))
 
@@ -176,7 +173,8 @@
 	else
 		item_to_retrieve.forceMove(caster.drop_location())
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))
-	playsound(get_turf(item_to_retrieve), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+
+	playsound(get_turf(item_to_retrieve), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/summonitem/abductor
 	name =  "Baton Recall"

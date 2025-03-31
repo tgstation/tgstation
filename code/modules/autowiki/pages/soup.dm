@@ -16,6 +16,7 @@
 
 	var/container_for_images = /obj/item/reagent_containers/cup/bowl
 
+	var/list/already_generated_icons = list()
 	for(var/soup_recipe_type in subtypesof(/datum/chemical_reaction/food/soup))
 		var/datum/chemical_reaction/food/soup/soup_recipe = new soup_recipe_type()
 		// Used to determine what icon is displayed on the wiki
@@ -27,6 +28,7 @@
 		var/result_name
 		var/result_desc
 		var/result_tastes
+		var/result_soup_type
 		// Solid food item results take priority over reagents for showcasing results
 		if(soup_recipe.resulting_food_path)
 			var/obj/item/resulting_food = new soup_recipe.resulting_food_path()
@@ -45,7 +47,7 @@
 
 		// Otherwise, it should be a reagent.
 		else
-			var/result_soup_type = soup_recipe.results[1]
+			result_soup_type = soup_recipe.results[1]
 			var/datum/reagent/result_soup = new result_soup_type()
 			result_name = format_text(result_soup.name)
 			result_desc = result_soup.description
@@ -122,8 +124,17 @@
 		template_list["results"] = escape_value(compiled_results)
 
 		// -- While we're here, generate an icon of the bowl --
-		var/image/compiled_image = image(icon = soup_icon, icon_state = soup_icon_state)
-		upload_icon(getFlatIcon(compiled_image, no_anim = TRUE), filename)
+
+		if(!already_generated_icons[filename])
+			if(!soup_icon_state)
+				var/obj/item/reagent_containers/cup/bowl/soup_bowl = new()
+				soup_bowl.reagents.add_reagent(result_soup_type, soup_bowl.reagents.maximum_volume)
+				upload_icon(getFlatIcon(soup_bowl, no_anim = TRUE), filename)
+				qdel(soup_bowl)
+			else
+				var/image/compiled_image = image(icon = soup_icon, icon_state = soup_icon_state)
+				upload_icon(getFlatIcon(compiled_image, no_anim = TRUE), filename)
+			already_generated_icons[filename] = TRUE
 
 		// -- Cleanup --
 		qdel(soup_recipe)

@@ -1,7 +1,7 @@
 // Keep the identifiers here below 32 characters, you can put the full display name in the actual achievement datum
 
 /// Achievements icon set
-#define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'
+#define ACHIEVEMENTS_SET 'icons/ui/achievements/achievements.dmi'
 
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
@@ -42,8 +42,8 @@
 #define MEDAL_BLADE_ASCENSION "Blade"
 #define MEDAL_COSMOS_ASCENSION "Cosmos"
 #define MEDAL_LOCK_ASCENSION "Knock"
+#define MEDAL_MOON_ASCENSION "Moon"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
-#define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
 #define MEDAL_TRAM_SURFER "Tram Surfer"
@@ -55,7 +55,10 @@
 #define MEDAL_GODS_WRATH "God's Wrath"
 #define MEDAL_EARTHQUAKE_VICTIM "Earthquake Victim"
 #define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
+#define MEDAL_SISYPHUS "Sisyphus"
 #define MEDAL_ARCHMAGE "Archmage"
+#define MEDAL_CIGARETTES "Cigarettes"
+#define MEDAL_SHARKDRAGON "Sharkdragon"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
 
 //Skill medal hub IDs
@@ -99,6 +102,7 @@
 #define BOSS_MEDAL_TENDRIL "Tendril Exterminator"
 #define BOSS_MEDAL_WENDIGO "Wendigo Killer"
 #define BOSS_MEDAL_KINGGOAT "King Goat Killer"
+#define BOSS_MEDAL_THETHING "Thing Exterminator"
 
 #define BOSS_MEDAL_MINER_CRUSHER "Blood-drunk Miner Crusher"
 #define BOSS_MEDAL_FROSTMINER_CRUSHER "Demonic-frost Miner Crusher"
@@ -109,6 +113,7 @@
 #define BOSS_MEDAL_LEGION_CRUSHER "Legion Crusher"
 #define BOSS_MEDAL_WENDIGO_CRUSHER "Wendigo Crusher"
 #define BOSS_MEDAL_KINGGOAT_CRUSHER "King Goat Crusher"
+#define BOSS_MEDAL_THETHING_CRUSHER "Thing Crusher"
 
 // Medal hub IDs for boss-kill scores
 #define BOSS_SCORE "Bosses Killed"
@@ -123,6 +128,7 @@
 #define WENDIGO_SCORE "Wendigos Killed"
 #define KINGGOAT_SCORE "King Goat Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
+#define THETHING_SCORE "The Thing Killed"
 
 // DB ID for hardcore random mode
 #define HARDCORE_RANDOM_SCORE "Hardcore Random Score"
@@ -138,6 +144,9 @@
 
 /// DB ID for the amount of achievements unlocked by the player.
 #define ACHIEVEMENTS_SCORE "Achievements Score"
+
+///DB ID for all the different kinds of fish that you've caught so far.
+#define FISH_SCORE "Fish Score"
 
 // Tourist related achievements and scores
 

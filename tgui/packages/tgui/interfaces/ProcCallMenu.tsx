@@ -1,6 +1,14 @@
-import { BooleanLike } from 'common/react';
+import {
+  Button,
+  Dropdown,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Stack, Section, Input, Button, Dropdown, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type Port = {
@@ -17,8 +25,8 @@ type ProcCallMenuData = {
   resolve_weakref: BooleanLike;
 };
 
-export const ProcCallMenu = (props, context) => {
-  const { act, data } = useBackend<ProcCallMenuData>(context);
+export const ProcCallMenu = (props) => {
+  const { act, data } = useBackend<ProcCallMenuData>();
   const {
     input_ports,
     possible_types,
@@ -29,7 +37,7 @@ export const ProcCallMenu = (props, context) => {
   return (
     <Window width={500} height={400}>
       <Window.Content scrollable>
-        <Stack grow height="100%">
+        <Stack fill>
           <Stack.Item>
             <Section fill title="Options">
               <Stack vertical width="180px">
@@ -37,7 +45,7 @@ export const ProcCallMenu = (props, context) => {
                 <Stack.Item>
                   <Dropdown
                     width="100%"
-                    displayText={expected_output}
+                    selected={expected_output}
                     options={possible_types}
                     color={expected_output_color}
                     onSelected={(value) =>
@@ -111,7 +119,7 @@ export const ProcCallMenu = (props, context) => {
   );
 };
 
-const PortEntry = (props, context) => {
+const PortEntry = (props) => {
   const {
     onRemove,
     onEnter,
@@ -131,7 +139,7 @@ const PortEntry = (props, context) => {
         </Stack.Item>
         <Stack.Item>
           <Dropdown
-            displayText={datatype}
+            selected={datatype}
             options={datatypeOptions}
             onSelected={onSetType}
             color={color}

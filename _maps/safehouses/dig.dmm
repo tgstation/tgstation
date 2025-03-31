@@ -20,7 +20,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/turf_decal/siding/yellow{
@@ -48,6 +48,10 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"s" = (
+/obj/modular_map_connector,
+/turf/closed/mineral/asteroid,
 /area/virtual_domain/safehouse)
 "u" = (
 /obj/effect/turf_decal/siding/yellow{
@@ -94,7 +98,7 @@
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/box/corners,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "T" = (
 /obj/effect/landmark/bitrunning/hololadder_spawn,
@@ -113,7 +117,7 @@ H
 A
 A
 H
-H
+s
 "}
 (2,1,1) = {"
 A

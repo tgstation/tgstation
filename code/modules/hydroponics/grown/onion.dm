@@ -1,5 +1,5 @@
 /obj/item/seeds/onion
-	name = "pack of onion seeds"
+	name = "onion seed pack"
 	desc = "These seeds grow into onions."
 	icon_state = "seed-onion"
 	species = "onion"
@@ -24,12 +24,13 @@
 	icon_state = "onion"
 	tastes = list("onions" = 1)
 	wine_power = 30
+	foodtypes = VEGETABLES
 
 /obj/item/food/grown/onion/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice, 2, 15, screentip_verb = "Cut")
 
 /obj/item/seeds/onion/red
-	name = "pack of red onion seeds"
+	name = "red onion seed pack"
 	desc = "For growing exceptionally potent onions."
 	icon_state = "seed-onionred"
 	species = "onion_red"
@@ -48,7 +49,7 @@
 /obj/item/food/grown/onion/red/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15, screentip_verb = "Cut")
 
-/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
+/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option, list/created_atoms)
 	var/datum/effect_system/fluid_spread/smoke/chem/cry_about_it = new //Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
 	cry_about_it.attach(splat_location)
@@ -63,6 +64,7 @@
 	icon_state = "onionslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	w_class = WEIGHT_CLASS_TINY
+	foodtypes = VEGETABLES
 
 /obj/item/food/onion_slice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/onionrings, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)

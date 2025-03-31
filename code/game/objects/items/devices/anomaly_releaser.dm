@@ -2,7 +2,7 @@
 /obj/item/anomaly_releaser
 	name = "anomaly releaser"
 	desc = "Single-use injector that releases and stabilizes anomalies by injecting an unknown substance."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "anomaly_releaser"
 	inhand_icon_state = "stimpen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -19,28 +19,28 @@
 	///Can we be used infinitely?
 	var/infinite = FALSE
 
-/obj/item/anomaly_releaser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/anomaly_releaser/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!istype(target, /obj/item/assembly/signaler/anomaly))
+		return NONE
 
-	if(used || !proximity_flag || !istype(target, /obj/item/assembly/signaler/anomaly))
-		return
-
+	if(used)
+		return ITEM_INTERACT_BLOCKING
 	if(!do_after(user, 3 SECONDS, target))
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(used)
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/assembly/signaler/anomaly/core = target
-
 	if(!core.anomaly_type)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/effect/anomaly/anomaly = new core.anomaly_type(get_turf(core))
 	anomaly.stabilize()
+	log_combat(user, anomaly, "released", object = src, addition = "in [get_area(target)].")
 
-	if(infinite)
-		return
-
-	icon_state = used_icon_state
-	used = TRUE
-	name = "used " + name
-
-	qdel(core)
+	if(!infinite)
+		icon_state = used_icon_state
+		used = TRUE
+		name = "used " + name
+		qdel(core)
+	return ITEM_INTERACT_SUCCESS

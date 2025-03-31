@@ -7,13 +7,14 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	modifystate = TRUE
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
-	cell_type = /obj/item/stock_parts/cell/pulse
+	cell_type = /obj/item/stock_parts/power_store/cell/pulse
 
-/obj/item/gun/energy/pulse/emp_act(severity)
-	return
+/obj/item/gun/energy/pulse/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/pulse/prize
 	pin = /obj/item/firing_pin
@@ -29,9 +30,7 @@
 	notify_ghosts(
 		"Someone won a pulse rifle as a prize!",
 		source = src,
-		action = NOTIFY_ORBIT,
 		header = "Pulse rifle prize",
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 /obj/item/gun/energy/pulse/loyalpin
@@ -45,7 +44,7 @@
 	icon_state = "pulse_carbine"
 	worn_icon_state = "gun"
 	inhand_icon_state = null
-	cell_type = /obj/item/stock_parts/cell/pulse/carbine
+	cell_type = /obj/item/stock_parts/power_store/cell/pulse/carbine
 
 /obj/item/gun/energy/pulse/carbine/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
@@ -60,11 +59,14 @@
 /obj/item/gun/energy/pulse/carbine/loyalpin
 	pin = /obj/item/firing_pin/implant/mindshield
 
+/obj/item/gun/energy/pulse/carbine/taserless
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/laser)
+
 /obj/item/gun/energy/pulse/destroyer
 	name = "pulse destroyer"
 	desc = "A heavy-duty energy rifle built for pure destruction."
 	worn_icon_state = "pulse"
-	cell_type = /obj/item/stock_parts/cell/infinite
+	cell_type = /obj/item/stock_parts/power_store/cell/infinite
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
 /obj/item/gun/energy/pulse/destroyer/attack_self(mob/living/user)
@@ -78,7 +80,10 @@
 	icon_state = "pulse_pistol"
 	worn_icon_state = "gun"
 	inhand_icon_state = "gun"
-	cell_type = /obj/item/stock_parts/cell/pulse/pistol
+	cell_type = /obj/item/stock_parts/power_store/cell/pulse/pistol
+
+/obj/item/gun/energy/pulse/pistol/taserless
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/gun/energy/pulse/pistol/loyalpin
 	pin = /obj/item/firing_pin/implant/mindshield
@@ -88,4 +93,4 @@
 	desc = "A compact pulse core in a classic handgun frame for Nanotrasen officers. It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911"
 	inhand_icon_state = "gun"
-	cell_type = /obj/item/stock_parts/cell/infinite
+	cell_type = /obj/item/stock_parts/power_store/cell/infinite

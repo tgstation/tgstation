@@ -3,7 +3,7 @@
 		. = VV_NULL
 
 	else if(isnum(var_value))
-		if(var_name in GLOB.bitfields)
+		if(length(get_valid_bitflags(var_name)))
 			. = VV_BITFIELD
 		else
 			. = VV_NUM
@@ -338,7 +338,7 @@
 
 		if(VV_COLOR_MATRIX)
 			.["value"] = open_color_matrix_editor()
-			if(.["value"] == color_matrix_identity()) //identity is equivalent to null
+			if(.["value"] == COLOR_MATRIX_IDENTITY) //identity is equivalent to null
 				.["class"] = null
 
 		if(VV_INFINITY)

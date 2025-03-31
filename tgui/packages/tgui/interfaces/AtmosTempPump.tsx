@@ -1,6 +1,12 @@
-import { BooleanLike } from 'common/react';
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -9,8 +15,8 @@ type Data = {
   max_heat_transfer_rate: number;
 };
 
-export const AtmosTempPump = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosTempPump = (props) => {
+  const { act, data } = useBackend<Data>();
   const { on, rate, max_heat_transfer_rate } = data;
 
   return (
@@ -35,7 +41,7 @@ export const AtmosTempPump = (props, context) => {
                 minValue={0}
                 maxValue={max_heat_transfer_rate}
                 step={1}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('rate', {
                     rate: value,
                   })

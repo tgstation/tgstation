@@ -84,7 +84,7 @@
 
 // EXPLORATION_SITE_RUINS 2/2
 /datum/exploration_event/simple/resource/remnants
-	name = "dessicated corpse"
+	name = "desiccated corpse"
 	required_site_traits = list(EXPLORATION_SITE_RUINS)
 	required_tool = EXODRONE_TOOL_MULTITOOL
 	discovery_log = "Discovered a corpse of a humanoid."
@@ -215,7 +215,7 @@
 	description = "You meet an inhabitant of this site, looking ragged and clearly agitated about something."
 	no_tool_description = "You can't tell what it's trying to convey without a translator."
 	has_tool_description = "Your best translation dictates that it would like to share its hobby with you!"
-	success_log = "Recieved a gift from a stranger."
+	success_log = "Received a gift from a stranger."
 	delay_message = "Enduring..."
 	action_text = "Accept gift."
 	loot_type = /obj/item/cardpack/series_one

@@ -1,15 +1,18 @@
+/*
+ * Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
+ */
 /proc/get_location_modifier(mob/located_mob)
-	var/turf/mob_turf = get_turf(located_mob)
-	if(locate(/obj/structure/table/optable, mob_turf))
-		return 1
-	else if(locate(/obj/machinery/stasis, mob_turf))
-		return 0.9
-	else if(locate(/obj/structure/table, mob_turf))
-		return 0.8
-	else if(locate(/obj/structure/bed, mob_turf))
-		return 0.7
-	else
-		return 0.5
+	// Technically this IS a typecache, just not the usual kind :3
+	var/static/list/modifiers = zebra_typecacheof(list(
+		/obj/structure/table = 0.8,
+		/obj/structure/table/optable = 1,
+		/obj/structure/table/optable/abductor = 1.2,
+		/obj/machinery/stasis = 0.9,
+		/obj/structure/bed = 0.7,
+	))
+	. = 0.5
+	for(var/obj/thingy in get_turf(located_mob))
+		. = max(., modifiers[thingy.type])
 
 
 /proc/get_location_accessible(mob/located_mob, location)
@@ -34,10 +37,10 @@
 			if(covered_locations & HEAD)
 				return FALSE
 		if(BODY_ZONE_PRECISE_EYES)
-			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
+			if((face_covered & HIDEEYES) || (eyesmouth_covered & (MASKCOVERSEYES|HEADCOVERSEYES|GLASSESCOVERSEYES)))
 				return FALSE
 		if(BODY_ZONE_PRECISE_MOUTH)
-			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
+			if((face_covered & HIDEFACE) || (eyesmouth_covered & (MASKCOVERSMOUTH|HEADCOVERSMOUTH)))
 				return FALSE
 		if(BODY_ZONE_CHEST)
 			if(covered_locations & CHEST)

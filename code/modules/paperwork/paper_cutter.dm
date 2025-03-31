@@ -61,8 +61,7 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/papercutter/deconstruct(disassembled)
-	..()
+/obj/item/papercutter/atom_deconstruct(disassembled)
 	if(!disassembled)
 		return
 
@@ -109,14 +108,17 @@
 	tool.play_tool_sound(src)
 	balloon_alert(user, "[blade_secured ? "un" : ""]secured")
 	blade_secured = !blade_secured
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, params)
 	if(istype(inserted_item, /obj/item/paper))
 		if(is_type_in_list(inserted_item, list(
-			/obj/item/paper/paperslip, /obj/item/paper/report, /obj/item/paper/fake_report,
-			/obj/item/paper/calling_card, /obj/item/paper/pamphlet, /obj/item/paper/holy_writ)
-			))
+				/obj/item/paper/fake_report,
+				/obj/item/paper/holy_writ,
+				/obj/item/paper/pamphlet,
+				/obj/item/paper/paperslip,
+				/obj/item/paper/report,
+		)))
 			balloon_alert(user, "won't fit!")
 			return
 		if(stored_paper)
@@ -142,16 +144,14 @@
 
 	return ..()
 
-/obj/item/papercutter/AltClick(mob/user)
-	if(!user.Adjacent(src))
-		return ..()
-
+/obj/item/papercutter/click_alt(mob/user)
 	// can only remove one at a time; paper goes first, as its most likely what players will want to be taking out
 	if(!isnull(stored_paper))
 		user.put_in_hands(stored_paper)
 	else if(!isnull(stored_blade) && !blade_secured)
 		user.put_in_hands(stored_blade)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/papercutter/attack_hand_secondary(mob/user, list/modifiers)
 	if(!stored_blade)
@@ -166,7 +166,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/papercutter/proc/cut_paper(mob/user)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
+	playsound(src.loc, 'sound/items/weapons/slash.ogg', 50, TRUE)
 	var/clumsy = (iscarbon(user) && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(cut_self_chance))
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)
@@ -180,12 +180,7 @@
 	new /obj/item/paper/paperslip(get_turf(src))
 	update_appearance()
 
-/obj/item/papercutter/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/user = usr
-	if(user.incapacitated() || !Adjacent(user))
-		return
-
+/obj/item/papercutter/mouse_drop_dragged(atom/over_object, mob/user)
 	if(over_object == user)
 		user.put_in_hands(src)
 

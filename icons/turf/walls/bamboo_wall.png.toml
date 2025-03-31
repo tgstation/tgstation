@@ -1,0 +1,5 @@
+output_name = "bamboo_wall"
+template = "bitmask/diagonal_32x32.toml"
+
+[prefabs]
+0 = 5

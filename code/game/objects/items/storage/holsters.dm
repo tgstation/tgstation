@@ -11,11 +11,11 @@
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
-		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+		ADD_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 
 /obj/item/storage/belt/holster/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 
 /obj/item/storage/belt/holster/Initialize(mapload)
 	. = ..()
@@ -33,6 +33,8 @@
 		/obj/item/gun/energy/laser/captain,
 		/obj/item/gun/energy/e_gun/hos,
 	))
+	atom_storage.open_sound = 'sound/items/handling/holster_open.ogg'
+	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/belt/holster/energy
 	name = "energy shoulder holsters"
@@ -111,8 +113,8 @@
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 		/obj/item/ammo_box/c38 = 2,
+		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 	), src)
 
 /obj/item/storage/belt/holster/detective/full/ert
@@ -124,8 +126,8 @@
 
 /obj/item/storage/belt/holster/detective/full/ert/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
 		/obj/item/ammo_box/magazine/m45 = 2,
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
 	),src)
 
 /obj/item/storage/belt/holster/chameleon
@@ -136,6 +138,7 @@
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/chameleon/change/belt)
+	action_slots = ALL
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
@@ -195,8 +198,8 @@
 
 /obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear = 1,
 		/obj/item/ammo_box/a357 = 2,
+		/obj/item/gun/ballistic/revolver/cowboy/nuclear = 1,
 	), src)
 
 

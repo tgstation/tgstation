@@ -35,3 +35,12 @@
 #define COMSIG_WEATHER_BEGAN_IN_AREA(event_type) "weather_began_in_area_[event_type]"
 /// Called when some weather ends in this area
 #define COMSIG_WEATHER_ENDED_IN_AREA(event_type) "weather_ended_in_area_[event_type]"
+
+///From base of area/update_beauty()
+#define COMSIG_AREA_BEAUTY_UPDATED "area_beauty_updated"
+
+/// From base of turf/change_area(area/old_area)
+#define COMSIG_AREA_TURF_ADDED "area_turf_added"
+
+/// From base of turf/change_area(area/new_area)
+#define COMSIG_AREA_TURF_REMOVED "area_turf_removed"

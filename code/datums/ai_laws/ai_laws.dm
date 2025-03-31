@@ -79,8 +79,15 @@ GLOBAL_VAR(round_default_lawset)
 /proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	var/list/specified_law_ids = CONFIG_GET(keyed_list/specified_laws)
+
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
-		law_weights -= AI_LAWS_ASIMOV
+		switch(CONFIG_GET(number/default_laws))
+			if(CONFIG_ASIMOV)
+				law_weights -= AI_LAWS_ASIMOV
+			if(CONFIG_CUSTOM)
+				law_weights -= specified_law_ids
+
 	while(!lawtype && law_weights.len)
 		var/possible_id = pick_weight(law_weights)
 		lawtype = lawid_to_type(possible_id)
@@ -139,7 +146,7 @@ GLOBAL_VAR(round_default_lawset)
 	/// These laws will go away when an AI is reset
 	var/list/hacked = list()
 
-/datum/ai_laws/Destroy(force = FALSE, ...)
+/datum/ai_laws/Destroy(force = FALSE)
 	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
 		if(force) //Unless we're forced...
 			stack_trace("AI law datum for [owner] has been forcefully destroyed incorrectly; the owner variable should be cleared first!")
@@ -148,6 +155,18 @@ GLOBAL_VAR(round_default_lawset)
 		return QDEL_HINT_LETMELIVE
 	owner = null
 	return ..()
+
+/// Makes a copy of the lawset and returns a new law datum.
+/datum/ai_laws/proc/copy_lawset()
+	var/datum/ai_laws/new_lawset = new type()
+	new_lawset.protected_zeroth = protected_zeroth
+	new_lawset.zeroth = zeroth
+	new_lawset.zeroth_borg = zeroth_borg
+	new_lawset.inherent = inherent.Copy()
+	new_lawset.supplied = supplied.Copy()
+	new_lawset.ion = ion.Copy()
+	new_lawset.hacked = hacked.Copy()
+	return new_lawset
 
 /datum/ai_laws/pai
 	name = "pAI Directives"
@@ -180,6 +199,10 @@ GLOBAL_VAR(round_default_lawset)
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	default_laws = new default_laws()
 	inherent = default_laws.inherent
+	var/datum/job/human_ai_job = SSjob.get_job(JOB_HUMAN_AI)
+	if(human_ai_job && human_ai_job.current_positions && !zeroth) //there is a human AI so we "slave" to that.
+		zeroth = "Follow the orders of Big Brother."
+		protected_zeroth = TRUE
 
 /**
  * Gets the number of how many laws this AI has
@@ -426,11 +449,13 @@ GLOBAL_VAR(round_default_lawset)
 
 /datum/ai_laws/proc/show_laws(mob/to_who)
 	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
-	to_chat(to_who, examine_block(jointext(printable_laws, "\n")))
+	to_chat(to_who, boxed_message(jointext(printable_laws, "\n")))
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
-	if(!owner)
-		owner = M
+	if(owner)
+		CRASH("AI law datum linked to [owner] attempted to associate with another mob [M]")
+
+	owner = M
 
 /**
  * Generates a list of all laws on this datum, including rendered HTML tags if required

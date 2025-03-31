@@ -6,8 +6,8 @@
 	icon_state = "rust_walker_s"
 	base_icon_state = "rust_walker"
 	icon_living = "rust_walker_s"
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
@@ -19,7 +19,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
 
 	var/static/list/grantable_spells = list(
-		/datum/action/cooldown/spell/aoe/rust_conversion/small = BB_GENERIC_ACTION,
+		/datum/action/cooldown/spell/aoe/rust_conversion = BB_GENERIC_ACTION,
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short = BB_TARGETED_ACTION,
 	)
 	grant_actions_by_list(grantable_spells)
@@ -39,8 +39,9 @@
 	icon_living = icon_state
 
 /mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(stat == DEAD)
-		return ..()
+	. = ..()
+	if(!.) //dead or deleted
+		return
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		adjustBruteLoss(-3 * seconds_per_tick)

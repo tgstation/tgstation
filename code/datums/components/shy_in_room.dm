@@ -31,7 +31,7 @@
 		COMSIG_TRY_ALT_ACTION,
 	))
 
-/datum/component/shy_in_room/PostTransfer()
+/datum/component/shy_in_room/PostTransfer(datum/new_parent)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -69,6 +69,6 @@
 	SIGNAL_HANDLER
 	return is_shy(target) && COMPONENT_CANT_STRIP
 
-/datum/component/shy_in_room/proc/on_try_alt_action(datum/source, atom/target)
+/datum/component/shy_in_room/proc/on_try_alt_action(datum/source, atom/target, action_key)
 	SIGNAL_HANDLER
 	return is_shy(target) && COMPONENT_CANT_ALT_ACTION

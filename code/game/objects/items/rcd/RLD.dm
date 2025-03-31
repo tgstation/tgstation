@@ -52,7 +52,7 @@
 /obj/item/construction/rld/attack_self(mob/user)
 	. = ..()
 
-	if((upgrade & RCD_UPGRADE_SILO_LINK) && display_options["Silo Link"] == null) //silo upgrade instaled but option was not updated then update it just one
+	if((construction_upgrades & RCD_UPGRADE_SILO_LINK) && display_options["Silo Link"] == null) //silo upgrade instaled but option was not updated then update it just one
 		display_options["Silo Link"] = icon(icon = 'icons/obj/machines/ore_silo.dmi', icon_state = "silo")
 
 	var/choice = show_radial_menu(user, src, display_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
@@ -73,7 +73,7 @@
 			if(new_choice == null)
 				return
 
-			var/list/new_rgb = ReadRGB(new_choice)
+			var/list/new_rgb = rgb2num(new_choice)
 			for(var/option in original_options)
 				if(option == "Color Pick" || option == "Deconstruct" || option == "Silo Link")
 					continue
@@ -88,61 +88,74 @@
 		else
 			toggle_silo(user)
 
-/obj/item/construction/rld/afterattack(atom/A, mob/user)
+/obj/item/construction/rld/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!range_check(interacting_with, user))
+		return NONE
+	return try_lighting(interacting_with, user)
+
+/obj/item/construction/rld/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!range_check(A,user))
-		return
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	return try_lighting(interacting_with, user)
+
+/**
+ * Try to place/remove a light or throw a glowstick
+ * Arguments
+ *
+ * * atom/interacting_with - the target atom to light or throw glowsticks at
+ * * mob/user - the player doing this action
+ */
+/obj/item/construction/rld/proc/try_lighting(atom/interacting_with, mob/user)
+	PRIVATE_PROC(TRUE)
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+
 	var/turf/start = get_turf(src)
 	switch(mode)
 		if(REMOVE_MODE)
-			if(!istype(A, /obj/machinery/light/))
-				return FALSE
+			if(!istype(interacting_with, /obj/machinery/light))
+				return NONE
 
 			//resource sanity checks before & after delay
 			if(!checkResource(DECONSTRUCT_COST, user))
-				return FALSE
-			var/beam = user.Beam(A,icon_state="light_beam", time = 15)
-			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-			if(!do_after(user, REMOVE_DELAY, target = A))
+				return ITEM_INTERACT_BLOCKING
+			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = 15)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			if(!do_after(user, REMOVE_DELAY, target = interacting_with))
 				qdel(beam)
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
 			if(!checkResource(DECONSTRUCT_COST, user))
-				return FALSE
-
+				return ITEM_INTERACT_BLOCKING
 			if(!useResource(DECONSTRUCT_COST, user))
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
 			activate()
-			qdel(A)
-			return TRUE
+			qdel(interacting_with)
+			return ITEM_INTERACT_SUCCESS
 
 		if(LIGHT_MODE)
 			//resource sanity checks before & after delay
-			var/cost = iswallturf(A) ? LIGHT_TUBE_COST : FLOOR_LIGHT_COST
+			var/cost = iswallturf(interacting_with) ? LIGHT_TUBE_COST : FLOOR_LIGHT_COST
 
 			if(!checkResource(cost, user))
-				return FALSE
-			var/beam = user.Beam(A,icon_state="light_beam", time = BUILD_DELAY)
+				return ITEM_INTERACT_BLOCKING
+			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = BUILD_DELAY)
 			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 			playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
-			if(!do_after(user, BUILD_DELAY, target = A))
+			if(!do_after(user, BUILD_DELAY, target = interacting_with))
 				qdel(beam)
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
 			if(!checkResource(cost, user))
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
 
-			if(iswallturf(A))
+			if(iswallturf(interacting_with))
 				var/turf/open/winner = null
 				var/winning_dist = null
-				var/skip = FALSE
 				for(var/direction in GLOB.cardinals)
-					var/turf/C = get_step(A, direction)
+					var/turf/C = get_step(interacting_with, direction)
 					//turf already has a light
-					skip = FALSE
-					for(var/obj/machinery/light/dupe in C)
-						if(istype(dupe, /obj/machinery/light))
-							skip = TRUE
-							break
-					if(skip)
+					if(locate(/obj/machinery/light) in C)
 						continue
 					//can't put a light here
 					if(!(isspaceturf(C) || TURF_SHARES(C)))
@@ -159,43 +172,54 @@
 						winning_dist = contender
 				if(!winner)
 					balloon_alert(user, "no valid target!")
-					return FALSE
-
+					return ITEM_INTERACT_BLOCKING
 				if(!useResource(cost, user))
-					return FALSE
+					return ITEM_INTERACT_BLOCKING
 				activate()
 				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
-				L.setDir(get_dir(winner, A))
+				L.setDir(get_dir(winner, interacting_with))
 				L.color = color_choice
 				L.set_light_color(color_choice)
-				return TRUE
+				return ITEM_INTERACT_SUCCESS
 
-			if(isfloorturf(A))
-				var/turf/target = get_turf(A)
-				for(var/obj/machinery/light/floor/dupe in target)
-					if(istype(dupe))
-						return FALSE
-
+			if(isfloorturf(interacting_with))
+				var/turf/target = get_turf(interacting_with)
+				if(locate(/obj/machinery/light/floor) in target)
+					return ITEM_INTERACT_BLOCKING
 				if(!useResource(cost, user))
-					return FALSE
+					return ITEM_INTERACT_BLOCKING
 				activate()
 				var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(target)
 				FL.color = color_choice
 				FL.set_light_color(color_choice)
-				return TRUE
+				return ITEM_INTERACT_SUCCESS
 
 		if(GLOW_MODE)
 			if(!useResource(GLOW_STICK_COST, user))
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
 			activate()
-			var/obj/item/flashlight/glowstick/G = new /obj/item/flashlight/glowstick(start)
-			G.color = color_choice
-			G.set_light_color(G.color)
-			G.throw_at(A, 9, 3, user)
-			G.light_on = TRUE
-			G.update_brightness()
+			// Picks the closest fitting color for the fluid by hue
+			var/closest_diff = null
+			var/closest_fluid = null
+			var/list/unwrapped_color = rgb2num(color_choice, COLORSPACE_HSV)
+			var/chosen_hue = unwrapped_color[1]
+			for (var/datum/reagent/luminescent_fluid/glowstick_fluid as anything in typesof(/datum/reagent/luminescent_fluid))
+				unwrapped_color = rgb2num(glowstick_fluid::color, COLORSPACE_HSV)
+				var/hue_diff = abs(chosen_hue - unwrapped_color[1])
+				if (hue_diff > 180)
+					hue_diff = 360 - hue_diff
+				if (isnull(closest_diff) || hue_diff < closest_diff)
+					closest_diff = hue_diff
+					closest_fluid = glowstick_fluid
+			var/obj/item/flashlight/glowstick/new_stick = new /obj/item/flashlight/glowstick(start, null, closest_fluid)
+			new_stick.color = color_choice
+			new_stick.set_light_color(new_stick.color)
+			new_stick.throw_at(interacting_with, 9, 3, user)
+			new_stick.turn_on()
+			new_stick.update_brightness()
+			return ITEM_INTERACT_SUCCESS
 
-			return TRUE
+	return NONE
 
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device"

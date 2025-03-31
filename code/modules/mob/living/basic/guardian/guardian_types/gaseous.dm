@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_GASEOUS
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 0)
 	range = 7
 	playstyle_string = span_holoparasite("As a <b>gaseous</b> type, you have only light damage resistance, but you can expel gas in an area. In addition, your punches cause sparks, and you make your summoner inflammable.")
 	creator_name = "Gaseous"
@@ -81,7 +81,6 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "smoke"
 	cooldown_time = 0 SECONDS // We're here for the interface not the cooldown
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 	/// Gas being expelled.
 	var/active_gas = null
@@ -123,6 +122,12 @@
 	if(isnull(picked_gas) || isnull(gas_type))
 		return
 
+	if(isguardian(owner))
+		var/mob/living/basic/guardian/guardian_owner = owner
+		if(!guardian_owner.is_deployed())
+			to_chat(owner, span_warning("You cannot release gas without being summoned!"))
+			return
+
 	to_chat(owner, span_bolddanger("You start releasing [picked_gas]."))
 	owner.investigate_log("set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
 	var/had_gas = !isnull(active_gas)
@@ -151,6 +156,13 @@
 	SIGNAL_HANDLER
 	if (isnull(active_gas))
 		return // We shouldn't even be registered at this point but just in case
+
+	if(isguardian(owner))
+		var/mob/living/basic/guardian/guardian_owner = owner
+		if(!guardian_owner.is_deployed())
+			stop_gas()
+			return
+
 	var/datum/gas_mixture/mix_to_spawn = new()
 	mix_to_spawn.add_gas(active_gas)
 	mix_to_spawn.gases[active_gas][MOLES] = possible_gases[active_gas] * seconds_per_tick

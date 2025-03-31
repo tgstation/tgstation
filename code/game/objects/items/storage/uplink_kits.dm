@@ -10,6 +10,7 @@
 #define KIT_SNIPER "sniper"
 #define KIT_NUKEOPS_METAGAME "metaops"
 #define KIT_LORD_SINGULOTH "lordsingulo"
+#define KIT_REVOLUTIONARY "revolutionary"
 
 #define KIT_JAMES_BOND "bond"
 #define KIT_NINJA "ninja"
@@ -19,6 +20,9 @@
 #define KIT_BEES "bee"
 #define KIT_MR_FREEZE "mr_freeze"
 #define KIT_TRAITOR_2006 "ancient"
+#define KIT_DEAD_MONEY "dead_money"
+#define KIT_SAM_FISHER "sam_fisher"
+#define KIT_PROP_HUNT "prop_hunt"
 
 /// last audited december 2022
 /obj/item/storage/box/syndicate
@@ -35,7 +39,8 @@
 		KIT_IMPLANTS = 1,
 		KIT_HACKER = 3,
 		KIT_SNIPER = 1,
-		KIT_NUKEOPS_METAGAME = 1
+		KIT_NUKEOPS_METAGAME = 1,
+		KIT_REVOLUTIONARY = 2
 		)))
 		if(KIT_RECON)
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
@@ -55,7 +60,7 @@
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
-			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
+			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //basically 1 tc as it can be bought from BM kits
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
@@ -73,7 +78,7 @@
 			new /obj/item/jammer(src) // 5 tc
 
 		if(KIT_GUN)
-			new /obj/item/gun/ballistic/revolver/syndicate(src) // 13 tc
+			new /obj/item/gun/ballistic/revolver(src) // 13 tc
 			new /obj/item/ammo_box/a357(src) // 4tc
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/storage/belt/holster/chameleon(src) // 1 tc
@@ -165,6 +170,18 @@
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 
+		if(KIT_REVOLUTIONARY)
+			new /obj/item/healthanalyzer/rad_laser(src) // 3 TC
+			new /obj/item/assembly/flash/hypnotic(src) // 7 TC
+			new /obj/item/storage/pill_bottle/lsd(src) // ~1 TC
+			new /obj/item/pen/sleepy(src) // 4 TC
+			new /obj/item/gun/ballistic/revolver/nagant(src) // 13 TC comparable to 357. revolvers
+			new /obj/item/megaphone(src)
+			new /obj/item/bedsheet/rev(src)
+			new /obj/item/clothing/suit/armor/vest/russian_coat(src)
+			new /obj/item/clothing/head/helmet/rus_ushanka(src)
+			new /obj/item/storage/box/syndie_kit/poster_box(src)
+
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pick_weight(list(
 		KIT_JAMES_BOND = 2,
@@ -174,7 +191,10 @@
 		KIT_MAD_SCIENTIST = 2,
 		KIT_BEES = 1,
 		KIT_MR_FREEZE = 2,
-		KIT_TRAITOR_2006 = 1
+		KIT_DEAD_MONEY = 2,
+		KIT_TRAITOR_2006 = 1,
+		KIT_SAM_FISHER = 1,
+		KIT_PROP_HUNT = 1
 		)))
 		if(KIT_JAMES_BOND)
 			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 tc
@@ -188,7 +208,7 @@
 			new /obj/item/implanter/freedom(src) // 5 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/grenade/c4/x4(src) // 1ish tc
-			new /obj/item/reagent_containers/pill/cyanide(src)
+			new /obj/item/reagent_containers/applicator/pill/cyanide(src)
 			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
@@ -234,7 +254,6 @@
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pen/edagger(src) // 2 tc
 			new /obj/item/gun/energy/wormhole_projector/core_inserted(src) // 5 tc easily
-			new /obj/item/gun/energy/decloner/unrestricted(src) // 5 tc at least also
 
 		if(KIT_BEES)
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
@@ -248,7 +267,7 @@
 
 		if(KIT_MR_FREEZE)
 			new /obj/item/clothing/glasses/cold(src)
-			new /obj/item/clothing/gloves/color/black(src)
+			new /obj/item/clothing/gloves/color/black/security/blu(src)
 			new /obj/item/clothing/mask/chameleon(src)
 			new /obj/item/clothing/suit/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -262,8 +281,36 @@
 			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
 			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
 
-		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
+		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire uplink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
+
+		if(KIT_DEAD_MONEY)
+			for(var/i in 1 to 4)
+				new /obj/item/clothing/neck/collar_bomb(src) // These let you remotely kill people with a signaler, though you have to get them first.
+			new /obj/item/storage/box/syndie_kit/signaler(src)
+			new /obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie(src) // basically a snowflake yet better elite modsuit, so like, 8 + 5 tc.
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/clothing/mask/chameleon(src)
+			new /obj/item/melee/baton/telescopic/contractor_baton(src) // 7 tc
+			new /obj/item/jammer(src) // 5 tc
+			new /obj/item/pinpointer/crew(src) //priceless
+
+		if(KIT_SAM_FISHER)
+			new /obj/item/clothing/under/syndicate/combat(src)
+			new /obj/item/clothing/suit/armor/vest/marine/pmc(src) //The armor kit is comparable to the infiltrator, 6 TC
+			new /obj/item/clothing/head/helmet/marine/pmc(src)
+			new /obj/item/clothing/mask/gas/sechailer(src)
+			new /obj/item/clothing/glasses/night/colorless(src) // 3~ TC
+			new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
+			new /obj/item/clothing/shoes/jackboots(src)
+			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC
+
+		if(KIT_PROP_HUNT)
+			new /obj/item/chameleon(src) // 7 TC
+			new /obj/item/card/emag/doorjack(src) // 3 TC
+			new /obj/item/storage/box/syndie_kit/imp_stealth(src) //8 TC
+			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 TC
+			new /obj/item/clothing/glasses/thermal(src) // 4 TC
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
@@ -271,68 +318,20 @@
 	new /obj/item/card/emag(src) // 4 tc
 	new /obj/item/card/emag/doorjack(src) //emag used to do both. 3 tc
 	new /obj/item/pen/sleepy(src) // 4 tc
-	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do. 8 tc
 	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
 	new /obj/item/implanter/freedom(src) // 5 tc
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
-/obj/item/storage/box/syndicate/contract_kit
-	name = "Contract Kit"
-	desc = "Supplied to Syndicate contractors."
-	icon_state = "syndiebox"
-	illustration = "writing_syndie"
+/obj/item/storage/belt/military/assault/fisher
 
-/obj/item/storage/box/syndicate/contractor_loadout
-	name = "Standard Loadout"
-	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
-	icon_state = "syndiebox"
-	illustration = "writing_syndie"
-
-/obj/item/paper/contractor_guide
-	name = "Contractor Guide"
-
-/obj/item/paper/contractor_guide/Initialize(mapload)
-	default_raw_text = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
-			this kit will provide you contracts to take on for TC payments.</p>
-
-			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
-			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed
-			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
-
-			<p>Your standard issue contractor baton hits harder than the ones you might be used to, and likely be your go to weapon for kidnapping your
-			targets. The three additional items have been randomly selected from what we had available. We hope they're useful to you for your mission.</p>
-
-			<p>The contractor hub, available at the top right of the uplink, will provide you unique items and abilities. These are bought using Contractor Rep,
-			with two Rep being provided each time you complete a contract.</p>
-
-			<h3>Using the tablet</h3>
-			<ol>
-				<li>Open the Syndicate Contract Uplink program.</li>
-				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
-				<li>The payment number shown in brackets is the bonus you'll receive when bringing your target <b>alive</b>. You receive the
-				other number regardless of if they were alive or dead.</li>
-				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
-				inside the pod.</li>
-			</ol>
-
-			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it
-			unavailable to take on again.</p>
-			<p>The tablet can also be recharged at any cell charger.</p>
-			<h3>Extracting</h3>
-			<ol>
-				<li>Make sure both yourself and your target are at the dropoff.</li>
-				<li>Call the extraction, and stand back from the drop point.</li>
-				<li>If it fails, make sure your target is inside, and there's a free space for the pod to land.</li>
-				<li>Grab your target, and drag them into the pod.</li>
-			</ol>
-			<h3>Ransoms</h3>
-			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back
-			from where you sent them off from in several minutes time. Don't worry, we give you a cut of what we get paid. We pay this into whatever
-			ID card you have equipped, on top of the TC payment we give.</p>
-
-			<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
-	return ..()
+/obj/item/storage/belt/military/assault/fisher/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher(src) // 11 TC: 7 (pistol) + 3 (suppressor) + lightbreaker (1 TC, black market meme/util item)
+	new /obj/item/ammo_box/magazine/m10mm(src) // 1 TC
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/card/emag/doorjack(src) // 3 TC
+	new /obj/item/knife/combat(src) //comparable to the e-dagger, 2 TC
 
 /obj/item/storage/box/syndie_kit
 	name = "box"
@@ -342,11 +341,28 @@
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	name = "Boxed Rebar Crossbow"
-	desc = "Now features instruction manual for making ammo."
+	desc = "A scoped weapon with low armor penetration, but devastating against flesh. Features instruction manual for making specialty ammo."
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
 	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
 	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
+	new /obj/item/storage/bag/rebar_quiver/syndicate(src)
+
+/obj/item/paper/syndicate_forensics_spoofer
+	name = "Forensics Spoofer Guide"
+	default_raw_text = {"
+		<b>Forensics Spoofer Info:</b><br>
+		The spoofer has two modes: <b>SCAN</b> which scans for fingerprints and fibers, and <b>APPLY</b> which applies the currently chosen fingerprint/fiber to your target.<br>
+		The spoofer can only store 5 fingerprints and 5 fibers, and may not store or report fibers/prints already stored. Additionally, it taps into the stations network to associate scanned fingerprints with names.<br>
+		The spoofer will make the same sounds and sights as a forensics scanner, when <b>silent mode</b> is <b>off</b>.<br>
+		"}
+
+/obj/item/storage/box/syndie_kit/forensics_spoofer
+	name = "forensics spoofing kit"
+
+/obj/item/storage/box/syndie_kit/forensics_spoofer/PopulateContents()
+	new /obj/item/forensics_spoofer(src)
+	new /obj/item/paper/syndicate_forensics_spoofer(src)
 
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
@@ -441,9 +457,16 @@
 		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
 
+/obj/item/storage/box/syndie_kit/smoke
+	name = "smoke kit"
+
+/obj/item/storage/box/syndie_kit/smoke/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/smokebomb(src)
+
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
-	desc = "A box full of mail counterfeit devices. Nothing stops the mail."
+	desc = "A GLA Postal Service branded box. It's emblazoned with the motto: *Nothing stops the mail*."
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit/PopulateContents()
 	for(var/i in 1 to 6)
@@ -454,7 +477,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 14
+	atom_storage.max_slots = 15
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
@@ -462,6 +485,7 @@
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
 	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
+	new /obj/item/reagent_containers/cup/bottle/syndol(src)
 	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
 	new /obj/item/reagent_containers/cup/bottle/histamine(src)
 	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
@@ -556,12 +580,22 @@
 	for(var/i in 1 to 3)
 		new/obj/item/grenade/chem_grenade/ez_clean(src)
 
+/obj/item/storage/box/syndie_kit/mulligan/PopulateContents()
+	. = ..()
+	new /obj/item/reagent_containers/syringe/mulligan(src)
+	new /obj/item/fake_identity_kit(src)
+
 /obj/item/storage/box/hug/reverse_revolver/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/reverse(src)
 
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
 	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
 	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
+
+/obj/item/storage/box/syndie_kit/moltobeso/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/moltobeso(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/dropper(src)
 
 /obj/item/storage/box/syndie_kit/combat_baking/PopulateContents()
 	new /obj/item/food/baguette/combat(src)
@@ -628,6 +662,7 @@
 	new /obj/item/card/emag/doorjack (src)
 	new /obj/item/reagent_containers/hypospray/medipen/stimulants (src)
 	new /obj/item/grenade/c4 (src)
+	new /obj/item/mod/module/energy_shield(src)
 
 /// Surplus Ammo Box
 
@@ -638,6 +673,17 @@
 /obj/item/storage/box/syndie_kit/sniper_surplus/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
+
+/obj/item/storage/box/syndie_kit/shotgun_surplus
+	name = "\improper Donk Co. 'Donk Spike' flechette 12g Bulldog magazine box"
+	desc = "A shoddy box full of Donk Co. 'Donk Spike' flechette 12g. It is debatable whether or not these are actually \
+		better or worse than standard flechette. Donk Co. did genuinely believe in this product being the future of military \
+		ammunition production. The only reason it didn't see wider adoption was a lack of faith in the product. Do you \
+		believe in Donk? Time to put that to the test."
+
+/obj/item/storage/box/syndie_kit/shotgun_surplus/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_box/magazine/m12g/donk(src)
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
@@ -676,15 +722,9 @@
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
 
-/obj/item/storage/box/syndie_kit/stickers
-	name = "sticker kit"
-
-/obj/item/storage/box/syndie_kit/stickers/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 8
-
-/obj/item/storage/box/syndie_kit/stickers/PopulateContents()
+/obj/item/storage/box/stickers/syndie_kit/PopulateContents()
 	var/list/types = subtypesof(/obj/item/sticker/syndicate)
+
 	for(var/i in 1 to atom_storage.max_slots)
 		var/type = pick(types)
 		new type(src)
@@ -739,12 +779,11 @@
 	implant_color = "r"
 
 /obj/item/implant/nuclear_operative/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Suspicious Implant<BR>
-				<b>Life:</b> UNKNOWN <BR>
-				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Suspicious Implant<BR> \
+		<b>Life:</b> UNKNOWN <BR> \
+		<b>Implant Details:</b> <BR> \
+		<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
@@ -821,6 +860,38 @@
 		/obj/item/food/grown/apple = 1,
 	), src)
 
+/obj/item/storage/box/syndicate/contract_kit
+	name = "Contract Kit"
+	desc = "Supplied to Syndicate contractors."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/contract_kit/PopulateContents()
+	new /obj/item/modular_computer/pda/syndicate_contract_uplink(src)
+	new /obj/item/storage/box/syndicate/contractor_loadout(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
+	// Paper guide is always last.
+	new /obj/item/paper/contractor_guide(src)
+
+/obj/item/storage/box/syndicate/contractor_loadout
+	name = "Standard Loadout"
+	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
+	new /obj/item/mod/control/pre_equipped/infiltrator(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
+	new /obj/item/clothing/suit/space/syndicate/contract(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/card/id/advanced/chameleon(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
+	new /obj/item/storage/toolbox/syndicate(src)
+	new /obj/item/jammer(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
@@ -833,6 +904,7 @@
 #undef KIT_SNIPER
 #undef KIT_NUKEOPS_METAGAME
 #undef KIT_LORD_SINGULOTH
+#undef KIT_REVOLUTIONARY
 
 #undef KIT_JAMES_BOND
 #undef KIT_NINJA
@@ -842,3 +914,6 @@
 #undef KIT_BEES
 #undef KIT_MR_FREEZE
 #undef KIT_TRAITOR_2006
+#undef KIT_DEAD_MONEY
+#undef KIT_SAM_FISHER
+#undef KIT_PROP_HUNT

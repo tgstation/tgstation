@@ -1,5 +1,6 @@
 ///Allows you to set a theme for a set of areas without tying them to looping sounds explicitly
 /datum/component/area_sound_manager
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///area -> looping sound type
 	var/list/area_to_looping_type = list()
 	///Current sound loop
@@ -29,7 +30,7 @@
 	else if(!isnull(remove_on))
 		RegisterSignal(parent, remove_on, PROC_REF(handle_removal))
 
-/datum/component/area_sound_manager/Destroy(force, silent)
+/datum/component/area_sound_manager/Destroy(force)
 	QDEL_NULL(our_loop)
 	. = ..()
 

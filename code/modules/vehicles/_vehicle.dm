@@ -1,12 +1,11 @@
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "error"
 	max_integrity = 300
 	armor_type = /datum/armor/obj_vehicle
 	layer = VEHICLE_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	density = TRUE
 	anchored = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
@@ -31,10 +30,12 @@
 	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths
 	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
-	var/list/mob/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
+	var/list/list/datum/action/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
+	var/enter_sound
+	var/exit_sound
 
 /datum/armor/obj_vehicle
 	melee = 30
@@ -61,6 +62,8 @@
 /obj/vehicle/Exited(atom/movable/gone, direction)
 	if(gone == inserted_key)
 		inserted_key = null
+	if(exit_sound)
+		playsound(src, exit_sound, 70, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /obj/vehicle/examine(mob/user)
@@ -115,10 +118,11 @@
 /obj/vehicle/proc/is_occupant(mob/M)
 	return !isnull(LAZYACCESS(occupants, M))
 
-/obj/vehicle/proc/add_occupant(mob/M, control_flags)
+/obj/vehicle/proc/add_occupant(mob/M, control_flags, forced)
 	if(!istype(M) || is_occupant(M))
 		return FALSE
-
+	if(enter_sound && !forced)
+		playsound(src, enter_sound, 70, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	LAZYSET(occupants, M, NONE)
 	add_control_flags(M, control_flags)
 	after_add_occupant(M)
@@ -139,6 +143,7 @@
 	remove_control_flags(M, ALL)
 	remove_passenger_actions(M)
 	LAZYREMOVE(occupants, M)
+//	LAZYREMOVE(contents, M)
 	cleanup_actions_for_mob(M)
 	after_remove_occupant(M)
 	return TRUE

@@ -1,4 +1,6 @@
-import { debounce, throttle } from 'common/timer';
+import { debounce, throttle } from 'tgui-core/timer';
+
+import { Channel } from './ChannelIterator';
 
 const SECONDS = 1000;
 
@@ -7,12 +9,13 @@ export const byondMessages = {
   // Debounce: Prevents spamming the server
   channelIncrementMsg: debounce(
     (visible: boolean) => Byond.sendMessage('thinking', { visible }),
-    0.4 * SECONDS
+    0.4 * SECONDS,
   ),
   forceSayMsg: debounce(
-    (entry: string) => Byond.sendMessage('force', { entry, channel: 'Say' }),
+    (entry: string, channel: Channel) =>
+      Byond.sendMessage('force', { entry, channel }),
     1 * SECONDS,
-    true
+    true,
   ),
   // Throttle: Prevents spamming the server
   typingMsg: throttle(() => Byond.sendMessage('typing'), 4 * SECONDS),

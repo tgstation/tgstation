@@ -227,6 +227,9 @@
 	can_adjust = FALSE
 	flags_1 = NONE
 
+/obj/item/clothing/under/color/rainbow/get_general_color(icon/base_icon)
+	return "#3f3f3f"
+
 /obj/item/clothing/under/color/jumpskirt/rainbow
 	name = "rainbow jumpskirt"
 	desc = "A multi-colored jumpskirt!"

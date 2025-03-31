@@ -167,6 +167,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/trappist = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/rum/aged = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/pizzaparty
@@ -322,4 +323,18 @@
 		/obj/item/food/donut/jelly/slimejelly/laugh = 2,
 		/obj/item/food/donut/jelly/slimejelly/matcha = 2,
 		/obj/item/food/donut/jelly/slimejelly/trumpet = 2,
+	)
+
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage
+	name = "any snack or beverage spawner"
+	icon_state = "slime_jelly_donut"
+	loot = list(
+		/obj/effect/spawner/random/food_or_drink/snack = 6,
+		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 6,
+		/obj/effect/spawner/random/food_or_drink/donuts = 5,
+		/obj/effect/spawner/random/food_or_drink/donkpockets_single = 5,
+		/obj/effect/spawner/random/food_or_drink/booze = 4,
+		/obj/effect/spawner/random/food_or_drink/snack/lizard = 4,
+		/obj/effect/spawner/random/food_or_drink/jelly_donuts = 3,
+		/obj/effect/spawner/random/food_or_drink/slime_jelly_donuts = 1,
 	)

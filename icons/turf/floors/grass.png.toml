@@ -1,0 +1,14 @@
+output_name = "grass"
+template = "bitmask/diagonal_32x32.toml"
+
+[icon_size]
+x = 50
+y = 50
+
+[output_icon_size]
+x = 50
+y = 50
+
+[cut_pos]
+x = 25
+y = 25

@@ -15,6 +15,8 @@
 	var/inlet_id
 	/// The outlet[vent pump] controlled by this sensor
 	var/outlet_id
+	/// The air alarm connected to this sensor
+	var/obj/machinery/airalarm/connected_airalarm
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = assign_random_name()
@@ -43,7 +45,7 @@
 	if(!on)
 		return
 	. = ..()
-	use_power(active_power_usage) //use power for analyzing gases
+	use_energy(active_power_usage) //use power for analyzing gases
 
 /obj/machinery/air_sensor/process()
 	//update appearance according to power state
@@ -57,7 +59,7 @@
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to link it to an injector/vent or reset it's ports")
+	. += span_notice("Use a multitool to link it to an injector, vent, or air alarm, or reset its ports.")
 	. += span_notice("Click with hand to turn it off.")
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
@@ -78,6 +80,11 @@
 /obj/machinery/air_sensor/proc/reset()
 	inlet_id = null
 	outlet_id = null
+	if(connected_airalarm)
+		connected_airalarm.disconnect_sensor()
+		// if air alarm and sensor were linked at roundstart we allow them to link to new devices
+		connected_airalarm.allow_link_change = TRUE
+		connected_airalarm = null
 
 ///right click with multi tool to disconnect everything
 /obj/machinery/air_sensor/multitool_act_secondary(mob/living/user, obj/item/tool)
@@ -112,7 +119,7 @@
 		multi_tool.set_buffer(src)
 		balloon_alert(user, "sensor added to buffer")
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * A portable version of the /obj/machinery/air_sensor
@@ -196,7 +203,7 @@
 		if(initial(sensor.chamber_id) != target_chamber)
 			continue
 
-		//make real air sensor in it's place
+		//make real air sensor in its place
 		var/obj/machinery/air_sensor/new_sensor = new sensor(get_turf(src))
 		new_sensor.inlet_id = input_id
 		new_sensor.outlet_id = output_id
@@ -207,23 +214,20 @@
 
 /obj/item/air_sensor/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	return
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/air_sensor/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 1))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	loc.balloon_alert(user, "dismantling sensor")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 30, amount = 1))
-		return
+		return ITEM_INTERACT_BLOCKING
 	loc.balloon_alert(user, "sensor dismanteled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/air_sensor/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/analyzer(loc)
-		new /obj/item/stack/sheet/iron(loc, 1)
-	return ..()
+/obj/item/air_sensor/atom_deconstruct(disassembled)
+	new /obj/item/analyzer(loc)
+	new /obj/item/stack/sheet/iron(loc, 1)

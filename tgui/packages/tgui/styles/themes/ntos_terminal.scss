@@ -7,16 +7,16 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-   $primary: #24e87e,
-   $label: #24e87e,
-   $good: rgba(36, 232, 127, 0.50),
-   // $fg-map-keys: (),
-   // $bg-map-keys: (),
- );
+  $primary: hsl(146, 82%, 53%),
+  $label: hsl(146, 82%, 53%),
+  $good: hsla(146, 82%, 53%, 0.5),
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
+);
 @use '../base.scss' with (
-   $color-bg: #121b12,
-   $color-bg-grad-spread: 0%,
- );
+  $color-bg: hsl(120, 10%, 9%),
+  $color-bg-grad-spread: 0%
+);
 
 .theme-ntos_terminal {
   // Atomic classes
@@ -24,89 +24,89 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': rgba(0, 0, 0, 0),
-      'color-disabled': #4a6a4a,
-      'color-selected': rgba(36, 232, 127, 0.25)
+      'color-disabled': hsl(120, 18%, 35%),
+      'color-selected': hsla(146, 82%, 53%, 0.25)
     )
   );
   @include meta.load-css(
-    '../components/Input.scss',
+    '~tgui-core/styles/components/Input',
     $with: ('border-color': colors.$primary)
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    '~tgui-core/styles/components/ProgressBar',
     $with: (
-      'background-color': rgba(0, 0, 0, 0.5),
-      'color-default-fill': rgba(36, 232, 127, 0.5)
+      'background-color': hsla(0, 0%, 0%, 0.5),
+      'color-default-fill': hsla(146, 82%, 53%, 0.5)
     )
   );
-  @include meta.load-css('../components/Modal.scss');
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('~tgui-core/styles/components/Modal');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': rgba(0, 97, 0, 0.25))
+    $with: ('background-color': hsla(120, 100%, 19%, 0.25))
   );
 
   .Layout__content {
     //background-image: none;
     background-image: repeating-linear-gradient(
         0deg,
-        rgba(black, 0.15),
-        rgba(black, 0.15) 1px,
+        hsla(0, 0%, 0%, 0.15),
+        hsla(0, 0%, 0%, 0.15) 1px,
         transparent 2.5px,
         transparent 5px
       ),
-      radial-gradient(rgba(0, 97, 0, 0.75), black 120%);
+      radial-gradient(hsla(120, 100%, 19%, 0.75), black 120%);
     background-size: 100%, 100%;
     background-position: center, center;
   }
 
   .Button {
     font: Inconsolata;
-    color: #24e87e;
-    text-shadow: 0 0 2px #24e87e;
+    color: hsl(146, 82%, 53%);
+    text-shadow: 0 0 2px hsl(146, 82%, 53%);
   }
   .Button:hover {
-    background-color: rgba(36, 232, 127, 0.25);
+    background-color: hsla(146, 82%, 53%, 0.25);
     transition: 0.1s;
   }
   .Button--selected {
-    color: #24e87e;
+    color: hsl(146, 82%, 53%);
   }
 
   body {
     //background-color: black;
-    color: white;
+    color: hsl(0, 0%, 100%);
     font: 1.3rem Inconsolata;
-    text-shadow: 0 0 2px #24e87e;
+    text-shadow: 0 0 2px hsl(146, 82%, 53%);
 
     //font: bold 12px Arial, 'Helvetica Neue', Helvetica, sans-serif;
   }
   .Section {
-    color: rgb(36, 232, 126);
+    color: hsl(146, 82%, 53%);
   }
   .Tab {
-    color: #24e87e;
+    color: hsl(146, 82%, 53%);
   }
   .Tab--selected {
-    color: #24e87e;
-    border: 2px solid #24e87e;
-    background-color: rgba(36, 232, 127, 0.25);
+    color: hsl(146, 82%, 53%);
+    border: 2px solid hsl(146, 82%, 53%);
+    background-color: hsla(146, 82%, 53%, 0.25);
   }
   ::selection {
-    background: #0080ff;
+    background: hsl(210, 100%, 50%);
     text-shadow: none;
   }
   .Table {
-    text-shadow: 0 0 2px #24e87e;
+    text-shadow: 0 0 2px hsl(146, 82%, 53%);
   }
   .Flex {
-    text-shadow: 0 0 2px #24e87e;
+    text-shadow: 0 0 2px hsl(146, 82%, 53%);
   }
 }

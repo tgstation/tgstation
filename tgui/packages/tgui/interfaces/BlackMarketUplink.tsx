@@ -1,6 +1,16 @@
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Image,
+  Modal,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Modal, Section, Stack, Tabs } from '../components';
-import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 type Data = {
@@ -27,6 +37,7 @@ type Item = {
   desc: string;
   amount: number;
   cost: number;
+  html_icon: string;
 };
 
 type DeliveryMethod = {
@@ -34,8 +45,8 @@ type DeliveryMethod = {
   price: number;
 };
 
-export const BlackMarketUplink = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BlackMarketUplink = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     categories = [],
     markets = [],
@@ -68,7 +79,8 @@ export const BlackMarketUplink = (props, context) => {
                 act('set_market', {
                   market: market.id,
                 })
-              }>
+              }
+            >
               {market.name}
             </Tabs.Tab>
           ))}
@@ -85,7 +97,8 @@ export const BlackMarketUplink = (props, context) => {
                     act('set_category', {
                       category: category,
                     })
-                  }>
+                  }
+                >
                   {category}
                 </Tabs.Tab>
               ))}
@@ -95,8 +108,22 @@ export const BlackMarketUplink = (props, context) => {
             {items.map((item) => (
               <Box key={item.name} className="candystripe" p={1} pb={2}>
                 <Stack align="baseline">
-                  <Stack.Item grow bold>
-                    {item.name}
+                  <Stack.Item grow>
+                    <Stack align="horizontal">
+                      {!!item.html_icon && (
+                        <Stack.Item>
+                          <Image
+                            m={1}
+                            src={`data:image/jpeg;base64,${item.html_icon}`}
+                            height="64px"
+                            width="64px"
+                          />
+                        </Stack.Item>
+                      )}
+                      <Stack.Item grow bold>
+                        {item.name}
+                      </Stack.Item>
+                    </Stack>
                   </Stack.Item>
                   <Stack.Item color="label">
                     {item.amount ? item.amount + ' in stock' : 'Out of stock'}
@@ -124,8 +151,8 @@ export const BlackMarketUplink = (props, context) => {
   );
 };
 
-const ShipmentSelector = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ShipmentSelector = (props) => {
+  const { act, data } = useBackend<Data>();
   const { buying, ltsrbt_built, money } = data;
   if (!buying) {
     return null;

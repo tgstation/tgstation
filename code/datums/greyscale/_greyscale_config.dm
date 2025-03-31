@@ -30,6 +30,9 @@
 	/// The md5 file hash for the json configuration. Used to check if the file has changed
 	var/json_config_hash
 
+	/// The raw string contents of the JSON config file.
+	var/raw_json_string
+
 	/// String path to the icon file, used for reloading
 	var/string_icon_file
 
@@ -65,7 +68,7 @@
 	if(!name)
 		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
-/datum/greyscale_config/Destroy(force, ...)
+/datum/greyscale_config/Destroy(force)
 	if(!force)
 		return QDEL_HINT_LETMELIVE
 	return ..()
@@ -105,13 +108,13 @@
 		var/changed = FALSE
 
 		json_config = file(string_json_config)
-		var/json_hash = md5asfile(json_config)
+		var/json_hash = rustg_hash_file("md5", string_json_config)
 		if(json_config_hash != json_hash)
 			json_config_hash = json_hash
 			changed = TRUE
 
 		icon_file = file(string_icon_file)
-		var/icon_hash = md5asfile(icon_file)
+		var/icon_hash = rustg_hash_file("md5", icon_file)
 		if(icon_file_hash != icon_hash)
 			icon_file_hash = icon_hash
 			changed = TRUE
@@ -123,7 +126,8 @@
 		if(!changed)
 			return FALSE
 
-	var/list/raw = json_decode(file2text(json_config))
+	raw_json_string = rustg_file_read(string_json_config)
+	var/list/raw = json_decode(raw_json_string)
 	ReadIconStateConfiguration(raw)
 
 	if(!length(icon_states))
@@ -249,7 +253,7 @@
 /datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps, icon/last_external_icon)
 	if(!istype(colors))
 		colors = SSgreyscale.ParseColorString(colors)
-	if(length(colors) != expected_colors)
+	if(length(colors) < expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
 
 	var/list/generated_icons = list()
@@ -278,8 +282,9 @@
 	for(var/datum/greyscale_layer/layer as anything in group)
 		var/icon/layer_icon
 		if(islist(layer))
+			var/list/layer_list = layer
 			layer_icon = GenerateLayerGroup(colors, layer, render_steps, new_icon || last_external_icon)
-			layer = layer[1] // When there are multiple layers in a group like this we use the first one's blend mode
+			layer = layer_list[1] // When there are multiple layers in a group like this we use the first one's blend mode
 		else
 			layer_icon = layer.Generate(colors, render_steps, new_icon || last_external_icon)
 
@@ -304,5 +309,44 @@
 
 	output["icon"] = GenerateBundle(colors, debug_steps)
 	return output
+
+// ===============
+// Universal Icons
+// ===============
+
+/datum/greyscale_config/proc/GenerateUniversalIcon(color_string, target_bundle_state, datum/universal_icon/last_external_icon)
+	return GenerateBundleUniversalIcon(color_string, target_bundle_state, last_external_icon=last_external_icon)
+
+/// Handles the actual icon manipulation to create the spritesheet
+/datum/greyscale_config/proc/GenerateBundleUniversalIcon(list/colors, target_bundle_state, datum/universal_icon/last_external_icon)
+	if(!istype(colors))
+		colors = SSgreyscale.ParseColorString(colors)
+	if(length(colors) != expected_colors)
+		CRASH("[DebugName()] expected [expected_colors] color arguments but received [length(colors)]")
+
+	if(!(target_bundle_state in icon_states))
+		CRASH("Invalid target bundle icon_state \"[target_bundle_state]\"! Valid icon_states: [icon_states.Join(", ")]")
+
+	var/datum/universal_icon/icon_bundle = GenerateLayerGroupUniversalIcon(colors, icon_states[target_bundle_state], last_external_icon) || uni_icon('icons/effects/effects.dmi', "nothing")
+	icon_bundle.scale(width, height)
+	return icon_bundle
+
+/// Internal recursive proc to handle nested layer groups
+/datum/greyscale_config/proc/GenerateLayerGroupUniversalIcon(list/colors, list/group, datum/universal_icon/last_external_icon)
+	var/datum/universal_icon/new_icon
+	for(var/datum/greyscale_layer/layer as anything in group)
+		var/datum/universal_icon/layer_icon
+		if(islist(layer))
+			layer_icon = GenerateLayerGroupUniversalIcon(colors, layer, new_icon || last_external_icon)
+			var/list/layer_list = layer
+			layer = layer_list[1] // When there are multiple layers in a group like this we use the first one's blend mode
+		else
+			layer_icon = layer.GenerateUniversalIcon(colors, new_icon || last_external_icon)
+
+		if(!new_icon)
+			new_icon = layer_icon
+		else
+			new_icon.blend_icon(layer_icon, layer.blend_mode)
+	return new_icon
 
 #undef MAX_SANE_LAYERS

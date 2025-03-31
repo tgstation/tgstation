@@ -11,6 +11,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "corgi"
+	cult_icon_state = "narsian"
 	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
 	///Access card for the corgi.
 	var/obj/item/card/id/access_card = null
@@ -36,13 +37,8 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 	RegisterSignals(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD), PROC_REF(on_appearance_change))
-	if(!can_breed)
-		return
-	AddComponent(\
-		/datum/component/breed,\
-		can_breed_with = typecacheof(list(/mob/living/basic/pet/dog/corgi)),\
-		baby_path = /mob/living/basic/pet/dog/corgi/puppy,\
-	)
+	if(can_breed)
+		add_breeding_component()
 
 /mob/living/basic/pet/dog/corgi/Destroy()
 	QDEL_NULL(inventory_head)
@@ -70,6 +66,18 @@
 		access_card.forceMove(drop_location())
 		access_card = null
 	return ..()
+
+/mob/living/basic/pet/dog/corgi/proc/add_breeding_component()
+	var/static/list/partner_paths = typecacheof(list(/mob/living/basic/pet/dog/corgi))
+	var/static/list/baby_paths = list(
+		/mob/living/basic/pet/dog/corgi/puppy = 95,
+		/mob/living/basic/pet/dog/corgi/puppy/void = 5,
+	)
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/pet/dog/corgi)),\
+		baby_paths = baby_paths,\
+	)
 
 /// Removes the hat and shirt (but not ID) of this corgi
 /mob/living/basic/pet/dog/corgi/proc/undress_dog()
@@ -115,7 +123,7 @@
 		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
 		if(do_after(user, 5 SECONDS, target = src))
 			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
-			playsound(get_turf(src), 'sound/items/welder2.ogg', 20, TRUE)
+			playsound(get_turf(src), 'sound/items/tools/welder2.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[icon_living]_shaved"
 			icon_dead = "[icon_living]_shaved_dead"
@@ -166,7 +174,7 @@
 
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			head_icon = equipped_head_fashion_item.get_overlay(dir = EAST)
-			head_icon.pixel_y = -8
+			head_icon.pixel_z = -8
 			head_icon.transform = head_icon.transform.Turn(180)
 		else
 			head_icon = equipped_head_fashion_item.get_overlay()
@@ -186,7 +194,7 @@
 
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			back_icon = equipped_back_fashion_item.get_overlay(dir = EAST)
-			back_icon.pixel_y = -11
+			back_icon.pixel_z = -11
 			back_icon.transform = back_icon.transform.Turn(180)
 		else
 			back_icon = equipped_back_fashion_item.get_overlay()
@@ -398,7 +406,7 @@
 	place_on_head(new /obj/item/clothing/glasses/eyepatch/medical)
 
 /mob/living/basic/pet/dog/corgi/ian/narsie_act()
-	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', 75, TRUE)
 	var/mob/living/basic/pet/dog/corgi/narsie/narsIan = new(loc)
 	narsIan.setDir(dir)
 	investigate_log("has been gibbed and replaced with Nars-Ian by Nar'Sie.", INVESTIGATE_DEATHS)
@@ -471,7 +479,7 @@
 	unique_pet = TRUE
 	held_state = "narsian"
 	/// Mobs we will consume in the name of Nar'Sie
-	var/static/list/edible_types = list(/mob/living/simple_animal/pet, /mob/living/basic/pet)
+	var/static/list/edible_types = list(/mob/living/basic/pet)
 
 /mob/living/basic/pet/dog/corgi/narsie/Initialize(mapload)
 	. = ..()
@@ -485,7 +493,7 @@
 		return
 	visible_message(span_warning("Dark magic resonating from [src] devours [prey]!"), \
 		"<span class='cult big bold'>DELICIOUS SOULS</span>")
-	playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(prey))
 	narsie_act()
 	prey.investigate_log("has been sacrificed by [src].", INVESTIGATE_DEATHS)
@@ -507,7 +515,7 @@
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
 	if(stat == DEAD) //Nar'Sie loves her doggy
 		visible_message(span_warning("[src] arises again, revived by the dark magicks!"), \
-		span_cultlarge("RISE"))
+		span_cult_large("RISE"))
 		revive(ADMIN_HEAL_ALL) //also means that a dead Nars-Ian can consume a pet and revive
 	adjustBruteLoss(-maxHealth)
 
@@ -543,9 +551,9 @@
 	pass_flags = PASSMOB
 	ai_controller = /datum/ai_controller/basic_controller/dog/puppy
 	mob_size = MOB_SIZE_SMALL
-	collar_icon_state = "puppy"
 	strippable_inventory_slots = list(/datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //puppies are too small to handle hats and back slot items
 	can_breed = FALSE
+	collar_icon_state = "puppy"
 
 //PUPPY IAN! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/puppy/ian

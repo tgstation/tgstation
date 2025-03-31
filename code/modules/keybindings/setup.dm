@@ -1,6 +1,7 @@
 // Set a client's focus to an object and override these procs on that object to let it handle keypresses
 
-/datum/proc/key_down(key, client/user) // Called when a key is pressed down initially
+/datum/proc/key_down(key, client/user, full_key) // Called when a key is pressed down initially
+	SHOULD_CALL_PARENT(TRUE)
 	return
 /datum/proc/key_up(key, client/user) // Called when a key is released
 	return
@@ -31,12 +32,6 @@
 		var/key = macro_set[k]
 		var/command = macro_set[key]
 		winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[command]")
-
-	//Reactivate any active tgui windows mouse passthroughs macros
-	for(var/datum/tgui_window/window in tgui_windows)
-		if(window.mouse_event_macro_set)
-			window.mouse_event_macro_set = FALSE
-			window.set_mouse_macro()
 
 	update_special_keybinds()
 

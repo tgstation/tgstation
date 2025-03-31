@@ -5,12 +5,12 @@
 /atom/movable/screen/alert/status_effect/agent_pinpointer
 	name = "Target Integrated Pinpointer"
 	desc = "Even stealthier than a normal implant, it points to any assassination target you have."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinon"
 
 /datum/status_effect/agent_pinpointer
 	id = "agent_pinpointer"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = PINPOINTER_PING_TIME
 	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer
 	///The minimum range to start pointing towards your target.
@@ -22,7 +22,7 @@
 	///The range until you're considered 'too far away'
 	var/range_far = 16
 	///The target we are pointing towards, refreshes every tick.
-	var/mob/scan_target
+	var/atom/movable/scan_target
 
 /datum/status_effect/agent_pinpointer/tick(seconds_between_ticks)
 	if(!owner)
@@ -40,10 +40,13 @@
 	var/turf/here = get_turf(owner)
 	var/turf/there = get_turf(scan_target)
 
+	if(isnull(there))
+		scan_target = null
+		return
 	if(here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return
-	if(get_dist_euclidian(here,there) <= minimum_range + rand(0, range_fuzz_factor))
+	if(get_dist_euclidean(here,there) <= minimum_range + rand(0, range_fuzz_factor))
 		linked_alert.icon_state = "pinondirect"
 		return
 	linked_alert.setDir(get_dir(here, there))

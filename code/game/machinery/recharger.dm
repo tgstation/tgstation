@@ -17,6 +17,7 @@
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
+		/obj/item/gun/ballistic/automatic/battle_rifle,
 	))
 
 /obj/machinery/recharger/RefreshParts()
@@ -40,20 +41,25 @@
 	if(using_power)
 		status_display_message_shown = TRUE
 		. += span_notice("The status display reads:")
-		. += span_notice("- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.")
+		. += span_notice("- Recharging efficiency: <b>[recharge_coeff*100]%</b>.")
 
 	if(isnull(charging))
 		return
 	if(!status_display_message_shown)
 		. += span_notice("The status display reads:")
 
-	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
+	var/obj/item/stock_parts/power_store/charging_cell = charging.get_cell()
 	if(charging_cell)
 		. += span_notice("- \The [charging]'s cell is at <b>[charging_cell.percent()]%</b>.")
 		return
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
 		. += span_notice("- \The [charging]'s cell is at <b>[PERCENT(power_pack.stored_ammo.len/power_pack.max_ammo)]%</b>.")
+		return
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+		. += span_notice("- \The [charging]'s system degradation is at stage [recalibrating_gun.degradation_stage] of [recalibrating_gun.degradation_stage_max]</b>.")
+		. += span_notice("- \The [charging]'s degradation buffer is at <b>[PERCENT(recalibrating_gun.shots_before_degradation/recalibrating_gun.max_shots_before_degradation)]%</b>.")
 		return
 	. += span_notice("- \The [charging] is not reporting a power level.")
 
@@ -103,22 +109,22 @@
 /obj/machinery/recharger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)
 		to_chat(user, span_notice("Remove the charging item first!"))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	set_anchored(!anchored)
 	power_change()
 	to_chat(user, span_notice("You [anchored ? "attached" : "detached"] [src]."))
 	tool.play_tool_sound(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!anchored || charging)
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
 	if(.)
 		update_appearance()
 
 /obj/machinery/recharger/crowbar_act(mob/living/user, obj/item/tool)
-	return (!anchored || charging) ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_crowbar(tool)
+	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)
 
 /obj/machinery/recharger/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -143,11 +149,10 @@
 	using_power = FALSE
 	if(isnull(charging))
 		return PROCESS_KILL
-	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
+	var/obj/item/stock_parts/power_store/charging_cell = charging.get_cell()
 	if(charging_cell)
 		if(charging_cell.charge < charging_cell.maxcharge)
-			charging_cell.give(charging_cell.chargerate * recharge_coeff * seconds_per_tick / 2)
-			use_power(active_power_usage * recharge_coeff * seconds_per_tick)
+			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
 			using_power = TRUE
 		update_appearance()
 
@@ -155,10 +160,27 @@
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
 		if(power_pack.stored_ammo.len < power_pack.max_ammo)
 			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_power(active_power_usage * recharge_coeff * seconds_per_tick)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
 			using_power = TRUE
 		update_appearance()
 		return
+
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+
+		if(recalibrating_gun.degradation_stage)
+			recalibrating_gun.attempt_recalibration(FALSE)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			using_power = TRUE
+
+		else if(recalibrating_gun.shots_before_degradation < recalibrating_gun.max_shots_before_degradation)
+			recalibrating_gun.attempt_recalibration(TRUE, 1 * recharge_coeff)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			using_power = TRUE
+
+		update_appearance()
+		return
+
 	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
 		finished_recharging = TRUE
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
@@ -179,13 +201,6 @@
 		var/obj/item/melee/baton/security/batong = charging
 		if(batong.cell)
 			batong.cell.charge = 0
-
-/obj/machinery/recharger/update_appearance(updates)
-	. = ..()
-	if((machine_stat & (NOPOWER|BROKEN)) || panel_open || !anchored)
-		luminosity = 0
-		return
-	luminosity = 1
 
 /obj/machinery/recharger/update_overlays()
 	. = ..()

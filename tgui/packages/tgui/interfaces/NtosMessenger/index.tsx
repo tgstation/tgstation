@@ -1,16 +1,29 @@
-import { Box, Button, Icon, Section, Stack, Input, TextArea, Dimmer, Divider } from '../../components';
-import { useBackend, useLocalState } from '../../backend';
-import { createSearch } from 'common/string';
-import { BooleanLike } from 'common/react';
-import { NtosWindow } from '../../layouts';
-
-import { NtChat, NtMessenger, NtPicture } from './types';
-import { ChatScreen } from './ChatScreen';
 import { sortBy } from 'common/collections';
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Divider,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  TextArea,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../../backend';
+import { NtosWindow } from '../../layouts';
+import { ChatScreen } from './ChatScreen';
+import { NtChat, NtMessenger, NtPicture } from './types';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
   is_silicon: BooleanLike;
+  remote_silicon: BooleanLike;
   owner?: NtMessenger;
   saved_chats: Record<string, NtChat>;
   messengers: Record<string, NtMessenger>;
@@ -26,10 +39,11 @@ type NtosMessengerData = {
   sending_virus: BooleanLike;
 };
 
-export const NtosMessenger = (props, context) => {
-  const { data } = useBackend<NtosMessengerData>(context);
+export const NtosMessenger = (props) => {
+  const { data } = useBackend<NtosMessengerData>();
   const {
     is_silicon,
+    remote_silicon,
     saved_chats,
     stored_photos,
     selected_photo_path,
@@ -39,7 +53,9 @@ export const NtosMessenger = (props, context) => {
   } = data;
 
   let content: JSX.Element;
-  if (open_chat !== null) {
+  if (remote_silicon) {
+    content = <AccessDeniedScreen />;
+  } else if (open_chat !== null) {
     const openChat = saved_chats[open_chat];
     const temporaryRecipient = messengers[open_chat];
 
@@ -71,8 +87,43 @@ export const NtosMessenger = (props, context) => {
   );
 };
 
-const ContactsScreen = (props: any, context: any) => {
-  const { act, data } = useBackend<NtosMessengerData>(context);
+const AccessDeniedScreen = (props: any) => {
+  const { act, data } = useBackend<NtosMessengerData>();
+
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        <Section>
+          <Stack vertical textAlign="center">
+            <Box bold>
+              <Icon name="address-card" />
+              SpaceMessenger V6.5.3
+            </Box>
+          </Stack>
+        </Section>
+      </Stack.Item>
+      <NoticeBox
+        color="white"
+        position="relative"
+        top="30%"
+        fontSize="30px"
+        textAlign="center"
+      >
+        ERROR: CONNECTION REFUSED
+      </NoticeBox>
+      <Stack vertical position="relative" top="35%" textAlign="left">
+        <Section>
+          <Box>Message from host:</Box>
+          <Box>- Remote access of this application has been restricted.</Box>
+          <Box>- Contact your Administrator for further assistance.</Box>
+        </Section>
+      </Stack>
+    </Stack>
+  );
+};
+
+const ContactsScreen = (props: any) => {
+  const { act, data } = useBackend<NtosMessengerData>();
   const {
     owner,
     alert_silenced,
@@ -87,17 +138,18 @@ const ContactsScreen = (props: any, context: any) => {
     sending_virus,
   } = data;
 
-  const [searchUser, setSearchUser] = useLocalState(context, 'searchUser', '');
+  const [searchUser, setSearchUser] = useState('');
 
-  const sortByUnreads = sortBy<NtChat>((chat) => chat.unread_messages);
+  const sortByUnreads = (array: NtChat[]) =>
+    sortBy(array, (chat) => chat.unread_messages);
 
   const searchChatByName = createSearch(
     searchUser,
-    (chat: NtChat) => chat.recipient.name + chat.recipient.job
+    (chat: NtChat) => chat.recipient.name + chat.recipient.job,
   );
   const searchMessengerByName = createSearch(
     searchUser,
-    (messenger: NtMessenger) => messenger.name + messenger.job
+    (messenger: NtMessenger) => messenger.name + messenger.job,
   );
 
   const chatToButton = (chat: NtChat) => {
@@ -123,7 +175,7 @@ const ContactsScreen = (props: any, context: any) => {
   };
 
   const openChatsArray = sortByUnreads(Object.values(saved_chats)).filter(
-    searchChatByName
+    searchChatByName,
   );
 
   const filteredChatButtons = openChatsArray
@@ -134,7 +186,7 @@ const ContactsScreen = (props: any, context: any) => {
     .filter(
       ([ref, messenger]) =>
         openChatsArray.every((chat) => chat.recipient.ref !== ref) &&
-        searchMessengerByName(messenger)
+        searchMessengerByName(messenger),
     )
     .map(([_, messenger]) => messenger)
     .map(messengerToButton)
@@ -203,7 +255,7 @@ const ContactsScreen = (props: any, context: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onInput={(_: any, value: string) => setSearchUser(value)}
+              onInput={(_, value) => setSearchUser(value)}
             />
           </Stack>
         </Section>
@@ -262,8 +314,8 @@ type ChatButtonProps = {
   chatRef: string;
 };
 
-const ChatButton = (props: ChatButtonProps, context) => {
-  const { act } = useBackend(context);
+const ChatButton = (props: ChatButtonProps) => {
+  const { act } = useBackend();
   const unreadMessages = props.unreads;
   const hasUnreads = unreadMessages > 0;
   return (
@@ -273,7 +325,8 @@ const ChatButton = (props: ChatButtonProps, context) => {
       fluid
       onClick={() => {
         act('PDA_viewMessages', { ref: props.chatRef });
-      }}>
+      }}
+    >
       {hasUnreads &&
         `[${unreadMessages <= 9 ? unreadMessages : '9+'} unread message${
           unreadMessages !== 1 ? 's' : ''
@@ -283,11 +336,11 @@ const ChatButton = (props: ChatButtonProps, context) => {
   );
 };
 
-const SendToAllSection = (props, context) => {
-  const { data, act } = useBackend<NtosMessengerData>(context);
+const SendToAllSection = (props) => {
+  const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
-  const [message, setmessage] = useLocalState(context, 'everyoneMessage', '');
+  const [message, setmessage] = useState('');
 
   return (
     <>
@@ -306,7 +359,8 @@ const SendToAllSection = (props, context) => {
               onClick={() => {
                 act('PDA_sendEveryone', { message: message });
                 setmessage('');
-              }}>
+              }}
+            >
               Send
             </Button>
           </Stack.Item>
@@ -317,7 +371,7 @@ const SendToAllSection = (props, context) => {
           height={6}
           value={message}
           placeholder="Send message to everyone..."
-          onInput={(_: any, v: string) => setmessage(v)}
+          onChange={(event, value: string) => setmessage(value)}
         />
       </Section>
     </>

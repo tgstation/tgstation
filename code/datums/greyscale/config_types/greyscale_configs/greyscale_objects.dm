@@ -3,6 +3,11 @@
 	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
 	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
 
+/datum/greyscale_config/big_manipulator
+	name = "Big Manipulator"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
+	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
+
 //
 // BENCHES
 //
@@ -112,15 +117,15 @@
 	name = "Hazard Striped Canister"
 	json_config = 'code/datums/greyscale/json_configs/canister_hazard.json'
 
-/datum/greyscale_config/prototype_canister
-	name = "Prototype Canister"
-	icon_file = 'icons/obj/pipes_n_cables/prototype_canister.dmi'
-	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
-
 /datum/greyscale_config/stationary_canister
 	name = "Stationary Canister"
 	icon_file = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
 	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary.json'
+
+/datum/greyscale_config/stationary_canister_overlays
+	name = "Stationary Canister"
+	icon_file = 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi'
+	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary_overlays.json'
 
 // MISC ATMOSPHERICS
 /datum/greyscale_config/meter

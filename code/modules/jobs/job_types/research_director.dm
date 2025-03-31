@@ -2,7 +2,7 @@
 	title = JOB_RESEARCH_DIRECTOR
 	description = "Supervise research efforts, ensure Robotics is in working \
 		order, make sure the AI and its Cyborgs aren't rogue, replacing them if \
-		they are"
+		they are."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list(JOB_CAPTAIN)
 	head_announce = list("Science")
@@ -28,6 +28,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
 
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
 	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
@@ -41,7 +42,9 @@
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 	rpg_title = "Archmagister"
-	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
+
+	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -57,9 +60,9 @@
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/job/research_director
 	uniform = /obj/item/clothing/under/rank/rnd/research_director/turtleneck
-	suit = /obj/item/clothing/suit/jacket/research_director
+	suit = /obj/item/clothing/suit/toggle/labcoat/research_director
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/silver = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/rd
 	head = /obj/item/clothing/head/beret/science/rd
@@ -75,7 +78,7 @@
 	messenger = /obj/item/storage/backpack/messenger/science
 
 	chameleon_extras = /obj/item/stamp/head/rd
-	skillchips = list(/obj/item/skillchip/job/research_director)
+	skillchips = list(/obj/item/skillchip/research_director, /obj/item/skillchip/job/roboticist)
 
 /datum/outfit/job/rd/mod
 	name = "Research Director (MODsuit)"

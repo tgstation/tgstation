@@ -7,13 +7,13 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: #00ff00,
+  $primary: hsl(120, 100%, 50%),
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
 @use '../base.scss' with (
-  $color-bg: #121b12,
-  $color-bg-grad-spread: 0%,
+  $color-bg: hsl(120, 20%, 8.8%),
+  $color-bg-grad-spread: 0%
 );
 
 .theme-hackerman {
@@ -22,34 +22,34 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': colors.$primary,
-      'color-disabled': #4a6a4a,
-      'color-selected': #00ff00
+      'color-disabled': hsl(120, 17.78%, 35.29%),
+      'color-selected': hsl(120, 100%, 50%)
     )
   );
   @include meta.load-css(
-    '../components/Tabs.scss',
+    '~tgui-core/styles/components/Tabs',
     $with: (
       'color-default': colors.$primary,
-      'tab-color-selected': #00ff003f,
-      'text-color': #e7e7e7
+      'tab-color-selected': hsla(120, 100%, 50%, 0.25),
+      'text-color': hsl(0, 0%, 90.59%)
     )
   );
   @include meta.load-css(
-    '../components/Input.scss',
+    '~tgui-core/styles/components/Input',
     $with: ('border-color': colors.$primary)
   );
-  @include meta.load-css('../components/Modal.scss');
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('~tgui-core/styles/components/Modal');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #223d22)
+    $with: ('background-color': hsl(120, 28.4%, 18.6%))
   );
 
   .Layout__content {
@@ -60,7 +60,7 @@
     font-family: monospace;
     border-width: base.em(2px);
     border-style: outset;
-    border-color: #00aa00;
+    border-color: hsl(120, 100%, 33.33%);
     outline: base.em(1px) solid rgb(0, 122, 0);
   }
 

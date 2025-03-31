@@ -7,6 +7,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
+"b" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
 "c" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
@@ -14,7 +18,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "e" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -55,7 +59,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -172,7 +176,7 @@ C
 C
 G
 G
-C
+b
 "}
 (2,1,1) = {"
 W

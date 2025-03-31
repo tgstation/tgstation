@@ -39,8 +39,4 @@
 		addtimer(CALLBACK(src, PROC_REF(transform_area), turfs_to_transform["[iterator]"]), (5 SECONDS) * iterator)
 
 /datum/grand_finale/midas/proc/transform_area(list/turfs)
-	for (var/turf/transform_turf as anything in turfs)
-		if (!chosen_theme.can_convert(transform_turf))
-			continue
-		chosen_theme.apply_theme(transform_turf)
-		CHECK_TICK
+	chosen_theme.apply_theme_to_list_of_turfs(turfs)

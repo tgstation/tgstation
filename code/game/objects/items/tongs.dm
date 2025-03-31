@@ -6,6 +6,7 @@
 	icon_state = "tongs"
 	base_icon_state = "tongs"
 	inhand_icon_state = "fork" // close enough
+	icon_angle = -45
 	attack_verb_continuous = list("pinches", "tongs", "nips")
 	attack_verb_simple = list("pinch", "tong", "nip")
 	/// What are we holding in our tongs?
@@ -39,7 +40,7 @@
 		return TRUE
 	if (!COOLDOWN_FINISHED(src, clack_cooldown))
 		return TRUE
-	user.visible_message(span_notice("[user] clacks [user.p_their()] [src] together like a crab. Click clack!"))
+	user.visible_message(span_notice("[user] clacks [user.p_their()] [name] together like a crab. Click clack!"))
 	click_clack()
 	return TRUE
 
@@ -73,7 +74,7 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/item/kitchen/tongs/pre_attack(obj/item/attacked, mob/living/user, params)
-	if (!isnull(tonged))
+	if (!isnull(tonged) && tonged.force <= 0) // prevents tongs from giving food-weapons extra range
 		attacked.attackby(tonged, user)
 		return TRUE
 	if (isliving(attacked))
@@ -86,6 +87,7 @@
 	attacked.do_pickup_animation(src)
 	attacked.forceMove(src)
 	update_appearance(UPDATE_ICON)
+	return TRUE
 
 /obj/item/kitchen/tongs/update_overlays()
 	. = ..()
@@ -95,6 +97,6 @@
 	held_food.layer = layer
 	held_food.plane = plane
 	held_food.transform = held_food.transform.Scale(0.7, 0.7)
-	held_food.pixel_x = 6
-	held_food.pixel_y = 6
+	held_food.pixel_w = 6
+	held_food.pixel_z = 6
 	. += held_food

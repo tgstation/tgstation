@@ -3,6 +3,9 @@
 	savefile_key = "language"
 	savefile_identifier = PREFERENCE_CHARACTER
 
+/datum/preference/choiced/language/create_default_value()
+	return "Random"
+
 /datum/preference/choiced/language/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE

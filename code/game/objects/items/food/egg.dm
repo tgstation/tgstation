@@ -120,36 +120,40 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	else
 		..()
 
-/obj/item/food/egg/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+/obj/item/food/egg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/griddle))
+		return NONE
 
-	if(!istype(target, /obj/machinery/griddle))
-		return SECONDARY_ATTACK_CALL_NORMAL
+	var/obj/machinery/griddle/hit_griddle = interacting_with
+	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
+		interacting_with.balloon_alert(user, "no room!")
+		return ITEM_INTERACT_BLOCKING
+	var/atom/broken_egg = new /obj/item/food/rawegg(interacting_with.loc)
+	if(LAZYACCESS(modifiers, ICON_X))
+		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+	if(LAZYACCESS(modifiers, ICON_Y))
+		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
+	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
+	reagents.copy_to(broken_egg, reagents.total_volume)
 
-	var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
-	broken_egg.pixel_x = pixel_x
-	broken_egg.pixel_y = pixel_y
-	playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
-	reagents.copy_to(broken_egg,reagents.total_volume)
-
-	var/obj/machinery/griddle/hit_griddle = target
 	hit_griddle.AddToGrill(broken_egg, user)
-	target.balloon_alert(user, "cracks [src] open")
+	interacting_with.balloon_alert(user, "cracks [src] open")
 
 	qdel(src)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/food/egg/blue
 	icon_state = "egg-blue"
 	inhand_icon_state = "egg-blue"
+
 /obj/item/food/egg/green
 	icon_state = "egg-green"
 	inhand_icon_state = "egg-green"
+
 /obj/item/food/egg/mime
 	icon_state = "egg-mime"
 	inhand_icon_state = "egg-mime"
+
 /obj/item/food/egg/orange
 	icon_state = "egg-orange"
 	inhand_icon_state = "egg-orange"
@@ -213,7 +217,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	desc = "Supposedly good for you, if you can stomach it. Better fried."
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "rawegg"
-	food_reagents = list() //Recieves all reagents from its whole egg counterpart
+	food_reagents = list() // Receives all reagents from its whole egg counterpart
 	bite_consumption = 1
 	tastes = list("raw egg" = 6, "sliminess" = 1)
 	eatverbs = list("gulp down")
@@ -274,6 +278,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/obj/item/food/omelette/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/love_food_buff, /datum/status_effect/food/speech/french)
+
 /obj/item/food/omelette/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/kitchen/fork))
 		var/obj/item/kitchen/fork/fork = item
@@ -304,7 +312,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
-	foodtypes = MEAT | BREAKFAST | GRAIN
+	foodtypes = MEAT|BREAKFAST|GRAIN|FRIED
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -319,7 +327,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|FRIED
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -335,4 +343,5 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	tastes = list("custard" = 1)
 	foodtypes = MEAT | VEGETABLES
+	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3

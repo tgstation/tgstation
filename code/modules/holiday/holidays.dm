@@ -257,7 +257,7 @@
 /datum/holiday/april_fools/celebrate()
 	. = ..()
 	SSjob.set_overflow_role(/datum/job/clown)
-	SSticker.login_music = 'sound/ambience/clown.ogg'
+	SSticker.set_lobby_music('sound/music/lobby_music/clown.ogg', override = TRUE)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
 		if(P.client)
@@ -456,8 +456,8 @@
 /datum/holiday/france/greet()
 	return "Do you hear the people sing?"
 
-/datum/holiday/hotdogday //I have plans for this.
-	name = "National Hot Dog Day"
+/datum/holiday/hotdogday
+	name = HOTDOG_DAY
 	begin_day = 17
 	begin_month = JULY
 
@@ -519,7 +519,7 @@
 	return pick("Tizira", "Lizard", "Imperial")
 
 /datum/holiday/ianbirthday
-	name = "Ian's Birthday" //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
+	name = IAN_HOLIDAY //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
 	begin_month = SEPTEMBER
 	begin_day = 9
 	end_day = 10
@@ -694,6 +694,10 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/monkey/celebrate()
+	. = ..()
+	SSstation.setup_trait(/datum/station_trait/job/pun_pun)
+
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
@@ -701,7 +705,7 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 23
+	begin_day = 18
 	begin_month = DECEMBER
 	end_day = 27
 	holiday_hat = /obj/item/clothing/head/costume/santa
@@ -842,9 +846,9 @@
 	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/toy/xmas_cracker = 3,
 			/obj/item/clothing/head/costume/santa = 1,
-			/obj/item/a_gift/anything = 1
+			/obj/item/gift/anything = 1,
+			/obj/item/toy/xmas_cracker = 3,
 		) = maint_holiday_weight,
 	)
 
@@ -856,7 +860,7 @@
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 
-// EASTER (this having it's own spot should be understandable)
+// EASTER (this having its own spot should be understandable)
 
 /datum/holiday/easter
 	name = EASTER

@@ -8,3 +8,4 @@
 	)
 	icon_state = "buzz"
 	default_priority = 90
+	always_use_default_namelist = TRUE // Otherwise we get Bzzbzbz Zzzbzbz.

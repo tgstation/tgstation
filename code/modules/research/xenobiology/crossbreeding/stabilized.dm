@@ -53,7 +53,7 @@ Stabilized extracts:
 	if (holder.has_status_effect(effectpath))
 		return
 	holder.apply_status_effect(effectpath, src)
-	STOP_PROCESSING(SSobj,src)
+	return PROCESS_KILL
 
 //Colors and subtypes:
 /obj/item/slimecross/stabilized/grey
@@ -110,7 +110,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/red
 	colour = SLIME_TYPE_RED
-	effect_desc = "Nullifies all equipment based slowdowns."
+	effect_desc = "Nullifies all equipment based speed change."
 
 /obj/item/slimecross/stabilized/green
 	colour = SLIME_TYPE_GREEN

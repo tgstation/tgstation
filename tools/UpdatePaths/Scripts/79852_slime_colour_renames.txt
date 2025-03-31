@@ -1,0 +1,22 @@
+
+/mob/living/simple_animal/slime{colour="grey"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/grey}
+/mob/living/simple_animal/slime{colour="metal"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/blue}
+/mob/living/simple_animal/slime{colour="purple"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/purple}
+/mob/living/simple_animal/slime{colour="orange"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/orange}
+/mob/living/simple_animal/slime{colour="dark blue"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/darkblue}
+/mob/living/simple_animal/slime{colour="dark purple"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/darkpurple}
+/mob/living/simple_animal/slime{colour="silver"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/silver}
+/mob/living/simple_animal/slime{colour="yellow"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/yellow}
+/mob/living/simple_animal/slime{colour="bluespace"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/bluespace}
+/mob/living/simple_animal/slime{colour="cerulean"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/cerulean}
+/mob/living/simple_animal/slime{colour="pyrite"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/pyrite}
+/mob/living/simple_animal/slime{colour="sepia"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/sepia}
+/mob/living/simple_animal/slime{colour="gold"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/gold}
+/mob/living/simple_animal/slime{colour="green"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/green}
+/mob/living/simple_animal/slime{colour="pick"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/pick}
+/mob/living/simple_animal/slime{colour="red"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/red}
+/mob/living/simple_animal/slime{colour="adamantine"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/adamantine}
+/mob/living/simple_animal/slime{colour="black"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/black}
+/mob/living/simple_animal/slime{colour="light pink"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/lightpink}
+/mob/living/simple_animal/slime{colour="oil"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/oil}
+/mob/living/simple_animal/slime{colour="rainbow"} : /mob/living/simple_animal/slime{@OLD;colour=@SKIP;slime_type=/datum/slime_type/rainbow}

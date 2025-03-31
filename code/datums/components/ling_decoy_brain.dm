@@ -6,7 +6,7 @@
 	VAR_FINAL/datum/action/changeling/mmi_talk/talk_action
 
 /datum/component/ling_decoy_brain/Initialize(datum/antagonist/changeling/ling)
-	if(!istype(parent, /obj/item/organ/internal/brain))
+	if(!istype(parent, /obj/item/organ/brain))
 		return COMPONENT_INCOMPATIBLE
 	if(isnull(ling))
 		stack_trace("[type] instantiated without a changeling to link to.")
@@ -22,13 +22,13 @@
 	return ..()
 
 /datum/component/ling_decoy_brain/RegisterWithParent()
-	var/obj/item/organ/internal/brain/ling_brain = parent
+	var/obj/item/organ/brain/ling_brain = parent
 	ling_brain.organ_flags &= ~ORGAN_VITAL
 	ling_brain.decoy_override = TRUE
 	RegisterSignal(ling_brain, COMSIG_ATOM_ENTERING, PROC_REF(entered_mmi))
 
 /datum/component/ling_decoy_brain/UnregisterFromParent()
-	var/obj/item/organ/internal/brain/ling_brain = parent
+	var/obj/item/organ/brain/ling_brain = parent
 	ling_brain.organ_flags |= ORGAN_VITAL
 	ling_brain.decoy_override = FALSE
 	UnregisterSignal(ling_brain, COMSIG_ATOM_ENTERING, PROC_REF(entered_mmi))
@@ -38,7 +38,7 @@
  *
  * Unfortunately this is hooked on Entering rather than its own dedicated MMI signal becuase MMI code is a fuck
  */
-/datum/component/ling_decoy_brain/proc/entered_mmi(obj/item/organ/internal/brain/source, atom/entering, atom/old_loc, ...)
+/datum/component/ling_decoy_brain/proc/entered_mmi(obj/item/organ/brain/source, atom/entering, atom/old_loc, ...)
 	SIGNAL_HANDLER
 
 	var/mob/living/the_real_ling = parent_ling.owner.current
@@ -54,7 +54,7 @@
 			to_chat(the_real_ling, span_ghostalert("We detect our decoy brain has been placed within a Man-Machine Interface. \
 				We can use the \"MMI Talk\" action to command it to speak."))
 		else
-			the_real_ling.notify_ghost_cloning("Your decoy brain has been placed in an MMI, re-enter your body to talk via it!", source = the_real_ling, flashwindow = TRUE)
+			the_real_ling.notify_revival("Your decoy brain has been placed in an MMI, re-enter your body to talk via it!", source = the_real_ling, flashwindow = TRUE)
 		talk_action.Grant(the_real_ling)
 
 	else if(talk_action?.owner == the_real_ling)

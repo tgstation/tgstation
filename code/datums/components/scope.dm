@@ -1,33 +1,57 @@
+///Used to allow reaching the maximum offset range without exiting the boundaries of the game screen.
+#define MOUSE_POINTER_OFFSET_MULT 1.1
+
+///A component that allows players to use the item to zoom out. Mainly intended for firearms, but now works with other items too.
 /datum/component/scope
 	/// How far we can extend, with modifier of 1, up to our vision edge, higher numbers multiply.
 	var/range_modifier = 1
-	/// Fullscreen object we use for tracking the shots.
+	/// Fullscreen object we use for tracking.
 	var/atom/movable/screen/fullscreen/cursor_catcher/scope/tracker
 	/// The owner of the tracker's ckey. For comparing with the current owner mob, in case the client has left it (e.g. ghosted).
 	var/tracker_owner_ckey
-	/// Are we zooming currently?
-	var/zooming
+	/// The method which we zoom in and out
+	var/zoom_method = ZOOM_METHOD_RIGHT_CLICK
+	/// if not null, an item action will be added. Redundant if the mode is ZOOM_METHOD_RIGHT_CLICK or ZOOM_METHOD_WIELD.
+	var/item_action_type
 
-/datum/component/scope/Initialize(range_modifier)
-	if(!isgun(parent))
+/datum/component/scope/Initialize(range_modifier = 1, zoom_method = ZOOM_METHOD_RIGHT_CLICK, item_action_type)
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.range_modifier = range_modifier
+	src.zoom_method = zoom_method
+	src.item_action_type = item_action_type
 
-/datum/component/scope/Destroy(force, silent)
+/datum/component/scope/Destroy(force)
 	if(tracker)
 		stop_zooming(tracker.owner)
 	return ..()
 
 /datum/component/scope/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
-	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_gun_fire))
+	switch(zoom_method)
+		if(ZOOM_METHOD_RIGHT_CLICK)
+			RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(do_secondary_zoom))
+		if(ZOOM_METHOD_WIELD)
+			RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_WIELDED), PROC_REF(on_wielded))
+			RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_WIELDED), PROC_REF(on_unwielded))
+	if(item_action_type)
+		var/obj/item/parent_item = parent
+		var/datum/action/item_action/scope = parent_item.add_item_action(item_action_type)
+		RegisterSignal(scope, COMSIG_ACTION_TRIGGER, PROC_REF(on_action_trigger))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	if(isgun(parent))
+		RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_gun_fire))
 
 /datum/component/scope/UnregisterFromParent()
+	if(item_action_type)
+		var/obj/item/parent_item = parent
+		var/datum/action/item_action/scope = locate(item_action_type) in parent_item.actions
+		parent_item.remove_item_action(scope)
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
+		SIGNAL_ADDTRAIT(TRAIT_WIELDED),
+		SIGNAL_REMOVETRAIT(TRAIT_WIELDED),
 		COMSIG_GUN_TRY_FIRE,
 		COMSIG_ATOM_EXAMINE,
 	))
@@ -39,7 +63,7 @@
 		stop_zooming(user_mob)
 		return
 	tracker.calculate_params()
-	if(!length(user_client.keys_held & user_client.movement_keys))
+	if(!user_client.intended_direction)
 		user_mob.face_atom(tracker.given_turf)
 	animate(user_client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
@@ -50,14 +74,33 @@
 		return
 	stop_zooming(tracker.owner)
 
-/datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/scope/proc/do_secondary_zoom(datum/source, mob/user, atom/target, click_parameters)
 	SIGNAL_HANDLER
 
 	if(tracker)
 		stop_zooming(user)
 	else
-		start_zooming(user)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+		zoom(user)
+	return ITEM_INTERACT_BLOCKING
+
+/datum/component/scope/proc/on_action_trigger(datum/action/source)
+	SIGNAL_HANDLER
+	var/obj/item/item = source.target
+	var/mob/living/user = item.loc
+	if(tracker)
+		stop_zooming(user)
+	else
+		zoom(user)
+
+/datum/component/scope/proc/on_wielded(obj/item/source, trait)
+	SIGNAL_HANDLER
+	var/mob/living/user = source.loc
+	zoom(user)
+
+/datum/component/scope/proc/on_unwielded(obj/item/source, trait)
+	SIGNAL_HANDLER
+	var/mob/living/user = source.loc
+	stop_zooming(user)
 
 /datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
 	SIGNAL_HANDLER
@@ -70,7 +113,12 @@
 /datum/component/scope/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("You can scope in with <b>right-click</b>.")
+	var/scope = isgun(parent) ? "scope in" : "zoom out"
+	switch(zoom_method)
+		if(ZOOM_METHOD_RIGHT_CLICK)
+			examine_list += span_notice("You can [scope] with <b>right-click</b>.")
+		if(ZOOM_METHOD_WIELD)
+			examine_list += span_notice("You can [scope] by wielding it with both hands.")
 
 /**
  * We find and return the best target to hit on a given turf.
@@ -105,17 +153,7 @@
 	return target_turf
 
 /**
- * Wrapper for zoom(), so in case we runtime we do not get stuck in a bad state
- *
- * Arguments:
- * * user: The mob we are starting zooming on.
-*/
-/datum/component/scope/proc/start_zooming(mob/user)
-	if(zoom(user))
-		zooming = TRUE
-
-/**
- * We start zooming by hiding the mouse pointer, adding our tracker overlay and starting our processing.
+ * We start zooming by adding our tracker overlay and starting our processing.
  *
  * Arguments:
  * * user: The mob we are starting zooming on.
@@ -123,17 +161,41 @@
 /datum/component/scope/proc/zoom(mob/user)
 	if(isnull(user.client))
 		return
-	if(zooming)
+	if(HAS_TRAIT(user, TRAIT_USER_SCOPED))
+		user.balloon_alert(user, "already zoomed!")
 		return
-	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
-	user.update_mouse_pointer()
-	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
-	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)
+	user.playsound_local(parent, 'sound/items/weapons/scope.ogg', 75, TRUE)
+	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, isgun(parent))
 	tracker.assign_to_mob(user, range_modifier)
 	tracker_owner_ckey = user.ckey
-	RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
+	if(user.is_holding(parent))
+		RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
+		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
+	else // The item is likely worn (eg. mothic cap)
+		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(stop_zooming))
+		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
+		var/static/list/capacity_signals = list(
+			COMSIG_LIVING_STATUS_KNOCKDOWN,
+			COMSIG_LIVING_STATUS_PARALYZE,
+			COMSIG_LIVING_STATUS_STUN,
+		)
+		RegisterSignals(user, capacity_signals, PROC_REF(on_incapacitated))
 	START_PROCESSING(SSprojectiles, src)
+	ADD_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 	return TRUE
+
+///Stop scoping if the `newloc` we move to is not a turf
+/datum/component/scope/proc/on_enter_new_loc(datum/source, atom/newloc, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if(!isturf(newloc))
+		stop_zooming(tracker.owner)
+
+/datum/component/scope/proc/on_incapacitated(mob/living/source, amount = 0, ignore_canstun = FALSE)
+	SIGNAL_HANDLER
+
+	if(amount > 0)
+		stop_zooming(source)
 
 /**
  * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
@@ -144,15 +206,21 @@
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
-	if(!zooming)
+	if(!HAS_TRAIT(user, TRAIT_USER_SCOPED))
 		return
 
 	STOP_PROCESSING(SSprojectiles, src)
-	UnregisterSignal(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING))
+	UnregisterSignal(user, list(
+		COMSIG_LIVING_STATUS_KNOCKDOWN,
+		COMSIG_LIVING_STATUS_PARALYZE,
+		COMSIG_LIVING_STATUS_STUN,
+		COMSIG_MOB_SWAP_HANDS,
+		COMSIG_QDELETING,
+		COMSIG_ATOM_ENTERING,
+	))
+	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 
-	zooming = FALSE
-
-	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
+	user.playsound_local(parent, 'sound/items/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	user.clear_fullscreen("scope")
 
 	// if the client has ended up in another mob, find that mob so we can fix their cursor
@@ -165,8 +233,6 @@
 
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
-		user.client.mouse_override_icon = null
-		user.update_mouse_pointer()
 	tracker = null
 	tracker_owner_ckey = null
 
@@ -190,12 +256,18 @@
 	if(isnull(icon_x))
 		icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 		if(isnull(icon_x))
-			icon_x = view_list[1]*world.icon_size/2
+			icon_x = view_list[1]*ICON_SIZE_X/2
 	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	if(isnull(icon_y))
 		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 		if(isnull(icon_y))
-			icon_y = view_list[2]*world.icon_size/2
-	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
-	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
-	given_turf = locate(owner.x+round(given_x/world.icon_size, 1),owner.y+round(given_y/world.icon_size, 1),owner.z)
+			icon_y = view_list[2]*ICON_SIZE_Y/2
+	var/x_cap = range_modifier * view_list[1]*ICON_SIZE_X / 2
+	var/y_cap = range_modifier * view_list[2]*ICON_SIZE_Y / 2
+	var/uncapped_x = round(range_modifier * (icon_x - view_list[1]*ICON_SIZE_X/2) * MOUSE_POINTER_OFFSET_MULT)
+	var/uncapped_y = round(range_modifier * (icon_y - view_list[2]*ICON_SIZE_Y/2) * MOUSE_POINTER_OFFSET_MULT)
+	given_x = clamp(uncapped_x, -x_cap, x_cap)
+	given_y = clamp(uncapped_y, -y_cap, y_cap)
+	given_turf = locate(owner.x+round(given_x/ICON_SIZE_X, 1),owner.y+round(given_y/ICON_SIZE_Y, 1),owner.z)
+
+#undef MOUSE_POINTER_OFFSET_MULT

@@ -1,6 +1,6 @@
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
-	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
+	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid forward movement."
 	icon_state = "jetboots"
 	inhand_icon_state = null
 	resistance_flags = FIRE_PROOF
@@ -36,6 +36,7 @@
 		user.visible_message(span_warning("[usr] dashes forward into the air!"))
 		recharging_time = world.time + recharging_rate
 	else
+		REMOVE_TRAIT(user, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 		to_chat(user, span_warning("Something prevents you from dashing forward!"))
 
 /obj/item/clothing/shoes/bhop/rocket

@@ -1,0 +1,21 @@
+{
+	"jester_map": [
+		{
+			"type": "icon_state",
+			"icon_state": "jester_a",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jester_b",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jester_bells",
+			"blend_mode": "overlay"
+		}
+	]
+}

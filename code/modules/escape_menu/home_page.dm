@@ -2,10 +2,10 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
-			/* hud_owner = */ src,
+			/* hud_owner = */ null,
 			src,
 			"Resume",
-			/* offset = */ 0,
+			/* offset = */ 1,
 			CALLBACK(src, PROC_REF(home_resume)),
 		)
 	)
@@ -15,29 +15,40 @@
 			null,
 			/* hud_owner = */ null,
 			src,
+			"Character",
+			/* offset = */ 2,
+			CALLBACK(src, PROC_REF(home_open_character_settings)),
+		)
+	)
+
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			/* hud_owner = */ null,
+			src,
 			"Settings",
-			/* offset = */ 1,
-			CALLBACK(src, PROC_REF(home_open_settings)),
+			/* offset = */ 3,
+			CALLBACK(src, PROC_REF(home_open_game_settings)),
 		)
 	)
 
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/admin_help(
 			null,
-			/* hud_owner = */ src,
+			/* hud_owner = */ null,
 			src,
 			"Admin Help",
-			/* offset = */ 2,
+			/* offset = */ 4,
 		)
 	)
 
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/leave_body(
 			null,
-			/* hud_owner = */ src,
+			/* hud_owner = */ null,
 			src,
 			"Leave Body",
-			/* offset = */ 3,
+			/* offset = */ 5,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
@@ -45,7 +56,15 @@
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
 
-/datum/escape_menu/proc/home_open_settings()
+/datum/escape_menu/proc/home_open_character_settings()
+	client?.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	client?.prefs.update_static_data(client?.mob)
+	client?.prefs.ui_interact(client?.mob)
+	qdel(src)
+
+/datum/escape_menu/proc/home_open_game_settings()
+	client?.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+	client?.prefs.update_static_data(client?.mob)
 	client?.prefs.ui_interact(client?.mob)
 	qdel(src)
 
@@ -147,6 +166,7 @@
 
 /atom/movable/screen/escape_menu/home_button/admin_help/Initialize(
 	mapload,
+	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
 	offset,
@@ -270,6 +290,7 @@
 
 /atom/movable/screen/escape_menu/home_button/leave_body/Initialize(
 	mapload,
+	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
 	offset,

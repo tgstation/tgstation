@@ -72,7 +72,9 @@
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/make_edible()
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		initial_reagents = food_reagents,\
 		food_flags = food_flags,\
 		foodtypes = foodtypes,\
@@ -120,3 +122,19 @@
 	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)
+
+/obj/item/food/CheckParts(list/parts, datum/crafting_recipe/food/current_recipe)
+	. = ..()
+	if(!istype(current_recipe))
+		return
+
+	var/made_with_food = FALSE
+	var/final_foodtypes = current_recipe.added_foodtypes
+	for(var/obj/item/food/ingredient in parts)
+		made_with_food = TRUE
+		final_foodtypes |= ingredient.foodtypes
+	if(!made_with_food)
+		return
+	final_foodtypes &= ~current_recipe.removed_foodtypes
+	///Update the foodtypes
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = final_foodtypes)

@@ -76,23 +76,23 @@
 
 					body += "</td><td align='center'>";
 
-					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b><br><b>Old names :"+old_names+"</b></font>";
+					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b><br><b>Old names: "+old_names+"</b></font>";
 
 					body += "</td><td align='center'>";
 
-					body += "<a href='?_src_=holder;[HrefToken()];adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
-					body += "<a href='?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
-					body += "<a href='?_src_=vars;[HrefToken()];skill="+ref+"'>SP</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];adminplayeropts="+ref+"'>PP</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
+					body += "<a href='byond://?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
+					body += "<a href='byond://?_src_=vars;[HrefToken()];skill="+ref+"'>SP</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
 					if (job == "Cyborg")
-						body += "<a href='?_src_=holder;[HrefToken()];borgpanel="+ref+"'>BP</a> - "
-					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
+						body += "<a href='byond://?_src_=holder;[HrefToken()];borgpanel="+ref+"'>BP</a> - "
+					body += "<a href='byond://?priv_msg="+ckey+"'>PM</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
 					if(antagonist > 0)
-						body += "<font size='2'><a href='?_src_=holder;[HrefToken()];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
+						body += "<font size='2'><a href='byond://?_src_=holder;[HrefToken()];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
 
 					body += "</td></tr></table>";
 
@@ -198,7 +198,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information - <a href='?_src_=holder;[HrefToken()];check_antagonist=1'>Check antagonists</a> - Kick <a href='?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=0'>everyone</a>/<a href='?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=1'>AFKers</a> in lobby
+					Hover over a line to see more information - <a href='byond://?_src_=holder;[HrefToken()];check_antagonist=1'>Check antagonists</a> - Kick <a href='byond://?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=0'>everyone</a>/<a href='byond://?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=1'>AFKers</a> in lobby
 					<p>
 				</td>
 			</tr>
@@ -231,10 +231,10 @@
 			if(isliving(M))
 
 				if(iscarbon(M)) //Carbon stuff
-					if(ismonkey(M))
-						M_job = "Monkey"
-					else if(ishuman(M))
+					if(ishuman(M) && M.job)
 						M_job = M.job
+					else if(ismonkey(M))
+						M_job = "Monkey"
 					else if(isalien(M)) //aliens
 						if(islarva(M))
 							M_job = "Alien larva"
@@ -274,18 +274,17 @@
 				else
 					M_job = "Ghost"
 
+			var/M_key = html_encode(M.key)
+			var/M_ip_address = isnull(M.lastKnownIP) ? "+localhost+" : M.lastKnownIP
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)
 			var/M_rname_as_key = html_encode(ckey(M.real_name)) // so you can ignore punctuation
 			if(M_rname == M_rname_as_key)
 				M_rname_as_key = null
-			var/M_key = html_encode(M.key)
-			var/previous_names = ""
-			if(M_key)
-				var/datum/player_details/P = GLOB.player_details[ckey(M_key)]
-				if(P)
-					previous_names = P.played_names.Join(",")
-			previous_names = html_encode(previous_names)
+
+			var/previous_names_string = ""
+			if(M.persistent_client)
+				previous_names_string = M.persistent_client.get_played_names()
 
 			//output for each mob
 			dat += {"
@@ -297,14 +296,14 @@
 						onmouseover='expand("data[i]","item[i]")'
 						>
 						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
-						<span hidden class='filter_data'>[M_name] [M_rname] [M_rname_as_key] [M_key] [M_job] [previous_names]</span>
+						<span hidden class='filter_data'>[M_name] [M_rname] [M_rname_as_key] [M_key] [M_job] [previous_names_string]</span>
 						<span hidden id="data[i]_name">[M_name]</span>
 						<span hidden id="data[i]_job">[M_job]</span>
 						<span hidden id="data[i]_rname">[M_rname]</span>
 						<span hidden id="data[i]_rname_as_key">[M_rname_as_key]</span>
-						<span hidden id="data[i]_prevnames">[previous_names]</span>
+						<span hidden id="data[i]_prevnames">[previous_names_string]</span>
 						<span hidden id="data[i]_key">[M_key]</span>
-						<span hidden id="data[i]_lastip">[M.lastKnownIP]</span>
+						<span hidden id="data[i]_lastip">[M_ip_address]</span>
 						<span hidden id="data[i]_isantag">[is_antagonist]</span>
 						<span hidden id="data[i]_ref">[REF(M)]</span>
 						</a>

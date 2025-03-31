@@ -47,19 +47,16 @@
 	. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
 
 
-/obj/item/clothing/suit/hooded/wintercoat/AltClick(mob/user)
-	. = ..()
-
-	if (. == FALSE) // Direct check for FALSE, because that's the specific case we want to propagate, not just null.
-		return FALSE
-
+/obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
 	zipped = !zipped
+	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
 	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		wearer.update_worn_oversuit()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/hooded/winterhood
 	name = "winter hood"
@@ -70,7 +67,8 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	flags_inv = HIDEHAIR|HIDEEARS
+	flags_inv = HIDEEARS
+	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
 	armor_type = /datum/armor/hooded_winterhood
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
@@ -81,6 +79,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/eva
 	name = "\proper Endotherm winter coat"
 	desc = "A thickly padded winter coat to keep the wearer well insulated no matter the circumstances. It has a harness for a larger oxygen tank attached to the back."
+	icon_state = "coateva"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.75
 	armor_type = /datum/armor/wintercoat_eva
@@ -88,7 +87,6 @@
 	equip_delay_other = 6 SECONDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT // Protects very cold.
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT // Protects a little hot.
-	flags_inv = HIDEJUMPSUIT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/eva
@@ -108,6 +106,7 @@
 /obj/item/clothing/head/hooded/winterhood/eva
 	name = "\proper Endotherm winter hood"
 	desc = "A thickly padded hood attached to an even thicker coat."
+	icon_state = "hood_eva"
 	armor_type = /datum/armor/winterhood_eva
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
@@ -224,16 +223,7 @@
 	desc = "A green and blue winter coat. The zipper tab looks like the flower from a member of Rosa Hesperrhodos, a pretty pink-and-white rose. The colours absolutely clash."
 	icon_state = "coathydro"
 	inhand_icon_state = "coathydro"
-	allowed = list(
-		/obj/item/cultivator,
-		/obj/item/hatchet,
-		/obj/item/plant_analyzer,
-		/obj/item/reagent_containers/spray/plantbgone,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/spray/pestspray,
-		/obj/item/seeds,
-		/obj/item/storage/bag/plants,
-	)
+	allowed = /obj/item/clothing/suit/apron::allowed
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hydro
 
 /obj/item/clothing/head/hooded/winterhood/hydro
@@ -311,7 +301,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
@@ -388,6 +378,9 @@
 	allowed += list(
 		/obj/item/autopsy_scanner,
 		/obj/item/scythe,
+		/obj/item/shovel,
+		/obj/item/shovel/serrated,
+		/obj/item/trench_tool,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/coroner
@@ -397,7 +390,7 @@
 // Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
 	name = "virology winter coat"
-	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
+	desc = "A white winter coat with green markings. Warm, but won't fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
 	icon_state = "coatviro"
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
@@ -437,7 +430,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/bag/xeno,
 		/obj/item/storage/pill_bottle,
@@ -503,6 +496,10 @@
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/genetics
 
+/obj/item/clothing/suit/hooded/wintercoat/science/genetics/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/sequence_scanner
+
 /obj/item/clothing/head/hooded/winterhood/science/genetics
 	desc = "A white winter coat hood. It's warm."
 	icon_state = "hood_genetics"
@@ -520,6 +517,10 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/storage/bag/construction,
 		/obj/item/t_scanner,
+		/obj/item/construction/rld,
+		/obj/item/construction/rtd,
+		/obj/item/gun/ballistic/rifle/rebarxbow,
+		/obj/item/storage/bag/rebar_quiver,
 	)
 	armor_type = /datum/armor/wintercoat_engineering
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
@@ -630,6 +631,8 @@
 		/obj/item/storage/bag/ore,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/shovel,
+		/obj/item/trench_tool,
 	)
 	armor_type = /datum/armor/wintercoat_miner
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner

@@ -1,6 +1,7 @@
 /turf/open/floor/iron
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/iron/base
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -12,12 +13,6 @@
 /turf/open/floor/iron/examine(mob/user)
 	. = ..()
 	. += span_notice("There's a <b>small crack</b> on the edge of it.")
-
-
-/turf/open/floor/iron/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)
@@ -315,7 +310,7 @@
 	base_icon_state = "recharge_floor"
 	floor_tile = /obj/item/stack/tile/iron/recharge_floor
 
-/turf/open/floor/iron/recharge_floor/Airless
+/turf/open/floor/iron/recharge_floor/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/recharge_floor/asteroid
@@ -438,6 +433,16 @@
 /turf/open/floor/iron/kitchen_coldroom
 	name = "cold room floor"
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+
+/turf/open/floor/iron/kitchen_coldroom/dark
+	icon_state = "darkfull"
+	base_icon_state = "darkfull"
+	floor_tile = /obj/item/stack/tile/iron/dark
+
+/turf/open/floor/iron/kitchen_coldroom/dark/textured
+	icon_state = "textured_dark"
+	base_icon_state = "textured_dark"
+	floor_tile = /obj/item/stack/tile/iron/dark/textured
 
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
 	icon_state = "freezerfloor"

@@ -2,7 +2,7 @@
 /mob/living/basic/guardian/support
 	guardian_type = GUARDIAN_SUPPORT
 	speed = 0
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	playstyle_string = span_holoparasite("As a <b>support</b> type, you may right-click to heal targets. In addition, alt-clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.")
@@ -103,10 +103,12 @@
 /// Try and teleport something to our beacon
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/try_teleporting(mob/living/source, atom/target)
 	SIGNAL_HANDLER
+
 	if (!can_teleport(source, target))
 		return
+
 	INVOKE_ASYNC(src, PROC_REF(perform_teleport), source, target)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Validate whether we can teleport this object
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/can_teleport(mob/living/source, atom/movable/target)
@@ -118,7 +120,7 @@
 		if (!guardian_mob.is_deployed())
 			source.balloon_alert(source, "manifest yourself!")
 			return FALSE
-	if (!source.Adjacent(target))
+	if (!source.can_perform_action(target))
 		target.balloon_alert(source, "too far!")
 		return FALSE
 	if (target.anchored)
@@ -132,7 +134,7 @@
 /// Start teleporting
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/perform_teleport(mob/living/source, atom/target)
 	source.do_attack_animation(target)
-	playsound(target, 'sound/weapons/punch1.ogg', 50, TRUE, TRUE, frequency = -1)
+	playsound(target, 'sound/items/weapons/punch1.ogg', 50, TRUE, TRUE, frequency = -1)
 	source.balloon_alert(source, "teleporting...")
 	target.visible_message(
 		span_danger("[target] starts to glow faintly!"), \

@@ -4,6 +4,10 @@
 	trim_state = "trim_janitor"
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_SERVICE_LIME
+	threat_modifier = -INFINITY
+	big_pointer = TRUE
+	pointer_color = COLOR_GREEN
+
 /datum/id_trim/admin/New()
 	. = ..()
 	// Every single access in the game, all on one handy trim.

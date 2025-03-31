@@ -21,11 +21,11 @@
 	attack_verb_continuous = "ravages"
 	attack_verb_simple = "ravage"
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	death_sound = 'sound/magic/cosmic_expansion.ogg'
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
+	death_sound = 'sound/effects/magic/cosmic_expansion.ogg'
 
 	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING
@@ -34,7 +34,6 @@
 	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
@@ -65,7 +64,7 @@
 		return
 
 	target.apply_status_effect(/datum/status_effect/star_mark)
-	target.apply_damage(damage = 5, damagetype = CLONE)
+	target.apply_damage(damage = 5, damagetype = BURN)
 	var/datum/targeting_strategy/target_confirmer = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
 	for(var/mob/living/nearby_mob in range(1, src))
 		if(target == nearby_mob || !target_confirmer?.can_attack(src, nearby_mob))
@@ -80,7 +79,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/attack_closed_turfs,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/attack_everything,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -104,7 +103,7 @@
 	can_attack_turfs = TRUE
 	can_attack_dense_objects = TRUE
 
-/datum/pet_command/point_targeting/attack/star_gazer
+/datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
 	command_feedback = "stares!"
 	pointed_reaction = "stares intensely!"

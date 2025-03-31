@@ -6,15 +6,15 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-@use '../colors.scss' with (
-  $primary: #000000,
+@use '../colors' with (
+  $primary: hsl(0, 0%, 0%),
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
-@use '../base.scss' with (
-  $color-bg: #117039,
+@use '../base' with (
+  $color-bg: hsl(145.26, 73.64%, 25.29%),
   $color-bg-grad-spread: 0%,
-  $border-radius: 0,
+  $border-radius: 0
 );
 
 //Made for the roulette table, probably requires a bunch of manual hacks to work for anything else
@@ -24,34 +24,34 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
-      'color-default': #117039,
-      'color-disabled': #363636,
-      'color-selected': #9d0808,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00
+      'color-default': hsl(145.26, 73.64%, 25.29%),
+      'color-disabled': hsl(0, 0%, 21.18%),
+      'color-selected': hsl(0, 90.3%, 32.35%),
+      'color-caution': hsl(29.5, 90.95%, 39.02%),
+      'color-danger': hsl(61.15, 100%, 30.78%)
     )
   );
   @include meta.load-css(
-    '../components/NumberInput.scss',
-    $with: ('border-color': #fff)
+    '~tgui-core/styles/components/NumberInput',
+    $with: ('border-color': hsl(0, 0%, 100%))
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    '~tgui-core/styles/components/ProgressBar',
     $with: ('background-color': rgba(0, 0, 0, 0.5))
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #381608)
+    $with: ('background-color': hsl(17.5, 75%, 12.5%))
   );
 
   .Button {
-    border: base.em(2px) solid #fff;
+    border: base.em(2px) solid hsl(0, 0%, 100%);
   }
 }

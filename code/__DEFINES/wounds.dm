@@ -25,6 +25,11 @@
 /// outright dismemberment of limb
 #define WOUND_SEVERITY_LOSS 4
 
+// how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
+#define BLEED_OVERLAY_LOW 0.5
+#define BLEED_OVERLAY_MED 1.5
+#define BLEED_OVERLAY_GUSH 3.25
+
 /// A "chronological" list of wound severities, starting at the least severe.
 GLOBAL_LIST_INIT(wound_severities_chronological, list(
 	"[WOUND_SEVERITY_TRIVIAL]",
@@ -125,6 +130,8 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+/// Cranial fissure wound.
+#define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
@@ -296,8 +303,8 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 // ~random wound balance defines
 /// how quickly sanitization removes infestation and decays per second
 #define WOUND_BURN_SANITIZATION_RATE 0.075
-/// how much blood you can lose per tick per slash max.
-#define WOUND_SLASH_MAX_BLOODFLOW 4.5
+/// how much blood you can lose per tick per wound max.
+#define WOUND_MAX_BLOODFLOW 4.5
 /// further slash attacks on a bodypart with a slash wound have their blood_flow further increased by damage * this (10 damage slash adds .25 flow)
 #define WOUND_SLASH_DAMAGE_FLOW_COEFF 0.025
 /// if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)

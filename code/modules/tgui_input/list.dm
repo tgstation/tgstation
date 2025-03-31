@@ -94,10 +94,11 @@
 		start_time = world.time
 		QDEL_IN(src, timeout)
 
-/datum/tgui_list_input/Destroy(force, ...)
+/datum/tgui_list_input/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
-	QDEL_NULL(items)
+	items?.Cut()
+	items_map?.Cut()
 	return ..()
 
 /**
@@ -111,7 +112,7 @@
 /datum/tgui_list_input/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ListInputModal")
+		ui = new(user, src, "ListInputWindow")
 		ui.open()
 
 /datum/tgui_list_input/ui_close(mob/user)
@@ -137,7 +138,7 @@
 		data["timeout"] = clamp((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS), 0, 1)
 	return data
 
-/datum/tgui_list_input/ui_act(action, list/params)
+/datum/tgui_list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

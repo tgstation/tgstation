@@ -10,19 +10,18 @@
 	icon_dead = "blobbernaut_dead"
 	health = BLOBMOB_BLOBBERNAUT_HEALTH
 	maxHealth = BLOBMOB_BLOBBERNAUT_HEALTH
-	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER
 	melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER
 	melee_attack_cooldown = CLICK_CD_MELEE
 	obj_damage = BLOBMOB_BLOBBERNAUT_DMG_OBJ
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
-	attack_sound = 'sound/effects/blobattack.ogg'
+	attack_sound = 'sound/effects/blob/blobattack.ogg'
 	verb_say = "gurgles"
 	verb_ask = "demands"
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
-	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/living/blobbernaut
@@ -32,6 +31,7 @@
 /mob/living/basic/blob_minion/blobbernaut/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/damage_threshold, 10)
 
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("blobbernaut_death", src)
@@ -72,9 +72,8 @@
 
 	// take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 	apply_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damage_sources * seconds_per_tick, damagetype = TOX) // We reduce brute damage
-	var/mutable_appearance/harming = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "nautdamage", MOB_LAYER + 0.01)
-	harming.appearance_flags = RESET_COLOR
-	harming.color = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_WHITE
+	var/mutable_appearance/harming = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "nautdamage", MOB_LAYER + 0.01, appearance_flags = RESET_COLOR|KEEP_APART)
+	harming = color_atom_overlay(harming)
 	harming.dir = dir
 	flick_overlay_view(harming, 0.8 SECONDS)
 	return TRUE
@@ -84,15 +83,15 @@
 	key = ckey
 	flick("blobbernaut_produce", src)
 	health = maxHealth / 2 // Start out injured to encourage not beelining away from the blob
-	SEND_SOUND(src, sound('sound/effects/blobattack.ogg'))
-	SEND_SOUND(src, sound('sound/effects/attackblob.ogg'))
-	to_chat(src, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed."))
+	SEND_SOUND(src, sound('sound/effects/blob/blobattack.ogg'))
+	SEND_SOUND(src, sound('sound/effects/blob/attackblob.ogg'))
+	to_chat(src, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cult_large("but will slowly die if not near the blob")] or if the factory that made you is killed."))
 	to_chat(src, span_infoplain("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally"))
 	to_chat(src, span_infoplain("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
 	to_chat(src, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
 
 /// Set our attack damage based on blob's properties
-/mob/living/basic/blob_minion/blobbernaut/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/mob/living/basic/blob_minion/blobbernaut/minion/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
 	if (isnull(overmind))
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)

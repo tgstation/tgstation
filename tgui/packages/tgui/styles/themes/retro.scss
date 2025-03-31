@@ -7,14 +7,14 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: #000000,
+  $primary: hsl(0, 0%, 0%),
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
 @use '../base.scss' with (
-  $color-bg: #E8E4C9,
+  $color-bg: hsl(48, 38%, 84%),
   $color-bg-grad-spread: 0%,
-  $border-radius: 0,
+  $border-radius: 0
 );
 
 // A fat warning to anyone who wants to use this: this only half works.
@@ -25,44 +25,44 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: (
-      'color-default': #e8e4c9,
-      'color-disabled': #505046,
-      'color-selected': #9d0808,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00
+      'color-default': hsl(48, 38%, 84%),
+      'color-disabled': hsl(60, 6%, 28%),
+      'color-selected': hsl(0, 91%, 31%),
+      'color-caution': hsl(28, 87%, 39%),
+      'color-danger': hsl(61, 100%, 30%)
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
+    '~tgui-core/styles/components/ProgressBar',
+    $with: ('background-color': hsla(0, 0%, 0%, 0.5))
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #585337)
+    $with: ('background-color': hsl(48, 10%, 28%))
   );
 
   .Button {
     font-family: monospace;
-    color: #161613;
-    border: base.em(2px) outset #e8e4c9;
-    outline: base.em(1px) solid #161613;
+    color: hsl(60, 6%, 8%);
+    border: base.em(2px) outset hsl(48, 38%, 84%);
+    outline: base.em(1px) solid hsl(60, 6%, 8%);
   }
 
   .Button--disabled {
-    color: #c5c5c2;
+    color: hsl(60, 6%, 77%);
     font-family: monospace;
     &:hover {
-      color: #ffffff;
+      color: hsl(0, 0%, 100%);
     }
     &:focus {
-      color: #ffffff;
+      color: hsl(0, 0%, 100%);
     }
   }
 

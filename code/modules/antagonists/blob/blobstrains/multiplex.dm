@@ -2,7 +2,7 @@
 	var/list/blobstrains
 	var/typeshare
 
-/datum/blobstrain/multiplex/New(mob/camera/blob/new_overmind, list/blobstrains)
+/datum/blobstrain/multiplex/New(mob/eye/blob/new_overmind, list/blobstrains)
 	. = ..()
 	for (var/bt in blobstrains)
 		if (ispath(bt, /datum/blobstrain))
@@ -21,7 +21,7 @@
 	for (var/datum/blobstrain/bt in blobstrains)
 		. += bt.death_reaction(B, damage_flag, coefficient*typeshare)
 
-/datum/blobstrain/multiplex/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O, coefficient = 1) //when the blob expands, do this
+/datum/blobstrain/multiplex/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/eye/blob/O, coefficient = 1) //when the blob expands, do this
 	for (var/datum/blobstrain/bt in blobstrains)
 		. += bt.expand_reaction(B, newB, T, O, coefficient*typeshare)
 

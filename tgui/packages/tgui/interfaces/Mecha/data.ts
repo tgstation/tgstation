@@ -1,4 +1,6 @@
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
+
+import { Region } from '../common/AccessConfig';
 
 export type AccessData = {
   name: string;
@@ -25,7 +27,7 @@ export type MainData = {
   overclock_temp_percentage: number;
 
   one_access: BooleanLike;
-  regions: string[];
+  regions: Region[];
   accesses: string[];
 
   servo_rating: number;

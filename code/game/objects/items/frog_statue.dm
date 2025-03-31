@@ -1,7 +1,7 @@
 #define STATUE_FILTER "statue_filter"
 #define FILTER_COLOR "#34b347"
 #define RECALL_DURATION 3 SECONDS
-#define MINIMUM_COLOR_VALUE 60
+#define MINIMUM_COLOR_VALUE 20
 
 /obj/item/frog_statue
 	name = "frog statue"
@@ -41,7 +41,7 @@
 	if(isnull(contained_frog))
 		. += span_notice("There are currently no frogs linked to this statue!")
 	else
-		. += span_notice("Using it will [contained_frog in src ? "release" : "recall"] the beast!")
+		. += span_notice("Using it will [(contained_frog in src) ? "release" : "recall"] the beast!")
 
 ///resummon the frog into its home
 /obj/item/frog_statue/proc/recall_frog(mob/user)
@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 
 	contained_frog = null
-	playsound(src, 'sound/magic/demon_dies.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', 50, TRUE)
 	UnregisterSignal(source, COMSIG_QDELETING)
 
 /obj/item/frog_statue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -151,8 +151,8 @@
 		to_chat(user, span_warning("Please choose a valid color."))
 		select_frog_color(user, new_frog)
 		return
-	var/temp_hsv = RGBtoHSV(frog_color)
-	if(ReadHSV(temp_hsv)[3] < MINIMUM_COLOR_VALUE)
+	var/list/hsv_frog = rgb2hsv(frog_color)
+	if(hsv_frog[3] < MINIMUM_COLOR_VALUE)
 		to_chat(user, span_danger("This color is too dark!"))
 		select_frog_color(user, new_frog)
 		return

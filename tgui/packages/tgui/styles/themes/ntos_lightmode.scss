@@ -6,37 +6,37 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$nanotrasen: #ffffff;
+$nanotrasen: hsl(0, 0%, 100%);
 
 @use '../colors.scss' with (
-   $primary: #000000,
-   $label: #000000,
- );
+  $primary: hsl(0, 0%, 0%),
+  $label: hsl(0, 0%, 0%)
+);
 @use '../base.scss' with (
-   $color-bg: white,
- );
+  $color-bg: hsl(0, 0%, 100%)
+);
 
 .theme-ntos_lightmode {
   @include meta.load-css('../atomic/color.scss', $with: ());
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    '~tgui-core/styles/components/Button',
     $with: ('color-default': $nanotrasen)
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    '~tgui-core/styles/components/ProgressBar',
     $with: (
       'color-default-fill': $nanotrasen,
-      'background-color': rgba(0, 0, 0, 0.5)
+      'background-color': hsla(0, 0%, 0%, 0.5)
     )
   );
   @include meta.load-css(
-    '../components/Section.scss',
-    $with: ('background-color': rgba(119, 119, 119, 0.4))
+    '~tgui-core/styles/components/Section',
+    $with: ('background-color': hsla(0, 0%, 47%, 0.4))
   );
   @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': white)
+    '~tgui-core/styles/components/Tooltip',
+    $with: ('background-color': hsl(0, 0%, 100%))
   );
 
   // Layouts
@@ -44,24 +44,24 @@ $nanotrasen: #ffffff;
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': gray)
+    $with: ('background-color': hsl(0, 0%, 50%))
   );
   .Button {
-    color: #161613;
+    color: hsl(45, 6%, 8%);
   }
   .Button:hover {
-    background-color: #777777;
+    background-color: hsl(0, 0%, 47%);
     transition: 0.1s;
   }
 
   .Section {
-    color: black;
+    color: hsl(0, 0%, 0%);
   }
   .Tab {
-    color: black;
+    color: hsl(0, 0%, 0%);
   }
   .Tab--selected {
-    color: white;
-    background-color: darkgray;
+    color: hsl(0, 0%, 100%);
+    background-color: hsl(0, 0%, 66%);
   }
 }

@@ -29,7 +29,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_EXAMINE))
 	return ..()
 
-/datum/component/golem_food/Destroy(force, silent)
+/datum/component/golem_food/Destroy(force)
 	QDEL_NULL(golem_snack)
 	snack_type = null
 	extra_validation = null
@@ -108,7 +108,7 @@
 
 /obj/item/food/golem_food/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
 
 /// Called when someone bites this food, subtract one charge from our material stack
 /obj/item/food/golem_food/proc/took_bite(mob/eater)

@@ -16,7 +16,7 @@
 /datum/action/cooldown/mob_cooldown/sneak/Remove(mob/living/remove_from)
 	if(HAS_TRAIT(remove_from, TRAIT_SNEAK))
 		remove_from.alpha = initial(remove_from.alpha)
-		REMOVE_TRAIT(remove_from, TRAIT_SNEAK, name)
+		REMOVE_TRAIT(remove_from, TRAIT_SNEAK, ACTION_TRAIT)
 
 	return ..()
 
@@ -26,11 +26,11 @@
 		// Otherwise we get permanent invisbility exploits.
 		animate(owner, alpha = initial(owner.alpha), time = animation_time)
 		owner.balloon_alert(owner, "you reveal yourself")
-		REMOVE_TRAIT(owner, TRAIT_SNEAK, name)
+		REMOVE_TRAIT(owner, TRAIT_SNEAK, ACTION_TRAIT)
 
 	else
 		animate(owner, alpha = sneak_alpha, time = animation_time)
 		owner.balloon_alert(owner, "you blend into the environment")
-		ADD_TRAIT(owner, TRAIT_SNEAK, name)
+		ADD_TRAIT(owner, TRAIT_SNEAK, ACTION_TRAIT)
 
 	return TRUE

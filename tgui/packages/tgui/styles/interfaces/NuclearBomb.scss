@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
@@ -5,12 +7,12 @@
 $color-danger: colors.bg(colors.$red) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 
-$background-beige: #e8e4c9;
+$background-beige: hsl(50, 33%, 84%);
 
 .NuclearBomb__displayBox {
-  background-color: #002003;
+  background-color: hsl(150, 100%, 1%);
   border: 0.167em inset $background-beige;
-  color: #03e017;
+  color: hsl(132, 100%, 45%);
   font-size: 2em;
   font-family: monospace;
   padding: 0.25em;
@@ -27,23 +29,26 @@ $background-beige: #e8e4c9;
   background-color: $background-beige;
   border-color: $background-beige;
   &:hover {
-    background-color: lighten($background-beige, 15%) !important;
-    border-color: lighten($background-beige, 15%) !important;
+    background-color: color.adjust(
+      $background-beige,
+      $lightness: 15%
+    ) !important;
+    border-color: color.adjust($background-beige, $lightness: 15%) !important;
   }
 }
 
 .NuclearBomb__Button--1 {
-  background-color: #d3cfb7 !important;
-  border-color: #d3cfb7 !important;
-  color: #a9a692 !important;
+  background-color: hsl(50, 33%, 78%) !important;
+  border-color: hsl(50, 33%, 78%) !important;
+  color: hsl(50, 10%, 70%) !important;
 }
 
 .NuclearBomb__Button--E {
   background-color: $color-caution !important;
   border-color: $color-caution !important;
   &:hover {
-    background-color: lighten($color-caution, 15%) !important;
-    border-color: lighten($color-caution, 15%) !important;
+    background-color: color.adjust($color-caution, $lightness: 15%) !important;
+    border-color: color.adjust($color-caution, $lightness: 15%) !important;
   }
 }
 
@@ -51,8 +56,8 @@ $background-beige: #e8e4c9;
   background-color: $color-danger !important;
   border-color: $color-danger !important;
   &:hover {
-    background-color: lighten($color-danger, 15%) !important;
-    border-color: lighten($color-danger, 15%) !important;
+    background-color: color.adjust($color-danger, $lightness: 15%) !important;
+    border-color: color.adjust($color-danger, $lightness: 15%) !important;
   }
 }
 

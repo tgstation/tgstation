@@ -27,7 +27,7 @@ declare class Benchmark {
   static reduce<T, K>(
     arr: T[],
     callback: (accumulator: K, value: T) => K,
-    thisArg?: any
+    thisArg?: any,
   ): K;
 
   static options: Benchmark.Options;

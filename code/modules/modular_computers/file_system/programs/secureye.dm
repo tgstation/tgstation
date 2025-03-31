@@ -3,21 +3,22 @@
 /datum/computer_file/program/secureye
 	filename = "secureye"
 	filedesc = "SecurEye"
-	category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_SECURITY
 	ui_header = "borg_mon.gif"
-	program_icon_state = "generic"
+	program_open_overlay = "generic"
 	extended_desc = "This program allows access to standard security camera networks."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	download_access = list(ACCESS_SECURITY)
-	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	size = 5
 	tgui_id = "NtosSecurEye"
 	program_icon = "eye"
+	always_update_ui = TRUE
 
 	///Boolean on whether or not the app will make noise when flipping around the channels.
 	var/spying = FALSE
 
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	///List of weakrefs of all users watching the program.
 	var/list/concurrent_users = list()
 
@@ -27,9 +28,7 @@
 	var/turf/last_camera_turf
 
 	// Stuff needed to render the map
-	var/atom/movable/screen/map_view/cam_screen
-	/// All the plane masters that need to be applied.
-	var/atom/movable/screen/background/cam_background
+	var/atom/movable/screen/map_view/camera/cam_screen
 
 	///Internal tracker used to find a specific person and keep them on cameras.
 	var/datum/trackable/internal_tracker
@@ -40,12 +39,25 @@
 	filedesc = "SyndEye"
 	extended_desc = "This program allows for illegal access to security camera networks."
 	download_access = list()
-	available_on_ntnet = FALSE
-	available_on_syndinet = TRUE
-	requires_ntnet = FALSE
-	usage_flags = PROGRAM_ALL
-	unique_copy = TRUE
+	can_run_on_flags = PROGRAM_ALL
+	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
 
+	network = list(
+		CAMERANET_NETWORK_SS13,
+		CAMERANET_NETWORK_MINE,
+		CAMERANET_NETWORK_RD,
+		CAMERANET_NETWORK_LABOR,
+		CAMERANET_NETWORK_ORDNANCE,
+		CAMERANET_NETWORK_MINISAT,
+	)
+	spying = TRUE
+
+/datum/computer_file/program/secureye/human_ai
+	filename = "Overseer"
+	filedesc = "OverSeer"
+	run_access = list(ACCESS_MINISAT)
+	can_run_on_flags = PROGRAM_PDA
+	program_flags = PROGRAM_UNIQUE_COPY
 	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
 	spying = TRUE
 
@@ -57,18 +69,13 @@
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
-		network += lowertext(i)
+		network += LOWER_TEXT(i)
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = FALSE
-	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
-	QDEL_NULL(cam_background)
 	QDEL_NULL(internal_tracker)
 	last_camera_turf = null
 	return ..()
@@ -89,10 +96,9 @@
 	if(is_living)
 		concurrent_users += user_ref
 	// Register map objects
-	cam_screen.display_to(user)
-	user.client.register_map_obj(cam_background)
+	cam_screen.display_to(user, ui.window)
 
-/datum/computer_file/program/secureye/ui_status(mob/user)
+/datum/computer_file/program/secureye/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(. == UI_DISABLED)
 		return UI_CLOSE
@@ -106,7 +112,7 @@
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
 			ref = REF(active_camera),
-			status = active_camera.status,
+			status = active_camera.camera_enabled,
 		)
 	return data
 
@@ -115,15 +121,7 @@
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	data["can_spy"] = !!spying
-	var/list/cameras = get_camera_list(network)
-	data["cameras"] = list()
-	for(var/i in cameras)
-		var/obj/machinery/camera/C = cameras[i]
-		data["cameras"] += list(list(
-			name = C.c_tag,
-			ref = REF(C),
-		))
-
+	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
 /datum/computer_file/program/secureye/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -138,11 +136,11 @@
 			else
 				camera_ref = null
 			if(!spying)
-				playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
 			if(isnull(camera_ref))
 				return TRUE
-			if(internal_tracker && internal_tracker.tracking)
-				internal_tracker.set_tracking(FALSE)
+			if(internal_tracker)
+				internal_tracker.reset_tracking()
 
 			update_active_camera_screen()
 			return TRUE
@@ -150,7 +148,8 @@
 		if("start_tracking")
 			if(!internal_tracker)
 				internal_tracker = new(src)
-			internal_tracker.set_tracked_mob(usr)
+				RegisterSignal(internal_tracker, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+			internal_tracker.track_input(usr)
 			return TRUE
 
 /datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, mob/living/target)
@@ -172,8 +171,8 @@
 /datum/computer_file/program/secureye/ui_close(mob/user)
 	. = ..()
 	//don't track anyone while we're shutting off.
-	if(internal_tracker && internal_tracker.tracking)
-		internal_tracker.set_tracking(FALSE)
+	if(internal_tracker)
+		internal_tracker.reset_tracking()
 	var/user_ref = REF(user)
 	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.
@@ -185,18 +184,18 @@
 		camera_ref = null
 		last_camera_turf = null
 		if(!spying)
-			playsound(computer, 'sound/machines/terminal_off.ogg', 25, FALSE)
+			playsound(computer, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
-		show_camera_static()
+		cam_screen.show_camera_static()
 		return
 
 	var/list/visible_turfs = list()
 
-	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	// Get the camera's turf to correctly gather what's visible from its turf, in case it's located in a moving object (borgs / mechs)
 	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
@@ -219,13 +218,6 @@
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
 
-	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
-
-/datum/computer_file/program/secureye/proc/show_camera_static()
-	cam_screen.vis_contents.Cut()
-	cam_background.icon_state = "scanline2"
-	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+	cam_screen.show_camera(visible_turfs, size_x, size_y)
 
 #undef DEFAULT_MAP_SIZE

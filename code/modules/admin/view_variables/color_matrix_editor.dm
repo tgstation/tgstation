@@ -12,9 +12,9 @@
 	else if(istext(_target?.color))
 		current_color = color_hex2color_matrix(_target.color)
 	else
-		current_color = color_matrix_identity()
+		current_color = COLOR_MATRIX_IDENTITY
 
-	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
+	var/mutable_appearance/view = image('icons/testing/colortest.dmi', "colors")
 	if(_target)
 		target = WEAKREF(_target)
 		if(!(_target.appearance_flags & PLANE_MASTER))
@@ -25,14 +25,13 @@
 
 	proxy_view.appearance = view
 	proxy_view.color = current_color
-	proxy_view.display_to(owner.mob)
 
-/datum/color_matrix_editor/Destroy(force, ...)
+/datum/color_matrix_editor/Destroy(force)
 	QDEL_NULL(proxy_view)
 	return ..()
 
 /datum/color_matrix_editor/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_VAREDIT)
 
 /datum/color_matrix_editor/ui_static_data(mob/user)
 	var/list/data = list()
@@ -51,6 +50,7 @@
 	if(!ui)
 		ui = new(user, src, "ColorMatrixEditor")
 		ui.open()
+		proxy_view.display_to(owner.mob, ui.window)
 
 /datum/color_matrix_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

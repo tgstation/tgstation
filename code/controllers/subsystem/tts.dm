@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request = new()
 	var/list/headers = list()
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-voices", "", headers)
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-voices", "", headers, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request_pitch = new()
 	var/list/headers_pitch = list()
 	headers_pitch["Authorization"] = CONFIG_GET(string/tts_http_token)
-	request_pitch.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/pitch-available", "", headers_pitch)
+	request_pitch.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/pitch-available", "", headers_pitch, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request_pitch.begin_async()
 	UNTIL(request_pitch.is_complete())
 	pitch_enabled = TRUE
@@ -110,13 +110,14 @@ SUBSYSTEM_DEF(tts)
 		if(QDELING(listening_mob))
 			stack_trace("TTS tried to play a sound to a deleted mob.")
 			continue
-		var/volume_to_play_at = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts_volume)
+		/// volume modifier for TTS as set by the player in preferences.
+		var/volume_modifier = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_tts_volume)/100
 		var/tts_pref = listening_mob.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
-		if(volume_to_play_at == 0 || (tts_pref == TTS_SOUND_OFF))
+		if(volume_modifier == 0 || (tts_pref == TTS_SOUND_OFF))
 			continue
 
 		var/sound_volume = ((listening_mob == target)? 60 : 85) + volume_offset
-		sound_volume = sound_volume * (volume_to_play_at / 100)
+		sound_volume = sound_volume*volume_modifier
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		var/audio_to_use = (tts_pref == TTS_SOUND_BLIPS) ? audio_blips : audio
 		if(!holder.has_language(language))
@@ -182,6 +183,12 @@ SUBSYSTEM_DEF(tts)
 		var/identifier = current_request.identifier
 		if(current_request.requests_errored())
 			current_request.timed_out = TRUE
+			var/datum/http_response/normal_response = current_request.request.into_response()
+			var/datum/http_response/blips_response = current_request.request_blips.into_response()
+			log_tts("TTS HTTP request errored | Normal: [normal_response.error] | Blips: [blips_response.error]", list(
+				"normal" = normal_response,
+				"blips" = blips_response
+			))
 			continue
 		current_request.audio_length = text2num(response.headers["audio-length"]) * 10
 		if(!current_request.audio_length)
@@ -288,8 +295,8 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request_blips = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
 	var/file_name_blips = "tmp/tts/[identifier]_blips.ogg"
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
-	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips)
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
+	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners, pitch)
 	var/list/player_queued_tts_messages = queued_tts_messages[target]
 	if(!player_queued_tts_messages)

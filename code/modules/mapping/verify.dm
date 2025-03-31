@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(map_reports)
 	original_path = map.original_path || "Untitled"
 	GLOB.map_reports += src
 
-/datum/map_report/Destroy(force, ...)
+/datum/map_report/Destroy(force)
 	GLOB.map_reports -= src
 	return ..()
 
@@ -24,7 +24,6 @@ GLOBAL_LIST_EMPTY(map_reports)
 /// Show a rendered version of this report to a client.
 /datum/map_report/proc/show_to(client/C)
 	var/list/html = list()
-	html += "<p>Report for map file <tt>[original_path]</tt></p>"
 	if(crashed)
 		html += "<p><b>Validation crashed</b>: check the runtime logs.</p>"
 	if(!loadable)
@@ -48,7 +47,9 @@ GLOBAL_LIST_EMPTY(map_reports)
 				html += "<ul><li>[messages.Join("</li><li>")]</li></ul>"
 			html += "</li>"
 		html += "</ul></p>"
-	C << browse(html.Join(), "window=[tag];size=600x400")
+	var/datum/browser/browser = new(C.mob, "[tag]", "Report for map file [original_path]", 600, 400)
+	browser.set_content(html.Join())
+	browser.open()
 
 /datum/map_report/Topic(href, href_list)
 	. = ..()

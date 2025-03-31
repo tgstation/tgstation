@@ -3,8 +3,6 @@
 
 /datum/round_event/ghost_role
 	fakeable = FALSE
-	/// Members of this list will be placed at the front of the candicacy list, in front of the (shuffled) normal candidates.
-	var/list/priority_candidates = list() //expected to contain 0 or more /clients (or things with .key)
 	/// The minimum number of signups required for the event to continue past the polling period
 	var/minimum_required = 1
 	/// The name of the role, to be displayed in logs/polls/etc.
@@ -83,30 +81,5 @@
 
 /datum/round_event/ghost_role/proc/spawn_role()
 	return FALSE
-
-/**
- * Gathers the candidates to select our ghost roles from.
- *
- * Returns a list of candidates in priority order, with candidates from
- * `priority_candidates` first, and ghost roles randomly shuffled and
- * appended after.
- *
- * jobban - The jobban flag to exclude players from the polling pool with.
- * be_special - The "special role" flag for the ghost candidacy poll.
- */
-
-/datum/round_event/ghost_role/proc/get_candidates(jobban, be_special)
-	var/list/mob/dead/observer/regular_candidates
-	// don't get their hopes up
-	if(priority_candidates.len < minimum_required)
-		regular_candidates = poll_ghost_candidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, be_special)
-	else
-		regular_candidates = list()
-
-	shuffle_inplace(regular_candidates)
-
-	var/list/candidates = priority_candidates + regular_candidates
-
-	return candidates
 
 #undef MAX_SPAWN_ATTEMPT

@@ -39,19 +39,21 @@
 /datum/crafting_recipe/food/appendixburger
 	name = "Appendix burger"
 	reqs = list(
-		/obj/item/organ/internal/appendix = 1,
+		/obj/item/organ/appendix = 1,
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/appendix
+	added_foodtypes = MEAT | GORE
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/brainburger
 	name = "Brain burger"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/brain = 1,
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/brain
+	added_foodtypes = MEAT | GORE
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/xenoburger
@@ -233,6 +235,7 @@
 
 	)
 	result = /obj/item/food/burger/superbite
+	removed_foodtypes = BREAKFAST
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/slimeburger
@@ -242,6 +245,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/jelly/slime
+	added_foodtypes = TOXIC
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/jellyburger
@@ -251,6 +255,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/jelly/cherry
+	added_foodtypes = FRUIT
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/fivealarmburger
@@ -279,6 +284,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/baseball
+	added_foodtypes = GROSS
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/baconburger
@@ -289,6 +295,7 @@
 	)
 
 	result = /obj/item/food/burger/baconburger
+	removed_foodtypes = BREAKFAST
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/empoweredburger
@@ -299,6 +306,7 @@
 	)
 
 	result = /obj/item/food/burger/empoweredburger
+	added_foodtypes = TOXIC
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/catburger
@@ -306,10 +314,11 @@
 	reqs = list(
 		/obj/item/food/bun = 1,
 		/obj/item/food/patty/plain = 1,
-		/obj/item/organ/internal/ears/cat = 1,
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 	)
 	result = /obj/item/food/burger/catburger
+	added_foodtypes = GORE
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/crabburger
@@ -396,4 +405,72 @@
 			/datum/reagent/consumable/bbqsauce = 5,
 	)
 	result = /obj/item/food/burger/sloppy_moe
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/kortaburger
+	name = "Plain Rootburger"
+	reqs = list(
+			/obj/item/food/patty/plain = 1,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/plain/korta
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/ratkorta
+	name = "Rat Rootburger"
+	reqs = list(
+			/obj/item/food/deadmouse = 1,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rat/korta
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootguffin
+	name = "Root-Guffin"
+	reqs = list(
+			/obj/item/food/friedegg = 1,
+			/obj/item/food/meat/bacon = 2,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootguffin
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootrib
+	name = "RootRib"
+	reqs = list(
+			/obj/item/food/bbqribs = 1,     //The sauce is already included in the ribs
+			/obj/item/food/onion_slice = 1, //feel free to remove if too burdensome.
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootrib
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootchicken
+	name = "Chicken Rootwich"
+	reqs = list(
+			/obj/item/food/patty/chicken = 1,
+			/datum/reagent/consumable/mayonnaise = 5,
+			/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootchicken
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/rootfish
+	name = "Fish rootburger"
+	reqs = list(
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/rootroll = 1
+	)
+	result = /obj/item/food/burger/rootfish
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/sloppyroot
+	name = "Sssloppy moe"
+	reqs = list(
+			/obj/item/food/rootroll = 1,
+			/obj/item/food/meat/cutlet = 2,
+			/obj/item/food/onion_slice = 1,
+			/datum/reagent/consumable/bbqsauce = 5,
+	)
+	result = /obj/item/food/burger/sloppyroot
 	category = CAT_BURGER

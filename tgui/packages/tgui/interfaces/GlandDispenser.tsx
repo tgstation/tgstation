@@ -1,5 +1,6 @@
+import { Button, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -12,8 +13,8 @@ type Gland = {
   amount: number;
 };
 
-export const GlandDispenser = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const GlandDispenser = (props) => {
+  const { act, data } = useBackend<Data>();
   const { glands = [] } = data;
 
   return (

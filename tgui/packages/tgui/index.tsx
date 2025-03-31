@@ -26,43 +26,36 @@ import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 
-import { StoreProvider, configureStore } from './store';
-
-import { captureExternalLinks } from './links';
-import { createRenderer } from './renderer';
 import { perf } from 'common/perf';
-import { setupGlobalEvents } from './events';
-import { setupHotKeys } from './hotkeys';
+import { setupGlobalEvents } from 'tgui-core/events';
+import { setupHotKeys } from 'tgui-core/hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
 
-perf.mark('inception', window.performance?.timing?.navigationStart);
+import { App } from './App';
+import { setGlobalStore } from './backend';
+import { captureExternalLinks } from './links';
+import { render } from './renderer';
+import { configureStore } from './store';
+
+perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
 const store = configureStore();
 
-const renderApp = createRenderer(() => {
-  const { getRoutedComponent } = require('./routes');
-  const Component = getRoutedComponent(store);
-  return (
-    <StoreProvider store={store}>
-      <Component />
-    </StoreProvider>
-  );
-});
-
-const setupApp = () => {
+function setupApp() {
   // Delay setup
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
 
+  setGlobalStore(store);
+
   setupGlobalEvents();
   setupHotKeys();
   captureExternalLinks();
 
-  // Re-render UI on store updates
-  store.subscribe(renderApp);
+  store.subscribe(() => render(<App />));
 
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
@@ -70,16 +63,10 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    // prettier-ignore
-    module.hot.accept([
-      './components',
-      './debug',
-      './layouts',
-      './routes',
-    ], () => {
-      renderApp();
+    module.hot.accept(['./debug', './layouts', './routes', './App'], () => {
+      render(<App />);
     });
   }
-};
+}
 
 setupApp();

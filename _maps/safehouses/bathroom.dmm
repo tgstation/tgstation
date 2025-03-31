@@ -13,6 +13,10 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
+"h" = (
+/obj/modular_map_connector,
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/safehouse)
 "q" = (
 /obj/structure/urinal/directional/west,
 /turf/open/floor/iron/freezer,
@@ -23,7 +27,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/blacklight/directional/east,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "v" = (
 /obj/machinery/light/small/blacklight/directional/east,
@@ -64,7 +68,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
@@ -103,7 +107,7 @@ G
 G
 G
 G
-G
+h
 "}
 (2,1,1) = {"
 G

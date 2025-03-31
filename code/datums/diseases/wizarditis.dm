@@ -9,6 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	spreading_modifier = 0.75
+	bypasses_immunity = TRUE
 	desc = "Some speculate that this virus is the cause of the Space Wizard Federation's existence. \
 		Subjects affected show the signs of brain damage, yelling obscure sentences or total gibberish. \
 		On late stages subjects sometime express the feelings of inner power, and cite \
@@ -160,8 +161,10 @@
 	random_spells += sneeze_spacetime
 
 	var/datum/action/cooldown/spell/timestop/sneeze_timestop = new(src)
-	sneeze_timestop.timestop_range = 1 // heh
+	sneeze_timestop.timestop_range = 0 // heh
 	sneeze_timestop.timestop_duration = 5 SECONDS
+	sneeze_timestop.owner_is_immune_to_all_timestop = FALSE
+	sneeze_timestop.owner_is_immune_to_self_timestop = FALSE
 	random_spells += sneeze_timestop
 
 	var/datum/action/cooldown/spell/aoe/repulse/sneeze_repulse = new(src)

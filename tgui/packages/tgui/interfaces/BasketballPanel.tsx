@@ -1,6 +1,6 @@
-import { multiline } from '../../common/string';
+import { Button, NoticeBox, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Stack, Section } from '../components';
 import { Window } from '../layouts';
 
 type BasketballPanelData = {
@@ -13,8 +13,8 @@ type BasketballPanelData = {
   }[];
 };
 
-export const BasketballPanel = (props, context) => {
-  const { act, data } = useBackend<BasketballPanelData>(context);
+export const BasketballPanel = (props) => {
+  const { act, data } = useBackend<BasketballPanelData>();
 
   return (
     <Window title="Basketball" width={650} height={580}>
@@ -30,7 +30,7 @@ export const BasketballPanel = (props, context) => {
                   <Button
                     icon="clipboard-check"
                     tooltipPosition="bottom-start"
-                    tooltip={multiline`
+                    tooltip={`
                     Signs you up for the next game. If there
                     is an ongoing one, you will be signed up
                     for the next.
@@ -40,12 +40,14 @@ export const BasketballPanel = (props, context) => {
                   />
                   <Button
                     icon="basketball"
-                    disabled={!(data.total_votes >= data.players_min)}
-                    onClick={() => act('basketball_start')}>
+                    disabled={data.total_votes < data.players_min}
+                    onClick={() => act('basketball_start')}
+                  >
                     Start
                   </Button>
                 </>
-              }>
+              }
+            >
               <NoticeBox info>
                 The lobby has {data.total_votes} players signed up. The minigame
                 is for {data.players_min} to {data.players_max} players.
@@ -56,11 +58,13 @@ export const BasketballPanel = (props, context) => {
                   key={lobbyist.ckey}
                   className="candystripe"
                   p={1}
-                  align="baseline">
+                  align="baseline"
+                >
                   <Stack.Item grow>{lobbyist.ckey}</Stack.Item>
                   <Stack.Item>Status:</Stack.Item>
                   <Stack.Item
-                    color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
+                    color={lobbyist.status === 'Ready' ? 'green' : 'red'}
+                  >
                     {lobbyist.status}
                   </Stack.Item>
                 </Stack>

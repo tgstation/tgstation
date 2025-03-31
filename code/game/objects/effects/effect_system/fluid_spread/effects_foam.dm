@@ -17,7 +17,6 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = NO_STEPS
 	/// The types of turfs that this foam cannot spread to.
@@ -40,8 +39,10 @@
 	. = ..()
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
+	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
+		layer = WATER_LEVEL_LAYER
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
-	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
+	playsound(src, 'sound/effects/bubbles/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	SSfoam.start_processing(src)
 
@@ -97,10 +98,14 @@
 				continue
 			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
 				continue
+			if (HAS_TRAIT(loc, TRAIT_ELEVATED_TURF) && !HAS_TRAIT(object, TRAIT_ELEVATING_OBJECT))
+				continue // Do expose tables, don't expose items on tables
 			reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
+		if (HAS_TRAIT(foamer, TRAIT_MOB_ELEVATED))
+			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
 		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
@@ -138,6 +143,7 @@
 		return FALSE
 
 	var/datum/can_pass_info/info = new(no_id = TRUE)
+	info.pass_flags = PASSTABLE | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
 		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
@@ -150,6 +156,8 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
+			if (HAS_TRAIT(foaming, TRAIT_MOB_ELEVATED))
+				continue
 			foam_mob(foaming, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
@@ -298,7 +306,6 @@
 	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
@@ -326,7 +333,7 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -335,7 +342,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/attackby(obj/item/W, mob/user, params)
 	///A speed modifier for how fast the wall is build
@@ -361,7 +368,7 @@
 				return
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
+			T.place_on_top(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
 		return
@@ -393,7 +400,7 @@
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
 	if(isspaceturf(location))
-		location.PlaceOnTop(/turf/open/floor/plating/foam)
+		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)
 		var/turf/cardinal_turf = get_step(location, cardinal)
@@ -418,6 +425,12 @@
 	alpha = 120
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
+	var/static/list/ignored_gases = typecacheof(list(
+		/datum/gas/nitrogen,
+		/datum/gas/oxygen,
+		/datum/gas/pluoxium,
+		/datum/gas/halon,
+	))
 
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
@@ -426,6 +439,7 @@
 		return
 
 	location.ClearWet()
+	location.temperature = T20C
 	if(location.air)
 		var/datum/gas_mixture/air = location.air
 		air.temperature = T20C
@@ -434,11 +448,8 @@
 
 		var/list/gases = air.gases
 		for(var/gas_type in gases)
-			switch(gas_type)
-				if(/datum/gas/oxygen, /datum/gas/nitrogen)
-					continue
-				else
-					gases[gas_type][MOLES] = 0
+			if(!(ignored_gases[gas_type]))
+				gases[gas_type][MOLES] = 0
 		air.garbage_collect()
 
 	for(var/obj/machinery/atmospherics/components/unary/comp in location)
@@ -451,6 +462,22 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/metal/resin/halon
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/// A variant of resin foam that is created from halon combustion. It does not dissolve in heat to allow the gas to spread before foaming.
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive) // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return FALSE // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	return // Doesn't dissolve in heat.
 
 /datum/effect_system/fluid_spread/foam/dirty
 	effect_type = /obj/effect/particle_effect/fluid/foam/dirty

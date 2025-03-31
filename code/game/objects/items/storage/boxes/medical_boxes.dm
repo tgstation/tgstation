@@ -149,9 +149,9 @@
 	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(
 		/obj/item/stack/medical/bandage,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/pill/patch,
-		))
+		/obj/item/reagent_containers/applicator/pill,
+		/obj/item/reagent_containers/applicator/patch,
+	))
 
 /obj/item/storage/box/bandages/PopulateContents()
 	for(var/i in 1 to 5)

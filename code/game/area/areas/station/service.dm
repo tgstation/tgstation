@@ -9,6 +9,10 @@
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
 
+/area/station/service/minibar
+	name = "\improper Mini Bar"
+	icon_state = "minibar"
+
 /area/station/service/kitchen
 	name = "\improper Kitchen"
 	icon_state = "kitchen"
@@ -57,9 +61,14 @@
 	icon_state = "theatre"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
+/area/station/service/theater_dressing
+	name = "\improper Theater Dressing Room"
+	icon_state = "theatre_dressing"
+	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
+
 /area/station/service/greenroom
 	name = "\improper Greenroom"
-	icon_state = "theatre"
+	icon_state = "theatre_green"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
 /area/station/service/library
@@ -177,6 +186,10 @@
 /area/station/service/barber
 	name = "\improper Barber"
 	icon_state = "barber"
+
+/area/station/service/boutique
+	name = "\improper Boutique"
+	icon_state = "boutique"
 
 /*
 * Abandoned Rooms

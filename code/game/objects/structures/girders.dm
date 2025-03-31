@@ -1,11 +1,16 @@
 /obj/structure/girder
+	icon = 'icons/obj/smooth_structures/girder.dmi'
 	name = "girder"
-	icon_state = "girder"
+	base_icon_state = "girder"
+	icon_state = "girder-0"
 	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_GIRDER
+	canSmoothWith = SMOOTH_GROUP_GIRDER + SMOOTH_GROUP_WALLS
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
@@ -81,7 +86,7 @@
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
@@ -94,12 +99,12 @@
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "adding plating...")
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 4 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/mineral/iron)
+					T.place_on_top(/turf/closed/wall/mineral/iron)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -149,7 +154,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall)
+					T.place_on_top(/turf/closed/wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -176,7 +181,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -194,7 +199,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/r_wall)
+					T.place_on_top(/turf/closed/wall/r_wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -243,7 +248,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -265,15 +270,15 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
 					if(sheets.walltype)
-						T.PlaceOnTop(sheets.walltype)
+						T.place_on_top(sheets.walltype)
 					else
-						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
+						var/turf/newturf = T.place_on_top(/turf/closed/wall/material)
 						var/list/material_list = list()
 						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
 						if(material_list)
@@ -384,11 +389,9 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/girder/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
-		new remains(loc)
-	qdel(src)
+/obj/structure/girder/atom_deconstruct(disassembled = TRUE)
+	var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
+	new remains(loc)
 
 /obj/structure/girder/narsie_act()
 	new /obj/structure/girder/cult(loc)
@@ -396,26 +399,35 @@
 
 /obj/structure/girder/displaced
 	name = "displaced girder"
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
 	anchored = FALSE
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
 	max_integrity = 120
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
-	icon_state = "reinforced"
+	icon = 'icons/obj/smooth_structures/reinforced_girder.dmi'
+	icon_state = "reinforced-0"
+	base_icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
 	max_integrity = 350
 
 /obj/structure/girder/tram
-	name = "tram frame"
+	name = "tram girder"
 	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "tram"
 	state = GIRDER_TRAM
-	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/girder/tram/corner
 	name = "tram frame corner"
@@ -428,6 +440,9 @@
 	icon = 'icons/obj/antags/cult/structures.dmi'
 	icon_state= "cultgirder"
 	can_displace = FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -448,12 +463,12 @@
 			balloon_alert(user, "need [amount] sheet!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			if(R.get_amount() < amount)
 				return
 			R.use(amount)
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/mineral/cult)
+			T.place_on_top(/turf/closed/wall/mineral/cult)
 			qdel(src)
 
 	else
@@ -462,10 +477,8 @@
 /obj/structure/girder/cult/narsie_act()
 	return
 
-/obj/structure/girder/cult/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-	qdel(src)
+/obj/structure/girder/cult/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -488,7 +501,7 @@
 				return FALSE
 
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall)
+			T.place_on_top(/turf/closed/wall)
 			qdel(src)
 			return TRUE
 		if(RCD_DECONSTRUCT)
@@ -499,13 +512,17 @@
 /obj/structure/girder/bronze
 	name = "wall gear"
 	desc = "A girder made out of sturdy bronze, made to resemble a gear."
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "wall_gear"
 	can_displace = FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount = 0))
+		if(!W.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))
@@ -520,12 +537,12 @@
 			balloon_alert(user, "need [amount] sheets!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			if(B.get_amount() < amount)
 				return
 			B.use(amount)
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/mineral/bronze)
+			T.place_on_top(/turf/closed/wall/mineral/bronze)
 			qdel(src)
 
 	else

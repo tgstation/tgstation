@@ -2,6 +2,7 @@
 	name = "Implant Removal"
 	target_mobtypes = list(/mob/living)
 	possible_locs = list(BODY_ZONE_CHEST)
+	surgery_flags = SURGERY_REQUIRE_RESTING
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
@@ -18,7 +19,7 @@
 		TOOL_CROWBAR = 65,
 		/obj/item/kitchen/fork = 35)
 	time = 64
-	success_sound = 'sound/surgery/hemostat1.ogg'
+	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -55,6 +56,9 @@
 		display_pain(target, "You can feel your [implant.name] pulled out of you!")
 		implant.removed(target)
 
+		if (QDELETED(implant))
+			return ..()
+
 		var/obj/item/implantcase/case
 		for(var/obj/item/implantcase/implant_case in user.held_items)
 			case = implant_case
@@ -83,6 +87,7 @@
 	name = "Implant Removal"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	target_mobtypes = list(/mob/living/carbon/human) // Simpler mobs don't have bodypart types
+	surgery_flags = parent_type::surgery_flags | SURGERY_REQUIRE_LIMB
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

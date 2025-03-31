@@ -4,11 +4,10 @@
 	desc = "Does what he wants cause a pirate is free."
 	response_help_continuous = "pushes"
 	response_help_simple = "push"
-	speed = 0
 	speak_emote = list("yarrs")
 	faction = list(FACTION_PIRATE)
-	loot = list(/obj/effect/mob_spawn/corpse/human/pirate)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate
+	corpse = /obj/effect/mob_spawn/corpse/human/pirate
 
 	/// The amount of money to steal with a melee attack
 	var/plunder_credits = 25
@@ -24,17 +23,17 @@
 	armour_penetration = 35
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/blade1.ogg'
+	attack_sound = 'sound/items/weapons/blade1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee)
 	light_range = 2
 	light_power = 2.5
 	light_color = COLOR_SOFT_RED
 	loot = list(
-		/obj/effect/mob_spawn/corpse/human/pirate/melee,
 		/obj/item/melee/energy/sword/pirate,
 	)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee
+	corpse = /obj/effect/mob_spawn/corpse/human/pirate/melee
 	r_hand = /obj/item/melee/energy/sword/pirate
 	plunder_credits = 50 //they hit hard so they steal more
 
@@ -42,9 +41,9 @@
 	name = "Space Pirate Swashbuckler"
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
-	speed = 1
-	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee/space)
+	loot = null
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee/space
+	corpse = /obj/effect/mob_spawn/corpse/human/pirate/melee/space
 
 /mob/living/basic/trooper/pirate/melee/space/Initialize(mapload)
 	. = ..()
@@ -52,14 +51,14 @@
 
 /mob/living/basic/trooper/pirate/ranged
 	name = "Pirate Gunner"
-	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/ranged)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/ranged
+	corpse = /obj/effect/mob_spawn/corpse/human/pirate/ranged
 	r_hand = /obj/item/gun/energy/laser
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 	/// Type of bullet we use
-	var/casingtype = /obj/item/ammo_casing/energy/laser
+	var/projectiletype = /obj/projectile/beam/laser
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/laser.ogg'
+	var/projectilesound = 'sound/items/weapons/laser.ogg'
 	/// number of burst shots
 	var/burst_shots = 2
 	/// Time between taking shots
@@ -69,7 +68,7 @@
 	. = ..()
 	AddComponent(\
 		/datum/component/ranged_attacks,\
-		casing_type = casingtype,\
+		projectile_type = projectiletype,\
 		projectile_sound = projectilesound,\
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\
@@ -79,8 +78,7 @@
 	name = "Space Pirate Gunner"
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
-	speed = 1
-	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/ranged/space)
+	corpse = /obj/effect/mob_spawn/corpse/human/pirate/ranged/space
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/ranged/space
 	r_hand = /obj/item/gun/energy/e_gun/lethal
 

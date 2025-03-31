@@ -1,7 +1,7 @@
 /obj/structure/lock_tear
 	name = "???"
-	desc = "It stares back. Theres no reason to remain. Run."
-	max_integrity = INFINITE
+	desc = "It stares back. There's no reason to remain. Run."
+	max_integrity = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "bhole3"
@@ -37,7 +37,7 @@
 
 /// Ask ghosts if they want to make some noise
 /obj/structure/lock_tear/proc/poll_ghosts()
-	var/list/candidates = poll_ghost_candidates("Would you like to be a random eldritch monster attacking the crew?", ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, POLL_IGNORE_HERETIC_MONSTER)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Would you like to be a random [span_notice("eldritch monster")] attacking the crew?", check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HERETIC_MONSTER, alert_pic = src, role_name_text = "eldritch monster")
 	while(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick_n_take(candidates)
 		ghost_to_monster(candidate, should_ask = FALSE)
@@ -47,7 +47,7 @@
 /obj/structure/lock_tear/proc/end_madness(datum/former_master)
 	SIGNAL_HANDLER
 	var/turf/our_turf = get_turf(src)
-	playsound(our_turf, 'sound/magic/castsummon.ogg', vol = 100, vary = TRUE)
+	playsound(our_turf, 'sound/effects/magic/castsummon.ogg', vol = 100, vary = TRUE)
 	visible_message(span_boldwarning("The rip in space spasms and disappears!"))
 	UnregisterSignal(former_master, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING)) // Just in case they die THEN delete
 	new /obj/effect/temp_visual/destabilising_tear(our_turf)
@@ -73,8 +73,9 @@
 			return FALSE
 	var/monster_type = pick(monster_types)
 	var/mob/living/monster = new monster_type(loc)
-	monster.key = user.key
+	monster.PossessByPlayer(user.key)
 	monster.set_name()
+	ADD_TRAIT(monster, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)
 	var/datum/antagonist/heretic_monster/woohoo_free_antag = new(src)
 	monster.mind.add_antag_datum(woohoo_free_antag)
 	if(ascendee)

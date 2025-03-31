@@ -2,19 +2,18 @@
 	name = "\improper Ethereal"
 	id = SPECIES_ETHEREAL
 	meat = /obj/item/food/meat/slab/human/mutant/ethereal
-	mutantlungs = /obj/item/organ/internal/lungs/ethereal
-	mutantstomach = /obj/item/organ/internal/stomach/ethereal
-	mutanttongue = /obj/item/organ/internal/tongue/ethereal
-	mutantheart = /obj/item/organ/internal/heart/ethereal
+	mutantlungs = /obj/item/organ/lungs/ethereal
+	smoker_lungs = /obj/item/organ/lungs/ethereal/ethereal_smoker
+	mutantstomach = /obj/item/organ/stomach/ethereal
+	mutanttongue = /obj/item/organ/tongue/ethereal
+	mutantheart = /obj/item/organ/heart/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
 	payday_modifier = 1.0
 	inherent_traits = list(
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
-		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -26,7 +25,7 @@
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
-	hair_color = "fixedmutcolor"
+	hair_color_mode = USE_FIXED_MUTANT_COLOR
 	hair_alpha = 140
 	facial_hair_alpha = 140
 
@@ -41,12 +40,6 @@
 
 	var/current_color
 	var/default_color
-	var/r1
-	var/g1
-	var/b1
-	var/static/r2 = 237
-	var/static/g2 = 164
-	var/static/b2 = 149
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
 	var/obj/effect/dummy/lighting_obj/ethereal_light
@@ -55,26 +48,20 @@
 	QDEL_NULL(ethereal_light)
 	return ..()
 
-/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load)
+/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(!ishuman(new_ethereal))
 		return
 	default_color = new_ethereal.dna.features["ethcolor"]
-	fixed_hair_color = default_color
-	r1 = GETREDPART(default_color)
-	g1 = GETGREENPART(default_color)
-	b1 = GETBLUEPART(default_color)
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
-	RegisterSignal(new_ethereal, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+	RegisterSignal(new_ethereal, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(hit_by_saboteur))
 	RegisterSignal(new_ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(new_ethereal, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(refresh_light_color))
 	ethereal_light = new_ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	refresh_light_color(new_ethereal)
-	new_ethereal.set_safe_hunger_level()
-	update_mail_goodies(new_ethereal)
 
-	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
 	for(var/obj/item/bodypart/limb as anything in new_ethereal.bodyparts)
@@ -85,27 +72,12 @@
 	UnregisterSignal(former_ethereal, list(
 		COMSIG_ATOM_EMAG_ACT,
 		COMSIG_ATOM_EMP_ACT,
-		COMSIG_HIT_BY_SABOTEUR,
+		COMSIG_ATOM_SABOTEUR_ACT,
 		COMSIG_LIGHT_EATER_ACT,
 		COMSIG_LIVING_HEALTH_UPDATE,
 	))
 	QDEL_NULL(ethereal_light)
 	return ..()
-
-/datum/species/ethereal/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		mail_goodies += list(
-			/obj/item/reagent_containers/blood/ethereal
-		)
-	return ..()
-
-/datum/species/ethereal/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_ethereal_name()
-
-	var/randname = ethereal_name()
-
-	return randname
 
 /datum/species/ethereal/randomize_features()
 	var/list/features = ..()
@@ -116,19 +88,19 @@
 	SIGNAL_HANDLER
 	if(isnull(ethereal_light))
 		return
-	if(default_color != ethereal.dna.features["ethcolor"])
-		var/new_color = ethereal.dna.features["ethcolor"]
-		r1 = GETREDPART(new_color)
-		g1 = GETGREENPART(new_color)
-		b1 = GETBLUEPART(new_color)
 	if(ethereal.stat != DEAD && !EMPeffect)
 		var/healthpercent = max(ethereal.health, 0) / 100
 		if(!emageffect)
-			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
+			var/static/list/skin_color = rgb2num("#eda495")
+			var/list/colors = rgb2num(ethereal.dna.features["ethcolor"])
+			var/list/built_color = list()
+			for(var/i in 1 to 3)
+				built_color += skin_color[i] + ((colors[i] - skin_color[i]) * healthpercent)
+			current_color = rgb(built_color[1], built_color[2], built_color[3])
+
 		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
 		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
-		fixed_hair_color = current_color
 		ethereal.update_body()
 		ethereal.set_facial_haircolor(current_color, override = TRUE, update = FALSE)
 		ethereal.set_haircolor(current_color, override = TRUE,  update = TRUE)
@@ -136,7 +108,6 @@
 		ethereal_light.set_light_on(FALSE)
 		var/dead_color = rgb(128,128,128)
 		fixed_mut_color = dead_color
-		fixed_hair_color = dead_color
 		ethereal.update_body()
 		ethereal.set_facial_haircolor(dead_color, override = TRUE, update = FALSE)
 		ethereal.set_haircolor(dead_color, override = TRUE, update = TRUE)
@@ -154,14 +125,13 @@
 		if(EMP_HEAVY)
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), source), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
-/datum/species/ethereal/proc/on_saboteur(mob/living/carbon/human/source, disrupt_duration)
-	SIGNAL_HANDLER
+/datum/species/ethereal/proc/hit_by_saboteur(mob/living/carbon/human/source, disrupt_duration)
 	EMPeffect = TRUE
 	refresh_light_color(source)
 	to_chat(source, span_warning("Something inside of you crackles in a bad way."))
 	source.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
 	addtimer(CALLBACK(src, PROC_REF(stop_emp), source), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/source, mob/user)
 	SIGNAL_HANDLER
@@ -207,10 +177,13 @@
 
 /datum/species/ethereal/get_scream_sound(mob/living/carbon/human/ethereal)
 	return pick(
-		'sound/voice/ethereal/ethereal_scream_1.ogg',
-		'sound/voice/ethereal/ethereal_scream_2.ogg',
-		'sound/voice/ethereal/ethereal_scream_3.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_1.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_2.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
 	)
+
+/datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
+	return 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
 
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
@@ -272,15 +245,12 @@
 	name = "Lustrous"
 	id = SPECIES_ETHEREAL_LUSTROUS
 	examine_limb_id = SPECIES_ETHEREAL
-	mutantbrain = /obj/item/organ/internal/brain/lustrous
-	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	mutantbrain = /obj/item/organ/brain/lustrous
+	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN
 	inherent_traits = list(
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
-		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
-		TRAIT_TENACIOUS, // this doesn't work. tenacity is an element
 		TRAIT_NOBREATH,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
@@ -301,12 +271,12 @@
 
 /datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
 	return pick(
-		'sound/voice/ethereal/lustrous_scream_1.ogg',
-		'sound/voice/ethereal/lustrous_scream_2.ogg',
-		'sound/voice/ethereal/lustrous_scream_3.ogg',
+		'sound/mobs/humanoids/ethereal/lustrous_scream_1.ogg',
+		'sound/mobs/humanoids/ethereal/lustrous_scream_2.ogg',
+		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
 	)
 
-/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
+/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load, regenerate_icons)
 	..()
 	default_color = new_lustrous.dna.features["ethcolor"]
 	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.

@@ -14,10 +14,9 @@
 	attack_verb_continuous = "smashes their armored gauntlet into"
 	attack_verb_simple = "smash your armored gauntlet into"
 	speed = 2.5
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/items/weapons/punch3.ogg'
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
-	force_threshold = 10
 	construct_spells = list(
 		/datum/action/cooldown/spell/basic_projectile/juggernaut,
 		/datum/action/cooldown/spell/forcewall/cult,
@@ -26,6 +25,10 @@
 	playstyle_string = span_bold("You are a Juggernaut. Though slow, your shell can withstand heavy punishment, create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.")
 
 	smashes_walls = TRUE
+
+/mob/living/basic/construct/juggernaut/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/damage_threshold, 10)
 
 /// Hostile NPC version. Pretty dumb, just attacks whoever is near.
 /mob/living/basic/construct/juggernaut/hostile
@@ -41,8 +44,8 @@
 
 	apply_damage(bullet.damage * 0.5, bullet.damage_type)
 	visible_message(
-		span_danger("The [bullet.name] is reflected by [src]'s armored shell!"),
-		span_userdanger("The [bullet.name] is reflected by your armored shell!"),
+		span_danger("\The [bullet] is reflected by [src]'s armored shell!"),
+		span_userdanger("\The [bullet] is reflected by your armored shell!"),
 	)
 
 	bullet.reflect(src)

@@ -28,6 +28,7 @@
 	paycheck_department = ACCOUNT_SRV
 	bounty_types = CIV_JOB_RANDOM
 
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
@@ -39,7 +40,10 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/trophy/silver_cup)
 	rpg_title = "Guild Questgiver"
-	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
+
+	human_authority = JOB_AUTHORITY_HUMANS_ONLY
+
 	voice_of_god_power = 1.4 //Command staff has authority
 
 
@@ -51,11 +55,11 @@
 	name = "Head of Personnel"
 	jobtype = /datum/job/head_of_personnel
 
-	id = /obj/item/card/id/advanced/silver
+	id = /obj/item/card/id/advanced/platinum
 	id_trim = /datum/id_trim/job/head_of_personnel
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/silver = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
@@ -70,7 +74,7 @@
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(check_holidays("Ian's Birthday"))
+	if(check_holidays(IAN_HOLIDAY))
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
 //only pet worth reviving

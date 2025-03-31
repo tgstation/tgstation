@@ -1,11 +1,11 @@
 /obj/item/firing_pin
 	name = "electronic firing pin"
 	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/gunmod.dmi'
 	icon_state = "firing_pin"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
@@ -20,37 +20,31 @@
 	var/pin_removable = TRUE
 	var/obj/item/gun/gun
 
-/obj/item/firing_pin/New(newloc)
-	..()
-	if(isgun(newloc))
-		gun = newloc
+/obj/item/firing_pin/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isgun(interacting_with))
+		return NONE
 
-/obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag)
-		if(isgun(target))
-			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/targeted_gun = target
-			var/obj/item/firing_pin/old_pin = targeted_gun.pin
-			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
-				if(Adjacent(user))
-					user.put_in_hands(old_pin)
-				else
-					old_pin.forceMove(targeted_gun.drop_location())
-				old_pin.gun_remove(user)
+	var/obj/item/gun/targeted_gun = interacting_with
+	var/obj/item/firing_pin/old_pin = targeted_gun.pin
+	if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
+		if(Adjacent(user))
+			user.put_in_hands(old_pin)
+		else
+			old_pin.forceMove(targeted_gun.drop_location())
+		old_pin.gun_remove(user)
 
-			if(!targeted_gun.pin)
-				if(!user.temporarilyRemoveItemFromInventory(src))
-					return .
-				if(gun_insert(user, targeted_gun))
-					if(old_pin)
-						balloon_alert(user, "swapped firing pin")
-					else
-						balloon_alert(user, "inserted firing pin")
-			else
-				to_chat(user, span_notice("This firearm already has a firing pin installed."))
-
+	if(!targeted_gun.pin)
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return .
+		if(gun_insert(user, targeted_gun))
+			if(old_pin)
+				balloon_alert(user, "swapped firing pin")
+			else
+				balloon_alert(user, "inserted firing pin")
+	else
+		to_chat(user, span_notice("This firearm already has a firing pin installed."))
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/firing_pin/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -59,8 +53,8 @@
 	balloon_alert(user, "authentication checks overridden")
 	return TRUE
 
-/obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)
-	gun = G
+/obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun)
+	gun = new_gun
 	forceMove(gun)
 	gun.pin = src
 	return TRUE
@@ -137,7 +131,7 @@
 /obj/item/firing_pin/clown
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	fail_message = "honk!"
 	force_replace = TRUE
 
@@ -166,9 +160,9 @@
 			return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
 	return FALSE
 
-/obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
+/obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/new_gun)
 	..()
-	G.clumsy_check = FALSE
+	new_gun.clumsy_check = FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_remove(mob/living/user)
 	gun.clumsy_check = initial(gun.clumsy_check)
@@ -190,13 +184,15 @@
 	fail_message = "dna check failed!"
 	var/unique_enzymes = null
 
-/obj/item/firing_pin/dna/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && iscarbon(target))
-		var/mob/living/carbon/M = target
+/obj/item/firing_pin/dna/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscarbon(interacting_with))
+		var/mob/living/carbon/M = interacting_with
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
 			balloon_alert(user, "dna lock set")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(user && user.dna && user.dna.unique_enzymes)
@@ -221,7 +217,7 @@
 /obj/item/firing_pin/paywall
 	name = "paywall firing pin"
 	desc = "A firing pin with a built-in configurable paywall."
-	color = "#FFD700"
+	color = COLOR_GOLD
 	fail_message = ""
 	///list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
 	var/list/gun_owners = list()
@@ -243,14 +239,15 @@
 	if(pin_owner)
 		. += span_notice("This firing pin is currently authorized to pay into the account of [pin_owner.account_holder].")
 
-/obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/G)
+/obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/new_gun)
 	if(!pin_owner)
-		to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
-		user.put_in_hands(src)
+		if(isnull(user))
+			forceMove(new_gun.drop_location())
+		else
+			to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
+			user.put_in_hands(src)
 		return FALSE
-	gun = G
-	forceMove(gun)
-	gun.pin = src
+	..()
 	if(multi_payment)
 		gun.desc += span_notice(" This [gun.name] has a per-shot cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].")
 		return TRUE
@@ -259,7 +256,7 @@
 
 
 /obj/item/firing_pin/paywall/gun_remove(mob/living/user)
-	gun.desc = initial(desc)
+	gun.desc = gun::desc
 	..()
 
 /obj/item/firing_pin/paywall/attackby(obj/item/M, mob/living/user, params)
@@ -334,7 +331,7 @@
 // Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
 /obj/item/firing_pin/explorer
 	name = "outback firing pin"
-	desc = "A firing pin used by the austrailian defense force, retrofit to prevent weapon discharge on the station."
+	desc = "A firing pin used by the Australian defense force, retrofit to prevent weapon discharge on the station."
 	icon_state = "firing_pin_explorer"
 	fail_message = "cannot fire while on station, mate!"
 
@@ -380,11 +377,12 @@
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
 	if(!is_simian(user))
-		playsound(get_turf(src), "sound/creatures/monkey/monkey_screech_[rand(1,7)].ogg", 75, TRUE)
+		playsound(src, SFX_SCREECH, 75, TRUE)
 		return FALSE
 	return TRUE
 
 /obj/item/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null
+		gun = null
 	return ..()

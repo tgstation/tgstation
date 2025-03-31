@@ -22,6 +22,8 @@
 	var/hit_sound
 	///if we have a brick inside us
 	var/bricked = FALSE
+	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = SFX_CLOTH_PICKUP
 
 /obj/item/pillow/Initialize(mapload)
 	. = ..()
@@ -31,13 +33,14 @@
 		force_unwielded = 5, \
 		force_wielded = 10, \
 	)
+	AddElement(/datum/element/disarm_attack)
 
 	var/static/list/slapcraft_recipe_list = list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
 		)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -50,10 +53,10 @@
 	if(!iscarbon(target_mob))
 		return
 	if(bricked || HAS_TRAIT(src, TRAIT_WIELDED))
-		user.apply_damage(5, STAMINA) // when hitting with such force we should prolly be getting tired too
-		hit_sound = 'sound/items/pillow_hit2.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit2.ogg'
 	else
-		hit_sound = 'sound/items/pillow_hit.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit.ogg'
+	user.apply_damage(5, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
@@ -101,21 +104,23 @@
 	if(pillow_trophy)
 		. += span_notice("Alt-click to remove the tag!")
 
-/obj/item/pillow/AltClick(mob/user)
-	. = ..()
+/obj/item/pillow/click_alt(mob/user)
+	if(!user.can_hold_items(src))
+		return CLICK_ACTION_BLOCKING
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "removing tag...")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(last_fighter)
 		pillow_trophy.desc = "A pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
 	balloon_alert(user, "tag removed")
-	playsound(user,'sound/items/poster_ripped.ogg', 50)
+	playsound(user,'sound/items/poster/poster_ripped.ogg', 50)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pillow/update_appearance(updates)
 	. = ..()
@@ -128,7 +133,7 @@
 		icon_state = "pillow_[variation]_t"
 		inhand_icon_state = "pillow_t"
 
-/// Puts a brick inside the pillow, increasing it's damage
+/// Puts a brick inside the pillow, increasing its damage
 /obj/item/pillow/proc/become_bricked()
 	bricked = TRUE
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)

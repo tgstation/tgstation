@@ -30,7 +30,7 @@
 	holder = c
 	buttons = list()
 	li_cb = CALLBACK(src, PROC_REF(post_login))
-	holder.player_details.post_login_callbacks += li_cb
+	holder.persistent_client.post_login_callbacks += li_cb
 	holder.show_popup_menus = FALSE
 	create_buttons()
 	holder.screen += buttons
@@ -47,9 +47,11 @@
 /datum/buildmode/Destroy()
 	close_switchstates()
 	close_preview()
-	holder.player_details.post_login_callbacks -= li_cb
+	holder.persistent_client.post_login_callbacks -= li_cb
 	li_cb = null
 	holder = null
+	modebutton = null
+	dirbutton = null
 	QDEL_NULL(mode)
 	QDEL_LIST(buttons)
 	QDEL_LIST(modeswitch_buttons)
@@ -135,7 +137,7 @@
 	preview.name = initial(typepath.name)
 
 	// Scale the preview if it's bigger than one tile
-	var/mutable_appearance/preview_overlay = get_small_overlay(new typepath)
+	var/mutable_appearance/preview_overlay = get_small_overlay(new /mutable_appearance(typepath))
 	preview_overlay.appearance_flags |= TILE_BOUND
 	preview_overlay.layer = FLOAT_LAYER
 	preview_overlay.plane = FLOAT_PLANE

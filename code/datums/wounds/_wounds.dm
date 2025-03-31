@@ -16,18 +16,17 @@
 
 #define WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS 15
 
-// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
-#define TRAIT_WOUND_SCANNED "wound_scanned"
-// I dunno lol
-#define ANALYZER_TRAIT "analyzer_trait"
-
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
+	/// Optional, what is the wound named when someone is checking themselves (IE, no scanner - just with their eyes and hands)
+	var/undiagnosed_name
 	/// The description shown on the scanners
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
 	var/treat_text = ""
+	/// Even more basic treatment
+	var/treat_text_short = ""
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
@@ -132,7 +131,7 @@
 
 	return ..()
 
-/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we dont have one
+/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we don't have one
 /// by qdeleting any existing modifier.
 /datum/wound/proc/update_actionspeed_modifier()
 	if (should_have_actionspeed_modifier())
@@ -206,8 +205,7 @@
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
-	if(!victim.alerts[ALERT_WOUNDED]) // only one alert is shared between all of the wounds
-		victim.throw_alert(ALERT_WOUNDED, /atom/movable/screen/alert/status_effect/wound)
+	victim.update_health_hud()
 
 	var/demoted
 	if(old_wound)
@@ -220,13 +218,13 @@
 		var/msg = span_danger("[victim]'s [limb.plaintext_zone] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
-		if(severity > WOUND_SEVERITY_MODERATE)
+		if(severity > WOUND_SEVERITY_SEVERE)
 			msg = "<b>[msg]</b>"
 			vis_dist = DEFAULT_MESSAGE_RANGE
 
 		victim.visible_message(msg, span_userdanger("Your [limb.plaintext_zone] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
-			playsound(L.owner, sound_effect, sound_volume + (20 * severity), TRUE)
+			playsound(L.owner, sound_effect, sound_volume + (20 * severity), TRUE, falloff_exponent = SOUND_FALLOFF_EXPONENT + 2,  ignore_walls = FALSE, falloff_distance = 0)
 
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
@@ -328,7 +326,7 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
+/// Remove the wound from whatever it's afflicting, and cleans up whatever status effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
 	var/old_victim = victim
@@ -346,18 +344,18 @@
 
 	if(limb && !ignore_limb)
 		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
-		// if you want to keep the ref, do it externally, theres no reason for us to remember it
+		// if you want to keep the ref, do it externally, there's no reason for us to remember it
 
 	if (ismob(old_victim))
 		var/mob/mob_victim = old_victim
 		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced)
+		if(!replaced && !limb)
+			mob_victim.update_health_hud()
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)
 		return
 	LAZYREMOVE(victim.all_wounds, src)
-	if(!victim.all_wounds)
-		victim.clear_alert(ALERT_WOUNDED)
 	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**
@@ -503,7 +501,7 @@
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE
-	if(TOOL_CAUTERY in treatable_tools && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
+	if((TOOL_CAUTERY in treatable_tools) && potential_treater.get_temperature() && (user == victim)) // allow improvised cauterization on yourself without an aggro grab
 		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(potential_treater, user))
@@ -517,8 +515,8 @@
 /datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
 	return FALSE
 
-/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
-/datum/wound/proc/try_handling(mob/living/carbon/human/user)
+/// Like try_treating() but for unhanded interactions, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
+/datum/wound/proc/try_handling(mob/living/user)
 	return FALSE
 
 /// Someone is using something that might be used for treating the wound on this limb
@@ -605,7 +603,7 @@
 /datum/wound/proc/get_examine_description(mob/user)
 	. = get_wound_description(user)
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		. += span_notice("\nThere is a holo-image next to the wound that seems to contain indications for treatment.")
+		. += span_notice("<br>There is a holo-image next to the wound that seems to contain indications for treatment.")
 
 	return .
 
@@ -621,6 +619,30 @@
 	desc = modify_desc_before_span(desc, user)
 
 	return get_desc_intensity(desc)
+
+/**
+ * Used when a mob is examining themselves / their limbs
+ *
+ * Reports what this wound looks like to them
+ *
+ * It should be formatted as an extension of the limb:
+ * Input is something like "Your chest is bruised.",
+ * you would add something like "It is bleeding."
+ *
+ * * self_aware - if TRUE, the examiner is more aware of themselves and thus may get more detailed information
+ *
+ * Return a string, to be concatenated with other organ / limb status strings. Include spans and punctuation.
+ */
+/datum/wound/proc/get_self_check_description(self_aware)
+	switch(severity)
+		if(WOUND_SEVERITY_TRIVIAL)
+			return span_danger("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_MODERATE)
+			return span_warning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_SEVERE)
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!")
+		if(WOUND_SEVERITY_CRITICAL)
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!!")
 
 /// A hook proc used to modify desc before it is spanned via [get_desc_intensity]. Useful for inserting spans yourself.
 /datum/wound/proc/modify_desc_before_span(desc, mob/user)
@@ -648,22 +670,42 @@
 		return span_bold("[desc]!")
 	return "[desc]."
 
+/**
+ * Prints the details about the wound for the wound scanner on simple mode
+ */
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
+	return "Type: [name]<br>\
+		Severity: [severity_text()]<br>\
+		Description: [desc]<br>\
+		Recommended Treatment: [treat_text]"
 
+/**
+ * Prints the details about the wound for the wound scanner on complex mode
+ */
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [simple_desc ? simple_desc : desc]\n<i>Treatment Guide: [simple_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
+	var/severity_text_formatted = severity_text()
+	for(var/i in 1 to severity)
+		severity_text_formatted += "!"
 
-/datum/wound/proc/severity_text(simple = FALSE)
+	return "[name] detected!<br>\
+		Risk: [severity_text_formatted]<br>\
+		Description: [simple_desc || desc]<br>\
+		<i>Treatment Guide: [simple_treat_text]</i><br>\
+		<i>Homemade Remedies: [homemade_treat_text]</i>"
+
+/**
+ * Returns what text describes this wound
+ */
+/datum/wound/proc/severity_text()
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate" + (simple ? "!" : "")
+			return "Moderate"
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe" + (simple ? "!!" : "")
+			return "<b>Severe</b>"
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical" + (simple ? "!!!" : "")
+			return "<b>Critical</b>"
 
 /// Returns TRUE if our limb is the head or chest, FALSE otherwise.
 /// Essential in the sense of "we cannot live without it".
@@ -693,13 +735,13 @@
 /datum/wound/proc/get_limb_examine_description()
 	return
 
-/// Gets the flat percentage chance increment of a dismember occuring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
+/// Gets the flat percentage chance increment of a dismember occurring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
 /datum/wound/proc/get_dismember_chance_bonus(existing_chance)
 	SHOULD_BE_PURE(TRUE)
 
 	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
 
-	if (WOUND_BLUNT in pregen_data.required_wounding_types && severity >= WOUND_SEVERITY_CRITICAL)
+	if ((WOUND_BLUNT in pregen_data.required_wounding_types) && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
 /// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.

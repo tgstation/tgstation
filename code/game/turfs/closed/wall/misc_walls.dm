@@ -45,22 +45,35 @@
 /turf/closed/wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
-	color = COLOR_ORANGE_BROWN
+	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
 
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
-	color = null
 	AddElement(/datum/element/rust)
+
+/turf/closed/wall/heretic_rust
+	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+
+/turf/closed/wall/heretic_rust/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rust/heretic)
 
 /turf/closed/wall/r_wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
-	color = COLOR_ORANGE_BROWN
+	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
+	base_decon_state = "rusty_r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
-	color = null
 	AddElement(/datum/element/rust)
+
+/turf/closed/wall/r_wall/heretic_rust
+	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+
+/turf/closed/wall/r_wall/heretic_rust/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rust/heretic)
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"

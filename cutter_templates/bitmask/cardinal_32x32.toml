@@ -1,0 +1,36 @@
+mode = "BitmaskSlice"
+
+# Don't try and put directions in our icon states
+produce_dirs = false
+# We smooth only with our cardinal neighbors, not the ones on the diagonal
+smooth_diagonally = false
+
+# Take as input a set of 32x32 blocks
+[icon_size]
+x = 32
+y = 32
+
+# Output our stuff at the same level as its input
+[output_icon_pos]
+x = 0
+y = 0
+
+# And at the same width/height too
+[output_icon_size]
+x = 32
+y = 32
+
+# This defines where in our list of blocks we draw each "direction" from
+# no connections, east/west, north/south, and north/south/east/west
+# the 0-3 is the block to read from, starting at 0
+[positions]
+convex = 0
+horizontal = 1
+vertical = 2
+concave = 3
+
+# When we cut up our blockls, we're cutting "around" a central point
+# We typically want to cut around the center, so let's do that here
+[cut_pos]
+x = 16
+y = 16

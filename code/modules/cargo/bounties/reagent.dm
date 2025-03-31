@@ -121,7 +121,6 @@
 	// Chemicals that can be mixed by a single skilled Chemist.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
-		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
 		/datum/reagent/medicine/c2/convermol,\
 		/datum/reagent/medicine/ephedrine,\
@@ -195,7 +194,7 @@
 	return ..() && shipped_ammount >= required_ammount
 
 /datum/bounty/pill/applies_to(obj/shipped)
-	if(!istype(shipped, /obj/item/reagent_containers/pill))
+	if(!istype(shipped, /obj/item/reagent_containers/applicator/pill))
 		return FALSE
 	if(shipped?.reagents.get_reagent_amount(wanted_reagent.type) >= wanted_vol)
 		return TRUE

@@ -1,6 +1,6 @@
 // Simple app meant to test tgstation's TGS integration given a fresh TGS install with the default account
 //
-// Args: Repository Owner/Name, TGS instance path, TGS API port, Pushed commit hash (For .tgs.yml access), GitHub Token, (OPTIONAL) PR Number 
+// Args: Repository Owner/Name, TGS instance path, TGS API port, Pushed commit hash (For .tgs.yml access), GitHub Token, (OPTIONAL) PR Number
 
 using System.Reflection;
 using System.Text;
@@ -11,6 +11,7 @@ using Tgstation.Server.Api.Models.Request;
 using Tgstation.Server.Api.Models;
 using Tgstation.Server.Api.Models.Response;
 using Tgstation.Server.Client;
+using Tgstation.Server.Common.Extensions;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
 
@@ -196,16 +197,18 @@ try
 		{
 			Origin = new Uri($"http://github.com/{repoSlug}"),
 			UpdateSubmodules = true,
-			AccessUser = "Testing",
-			AccessToken = gitHubToken
 		},
 		default);
 
 	Console.WriteLine("Installing BYOND...");
-	var byondInstallJob = await instanceClient.Byond.SetActiveVersion(
-		new ByondVersionRequest
+	var byondInstallJob = await instanceClient.Engine.SetActiveVersion(
+		new EngineVersionRequest
 		{
-			Version = targetByondVersion
+			EngineVersion = new EngineVersion
+			{
+				Version = targetByondVersion,
+				Engine = EngineType.Byond,
+			}
 		},
 		null,
 		default);

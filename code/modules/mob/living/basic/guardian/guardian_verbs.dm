@@ -57,7 +57,7 @@
 	if (isnull(summoner))
 		return
 	var/sender_key = key
-	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian")
+	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian", max_length = MAX_MESSAGE_LEN)
 	if (sender_key != key || !input) //guardian got reset, or did not enter anything
 		return
 
@@ -83,6 +83,7 @@
 	button_icon_state = "communicate"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
@@ -90,7 +91,7 @@
 
 /datum/action/cooldown/mob_cooldown/guardian_comms/Activate(atom/target)
 	StartCooldown(360 SECONDS)
-	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message")
+	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message", max_length = MAX_MESSAGE_LEN)
 	StartCooldown()
 	if (!input)
 		return FALSE
@@ -119,6 +120,7 @@
 	button_icon_state = "recall"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
@@ -140,6 +142,7 @@
 	button_icon_state = "ghost"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0
@@ -166,20 +169,18 @@
 		return FALSE
 
 	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>'s personality..."))
-	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", ROLE_PAI, FALSE, 100)
-	if (!LAZYLEN(ghost_candidates))
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(chosen_guardian.theme.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = chosen_guardian, jump_target = owner, role_name_text = chosen_guardian.theme.name, amount_to_pick = 1)
+	if(isnull(chosen_one))
 		to_chat(owner, span_holoparasite("Your attempt to reset the personality of \
 			<font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font> appears to have failed... \
 			Looks like you're stuck with it for now."))
 		StartCooldown()
 		return FALSE
-
-	var/mob/dead/observer/candidate = pick(ghost_candidates)
 	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
 	to_chat(owner, span_boldholoparasite("The personality of <font color=\"[chosen_guardian.guardian_colour]\">[chosen_guardian.theme.name]</font> has been successfully reset."))
-	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
+	message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
-	chosen_guardian.key = candidate.key
+	chosen_guardian.PossessByPlayer(chosen_one.key)
 	COOLDOWN_START(chosen_guardian, resetting_cooldown, 5 MINUTES)
 	chosen_guardian.guardian_rename() //give it a new color and name, to show it's a new person
 	chosen_guardian.guardian_recolour()

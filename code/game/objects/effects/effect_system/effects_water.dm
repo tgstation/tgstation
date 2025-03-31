@@ -38,7 +38,7 @@
 /// Starts the effect moving at a target with a delay in deciseconds, and a lifetime in moves
 /// Returns the created loop
 /obj/effect/particle_effect/water/extinguisher/proc/move_at(atom/target, delay, lifetime)
-	var/datum/move_loop/loop = SSmove_manager.move_towards_legacy(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/loop = GLOB.move_manager.move_towards_legacy(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_forcemove))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(movement_stopped))
 	return loop
@@ -63,7 +63,7 @@
 
 // Stomach acid doesn't use legacy because it's not "targeted", and we instead want the circular sorta look
 /obj/effect/particle_effect/water/extinguisher/stomach_acid/move_at(atom/target, delay, lifetime)
-	var/datum/move_loop/loop = SSmove_manager.move_towards(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/loop = GLOB.move_manager.move_towards(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_forcemove))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(movement_stopped))
 	return loop

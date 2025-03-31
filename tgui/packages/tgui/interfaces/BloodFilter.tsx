@@ -1,5 +1,6 @@
+import { Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Stack } from '../components';
 import { Window } from '../layouts';
 import { ChemFilterPane } from './ChemFilter';
 
@@ -7,8 +8,8 @@ type Data = {
   whitelist: string[];
 };
 
-export const BloodFilter = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const BloodFilter = (props) => {
+  const { data } = useBackend<Data>();
   const { whitelist = [] } = data;
 
   return (

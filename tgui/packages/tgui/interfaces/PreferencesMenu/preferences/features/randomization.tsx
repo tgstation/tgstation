@@ -1,14 +1,16 @@
-import { useBackend } from '../../../../backend';
-import { Button, Stack } from '../../../../components';
-import { PreferencesMenuData, RandomSetting } from '../../data';
-import { RandomizationButton } from '../../RandomizationButton';
+import { useBackend } from 'tgui/backend';
+import { Button, Stack } from 'tgui-core/components';
+
+import { RandomizationButton } from '../../components/RandomizationButton';
+import { PreferencesMenuData, RandomSetting } from '../../types';
 import { useRandomToggleState } from '../../useRandomToggleState';
 import { CheckboxInput, Feature, FeatureToggle } from './base';
 
 export const random_body: Feature<RandomSetting> = {
   name: 'Random body',
-  component: (props, context) => {
-    const [randomToggle, setRandomToggle] = useRandomToggleState(context);
+  component: (props) => {
+    const [randomToggle, setRandomToggle] = useRandomToggleState();
+    const { act } = useBackend();
 
     return (
       <Stack>
@@ -25,9 +27,10 @@ export const random_body: Feature<RandomSetting> = {
               <Button
                 color="green"
                 onClick={() => {
-                  props.act('randomize_character');
+                  act('randomize_character');
                   setRandomToggle(false);
-                }}>
+                }}
+              >
                 Randomize
               </Button>
             </Stack.Item>
@@ -55,7 +58,7 @@ export const random_hardcore: FeatureToggle = {
 
 export const random_name: Feature<RandomSetting> = {
   name: 'Random name',
-  component: (props, context) => {
+  component: (props) => {
     return (
       <RandomizationButton
         setValue={(value) => props.handleSetValue(value)}
@@ -67,8 +70,8 @@ export const random_name: Feature<RandomSetting> = {
 
 export const random_species: Feature<RandomSetting> = {
   name: 'Random species',
-  component: (props, context) => {
-    const { act, data } = useBackend<PreferencesMenuData>(context);
+  component: (props) => {
+    const { act, data } = useBackend<PreferencesMenuData>();
 
     const species = data.character_preferences.randomization['species'];
 

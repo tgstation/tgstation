@@ -16,6 +16,8 @@
 
 /obj/item/aicard/Initialize(mapload)
 	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		return INITIALIZE_HINT_QDEL
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/item/aicard/Destroy(force)
@@ -41,17 +43,15 @@
 	user.visible_message(span_suicide("[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!"))
 	return BRUTELOSS
 
-/obj/item/aicard/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/aicard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AI)
-		if(upload_ai(target, user))
-			return TRUE
+		if(upload_ai(interacting_with, user))
+			return ITEM_INTERACT_SUCCESS
 	else
-		if(capture_ai(target, user))
-			return TRUE
+		if(capture_ai(interacting_with, user))
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /// Tries to get an AI from the atom clicked
 /obj/item/aicard/proc/capture_ai(atom/from_what, mob/living/user)

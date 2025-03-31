@@ -15,4 +15,6 @@
 	anomaly_path = /obj/effect/anomaly/hallucination
 
 /datum/round_event/anomaly/anomaly_hallucination/announce(fake)
+	if(isnull(impact_area))
+		impact_area = placer.findValidArea()
 	priority_announce("Hallucinatory event detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")

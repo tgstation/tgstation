@@ -38,28 +38,34 @@
 	var/emote_type = EMOTE_VISIBLE
 	/// Checks if the mob can use its hands before performing the emote.
 	var/hands_use_check = FALSE
-	/// Will only work if the emote is EMOTE_AUDIBLE.
-	var/muzzle_ignore = FALSE
 	/// Types that are allowed to use that emote.
 	var/list/mob_type_allowed_typecache = /mob
 	/// Types that are NOT allowed to use that emote.
 	var/list/mob_type_blacklist_typecache
 	/// Types that can use this emote regardless of their state.
 	var/list/mob_type_ignore_stat_typecache
+	/// Trait that is required to use this emote.
+	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
 	/// Sound to play when emote is called.
 	var/sound
-	/// Used for the honk borg emote.
+	/// Does this emote vary in pitch?
 	var/vary = FALSE
+	/// If this emote's sound is affected by TTS pitch
+	var/affected_by_pitch = TRUE
 	/// Can only code call this event instead of the player.
 	var/only_forced_audio = FALSE
 	/// The cooldown between the uses of the emote.
 	var/cooldown = 0.8 SECONDS
 	/// Does this message have a message that can be modified by the user?
 	var/can_message_change = FALSE
-	/// How long is the cooldown on the audio of the emote, if it has one?
-	var/audio_cooldown = 2 SECONDS
+	/// How long is the shared emote cooldown triggered by this emote?
+	var/general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote?
+	var/specific_emote_audio_cooldown = 5 SECONDS
+	/// Does this emote's sound ignore walls?
+	var/sound_wall_ignore = FALSE
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -85,46 +91,111 @@
  * * type_override - Override to the current emote_type.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
  *
- * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
-	. = TRUE
-	if(!can_run_emote(user, TRUE, intentional))
-		return FALSE
-	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_EMOTED, key, params, type_override, intentional) & COMPONENT_CANT_EMOTE)
-		return // We don't return FALSE because the error output would be incorrect, provide your own if necessary.
 	var/msg = select_message_type(user, message, intentional)
 	if(params && message_param)
 		msg = select_param(user, params)
 
 	msg = replace_pronoun(user, msg)
-
 	if(!msg)
 		return
 
 	user.log_message(msg, LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
-		TIMER_COOLDOWN_START(user, type, audio_cooldown)
-		playsound(user, tmp_sound, 50, vary)
+	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
+		TIMER_COOLDOWN_START(user, type, specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, "general_emote_audio_cooldown", general_emote_audio_cooldown)
+		var/frequency = null
+		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
+			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * SIGN(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
+		else if(vary)
+			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
+		playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
 
-	var/user_turf = get_turf(user)
-	if (user.client)
-		for(var/mob/ghost as anything in GLOB.dead_mob_list)
-			if(!ghost.client || isnewplayer(ghost))
+
+	var/is_important = emote_type & EMOTE_IMPORTANT
+	var/is_visual = emote_type & EMOTE_VISIBLE
+	var/is_audible = emote_type & EMOTE_AUDIBLE
+
+	// Emote doesn't get printed to chat, runechat only
+	if(emote_type & EMOTE_RUNECHAT)
+		for(var/mob/viewer as anything in viewers(user))
+			if(isnull(viewer.client))
 				continue
-			if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
-				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
-	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
-		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
-	else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
-		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
-	if(emote_type & EMOTE_IMPORTANT)
-		for(var/mob/living/viewer in viewers())
-			if(viewer.is_blind() && !viewer.can_hear())
-				to_chat(viewer, msg)
+			if(!is_important && viewer != user && (!is_visual || !is_audible))
+				if(is_audible && !viewer.can_hear())
+					continue
+				if(is_visual && viewer.is_blind())
+					continue
+			if(user.runechat_prefs_check(viewer, EMOTE_MESSAGE))
+				viewer.create_chat_message(
+					speaker = user,
+					raw_message = msg,
+					runechat_flags = EMOTE_MESSAGE,
+				)
+			else if(is_important)
+				to_chat(viewer, span_emote("<b>[user]</b> [msg]"))
+			else if(is_audible && is_visual)
+				viewer.show_message(
+					span_emote("<b>[user]</b> [msg]"), MSG_AUDIBLE,
+					span_emote("You see how <b>[user]</b> [msg]"), MSG_VISUAL,
+				)
+			else if(is_audible)
+				viewer.show_message(span_emote("<b>[user]</b> [msg]"), MSG_AUDIBLE)
+			else if(is_visual)
+				viewer.show_message(span_emote("<b>[user]</b> [msg]"), MSG_VISUAL)
+		return // Early exit so no dchat message
+
+	// The emote has some important information, and should always be shown to the user
+	else if(is_important)
+		for(var/mob/viewer as anything in viewers(user))
+			to_chat(viewer, span_emote("<b>[user]</b> [msg]"))
+			if(user.runechat_prefs_check(viewer, EMOTE_MESSAGE))
+				viewer.create_chat_message(
+					speaker = user,
+					raw_message = msg,
+					runechat_flags = EMOTE_MESSAGE,
+				)
+	// Emotes has both an audible and visible component
+	// Prioritize audible, and provide a visible message if the user is deaf
+	else if(is_visual && is_audible)
+		user.audible_message(
+			message = msg,
+			deaf_message = span_emote("You see how <b>[user]</b> [msg]"),
+			self_message = msg,
+			audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	// Emote is entirely audible, no visible component
+	else if(is_audible)
+		user.audible_message(
+			message = msg,
+			self_message = msg,
+			audible_message_flags = EMOTE_MESSAGE,
+		)
+	// Emote is entirely visible, no audible component
+	else if(is_visual)
+		user.visible_message(
+			message = msg,
+			self_message = msg,
+			visible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		CRASH("Emote [type] has no valid emote type set!")
+
+	if(!isnull(user.client))
+		var/dchatmsg = "<b>[user]</b> [msg]"
+		for(var/mob/ghost as anything in GLOB.dead_mob_list - viewers(get_turf(user)))
+			if(isnull(ghost.client) || isnewplayer(ghost))
+				continue
+			if(!(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT))
+				continue
+			to_chat(ghost, span_emote("[FOLLOW_LINK(ghost, user)] [dchatmsg]"))
+
+	return
+
+
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
@@ -136,8 +207,13 @@
  * Returns FALSE if the cooldown is not over, TRUE if the cooldown is over.
  */
 /datum/emote/proc/check_cooldown(mob/user, intentional)
+
+	if(SEND_SIGNAL(user, COMSIG_MOB_EMOTE_COOLDOWN_CHECK, src.key, intentional) & COMPONENT_EMOTE_COOLDOWN_BYPASS)
+		intentional = FALSE
+
 	if(!intentional)
 		return TRUE
+
 	if(user.emotes_used && user.emotes_used[src] + cooldown > world.time)
 		var/datum/emote/default_emote = /datum/emote
 		if(cooldown > initial(default_emote.cooldown)) // only worry about longer-than-normal emotes
@@ -196,8 +272,6 @@
 		return .
 	var/mob/living/living_user = user
 
-	if(!muzzle_ignore && user.is_muzzled() && emote_type & EMOTE_AUDIBLE)
-		return "makes a [pick("strong ", "weak ", "")]noise."
 	if(HAS_MIND_TRAIT(user, TRAIT_MIMING) && message_mime)
 		. = message_mime
 	if(isalienadult(user) && message_alien)
@@ -234,10 +308,13 @@
  * * user - Person that is trying to send the emote.
  * * status_check - Bool that says whether we should check their stat or not.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * params - Parameters added after the emote.
  *
  * Returns a bool about whether or not the user can run the emote.
  */
-/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE, params)
+	if(trait_required && !HAS_TRAIT(user, trait_required))
+		return FALSE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
@@ -275,9 +352,7 @@
  * Returns a bool about whether or not the user should play a sound when performing the emote.
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
-	if(emote_type & EMOTE_AUDIBLE && !muzzle_ignore)
-		if(user.is_muzzled())
-			return FALSE
+	if(emote_type & EMOTE_AUDIBLE && !hands_use_check)
 		if(HAS_TRAIT(user, TRAIT_MUTE))
 			return FALSE
 		if(ishuman(user))

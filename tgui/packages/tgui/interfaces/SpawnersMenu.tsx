@@ -1,24 +1,28 @@
-import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Button, LabeledList, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
 
-type SpawnersMenuContext = {
-  spawners: spawner[];
+type Data = {
+  spawners: Spawner[];
 };
 
-type spawner = {
+type Spawner = {
   name: string;
   amount_left: number;
-  desc?: string;
-  you_are_text?: string;
-  flavor_text?: string;
-  important_text?: string;
-};
+  infinite: BooleanLike;
+} & Partial<{
+  desc: string;
+  you_are_text: string;
+  flavor_text: string;
+  important_text: string;
+}>;
 
-export const SpawnersMenu = (props, context) => {
-  const { act, data } = useBackend<SpawnersMenuContext>(context);
-  const spawners = data.spawners || [];
+export const SpawnersMenu = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { spawners = [] } = data;
+
   return (
     <Window title="Spawners Menu" width={700} height={525}>
       <Window.Content scrollable>
@@ -31,9 +35,15 @@ export const SpawnersMenu = (props, context) => {
                 title={capitalizeAll(spawner.name)}
                 buttons={
                   <Stack>
-                    <Stack.Item fontSize="14px" color="green">
-                      {spawner.amount_left} left
-                    </Stack.Item>
+                    {spawner.infinite ? (
+                      <Stack.Item fontSize="14px" color="green">
+                        Infinite
+                      </Stack.Item>
+                    ) : (
+                      <Stack.Item fontSize="14px" color="green">
+                        {spawner.amount_left} left
+                      </Stack.Item>
+                    )}
                     <Stack.Item>
                       <Button
                         content="Jump"
@@ -53,7 +63,8 @@ export const SpawnersMenu = (props, context) => {
                       />
                     </Stack.Item>
                   </Stack>
-                }>
+                }
+              >
                 <LabeledList>
                   {spawner.desc ? (
                     <LabeledList.Item label="Description">

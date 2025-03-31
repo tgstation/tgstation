@@ -5,6 +5,7 @@
 #define CHANGETURF_INHERIT_AIR (1<<4) // Inherit air from previous turf. Implies CHANGETURF_IGNORE_AIR
 #define CHANGETURF_RECALC_ADJACENT (1<<5) //Immediately recalc adjacent atmos turfs instead of queuing.
 #define CHANGETURF_TRAPDOOR_INDUCED (1<<6) // Caused by a trapdoor, for trapdoor to know that this changeturf was caused by itself
+#define CHANGETURF_GENERATE_SHUTTLE_CEILING (1<<7) // Generate a shuttle ceiling on the above turf
 
 #define IS_OPAQUE_TURF(turf) (turf.directional_opacity == ALL_CARDINALS)
 
@@ -15,15 +16,15 @@
 
 #define RECT_TURFS(H_RADIUS, V_RADIUS, CENTER) \
 	block( \
-	locate(max((CENTER).x-(H_RADIUS),1), max((CENTER).y-(V_RADIUS),1), (CENTER).z), \
-	locate(min((CENTER).x+(H_RADIUS),world.maxx), min((CENTER).y+(V_RADIUS),world.maxy), (CENTER).z) \
+	(CENTER).x - (H_RADIUS), (CENTER).y - (V_RADIUS), (CENTER).z, \
+	(CENTER).x + (H_RADIUS), (CENTER).y + (V_RADIUS), (CENTER).z \
 	)
 
 ///Returns all turfs in a zlevel
-#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+#define Z_TURFS(ZLEVEL) block(1, 1, ZLEVEL, world.maxx, world.maxy, ZLEVEL)
 
 ///Returns all currently loaded turfs
-#define ALL_TURFS(...) block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
+#define ALL_TURFS(...) block(1, 1, 1, world.maxx, world.maxy, world.maxz)
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
 
@@ -31,7 +32,7 @@
 #define CORNER_BLOCK(corner, width, height) CORNER_BLOCK_OFFSET(corner, width, height, 0, 0)
 
 /// Returns a list of turfs similar to CORNER_BLOCK but with offsets
-#define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(locate(corner.x + offset_x, corner.y + offset_y, corner.z), locate(min(corner.x + (width - 1) + offset_x, world.maxx), min(corner.y + (height - 1) + offset_y, world.maxy), corner.z))))
+#define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(corner.x + offset_x, corner.y + offset_y, corner.z, corner.x + (width - 1) + offset_x, corner.y + (height - 1) + offset_y, corner.z)))
 
 /// Returns an outline (neighboring turfs) of the given block
 #define CORNER_OUTLINE(corner, width, height) ( \
@@ -64,9 +65,6 @@
 /// Turf has superlube on the floor and mobs will slip even if they are crawling
 #define TURF_WET_SUPERLUBE (1<<4)
 
-/// Checks if a turf is wet
-#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
-
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME (5 MINUTES)
 
@@ -85,9 +83,13 @@
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
-#define TEMPORARY_THERMAL_CONDUCTIVITY 1
+// Defines for turfs rust resistance
+#define RUST_RESISTANCE_BASIC 1
+#define RUST_RESISTANCE_REINFORCED 2
+#define RUST_RESISTANCE_TITANIUM 3
+#define RUST_RESISTANCE_ORGANIC 4
+#define RUST_RESISTANCE_ABSOLUTE 5
 
-#define MAX_TEMPORARY_THERMAL_CONDUCTIVITY 1
 /// Turf will be passable if density is 0
 #define TURF_PATHING_PASS_DENSITY 0
 /// Turf will be passable depending on [CanAStarPass] return value
@@ -110,3 +112,25 @@
  * Finds the midpoint of two given turfs.
  */
 #define TURF_MIDPOINT(a, b) (locate(((a.x + b.x) * 0.5), (a.y + b.y) * 0.5, (a.z + b.z) * 0.5))
+
+/// Defines the x offset to apply to larger smoothing turfs (such as grass).
+#define LARGE_TURF_SMOOTHING_X_OFFSET -9
+/// Defines the y offset to apply to larger smoothing turfs (such as grass).
+#define LARGE_TURF_SMOOTHING_Y_OFFSET -9
+
+/// Defines a consistent light power for our various basalt turfs
+#define BASALT_LIGHT_POWER 0.6
+/// Defines a consistent light range for basalt turfs that have a bigger area of lava
+#define BASALT_LIGHT_RANGE_BRIGHT 2
+/// Defines a consistent light range for basalt turfs that have a smaller area of lava
+#define BASALT_LIGHT_RANGE_DIM 1.4
+
+/// Makes the set turf transparent
+#define ADD_TURF_TRANSPARENCY(modturf, source) \
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.AddElement(/datum/element/turf_z_transparency) }; \
+	ADD_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source))
+
+/// Removes the transparency from the set turf
+#define REMOVE_TURF_TRANSPARENCY(modturf, source) \
+	REMOVE_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source)); \
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.RemoveElement(/datum/element/turf_z_transparency) }

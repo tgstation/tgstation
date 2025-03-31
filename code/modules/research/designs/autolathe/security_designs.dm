@@ -179,7 +179,7 @@
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
-	build_path = /obj/item/ammo_casing/a357
+	build_path = /obj/item/ammo_casing/c357
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,

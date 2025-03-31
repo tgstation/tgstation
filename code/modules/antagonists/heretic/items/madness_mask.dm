@@ -1,7 +1,7 @@
 // The spooky "void" / "abyssal" / "madness" mask for heretics.
 /obj/item/clothing/mask/madness_mask
-	name = "Abyssal Mask"
-	desc = "A mask created from the suffering of existence. Looking down it's eyes, you notice something gazing back at you."
+	name = "abyssal mask"
+	desc = "A mask created from suffering. When you look into its eyes, it looks back."
 	icon_state = "mad_mask"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
@@ -56,10 +56,13 @@
 		if(IS_HERETIC_OR_MONSTER(human_in_range) || human_in_range.is_blind())
 			continue
 
+		if(human_in_range.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+			continue
+
 		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * seconds_per_tick)
 
 		if(SPT_PROB(60, seconds_per_tick))
-			human_in_range.adjust_hallucinations_up_to(10 SECONDS, 240 SECONDS)
+			human_in_range.adjust_hallucinations_up_to(10 SECONDS, 120 SECONDS)
 
 		if(SPT_PROB(40, seconds_per_tick))
 			human_in_range.set_jitter_if_lower(10 SECONDS)

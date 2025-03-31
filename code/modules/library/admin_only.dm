@@ -80,7 +80,7 @@
 	page_count = round(max(bookcount - 1, 0) / BOOKS_PER_PAGE) //This is just floor()
 	search_page = clamp(search_page, 0, page_count)
 
-/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/ui_status(mob/user)
+/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/ui_status(mob/user, datum/ui_state/state)
 	if(!check_rights_for(user.client, R_BAN))
 		return UI_CLOSE
 	if(!SSdbcore.Connect())
@@ -339,7 +339,7 @@
 		ui.set_autoupdate(FALSE) // Nothing is changing here brother
 		ui.open()
 
-/datum/admin_book_viewer/ui_status(mob/user)
+/datum/admin_book_viewer/ui_status(mob/user, datum/ui_state/state)
 	if(!check_rights_for(user.client, R_BAN))
 		return UI_CLOSE
 	return UI_INTERACTIVE

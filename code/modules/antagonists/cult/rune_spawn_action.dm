@@ -42,7 +42,7 @@
 		var/chosen_keyword
 		if(initial(rune_type.req_keyword))
 			chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
-			if(!chosen_keyword)
+			if(!chosen_keyword || !turf_check(T))
 				return
 	//the outer ring is always the same across all runes
 		var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
@@ -67,7 +67,7 @@
 		var/scribe_mod = scribe_time
 		if(istype(T, /turf/open/floor/engine/cult))
 			scribe_mod *= 0.5
-		playsound(T, 'sound/magic/enter_blood.ogg', 100, FALSE)
+		playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, FALSE)
 		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, TYPE_PROC_REF(/mob, break_do_after_checks), health, action_interrupt)))
 			new rune_type(owner.loc, chosen_keyword)
 		else

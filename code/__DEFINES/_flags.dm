@@ -11,55 +11,53 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_USE_TAG (1<<0)
 #define DF_VAR_EDITED (1<<1)
 #define DF_ISPROCESSING (1<<2)
+/// Placed on datums that have a static, constant reference. Primarily only used for turfs.
+#define DF_STATIC_OBJECT (1<<3)
 
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
 
 /// Is this object currently processing in the atmos object list?
 #define ATMOS_IS_PROCESSING_1 (1<<0)
-/// conducts electricity (metal etc.)
-#define CONDUCT_1 (1<<1)
-/// For machines and structures that should not break into parts, eg, holodeck stuff
-#define NODECONSTRUCT_1 (1<<2)
 /// item has priority to check when entering or leaving
-#define ON_BORDER_1 (1<<3)
+#define ON_BORDER_1 (1<<1)
 ///Whether or not this atom shows screentips when hovered over
-#define NO_SCREENTIPS_1 (1<<4)
+#define NO_SCREENTIPS_1 (1<<2)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1 (1<<5)
-///specifies that this atom is a hologram that isnt real
-#define HOLOGRAM_1 (1<<6)
+#define PREVENT_CLICK_UNDER_1 (1<<3)
+///specifies that this atom is a hologram that isn't real
+#define HOLOGRAM_1 (1<<4)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1 (1<<7)
+#define INITIALIZED_1 (1<<5)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1 (1<<8)
+#define ADMIN_SPAWNED_1 (1<<6)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<9)
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<7)
 /// Should this object be paintable with very dark colors?
-#define ALLOW_DARK_PAINTS_1 (1<<10)
+#define ALLOW_DARK_PAINTS_1 (1<<8)
 /// Should this object be unpaintable?
-#define UNPAINTABLE_1 (1<<11)
-/// Is the thing currently spinning?
-#define IS_SPINNING_1 (1<<12)
+#define UNPAINTABLE_1 (1<<9)
 /// Is this atom on top of another atom, and as such has click priority?
-#define IS_ONTOP_1 (1<<13)
+#define IS_ONTOP_1 (1<<10)
 /// Is this atom immune to being dusted by the supermatter?
-#define SUPERMATTER_IGNORES_1 (1<<14)
+#define SUPERMATTER_IGNORES_1 (1<<11)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<15)
+#define CAN_BE_DIRTY_1 (1<<12)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<16)
+#define HTML_USE_INITAL_ICON_1 (1<<13)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
-#define IS_PLAYER_COLORABLE_1 (1<<17)
+#define IS_PLAYER_COLORABLE_1 (1<<14)
 /// Whether or not this atom has contextual screentips when hovered OVER
-#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<18)
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<15)
 /// Whether or not this atom is storing contents for a disassociated storage object
-#define HAS_DISASSOCIATED_STORAGE_1 (1<<19)
+#define HAS_DISASSOCIATED_STORAGE_1 (1<<16)
 /// If this atom has experienced a decal element "init finished" sourced appearance update
-/// We use this to ensure stacked decals don't double up appearance updates for no rasin
+/// We use this to ensure stacked decals don't double up appearance updates for no reason
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
-#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
+#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<17)
+/// This atom always returns its turf in get_turf_pixel instead of the turf from its offsets
+#define IGNORE_TURF_PIXEL_OFFSET_1 (1<<18)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -83,9 +81,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RICOCHET_HARD (1<<1)
 
 //TURF FLAGS
-/// If a turf cant be jaunted through.
+/// If a turf can't be jaunted through.
 #define NOJAUNT (1<<0)
-/// If a turf is an usused reservation turf awaiting assignment
+/// If a turf is an unused reservation turf awaiting assignment
 #define UNUSED_RESERVATION_TURF (1<<1)
 /// If a turf is a reserved turf
 #define RESERVATION_TURF (1<<2)
@@ -99,6 +97,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_SOLID (1<<6)
 /// This turf will never be cleared away by other objects on Initialize.
 #define NO_CLEARING (1<<7)
+/// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
+#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
+
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -121,40 +122,66 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNIQUE_AREA (1<<8)
 /// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
 #define BLOCK_SUICIDE (1<<9)
-/// Can the Xenobio management console transverse this area by default?
+/// If set, this area will be innately traversable by Xenobiology camera consoles.
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
-/// If Abductors are unable to teleport in with their observation console
-#define ABDUCTOR_PROOF (1<<11)
 /// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<12)
+#define CULT_PERMITTED (1<<11)
 /// If engravings are persistent in this area
-#define PERSISTENT_ENGRAVINGS (1<<13)
+#define PERSISTENT_ENGRAVINGS (1<<12)
 /// Mobs that die in this area don't produce a dead chat message
-#define NO_DEATH_MESSAGE (1<<14)
+#define NO_DEATH_MESSAGE (1<<13)
 /// This area should have extra shielding from certain event effects
-#define EVENT_PROTECTED (1<<15)
+#define EVENT_PROTECTED (1<<14)
+/// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
+#define QUIET_LOGS (1<<15)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<16)
+/// This area does not allow the Binary channel
+#define BINARY_JAMMING (1<<17)
+/// This area prevents Bag of Holding rifts from being opened.
+#define NO_BOH (1<<18)
+/// This area prevents fishing from removing unique/limited loot from sources that're also used outside of it.
+#define UNLIMITED_FISHING (1<<19)
+/// This area is prevented from having gravity (ie. space, nearstation, or outside solars)
+#define NO_GRAVITY (1<<20)
+/// This area can be teleported in, but -only- to locations within that same area.
+#define LOCAL_TELEPORT (1<<21)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
+/// Allows you to pass over tables.
 #define PASSTABLE (1<<0)
+/// Allows you to pass over glass(this generally includes anything see-through that's glass-adjacent, ie. windows, windoors, airlocks with glass, etc.)
 #define PASSGLASS (1<<1)
+/// Allows you to pass over grilles.
 #define PASSGRILLE (1<<2)
+/// Allows you to pass over blob tiles.
 #define PASSBLOB (1<<3)
+/// Allows you to pass over mobs.
 #define PASSMOB (1<<4)
+/// Allows you to pass over closed turfs, ie. walls.
 #define PASSCLOSEDTURF (1<<5)
 /// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW (1<<6)
+/// Allows you to pass over machinery, ie. vending machines, computers, protolathes, etc.
 #define PASSMACHINE (1<<7)
+/// Allows you to pass over structures, ie. racks, tables(if you don't already have PASSTABLE), etc.
 #define PASSSTRUCTURE (1<<8)
+/// Allows you to pass over plastic flaps, often found at cargo or MULE dropoffs.
 #define PASSFLAPS (1<<9)
+/// Allows you to pass over airlocks and mineral doors.
 #define PASSDOORS (1<<10)
+/// Allows you to pass over vehicles, ie. mecha, secways, the pimpin' ride, etc.
 #define PASSVEHICLE (1<<11)
+/// Allows you to pass over dense items.
 #define PASSITEM (1<<12)
 /// Do not intercept click attempts during Adjacent() checks. See [turf/proc/ClickCross]. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSCLICKS (1<<13)
+/// Allows you to pass over windows and window-adjacent stuff, like windows and windoors. Does not include airlocks with glass in them.
+#define PASSWINDOW (1<<14)
 
 //Movement Types
 #define GROUND (1<<0)
@@ -163,6 +190,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLOATING (1<<3)
 /// When moving, will Cross() everything, but won't stop or Bump() anything.
 #define PHASING (1<<4)
+/// The mob is walking on the ceiling. Or is generally just, upside down.
+#define UPSIDE_DOWN (1<<5)
+/// Combination flag for movetypes which, for all intents and purposes, mean the mob is not touching the ground
+#define MOVETYPES_NOT_TOUCHING_GROUND (FLYING|FLOATING|UPSIDE_DOWN)
+/// Trait source for stuff movetypes applies
+#define SOURCE_MOVETYPES "movetypes"
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF (1<<0)
@@ -180,6 +213,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE (1<<6)
 /// can't be frozen
 #define FREEZE_PROOF (1<<7)
+/// can't be shuttle crushed.
+#define SHUTTLE_CRUSH_PROOF (1<<8)
 
 //tesla_zap
 #define ZAP_MACHINE_EXPLOSIVE (1<<0)
@@ -195,10 +230,15 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS ZAP_GENERATES_POWER
 
-//EMP protection
+///EMP will protect itself.
 #define EMP_PROTECT_SELF (1<<0)
+///EMP will protect the contents from also being EMPed.
 #define EMP_PROTECT_CONTENTS (1<<1)
+///EMP will protect the wires.
 #define EMP_PROTECT_WIRES (1<<2)
+
+///Protects against all EMP types.
+#define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)
 
 //Mob mobility var flags
 /// can move
@@ -248,8 +288,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RELIGION_TOOL_SACRIFICE (1<<1)
 #define RELIGION_TOOL_SECTSELECT (1<<2)
 
-// ---- Skillchip incompatability flags ---- //
-// These flags control which skill chips are compatible with eachother.
+// ---- Skillchip incompatibility flags ---- //
+// These flags control which skill chips are compatible with each other.
 // By default, skillchips are incompatible with themselves and multiple of the same istype() cannot be implanted together. Set this flag to disable that check.
 #define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
 // This skillchip is incompatible with other skillchips from the incompatible_category list.
@@ -290,3 +330,5 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_VISIBLE (1<<1)
 /// Is it an emote that should be shown regardless of blindness/deafness
 #define EMOTE_IMPORTANT (1<<2)
+/// Emote only prints to runechat, not to the chat window
+#define EMOTE_RUNECHAT (1<<3)

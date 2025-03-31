@@ -13,12 +13,8 @@
 #define SIGNATURE_FONT "Segoe Script"
 
 /// Emoji icon set
-#define EMOJI_SET 'icons/ui_icons/emoji/emoji.dmi'
+#define EMOJI_SET 'icons/ui/chat/emoji.dmi'
 
 // Font metrics bitfield
 /// Include leading A width and trailing C width in GetWidth() or in DrawText()
 #define INCLUDE_AC (1<<0)
-
-DEFINE_BITFIELD(font_flags, list(
-	"INCLUDE_AC" = INCLUDE_AC,
-))

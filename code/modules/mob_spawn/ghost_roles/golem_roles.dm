@@ -26,17 +26,17 @@
 		notify_ghosts(
 			"\A golem shell has been completed in \the [init_area.name].",
 			source = src,
-			action = NOTIFY_PLAY,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Golem Shell",
+			click_interact = TRUE,
 			ignore_key = POLL_IGNORE_GOLEM,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/name_mob(mob/living/spawned_mob, forced_name)
 	if(forced_name || !iscarbon(spawned_mob))
 		return ..()
 
-	var/datum/species/golem/golem_species = new()
-	forced_name = golem_species.random_name()
+	forced_name = generate_random_name_species_based(spawned_mob.gender, TRUE, species_type = /datum/species/golem)
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor)
@@ -78,7 +78,7 @@
 	if(!ishuman(new_spawn))
 		return
 	var/mob/living/carbon/human/new_golem = new_spawn
-	var/obj/item/organ/internal/vocal_cords/adamantine/free_golem_radio = new()
+	var/obj/item/organ/vocal_cords/adamantine/free_golem_radio = new()
 	free_golem_radio.Insert(new_golem)
 
 // Subtype which follows orders

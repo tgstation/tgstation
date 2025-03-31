@@ -2,32 +2,34 @@
 #define TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(___TraitRemove), ##target, ##trait, ##source)
 
 ///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
-/proc/___TraitAdd(target,trait,source)
+/proc/___TraitAdd(target, trait, source)
 	if(!target || !trait || !source)
 		return
+
 	if(islist(target))
-		for(var/i in target)
-			if(!isatom(i))
-				continue
-			var/atom/the_atom = i
-			ADD_TRAIT(the_atom,trait,source)
-	else if(isatom(target))
-		var/atom/the_atom2 = target
-		ADD_TRAIT(the_atom2,trait,source)
+		for(var/datum/listed_target in target)
+			ADD_TRAIT(listed_target, trait, source)
+		return
+
+	ASSERT(isdatum(target), "Invalid target used in TRAIT_CALLBACK_ADD! Expected a datum reference, got [target] instead.")
+
+	var/datum/datum_target = target
+	ADD_TRAIT(datum_target, trait, source)
 
 ///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
-/proc/___TraitRemove(target,trait,source)
+/proc/___TraitRemove(target, trait, source)
 	if(!target || !trait || !source)
 		return
+
 	if(islist(target))
-		for(var/i in target)
-			if(!isatom(i))
-				continue
-			var/atom/the_atom = i
-			REMOVE_TRAIT(the_atom,trait,source)
-	else if(isatom(target))
-		var/atom/the_atom2 = target
-		REMOVE_TRAIT(the_atom2,trait,source)
+		for(var/datum/listed_target in target)
+			REMOVE_TRAIT(listed_target, trait, source)
+		return
+
+	ASSERT(isdatum(target), "Invalid target used in TRAIT_CALLBACK_REMOVE! Expected a datum reference, got [target] instead.")
+
+	var/datum/datum_target = target
+	REMOVE_TRAIT(datum_target, trait, source)
 
 
 /// Proc that handles adding multiple traits to a target via a list. Must have a common source and target.

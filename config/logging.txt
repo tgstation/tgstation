@@ -39,7 +39,7 @@ LOG_GAME
 LOG_MANIFEST
 
 ## log mecha actions
-# LOG_MECHA
+LOG_MECHA
 
 ## log OOC channel
 LOG_OOC
@@ -97,7 +97,7 @@ LOG_VOTE
 LOG_WHISPER
 
 ## log all world.Topic() calls
-# LOG_WORLD_TOPIC
+LOG_WORLD_TOPIC
 
 ## log manual target zone switching
 LOG_ZONE_SWITCH

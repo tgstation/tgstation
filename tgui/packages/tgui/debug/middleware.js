@@ -4,10 +4,15 @@
  * @license MIT
  */
 
-import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'common/keycodes';
-import { globalEvents } from '../events';
-import { acquireHotKey } from '../hotkeys';
-import { openExternalBrowser, toggleDebugLayout, toggleKitchenSink } from './actions';
+import { globalEvents } from 'tgui-core/events';
+import { acquireHotKey } from 'tgui-core/hotkeys';
+import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'tgui-core/keycodes';
+
+import {
+  openExternalBrowser,
+  toggleDebugLayout,
+  toggleKitchenSink,
+} from './actions';
 
 // prettier-ignore
 const relayedTypes = [

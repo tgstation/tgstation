@@ -1,0 +1,2 @@
+/area/station/bitrunning : /area/station/cargo/bitrunning{@OLD}
+/area/station/bitrunning/den : /area/station/cargo/bitrunning/den{@OLD}

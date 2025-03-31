@@ -2,9 +2,9 @@
 	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
-	faction = list(FACTION_NEUTRAL, FACTION_MONKEY)
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
+	ADD_TRAIT(src, TRAIT_BORN_MONKEY, INNATE_TRAIT)
 	if (cubespawned)
 		var/cap = CONFIG_GET(number/monkeycap)
 		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
@@ -32,20 +32,6 @@
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
 	helmet.attack_self(src) // todo encapsulate toggle
 
-/mob/living/carbon/human/species/monkey/holodeck
-	race = /datum/species/monkey/holodeck
-
-/mob/living/carbon/human/species/monkey/holodeck/spawn_gibs() // no blood and no gibs
-	return
-
-/mob/living/carbon/human/species/monkey/holodeck/has_dna()
-	return null
-
-/mob/living/carbon/human/species/monkey/holodeck/create_bodyparts(list/overrides) // done like this in case people add more limbs to monkeys or something
-	. = ..()
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		limb.bodypart_flags |= BODYPART_UNREMOVABLE // no farming organs or limbs from these fellers. get a monkey cube
-
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
 /mob/living/carbon/human/species/monkey/punpun
@@ -62,6 +48,11 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	var/memory_saved = FALSE
 
 /mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
+	// 1 Pun Pun should exist
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+	if(mapload && (locate(/datum/station_trait/job/pun_pun) in SSstation.station_traits))
+		new /obj/effect/landmark/start/pun_pun(loc) //Pun Pun is a crewmember, and may late-join.
+		return INITIALIZE_HINT_QDEL
 	Read_Memory()
 
 	var/name_to_use = name
@@ -79,8 +70,8 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 
 	if(!GLOB.the_one_and_only_punpun && mapload)
 		GLOB.the_one_and_only_punpun = src
-	// 1 Pun Pun should exist
-	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+	else if(GLOB.the_one_and_only_punpun)
+		ADD_TRAIT(src, TRAIT_DONT_WRITE_MEMORY, INNATE_TRAIT) //faaaaaaake!
 
 	fully_replace_character_name(real_name, name_to_use)
 

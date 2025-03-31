@@ -19,7 +19,7 @@
 	atom_storage.remove_all()
 	implantee.visible_message(span_warning("A bluespace pocket opens around [src] as it exits [implantee], spewing out its contents and rupturing the surrounding tissue!"))
 	implantee.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
-	qdel(atom_storage)
+	QDEL_NULL(atom_storage)
 	return ..()
 
 /obj/item/implant/storage/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
@@ -36,7 +36,7 @@
 				return TRUE
 			return FALSE
 	create_storage(storage_type = /datum/storage/implant)
-
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 	return ..()
 
 /obj/item/implanter/storage

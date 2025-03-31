@@ -1,16 +1,23 @@
 #define BP_MAX_ROOM_SIZE 300
+#define EXTRA_ROOM_CHECK_SKIP 1
+#define EXTRA_ROOM_CHECK_FAIL 2
 
-GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/engineering/main, \
-															    /area/station/engineering/supermatter, \
-															    /area/station/engineering/atmospherics_engine, \
-															    /area/station/ai_monitored/turret_protected/ai))
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
+	/area/station/engineering/main,
+	/area/station/engineering/supermatter,
+	/area/station/engineering/atmospherics_engine,
+	/area/station/ai_monitored/turret_protected/ai,
+	/area/ruin/comms_agent //fixes icemoon comms station being affected
+
+)))
 
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
 // The dirs are connected turfs in the same space
 // break_if_found is a typecache of turf/area types to return false if found
+// extra_check is an optional callback to invoke on each turf checked, and can specify whether to skip processing the turf or return false
 // Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
-/proc/detect_room(turf/origin, list/break_if_found = list(), max_size=INFINITY)
+/proc/detect_room(turf/origin, list/break_if_found = list(), max_size=INFINITY, datum/callback/extra_check)
 	if(origin.blocks_air)
 		return list(origin)
 
@@ -31,6 +38,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 				continue
 			checked_turfs[sourceT] |= dir
 			checked_turfs[checkT] |= REVERSE_DIR(dir)
+			switch(extra_check?.Invoke(checkT))
+				if(EXTRA_ROOM_CHECK_SKIP)
+					continue
+				if(EXTRA_ROOM_CHECK_FAIL)
+					return FALSE
 			.[sourceT] |= dir
 			.[checkT] |= REVERSE_DIR(dir)
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
@@ -77,6 +89,28 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
 
+/proc/set_turfs_to_area(list/turf/turfs, area/new_area, list/area/affected_areas = list())
+	for(var/turf/the_turf as anything in turfs)
+		var/area/old_area = the_turf.loc
+
+		//keep rack of all areas affected by turf changes
+		affected_areas[old_area.name] = old_area
+
+		//move the turf to its new area and unregister it from the old one
+		the_turf.change_area(old_area, new_area)
+
+		//inform atoms on the turf that their area has changed
+		for(var/atom/stuff as anything in the_turf)
+			//unregister the stuff from its old area
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
+
+			//register the stuff to its new area. special exception for apc as its not registered to this signal
+			if(istype(stuff, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/area_apc = stuff
+				area_apc.assign_to_area()
+			else
+				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
+
 /proc/create_area(mob/creator, new_area_type = /area)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
@@ -86,6 +120,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	// Ignore these areas and dont let people expand them. They can expand into them though
 	var/static/list/blacklisted_areas = typecacheof(list(
 		/area/space,
+		/area/station/asteroid,
 		))
 
 	var/error = ""
@@ -130,8 +165,10 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		if(!str)
 			return
 		newA = new area_choice
+		newA.AddComponent(/datum/component/custom_area)
 		newA.setup(str)
-		newA.has_gravity = oldA.has_gravity
+		newA.default_gravity = oldA.default_gravity
+		GLOB.custom_areas[newA] = TRUE
 		require_area_resort() //new area registered. resort the names
 	else
 		newA = area_choice
@@ -145,27 +182,8 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	 * A list of all machinery tied to an area along with the area itself. key=area name,value=list(area,list of machinery)
 	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
 	 */
-	var/area/affected_areas = list()
-	for(var/turf/the_turf as anything in turfs)
-		var/area/old_area = the_turf.loc
-
-		//keep rack of all areas affected by turf changes
-		affected_areas[old_area.name] = old_area
-
-		//move the turf to its new area and unregister it from the old one
-		the_turf.change_area(old_area, newA)
-
-		//inform atoms on the turf that their area has changed
-		for(var/atom/stuff as anything in the_turf)
-			//unregister the stuff from its old area
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
-
-			//register the stuff to its new area. special exception for apc as its not registered to this signal
-			if(istype(stuff, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/area_apc = stuff
-				area_apc.assign_to_area()
-			else
-				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, newA)
+	var/list/area/affected_areas = list()
+	set_turfs_to_area(turfs, newA, affected_areas)
 
 	newA.reg_in_areas_in_z()
 
@@ -270,13 +288,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	// Now their turfs
 	var/list/turfs = list()
 	for(var/area/pull_from as anything in areas_to_pull)
-		var/list/our_turfs = pull_from.get_contained_turfs()
-		if(target_z == 0)
-			turfs += our_turfs
+		if (target_z == 0)
+			for (var/list/zlevel_turfs as anything in pull_from.get_zlevel_turf_lists())
+				turfs += zlevel_turfs
 		else
-			for(var/turf/turf_in_area as anything in our_turfs)
-				if(target_z == turf_in_area.z)
-					turfs += turf_in_area
+			turfs += pull_from.get_turfs_by_zlevel(target_z)
 	return turfs
 
 
@@ -292,3 +308,51 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 				mobs_in_area += mob
 				break
 	return mobs_in_area
+
+/**
+ * rename_area
+ * Renames an area to the given new name, updating all machines' names and firedoors
+ * to properly ensure alarms and machines are named correctly at all times.
+ * Args:
+ * - area_to_rename: The area that's being renamed.
+ * - new_name: The name we're changing said area to.
+ */
+/proc/rename_area(area/area_to_rename, new_name)
+	var/prevname = "[area_to_rename.name]"
+	set_area_machinery_title(area_to_rename, new_name, prevname)
+	area_to_rename.name = new_name
+	require_area_resort() //area renamed so resort the names
+
+	if(LAZYLEN(area_to_rename.firedoors))
+		for(var/obj/machinery/door/firedoor/area_firedoors as anything in area_to_rename.firedoors)
+			area_firedoors.CalculateAffectingAreas()
+	area_to_rename.update_areasize()
+	return TRUE
+
+/**
+ * Renames all machines in a defined area from the old title to the new title.
+ * Used when renaming an area to ensure that all machiens are labeled the new area's machine.
+ * Args:
+ * - area_renaming: The area being renamed, which we'll check turfs from to rename machines in.
+ * - title: The new name of the area that we're swapping into.
+ * - oldtitle: The old name of the area that we're replacing text from.
+ */
+/proc/set_area_machinery_title(area/area_renaming, title, oldtitle)
+	if(!oldtitle) // or replacetext goes to infinite loop
+		return
+
+	//stuff tied to the area to rename
+	var/static/list/to_rename = typecacheof(list(
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
+		/obj/machinery/camera,
+	))
+	for(var/list/zlevel_turfs as anything in area_renaming.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
+				machine.name = replacetext(machine.name, oldtitle, title)

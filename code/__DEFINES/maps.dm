@@ -161,7 +161,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define RESERVED_TURF_TYPE /turf/open/space/basic //What the turf is when not being used
 
 //Ruin Generation
-
 #define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere until giving up (really should just swap to some packing algo)
 
 #define PLACE_DEFAULT "random"
@@ -175,17 +174,15 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define DEFAULT_SPACE_RUIN_LEVELS 7
 #define DEFAULT_SPACE_EMPTY_LEVELS 1
 
-#define PERLIN_LAYER_HEIGHT "perlin_height"
-#define PERLIN_LAYER_HUMIDITY "perlin_humidity"
-#define PERLIN_LAYER_HEAT "perlin_heat"
-
 #define BIOME_LOW_HEAT "low_heat"
 #define BIOME_LOWMEDIUM_HEAT "lowmedium_heat"
+#define BIOME_MEDIUM_HEAT "medium_heat"
 #define BIOME_HIGHMEDIUM_HEAT "highmedium_heat"
 #define BIOME_HIGH_HEAT "high_heat"
 
 #define BIOME_LOW_HUMIDITY "low_humidity"
 #define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
+#define BIOME_MEDIUM_HUMIDITY "medium_humidity"
 #define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
 #define BIOME_HIGH_HUMIDITY "high_humidity"
 
@@ -198,8 +195,16 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 /// Shelter spot has anchored objects that restrict deployment
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+/// Sheter spot has banned objects that restrict deployment
+#define SHELTER_DEPLOY_BANNED_OBJECTS "banned objects"
 /// Shelter spot is out of bounds from the maps x/y coordinates
 #define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
+
+//Flags for survival capsules to ignore some deploy checks
+///Ignore anchored, dense objects in the area
+#define CAPSULE_IGNORE_ANCHORED_OBJECTS (1<<0)
+///Ignore banned objects in the area
+#define CAPSULE_IGNORE_BANNED_OBJECTS (1<<1)
 
 /// A map key that corresponds to being one exclusively for Space.
 #define SPACE_KEY "space"
@@ -224,4 +229,14 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
 
 /// Checks the job changes in the map config for the passed change key.
-#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.config.job_changes?[job]?[change]
+#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
+
+///Identifiers for away mission spawnpoints
+#define AWAYSTART_BEACH "AWAYSTART_BEACH"
+#define AWAYSTART_MUSEUM "AWAYSTART_MUSEUM"
+#define AWAYSTART_RESEARCH "AWAYSTART_RESEARCH"
+#define AWAYSTART_CAVES "AWAYSTART_CAVES"
+#define AWAYSTART_MOONOUTPOST "AWAYSTART_MOONOUTPOST"
+#define AWAYSTART_SNOWCABIN "AWAYSTART_SNOWCABIN"
+#define AWAYSTART_SNOWDIN "AWAYSTART_SNOWDIN"
+#define AWAYSTART_UNDERGROUND "AWAYSTART_UNDERGROUND"

@@ -163,7 +163,7 @@
 	icon_dead = "young_tank_dead"
 	maxHealth = 50
 	health = 50
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0.5, OXY = 1)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, STAMINA = 0.5, OXY = 1)
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	speed = 1
@@ -195,7 +195,7 @@
 /mob/living/basic/spider/growing/young/breacher
 	grow_as = /mob/living/basic/spider/giant/breacher
 	name = "young breacher spider"
-	desc = "Furry and baige, it looks defenseless. This one has dim red eyes."
+	desc = "Furry and beige, it looks defenseless. This one has dim red eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_breacher"
 	icon_dead = "young_breacher_dead"

@@ -15,8 +15,7 @@
 /datum/ai_behavior/run_emote/perform(seconds_per_tick, datum/ai_controller/controller, emote_key)
 	var/mob/living/living_pawn = controller.pawn
 	if (!isliving(living_pawn))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/list/emote_list = controller.blackboard[emote_key]
 	var/emote
@@ -26,8 +25,7 @@
 		emote = emote_list
 
 	if(isnull(emote))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	living_pawn.emote(emote)
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED

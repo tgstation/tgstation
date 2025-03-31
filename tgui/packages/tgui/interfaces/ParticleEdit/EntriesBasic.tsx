@@ -1,24 +1,51 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, LabeledList, NumberInput, ColorBox, Input, Dropdown, Stack } from '../../components';
-import { EntryCoordProps, EntryFloatProps, EntryGradientProps, EntryIconStateProps, EntryTransformProps, MatrixTypes, ParticleUIData, P_DATA_ICON_ADD, P_DATA_ICON_REMOVE, P_DATA_ICON_WEIGHT, SpaceToNum, SpaceTypes } from './data';
+import { useContext } from 'react';
+import {
+  Box,
+  Button,
+  ColorBox,
+  Dropdown,
+  Input,
+  LabeledList,
+  NumberInput,
+  Stack,
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
+import { ParticleContext } from '.';
+import {
+  EntryCoordProps,
+  EntryFloatProps,
+  EntryGradientProps,
+  EntryIconStateProps,
+  EntryTransformProps,
+  MatrixTypes,
+  P_DATA_ICON_ADD,
+  P_DATA_ICON_REMOVE,
+  P_DATA_ICON_WEIGHT,
+  ParticleUIData,
+  SpaceToNum,
+  SpaceTypes,
+} from './data';
 import { editKeyOf, editWeightOf, setGradientSpace } from './helpers';
 
-export const EntryFloat = (props: EntryFloatProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryFloat = (props: EntryFloatProps) => {
+  const { act } = useBackend<ParticleUIData>();
+  const { setDesc } = useContext(ParticleContext);
   const { name, var_name, float } = props;
   return (
     <LabeledList.Item label={name}>
       <Button
         icon={'question'}
-        onClick={() => setdesc(var_name)}
+        onClick={() => setDesc(var_name)}
         tooltip={'View details'}
       />
       <NumberInput
         animated
         value={float}
         minValue={0}
-        onDrag={(e, value) =>
+        maxValue={Infinity}
+        step={1}
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: value,
@@ -29,21 +56,24 @@ export const EntryFloat = (props: EntryFloatProps, context) => {
   );
 };
 
-export const EntryCoord = (props: EntryCoordProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryCoord = (props: EntryCoordProps) => {
+  const { act } = useBackend<ParticleUIData>();
+  const { setDesc } = useContext(ParticleContext);
   const { name, var_name, coord } = props;
   return (
     <LabeledList.Item label={name}>
       <Button
         icon={'question'}
-        onClick={() => setdesc(var_name)}
+        onClick={() => setDesc(var_name)}
         tooltip={'View details'}
       />
       <NumberInput
         animated
-        value={coord?.[0]}
-        onDrag={(e, value) =>
+        minValue={-Infinity}
+        maxValue={Infinity}
+        step={1}
+        value={coord?.[0] || 0}
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: [value, coord?.[1], coord?.[2]],
@@ -52,8 +82,11 @@ export const EntryCoord = (props: EntryCoordProps, context) => {
       />
       <NumberInput
         animated
-        value={coord?.[1]}
-        onDrag={(e, value) =>
+        minValue={-Infinity}
+        maxValue={Infinity}
+        step={1}
+        value={coord?.[1] || 0}
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], value, coord?.[2]],
@@ -62,8 +95,11 @@ export const EntryCoord = (props: EntryCoordProps, context) => {
       />
       <NumberInput
         animated
-        value={coord?.[2]}
-        onDrag={(e, value) =>
+        minValue={-Infinity}
+        maxValue={Infinity}
+        step={1}
+        value={coord?.[2] || 0}
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], coord?.[1], value],
@@ -74,15 +110,15 @@ export const EntryCoord = (props: EntryCoordProps, context) => {
   );
 };
 
-export const EntryGradient = (props: EntryGradientProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryGradient = (props: EntryGradientProps) => {
+  const { act } = useBackend<ParticleUIData>();
+  const { setDesc } = useContext(ParticleContext);
   const { name, var_name, gradient } = props;
   const isLooping = gradient?.find((x) => x === 'loop');
   const space_type = gradient?.includes('space')
     ? Object.keys(SpaceToNum).find(
-      (space) => SpaceToNum[space] === gradient['space']
-    )
+        (space) => SpaceToNum[space] === gradient['space'],
+      )
     : 'COLORSPACE_RGB';
   return (
     <LabeledList.Item label={name}>
@@ -90,7 +126,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
         <Stack.Item>
           <Button
             icon={'question'}
-            onClick={() => setdesc(var_name)}
+            onClick={() => setDesc(var_name)}
             tooltip={'View details'}
           />
         </Stack.Item>
@@ -98,7 +134,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
           <Button
             tooltip={'Loop'}
             icon={'sync'}
-            selected={isLooping}
+            selected={!!isLooping}
             onClick={() =>
               act('edit', {
                 var: var_name,
@@ -118,7 +154,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
                 var: var_name,
                 new_value: gradient
                   ? setGradientSpace(gradient, SpaceToNum[e])
-                  : { 'space': SpaceToNum[e] },
+                  : { space: SpaceToNum[e] },
               })
             }
             width="145px"
@@ -139,7 +175,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
                     act('edit', {
                       var: var_name,
                       new_value: gradient!.map((x, i) =>
-                        i === index ? value : x
+                        i === index ? value : x,
                       ),
                     })
                   }
@@ -155,7 +191,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
                   }
                 />
               </>
-            )
+            ),
           )}
         </Stack.Item>
         <Stack.Item>
@@ -175,9 +211,9 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
   );
 };
 
-export const EntryTransform = (props: EntryTransformProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryTransform = (props: EntryTransformProps) => {
+  const { act } = useBackend<ParticleUIData>();
+  const { setDesc } = useContext(ParticleContext);
   const len = props.transform?.length ? props.transform.length : 0;
   const selected =
     len < 7
@@ -192,7 +228,7 @@ export const EntryTransform = (props: EntryTransformProps, context) => {
         <Stack.Item>
           <Button
             icon={'question'}
-            onClick={() => setdesc(var_name)}
+            onClick={() => setDesc(var_name)}
             tooltip={'View details'}
           />
         </Stack.Item>
@@ -212,11 +248,12 @@ export const EntryTransform = (props: EntryTransformProps, context) => {
               value={value}
               minValue={0}
               maxValue={1}
-              onDrag={(e, value) =>
+              step={1}
+              onDrag={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: transform!.map((x, i) =>
-                    i === index ? value : x
+                    i === index ? value : x,
                   ),
                 })
               }
@@ -228,9 +265,9 @@ export const EntryTransform = (props: EntryTransformProps, context) => {
   );
 };
 
-export const EntryIcon = (props: EntryIconStateProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryIcon = (props: EntryIconStateProps) => {
+  const { act } = useBackend<ParticleUIData>();
+  const { setDesc } = useContext(ParticleContext);
   const { name, var_name, icon_state } = props;
   return (
     <LabeledList.Item label={name}>
@@ -238,7 +275,7 @@ export const EntryIcon = (props: EntryIconStateProps, context) => {
         <Stack.Item>
           <Button
             icon={'question'}
-            onClick={() => setdesc(var_name)}
+            onClick={() => setDesc(var_name)}
             tooltip={'View details'}
           />
         </Stack.Item>
@@ -252,9 +289,11 @@ export const EntryIcon = (props: EntryIconStateProps, context) => {
               <Stack.Item>
                 <NumberInput
                   animated
-                  value={icon_state[icon_name]}
                   minValue={0}
-                  onDrag={(e, value) =>
+                  maxValue={Infinity}
+                  step={1}
+                  value={icon_state[icon_name]}
+                  onDrag={(value) =>
                     act('edit', {
                       var: var_name,
                       var_mod: P_DATA_ICON_WEIGHT,
@@ -300,21 +339,21 @@ export const EntryIcon = (props: EntryIconStateProps, context) => {
   );
 };
 
-export const EntryIconState = (props: EntryIconStateProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryIconState = (props: EntryIconStateProps) => {
+  const { act } = useBackend<ParticleUIData>();
+  const { setDesc } = useContext(ParticleContext);
   const { name, var_name, icon_state } = props;
   const newValue =
     typeof icon_state === 'string'
-      ? { [icon_state]: 1, 'None': 0 }
-      : { ...icon_state, 'None': 0 };
+      ? { [icon_state]: 1, None: 0 }
+      : { ...icon_state, None: 0 };
   return (
     <LabeledList.Item label={name}>
       <Stack>
         <Stack.Item>
           <Button
             icon={'question'}
-            onClick={() => setdesc(var_name)}
+            onClick={() => setDesc(var_name)}
             tooltip={'View details'}
           />
         </Stack.Item>
@@ -341,9 +380,11 @@ export const EntryIconState = (props: EntryIconStateProps, context) => {
               <Stack.Item>
                 <NumberInput
                   animated
-                  value={icon_state[iconstate]}
                   minValue={0}
-                  onDrag={(e, value) =>
+                  maxValue={Infinity}
+                  step={1}
+                  value={icon_state[iconstate]}
+                  onDrag={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: editWeightOf(icon_state, iconstate, value),
@@ -359,8 +400,8 @@ export const EntryIconState = (props: EntryIconStateProps, context) => {
                       var: var_name,
                       new_value: Object.fromEntries(
                         Object.entries(icon_state).filter(
-                          ([key]) => key !== iconstate
-                        )
+                          ([key]) => key !== iconstate,
+                        ),
                       ),
                     })
                   }

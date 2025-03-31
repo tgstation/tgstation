@@ -1,5 +1,3 @@
-/// When sending mutiple assets, how many before we give the client a quaint little sending resources message
-#define ASSET_CACHE_TELL_CLIENT_AMOUNT 8
 
 /// Base browse_rsc asset transport
 /datum/asset_transport
@@ -59,6 +57,10 @@
 	SSassets.cache[asset_name] = ACI
 	return ACI
 
+/// Immediately removes an asset from the asset cache.
+/datum/asset_transport/proc/unregister_asset(asset_name)
+	SSassets.cache[asset_name] = null
+	SSassets.cache.Remove(null)
 
 /// Returns a url for a given asset.
 /// asset_name - Name of the asset.
@@ -82,11 +84,15 @@
 /// asset_list - A list of asset filenames to be sent to the client. Can optionally be assoicated with the asset's asset_cache_item datum.
 /// Returns TRUE if any assets were sent.
 /datum/asset_transport/proc/send_assets(client/client, list/asset_list)
+#if defined(UNIT_TESTS)
+	return
+#endif
+
 	if (!istype(client))
 		if (ismob(client))
-			var/mob/M = client
-			if (M.client)
-				client = M.client
+			var/mob/our_mob = client
+			if (our_mob.client)
+				client = our_mob.client
 			else //no stacktrace because this will mainly happen because the client went away
 				return
 		else
@@ -121,7 +127,7 @@
 
 	if (unreceived.len)
 		if (unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
-			to_chat(client, "<span class='infoplain'>Sending Resources...</span>")
+			to_chat(client, span_infoplain("Sending Resources..."))
 
 		for (var/asset_name in unreceived)
 			var/new_asset_name = asset_name
@@ -143,7 +149,7 @@
 
 
 /// Precache files without clogging up the browse() queue, used for passively sending files on connection start.
-/datum/asset_transport/proc/send_assets_slow(client/client, list/files, filerate = 6)
+/datum/asset_transport/proc/send_assets_slow(client/client, list/files, filerate = SLOW_ASSET_SEND_RATE)
 	var/startingfilerate = filerate
 	for (var/file in files)
 		if (!client)
