@@ -410,6 +410,7 @@
 	ghoul.objectives += until_it_is_done
 
 	ADD_TRAIT(spawned_mob, TRAIT_HULK, INNATE_TRAIT)
+	ADD_TRAIT(spawned_mob, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
 	ADD_TRAIT(spawned_mob, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 	spawned_mob.mind.add_antag_datum(ghoul)
 	spawned_mob.AddComponent(/datum/component/strong_pull)
