@@ -97,7 +97,7 @@
 	if(!can_read_book(user))
 		return
 	// This goes out to you .tonty, FUCK YOU!!! EAT SHIT AND DIE!!! THIS IS WHAT YOU DESERVE!!! GET GIBBED!!!
-	if(book_data.was_ever_adult == TRUE)
+	if(book_data.was_adult == TRUE)
 		if(tgui_alert(user, "Are you sure", "Are you sure", list("Yes","No"))=="No")
 			// Regret
 			user.visible_message(span_notice("[user] stares at the cover of the book titled \"[book_data.title]\" before looking away with a face of regret."))
