@@ -36,7 +36,7 @@
 		/obj/effect/spawner/random/entertainment/money = 10,
 		/obj/effect/spawner/random/trash/crushed_can = 10,
 		/obj/item/shard/plasma = 5,
-		/obj/item/reagent_containers/pill/maintenance = 5,
+		/obj/item/reagent_containers/applicator/pill/maintenance = 5,
 		/obj/item/mail/junkmail = 5,
 		/obj/effect/spawner/random/food_or_drink/snack = 5,
 		/obj/effect/spawner/random/trash/soap = 3,

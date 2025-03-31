@@ -141,6 +141,10 @@
 	speech_args[SPEECH_MESSAGE] = message
 	return COMPONENT_UPPERCASE_SPEECH
 
+/obj/item/organ/ears/feel_for_damage(self_aware)
+	// Ear damage has audible effects, so we don't really need to "feel" it when self-examining
+	return ""
+
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
 
@@ -191,7 +195,15 @@
 	// Construct image of inner ears, apply to base ears as an overlay
 	feature_key += "inner"
 	var/mutable_appearance/inner_ears = ..()
-	inner_ears.appearance_flags = RESET_COLOR
+	inner_ears.appearance_flags = RESET_COLOR|KEEP_APART
+	if(limb.cached_color_filter)
+		inner_ears.color = limb.color
+		inner_ears = filter_appearance_recursive(inner_ears, limb.cached_color_filter)
+	if(limb.owner)
+		if(limb.owner.color)
+			inner_ears.color = limb.owner.color
+		if(limb.owner.cached_color_filter)
+			inner_ears = filter_appearance_recursive(inner_ears, limb.owner.cached_color_filter)
 	feature_key = initial(feature_key)
 
 	base_ears.overlays += inner_ears

@@ -55,6 +55,7 @@
 				/obj/item/storage/box/fishing_lures = 2,
 				/obj/item/book/manual/fish_catalog = 5,
 				/obj/item/reagent_containers/cup/fish_feed = 4,
+				/obj/item/storage/box/aquarium_props = 4,
 				/obj/item/fish_analyzer = 2,
 				/obj/item/storage/bag/fishing = 2,
 				/obj/item/fishing_rod/telescopic = 1,

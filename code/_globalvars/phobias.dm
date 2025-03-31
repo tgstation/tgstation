@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/autopsy_scanner,
 		/obj/item/hemostat,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill/,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/retractor,
 		/obj/item/scalpel,

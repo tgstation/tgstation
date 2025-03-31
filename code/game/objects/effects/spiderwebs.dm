@@ -140,8 +140,8 @@
 /obj/structure/spider/stickyweb/very_sticky/update_overlays()
 	. = ..()
 	var/mutable_appearance/web_overlay = mutable_appearance(icon = 'icons/effects/web.dmi', icon_state = "sticky_overlay", layer = layer + 1)
-	web_overlay.pixel_x -= pixel_x
-	web_overlay.pixel_y -= pixel_y
+	web_overlay.pixel_w -= pixel_x
+	web_overlay.pixel_z -= pixel_y
 	. += web_overlay
 
 
@@ -275,6 +275,6 @@
 
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+	fade_into_nothing(1 MINUTES)
 
 #undef SPIDER_WEB_TINT
