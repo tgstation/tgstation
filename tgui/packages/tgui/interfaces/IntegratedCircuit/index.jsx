@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Box, Button, Input, Stack } from 'tgui-core/components';
+import { Box, Button, InfinitePlane, Input, Stack } from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -15,7 +15,6 @@ import {
   VARIABLE_LIST,
 } from './constants';
 import { DisplayComponent } from './DisplayComponent';
-import { InfinitePlane } from './InfinitePlane';
 import { ObjectComponent } from './ObjectComponent';
 import { VariableMenu } from './VariableMenu';
 
