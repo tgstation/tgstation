@@ -39,7 +39,6 @@
 		return TRUE
 	if(default_set_atom(user, chain, wanted_type))
 		return TRUE
-	stack_trace("handle_set not implemented for [wanted_type]")
 
 /datum/animate_argument/object
 	name = "Object"
@@ -60,9 +59,6 @@
 	name = "time"
 	description = "Time of this step, in 1/10s."
 	arg_types = list( "number" )
-
-/datum/animate_argument/time/handle_set(datum/animate_chain/chain, wanted_type, wanted_value)
-
 
 /datum/animate_argument/loop
 	name = "loop"
