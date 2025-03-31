@@ -48,7 +48,8 @@
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		. += islist(cube_type) ? pick_weight(cube_type) : cube_type
+		var/new_cube_type = islist(cube_type) ? pick_weight(cube_type) : cube_type
+		new new_cube_type(src)
 
 /obj/item/storage/box/monkeycubes/syndicate
 	desc = "Waffle Corp. brand monkey cubes. Just add water and a dash of subterfuge!"
