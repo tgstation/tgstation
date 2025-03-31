@@ -83,8 +83,3 @@ Name = Coder
 Include = DEBUG VAREDIT SERVER SPAWN POLL
 Exclude = AUTOADMIN
 Edit =
-
-Name = My Really Hot Girlfriend I LOVE HER <3
-Include = EVERYTHING
-Exclude =
-Edit = EVERYTHING
