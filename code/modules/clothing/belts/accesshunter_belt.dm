@@ -29,7 +29,7 @@
 
 /obj/item/access_hunter/Destroy()
 	. = ..()
-	stolen_id_cards.Cut()
+	stolen_id_cards?.Cut()
 
 /obj/item/access_hunter/proc/on_attack_hand(mob/living/source, atom/target, proximity, modifiers)
 
