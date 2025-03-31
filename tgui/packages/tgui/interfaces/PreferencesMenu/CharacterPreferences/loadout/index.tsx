@@ -14,7 +14,7 @@ import {
 } from 'tgui-core/components';
 
 import { useServerPrefs } from '../../useServerPrefs';
-import {
+import type {
   LoadoutCategory,
   LoadoutItem,
   LoadoutManagerData,

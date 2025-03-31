@@ -1,7 +1,6 @@
 import { useBackend } from 'tgui/backend';
 import {
   DmIcon,
-  Flex,
   Icon,
   ImageButton,
   NoticeBox,
@@ -10,7 +9,7 @@ import {
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
-import { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
+import type { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
 
 type Props = {
   item: LoadoutItem;
@@ -104,21 +103,65 @@ type ListProps = {
   items: LoadoutItem[];
 };
 
+type LoadoutGroup = {
+  items: LoadoutItem[];
+  title: string;
+};
+
+function sortByGroup(items: LoadoutItem[]): LoadoutGroup[] {
+  const groups: LoadoutGroup[] = [];
+
+  for (let i = 0; i < items.length; i++) {
+    const item: LoadoutItem = items[i];
+    let usedGroup: LoadoutGroup | undefined = groups.find(
+      (group) => group.title === item.group,
+    );
+    if (usedGroup === undefined) {
+      usedGroup = { items: [], title: item.group };
+      groups.push(usedGroup);
+    }
+    usedGroup.items.push(item);
+  }
+
+  return groups;
+}
+
 export function ItemListDisplay(props: ListProps) {
   const { data } = useBackend<LoadoutManagerData>();
   const { loadout_list } = data.character_preferences.misc;
+  const itemGroups = sortByGroup(props.items);
 
   return (
-    <Flex wrap>
-      {props.items.map((item) => (
-        <Flex.Item key={item.name} mr={2} mb={2}>
-          <ItemDisplay
-            item={item}
-            active={loadout_list && loadout_list[item.path] !== undefined}
-          />
-        </Flex.Item>
+    <Stack vertical>
+      {itemGroups.map((group) => (
+        <Stack.Item key={group.title}>
+          <Stack vertical>
+            {itemGroups.length > 1 && (
+              <>
+                <Stack.Item>
+                  <h3 color="grey">{group.title}</h3>
+                </Stack.Item>
+                <Stack.Divider />
+              </>
+            )}
+            <Stack.Item>
+              <Stack wrap>
+                {group.items.map((item) => (
+                  <Stack.Item key={item.name} mb={1}>
+                    <ItemDisplay
+                      item={item}
+                      active={
+                        loadout_list && loadout_list[item.path] !== undefined
+                      }
+                    />
+                  </Stack.Item>
+                ))}
+              </Stack>
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
       ))}
-    </Flex>
+    </Stack>
   );
 }
 

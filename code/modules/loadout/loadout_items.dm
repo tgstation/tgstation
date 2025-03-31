@@ -35,6 +35,8 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Displayed name of the loadout item.
 	/// Defaults to the item's name if unset.
 	var/name
+	/// Title of a group that this item will be bundled under
+	var/group = "undefined"
 	/// Whether this item has greyscale support.
 	/// Only works if the item is compatible with the GAGS system of coloring.
 	/// Set automatically to TRUE for all items that have the flag [IS_PLAYER_COLORABLE_1].
@@ -284,6 +286,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	var/list/formatted_item = list()
 	formatted_item["name"] = name
+	formatted_item["group"] = group
 	formatted_item["path"] = item_path
 	formatted_item["information"] = get_item_information()
 	formatted_item["buttons"] = get_ui_buttons()
