@@ -8,7 +8,7 @@
 	cooldown_time = 300 SECONDS
 
 	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_MIND
 
 	spell_max_level = 1
 
