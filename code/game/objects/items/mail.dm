@@ -300,7 +300,7 @@
 
 	if(check_holidays(APRIL_FOOLS))
 		var/static/mail_ghoul = FALSE
-		if(!mail_ghoul && prob(5 * amount))
+		if(!mail_ghoul && prob(3 * mail_count))
 			var/obj/effect/mob_spawn/ghost_role/human/mail_ghoul/ghoul = new(src)
 			mail_ghoul = TRUE
 			ghoul.do_poll()
