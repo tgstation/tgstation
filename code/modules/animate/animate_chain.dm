@@ -10,22 +10,8 @@
 	var/easing_flags
 	var/flags
 	var/delay
-	var/tag
+	var/a_tag
 	var/command
-
-/datum/animate_chain/proc/animate_param_ids()
-	return list(
-		"var_list",
-		"appearance",
-		"time",
-		"loop",
-		"easing",
-		"easing_flags",
-		"flags",
-		"delay",
-		"tag",
-		"command",
-	)
 
 /datum/animate_chain/proc/apply(target)
 	var/list/animate_arguments = list()
@@ -49,7 +35,7 @@
 	if(!isnull(delay))
 		animate_arguments["delay"] = delay
 	if(!isnull(tag))
-		animate_arguments["tag"] = tag
+		animate_arguments["tag"] = a_tag
 	if(!isnull(command))
 		animate_arguments["command"] = command
 
@@ -66,6 +52,6 @@
 		"easing_flags" = easing_flags,
 		"flags" = flags,
 		"delay" = delay,
-		"tag" = tag,
+		"a_tag" = a_tag,
 		"command" = command,
 	)

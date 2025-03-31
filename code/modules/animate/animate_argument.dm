@@ -44,8 +44,8 @@
 	arg_types = list( "number" )
 
 /datum/animate_argument/tag
-	name = "tag"
-	description = "Optional name for a new animation sequence."
+	name = "a_tag"
+	description = "Optional name for a new animation sequence. The true parameter is \"tag\" however is a_tag for this editor to prevent issues."
 	arg_types = list( "string" )
 
 /datum/animate_argument/command
