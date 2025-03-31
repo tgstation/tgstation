@@ -244,3 +244,5 @@
 	var/datum/action/cooldown/spell/invoked_spell
 	/// Cooldown between spells
 	COOLDOWN_DECLARE(invoke_spell_cooldown)
+	/// Safety timer
+	var/invoke_spell_reset_timer

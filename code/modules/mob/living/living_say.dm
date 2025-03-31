@@ -416,6 +416,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		say(pick(oom_phrases), forced = "spell cast error")
 		return
 
+	invoke_spell_reset_timer = addtimer(CALLBACK(src, PROC_REF(clear_uncast_spell)), 10 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 	COOLDOWN_START(src, invoke_spell_cooldown, INFINITY)
 	invoked_spell = new spell_type(src)
 	invoked_spell.invocation_type = INVOCATION_NONE // We already did it
@@ -440,8 +441,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/proc/on_spell_invoked(datum/action/cooldown/spell/invoked)
 	SIGNAL_HANDLER
 	COOLDOWN_START(src, invoke_spell_cooldown, invoked.cooldown_time)
-	addtimer(CALLBACK(src, PROC_REF(spells_recharged)), invoked.cooldown_time, TIMER_DELETE_ME)
-	UnregisterSignal(src, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED))
+	addtimer(CALLBACK(src, PROC_REF(spells_recharged)), min(invoked.cooldown_time, 5 MINUTES), TIMER_DELETE_ME)
 	remove_invoked_spell()
 
 /// I don't want to play with you any more
@@ -449,9 +449,19 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	SIGNAL_HANDLER
 	if(isnull(invoked_spell))
 		return
+	deltimer(invoke_spell_reset_timer)
+	UnregisterSignal(src, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED))
 	UnregisterSignal(invoked_spell, list(COMSIG_SPELL_AFTER_CAST, COMSIG_QDELETING))
 	invoked_spell.Remove(src)
 	QDEL_NULL(invoked_spell)
+
+/// If you take too long without using your spell or it gets stuck, get rid of it
+/mob/living/proc/clear_uncast_spell()
+	if (isnull(invoked_spell))
+		return
+	COOLDOWN_RESET(src, invoke_spell_cooldown)
+	balloon_alert(src, "uncast spell dissipates!")
+	remove_invoked_spell()
 
 /// Notify that we can cast spells
 /mob/living/proc/spells_recharged()
