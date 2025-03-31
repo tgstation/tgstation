@@ -1,6 +1,11 @@
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
+
+// This should always be the VERY FIRST THING. No exceptions. Read the file for more info, but basically, this needs to be here so that we can ensure specific code is always the very first thing to execute.
+#include "code\genesis_call.dme"
+// Again, DO NOT MOVE IT OR ALLOW ANY OTHER #include TO PRECEDE THE ONE ABOVE.
+
 // BEGIN_INTERNALS
 // END_INTERNALS
 
@@ -368,6 +373,7 @@
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
 #include "code\__DEFINES\dcs\signals\signals_swab.dm"
 #include "code\__DEFINES\dcs\signals\signals_techweb.dm"
+#include "code\__DEFINES\dcs\signals\signals_tgui.dm"
 #include "code\__DEFINES\dcs\signals\signals_tools.dm"
 #include "code\__DEFINES\dcs\signals\signals_traitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_transform.dm"
@@ -1350,6 +1356,10 @@
 #include "code\datums\components\fantasy\affix.dm"
 #include "code\datums\components\fantasy\prefixes.dm"
 #include "code\datums\components\fantasy\suffixes.dm"
+#include "code\datums\components\fearful\effects.dm"
+#include "code\datums\components\fearful\fearful.dm"
+#include "code\datums\components\fearful\sources.dm"
+#include "code\datums\components\fearful\terror_handler.dm"
 #include "code\datums\components\food\decomposition.dm"
 #include "code\datums\components\food\edible.dm"
 #include "code\datums\components\food\germ_sensitive.dm"
@@ -3045,6 +3055,7 @@
 #include "code\modules\admin\verbs\mapping.dm"
 #include "code\modules\admin\verbs\maprotation.dm"
 #include "code\modules\admin\verbs\panicbunker.dm"
+#include "code\modules\admin\verbs\path_debugger.dm"
 #include "code\modules\admin\verbs\plane_debugger.dm"
 #include "code\modules\admin\verbs\player_ticket_history.dm"
 #include "code\modules\admin\verbs\playsound.dm"
@@ -4255,8 +4266,13 @@
 #include "code\modules\fishing\fish\types\syndicate.dm"
 #include "code\modules\fishing\fish\types\tiziran.dm"
 #include "code\modules\fishing\sources\_fish_source.dm"
-#include "code\modules\fishing\sources\source_types.dm"
-#include "code\modules\flufftext\Dreaming.dm"
+#include "code\modules\fishing\sources\subtypes\fishing_portal_machine.dm"
+#include "code\modules\fishing\sources\subtypes\mining_ruins.dm"
+#include "code\modules\fishing\sources\subtypes\rifts.dm"
+#include "code\modules\fishing\sources\subtypes\structures.dm"
+#include "code\modules\fishing\sources\subtypes\surgery.dm"
+#include "code\modules\fishing\sources\subtypes\turfs.dm"
+#include "code\modules\flufftext\dreaming.dm"
 #include "code\modules\food_and_drinks\pizzabox.dm"
 #include "code\modules\food_and_drinks\plate.dm"
 #include "code\modules\food_and_drinks\machinery\coffeemaker.dm"
@@ -4807,6 +4823,11 @@
 #include "code\modules\mining\laborcamp\laborstacker.dm"
 #include "code\modules\mining\lavaland\ash_flora.dm"
 #include "code\modules\mining\lavaland\necropolis_chests.dm"
+#include "code\modules\mining\lavaland\cain_and_abel\_cain_and_abel.dm"
+#include "code\modules\mining\lavaland\cain_and_abel\dagger_abilities.dm"
+#include "code\modules\mining\lavaland\cain_and_abel\dagger_effects.dm"
+#include "code\modules\mining\lavaland\cain_and_abel\dagger_status_effects.dm"
+#include "code\modules\mining\lavaland\cain_and_abel\dagger_throw.dm"
 #include "code\modules\mining\lavaland\mining_loot\berserker.dm"
 #include "code\modules\mining\lavaland\mining_loot\clothing.dm"
 #include "code\modules\mining\lavaland\mining_loot\consumables.dm"
@@ -6560,7 +6581,6 @@
 #include "code\modules\wiremod\shell\wallmount.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
-#include "code\ze_genesis_call\genesis_call.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"

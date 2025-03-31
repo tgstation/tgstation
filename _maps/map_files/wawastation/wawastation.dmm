@@ -1698,6 +1698,10 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
+/obj/effect/turf_decal/arrows/red{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "aBU" = (
@@ -4004,6 +4008,9 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /obj/structure/disposalpipe/segment{
 	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -6478,6 +6485,7 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/medical/treatment_center)
 "cnm" = (
@@ -12452,7 +12460,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,
-/obj/effect/landmark/start/hangover,
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -17202,13 +17209,6 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"fYX" = (
-/obj/machinery/power/solar{
-	id = "foreport";
-	name = "Fore-Port Solar Array"
-	},
-/turf/open/floor/iron/solarpanel/airless,
-/area/station/solars/port/fore)
 "fYZ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -21536,6 +21536,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "hvw" = (
@@ -24290,13 +24291,14 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot_red,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "iwu" = (
@@ -26988,6 +26990,10 @@
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1
 	},
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "jwI" = (
@@ -27505,7 +27511,11 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/arrows/red{
+	dir = 1
+	},
+/obj/machinery/ticket_machine/directional/west,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "jEc" = (
@@ -34984,6 +34994,10 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/west,
+/obj/effect/turf_decal/arrows/red{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "mhO" = (
@@ -47225,10 +47239,6 @@
 /obj/item/storage/medkit{
 	pixel_x = -10
 	},
-/obj/item/toy/figure/ian{
-	pixel_x = 5;
-	pixel_y = 12
-	},
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
 "qwu" = (
@@ -50577,6 +50587,7 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/medical/treatment_center)
 "rCL" = (
@@ -54438,6 +54449,7 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "sPV" = (
@@ -60591,6 +60603,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/item/storage/box/stickers,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "uWj" = (
@@ -66587,6 +66600,16 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
+"xcr" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
 "xcs" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/chair_comfy{
@@ -66767,6 +66790,7 @@
 	dir = 4
 	},
 /obj/machinery/photobooth,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "xgn" = (
@@ -68304,8 +68328,9 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/south,
-/obj/item/storage/box/stickers{
-	pixel_y = 16
+/obj/item/toy/figure/ian{
+	pixel_y = 15;
+	pixel_x = 7
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
@@ -78545,7 +78570,7 @@ cLf
 cLf
 rGO
 rGO
-nMk
+sKL
 rGO
 nMk
 rGO
@@ -78802,7 +78827,7 @@ cLf
 rGO
 opZ
 opZ
-fYX
+opZ
 urS
 opZ
 opZ
@@ -79316,7 +79341,7 @@ cLf
 opZ
 opZ
 opZ
-fYX
+opZ
 rGO
 opZ
 opZ
@@ -79830,7 +79855,7 @@ dUc
 opZ
 opZ
 opZ
-fYX
+opZ
 rGO
 opZ
 opZ
@@ -97055,7 +97080,7 @@ dbJ
 mMH
 sPS
 jww
-btw
+xcr
 btw
 btw
 iow
