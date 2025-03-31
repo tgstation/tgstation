@@ -6362,7 +6362,6 @@
 #include "code\modules\vehicles\cars\car.dm"
 #include "code\modules\vehicles\cars\car2.dm"
 #include "code\modules\vehicles\cars\clowncar.dm"
-#include "code\modules\vehicles\cars\gasoline_decal.dm"
 #include "code\modules\vehicles\cars\speedwagon.dm"
 #include "code\modules\vehicles\cars\vim.dm"
 #include "code\modules\vehicles\mecha\_mecha.dm"

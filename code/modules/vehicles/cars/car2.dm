@@ -57,24 +57,14 @@ SUBSYSTEM_DEF(carpool)
 	icon_state = "gasoline"
 	icon = 'code/modules/vehicles/cars/items.dmi'
 
-/obj/item/gas_can/rand
-
-/obj/item/gas_can/rand/Initialize()
-	. = ..()
-	stored_gasoline = rand(0, 500)
-
 /obj/item/gas_can/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(istype(get_turf(A), /turf/open/floor) && !istype(A, /obj/vampire_car) && !istype(A, /mob/living/carbon/human))
-		var/obj/effect/decal/cleanable/gasoline/G = locate() in get_turf(A)
-		if(G)
-			return
 		if(!proximity)
 			return
 		if(stored_gasoline < 50)
 			return
 		stored_gasoline = max(0, stored_gasoline-50)
-		new /obj/effect/decal/cleanable/gasoline(get_turf(A))
 		playsound(get_turf(src), 'code/modules/vehicles/cars/gas_splat.ogg', 50, TRUE)
 	if(istype(A, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = A
@@ -521,7 +511,7 @@ SUBSYSTEM_DEF(carpool)
 /obj/vampire_car/retro/third
 	icon_state = "3"
 
-/obj/vampire_car/retro/rand/Initialize()
+/obj/vampire_car/retro/rand/New()
 	icon_state = "[pick(1, 3, 5)]"
 	..()
 
@@ -529,7 +519,7 @@ SUBSYSTEM_DEF(carpool)
 	icon_state = "4"
 	dir = WEST
 
-/obj/vampire_car/rand/Initialize()
+/obj/vampire_car/rand/New()
 	icon_state = "[pick(2, 4, 6)]"
 	..()
 
@@ -827,3 +817,7 @@ SUBSYSTEM_DEF(carpool)
 	var/matrix/M = matrix()
 	M.Turn(movement_vector - minus_angle)
 	transform = M
+
+
+#undef CAR_LAYER
+#undef O_LIGHTING_VISUAL_LAYER
