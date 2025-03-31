@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		LAZYADD(gas_filters, inserted_filter)
 	has_filter = TRUE
 
-/obj/item/clothing/mask/gas/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/mask/gas/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	. = ..()
 	if(!isinhands && cig)
 		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')

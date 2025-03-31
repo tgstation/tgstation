@@ -210,7 +210,7 @@
 	return ..()
 
 /obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!iswallturf(interacting_with))
+	if(!iswallturf(interacting_with) && !istype(interacting_with, /obj/structure/tram))
 		return NONE
 	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)

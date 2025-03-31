@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SET_PLANE(I, GAME_PLANE, src)
 	I.layer = OBJ_LAYER
 	I.appearance = AM.appearance
-	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM|KEEP_APART
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128

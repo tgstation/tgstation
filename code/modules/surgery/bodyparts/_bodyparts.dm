@@ -1017,8 +1017,8 @@
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
 	for(var/image/img as anything in standing)
-		img.pixel_x += px_x
-		img.pixel_y += px_y
+		img.pixel_w += px_x
+		img.pixel_z += px_y
 	add_overlay(standing)
 
 /obj/item/bodypart/update_atom_colour()
@@ -1052,16 +1052,13 @@
 
 	. = list()
 
-	var/image_dir = NONE
-	if(dropped)
-		image_dir = SOUTH
-		if(dmg_overlay_type)
-			if(brutestate)
-				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
-			if(burnstate)
-				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
+	if(dropped && dmg_overlay_type)
+		if(brutestate)
+			. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+		if(burnstate)
+			. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER)
 
-	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+	var/image/limb = image(layer = -BODYPARTS_LAYER)
 	var/image/aux
 
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
@@ -1087,7 +1084,7 @@
 	. += limb
 
 	if(aux_zone) //Hand shit
-		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
+		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer)
 		. += aux
 
 	update_draw_color()
@@ -1110,21 +1107,17 @@
 		var/atom/location = loc || owner || src
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
-			limb_em_block.dir = image_dir
 			. += limb_em_block
 
 			if(aux_zone)
 				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
-				aux_em_block.dir = image_dir
 				. += aux_em_block
 		if(is_emissive)
 			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
-			limb_em.dir = image_dir
 			. += limb_em
 
 			if(aux_zone)
 				var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
-				aux_em.dir = image_dir
 				. += aux_em
 	//EMISSIVE CODE END
 
@@ -1136,7 +1129,7 @@
 			//remove the old, unmasked image
 			. -= limb_image
 			//add two masked images based on the old one
-			. += leg_source.generate_masked_leg(limb_image, image_dir)
+			. += leg_source.generate_masked_leg(limb_image)
 
 	// And finally put bodypart_overlays on if not husked
 	if(!is_husked)

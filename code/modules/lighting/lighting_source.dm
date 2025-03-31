@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 
 	update()
 	if(GLOB.light_debug_enabled)
-		source_atom.debug()
+		source_atom.debug_lights()
 
 /datum/light_source/Destroy(force)
 	remove_lum()

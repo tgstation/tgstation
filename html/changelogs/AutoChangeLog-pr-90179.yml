@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Being at low sanity will actually give your hallucinations as intended."

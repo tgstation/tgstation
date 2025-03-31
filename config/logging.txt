@@ -97,7 +97,7 @@ LOG_VOTE
 LOG_WHISPER
 
 ## log all world.Topic() calls
-# LOG_WORLD_TOPIC
+LOG_WORLD_TOPIC
 
 ## log manual target zone switching
 LOG_ZONE_SWITCH

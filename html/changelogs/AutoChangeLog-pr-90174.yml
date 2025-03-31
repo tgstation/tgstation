@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "The action animation indicating someone is performing an action with a progress bar now inherits how visible they are. You won't easily see a pair of gears floating in space if a Voidwalker starts diving under the station."

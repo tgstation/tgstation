@@ -6,20 +6,17 @@
 	illustration = "syringe"
 
 /obj/item/storage/box/syringes/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/syringe
+		new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syringes/variety
 	name = "syringe variety box"
 
 /obj/item/storage/box/syringes/variety/PopulateContents()
-	return list(
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/syringe/lethal,
-		/obj/item/reagent_containers/syringe/piercing,
-		/obj/item/reagent_containers/syringe/bluespace,
-	)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/syringe/lethal(src)
+	new /obj/item/reagent_containers/syringe/piercing(src)
+	new /obj/item/reagent_containers/syringe/bluespace(src)
 
 /obj/item/storage/box/medipens
 	name = "box of medipens"
@@ -27,52 +24,45 @@
 	illustration = "epipen"
 
 /obj/item/storage/box/medipens/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/hypospray/medipen
+		new /obj/item/reagent_containers/hypospray/medipen(src)
 
 /obj/item/storage/box/medipens/utility
 	name = "stimpack value kit"
 	desc = "A box with several stimpack medipens for the economical miner."
 	illustration = "epipen"
 
-/obj/item/storage/box/medipens/utility/PopulateContents(datum/storage_config/config)
-	config.compute_max_item_count = TRUE
-
-	. = ..() // includes regular medipens.
+/obj/item/storage/box/medipens/utility/PopulateContents()
+	..() // includes regular medipens.
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/hypospray/medipen/stimpack
+		new /obj/item/reagent_containers/hypospray/medipen/stimpack(src)
 
 /obj/item/storage/box/beakers
 	name = "box of beakers"
 	illustration = "beaker"
 
 /obj/item/storage/box/beakers/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/cup/beaker
+		new /obj/item/reagent_containers/cup/beaker( src )
 
 /obj/item/storage/box/beakers/bluespace
 	name = "box of bluespace beakers"
 	illustration = "beaker"
 
 /obj/item/storage/box/beakers/bluespace/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/cup/beaker/bluespace
+		new /obj/item/reagent_containers/cup/beaker/bluespace(src)
 
 /obj/item/storage/box/beakers/variety
 	name = "beaker variety box"
 
 /obj/item/storage/box/beakers/variety/PopulateContents()
-	return list(
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/beaker/bluespace,
-		/obj/item/reagent_containers/cup/beaker/large,
-		/obj/item/reagent_containers/cup/beaker/meta,
-		/obj/item/reagent_containers/cup/beaker/noreact,
-		/obj/item/reagent_containers/cup/beaker/plastic,
-	)
+	new /obj/item/reagent_containers/cup/beaker(src)
+	new /obj/item/reagent_containers/cup/beaker/bluespace(src)
+	new /obj/item/reagent_containers/cup/beaker/large(src)
+	new /obj/item/reagent_containers/cup/beaker/meta(src)
+	new /obj/item/reagent_containers/cup/beaker/noreact(src)
+	new /obj/item/reagent_containers/cup/beaker/plastic(src)
 
 /obj/item/storage/box/medigels
 	name = "box of medical gels"
@@ -80,9 +70,8 @@
 	illustration = "medgel"
 
 /obj/item/storage/box/medigels/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/medigel
+		new /obj/item/reagent_containers/medigel( src )
 
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"
@@ -90,12 +79,11 @@
 	illustration = "dna"
 
 /obj/item/storage/box/injectors/PopulateContents()
-	var/static/items_inside = flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/dnainjector/h2m = 3,
 		/obj/item/dnainjector/m2h = 3,
-	))
-
-	return items_inside
+	)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/bodybags
 	name = "body bags"
@@ -103,9 +91,9 @@
 	illustration = "bodybags"
 
 /obj/item/storage/box/bodybags/PopulateContents()
-	. = list()
+	..()
 	for(var/i in 1 to 7)
-		. += /obj/item/bodybag
+		new /obj/item/bodybag(src)
 
 /obj/item/storage/box/pillbottles
 	name = "box of pill bottles"
@@ -113,19 +101,16 @@
 	illustration = "pillbox"
 
 /obj/item/storage/box/pillbottles/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/storage/pill_bottle
+		new /obj/item/storage/pill_bottle(src)
 
-/obj/item/storage/box/plumbing/PopulateContents(datum/storage_config/config)
-	config.compute_max_item_weight = TRUE
-
-	return list(
-		/obj/item/stock_parts/water_recycler,
-		/obj/item/stock_parts/water_recycler,
-		/obj/item/stack/ducts/fifty,
-		/obj/item/stack/sheet/iron/ten,
-	)
+/obj/item/storage/box/plumbing/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/stock_parts/water_recycler = 2,
+		/obj/item/stack/ducts/fifty = 1,
+		/obj/item/stack/sheet/iron/ten = 1,
+		)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/evilmeds
 	name = "box of premium medicine"
@@ -135,16 +120,15 @@
 
 /obj/item/storage/box/evilmeds/PopulateContents()
 	var/static/list/items_inside = list(
-		/obj/item/reagent_containers/cup/beaker/meta/omnizine,
-		/obj/item/reagent_containers/cup/beaker/meta/sal_acid,
-		/obj/item/reagent_containers/cup/beaker/meta/oxandrolone,
-		/obj/item/reagent_containers/cup/beaker/meta/pen_acid,
-		/obj/item/reagent_containers/cup/beaker/meta/atropine,
-		/obj/item/reagent_containers/cup/beaker/meta/salbutamol,
-		/obj/item/reagent_containers/cup/beaker/meta/rezadone,
+		/obj/item/reagent_containers/cup/beaker/meta/omnizine = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/sal_acid = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/oxandrolone = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/pen_acid = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/atropine = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/salbutamol = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/rezadone = 1,
 	)
-
-	return items_inside
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/bandages
 	name = "box of bandages"
@@ -159,12 +143,19 @@
 	illustration = null
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 1.75
-	storage_type = /datum/storage/box/bandages
+
+/obj/item/storage/box/bandages/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 6
+	atom_storage.set_holdable(list(
+		/obj/item/stack/medical/bandage,
+		/obj/item/reagent_containers/applicator/pill,
+		/obj/item/reagent_containers/applicator/patch,
+	))
 
 /obj/item/storage/box/bandages/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/stack/medical/bandage
+		new /obj/item/stack/medical/bandage(src)
 
 /obj/item/storage/box/bandages/update_icon_state()
 	. = ..()

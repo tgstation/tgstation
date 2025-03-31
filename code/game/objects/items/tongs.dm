@@ -97,6 +97,6 @@
 	held_food.layer = layer
 	held_food.plane = plane
 	held_food.transform = held_food.transform.Scale(0.7, 0.7)
-	held_food.pixel_x = 6
-	held_food.pixel_y = 6
+	held_food.pixel_w = 6
+	held_food.pixel_z = 6
 	. += held_food

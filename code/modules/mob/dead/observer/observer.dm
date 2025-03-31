@@ -236,7 +236,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				if(hair_color)
 					hair_overlay.color = hair_color
 				hair_overlay.alpha = 200
-				hair_overlay.pixel_y = S.y_offset
+				hair_overlay.pixel_z = S.y_offset
 				add_overlay(hair_overlay)
 
 /*

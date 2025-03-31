@@ -379,11 +379,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		found_anything = FALSE
 		for(var/datum/data/vending_product/record as anything in shuffle(product_records))
 			//first dump any of the items that have been returned, in case they contain the nuke disk or something
-			for(var/obj/returned_obj_to_dump in record.returned_products)
-				LAZYREMOVE(record.returned_products, returned_obj_to_dump)
-				returned_obj_to_dump.forceMove(get_turf(src))
+			for(var/i in 1 to LAZYLEN(record.returned_products))
+				var/obj/item/returned_obj_to_dump = dispense(record, get_turf(src), dispense_returned = TRUE)
 				step(returned_obj_to_dump, pick(GLOB.alldirs))
-				record.amount--
 
 			if(record.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
@@ -788,13 +786,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 			if(record.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
-			if(record.amount > LAZYLEN(record.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-				dispense(record, get_turf(src), silent = TRUE)
-			else
-				var/obj/returned_obj_to_dump = LAZYACCESS(record.returned_products, LAZYLEN(record.returned_products)) //first in, last out
-				LAZYREMOVE(record.returned_products, returned_obj_to_dump)
-				returned_obj_to_dump.forceMove(get_turf(src))
-				record.amount--
+			// Always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
+			var/only_returned_left = (record.amount <= LAZYLEN(record.returned_products))
+			dispense(record, get_turf(src), silent = TRUE, dispense_returned = only_returned_left)
 			break
 	deploy_credits()
 
@@ -1074,9 +1068,14 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.set_embed(/datum/embedding/glass_candy)
+				var/datum/embedding/embed = shard.get_embed()
+				embed.embed_chance = 100
+				embed.ignore_throwspeed_threshold = TRUE
+				embed.impact_pain_mult = 1
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.set_embed(initial(shard.embed_type))
+				embed.embed_chance = initial(embed.embed_chance)
+				embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+				embed.impact_pain_mult = initial(embed.impact_pain_mult)
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1452,14 +1451,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
-	var/obj/item/vended_item
-	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
-		vended_item = dispense(item_record, get_turf(src))
-	else
-		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
-		LAZYREMOVE(item_record.returned_products, vended_item)
-		vended_item.forceMove(get_turf(src))
+
+	// Always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
+	var/returned_available = LAZYLEN(item_record.returned_products)
+	var/obj/item/vended_item = dispense(item_record, get_turf(src), dispense_returned = returned_available)
+
 	if(greyscale_colors)
 		vended_item.set_greyscale(colors=greyscale_colors)
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
@@ -1470,19 +1466,27 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	vend_ready = TRUE
 
 ///Common proc that dispenses an item. Called when the item is vended, or gotten some other way.
-/obj/machinery/vending/proc/dispense(datum/data/vending_product/item_record, atom/spawn_location, silent = FALSE)
+/obj/machinery/vending/proc/dispense(datum/data/vending_product/item_record, atom/spawn_location, silent = FALSE, dispense_returned = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!silent)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-	var/obj/item/vended_item = new item_record.product_path (spawn_location)
-	if(vended_item.type in contraband)
-		ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
-	on_dispense(vended_item)
+
+	var/obj/item/vended_item
+	if(dispense_returned)
+		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
+		LAZYREMOVE(item_record.returned_products, vended_item)
+		vended_item.forceMove(spawn_location)
+	else
+		vended_item = new item_record.product_path(spawn_location)
+		if(vended_item.type in contraband)
+			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
+
+	on_dispense(vended_item, dispense_returned)
 	item_record.amount--
 	return vended_item
 
 ///A proc meant to perform custom behavior on newly dispensed items.
-/obj/machinery/vending/proc/on_dispense(obj/item/vended_item)
+/obj/machinery/vending/proc/on_dispense(obj/item/vended_item, dispense_returned = FALSE)
 	return
 
 /**
@@ -1573,32 +1577,28 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * This item is then created and tossed out in front of us with a visible message
  */
 /obj/machinery/vending/proc/throw_item()
-	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
 		return FALSE
 
+	var/obj/thrown_item
 	for(var/datum/data/vending_product/record in shuffle(product_records))
 		if(record.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = record.product_path
 		if(!dump_path)
 			continue
-		if(record.amount > LAZYLEN(record.returned_products)) //always throw new stuff that costs before free returned stuff, because of the hacking effort and time between throws involved
-			throw_item = new dump_path(loc)
-		else
-			throw_item = LAZYACCESS(record.returned_products, LAZYLEN(record.returned_products)) //first in, last out
-			throw_item.forceMove(loc)
-			LAZYREMOVE(record.returned_products, throw_item)
-		record.amount--
+		// Always throw new stuff that costs before free returned stuff, because of the hacking effort and time between throws involved
+		var/only_returned_left = (record.amount <= LAZYLEN(record.returned_products))
+		thrown_item = dispense(record, get_turf(src), silent = TRUE, dispense_returned = only_returned_left)
 		break
-	if(!throw_item)
+	if(isnull(thrown_item))
 		return FALSE
 
-	pre_throw(throw_item)
+	pre_throw(thrown_item)
 
-	throw_item.throw_at(target, 16, 3)
-	visible_message(span_danger("[src] launches [throw_item] at [target]!"))
+	thrown_item.throw_at(target, 16, 3)
+	visible_message(span_danger("[src] launches [thrown_item] at [target]!"))
 	return TRUE
 
 /**

@@ -427,7 +427,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	resistance_flags = FLAMMABLE //burn your enemies' collections, for only you can Collect Them All!
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	storage_type = /datum/storage/card_binder
+
+/obj/item/storage/card_binder/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(/obj/item/tcgcard)
+	atom_storage.max_total_storage = 120
+	atom_storage.max_slots = 60
 
 ///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guaranteed table.
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)

@@ -30,6 +30,7 @@
 	return TRUE
 
 /obj/item/reagent_containers/applicator/patch/on_consumption(mob/living/carbon/consumer, mob/giver, list/modifiers)
+	consumer.log_message("Had \a [src] patch applied by [giver], containing the following reagents: [english_list(reagents.reagent_list)].", LOG_GAME)
 	var/clicked_x = LAZYACCESS(modifiers, ICON_X)
 	var/clicked_y = LAZYACCESS(modifiers, ICON_Y)
 	if (isnull(clicked_x))
