@@ -11,7 +11,7 @@
 	/// What month does the holiday end on?
 	var/end_month = 0
 	/// Set on New by ShouldCelebrate()
-	var/should_be_celebrated = TRUE
+	var/should_be_celebrated = FALSE
 	/// Held variable to better calculate when certain holidays may fall on, like easter.
 	var/current_year = 0
 	/// How many years are you offsetting your calculations for begin_day and end_day on. Used for holidays like easter.
