@@ -1,5 +1,6 @@
 #define SUBTLE_DEFAULT_DISTANCE 1
 #define SUBTLE_SAME_TILE_DISTANCE 0
+#define SUBTLE_TELEKINESIS_DISTANCE 7
 
 #define SUBTLE_ONE_TILE_TEXT "1-Tile Range"
 #define SUBTLE_SAME_TILE_TEXT "Same Tile"
@@ -18,6 +19,10 @@
 	var/subtle_emote = params
 	var/target
 	var/subtle_range = SUBTLE_DEFAULT_DISTANCE
+
+	var/datum/dna/dna = user.has_dna()
+	if(dna && dna?.check_mutation(/datum/mutation/human/telekinesis))
+		subtle_range = SUBTLE_TELEKINESIS_DISTANCE
 
 	if(SSdbcore.IsConnected() && is_banned_from(user, "emote"))
 		to_chat(user, span_warning("You cannot send subtle emotes (banned)."))
@@ -111,6 +116,7 @@
 
 #undef SUBTLE_DEFAULT_DISTANCE
 #undef SUBTLE_SAME_TILE_DISTANCE
+#undef SUBTLE_TELEKINESIS_DISTANCE
 
 #undef SUBTLE_ONE_TILE_TEXT
 #undef SUBTLE_SAME_TILE_TEXT

@@ -118,7 +118,7 @@
 	difficulty = 16
 	instability = POSITIVE_INSTABILITY_MINOR
 	conflicts = list(/datum/mutation/human/gigantism, /datum/mutation/human/acromegaly)
-	locked = TRUE // Default intert species for now, so locked from regular pool.
+//	locked = TRUE // Default intert species for now, so locked from regular pool. // doppler edit bc fuck it we ball?
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
