@@ -3,13 +3,13 @@
 	var/description
 	var/list/arg_types
 
-/datum/animate_argument/proc/default_set_string(datum/animate_chain/chain, wanted_type, wanted_value)
+/datum/animate_argument/proc/default_set_string(user, datum/animate_chain/chain, wanted_type, wanted_value)
 	if(wanted_type != "string")
 		return FALSE
 	chain.vars[name] = "[wanted_value]"
 	return TRUE
 
-/datum/animate_argument/proc/default_set_number(datum/animate_chain/chain, wanted_type, wanted_value)
+/datum/animate_argument/proc/default_set_number(user, datum/animate_chain/chain, wanted_type, wanted_value)
 	if(wanted_type != "number")
 		return FALSE
 	if(!isnum(wanted_value))
@@ -21,10 +21,23 @@
 	chain.vars[name] = wanted_value
 	return TRUE
 
-/datum/animate_argument/proc/handle_set(datum/animate_chain/chain, wanted_type, wanted_value)
-	if(default_set_string(chain, wanted_type, wanted_value))
+/datum/animate_argument/proc/default_set_atom(user, datum/animate_chain/chain, wanted_type)
+	tgui_alert(user, "Mark the /atom you want to use as the value.", "mark /atom")
+
+	var/client/user_client = CLIENT_FROM_VAR(user)
+	var/target = user_client?.holder?.marked_datum
+	if(!isatom(target))
+		to_chat(user, span_warning("Failed to find marked /atom."))
 		return TRUE
-	if(default_set_number(chain, wanted_type, wanted_value))
+	chain.vars[name] = ref(target)
+	return TRUE
+
+/datum/animate_argument/proc/handle_set(datum/animate_chain/chain, wanted_type, wanted_value)
+	if(default_set_string(user, chain, wanted_type, wanted_value))
+		return TRUE
+	if(default_set_number(user, chain, wanted_type, wanted_value))
+		return TRUE
+	if(default_set_atom(user, chain, wanted_type))
 		return TRUE
 	stack_trace("handle_set not implemented for [wanted_type]")
 

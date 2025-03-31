@@ -125,19 +125,6 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			animate(target, flags = ANIMATION_END_NOW)
 			return TRUE
 
-		if("target")
-			var/target_type = params["target_type"]
-			switch(params["target_type"])
-				if("/client")
-					cached_targets[ref(user)] = "ckey_[params["target_ckey"]]"
-					return TRUE
-				if("/atom")
-					cached_targets[ref(user)] = ref(user.client?.holder?.marked_datum)
-					return TRUE
-
-			stack_trace("unhandled target_type: [target_type]")
-			return TRUE
-
 		if("insert_chain")
 			var/after = params["insert_after"]
 			if(!isnum(after))
@@ -203,10 +190,6 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 
 			var/param_name = params["set_param_name"]
 			if(!istext(param_name) || !(param_name in arguments))
-				return
-
-			if(param_name == "Object")
-				to_chat(user, span_notice("Object is handled internally via your target. Support for /image will not be implemented."))
 				return
 
 			var/datum/animate_argument/argument_definition = arguments[param_name]
