@@ -78,8 +78,8 @@
 //National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
 /datum/holiday/nth_week/moth/shouldCelebrate(dd, mm, yyyy, ddd)
 	if(first_day_of_month(yyyy, mm) >= 5) //Friday or later start of the month means week 5 is a full week.
-		begin_week += 1
-		end_week += 1
+		begin_week = 4
+		end_week = 5
 	return ..(dd, mm, yyyy, ddd)
 
 /datum/holiday/nth_week/moth/getStationPrefix()

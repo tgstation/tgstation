@@ -45,6 +45,7 @@
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
+	SHOULD_CALL_PARENT(TRUE)
 	if(mail_holiday)
 		SSeconomy.mail_blocked = TRUE
 	GLOB.holidays[name] = src
