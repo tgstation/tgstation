@@ -161,11 +161,7 @@
 /datum/storage/proc/on_deconstruct()
 	SIGNAL_HANDLER
 
-	var/atom/drop_location = real_location.drop_location()
-	for(var/obj/thing in real_location)
-		thing.forceMove(drop_location)
-		thing.pixel_x = thing.base_pixel_x + rand(-8, 8)
-		thing.pixel_y = thing.base_pixel_y + rand(-8, 8)
+	remove_all()
 
 /// Automatically ran on all object insertions: flag marking and view refreshing.
 /datum/storage/proc/handle_enter(datum/source, obj/item/arrived)
@@ -576,11 +572,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	else
 		thing.moveToNullspace()
 
-	if(animated)
-		animate_parent()
+	if(!silent)
+		if(animated)
+			animate_parent()
 
-	refresh_views()
-	parent.update_appearance()
+		refresh_views()
+		parent.update_appearance()
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_REMOVED_ITEM, thing, remove_to_loc, silent)
 	SEND_SIGNAL(src, COMSIG_STORAGE_REMOVED_ITEM, thing, remove_to_loc, silent)
