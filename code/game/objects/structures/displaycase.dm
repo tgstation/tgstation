@@ -317,6 +317,11 @@
 	start_showpiece_type = /obj/item/gun/energy/laser/captain
 	req_access = list(ACCESS_CENT_SPECOPS) //this was intentional, presumably to make it slightly harder for caps to grab their gun roundstart
 
+/obj/structure/displaycase/captain/Initialize(mapload)
+	if(check_holidays(APRIL_FOOLS))
+		start_showpiece_type = /obj/item/access_hunter/
+	. = ..()
+
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
