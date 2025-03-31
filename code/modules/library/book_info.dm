@@ -13,12 +13,15 @@
 	var/content
 	///The genre of the book
 	var/genre
+	///Was this book ever labeled 'Adult' in genre
+	var/was_adult
 
 /datum/book_info/New(_title, _author, _content, _genre)
 	title = _title
 	author = _author
 	content = _content
 	genre = _genre
+	was_adult = FALSE
 
 /datum/book_info/proc/set_title(_title, trusted = FALSE)  //Trusted should only be used for books read from the db, or in cases that we can be sure the info has already been sanitized
 	if(trusted)
@@ -39,6 +42,9 @@
 	return html_decode(author) || "N/A"
 
 /datum/book_info/proc/set_genre(_genre, trusted = FALSE)
+	// fuck you, you are not changing the genre to bypass the gib. i will gib you. fuck you.
+	if(_genre == "Adult")
+		was_adult = TRUE
 	if(trusted)
 		genre = _genre
 		return
@@ -46,6 +52,9 @@
 
 /datum/book_info/proc/get_genre(default="N/A")
 	return html_decode(genre) || "N/A"
+
+/datumn/book_info/proc/was_ever_adult()
+	return was_adult
 
 /datum/book_info/proc/set_content(_content, trusted = FALSE)
 	if(trusted)
