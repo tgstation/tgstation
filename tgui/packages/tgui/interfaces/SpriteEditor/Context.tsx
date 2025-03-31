@@ -1,19 +1,27 @@
-import { useCallback, useEffect, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { Box, Button, Popper, Stack } from 'tgui-core/components';
 import { capitalize } from 'tgui-core/string';
 
+import { useBackend } from '../../backend';
 import {
   AdvancedCanvas,
   AdvancedCanvasPropsBase,
 } from './Components/AdvancedCanvas';
 import { ColorPicker, ColorPickerProps } from './Components/ColorPicker';
+import { LayerManager, LayerManagerProps } from './Components/LayerManager';
 import { Palette, PaletteProps } from './Components/Palette';
-import { localizeCoords, typedCapitalize, useStoreState } from './helpers';
+import { getFlattenedSpriteDir, localizeCoords } from './helpers';
 import { Tool } from './Types/Tool';
 import { Eraser } from './Types/Tools/Eraser';
+import { Eyedropper } from './Types/Tools/Eyedropper';
 import { Pencil } from './Types/Tools/Pencil';
-import { EditorColor } from './Types/types';
-import { Workspace } from './Types/Workspace';
+import {
+  Dir,
+  EditorColor,
+  SpriteData,
+  SpriteEditorContextType,
+  StringLayer,
+} from './Types/types';
 
 type ToolbarButtonProps = Omit<
   Parameters<typeof Button>[0],
@@ -26,16 +34,15 @@ type ToolbarProps = {
 } & Parameters<typeof Stack>[0];
 
 type TransactionType = 'undo' | 'redo';
-type TransactionStoreType = `use${Capitalize<TransactionType>}Stack`;
 
 const undoRedoFactory = (type: TransactionType) => {
-  const stackStoreName: TransactionStoreType = `use${typedCapitalize(type)}Stack`;
-  return (props: { workspace: Workspace }) => {
-    const { workspace } = props;
-    const stack = workspace[stackStoreName]();
+  return (props: { stack: string[] }) => {
+    const { stack } = props;
+    const { act } = useBackend();
     const [historyOpen, setHistoryOpen] = useState(false);
     const stackEmpty = stack.length < 1;
-    const action = workspace[type].bind(workspace);
+    const action = (count: number = 1) =>
+      act(`spriteEditorCommand`, { command: type, count });
     return (
       <Popper
         isOpen={historyOpen}
@@ -51,11 +58,11 @@ const undoRedoFactory = (type: TransactionType) => {
                     width="100%"
                     ellipsis
                     onClick={() => {
-                      for (let j = 0; j <= i; j++) action();
+                      action(i);
                       setHistoryOpen(false);
                     }}
                   >
-                    {transaction.name}
+                    {transaction}
                   </Button>
                 </Stack.Item>
               ))}
@@ -68,7 +75,7 @@ const undoRedoFactory = (type: TransactionType) => {
           mr={0}
           icon={type}
           disabled={stackEmpty}
-          tooltip={`${capitalize(type)}${stackEmpty ? '' : ' ' + stack[stack.length - 1].name}`}
+          tooltip={`${capitalize(type)}${stackEmpty ? '' : ' ' + stack[stack.length - 1]}`}
           onClick={() => action()}
           style={{
             borderTopRightRadius: 0,
@@ -93,107 +100,176 @@ const undoRedoFactory = (type: TransactionType) => {
   };
 };
 
-export const useSpriteEditorContext = () => {
-  const [tools] = useState<Tool[]>(() => [new Pencil(), new Eraser()]);
-  const [useCurrentTool, setCurrentTool] = useStoreState(tools[0]);
-  const [useColors, setColors] = useStoreState<EditorColor[]>([]);
-  const [useCurrentColor, setCurrentColor, getCurrentColor] =
-    useStoreState<EditorColor>({
-      r: 255,
-      g: 255,
-      b: 255,
-    });
-  const colorPicker = useCallback(
-    (props: Omit<ColorPickerProps, 'initialColor' | 'onSelectColor'>) => (
-      <ColorPicker
-        initialColor={useCurrentColor()}
-        onSelectColor={setCurrentColor}
-        {...props}
-      />
-    ),
-    [],
-  );
-  const palette = useCallback(
-    (
-      props: Omit<
-        PaletteProps,
-        'colors' | 'selectedColor' | 'onClickColor' | 'onClickAddColor'
-      >,
-    ) => {
-      const currentColor = useCurrentColor();
-      return (
-        <Palette
-          colors={useColors()}
-          selectedColor={currentColor}
-          onClickColor={setCurrentColor}
-          onClickAddColor={() =>
-            setColors((colors) => [...colors, currentColor])
-          }
-          {...props}
-        />
-      );
-    },
-    [],
-  );
-  const undoButton = useCallback(undoRedoFactory('undo'), []);
-  const redoButton = useCallback(undoRedoFactory('redo'), []);
-  const toolbar = useCallback((props: ToolbarProps) => {
-    const { toolButtonProps, perButtonProps, ...rest } = props;
-    const currentTool = useCurrentTool();
-    return (
-      <Stack {...rest}>
-        {tools.map((tool, i) => (
-          <Stack.Item key={i}>
-            <Button
-              icon={tool.icon}
-              selected={currentTool === tool}
-              onClick={() => setCurrentTool(tool)}
-              {...toolButtonProps}
-              {...perButtonProps?.(tool, i)}
-            />
-          </Stack.Item>
-        ))}
-      </Stack>
-    );
-  }, []);
-  const canvas = useCallback(
-    (
-      props: { workspace: Workspace } & Omit<
-        AdvancedCanvasPropsBase,
-        'data' | 'showGrid'
-      >,
-    ) => {
-      const { workspace, ...rest } = props;
-      useEffect(() => {
-        workspace.getPrimaryColor = getCurrentColor;
-        return () => {
-          workspace.getPrimaryColor = null;
-        };
-      }, [workspace]);
-      const { icon } = workspace;
-      const currentTool = useCurrentTool();
-      return (
-        <AdvancedCanvas
-          data={workspace.useMainCanvasData()}
-          onMouseDown={(ev, ref) => {
-            const [x, y] = localizeCoords(ev, ref, icon);
-            if (!currentTool.onMouseDown(workspace, x, y, ev.button === 2)) {
-              ev.preventDefault();
-            }
-          }}
-          onMouseMove={(ev, ref) => {
-            const [x, y] = localizeCoords(ev, ref, icon);
-            currentTool.onMouseMove(workspace, x, y);
-          }}
-          onMouseUp={(ev, ref) => {
-            const [x, y] = localizeCoords(ev, ref, icon);
-            currentTool.onMouseUp(workspace, x, y);
-          }}
-          {...rest}
-        />
-      );
-    },
-    [],
-  );
-  return { colorPicker, palette, undoButton, redoButton, toolbar, canvas };
+const SpriteEditorContextObject = createContext<SpriteEditorContextType | null>(
+  null,
+);
+
+const useSpriteEditorContext = (name: string): SpriteEditorContextType => {
+  const context = useContext(SpriteEditorContextObject);
+  if (!context) {
+    throw new Error(`${name} must be a child of SpriteEditor.Root`);
+  }
+  return context;
 };
+
+const colorPicker = (
+  props: Omit<ColorPickerProps, 'initialColor' | 'onSelectColor'>,
+) => {
+  const { currentColor, setCurrentColor } = useSpriteEditorContext(
+    'SpriteEditor.ColorPicker',
+  );
+  return (
+    <ColorPicker
+      initialColor={currentColor}
+      onSelectColor={setCurrentColor}
+      {...props}
+    />
+  );
+};
+
+const palette = (
+  props: Omit<
+    PaletteProps,
+    'colors' | 'selectedColor' | 'onClickColor' | 'onClickAddColor'
+  >,
+) => {
+  const { colors, setColors, currentColor, setCurrentColor } =
+    useSpriteEditorContext('SpriteEditor.Palette');
+  return (
+    <Palette
+      colors={colors}
+      selectedColor={currentColor}
+      onClickColor={setCurrentColor}
+      onClickAddColor={() => setColors((colors) => [...colors, currentColor])}
+      {...props}
+    />
+  );
+};
+
+const undoButton = undoRedoFactory('undo');
+const redoButton = undoRedoFactory('redo');
+
+const toolbar = (props: ToolbarProps) => {
+  const { tools, currentTool, setCurrentTool } = useContext(
+    SpriteEditorContextObject,
+  )!;
+  const { toolButtonProps, perButtonProps, ...rest } = props;
+  return (
+    <Stack {...rest}>
+      {tools.map((tool, i) => (
+        <Stack.Item key={i}>
+          <Button
+            icon={tool.icon}
+            selected={currentTool === tool}
+            onClick={() => setCurrentTool(tool)}
+            {...toolButtonProps}
+            {...perButtonProps?.(tool, i)}
+          />
+        </Stack.Item>
+      ))}
+    </Stack>
+  );
+};
+
+const canvas = (
+  props: { data: SpriteData } & Omit<AdvancedCanvasPropsBase, 'data'>,
+) => {
+  const { data, ...rest } = props;
+  const { width, height } = data;
+  const context = useSpriteEditorContext('SpriteEditor.Canvas');
+  const {
+    currentTool,
+    selectedDir,
+    selectedLayer,
+    visibleLayers,
+    previewLayer,
+    previewData,
+  } = context;
+  return (
+    <AdvancedCanvas
+      data={getFlattenedSpriteDir(
+        data,
+        selectedDir,
+        visibleLayers.toSpliced(selectedLayer, 1, true),
+        previewLayer,
+        previewData,
+      )}
+      onMouseDown={(ev, ref) => {
+        const [x, y] = localizeCoords(ev, ref, width, height);
+        if (!currentTool.onMouseDown(context, data, x, y, ev.button === 2)) {
+          ev.preventDefault();
+        }
+      }}
+      onMouseMove={(ev, ref) => {
+        const [x, y] = localizeCoords(ev, ref, width, height);
+        currentTool.onMouseMove?.(context, data, x, y);
+      }}
+      onMouseUp={(ev, ref) => {
+        const [x, y] = localizeCoords(ev, ref, width, height);
+        currentTool.onMouseUp?.(context, data, x, y);
+      }}
+      {...rest}
+    />
+  );
+};
+
+const layerManager = (props: Omit<LayerManagerProps, 'context'>) => (
+  <LayerManager
+    {...props}
+    context={useSpriteEditorContext('SpriteEditor.LayerManager')}
+  />
+);
+
+const getSpriteEditorContext = () => {
+  const [colors, setColors] = useState<EditorColor[]>([]);
+  const [currentColor, setCurrentColor] = useState<EditorColor>({
+    r: 255,
+    g: 255,
+    b: 255,
+  });
+  const [tools] = useState<Tool[]>(() => [
+    new Pencil(),
+    new Eraser(),
+    new Eyedropper(),
+  ]);
+  const [currentTool, setCurrentTool] = useState(tools[0]);
+  const [selectedDir, setSelectedDir] = useState(Dir.SOUTH);
+  const [selectedLayer, setSelectedLayer] = useState(0);
+  const [visibleLayers, setVisibleLayers] = useState<boolean[]>([]);
+  const [previewLayer, setPreviewLayer] = useState<number>();
+  const [previewData, setPreviewData] = useState<StringLayer>();
+  return {
+    colors,
+    setColors,
+    currentColor,
+    setCurrentColor,
+    tools,
+    currentTool,
+    setCurrentTool,
+    selectedDir,
+    setSelectedDir,
+    selectedLayer,
+    setSelectedLayer,
+    visibleLayers,
+    setVisibleLayers,
+    previewLayer,
+    setPreviewLayer,
+    previewData,
+    setPreviewData,
+  };
+};
+
+export namespace SpriteEditorContext {
+  export const Root = ({ children }: { children: ReactNode }) => (
+    <SpriteEditorContextObject.Provider value={getSpriteEditorContext()}>
+      {children}
+    </SpriteEditorContextObject.Provider>
+  );
+  export const ColorPicker = colorPicker;
+  export const Palette = palette;
+  export const Undo = undoButton;
+  export const Redo = redoButton;
+  export const Toolbar = toolbar;
+  export const Canvas = canvas;
+  export const LayerManager = layerManager;
+}

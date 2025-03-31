@@ -1,9 +1,9 @@
-import { HSV, HSVA, RGB, RGBA, WithOptional } from './Types/types';
+import { EditorColor, HSV, HSVA, RGB, RGBA } from './Types/types';
 
 const rem = (n: number, d: number) => ((n % d) + d) % d;
 
-export const rgb2hsv = (rgb: RGB): WithOptional<HSV, 'h' | 's'> => {
-  let { r, g, b } = rgb;
+export function rgb2hsv<T extends RGB>(rgb: T): Omit<T, 'r' | 'g' | 'b'> & HSV {
+  let { r, g, b, ...rest } = rgb;
   r /= 255;
   g /= 255;
   b /= 255;
@@ -32,11 +32,12 @@ export const rgb2hsv = (rgb: RGB): WithOptional<HSV, 'h' | 's'> => {
     h: h && Math.round(rem(h, 6) * 60),
     s: s,
     v: v,
+    ...rest,
   };
-};
+}
 
-export const hsv2rgb = (hsv: WithOptional<HSV, 'h' | 's'>): RGB => {
-  let { h, s, v } = hsv;
+export function hsv2rgb<T extends HSV>(hsv: T): Omit<T, 'h' | 's' | 'v'> & RGB {
+  let { h, s, v, ...rest } = hsv;
   if (h) {
     h = rem(h / 60, 6);
   }
@@ -48,30 +49,30 @@ export const hsv2rgb = (hsv: WithOptional<HSV, 'h' | 's'>): RGB => {
   c = Math.round(c);
   v = Math.round(v);
   if (h === undefined || s === 0) {
-    return { r: v, g: v, b: v };
+    return { r: v, g: v, b: v, ...rest };
   }
   if (h >= 0 && h < 1) {
-    return { r: c + m, g: x + m, b: m };
+    return { r: c + m, g: x + m, b: m, ...rest };
   }
   if (h >= 1 && h < 2) {
-    return { r: x + m, g: c + m, b: m };
+    return { r: x + m, g: c + m, b: m, ...rest };
   }
   if (h >= 2 && h < 3) {
-    return { r: m, g: c + m, b: x + m };
+    return { r: m, g: c + m, b: x + m, ...rest };
   }
   if (h >= 3 && h < 4) {
-    return { r: m, g: x + m, b: c + m };
+    return { r: m, g: x + m, b: c + m, ...rest };
   }
   if (h >= 4 && h < 5) {
-    return { r: x + m, g: m, b: c + m };
+    return { r: x + m, g: m, b: c + m, ...rest };
   }
   if (h >= 5 && h < 6) {
-    return { r: c + m, g: m, b: x + m };
+    return { r: c + m, g: m, b: x + m, ...rest };
   }
   throw new Error(
     'Unreachable code - h is outside the range [0,6], which should not be possible.',
   );
-};
+}
 
 export const hsva2hslString = (hsv: HSVA) => {
   const { h = 0, s, v, a } = hsv;
@@ -80,40 +81,24 @@ export const hsva2hslString = (hsv: HSVA) => {
   return `hsla(${h}, ${sL * 100}%, ${l * 100}%, ${a ?? 1})`;
 };
 
-export const isRgb = (color: RGB | HSV): color is RGB =>
+export const isRgb = (color: EditorColor): color is RGB =>
   Object.keys(color).includes('r');
-export const isHsv = (color: RGB | HSV): color is HSV =>
+export const isHsv = (color: EditorColor): color is HSV =>
   Object.keys(color).includes('v');
+
+export const parseHexColorString = (color: string): EditorColor => ({
+  r: Number.parseInt(color.substring(1, 3), 16),
+  g: Number.parseInt(color.substring(3, 5), 16),
+  b: Number.parseInt(color.substring(5, 7), 16),
+  a: color.length >= 9 ? Number.parseInt(color.substring(7, 9), 16) : undefined,
+});
 
 type BothSpaces = RGBA & HSVA;
 
-export const AsBothSpaces = (color: RGBA | HSVA): BothSpaces =>
+export const AsBothSpaces = (color: EditorColor): BothSpaces =>
   isRgb(color)
     ? { ...color, ...rgb2hsv(color) }
     : { ...color, ...hsv2rgb(color) };
-
-export const colorToString = (color: RGBA | HSVA) => {
-  const { a = 1 } = color;
-  if (isRgb(color)) {
-    const { r, g, b } = color;
-    return `rgba(${r}, ${g}, ${b}, ${a})`;
-  } else {
-    return hsva2hslString(color);
-  }
-};
-
-export const colorsAreEqual = (a: RGBA | HSVA, b: RGBA | HSVA) => {
-  if (isHsv(a) && isHsv(b)) {
-    return a.h === b.h && a.s === b.s && a.v === b.v && a.a === b.a;
-  }
-  if (isHsv(a)) {
-    a = hsv2rgb(a);
-  }
-  if (isHsv(b)) {
-    b = hsv2rgb(b);
-  }
-  return a.r === b.r && a.g === b.g && a.b === b.b && a.a === b.a;
-};
 
 export const rgb2hexstring = (color: RGBA, alwaysIncludeAlpha = true) => {
   const { r, g, b, a = 1 } = color;
@@ -124,4 +109,23 @@ export const rgb2hexstring = (color: RGBA, alwaysIncludeAlpha = true) => {
           .padStart(2, '0')
       : ''
   }`;
+};
+
+export const colorToCssString = (color: EditorColor) =>
+  isRgb(color) ? rgb2hexstring(color, false) : hsva2hslString(color);
+
+export const colorToHexString = (color: EditorColor) =>
+  rgb2hexstring(isRgb(color) ? color : hsv2rgb(color));
+
+export const colorsAreEqual = (a: EditorColor, b: EditorColor) => {
+  if (isHsv(a) && isHsv(b)) {
+    return a.h === b.h && a.s === b.s && a.v === b.v && a.a === b.a;
+  }
+  if (isHsv(a)) {
+    a = hsv2rgb(a);
+  }
+  if (isHsv(b)) {
+    b = hsv2rgb(b);
+  }
+  return a.r === b.r && a.g === b.g && a.b === b.b && a.a === b.a;
 };

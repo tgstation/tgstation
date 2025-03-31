@@ -1,8 +1,20 @@
-import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
-import { capitalizeFirst } from 'tgui-core/string';
+import { normal } from 'color-blend';
+import { useEffect, useState } from 'react';
 
-import { Icon } from './Types/Icon';
-import { ClickAndDragEventHandler, Layer, LayerStack } from './Types/types';
+import {
+  hsv2rgb,
+  isRgb,
+  parseHexColorString as parseHexColorString,
+} from './colorSpaces';
+import {
+  ClickAndDragEventHandler,
+  Dir,
+  EditorColor,
+  Layer,
+  RGBA,
+  SpriteData,
+  StringLayer,
+} from './Types/types';
 
 export function matrix<T>(initializer: () => T, ...dimensions: number[]) {
   return dimensions.reduce(
@@ -10,20 +22,6 @@ export function matrix<T>(initializer: () => T, ...dimensions: number[]) {
       Array.from({ length: dimension }, generator),
     () => initializer(),
   );
-}
-export function fillBy<T>(
-  array: T[],
-  fn: (value: T, index: number, array: T[]) => T,
-  start?: number,
-  end?: number,
-) {
-  array
-    .keys()
-    .toArray()
-    .slice(start, end)
-    .forEach((i) => {
-      array[i] = fn(array[i], i, array);
-    });
 }
 
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -80,9 +78,9 @@ export function useClickAndDragEventHandler<T>(
 export const constrainToIconGrid = (
   x: number,
   y: number,
-  icon: Icon,
+  width: number,
+  height: number,
 ): [number, number, boolean] => {
-  const { width, height } = icon;
   return [
     Math.floor(x),
     Math.floor(y),
@@ -93,10 +91,10 @@ export const constrainToIconGrid = (
 export const localizeCoords = (
   ev: MouseEvent,
   ref: React.RefObject<HTMLCanvasElement>,
-  icon: Icon,
+  imageWidth: number,
+  imageHeight: number,
 ) => {
   const { clientX, clientY } = ev;
-  const { width: imageWidth, height: imageHeight } = icon;
   const { top, left, width, height } = ref.current!.getBoundingClientRect();
   return [
     lerp(0, imageWidth, invLerp(0, width, clientX - left)),
@@ -104,60 +102,46 @@ export const localizeCoords = (
   ];
 };
 
-export function typedCapitalize<T extends string>(string: T): Capitalize<T> {
-  return capitalizeFirst(string) as Capitalize<T>;
-}
+export const getDataPixel = (
+  data: SpriteData,
+  layer: number,
+  dir: Dir,
+  x: number,
+  y: number,
+) => data.layers[layer].data[dir]![y][x] ?? '#00000000';
 
-type StoreStateStore<T> = {
-  value: T;
-  onChange: Set<() => void>;
+export const getFlattenedSpriteDir = (
+  data: SpriteData,
+  dir: Dir,
+  visibility: boolean[],
+  previewLayer?: number,
+  previewData?: StringLayer,
+  backdrop: EditorColor = { r: 0, g: 0, b: 0, a: 0 },
+) => {
+  const { width, height, layers } = data;
+  const output = matrix(
+    () => Object.assign({}, backdrop),
+    width,
+    height,
+  )() as Layer;
+  layers.forEach(({ data: layer }, i) => {
+    if (!visibility[i]) return;
+    (previewLayer === i ? previewData : layer[dir])!.forEach((row, y) => {
+      row.forEach((frontPixelstring, x) => {
+        const frontPixel = parseHexColorString(frontPixelstring);
+        const backPixel = output[y][x];
+        const outPixel: RGBA = normal(
+          { a: 1, ...(isRgb(backPixel) ? backPixel : hsv2rgb(backPixel)) },
+          { a: 1, ...(isRgb(frontPixel) ? frontPixel : hsv2rgb(frontPixel)) },
+        );
+        if (outPixel.a === 1) delete outPixel.a;
+        output[y][x] = outPixel;
+      });
+    });
+  });
+  return output;
 };
 
-type StoreStateWithDispatch<T> = [
-  () => T,
-  (newValue: T | ((oldValue: T) => T)) => void,
-  () => T,
-];
-
-export function useStoreState<T>(
-  initial: T | (() => T),
-): StoreStateWithDispatch<T> {
-  return useMemo(() => {
-    const store: StoreStateStore<T> = {
-      value: typeof initial === 'function' ? (initial as () => T)() : initial,
-      onChange: new Set(),
-    };
-    const subscribe = (onStoreChanged: () => void) => {
-      store.onChange.add(onStoreChanged);
-      return () => store.onChange.delete(onStoreChanged);
-    };
-    const getSnapshot = () => store.value;
-    return [
-      () => useSyncExternalStore(subscribe, getSnapshot),
-      (newValue: T | ((oldValue: T) => T)) => {
-        store.value =
-          typeof newValue === 'function'
-            ? (newValue as (oldValue: T) => T)(store.value)
-            : newValue;
-        store.onChange.forEach((cb) => cb());
-      },
-      getSnapshot,
-    ];
-  }, []);
+export function copyLayer<T>(layer: T[][]) {
+  return [...layer.map((row) => [...row])];
 }
-
-export const copyLayer = (layer: Layer) => [...layer.map((row) => [...row])];
-
-export const copyStack = (stack: LayerStack) => [...stack.map(copyLayer)];
-
-export const bytes2Base64UrlSafe = async (data: Uint8Array) =>
-  (
-    await new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = () => reject(reader.result);
-      reader.readAsDataURL(
-        new File([data], '', { type: 'application/octet-stream' }),
-      );
-    })
-  ).replace('data:application/octet-stream;base64,', '');

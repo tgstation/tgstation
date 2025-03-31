@@ -1,20 +1,26 @@
 import { Box, Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 import { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 
+import { useBackend } from '../../../backend';
 import {
-  AddLayerTransaction,
-  DeleteLayerTransaction,
-  FlattenLayerTransaction,
-  MoveLayerDownTransaction,
-  MoveLayerUpTransaction,
-  RenameLayerTransaction,
-} from '../Types/LayerModTransactions';
-import { Dir, InlineStyle } from '../Types/types';
-import { Workspace } from '../Types/Workspace';
+  Dir,
+  InlineStyle,
+  SpriteData,
+  SpriteEditorContextType,
+} from '../Types/types';
 import { AdvancedCanvas } from './AdvancedCanvas';
 
-type LayerManagerProps = {
-  workspace: Workspace;
+export type LayerManagerProps = {
+  data: SpriteData;
+  context: Pick<
+    SpriteEditorContextType,
+    | 'selectedDir'
+    | 'setSelectedDir'
+    | 'selectedLayer'
+    | 'setSelectedLayer'
+    | 'visibleLayers'
+    | 'setVisibleLayers'
+  >;
 } & Partial<BooleanStyleMap & StringStyleMap & InlineStyle>;
 
 const dirs = [Dir.SOUTH, Dir.NORTH, Dir.EAST, Dir.WEST];
@@ -22,15 +28,22 @@ const dirCellPrefixes = ['south', 'north', 'east', 'west'];
 const dirIcons = ['arrow-down', 'arrow-up', 'arrow-right', 'arrow-left'];
 
 export const LayerManager = (props: LayerManagerProps) => {
-  const { workspace, ...rest } = props;
-  const { icon, selectedDir, selectedLayer } = workspace;
-  const { width, height, inner } = icon;
-  const { dirs: iconDirs } = inner;
-  const layers = workspace.metadata.length;
+  const { act } = useBackend();
+  const { data, context, ...rest } = props;
+  const {
+    selectedDir,
+    setSelectedDir,
+    selectedLayer,
+    setSelectedLayer,
+    visibleLayers,
+    setVisibleLayers,
+  } = context;
+  const { width, height, dirs: iconDirs, layers } = data;
+  const layerCount = layers.length;
   const cells = [
     `". ${dirCellPrefixes.slice(0, iconDirs).join(' ')} add"`,
     ...Array.from(
-      { length: layers },
+      { length: layerCount },
       (_, i) =>
         `"leftControls${i} ${dirCellPrefixes
           .slice(0, iconDirs)
@@ -38,7 +51,6 @@ export const LayerManager = (props: LayerManagerProps) => {
           .join(' ')} rightControls${i}"`,
     ).toReversed(),
   ].join(' ');
-  const metadata = workspace.useMetadata();
   return (
     <Box {...rest}>
       <Section fill title="Layers">
@@ -73,12 +85,16 @@ export const LayerManager = (props: LayerManagerProps) => {
               icon="plus"
               tooltip="Add Layer"
               onClick={() =>
-                workspace.commitTransaction(new AddLayerTransaction())
+                act('spriteEditorCommand', {
+                  command: 'transaction',
+                  transaction: { type: 'addLayer', name: 'Add Layer' },
+                })
               }
             />
           </Box>
-          {metadata.map((metadata, i) => {
-            const { name, visible } = metadata;
+          {layers.map((layer, i) => {
+            const { name, data } = layer;
+            const visible = visibleLayers[i];
             return (
               <>
                 <Box
@@ -93,19 +109,24 @@ export const LayerManager = (props: LayerManagerProps) => {
                     updateOnPropsChange
                     onChange={(_, value) => {
                       if (name === value) return;
-                      workspace.commitTransaction(
-                        new RenameLayerTransaction(workspace, i, value),
-                      );
+                      act('spriteEditorCommand', {
+                        command: 'transaction',
+                        transaction: {
+                          type: 'renameLayer',
+                          name: `Rename ${name} to ${value}`,
+                          layer: i + 1,
+                          newName: value,
+                          oldName: name,
+                        },
+                      });
                     }}
                   />
                   <Button
                     inline
                     icon={visible ? 'eye' : 'eye-slash'}
-                    onClick={() => {
-                      metadata.visible = !metadata.visible;
-                      workspace.markMainCanvasDataDirty();
-                      workspace.markMetadataChanged();
-                    }}
+                    onClick={() =>
+                      setVisibleLayers(visibleLayers.toSpliced(i, 1, !visible))
+                    }
                   />
                 </Box>
                 {dirs.slice(0, iconDirs).map((dir, j) => (
@@ -114,16 +135,14 @@ export const LayerManager = (props: LayerManagerProps) => {
                     style={{ gridArea: `${dirCellPrefixes[j]}${i}` }}
                   >
                     <AdvancedCanvas
-                      data={icon.getStack(dir)![i]}
+                      data={data[dir]!}
                       width={`${width}px`}
                       height={`${height}px`}
                       ml="0.25rem"
                       mr="0.25rem"
                       onClick={() => {
-                        workspace.selectedDir = dir;
-                        workspace.selectedLayer = i;
-                        workspace.markMainCanvasDataDirty();
-                        workspace.markMetadataChanged();
+                        setSelectedDir(dir);
+                        setSelectedLayer(i);
                       }}
                       border={
                         selectedDir === dir && selectedLayer === i
@@ -139,11 +158,16 @@ export const LayerManager = (props: LayerManagerProps) => {
                       <Button
                         icon="arrow-up"
                         tooltip="Move Up"
-                        disabled={i === layers - 1}
+                        disabled={i === layerCount - 1}
                         onClick={() =>
-                          workspace.commitTransaction(
-                            new MoveLayerUpTransaction(workspace, i),
-                          )
+                          act('spriteEditorCommand', {
+                            command: 'transaction',
+                            transaction: {
+                              type: 'moveLayerUp',
+                              name: `Move ${name} Up`,
+                              layer: i + 1,
+                            },
+                          })
                         }
                       />
                     </Stack.Item>
@@ -153,9 +177,14 @@ export const LayerManager = (props: LayerManagerProps) => {
                         tooltip="Move Down"
                         disabled={i === 0}
                         onClick={() =>
-                          workspace.commitTransaction(
-                            new MoveLayerDownTransaction(workspace, i),
-                          )
+                          act('spriteEditorCommand', {
+                            command: 'transaction',
+                            transaction: {
+                              type: 'moveLayerDown',
+                              name: `Move ${name} Down`,
+                              layer: i + 1,
+                            },
+                          })
                         }
                       />
                     </Stack.Item>
@@ -165,9 +194,14 @@ export const LayerManager = (props: LayerManagerProps) => {
                         tooltip="Flatten"
                         disabled={i === 0}
                         onClick={() =>
-                          workspace.commitTransaction(
-                            new FlattenLayerTransaction(workspace, i),
-                          )
+                          act('spriteEditorCommand', {
+                            command: 'transaction',
+                            transaction: {
+                              type: 'flattenLayer',
+                              name: `Flatten ${name} onto ${layers[i - 1].name}`,
+                              layer: i + 1,
+                            },
+                          })
                         }
                       />
                     </Stack.Item>
@@ -175,11 +209,16 @@ export const LayerManager = (props: LayerManagerProps) => {
                       <Button.Confirm
                         icon="xmark"
                         tooltip="Delete"
-                        disabled={layers === 1}
+                        disabled={layerCount === 1}
                         onClick={() =>
-                          workspace.commitTransaction(
-                            new DeleteLayerTransaction(workspace, i),
-                          )
+                          act('spriteEditorCommand', {
+                            command: 'transaction',
+                            transaction: {
+                              type: 'deleteLayer',
+                              name: `Delete ${name}`,
+                              layer: i + 1,
+                            },
+                          })
                         }
                       />
                     </Stack.Item>

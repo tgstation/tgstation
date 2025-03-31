@@ -2,9 +2,14 @@ import { useLayoutEffect, useRef } from 'react';
 import { BooleanStyleMap, computeBoxProps, StringStyleMap } from 'tgui-core/ui';
 
 import transparency_checkerboard from '../../../assets/transparency_checkerboard.svg';
-import { colorToString } from '../colorSpaces';
+import { colorToCssString } from '../colorSpaces';
 import { useClickAndDragEventHandler, useDimensions } from '../helpers';
-import { BorderStyleProps, Layer } from '../Types/types';
+import {
+  BorderStyleProps,
+  EditorColor,
+  Layer,
+  StringLayer,
+} from '../Types/types';
 
 type AdvancedCanvasMouseEventHandler = (
   event: MouseEvent,
@@ -27,9 +32,10 @@ type AdvancedCanvasEventHandlers =
   | AdvancedCanvasClickAndDragHandlers;
 
 export type AdvancedCanvasPropsBase = {
-  data: Layer;
+  data: Layer | StringLayer;
   showGrid?: boolean;
   border?: BorderStyleProps;
+  background?: string | string[];
 } & Partial<BooleanStyleMap & StringStyleMap>;
 
 type AdvancedCanvasProps = AdvancedCanvasPropsBase &
@@ -66,6 +72,7 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
     data,
     showGrid,
     border: borderProps,
+    background,
     ...rest
   } = extractBaseProps(props);
   const { onClick } = propsHaveClickHandler(props) ? props : {};
@@ -95,9 +102,10 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
     const canvasWidth = (canvas.width = imageWidth * scalingFactor);
     const canvasHeight = (canvas.height = imageHeight * scalingFactor);
     const context = canvas.getContext('2d')!;
-    data.forEach((row, y) =>
-      row.forEach((pixel, x) => {
-        context.fillStyle = colorToString(pixel);
+    data.forEach((row: string[] | EditorColor[], y) =>
+      row.forEach((pixel: string | EditorColor, x) => {
+        context.fillStyle =
+          typeof pixel === 'string' ? pixel : colorToCssString(pixel);
         context.fillRect(
           x * scalingFactor,
           y * scalingFactor,
@@ -136,7 +144,14 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
         onClick={onClick && ((ev) => onClick(ev.nativeEvent, canvasRef))}
         onMouseDown={mouseDownHandler}
         style={{
-          backgroundImage: `url(${transparency_checkerboard})`,
+          backgroundImage: [
+            ...(Array.isArray(background)
+              ? background
+              : background
+                ? [background]
+                : []),
+            `url(${transparency_checkerboard})`,
+          ].join(', '),
           outline: '2px solid black',
           ...borderProps,
         }}

@@ -1,5 +1,7 @@
-import { useSyncExternalStore } from 'react';
+import { Dispatch, SetStateAction, useSyncExternalStore } from 'react';
 import { Box } from 'tgui-core/components';
+
+import { Tool } from './Tool';
 
 export type RGB = {
   r: number;
@@ -46,11 +48,16 @@ export type ClickAndDragEventHandler<T> = (
   ref: React.Ref<T>,
 ) => void;
 
-export type WithOptional<T, K extends keyof T = keyof T> = Omit<T, K> &
-  Partial<Pick<T, K>>;
-
 type PickByType<T, V> = {
   [K in keyof T as T[K] extends V ? K : never]: T[K];
+};
+
+type Substitute<T, K extends keyof T, U extends T[K]> = Omit<T, K> & {
+  [key in K]: U;
+};
+
+type WithDispatch<T, K extends string & keyof T> = T & {
+  [key in K as `set${Capitalize<key>}`]: Dispatch<SetStateAction<T[key]>>;
 };
 
 export type InlineStyle = Pick<Parameters<typeof Box>[0], 'style'>;
@@ -85,8 +92,44 @@ export type SerializedIcon = {
   states: SerializedIconState[];
 };
 
-export type PixelDelta = {
-  x: number;
-  y: number;
-  color: EditorColor;
+export type StringLayer = string[][];
+
+export type SpriteDataLayer = {
+  name: string;
+  data: {
+    [key in Dir]: key extends Dir.SOUTH ? StringLayer : StringLayer | undefined;
+  };
+};
+
+export type SpriteData = {
+  width: number;
+  height: number;
+  dirs: IconDirCount;
+  layers: SpriteDataLayer[];
+};
+
+export type SpriteEditorData = {
+  undoStack: string[];
+  redoStack: string[];
+  sprite: SpriteData;
+};
+
+export type SpriteEditorContextType = {
+  colors: EditorColor[];
+  setColors: Dispatch<SetStateAction<EditorColor[]>>;
+  currentColor: EditorColor;
+  setCurrentColor: Dispatch<SetStateAction<EditorColor>>;
+  tools: Tool[];
+  currentTool: Tool;
+  setCurrentTool: Dispatch<SetStateAction<Tool>>;
+  selectedDir: Dir;
+  setSelectedDir: Dispatch<SetStateAction<Dir>>;
+  selectedLayer: number;
+  setSelectedLayer: Dispatch<SetStateAction<number>>;
+  visibleLayers: boolean[];
+  setVisibleLayers: Dispatch<SetStateAction<boolean[]>>;
+  previewLayer?: number;
+  setPreviewLayer: Dispatch<SetStateAction<number | undefined>>;
+  previewData?: StringLayer;
+  setPreviewData: Dispatch<SetStateAction<StringLayer | undefined>>;
 };

@@ -2,7 +2,7 @@ import { Button, Section, Stack } from 'tgui-core/components';
 import { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 
 import transparency_checkerboard from '../../../assets/transparency_checkerboard.svg';
-import { colorsAreEqual, colorToString } from '../colorSpaces';
+import { colorsAreEqual, colorToCssString } from '../colorSpaces';
 import { EditorColor } from '../Types/types';
 
 export type PaletteProps = {
@@ -40,7 +40,7 @@ export const Palette = (props: PaletteProps) => {
                 ev.preventDefault();
               }}
               style={{
-                backgroundImage: `linear-gradient(${colorToString(color)}, ${colorToString(color)}), url(${transparency_checkerboard})`,
+                backgroundImage: `linear-gradient(${colorToCssString(color)}, ${colorToCssString(color)}), url(${transparency_checkerboard})`,
               }}
             />
           </Stack.Item>

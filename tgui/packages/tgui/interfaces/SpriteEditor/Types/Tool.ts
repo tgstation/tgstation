@@ -1,14 +1,25 @@
-import { Workspace } from './Workspace';
+import { SpriteData, SpriteEditorContextType } from './types';
 
 export abstract class Tool {
   abstract icon: string;
   abstract name: string;
   abstract onMouseDown(
-    workspace: Workspace,
+    context: SpriteEditorContextType,
+    data: SpriteData,
     x: number,
     y: number,
     isRightClick?: boolean,
-  ): boolean;
-  abstract onMouseMove(workspace: Workspace, x: number, y: number): void;
-  abstract onMouseUp(workspace: Workspace, x?: number, y?: number): void;
+  ): boolean | void;
+  onMouseMove?(
+    context: SpriteEditorContextType,
+    data: SpriteData,
+    x: number,
+    y: number,
+  ): void;
+  onMouseUp?(
+    context: SpriteEditorContextType,
+    data: SpriteData,
+    x?: number,
+    y?: number,
+  ): void;
 }

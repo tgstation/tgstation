@@ -1,14 +1,8 @@
-import { Dir, Layer } from './types';
-import { Workspace } from './Workspace';
+import { Dir, StringLayer } from './types';
 
-export interface Transaction {
-  name: string;
-  commit: (workspace: Workspace) => void;
-  undo: (workspace: Workspace) => void;
-}
-
-export interface LayerTransaction extends Transaction {
+export interface LayerTransaction {
   dir: Dir;
   layer: number;
-  applyPreview(layer: Layer);
+  getPreviewLayer(baseLayer: StringLayer): StringLayer;
+  commit(): void;
 }

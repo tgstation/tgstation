@@ -1,3 +1,9 @@
+/datum/sprite_editor
+	var/datum/sprite_editor_workspace/workspace
+
+/datum/sprite_editor/New()
+	workspace = new()
+
 /datum/sprite_editor/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -8,14 +14,22 @@
 /datum/sprite_editor/ui_state(mob/user)
 	return GLOB.always_state
 
+/datum/sprite_editor/ui_data(mob/user)
+	return workspace.sprite_editor_ui_data()
+
 /datum/sprite_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	switch(action)
-		if("save")
-			var/data = json_encode(params["data"])
-			var/result = rustg_dmi_create_dmi("tmp/temp_icon.dmi", data)
-			if(result)
-				stack_trace(result)
+		if("spriteEditorCommand")
+			var/command = params["command"]
+			switch(command)
+				if("transaction")
+					workspace.new_transaction(params["transaction"])
+				if("undo")
+					workspace.undo()
+				if("redo")
+					workspace.redo()
+			return TRUE
 
 ADMIN_VERB(test_sprite_editor, R_DEBUG, "Test Sprite Editor", "Test the Sprite Editor", ADMIN_CATEGORY_DEBUG)
 	BLACKBOX_LOG_ADMIN_VERB("Test Sprite Editor")

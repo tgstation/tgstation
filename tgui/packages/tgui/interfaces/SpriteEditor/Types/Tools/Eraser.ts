@@ -1,54 +1,51 @@
-import { constrainToIconGrid } from '../../helpers';
+import { useBackend } from '../../../../backend';
+import { parseHexColorString } from '../../colorSpaces';
+import { constrainToIconGrid, copyLayer, getDataPixel } from '../../helpers';
 import { Tool } from '../Tool';
 import { LayerTransaction } from '../Transaction';
-import { Dir, HSVA, Layer, RGBA } from '../types';
-import { Workspace } from '../Workspace';
+import {
+  Dir,
+  SpriteData,
+  SpriteEditorContextType,
+  StringLayer,
+} from '../types';
 
 class EraserTransaction implements LayerTransaction {
   name = 'Eraser';
   layer: number;
   dir: Dir;
-  points: Map<string, [number, number, RGBA | HSVA]> = new Map();
+  points: Map<string, [number, number]> = new Map();
 
   constructor(dir: Dir, layer: number) {
     this.dir = dir;
     this.layer = layer;
   }
 
-  addPoint(x: number, y: number, workspace: Workspace) {
+  addPoint(x: number, y: number, color: string) {
     const hashKey = `${x},${y}`;
     if (this.points.has(hashKey)) return;
-    const color = workspace.icon.getPixel(this.dir, this.layer, x, y)!;
-    if (color.a === 0) return;
-    this.points.set(`${x},${y}`, [x, y, color]);
-    workspace.markMainCanvasDataDirty();
+    if (parseHexColorString(color).a === 0) return;
+    this.points.set(`${x},${y}`, [x, y]);
   }
 
-  commit(workspace: Workspace) {
-    this.points.values().forEach(([x, y]) =>
-      workspace.icon.setPixel(this.dir, this.layer, x, y, {
-        r: 0,
-        g: 0,
-        b: 0,
-        a: 0,
-      }),
-    );
-    workspace.markMainCanvasDataDirty();
+  getPreviewLayer(layer: StringLayer) {
+    const outLayer = copyLayer(layer);
+    this.points.values().forEach(([x, y]) => (outLayer[y][x] = '#00000000'));
+    return outLayer;
   }
 
-  undo(workspace: Workspace) {
-    this.points
-      .values()
-      .forEach(([x, y, color]) =>
-        workspace.icon.setPixel(this.dir, this.layer, x, y, color),
-      );
-    workspace.markMainCanvasDataDirty();
-  }
-
-  applyPreview(layer: Layer) {
-    this.points
-      .values()
-      .forEach(([x, y]) => (layer[y][x] = { r: 0, g: 0, b: 0, a: 0 }));
+  commit() {
+    const { act } = useBackend();
+    act('spriteEditorCommand', {
+      command: 'transaction',
+      transaction: {
+        type: 'eraser',
+        name: 'Eraser',
+        layer: this.layer + 1,
+        dir: `${this.dir}`,
+        points: this.points.values().toArray(),
+      },
+    });
   }
 }
 
@@ -57,32 +54,62 @@ export class Eraser extends Tool {
   name = 'Eraser';
   currentTransaction: EraserTransaction | null;
   onMouseDown(
-    workspace: Workspace,
+    context: SpriteEditorContextType,
+    data: SpriteData,
     x: number,
     y: number,
     isRightClick: boolean,
   ) {
-    const { icon, selectedDir, selectedLayer } = workspace;
-    const [px, py, inBounds] = constrainToIconGrid(x, y, icon);
-    if (!inBounds || isRightClick) return false;
-    workspace.pendingTransaction = this.currentTransaction =
-      new EraserTransaction(selectedDir, selectedLayer);
-    this.currentTransaction.addPoint(px, py, workspace);
+    const { selectedDir, selectedLayer, setPreviewLayer, setPreviewData } =
+      context;
+    const { width, height, layers } = data;
+    const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
+    if (!inBounds || isRightClick) return;
+    this.currentTransaction = new EraserTransaction(selectedDir, selectedLayer);
+    this.currentTransaction.addPoint(
+      px,
+      py,
+      getDataPixel(data, selectedLayer, selectedDir, px, py),
+    );
+    setPreviewLayer(selectedLayer);
+    setPreviewData(
+      this.currentTransaction.getPreviewLayer(
+        layers[selectedLayer].data[selectedDir]!,
+      ),
+    );
     return true;
   }
-  onMouseMove(workspace: Workspace, x: number, y: number) {
-    const { icon } = workspace;
-    const [px, py, inBounds] = constrainToIconGrid(x, y, icon);
+  onMouseMove(
+    context: SpriteEditorContextType,
+    data: SpriteData,
+    x: number,
+    y: number,
+  ) {
+    const { selectedDir, selectedLayer, setPreviewData } = context;
+    const { width, height, layers } = data;
+    const { currentTransaction } = this;
+    const { dir, layer } = currentTransaction!;
+    const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
     if (!inBounds) return;
-    this.currentTransaction!.addPoint(px, py, workspace);
+    currentTransaction!.addPoint(
+      px,
+      py,
+      getDataPixel(data, selectedLayer, selectedDir, px, py),
+    );
+    setPreviewData(
+      currentTransaction!.getPreviewLayer(layers[layer].data[dir]!),
+    );
   }
-  onMouseUp(workspace: Workspace, x: number, y: number) {
-    const transaction = this.currentTransaction!;
+  onMouseUp(
+    context: SpriteEditorContextType,
+    data: SpriteData,
+    x: number,
+    y: number,
+  ) {
+    const { setPreviewLayer, setPreviewData } = context;
+    setPreviewLayer(undefined);
+    setPreviewData(undefined);
+    this.currentTransaction!.commit();
     this.currentTransaction = null;
-    if (transaction.points.size > 0) {
-      workspace.commitTransaction();
-    } else {
-      workspace.discardPendingTransaction();
-    }
   }
 }
