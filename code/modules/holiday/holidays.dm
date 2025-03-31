@@ -30,7 +30,9 @@
 	/// The default pattern of the holiday, if the requested pattern is null.
 	var/holiday_pattern = PATTERN_DEFAULT
 
-/datum/holiday/New()
+/datum/holiday/New(calculate_timezones = TRUE)
+	if(!calculate_timezones)
+		return
 	for(var/timezone in timezones)
 		var/time_in_timezone = world.realtime + timezone HOURS
 
@@ -943,7 +945,7 @@
 	for(var/year in min_year to max_year)
 		for(var/month in min_month to max_month)
 			for(var/day in 1 to max_day)
-				var/datum/holiday/new_day = new path()
+				var/datum/holiday/new_day = new path(FALSE)
 				if(new_day.shouldCelebrate(day, month, year, iso_to_weekday(day_of_month(year, month, day))))
 					deets += "[year]/[month]/[day]"
 	return deets
