@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - admin: "Play Internet Sound will now automatically stop lobby music and prevent lobby music from playing at roundend whilst active."
