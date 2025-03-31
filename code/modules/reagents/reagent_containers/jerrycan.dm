@@ -73,7 +73,7 @@
 	. = ..()
 	if(!isinhands)
 		return
-	if(fill_icon_thresholds)
+	if(fill_icon_thresholds && reagents.total_volume)
 		var/mutable_appearance/inhand_reagent_filling = mutable_appearance(icon_file, "[inhand_icon_state]_reagent_filling")
 		inhand_reagent_filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += inhand_reagent_filling
