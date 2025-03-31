@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(pressure < ONE_ATMOSPHERE * (HAS_TRAIT(src, TRAIT_SPEECH_BOOSTER) ? 0.1 : 0.4)) //Thin air, let's italicise the message unless we have a loud low pressure speech trait and not in vacuum
 		spans |= SPAN_ITALICS
 
-	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, tts_message = tts_message, tts_filter = tts_filter)//roughly 58% of living/say()'s total cost
+	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced, tts_message = tts_message, tts_filter = tts_filter)//roughly 58% of living/say()'s total cost
 	if(succumbed)
 		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
