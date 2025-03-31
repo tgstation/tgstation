@@ -423,7 +423,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	invoked_spell.owner_has_control = FALSE
 	invoked_spell.Grant(src)
 	RegisterSignals(src, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(after_other_spell_invoked))
-	RegisterSignal(invoked_spell, COMSIG_SPELL_AFTER_CAST, PROC_REF(remove_invoked_spell))
+	RegisterSignal(invoked_spell, COMSIG_SPELL_AFTER_CAST, PROC_REF(on_spell_invoked))
+	RegisterSignal(invoked_spell, COMSIG_QDELETING, PROC_REF(remove_invoked_spell))
 	if (invoked_spell.click_to_activate)
 		invoked_spell.set_click_ability(src)
 	else
@@ -436,12 +437,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		remove_invoked_spell(invoked_spell)
 
 /// When we're done casting a spell get rid of it
-/mob/living/proc/remove_invoked_spell(datum/action/cooldown/spell/invoked)
+/mob/living/proc/on_spell_invoked(datum/action/cooldown/spell/invoked)
 	SIGNAL_HANDLER
 	COOLDOWN_START(src, invoke_spell_cooldown, invoked.cooldown_time)
 	addtimer(CALLBACK(src, PROC_REF(spells_recharged)), invoked.cooldown_time, TIMER_DELETE_ME)
 	UnregisterSignal(src, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED))
-	invoked.Remove(src)
+	remove_invoked_spell()
+
+/// I don't want to play with you any more
+/mob/living/proc/remove_invoked_spell()
+	SIGNAL_HANDLER
+	UnregisterSignal(invoked_spell, list(COMSIG_SPELL_AFTER_CAST, COMSIG_QDELETING))
+	invoked_spell.Remove(src)
 	QDEL_NULL(invoked_spell)
 
 /// Notify that we can cast spells
