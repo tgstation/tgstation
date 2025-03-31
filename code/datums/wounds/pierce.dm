@@ -3,6 +3,21 @@
 	Piercing wounds
 */
 /datum/wound/pierce
+	undiagnosed_name = "Puncture"
+
+/datum/wound/pierce/get_self_check_description(self_aware)
+	if(!limb.can_bleed())
+		return ..()
+
+	switch(severity)
+		if(WOUND_SEVERITY_TRIVIAL)
+			return span_danger("It's leaking blood from a small [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_MODERATE)
+			return span_warning("It's leaking blood from a [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_SEVERE)
+			return span_boldwarning("It's leaking blood from a serious [LOWER_TEXT(undiagnosed_name || name)]!")
+		if(WOUND_SEVERITY_CRITICAL)
+			return span_boldwarning("It's leaking blood from a major [LOWER_TEXT(undiagnosed_name || name)]!!")
 
 /datum/wound/pierce/bleed
 	name = "Piercing Wound"
@@ -91,7 +106,7 @@
 			if(QDELETED(src))
 				return
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(victim, span_notice("You feel the [LOWER_TEXT(name)] in your [limb.plaintext_zone] firming up from the cold!"))
+				to_chat(victim, span_notice("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first

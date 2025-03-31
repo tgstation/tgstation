@@ -78,9 +78,8 @@
 		hewmon = aliver
 		head = hewmon.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes ()
+			soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes()
 			head.add_bodypart_overlay(soul_eyes)
-			hewmon.update_body_parts()
 
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as a recovered crewmember?",
@@ -94,7 +93,6 @@
 	)
 	if(head)
 		head.remove_bodypart_overlay(soul_eyes)
-		hewmon?.update_body_parts()
 
 	if(!isobserver(chosen_one))
 		if(refuse_revival_if_failed)

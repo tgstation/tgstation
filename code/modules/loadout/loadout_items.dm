@@ -227,7 +227,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
  *
  * Arguments:
  * * preference_source - the datum/preferences our loadout item originated from - cannot be null
- * * equipper - the mob we're equipping this item onto - cannot be null
+ * * equipper - the mob we're equipping this item onto
  * * visuals_only - whether or not this is only concerned with visual things (not backpack, not renaming, etc)
  * * preference_list - what the raw loadout list looks like in the preferences
  *
@@ -240,7 +240,8 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	mob/living/carbon/human/equipper,
 	visuals_only = FALSE,
 )
-	ASSERT(!isnull(equipped_item))
+	if(isnull(equipped_item))
+		return NONE
 
 	if(!visuals_only)
 		ADD_TRAIT(equipped_item, TRAIT_ITEM_OBJECTIVE_BLOCKED, "Loadout")

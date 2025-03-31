@@ -35,6 +35,8 @@ Nothing else in the console has ID requirements.
 	var/id_cache = list()
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
+	/// Cooldown that prevents hanging the MC when tech disks are copied
+	STATIC_COOLDOWN_DECLARE(cooldowncopy)
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
@@ -344,18 +346,23 @@ Nothing else in the console has ID requirements.
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access."))
 			return TRUE
+
 		if ("researchNode")
 			research_node(params["node_id"], usr)
 			return TRUE
+
 		if ("enqueueNode")
 			enqueue_node(params["node_id"], usr)
 			return TRUE
+
 		if ("dequeueNode")
 			dequeue_node(params["node_id"], usr)
 			return TRUE
+
 		if ("ejectDisk")
 			eject_disk(params["type"])
 			return TRUE
+
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
@@ -368,19 +375,28 @@ Nothing else in the console has ID requirements.
 				d_disk.on_upload(stored_research, src)
 				return TRUE
 			if (params["type"] == RND_TECH_DISK)
+				if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
+					say("Servers busy!")
+					return
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
 					return TRUE
+				COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
 			return TRUE
+
 		//Tech disk-only action.
 		if ("loadTech")
+			if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
+				say("Servers busy!")
+				return
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")
 				return
-			stored_research.copy_research_to(t_disk.stored_research)
+			COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 			say("Downloading to technology disk.")
+			stored_research.copy_research_to(t_disk.stored_research)
 			return TRUE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)

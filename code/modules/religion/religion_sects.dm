@@ -104,26 +104,29 @@
 /// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
 /datum/religion_sect/proc/sect_bless(mob/living/target, mob/living/chap)
 	if(!ishuman(target))
-		return FALSE
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/blessed = target
 	for(var/obj/item/bodypart/bodypart as anything in blessed.bodyparts)
 		if(IS_ROBOTIC_LIMB(bodypart))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return TRUE
+			return BLESSING_IGNORED
 
 	var/heal_amt = 10
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 
-	if(hurt_limbs.len)
-		for(var/X in hurt_limbs)
-			var/obj/item/bodypart/affecting = X
-			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		playsound(chap, SFX_PUNCH, 25, TRUE, -1)
-		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
+			blessed.update_damage_overlays()
+
+	blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
+	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 /// What happens if we bless a corpse? By default just do the default smack behavior
 /datum/religion_sect/proc/sect_dead_bless(mob/living/target, mob/living/chap)
@@ -162,9 +165,11 @@
 		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
 		R.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
-		return TRUE
+		return BLESSING_SUCCESS
+
 	if(!ishuman(target))
-		return
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/blessed = target
 
 	//first we determine if we can charge them
@@ -179,12 +184,13 @@
 	if(IS_ORGANIC_LIMB(bodypart))
 		if(!did_we_charge)
 			to_chat(chap, span_warning("[GLOB.deity] scoffs at the idea of healing such fleshy matter!"))
-		else
-			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
-			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
-			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-			playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
-		return TRUE
+			return BLESSING_IGNORED
+
+		blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
+		to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
+		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+		playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
+		return BLESSING_SUCCESS
 
 	//charge(?) and go
 	if(bodypart.heal_damage(5,5,BODYTYPE_ROBOTIC))
@@ -194,7 +200,7 @@
 	to_chat(blessed, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs and charges" : "repairs"] you!"))
 	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	return BLESSING_SUCCESS
 
 /datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/power_store/cell/power_cell, mob/living/chap)
 	if(!istype(power_cell))
@@ -258,33 +264,39 @@
 	return "In the eyes of [GLOB.deity], your wealth is your favor."
 
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
+	if(!ishuman(blessed_living))
+		return BLESSING_FAILED
+
 	var/datum/bank_account/account = chap.get_bank_account()
 	if(!account)
 		to_chat(chap, span_warning("You need a way to pay for the heal!"))
-		return TRUE
+		return BLESSING_IGNORED
+
 	if(account.account_balance < GREEDY_HEAL_COST)
 		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
-		return TRUE
-	if(!ishuman(blessed_living))
-		return FALSE
+		return BLESSING_IGNORED
+
 	var/mob/living/carbon/human/blessed = blessed_living
 	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
 		if(IS_ROBOTIC_LIMB(robolimb))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return TRUE
+			return BLESSING_IGNORED
 
 	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation: Treatment")
 	var/heal_amt = 30
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(hurt_limbs.len)
-		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
-		playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
-		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
+			blessed.update_damage_overlays()
+
+	blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
+	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
+	playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 #undef GREEDY_HEAL_COST
 
@@ -321,10 +333,12 @@
 
 /datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)
 	if(!istype(target) || !istype(chaplain))
-		return FALSE
+		return BLESSING_FAILED
+
 	var/datum/brain_trauma/special/burdened/burden = chaplain.has_trauma_type(/datum/brain_trauma/special/burdened)
 	if(!burden)
-		return FALSE
+		return BLESSING_FAILED
+
 	var/burden_modifier = max(1 - 0.07 * burden.burden_level, 0.01)
 	var/transferred = FALSE
 	var/list/hurt_limbs = target.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + target.get_wounded_bodyparts(BODYTYPE_ORGANIC)
@@ -332,6 +346,7 @@
 	for(var/obj/item/bodypart/possible_limb in chaplain.bodyparts)
 		if(IS_ORGANIC_LIMB(possible_limb))
 			chaplains_limbs += possible_limb
+
 	if(length(chaplains_limbs))
 		for(var/obj/item/bodypart/affected_limb as anything in hurt_limbs)
 			var/obj/item/bodypart/chaplains_limb = chaplain.get_bodypart(affected_limb.body_zone)
@@ -347,20 +362,24 @@
 				transferred = TRUE
 				iter_wound.remove_wound()
 				iter_wound.apply_wound(chaplains_limb)
+
 		if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 			transferred = TRUE
 			target.cure_husk(BURN)
 			chaplain.become_husk(BURN)
+
 	var/toxin_damage = target.getToxLoss()
 	if(toxin_damage && !HAS_TRAIT(chaplain, TRAIT_TOXIMMUNE))
 		transferred = TRUE
 		target.adjustToxLoss(-toxin_damage)
 		chaplain.adjustToxLoss(toxin_damage * burden_modifier, forced = TRUE)
+
 	var/suffocation_damage = target.getOxyLoss()
 	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
 		transferred = TRUE
 		target.adjustOxyLoss(-suffocation_damage)
 		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
+
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
 			var/target_blood_data = target.get_blood_data(target.get_blood_id())
@@ -371,16 +390,18 @@
 				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
 		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
 			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
 	if(transferred)
-		target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
-		to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
-		target.add_mood_event("blessing", /datum/mood_event/blessing)
-	else
 		to_chat(chaplain, span_warning("They hold no burden!"))
-	return TRUE
+		return BLESSING_IGNORED
+
+	target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
+	to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+	playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
+	target.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 /datum/religion_sect/burden/sect_dead_bless(mob/living/target, mob/living/chaplain)
 	return sect_bless(target, chaplain)
@@ -436,17 +457,19 @@
 
 /datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/chap)
 	if(!ishuman(blessed_living))
-		return TRUE
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/blessed = blessed_living
 	if(blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge))
 		to_chat(blessed, span_warning("[GLOB.deity] has already empowered them."))
-		return TRUE
+		return BLESSING_IGNORED
+
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
+	return BLESSING_SUCCESS //trust me, you'll be feeling the pain from the maint drugs all well enough
 
 /datum/religion_sect/maintenance/on_sacrifice(obj/item/reagent_containers/offering, mob/living/user)
 	if(!istype(offering))

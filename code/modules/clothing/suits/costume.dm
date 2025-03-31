@@ -23,7 +23,7 @@
 
 /obj/item/clothing/head/hooded/flashsuit/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, forced = TRUE)
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 
 /obj/item/clothing/suit/costume/pirate
 	name = "pirate coat"
