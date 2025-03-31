@@ -127,3 +127,5 @@
 	var/bodyshape = BODYSHAPE_HUMANOID
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
+
+	var/potential = 0
