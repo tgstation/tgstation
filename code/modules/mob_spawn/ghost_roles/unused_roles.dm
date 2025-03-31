@@ -413,7 +413,7 @@
 	var/datum/objective/until_it_is_done = new()
 	until_it_is_done.no_failure = TRUE
 	until_it_is_done.explanation_text = "Take over as the station's new mail carrier. \
-		If anyone forgets to pick up their package, remind them... With force if necessary."
+		If anyone forgets to pick up their package, remind them... With force if necessary. But try words first."
 	ghoul.objectives += until_it_is_done
 
 	ADD_TRAIT(spawned_mob, TRAIT_HULK, INNATE_TRAIT)
