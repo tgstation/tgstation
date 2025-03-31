@@ -162,8 +162,10 @@
 	SIGNAL_HANDLER
 
 	var/atom/drop_location = real_location.drop_location()
-	for(var/obj/important_thing in real_location)
-		important_thing.forceMove(drop_location)
+	for(var/obj/thing in real_location)
+		thing.forceMove(drop_location)
+		thing.pixel_x = thing.base_pixel_x + rand(-8, 8)
+		thing.pixel_y = thing.base_pixel_y + rand(-8, 8)
 
 /// Automatically ran on all object insertions: flag marking and view refreshing.
 /datum/storage/proc/handle_enter(datum/source, obj/item/arrived)
