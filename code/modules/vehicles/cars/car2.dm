@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(carpool)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.combat_mode && H.potential >= 4)
+		if(H.combat_mode)
 			var/atom/throw_target = get_edge_target_turf(src, user.dir)
 			playsound(get_turf(src), 'code/modules/vehicles/cars/bump.ogg', 100, FALSE)
 			get_damage(10)
