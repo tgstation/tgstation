@@ -48,7 +48,6 @@
 	name = "Ian's Adventure"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
-	show_in_report = FALSE
 	cost = STATION_TRAIT_COST_LOW
 
 /datum/station_trait/ian_adventure/on_round_start()

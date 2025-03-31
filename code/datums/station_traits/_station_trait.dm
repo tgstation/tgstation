@@ -15,8 +15,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/cost = STATION_TRAIT_COST_FULL
 	///Whether this trait is always enabled; generally used for debugging
 	var/force = FALSE
-	///Does this trait show in the centcom report?
-	var/show_in_report = TRUE
 	///What message to show in the centcom report?
 	var/report_message
 	///What code-trait does this station trait give? gives none if null
@@ -68,7 +66,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 /// Returns the type of info the centcom report has on this trait, if any.
 /datum/station_trait/proc/get_report()
-	return "<i>[name]</i> - [report_message]"
+	return report_message ? "<i>[name]</i> - [report_message]" : null
 
 /// Will attempt to revert the station trait, used by admins.
 /datum/station_trait/proc/revert()

@@ -4,7 +4,6 @@
 	abstract_type = /datum/station_trait/april_fools
 	trait_type = STATION_TRAIT_NEUTRAL //They should all be treated as neutral traits, it's easier to pick them that way.
 	//By default, they don't. Some of them just add more station traits, while it doesn't take much to understand others are pranks.
-	show_in_report = FALSE
 	can_revert = FALSE //I'm pretty sure these won't be easy to revert a trait that adds more unrevertable traits.
 
 ///Enables all job traits

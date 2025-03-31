@@ -339,9 +339,10 @@ SUBSYSTEM_DEF(dynamic)
 
 	var/list/trait_list_strings = list()
 	for(var/datum/station_trait/station_trait as anything in SSstation.station_traits)
-		if(!station_trait.show_in_report)
+		var/report_message = station_trait.get_report()
+		if(!report_message)
 			continue
-		trait_list_strings += "[station_trait.get_report()]<BR>"
+		trait_list_strings += "[report_message]<BR>"
 	if(trait_list_strings.len > 0)
 		. += "<hr><b>Identified shift divergencies:</b><BR>" + trait_list_strings.Join()
 

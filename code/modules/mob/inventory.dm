@@ -465,6 +465,7 @@
 	if(qdel_on_fail)
 		qdel(equipping)
 	return null
+
 /**
  * Actually equips an item to a slot (UNSAFE)
  *
