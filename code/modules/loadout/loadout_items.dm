@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Only works if the item is compatible with the GAGS system of coloring.
 	/// Set automatically to TRUE for all items that have the flag [IS_PLAYER_COLORABLE_1].
 	/// If you really want it to not be colorable set this to [DONT_GREYSCALE]
-	var/can_be_greyscale = FALSE
+	var/can_be_recolored = FALSE
 	/// Whether this item can be renamed.
 	/// I recommend you apply this sparingly becuase it certainly can go wrong (or get reset / overridden easily)
 	var/can_be_named = FALSE
@@ -50,8 +50,6 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/abstract_type = /datum/loadout_item
 	/// The actual item path of the loadout item.
 	var/obj/item/item_path
-	/// Assoc lazylist of additional "information" text to display about this item, icon -> text when hovering over it
-	var/list/additional_info
 	/// Icon file (DMI) for the UI to use for preview icons.
 	/// Set automatically if null
 	var/ui_icon
@@ -64,10 +62,10 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 /datum/loadout_item/New(category)
 	src.category = category
 
-	if(can_be_greyscale == DONT_GREYSCALE)
-		can_be_greyscale = FALSE
+	if(can_be_recolored == DONT_GREYSCALE)
+		can_be_recolored = FALSE
 	else if((item_path::flags_1 & IS_PLAYER_COLORABLE_1) && item_path::greyscale_config && item_path::greyscale_colors)
-		can_be_greyscale = TRUE
+		can_be_recolored = TRUE
 
 	if(isnull(name))
 		name = item_path::name
@@ -105,7 +103,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	switch(action)
 		if("select_color")
-			if(can_be_greyscale)
+			if(can_be_recolored)
 				return set_item_color(manager, user)
 
 		if("set_name")
@@ -249,7 +247,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/list/item_details = preference_list[item_path]
 	var/update_flag = NONE
 
-	if(can_be_greyscale && item_details?[INFO_GREYSCALE])
+	if(can_be_recolored && item_details?[INFO_GREYSCALE])
 		equipped_item.set_greyscale(item_details[INFO_GREYSCALE])
 		update_flag |= equipped_item.slot_flags
 
@@ -301,13 +299,10 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 /datum/loadout_item/proc/get_item_information() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/list/displayed_text = additional_info || list()
-
-	if(can_be_greyscale)
+	// Mothblocks is hellbent on recolorable and reskinnable being only tooltips for items
+	var/list/displayed_text = list()
+	if(can_be_recolored)
 		displayed_text[FA_ICON_PALETTE] = "Recolorable"
-
-	if(can_be_named)
-		displayed_text[FA_ICON_QUOTE_LEFT] = "Renamable"
 
 	if(can_be_reskinned)
 		displayed_text[FA_ICON_SWATCHBOOK] = "Reskinnable"
@@ -339,7 +334,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	var/list/button_list = list()
 
-	if(can_be_greyscale)
+	if(can_be_recolored)
 		UNTYPED_LIST_ADD(button_list, list(
 			"label" = "Recolor",
 			"act_key" = "select_color",

@@ -155,4 +155,3 @@
 /datum/loadout_item/head/wig
 	name = "Natural Wig"
 	item_path = /obj/item/clothing/head/wig/natural
-	additional_info = list(FA_ICON_FEMALE = "Hair Color")
