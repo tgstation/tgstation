@@ -94,9 +94,8 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	desc = "A box full of special syndicate firing pins which allow only syndicate operatives to use weapons with those firing pins."
 
 /obj/item/storage/box/firingpins/syndicate/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/firing_pin/implant/pindicate
+		new /obj/item/firing_pin/implant/pindicate(src)
 
 /////////// AI Laws
 

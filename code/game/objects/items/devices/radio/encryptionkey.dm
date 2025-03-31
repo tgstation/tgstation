@@ -3,6 +3,8 @@
 	desc = "An encryption key for a radio headset."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cypherkey_basic"
+	icon_preview = 'icons/obj/fluff/previews.dmi'
+	icon_state_preview = "cypherkey"
 	w_class = WEIGHT_CLASS_TINY
 	/// What channels does this encryption key grant to the parent headset.
 	var/list/channels = list()

@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - bugfix: "Fixed small character preview, color matrix preview, mech preview, and other previews with uses ByondUI map"

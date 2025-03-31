@@ -337,10 +337,8 @@
 	return ..()
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()
-	return list(
-		/obj/item/pen,
-		new /obj/item/launchpad_remote(null, pad),
-	)
+	new /obj/item/pen(src)
+	new /obj/item/launchpad_remote(src, pad)
 
 /obj/item/storage/briefcase/launchpad/attack_self(mob/user)
 	if(!isturf(user.loc)) //no setting up in a locker
