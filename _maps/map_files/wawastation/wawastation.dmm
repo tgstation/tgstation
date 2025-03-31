@@ -2417,7 +2417,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/modular_computer/preset/cargochat/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aML" = (
@@ -3331,7 +3331,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "beW" = (
@@ -4781,7 +4780,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/autolathe,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -26101,14 +26099,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
-"jgZ" = (
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 1
-	},
-/obj/item/radio/intercom/directional/north,
-/obj/machinery/modular_computer/preset/cargochat/cargo,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "jha" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -34279,6 +34269,13 @@
 /obj/structure/disposalpipe/junction,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"lTO" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/autolathe,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "lUj" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -50727,6 +50724,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"rFm" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "rFt" = (
 /obj/machinery/shower/directional/west,
 /obj/effect/landmark/start/prisoner,
@@ -63455,6 +63459,13 @@
 "vYz" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/chemistry/minisat)
+"vYI" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/rnd/production/techfab/department/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "vYL" = (
 /obj/machinery/computer/atmos_control/nitrous_tank,
 /obj/effect/turf_decal/tile/yellow{
@@ -68816,17 +68827,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"xSE" = (
-/obj/machinery/door/poddoor/lift/preopen{
-	transport_linked_id = "cargo"
-	},
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark/textured_half,
-/area/station/cargo/storage)
 "xSW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -83175,7 +83175,7 @@ mVX
 uDB
 poi
 poi
-jgZ
+ahV
 uyL
 hQu
 uyL
@@ -84728,7 +84728,7 @@ uyL
 uuu
 xeW
 bWO
-lam
+rFm
 lKp
 fZp
 klP
@@ -85236,8 +85236,8 @@ aZt
 rzg
 xrH
 jCX
-sdc
-lwW
+etV
+vYI
 uyL
 esN
 fXZ
@@ -85493,8 +85493,8 @@ hvA
 jPR
 pJL
 jCX
-xSE
-twR
+etV
+lTO
 uyL
 dUS
 meT
@@ -85750,7 +85750,7 @@ fHk
 hVQ
 fxG
 jCX
-sdc
+etV
 aMH
 uyL
 uUF
@@ -148199,7 +148199,7 @@ xKh
 sdc
 lNO
 mMJ
-uyL
+xXo
 lZP
 oZQ
 oZQ
@@ -148456,7 +148456,7 @@ cwB
 sdc
 ilr
 gDQ
-uyL
+xXo
 lZP
 oZQ
 oZQ
@@ -148713,7 +148713,7 @@ eFu
 etV
 twR
 gDQ
-uyL
+xXo
 lZP
 oZQ
 oZQ
@@ -148970,7 +148970,7 @@ sdc
 sdc
 rWv
 mlf
-uyL
+xXo
 sMV
 oZQ
 oZQ
@@ -149227,7 +149227,7 @@ sdc
 oZQ
 oZQ
 qNz
-uyL
+xXo
 sMV
 oZQ
 oZQ
