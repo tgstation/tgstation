@@ -80,8 +80,6 @@
 #define DEFAULT_CYBORG_NAME "Default Cyborg Name"
 
 // Choose grid or list TGUI layouts for UI's, when possible.
-/// Default layout will be used. It can be either a grid or a list
-#define TGUI_LAYOUT_DEFAULT "default"
 /// Force grid layout, even if default is a list.
 #define TGUI_LAYOUT_GRID "grid"
 /// Force list layout, even if default is a grid.

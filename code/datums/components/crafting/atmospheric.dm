@@ -37,18 +37,22 @@
 		/obj/item/stack/sheet/iron = 1,
 		)
 	blacklist = list(/obj/item/analyzer/ranged)
+	category = CAT_ATMOSPHERIC
 
 ///abstract path for pipe crafting recipes that set the pipe_type of their results and have other checks as well
 /datum/crafting_recipe/spec_pipe
 	var/pipe_type
 
 /datum/crafting_recipe/spec_pipe/check_requirements(mob/user, list/collected_requirements)
-	return atmos_pipe_check(user, collected_requirements)
+	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
+	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+		return TRUE
+	return FALSE
 
 /datum/crafting_recipe/spec_pipe/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = pipe_type
-	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.pipe_color = ATMOS_COLOR_OMNI
 	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
@@ -236,17 +240,6 @@
 		/obj/item/stock_parts/water_recycler = 1,
 	)
 	category = CAT_ATMOSPHERIC
-
-/datum/crafting_recipe/elder_atmosian_statue
-	name = "Elder Atmosian Statue"
-	result = /obj/structure/statue/elder_atmosian
-	time = 6 SECONDS
-	reqs = list(
-		/obj/item/stack/sheet/mineral/metal_hydrogen = 20,
-		/obj/item/stack/sheet/mineral/zaukerite = 15,
-		/obj/item/stack/sheet/iron = 30,
-	)
-	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/spec_pipe/airlock_pump
 	name = "External Airlock Pump"

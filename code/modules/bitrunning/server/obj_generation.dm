@@ -21,7 +21,7 @@
 	if(!length(possible_turfs)) // Out of turfs to place a curiosity
 		return FALSE
 
-	if(generated_domain.secondary_loot_generated >= assoc_value_sum(generated_domain.secondary_loot)) // Out of curiosities to place
+	if(generated_domain.secondary_loot_generated >= counterlist_sum(generated_domain.secondary_loot)) // Out of curiosities to place
 		return FALSE
 
 	shuffle_inplace(possible_turfs)
