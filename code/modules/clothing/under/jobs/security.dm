@@ -119,7 +119,13 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(14,19),
+		list(20,9)
+	)
+	pony_icon_state = "secskirt"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/security/warden/formal
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
@@ -215,7 +221,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 	pony_clothing_sample_pixels = list(
 		list(14,19),
 		list(20,9)

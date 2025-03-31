@@ -396,5 +396,123 @@
 			"icon_state": "security_skirt_highlight",
 			"blend_mode": "overlay"
 		}
+	],
+	"science": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer1_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer1_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer2_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_layer2_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "belt_highlight",
+			"blend_mode": "overlay"
+		}
+	],
+	"science_skirt": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer1_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer1_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer1_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer2_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer2_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "science_skirt_layer2_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "belt_highlight",
+			"blend_mode": "overlay"
+		}
 	]
 }
