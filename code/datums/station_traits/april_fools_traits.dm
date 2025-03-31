@@ -43,10 +43,10 @@
 
 /datum/station_trait/april_fools/shuffe_job_landmarks/New()
 	. = ..()
-	RegisterSignal(SSminor_mapping, , PROC_REF(shuffe_job_landmarks))
+	RegisterSignal(SSminor_mapping, , PROC_REF(shuffle))
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(give_emergency_welding_tool))
 
-/datum/station_trait/april_fools/proc/shuffe_job_landmarks()
+/datum/station_trait/april_fools/shuffe_job_landmarks/proc/shuffle()
 	SIGNAL_HANDLER
 	var/list/stored_locations = list()
 	var/list/stored_landmarks = list()
