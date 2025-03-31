@@ -184,18 +184,18 @@
 		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
+	if(reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		user.log_message("activated a rigged welder", LOG_VICTIM)
 		explode()
-	switched_on(user)
+		return
 
+	switched_on(user)
 	update_appearance()
 
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount(/datum/reagent/fuel)
-
 
 /// Uses fuel from the welding tool.
 /obj/item/weldingtool/use(used = 0)

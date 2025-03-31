@@ -222,10 +222,6 @@
 		remove_paddles(user)
 		update_power()
 
-/obj/item/defibrillator/item_action_slot_check(slot, mob/user)
-	if(slot_flags & slot)
-		return TRUE
-
 /obj/item/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
 		var/mob/M = paddles.loc
@@ -285,10 +281,6 @@
 	charge_state = "defibcompact-charge"
 	nocell_state = "defibcompact-nocell"
 	emagged_state = "defibcompact-emagged"
-
-/obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBeltSlot())
-		return TRUE
 
 /obj/item/defibrillator/compact/loaded/Initialize(mapload)
 	. = ..()

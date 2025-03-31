@@ -36,7 +36,7 @@
 	if(istype(drug_instance, /obj/item/storage/pill_bottle))
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
-			var/obj/item/reagent_containers/pill/pill = new(drug_instance)
+			var/obj/item/reagent_containers/applicator/pill/pill = new(drug_instance)
 			pill.icon_state = pill_state
 			pill.reagents.add_reagent(reagent_type, 3)
 
@@ -102,7 +102,7 @@
 	return ..()
 
 /datum/quirk/item_quirk/addict/remove()
-	if(quirk_holder && reagent_instance)
+	if(!QDELETED(quirk_holder) && reagent_instance)
 		for(var/addiction_type in subtypesof(/datum/addiction))
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 

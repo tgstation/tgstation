@@ -46,8 +46,8 @@
 	if(isnull(hat))
 		return
 	var/mutable_appearance/hat_overlay = mutable_appearance(hat.worn_icon, hat.icon_state)
-	hat_overlay.pixel_x = offsets[1]
-	hat_overlay.pixel_y = offsets[2]
+	hat_overlay.pixel_w = offsets[1]
+	hat_overlay.pixel_z = offsets[2]
 	overlays += hat_overlay
 
 /datum/element/hat_wearer/proc/exited(atom/movable/source, atom/movable/exited)

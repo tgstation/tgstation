@@ -121,10 +121,36 @@
 	for(var/i = 0; i < max(sprint, initial); i += 20)
 		var/turf/step = get_turf(get_step_multiz(src, direction))
 		if(step)
-			setLoc(step)
+			if(!(ISINRANGE_EX(step.x, TRANSITIONEDGE, world.maxx - TRANSITIONEDGE) && ISINRANGE_EX(step.y, TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)))
+				transition_step(step, direction)
+			else
+				setLoc(step)
 
 	last_moved = world.timeofday + wait_time
 	if(acceleration)
 		sprint = min(sprint + momentum, max_sprint)
 	else
 		sprint = initial
+
+/mob/eye/camera/remote/proc/transition_step(turf/destination, direction)
+	var/datum/space_level/from = SSmapping.get_level(destination.z)
+	var/datum/space_level/into = from.neigbours["[direction]"]
+	if(into && allow_z_transition(from, into))
+		var/dest_x = destination.x
+		var/dest_y = destination.y
+		switch(direction)
+			if(NORTH)
+				dest_y = 1+TRANSITIONEDGE
+			if(SOUTH)
+				dest_y = world.maxy-TRANSITIONEDGE
+			if(EAST)
+				dest_x = 1+TRANSITIONEDGE
+			if(WEST)
+				dest_x = world.maxx-TRANSITIONEDGE
+		var/turf/new_destination = locate(dest_x, dest_y, into.z_value)
+		setLoc(new_destination || destination)
+	else
+		setLoc(destination)
+
+/mob/eye/camera/remote/proc/allow_z_transition(datum/space_level/from, datum/space_level/into)
+	return from == into

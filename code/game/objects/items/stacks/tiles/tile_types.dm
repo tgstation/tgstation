@@ -217,7 +217,7 @@
 	inhand_icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
-	tableVariant = /obj/structure/table/wood/fancy
+	table_type = /obj/structure/table/wood/fancy
 	merge_type = /obj/item/stack/tile/carpet
 	tile_reskin_types = list(
 		/obj/item/stack/tile/carpet,
@@ -247,7 +247,7 @@
 	icon_state = "tile-carpet-black"
 	inhand_icon_state = "tile-carpet-black"
 	turf_type = /turf/open/floor/carpet/black
-	tableVariant = /obj/structure/table/wood/fancy/black
+	table_type = /obj/structure/table/wood/fancy/black
 	merge_type = /obj/item/stack/tile/carpet/black
 	tile_reskin_types = null
 
@@ -256,7 +256,7 @@
 	icon_state = "tile-carpet-blue"
 	inhand_icon_state = "tile-carpet-blue"
 	turf_type = /turf/open/floor/carpet/blue
-	tableVariant = /obj/structure/table/wood/fancy/blue
+	table_type = /obj/structure/table/wood/fancy/blue
 	merge_type = /obj/item/stack/tile/carpet/blue
 	tile_reskin_types = null
 
@@ -265,7 +265,7 @@
 	icon_state = "tile-carpet-cyan"
 	inhand_icon_state = "tile-carpet-cyan"
 	turf_type = /turf/open/floor/carpet/cyan
-	tableVariant = /obj/structure/table/wood/fancy/cyan
+	table_type = /obj/structure/table/wood/fancy/cyan
 	merge_type = /obj/item/stack/tile/carpet/cyan
 	tile_reskin_types = null
 
@@ -274,7 +274,7 @@
 	icon_state = "tile-carpet-green"
 	inhand_icon_state = "tile-carpet-green"
 	turf_type = /turf/open/floor/carpet/green
-	tableVariant = /obj/structure/table/wood/fancy/green
+	table_type = /obj/structure/table/wood/fancy/green
 	merge_type = /obj/item/stack/tile/carpet/green
 	tile_reskin_types = null
 
@@ -283,7 +283,7 @@
 	icon_state = "tile-carpet-orange"
 	inhand_icon_state = "tile-carpet-orange"
 	turf_type = /turf/open/floor/carpet/orange
-	tableVariant = /obj/structure/table/wood/fancy/orange
+	table_type = /obj/structure/table/wood/fancy/orange
 	merge_type = /obj/item/stack/tile/carpet/orange
 	tile_reskin_types = null
 
@@ -292,7 +292,7 @@
 	icon_state = "tile-carpet-purple"
 	inhand_icon_state = "tile-carpet-purple"
 	turf_type = /turf/open/floor/carpet/purple
-	tableVariant = /obj/structure/table/wood/fancy/purple
+	table_type = /obj/structure/table/wood/fancy/purple
 	merge_type = /obj/item/stack/tile/carpet/purple
 	tile_reskin_types = null
 
@@ -301,7 +301,7 @@
 	icon_state = "tile-carpet-red"
 	inhand_icon_state = "tile-carpet-red"
 	turf_type = /turf/open/floor/carpet/red
-	tableVariant = /obj/structure/table/wood/fancy/red
+	table_type = /obj/structure/table/wood/fancy/red
 	merge_type = /obj/item/stack/tile/carpet/red
 	tile_reskin_types = null
 
@@ -310,7 +310,7 @@
 	icon_state = "tile-carpet-royalblack"
 	inhand_icon_state = "tile-carpet-royalblack"
 	turf_type = /turf/open/floor/carpet/royalblack
-	tableVariant = /obj/structure/table/wood/fancy/royalblack
+	table_type = /obj/structure/table/wood/fancy/royalblack
 	merge_type = /obj/item/stack/tile/carpet/royalblack
 	tile_reskin_types = null
 
@@ -319,7 +319,7 @@
 	icon_state = "tile-carpet-royalblue"
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/royalblue
-	tableVariant = /obj/structure/table/wood/fancy/royalblue
+	table_type = /obj/structure/table/wood/fancy/royalblue
 	merge_type = /obj/item/stack/tile/carpet/royalblue
 	tile_reskin_types = null
 

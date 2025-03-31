@@ -37,10 +37,12 @@
 	var/special_pod
 	/// Was this spawned through an admin proc?
 	var/admin_spawned = FALSE
-	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
+	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the crate price min doesn't apply
 	var/goody = FALSE
 	/// Can coupons target this pack? If so, how rarely?
 	var/discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
+	/// Is this supply pack considered unpredictable for the purposes of testing unit testing? Examples include the stock market, or miner supply crates. If true, exempts from unit testing
+	var/test_ignored = FALSE
 
 /datum/supply_pack/New()
 	id = type
@@ -59,6 +61,12 @@
 
 	return data
 
+/**
+ * Proc that takes a given supply_pack, and attempts to create a crate containing the pack's contents as determined by fill()
+ *
+ * @ atom/A: The location or turf that the pack is being generated onto. Cargo shuttle provides an empty turf, other generate()s call this either null or otherwise.
+ * @ datum/bank_account/paying_account: The account to associate the supply pack with when going and generating the crate. Only the paying account can open said secure crate/case.
+ */
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
@@ -121,6 +129,7 @@
 	hidden = TRUE
 	crate_name = "shaft mining delivery crate"
 	access = ACCESS_MINING
+	test_ignored = TRUE
 
 /datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()

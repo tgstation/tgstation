@@ -1,6 +1,7 @@
 // This hallucinations makes us suddenly think we died, stopping us / changing our hud / sending a fake deadchat message.
 /datum/hallucination/death
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 	/// Determines whether we floor them or just immobilize them
 	var/floor_them = TRUE
 

@@ -21,8 +21,10 @@
 	var/stripe_color = null
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
-	//looping sound for printing items
+	///looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
+	///made so we dont call addtimer() 40,000 times in on_techweb_update(). only allows addtimer() to be called on the first update
+	var/techweb_updating = FALSE
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	print_sound = new(src,  FALSE)
@@ -108,6 +110,7 @@
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
 	PROTECTED_PROC(TRUE)
+	techweb_updating = FALSE
 
 	var/previous_design_count = cached_designs.len
 
@@ -130,9 +133,9 @@
 /obj/machinery/rnd/production/proc/on_techweb_update()
 	SIGNAL_HANDLER
 
-	// We're probably going to get more than one update (design) at a time, so batch
-	// them together.
-	addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	if(!techweb_updating) //so we batch these updates together
+		techweb_updating = TRUE
+		addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS)
 
 ///When materials are instered via silo link
 /obj/machinery/rnd/production/proc/silo_material_insert(obj/machinery/rnd/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
@@ -224,8 +227,8 @@
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
@@ -239,7 +242,7 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	var/coefficient

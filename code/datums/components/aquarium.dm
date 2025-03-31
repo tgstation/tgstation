@@ -27,13 +27,13 @@
 	var/list/used_layers = list()
 
 	///The minimum pixel x of the area where vis overlays should be displayed
-	var/aquarium_zone_min_px
+	var/aquarium_zone_min_pw
 	///The maximum pixel x of the area where vis overlays should be displayed
-	var/aquarium_zone_max_px
+	var/aquarium_zone_max_pw
 	///The minimum pixel y of the area where vis overlays should be displayed
-	var/aquarium_zone_min_py
+	var/aquarium_zone_min_pz
 	///The maximum pixel y of the area where vis overlays should be displayed
-	var/aquarium_zone_max_py
+	var/aquarium_zone_max_pz
 
 	///While the feed (reagent) storage is not empty, this is the interval which the fish are fed.
 	var/feeding_interval = 3 MINUTES
@@ -73,10 +73,10 @@
 	src.default_beauty = default_beauty
 	src.reagents_size = reagents_size
 
-	aquarium_zone_min_px = min_px
-	aquarium_zone_max_px = max_px
-	aquarium_zone_min_py = min_py
-	aquarium_zone_max_py = max_py
+	aquarium_zone_min_pw = min_px
+	aquarium_zone_max_pw = max_px
+	aquarium_zone_min_pz = min_py
+	aquarium_zone_max_pz = max_py
 
 	src.min_fluid_temp = min_fluid_temp
 	src.max_fluid_temp = max_fluid_temp
@@ -424,10 +424,10 @@
 	SIGNAL_HANDLER
 	used_layers -= visual.layer
 	visual.layer = request_layer(visual.layer_mode)
-	visual.aquarium_zone_min_px = aquarium_zone_min_px
-	visual.aquarium_zone_max_px = aquarium_zone_max_px
-	visual.aquarium_zone_min_py = aquarium_zone_min_py
-	visual.aquarium_zone_max_py = aquarium_zone_max_py
+	visual.aquarium_zone_min_pw = aquarium_zone_min_pw
+	visual.aquarium_zone_max_pw = aquarium_zone_max_pw
+	visual.aquarium_zone_min_pz = aquarium_zone_min_pz
+	visual.aquarium_zone_max_pz = aquarium_zone_max_pz
 	visual.fluid_type = fluid_type
 
 /datum/component/aquarium/proc/request_layer(layer_type)
