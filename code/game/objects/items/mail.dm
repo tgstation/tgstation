@@ -303,12 +303,7 @@
 		if(!mail_ghoul && prob(10))
 			var/obj/effect/mob_spawn/ghost_role/human/mail_ghoul/ghoul = new(src)
 			mail_ghoul = TRUE
-			notify_ghosts(
-				"A mail ghoul has spawned!",
-				source = ghoul,
-				header = "Delivery",
-				click_interact = TRUE,
-			)
+			ghoul.do_poll()
 
 	update_icon()
 

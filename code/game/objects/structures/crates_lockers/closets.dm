@@ -1031,7 +1031,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		AM.relay_container_resist_act(user, src)
 		return
 	if(!welded && !locked)
-		open()
+		open(user)
 		return
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
