@@ -3,6 +3,31 @@
 	var/description
 	var/list/arg_types
 
+/datum/animate_argument/proc/default_set_string(datum/animate_chain/chain, wanted_type, wanted_value)
+	if(wanted_type != "string")
+		return FALSE
+	chain.vars[name] = "[wanted_value]"
+	return TRUE
+
+/datum/animate_argument/proc/default_set_number(datum/animate_chain/chain, wanted_type, wanted_value)
+	if(wanted_type != "number")
+		return FALSE
+	if(!isnum(wanted_value))
+		if(!istext(wanted_value))
+			return FALSE
+		wanted_value = text2num(wanted_value)
+		if(!isnum(wanted_value))
+			return FALSE
+	chain.vars[name] = wanted_value
+	return TRUE
+
+/datum/animate_argument/proc/handle_set(datum/animate_chain/chain, wanted_type, wanted_value)
+	if(default_set_string(chain, wanted_type, wanted_value))
+		return TRUE
+	if(default_set_number(chain, wanted_type, wanted_value))
+		return TRUE
+	stack_trace("handle_set not implemented for [wanted_type]")
+
 /datum/animate_argument/object
 	name = "Object"
 	description = "The atom, image, or client to animate; omit to add another step to the same sequence as the last animate() call."
@@ -22,6 +47,9 @@
 	name = "time"
 	description = "Time of this step, in 1/10s."
 	arg_types = list( "number" )
+
+/datum/animate_argument/time/handle_set(datum/animate_chain/chain, wanted_type, wanted_value)
+
 
 /datum/animate_argument/loop
 	name = "loop"

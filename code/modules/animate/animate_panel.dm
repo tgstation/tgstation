@@ -110,9 +110,11 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			return TRUE
 
 		if("apply")
-			var/target = locate(cached_targets[ref(user)])
+			var/target_text = cached_targets[ref(user)]
+			var/target = (findtext(target_text, "ckey_") == 1) ? GLOB.directory[copytext(target_text, 6)] : locate(target_text)
 			if(!target)
 				return
+
 			chain?.apply(target)
 			return TRUE
 
@@ -124,7 +126,16 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			return TRUE
 
 		if("target")
-			cached_targets[ref(user)] = ref(user.client?.holder?.marked_datum)
+			var/target_type = params["target_type"]
+			switch(params["target_type"])
+				if("/client")
+					cached_targets[ref(user)] = "ckey_[params["target_ckey"]]"
+					return TRUE
+				if("/atom")
+					cached_targets[ref(user)] = ref(user.client?.holder?.marked_datum)
+					return TRUE
+
+			stack_trace("unhandled target_type: [target_type]")
 			return TRUE
 
 		if("insert_chain")
@@ -186,4 +197,26 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			return TRUE
 
 		if("set_argument")
+			var/datum/animate_chain/chain = get_chain_by_index(user, params["set_param_index"])
+			if(isnull(chain))
+				return
+
+			var/param_name = params["set_param_name"]
+			if(!istext(param_name) || !(param_name in arguments))
+				return
+
+			if(param_name == "Object")
+				to_chat(user, span_notice("Object is handled internally via your target. Support for /image will not be implemented."))
+				return
+
+			var/datum/animate_argument/argument_definition = arguments[param_name]
+			var/list/valid_types = list()
+			for(var/valid_type in argument_definition.arg_types)
+				valid_types["[valid_type]"] = TRUE
+
+			var/param_type = params["set_param_type"]
+			if(!(param_type in valid_types))
+				return
+			return argument_definition.handle_set(chain, param_type, params["set_param_value"])
+
 #warn todo
