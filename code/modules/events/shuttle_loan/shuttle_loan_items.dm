@@ -1,10 +1,8 @@
 
 /obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents()
-	return list(
-		/obj/item/grenade/c4,
-		/obj/item/reagent_containers/applicator/pill/cyanide,
-		/obj/item/grenade/chem_grenade/facid,
-	)
+	new /obj/item/grenade/c4 (src)
+	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
+	new /obj/item/grenade/chem_grenade/facid(src)
 
 /obj/item/paper/fluff/bee_objectives
 	name = "Objectives of a Bee Liberation Front Operative"

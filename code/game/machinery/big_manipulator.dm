@@ -801,8 +801,8 @@
 	icon_overlay = mutable_appearance(item_data.icon, item_data.icon_state, item_data.layer, src, item_data.plane, item_data.alpha, item_data.appearance_flags)
 	icon_overlay.color = item_data.color
 	icon_overlay.appearance = item_data.appearance
-	icon_overlay.pixel_x = 32 + calculate_item_offset(is_x = TRUE)
-	icon_overlay.pixel_y = 32 + calculate_item_offset(is_x = FALSE)
+	icon_overlay.pixel_w = 32 + calculate_item_offset(is_x = TRUE)
+	icon_overlay.pixel_z = 32 + calculate_item_offset(is_x = FALSE)
 	return icon_overlay
 
 /// Updates item that is in the claw.

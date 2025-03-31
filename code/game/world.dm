@@ -163,7 +163,7 @@ GLOBAL_VAR(restart_counter)
 
 	SetupLogs()
 
-	load_admins()
+	load_admins(initial = TRUE)
 
 	load_poll_data()
 

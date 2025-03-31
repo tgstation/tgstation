@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - bugfix: "Players on 516 can submit votes for IRV again."

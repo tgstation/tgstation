@@ -83,7 +83,7 @@
 /obj/item/clothing/shoes/visual_equipped(mob/user, slot)
 	..()
 	if(offset && (slot_flags & slot))
-		user.pixel_y += offset
+		user.pixel_z += offset
 		worn_y_dimension -= (offset * 2)
 		user.update_worn_shoes()
 		equipped_before_drop = TRUE
@@ -96,7 +96,7 @@
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
-	user.pixel_y -= offset
+	user.pixel_z -= offset
 	worn_y_dimension = ICON_SIZE_Y
 
 /obj/item/clothing/shoes/dropped(mob/user)
@@ -300,7 +300,7 @@
 	return ..()
 
 /// Returns appropriate description for unfastened shoes
-/obj/item/clothing/shoes/verb/untied_adjective()
+/obj/item/clothing/shoes/proc/untied_adjective()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "untied"
@@ -310,7 +310,7 @@
 	return "nonexistant"
 
 /// Returns appropriate verb for how to fasten shoes
-/obj/item/clothing/shoes/verb/fasten_verb()
+/obj/item/clothing/shoes/proc/fasten_verb()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "tie"
@@ -320,7 +320,7 @@
 	return "do something mysterious to"
 
 /// Returns appropriate verb for fastening shoes
-/obj/item/clothing/shoes/verb/fastening_verb()
+/obj/item/clothing/shoes/proc/fastening_verb()
 	switch(fastening_type)
 		if (SHOES_LACED)
 			return "tying"
