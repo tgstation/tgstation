@@ -53,7 +53,7 @@
 /datum/book_info/proc/get_genre(default="N/A")
 	return html_decode(genre) || "N/A"
 
-/datumn/book_info/proc/was_ever_adult()
+/datum/book_info/proc/was_ever_adult()
 	return was_adult
 
 /datum/book_info/proc/set_content(_content, trusted = FALSE)
