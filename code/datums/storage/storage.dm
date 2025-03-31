@@ -161,7 +161,9 @@
 /datum/storage/proc/on_deconstruct()
 	SIGNAL_HANDLER
 
-	remove_all()
+	var/atom/drop_location = real_location.drop_location()
+	for(var/obj/important_thing in real_location)
+		important_thing.forceMove(drop_location)
 
 /// Automatically ran on all object insertions: flag marking and view refreshing.
 /datum/storage/proc/handle_enter(datum/source, obj/item/arrived)
