@@ -379,13 +379,6 @@
 	to_chat(user, span_warning("You feel an ominous aura from [source], but there's nothing out of the ordinary inside."))
 	qdel(src)
 
-/obj/effect/mob_spawn/ghost_role/human/mail_ghoul/proc/block_walking_out_early(datum/source, mob/user)
-	SIGNAL_HANDLER
-	if(!polling)
-		return
-	to_chat(user, span_warning("The mail ghoul is being polled for."))
-	qdel(src)
-
 /obj/effect/mob_spawn/ghost_role/human/mail_ghoul/create(mob/mob_possessor, newname)
 	var/mob/living/spawned_mob = ..()
 	for(var/obj/structure/closet/box in spawned_mob.loc)
