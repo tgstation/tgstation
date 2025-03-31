@@ -29,10 +29,11 @@
 	var/starting_content
 	/// The packet of information that describes this book
 	var/datum/book_info/book_data
-
+	/// The inital genre of the book.
+	var/starting_genre
 /obj/item/book/Initialize(mapload)
 	. = ..()
-	book_data = new(starting_title, starting_author, starting_content)
+	book_data = new(starting_title, starting_author, starting_content, starting_genre)
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 
@@ -46,6 +47,7 @@
 	data["author"] = book_data.get_author()
 	data["title"] = book_data.get_title()
 	data["content"] = book_data.get_content()
+	data["genre"] = book_data.get_genre()
 	return data
 
 /obj/item/book/ui_interact(mob/living/user, datum/tgui/ui)
@@ -90,11 +92,21 @@
 	user.add_mood_event("book_nerd", /datum/mood_event/book_nerd)
 	user.mind.book_titles_read[starting_title] = TRUE
 
-/obj/item/book/attack_self(mob/user)
+//Only living mobs can read books now I DON'T CARE!!! it's for a JOKE!!! JOKE!!! HAR HAR!!!
+/obj/item/book/attack_self(mob/living/user)
 	if(!can_read_book(user))
 		return
-
-	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	// This goes out to you .tonty, FUCK YOU!!! EAT SHIT AND DIE!!! THIS IS WHAT YOU DESERVE!!! GET GIBBED!!!
+	if(book_data.genre == "Adult")
+		if(tgui_alert(user, "Are you sure", "Are you sure", list("Yes","No"))=="No")
+			// Regret
+			user.visible_message(span_notice("[user] stares at the cover of the book titled \"[book_data.title]\" before looking away with a face of regret."))
+			return
+		user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and blows up for trying to read it."))
+		user.gib(DROP_ALL_REMAINS)
+		return
+	else
+		user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
 	display_content(user)
 
 /obj/item/book/attackby(obj/item/attacking_item, mob/living/user, params)
@@ -114,7 +126,7 @@
 			to_chat(user, span_warning("The book has been carved out! There is nothing to be vandalized."))
 			return
 
-		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
+		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Genre", "Cancel"))
 		if(isnull(choice))
 			return
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
@@ -150,6 +162,15 @@
 					to_chat(user, span_warning("The name is invalid."))
 					return
 				book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
+				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+			if("Genre")
+				var/genre = tgui_input_text(user, "Write your genre", "Genre", max_length = 15)
+				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
+					return
+				if(!genre)
+					to_chat(user, span_warning("The genre is invalid."))
+					return
+				book_data.set_genre(html_decode(genre))
 				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 
 	else if(istype(attacking_item, /obj/item/barcodescanner))

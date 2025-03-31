@@ -11,11 +11,14 @@
 	var/author
 	///The info inside the book
 	var/content
+	///The genre of the book
+	var/genre
 
-/datum/book_info/New(_title, _author, _content)
+/datum/book_info/New(_title, _author, _content, _genre)
 	title = _title
 	author = _author
 	content = _content
+	genre = _genre
 
 /datum/book_info/proc/set_title(_title, trusted = FALSE)  //Trusted should only be used for books read from the db, or in cases that we can be sure the info has already been sanitized
 	if(trusted)
@@ -35,11 +38,21 @@
 /datum/book_info/proc/get_author(default="N/A")
 	return html_decode(author) || "N/A"
 
+/datum/book_info/proc/set_genre(_genre, trusted = FALSE)
+	if(trusted)
+		genre = _genre
+		return
+	genre = trim(html_encode(_genre), 15)
+
+/datum/book_info/proc/get_genre(default="N/A")
+	return html_decode(genre) || "N/A"
+
 /datum/book_info/proc/set_content(_content, trusted = FALSE)
 	if(trusted)
 		content = _content
 		return
 	content = trim(html_encode(_content), MAX_PAPER_LENGTH)
+
 
 /datum/book_info/proc/set_content_using_paper(obj/item/paper/paper)
 	// Just the paper's raw data.
@@ -70,5 +83,7 @@
 	if(title != cmp_with.title)
 		return FALSE
 	if(content != cmp_with.content)
+		return FALSE
+	if(genre != cmp_with.genre)
 		return FALSE
 	return TRUE

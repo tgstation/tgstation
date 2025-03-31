@@ -668,6 +668,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		var/author = query_library_print.item[2]
 		var/title = query_library_print.item[3]
 		var/content = query_library_print.item[4]
+		var/genre = query_library_print.item[1]
 		if(!QDELETED(src))
 			var/obj/item/book/printed_book = new(get_turf(src))
 			printed_book.name = "Book: [title]"
@@ -676,6 +677,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			fill.set_title(title, trusted = TRUE)
 			fill.set_author(author, trusted = TRUE)
 			fill.set_content(content, trusted = TRUE)
+			fill.set_genre(genre, trusted = TRUE)
 			printed_book.gen_random_icon_state()
 			visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 			log_paper("[key_name(usr)] has printed \"[title]\" (id: [id]) by [author] from a book management console.")
