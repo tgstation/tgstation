@@ -386,8 +386,22 @@
 		spawned_mob.forceMove(box)
 		spawned_mob.AddComponent(/datum/component/block_walking_out_early, box)
 		spawned_mob.set_resting(FALSE, silent = FALSE)
+		var/obj/item/satchel = spawned_mob.get_item_by_slot(ITEM_SLOT_BELT)
+		for(var/obj/item/mail/mail in box)
+			if(prob(50) && length(satchel?.contents) < 7)
+				mail.forceMove(satchel)
 		break
 	return spawned_mob
+
+/obj/effect/mob_spawn/ghost_role/human/mail_ghoul/equip(mob/living/spawned_mob)
+	. = ..()
+	for(var/obj/item/equipment in spawned_mob.get_equipped_items())
+		ADD_TRAIT(equipment, TRAIT_NODROP, INNATE_TRAIT)
+	var/obj/item/clothing/under/mailsuit = spawned_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	if(istype(mailsuit))
+		mailsuit.has_sensor = BROKEN_SENSORS
+		mailsuit.sensor_mode = SENSOR_OFF
+		mailsuit.update_wearer_status()
 
 /obj/effect/mob_spawn/ghost_role/human/mail_ghoul/special(mob/living/carbon/human/spawned_mob, mob/mob_possessor)
 	. = ..()
@@ -412,6 +426,7 @@
 	ADD_TRAIT(spawned_mob, TRAIT_HULK, INNATE_TRAIT)
 	ADD_TRAIT(spawned_mob, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
 	ADD_TRAIT(spawned_mob, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
+	spawned_mob.add_movespeed_mod_immunities(INNATE_TRAIT, /datum/movespeed_modifier/damage_slowdown)
 	spawned_mob.mind.add_antag_datum(ghoul)
 	spawned_mob.AddComponent(/datum/component/strong_pull)
 	spawned_mob.AddComponent( \
@@ -421,7 +436,7 @@
 	)
 	spawned_mob.AddComponent( \
 		/datum/component/regenerator, \
-		regeneration_delay = 10 SECONDS, \
+		regeneration_delay = 4 SECONDS, \
 		brute_per_second = 0.25, \
 		burn_per_second = 0.25, \
 		tox_per_second = 0.1, \
@@ -452,6 +467,8 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	ears = /obj/item/radio/headset
+	belt = /obj/item/storage/bag/mail
+	back = /obj/item/storage/backpack/satchel/leather
 
 /obj/item/card/id/advanced/mailman
 	name = "mail carrier ID"
