@@ -294,7 +294,6 @@
 	user.display_image_in_bubble(emote_image)
 
 /datum/emote/living/carbon/human/aprilfools/clueless
-	emote_icon = 'icons/mob/human/aprilfools_emotes.dmi'
 	key = "clueless"
 	message = "looks clueless."
 	emote_icon_state = "clueless"
