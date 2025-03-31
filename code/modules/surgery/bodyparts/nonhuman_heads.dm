@@ -53,20 +53,13 @@ GLOBAL_LIST_INIT(nonhuman_heads_to_organs, list(
 	icon_state = "bear_snout"
 	preference = null
 	external_bodyshapes = BODYSHAPE_SNOUTED
-	bodypart_overlay = /datum/bodypart_overlay/simple/snout_bear
+	bodypart_overlay = /datum/bodypart_overlay/mutant/nonhuman_snout/bear
 
-/datum/bodypart_overlay/simple/snout_bear
-	icon = 'icons/mob/human/nonhuman_heads.dmi'
-	icon_state = "bear_snout"
-	layers = EXTERNAL_FRONT
-
-/datum/bodypart_overlay/simple/snout_bear/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDESNOUT) || (human.wear_mask?.flags_inv & HIDESNOUT))
-		return FALSE
-	return TRUE
+/datum/bodypart_overlay/mutant/nonhuman_snout/bear
+	color_source = NONE
+	feature_key = "snout_nonhuman"
+	imprint_on_next_insertion = FALSE
+	default_appearance = "Bear"
 
 /obj/item/bodypart/head/cow
 	icon = 'icons/mob/human/nonhuman_heads.dmi'
@@ -92,20 +85,10 @@ GLOBAL_LIST_INIT(nonhuman_heads_to_organs, list(
 	icon_state = "cow_snout"
 	preference = null
 	external_bodyshapes = BODYSHAPE_SNOUTED
-	bodypart_overlay = /datum/bodypart_overlay/simple/snout_cow
+	bodypart_overlay = /datum/bodypart_overlay/mutant/nonhuman_snout/cow
 
-/datum/bodypart_overlay/simple/snout_cow
-	icon = 'icons/mob/human/nonhuman_heads.dmi'
-	icon_state = "cow_snout"
-	layers = EXTERNAL_FRONT
-
-/datum/bodypart_overlay/simple/snout_cow/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDESNOUT) || (human.wear_mask?.flags_inv & HIDESNOUT))
-		return FALSE
-	return TRUE
+/datum/bodypart_overlay/mutant/nonhuman_snout/cow
+	default_appearance = "Cow"
 
 /obj/item/bodypart/head/frog
 	icon = 'icons/mob/human/nonhuman_heads.dmi'
@@ -162,20 +145,10 @@ GLOBAL_LIST_INIT(nonhuman_heads_to_organs, list(
 	icon_state = "horse_snout"
 	preference = null
 	external_bodyshapes = BODYSHAPE_SNOUTED
-	bodypart_overlay = /datum/bodypart_overlay/simple/snout_horse
+	bodypart_overlay = /datum/bodypart_overlay/mutant/nonhuman_snout/horse
 
-/datum/bodypart_overlay/simple/snout_horse
-	icon = 'icons/mob/human/nonhuman_heads.dmi'
-	icon_state = "horse_snout"
-	layers = EXTERNAL_FRONT
-
-/datum/bodypart_overlay/simple/snout_horse/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDESNOUT) || (human.wear_mask?.flags_inv & HIDESNOUT))
-		return FALSE
-	return TRUE
+/datum/bodypart_overlay/mutant/nonhuman_snout/horse
+	default_appearance = "Horse"
 
 /obj/item/bodypart/head/pig
 	icon = 'icons/mob/human/nonhuman_heads.dmi'
@@ -205,3 +178,53 @@ GLOBAL_LIST_INIT(nonhuman_heads_to_organs, list(
 	var/obj/item/organ/liver = organ_owner.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (liver)
 		ADD_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM, REF(src))
+
+/// Quick way to make big noses
+/datum/bodypart_overlay/mutant/nonhuman_snout
+	layers = list(EXTERNAL_FRONT)
+	color_source = NONE
+	feature_key = "snout_nonhuman"
+	imprint_on_next_insertion = FALSE
+	var/default_appearance
+
+/datum/bodypart_overlay/mutant/nonhuman_snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
+	if((human.head?.flags_inv & HIDESNOUT) || (human.wear_mask?.flags_inv & HIDESNOUT))
+		return FALSE
+	return TRUE
+
+/datum/bodypart_overlay/mutant/nonhuman_snout/New()
+	. = ..()
+	set_appearance_from_name(default_appearance)
+
+/datum/bodypart_overlay/mutant/nonhuman_snout/get_global_feature_list()
+	return SSaccessories.snouts_nonhuman
+
+/datum/bodypart_overlay/mutant/nonhuman_snout/randomize_appearance()
+	set_appearance_from_name(default_appearance)
+
+/datum/bodypart_overlay/mutant/nonhuman_snout/get_image(image_layer, obj/item/bodypart/limb)
+	if(!sprite_datum)
+		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
+
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, sprite_datum.icon_state, layer = image_layer)
+
+	return appearance
+
+/datum/sprite_accessory/nonhuman_snout
+	icon = 'icons/mob/human/nonhuman_heads.dmi'
+	color_src = FALSE
+
+/datum/sprite_accessory/nonhuman_snout/bear
+	name = "Bear"
+	icon_state = "bear_snout"
+
+/datum/sprite_accessory/nonhuman_snout/cow
+	name = "Cow"
+	icon_state = "cow_snout"
+
+/datum/sprite_accessory/nonhuman_snout/horse
+	name = "Horse"
+	icon_state = "horse_snout"
