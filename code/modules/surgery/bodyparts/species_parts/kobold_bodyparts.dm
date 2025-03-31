@@ -49,7 +49,7 @@
 	appendage_noun = "claw"
 
 /obj/item/bodypart/arm/right/kobold
-	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/human/species/kobold/bodyparts.dmi'
 	icon_greyscale = 'icons/mob/human/species/kobold/bodyparts.dmi'
 	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
