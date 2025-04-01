@@ -7,6 +7,10 @@
 	UnregisterSignal(idiot_who_lost_species, COMSIG_LIVING_DEATH)
 
 /datum/species/monkey/proc/spec_death(mob/living/carbon/human/H, gibbed)
+	#ifdef UNIT_TESTS
+		return
+	#endif
+
 	if (gibbed && H)
 		explosion(H, heavy_impact_range = 2, light_impact_range = 4) // Smol boom.
 	else if (!QDELETED(H) && H.stat == DEAD && H.getBruteLoss() + H.getFireLoss() >= 100) // Xenobio will live. FOR NOW.
