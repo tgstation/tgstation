@@ -121,6 +121,7 @@ SUBSYSTEM_DEF(carpool)
 	var/beep_sound = 'code/modules/vehicles/cars/beep.ogg'
 
 	var/gas = 1000
+	var/max_bump_damage = 110
 
 
 /obj/vampire_car/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
@@ -448,7 +449,7 @@ SUBSYSTEM_DEF(carpool)
 		prev_speed = round(abs(speed_in_pixels)/8)
 
 	if(istype(A, /mob/living))
-		prev_speed = round(abs(speed_in_pixels)* 0.95)
+		prev_speed = round(abs(speed_in_pixels)* 0.9)
 		var/mob/living/hit_mob = A
 		switch(hit_mob.mob_size)
 			if(MOB_SIZE_HUGE) 	//gangrel warforms, werewolves, bears, ppl with fortitude
@@ -468,7 +469,7 @@ SUBSYSTEM_DEF(carpool)
 			else				//everything else
 				playsound(src, 'code/modules/vehicles/cars/bump.ogg', 50, TRUE)
 				speed_in_pixels = round(speed_in_pixels * 0.9)
-				hit_mob.Paralyze(3 SECONDS)
+				hit_mob.Paralyze(2 SECONDS)
 				hit_mob.Knockdown(3 SECONDS)
 
 	else
@@ -486,7 +487,7 @@ SUBSYSTEM_DEF(carpool)
 	if(istype(A, /mob/living))
 		var/mob/living/L = A
 		var/dam2 = prev_speed
-		L.apply_damage(dam2, BRUTE, BODY_ZONE_CHEST)
+		L.apply_damage(min(dam2, max_bump_damage), BRUTE, BODY_ZONE_CHEST)
 		var/dam = prev_speed
 		if(driver)
 			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
@@ -695,7 +696,7 @@ SUBSYSTEM_DEF(carpool)
 					hit_turf = null
 				if(O.density && O != src)
 					//to_chat(world, "dist_to_hit [dist_to_hit] O [O] O.density [O.density])]")
-					if(!hit_turf || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32))
+					if(!hit_turf || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], O.x*32, O.y*32))
 						hit_turf = O.loc
 						//message_admins("hit_mob:[hit_turf] ")
 

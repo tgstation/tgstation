@@ -219,7 +219,9 @@
 	name = "Car delivery beacon"
 	desc = "Summon your car."
 	icon_state = "designator_syndicate"
-	inhand_icon_state = "designator_syndicate"
+	inhand_icon_state = "nukietalkie"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	company_source = "Quantum Ride"
 	company_message = span_bold("Autonomous delivery initiated. Anticipate the arrival of your vehicle.")
 	w_class = WEIGHT_CLASS_TINY
