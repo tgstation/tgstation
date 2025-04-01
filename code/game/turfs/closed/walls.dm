@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(wall_overlays_cache)
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
-	var/sheet_type = /obj/item/stack/sheet/iron
+	var/obj/item/stack/sheet/sheet_type = /obj/item/stack/sheet/iron
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
@@ -92,8 +92,14 @@ GLOBAL_LIST_EMPTY(wall_overlays_cache)
 		underlays += underlay_appearance
 	register_context()
 
+	if(ispath(sheet_type))
+		plating_material = sheet_type::material_type
+
 	set_materials(plating_material, reinf_material, FALSE)
-	update_overlays()
+
+/turf/closed/wall/bitmask_smooth()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /// Most of this code is pasted within /obj/structure/falsewall. Be mindful of this
 /turf/closed/wall/proc/paint_wall(new_paint, update)

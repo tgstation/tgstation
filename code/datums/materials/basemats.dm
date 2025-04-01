@@ -416,7 +416,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/titanium
 	name = "titanium"
 	desc = "Titanium"
-	color = "#EFEFEF"
+	color = "#b3c0c7"
 	strength_modifier = 1.3
 	categories = list(
 		MAT_CATEGORY_SILO = TRUE,
@@ -443,6 +443,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_deceleration_mult = 1.3
 	fishing_bounciness_mult = 0.75
 	fishing_gravity_mult = 1.1
+	wall_icon = 'icons/turf/bimmerwalls/metal_wall.dmi'
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)

@@ -126,6 +126,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	else if(isnull(id))
 		id = type
 
+	if(!wall_color)
+		wall_color = color
+
 	if(texture_layer_icon_state)
 		cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
 
