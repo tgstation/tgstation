@@ -492,7 +492,7 @@ SUBSYSTEM_DEF(carpool)
 		var/mob/living/L = A
 		var/dam2 = prev_speed
 		var/turf/throw_target = get_edge_target_turf(src, src.dir)
-		var/throw_dist = round(prev_speed/32)
+		var/throw_dist = round(prev_speed/16)
 		L.throw_at(throw_target, throw_dist, 4)
 		L.apply_damage(min(dam2, max_bump_damage), BRUTE, BODY_ZONE_CHEST)
 		var/dam = prev_speed
