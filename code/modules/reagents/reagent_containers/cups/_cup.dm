@@ -359,7 +359,7 @@
 
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
-	desc = "It's a bucket."
+	desc = "It's a... what the hell. Is that a fire cone?"
 	icon = 'icons/obj/service/janitor.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "bucket"
@@ -435,6 +435,23 @@
 /obj/item/reagent_containers/cup/bucket/dropped(mob/user)
 	. = ..()
 	reagents.flags = initial(reagent_flags)
+
+	if(!istype(src, /obj/item/reagent_containers/cup/bucket/wooden))
+		addtimer(CALLBACK(src, PROC_REF(check_spill)), 1)
+
+/obj/item/reagent_containers/cup/bucket/proc/check_spill()
+	if(!ismob(loc) && !istype(loc, /obj/item/storage))
+		visible_message(span_notice("[src] trips over!"))
+		src.throw_at(src)
+		reagents?.expose(get_turf(src), TOUCH)
+		reagents?.clear_reagents()
+		icon_state = "bucket_spill"
+		playsound(loc, 'sound/effects/metalbucket.ogg', 50, TRUE)
+
+/obj/item/reagent_containers/cup/bucket/pickup(mob/user)
+	. = ..()
+	if(!istype(src, /obj/item/reagent_containers/cup/bucket/wooden))
+		icon_state = "bucket"
 
 /obj/item/reagent_containers/cup/bucket/equip_to_best_slot(mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
