@@ -26,6 +26,7 @@
 		"android_l_leg",
 		"android_r_arm",
 		"android_r_leg",
+		"chassis_kit",
 		// DOPPLER ADDITION END
 	)
 	experiments_to_unlock = list(

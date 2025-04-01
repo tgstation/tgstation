@@ -7238,6 +7238,7 @@
 #include "modular_doppler\modular_species\species_types\android\android.dm"
 #include "modular_doppler\modular_species\species_types\android\android_hud.dm"
 #include "modular_doppler\modular_species\species_types\android\android_parts.dm"
+#include "modular_doppler\modular_species\species_types\android\chassis_kit.dm"
 #include "modular_doppler\modular_species\species_types\android\monitor_component.dm"
 #include "modular_doppler\modular_species\species_types\android\power_cord.dm"
 #include "modular_doppler\modular_species\species_types\anthromorph\anthromorph.dm"
