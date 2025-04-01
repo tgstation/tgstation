@@ -8,7 +8,7 @@
 
 /datum/species/monkey/proc/spec_death(mob/living/carbon/human/H, gibbed)
 	#ifdef UNIT_TESTS
-		return
+	return
 	#endif
 
 	if (gibbed && H)
