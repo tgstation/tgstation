@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - map: "Move mafia, CTF, and deathmatch maps into minigame folder"
