@@ -44,6 +44,7 @@
 	// Perform a clean initialization
 	window.initialize(
 		strict_mode = TRUE,
+		inline_js = file('html/meme.js'),
 		assets = list(
 			get_asset_datum(/datum/asset/simple/tgui_panel),
 		))

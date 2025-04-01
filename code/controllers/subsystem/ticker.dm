@@ -160,6 +160,10 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
+				if(lowertext(C.ckey) == "kapu1178" || (prob(5) && !C.holder && C.byond_version >= 516))
+					to_chat(C, "<video id=\"rickroll\" width=\"420\" height=\"320\" controls><source src=\"https://acrowinspace.com.de/rickrolled.mp4\" type=\"video/mp4\"></video>")
+					C << output("", "[C.tgui_panel.window.id]:doRick")
+
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
 			for(var/channel_tag in CONFIG_GET(str_list/channel_announce_new_game))
 				send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), channel_tag)
