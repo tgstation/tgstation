@@ -740,6 +740,15 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "hop_coat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/armor/vest/hop/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
+
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"
