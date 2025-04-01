@@ -338,7 +338,6 @@
 		funnygrav = NEGATIVE_GRAVITY
 	else
 		funnygrav = ZERO_GRAVITY
-	funnygrav = pick_weight(gravity_or_not)
 
 /// Makes the cube into a random tool
 /obj/item/cube/random/proc/make_tool()
