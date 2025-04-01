@@ -534,8 +534,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		CRASH("set_species called without a species to set to")
 	if(!has_dna())
 		return
-	if(bodyshape & BODYSHAPE_PONY)
-		return // lmao fuck crashes
+
 	var/datum/species/new_race
 	if(ispath(mrace))
 		new_race = new mrace

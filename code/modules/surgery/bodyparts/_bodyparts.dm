@@ -1141,11 +1141,6 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					var/list/bodyparts_overlays = overlay.get_overlay(external_layer, src)
-					if(overlay.use_feature_offset)
-						overlay.update_worn_offset(bodyshape, src)
-						if(overlay.my_current_offset)
-							for(var/image/bodypart_image in bodyparts_overlays)
-								overlay.my_current_offset.apply_offset(bodypart_image)
 					. += bodyparts_overlays
 			for(var/datum/layer in .)
 				overlay.modify_bodypart_appearance(layer)
