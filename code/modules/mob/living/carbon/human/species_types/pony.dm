@@ -74,6 +74,9 @@
 		pony_eyes.eye_color_right = "#3366CC"
 	human_for_preview.update_body(TRUE)
 
+/datum/species/pony/check_roundstart_eligible()
+	return TRUE
+
 /datum/species/pony/get_physical_attributes()
 	return "Equestrians are a species of small, long-lived, colorful, psychic quadrupeds, with big eyes and no hands, that bear superficial resemblance to \
 	Old Earth's equines. They are quick on their feet in both senses and can do impossible things, but they struggle with accessibility generally \
