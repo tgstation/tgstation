@@ -98,6 +98,23 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// The multiplier of negative velocity that pulls the bait/bobber of a fishing rod down when not holding the click
 	var/fishing_gravity_mult = 1
 
+	///Icon for walls which are plated with this material
+	var/wall_icon = 'icons/turf/bimmerwalls/bimmer_walls.dmi'
+	///Icon for reinforced walls which are plated with this material
+	var/reinforced_wall_icon = 'icons/turf/bimmerwalls/metal_wall.dmi'
+	/// Icon for painted stripes on the walls
+	var/wall_stripe_icon = 'icons/turf/bimmerwalls/bimmer_stripes.dmi'
+	/// Icon for painted stripes on reinforced walls
+	var/reinforced_wall_stripe_icon = 'icons/turf/bimmerwalls/bimmer_stripes_low.dmi'
+	/// Icon for painted stripes on the low walls
+	var/low_wall_stripe_icon = 'icons/turf/bimmerwalls/bimmer_stripes_low.dmi'
+	/// Color of walls constructed with this material as their plating
+	var/wall_color
+	/// Type of the wall this material makes when its used as a plating, null means can't make a wall out of it.
+	var/wall_type = /turf/closed/wall
+	/// What do we *call* a 'wall' made out of this stuff?
+	var/wall_name = "wall"
+
 /** Handles initializing the material.
  *
  * Arguments:

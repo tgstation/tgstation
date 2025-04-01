@@ -21,6 +21,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	fish_weight_modifier = 1.3
 	fishing_gravity_mult = 1.1
+	wall_color = "#57575c"
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)

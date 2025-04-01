@@ -1,7 +1,20 @@
+/// Typecache of all objects that we seek out to apply a neighbor stripe overlay
+GLOBAL_LIST_INIT(neighbor_typecache, typecacheof(list( \
+	/obj/machinery/door/airlock,
+	/obj/structure/window/reinforced/fulltile,
+	/obj/structure/window/fulltile,
+	/obj/structure/window/reinforced/shuttle,
+	/obj/machinery/door/poddoor,
+	/obj/structure/window/reinforced/plasma/fulltile,
+	/obj/structure/window/plasma/fulltile,
+	)))
+
+GLOBAL_LIST_EMPTY(wall_overlays_cache)
+
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of iron used to separate rooms."
-	icon = 'icons/turf/walls/wall.dmi'
+	icon = 'icons/turf/bimmerwalls/bimmer_walls.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	explosive_resistance = 1
@@ -16,7 +29,7 @@
 
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	canSmoothWith =  SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE +SMOOTH_GROUP_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL
 	///bool on whether this wall can be chiselled into
@@ -31,6 +44,34 @@
 	var/decon_type
 	/// If we added a leaning component to ourselves
 	var/added_leaning = FALSE
+
+	/// Material type of the plating
+	var/plating_material = /datum/material/iron
+	/// Material type of the reinforcement
+	var/reinf_material
+
+	//These are set by the material, do not touch!!!
+	var/material_color
+
+	var/stripe_icon
+	//Ok you can touch vars again :)
+
+
+	/// Paint color of which the wall has been painted with.
+	var/wall_paint
+	/// Paint color of which the stripe has been painted with. Will not overlay a stripe if no paint is applied
+	var/stripe_paint
+	/// Whether this wall is hard to deconstruct, like a reinforced plasteel wall. Dictated by material
+	var/hard_decon
+	/// Whether this wall is rusted or not, to apply the rusted overlay
+	var/rusted
+	/// Material Set Name
+	var/matset_name
+	/// Should the material name be used?
+	var/use_matset_name = TRUE
+
+	///Appearance cache key. This is very touchy.
+	VAR_PRIVATE/cache_key
 
 	var/list/dent_decals
 
@@ -50,6 +91,120 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 	register_context()
+
+	set_materials(plating_material, reinf_material, FALSE)
+	update_overlays()
+
+/// Most of this code is pasted within /obj/structure/falsewall. Be mindful of this
+/turf/closed/wall/proc/paint_wall(new_paint, update)
+	wall_paint = new_paint
+	if(update)
+		update_appearance()
+
+/// Most of this code is pasted within /obj/structure/falsewall. Be mindful of this
+/turf/closed/wall/proc/paint_stripe(new_paint, update)
+	stripe_paint = new_paint
+	if(update)
+		update_appearance()
+
+/// Most of this code is pasted within /obj/structure/falsewall. Be mindful of this
+/turf/closed/wall/proc/set_wall_information(plating_mat, reinf_mat, new_paint, new_stripe_paint)
+	wall_paint = new_paint
+	stripe_paint = new_stripe_paint
+	set_materials(plating_mat, reinf_mat)
+
+/// Most of this code is pasted within /obj/structure/falsewall. Be mindful of this
+/turf/closed/wall/proc/set_materials(plating_mat, reinf_mat, update_appearance = TRUE)
+	if(!plating_mat)
+		CRASH("Something tried to set wall plating to null!")
+
+	var/datum/material/plating_mat_ref = GET_MATERIAL_REF(plating_mat)
+	var/datum/material/reinf_mat_ref
+	if(reinf_mat)
+		reinf_mat_ref = GET_MATERIAL_REF(reinf_mat)
+
+	if(reinf_mat_ref)
+		icon = plating_mat_ref.reinforced_wall_icon
+		material_color = plating_mat_ref.wall_color
+	else
+		icon = plating_mat_ref.wall_icon
+		material_color = plating_mat_ref.wall_color
+
+	if(reinf_mat_ref)
+		stripe_icon = plating_mat_ref.reinforced_wall_stripe_icon
+	else
+		stripe_icon = plating_mat_ref.wall_stripe_icon
+
+	plating_material = plating_mat
+	reinf_material = reinf_mat
+
+	if(reinf_material)
+		name = "reinforced [plating_mat_ref.name] [plating_mat_ref.wall_name]"
+		desc = "It seems to be a section of hull reinforced with [reinf_mat_ref.name] and plated with [plating_mat_ref.name]."
+	else
+		name = "[plating_mat_ref.name] [plating_mat_ref.wall_name]"
+		desc = "It seems to be a section of hull plated with [plating_mat_ref.name]."
+
+	matset_name = name
+
+	if(update_appearance)
+		update_appearance()
+
+/turf/closed/wall/bitmask_smooth()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/turf/closed/wall/update_overlays()
+	var/plating_color = wall_paint || material_color
+	var/stripe_color = stripe_paint || wall_paint || material_color
+
+	var/neighbor_stripe = NONE
+	for (var/cardinal = NORTH; cardinal <= WEST; cardinal *= 2) //No list copy please good sir
+		var/turf/step_turf = get_step(src, cardinal)
+		var/can_area_smooth
+		CAN_AREAS_SMOOTH(src, step_turf, can_area_smooth)
+		if(isnull(can_area_smooth))
+			continue
+		for(var/atom/movable/movable_thing as anything in step_turf)
+			if(GLOB.neighbor_typecache[movable_thing.type])
+				neighbor_stripe ^= cardinal
+				break
+
+	var/old_cache_key = cache_key
+	cache_key = "[icon]:[smoothing_junction]:[plating_color]:[stripe_icon]:[stripe_color]:[neighbor_stripe]:[rusted]"
+	if(!(old_cache_key == cache_key))
+
+		var/potential_overlays = GLOB.wall_overlays_cache[cache_key]
+		if(potential_overlays)
+			overlays = potential_overlays
+			color = plating_color
+		else
+			color = plating_color
+			//Updating the unmanaged wall overlays (unmanaged for optimisations)
+			overlays.len = 0
+			var/list/new_overlays = list()
+
+			if(stripe_icon)
+				var/image/smoothed_stripe = image(stripe_icon, icon_state)
+				smoothed_stripe.appearance_flags = RESET_COLOR
+				smoothed_stripe.color = stripe_color
+				new_overlays += smoothed_stripe
+
+			if(neighbor_stripe)
+				var/image/neighb_stripe_overlay = image('icons/turf/bimmerwalls/neighbor_stripe.dmi', "stripe-[neighbor_stripe]")
+				neighb_stripe_overlay.appearance_flags = RESET_COLOR
+				neighb_stripe_overlay.color = stripe_color
+				new_overlays += neighb_stripe_overlay
+
+			overlays = new_overlays
+			GLOB.wall_overlays_cache[cache_key] = new_overlays
+
+
+	if(dent_decals)
+		add_overlay(dent_decals)
+
+	//And letting anything else that may want to render on the wall to work (ie components)
+	return ..()
 
 /turf/closed/wall/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

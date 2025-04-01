@@ -49,6 +49,9 @@
 	fishing_difficulty_modifier = 5
 	fishing_experience_multiplier = 1.1
 	fishing_gravity_mult = 1.6
+	wall_name = "bulkhead"
+	wall_color = "#57575c"
+	reinforced_wall_icon = 'icons/turf/bimmerwalls/solid_wall_reinforced.dmi'
 
 /datum/material/alloy/plasteel/on_applied(atom/target, mat_amount, multiplier)
 	. = ..()

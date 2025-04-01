@@ -242,3 +242,23 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_group_variable) \
 	var/list/unwrapped = UNWRAP_SMOOTHING_GROUPS(smoothing_group_variable, unwrapped); \
 	assert_sorted(unwrapped, "[#smoothing_group_variable] ([type])"); \
+
+/// Test if thing (an atom) can smooth with an adjacent turf. This is a macro because it is a very very hot proc.
+#define CAN_AREAS_SMOOTH(thing, turf, val) \
+	do{ \
+		if(isnull(turf)) { \
+			break; \
+		}; \
+		var/area/source_area = get_step(thing, 0)?.loc; \
+		var/area/target_area = turf:loc; \
+		if(isnull(target_area)) { \
+			break; \
+		};\
+		if(target_area.area_limited_icon_smoothing && !istype(source_area, target_area.area_limited_icon_smoothing)) { \
+			break; \
+		}; \
+		if(source_area.area_limited_icon_smoothing && !istype(target_area, source_area.area_limited_icon_smoothing)) { \
+			break; \
+		}; \
+		val = TRUE; \
+	}while(FALSE)

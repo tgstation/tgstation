@@ -2,14 +2,14 @@
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
-	icon_state = "reinforced_wall-0"
-	base_icon_state = "reinforced_wall"
 	opacity = TRUE
 	density = TRUE
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
+	reinf_material = /datum/material/iron
+	plating_material = /datum/material/alloy/plasteel
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
