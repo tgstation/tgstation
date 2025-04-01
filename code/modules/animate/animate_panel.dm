@@ -30,6 +30,8 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 	animate_chains_by_user = list()
 
 /datum/animate_panel/proc/get_chain_by_index(mob/user, index)
+	RETURN_TYPE(/datum/animate_chain)
+
 	if(!isnum(index))
 		return null
 
@@ -103,6 +105,7 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 	switch(action)
 		if("export_json")
 		if("export_dm")
+		if("import_json")
 #warn todo
 
 		if("wipe")
@@ -159,7 +162,7 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 
 		if("drop_chain")
 			var/index = params["drop_index"]
-			if(!isnum(index) || !chain)
+			if(!isnum(index))
 				return
 
 			if(index == 1)
@@ -214,5 +217,3 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 				return
 
 			return TRUE
-
-#warn todo
