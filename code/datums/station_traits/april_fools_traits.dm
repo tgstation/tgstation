@@ -42,7 +42,7 @@
 
 /datum/station_trait/april_fools/shuffe_job_landmarks/New()
 	. = ..()
-	RegisterSignal(SSminor_mapping, , PROC_REF(shuffle))
+	RegisterSignal(SSminor_mapping, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(shuffle))
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(give_emergency_welding_tool))
 
 /datum/station_trait/april_fools/shuffe_job_landmarks/proc/shuffle()
