@@ -158,19 +158,9 @@ SUBSYSTEM_DEF(carpool)
 		repairing = FALSE
 		return
 
-/obj/vampire_car/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/gas_can))
-		var/obj/item/gas_can/G = I
-		if(G.stored_gasoline && gas < 1000 && isturf(user.loc))
-			var/gas_to_transfer = min(1000-gas, min(100, max(1, G.stored_gasoline)))
-			G.stored_gasoline = max(0, G.stored_gasoline-gas_to_transfer)
-			gas = min(1000, gas+gas_to_transfer)
-			playsound(loc, 'code/modules/vehicles/cars/gas_fill.ogg', 25, TRUE)
-			to_chat(user, "<span class='notice'>You transfer [gas_to_transfer] fuel to [src].</span>")
-		return
-
-	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		if(!I.tool_start_check(user, amount=1))
+/obj/vampire_car/proc/try_to_weld(obj/item/weldingtool/W, mob/living/user)
+	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+		if(!W.tool_start_check(user, amount=5))
 			return
 		if(!repairing)
 			if(health >= maxhealth)
@@ -178,12 +168,12 @@ SUBSYSTEM_DEF(carpool)
 				return
 			repairing = TRUE
 
-			var time_to_repair = (maxhealth - health) / 8 //Repair 4hp for every second spent repairing
+			var time_to_repair = (maxhealth - health) / 4 //Repair 4hp for every second spent repairing
 			var start_time = world.time
 
 			user.visible_message("<span class='notice'>[user] begins repairing [src]...</span>", \
 				"<span class='notice'>You begin repairing [src]. Stop at any time to only partially repair it.</span>")
-			if(do_after(user, time_to_repair SECONDS, src))
+			if(W.use_tool(src, user, time_to_repair, volume=30))
 				health = maxhealth
 				playsound(src, 'code/modules/vehicles/cars/repair.ogg', 50, TRUE)
 				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
@@ -201,6 +191,20 @@ SUBSYSTEM_DEF(carpool)
 				return
 		return
 
+
+/obj/vampire_car/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weldingtool))
+		try_to_weld(I, user)
+		return
+	if(istype(I, /obj/item/gas_can))
+		var/obj/item/gas_can/G = I
+		if(G.stored_gasoline && gas < 1000 && isturf(user.loc))
+			var/gas_to_transfer = min(1000-gas, min(100, max(1, G.stored_gasoline)))
+			G.stored_gasoline = max(0, G.stored_gasoline-gas_to_transfer)
+			gas = min(1000, gas+gas_to_transfer)
+			playsound(loc, 'code/modules/vehicles/cars/gas_fill.ogg', 25, TRUE)
+			to_chat(user, "<span class='notice'>You transfer [gas_to_transfer] fuel to [src].</span>")
+		return
 	else
 		if(I.force)
 			get_damage(round(I.force/2))
@@ -487,6 +491,9 @@ SUBSYSTEM_DEF(carpool)
 	if(istype(A, /mob/living))
 		var/mob/living/L = A
 		var/dam2 = prev_speed
+		var/turf/throw_target = get_edge_target_turf(src, src.dir)
+		var/throw_dist = round(prev_speed/32)
+		L.throw_at(throw_target, throw_dist, 4)
 		L.apply_damage(min(dam2, max_bump_damage), BRUTE, BODY_ZONE_CHEST)
 		var/dam = prev_speed
 		if(driver)
@@ -591,6 +598,7 @@ SUBSYSTEM_DEF(carpool)
 
 /obj/vampire_car/track/ambulance
 	icon_state = "ambulance"
+	max_bump_damage = 10
 
 /proc/get_dist_in_pixels(pixel_starts_x, pixel_starts_y, pixel_ends_x, pixel_ends_y)
 	var/total_x = abs(pixel_starts_x-pixel_ends_x)
