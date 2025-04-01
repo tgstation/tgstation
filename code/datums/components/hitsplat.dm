@@ -95,6 +95,6 @@
 
 /obj/effect/overlay/vis/hitsplat/update_overlays()
 	. = ..()
-	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1, pixel_z = 10, pixel_w = 1)
+	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1, pixel_w = 1, pixel_z = 10)
 	hitsplat_text.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[damage_amount]</span>")
 	. += hitsplat_text
