@@ -588,8 +588,11 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-	var/bleed_rate = 2
-	var/blood_regen_rate = 8
+	/// Modifies the bleed rate of the owner
+	var/bleed_rate = 1.5
+	/// Modifies the blood regeneration rate of the owner
+	var/blood_regen_rate = 6
+	/// Tracks if we've modified the physiology of the owner
 	VAR_PRIVATE/physiology_modified = FALSE
 
 /datum/mutation/human/bloodier/on_acquiring(mob/living/carbon/human/owner)
@@ -616,8 +619,8 @@
 		owner.physiology.blood_regen_mod /= blood_regen_rate
 		physiology_modified = FALSE
 
-	bleed_rate = max(initial(bleed_rate) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 1)
-	blood_regen_rate = min(initial(blood_regen_rate) * GET_MUTATION_POWER(src), 10)
+	bleed_rate = clamp(initial(bleed_rate) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 1, 2)
+	blood_regen_rate = clamp(initial(blood_regen_rate) * GET_MUTATION_POWER(src), 4, 12)
 
 	if(owner && !physiology_modified) // redundant but just in case
 		owner.physiology.bleed_mod *= bleed_rate
