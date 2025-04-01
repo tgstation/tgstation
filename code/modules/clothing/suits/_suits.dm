@@ -57,8 +57,9 @@
 		if(colors_len > config.expected_colors) // more colors than our config supports
 			var/list/filled_colors = finalized_colors.Copy()
 			finalized_colors = list()
-			for(var/index in colors_len to config.expected_colors - 1)
+			for(var/index in 1 to config.expected_colors)
 				finalized_colors += filled_colors[index]
 			color_string_to_use = jointext(finalized_colors, "")
 	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, color_string_to_use), pony_icon_state)
+	ponysuit.Insert(ponysuit, worn_icon_state ? worn_icon_state : icon_state)
 	return ponysuit

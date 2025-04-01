@@ -14,6 +14,13 @@
 	hood_down_overlay_suffix = "_hood"
 	/// How snug are we?
 	var/zipped = FALSE
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(14,22),
+		list(13,17)
+	)
+	pony_icon_state = "wintercoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /datum/armor/hooded_wintercoat
 	bio = 10
@@ -673,6 +680,7 @@
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
 	flags_1 = IS_PLAYER_COLORABLE_1
+	pony_clothing_sample_pixels = null
 
 //In case colors are changed after initialization
 /obj/item/clothing/suit/hooded/wintercoat/custom/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)

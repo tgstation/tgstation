@@ -40,6 +40,7 @@
 		list(14,11)
 	)
 	pony_icon_state = "cargotech"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/centcom/officer/replica
 	name = "\improper CentCom turtleneck replica"
@@ -59,6 +60,7 @@
 		list(15,10)
 	)
 	pony_icon_state = "cargo_skirt"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/centcom/officer_skirt/replica
 	name = "\improper CentCom turtleneck skirt replica"
