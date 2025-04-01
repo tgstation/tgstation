@@ -76,3 +76,6 @@
 	)
 
 	set_holdable(exception_hold_list = exception_type_list)
+
+	//...So we can run this without it generating a line for every subtype.
+	can_hold_description = generate_hold_desc(exception_type_list)
