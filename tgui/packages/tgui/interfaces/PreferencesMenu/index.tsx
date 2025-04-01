@@ -9,6 +9,7 @@ import { logger } from '../../logging';
 import { LoadingScreen } from '../common/LoadingScreen';
 import { CharacterPreferenceWindow } from './CharacterPreferences';
 import { GamePreferenceWindow } from './GamePreferences';
+import { IconEditingModal } from './preferences/features/icon_editing_modal';
 import {
   GamePreferencesSelectedPage,
   PreferencesMenuData,
@@ -21,6 +22,7 @@ import { ServerPrefs } from './useServerPrefs';
 export function PreferencesMenu(props) {
   return (
     <Window width={920} height={770}>
+      <IconEditingModal />
       <Window.Content>
         <Suspense fallback={<LoadingScreen />}>
           <PrefsWindowInner />

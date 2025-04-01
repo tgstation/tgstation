@@ -23,6 +23,9 @@
 	mutanttongue = /obj/item/organ/tongue/pony
 	mutantbrain = /obj/item/organ/brain/pony
 	mutantlungs = /obj/item/organ/lungs/pony
+	body_markings = list(
+		/datum/bodypart_overlay/simple/body_marking/cutie_mark = SPRITE_ACCESSORY_NONE
+	)
 
 	payday_modifier = 0.8
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT

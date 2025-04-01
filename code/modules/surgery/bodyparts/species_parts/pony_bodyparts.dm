@@ -1152,3 +1152,166 @@
 		else
 			breather.clear_mood_event("smell")
 	breather.adjust_disgust(0.25 * miasma_pp)
+
+/datum/preference_middleware/icon
+	action_delegations = list(
+		"start_editing_pref" = PROC_REF(start_editing_pref),
+		"stop_editing_pref" = PROC_REF(stop_editing_pref),
+		"save_pref" = PROC_REF(save_pref),
+		"spriteEditorCommand" = PROC_REF(sprite_editor_command)
+	)
+	var/datum/preference/icon/edited_pref
+	var/datum/sprite_editor_workspace/workspace
+
+/datum/preference_middleware/icon/on_ui_close(mob/user)
+	stop_editing_pref()
+
+/datum/preference_middleware/icon/proc/start_editing_pref(list/params, mob/user)
+	var/key = params["key"]
+	var/datum/preference/icon/icon_pref = GLOB.preference_entries_by_key[key]
+	if(!istype(icon_pref))
+		return TRUE
+	edited_pref = icon_pref
+	workspace = new(icon_pref.width, icon_pref.height)
+	edited_pref.apply_to_new_workspace(workspace, preferences.read_preference(edited_pref.type))
+	return TRUE
+
+/datum/preference_middleware/icon/proc/stop_editing_pref()
+	edited_pref = null
+	QDEL_NULL(workspace)
+	return TRUE
+
+/datum/preference_middleware/icon/proc/save_pref(list/params, mob/user)
+	if(!workspace)
+		return TRUE
+	var/icon/canvas = new/icon('icons/blanks/32x32.dmi', "nothing")
+	var/width = edited_pref.width
+	var/height = edited_pref.height
+	canvas.Crop(1, 1, width, height)
+	// We only use one sprite editor layer for this pref, for now
+	var/list/layer = workspace.layers[1]["data"]["[SOUTH]"]
+	for(var/y in 1 to height)
+		var/actual_y = height-y+1
+		for(var/x in 1 to width)
+			canvas.DrawBox(layer[actual_y][x], x, y)
+	var/icon/out_icon = edited_pref.process_icon(canvas)
+	preferences.write_preference(edited_pref, out_icon)
+	return stop_editing_pref()
+
+/datum/preference_middleware/icon/proc/sprite_editor_command(list/params, mob/user)
+	if(!workspace)
+		return TRUE
+	var/command = params["command"]
+	switch(command)
+		if("transaction")
+			workspace.new_transaction(params["transaction"])
+		if("undo")
+			workspace.undo()
+		if("redo")
+			workspace.redo()
+	return TRUE
+
+/datum/preference_middleware/icon/get_ui_data(mob/user)
+	var/data = list()
+	if(workspace)
+		data["workspaceData"] = workspace.sprite_editor_ui_data()
+		data["editingIcon"] = TRUE
+	else
+		data["editingIcon"] = FALSE
+	return data
+
+/datum/preference/icon
+	abstract_type = /datum/preference/icon
+	can_randomize = FALSE
+	var/width = 32
+	var/height = 32
+	var/destination_file
+
+/datum/preference/icon/create_informed_default_value(datum/preferences/preferences)
+	var/client/client = preferences.parent
+	var/ckey = client.ckey
+	var/path = "data/player_saves/[ckey[1]]/[ckey]/icons/[destination_file]_[preferences.default_slot].dmi"
+	var/icon/new_icon = icon('icons/blanks/32x32.dmi', "nothing")
+	new_icon.Crop(1, 1, width, height)
+	var/icon/out_icon = process_icon(new_icon)
+	fcopy(out_icon, path)
+	return path
+
+/datum/preference/icon/proc/process_icon(icon/in_icon)
+	return in_icon
+
+/datum/preference/icon/proc/apply_to_new_workspace(datum/sprite_editor_workspace/workspace, value)
+	return
+
+/datum/preference/icon/deserialize(input, datum/preferences/preferences)
+	var/client/client = preferences.parent
+	var/ckey = client.ckey
+	var/path = "data/player_saves/[ckey[1]]/[ckey]/icons/[destination_file]_[preferences.default_slot].dmi"
+	if(isicon(input))
+		fcopy(input, path)
+	return path
+
+/datum/preference/icon/cutie_mark
+	savefile_key = "feature_pony_cutie_mark"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/cutie_mark
+	width = 4
+	height = 4
+	destination_file = "cutie_mark"
+
+/datum/preference/icon/cutie_mark/is_valid(value)
+	return isicon(value) || (istext(value) && fexists(value))
+
+/datum/preference/icon/cutie_mark/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["pony_cutie_mark"] = value
+
+/datum/preference/icon/cutie_mark/compile_ui_data(mob/user, value)
+	var/icon/mark_icon = icon(value, "cutie_mark_chest", EAST)
+	mark_icon.Crop(12, 11, 15, 14)
+	return icon2base64(mark_icon)
+
+/datum/preference/icon/cutie_mark/process_icon(icon/in_icon)
+	var/icon/new_icon = icon('icons/blanks/32x32.dmi', "nothing")
+	in_icon.Crop(1, 1, 32, 32)
+	in_icon.Shift(EAST, 11)
+	in_icon.Shift(NORTH, 10)
+	new_icon.Insert(in_icon, "cutie_mark_chest", EAST)
+	in_icon.Shift(EAST, 7)
+	new_icon.Insert(in_icon, "cutie_mark_chest", WEST)
+	return new_icon
+
+/datum/preference/icon/cutie_mark/apply_to_new_workspace(datum/sprite_editor_workspace/workspace, value)
+	var/icon/mark_icon = icon(value, "cutie_mark_chest", EAST)
+	var/list/layer = workspace.layers[1]["data"]["[SOUTH]"]
+	for(var/y in 1 to height)
+		for(var/x in 1 to height)
+			var/actual_y = 15-y
+			var/actual_x = 11+x
+			layer[y][x] = mark_icon.GetPixel(actual_x, actual_y) || "#00000000"
+
+/datum/sprite_accessory/cutie_mark
+	natural_spawn = FALSE
+	icon_state = "cutie_mark"
+	compatible_bodyshapes = BODYSHAPE_PONY
+	color_src = null
+	var/icon_path
+
+/datum/bodypart_overlay/simple/body_marking/cutie_mark
+	dna_feature_key = "pony_cutie_mark"
+	applies_to = list(
+		/obj/item/bodypart/chest
+	)
+
+/datum/bodypart_overlay/simple/body_marking/cutie_mark/get_accessory(value)
+	if(value == SPRITE_ACCESSORY_NONE)
+		return
+	var/datum/sprite_accessory/cutie_mark/accessory = new()
+	accessory.icon_path = value
+	accessory.icon = icon(value)
+	return accessory
+
+/datum/bodypart_overlay/simple/body_marking/cutie_mark/generate_icon_cache()
+	. = ..()
+	. += md5(icon)
+

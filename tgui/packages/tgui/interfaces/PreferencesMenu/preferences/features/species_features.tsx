@@ -3,6 +3,7 @@ import {
   FeatureChoiced,
   FeatureChoicedServerData,
   FeatureColorInput,
+  FeatureIcon,
   FeatureValueProps,
 } from './base';
 import { FeatureDropdownInput } from './dropdowns';
@@ -120,6 +121,11 @@ export const feature_pony_choice: FeatureChoiced = {
   ) => {
     return <FeatureDropdownInput buttons {...props} />;
   },
+};
+
+export const feature_pony_cutie_mark: Feature<string, undefined> = {
+  name: 'Cutie Mark',
+  component: FeatureIcon,
 };
 
 export const unicorn_tk_color: Feature<string> = {

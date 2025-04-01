@@ -277,6 +277,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return FALSE
 
 /datum/preferences/ui_close(mob/user)
+	for(var/datum/preference_middleware/preference_middleware as anything in middleware)
+		preference_middleware.on_ui_close(user)
 	save_character()
 	save_preferences()
 	QDEL_NULL(character_preview_view)

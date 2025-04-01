@@ -11,6 +11,7 @@ import {
   Box,
   Button,
   Dropdown,
+  Image,
   Input,
   NumberInput,
   Slider,
@@ -258,5 +259,26 @@ export function FeatureShortTextInput(
       updateOnPropsChange
       onChange={(_, value) => handleSetValue(value)}
     />
+  );
+}
+
+export function FeatureIcon(props: FeatureValueProps<string, undefined>) {
+  const { act, data } = useBackend<PreferencesMenuData>();
+
+  const { featureId, value } = props;
+
+  return (
+    <Button onClick={() => act('start_editing_pref', { key: featureId })}>
+      <Stack align="center" fill>
+        <Stack.Item>
+          <Image
+            height={1.2}
+            width={1.2}
+            src={`data:image/jpeg;base64,${value}`}
+          />
+        </Stack.Item>
+        <Stack.Item grow>Change</Stack.Item>
+      </Stack>
+    </Button>
   );
 }
