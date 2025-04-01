@@ -447,6 +447,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/proc/on_spell_invoked(datum/action/cooldown/spell/invoked)
 	SIGNAL_HANDLER
 
+	deltimer(invoke_spell_reset_timer)
+	UnregisterSignal(invoked, COMSIG_SPELL_AFTER_CAST)
+
 	// Snowflake time
 	if (istype(invoked, /datum/action/cooldown/spell/shapeshift))
 		var/mob/living/living_owner = invoked.owner
@@ -457,9 +460,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	if (istype(invoked, /datum/action/cooldown/spell/touch))
-		deltimer(invoke_spell_reset_timer)
-		UnregisterSignal(invoked, COMSIG_SPELL_AFTER_CAST)
 		RegisterSignal(invoked, COMSIG_SPELL_LOST_SPELL_HAND, PROC_REF(apply_spell_cooldown))
+		return
+
+	if (istype(invoked, /datum/action/cooldown/spell/sanguine_strike))
+		RegisterSignal(invoked, COMSIG_SPELL_FINISHED_ENCHANTING, PROC_REF(apply_spell_cooldown))
 		return
 
 	apply_spell_cooldown(invoked)

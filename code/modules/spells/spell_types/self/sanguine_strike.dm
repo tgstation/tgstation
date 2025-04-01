@@ -88,6 +88,7 @@
 
 /// ends the enchantment, starting the cooldown (which was frozen until you attacked)
 /datum/action/cooldown/spell/sanguine_strike/proc/end_enchantment(obj/item/enchanted)
+	SEND_SIGNAL(src, COMSIG_SPELL_FINISHED_ENCHANTING)
 	UnregisterSignal(enchanted, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_DROPPED))
 	StartCooldown()
 	enchanted.remove_filter("sanguine_strike")

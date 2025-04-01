@@ -15,7 +15,10 @@
 	#define SPELL_NO_IMMEDIATE_COOLDOWN (1 << 2)
 
 /// Sent from /datum/action/cooldown/spell/touch/proc/remove_hand
-#define COMSIG_SPELL_LOST_SPELL_HAND "mob_lost_spell_hand"
+#define COMSIG_SPELL_LOST_SPELL_HAND "spell_lost_spell_hand"
+
+/// Sent from /datum/action/cooldown/spell/sanguine_strike/proc/end_enchantment
+#define COMSIG_SPELL_FINISHED_ENCHANTING "spell_finished_enchanting"
 
 /// Sent to an mob when a [/datum/action/cooldown/spell] calls try_invoke() to the caster: (datum/action/cooldown/spell/spell, feedback)
 #define COMSIG_MOB_TRY_INVOKE_SPELL "try_invoke_spell"
