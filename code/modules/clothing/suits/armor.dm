@@ -216,6 +216,13 @@
 	icon_state = "hosformal"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(16,19),
+		list(19,20)
+	)
+	pony_icon_state = "parade"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
@@ -314,6 +321,13 @@
 	icon_state = "capformal"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(16,19),
+		list(19,20)
+	)
+	pony_icon_state = "parade"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
 	. = ..()
@@ -697,6 +711,13 @@
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_centcom_formal
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(19,20)
+	)
+	pony_icon_state = "parade"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /datum/armor/armor_centcom_formal
 	melee = 35

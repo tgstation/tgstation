@@ -31,6 +31,12 @@
 		)
 	armor_type = /datum/armor/toggle_labcoat
 	species_exception = list(/datum/species/golem)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(15,18)
+	)
+	pony_icon_state = "labcoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/suit/toggle/labcoat/cmo
 	name = "chief medical officer's labcoat"
@@ -84,6 +90,10 @@
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#4A77A1#4A77A1#7095C2"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "labcoat_sleeves"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/suit/toggle/labcoat/genetics/Initialize(mapload)
 	. = ..()
@@ -96,6 +106,11 @@
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#F17420#F17420#EB6F2C"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "labcoat_shoulders"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+
 
 /obj/item/clothing/suit/toggle/labcoat/chemist/Initialize(mapload)
 	. = ..()
@@ -108,6 +123,11 @@
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#198019#198019#40992E"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "labcoat_sleeves"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+
 
 /obj/item/clothing/suit/toggle/labcoat/virologist/Initialize(mapload)
 	. = ..()
@@ -120,6 +140,11 @@
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#2D2D33#2D2D33#39393F"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "labcoat_shoulders"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+
 
 /obj/item/clothing/suit/toggle/labcoat/coroner/Initialize(mapload)
 	. = ..()
@@ -138,6 +163,11 @@
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#7E1980#7E1980#B347A1"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "labcoat_shoulders"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+
 
 /obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
 	. = ..()
@@ -150,6 +180,11 @@
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#88242D#88242D#39393F"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "labcoat_shoulders"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+
 
 /obj/item/clothing/suit/toggle/labcoat/interdyne
 	name = "interdyne labcoat"
@@ -158,6 +193,11 @@
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#88242D#88242D#39393F"
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "labcoat_sleeves"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+
 
 // Research Director
 

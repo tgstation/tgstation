@@ -141,6 +141,12 @@
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
 	flags_inv = HIDEBELT
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,20)
+	)
+	pony_icon_state = "trenchcoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /datum/armor/jacket_det_suit
 	melee = 25
@@ -228,6 +234,12 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,19)
+	)
+	pony_icon_state = "suitjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple formal suit jacket"

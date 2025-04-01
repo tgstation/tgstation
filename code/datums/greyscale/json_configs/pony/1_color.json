@@ -181,5 +181,117 @@
 			"icon_state": "hos_coat_highlight",
 			"blend_mode": "overlay"
 		}
+	],
+	"sweater": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"suitjacket": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"trenchcoat": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"labcoat": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_mult",
+				"blend_mode": "multiply"
+			}
+		]
 	]
 }
