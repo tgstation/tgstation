@@ -334,7 +334,11 @@
 
 /// Makes it either negate your gravity or RARELY flip you upside down.
 /obj/item/cube/random/proc/make_gravity()
-	funnygrav = pick_weight(list(ZERO_GRAVITY = 150, NEGATIVE_GRAVITY = rarity*5))
+	if(prob(round(5*rarity/200,0.1)))
+		funnygrav = NEGATIVE_GRAVITY
+	else
+		funnygrav = ZERO_GRAVITY
+	funnygrav = pick_weight(gravity_or_not)
 
 /// Makes the cube into a random tool
 /obj/item/cube/random/proc/make_tool()

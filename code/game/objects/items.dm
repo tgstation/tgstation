@@ -1809,7 +1809,7 @@
 /// Modifies the fantasy variable
 /obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
 	var/result = LAZYACCESS(fantasy_modifications, variable_key)
-	if(!isnull(result) && !istype(src, /obj/item/cube)) // fuck you
+	if(!isnull(result))
 		if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
 			return result // we are immune to your foul magicks you inferior wizard, we keep our bonuses
 

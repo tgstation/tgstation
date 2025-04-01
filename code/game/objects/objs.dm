@@ -315,10 +315,10 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 	var/integrity_mod = GET_MATERIAL_MODIFIER(material?.integrity_modifier ? material.integrity_modifier : 1, multiplier) // STOP SCREAMING RUNTIMES AT ME
 	modify_max_integrity(ceil(max_integrity * integrity_mod))
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	var/strength_mod = GET_MATERIAL_MODIFIER(material?.strength_modifier ? material.strength_modifier : 1, multiplier)
 	force *= strength_mod
 	throwforce *= strength_mod
-	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	var/list/armor_mods = material?.get_armor_modifiers(multiplier) ? material.get_armor_modifiers(multiplier) : list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
 	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 ///This proc is called when the material is removed from an object specifically.
