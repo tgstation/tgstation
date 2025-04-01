@@ -446,19 +446,28 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /// When we're done casting a spell get rid of it
 /mob/living/proc/on_spell_invoked(datum/action/cooldown/spell/invoked)
 	SIGNAL_HANDLER
-	if (!istype(invoked, /datum/action/cooldown/spell/shapeshift))
-		apply_spell_cooldown(invoked)
-		return
 
 	// Snowflake time
-	var/mob/living/living_owner = invoked.owner
-	COOLDOWN_START(living_owner, invoke_spell_cooldown, INFINITY)
-	deltimer(invoke_spell_reset_timer)
-	addtimer(CALLBACK(src, PROC_REF(expire_shapeshift)), 2 MINUTES, TIMER_DELETE_ME)
-	to_chat(living_owner, span_notice("Your new form will last for two minutes!"))
+	if (istype(invoked, /datum/action/cooldown/spell/shapeshift))
+		var/mob/living/living_owner = invoked.owner
+		COOLDOWN_START(living_owner, invoke_spell_cooldown, INFINITY)
+		deltimer(invoke_spell_reset_timer)
+		addtimer(CALLBACK(src, PROC_REF(expire_shapeshift)), 2 MINUTES, TIMER_DELETE_ME)
+		to_chat(living_owner, span_notice("Your new form will last for two minutes!"))
+		return
+
+	if (istype(invoked, /datum/action/cooldown/spell/touch))
+		deltimer(invoke_spell_reset_timer)
+		UnregisterSignal(invoked, COMSIG_SPELL_AFTER_CAST)
+		RegisterSignal(invoked, COMSIG_SPELL_LOST_SPELL_HAND, PROC_REF(apply_spell_cooldown))
+		return
+
+	apply_spell_cooldown(invoked)
+
 
 /// Boy we sure are collecting a lot of procs
 /mob/living/proc/apply_spell_cooldown(datum/action/cooldown/spell/invoked)
+	SIGNAL_HANDLER
 	COOLDOWN_START(src, invoke_spell_cooldown, invoked.cooldown_time)
 	addtimer(CALLBACK(src, PROC_REF(spells_recharged)), min(invoked.cooldown_time, 5 MINUTES), TIMER_DELETE_ME)
 	remove_invoked_spell()
@@ -476,7 +485,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 	deltimer(invoke_spell_reset_timer)
 	UnregisterSignal(src, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED))
-	UnregisterSignal(invoked_spell, list(COMSIG_SPELL_AFTER_CAST, COMSIG_QDELETING))
+	UnregisterSignal(invoked_spell, list(COMSIG_SPELL_AFTER_CAST, COMSIG_SPELL_LOST_SPELL_HAND, COMSIG_QDELETING))
 	invoked_spell.Remove(src)
 	QDEL_NULL(invoked_spell)
 
