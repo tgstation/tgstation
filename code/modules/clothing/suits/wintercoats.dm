@@ -168,6 +168,14 @@
 	inhand_icon_state = "coatcaptain"
 	armor_type = /datum/armor/wintercoat_captain
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "cap_wintercoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/hooded/wintercoat/captain/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 /datum/armor/wintercoat_captain
 	melee = 25
@@ -260,6 +268,14 @@
 	inhand_icon_state = "coatsecurity"
 	armor_type = /datum/armor/wintercoat_security
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "sec_wintercoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/hooded/wintercoat/security/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 /datum/armor/wintercoat_security
 	melee = 25

@@ -57,7 +57,7 @@
 	var/obj/item/food/clothing/moth_snack
 
 	/// Where should we sample from for pony clothes, if applicable?
-	var/list/pony_clothing_sample_pixels = list()
+	var/list/pony_clothing_sample_pixels = null
 	/// What icon state should we pull from the config?
 	var/pony_icon_state = "jumpsuit"
 	/// Which config should we be looking for the jumpsuit in?

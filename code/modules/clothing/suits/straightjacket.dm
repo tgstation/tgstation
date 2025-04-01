@@ -8,6 +8,14 @@
 	equip_delay_self = 50
 	strip_delay = 60
 	breakouttime = 5 MINUTES
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "straightjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/jacket/straight_jacket/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 /obj/item/clothing/suit/jacket/straight_jacket/Initialize(mapload)
 	. = ..()
