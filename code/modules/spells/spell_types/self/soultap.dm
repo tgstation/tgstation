@@ -42,6 +42,7 @@
 	. = ..()
 	cast_on.maxHealth -= tap_health_taken
 	cast_on.health = min(cast_on.health, cast_on.maxHealth)
+	cast_on.clear_invoked_spell()
 
 	for(var/datum/action/cooldown/spell/spell in cast_on.actions)
 		spell.reset_spell_cooldown()
@@ -62,3 +63,4 @@
 	// Otherwise just give them some feedback
 	else
 		to_chat(cast_on, span_danger("Your body feels drained and there is a burning pain in your chest."))
+

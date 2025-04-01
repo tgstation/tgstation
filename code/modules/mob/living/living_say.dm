@@ -386,6 +386,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	if (!COOLDOWN_FINISHED(src, invoke_spell_cooldown))
+		var/remaining_cooldown = COOLDOWN_TIMELEFT(src, invoke_spell_cooldown)
+		if (remaining_cooldown == INFINITY)
+			balloon_alert(src, "finish casting your spell first!")
+			return
+
 		balloon_alert(src, "too soon!") // Executus, what is the meaning of this intrusion?
 
 		var/static/list/oom_phrases = list(
@@ -414,6 +419,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		)
 
 		say(pick(oom_phrases), forced = "spell cast error")
+		to_chat(src, span_notice("It will take [DisplayTimeText(remaining_cooldown)] to regain your mana."))
 		return
 
 	invoke_spell_reset_timer = addtimer(CALLBACK(src, PROC_REF(clear_uncast_spell)), 10 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
@@ -457,10 +463,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 /// If you take too long without using your spell or it gets stuck, get rid of it
 /mob/living/proc/clear_uncast_spell()
-	if (isnull(invoked_spell))
+	if (isnull(invoked_spell) && COOLDOWN_TIMELEFT(src, invoke_spell_cooldown) <= 0)
 		return
-	COOLDOWN_RESET(src, invoke_spell_cooldown)
 	balloon_alert(src, "uncast spell dissipates!")
+	clear_invoked_spell()
+
+/// Removes the remaining cooldown
+/mob/living/proc/clear_invoked_spell()
+	COOLDOWN_RESET(src, invoke_spell_cooldown)
 	remove_invoked_spell()
 
 /// Notify that we can cast spells
