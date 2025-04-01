@@ -103,8 +103,23 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 
 	var/mob/user = ui.user
 	switch(action)
-		if("export_json")
 		if("export_dm")
+#warn todo
+
+		if("export_json")
+			var/datum/animate_chain/front = get_chain_by_index(user, 1)
+			if(!front)
+				return
+			var/json = front.serialize_json(list())
+
+			var/json_directory = "data/animation_panel_exports"
+			var/json_file = "[ckey(user)].json"
+			if(!text2file(json, "[json_directory]/[json_file]"))
+				return
+
+			DIRECT_OUTPUT(user, ftp(file(json_file), json_file))
+			return TRUE
+
 		if("import_json")
 #warn todo
 
