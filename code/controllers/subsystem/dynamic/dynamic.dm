@@ -317,7 +317,7 @@ SUBSYSTEM_DEF(dynamic)
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), 10 SECONDS)
 		return
 
-	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD", 0)], [CURRENT_STATION_YEAR]:</i></b><hr>"
+	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]:</i></b><hr>"
 	. += generate_advisory_level()
 
 	var/min_threat = 100
