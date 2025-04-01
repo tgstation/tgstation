@@ -66,7 +66,6 @@
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
 /obj/machinery/recycler/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
@@ -76,16 +75,15 @@
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
-/obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
-		return
+/obj/machinery/recycler/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_pry_open(tool, close_after_pry = TRUE))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	if(default_pry_open(I, close_after_pry = TRUE))
-		return
-
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+/obj/machinery/recycler/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/recycler/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

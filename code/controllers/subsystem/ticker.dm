@@ -349,10 +349,6 @@ SUBSYSTEM_DEF(ticker)
 	else
 		LAZYADD(round_end_events, cb)
 
-/datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
-	if(bomb) //BOOM
-		qdel(bomb)
-
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
@@ -431,6 +427,8 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
 				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
 			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
+		if(ishuman(new_player_living))
+			SEND_SIGNAL(new_player_living, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
 		CHECK_TICK
 
 	if(captainless)

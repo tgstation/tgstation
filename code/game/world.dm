@@ -177,7 +177,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	SetupLogs()
 
-	load_admins()
+	load_admins(initial = TRUE)
 
 	load_poll_data()
 

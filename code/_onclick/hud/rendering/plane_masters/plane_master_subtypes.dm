@@ -248,6 +248,7 @@
 	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
 	plane = WEATHER_PLANE
 	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
 	. = ..()
@@ -272,7 +273,7 @@
 	documentation = "Contains all lighting drawn to turfs. Not so complex, draws directly onto the lighting plate."
 	plane = LIGHTING_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(TURF_LIGHTING_PLATE)
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
@@ -288,8 +289,20 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_MULTIPLY
+	blend_mode = BLEND_ADD
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// I'd love for this to be HSL but filters don't work with blend modes
+	add_relay_to(GET_NEW_PLANE(TURF_LIGHTING_PLATE, offset), BLEND_MULTIPLY, relay_color = list(
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
+		1, 1, 1, 0,
+	))
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
@@ -302,6 +315,7 @@
 	documentation = "Holds the glowing parts of the main tiling 32x32 sprites of weather."
 	plane = WEATHER_GLOW_PLANE
 	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/weather_glow/set_home(datum/plane_master_group/home)
 	. = ..()

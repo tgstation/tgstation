@@ -201,13 +201,13 @@
 	var/turf/draw_to = master_SW || master_NE || master_SE || master_NW
 	var/mutable_appearance/display = mutable_appearance('icons/turf/debug.dmi', "corner_color", LIGHT_DEBUG_LAYER, draw_to, BALLOON_CHAT_PLANE)
 	if(x > draw_to.x)
-		display.pixel_x = 16
+		display.pixel_w = 16
 	else
-		display.pixel_x = -16
+		display.pixel_w = -16
 	if(y > draw_to.y)
-		display.pixel_y = 16
+		display.pixel_z = 16
 	else
-		display.pixel_y = -16
+		display.pixel_z = -16
 
 	display.color = rgb(cache_r * 255, cache_g * 255, cache_b * 255)
 

@@ -18,7 +18,7 @@
 	ADD_TRAIT(target, TRAIT_STOP_FISH_FLOPPING, REF(src))
 	for(var/obj/item/fish/fish in target)
 		tracked_fish |= fish
-		fish.enter_stasis()
+		ADD_TRAIT(fish, TRAIT_FISH_STASIS, REF(src))
 
 /datum/element/fish_safe_storage/Detach(atom/source)
 	for(var/obj/item/fish/fish in source)

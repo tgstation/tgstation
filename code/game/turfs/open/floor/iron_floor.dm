@@ -310,7 +310,7 @@
 	base_icon_state = "recharge_floor"
 	floor_tile = /obj/item/stack/tile/iron/recharge_floor
 
-/turf/open/floor/iron/recharge_floor/Airless
+/turf/open/floor/iron/recharge_floor/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/recharge_floor/asteroid
