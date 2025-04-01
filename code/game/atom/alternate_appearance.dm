@@ -167,6 +167,12 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/everyone/mobShouldSee(mob/M)
 	return !isdead(M)
 
+/datum/atom_hud/alternate_appearance/basic/everyone_plus_observers
+	add_ghost_version = FALSE
+
+/datum/atom_hud/alternate_appearance/basic/everyone_plus_observers/mobShouldSee(mob/M)
+	return TRUE
+
 /datum/atom_hud/alternate_appearance/basic/silicons
 
 /datum/atom_hud/alternate_appearance/basic/silicons/mobShouldSee(mob/M)

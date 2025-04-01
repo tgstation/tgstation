@@ -3001,6 +3001,7 @@
 #include "code\modules\admin\smites\immerse.dm"
 #include "code\modules\admin\smites\knot_shoes.dm"
 #include "code\modules\admin\smites\lightning.dm"
+#include "code\modules\admin\smites\make_valid.dm"
 #include "code\modules\admin\smites\nugget.dm"
 #include "code\modules\admin\smites\petrify.dm"
 #include "code\modules\admin\smites\phobia_ocky_icky.dm"
