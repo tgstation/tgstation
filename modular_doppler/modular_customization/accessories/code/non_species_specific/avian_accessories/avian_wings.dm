@@ -55,3 +55,7 @@
 /datum/sprite_accessory/wings_more/low_jewel
 	name = "Low (Jeweled)"
 	icon_state = "low_jewel"
+
+/datum/sprite_accessory/wings_more/pinioned
+	name = "Pinioned Wings"
+	icon_state = "pinioned"

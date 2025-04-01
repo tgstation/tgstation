@@ -10,3 +10,7 @@
 /datum/sprite_accessory/snouts/bird/big
 	name = "Bird Big"
 	icon_state = "birdbig"
+
+/datum/sprite_accessory/snouts/bird/masked_wing
+	name = "Masked Wing"
+	icon_state = "masked"

@@ -83,6 +83,10 @@
 	name = "Antenna"
 	icon_state = "antenna"
 
+/datum/sprite_accessory/horns/humanoid/messenger
+	name = "Winged Messenger"
+	icon_state = "messenger"
+
 /datum/sprite_accessory/horns/humanoid/big
 	name = "Painted Points"
 	icon = 'modular_doppler/modular_customization/accessories/icons/human/horns_big.dmi'
