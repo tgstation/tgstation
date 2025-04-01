@@ -51,15 +51,15 @@
 		if(!isnull(hitsplat_positions[hitsplat]))
 			continue
 		hitsplat_positions[hitsplat] = new_hitsplat
-		new_hitsplat.pixel_x = hitsplat[1]
-		new_hitsplat.pixel_y = hitsplat[2]
+		new_hitsplat.pixel_w = hitsplat[1]
+		new_hitsplat.pixel_z = hitsplat[2]
 		return
 
 	var/list/first_hitsplat = hitsplat_positions[1]
 	qdel(hitsplat_positions[first_hitsplat])
 	hitsplat_positions[first_hitsplat] = new_hitsplat
-	new_hitsplat.pixel_x = first_hitsplat[1]
-	new_hitsplat.pixel_y = first_hitsplat[2]
+	new_hitsplat.pixel_w = first_hitsplat[1]
+	new_hitsplat.pixel_z = first_hitsplat[2]
 
 /datum/component/hitsplat/proc/on_hitsplat_delete(datum/source)
 	SIGNAL_HANDLER
@@ -69,6 +69,7 @@
 			hitsplat_positions[hitsplat] = null
 
 /obj/effect/overlay/vis/hitsplat
+	name = "hitsplat"
 	icon = 'icons/effects/hitsplats.dmi'
 	icon_state = "hitsplat_default"
 	base_icon_state = "hitsplat"
@@ -94,6 +95,6 @@
 
 /obj/effect/overlay/vis/hitsplat/update_overlays()
 	. = ..()
-	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1, pixel_y = 10, pixel_x = 1)
+	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1, pixel_z = 10, pixel_w = 1)
 	hitsplat_text.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[damage_amount]</span>")
 	. += hitsplat_text
