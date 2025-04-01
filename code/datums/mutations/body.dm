@@ -616,7 +616,7 @@
 		owner.physiology.blood_regen_mod /= blood_regen_rate
 		physiology_modified = FALSE
 
-	bleed_rate = max(initial(bleed_rate) * GET_MUTATION_SYNCHRONIZER(src), 1)
+	bleed_rate = max(initial(bleed_rate) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 1)
 	blood_regen_rate = min(initial(blood_regen_rate) * GET_MUTATION_POWER(src), 10)
 
 	if(owner && !physiology_modified) // redundant but just in case
