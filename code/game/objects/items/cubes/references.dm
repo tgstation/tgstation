@@ -934,7 +934,7 @@
 		. += span_notice("It will open again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, pain_cooldown))]")
 
 /datum/reagent/determination/painbox
-name = "Determination (Cube)"
+	name = "Determination (Cube)"
 
 /datum/reagent/determination/painbox/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
