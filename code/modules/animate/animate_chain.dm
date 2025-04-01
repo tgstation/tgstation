@@ -62,4 +62,28 @@
 		"delay" = delay,
 		"a_tag" = a_tag,
 		"command" = command,
+		"next" = next.serialize_list(options, list())
 	)
+
+/datum/animate_chain/deserialize_list(list/data, list/options)
+	. = ..()
+	if(!.)
+		return
+
+	index = data["index"]
+	time = data["time"]
+	loop = data["loop"]
+	easing = data["easing"]
+	easing_flags = data["easing_flags"]
+	flags = data["flags"]
+	delay = data["delay"]
+	a_tag = data["a_tag"]
+	command = data["command"]
+
+	if("next" in data)
+		var/datum/animate_chain/next_instance = new
+		if(!next_instance.deserialize_list(data["next"], options))
+			return FALSE
+		next = next_instance
+
+	return TRUE
