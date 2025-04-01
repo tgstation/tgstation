@@ -6912,6 +6912,7 @@
 #include "modular_doppler\lore\overrides\station_traits\neutral_traits.dm"
 #include "modular_doppler\lore\overrides\station_traits\positive_traits.dm"
 #include "modular_doppler\loud_asay\code\loud_asay.dm"
+#include "modular_doppler\mining\equipment\trophies_misc.dm"
 #include "modular_doppler\modsuit_pda_app\tap_to_control.dm"
 #include "modular_doppler\modular_antagonists\_dynamic_rulesets.dm"
 #include "modular_doppler\modular_antagonists\cantina\cantina_roles.dm"
