@@ -271,6 +271,12 @@
 		/obj/item/storage/bag/mail,
 		/obj/item/universal_scanner,
 	)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,19)
+	)
+	pony_icon_state = "suitjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 // Quartermaster
 
@@ -306,6 +312,10 @@
 	greyscale_config_worn = /datum/greyscale_config/jacket_lawyer/worn
 	greyscale_colors = "#ffffff"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "suitjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 //Mime
 /obj/item/clothing/suit/toggle/suspenders

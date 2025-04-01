@@ -83,7 +83,7 @@
 		[
 			{
 				"type": "icon_state",
-				"icon_state": "centcom_skirt_layer3_base",
+				"icon_state": "centcom_skirt_layer3_bsase",
 				"blend_mode": "overlay",
 				"color_ids": [ 3 ]
 			},
