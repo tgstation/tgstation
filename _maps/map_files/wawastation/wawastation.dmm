@@ -4638,6 +4638,15 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"bEe" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmospherics_engine)
 "bEn" = (
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/hos)
@@ -6298,10 +6307,10 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
-/obj/machinery/camera/autoname/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/large,
 /area/station/engineering/atmos)
 "ciR" = (
@@ -14251,10 +14260,10 @@
 /turf/open/floor/wood,
 /area/station/security/detectives_office/private_investigators_office)
 "eYM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "eYO" = (
@@ -17422,6 +17431,7 @@
 	name = "Incinerator Storage Shutters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "gcD" = (
@@ -32741,13 +32751,11 @@
 /area/station/science/robotics/lab)
 "lrK" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/large,
 /area/station/engineering/atmos/project)
 "lrV" = (
@@ -41249,9 +41257,18 @@
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "ouG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
 /area/station/engineering/atmos/project)
 "ouH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -45539,8 +45556,8 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "pSH" = (
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/box,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "pSK" = (
@@ -50442,8 +50459,8 @@
 /area/station/maintenance/department/cargo)
 "rAW" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/box,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "rAZ" = (
@@ -54163,6 +54180,7 @@
 "sKn" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "sKs" = (
@@ -54727,6 +54745,16 @@
 /obj/structure/fluff/minepost,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/greater)
+"sVZ" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/station/engineering/atmos/project)
 "sWd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/side,
@@ -55105,12 +55133,9 @@
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "tbv" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister,
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/turf_decal/box,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "tbH" = (
@@ -58736,6 +58761,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer5{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "unL" = (
@@ -63926,6 +63952,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "whn" = (
@@ -64455,12 +64482,9 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
 "wrQ" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/box,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "wrU" = (
@@ -66047,14 +66071,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"wUg" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister,
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark/textured,
-/area/station/engineering/atmos)
 "wUH" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
@@ -67115,6 +67131,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -68354,6 +68371,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/large,
 /area/station/engineering/atmos/mix)
 "xIl" = (
@@ -111225,7 +111243,7 @@ fCG
 wgK
 uTU
 fTX
-wUg
+pSH
 wrQ
 tbv
 fTX
@@ -112776,7 +112794,7 @@ eTg
 jfo
 jfo
 gYM
-jfo
+bEe
 jfo
 jfo
 jfo
@@ -175746,9 +175764,9 @@ fze
 lMj
 anN
 ktL
-ktL
-ktL
-ktL
+pMG
+pMG
+pMG
 vrP
 iZa
 qWG
@@ -178572,7 +178590,7 @@ wNG
 upe
 xxB
 xoR
-hrS
+sVZ
 kCK
 sgw
 vxX
@@ -178828,7 +178846,7 @@ eES
 lqt
 lqt
 lqt
-ouG
+eES
 eYM
 nOd
 sgw
@@ -180108,7 +180126,7 @@ bDk
 eJi
 sgw
 lrK
-lnr
+ouG
 cws
 kIh
 hGY
