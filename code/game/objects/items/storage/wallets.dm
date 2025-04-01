@@ -15,37 +15,40 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 4
-	atom_storage.set_holdable(list(
-		/obj/item/stack/spacecash,
-		/obj/item/holochip,
-		/obj/item/card,
-		/obj/item/cigarette,
-		/obj/item/clothing/accessory/dogtag,
-		/obj/item/coin,
-		/obj/item/coupon,
-		/obj/item/dice,
-		/obj/item/disk,
-		/obj/item/flashlight/pen,
-		/obj/item/folder/biscuit,
-		/obj/item/food/chococoin,
-		/obj/item/implanter,
-		/obj/item/laser_pointer,
-		/obj/item/lighter,
-		/obj/item/lipstick,
-		/obj/item/match,
-		/obj/item/paper,
-		/obj/item/pen,
-		/obj/item/photo,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/applicator,
-		/obj/item/screwdriver,
-		/obj/item/seeds,
-		/obj/item/spess_knife,
-		/obj/item/stack/medical,
-		/obj/item/stamp,
-		/obj/item/toy/crayon),
-		list(/obj/item/screwdriver/power))
+	atom_storage.set_holdable(
+		can_hold_list = list(
+			/obj/item/stack/spacecash,
+			/obj/item/holochip,
+			/obj/item/card,
+			/obj/item/cigarette,
+			/obj/item/clothing/accessory/dogtag,
+			/obj/item/coin,
+			/obj/item/coupon,
+			/obj/item/dice,
+			/obj/item/disk,
+			/obj/item/flashlight/pen,
+			/obj/item/folder/biscuit,
+			/obj/item/food/chococoin,
+			/obj/item/implanter,
+			/obj/item/laser_pointer,
+			/obj/item/lighter,
+			/obj/item/lipstick,
+			/obj/item/match,
+			/obj/item/paper,
+			/obj/item/pen,
+			/obj/item/photo,
+			/obj/item/reagent_containers/dropper,
+			/obj/item/reagent_containers/syringe,
+			/obj/item/reagent_containers/applicator,
+			/obj/item/screwdriver,
+			/obj/item/seeds,
+			/obj/item/spess_knife,
+			/obj/item/stack/medical,
+			/obj/item/stamp,
+			/obj/item/toy/crayon
+		),
+		cant_hold_list = /obj/item/screwdriver/power
+	)
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()

@@ -9,8 +9,8 @@
 	max_total_storage,
 )
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/fish_tank))
-	exception_hold = exception_cache
+
+	set_holdable(/obj/item/fish_tank)
 
 // Syndi bags get some FUN extras
 // You can fit any 2 bulky objects (assuming they're in the whitelist)
@@ -75,9 +75,4 @@
 		/obj/item/fish_tank,
 	)
 
-	// We keep the type list and the typecache list separate...
-	var/static/list/exception_cache = typecacheof(exception_type_list)
-	exception_hold = exception_cache
-
-	//...So we can run this without it generating a line for every subtype.
-	can_hold_description = generate_hold_desc(exception_type_list)
+	set_holdable(exception_hold_list = exception_type_list)
