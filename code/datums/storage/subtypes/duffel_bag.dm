@@ -10,7 +10,7 @@
 )
 	. = ..()
 
-	set_holdable(/obj/item/fish_tank)
+	set_holdable(exception_hold_list = /obj/item/fish_tank)
 
 // Syndi bags get some FUN extras
 // You can fit any 2 bulky objects (assuming they're in the whitelist)
