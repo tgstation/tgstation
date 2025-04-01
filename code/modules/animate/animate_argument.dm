@@ -3,13 +3,13 @@
 	var/description
 	var/list/arg_types
 
-/datum/animate_argument/proc/default_set_string(user, datum/animate_chain/chain, wanted_type, wanted_value)
+/datum/animate_argument/proc/default_set_string(mob/user, datum/animate_chain/chain, wanted_type, wanted_value)
 	if(wanted_type != "string")
 		return FALSE
 	chain.vars[name] = "[wanted_value]"
 	return TRUE
 
-/datum/animate_argument/proc/default_set_number(user, datum/animate_chain/chain, wanted_type, wanted_value)
+/datum/animate_argument/proc/default_set_number(mob/user, datum/animate_chain/chain, wanted_type, wanted_value)
 	if(wanted_type != "number")
 		return FALSE
 	if(!isnum(wanted_value))
@@ -21,7 +21,7 @@
 	chain.vars[name] = wanted_value
 	return TRUE
 
-/datum/animate_argument/proc/default_set_atom(user, datum/animate_chain/chain, wanted_type)
+/datum/animate_argument/proc/default_set_atom(mob/user, datum/animate_chain/chain, wanted_type)
 	tgui_alert(user, "Mark the /atom you want to use as the value.", "mark /atom")
 
 	var/client/user_client = CLIENT_FROM_VAR(user)
@@ -32,7 +32,7 @@
 	chain.vars[name] = ref(target)
 	return TRUE
 
-/datum/animate_argument/proc/handle_set(datum/animate_chain/chain, wanted_type, wanted_value)
+/datum/animate_argument/proc/handle_set(mob/user, datum/animate_chain/chain, wanted_type, wanted_value)
 	if(default_set_string(user, chain, wanted_type, wanted_value))
 		return TRUE
 	if(default_set_number(user, chain, wanted_type, wanted_value))

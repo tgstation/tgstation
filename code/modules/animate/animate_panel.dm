@@ -200,7 +200,7 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			var/param_type = params["set_param_type"]
 			if(!(param_type in valid_types))
 				return
-			if(!argument_definition.handle_set(chain, param_type, params["set_param_value"]))
+			if(!argument_definition.handle_set(user, chain, param_type, params["set_param_value"]))
 				to_chat(user, span_warning("Failed to set argument!"))
 				return
 
