@@ -22,7 +22,7 @@
 	var/datum/weakref/owner
 
 	/// All possible tool behaviors for the cube
-	var/list/cube_tools = list()
+	var/list/cube_tools
 	/// If we're a laser gun
 	var/lasergun = FALSE
 	/// If this is true, we wait for someone to pick us up and then register a leash component to them.
@@ -232,11 +232,11 @@
 /// Increases melee damage
 /obj/item/cube/random/proc/make_melee()
 	cube_examine_flags |= CUBE_WEAPON
-	AddElement(/datum/element/kneecapping)
-	force = 3 * rarity
+	force = max(3 * rarity, WOUND_MINIMUM_DAMAGE)
 	wound_bonus = rarity
 	throwforce = 3*rarity
 	demolition_mod = 1.05*round(rarity/4)
+	AddElement(/datum/element/kneecapping)
 
 /// Makes it a storage object
 /obj/item/cube/random/proc/make_storage()
@@ -334,13 +334,11 @@
 
 /// Makes it either negate your gravity or RARELY flip you upside down.
 /obj/item/cube/random/proc/make_gravity()
-	var/list/gravweights = list()
-	gravweights[ZERO_GRAVITY] = 150
-	gravweights[NEGATIVE_GRAVITY] = rarity*5
-	funnygrav = pick_weight(gravweights)
+	funnygrav = pick_weight(list(ZERO_GRAVITY = 150, NEGATIVE_GRAVITY = rarity*5))
 
 /// Makes the cube into a random tool
 /obj/item/cube/random/proc/make_tool()
+	cube_tools = list()
 	var/list/possible_tools = list() + GLOB.all_tool_behaviours
 	for(var/t in 1 to rarity)
 		var/new_tool = pick(possible_tools)

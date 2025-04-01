@@ -362,3 +362,25 @@
 		var/datum/gas_mixture/new_mixture = SSair.parse_gas_string("[GAS_O2]=[seconds_per_tick/20]", /datum/gas_mixture)
 		air_contents.merge(new_mixture)
 	return ..()
+
+// To stop issues with the kobolds pr these go here
+/obj/item/food/monkeycube/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = COMMON_CUBE, ismapload = mapload)
+
+/obj/item/food/monkeycube/gorilla/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = RARE_CUBE, ismapload = mapload)
+
+/obj/item/food/monkeycube/chicken/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE, ismapload = mapload)
+
+/obj/item/food/monkeycube/bee/Initialize(mapload)
+	. = ..()
+	if(check_holidays(APRIL_FOOLS))
+		AddComponent(/datum/component/cuboid, cube_rarity = UNCOMMON_CUBE, ismapload = mapload)
+

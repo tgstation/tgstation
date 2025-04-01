@@ -313,7 +313,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier ? material.integrity_modifier : 1, multiplier) // STOP SCREAMING RUNTIMES AT ME
 	modify_max_integrity(ceil(max_integrity * integrity_mod))
 	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 	force *= strength_mod
