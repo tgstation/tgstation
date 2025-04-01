@@ -193,7 +193,7 @@
 	flags_inv = 0
 	strip_delay = 80
 	pony_clothing_sample_pixels = list(
-		list(17,19)
+		list(14,19)
 	)
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter

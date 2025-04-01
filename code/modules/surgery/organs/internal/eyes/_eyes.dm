@@ -295,9 +295,6 @@
 	if(my_head.eye_offset)
 		my_head.eye_offset.apply_offset(eye_left)
 		my_head.eye_offset.apply_offset(eye_right)
-	if(my_head.worn_face_offset)
-		for (var/mutable_appearance/overlay as anything in overlays)
-			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
 

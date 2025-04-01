@@ -723,7 +723,32 @@
 
 /datum/sprite_accessory/hair/wintersshield
 	name = "Soldier (Equestrian)"
-	icon_state = "hair_wintersshield"
+	icon_state = "hair_eq_wintersshield"
+	compatible_bodyshapes = BODYSHAPE_PONY
+
+/datum/sprite_accessory/hair/eq_dork
+	name = "Dork (Equestrian)"
+	icon_state = "hair_eq_dork"
+	compatible_bodyshapes = BODYSHAPE_PONY
+
+/datum/sprite_accessory/hair/eq_punkrocker
+	name = "Punk Rocker (Equestrian)"
+	icon_state = "hair_eq_punkrocker"
+	compatible_bodyshapes = BODYSHAPE_PONY
+
+/datum/sprite_accessory/hair/eq_timid
+	name = "Timid (Equestrian)"
+	icon_state = "hair_eq_timid"
+	compatible_bodyshapes = BODYSHAPE_PONY
+
+/datum/sprite_accessory/hair/eq_bookworm
+	name = "Bookworm (Equestrian)"
+	icon_state = "hair_eq_bookworm"
+	compatible_bodyshapes = BODYSHAPE_PONY
+
+/datum/sprite_accessory/hair/eq_fatale
+	name = "Fatale (Equestrian)"
+	icon_state = "hair_eq_fatale"
 	compatible_bodyshapes = BODYSHAPE_PONY
 
 /datum/sprite_accessory/hair/spiky2
