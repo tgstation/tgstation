@@ -112,4 +112,4 @@
 	inhand_icon_state = "sec-case"
 
 /obj/item/storage/briefcase/secure/digital_storage/PopulateContents()
-	return NONE
+	return

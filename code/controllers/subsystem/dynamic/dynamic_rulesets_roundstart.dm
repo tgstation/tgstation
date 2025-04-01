@@ -606,7 +606,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	log_game("Starting a round of extended.")
 	SSdynamic.spend_roundstart_budget(SSdynamic.round_start_budget)
 	SSdynamic.spend_midround_budget(SSdynamic.mid_round_budget)
-	SSdynamic.threat_log += "[worldtime2text()]: Extended ruleset set threat to 0."
+	SSdynamic.threat_log += "[gameTimestamp()]: Extended ruleset set threat to 0."
 	return TRUE
 
 //////////////////////////////////////////////
