@@ -668,7 +668,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		var/author = query_library_print.item[2]
 		var/title = query_library_print.item[3]
 		var/content = query_library_print.item[4]
-		var/genre = query_library_print.item[1]
+		var/genre = query_library_print.item[5]
 		if(!QDELETED(src))
 			var/obj/item/book/printed_book = new(get_turf(src))
 			printed_book.name = "Book: [title]"
