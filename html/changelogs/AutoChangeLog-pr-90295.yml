@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - code_imp: "Any tgui message that would be too big to send to the server is now split into chunks and sent in sequence. This fixes several issues, such as..."
+  - bugfix: "It is once again possible to save large amounts of text on paper at once."
