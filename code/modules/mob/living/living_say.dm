@@ -446,9 +446,28 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /// When we're done casting a spell get rid of it
 /mob/living/proc/on_spell_invoked(datum/action/cooldown/spell/invoked)
 	SIGNAL_HANDLER
+	if (!istype(invoked, /datum/action/cooldown/spell/shapeshift))
+		apply_spell_cooldown(invoked)
+		return
+
+	// Snowflake time
+	var/mob/living/living_owner = invoked.owner
+	COOLDOWN_START(living_owner, invoke_spell_cooldown, INFINITY)
+	deltimer(invoke_spell_reset_timer)
+	addtimer(CALLBACK(src, PROC_REF(expire_shapeshift)), 2 MINUTES, TIMER_DELETE_ME)
+	to_chat(living_owner, span_notice("Your new form will last for two minutes!"))
+
+/// Boy we sure are collecting a lot of procs
+/mob/living/proc/apply_spell_cooldown(datum/action/cooldown/spell/invoked)
 	COOLDOWN_START(src, invoke_spell_cooldown, invoked.cooldown_time)
 	addtimer(CALLBACK(src, PROC_REF(spells_recharged)), min(invoked.cooldown_time, 5 MINUTES), TIMER_DELETE_ME)
 	remove_invoked_spell()
+
+/// You've had your fun
+/mob/living/proc/expire_shapeshift()
+	if(isnull(invoked_spell))
+		return // IDK how that happened but fine I guess you got out yourself
+	apply_spell_cooldown(invoked_spell)
 
 /// I don't want to play with you any more
 /mob/living/proc/remove_invoked_spell()

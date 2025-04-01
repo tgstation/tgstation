@@ -88,3 +88,21 @@
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/random_speech/snake,
 	)
+
+/mob/living/basic/snake/armsy
+	name = /mob/living/basic/heretic_summon/armsy::name
+	desc = /mob/living/basic/heretic_summon/armsy::desc
+	health = 50
+	maxHealth = 50
+
+/mob/living/basic/snake/armsy/Initialize(mapload, special_reagent = /datum/reagent/eldritch)
+	. = ..()
+	AddComponent(\
+		/datum/component/blood_walk, \
+		blood_type = /obj/effect/decal/cleanable/blood/tracks, \
+		target_dir_change = TRUE,\
+	)
+
+/mob/living/basic/snake/armsy/Login()
+	. = ..()
+	to_chat(src, span_clown("April Fool!"))

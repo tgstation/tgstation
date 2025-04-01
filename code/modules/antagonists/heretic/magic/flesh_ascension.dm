@@ -21,6 +21,11 @@
 	/// The radius around us that we cause brain damage / sanity damage to.
 	var/scare_radius = 9
 
+/datum/action/cooldown/spell/shapeshift/shed_human_form/before_cast(mob/living/cast_on)
+	if (cast_on.invoked_spell == src)
+		possible_shapes = list(/mob/living/basic/snake/armsy)
+	return ..()
+
 /datum/action/cooldown/spell/shapeshift/shed_human_form/do_shapeshift(mob/living/caster)
 	// When we transform into the worm, everyone nearby gets freaked out
 	for(var/mob/living/carbon/human/nearby_human in view(scare_radius, caster))
