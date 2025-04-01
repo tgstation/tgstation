@@ -81,6 +81,7 @@
 	products_doppler = list(
 		/obj/item/clothing/under/misc/doppler_uniform/security = 5,
 		/obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec = 3,
+		/obj/item/clothing/head/cap_colonysec = 5,
 	)
 
 

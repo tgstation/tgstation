@@ -37,3 +37,25 @@
 /obj/item/clothing/head/hooded/winterhood
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/hoods.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/hoods.dmi'
+
+/obj/item/clothing/head/cap_colonysec
+	name = "security colonial cap"
+	desc = "The day security raided your department was the most important day of your life. But for me? It was tuesday."
+	icon_state = "cap_colonysec"
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/sec_hats.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/sec_hats.dmi'
+	uses_advanced_reskins = TRUE
+	unique_reskin = list(
+		"Regular" = list(
+			RESKIN_ICON_STATE = "cap_colonysec",
+			RESKIN_WORN_ICON_STATE = "cap_colonysec"
+		),
+		"Alternate" = list(
+			RESKIN_ICON = 'modular_doppler/modular_cosmetics/icons/obj/head/sec_hats.dmi',
+			RESKIN_ICON_STATE = "cap_colonysecalt",
+			RESKIN_WORN_ICON = 'modular_doppler/modular_cosmetics/icons/mob/head/sec_hats.dmi',
+			RESKIN_WORN_ICON_STATE = "cap_colonysecalt"
+		)
+	)
+	armor_type = /datum/armor/head_helmet
+	strip_delay = 60
