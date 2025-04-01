@@ -115,7 +115,7 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			if(!target)
 				return
 
-			chain?.apply(target)
+			get_chain_by_index(user, 1)?.apply(target)
 			return TRUE
 
 		if("revert")
@@ -130,27 +130,30 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			if(!isnum(after))
 				return
 
-			if(after == 0 || !chain)
-				var/datum/animate_chain/front = new
-				front.next = chain
-				animate_chains_by_user[ref(user)] = front
+			if(after == 0)
+				var/datum/animate_chain/old_front = get_chain_by_index(user, 1)
+				old_front.chain_index += 1
+
+				var/datum/animate_chain/new_front = new
+				new_front.chain_index = 1
+				animate_chains_by_user[ref(user)] = new_front
+
+				for(var/datum/animate_chain/chain as anything in old_front.get_all_next())
+					chain.chain_index += 1
+				new_front.next = old_front
 				return TRUE
 
-			var/datum/animate_chain/iteration = chain.next
+			var/datum/animate_chain/insert_after = get_chain_by_index(user, after)
+			if(isnull(insert_after))
+				return
+
 			var/datum/animate_chain/inserted = new
 			inserted.chain_index = after + 1
 
-			while(!isnull(iteration) && iteration.chain_index < after)
-				iteration = iteration.next
-			if(iteration.chain_index != after)
-				return
-
-			inserted.next = iteration.next
-			iteration.next = inserted
-			iteration = inserted.next
-			while(!isnull(iteration))
-				iteration.chain_index += 1
-				iteration = iteration.next
+			for(var/datum/animate_chain/chain as anything in insert_after.get_all_next())
+				chain.chain_index += 1
+			inserted.next = insert_after.next
+			insert_after.next = inserted
 
 			return TRUE
 
@@ -160,15 +163,21 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 				return
 
 			if(index == 1)
-				animate_chains_by_user[ref(user)] = chain.next
-				chain.next = null
+				var/datum/animate_chain/front = get_chain_by_index(user, 1)
+				if(!front)
+					return
+				for(var/datum/animate_chain/chain as anything in front.get_all_next())
+					chain.chain_index -= 1
+				animate_chains_by_user[ref(user)] = front.next
+				front.next = null
 				return TRUE
 
 			var/datum/animate_chain/before_dropped = get_chain_by_index(user, index - 1)
 			var/datum/animate_chain/dropped = before_dropped.next
+			for(var/datum/animate_chain/chain as anything in before_dropped.get_all_next())
+				chain.chain_index -= 1
 			before_dropped.next = dropped.next
 			dropped.next = null
-
 			return TRUE
 
 		if("drop_argument")

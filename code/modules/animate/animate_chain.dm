@@ -13,6 +13,14 @@
 	var/a_tag
 	var/command
 
+/datum/animate_chain/proc/get_all_next()
+	var/datum/animate_chain/iteration = next
+	var/list/datum/animate_chain/all_next = list()
+	while(!isnull(iteration))
+		all_next += list(iteration)
+		iteration = iteration.next
+	return all_next
+
 /datum/animate_chain/proc/apply(target)
 	var/list/animate_arguments = list()
 
