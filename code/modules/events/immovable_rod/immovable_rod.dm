@@ -166,8 +166,14 @@
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
 		smoke.set_up(2, holder = src, location = get_turf(src))
 		smoke.start()
-		var/obj/singularity/bad_luck = new(get_turf(src))
-		bad_luck.energy = 800
+
+		var/turf/our_turf = get_turf(src)
+		if (HAS_TRAIT(src, TRAIT_FUNNY_ROD) || HAS_TRAIT(clong, TRAIT_FUNNY_ROD))
+			new /obj/item/toy/spinningtoy(our_turf)
+			playsound(our_turf, 'sound/items/bikehorn.ogg', 100, TRUE, pressure_affected = FALSE)
+		else
+			var/obj/singularity/bad_luck = new(our_turf)
+			bad_luck.energy = 800
 		qdel(clong)
 		qdel(src)
 		return

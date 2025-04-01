@@ -29,7 +29,7 @@
 	// The destination turf of the rod - just a bit over the max range we calculated, for safety
 	var/turf/distant_turf = get_ranged_target_turf(get_turf(cast_on), cast_on.dir, (rod_max_distance + 2))
 
-	new /obj/effect/immovablerod/wizard(
+	var/atom/rod = new /obj/effect/immovablerod/wizard(
 		get_turf(cast_on),
 		distant_turf,
 		null,
@@ -38,6 +38,8 @@
 		rod_max_distance,
 		rod_damage_bonus,
 	)
+
+	ADD_TRAIT(rod, TRAIT_FUNNY_ROD, INNATE_TRAIT)
 
 /datum/action/cooldown/spell/rod_form/level_spell(bypass_cap = FALSE)
 	. = ..()
