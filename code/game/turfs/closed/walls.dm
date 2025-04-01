@@ -11,6 +11,31 @@ GLOBAL_LIST_INIT(neighbor_typecache, typecacheof(list( \
 
 GLOBAL_LIST_EMPTY(wall_overlays_cache)
 
+GLOBAL_DATUM_INIT(wall_server, /datum/server_walls, get_server_walls())
+
+/proc/get_server_walls()
+	var/list/choices = typesof(/datum/server_walls)
+	// Pick always returns the first one. I dont know why.
+	var/new_path = choices[rand(1, length(choices))]
+	return new new_path
+
+#define GET_WALL_ICON(icon) (GLOB.wall_server.icon_map[icon] || icon)
+
+/datum/server_walls
+	var/name = "Daedalus"
+
+	var/list/icon_map = list()
+	var/list/state_map = list()
+	var/uses_stripes = TRUE
+	var/uses_color = TRUE
+
+/datum/server_walls/baystation
+	name = "Baystation12"
+	icon_map = list(
+		'icons/turf/bimmerwalls/bimmer_walls.dmi' = 'icons/turf/bimmerwalls/solid_wall.dmi',
+		'icons/turf/bimmerwalls/bimmer_stripes.dmi' = 'icons/turf/bimmerwalls/wall_stripe.dmi'
+	)
+
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of iron used to separate rooms."
@@ -92,7 +117,7 @@ GLOBAL_LIST_EMPTY(wall_overlays_cache)
 		underlays += underlay_appearance
 	register_context()
 
-	if(ispath(sheet_type))
+	if(sheet_type)
 		plating_material = sheet_type::material_type
 
 	set_materials(plating_material, reinf_material, FALSE)
@@ -130,16 +155,16 @@ GLOBAL_LIST_EMPTY(wall_overlays_cache)
 		reinf_mat_ref = GET_MATERIAL_REF(reinf_mat)
 
 	if(reinf_mat_ref)
-		icon = plating_mat_ref.reinforced_wall_icon
+		icon = GET_WALL_ICON(plating_mat_ref.reinforced_wall_icon)
 		material_color = plating_mat_ref.wall_color
 	else
-		icon = plating_mat_ref.wall_icon
+		icon = GET_WALL_ICON(plating_mat_ref.wall_icon)
 		material_color = plating_mat_ref.wall_color
 
 	if(reinf_mat_ref)
-		stripe_icon = plating_mat_ref.reinforced_wall_stripe_icon
+		stripe_icon = GET_WALL_ICON(plating_mat_ref.reinforced_wall_stripe_icon)
 	else
-		stripe_icon = plating_mat_ref.wall_stripe_icon
+		stripe_icon = GET_WALL_ICON(plating_mat_ref.wall_stripe_icon)
 
 	plating_material = plating_mat
 	reinf_material = reinf_mat
@@ -163,41 +188,42 @@ GLOBAL_LIST_EMPTY(wall_overlays_cache)
 /turf/closed/wall/update_overlays()
 	var/plating_color = wall_paint || material_color
 	var/stripe_color = stripe_paint || wall_paint || material_color
+	var/using_stripes = GLOB.wall_server.uses_stripes
 
 	var/neighbor_stripe = NONE
-	for (var/cardinal = NORTH; cardinal <= WEST; cardinal *= 2) //No list copy please good sir
-		var/turf/step_turf = get_step(src, cardinal)
-		var/can_area_smooth
-		CAN_AREAS_SMOOTH(src, step_turf, can_area_smooth)
-		if(isnull(can_area_smooth))
-			continue
-		for(var/atom/movable/movable_thing as anything in step_turf)
-			if(GLOB.neighbor_typecache[movable_thing.type])
-				neighbor_stripe ^= cardinal
-				break
+	if(using_stripes)
+		for (var/cardinal = NORTH; cardinal <= WEST; cardinal *= 2) //No list copy please good sir
+			var/turf/step_turf = get_step(src, cardinal)
+			var/can_area_smooth
+			CAN_AREAS_SMOOTH(src, step_turf, can_area_smooth)
+			if(isnull(can_area_smooth))
+				continue
+			for(var/atom/movable/movable_thing as anything in step_turf)
+				if(GLOB.neighbor_typecache[movable_thing.type])
+					neighbor_stripe ^= cardinal
+					break
 
 	var/old_cache_key = cache_key
 	cache_key = "[icon]:[smoothing_junction]:[plating_color]:[stripe_icon]:[stripe_color]:[neighbor_stripe]:[rusted]"
 	if(!(old_cache_key == cache_key))
 
+		color = GLOB.wall_server.uses_color ? plating_color : initial(color)
 		var/potential_overlays = GLOB.wall_overlays_cache[cache_key]
 		if(potential_overlays)
 			overlays = potential_overlays
-			color = plating_color
 		else
-			color = plating_color
 			//Updating the unmanaged wall overlays (unmanaged for optimisations)
 			overlays.len = 0
 			var/list/new_overlays = list()
 
-			if(stripe_icon)
+			if(stripe_icon && using_stripes)
 				var/image/smoothed_stripe = image(stripe_icon, icon_state)
 				smoothed_stripe.appearance_flags = RESET_COLOR
 				smoothed_stripe.color = stripe_color
 				new_overlays += smoothed_stripe
 
-			if(neighbor_stripe)
-				var/image/neighb_stripe_overlay = image('icons/turf/bimmerwalls/neighbor_stripe.dmi', "stripe-[neighbor_stripe]")
+			if(neighbor_stripe && using_stripes)
+				var/image/neighb_stripe_overlay = image(GET_WALL_ICON('icons/turf/bimmerwalls/neighbor_stripe.dmi'), "stripe-[neighbor_stripe]")
 				neighb_stripe_overlay.appearance_flags = RESET_COLOR
 				neighb_stripe_overlay.color = stripe_color
 				new_overlays += neighb_stripe_overlay
