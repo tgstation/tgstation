@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-				if(lowertext(C.ckey) == "kapu1178" || (prob(5) && !C.holder && C.byond_version >= 516))
+				if(prob(5) && !C.holder && (C.byond_version >= 516))
 					to_chat(C, "<video id=\"rickroll\" width=\"420\" height=\"320\" controls><source src=\"https://acrowinspace.com.de/rickrolled.mp4\" type=\"video/mp4\"></video>")
 					C << output("", "[C.tgui_panel.window.id]:doRick")
 
