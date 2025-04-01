@@ -2498,6 +2498,7 @@
 #include "code\game\objects\items\virgin_mary.dm"
 #include "code\game\objects\items\wall_mounted.dm"
 #include "code\game\objects\items\weaponry.dm"
+#include "code\game\objects\items\execution_sword.dm"
 #include "code\game\objects\items\wiki_manuals.dm"
 #include "code\game\objects\items\wizard_weapons.dm"
 #include "code\game\objects\items\AI_modules\_AI_modules.dm"
