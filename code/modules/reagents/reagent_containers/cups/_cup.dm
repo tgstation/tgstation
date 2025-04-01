@@ -442,7 +442,7 @@
 /obj/item/reagent_containers/cup/bucket/proc/check_spill()
 	if(!ismob(loc) && !istype(loc, /obj/item/storage))
 		visible_message(span_notice("[src] trips over!"))
-		src.throw_at(src)
+		src.throw_at(get_turf(src))
 		reagents?.expose(get_turf(src), TOUCH)
 		reagents?.clear_reagents()
 		icon_state = "bucket_spill"
