@@ -96,3 +96,19 @@
 /mob/living/basic/lizard/eats_the_roaches
 	name = "Eats-The-Roaches"
 	desc = "The janitorial department's less trusty pet lizard."
+
+
+/mob/living/basic/lizard/ash
+	name = "Much Lesser Ash Drake"
+	maxHealth = 50
+	health = 50
+	footstep_type = FOOTSTEP_MOB_HEAVY
+
+/mob/living/basic/lizard/ash/Initialize(mapload)
+	. = ..()
+	var/datum/action/cooldown/mob_cooldown/fire_breath/breath = new(src)
+	breath.Grant(src)
+
+/mob/living/basic/lizard/ash/Login()
+	. = ..()
+	to_chat(src, span_clown("April Fool!"))

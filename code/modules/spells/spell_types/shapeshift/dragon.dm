@@ -7,3 +7,8 @@
 	spell_requirements = NONE
 
 	possible_shapes = list(/mob/living/simple_animal/hostile/megafauna/dragon/lesser)
+
+/datum/action/cooldown/spell/shapeshift/dragon/before_cast(mob/living/cast_on)
+	if (cast_on.invoked_spell == src)
+		possible_shapes = list(/mob/living/basic/lizard/ash)
+	return ..()
