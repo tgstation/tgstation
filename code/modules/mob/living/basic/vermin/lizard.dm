@@ -102,10 +102,10 @@
 	name = "Much Lesser Ash Drake"
 	maxHealth = 50
 	health = 50
-	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /mob/living/basic/lizard/ash/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	var/datum/action/cooldown/mob_cooldown/fire_breath/breath = new(src)
 	breath.Grant(src)
 
