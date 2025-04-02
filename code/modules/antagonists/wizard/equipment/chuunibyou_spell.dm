@@ -36,4 +36,6 @@
 			to_chat(human_cast_on, span_notice("An eyepatch pops into existence over one of your eyes."))
 		human_cast_on.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch/medical/chuuni(human_cast_on), ITEM_SLOT_EYES)
 
+	after_cast(cast_on)
+
 	qdel(src)
