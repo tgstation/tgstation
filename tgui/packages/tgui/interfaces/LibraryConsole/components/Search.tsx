@@ -1,85 +1,42 @@
-import { map, sortBy } from 'common/collections';
+import { useBackend } from 'tgui/backend';
 import {
-  Box,
   Button,
   Dropdown,
   Input,
-  NoticeBox,
   Section,
   Stack,
   Table,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import { PageSelect } from './LibraryConsole/components/PageSelect';
+import { LibraryConsoleData } from '../types';
 
-export const LibraryVisitor = (props) => {
+export function SearchAndDisplay(props) {
   return (
-    <Window title="Library Lookup Console" width={702} height={421}>
-      <BookListing />
-    </Window>
-  );
-};
-
-const BookListing = (props) => {
-  const { act, data } = useBackend();
-  const { can_connect, can_db_request, our_page, page_count } = data;
-  if (!can_connect) {
-    return (
-      <NoticeBox>
-        Unable to retrieve book listings. Please contact your system
-        administrator for assistance.
-      </NoticeBox>
-    );
-  }
-  return (
-    <Stack fill vertical justify="space-between">
+    <Stack fill vertical>
       <Stack.Item>
-        <Box fillPositionedParent bottom="25px">
-          <Window.Content scrollable>
-            <SearchAndDisplay />
-          </Window.Content>
-        </Box>
+        <SearchTabs />
       </Stack.Item>
-      <Stack.Item align="center">
-        <PageSelect
-          minimum_page_count={1}
-          page_count={page_count}
-          current_page={our_page}
-          disabled={!can_db_request}
-          call_on_change={(value) =>
-            act('switch_page', {
-              page: value,
-            })
-          }
-        />
+      <Stack.Item grow>
+        <SearchResults />
       </Stack.Item>
     </Stack>
   );
-};
+}
 
-const SearchAndDisplay = (props) => {
-  const { act, data } = useBackend();
+function SearchTabs(props) {
+  const { act, data } = useBackend<LibraryConsoleData>();
   const {
-    can_db_request,
-    search_categories = [],
-    book_id,
-    title,
-    category,
     author,
+    book_id,
+    can_db_request,
+    category,
     params_changed,
+    search_categories = [],
+    title,
   } = data;
-  const records = sortBy(
-    map(data.pages, (record, i) => ({
-      ...record,
-      // Generate a unique id
-      key: i,
-    })),
-    (record) => record.key,
-  );
+
   return (
-    <Section>
+    <Section fill>
       <Stack justify="space-between">
         <Stack.Item pb={0.6}>
           <Stack>
@@ -98,6 +55,7 @@ const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Dropdown
+                width="120px"
                 options={search_categories}
                 selected={category}
                 onSelected={(value) =>
@@ -154,16 +112,45 @@ const SearchAndDisplay = (props) => {
           </Button>
         </Stack.Item>
       </Stack>
+    </Section>
+  );
+}
+
+function SearchResults(props) {
+  const { act, data } = useBackend<LibraryConsoleData>();
+  const { pages } = data;
+
+  const sorted = pages
+    .map((record, i) => ({
+      ...record,
+      // Generate a unique id
+      key: i,
+    }))
+    .sort((a, b) => a.key - b.key);
+
+  return (
+    <Section fill scrollable>
       <Table>
-        <Table.Row>
+        <Table.Row className="candystripe">
           <Table.Cell fontSize={1.5}>#</Table.Cell>
           <Table.Cell fontSize={1.5}>Category</Table.Cell>
           <Table.Cell fontSize={1.5}>Title</Table.Cell>
           <Table.Cell fontSize={1.5}>Author</Table.Cell>
         </Table.Row>
-        {records.map((record) => (
-          <Table.Row key={record.key}>
-            <Table.Cell>{record.id}</Table.Cell>
+        {sorted.map((record) => (
+          <Table.Row key={record.key} className="candystripe">
+            <Table.Cell>
+              <Button
+                onClick={() =>
+                  act('print_book', {
+                    book_id: record.id,
+                  })
+                }
+                icon="print"
+              >
+                {record.id}
+              </Button>
+            </Table.Cell>
             <Table.Cell>{record.category}</Table.Cell>
             <Table.Cell>{record.title}</Table.Cell>
             <Table.Cell>{record.author}</Table.Cell>
@@ -172,4 +159,4 @@ const SearchAndDisplay = (props) => {
       </Table>
     </Section>
   );
-};
+}
