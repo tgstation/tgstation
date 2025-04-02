@@ -55,8 +55,7 @@
 	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
 		seethrough.unhide_plane(fool)
 
-	render_source_atom.pixel_x = -fool.pixel_x
-	render_source_atom.pixel_y = ((fool.get_cached_height() - ICON_SIZE_Y) * 0.5)
+	render_source_atom.name = "seethrough" //So our name is not just "movable" when looking at VVs
 
 	initial_render_target_value = fool.render_target
 	fool.render_target = "*transparent_bigmob[personal_uid]"
