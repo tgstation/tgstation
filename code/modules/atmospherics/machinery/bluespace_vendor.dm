@@ -216,7 +216,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	if(internal_tank && Adjacent(user)) //proper capitalysm take money before goods
 		tank_purchased = FALSE
 		user.put_in_hands(internal_tank)
-		internal_tank = null
 		playsound(src, 'sound/effects/compressed_air/tank_remove_thunk.ogg', 50)
 
 /obj/machinery/bluespace_vendor/ui_interact(mob/user, datum/tgui/ui)
