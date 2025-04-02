@@ -480,7 +480,7 @@
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
 
-/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
+/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, list/modifiers)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if(get_amount() < 2)
 			balloon_alert(user, "not enough gauze!")

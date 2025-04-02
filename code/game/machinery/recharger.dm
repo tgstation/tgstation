@@ -83,7 +83,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/recharger/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/recharger/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(!is_type_in_typecache(attacking_item, allowed_devices))
 		return ..()
 

@@ -50,7 +50,7 @@
 		linked_techweb = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
+/obj/machinery/computer/operating/attackby(obj/item/O, mob/user, list/modifiers)
 	if(istype(O, /obj/item/disk/surgery))
 		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."), \
 			span_notice("You begin to load a surgery protocol from \the [O]..."), \

@@ -104,7 +104,7 @@
 	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
-/obj/item/tank/internals/plasma/attackby(obj/item/W, mob/user, params)
+/obj/item/tank/internals/plasma/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/flamethrower))
 		var/obj/item/flamethrower/F = W
 		if ((!F.status) || (F.ptank))

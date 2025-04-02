@@ -46,7 +46,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Covers Reloading and lighting of the gun
-/obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
+/obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, list/modifiers)
 	var/ignition_message = used_item.ignition_effect(src, user) // Checks if item used can ignite stuff.
 	if(istype(used_item, ammo_type))
 		if(fully_loaded_gun)

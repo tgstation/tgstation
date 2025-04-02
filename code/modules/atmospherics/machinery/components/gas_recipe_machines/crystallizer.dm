@@ -58,7 +58,7 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!on)
 		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
 			return

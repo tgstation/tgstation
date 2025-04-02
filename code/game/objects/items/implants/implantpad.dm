@@ -37,7 +37,7 @@
 		inserted_case = null
 		update_appearance(UPDATE_ICON)
 
-/obj/item/implantpad/attackby(obj/item/implantcase/attacking_item, mob/user, params)
+/obj/item/implantpad/attackby(obj/item/implantcase/attacking_item, mob/user, list/modifiers)
 	if(inserted_case || !istype(attacking_item))
 		return ..()
 	if(!user.transferItemToLoc(attacking_item, src))

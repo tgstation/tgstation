@@ -59,7 +59,7 @@
 /turf/open/misc/asteroid/ex_act(severity, target)
 	return FALSE
 
-/turf/open/misc/asteroid/attackby(obj/item/attack_item, mob/user, params)
+/turf/open/misc/asteroid/attackby(obj/item/attack_item, mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return TRUE

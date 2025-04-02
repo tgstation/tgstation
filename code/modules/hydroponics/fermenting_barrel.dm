@@ -56,7 +56,7 @@
 	else
 		. += span_notice("It is currently closed, letting it ferment fruits or draw reagents from its tap.")
 
-/obj/structure/fermenting_barrel/attackby(obj/item/object, mob/user, params)
+/obj/structure/fermenting_barrel/attackby(obj/item/object, mob/user, list/modifiers)
 	if(open)
 		if(istype(object, /obj/item/food/grown) && insert_fruit(user, object))
 			balloon_alert(user, "added fruit")

@@ -269,7 +269,7 @@
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	..()
 	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return

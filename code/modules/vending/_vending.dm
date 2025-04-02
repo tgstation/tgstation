@@ -710,7 +710,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/attack_item, mob/living/user, params)
+/obj/machinery/vending/attackby(obj/item/attack_item, mob/living/user, list/modifiers)
 	if(panel_open && is_wire_tool(attack_item))
 		wires.interact(user)
 		return
@@ -1790,7 +1790,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				vend_ready = TRUE
 			return TRUE
 
-/obj/machinery/vending/custom/attackby(obj/item/attack_item, mob/user, params)
+/obj/machinery/vending/custom/attackby(obj/item/attack_item, mob/user, list/modifiers)
 	if(!linked_account && isliving(user))
 		var/mob/living/living_user = user
 		var/obj/item/card/id/card_used = living_user.get_idcard(TRUE)
