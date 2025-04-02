@@ -266,7 +266,7 @@ SUBSYSTEM_DEF(carpool)
 		on = FALSE
 		set_light(0)
 		color = "#919191"
-		if(!exploded && prob(10))
+		if(!exploded && prob(70))
 			exploded = TRUE
 			for(var/mob/living/L in src)
 				L.forceMove(loc)
@@ -491,8 +491,8 @@ SUBSYSTEM_DEF(carpool)
 	if(istype(A, /mob/living))
 		var/mob/living/L = A
 		var/dam2 = prev_speed
-		var/turf/throw_target = get_edge_target_turf(src, src.dir)
-		var/throw_dist = round(prev_speed/16)
+		var/turf/throw_target = get_edge_target_turf(src, get_dir(src.loc, L.loc))
+		var/throw_dist = max(round(prev_speed/16), 2)
 		L.throw_at(throw_target, throw_dist, 4)
 		L.apply_damage(min(dam2, max_bump_damage), BRUTE, BODY_ZONE_CHEST)
 		var/dam = prev_speed
@@ -685,35 +685,35 @@ SUBSYSTEM_DEF(carpool)
 			y + (moved_y < 0 ? -1 : 1) * round(max(abs(moved_y), 36) / 32), \
 			z
 		)
-		//to_chat(world, "--check_turf [check_turf] X: [check_turf.x] Y: [check_turf.y] Z:[z] used_speed:[used_speed]")
+		to_chat(world, "--check_turf [check_turf] X: [check_turf.x] Y: [check_turf.y] Z:[z] used_speed:[used_speed]")
 		//to_chat(world, "--moved_x:[moved_x], moved_y:[moved_y] ")
 		var/turf/hit_turf
 		var/mob/living/hit_mob
 		var/list/in_line = get_line(src, check_turf)
 		for(var/turf/T in in_line)
-			var/dist_to_hit = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], T.x*32, T.y*32)
-			//to_chat(world, "_dist_to_hit [dist_to_hit] T.density [T.density]")
+			to_chat(world, "_dist_to_hit, T:[T] T.density [T.density]")
 			if(T.density)
-				if(dist_to_hit <= used_speed)
-					if(!hit_turf || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32))
-						hit_turf = T
-						//message_admins("ht:[hit_turf], dist_to_hit:[dist_to_hit] ")
+				if(!hit_turf)
+					hit_turf = T
+					message_admins("hit_turf:[hit_turf], dist_to_hit:")
+					continue
 			for(var/obj/O as obj|mob in T.contents)
 				if(istype(O, /mob/living))
 					hit_mob = O
 					hit_turf = null
+					message_admins("hit_mob:[hit_mob] ")
+					continue
 				if(O.density && O != src)
 					//to_chat(world, "dist_to_hit [dist_to_hit] O [O] O.density [O.density])]")
-					if(!hit_turf || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], O.x*32, O.y*32))
+					if(!hit_turf)
 						hit_turf = O.loc
-						//message_admins("hit_mob:[hit_turf] ")
-
-			if(hit_mob)
-				Bump(hit_mob)
-				//to_chat(world, "I can't pass MOB [hit_mob] at [hit_turf.x] x [hit_turf.y] YEAA)]")
+						message_admins("hit_obj:[hit_turf] ")
+		if(hit_mob)
+			Bump(hit_mob)
+			to_chat(world, "I can't pass MOB [hit_mob] at [hit_turf.x] x [hit_turf.y] YEAA)]")
 		if(hit_turf)
 			Bump(hit_turf)
-			//to_chat(world, "I can't pass that [hit_turf] at [hit_turf.x] x [hit_turf.y] FUCK)]")
+			to_chat(world, "I can't pass that [hit_turf] at [hit_turf.x] x [hit_turf.y] FUCK)]")
 			// var/bearing = get_angle_raw(x, y, pixel_x, pixel_y, hit_turf.x, hit_turf.y, 0, 0)
 			var/actual_distance = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32)-32
 			moved_x = round(sin(true_movement_angle)*actual_distance)
