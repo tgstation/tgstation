@@ -39,9 +39,6 @@ GLOBAL_LIST_EMPTY(shared_particles)
  * and don't have vis_contents, so to avoid copypaste code we do this weirdness
  */
 /atom/proc/add_shared_particles(particle_type, custom_key = null, particle_flags = NONE, pool_size = 3)
-	if (isarea(src))
-		CRASH("add_shared_particles was called on an area [src] ([type]) trying to add [particle_type]! Only turfs and movables support shared particles.")
-
 	var/atom/movable/play_pretend = src
 	var/particle_key = custom_key || "[particle_type]"
 	if (!GLOB.shared_particles[particle_key])
@@ -66,13 +63,13 @@ GLOBAL_LIST_EMPTY(shared_particles)
 	GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
 	return particle_holder
 
+/area/add_shared_particles(particle_type, custom_key = null, particle_flags = NONE, pool_size = 3)
+	CRASH("add_shared_particles was called on an area [src] ([type]) trying to add [particle_type]! Only turfs and movables support shared particles.")
+
 /* Removes shared particles from object's vis_contents and disposes of it if nothing uses that type/key of particle
  * particle_key can be either a type (if no custom_key was passed) or said custom_key
  */
 /atom/proc/remove_shared_particles(particle_key, delete_on_empty = TRUE)
-	if (isarea(src))
-		CRASH("remove_shared_particles was called on an area [src] ([type]) trying to add [particle_key]! Only turfs and movables support shared particles.")
-
 	if (!particle_key)
 		return
 
@@ -95,6 +92,9 @@ GLOBAL_LIST_EMPTY(shared_particles)
 			QDEL_LIST(type_holders)
 			GLOB.shared_particles -= particle_key
 		return
+
+/area/remove_shared_particles(particle_key, delete_on_empty = TRUE)
+	CRASH("remove_shared_particles was called on an area [src] ([type]) trying to add [particle_key]! Only turfs and movables support shared particles.")
 
 #undef SHARED_PARTICLE_HOLDER_INDEX
 #undef SHARED_PARTICLE_USER_NUM_INDEX
