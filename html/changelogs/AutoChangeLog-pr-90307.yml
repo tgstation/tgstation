@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Burning paper (and similar) is now two way. Rather than needing to click on the paper with a burning item, you can now click on a burning item with the paper. This means you can burn paper on your lit cigarette like a badass."
+  - qol: "You can now light cigarettes on candles."
+  - rscdel: "Flares and candles can no longer craft into flashlight eyes, I guess."
