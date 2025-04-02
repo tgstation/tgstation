@@ -27,7 +27,7 @@
 	var/obj/machinery/atmospherics/components/unary/bluespace_sender/connected_machine
 	///Amount of usable tanks inside the machine
 	var/empty_tanks = 10
-	///Reference to the tanks that vendor will make
+	///Typepath to the tanks that vendor will make
 	var/obj/item/tank/internals/generic/new_tank
 	///Reference to the current in use tank to be filled
 	var/obj/item/tank/internal_tank
@@ -35,8 +35,6 @@
 	var/selected_gas
 	///Is the vendor trying to move gases from the network to the tanks?
 	var/pumping = FALSE
-	///Has the user prepared a tank to be filled with gases?
-	var/inserted_tank = FALSE
 	///Amount of the tank already filled with gas (from 0 to 100)
 	var/tank_filling_amount = 0
 	///Base price of the tank
@@ -49,10 +47,6 @@
 	var/map_spawned = TRUE
 	///Current operating mode of the vendor
 	var/mode = BS_MODE_OFF
-	///Sound effcts just taken from canisters
-	var/insert_sound = 'sound/effects/compressed_air/tank_insert_clunky.ogg'
-	var/remove_sound = 'sound/effects/compressed_air/tank_remove_thunk.ogg'
-	var/sound_vol = 50
 
 //The one that the players make
 /obj/machinery/bluespace_vendor/built
@@ -153,13 +147,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 			user.balloon_alert(user, "sheet inserted")
 			empty_tanks++
 			return TRUE
-	if(istype(item, /obj/item/tank) && !inserted_tank && !(mode == BS_MODE_OFF))
+	if(istype(item, /obj/item/tank) && !internal_tank && mode != BS_MODE_OFF)
 		if(!user.transferItemToLoc(item, src))
 			user.balloon_alert(user, "it's stuck!")
 			return
-		inserted_tank = TRUE
 		internal_tank = item
-		playsound(src, insert_sound, sound_vol)
+		playsound(src, 'sound/effects/compressed_air/tank_insert_clunky.ogg', 50)
 		to_chat(user, span_notice("You insert [item] into the vendor."))
 		return TRUE
 
@@ -221,11 +214,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	connected_machine.credits_gained += gas_price
 
 	if(internal_tank && Adjacent(user)) //proper capitalysm take money before goods
-		inserted_tank = FALSE
 		tank_purchased = FALSE
 		user.put_in_hands(internal_tank)
 		internal_tank = null
-		playsound(src, remove_sound, sound_vol)
+		playsound(src, 'sound/effects/compressed_air/tank_remove_thunk.ogg', 50)
 
 /obj/machinery/bluespace_vendor/ui_interact(mob/user, datum/tgui/ui)
 	if(!connected_machine || mode == BS_MODE_OPEN)
@@ -259,7 +251,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	data["tank_filling_amount"] = tank_filling_amount
 	data["selected_gas"] = selected_gas
 	data["tank_amount"] = empty_tanks
-	data["inserted_tank"] = inserted_tank
+	data["inserted_tank"] = !!internal_tank
 	var/total_tank_pressure
 	if(internal_tank)
 		var/datum/gas_mixture/working_mix = internal_tank.return_air()
@@ -279,14 +271,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 	switch(action)
 		if("start_pumping")
-			if(inserted_tank && !pumping)
+			if(internal_tank && !pumping)
 				pumping = TRUE
 				selected_gas = params["gas_id"]
 				mode = BS_MODE_PUMPING
 				update_appearance()
 			. = TRUE
 		if("stop_pumping")
-			if(inserted_tank && pumping)
+			if(internal_tank && pumping)
 				pumping = FALSE
 				selected_gas = null
 				mode = BS_MODE_IDLE
@@ -296,14 +288,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 			tank_filling_amount = clamp(params["rate"], 0, 100)
 			. = TRUE
 		if("tank_prepare")
-			if(empty_tanks && !inserted_tank)
-				inserted_tank = TRUE
+			if(empty_tanks && !internal_tank)
 				tank_purchased = TRUE
 				internal_tank = new(new_tank)
 				empty_tanks = max(empty_tanks - 1, 0)
 			. = TRUE
 		if("tank_expel")
-			if(inserted_tank && !pumping)
+			if(internal_tank && !pumping)
 				check_price(usr)
 			. = TRUE
 
