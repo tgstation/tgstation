@@ -11,7 +11,7 @@
 	///Is the venue open at the moment?
 	var/open
 	///List of portals linked to this venue at the moment
-	var/list/restaurant_portals = list()
+	var/list/obj/machinery/restaurant_portal/restaurant_portals = list()
 	///Lists the current visitors of a venue
 	var/list/current_visitors = list()
 	///Cooldown for next guest to arrive
@@ -193,7 +193,7 @@
 	var/obj/item/circuitboard/machine/restaurant_portal/board = circuit
 	board.venue_type = linked_venue
 	linked_venue = SSrestaurant.all_venues[linked_venue]
-	linked_venue.restaurant_portals |= src
+	linked_venue.restaurant_portals += src
 
 /obj/machinery/restaurant_portal/Destroy()
 	turned_on_portal = null
@@ -266,7 +266,7 @@
 		linked_venue = null
 
 	linked_venue = chosen_venue
-	linked_venue.restaurant_portals |= src
+	linked_venue.restaurant_portals += src
 
 /obj/machinery/restaurant_portal/screwdriver_act(mob/user, obj/item/tool)
 	if (default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))

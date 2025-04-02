@@ -1510,7 +1510,7 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = TRUE
 	/// Type of the venue that we're linked to
-	var/venue_type = null
+	var/venue_type = /datum/venue/restaurant
 
 /obj/item/circuitboard/machine/restaurant_portal/multitool_act(mob/living/user)
 	var/list/radial_items = list()
@@ -1540,7 +1540,7 @@
 	if(!istype(machine))
 		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
 	machine.linked_venue = SSrestaurant.all_venues[venue_type]
-	machine.linked_venue.restaurant_portals |= machine
+	machine.linked_venue.restaurant_portals += machine
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
