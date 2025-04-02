@@ -6623,7 +6623,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.39.0, core-js@npm:^3.6.5":
+"core-js@npm:^3.6.5":
   version: 3.39.0
   resolution: "core-js@npm:3.39.0"
   checksum: 10c0/f7602069b6afb2e3298eec612a5c1e0c3e6a458930fbfc7a4c5f9ac03426507f49ce395eecdd2d9bae9024f820e44582b67ffe16f2272395af26964f174eeb6b
@@ -16541,7 +16541,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.14.0, regenerator-runtime@npm:^0.14.1":
+"regenerator-runtime@npm:^0.14.0":
   version: 0.14.1
   resolution: "regenerator-runtime@npm:0.14.1"
   checksum: 10c0/1b16eb2c4bceb1665c89de70dcb64126a22bc8eb958feef3cd68fe11ac6d2a4899b5cd1b80b0774c7c03591dc57d16631a7f69d2daa2ec98100e2f29f7ec4cc4
@@ -18677,7 +18677,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:^5.26.0, terser@npm:^5.3.4, terser@npm:^5.36.0":
+"terser@npm:^5.26.0, terser@npm:^5.3.4":
   version: 5.36.0
   resolution: "terser@npm:5.36.0"
   dependencies:
@@ -18770,18 +18770,6 @@ __metadata:
     tgui: "workspace:*"
     tgui-core: "npm:^1.8.1"
     tgui-dev-server: "workspace:*"
-    tgui-polyfill: "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"tgui-polyfill@workspace:*, tgui-polyfill@workspace:packages/tgui-polyfill":
-  version: 0.0.0-use.local
-  resolution: "tgui-polyfill@workspace:packages/tgui-polyfill"
-  dependencies:
-    core-js: "npm:^3.39.0"
-    regenerator-runtime: "npm:^0.14.1"
-    terser: "npm:^5.36.0"
-    unfetch: "npm:^5.0.0"
   languageName: unknown
   linkType: soft
 
@@ -18796,7 +18784,6 @@ __metadata:
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
     tgui-core: "npm:^1.8.1"
-    tgui-polyfill: "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -18860,7 +18847,6 @@ __metadata:
     react-popper: "npm:^2.3.0"
     tgui-core: "npm:^1.8.1"
     tgui-dev-server: "workspace:*"
-    tgui-polyfill: "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -19376,13 +19362,6 @@ __metadata:
   version: 6.19.8
   resolution: "undici-types@npm:6.19.8"
   checksum: 10c0/078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
-  languageName: node
-  linkType: hard
-
-"unfetch@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "unfetch@npm:5.0.0"
-  checksum: 10c0/ccbbf648a384d57aeaf3bd4972761327a6cf60c84a3edb8e2f9d18aed0df6214576fc8fcd444ea87672e8e32f4a74590bc5c07756f053f57f492c6d8363045c9
   languageName: node
   linkType: hard
 
