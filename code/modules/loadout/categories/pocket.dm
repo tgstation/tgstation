@@ -55,17 +55,21 @@
 
 /datum/loadout_item/pocket_items/plush/carp
 	name = "Plush (Carp)"
+	ui_icon = 'icons/obj/fluff/previews.dmi'
+	ui_icon_state = "plushie_carp"
 	item_path = /obj/item/toy/plush/carpplushie
 
 /datum/loadout_item/pocket_items/plush/lizard_greyscale
 	name = "Plush (Lizard, Colorable)"
+	ui_icon = 'icons/obj/fluff/previews.dmi'
+	ui_icon_state = "plushie_lizard"
 	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/loadout_item/pocket_items/plush/lizard_random
 	name = "Plush (Lizard, Random)"
-	can_be_recolored = DONT_GREYSCALE
-	ui_icon = /obj/item/toy/plush/lizard_plushie::icon
-	ui_icon_state = "map_plushie_lizard_random"
+	can_be_greyscale = DONT_GREYSCALE
+	ui_icon = 'icons/obj/fluff/previews.dmi'
+	ui_icon_state = "plushie_lizard_random"
 	item_path = /obj/item/toy/plush/lizard_plushie
 
 /datum/loadout_item/pocket_items/plush/moth
@@ -94,6 +98,8 @@
 
 /datum/loadout_item/pocket_items/plush/snake
 	name = "Plush (Snake)"
+	ui_icon = 'icons/obj/fluff/previews.dmi'
+	ui_icon_state = "plushie_snake"
 	item_path = /obj/item/toy/plush/snakeplushie
 
 /datum/loadout_item/pocket_items/dice
@@ -171,7 +177,10 @@
 /datum/loadout_item/pocket_items/lipstick
 	name = "Lipstick"
 	item_path = /obj/item/lipstick
-	can_be_recolored = TRUE
+
+/datum/loadout_item/pocket_items/lipstick/get_item_information()
+	. = ..()
+	.[FA_ICON_PALETTE] = "Recolorable"
 
 /datum/loadout_item/pocket_items/lipstick/on_equip_item(
 	obj/item/lipstick/equipped_item,

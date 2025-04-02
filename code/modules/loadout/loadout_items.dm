@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Only works if the item is compatible with the GAGS system of coloring.
 	/// Set automatically to TRUE for all items that have the flag [IS_PLAYER_COLORABLE_1].
 	/// If you really want it to not be colorable set this to [DONT_GREYSCALE]
-	var/can_be_recolored = FALSE
+	var/can_be_greyscale = FALSE
 	/// Whether this item can be renamed.
 	/// I recommend you apply this sparingly becuase it certainly can go wrong (or get reset / overridden easily)
 	var/can_be_named = FALSE
@@ -65,10 +65,10 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 /datum/loadout_item/New(category)
 	src.category = category
 
-	if(can_be_recolored == DONT_GREYSCALE)
-		can_be_recolored = FALSE
+	if(can_be_greyscale == DONT_GREYSCALE)
+		can_be_greyscale = FALSE
 	else if((item_path::flags_1 & IS_PLAYER_COLORABLE_1) && item_path::greyscale_config && item_path::greyscale_colors)
-		can_be_recolored = TRUE
+		can_be_greyscale = TRUE
 
 	if(isnull(name))
 		name = item_path::name
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	switch(action)
 		if("select_color")
-			if(can_be_recolored)
+			if(can_be_greyscale)
 				return set_item_color(manager, user)
 
 		if("set_name")
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/list/item_details = preference_list[item_path]
 	var/update_flag = NONE
 
-	if(can_be_recolored && item_details?[INFO_GREYSCALE])
+	if(can_be_greyscale && item_details?[INFO_GREYSCALE])
 		equipped_item.set_greyscale(item_details[INFO_GREYSCALE])
 		update_flag |= equipped_item.slot_flags
 
@@ -286,10 +286,18 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/list/formatted_item = list()
+	var/list/information = list()
+	var/list/fetched_info = get_item_information()
+	for (var/icon_name in fetched_info)
+		information += list(list(
+			"icon" = icon_name,
+			"tooltip" = fetched_info[icon_name]
+		))
+
 	formatted_item["name"] = name
 	formatted_item["group"] = group || category.category_name
 	formatted_item["path"] = item_path
-	formatted_item["information"] = get_item_information()
+	formatted_item["information"] = information
 	formatted_item["buttons"] = get_ui_buttons()
 	formatted_item["reskins"] = get_reskin_options()
 	formatted_item["icon"] = ui_icon
@@ -303,22 +311,15 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 /datum/loadout_item/proc/get_item_information() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
-	// Mothblocks is hellbent on recolorable and reskinnable being only tooltips for items
+	// Mothblocks is hellbent on recolorable and reskinnable being only tooltips for items for visual clarity, so ask her before changing these
 	var/list/displayed_text = list()
-	if(can_be_recolored)
+	if(can_be_greyscale)
 		displayed_text[FA_ICON_PALETTE] = "Recolorable"
 
 	if(can_be_reskinned)
 		displayed_text[FA_ICON_SWATCHBOOK] = "Reskinnable"
 
-	var/list/return_list = list()
-	for (var/icon_name in displayed_text)
-		return_list += list(list(
-			"icon" = icon_name,
-			"tooltip" = displayed_text[icon_name]
-		))
-
-	return return_list
+	return displayed_text
 
 /**
  * Returns a list of buttons that are shown in the loadout UI for customizing this item.
@@ -338,7 +339,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	var/list/button_list = list()
 
-	if(can_be_recolored)
+	if(can_be_greyscale)
 		UNTYPED_LIST_ADD(button_list, list(
 			"label" = "Recolor",
 			"act_key" = "select_color",
