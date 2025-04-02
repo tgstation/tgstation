@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "The library console has been refactored. Report any issues in the github!"
