@@ -84,7 +84,8 @@
 
 /datum/material/meat/mob_meat/Initialize(_id, mob/living/source)
 	if(!istype(source))
-		return FALSE
+		source = /mob/living/basic/ant
+//		return FALSE
 
 	name = "[source?.name ? "[source.name]'s" : "mystery"] [initial(name)]"
 
@@ -104,7 +105,8 @@
 
 /datum/material/meat/species_meat/Initialize(_id, datum/species/source)
 	if(!istype(source))
-		return FALSE
+		source = /datum/species/monkey
+//		return FALSE
 
 	name = "[source?.name || "mystery"] [initial(name)]"
 	return ..()

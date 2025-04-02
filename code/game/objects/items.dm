@@ -1810,7 +1810,7 @@
 /obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
 	var/result = LAZYACCESS(fantasy_modifications, variable_key)
 	if(!isnull(result))
-		if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+		if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM) || istype(src, /obj/item/cube))
 			return result // we are immune to your foul magicks you inferior wizard, we keep our bonuses
 
 		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
@@ -1938,15 +1938,15 @@
 
 /obj/item/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material?.added_slowdown)
 		return
-	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown ? material.added_slowdown : 0 * mat_amount, multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material?.added_slowdown)
 		return
-	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown ? material.added_slowdown : 0 * mat_amount, multiplier)
 
 /**
  * Returns the atom(either itself or an internal module) that will interact/attack the target on behalf of us

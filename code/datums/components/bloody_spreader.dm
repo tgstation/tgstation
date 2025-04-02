@@ -27,12 +27,14 @@
 		parent.AddComponent(/datum/component/bloodysoles)
 
 	src.blood_left = blood_left
-	src.blood_dna = blood_dna
+	if(blood_dna)
+		src.blood_dna = blood_dna
 	src.diseases = diseases
 
 /datum/component/bloody_spreader/proc/spread_yucky_blood(atom/parent, atom/bloody_fool)
 	SIGNAL_HANDLER
-	bloody_fool.add_blood_DNA(blood_dna, diseases)
+	if(blood_dna)
+		bloody_fool.add_blood_DNA(blood_dna, diseases)
 	blood_left--
 	if(blood_left <= 0)
 		qdel(src)

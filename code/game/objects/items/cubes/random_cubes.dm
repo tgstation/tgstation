@@ -169,7 +169,7 @@
 		PROC_REF(make_reverse),
 		PROC_REF(make_vampire),
 		PROC_REF(make_speen),
-		PROC_REF(make_material),
+//		PROC_REF(make_material),
 		PROC_REF(make_lamp),
 		PROC_REF(make_gravity),
 	)
@@ -178,6 +178,7 @@
 		var/rand_swap = pick(possible_cube_effects)
 		call(src, rand_swap)()
 		possible_cube_effects -= rand_swap
+	make_material()
 
 /// Make the cube a food w/ random consumable reagents
 /obj/item/cube/random/proc/make_food()
@@ -397,12 +398,16 @@
 		if("All for one")
 			var/datum/material/cube_mat = pick(GLOB.typecache_material)
 			var/list/mymat = list()
+			if(cube_mat.type == /datum/material/alloy)
+				cube_mat = /datum/material/wood
 			mymat[cube_mat] = SHEET_MATERIAL_AMOUNT * rarity
 			set_custom_materials(mymat)
 		if("One for all")
 			var/list/mymat = list()
 			for(var/m in 1 to rarity)
 				var/datum/material/cube_mat = pick(GLOB.typecache_material)
+				if(cube_mat.type == /datum/material/alloy)
+					cube_mat = /datum/material/wood
 				mymat[cube_mat] += SHEET_MATERIAL_AMOUNT
 			set_custom_materials(mymat)
 

@@ -13,7 +13,7 @@
 
 	. = list()
 
-	var/list/cached_comp = composition
+	var/list/cached_comp = composition ? composition : list(/datum/material/iron=1, /datum/material/plasma=1)
 	for(var/comp_mat in cached_comp)
 		var/datum/material/component_material = GET_MATERIAL_REF(comp_mat)
 		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat], flags)
