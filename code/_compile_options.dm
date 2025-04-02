@@ -117,7 +117,7 @@
 // OpenDream currently doesn't support byondapi, so automatically disable it on OD,
 // unless CIBUILDING is defined - we still want to lint dreamluau-related code.
 // Get rid of this whenever it does have support.
-#ifndef OPENDREAM_REAL
+#ifdef OPENDREAM_REAL
 #define DISABLE_DREAMLUAU
 #endif
 
