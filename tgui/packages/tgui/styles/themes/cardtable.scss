@@ -7,9 +7,7 @@
 @use 'sass:meta';
 
 @use '../colors' with (
-  $primary: hsl(0, 0%, 0%),
-  $fg-map-keys: (),
-  $bg-map-keys: ()
+  $primary: hsl(0, 0%, 0%)
 );
 @use '../base' with (
   $color-bg: hsl(145.26, 73.64%, 25.29%),
@@ -27,7 +25,6 @@
     '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(145.26, 73.64%, 25.29%),
-      'color-disabled': hsl(0, 0%, 21.18%),
       'color-selected': hsl(0, 90.3%, 32.35%),
       'color-caution': hsl(29.5, 90.95%, 39.02%),
       'color-danger': hsl(61.15, 100%, 30.78%)

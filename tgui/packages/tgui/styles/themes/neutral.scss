@@ -9,9 +9,7 @@
 $neutral: hsl(42.12, 100%, 50%);
 
 @use '../colors.scss' with (
-  $primary: $neutral,
-  $fg-map-keys: (),
-  $bg-map-keys: ()
+  $primary: $neutral
 );
 @use '../base.scss' with (
   $color-bg: color.scale($neutral, $lightness: -40%),

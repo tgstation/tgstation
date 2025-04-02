@@ -12,11 +12,7 @@
   $fg-lightness: -10%,
   $label: hsl(0, 0%, 23.1%),
   // Makes button look actually grey due to weird maths.
-  $grey: hsl(0, 0%, 100%),
-  // Commenting out color maps will adjust all colors based on the lightness
-  // settings above, but will add extra 10KB to the theme.
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
+  $grey: hsl(0, 0%, 100%)
 );
 @use '~tgui/styles/base.scss' with (
   $color-fg: hsl(0, 0%, 0%),
@@ -49,7 +45,6 @@
     '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(0, 0%, 73.3%),
-      'color-disabled': hsl(0, 0%, 21.2%),
       'color-selected': hsl(204, 94%, 35.3%),
       'color-caution': hsl(28, 91%, 38.2%),
       'color-danger': hsl(62, 100%, 30.2%),
@@ -76,10 +71,6 @@
   );
 
   // Layouts
-  @include meta.load-css(
-    '~tgui/styles/layouts/Layout.scss',
-    $with: ('scrollbar-color-multiplier': -1)
-  );
   @include meta.load-css('~tgui/styles/layouts/Window.scss');
   @include meta.load-css(
     '~tgui/styles/layouts/TitleBar.scss',

@@ -18,7 +18,7 @@ $shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
   align-items: center;
   width: 100vw;
   height: base.rem(32px);
-  background-color: $background-color;
+  background-color: var(--color-secondary);
   border-bottom: 1px solid $shadow-color-core;
   box-shadow: 0px 0px base.em(6px) base.em(-1px) $shadow-color;
   z-index: 101; // More than Dimmer
@@ -64,32 +64,35 @@ $shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
     width: base.rem(21px);
     min-width: base.rem(21px);
     max-width: base.rem(21px);
-    background-color: color.adjust(colors.$good, $lightness: -10%, $space: hsl);
-    color: hsl(120, 100%, 100%);
+    background-color: hsl(
+      from var(--color-green) h s calc(l - var(--adjust-hover))
+    );
+    color: var(--color-text-fixed-white);
     text-align: center;
     border-radius: 0;
 
     &:hover {
-      background-color: colors.$good;
+      background-color: var(--color-green) !important;
     }
   }
 
   &__close {
     cursor: pointer;
+    opacity: 0.5;
     pointer-events: all;
     align-content: center;
     text-align: center;
     font-size: base.rem(16px);
     height: 100%;
-    color: color.change($text-color, $alpha: 0.5);
+    color: var(--color-text);
     z-index: 102;
     transition:
       background-color 0.2s,
-      color 0.2s;
+      opacity 0.2s;
 
     &:hover {
-      background-color: hsl(0, 100%, 40%);
-      color: rgba(255, 255, 255, 1);
+      opacity: 1;
+      background-color: var(--button-background-danger);
       transition-duration: 0s;
     }
   }

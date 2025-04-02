@@ -230,7 +230,7 @@ $department_map: (
 
           @each $quality, $color-value in $quality_map {
             .PreferencesMenu__Quirks__QuirkList__quirk--#{$quality} {
-              background-color: color.scale($color-value, $lightness: -25%);
+              background-color: hsl(from $color-value h s calc(l - 10));
               transition: background-color 0.1s ease-out;
             }
           }

@@ -2,7 +2,7 @@
 @use '../colors.scss';
 @use '../base.scss';
 
-$fg-map: colors.$fg-map !default;
+$map-keys: colors.$color-map !default;
 
 .CircuitInfo__Examined {
   background-color: rgba(0, 0, 0, 1);
@@ -47,24 +47,21 @@ $fg-map: colors.$fg-map !default;
 
 .ObjectComponent__PortPos {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
 }
 
-@each $color-name, $color-value in $fg-map {
+@each $color-name, $color-value in $map-keys {
   .color-stroke-#{$color-name} {
-    stroke: $color-value !important;
+    stroke: hsl(from $color-value h s calc(l + var(--adjust-color))) !important;
   }
 
   .color-fill-#{$color-name} {
-    fill: $color-value !important;
+    fill: hsl(from $color-value h s calc(l + var(--adjust-color))) !important;
   }
 }
 
-$border-color: hsl(210, 100%, 73%) !default;
-$border-radius: base.$border-radius !default;
+$border-color: var(--color-border-primary) !default;
+$border-radius: var(--border-radius-small) !default;
 
 .IntegratedCircuit__BlueBorder {
   border: base.em(1px) solid $border-color;

@@ -1,6 +1,4 @@
 @use '../colors.scss';
-@use 'sass:color';
-@use 'sass:math';
 @use '../base.scss';
 
 .BoardTab {
@@ -86,14 +84,16 @@
   width: 100%;
 }
 
-@each $color-name, $color-value in colors.$fg-map {
+@each $color-name, $color-value in colors.$color-map {
   .BoardTab__#{$color-name} {
-    color: black;
-    background-color: $color-value;
+    cursor: var(--cursor-pointer);
+    background-color: hsl(from $color-value h s calc(l + var(--adjust-color)));
+    color: var(--color-text-fixed-black);
     transition: all 0.2s;
-    cursor: pointer;
   }
   .BoardTab__#{$color-name}:hover {
-    background-color: color.scale($color-value, $lightness: 25%);
+    background-color: hsl(
+      from $color-value h s calc(l + var(--adjust-color) * 2.5)
+    );
   }
 }

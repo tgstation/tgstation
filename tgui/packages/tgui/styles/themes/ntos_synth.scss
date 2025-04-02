@@ -16,9 +16,7 @@ $purple: hsl(248, 47%, 37%);
 @use '../colors.scss' with (
   $primary: $pink,
   $label: $orange,
-  $good: $cyan,
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
+  $good: $cyan
 );
 
 @use '../base.scss' with (
@@ -36,7 +34,6 @@ $purple: hsl(248, 47%, 37%);
     $with: (
       'color-default': $cyan,
       'color-transparent-text': hsla(210, 100%, 94%, 0.75),
-      'color-disabled': hsl(0, 0%, 21%),
       'color-selected': hsl(227, 37%, 45%),
       'color-caution': hsl(30, 88%, 39%)
     )

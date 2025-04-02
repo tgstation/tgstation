@@ -9,9 +9,7 @@
 @use '../colors.scss' with (
   $primary: hsl(146, 82%, 53%),
   $label: hsl(146, 82%, 53%),
-  $good: hsla(146, 82%, 53%, 0.5),
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
+  $good: hsla(146, 82%, 53%, 0.5)
 );
 @use '../base.scss' with (
   $color-bg: hsl(120, 10%, 9%),
@@ -27,7 +25,6 @@
     '~tgui-core/styles/components/Button',
     $with: (
       'color-default': rgba(0, 0, 0, 0),
-      'color-disabled': hsl(120, 18%, 35%),
       'color-selected': hsla(146, 82%, 53%, 0.25)
     )
   );

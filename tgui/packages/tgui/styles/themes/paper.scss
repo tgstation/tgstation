@@ -9,11 +9,7 @@
 @use '../colors.scss' with (
   $primary: hsl(0, 0%, 100%),
   $bg-lightness: 25%,
-  $fg-lightness: -10%,
-  // Commenting out color maps will adjust all colors based on the lightness
-  // settings above, but will add extra 10KB to the theme.
-  $fg-map-keys: (),
-  $bg-map-keys: ()
+  $fg-lightness: -10%
 );
 @use '../base.scss' with (
   $color-fg: hsl(0, 0%, 0%),
@@ -39,7 +35,6 @@ $font-size: 24px;
     '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(50, 50%, 90%),
-      'color-disabled': hsl(0, 0%, 21%),
       'color-selected': hsl(0, 100%, 30%),
       'color-caution': hsl(30, 90%, 40%),
       'color-danger': hsl(60, 100%, 30%),
@@ -48,10 +43,6 @@ $font-size: 24px;
   );
 
   // Layouts
-  @include meta.load-css(
-    '../layouts/Layout.scss',
-    $with: ('scrollbar-color-multiplier': -1)
-  );
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',

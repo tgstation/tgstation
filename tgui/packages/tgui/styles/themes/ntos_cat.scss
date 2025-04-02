@@ -15,15 +15,12 @@ $purple: hsl(248, 47%, 37%);
 
 $light-gray: hsl(0, 0%, 76%);
 $dark-gray: hsl(0, 0%, 52%);
-$scrollbar-color-multiplier: 0.5;
 
 @use '../colors.scss' with (
   $primary: black,
   $label: hsl(350, 100%, 76.5%),
   $good: hsl(300, 91%, 52%),
-  $bad: red,
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
+  $bad: red
 );
 
 @use '../base.scss' with (
@@ -42,7 +39,6 @@ $scrollbar-color-multiplier: 0.5;
     $with: (
       'color-default': hsl(300, 91%, 52%),
       'color-transparent-text': hsla(210, 100%, 94%, 0.75),
-      'color-disabled': hsl(0, 0%, 21%),
       'color-selected': hsl(227, 37%, 45%),
       'color-caution': hsl(30, 88%, 39%)
     )
@@ -85,39 +81,6 @@ $scrollbar-color-multiplier: 0.5;
     background-image: url('../../assets/bg-cat.svg');
     background-size: 100%;
     background-repeat: no-repeat;
-  }
-  .Layout,
-  .Layout * {
-    // Fancy scrollbar
-    scrollbar-base-color: color.scale(
-      hsl(248, 17%, 27%),
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-face-color: color.scale(
-      hsl(248, 17%, 27%),
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
-
-    scrollbar-3dlight-color: color.scale(
-      hsl(36, 100%, 50%),
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-highlight-color: color.scale(
-      hsl(36, 100%, 50%),
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-track-color: color.scale(
-      hsl(30, 47%, 47%),
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-arrow-color: color.scale(
-      hsl(36, 100%, 50%),
-      $lightness: 50% * $scrollbar-color-multiplier
-    );
-    scrollbar-shadow-color: color.scale(
-      hsl(248, 17%, 27%),
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
   }
   .Tab {
     color: hsl(350, 100%, 76.5%);

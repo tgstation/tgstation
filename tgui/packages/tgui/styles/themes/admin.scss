@@ -8,9 +8,7 @@
 
 @use '../colors.scss' with (
   // convert to hsl
-  $primary: hsl(191.93, 79.31%, 39.8%),
-  $fg-map-keys: (),
-  $bg-map-keys: ()
+  $primary: hsl(191.93, 79.31%, 39.8%)
 );
 @use '../base.scss' with (
   $color-bg: hsl(204.7, 17.2%, 19.4%),

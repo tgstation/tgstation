@@ -11,16 +11,17 @@ body {
   height: 100%;
   margin: 0;
   font-size: base.$font-size;
+  color: var(--color-text);
 }
 
 html {
+  cursor: var(--curs-default); // Reset the cursor.
   overflow: hidden;
-  cursor: default; // Reset the cursor.
 }
 
 body {
   overflow: auto;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: var(--font-family);
 }
 
 *,

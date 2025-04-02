@@ -8,10 +8,6 @@
 
 $nanotrasen: hsl(0, 0%, 17.25%);
 
-@use '../colors.scss' with (
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
 @use '../base.scss' with (
   $color-bg: color.scale($nanotrasen, $lightness: -45%)
 );

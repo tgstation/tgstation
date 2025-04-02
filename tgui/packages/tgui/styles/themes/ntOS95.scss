@@ -8,7 +8,6 @@
 
 $light-gray: hsl(0, 0%, 76%);
 $dark-gray: hsl(0, 0%, 52%);
-$scrollbar-color-multiplier: 1;
 
 @use '../colors.scss' with (
   $primary: hsl(0, 0%, 0%),
@@ -32,7 +31,6 @@ $scrollbar-color-multiplier: 1;
     '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(52.3, 40.3%, 84.9%),
-      'color-disabled': hsl(0, 0%, 43.9%),
       'color-selected': hsl(128.2, 100%, 24.3%),
       'color-caution': hsl(29.5, 91%, 39%),
       'color-danger': hsl(0, 90.3%, 32.4%)
@@ -96,40 +94,6 @@ $scrollbar-color-multiplier: 1;
   .Layout__content {
     background-image: none;
   }
-  .Layout,
-  .Layout * {
-    // Fancy scrollbar
-    scrollbar-base-color: color.scale(
-      $light-gray,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-face-color: color.scale(
-      $light-gray,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
-
-    scrollbar-3dlight-color: color.scale(
-      $light-gray,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-highlight-color: color.scale(
-      $light-gray,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-track-color: color.scale(
-      $light-gray,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-arrow-color: color.scale(
-      $light-gray,
-      $lightness: 50% * $scrollbar-color-multiplier
-    );
-    scrollbar-shadow-color: color.scale(
-      $light-gray,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
-  }
-
   .Tab {
     color: hsl(0, 0%, 0%);
     background-color: hsl(61.5, 70.2%, 77.6%);

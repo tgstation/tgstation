@@ -4,9 +4,6 @@
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
-$color-danger: colors.bg(colors.$red) !default;
-$color-caution: colors.bg(colors.$yellow) !default;
-
 $background-beige: hsl(50, 33%, 84%);
 
 .NuclearBomb__displayBox {
@@ -14,7 +11,7 @@ $background-beige: hsl(50, 33%, 84%);
   border: 0.167em inset $background-beige;
   color: hsl(132, 100%, 45%);
   font-size: 2em;
-  font-family: monospace;
+  font-family: var(--font-family-mono);
   padding: 0.25em;
 }
 
@@ -44,20 +41,28 @@ $background-beige: hsl(50, 33%, 84%);
 }
 
 .NuclearBomb__Button--E {
-  background-color: $color-caution !important;
-  border-color: $color-caution !important;
+  background-color: var(--button-background-caution) !important;
+  border-color: var(--button-background-caution) !important;
   &:hover {
-    background-color: color.adjust($color-caution, $lightness: 15%) !important;
-    border-color: color.adjust($color-caution, $lightness: 15%) !important;
+    background-color: hsl(
+      from var(--button-background-caution) h s calc(l + var(--adjust-hover))
+    ) !important;
+    border-color: hsl(
+      from var(--button-background-caution) h s calc(l + var(--adjust-hover))
+    ) !important;
   }
 }
 
 .NuclearBomb__Button--C {
-  background-color: $color-danger !important;
-  border-color: $color-danger !important;
+  background-color: var(--button-background-danger) !important;
+  border-color: var(--button-background-danger) !important;
   &:hover {
-    background-color: color.adjust($color-danger, $lightness: 15%) !important;
-    border-color: color.adjust($color-danger, $lightness: 15%) !important;
+    background-color: hsl(
+      from var(--button-background-danger) h s calc(l + var(--adjust-hover))
+    ) !important;
+    border-color: hsl(
+      from var(--button-background-danger) h s calc(l + var(--adjust-hover))
+    ) !important;
   }
 }
 
