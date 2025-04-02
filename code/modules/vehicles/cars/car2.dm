@@ -491,10 +491,12 @@ SUBSYSTEM_DEF(carpool)
 	if(istype(A, /mob/living))
 		var/mob/living/L = A
 		var/dam2 = prev_speed
-		var/turf/throw_target = get_edge_target_turf(src, get_dir(src.loc, L.loc))
+		var/relative_dir = get_dir(src.loc, L.loc)
+		var/turf/throw_target = get_edge_target_turf(src, relative_dir ? relative_dir : src.dir)
 		var/throw_dist = max(round(prev_speed/16), 2)
 		L.throw_at(throw_target, throw_dist, 4)
 		L.apply_damage(min(dam2, max_bump_damage), BRUTE, BODY_ZONE_CHEST)
+		log_combat(src.driver, L, "drove over")
 		var/dam = prev_speed
 		if(driver)
 			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
@@ -709,7 +711,7 @@ SUBSYSTEM_DEF(carpool)
 						hit_turf = O.loc
 						//message_admins("hit_obj:[hit_turf] ")
 		if(hit_mob)
-			Bump(hit_mob)
+
 			//to_chat(world, "I can't pass MOB [hit_mob] at [hit_mob.x] x [hit_mob.y] YEAA)]")
 
 			var/actual_distance = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_mob.x*32, hit_mob.y*32)-32
@@ -723,6 +725,9 @@ SUBSYSTEM_DEF(carpool)
 				moved_y = max((hit_mob.y*32+32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
 			if(last_pos["y"]*32+last_pos["y_pix"] < hit_mob.y*32)
 				moved_y = min((hit_mob.y*32-32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
+
+			Bump(hit_mob)
+
 		if(hit_turf)
 			Bump(hit_turf)
 			//to_chat(world, "I can't pass that [hit_turf] at [hit_turf.x] x [hit_turf.y] FUCK)]")
