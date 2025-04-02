@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Refactored some code related to initialization."
+  - code_imp: "Runtime errors will now print to the chat while debugging."
