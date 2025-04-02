@@ -131,7 +131,7 @@
 			if(hair_gradient_style != "None")
 				var/hair_gradient_color = gradient_colors[GRADIENT_HAIR_KEY]
 				var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, -HAIR_LAYER, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, hair_sprite_accessory)
-				if(!(owner.bodyshape & BODYSHAPE_PONY))
+				if(owner && !(owner.bodyshape & BODYSHAPE_PONY))
 					hair_gradient_overlay.pixel_z = hair_sprite_accessory.y_offset
 				. += hair_gradient_overlay
 
