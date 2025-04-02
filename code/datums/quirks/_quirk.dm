@@ -41,7 +41,7 @@
 	/// A list of traits that should stop this quirk from processing.
 	/// Signals for adding and removing this trait will automatically be added to `process_update_signals`.
 	var/list/no_process_traits
-		/// List of species that this quirk is valid for, or empty if it's valid for all species. Only use species ids here.
+	/// List of species that this quirk is valid for, or empty if it's valid for all species. Only use species ids here.
 	var/list/species_whitelist = list()
 
 /datum/quirk/New()
