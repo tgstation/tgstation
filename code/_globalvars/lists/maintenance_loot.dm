@@ -59,6 +59,8 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 
 		/obj/item/reagent_containers/applicator/pill/maintenance/achievement = 1,
 		/obj/item/toy/eightball = 1,
+		/obj/item/flashlight/lantern/syndicate = 1,
+		/obj/item/toy/plush/carpplushie/dehy_carp = 1,
 		) = 8,
 
 	list(//tier 1 stock parts
@@ -152,6 +154,12 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/sticky_tape = 1,
 		/obj/item/tank/internals/emergency_oxygen = 1,
 		/obj/item/paper/paperslip/fishing_tip = 1,
+		/obj/item/clothing/suit/space/syndicate = 1,
+		/obj/item/clothing/head/helmet/space/syndicate = 1,
+		/obj/item/storage/box/syndie_kit/centcom_costume = 1,
+		/obj/item/storage/box/syndie_kit/chameleon/broken = 1,
+		/obj/item/storage/box/syndie_kit/sleepytime = 1,
+		/obj/item/storage/backpack/duffelbag/clown/syndie = 1,
 
 		//light sources
 		/obj/effect/spawner/random/decoration/glowstick = 1,
@@ -176,6 +184,11 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/spear = 1,
 		/obj/item/weldingtool/largetank = 1,
 		/obj/item/market_uplink/blackmarket = 1,
+		/obj/item/melee/baton/security = 1,
+		/obj/item/grenade/clusterbuster/soap = 1,
+		/obj/item/gift/anything = 1,
+		/obj/item/language_manual/codespeak_manual/unlimited = 1,
+		/obj/item/storage/toolbox/guncase/traitor/donksoft = 1,
 		) = 8,
 
 	list(//equipment
@@ -241,6 +254,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/canned/peaches/maint = 1,
 		/obj/item/storage/box/donkpockets = 1,
 		/obj/item/storage/box/gum/happiness = 1,
+		/obj/item/pizzabox/bomb = 1, //oh no thats pizza box is fake!
 		list(//Donk Varieties
 			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
@@ -294,8 +308,8 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 
 	list(//fakeout items, keep this list at low relative weight
 		/obj/item/clothing/shoes/jackboots = 1,
-		/obj/item/dice/d20 = 1, //To balance out the stealth die of fates in oddities
-		) = 1,
+		/obj/item/dice/d20/fate/stealth/cursed = 1, //Happy April Fools!
+		) = 4,
 ))
 
 
@@ -315,7 +329,14 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/fishing_rod/telescopic/master = 1,
 		/obj/item/spess_knife = 1,
 		/obj/item/gun/ballistic/automatic/pistol/doorhickey = 1,
-		) = 1,
+		/obj/item/melee/energy/sword/saber = 1,
+		/obj/item/card/emag = 1,
+		/obj/item/card/emag/doorjack = 1,
+		/obj/item/gun/magic/staff/healing = 1,
+		/obj/item/gun/grenadelauncher = 1,
+		/obj/item/gun/ballistic/revolver/reverse = 1,
+		/obj/item/gun/energy/recharge/ebow = 1,
+		) = 2,
 
 	list(//equipment
 		/obj/item/clothing/glasses/hud/security = 1,
@@ -326,7 +347,19 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/clothing/head/helmet/toggleable/justice = 1,
 		/obj/item/storage/belt/military/assault = 1,
 		/obj/item/storage/belt/security = 1,
-		) = 1,
+		/obj/item/storage/belt/grenade/full = 1,
+		/obj/item/clothing/gloves/rapid = 1,
+		/obj/item/clothing/suit/armor/elder_atmosian = 1,
+		/obj/item/clothing/head/helmet/elder_atmosian = 1,
+		/obj/item/clothing/suit/armor/laserproof = 1,
+		/obj/item/clothing/suit/armor/swat = 1,
+		/obj/item/clothing/head/helmet/swat = 1,
+		/obj/item/clothing/suit/armor/riot/knight/greyscale = 1,
+		/obj/item/clothing/head/helmet/knight/greyscale = 1,
+		/obj/item/clothing/suit/armor/vest/russian = 1,
+		/obj/item/clothing/head/helmet/rus_helmet = 1,
+		/obj/item/clothing/head/helmet/rus_ushanka = 1,
+		) = 2,
 
 	list(//paint
 		/obj/item/paint/anycolor = 1,
@@ -341,6 +374,10 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		) = 1,
 
 	list(//medical and chemicals
+		/obj/item/autosurgeon/syndicate = 1,
+		/obj/item/autosurgeon/syndicate/anti_stun = 1,
+		/obj/item/autosurgeon/syndicate/thermal_eyes = 1,
+		/obj/item/autosurgeon/syndicate/reviver = 1,
 		list(//medkits
 			/obj/item/storage/box/hug/medical = 1,
 			/obj/item/storage/medkit/emergency = 1,
@@ -352,7 +389,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 			/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
 			/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 			) = 1,
-		) = 1,
+		) = 2,
 
 	list(//misc
 		/obj/item/book/granter/crafting_recipe/dusting/pipegun_prime = 1,
@@ -365,13 +402,21 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/skillchip/intj = 1,
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
-		) = 1,
+		/obj/item/spellbook = 1, //its so much funny, anyways have happy April Fools!
+		/obj/item/grenade/chem_grenade/teargas/moustache = 1,
+		/obj/item/storage/toolbox/guncase/cqc = 1,
+		/obj/item/storage/box/syndie_kit/imp_radio = 1,
+		/obj/item/card/id/advanced/chameleon = 1,
+		/obj/item/storage/box/syndie_kit/origami_bundle = 1,
+		/obj/item/mod/control/pre_equipped/infiltrator = 1,
+		/obj/item/mod/control/pre_equipped/traitor = 1,
+		) = 2,
 
 ))
 
 
 
-GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
+GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items | i make this more common, happy April Fools!
 		/obj/effect/rune/teleport = 1,
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/shoes/jackboots/fast = 1,
@@ -381,6 +426,10 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/shadowcloak = 1,
 		/obj/item/spear/grey_tide = 1,
 		/obj/item/storage/box/donkpockets/donkpocketgondola = 1,
+		/obj/item/storage/toolbox/emergency/turret = 1,
+		/obj/item/reagent_containers/cup/bottle/romerol = 1,
+		/obj/item/disk/tech_disk/debug = 1,
+		/obj/item/storage/backpack/duffelbag/syndie/firestarter = 1,
 		list(//music
 			/obj/item/instrument/saxophone/spectral = 1,
 			/obj/item/instrument/trombone/spectral = 1,
@@ -392,9 +441,9 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 //Maintenance loot spawner pools
 #define maint_trash_weight 4500
 #define maint_common_weight 4500
-#define maint_uncommon_weight 900
-#define maint_rarity_weight 99
-#define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
+#define maint_uncommon_weight 1000
+#define maint_rarity_weight 800
+#define maint_oddity_weight 600 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg... Nevermind
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 
 //Loot pool used by default maintenance loot spawners
