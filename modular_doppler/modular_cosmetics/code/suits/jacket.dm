@@ -245,6 +245,12 @@
 	cold_protection = CHEST|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
+/obj/item/clothing/suit/jacket/doppler/gacket
+	name = "crop-top jacket"
+	desc = "A remarkably fancy-looking two-tone cropped jacket with a nice gold trim, and a golden middle finger on the back."
+	icon_state = "gacket"
+	worn_icon_state = "gacket"
+
 /////////
 //COATS//
 /////////

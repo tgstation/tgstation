@@ -195,6 +195,10 @@
 	name = "Leather Jacket with Hoodie"
 	item_path = /obj/item/clothing/suit/hooded/doppler/leather_hoodie
 
+/datum/loadout_item/suit/da_gacket
+	name = "Crop-top Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/gacket
+
 /*
 *	COLONIST
 */
