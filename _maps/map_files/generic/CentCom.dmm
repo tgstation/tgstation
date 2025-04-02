@@ -6911,10 +6911,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"Fi" = (
-/obj/effect/landmark/basketball/game_area,
-/turf/open/space/basic,
-/area/space)
 "Fj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -36282,7 +36278,7 @@ aa
 aa
 aa
 aa
-Fi
+aa
 aa
 aa
 aa
@@ -57915,7 +57911,7 @@ ZS
 sK
 GX
 wl
-iu
+io
 vR
 Ab
 Ab

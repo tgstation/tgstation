@@ -335,36 +335,39 @@
 // Copy-pasted from the former /obj/item/storage/box/material, w/ small additions like rods, cardboard, plastic.
 // "Only 20 uranium 'cause of radiation"
 /obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
+	// amount should be null if it should spawn with the type's default amount
 	var/static/items_inside = list(
-		/obj/item/stack/sheet/iron/fifty=1,
-		/obj/item/stack/sheet/glass/fifty=1,
-		/obj/item/stack/sheet/rglass/fifty=1,
-		/obj/item/stack/sheet/plasmaglass/fifty=1,
-		/obj/item/stack/sheet/titaniumglass/fifty=1,
-		/obj/item/stack/sheet/plastitaniumglass/fifty=1,
-		/obj/item/stack/sheet/plasteel/fifty=1,
-		/obj/item/stack/sheet/mineral/titanium/fifty=1,
-		/obj/item/stack/sheet/mineral/gold=50,
-		/obj/item/stack/sheet/mineral/silver=50,
-		/obj/item/stack/sheet/mineral/plasma=50,
-		/obj/item/stack/sheet/mineral/uranium=20,
-		/obj/item/stack/sheet/mineral/diamond=50,
-		/obj/item/stack/sheet/bluespace_crystal=50,
-		/obj/item/stack/sheet/mineral/bananium=50,
-		/obj/item/stack/sheet/mineral/wood/fifty=1,
-		/obj/item/stack/sheet/plastic/fifty=1,
-		/obj/item/stack/sheet/runed_metal/fifty=1,
-		/obj/item/stack/rods/fifty=1,
-		/obj/item/stack/sheet/mineral/plastitanium=50,
-		/obj/item/stack/sheet/mineral/abductor=50,
-		/obj/item/stack/sheet/cardboard/fifty=1,
-		)
+		/obj/item/stack/sheet/iron/fifty = null,
+		/obj/item/stack/sheet/glass/fifty = null,
+		/obj/item/stack/sheet/rglass/fifty = null,
+		/obj/item/stack/sheet/plasmaglass/fifty = null,
+		/obj/item/stack/sheet/titaniumglass/fifty = null,
+		/obj/item/stack/sheet/plastitaniumglass/fifty = null,
+		/obj/item/stack/sheet/plasteel/fifty = null,
+		/obj/item/stack/sheet/mineral/titanium/fifty = null,
+		/obj/item/stack/sheet/mineral/gold = 50,
+		/obj/item/stack/sheet/mineral/silver = 50,
+		/obj/item/stack/sheet/mineral/plasma = 50,
+		/obj/item/stack/sheet/mineral/uranium = 20,
+		/obj/item/stack/sheet/mineral/diamond = 50,
+		/obj/item/stack/sheet/bluespace_crystal = 50,
+		/obj/item/stack/sheet/mineral/bananium = 50,
+		/obj/item/stack/sheet/mineral/wood/fifty = null,
+		/obj/item/stack/sheet/plastic/fifty = null,
+		/obj/item/stack/sheet/runed_metal/fifty = null,
+		/obj/item/stack/rods/fifty = null,
+		/obj/item/stack/sheet/mineral/plastitanium = 50,
+		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/cardboard/fifty = null,
+	)
 	//This needs to be done here and not in Initialize() because the stacks get merged and fall out when their weight updates if this is set after PopulateContents()
 	atom_storage.allow_big_nesting = TRUE
 	atom_storage.max_slots = 99
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	atom_storage.max_total_storage = capacity
-	generate_items_inside(items_inside,src)
+	for(var/obj/item/stack/stack_type as anything in items_inside)
+		var/amt = items_inside[stack_type]
+		new stack_type(src, amt, FALSE)
 
 /obj/item/storage/bag/sheetsnatcher/debug/Initialize(mapload)
 	. = ..()
@@ -524,7 +527,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 	))
 

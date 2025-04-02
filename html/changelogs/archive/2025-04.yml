@@ -1,0 +1,24 @@
+2025-04-01:
+  Ghommie:
+  - bugfix: Fish will no longer drown if left half-submerged in a fishable turf on
+      which it can normally be found. Instead it will disperse after a while or if
+      starving. Note that this only happens if the fish is native to such turfs (eg.
+      lavaloop on beach water will still die).
+  SmArtKar:
+  - bugfix: Fixed gas station and phonebooth ruins magically summoning weather on
+      bottom levels of Icebox
+2025-04-02:
+  TiviPlus:
+  - refactor: "Logging and IC timestamps will now always use UTC\xB10 and not be affected\
+      \ by server system timezone changes"
+  - bugfix: "Station and round times will not longer be incorrect if the system timezone\
+      \ is not UTC\xB10"
+  Y0SH1M4S73R:
+  - code_imp: Any tgui message that would be too big to send to the server is now
+      split into chunks and sent in sequence. This fixes several issues, such as...
+  - bugfix: It is once again possible to save large amounts of text on paper at once.
+  jlsnow301:
+  - bugfix: Fixed the circuit UI titlebar spacing
+  - bugfix: The library console has been refactored. Report any issues in the github!
+  timothymtorres:
+  - map: Move mafia, CTF, and deathmatch maps into minigame folder

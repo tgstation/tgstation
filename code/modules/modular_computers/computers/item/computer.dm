@@ -620,7 +620,7 @@
 	data["PC_programheaders"] = program_headers
 
 	data["PC_stationtime"] = station_time_timestamp()
-	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [CURRENT_STATION_YEAR]"
+	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]"
 	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
 
@@ -985,6 +985,30 @@
 	if(!include_disk_files || !inserted_disk)
 		return stored_files
 	return stored_files + inserted_disk.stored_files
+
+/// Returns how relevant the current security level is:
+#define ALERT_RELEVANCY_SAFE 0 /// * 0: User is not in immediate danger and not needed for some station-critical task.
+#define ALERT_RELEVANCY_WARN 1 /// * 1: Danger is around, but the user is not directly needed to handle it.
+#define ALERT_RELEVANCY_PERTINENT 2/// * 2: Danger is around and the user is responsible for handling it.
+/obj/item/modular_computer/proc/get_security_level_relevancy()
+	switch(SSsecurity_level.get_current_level_as_number())
+		if(SEC_LEVEL_DELTA)
+			return ALERT_RELEVANCY_PERTINENT
+		if(SEC_LEVEL_RED) // all-hands-on-deck situations, everyone is responsible for combatting a threat
+			return ALERT_RELEVANCY_PERTINENT
+		if(SEC_LEVEL_BLUE) // suspected threat. security needs to be alert and possibly preparing for it, no further concerns
+			if(ACCESS_SECURITY in computer_id_slot.access)
+				return ALERT_RELEVANCY_PERTINENT
+			else
+				return ALERT_RELEVANCY_WARN
+		if(SEC_LEVEL_GREEN) // no threats, no concerns
+			return ALERT_RELEVANCY_SAFE
+
+	return 0
+
+#undef ALERT_RELEVANCY_SAFE
+#undef ALERT_RELEVANCY_WARN
+#undef ALERT_RELEVANCY_PERTINENT
 
 /**
  * Debug ModPC

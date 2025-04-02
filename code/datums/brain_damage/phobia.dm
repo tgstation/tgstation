@@ -58,39 +58,49 @@
 			if(is_scary_item(seen_item))
 				freak_out(seen_item)
 				return
-		for(var/mob/living/carbon/human/nearby_guy in seen_atoms) //check equipment for trigger items
-			for(var/obj/item/equipped as anything in nearby_guy.get_visible_items())
-				if(is_scary_item(equipped))
-					freak_out(equipped)
-					return
 
 	if(LAZYLEN(trigger_turfs))
-		for(var/turf/T in seen_atoms)
-			if(is_type_in_typecache(T, trigger_turfs))
-				freak_out(T)
+		for(var/turf/checked in seen_atoms)
+			if(is_type_in_typecache(checked, trigger_turfs))
+				freak_out(checked)
 				return
 
 	seen_atoms -= owner //make sure they aren't afraid of themselves.
-	if(LAZYLEN(trigger_mobs) || LAZYLEN(trigger_species))
-		for(var/mob/M in seen_atoms)
-			if(is_type_in_typecache(M, trigger_mobs))
-				freak_out(M)
+	if(LAZYLEN(trigger_mobs) || LAZYLEN(trigger_species) || LAZYLEN(trigger_objs))
+		for(var/mob/living/checked in seen_atoms)
+			if (is_scary_mob(checked))
+				freak_out(checked)
 				return
-
-			else if(ishuman(M)) //check their species
-				var/mob/living/carbon/human/H = M
-				if(LAZYLEN(trigger_species) && H.dna && H.dna.species && is_type_in_typecache(H.dna.species, trigger_species))
-					freak_out(H)
-					return
 
 /// Returns true if this item should be scary to us
 /datum/brain_trauma/mild/phobia/proc/is_scary_item(obj/checked)
-	if (QDELETED(checked) || !is_type_in_typecache(checked, trigger_objs))
+	if (QDELETED(checked) || !is_type_in_typecache(checked, trigger_objs) || checked.invisibility > owner.see_invisible)
 		return FALSE
 	if (!isitem(checked))
 		return TRUE
 	var/obj/item/checked_item = checked
 	return !HAS_TRAIT(checked_item, TRAIT_EXAMINE_SKIP)
+
+/datum/brain_trauma/mild/phobia/proc/is_scary_mob(mob/living/checked)
+	if(is_type_in_typecache(checked, trigger_mobs))
+		return TRUE
+
+	if (!ishuman(checked))
+		return FALSE
+
+	var/mob/living/carbon/human/as_human = checked
+	if (LAZYLEN(trigger_species))
+		if (is_type_in_typecache(as_human.dna?.species, trigger_species))
+			return TRUE
+
+	if (!LAZYLEN(trigger_objs))
+		return FALSE
+
+	for(var/obj/item/equipped as anything in as_human.get_visible_items())
+		if(is_scary_item(equipped))
+			return TRUE
+
+	return FALSE
 
 /datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
 	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE])) 	//words can't trigger you if you can't hear them *taps head*

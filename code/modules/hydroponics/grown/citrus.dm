@@ -55,7 +55,7 @@
 	name = "orange"
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
-	foodtypes = ORANGES
+	foodtypes = ORANGES | FRUIT
 	juice_typepath = /datum/reagent/consumable/orangejuice
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 

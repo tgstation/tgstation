@@ -17,7 +17,6 @@
 	icon_state = "paper"
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
-	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -85,6 +84,11 @@
 	clear_paper()
 	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
 	return ..()
+
+/obj/item/paper/custom_fire_overlay()
+	if (!custom_fire_overlay)
+		custom_fire_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_onfire_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
+	return custom_fire_overlay
 
 /// Determines whether this paper has been written or stamped to.
 /obj/item/paper/proc/is_empty()
@@ -219,9 +223,9 @@
 	if(is_signature)
 		field_text = signature_name
 	else if(is_date)
-		field_text = "[time2text(world.timeofday, "DD/MM")]/[CURRENT_STATION_YEAR]"
+		field_text = "[time2text(world.timeofday, "DD/MM", NO_TIMEZONE)]/[CURRENT_STATION_YEAR]"
 	else if(is_time)
-		field_text = time2text(world.timeofday, "hh:mm")
+		field_text = time2text(world.timeofday, "hh:mm", NO_TIMEZONE)
 
 	var/field_font = is_signature ? SIGNATURE_FONT : font
 

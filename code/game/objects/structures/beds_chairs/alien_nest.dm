@@ -7,7 +7,6 @@
 	icon_state = "nest-0"
 	base_icon_state = "nest"
 	max_integrity = 120
-	can_be_unanchored = FALSE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_ALIEN_NEST
 	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST

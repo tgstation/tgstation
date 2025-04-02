@@ -245,9 +245,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
-"oA" = (
-/turf/open/floor/iron/dark/textured,
-/area/ruin/syndielab)
 "oY" = (
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/mapping_helpers/apc/full_charge,
@@ -812,10 +809,10 @@
 /area/ruin/syndielab)
 "Wo" = (
 /obj/structure/table/wood,
-/obj/item/ammo_casing/shotgun/fletchette{
+/obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/shotgun/fletchette{
+/obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -1082,7 +1079,7 @@ Xt
 Xt
 AR
 Jc
-oA
+ey
 FJ
 AR
 qC

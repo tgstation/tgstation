@@ -5,8 +5,6 @@
 // UI minigame phase
 #define MINIGAME_PHASE 3
 
-// Acceleration mod when bait is over fish
-#define FISH_ON_BAIT_ACCELERATION_MULT 0.6
 /// The minimum velocity required for the bait to bounce
 #define BAIT_MIN_VELOCITY_BOUNCE 150
 
@@ -109,10 +107,12 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	var/gravity_velocity = -800
 	/// The acceleration of the bait while reeling
 	var/reeling_velocity = 1200
-	/// By how much the bait recoils back when hitting the bounds of the slider while idle
+	/// By how much the bait recoils back when hitting the bounds of the slider while idle. Should be never above 1
 	var/bait_bounce_mult = 0.6
 	/// The multiplier of deceleration of velocity that happens when the bait switches direction
 	var/deceleration_mult = 1.8
+	/// Multiplier of the velocity applied when the bait is overlapping the fish
+	var/overlap_velocity_mult = 0.6
 
 	///The background as shown in the minigame, and the holder of the other visual overlays
 	var/atom/movable/screen/fishing_hud/fishing_hud
@@ -170,6 +170,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	bait_bounce_mult *= rod.bounciness_mult
 	deceleration_mult *= rod.deceleration_mult
 	gravity_velocity *= rod.gravity_mult
+	/**
+	 * The overlap multiplier is lower than 1 by default and exponentiation will make it even lower,
+	 * to offset the harder control however a bait velocity higher (or lower) than normal.
+	 */
+	overlap_velocity_mult = overlap_velocity_mult ** rod.bait_speed_mult
 
 /datum/fishing_challenge/Destroy(force)
 	GLOB.fishing_challenges_by_user -= user
@@ -406,8 +411,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	deltimer(next_phase_timer)
 	phase = WAIT_PHASE
 	//Bobbing animation
-	animate(float, pixel_y = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
-	animate(pixel_y = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(float, pixel_z = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_biting_phase)), wait_time, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	if(float.spin_frequency)
 		set_lure_timers()
@@ -464,8 +469,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 				send_alert("organ!!!")
 	else
 		send_alert("!!!")
-	animate(float, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
-	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
+	animate(float, pixel_z = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -3, time = 5, flags = ANIMATION_RELATIVE)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
 		addtimer(CALLBACK(src, PROC_REF(automatically_start_minigame)), 0.2 SECONDS)
 	// Setup next phase
@@ -739,12 +744,20 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 				velocity_change = gravity_velocity
 			else
 				velocity_change = -gravity_velocity
-	velocity_change *= (fish_on_bait ? FISH_ON_BAIT_ACCELERATION_MULT : 1) * seconds_per_tick
+	velocity_change *= (fish_on_bait ? overlap_velocity_mult : 1) * seconds_per_tick
 
 	velocity_change = round(velocity_change)
 
 	if(current_active_effect == FISHING_MINIGAME_RULE_ANTIGRAV)
 		velocity_change = -velocity_change
+
+	if(reeling_state == REELING_STATE_IDLE && (special_effects & FISHING_MINIGAME_AUTOREEL))
+		var/bait_center = bait_position + bait_height / 2
+		var/auto_adjustment = reeling_velocity * 0.2
+		if(fish_position > bait_center)
+			velocity_change += auto_adjustment
+		else
+			velocity_change -= auto_adjustment
 
 	/**
 	 * Pull the brake on the velocity if the current velocity and the acceleration
@@ -765,7 +778,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		bait_velocity += velocity_change
 
 	//check that the fish area is still intersecting the bait now that it has moved
-	if(is_fish_on_bait())
+	if(fish_on_bait)
 		completion += completion_gain * seconds_per_tick
 		if(completion >= 100)
 			complete(TRUE)
@@ -777,16 +790,12 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 	completion = clamp(completion, 0, 100)
 
-///Returns TRUE if the fish and the bait are intersecting
-/datum/fishing_challenge/proc/is_fish_on_bait()
-	return (fish_position + fish_height >= bait_position) && (bait_position + bait_height >= fish_position)
-
 ///update the vertical pixel position of both fish and bait, and the icon state of the completion bar
 /datum/fishing_challenge/proc/update_visuals(seconds_per_tick)
 	var/bait_offset_mult = bait_position / FISHING_MINIGAME_AREA
-	animate(fishing_hud.hud_bait, pixel_y = MINIGAME_SLIDER_HEIGHT * bait_offset_mult, time = seconds_per_tick SECONDS)
+	animate(fishing_hud.hud_bait, pixel_z = MINIGAME_SLIDER_HEIGHT * bait_offset_mult, time = seconds_per_tick SECONDS)
 	var/fish_offset_mult = fish_position / FISHING_MINIGAME_AREA
-	animate(fishing_hud.hud_fish, pixel_y = MINIGAME_SLIDER_HEIGHT * fish_offset_mult, time = seconds_per_tick SECONDS)
+	animate(fishing_hud.hud_fish, pixel_z = MINIGAME_SLIDER_HEIGHT * fish_offset_mult, time = seconds_per_tick SECONDS)
 	fishing_hud.hud_completion.update_state(completion, seconds_per_tick)
 
 ///The screen object which bait, fish, and completion bar are visually attached to.
@@ -844,11 +853,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 /atom/movable/screen/hud_bait/update_overlays()
 	. = ..()
 	var/mutable_appearance/bait_top = mutable_appearance(icon, "bait_top")
-	bait_top.pixel_y += cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT
+	bait_top.pixel_z += cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT
 	. += bait_top
 	for (var/i in 1 to (cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT))
 		var/mutable_appearance/bait_bar = mutable_appearance(icon, "bait_bar")
-		bait_bar.pixel_y += i
+		bait_bar.pixel_z += i
 		. += bait_bar
 
 /atom/movable/screen/hud_fish
@@ -935,7 +944,6 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 #undef REELING_STATE_UP
 #undef REELING_STATE_DOWN
 
-#undef FISH_ON_BAIT_ACCELERATION_MULT
 #undef BAIT_MIN_VELOCITY_BOUNCE
 
 #undef MAX_FISH_COMPLETION_MALUS

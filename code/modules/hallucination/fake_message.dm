@@ -1,5 +1,6 @@
 /datum/hallucination/message
 	random_hallucination_weight = 60
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /datum/hallucination/message/start()
 	var/list/nearby_humans = list()

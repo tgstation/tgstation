@@ -23,6 +23,8 @@
 /code/modules/tgs/ @Cyberboss
 /code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
+/tools/Tgstation.DiscordDiscussions/ @Cyberboss
+/tools/Tgstation.PRAnnouncer/ @Cyberboss
 
 # Cobby
 
@@ -173,7 +175,7 @@
 # NamelessFairy
 
 /code/modules/capture_the_flag/ @NamelessFairy
-/_maps/map_files/CTF/ @NamelessFairy
+/_maps/minigame/CTF/ @NamelessFairy
 
 # Pickle-Coding
 
@@ -213,8 +215,6 @@
 
 /tools/build/ @scriptis @stylemistake
 /tools/tgs_scripts/ @Cyberboss @scriptis
-
-/tools/WebhookProcessor/ @BraveMole @TiviPlus
 
 # Host Hell
 

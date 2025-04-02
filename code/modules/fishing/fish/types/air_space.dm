@@ -200,7 +200,7 @@
 	if(status == FISH_DEAD)
 		eyes.icon_state += "_dead"
 	else
-		eyes.appearance_flags = RESET_COLOR
+		eyes.appearance_flags = RESET_COLOR|KEEP_APART
 	. += eyes
 
 ///Determines the speed at which the carp grows based on how big it's

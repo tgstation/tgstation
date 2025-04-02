@@ -36,6 +36,7 @@
 #define TECHWEB_NODE_CYBER_ORGANS_UPGRADED "cyber_organs_upgraded"
 #define TECHWEB_NODE_CYBERNETICS "cybernetics"
 #define TECHWEB_NODE_CYTOLOGY "cytology"
+#define TECHWEB_NODE_DONK_PRODUCTS "donk_products"
 #define TECHWEB_NODE_ELECTRIC_WEAPONS "electric_weapons"
 #define TECHWEB_NODE_ENERGY_MANIPULATION "energy_manipulation"
 #define TECHWEB_NODE_EXODRONE "exodrone"

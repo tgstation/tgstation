@@ -28,9 +28,7 @@
 	var/turf/last_camera_turf
 
 	// Stuff needed to render the map
-	var/atom/movable/screen/map_view/cam_screen
-	/// All the plane masters that need to be applied.
-	var/atom/movable/screen/background/cam_background
+	var/atom/movable/screen/map_view/camera/cam_screen
 
 	///Internal tracker used to find a specific person and keep them on cameras.
 	var/datum/trackable/internal_tracker
@@ -75,13 +73,9 @@
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = FALSE
 
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
-	QDEL_NULL(cam_background)
 	QDEL_NULL(internal_tracker)
 	last_camera_turf = null
 	return ..()
@@ -102,8 +96,7 @@
 	if(is_living)
 		concurrent_users += user_ref
 	// Register map objects
-	cam_screen.display_to(user)
-	user.client.register_map_obj(cam_background)
+	cam_screen.display_to(user, ui.window)
 
 /datum/computer_file/program/secureye/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
@@ -197,7 +190,7 @@
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
-		show_camera_static()
+		cam_screen.show_camera_static()
 		return
 
 	var/list/visible_turfs = list()
@@ -225,13 +218,6 @@
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
 
-	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
-
-/datum/computer_file/program/secureye/proc/show_camera_static()
-	cam_screen.vis_contents.Cut()
-	cam_background.icon_state = "scanline2"
-	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+	cam_screen.show_camera(visible_turfs, size_x, size_y)
 
 #undef DEFAULT_MAP_SIZE

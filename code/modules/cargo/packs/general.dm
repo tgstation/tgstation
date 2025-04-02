@@ -178,7 +178,7 @@
 /datum/supply_pack/misc/candles_bulk
 	name = "Candle Box Crate"
 	desc = "Keep your local chapel lit with three candle boxes!"
-	cost = CARGO_CRATE_VALUE * 1.5
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/fancy/candle_box = 3)
 	crate_name = "candle box crate"
 
@@ -214,6 +214,7 @@
 	contains = list()
 	crate_name = "syndicate gear crate"
 	crate_type = /obj/structure/closet/crate
+	test_ignored = TRUE
 	///Total TC worth of contained uplink items
 	var/crate_value = 30
 	///What uplink the contents are pulled from

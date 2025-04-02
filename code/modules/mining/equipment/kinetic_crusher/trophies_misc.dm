@@ -14,18 +14,18 @@
 	var/retool_icon = 'icons/obj/mining.dmi'
 	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
 	var/retool_icon_state = "crusher_sword"
-	///Specifies the icon state for the crusher's appearance in hand. Should appear in both retool_lefthand_file and retool_righthand_file, which are icons/mob/inhands/weapons/hammers_lefthand.dmi and icons/mob/inhands/weapons/hammers_righthand.dmi by default.
+	///Specifies the icon state for the crusher's appearance in hand. Should appear in both retool_lefthand_file and retool_righthand_file.
 	var/retool_inhand_icon = "crusher_sword"
-	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi
+	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi.
 	var/retool_projectile_icon = "pulse1"
-	/// Specifies the left hand inhand icon file. If both this and retool_righthand_file are set, changes the inhand files and dimensions as appropriate.
+	/// Specifies the left hand inhand icon file. Don't forget to set the right hand file as well.
 	var/retool_lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
-	/// Specifies the right hand inhand icon file. If both this and retool_lefthand_file are set, changes the inhand files and dimensions as appropriate.
+	/// Specifies the right hand inhand icon file. Don't forget to set the left hand file as well.
 	var/retool_righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	/// Specifies the X dimensions of the new inhand, only relevant with different inhand files.
-	var/retool_inhand_X = 32
+	var/retool_inhand_x = 32
 	/// Specifies the Y dimensions of the new inhand, only relevant with different inhand files.
-	var/retool_inhand_Y = 32
+	var/retool_inhand_y = 32
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
@@ -39,8 +39,10 @@
 	pkc.icon_state = retool_icon_state
 	pkc.current_inhand_icon_state = retool_inhand_icon
 	pkc.projectile_icon = retool_projectile_icon
-	pkc.inhand_x_dimension = retool_inhand_X
-	pkc.inhand_y_dimension = retool_inhand_Y
+	pkc.lefthand_file = retool_lefthand_file
+	pkc.righthand_file = retool_righthand_file
+	pkc.inhand_x_dimension = retool_inhand_x
+	pkc.inhand_y_dimension = retool_inhand_y
 	pkc.update_appearance()
 	pkc.update_slot_icon()
 
@@ -83,8 +85,8 @@
 	retool_inhand_icon = "crusher_glaive"
 	retool_lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	retool_righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
-	retool_inhand_X = 64
-	retool_inhand_Y = 64
+	retool_inhand_x = 64
+	retool_inhand_y = 64
 
 /obj/item/crusher_trophy/retool_kit/glaive/effect_desc()
 	return "the crusher to have the appearance of a glaive"

@@ -118,6 +118,9 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 /obj/item/stack/sheet/mineral/diamond/five
 	amount = 5
 
+/obj/item/stack/sheet/mineral/diamond/fifty
+	amount = 50
+
 /*
  * Uranium
  */
@@ -148,6 +151,9 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/uranium/half
 	amount = 25
+
+/obj/item/stack/sheet/mineral/uranium/fifty
+	amount = 50
 
 /*
  * Plasma
@@ -186,6 +192,9 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 /obj/item/stack/sheet/mineral/plasma/thirty
 	amount = 30
 
+/obj/item/stack/sheet/mineral/plasma/fifty
+	amount = 50
+
 /*
  * Gold
  */
@@ -213,6 +222,9 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	. = ..()
 	. += GLOB.gold_recipes
 
+/obj/item/stack/sheet/mineral/gold/fifty
+	amount = 50
+
 /*
  * Silver
  */
@@ -227,7 +239,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	gulag_valid = TRUE
 	merge_type = /obj/item/stack/sheet/mineral/silver
 	material_type = /datum/material/silver
-	tableVariant = /obj/structure/table/optable
+	table_type = /obj/structure/table/optable
 	walltype = /turf/closed/wall/mineral/silver
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
@@ -238,6 +250,9 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 /obj/item/stack/sheet/mineral/silver/get_main_recipes()
 	. = ..()
 	. += GLOB.silver_recipes
+
+/obj/item/stack/sheet/mineral/silver/fifty
+	amount = 50
 
 /*
  * Clown

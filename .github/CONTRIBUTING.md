@@ -35,7 +35,7 @@ First things first, we want to make it clear how you can contribute (if you've n
 If you want to contribute the first thing you'll need to do is [set up Git](https://hackmd.io/@tgstation/HJ8OdjNBc) so you can download the source code.
 After setting it up, optionally navigate your git commandline to the project folder and run the command: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
 
-We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+We have a [list of guides on the wiki](http://tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
 There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
@@ -98,13 +98,13 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 
 ## Development Guides
 
-#### Writing readable code 
+#### Writing readable code
 [Style guide](./guides/STYLE.md)
 
-#### Writing sane code 
+#### Writing sane code
 [Code standards](./guides/STANDARDS.md)
 
-#### Writing understandable code 
+#### Writing understandable code
 [Autodocumenting code](./guides/AUTODOC.md)
 
 #### Misc
@@ -144,7 +144,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 ## Justifying Your Changes
 
-You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your pull request wholesale, or requiring that you fix it before your pull request is merged. A reasonable justification for your changes is a requirement. 
+You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your pull request wholesale, or requiring that you fix it before your pull request is merged. A reasonable justification for your changes is a requirement.
 
 Your "Why It's Good For The Game" section must make a good faith and reasonable attempt to:
 * Assert and argue that the current state of affairs in the game is not good, and needs changing.
@@ -171,7 +171,7 @@ Negative GBP increases the likelihood of a maintainer closing your PR. With that
 
 There is no benefit to having a higher positive GBP score, since GBP only comes into consideration when it is negative.
 
-You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml). 
+You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml).
 
 ## Porting features/sprites/sounds/tools from other codebases
 
@@ -198,6 +198,6 @@ Github actions that require additional configuration are disabled on the reposit
 
 ## Using the Maintainer Role Ping in Discord
 
-This role `@Maintainer` is pingable as a compromise reached with the server host MrStonedOne over the auto-stale system we presently have in the codebase. It should be used only to ping Maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
+When your PR is labeled as "Stale", you are permitted to ping the `@Maintainer` role on the /tg/station Discord. Using this ping for anything else can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
 
 Feel free to engage and obtain general feedback in the Coding General channel without the role ping before your PR goes stale to build interest and get reviews.
