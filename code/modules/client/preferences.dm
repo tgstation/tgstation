@@ -431,8 +431,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			LAZYADD(quirks_removed, quirk_name)
 	var/list/feedback
 	if(LAZYLEN(quirks_removed))
-		feedback = list("The following quirks are incompatible with your species:")
-		feedback += quirks_removed
+		LAZYADD(feedback, "The following quirks are incompatible with your species:")
+		LAZYADD(feedback, quirks_removed)
 	if(!CONFIG_GET(flag/disable_quirk_points) && GetQuirkBalance() < 0)
 		LAZYADD(feedback, "Your quirks have been reset.")
 		all_quirks = list()
