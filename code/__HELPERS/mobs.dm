@@ -601,8 +601,6 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		return persistent_mob
 	// hopefully the above will always handle it, but any time a coder thinks "no way this will happen", murphy's law guarantees it somehow will
 	for(var/mob/mob as anything in GLOB.mob_list)
-		if(QDELETED(mob))
-			continue
 		if(mob.ckey == key)
 			return mob
 
