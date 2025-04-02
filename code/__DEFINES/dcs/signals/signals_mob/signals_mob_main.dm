@@ -15,7 +15,7 @@
 #define COMSIG_MOB_REAGENT_CHECK "mob_reagent_check"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_CHECK (1<<0)
-///from base of mob/clickon(): (atom/A, params)
+///from base of mob/clickon(): (atom/A, list/modifiers)
 #define COMSIG_MOB_CLICKON "mob_clickon"
 ///from base of mob/MiddleClickOn(): (atom/A)
 #define COMSIG_MOB_MIDDLECLICKON "mob_middleclickon"
