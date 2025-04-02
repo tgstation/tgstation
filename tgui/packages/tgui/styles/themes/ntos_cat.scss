@@ -23,14 +23,13 @@ $scrollbar-color-multiplier: 0.5;
   $good: hsl(300, 91%, 52%),
   $bad: red,
   // $fg-map-keys: (),
-  // $bg-map-keys: (),
+   // $bg-map-keys: (),
 );
 
 @use '../base.scss' with (
-    $color-bg: hsl(36, 100%, 50%),
-    $color-bg-grad-spread: 12%,
-    //$border-radius: 0,
-  );
+  $color-bg: hsl(36, 100%, 50%),
+  $color-bg-grad-spread: 12% //$border-radius: 0,
+);
 
 .theme-ntos_cat {
   // Atomic classes

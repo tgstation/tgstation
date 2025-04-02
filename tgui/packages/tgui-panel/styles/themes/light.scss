@@ -16,7 +16,7 @@
   // Commenting out color maps will adjust all colors based on the lightness
   // settings above, but will add extra 10KB to the theme.
   // $fg-map-keys: (),
-  // $bg-map-keys: (),
+   // $bg-map-keys: (),
 );
 @use '~tgui/styles/base.scss' with (
   $color-fg: hsl(0, 0%, 0%),
