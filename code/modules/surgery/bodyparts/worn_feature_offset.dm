@@ -42,11 +42,6 @@
 
 	if (!isnull(owner))
 		changed_owner(src, owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/new_human = owner
-			new_human.update_features(feature_key)
-			if(update_body_parts)
-				new_human.update_body_parts(update_limb_data = TRUE)
 	RegisterSignal(attached_part, COMSIG_BODYPART_CHANGED_OWNER, PROC_REF(changed_owner))
 
 /// Returns the current offset which should be used for this feature
@@ -85,8 +80,6 @@
 		if(ishuman(new_owner))
 			var/mob/living/carbon/human/new_human = new_owner
 			new_human.update_features(feature_key)
-			if(update_body_parts)
-				new_human.update_body_parts(update_limb_data = TRUE)
 
 /// If the owner is deleted, stop updating
 /datum/worn_feature_offset/proc/on_owner_deleted(mob/living/host)
@@ -97,9 +90,6 @@
 /datum/worn_feature_offset/proc/on_dir_change(mob/living/carbon/owner, olddir, newdir)
 	SIGNAL_HANDLER
 	if(olddir != newdir)
-		owner.update_features(feature_key)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/new_human = owner
 			new_human.update_features(feature_key)
-			if(update_body_parts)
-				new_human.update_body_parts(update_limb_data = TRUE)

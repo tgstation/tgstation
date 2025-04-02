@@ -197,8 +197,8 @@
 				eye_left.overlays += emissive_blocker(eye_left.icon, eye_left.icon_state, location, alpha = eye_left.alpha)
 				eye_right.overlays += emissive_blocker(eye_right.icon, eye_right.icon_state, location, alpha = eye_right.alpha)
 			if(eye_offset)
-				eye_offset.apply_offset(eye_left)
-				eye_offset.apply_offset(eye_right)
+				eye_offset?.apply_offset(eye_left)
+				eye_offset?.apply_offset(eye_right)
 			. += eye_left
 			. += eye_right
 		else if(!eyes && (head_flags & HEAD_EYEHOLES))

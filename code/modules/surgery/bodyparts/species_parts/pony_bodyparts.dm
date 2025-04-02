@@ -689,32 +689,6 @@
 	var/doing_tk = FALSE
 	var/tk_color = "#FF99FF"
 
-/datum/bodypart_overlay/mutant/pony_horn/New(obj/item/organ/attached_organ)
-	bodyshape_offsets = list(
-		"[BODYSHAPE_HUMANOID]" = list(
-			"offset_x" = list("north" = 0, "south" = 0, "east" = -6, "west" = 6),
-			"offset_y" = list("north" = 0, "south" = 2, "east" = 1, "west" = 1),
-			"size_modifier" = list("north" = 1, "south" = 1, "east" = 1, "west" = 1),
-			"rotation_modifier" = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
-			"update_body_parts" = TRUE
-		),
-		"[BODYSHAPE_DIGITIGRADE]" = list(
-			"offset_x" = list("north" = 0, "south" = 0, "east" = -6, "west" = 6),
-			"offset_y" = list("north" = 0, "south" = 2, "east" = 1, "west" = 1),
-			"size_modifier" = list("north" = 1, "south" = 1, "east" = 1, "west" = 1),
-			"rotation_modifier" = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
-			"update_body_parts" = TRUE
-		),
-		"[BODYSHAPE_MONKEY]" = list(
-			"offset_x" = list("north" = 0, "south" = 0, "east" = -6, "west" = 6),
-			"offset_y" = list("north" = 0, "south" = 2, "east" = 1, "west" = 1),
-			"size_modifier" = list("north" = 1, "south" = 1, "east" = 1, "west" = 1),
-			"rotation_modifier" = list("north" = 0, "south" = 0, "east" = 0, "west" = 0),
-			"update_body_parts" = TRUE
-		)
-	)
-
-	. = ..()
 /datum/bodypart_overlay/mutant/pony_horn/get_global_feature_list()
 	return SSaccessories.pony_horn_list
 
