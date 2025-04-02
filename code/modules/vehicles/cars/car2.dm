@@ -685,35 +685,47 @@ SUBSYSTEM_DEF(carpool)
 			y + (moved_y < 0 ? -1 : 1) * round(max(abs(moved_y), 36) / 32), \
 			z
 		)
-		to_chat(world, "--check_turf [check_turf] X: [check_turf.x] Y: [check_turf.y] Z:[z] used_speed:[used_speed]")
+		//to_chat(world, "--check_turf [check_turf] X: [check_turf.x] Y: [check_turf.y] Z:[z] used_speed:[used_speed]")
 		//to_chat(world, "--moved_x:[moved_x], moved_y:[moved_y] ")
 		var/turf/hit_turf
 		var/mob/living/hit_mob
 		var/list/in_line = get_line(src, check_turf)
 		for(var/turf/T in in_line)
-			to_chat(world, "_dist_to_hit, T:[T] T.density [T.density]")
+			//to_chat(world, "_T:[T] T.density [T.density], hit_turf:[hit_turf]")
 			if(T.density)
 				if(!hit_turf)
 					hit_turf = T
-					message_admins("hit_turf:[hit_turf], dist_to_hit:")
+					//message_admins("hit_turf:[hit_turf], dist_to_hit:")
 					continue
 			for(var/obj/O as obj|mob in T.contents)
 				if(istype(O, /mob/living))
 					hit_mob = O
 					hit_turf = null
-					message_admins("hit_mob:[hit_mob] ")
+					//message_admins("hit_mob:[hit_mob] ")
 					continue
 				if(O.density && O != src)
-					//to_chat(world, "dist_to_hit [dist_to_hit] O [O] O.density [O.density])]")
+					//to_chat(world, "_ O [O] O.density [O.density])]")
 					if(!hit_turf)
 						hit_turf = O.loc
-						message_admins("hit_obj:[hit_turf] ")
+						//message_admins("hit_obj:[hit_turf] ")
 		if(hit_mob)
 			Bump(hit_mob)
-			to_chat(world, "I can't pass MOB [hit_mob] at [hit_turf.x] x [hit_turf.y] YEAA)]")
+			//to_chat(world, "I can't pass MOB [hit_mob] at [hit_mob.x] x [hit_mob.y] YEAA)]")
+
+			var/actual_distance = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_mob.x*32, hit_mob.y*32)-32
+			moved_x = round(sin(true_movement_angle)*actual_distance)
+			moved_y = round(cos(true_movement_angle)*actual_distance)
+			if(last_pos["x"]*32+last_pos["x_pix"] > hit_mob.x*32)
+				moved_x = max((hit_mob.x*32+32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
+			if(last_pos["x"]*32+last_pos["x_pix"] < hit_mob.x*32)
+				moved_x = min((hit_mob.x*32-32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
+			if(last_pos["y"]*32+last_pos["y_pix"] > hit_mob.y*32)
+				moved_y = max((hit_mob.y*32+32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
+			if(last_pos["y"]*32+last_pos["y_pix"] < hit_mob.y*32)
+				moved_y = min((hit_mob.y*32-32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
 		if(hit_turf)
 			Bump(hit_turf)
-			to_chat(world, "I can't pass that [hit_turf] at [hit_turf.x] x [hit_turf.y] FUCK)]")
+			//to_chat(world, "I can't pass that [hit_turf] at [hit_turf.x] x [hit_turf.y] FUCK)]")
 			// var/bearing = get_angle_raw(x, y, pixel_x, pixel_y, hit_turf.x, hit_turf.y, 0, 0)
 			var/actual_distance = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32)-32
 			moved_x = round(sin(true_movement_angle)*actual_distance)
