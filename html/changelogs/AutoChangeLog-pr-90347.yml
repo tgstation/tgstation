@@ -1,5 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes:
-  - refactor: "Logging and IC timestamps will now always use UTC±0 and not be affected by server system timezone changes"
-  - bugfix: "Station and round times will not longer be incorrect if the system timezone is not UTC±0"
