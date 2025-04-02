@@ -5537,13 +5537,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"blob-polyfill@npm:^9.0.20240710":
-  version: 9.0.20240710
-  resolution: "blob-polyfill@npm:9.0.20240710"
-  checksum: 10c0/eb28a475aa43c62bb855ec5404e3382772d1778852b827d6f21a73e499e3eafb3a4f81e9add68f87df336bc23db857ac357767fbb2b4a373f23dc9da872bcfda
-  languageName: node
-  linkType: hard
-
 "bluebird@npm:^3.5.5, bluebird@npm:^3.7.2":
   version: 3.7.2
   resolution: "bluebird@npm:3.7.2"
@@ -19080,6 +19073,7 @@ __metadata:
   resolution: "tgui-bench@workspace:packages/tgui-bench"
   dependencies:
     "@fastify/static": "npm:^8.0.2"
+    "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
     common: "workspace:*"
     fastify: "npm:^5.1.0"
@@ -19191,7 +19185,6 @@ __metadata:
     "@popperjs/core": "npm:^2.11.8"
     "@types/marked": "npm:4.3.2"
     "@types/react": "npm:^18.3.12"
-    blob-polyfill: "npm:^9.0.20240710"
     common: "workspace:*"
     dateformat: "npm:^5.0.3"
     dompurify: "npm:^2.5.7"
