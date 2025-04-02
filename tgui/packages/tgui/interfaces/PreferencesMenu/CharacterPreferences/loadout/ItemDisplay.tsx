@@ -133,12 +133,13 @@ export function ItemListDisplay(props: ListProps) {
 
   return (
     <Stack vertical>
+      {itemGroups.length > 1 && <Stack.Item />}
       {itemGroups.map((group) => (
         <Stack.Item key={group.title}>
           <Stack vertical>
             {itemGroups.length > 1 && (
               <>
-                <Stack.Item>
+                <Stack.Item mt={-1.5} mb={-0.8} ml={1.5}>
                   <h3 color="grey">{group.title}</h3>
                 </Stack.Item>
                 <Stack.Divider />
@@ -147,7 +148,13 @@ export function ItemListDisplay(props: ListProps) {
             <Stack.Item>
               <Stack wrap>
                 {group.items.map((item) => (
-                  <Stack.Item key={item.name} mb={1}>
+                  <Stack.Item
+                    key={item.name}
+                    mb={1}
+                    style={{
+                      marginLeft: '0.5em', // Remove if tgui core implements gap
+                    }}
+                  >
                     <ItemDisplay
                       item={item}
                       active={
