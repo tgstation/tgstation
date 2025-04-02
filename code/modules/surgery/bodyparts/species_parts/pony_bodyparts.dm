@@ -409,6 +409,15 @@
 	. = ..()
 	soundloop = new(src)
 
+/obj/item/organ/pony_horn/Destroy()
+	QDEL_NULL(soundloop)
+	QDEL_NULL(toggle)
+	QDEL_NULL(kinesis_icon)
+	QDEL_NULL(kinesis_catcher)
+	return ..()
+
+
+
 /obj/item/organ/pony_horn/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	toggle = new
@@ -420,6 +429,16 @@
 
 /obj/item/organ/pony_horn/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
+	if(owner && HAS_TRAIT(owner, TRAIT_FLOATING_HELD))
+		REMOVE_TRAIT(owner, TRAIT_FLOATING_HELD, ORGAN_TRAIT)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/owner_human = owner
+			var/obj/item/bodypart/chest/pony/pony_bodypart = owner_human.get_bodypart(BODY_ZONE_CHEST)
+			if(pony_bodypart && istype(pony_bodypart))
+				pony_bodypart.update_movespeed(owner_human)
+			owner_human.update_held_items()
+	if(grabbed_atom)
+		clear_grab(playsound = FALSE)
 	remove_organ_trait(TRAIT_VIRUS_WEAKNESS)
 	qdel(toggle)
 	clear_grab(playsound = FALSE)
@@ -475,10 +494,6 @@
 		grab_atom(clicked_on)
 		return COMSIG_MOB_CANCEL_CLICKON
 	return NONE
-
-/obj/item/organ/pony_horn/Destroy()
-	QDEL_NULL(soundloop)
-	return ..()
 
 /obj/item/organ/pony_horn/process(seconds_per_tick)
 	if(!owner)
@@ -740,7 +755,7 @@
 	jumping_power.our_wings = src
 
 /obj/item/organ/pony_wings/Destroy()
-	tackler = null
+	qdel(tackler)
 	qdel(jumping_power)
 	. = ..()
 
@@ -870,6 +885,10 @@
 	hind_kick.overlay_icon_state = "bg_tech_blue_border"
 	hind_kick.active_overlay_icon_state = null
 	hind_kick.panel = "Genetic"
+
+/obj/item/organ/earth_pony_core/Destroy()
+	QDEL_NULL(hind_kick)
+	return ..()
 
 /datum/action/cooldown/spell/touch/pony_kick
 	name = "Hind-leg Kick"
