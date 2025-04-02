@@ -43,6 +43,7 @@
 	var/list/no_process_traits
 		/// List of species that this quirk is valid for, or empty if it's valid for all species. Only use species ids here.
 	var/list/species_whitelist = list()
+
 /datum/quirk/New()
 	. = ..()
 	for(var/trait in no_process_traits)
