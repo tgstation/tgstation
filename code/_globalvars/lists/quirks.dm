@@ -9,9 +9,7 @@ GLOBAL_LIST_INIT(quirk_species_whitelist, generate_quirk_species_whitelist())
 	for(var/quirk_type in all_quirks)
 		var/datum/quirk/quirk = new quirk_type()
 		if(length(quirk.species_whitelist))
-			quirk_species_whitelist[quirk.type] = list()
-			for(var/species_id in quirk.species_whitelist)
-				quirk_species_whitelist[quirk.type] += species_id
+			quirk_species_whitelist[quirk.type] = quirk.species_whitelist.Copy() 
 		qdel(quirk)
 	return quirk_species_whitelist
 
