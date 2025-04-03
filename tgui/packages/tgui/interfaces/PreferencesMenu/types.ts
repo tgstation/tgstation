@@ -4,6 +4,7 @@ import { sendAct } from '../../backend';
 import {
   LoadoutCategory,
   LoadoutList,
+  typePath,
 } from './CharacterPreferences/loadout/base';
 import { Gender } from './preferences/gender';
 
@@ -98,6 +99,12 @@ export type QuirkInfo = {
   points_enabled: boolean;
 };
 
+export type Personality = {
+  name: string;
+  description: string;
+  gameplay_description: string;
+};
+
 export enum RandomSetting {
   AntagOnly = 1,
   Disabled = 2,
@@ -174,6 +181,8 @@ export type PreferencesMenuData = {
   keybindings: Record<string, string[]>;
   overflow_role: string;
   selected_quirks: string[];
+  selected_personalities: typePath[] | null;
+  max_personalities: number;
 
   antag_bans?: string[];
   antag_days_left?: Record<string, number>;
@@ -194,6 +203,9 @@ export type ServerData = {
     types: Record<string, Name>;
   };
   quirks: QuirkInfo;
+  personality: {
+    personalities: Personality[];
+  };
   random: {
     randomizable: string[];
   };

@@ -490,6 +490,10 @@
 	default = 6
 	min_val = -1
 
+/// Max personalities you can have at once
+/datum/config_entry/number/max_personalities
+	default = 4
+
 /**
  * A config that skews with the random spawners weights
  * If the value is lower than 1, it'll tend to even out the odds

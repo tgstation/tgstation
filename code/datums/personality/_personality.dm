@@ -10,6 +10,16 @@
 #define PERSONALITY_TO_HUMANITY "humanity"
 #define PERSONALITY_TO_WHIMSY "whimsy"
 #define PERSONALITY_TO_HUGS "hugs"
+#define PERSONALITY_TO_DRINKING "drinking"
+#define PERSONALITY_TO_RISK "risk"
+#define PERSONALITY_TO_SUCCESS "success"
+#define PERSONALITY_TO_ROMANCE "romance"
+#define PERSONALITY_TO_FOOD "food"
+#define PERSONALITY_TO_AUTHORITY "authority"
+#define PERSONALITY_TO_CENTCOM "centcom"
+#define PERSONALITY_TO_HOPE "hope"
+#define PERSONALITY_DECISION_MAKING "decision making"
+#define PERSONALITY_OTHER_PEOPLE "other people"
 #define PERSONALITY_FORTITUDE "fortitude"
 
 /datum/personality
@@ -123,7 +133,7 @@
 /datum/personality/resilient
 	name = "Resilient"
 	desc = "I don't let things get to me."
-	gameplay_desc = "Your negative moodlets expire faster.
+	gameplay_desc = "Your negative moodlets expire faster."
 	categories = list(
 		PERSONALITY_FORTITUDE,
 	)
@@ -282,7 +292,7 @@
 
 /datum/personality/gourmand
 	name = "Gourmand"
-	desc = "Food is everything to me.
+	desc = "Food is everything to me."
 	gameplay_desc = "You receive positive moodlets from eating food, but negative moodlets from disliked food are more powerful."
 	categories = list(
 		PERSONALITY_TO_FOOD,

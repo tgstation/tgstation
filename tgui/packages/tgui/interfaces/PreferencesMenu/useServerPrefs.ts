@@ -16,6 +16,9 @@ export const ServerPrefs = createContext<ServerData | undefined>({
     quirk_blacklist: [],
     points_enabled: false,
   },
+  personality: {
+    personalities: [],
+  },
   random: {
     randomizable: [],
   },
