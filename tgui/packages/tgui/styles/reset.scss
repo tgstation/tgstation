@@ -12,6 +12,7 @@ body {
   margin: 0;
   font-size: base.$font-size;
   color: var(--color-text);
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-base);
 }
 
 html {

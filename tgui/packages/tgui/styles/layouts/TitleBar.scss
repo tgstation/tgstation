@@ -7,11 +7,6 @@
 @use '../base';
 @use '../colors';
 
-$text-color: hsla(0, 0%, 100%, 0.75) !default;
-$background-color: hsl(0, 0%, 21%) !default;
-$shadow-color: hsla(0, 0%, 0%, 0.66) !default;
-$shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
-
 .TitleBar {
   position: fixed;
   display: flex;
@@ -19,8 +14,8 @@ $shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
   width: 100vw;
   height: base.rem(32px);
   background-color: var(--color-secondary);
-  border-bottom: 1px solid $shadow-color-core;
-  box-shadow: 0px 0px base.em(6px) base.em(-1px) $shadow-color;
+  border-bottom: 1px solid var(--color-border-dark);
+  box-shadow: 0px 0px base.em(6px) base.em(-1px) hsla(0, 0%, 0%, 0.66);
   z-index: 101; // More than Dimmer
   user-select: none;
   // Deprecated. Delete after full transition to 516
@@ -47,7 +42,7 @@ $shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: $text-color;
+    color: var(--color-text-translucent-light);
     font-size: base.rem(14px);
   }
 
@@ -61,9 +56,6 @@ $shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
   }
 
   &__KitchenSink {
-    width: base.rem(21px);
-    min-width: base.rem(21px);
-    max-width: base.rem(21px);
     background-color: hsl(
       from var(--color-green) h s calc(l - var(--adjust-hover))
     );

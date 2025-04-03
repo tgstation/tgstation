@@ -31,9 +31,7 @@
 
 .Window__contentPadding {
   margin: 0.5rem;
-  // 0.01 is needed to make the scrollbar not appear
-  // due to rem rendering inaccuracies in IE11.
-  height: calc(100% - 1.01rem);
+  height: calc(100% - 1rem);
 }
 
 .Window__contentPadding:after {
@@ -54,32 +52,29 @@
 }
 
 .Window__resizeHandle__se {
+  cursor: var(--cursor-se-resize);
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 20px;
   width: base.rem(20px);
-  height: 20px;
   height: base.rem(20px);
-  cursor: se-resize;
 }
 
 .Window__resizeHandle__s {
+  cursor: var(--cursor-s-resize);
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 6px;
   height: base.rem(6px);
-  cursor: s-resize;
 }
 
 .Window__resizeHandle__e {
+  cursor: var(--cursor-e-resize);
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   width: 3px;
   width: base.rem(3px);
-  cursor: e-resize;
 }

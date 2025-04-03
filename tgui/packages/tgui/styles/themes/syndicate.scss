@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-:root.theme-syndicate {
+.theme-syndicate:root {
   // Base
-  --base-gradient-spread: 6;
-  --secondary-lightness-adjustment: 10;
   --color-base: hsl(0, 96%, 17%);
   --color-primary: hsl(120, 34%, 35%);
+  --secondary-lightness-adjustment: 11.5;
+  --base-gradient-spread: 6;
   // Components
-  --button-background-selected: hsl(0, 91%, 31%);
+  --button-background-selected: hsl(0, 90%, 37.5%);
   --button-background-caution: hsl(28, 87%, 39%);
   --button-background-danger: hsl(61, 100%, 30%);
   --notice-box-background: hsl(0, 98%, 28%);

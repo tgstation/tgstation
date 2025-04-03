@@ -72,14 +72,6 @@
 
   // Layouts
   @include meta.load-css('~tgui/styles/layouts/Window.scss');
-  @include meta.load-css(
-    '~tgui/styles/layouts/TitleBar.scss',
-    $with: (
-      'text-color': rgba(0, 0, 0, 0.75),
-      'background-color': base.$color-bg,
-      'shadow-color-core': rgba(0, 0, 0, 0.25)
-    )
-  );
 
   // tgchat styles
   @include meta.load-css('../tgchat/chat-light.scss');
