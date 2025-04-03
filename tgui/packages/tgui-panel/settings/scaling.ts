@@ -1,6 +1,5 @@
-// This is the elements from the skin.dmf that we need to compensate for DPI
+// This is the elements from the skin.dmf that we need to adjust the fontsize of
 const ELEMENTS_TO_ADJUST = [
-  //  'outputwindow.input',
   'infowindow.changelog',
   'infowindow.rules',
   'infowindow.wiki',
@@ -8,7 +7,7 @@ const ELEMENTS_TO_ADJUST = [
   'infowindow.github',
   'infowindow.report-issue',
   'infowindow.fullscreen-toggle',
-];
+].map((i) => i + '.font-size');
 
 export async function setDisplayScaling() {
   if (window.devicePixelRatio === 1) {
@@ -23,10 +22,9 @@ export async function setDisplayScaling() {
   const newSizes: string[] = [];
 
   for (const element of ELEMENTS_TO_ADJUST) {
-    const size: [number, number] = sizes[element + '.size'].split('x');
+    const size = parseInt(sizes[element], 10) ?? 4;
 
-    newSizes[`${element}.size`] =
-      `${size[0]}x${size[1] * window.devicePixelRatio}`;
+    newSizes[element] = size * window.devicePixelRatio;
   }
 
   Byond.winset(null, newSizes);

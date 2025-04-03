@@ -163,7 +163,6 @@ window "infowindow"
 		size = 87x20
 		anchor1 = 0,0
 		anchor2 = 15,0.8
-		font-size = 4
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
@@ -173,7 +172,6 @@ window "infowindow"
 		size = 87x20
 		anchor1 = 15,0
 		anchor2 = 29,0.8
-		font-size = 4
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -183,7 +181,6 @@ window "infowindow"
 		size = 87x20
 		anchor1 = 29,0
 		anchor2 = 43,0.8
-		font-size = 4
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -193,7 +190,6 @@ window "infowindow"
 		size = 87x20
 		anchor1 = 43,0
 		anchor2 = 57,0.8
-		font-size = 4
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -203,7 +199,6 @@ window "infowindow"
 		size = 87x20
 		anchor1 = 57,0
 		anchor2 = 71,0.8
-		font-size = 4
 		saved-params = "is-checked"
 		text = "Github"
 		command = "github"
@@ -213,7 +208,6 @@ window "infowindow"
 		size = 87x20
 		anchor1 = 71,0
 		anchor2 = 85,0.8
-		font-size = 4
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
@@ -223,7 +217,6 @@ window "infowindow"
 		size = 88x20
 		anchor1 = 85,0
 		anchor2 = 100,0.8
-		font-size = 4
 		saved-params = "is-checked"
 		text = "Fullscreen"
 		command = "fullscreen"
