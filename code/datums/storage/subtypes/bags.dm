@@ -268,3 +268,84 @@
 /datum/storage/bag/rebar_quiver/syndicate
 	max_slots = 20
 	max_total_storage = 20
+
+///Mail bag
+/datum/storage/bag/mail
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+	max_total_storage = 42
+	max_slots = 21
+	numerical_stacking = FALSE
+
+/datum/storage/bag/mail/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(list(
+		/obj/item/mail,
+		/obj/item/delivery/small,
+		/obj/item/paper
+	))
+
+///Garment bag
+/datum/storage/bag/garment
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+	numerical_stacking = FALSE
+	max_total_storage = 200
+	max_slots = 15
+	insert_preposition = "in"
+
+/datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/clothing)
+
+///Quiver bag
+/datum/storage/bag/quiver
+	numerical_stacking = TRUE
+	max_specific_storage = WEIGHT_CLASS_TINY
+	max_slots = 40
+	max_total_storage = 100
+
+/datum/storage/bag/quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/ammo_casing/arrow)
+
+///Quiver bag less
+/datum/storage/bag/quiver/less
+	max_slots = 10
+
+///Quiver bag endless
+/datum/storage/bag/quiver/endless
+	max_slots = 1
+
+/datum/storage/bag/quiver/endless/handle_exit(datum/source, obj/item/gone)
+	. = ..()
+
+	var/obj/item/storage/bag/quiver/endless/store = real_location
+
+	new store.arrow_path(store)
+
+///Money bag
+/datum/storage/bag/money
+	max_slots = 40
+	max_specific_storage = 40
+
+/datum/storage/bag/money/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(list(
+		/obj/item/coin,
+		/obj/item/stack/spacecash,
+		/obj/item/holochip
+	))
+
+///Fishing bag
+/datum/storage/bag/fishing
+	max_total_storage = 24 // Up to 8 normal fish
+	max_slots = 21
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/datum/storage/bag/fishing/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/fish)

@@ -163,6 +163,30 @@
 	max_slots = 13
 
 //=======================Fancy storages======================
+///Donut box
+/datum/storage/donut/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/donut)
+
+///Egg box
+/datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/egg)
+
+///Generic fancy holder
+/datum/storage/fancy_holder/New(obj/item/storage/fancy/candle_box/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(parent.spawn_type)
+
+///Heart box
+/datum/storage/heart_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food/bonbon)
+
 ///Cigrate boxes
 /datum/storage/cigarette_box
 	display_contents = FALSE
@@ -326,3 +350,16 @@
 	. = ..()
 
 	set_holdable(/obj/item/tcgcard)
+
+///Toilet bang
+/datum/storage/toiletbang
+	max_slots = 12
+	max_total_storage = 100
+	attack_hand_interact = FALSE
+	do_rustle = FALSE
+	animated = FALSE
+
+/datum/storage/toiletbang/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_holdable(/obj/item/food)

@@ -6,6 +6,7 @@
 	base_icon_state = "toiletbong"
 	density = FALSE
 	anchored = TRUE
+	storag
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
@@ -13,10 +14,7 @@
 	. = ..()
 	create_storage()
 	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
-	create_storage(max_total_storage = 100, max_slots = 12, canhold = /obj/item/food)
-	atom_storage.attack_hand_interact = FALSE
-	atom_storage.do_rustle = FALSE
-	atom_storage.animated = FALSE
+	create_storage(storage_type = /datum/storage/toiletbang)
 
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "[base_icon_state]_overlay")
 	START_PROCESSING(SSobj, src)

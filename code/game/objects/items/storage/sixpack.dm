@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*1.2)
 	max_integrity = 500
+	storage_type = /datum/storage/sixcan
 
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -20,18 +21,6 @@
 /obj/item/storage/cans/Initialize(mapload)
 	. = ..()
 	update_appearance()
-
-/obj/item/storage/cans/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_total_storage = 12
-	atom_storage.max_slots = 6
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/cup/soda_cans,
-		/obj/item/reagent_containers/cup/glass/bottle/beer,
-		/obj/item/reagent_containers/cup/glass/bottle/ale,
-		/obj/item/reagent_containers/cup/glass/waterbottle,
-	))
 
 /obj/item/storage/cans/sixsoda
 	name = "soda bottle ring"

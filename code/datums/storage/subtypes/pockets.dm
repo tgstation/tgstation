@@ -1,3 +1,4 @@
+///Regular pockets
 /datum/storage/pockets
 	max_slots = 2
 	max_specific_storage = WEIGHT_CLASS_SMALL
@@ -17,16 +18,19 @@
 	else
 		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]."))
 
+///Small pockets
 /datum/storage/pockets/small
 	max_slots = 1
 	max_specific_storage = WEIGHT_CLASS_SMALL
 	attack_hand_interact = FALSE
 
+///Tiny pockets
 /datum/storage/pockets/tiny
 	max_slots = 1
 	max_specific_storage = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
+///Fedora pockets
 /datum/storage/pockets/small/fedora/New(
 	atom/parent,
 	max_slots,
@@ -43,10 +47,12 @@
 		/obj/item/gun/ballistic/automatic/tommygun,
 	))
 
+///Fedora detective pockets
 /datum/storage/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
 	click_alt_open = FALSE
 
+///Chef hat pocket
 /datum/storage/pockets/chefhat
 	attack_hand_interact = TRUE
 	max_slots = 1
@@ -59,6 +65,7 @@
 	max_total_storage,
 )
 	. = ..()
+
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
 		/obj/item/food/deadmouse
@@ -72,6 +79,7 @@
 			return
 		return FALSE
 
+///Shoe pockets
 /datum/storage/pockets/shoes
 	max_slots = 2
 	attack_hand_interact = FALSE
@@ -85,6 +93,7 @@
 	max_total_storage,
 )
 	. = ..()
+
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/knife,
@@ -114,16 +123,17 @@
 			/obj/item/match,
 			/obj/item/holochip,
 			/obj/item/toy/crayon,
-			/obj/item/reagent_containers/cup/glass/flask
+			/obj/item/reagent_containers/cup/glass/flask,
 		),
 		cant_hold_list = list(
 			/obj/item/screwdriver/power,
 			/obj/item/ammo_casing/rocket,
 			/obj/item/cigarette/pipe,
-			/obj/item/toy/crayon/spraycan
+			/obj/item/toy/crayon/spraycan,
 		)
 	)
 
+///Clown shoe pockets
 /datum/storage/pockets/shoes/clown/New(
 	atom/parent,
 	max_slots,
@@ -131,6 +141,7 @@
 	max_total_storage,
 )
 	. = ..()
+
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/ammo_box/magazine/m10mm,
@@ -168,6 +179,7 @@
 		),
 	)
 
+///Protector pocket
 /datum/storage/pockets/pocketprotector
 	max_slots = 3
 	max_specific_storage = WEIGHT_CLASS_TINY
@@ -179,6 +191,7 @@
 	max_total_storage,
 )
 	. = ..()
+
 	set_holdable(list( //Same items as a PDA
 		/obj/item/pen,
 		/obj/item/toy/crayon,
@@ -187,6 +200,7 @@
 		/obj/item/lipstick,
 	))
 
+///Helmet pockets
 /datum/storage/pockets/helmet
 	max_slots = 2
 	quickdraw = TRUE
@@ -199,14 +213,15 @@
 	max_total_storage,
 )
 	. = ..()
+
 	set_holdable(list(
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
-		/obj/item/reagent_containers/cup/glass/bottle/molotov,
-		/obj/item/reagent_containers/cup/glass/drinkingglass,
+		/obj/item/reagent_containers/cup/glass/bottle/molotov,,
+		/obj/item/reagent_containers/cup/glass/drinkingglass,,
 		/obj/item/ammo_box/strilka310
 	))
 
-
+///Void cloak pocket
 /datum/storage/pockets/void_cloak
 	quickdraw = TRUE
 	max_total_storage = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
@@ -219,6 +234,7 @@
 	max_total_storage,
 )
 	. = ..()
+
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/ammo_box/strilka310/lionhunter,
@@ -235,6 +251,7 @@
 		),
 		exception_hold_list = list(
 			/obj/item/bodypart,
-			/obj/item/melee/sickly_blade,
+			/obj/item/melee/sickly_blade
 		)
 	)
+

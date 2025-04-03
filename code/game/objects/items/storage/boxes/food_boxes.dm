@@ -7,14 +7,11 @@
 	illustration = null
 	/// What type of donk pocket are we gonna cram into this box?
 	var/donktype = /obj/item/food/donkpocket
+	storage_type = /datum/storage/box/donk_pockets
 
 /obj/item/storage/box/donkpockets/PopulateContents()
 	for(var/i in 1 to 6)
 		new donktype(src)
-
-/obj/item/storage/box/donkpockets/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/donkpocket)
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
@@ -340,11 +337,7 @@
 	illustration = null
 	foldable_result = null
 	custom_price = PAYCHECK_CREW
-
-/obj/item/storage/box/gum/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/bubblegum)
-	atom_storage.max_slots = 4
+	storage_type = /datum/storage/box/gum
 
 /obj/item/storage/box/gum/PopulateContents()
 	for(var/i in 1 to 4)
@@ -510,14 +503,10 @@
 	desc = "A bag containing fresh, dry coffee arabica beans. Ethically sourced and packaged by Waffle Corp."
 	illustration = null
 	icon = 'icons/obj/food/containers.dmi'
+	storage_type = /datum/storage/box/coffee
 	var/beantype = /obj/item/food/grown/coffee
 
-/obj/item/storage/box/coffeepack/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/grown/coffee)
-
 /obj/item/storage/box/coffeepack/PopulateContents()
-	atom_storage.max_slots = 5
 	for(var/i in 1 to 5)
 		var/obj/item/food/grown/coffee/bean = new beantype(src)
 		ADD_TRAIT(bean, TRAIT_DRIED, ELEMENT_TRAIT(type))

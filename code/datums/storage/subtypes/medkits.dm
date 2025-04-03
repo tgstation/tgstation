@@ -108,14 +108,14 @@
 
 ///Tatical medkit
 /datum/storage/medkit/tatical
-	max_slots = 24
+	max_slots = 21
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 ///Tatical premium medkit
 /datum/storage/medkit/tatical/premium
 	allow_big_nesting = TRUE // so you can put back the box you took out
-	max_total_storage = 36
+	max_total_storage = 34
 
 ///Corrinor medkit
 /datum/storage/medkit/coroner
