@@ -3,7 +3,10 @@
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
-	init_order = INIT_ORDER_MINOR_MAPPING
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/minor_mapping/Initialize()

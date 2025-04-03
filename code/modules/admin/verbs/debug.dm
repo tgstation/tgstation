@@ -917,3 +917,41 @@ ADMIN_VERB(queue_tracy, R_DEBUG, "Toggle Tracy Next Round", "Toggle running the 
 ADMIN_VERB_CUSTOM_EXIST_CHECK(queue_tracy)
 	return CONFIG_GET(flag/allow_tracy_queue) && fexists(TRACY_DLL_PATH)
 #endif
+
+/datum/mc_dependency_ui
+
+/datum/mc_dependency_ui/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MCDependencyDebug")
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/datum/mc_dependency_ui/ui_state(mob/user)
+	return ADMIN_STATE(R_DEBUG)
+
+/datum/mc_dependency_ui/ui_data(mob/user)
+	var/list/data = list()
+
+	var/list/subsystems = Master.subsystems.Copy()
+	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_init))
+
+	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
+		var/list/sub_data = list()
+		sub_data["name"] = subsystem.name
+		var/list/dependents = list()
+		for(var/datum/controller/subsystem/dependent as anything in subsystem.dependents)
+			dependents += dependent.name
+		sub_data["dependents"] = dependents
+		data += list(sub_data)
+
+	return list(
+		"subsystems" = data
+	)
+
+/datum/mc_dependency_ui/ui_assets(mob/user)
+	return list(get_asset_datum(/datum/asset/simple/plane_background))
+
+ADMIN_VERB(debug_mc_dependencies, R_DEBUG, "Debug MC Dependencies", "Debug MC dependencies.", ADMIN_CATEGORY_DEBUG)
+	var/datum/mc_dependency_ui/data = new /datum/mc_dependency_ui()
+	data.ui_interact(usr)
