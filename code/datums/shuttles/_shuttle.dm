@@ -61,7 +61,7 @@
 	if(!.)
 		return
 
-	turfs = block( .[MAP_MINX], .[MAP_MINY], .[MAP_MINZ],
+	turfs = block(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ], \
 					.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ])
 
 	if(modular)
@@ -74,10 +74,13 @@
 		var/found = FALSE
 		for(var/turf/current_turf in turfs)
 			if(is_type_on_turf(current_turf, /obj/modular_map_root))
+				message_admins("Found a root ([current_turf.x], [current_turf.y], [current_turf.z])")
 				found = TRUE
 		if(found)
+			message_admins("Waiting")
 			sleep(5 DECISECONDS)
 		else
+			message_admins("GO!")
 			break
 	dispatch(register)
 
