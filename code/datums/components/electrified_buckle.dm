@@ -235,11 +235,11 @@
 	if(shock_on_loop)
 		shock_on_loop = FALSE
 		STOP_PROCESSING(SSprocessing, src)
-		parent_as_movable.visible_message(span_notice("[parent_as_movable] emits a snap as its circuit opens, making it safe for now."))
+		parent_as_movable.visible_message(span_notice("\The [parent_as_movable] emits a snap as its circuit opens, making it safe for now."))
 	else
 		shock_on_loop = TRUE
 		START_PROCESSING(SSprocessing, src)
-		parent_as_movable.visible_message(span_notice("You hear the sound of an electric circuit closing coming from [parent_as_movable]!"))
+		parent_as_movable.visible_message(span_notice("You hear the sound of an electric circuit closing coming from \the [parent_as_movable]!"))
 
 #undef ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR
 #undef ELECTRIC_BUCKLE_MINUMUM_POWERNET_STRENGTH
