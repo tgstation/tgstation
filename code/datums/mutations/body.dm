@@ -628,6 +628,7 @@
 		physiology_modified = TRUE
 	return TRUE
 
+// You eat rocks
 /datum/mutation/human/rock_eater
 	name = "Rock Eater"
 	desc = "The subject's body is able to digest rocks and minerals."
@@ -639,18 +640,19 @@
 	mutation_traits = list(TRAIT_ROCK_EATER)
 	conflicts = list(/datum/mutation/human/rock_absorber)
 
+// You eat rock but also get buffs from them
 /datum/mutation/human/rock_absorber
 	name = "Rock Absorber"
 	desc = "The subject's body is able to digest rocks and minerals, taking on their properties."
 	quality = POSITIVE
-	instability = POSITIVE_INSTABILITY_MODERATE
+	instability = POSITIVE_INSTABILITY_MAJOR
 	text_gain_indication = span_notice("You feel a supreme craving for rocks.")
 	text_lose_indication = span_notice("You could go for a normal meal.")
 	mutation_traits = list(TRAIT_ROCK_EATER, TRAIT_ROCK_METAMORPHIC)
 	conflicts = list(/datum/mutation/human/rock_eater)
 	locked = TRUE
 
-
+// Soft crit is disabed
 /datum/mutation/human/inexorable
 	name = "Inexorable"
 	desc = "Your body can push on beyond the limits of normal human endurance. \
