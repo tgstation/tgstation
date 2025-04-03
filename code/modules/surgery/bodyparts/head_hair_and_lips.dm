@@ -134,10 +134,10 @@
 				. += hair_gradient_overlay
 
 	if(show_debrained && (head_flags & HEAD_DEBRAIN))
-		. += get_debrain_overlay(can_rotate = !dropped)
+		. += get_debrain_overlay()
 
 	if(show_eyeless && (head_flags & HEAD_EYEHOLES))
-		. += get_eyeless_overlay(can_rotate = !dropped)
+		. += get_eyeless_overlay()
 
 	//HAIR COLOR START
 	if(override_hair_color)
@@ -156,7 +156,7 @@
 #undef SET_OVERLAY_VALUE
 
 /// Returns an appropriate debrained overlay
-/obj/item/bodypart/head/proc/get_debrain_overlay(can_rotate = TRUE)
+/obj/item/bodypart/head/proc/get_debrain_overlay()
 	RETURN_TYPE(/image)
 	var/debrain_icon = 'icons/mob/human/human_face.dmi'
 	var/debrain_icon_state = "debrained"
@@ -170,25 +170,17 @@
 		debrain_icon = 'icons/mob/human/species/golems.dmi'
 		debrain_icon_state = "debrained"
 
-	var/image/debrain_overlay
-	if(can_rotate)
-		debrain_overlay = mutable_appearance(debrain_icon, debrain_icon_state, HAIR_LAYER)
-	else
-		debrain_overlay = image(debrain_icon, debrain_icon_state, -HAIR_LAYER, SOUTH)
+	var/image/debrain_overlay = mutable_appearance(debrain_icon, debrain_icon_state, -HAIR_LAYER)
 	worn_face_offset?.apply_offset(debrain_overlay)
 	return debrain_overlay
 
 /// Returns an appropriate missing eyes overlay
-/obj/item/bodypart/head/proc/get_eyeless_overlay(can_rotate = TRUE)
+/obj/item/bodypart/head/proc/get_eyeless_overlay()
 	RETURN_TYPE(/image)
 	var/eyeless_icon = 'icons/mob/human/human_face.dmi'
 	var/eyeless_icon_state = "eyes_missing"
 
-	var/image/eyeless_overlay
-	if(can_rotate)
-		eyeless_overlay = mutable_appearance(eyeless_icon, eyeless_icon_state, HAIR_LAYER)
-	else
-		eyeless_overlay = image(eyeless_icon, eyeless_icon_state, -HAIR_LAYER, SOUTH)
+	var/image/eyeless_overlay = mutable_appearance(eyeless_icon, eyeless_icon_state, -HAIR_LAYER)
 	worn_face_offset?.apply_offset(eyeless_overlay)
 	return eyeless_overlay
 
