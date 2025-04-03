@@ -380,11 +380,8 @@
 		overlays += added_overlays
 		return
 
-	if (!source.render_target)
-		source.render_target = "[REF(source)]_mod_part"
-
 	for (var/mutable_appearance/overlay as anything in added_overlays)
-		overlay.add_filter("mod_mask_overlay", 1, alpha_mask_filter(render_source = source.render_target))
+		overlay.add_filter("mod_mask_overlay", 1, alpha_mask_filter(icon = icon(draw_target.icon, draw_target.icon_state)))
 		overlays += overlay
 
 /// Generates an icon to be used for the suit's worn overlays
@@ -398,7 +395,7 @@
 		return
 
 	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
-	if(!use_mod_colors)
+	if(use_mod_colors)
 		module_icon.appearance_flags |= RESET_COLOR
 
 	. += module_icon
