@@ -6,6 +6,27 @@
 		"give_quirk" = PROC_REF(give_quirk),
 		"remove_quirk" = PROC_REF(remove_quirk),
 	)
+/datum/preference_middleware/quirks/pre_set_preference(mob/user, preference, value)
+	if(preference != "species")
+		return
+	var/list/incompatible_quirks
+	var/selected_species_type = GLOB.species_list[value]
+	for(var/quirk_name in preferences.all_quirks)
+		var/quirk_path = SSquirks.quirks[quirk_name]
+		var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk_path]
+		if(!quirk_prototype.is_species_appropriate(selected_species_type))
+			LAZYADD(incompatible_quirks, quirk_name)
+	if(!LAZYLEN(incompatible_quirks))
+		return
+	var/list/message = list("The following quirks are incompatible with your selected species and will be removed: [incompatible_quirks.Join(", ")].")
+	if(CONFIG_GET(flag/disable_quirk_points))
+		message += "Would you like to continue?"
+	else
+		message += "If you do not have enough points to cover the removed quirks, your quirks will be reset. Would you like to continue?"
+	var/response = tgui_alert(user, message.Join(" "), "Quirks Incompatible", list("Yes", "No"))
+	if(response != "Yes")
+		return TRUE
+
 
 /datum/preference_middleware/quirks/post_set_preference(mob/user, preference, value)
 	if(preference != "species")
