@@ -68,6 +68,14 @@
 	for (file in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
 
+	if(user.window_scaling && user.window_scaling != 1 && !user.prefs.window_scale && width && height)
+		head_content += {"
+			<style>
+				body {
+					zoom: [100 / user.window_scaling]%;
+				}
+			</style>
+			"}
 
 	for (file in scripts)
 		head_content += "<script type='text/javascript' src='[SSassets.transport.get_asset_url(file)]'></script>"
