@@ -56,6 +56,13 @@ export const sound_instruments: Feature<number> = {
   component: FeatureSliderInput,
 };
 
+export const sound_jukebox: Feature<number> = {
+  name: 'Jukebox volume',
+  category: 'SOUND',
+  description: 'Volume of jukebox tracks.',
+  component: FeatureSliderInput,
+};
+
 export const sound_tts: FeatureChoiced = {
   name: 'Enable TTS',
   category: 'SOUND',

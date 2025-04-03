@@ -10,3 +10,8 @@
 #define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
 ///sent to the instrument when tempo changes, skipped on new. (datum/song)
 #define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"
+
+// /datum/jukebox signals
+
+///sent to the jukebox to update listening mob
+#define COMSIG_UPDATE_LISTENER "update_listener"
