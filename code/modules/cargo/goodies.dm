@@ -386,15 +386,3 @@
 		/obj/item/circuitboard/computer/shuttle/docker,
 		/obj/item/circuitboard/machine/engine/propulsion = 2,
 	)
-
-/datum/supply_pack/goody/car_beacon
-	name = "Nanotrasen Brand New Car"
-	desc = "Contains long-range bluespace delivery beacon from car dealership store."
-	cost = PAYCHECK_COMMAND * 5
-	contains = list(/obj/item/choice_beacon/car)
-
-/datum/supply_pack/goody/gasoline
-	name = "Nanotrasen Brand New Car"
-	desc = "Contains long-range bluespace delivery beacon from car dealership store."
-	cost = PAYCHECK_COMMAND
-	contains = list(/obj/item/gas_can/full)
