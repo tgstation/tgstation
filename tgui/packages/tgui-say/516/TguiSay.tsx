@@ -18,6 +18,7 @@ type ByondOpen = {
 type ByondProps = {
   maxLength: number;
   lightMode: BooleanLike;
+  scale: BooleanLike;
 };
 
 const ROWS: Record<keyof typeof WindowSize, number> = {
@@ -44,6 +45,7 @@ export function TguiSay() {
   const [lightMode, setLightMode] = useState(false);
   const [position, setPosition] = useState([window.screenX, window.screenY]);
   const [value, setValue] = useState('');
+  const [scale, setScale] = useState(true);
 
   function handleArrowKeys(direction: KEY.Up | KEY.Down): void {
     const chat = chatHistory.current;
@@ -91,7 +93,7 @@ export function TguiSay() {
 
   function handleClose(): void {
     innerRef.current?.blur();
-    windowClose();
+    windowClose(scale);
 
     setTimeout(() => {
       chatHistory.current.reset();
@@ -217,12 +219,19 @@ export function TguiSay() {
     }
 
     setButtonContent(iterator.current());
-    windowOpen(iterator.current());
+    windowOpen(iterator.current(), scale);
   }
 
   function handleProps(data: ByondProps): void {
     setMaxLength(data.maxLength);
     setLightMode(!!data.lightMode);
+    setScale(!!data.scale);
+
+    if(!data.scale) {
+      window.document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
+    } else {
+      window.document.body.style.zoom = "";
+    }
   }
 
   function unloadChat(): void {
@@ -253,7 +262,7 @@ export function TguiSay() {
 
     if (size !== newSize) {
       setSize(newSize);
-      windowSet(newSize);
+      windowSet(newSize, scale);
     }
   }, [value]);
 

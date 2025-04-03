@@ -328,4 +328,8 @@
 	</body></html>
 	"}
 
-	usr << browse(dat, "window=players;size=600x480")
+	var/window_size = "size=600x480"
+	if(owner.window_scaling && owner.prefs.read_preference(/datum/preference/toggle/ui_scale))
+		window_size = "size=[600 * owner.window_scaling]x[400 * owner.window_scaling]"
+
+	usr << browse(dat, "window=players;[window_size]")

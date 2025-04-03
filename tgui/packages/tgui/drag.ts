@@ -121,6 +121,7 @@ export const recallWindowGeometry = async (
     pos?: [number, number];
     size?: [number, number];
     locked?: BooleanLike;
+    scale?: BooleanLike;
   } = {},
 ) => {
   const geometry = options.fancy && (await storage.get(windowKey));
@@ -131,9 +132,16 @@ export const recallWindowGeometry = async (
   let pos = geometry?.pos || options.pos;
   let size = options.size;
   // Convert size from css-pixels to display-pixels
-  if (size) {
+  if (options.scale && size) {
     size = [size[0] * pixelRatio, size[1] * pixelRatio];
   }
+
+  if (!options.scale) {
+    window.document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
+  } else {
+    window.document.body.style.zoom = '';
+  }
+
   // Wait until screen offset gets resolved
   await screenOffsetPromise;
   const areaAvailable = getScreenSize();
@@ -208,7 +216,7 @@ export const dragStartHandler = (event) => {
   logger.log('drag start');
   dragging = true;
   dragPointOffset = vecSubtract(
-    [event.screenX, event.screenY],
+    [event.screenX * pixelRatio, event.screenY * pixelRatio],
     getWindowPosition(),
   ) as [number, number];
   // Focus click target
@@ -235,10 +243,10 @@ const dragMoveHandler = (event: MouseEvent) => {
   }
   event.preventDefault();
   setWindowPosition(
-    vecSubtract([event.screenX, event.screenY], dragPointOffset) as [
-      number,
-      number,
-    ],
+    vecSubtract(
+      [event.screenX * pixelRatio, event.screenY * pixelRatio],
+      dragPointOffset,
+    ) as [number, number],
   );
 };
 
@@ -249,7 +257,7 @@ export const resizeStartHandler =
     logger.log('resize start', resizeMatrix);
     resizing = true;
     dragPointOffset = vecSubtract(
-      [event.screenX, event.screenY],
+      [event.screenX * pixelRatio, event.screenY * pixelRatio],
       getWindowPosition(),
     ) as [number, number];
     initialSize = getWindowSize();
@@ -277,7 +285,7 @@ const resizeMoveHandler = (event: MouseEvent) => {
   }
   event.preventDefault();
   const currentOffset = vecSubtract(
-    [event.screenX, event.screenY],
+    [event.screenX * pixelRatio, event.screenY * pixelRatio],
     getWindowPosition(),
   );
   const delta = vecSubtract(currentOffset, dragPointOffset);
