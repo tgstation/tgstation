@@ -123,7 +123,7 @@
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	wound_bonus = -15
 	bare_wound_bonus = 15
-	reach = 2
+	block_chance = 10
 	sharpness = SHARP_EDGED
 
 /datum/embedding/forged_spear
