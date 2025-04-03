@@ -111,7 +111,7 @@ LINEN BINS
 	layer = ABOVE_MOB_LAYER
 	pixel_x = 0
 	pixel_y = 0
-	pixel_z = sleeper.pixel_z // Account for possible mob elevation
+	pixel_z = sleeper.pixel_z - PIXEL_Y_OFFSET_LYING // DOPPLER NON-MODULAR EDIT. Original line: pixel_z = sleeper.pixel_z // Account for possible mob elevation
 	balloon_alert(sleeper, "covered")
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
