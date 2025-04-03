@@ -1,0 +1,4 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - rscadd: "You can now flip tables by right clicking them!"

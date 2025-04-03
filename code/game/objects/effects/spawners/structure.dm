@@ -375,3 +375,18 @@ again.
 	icon = 'icons/obj/structures_spawners.dmi'
 	icon_state = "electrified_grille"
 	spawn_list = list(/obj/structure/grille, /obj/structure/cable)
+
+///flipped tables
+/obj/effect/spawner/structure/flipped_table
+	name = "flipped table spawner"
+	icon = 'icons/obj/flipped_tables.dmi'
+	icon_state = "table"
+	///just change this whatever table type you want, has to be a table subtype though.
+	var/table_to_spawn = /obj/structure/table
+
+/obj/effect/spawner/structure/flipped_table/Initialize(mapload)
+	. = ..()
+	var/obj/structure/table/table_to_flipped = new table_to_spawn(loc)
+	table_to_flipped.dir = dir
+	table_to_flipped.flip_table()
+

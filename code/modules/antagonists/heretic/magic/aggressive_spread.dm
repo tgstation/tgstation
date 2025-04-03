@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "A'GRSV SPR'D"
+	invocation = "A'GRSV SPR'D."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

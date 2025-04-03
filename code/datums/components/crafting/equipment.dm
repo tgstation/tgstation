@@ -164,6 +164,10 @@
 	)
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/flashlight_eyes/New()
+	. = ..()
+	blacklist += typesof(/obj/item/flashlight/flare)
+
 /datum/crafting_recipe/extendohand_r
 	name = "Extendo-Hand (Right Arm)"
 	reqs = list(

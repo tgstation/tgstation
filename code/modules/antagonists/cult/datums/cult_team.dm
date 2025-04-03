@@ -154,9 +154,9 @@
 	var/area/target_area = get_area(new_target)
 
 	blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', new_target, "glow", ABOVE_MOB_LAYER)
-	blood_target_image.appearance_flags = RESET_COLOR
-	blood_target_image.pixel_x = -new_target.pixel_x
-	blood_target_image.pixel_y = -new_target.pixel_y
+	blood_target_image.appearance_flags = RESET_COLOR|KEEP_APART
+	blood_target_image.pixel_w = -new_target.pixel_x
+	blood_target_image.pixel_z = -new_target.pixel_y
 
 	for(var/datum/mind/cultist as anything in members)
 		if(!cultist.current)

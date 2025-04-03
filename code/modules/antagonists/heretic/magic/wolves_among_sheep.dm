@@ -16,7 +16,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 5 MINUTES
 
-	invocation = "D`M``N `XP`NS``N!"
+	invocation = "D'M'N XP'NS'N!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 	/// Max distance our effect is expected to reach

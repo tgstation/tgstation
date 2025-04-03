@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "Blobs now have a custom icon for the orbit menu/ComboHUD."

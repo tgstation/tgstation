@@ -76,7 +76,7 @@
 	sound = 'sound/effects/magic/repulse.ogg'
 
 	school = SCHOOL_EVOCATION
-	invocation = "GITTAH WEIGH"
+	invocation = "GITTAH WEIGH!"
 	invocation_type = INVOCATION_SHOUT
 	aoe_radius = 5
 
