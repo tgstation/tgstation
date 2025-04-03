@@ -1,11 +1,11 @@
-/datum/antagonist/bloodsucker/proc/on_examine(datum/source, mob/examiner, examine_text)
-	SIGNAL_HANDLER
+//datum/antagonist/bloodsucker/proc/on_examine(datum/source, mob/examiner, examine_text)
+//	SIGNAL_HANDLER
 
-	if(!iscarbon(source))
-		return
-	var/vamp_examine = return_vamp_examine(examiner)
-	if(vamp_examine)
-		examine_text += vamp_examine
+//	if(!iscarbon(source))
+//		return
+//	var/vamp_examine = return_vamp_examine(examiner)
+//	if(vamp_examine)
+//		examine_text += vamp_examine
 
 ///Called when a Bloodsucker buys a power: (power)
 /datum/antagonist/bloodsucker/proc/BuyPower(datum/action/cooldown/bloodsucker/power)
