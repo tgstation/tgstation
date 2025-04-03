@@ -13,5 +13,5 @@
 
 // /datum/jukebox signals
 
-///sent to the jukebox to update listening mob
-#define COMSIG_UPDATE_LISTENER "update_listener"
+///sent to the jukebox when the volume preference is changed and applied
+#define COMSIG_MOB_JUKEBOX_PREFERENCE_APPLIED "jukebox_pref_applied"
