@@ -15,7 +15,7 @@
 	if(iscloset(receiving) && length(receiving.contents))
 		return MANUFACTURING_FAIL
 	if(length(contents - circuit) >= max_stuff && !may_merge_in_contents_and_do_so(receiving))
-		return MANUFACTURING_FAIL_FULL
+		return MANUFACTURING_FAIL
 	receiving.Move(src,receive_dir)
 	return MANUFACTURING_SUCCESS
 

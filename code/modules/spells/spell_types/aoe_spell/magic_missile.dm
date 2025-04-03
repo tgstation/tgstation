@@ -8,7 +8,7 @@
 	cooldown_time = 20 SECONDS
 	cooldown_reduction_per_rank = 3.5 SECONDS
 
-	invocation = "FORTI GY AMA"
+	invocation = "FORTI GY AMA!"
 	invocation_type = INVOCATION_SHOUT
 
 	aoe_radius = 7
@@ -31,7 +31,7 @@
 
 /datum/action/cooldown/spell/aoe/magic_missile/proc/fire_projectile(atom/victim, mob/caster)
 	var/obj/projectile/to_fire = new projectile_type()
-	to_fire.preparePixelProjectile(victim, caster)
+	to_fire.aim_projectile(victim, caster)
 	SEND_SIGNAL(caster, COMSIG_MOB_SPELL_PROJECTILE, src, victim, to_fire)
 	to_fire.fire()
 

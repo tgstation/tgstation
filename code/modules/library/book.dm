@@ -35,6 +35,7 @@
 	book_data = new(starting_title, starting_author, starting_content)
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/book/examine(mob/user)
 	. = ..()
@@ -98,9 +99,6 @@
 	display_content(user)
 
 /obj/item/book/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(burn_paper_product_attackby_check(attacking_item, user))
-		return
-
 	if(IS_WRITING_UTENSIL(attacking_item))
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return
@@ -196,7 +194,7 @@
 	if(!user.combat_mode)
 		return FALSE
 	//special check for wirecutter's because they don't have a sharp edge
-	if((carving_item.sharpness & SHARP_EDGED) || (carving_item.tool_behaviour == TOOL_WIRECUTTER))
+	if((carving_item.get_sharpness() & SHARP_EDGED) || (carving_item.tool_behaviour == TOOL_WIRECUTTER))
 		balloon_alert(user, "carving out...")
 		if(!do_after(user, 3 SECONDS, target = src))
 			balloon_alert(user, "interrupted!")

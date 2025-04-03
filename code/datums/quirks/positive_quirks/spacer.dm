@@ -9,12 +9,12 @@
 	gain_text = span_notice("You feel at home in space.")
 	lose_text = span_danger("You feel homesick.")
 	icon = FA_ICON_USER_ASTRONAUT
-	value = 7
+	value = 5
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	medical_record_text = "Patient is well-adapted to non-terrestrial environments."
 	mail_goodies = list(
 		/obj/item/storage/pill_bottle/ondansetron,
-		/obj/item/reagent_containers/pill/gravitum,
+		/obj/item/reagent_containers/applicator/pill/gravitum,
 	)
 	/// How high spacers get bumped up to
 	var/modded_height = HUMAN_HEIGHT_TALLER

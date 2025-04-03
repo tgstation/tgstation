@@ -28,7 +28,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	return ..()
 
-/datum/component/simple_rotation/PostTransfer()
+/datum/component/simple_rotation/PostTransfer(datum/new_parent)
 	//Because of the callbacks which we don't track cleanly we can't transfer this
 	//item cleanly, better to let the new of the new item create a new rotation datum
 	//instead (there's no real state worth transferring)

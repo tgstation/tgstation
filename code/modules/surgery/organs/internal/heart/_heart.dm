@@ -138,6 +138,15 @@
 /obj/item/organ/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantheart
 
+/obj/item/organ/heart/feel_for_damage(self_aware)
+	if(owner.needs_heart() && (!beating || (organ_flags & ORGAN_FAILING)))
+		return span_boldwarning("[self_aware ? "Your heart is not beating!" : "You don't feel your heart beating."]")
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		return span_warning("[self_aware ? "Your heart hurts." : "It hurts, and your heart rate feels irregular."]")
+	return span_boldwarning("[self_aware ? "Your heart seriously hurts!" : "It seriously hurts, and your heart rate is all over the place."]")
+
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
@@ -163,7 +172,7 @@
 
 	accursed.AddComponent(/datum/component/manual_heart, pump_delay = pump_delay, blood_loss = blood_loss, heal_brute = heal_brute, heal_burn = heal_burn, heal_oxy = heal_oxy)
 
-/obj/item/organ/heart/cursed/on_mob_remove(mob/living/carbon/accursed, special = FALSE)
+/obj/item/organ/heart/cursed/on_mob_remove(mob/living/carbon/accursed, special = FALSE, movement_flags)
 	. = ..()
 
 	qdel(accursed.GetComponent(/datum/component/manual_heart))
@@ -247,7 +256,7 @@
 	addtimer(VARSET_CALLBACK(src, stabilization_available, TRUE), 5 MINUTES, TIMER_DELETE_ME)
 
 // Largely a sanity check
-/obj/item/organ/heart/cybernetic/on_mob_remove(mob/living/carbon/heart_owner, special = FALSE)
+/obj/item/organ/heart/cybernetic/on_mob_remove(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(HAS_TRAIT_FROM(heart_owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT))
 		REMOVE_TRAIT(heart_owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
@@ -302,3 +311,9 @@
 		owner.heal_overall_damage(brute = 15, burn = 15, required_bodytype = BODYTYPE_ORGANIC)
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
+
+/obj/item/organ/heart/pod
+	name = "pod mitochondria"
+	desc = "This plant-like organ is the powerhouse of the podperson." // deliberate wording here
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME

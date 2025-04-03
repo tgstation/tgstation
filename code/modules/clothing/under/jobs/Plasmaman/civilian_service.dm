@@ -59,7 +59,7 @@
 
 /obj/item/clothing/under/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (!istype(tool, /obj/item/extinguisher_refill))
-		return
+		return ..()
 
 	if (extinguishes_left == 5)
 		to_chat(user, span_notice("The inbuilt extinguisher is full."))
@@ -79,19 +79,19 @@
 
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"
-	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differenciating the two with the length of their pant legs."
+	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differentiating the two with the length of their pant legs."
 	icon_state = "cargo_envirosuit"
 	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/mining
 	name = "mining plasma envirosuit"
-	desc = "An air-tight khaki suit designed for operations on lavaland by plasmamen."
+	desc = "An airtight khaki suit designed for operations on lavaland by plasmamen."
 	icon_state = "explorer_envirosuit"
 	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/chef
 	name = "chef's plasma envirosuit"
-	desc = "A white plasmaman envirosuit designed for cullinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
+	desc = "A white plasmaman envirosuit designed for culinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
 	icon_state = "chef_envirosuit"
 	inhand_icon_state = null
 

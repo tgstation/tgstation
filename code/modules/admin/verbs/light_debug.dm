@@ -1,12 +1,12 @@
 
-/proc/debug_sources()
+/proc/debug_light_sources()
 	GLOB.light_debug_enabled = TRUE
 	var/list/sum = list()
 	var/total = 0
 	for(var/datum/light_source/source)
 		if(!source.source_atom)
 			continue
-		source.source_atom.debug()
+		source.source_atom.debug_lights()
 		sum[source.source_atom.type] += 1
 		total += 1
 
@@ -29,14 +29,14 @@
 	var/datum/action/spawn_light/let_there_be = new (new_lad.mob.mind || new_lad.mob)
 	let_there_be.Grant(new_lad.mob)
 
-/proc/undebug_sources()
+/proc/undebug_light_sources()
 	GLOB.light_debug_enabled = FALSE
 	for(var/datum/weakref/button_ref as anything in GLOB.light_debugged_atoms)
 		var/atom/button = button_ref.resolve()
 		if(!button)
 			GLOB.light_debugged_atoms -= button_ref
 			continue
-		button.undebug()
+		button.undebug_lights()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_LIGHT_DEBUG_DISABLED)
 	SSdcs.UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
@@ -44,7 +44,7 @@
 GLOBAL_LIST_EMPTY(light_debugged_atoms)
 /// Sets up this light source to be debugged, setting up in world buttons to control and move it
 /// Also freezes it, so it can't change in future
-/atom/proc/debug()
+/atom/proc/debug_lights()
 	if(isturf(src) || HAS_TRAIT(src, TRAIT_LIGHTING_DEBUGGED))
 		return
 	ADD_TRAIT(src, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	new /atom/movable/screen/light_button/move(src)
 
 /// Disables light debugging, so you can let a scene fall to what it visually should be, or just fix admin fuckups
-/atom/proc/undebug()
+/atom/proc/undebug_lights()
 	// I don't really want to undebug a light if it's off rn
 	// Loses control if we turn it back on again
 	if(isturf(src) || !HAS_TRAIT(src, TRAIT_LIGHTING_DEBUGGED) || !light)
@@ -186,7 +186,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	ui_interact(usr)
 
 /atom/movable/screen/light_button/edit/ui_state(mob/user)
-	return GLOB.debug_state
+	return ADMIN_STATE(R_DEBUG)
 
 /atom/movable/screen/light_button/edit/can_interact()
 	return TRUE
@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 		ui.open()
 
 /atom/movable/screen/light_button/edit/ui_assets(mob/user)
-	return list(get_asset_datum(/datum/asset/spritesheet/lights))
+	return list(get_asset_datum(/datum/asset/spritesheet_batched/lights))
 
 /atom/movable/screen/light_button/edit/ui_data()
 	var/list/data = list()
@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	ui_interact(usr)
 
 /datum/action/spawn_light/ui_state(mob/user)
-	return GLOB.debug_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/action/spawn_light/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -371,7 +371,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 		ui.open()
 
 /datum/action/spawn_light/ui_assets(mob/user)
-	return list(get_asset_datum(/datum/asset/spritesheet/lights))
+	return list(get_asset_datum(/datum/asset/spritesheet_batched/lights))
 
 /datum/action/spawn_light/ui_data()
 	var/list/data = list()

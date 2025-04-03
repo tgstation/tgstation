@@ -82,6 +82,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /obj/effect/rune/examine(mob/user)
 	. = ..()
@@ -305,6 +306,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
 	var/mob/living/carbon/human/human_convertee = convertee
 
+	if(istype(human_convertee)) //remove the slurring/stuttering/silence before the april fools punch line reference
+		human_convertee.uncuff()
+		human_convertee.remove_status_effect(/datum/status_effect/silenced)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
+
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
 		if(istype(human_convertee))
@@ -324,10 +331,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	to_chat(convertee, span_cult_bold_italic("Assist your new compatriots in their dark dealings. \
 		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back."))
 
-	if(istype(human_convertee))
-		human_convertee.uncuff()
-		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
-		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
 		convertee.name = convertee.real_name
@@ -768,7 +771,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(FALSE)
-			mob_to_revive.key = chosen_one.key
+			mob_to_revive.PossessByPlayer(chosen_one.key)
 		else
 			fail_invoke()
 			return
@@ -1026,13 +1029,13 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cult_italic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
-		if(ghost_to_spawn.mind && ghost_to_spawn.mind.current)
+		if(ghost_to_spawn.mind && ghost_to_spawn.mind)
 			new_human.AddComponent( \
 				/datum/component/temporary_body, \
 				old_mind = ghost_to_spawn.mind, \
 				old_body = ghost_to_spawn.mind.current, \
 			)
-		new_human.key = ghost_to_spawn.key
+		new_human.PossessByPlayer(ghost_to_spawn.key)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
 		to_chat(new_human, span_cult_italic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
@@ -1173,7 +1176,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"cult_apoc",TRUE), duration)
 				images += C
 		else
-			to_chat(M, span_cult_large("An Apocalypse Rune was invoked in the [place.name], it is no longer available as a summoning site!"))
+			to_chat(M, span_cult_large("An Apocalypse Rune was invoked in \the [place], it is no longer available as a summoning site!"))
 			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
 	if(intensity >= 285) // Based on the prior formula, this means the cult makes up <15% of current players

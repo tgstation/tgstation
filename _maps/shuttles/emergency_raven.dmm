@@ -742,7 +742,7 @@
 /area/shuttle/escape)
 "cd" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1456,7 +1456,7 @@
 /area/shuttle/escape)
 "eo" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/docking_port/mobile/emergency{
 	name = "CentCom Raven Cruiser"

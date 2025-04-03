@@ -8,11 +8,10 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	/// Name to show for VV and stat()
 	var/name = "Camera Net"
 
-	/// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
+	/// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm in Initialize() and Destroy().
 	var/list/obj/machinery/camera/cameras = list()
 	/// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
-	var/ready = 0
 
 	/// List of images cloned by all chunk static images put onto turfs cameras cant see
 	/// Indexed by the plane offset to use
@@ -56,16 +55,12 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	if(!.)
 		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
 
-/// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or its location is set.
-/datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
+/// Updates what the camera eye can see. It is recommended you use this when a camera eye moves or its location is set.
+/datum/cameranet/proc/visibility(list/moved_eyes)
 	if(!islist(moved_eyes))
 		moved_eyes = moved_eyes ? list(moved_eyes) : list()
-	if(islist(other_eyes))
-		other_eyes = (other_eyes - moved_eyes)
-	else
-		other_eyes = list()
 
-	for(var/mob/eye/ai_eye/eye as anything in moved_eyes)
+	for(var/mob/eye/camera/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
 		//Get the eye's turf in case its located in an object like a mecha
 		var/turf/eye_turf = get_turf(eye)
@@ -129,6 +124,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
  * to change the time between static updates.
  */
 /datum/cameranet/proc/majorChunkChange(atom/c, choice, update_delay_buffer)
+	PROTECTED_PROC(TRUE)
+
 	if(QDELETED(c) && choice == 1)
 		CRASH("Tried to add a qdeleting camera to the net")
 
@@ -187,6 +184,60 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		chunk.hasChanged(1) // Update now, no matter if it's visible or not.
 	if(chunk.visibleTurfs[position])
 		return chunk
+
+/// Returns list of available cameras, ready to use for UIs displaying list of them
+/// The format is: list("name" = "camera.c_tag", ref = REF(camera))
+/datum/cameranet/proc/get_available_cameras_data(list/networks_available, list/z_levels_available)
+	var/list/available_cameras_data = list()
+	for(var/obj/machinery/camera/camera as anything in get_filtered_and_sorted_cameras(networks_available, z_levels_available))
+		available_cameras_data += list(list(
+			name = camera.c_tag,
+			ref = REF(camera),
+		))
+
+	return available_cameras_data
+
+/**
+ * get_available_camera_by_tag_list
+ *
+ * Builds a list of all available cameras that can be seen to networks_available and in z_levels_available.
+ * Entries are stored in `c_tag[camera.can_use() ? null : " (Deactivated)"]` => `camera` format
+ * Args:
+ *  networks_available - List of networks that we use to see which cameras are visible to it.
+ *  z_levels_available - List of z levels to filter camera by. If empty, all z levels are considered valid.
+ *  sort_by_ctag - If the resulting list should be sorted by `c_tag`.
+ */
+/datum/cameranet/proc/get_available_camera_by_tag_list(list/networks_available, list/z_levels_available)
+	var/list/available_cameras_by_tag = list()
+	for(var/obj/machinery/camera/camera as anything in get_filtered_and_sorted_cameras(networks_available, z_levels_available))
+		available_cameras_by_tag["[camera.c_tag][camera.can_use() ? null : " (Deactivated)"]"] = camera
+
+	return available_cameras_by_tag
+
+/// Returns list of all cameras that passed `is_camera_available` filter and sorted by `cmp_camera_ctag_asc`
+/datum/cameranet/proc/get_filtered_and_sorted_cameras(list/networks_available, list/z_levels_available)
+	PRIVATE_PROC(TRUE)
+
+	var/list/filtered_cameras = list()
+	for(var/obj/machinery/camera/camera as anything in cameras)
+		if(!is_camera_available(camera, networks_available, z_levels_available))
+			continue
+
+		filtered_cameras += camera
+
+	return sortTim(filtered_cameras, GLOBAL_PROC_REF(cmp_camera_ctag_asc))
+
+/// Checks if the `camera_to_check` meets the requirements of availability.
+/datum/cameranet/proc/is_camera_available(obj/machinery/camera/camera_to_check, list/networks_available, list/z_levels_available)
+	PRIVATE_PROC(TRUE)
+
+	if(!camera_to_check.c_tag)
+		return FALSE
+
+	if(length(z_levels_available) && !(camera_to_check.z in z_levels_available))
+		return FALSE
+
+	return length(camera_to_check.network & networks_available) > 0
 
 /obj/effect/overlay/camera_static
 	name = "static"

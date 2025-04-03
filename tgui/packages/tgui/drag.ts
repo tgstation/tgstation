@@ -6,6 +6,7 @@
 
 import { storage } from 'common/storage';
 import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'common/vector';
+import { BooleanLike } from 'tgui-core/react';
 
 import { createLogger } from './logging';
 
@@ -116,10 +117,10 @@ const storeWindowGeometry = async () => {
 // Recall window geometry from local storage and apply it
 export const recallWindowGeometry = async (
   options: {
-    fancy?: boolean;
+    fancy?: BooleanLike;
     pos?: [number, number];
     size?: [number, number];
-    locked?: boolean;
+    locked?: BooleanLike;
   } = {},
 ) => {
   const geometry = options.fancy && (await storage.get(windowKey));

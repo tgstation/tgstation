@@ -6,7 +6,7 @@
 
 import 'tgui/styles/main.scss';
 
-import { setupGlobalEvents } from 'tgui/events';
+import { setupGlobalEvents } from 'tgui-core/events';
 
 import Benchmark from './lib/benchmark';
 

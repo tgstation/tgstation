@@ -1,7 +1,7 @@
 //Hydroponics tank and base code
 /obj/item/watertank
 	name = "backpack water tank"
-	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
+	desc = "A S.U.N.S.H.I.N.E. brand water tank backpack with a nozzle to water plants."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	inhand_icon_state = "waterbackpack"
@@ -36,10 +36,6 @@
 
 /obj/item/watertank/ui_action_click(mob/user)
 	toggle_mister(user)
-
-/obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBackSlot())
-		return 1
 
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
@@ -290,6 +286,9 @@
 /obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AttemptRefill(interacting_with, user))
 		return NONE
+	return ..()
+
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(nozzle_mode == EXTINGUISHER)
 		return ..()
 
@@ -405,10 +404,6 @@
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
-
-/obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_BACK)
-		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr

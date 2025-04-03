@@ -235,7 +235,6 @@
 /atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
-	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	set_light_cutoff(10)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
@@ -262,7 +261,6 @@
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
-
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
@@ -350,8 +348,6 @@
 
 /atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)
 	. = ..()
-	var/atom/movable/screen/plane_master/overlay_lights = home.get_plane(GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, offset))
-	overlay_lights.remove_filter("lighting_mask")
 	var/atom/movable/screen/plane_master/emissive = home.get_plane(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset))
 	emissive.remove_filter("lighting_mask")
 	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, offset))
@@ -360,15 +356,12 @@
 /atom/movable/screen/plane_master/rendering_plate/light_mask/proc/handle_sight(datum/source, new_sight, old_sight)
 	// If we can see something that shows "through" blackness, and we can't see turfs, disable our draw to the game plane
 	// And instead mask JUST the overlay lighting plane, since that will look fuckin wrong
-	var/atom/movable/screen/plane_master/overlay_lights = home.get_plane(GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, offset))
 	var/atom/movable/screen/plane_master/emissive = home.get_plane(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset))
 	if(new_sight & SEE_AVOID_TURF_BLACKNESS && !(new_sight & SEE_TURFS))
 		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, offset))
-		overlay_lights.add_filter("lighting_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(LIGHT_MASK_RENDER_TARGET, offset)))
 		emissive.add_filter("lighting_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(LIGHT_MASK_RENDER_TARGET, offset)))
 	// If we CAN'T see through the black, then draw er down brother!
 	else
-		overlay_lights.remove_filter("lighting_mask")
 		emissive.remove_filter("lighting_mask")
 		// We max alpha here, so our darkness is actually.. dark
 		// Can't do it before cause it fucks with the filter
@@ -380,6 +373,14 @@
 	documentation = "Renders anything that's out of character. Mostly useful as a converse to the game rendering plate."
 	plane = RENDER_PLANE_NON_GAME
 	render_relay_planes = list(RENDER_PLANE_MASTER)
+
+/atom/movable/screen/plane_master/rendering_plate/turf_lighting
+	name = "Turf lighting post-processing plate"
+	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
+	plane = TURF_LIGHTING_PLATE
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	blend_mode = BLEND_ADD
+	critical = PLANE_CRITICAL_DISPLAY
 
 /**
  * Plane master proc called in Initialize() that creates relay objects, and sets them up as needed

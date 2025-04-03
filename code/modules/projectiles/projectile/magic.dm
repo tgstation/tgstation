@@ -37,7 +37,7 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+			if(victim.revive(ADMIN_HEAL_ALL & ~HEAL_REFRESH_ORGANS , force_grab_ghost = TRUE)) // This heals suicides
 				victim.grab_ghost(force = TRUE)
 				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
 			else if(victim.stat != DEAD)
@@ -68,7 +68,7 @@
 			victim.death()
 			return
 
-		if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+		if(victim.revive(ADMIN_HEAL_ALL & ~HEAL_REFRESH_ORGANS , force_grab_ghost = TRUE)) // This heals suicides
 			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
 		else if(victim.stat != DEAD)
 			to_chat(victim, span_notice("You feel great!"))
@@ -238,7 +238,8 @@
 
 /obj/projectile/magic/locker/Destroy()
 	locker_suck = FALSE
-	RemoveElement(/datum/element/connect_loc, projectile_connections) //We do this manually so the forcemoves don't "hit" us. This behavior is kinda dumb, someone refactor this
+	if (last_tick_turf)
+		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	. = ..()
@@ -377,7 +378,7 @@
 	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/mob/dead/observer/ghosted_target = target.ghostize(FALSE)
-		target.key = chosen_one.key
+		target.PossessByPlayer(chosen_one.key)
 		trauma.add_friend(ghosted_target)
 	else
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
@@ -400,8 +401,10 @@
 	var/trail_icon = 'icons/effects/magic.dmi'
 	/// The icon state the trail uses.
 	var/trail_icon_state = "arrow"
+	/// Can we spawn a trail effect again?
+	COOLDOWN_DECLARE(trail_cooldown)
 
-/obj/projectile/magic/aoe/Range()
+/obj/projectile/magic/aoe/reduce_range()
 	if(trigger_range >= 1)
 		for(var/mob/living/nearby_guy in range(trigger_range, get_turf(src)))
 			if(nearby_guy.stat == DEAD)
@@ -413,38 +416,31 @@
 
 	return ..()
 
-/obj/projectile/magic/aoe/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
+/obj/projectile/magic/aoe/prehit_pierce(atom/target)
 	if(can_only_hit_target && target != original)
-		return FALSE
+		return PROJECTILE_PIERCE_PHASE
 	return ..()
 
-/obj/projectile/magic/aoe/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(trail)
-		create_trail()
-
-/// Creates and handles the trail that follows the projectile.
-/obj/projectile/magic/aoe/proc/create_trail()
-	if(!trajectory)
+/obj/projectile/magic/aoe/move_animate(animate_x, animate_y, animate_time = world.tick_lag, deleting = FALSE)
+	if(!trail || !movement_vector || deleting || !COOLDOWN_FINISHED(src, trail_cooldown))
 		return
 
-	var/datum/point/vector/previous = trajectory.return_vector_after_increments(1, -1)
-	var/obj/effect/overlay/trail = new /obj/effect/overlay(previous.return_turf())
-	trail.pixel_x = previous.return_px()
-	trail.pixel_y = previous.return_py()
-	trail.icon = trail_icon
-	trail.icon_state = trail_icon_state
-	//might be changed to temp overlay
-	trail.set_density(FALSE)
-	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	QDEL_IN(trail, trail_lifespan)
+	var/obj/effect/overlay/trail_effect = new /obj/effect/overlay(loc)
+	trail_effect.pixel_x = pixel_x
+	trail_effect.pixel_y = pixel_y
+	trail_effect.icon = trail_icon
+	trail_effect.icon_state = trail_icon_state
+	trail_effect.set_density(FALSE)
+	trail_effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	QDEL_IN(trail_effect, trail_lifespan)
+	COOLDOWN_START(src, trail_cooldown, trail_lifespan)
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
 	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
-	speed = 0.3
+	speed = 3.5
 
 	/// The power of the zap itself when it electrocutes someone
 	var/zap_power = 2e4
@@ -513,8 +509,7 @@
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 100
-	speed = 1
-	pixel_speed_multiplier = 0.2
+	speed = 0.2
 	trigger_range = 0
 	can_only_hit_target = TRUE
 	paralyze = 6 SECONDS
@@ -540,8 +535,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list(FACTION_CULT)
 	range = 105
-	speed = 1
-	pixel_speed_multiplier = 1/7
+	speed = 0.15
 
 /obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

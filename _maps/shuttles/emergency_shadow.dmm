@@ -901,7 +901,7 @@
 	},
 /obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/warning/hot_temp/directional/west,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Oi" = (
@@ -1000,7 +1000,7 @@
 "Sb" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/gloves/latex/nitrile{

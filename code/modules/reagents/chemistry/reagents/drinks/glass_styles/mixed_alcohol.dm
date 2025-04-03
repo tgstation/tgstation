@@ -636,7 +636,7 @@
 /datum/glass_style/drinking_glass/applejack
 	required_drink_type = /datum/reagent/consumable/ethanol/applejack
 	name = "Applejack"
-	desc = "You feel like you could drink this all neight."
+	desc = "You feel like you could drink this all neigh-t."
 	icon_state = "applejack_glass"
 
 /datum/glass_style/drinking_glass/jack_rose
@@ -732,7 +732,7 @@
 /datum/glass_style/drinking_glass/godfather
 	required_drink_type = /datum/reagent/consumable/ethanol/godfather
 	name = "Godfather"
-	desc = "A classic from old Italy and enjoyed by gangsters, pray the orange peel doesnt end up in your mouth."
+	desc = "A classic from old Italy and enjoyed by gangsters, pray the orange peel doesn't end up in your mouth."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "godfather"
 

@@ -41,9 +41,9 @@
 			if(!field || !(field in target?.vars))
 				return FALSE
 
-			var/value = trim(params["value"], MAX_BROADCAST_LEN)
-			investigate_log("[key_name(user)] changed the field: \"[field]\" with value: \"[target.vars[field]]\" to new value: \"[value || "Unknown"]\"", INVESTIGATE_RECORDS)
-			target.vars[field] = value || "Unknown"
+			var/value = reject_bad_name(params["value"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+			investigate_log("[key_name(user)] changed the field: \"[field]\" with value: \"[target.vars[field]]\" to new value: \"[value]\"", INVESTIGATE_RECORDS)
+			target.vars[field] = value
 
 			return TRUE
 
@@ -100,30 +100,31 @@
 			if(!target)
 				return FALSE
 
-			update_preview(user, params["assigned_view"], target)
+			update_preview(user, params["assigned_view"], target, ui.window)
 			return TRUE
 
 	return FALSE
 
 /// Creates a character preview view for the UI.
-/obj/machinery/computer/records/proc/create_character_preview_view(mob/user)
+/obj/machinery/computer/records/proc/create_character_preview_view(mob/user, datum/tgui_window/window)
 	var/assigned_view = USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
 	if(user.client?.screen_maps[assigned_view])
 		return
 
 	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
 	new_view.generate_view(assigned_view)
-	new_view.display_to(user)
+	new_view.display_to(user, window)
 	return new_view
 
 /// Takes a record and updates the character preview view to match it.
-/obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target)
+/obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target, datum/tgui_window/window)
 	var/mutable_appearance/preview = new(target.character_appearance)
 	preview.underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
 	preview.add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
 
 	var/atom/movable/screen/map_view/char_preview/old_view = user.client?.screen_maps[assigned_view]?[1]
 	if(!old_view)
+		character_preview_view = create_character_preview_view(user, window)
 		return
 
 	old_view.appearance = preview.appearance

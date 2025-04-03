@@ -10,7 +10,8 @@
 
 /obj/effect/cult_turf/examine(mob/user)
 	if(linked)
-		linked.examine(user)
+		return linked.examine(user)
+	return list()
 
 /obj/effect/cult_turf/singularity_act()
 	return

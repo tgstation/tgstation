@@ -59,9 +59,6 @@
 // mob cooldowns
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
 
-// admin verb cooldowns
-#define COOLDOWN_INTERNET_SOUND "internet_sound"
-
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
 #define MOB_SHARED_COOLDOWN_2 (1<<1)
@@ -116,3 +113,31 @@
 #define COOLDOWN_STARTED(cd_source, cd_index) (cd_source.cd_index != 0)
 
 #define COOLDOWN_TIMELEFT(cd_source, cd_index) (max(0, cd_source.cd_index - world.time))
+
+///adds to existing cooldown timer if its started, otherwise starts anew
+#define COOLDOWN_INCREMENT(cd_source, cd_index, cd_increment) \
+	if(COOLDOWN_FINISHED(cd_source, cd_index)) { \
+		COOLDOWN_START(cd_source, cd_index, cd_increment); \
+		return; \
+	} \
+	cd_source.cd_index += (cd_increment); \
+
+/*
+ * Same as the above cooldown system, but uses REALTIMEOFDAY
+ * Primarily only used for times that need to be tracked with the client, such as sound or animations
+*/
+
+#define CLIENT_COOLDOWN_DECLARE(cd_index) var/##cd_index = 0
+
+#define CLIENT_STATIC_COOLDOWN_DECLARE(cd_index) var/static/##cd_index = 0
+
+#define CLIENT_COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = REALTIMEOFDAY + (cd_time))
+
+//Returns true if the cooldown has run its course, false otherwise
+#define CLIENT_COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index <= REALTIMEOFDAY)
+
+#define CLIENT_COOLDOWN_RESET(cd_source, cd_index) cd_source.cd_index = 0
+
+#define CLIENT_COOLDOWN_STARTED(cd_source, cd_index) (cd_source.cd_index != 0)
+
+#define CLIENT_COOLDOWN_TIMELEFT(cd_source, cd_index) (max(0, cd_source.cd_index - REALTIMEOFDAY))

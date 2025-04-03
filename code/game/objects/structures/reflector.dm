@@ -75,8 +75,8 @@
 
 /obj/structure/reflector/proc/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
 	proj.ignore_source_check = TRUE
-	proj.range = proj.decayedRange
-	proj.decayedRange = max(proj.decayedRange--, 0)
+	proj.range = proj.maximum_range
+	proj.maximum_range = max(proj.maximum_range--, 0)
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -96,7 +96,7 @@
 		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
 	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
-		return
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You dismantle [src]."))
 	new framebuildstacktype(drop_location(), framebuildstackamount)
 	if(buildstackamount)
@@ -106,7 +106,7 @@
 
 /obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount=1))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to repair [src]."),
 							span_notice("You begin repairing [src]..."),
@@ -196,7 +196,7 @@
 	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	proj.set_angle_centered(new_angle)
+	proj.set_angle_centered(loc, new_angle)
 	return ..()
 
 //DOUBLE
@@ -220,7 +220,8 @@
 /obj/structure/reflector/double/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
 	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (proj.angle + 180))
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	proj.set_angle_centered(new_angle)
+	proj.forceMove(loc)
+	proj.set_angle_centered(loc, new_angle)
 	return ..()
 
 //BOX
@@ -241,8 +242,8 @@
 	admin = TRUE
 	anchored = TRUE
 
-/obj/structure/reflector/box/auto_reflect(obj/projectile/P)
-	P.set_angle_centered(rotation_angle)
+/obj/structure/reflector/box/auto_reflect(obj/projectile/proj)
+	proj.set_angle_centered(loc, rotation_angle)
 	return ..()
 
 /obj/structure/reflector/ex_act()

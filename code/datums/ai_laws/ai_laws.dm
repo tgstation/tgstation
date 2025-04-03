@@ -79,8 +79,15 @@ GLOBAL_VAR(round_default_lawset)
 /proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	var/list/specified_law_ids = CONFIG_GET(keyed_list/specified_laws)
+
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
-		law_weights -= AI_LAWS_ASIMOV
+		switch(CONFIG_GET(number/default_laws))
+			if(CONFIG_ASIMOV)
+				law_weights -= AI_LAWS_ASIMOV
+			if(CONFIG_CUSTOM)
+				law_weights -= specified_law_ids
+
 	while(!lawtype && law_weights.len)
 		var/possible_id = pick_weight(law_weights)
 		lawtype = lawid_to_type(possible_id)
@@ -442,7 +449,7 @@ GLOBAL_VAR(round_default_lawset)
 
 /datum/ai_laws/proc/show_laws(mob/to_who)
 	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
-	to_chat(to_who, examine_block(jointext(printable_laws, "\n")))
+	to_chat(to_who, boxed_message(jointext(printable_laws, "\n")))
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(owner)

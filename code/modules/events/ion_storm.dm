@@ -36,10 +36,8 @@
 		M.laws_sanity_check()
 		if(M.stat != DEAD && !M.incapacitated)
 			if(prob(replaceLawsetChance))
-				var/datum/ai_laws/ion_lawset = pick_weighted_lawset()
-				// pick_weighted_lawset gives us a typepath,
-				// so we have to instantiate it to access its laws
-				ion_lawset = new()
+				var/ion_lawset_type = pick_weighted_lawset()
+				var/datum/ai_laws/ion_lawset = new ion_lawset_type()
 				// our inherent laws now becomes the picked lawset's laws!
 				M.laws.inherent = ion_lawset.inherent.Copy()
 				// and clean up after.
@@ -459,7 +457,7 @@
 						if(6) //X is a job
 							message = "YOU MUST HARM [ioncrew1] AND NOT ALLOW [ioncrew1], THROUGH INACTION, TO ESCAPE HARM"
 						if(7) //X is two jobs
-							message = "YOU MUST HARM [ioncrew1] AND [ioncrew2] AND AND NOT ALLOW EITHER, THROUGH INACTION, TO ESCAPE HARM"
+							message = "YOU MUST HARM [ioncrew1] AND [ioncrew2] AND NOT ALLOW EITHER, THROUGH INACTION, TO ESCAPE HARM"
 
 				if(2) //Protect
 					switch(rand(1,7)) //What is X?

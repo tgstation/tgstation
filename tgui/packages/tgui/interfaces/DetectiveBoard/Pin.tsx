@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Box, Stack } from 'tgui-core/components';
 
-import { Box, Stack } from '../../components';
 import { DataEvidence } from './DataTypes';
 
 type PinProps = {

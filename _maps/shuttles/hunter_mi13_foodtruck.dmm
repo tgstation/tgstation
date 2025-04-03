@@ -15,7 +15,7 @@
 /area/shuttle/hunter/mi13_foodtruck)
 "af" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/structure/sign/poster/contraband/hacking_guide/directional/south,
 /turf/open/floor/circuit/red/off,
 /area/shuttle/hunter/mi13_foodtruck)
@@ -103,14 +103,6 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/binoculars{
 	pixel_y = 10
-	},
-/obj/item/traitor_bug{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/item/traitor_bug{
-	pixel_y = 3;
-	pixel_x = -5
 	},
 /obj/item/storage/box/zipties{
 	pixel_y = -4;
@@ -634,7 +626,7 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -9;
 	pixel_x = -2
 	},
@@ -758,7 +750,7 @@
 	pixel_y = 6;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -6;
 	pixel_x = 10
 	},

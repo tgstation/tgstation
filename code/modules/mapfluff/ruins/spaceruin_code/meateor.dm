@@ -36,7 +36,6 @@
 		/datum/reagent/medicine/c2/penthrite = 5,
 		/datum/reagent/consumable/vinegar = 5,
 	)
-	drink_type = NONE
 	age_restricted = FALSE
 
 /// Abstract holder object for shared behaviour
@@ -101,7 +100,7 @@
 	stored_organ = pick_weight(allowed_organs)
 
 /obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, params)
-	if (attacking_item.sharpness & SHARP_EDGED)
+	if (attacking_item.get_sharpness() & SHARP_EDGED)
 		cut_open(user)
 		return
 	return ..()

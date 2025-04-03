@@ -6,13 +6,15 @@
 	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "gib1"
 	plane = GAME_PLANE
-	layer = BELOW_OBJ_LAYER
+	layer = GIB_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	mergeable_decal = FALSE
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
+
+	is_mopped = TRUE // probably shouldn't be, but janitor powercreep
 
 /obj/effect/decal/cleanable/robot_debris/Initialize(mapload)
 	. = ..()

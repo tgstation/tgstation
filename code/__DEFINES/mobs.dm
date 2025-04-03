@@ -73,6 +73,12 @@
 #define MOB_PLANT (1 << 10)
 ///The mob is a goopy creature, probably coming from xenobiology.
 #define MOB_SLIME (1 << 11)
+///The mob is fish or water-related.
+#define MOB_AQUATIC (1 << 12)
+///The mob is a mining-related mob. It's the plasma, you see. Gets in ya bones.
+#define MOB_MINING (1 << 13)
+///The mob is a crustacean. Like crabs. Or lobsters.
+#define MOB_CRUSTACEAN (1 << 14)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -93,6 +99,10 @@
 #define BODYTYPE_GOLEM (1<<4)
 //The limb is a peg limb
 #define BODYTYPE_PEG (1<<5)
+//The limb is plantly (and will regen if photosynthesis is active)
+#define BODYTYPE_PLANT (1<<6)
+//This limb is shadowy and will regen if shadowheal is active
+#define BODYTYPE_SHADOW (1<<7)
 
 // Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
@@ -226,54 +236,6 @@
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
 
-//Threshold levels for beauty for humans
-#define BEAUTY_LEVEL_HORRID -66
-#define BEAUTY_LEVEL_BAD -33
-#define BEAUTY_LEVEL_DECENT 33
-#define BEAUTY_LEVEL_GOOD 66
-#define BEAUTY_LEVEL_GREAT 100
-
-//Moods levels for humans
-#define MOOD_HAPPY4 15
-#define MOOD_HAPPY3 10
-#define MOOD_HAPPY2 6
-#define MOOD_HAPPY1 2
-#define MOOD_NEUTRAL 0
-#define MOOD_SAD1 -3
-#define MOOD_SAD2 -7
-#define MOOD_SAD3 -15
-#define MOOD_SAD4 -20
-
-//Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 9
-#define MOOD_LEVEL_HAPPY3 8
-#define MOOD_LEVEL_HAPPY2 7
-#define MOOD_LEVEL_HAPPY1 6
-#define MOOD_LEVEL_NEUTRAL 5
-#define MOOD_LEVEL_SAD1 4
-#define MOOD_LEVEL_SAD2 3
-#define MOOD_LEVEL_SAD3 2
-#define MOOD_LEVEL_SAD4 1
-
-//Sanity values for humans
-#define SANITY_MAXIMUM 150
-#define SANITY_GREAT 125
-#define SANITY_NEUTRAL 100
-#define SANITY_DISTURBED 75
-#define SANITY_UNSTABLE 50
-#define SANITY_CRAZY 25
-#define SANITY_INSANE 0
-
-//Sanity levels for humans
-#define SANITY_LEVEL_GREAT 1
-#define SANITY_LEVEL_NEUTRAL 2
-#define SANITY_LEVEL_DISTURBED 3
-#define SANITY_LEVEL_UNSTABLE 4
-#define SANITY_LEVEL_CRAZY 5
-#define SANITY_LEVEL_INSANE 6
-/// Equal to the highest sanity level
-#define SANITY_LEVEL_MAX SANITY_LEVEL_INSANE
-
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
@@ -295,15 +257,16 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals, in joules.
+// The standard charge all other Ethereal charge defines are scaled against.
+#define STANDARD_ETHEREAL_CHARGE (1 * STANDARD_CELL_CHARGE)
+// Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_FULL (2 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_BATTERY_CHARGE)
-
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_ETHEREAL_CHARGE)
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
 #define CRYSTALIZE_PRE_WAIT_TIME (40 SECONDS)
@@ -324,6 +287,9 @@
 
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
+
+//How many slimes can be on the same tile before it can no longer reproduce.
+#define SLIME_OVERCROWD_AMOUNT 2
 
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 3 //Min friendship to order it to follow
@@ -378,6 +344,8 @@
 #define SLIPPERY_TURF (1<<5)
 /// For mobs who are slippery, this requires the mob holding it to be lying down.
 #define SLIPPERY_WHEN_LYING_DOWN (1<<6)
+///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
+#define WEAK_SLIDE (1<<7)
 
 #define MAX_CHICKENS 50
 
@@ -448,7 +416,7 @@
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_DISCHARGE_RATE (8e-4 * STANDARD_CELL_CHARGE) // Rate at which ethereal stomach charge decreases
+#define ETHEREAL_DISCHARGE_RATE (1e-3 * STANDARD_ETHEREAL_CHARGE) // Rate at which ethereal stomach charge decreases
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
@@ -610,25 +578,28 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
-///Defines for AI hologram preferences
-#define AI_HOLOGRAM_BEAR "Bear"
-#define AI_HOLOGRAM_CARP "Carp"
-#define AI_HOLOGRAM_CAT "Cat"
-#define AI_HOLOGRAM_CAT_2 "Cat Alternate"
-#define AI_HOLOGRAM_CHICKEN "Chicken"
-#define AI_HOLOGRAM_CORGI "Corgi"
-#define AI_HOLOGRAM_COW "Cow"
-#define AI_HOLOGRAM_CRAB "Crab"
-#define AI_HOLOGRAM_DEFAULT "Default"
-#define AI_HOLOGRAM_FACE "Floating Face"
-#define AI_HOLOGRAM_FOX "Fox"
-#define AI_HOLOGRAM_GOAT "Goat"
-#define AI_HOLOGRAM_NARSIE "Narsie"
-#define AI_HOLOGRAM_PARROT "Parrot"
-#define AI_HOLOGRAM_PUG "Pug"
-#define AI_HOLOGRAM_RATVAR "Ratvar"
-#define AI_HOLOGRAM_SPIDER "Spider"
-#define AI_HOLOGRAM_XENO "Xeno Queen"
+// Defines for AI holograms
+#define AI_HOLOGRAM_CATEGORY_ANIMAL "Animal"
+	#define AI_HOLOGRAM_BEAR "Bear"
+	#define AI_HOLOGRAM_CARP "Carp"
+	#define AI_HOLOGRAM_CAT "Cat"
+	#define AI_HOLOGRAM_CAT_2 "Cat Alternate"
+	#define AI_HOLOGRAM_CHICKEN "Chicken"
+	#define AI_HOLOGRAM_CORGI "Corgi"
+	#define AI_HOLOGRAM_COW "Cow"
+	#define AI_HOLOGRAM_CRAB "Crab"
+	#define AI_HOLOGRAM_FOX "Fox"
+	#define AI_HOLOGRAM_GOAT "Goat"
+	#define AI_HOLOGRAM_PARROT "Parrot"
+	#define AI_HOLOGRAM_PUG "Pug"
+	#define AI_HOLOGRAM_SPIDER "Spider"
+
+#define AI_HOLOGRAM_CATEGORY_UNIQUE "Unique"
+	#define AI_HOLOGRAM_DEFAULT "Default"
+	#define AI_HOLOGRAM_FACE "Floating Face"
+	#define AI_HOLOGRAM_NARSIE "Narsie"
+	#define AI_HOLOGRAM_RATVAR "Ratvar"
+	#define AI_HOLOGRAM_XENO "Xeno Queen"
 
 /// Icon state to use for ai displays that just turns them off
 #define AI_DISPLAY_DONT_GLOW "ai_off"
@@ -651,6 +622,7 @@
 // Hair masks
 #define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
 #define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
+#define HAIR_MASK_HIDE_WINTERHOOD "hide_winterhood"
 
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
@@ -817,12 +789,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 
 // Bitflags for external organs restylability
+#define EXTERNAL_RESTYLE_ALL ALL
 /// This organ allows restyle through plant restyling (like secateurs)
-#define EXTERNAL_RESTYLE_PLANT (1 << 1)
+#define EXTERNAL_RESTYLE_PLANT (1 << 0)
 /// This organ allows restyling with flesh restyling stuff (surgery or something idk)
-#define EXTERNAL_RESTYLE_FLESH (1 << 2)
+#define EXTERNAL_RESTYLE_FLESH (1 << 1)
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
-#define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
+#define EXTERNAL_RESTYLE_ENAMEL (1 << 2)
 
 //Mob Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -862,9 +835,15 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NOT_INSIDE_TARGET (1<<10)
 /// Checks for base adjacency, but silences the error
 #define SILENT_ADJACENCY (1<<11)
+/// Allows pAIs to perform an action
+#define ALLOW_PAI (1<<12)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
+
+//Lying angles, which way your head points
+#define LYING_ANGLE_EAST 90
+#define LYING_ANGLE_WEST 270
 
 /// Get the client from the var
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))

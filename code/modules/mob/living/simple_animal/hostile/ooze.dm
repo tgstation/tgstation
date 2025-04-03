@@ -55,13 +55,16 @@
 /mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 
+	if(!.) //dead or deleted
+		return
+
 	if(!mind && stat != DEAD)//no mind no change
 		return
 
 	var/nutrition_change = ooze_nutrition_loss
 
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
-	for(var/i in reagents.reagent_list)
+	for(var/i in reagents?.reagent_list)
 		var/datum/reagent/reagent = i
 		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * seconds_per_tick)
 		if(istype(reagent, /datum/reagent/consumable))
@@ -202,6 +205,10 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
+	/// What do we call devouring something
+	var/devour_verb = "devour"
+	/// how much time to eat someone
+	var/devour_time = 1.5 SECONDS
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
@@ -223,8 +230,8 @@
 		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
-	owner.visible_message(span_warning("[ooze] starts attempting to devour [eat_target]!"), span_notice("You start attempting to devour [eat_target]."))
-	if(!do_after(ooze, 1.5 SECONDS, eat_target))
+	owner.visible_message(span_warning("[ooze] starts attempting to [devour_verb] [eat_target]!"), span_notice("You start attempting to [devour_verb] [eat_target]."))
+	if(!do_after(ooze, devour_time, eat_target))
 		return FALSE
 
 	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
@@ -238,7 +245,7 @@
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
+	owner.visible_message(span_warning("[owner] [devour_verb]s [target]!"), span_notice("You [devour_verb] [target]."))
 	START_PROCESSING(SSprocessing, src)
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
@@ -260,7 +267,8 @@
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
 	vored_mob.adjustBruteLoss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
-	ooze.adjust_ooze_nutrition(3)
+	if(istype(ooze))
+		ooze.adjust_ooze_nutrition(3)
 
 	///Dump 'em if they're dead.
 	if(vored_mob.stat == DEAD)
@@ -352,28 +360,28 @@
 
 	return TRUE
 
-/datum/action/cooldown/globules/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/globules/InterceptClickOn(mob/living/clicker, params, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	// Why is this in InterceptClickOn() and not Activate()?
 	// Well, we need to use the params of the click intercept
-	// for passing into preparePixelProjectile, so we'll handle it here instead.
+	// for passing into aim_projectile, so we'll handle it here instead.
 	// We just need to make sure Pre-activate and Activate return TRUE so we make it this far
-	caller.visible_message(
-		span_nicegreen("[caller] launches a mending globule!"),
+	clicker.visible_message(
+		span_nicegreen("[clicker] launches a mending globule!"),
 		span_notice("You launch a mending globule."),
 	)
 
-	var/mob/living/simple_animal/hostile/ooze/oozy = caller
+	var/mob/living/simple_animal/hostile/ooze/oozy = clicker
 	if(istype(oozy))
 		oozy.adjust_ooze_nutrition(-5)
 
 	var/modifiers = params2list(params)
-	var/obj/projectile/globule/globule = new(caller.loc)
-	globule.preparePixelProjectile(target, caller, modifiers)
-	globule.def_zone = caller.zone_selected
+	var/obj/projectile/globule/globule = new(clicker.loc)
+	globule.aim_projectile(target, clicker, modifiers)
+	globule.def_zone = clicker.zone_selected
 	globule.fire()
 
 	StartCooldown()
@@ -389,50 +397,32 @@
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
-	embed_type = /datum/embed_data/mending_globule
+	embed_type = /datum/embedding/mending_globule
 	damage = 0
 
-///This item is what is embedded into the mob, and actually handles healing of mending globules
+///This item is what is embedded into the mob
 /obj/item/mending_globule
 	name = "mending globule"
 	desc = "It somehow heals those who touch it."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "globule"
-	embed_type = /datum/embed_data/mending_globule
-	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
-/datum/embed_data/mending_globule
+/datum/embedding/mending_globule
 	embed_chance = 100
 	ignore_throwspeed_threshold = TRUE
 	pain_mult = 0
 	jostle_pain_mult = 0
 	fall_chance = 0.5
 
-/obj/item/mending_globule/Destroy()
+// This already processes, zero logic to add additional tracking to the item
+/datum/embedding/mending_globule/process(seconds_per_tick)
 	. = ..()
-	bodypart = null
-
-/obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob, obj/item/bodypart/part)
-	. = ..()
-	if(!istype(part))
-		return
-	bodypart = part
-	START_PROCESSING(SSobj, src)
-
-/obj/item/mending_globule/unembedded()
-	. = ..()
-	bodypart = null
-	STOP_PROCESSING(SSobj, src)
-
-///Handles the healing of the mending globule
-/obj/item/mending_globule/process()
-	if(!bodypart) //this is fucked
-		return FALSE
-	bodypart.heal_damage(1,1)
-	heals_left--
-	if(heals_left <= 0)
-		qdel(src)
+	var/obj/item/mending_globule/globule = parent
+	owner_limb.heal_damage(0.5 * seconds_per_tick, 0.5 * seconds_per_tick)
+	globule.heals_left--
+	if(globule.heals_left <= 0)
+		qdel(globule)
 
 ///This action lets you put a mob inside of a cacoon that will inject it with some chemicals.
 /datum/action/cooldown/gel_cocoon

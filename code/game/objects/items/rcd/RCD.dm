@@ -16,6 +16,7 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
+	action_slots = ALL
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
@@ -74,6 +75,23 @@
 
 	GLOB.rcd_list += src
 	AddElement(/datum/element/openspace_item_click_handler)
+
+/obj/item/construction/rcd/examine(mob/user)
+	. = ..()
+	if(construction_upgrades)
+		. += "It has the following upgrades installed:"
+		if(construction_upgrades & RCD_UPGRADE_FRAMES)
+			. += /obj/item/rcd_upgrade/frames::name
+		if(construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS)
+			. += /obj/item/rcd_upgrade/simple_circuits::name
+		if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
+			. += /obj/item/rcd_upgrade/silo_link::name
+		if(construction_upgrades & RCD_UPGRADE_FURNISHING)
+			. += /obj/item/rcd_upgrade/furnishing::name
+		if(construction_upgrades & RCD_UPGRADE_ANTI_INTERRUPT)
+			. += /obj/item/rcd_upgrade/anti_interrupt::name
+		if(construction_upgrades & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN)
+			. += /obj/item/rcd_upgrade/cooling::name
 
 /obj/item/construction/rcd/Destroy()
 	QDEL_NULL(airlock_electronics)
@@ -199,6 +217,17 @@
 
 	return TRUE
 
+/obj/item/construction/rcd/build_delay(mob/user, delay, atom/target)
+	//unaffected by ui changes
+	if(mode == RCD_DECONSTRUCT)
+		if(delay <= 0)
+			return TRUE
+
+		return do_after(user, delay, target)
+
+	//checks for ui changes
+	return ..()
+
 /**
  * actual proc to create the structure
  *
@@ -221,7 +250,7 @@
 
 	var/delay = rcd_results["delay"] * delay_mod
 	if (
-		!(upgrade & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN) \
+		!(construction_upgrades & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN) \
 			&& !rcd_results[RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN] \
 			&& current_active_effects > 0
 	)
@@ -249,7 +278,9 @@
  * * rcd_results- list of params which contains the cost & build mode to create the structure
  */
 /obj/item/construction/rcd/proc/_rcd_create_effect(atom/target, mob/user, delay, list/rcd_results)
-	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, rcd_results["[RCD_DESIGN_MODE]"], upgrade)
+	PRIVATE_PROC(TRUE)
+
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, rcd_results["[RCD_DESIGN_MODE]"], construction_upgrades)
 
 	//resource & structure placement sanity checks before & after delay along with beam effects
 	if(!checkResource(rcd_results["cost"], user) || !can_place(target, rcd_results, user))
@@ -283,7 +314,7 @@
 
 /obj/item/construction/rcd/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/rcd),
+		get_asset_datum(/datum/asset/spritesheet_batched/rcd),
 	)
 
 /obj/item/construction/rcd/ui_host(mob/user)
@@ -314,9 +345,9 @@
 			continue
 
 		//skip category if upgrades were not installed for these
-		if(sub_category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
+		if(sub_category == "Machines" && !(construction_upgrades & RCD_UPGRADE_FRAMES))
 			continue
-		if(sub_category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
+		if(sub_category == "Furniture" && !(construction_upgrades & RCD_UPGRADE_FURNISHING))
 			continue
 
 		var/list/designs = list() //initialize all designs under this category
@@ -370,10 +401,10 @@
 			 * You can ignore an complete category if the design disk upgrade for that category isn't installed.
 			 */
 			//You can't select designs from the Machines category if you don't have the frames upgrade installed.
-			if(category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
+			if(category == "Machines" && !(construction_upgrades & RCD_UPGRADE_FRAMES))
 				return TRUE
 			//You can't select designs from the Furniture category if you don't have the furnishing upgrade installed.
-			if(category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
+			if(category == "Furniture" && !(construction_upgrades & RCD_UPGRADE_FURNISHING))
 				return TRUE
 
 			//use UI params to set variables
@@ -488,12 +519,12 @@
 	matter = 160
 
 /obj/item/construction/rcd/loaded/upgraded
-	upgrade = RCD_ALL_UPGRADES
+	construction_upgrades = RCD_ALL_UPGRADES
 
 /obj/item/construction/rcd/ce
 	name = "professional RCD"
 	desc = "A higher-end model of the rapid construction device, prefitted with improved cooling and disruption prevention. Provided to the chief engineer."
-	upgrade = RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	construction_upgrades = RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 	matter = 160
 	color = list(
 		0.3, 0.3, 0.7, 0.0,
@@ -510,13 +541,13 @@
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
-	upgrade = RCD_ALL_UPGRADES
+	construction_upgrades = RCD_ALL_UPGRADES
 
 /obj/item/construction/rcd/combat/admin
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
-	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	construction_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 	delay_mod = 0.1
 
 // Ranged RCD
@@ -531,7 +562,7 @@
 	icon_state = "arcd"
 	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
-	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	construction_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
 ///How much charge is used up for each matter unit.
 #define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
@@ -551,6 +582,18 @@
 	if(ismecha(owner))
 		return owner.ui_status(user)
 	return UI_CLOSE
+
+/obj/item/construction/rcd/exosuit/build_delay(mob/user, delay, atom/target)
+	if(delay <= 0)
+		return TRUE
+
+	var/obj/item/mecha_parts/mecha_equipment/rcd/module = loc
+
+	//deconstruction can't be cancelled by ui changes
+	if(mode != RCD_DECONSTRUCT)
+		blueprint_changed = FALSE
+
+	return module.do_after_mecha(target, user, delay)
 
 /obj/item/construction/rcd/exosuit/get_matter(mob/user)
 	if(silo_link)

@@ -63,8 +63,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/obj/structure/closet/supplypod/centcompod/temp_pod //The temporary pod that is modified by this datum, then cloned. The buildObject() clone of this pod is what is launched
 	// Stuff needed to render the map
 	var/map_name
-	var/atom/movable/screen/map_view/cam_screen
-	var/atom/movable/screen/background/cam_background
+	var/atom/movable/screen/map_view/camera/cam_screen
 	var/tabIndex = 1
 	var/renderLighting = FALSE
 	var/static/list/pod_style_info
@@ -109,26 +108,22 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	cam_screen = new
 	cam_screen.generate_view(map_name)
 
-	var/datum/plane_master_group/planes = cam_screen.display_to(holder.mob)
-
+	// display_to doesn't send the planes to the client, so we have to do it via display_to_client
+	var/datum/plane_master_group/planes = cam_screen.display_to_client(holder)
 	if(!renderLighting)
 		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
 			instance.set_alpha(100)
 
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = TRUE
 	refreshView()
-	holder.register_map_obj(cam_background)
 
 /datum/centcom_podlauncher/ui_state(mob/user)
 	if (SSticker.current_state >= GAME_STATE_FINISHED)
 		return GLOB.always_state //Allow the UI to be given to players by admins after roundend
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/centcom_podlauncher/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/supplypods),
+		get_asset_datum(/datum/asset/spritesheet_batched/supplypods),
 	)
 
 /datum/centcom_podlauncher/ui_interact(mob/user, datum/tgui/ui)
@@ -303,7 +298,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 					return
 				if (!isnum(boomInput[i])) //If the user doesn't input a number, set that specific explosion value to zero
 					tgui_alert(usr, "That wasn't a number! Value set to default (zero) instead.")
-					boomInput = 0
+					boomInput[i] = 0
 			explosionChoice = 1
 			temp_pod.explosionSize = boomInput
 			. = TRUE
@@ -525,7 +520,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			. = TRUE
 		if("refreshView")
 			initMap()
-			refreshView()
 			. = TRUE
 		if("renderLighting")
 			renderLighting = !renderLighting
@@ -553,7 +547,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 /datum/centcom_podlauncher/ui_close(mob/user) //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
 	QDEL_NULL(temp_pod)
 	QDEL_NULL(cam_screen)
-	QDEL_NULL(cam_background)
 	qdel(src)
 
 /datum/centcom_podlauncher/proc/setupViewPod()
@@ -575,9 +568,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
 
-	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_screen.show_camera(visible_turfs, size_x, size_y)
 
 /datum/centcom_podlauncher/proc/updateCursor(forceClear = FALSE) //Update the mouse of the user
 	if (!holder) //Can't update the mouse icon if the client doesnt exist!

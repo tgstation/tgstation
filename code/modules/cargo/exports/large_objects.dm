@@ -40,9 +40,8 @@
 	cost = CARGO_CRATE_VALUE * 0.5 // +0-400 depending on amount of reagents left
 	var/contents_cost = CARGO_CRATE_VALUE * 0.8
 
-/datum/export/large/reagent_dispenser/get_cost(obj/O)
-	var/obj/structure/reagent_dispensers/D = O
-	var/ratio = D.reagents.total_volume / D.reagents.maximum_volume
+/datum/export/large/reagent_dispenser/get_cost(obj/structure/reagent_dispensers/dispenser)
+	var/ratio = dispenser.reagents.total_volume / dispenser.reagents.maximum_volume
 
 	return ..() + round(contents_cost * ratio)
 
@@ -59,7 +58,6 @@
 	unit_name = "beer keg"
 	contents_cost = CARGO_CRATE_VALUE * 3.5
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
-
 
 /datum/export/large/pipedispenser
 	cost = CARGO_CRATE_VALUE * 2.5
@@ -120,27 +118,26 @@
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
 	k_elasticity = 0.00033
 
-/datum/export/large/gas_canister/get_cost(obj/O)
-	var/obj/machinery/portable_atmospherics/canister/C = O
+/datum/export/large/gas_canister/get_cost(obj/machinery/portable_atmospherics/canister/canister)
 	var/worth = cost
-	var/datum/gas_mixture/canister_mix = C.return_air()
+	var/datum/gas_mixture/canister_mix = canister.return_air()
 	var/canister_gas = canister_mix.gases
 	var/list/gases_to_check = list(
-								/datum/gas/bz,
-								/datum/gas/nitrium,
-								/datum/gas/hypernoblium,
-								/datum/gas/miasma,
-								/datum/gas/tritium,
-								/datum/gas/pluoxium,
-								/datum/gas/freon,
-								/datum/gas/hydrogen,
-								/datum/gas/healium,
-								/datum/gas/proto_nitrate,
-								/datum/gas/zauker,
-								/datum/gas/helium,
-								/datum/gas/antinoblium,
-								/datum/gas/halon,
-								)
+		/datum/gas/bz,
+		/datum/gas/nitrium,
+		/datum/gas/hypernoblium,
+		/datum/gas/miasma,
+		/datum/gas/tritium,
+		/datum/gas/pluoxium,
+		/datum/gas/freon,
+		/datum/gas/hydrogen,
+		/datum/gas/healium,
+		/datum/gas/proto_nitrate,
+		/datum/gas/zauker,
+		/datum/gas/helium,
+		/datum/gas/antinoblium,
+		/datum/gas/halon,
+	)
 
 	for(var/gasID in gases_to_check)
 		canister_mix.assert_gas(gasID)

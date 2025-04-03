@@ -2,17 +2,20 @@
 /datum/element/fried_item
 	/// List of colors to apply the element target.
 	/// Each index corresponds to a different level.
-	var/static/list/fried_colors = list(
-		COLOR_LIGHT_BROWN,
-		COLOR_BROWNER_BROWN,
-		COLOR_DARKER_BROWN,
-		COLOR_BLACK,
-	)
+	var/static/list/fried_colors
 
 /datum/element/fried_item/Attach(datum/target, fry_time)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
+
+	if (isnull(fried_colors))
+		fried_colors = list(
+			color_transition_filter(COLOR_LIGHT_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_BROWNER_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_DARKER_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_BLACK, SATURATION_OVERRIDE),
+		)
 
 	var/atom/this_food = target
 
@@ -40,13 +43,13 @@
 	ADD_TRAIT(this_food, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
 	// Already edible items will inherent these parameters
 	// Otherwise, we will become edible.
-	this_food.AddComponent( \
+	this_food.AddComponentFrom( \
+		SOURCE_EDIBLE_FRIED, \
 		/datum/component/edible, \
 		bite_consumption = 2, \
 		food_flags = FOOD_FINGER_FOOD, \
 		junkiness = 10, \
 		foodtypes = FRIED, \
-		volume = this_food.reagents?.maximum_volume, \
 	)
 	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 
@@ -56,5 +59,5 @@
 	source.name = initial(source.name)
 	source.desc = initial(source.desc)
 	REMOVE_TRAIT(source, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
-	qdel(source.GetComponent(/datum/component/edible)) // Don't care if it was initially edible
+	source.RemoveComponentSource(SOURCE_EDIBLE_FRIED, /datum/component/edible)
 	return ..()

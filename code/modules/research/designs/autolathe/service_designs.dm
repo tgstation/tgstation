@@ -422,7 +422,7 @@
 /datum/design/plastic_tree
 	name = "Plastic Potted Plant"
 	id = "plastic_trees"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/kirbyplants/random/fullysynthetic
 	category = list(
@@ -434,7 +434,7 @@
 /datum/design/beads
 	name = "Plastic Bead Necklace"
 	id = "plastic_necklace"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/neck/beads
 	category = list(
@@ -446,7 +446,7 @@
 /datum/design/plastic_ring
 	name = "Plastic Can Rings"
 	id = "ring_holder"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*1.2)
 	build_path = /obj/item/storage/cans
 	category = list(
@@ -458,7 +458,7 @@
 /datum/design/plastic_box
 	name = "Plastic Box"
 	id = "plastic_box"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/storage/box/plastic
 	category = list(
@@ -556,6 +556,18 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/storage/fish_case
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/aquarium_kit
+	name = "Aquarium Kit"
+	id = "aquarium_kit"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/aquarium_kit
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,

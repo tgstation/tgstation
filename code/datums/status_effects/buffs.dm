@@ -306,7 +306,7 @@
 				newRod.activated()
 				if(!itemUser.has_hand_for_held_index(hand))
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
-					var/zone = (hand % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+					var/zone = IS_LEFT_INDEX(hand) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 					if(itemUser.regenerate_limb(zone, FALSE))
 						itemUser.put_in_hand(newRod, hand, forced = TRUE)
 					else
@@ -406,6 +406,7 @@
 /datum/status_effect/mayhem
 	id = "Mayhem"
 	duration = 2 MINUTES
+	alert_type = null
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
 
@@ -427,7 +428,7 @@
 
 	if(iscarbon(owner))
 		chainsaw = new(get_turf(owner))
-		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		ADD_TRAIT(chainsaw, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 		owner.put_in_hands(chainsaw, forced = TRUE)
 		chainsaw.attack_self(owner)
 		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
@@ -435,7 +436,7 @@
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
 	to_chat(owner, span_narsiesmall("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, NO TEAM MATES OR ALLEGIANCES! KILL THEM ALL!"))
 
-	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)
+	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust, REF(src))
 	QDEL_IN(colour, 1.1 SECONDS)
 	return TRUE
 
@@ -450,6 +451,7 @@
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
+	alert_type = null
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -557,7 +559,7 @@
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
-	ADD_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, id)
+	ADD_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_STATUS_EFFECT(id))
 	owner.playsound_local(get_turf(owner), 'sound/effects/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -575,7 +577,7 @@
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
 	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
-	REMOVE_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, id)
+	REMOVE_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_STATUS_EFFECT(id))
 
 /// Gives you a brief period of anti-gravity
 /datum/status_effect/jump_jet
@@ -595,13 +597,14 @@
 	id = "radiation_immunity"
 	duration = 1 MINUTES
 	show_duration = TRUE
+	alert_type = null
 
 /datum/status_effect/radiation_immunity/on_apply()
-	ADD_TRAIT(owner, TRAIT_RADIMMUNE, type)
+	ADD_TRAIT(owner, TRAIT_RADIMMUNE, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/radiation_immunity/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, type)
+	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/radiation_immunity/radnebula
 	alert_type = /atom/movable/screen/alert/status_effect/radiation_immunity
@@ -611,29 +614,33 @@
 	desc = "You're immune to radiation, get settled quick!"
 	icon_state = "radiation_shield"
 
-/// Heal in darkness and potentially trigger other effects, persists for a short duration after leaving
-/datum/status_effect/shadow_regeneration
-	id = "shadow_regeneration"
+/// Throw an alert we're in darkness!! Nightvision can make it hard to tell so this is useful
+/datum/status_effect/shadow
+	id = "shadow"
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration
 
-/datum/status_effect/shadow_regeneration/on_apply()
+/// Same as above, but also heal in darkness!! Mostly superseded but some simple mobs use this
+/datum/status_effect/shadow/regeneration
+	id = "shadow_regeneration"
+
+/datum/status_effect/shadow/regeneration/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
 	heal_owner()
 	return TRUE
 
-/datum/status_effect/shadow_regeneration/refresh(effect)
+/datum/status_effect/shadow/regeneration/refresh(effect)
 	. = ..()
 	heal_owner()
 
 /// Regenerate health whenever this status effect is applied or reapplied
-/datum/status_effect/shadow_regeneration/proc/heal_owner()
+/datum/status_effect/shadow/regeneration/proc/heal_owner()
 	owner.heal_overall_damage(brute = 1, burn = 1, required_bodytype = BODYTYPE_ORGANIC)
 
 /atom/movable/screen/alert/status_effect/shadow_regeneration
 	name = "Shadow Regeneration"
-	desc = "Bathed in soothing darkness, you will slowly heal yourself."
+	desc = "Bathed in soothing darkness, you will slowly heal yourself"
 	icon_state = "lightless"

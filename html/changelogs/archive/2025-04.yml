@@ -1,0 +1,39 @@
+2025-04-01:
+  Ghommie:
+  - bugfix: Fish will no longer drown if left half-submerged in a fishable turf on
+      which it can normally be found. Instead it will disperse after a while or if
+      starving. Note that this only happens if the fish is native to such turfs (eg.
+      lavaloop on beach water will still die).
+  SmArtKar:
+  - bugfix: Fixed gas station and phonebooth ruins magically summoning weather on
+      bottom levels of Icebox
+2025-04-02:
+  TiviPlus:
+  - refactor: "Logging and IC timestamps will now always use UTC\xB10 and not be affected\
+      \ by server system timezone changes"
+  - bugfix: "Station and round times will not longer be incorrect if the system timezone\
+      \ is not UTC\xB10"
+  Y0SH1M4S73R:
+  - code_imp: Any tgui message that would be too big to send to the server is now
+      split into chunks and sent in sequence. This fixes several issues, such as...
+  - bugfix: It is once again possible to save large amounts of text on paper at once.
+  jlsnow301:
+  - bugfix: Fixed the circuit UI titlebar spacing
+  - bugfix: The library console has been refactored. Report any issues in the github!
+  timothymtorres:
+  - map: Move mafia, CTF, and deathmatch maps into minigame folder
+2025-04-03:
+  Absolucy:
+  - refactor: Refactored some code related to initialization.
+  - code_imp: Runtime errors will now print to the chat while debugging.
+  Melbert:
+  - refactor: Minor mining voucher refactor, report any oddities.
+  - qol: All spell invocations have been made a bit more consistent - some have changed
+      slightly, some are now punctuated. "Dragon Form" and "Bear Form" are now emotes
+      invocations.
+  - qol: '"Unknown" mobs are now properly referred to as they/them'
+  - qol: Burning paper (and similar) is now two way. Rather than needing to click
+      on the paper with a burning item, you can now click on a burning item with the
+      paper. This means you can burn paper on your lit cigarette like a badass.
+  - qol: You can now light cigarettes on candles.
+  - rscdel: Flares and candles can no longer craft into flashlight eyes, I guess.

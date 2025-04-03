@@ -62,12 +62,12 @@
 
 	return null
 
-/mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
+/mob/living/carbon/check_projectile_dismemberment(obj/projectile/proj, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
-	if(affecting && affecting.can_dismember() && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
-		affecting.dismember(P.damtype)
-		if(P.catastropic_dismemberment)
-			apply_damage(P.damage, P.damtype, BODY_ZONE_CHEST, wound_bonus = P.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
+	if(affecting && affecting.can_dismember() && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - proj.dismemberment))
+		affecting.dismember(proj.damtype)
+		if(proj.catastropic_dismemberment)
+			apply_damage(proj.damage, proj.damtype, BODY_ZONE_CHEST, wound_bonus = proj.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
 
 /mob/living/carbon/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
 	. = ..()
@@ -84,19 +84,28 @@
 		return TRUE
 	return ..()
 
-/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, def_zone)
-	if(!I.force && !length(I.attack_verb_simple) && !length(I.attack_verb_continuous))
+/mob/living/carbon/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
 	if(isnull(hit_bodypart)) // ??
 		return ..()
 
-	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"
-	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
+	// Sanity in case one is null for some reason
+	var/picked_index = rand(max(length(weapon.attack_verb_simple), length(weapon.attack_verb_continuous)))
+
+	var/message_verb_continuous = "attacks"
+	var/message_verb_simple = "attack"
+	var/message_hit_area = get_hit_area_message(hit_area)
+	// Sanity in case one is... longer than the other?
+	if (picked_index && length(weapon.attack_verb_continuous) >= picked_index)
+		message_verb_continuous = weapon.attack_verb_continuous[picked_index]
+	if (picked_index && length(weapon.attack_verb_simple) >= picked_index)
+		message_verb_simple = weapon.attack_verb_simple[picked_index]
 
 	var/extra_wound_details = ""
 
-	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
+	if(weapon.damtype == BRUTE && hit_bodypart.can_dismember())
 
 		var/mangled_state = hit_bodypart.get_mangled_state()
 
@@ -111,24 +120,21 @@
 		var/dismemberable = ((hit_bodypart.dismemberable_by_wound()) || hit_bodypart.dismemberable_by_total_damage())
 		if (dismemberable)
 			extra_wound_details = ", threatening to sever it entirely"
-		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && I.get_sharpness()))
+		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && weapon.get_sharpness()))
 			var/bone_text = hit_bodypart.get_internal_description()
-			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [bone_text]"
-		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && I.get_sharpness()))
+			extra_wound_details = ", [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [bone_text]"
+		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && weapon.get_sharpness()))
 			var/tissue_text = hit_bodypart.get_external_description()
-			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [tissue_text]"
+			extra_wound_details = ", [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [tissue_text]"
 
-	var/message_hit_area = ""
-	if(hit_area)
-		message_hit_area = " in the [hit_area]"
-	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [I][extra_wound_details]!"
-	var/attack_message_victim = "You're [message_verb_continuous][message_hit_area] with [I][extra_wound_details]!"
-	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [I][extra_wound_details]!"
+	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"
+	var/attack_message_victim = "You're [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"
+	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [weapon][extra_wound_details]!"
 	if(user in viewers(src, null))
-		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [I][extra_wound_details]!"
-		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [I][extra_wound_details]!"
+		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [weapon][extra_wound_details]!"
+		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [weapon][extra_wound_details]!"
 	if(user == src)
-		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [I][extra_wound_details]!"
+		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [weapon][extra_wound_details]!"
 	visible_message(span_danger("[attack_message_spectator]"),\
 		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
 	if(user != src)
@@ -400,9 +406,9 @@
 
 /mob/proc/shake_up_animation()
 		var/direction = prob(50) ? -1 : 1
-		animate(src, pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
-		animate(pixel_x = pixel_x - (SHAKE_ANIMATION_OFFSET * 2 * direction), time = 1)
-		animate(pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_IN)
+		animate(src, pixel_w = SHAKE_ANIMATION_OFFSET * direction, time = 0.1 SECONDS, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+		animate(pixel_w = SHAKE_ANIMATION_OFFSET * -2 * direction, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
+		animate(pixel_w = SHAKE_ANIMATION_OFFSET * direction, time = 0.1 SECONDS, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_RELATIVE)
 
 /// Check ourselves to see if we've got any shrapnel, return true if we do. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
 /mob/living/carbon/proc/check_self_for_injuries()
@@ -410,21 +416,21 @@
 		return
 
 	var/embeds = FALSE
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/LB = X
-		for(var/obj/item/I in LB.embedded_objects)
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/weapon as anything in limb.embedded_objects)
 			if(!embeds)
 				embeds = TRUE
 				// this way, we only visibly try to examine ourselves if we have something embedded, otherwise we'll still hug ourselves :)
 				visible_message(span_notice("[src] examines [p_them()]self."), \
-					span_notice("You check yourself for shrapnel."))
-			if(I.is_embed_harmless())
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+					span_notice("You check yourself for shrapnel."), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
+			var/harmless = weapon.get_embed().is_harmless()
+			var/stuck_wordage = harmless ? "stuck to" : "embedded in"
+			var/embed_text = "\t <a href='byond://?src=[REF(src)];embedded_object=[REF(weapon)];embedded_limb=[REF(limb)]'> There is [icon2html(weapon, src)] \a [weapon] [stuck_wordage] your [limb.plaintext_zone]!</a>"
+			if (harmless)
+				to_chat(src, span_italics(span_notice(embed_text)))
 			else
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
-
+				to_chat(src, span_boldwarning(embed_text))
 	return embeds
-
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -656,7 +662,8 @@
 	if (HAS_TRAIT(src, TRAIT_GENELESS))
 		return FALSE
 
-	if (run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [scramble_source]!") >= 100)
+	if (run_armor_check(attack_flag = BIO, silent = TRUE) >= 100)
+		to_chat(src, span_warning("Your armor shields you from [scramble_source]!"))
 		return FALSE
 
 	if (!length(GLOB.bioscrambler_valid_organs) || !length(GLOB.bioscrambler_valid_parts))
@@ -695,7 +702,7 @@
 		body_parts -= part
 	GLOB.bioscrambler_valid_parts = body_parts
 
-	var/list/organs = subtypesof(/obj/item/organ) + subtypesof(/obj/item/organ)
+	var/list/organs = subtypesof(/obj/item/organ)
 	for(var/obj/item/organ/organ_type as anything in organs)
 		if(!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(initial(organ_type.organ_flags) & ORGAN_ROBOTIC))
 			continue
@@ -705,7 +712,7 @@
 /mob/living/carbon/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
 	. |= SHOVE_CAN_STAGGER
-	if(IsKnockdown() && !IsParalyzed() && HAS_TRAIT(src, TRAIT_STUN_ON_NEXT_SHOVE))
+	if(IsKnockdown() && !IsParalyzed() && HAS_TRAIT(src, TRAIT_DAZED))
 		. |= SHOVE_CAN_KICK_SIDE
 	if(HAS_TRAIT(src, TRAIT_NO_SIDE_KICK)) // added as an extra check, just in case
 		. &= ~SHOVE_CAN_KICK_SIDE

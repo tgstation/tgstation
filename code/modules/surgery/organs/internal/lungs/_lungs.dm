@@ -154,7 +154,7 @@
 	add_gas_reaction(/datum/gas/zauker, while_present = PROC_REF(too_much_zauker))
 
 ///Simply exists so that you don't keep any alerts from your previous lack of lungs.
-/obj/item/organ/lungs/mob_insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
+/obj/item/organ/lungs/on_mob_insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	. = ..()
 
 	receiver.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
@@ -163,7 +163,7 @@
 	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
 
-/obj/item/organ/lungs/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/lungs/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	// This is very "manual" I realize, but it's useful to ensure cleanup for gases we're removing happens
 	// Avoids stuck alerts and such
@@ -378,8 +378,7 @@
 /// Too much funny gas, time to get brain damage
 /obj/item/organ/lungs/proc/too_much_bz(mob/living/carbon/breather, datum/gas_mixture/breath, bz_pp, old_bz_pp)
 	if(bz_pp > BZ_trip_balls_min)
-		breather.adjust_hallucinations(20 SECONDS)
-		breather.reagents.add_reagent(/datum/reagent/bz_metabolites, 5)
+		breather.reagents.add_reagent(/datum/reagent/bz_metabolites, clamp(bz_pp, 1, 5))
 	if(bz_pp > BZ_brain_damage_min && prob(33))
 		breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150, ORGAN_ORGANIC)
 
@@ -809,7 +808,7 @@
 	var/breath_dir = breather.dir
 
 	var/list/particle_grav = list(0, 0.1, 0)
-	var/list/particle_pos = list(0, breather.get_mob_height() + 2, 0)
+	var/list/particle_pos = list(0, breather.mob_height + 2, 0)
 	if(breath_dir & NORTH)
 		particle_grav[2] = 0.2
 		breath_particle.rotation = pick(-45, 45)
@@ -852,6 +851,21 @@
 /obj/item/organ/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+/obj/item/organ/lungs/feel_for_damage(self_aware)
+	if(organ_flags & ORGAN_FAILING)
+		if(self_aware)
+			return span_boldwarning("Your lungs hurt madly[HAS_TRAIT(owner, TRAIT_NOBREATH) ? "" : ", and you can't breathe"]!")
+		return span_boldwarning("It hurts madly[HAS_TRAIT(owner, TRAIT_NOBREATH) ? "" : ", and you can't breathe"]!")
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		if(self_aware)
+			return span_warning("Your lungs feel tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and breathing is harder"].")
+		return span_warning("It feels tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and breathing is harder"].")
+	if(self_aware)
+		return span_boldwarning("Your lungs feel extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
+	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
+
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
 #define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
 
@@ -874,7 +888,7 @@
 	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/lungs/slime
-	name = "vacuole"
+	name = "slime vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
 	safe_plasma_max = 0 //We breathe this to gain POWER.
@@ -1035,6 +1049,12 @@
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 
+
+/obj/item/organ/lungs/pod
+	name = "pod vacuole"
+	desc = "A large organelle designed to store oxygen and other important gasses."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME
 
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT

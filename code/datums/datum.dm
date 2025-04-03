@@ -1,7 +1,7 @@
 /**
  * The absolute base class for everything
  *
- * A datum instantiated has no physical world prescence, use an atom if you want something
+ * A datum instantiated has no physical world presence, use an atom if you want something
  * that actually lives in the world
  *
  * Be very mindful about adding variables to this class, they are inherited by every single
@@ -79,6 +79,8 @@
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
 #endif
+	///The layout pref we take from the player looking at this datum's UI to know what layout to give.
+	var/datum/preference/choiced/layout_prefs_used = /datum/preference/choiced/tgui_layout
 
 /**
  * Called when a href for this datum is clicked
@@ -142,9 +144,11 @@
 	_clear_signal_refs()
 	//END: ECS SHIT
 
+#ifndef DISABLE_DREAMLUAU
 	if(!(datum_flags & DF_STATIC_OBJECT))
 		DREAMLUAU_CLEAR_REF_USERDATA(vars) // vars ceases existing when src does, so we need to clear any lua refs to it that exist.
 		DREAMLUAU_CLEAR_REF_USERDATA(src)
+#endif
 
 	return QDEL_HINT_QUEUE
 

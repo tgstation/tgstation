@@ -1,8 +1,4 @@
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-import { BooleanLike } from 'tgui-core/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -13,7 +9,11 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type FishData = {
@@ -183,7 +183,7 @@ const FishItem = (props) => {
                           tooltip={
                             <Stack vertical>
                               <Stack.Item>
-                                Inheritance: {trait.trait_inherit}
+                                Inheritance: {trait.trait_inherit}%
                               </Stack.Item>
                               <Stack.Item>{trait.trait_desc}</Stack.Item>
                             </Stack>

@@ -118,7 +118,6 @@ GLOBAL_LIST_INIT(quirk_chipped_choice, list(
 	"GENUINE ID Appraisal Now!" = /obj/item/skillchip/appraiser,
 	"Le S48R4G3" = /obj/item/skillchip/sabrage,
 	"Integrated Intuitive Thinking and Judging" = /obj/item/skillchip/intj,
-	"F0RC3 4DD1CT10N" = /obj/item/skillchip/drunken_brawler,
 	"\"Space Station 13: The Musical\"" = /obj/item/skillchip/musical,
 	"Mast-Angl-Er" = /obj/item/skillchip/master_angler,
 	"Kommand" = /obj/item/skillchip/big_pointer,

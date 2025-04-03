@@ -14,7 +14,7 @@
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
-///from base of atom/bullet_act(): (/obj/projectile, def_zone)
+///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit, blocked)
 #define COMSIG_ATOM_PRE_BULLET_ACT "pre_atom_bullet_act"
 	/// All this does is prevent default bullet on_hit from being called, [BULLET_ACT_HIT] being return is implied
 	#define COMPONENT_BULLET_ACTED (1<<0)
@@ -22,7 +22,7 @@
 	#define COMPONENT_BULLET_BLOCKED (1<<1)
 	/// Forces bullet act to return [BULLET_ACT_FORCE_PIERCE], takes priority over above
 	#define COMPONENT_BULLET_PIERCED (1<<2)
-///from base of atom/bullet_act(): (/obj/projectile, def_zone)
+///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit, blocked)
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
 ///from base of atom/CheckParts(): (list/parts_list, datum/crafting_recipe/R)
 #define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
@@ -92,3 +92,9 @@
 /// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
 #define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
 	#define COMSIG_SABOTEUR_SUCCESS 1
+
+/// signal sent when a mouse is hovering over us, sent by atom/proc/on_mouse_entered
+#define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"
+
+/// Sent from [/datum/element/burn_on_item_ignition] to an atom being ignited by something: (mob/living/user, obj/item/burning_thing)
+#define COMSIG_ATOM_IGNITED_BY_ITEM "atom_ignited_by_item"

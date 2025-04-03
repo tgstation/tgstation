@@ -22,7 +22,7 @@
 	connector.Insert(carbon_holder, special = TRUE)
 
 /datum/quirk/chip_connector/post_add()
-	to_chat(quirk_holder, span_boldannounce(desc)) // efficiency is clever laziness
+	to_chat(quirk_holder, span_bolddanger(desc)) // efficiency is clever laziness
 
 /datum/quirk/chip_connector/remove()
 	qdel(connector)

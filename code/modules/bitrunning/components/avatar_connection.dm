@@ -32,7 +32,7 @@
 	server_ref = WEAKREF(server)
 	server.avatar_connection_refs.Add(WEAKREF(src))
 
-	avatar.key = old_body.key
+	avatar.PossessByPlayer(old_body.key)
 	ADD_TRAIT(avatar, TRAIT_NO_MINDSWAP, REF(src)) // do not remove this one
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
@@ -64,7 +64,9 @@
 	var/alias = our_client?.prefs?.read_preference(/datum/preference/name/hacker_alias) || pick(GLOB.hacker_aliases)
 
 	if(alias && avatar.real_name != alias)
-		avatar.fully_replace_character_name(avatar.real_name, alias)
+		avatar.fully_replace_character_name(newname = alias)
+
+	update_avatar_id()
 
 	for(var/skill_type in old_mind.known_skills)
 		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
@@ -74,15 +76,15 @@
 	avatar.set_temp_blindness(1 SECONDS) // I'm in
 
 
-/datum/component/avatar_connection/PostTransfer()
+/datum/component/avatar_connection/PostTransfer(datum/new_parent)
 	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
 	if(isnull(pod))
 		return COMPONENT_INCOMPATIBLE
 
-	if(!isliving(parent))
+	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
-	pod.avatar_ref = WEAKREF(parent)
+	pod.avatar_ref = WEAKREF(new_parent)
 
 
 /datum/component/avatar_connection/RegisterWithParent()
@@ -105,10 +107,25 @@
 		COMSIG_BITRUNNER_ALERT_SEVER,
 		COMSIG_BITRUNNER_CACHE_SEVER,
 		COMSIG_BITRUNNER_LADDER_SEVER,
-		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_PILL_CONSUMED,
+		COMSIG_LIVING_DEATH,
+		COMSIG_QDELETING,
 		COMSIG_MOB_APPLY_DAMAGE,
 	))
+
+
+/// Updates our avatar's ID to match our avatar's name.
+/datum/component/avatar_connection/proc/update_avatar_id()
+	var/mob/living/avatar = parent
+	var/obj/item/card/id/our_id = locate() in avatar.get_all_contents()
+	if(isnull(our_id))
+		return
+
+	our_id.registered_name = avatar.real_name
+	our_id.update_label()
+	our_id.update_icon()
+	if(our_id.registered_account)
+		our_id.registered_account.account_holder = avatar.real_name
 
 
 /// Disconnects the avatar and returns the mind to the old_body.
@@ -204,7 +221,7 @@
 
 
 //if your bitrunning avatar somehow manages to acquire and consume a red pill, they will be ejected from the Matrix
-/datum/component/avatar_connection/proc/disconnect_if_red_pill(datum/source, obj/item/reagent_containers/pill/pill, mob/feeder)
+/datum/component/avatar_connection/proc/disconnect_if_red_pill(datum/source, obj/item/reagent_containers/applicator/pill/pill, mob/feeder)
 	SIGNAL_HANDLER
 	if(pill.icon_state == "pill4")
 		full_avatar_disconnect()

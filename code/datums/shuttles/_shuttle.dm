@@ -61,8 +61,8 @@
 	if(!.)
 		return
 
-	turfs = block(locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
-							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+	turfs = block( .[MAP_MINX], .[MAP_MINY], .[MAP_MINZ],
+					.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ])
 
 	if(modular)
 		INVOKE_ASYNC(src, PROC_REF(await_dispatch), register)

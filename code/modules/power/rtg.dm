@@ -73,10 +73,10 @@
 	tesla_zap(source = src, zap_range = 5, power = power_gen * 20)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 2, 3, 4, null, 8), 10 SECONDS) // Not a normal explosion.
 
-/obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/Proj)
+/obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/proj)
 	. = ..()
-	if(!going_kaboom && istype(Proj) && Proj.damage > 0 && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		log_bomber(Proj.firer, "triggered a", src, "explosion via projectile")
+	if(!going_kaboom && istype(proj) && proj.damage > 0 && ((proj.damage_type == BURN) || (proj.damage_type == BRUTE)))
+		log_bomber(proj.firer, "triggered a", src, "explosion via projectile")
 		overload()
 
 /obj/machinery/power/rtg/abductor/blob_act(obj/structure/blob/B)
@@ -112,7 +112,7 @@
 	name = "Lava powered RTG"
 	desc = "This device only works when exposed to the toxic fumes of Lavaland"
 	circuit = null
-	power_gen = 1500
+	power_gen = 20000
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF
 

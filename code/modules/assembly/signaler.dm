@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1.2)
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_ALL
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
@@ -146,7 +146,7 @@
 	if(!radio_connection)
 		return
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime, "hh:mm:ss", TIMEZONE_UTC)
 	var/turf/T = get_turf(src)
 
 	var/logging_data = "[time] <B>:</B> [key_name(usr)] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"

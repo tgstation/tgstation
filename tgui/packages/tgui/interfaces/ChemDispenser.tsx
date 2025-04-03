@@ -191,12 +191,11 @@ export const ChemDispenser = (props) => {
                 width="129.5px"
                 lineHeight={1.75}
                 tooltip={'pH: ' + chemical.pH}
+                style={{
+                  textShadow: '1px 1px 0 black',
+                }}
                 backgroundColor={
-                  recipeReagents.includes(chemical.id)
-                    ? showPhCol
-                      ? 'black'
-                      : 'green'
-                    : 'default'
+                  recipeReagents.includes(chemical.id) ? 'green' : 'default'
                 }
                 onClick={() =>
                   act('dispense', {
@@ -204,7 +203,14 @@ export const ChemDispenser = (props) => {
                   })
                 }
               >
-                <span style={{ color: 'white' }}>{chemical.title}</span>
+                <span
+                  style={{
+                    color: 'white',
+                    textShadow: 'none',
+                  }}
+                >
+                  {chemical.title}
+                </span>
               </Button>
             ))}
           </Box>

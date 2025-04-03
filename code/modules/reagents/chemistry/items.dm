@@ -132,7 +132,7 @@
 			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.000001)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [reagent.description]\n"
-	to_chat(user, examine_block(span_notice("[out_message.Join()]")))
+	to_chat(user, boxed_message(span_notice("[out_message.Join()]")))
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
 	return ITEM_INTERACT_SUCCESS
 

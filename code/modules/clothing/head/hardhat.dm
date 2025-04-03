@@ -143,7 +143,7 @@
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -251,9 +251,9 @@
 	if(isnull(.))
 		return
 	if(new_value)
-		AddElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, forced = TRUE)
+		AddElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 	else
-		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, forced = TRUE)
+		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/update_overlays()

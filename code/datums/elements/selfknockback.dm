@@ -47,15 +47,15 @@ clamping the Knockback_Force value below. */
 	usertarget.throw_at(move_target, knockback_force, knockback_speed)
 	usertarget.visible_message(span_warning("[usertarget] gets thrown back by the force of \the [I] impacting \the [attacktarget]!"), span_warning("The force of \the [I] impacting \the [attacktarget] sends you flying!"))
 
-/datum/element/selfknockback/proc/Projectile_SelfKnockback(obj/projectile/P)
+/datum/element/selfknockback/proc/Projectile_SelfKnockback(obj/projectile/proj)
 	SIGNAL_HANDLER
 
-	if(!P.firer)
+	if(!proj.firer)
 		return
 
-	var/knockback_force = Get_Knockback_Force(clamp(CEILING((P.damage / 10), 1), 1, 5))
+	var/knockback_force = Get_Knockback_Force(clamp(CEILING((proj.damage / 10), 1), 1, 5))
 	var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
 
-	var/atom/movable/knockback_target = P.firer
-	var/move_target = get_edge_target_turf(knockback_target, angle2dir(P.original_angle+180))
+	var/atom/movable/knockback_target = proj.firer
+	var/move_target = get_edge_target_turf(knockback_target, angle2dir(proj.original_angle+180))
 	knockback_target.throw_at(move_target, knockback_force, knockback_speed)

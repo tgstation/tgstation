@@ -133,13 +133,13 @@
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
 /obj/item/mod/module/timestopper/proc/on_module_triggered(datum/source)
 	SIGNAL_HANDLER
-	balloon_alert(mod.wearer, "not while channelling timestop!")
+	balloon_alert(mod.wearer, "not while stopping time!")
 	return MOD_ABORT_USE
 
 ///Signal fired when wearer attempts to activate/deactivate suits, if attempting while time is stopped
 /obj/item/mod/module/timestopper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
-	balloon_alert(user, "not while channelling timestop!")
+	balloon_alert(user, "not while stopping time!")
 	return MOD_CANCEL_ACTIVATE
 
 ///Timeline Jumper - Infinite phasing. needs some special effects
@@ -159,7 +159,7 @@
 
 /obj/item/mod/module/timeline_jumper/used()
 	var/area/noteleport_check = get_area(mod.wearer)
-	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+	if(noteleport_check && !check_teleport_valid(mod.wearer, get_turf(mod.wearer)))
 		to_chat(mod.wearer, span_danger("Some dull, universal force is between you and the [phased_mob ? "current timeline" : "stream between timelines"]."))
 		return FALSE
 	return ..()
@@ -222,7 +222,7 @@
 	//fire projectile
 	var/obj/projectile/energy/chrono_beam/chrono_beam = new /obj/projectile/energy/chrono_beam(get_turf(src))
 	chrono_beam.tem_weakref = WEAKREF(src)
-	chrono_beam.preparePixelProjectile(target, mod.wearer)
+	chrono_beam.aim_projectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))

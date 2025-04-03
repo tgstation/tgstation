@@ -233,10 +233,9 @@
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
-
 /obj/item/clothing/suit/wizrobe/durathread
 	name = "durathread robe"
-	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much more stylish."
 	icon_state = "durathread-fake"
 	inhand_icon_state = null
 	armor_type = /datum/armor/robe_durathread
@@ -254,12 +253,12 @@
 
 /obj/item/clothing/suit/wizrobe/durathread/fire
 	name = "pyromancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-fire"
 
 /obj/item/clothing/suit/wizrobe/durathread/ice
 	name = "pyromancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-ice"
 
 /obj/item/clothing/suit/wizrobe/durathread/electric
@@ -269,12 +268,12 @@
 
 /obj/item/clothing/suit/wizrobe/durathread/earth
 	name = "geomancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-earth"
 
 /obj/item/clothing/suit/wizrobe/durathread/necro
 	name = "necromancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-necro"
 
 

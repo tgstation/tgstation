@@ -50,7 +50,7 @@
 	var/list/genes = list()
 	/// A list of reagents to add to product.
 	var/list/reagents_add
-	// Format: "reagent_id" = potency multiplier
+	// Format: /datum/reagent/type = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: max(round(potency * multiplier), 1)
 	///If the chance below passes, then this many weeds sprout during growth
@@ -186,6 +186,10 @@
 /obj/item/seeds/proc/getYield()
 	var/return_yield = yield
 
+	for(var/datum/plant_gene/trait/trait in genes)
+		if(trait.trait_flags & TRAIT_NO_POLLINATION)
+			return return_yield
+
 	var/obj/machinery/hydroponics/parent = loc
 	if(istype(loc, /obj/machinery/hydroponics))
 		if(parent.yieldmod == 0)
@@ -204,7 +208,7 @@
 	///List of plants all harvested from the same batch.
 	var/list/result = list()
 	///Tile of the harvester to deposit the growables.
-	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = parent.Adjacent(user) ? user.drop_location() : parent.drop_location() //needed for TK
 	///Name of the grown products.
 	var/product_name
 	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
@@ -280,7 +284,7 @@
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
 		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath)
-			grown_edible.juice()
+			grown_edible.juice(juicer = FALSE) //we pass FALSE & not null because Byond default args will subtitute it with the default value
 		else if(get_gene(/datum/plant_gene/trait/brewing))
 			grown_edible.ferment()
 

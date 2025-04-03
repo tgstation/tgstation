@@ -40,13 +40,14 @@
 	///list of pet commands we can issue
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
 		/datum/pet_command/untargeted_ability/blood_rain,
 		/datum/pet_command/untargeted_ability/summon_toad,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/use_ability/flop,
-		/datum/pet_command/point_targeting/use_ability/bubble,
+		/datum/pet_command/attack,
+		/datum/pet_command/use_ability/flop,
+		/datum/pet_command/use_ability/bubble,
 	)
 
 /mob/living/basic/leaper/Initialize(mapload)
@@ -91,7 +92,7 @@
 	if(living_overlay)
 		. += living_overlay
 
-/mob/living/basic/leaper/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/mob/living/basic/leaper/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, LEAPING_TRAIT)
 	return ..()
 

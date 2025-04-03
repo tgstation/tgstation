@@ -17,6 +17,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/mobile_docking_ports = list()
 	/// A list of all the stationary docking ports.
 	var/list/stationary_docking_ports = list()
+	/// A list of all the custom shuttles.
+	var/list/custom_shuttles = list()
 	/// A list of all the beacons that can be docked to.
 	var/list/beacon_list = list()
 	/// A list of all the transit docking ports.
@@ -356,6 +358,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	return TRUE
 
+/**
+ * Calls the emergency shuttle.
+ *
+ * Arguments:
+ * * user - The mob that called the shuttle.
+ * * call_reason - The reason the shuttle was called, which should be non-html-encoded text.
+ */
 /datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if (!check_backup_emergency_shuttle())
 		return
@@ -378,7 +387,7 @@ SUBSYSTEM_DEF(shuttle)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
-	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A href='byond://?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /// Call the emergency shuttle.
 /// If you are doing this on behalf of a player, use requestEvac instead.
@@ -971,7 +980,7 @@ SUBSYSTEM_DEF(shuttle)
 		QDEL_NULL(preview_reservation)
 
 /datum/controller/subsystem/shuttle/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/controller/subsystem/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

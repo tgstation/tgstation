@@ -271,8 +271,8 @@
 		return
 	var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
 	for(var/i = ratio, i >= 1, i--)
-		charge_overlay.pixel_x = ammo_x_offset * (i - 1)
-		charge_overlay.pixel_y = ammo_y_offset * (i - 1)
+		charge_overlay.pixel_w = ammo_x_offset * (i - 1)
+		charge_overlay.pixel_z = ammo_y_offset * (i - 1)
 		. += new /mutable_appearance(charge_overlay)
 
 
@@ -336,7 +336,7 @@
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
-			. = span_danger("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
+			. = span_rose("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
 
 /obj/item/gun/energy/proc/instant_recharge()
 	SIGNAL_HANDLER

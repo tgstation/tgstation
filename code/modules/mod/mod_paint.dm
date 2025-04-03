@@ -30,6 +30,7 @@
 	if(!ui)
 		ui = new(user, src, "MODpaint", name)
 		ui.open()
+		proxy_view.display_to(user, ui.window)
 
 /obj/item/mod/paint/ui_host()
 	return editing_mod
@@ -153,10 +154,10 @@
 		return NONE
 	var/obj/item/mod/control/mod = attacked_atom
 	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
+		balloon_alert(user, "unit active!")
 		return ITEM_INTERACT_BLOCKING
 	if(!(skin in mod.theme.variants))
-		balloon_alert(user, "incompatible theme!")
+		balloon_alert(user, "wrong theme for skin!")
 		return ITEM_INTERACT_BLOCKING
 	mod.theme.set_skin(mod, skin)
 	balloon_alert(user, "skin applied")

@@ -10,6 +10,7 @@
 		return
 	if(!linked_bug)
 		user.audible_message(span_warning("[src] lets off a shrill beep!"))
+		return
 	if(cool_guy.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
 	cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
@@ -21,6 +22,7 @@
 /obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
 	linked_bug.cam_screen.hide_from_client(source)
+	UnregisterSignal(source, COMSIG_POPUP_CLEARED)
 
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
@@ -33,10 +35,6 @@
 
 /obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
 	show_to_user(user)
-
-/obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
 
 /obj/item/clothing/glasses/sunglasses/spy/Destroy()
 	if(linked_bug)
@@ -88,7 +86,7 @@
 /obj/item/paper/fluff/nerddocs
 	name = "Espionage For Dummies"
 	color = COLOR_YELLOW
-	desc = "An eye gougingly yellow pamphlet with a badly designed image of a detective on it. the subtext says \" The Latest way to violate privacy guidelines!\" "
+	desc = "An eye-gougingly yellow pamphlet with a badly designed image of a detective on it. The subtext says \"The latest way to violate privacy guidelines!\" "
 	default_raw_text = @{"
 
 Thank you for your purchase of the Nerd Co SpySpeks <small>tm</small>, this paper will be your quick-start guide to violating the privacy of your crewmates in three easy steps!<br><br>Step One: Nerd Co SpySpeks <small>tm</small> upon your face. <br>

@@ -12,7 +12,7 @@
  * Plant Bag
  * Sheet Snatcher
  * Book Bag
- *      Biowaste Bag
+ * Biowaste Bag
  *
  * -Sayu
  */
@@ -320,6 +320,66 @@
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
 
+
+// -----------------------------
+//    Sheet Snatcher (Debug)
+// -----------------------------
+
+/obj/item/storage/bag/sheetsnatcher/debug
+	name = "sheet snatcher EXTREME EDITION"
+	desc = "A Nanotrasen storage system designed which has been given post-market alterations to hold any type of sheet. Comes pre-populated with "
+	color = "#ff3737" // I'm too lazy to make a unique sprite
+	capacity = 5000 // Hopefully enough to fit anything you need
+	w_class = WEIGHT_CLASS_TINY
+
+// Copy-pasted from the former /obj/item/storage/box/material, w/ small additions like rods, cardboard, plastic.
+// "Only 20 uranium 'cause of radiation"
+/obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
+	// amount should be null if it should spawn with the type's default amount
+	var/static/items_inside = list(
+		/obj/item/stack/sheet/iron/fifty = null,
+		/obj/item/stack/sheet/glass/fifty = null,
+		/obj/item/stack/sheet/rglass/fifty = null,
+		/obj/item/stack/sheet/plasmaglass/fifty = null,
+		/obj/item/stack/sheet/titaniumglass/fifty = null,
+		/obj/item/stack/sheet/plastitaniumglass/fifty = null,
+		/obj/item/stack/sheet/plasteel/fifty = null,
+		/obj/item/stack/sheet/mineral/titanium/fifty = null,
+		/obj/item/stack/sheet/mineral/gold = 50,
+		/obj/item/stack/sheet/mineral/silver = 50,
+		/obj/item/stack/sheet/mineral/plasma = 50,
+		/obj/item/stack/sheet/mineral/uranium = 20,
+		/obj/item/stack/sheet/mineral/diamond = 50,
+		/obj/item/stack/sheet/bluespace_crystal = 50,
+		/obj/item/stack/sheet/mineral/bananium = 50,
+		/obj/item/stack/sheet/mineral/wood/fifty = null,
+		/obj/item/stack/sheet/plastic/fifty = null,
+		/obj/item/stack/sheet/runed_metal/fifty = null,
+		/obj/item/stack/rods/fifty = null,
+		/obj/item/stack/sheet/mineral/plastitanium = 50,
+		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/cardboard/fifty = null,
+	)
+	//This needs to be done here and not in Initialize() because the stacks get merged and fall out when their weight updates if this is set after PopulateContents()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = capacity
+	for(var/obj/item/stack/stack_type as anything in items_inside)
+		var/amt = items_inside[stack_type]
+		new stack_type(src, amt, FALSE)
+
+/obj/item/storage/bag/sheetsnatcher/debug/Initialize(mapload)
+	. = ..()
+	// Overrides so it can hold all possible sheets
+	atom_storage.set_holdable(
+		can_hold_list = list(
+			/obj/item/stack/sheet,
+			/obj/item/stack/sheet/mineral/sandstone,
+			/obj/item/stack/sheet/mineral/wood,
+		)
+	)
+
 // -----------------------------
 //           Book bag
 // -----------------------------
@@ -467,7 +527,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 	))
 
@@ -611,6 +671,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
+	action_slots = ALL
 
 /obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)
 	. = ..()

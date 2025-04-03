@@ -70,11 +70,11 @@
 	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
-	inspired_human.AdjustStun(-40)
-	inspired_human.AdjustKnockdown(-40)
-	inspired_human.AdjustImmobilized(-40)
-	inspired_human.AdjustParalyzed(-40)
-	inspired_human.AdjustUnconscious(-40)
+	inspired_human.AdjustStun(-4 SECONDS)
+	inspired_human.AdjustKnockdown(-4 SECONDS)
+	inspired_human.AdjustImmobilized(-4 SECONDS)
+	inspired_human.AdjustParalyzed(-4 SECONDS)
+	inspired_human.AdjustUnconscious(-4 SECONDS)
 	playsound(inspired_human, 'sound/effects/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
@@ -219,7 +219,7 @@
 
 /obj/item/banner/command
 	name = "command banner"
-	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
+	desc = "The banner of Command, a staunch and ancient line of bureaucratic kings and queens."
 	//No icon state here since the default one is the NT banner
 	warcry = "Hail Nanotrasen!"
 
@@ -337,6 +337,7 @@
 	desc = "It's a stick..?"
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "godstaff-red"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	var/conversion_color = "#ffffff"
@@ -427,8 +428,14 @@
 	force = 24
 	armour_penetration = 10
 
+/obj/item/claymore/weak/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -9)
+
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	force = 15
 	block_chance = 30
 	armour_penetration = 5
+
+/obj/item/claymore/weak/ceremonial/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)

@@ -46,7 +46,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 		ui.open()
 
 /datum/log_holder/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN | R_DEBUG)
 
 /datum/log_holder/ui_static_data(mob/user)
 	var/list/data = list(
@@ -276,7 +276,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 	init_category_file(category_instance, category_header)
 
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
-	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
+	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", TIMEZONE_UTC)
 	// now we grab the millis from the rustg timestamp
 	var/rustg_stamp = rustg_unix_timestamp()
 	var/list/timestamp = splittext(rustg_stamp, ".")

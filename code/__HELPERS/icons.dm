@@ -457,9 +457,8 @@ world
 	var/render_icon = curicon
 
 	if (render_icon)
-		var/curstates = icon_states(curicon)
-		if(!(curstate in curstates))
-			if ("" in curstates)
+		if(!icon_exists(curicon, curstate))
+			if(icon_exists(curicon, ""))
 				curstate = ""
 			else
 				render_icon = FALSE
@@ -546,10 +545,10 @@ world
 				continue
 
 			// Find the new dimensions of the flat icon to fit the added overlay
-			addX1 = min(flatX1, layer_image.pixel_x + 1)
-			addX2 = max(flatX2, layer_image.pixel_x + add.Width())
-			addY1 = min(flatY1, layer_image.pixel_y + 1)
-			addY2 = max(flatY2, layer_image.pixel_y + add.Height())
+			addX1 = min(flatX1, layer_image.pixel_x + layer_image.pixel_w + 1)
+			addX2 = max(flatX2, layer_image.pixel_x + layer_image.pixel_w + add.Width())
+			addY1 = min(flatY1, layer_image.pixel_y + layer_image.pixel_z + 1)
+			addY2 = max(flatY2, layer_image.pixel_y + layer_image.pixel_z + add.Height())
 
 			if (
 				addX1 != flatX1 \
@@ -571,7 +570,7 @@ world
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
+			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
 
 
 		if(appearance.alpha < 255)
@@ -1131,7 +1130,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		filters -= filters[filter_index]
 
 /**
- * Center's an image.
+ * Center's an image. Only run this on float overlays and not physical
  * Requires:
  * The Image
  * The x dimension of the icon file used in the image
@@ -1161,8 +1160,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(y_dimension < ICON_SIZE_Y)
 		y_offset *= -1
 
-	image_to_center.pixel_x = x_offset
-	image_to_center.pixel_y = y_offset
+	image_to_center.pixel_w = x_offset
+	image_to_center.pixel_z = y_offset
 
 	return image_to_center
 
@@ -1184,28 +1183,42 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
 	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
 
-///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
-/proc/icon_exists(file, state, scream)
+/// Checks whether a given icon state exists in a given icon file. If `file` and `state` both exist,
+/// this will return `TRUE` - otherwise, it will return `FALSE`.
+///
+/// If you want a stack trace to be output when the given state/file doesn't exist, use
+/// `/proc/icon_exists_or_scream()`.
+/proc/icon_exists(file, state)
 	var/static/list/icon_states_cache = list()
-	if(icon_states_cache[file]?[state])
-		return TRUE
+	if(isnull(file) || isnull(state))
+		return FALSE //This is common enough that it shouldn't panic, imo.
 
-	if(icon_states_cache[file]?[state] == FALSE)
-		return FALSE
-
-	var/list/states = icon_states(file)
-
-	if(!icon_states_cache[file])
+	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
+		var/file_string = "[file]"
+		if(isfile(file) && length(file_string)) // ensure that it's actually a file, and not a runtime icon
+			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
+				icon_states_cache[file][istate] = TRUE
+		else // Otherwise, we have to use the slower BYOND proc
+			for(var/istate in icon_states(file))
+				icon_states_cache[file][istate] = TRUE
 
-	if(state in states)
-		icon_states_cache[file][state] = TRUE
+	return !isnull(icon_states_cache[file][state])
+
+/// Functions the same as `/proc/icon_exists()`, but with the addition of a stack trace if the
+/// specified file or state doesn't exist.
+///
+/// Stack traces will only be output once for each file.
+/proc/icon_exists_or_scream(file, state)
+	if(icon_exists(file, state))
 		return TRUE
-	else
-		icon_states_cache[file][state] = FALSE
-		if(scream)
-			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
-		return FALSE
+
+	var/static/list/screams = list()
+	if(!isnull(screams[file]))
+		screams[file] = TRUE
+		stack_trace("State [state] in file [file] does not exist.")
+
+	return FALSE
 
 /**
  * Returns the size of the sprite in tiles.
@@ -1262,9 +1275,9 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/height = icon_dimensions["height"]
 
 	if(width > ICON_SIZE_X)
-		alert_overlay.pixel_x = -(ICON_SIZE_X / 2) * ((width - ICON_SIZE_X) / ICON_SIZE_X)
+		alert_overlay.pixel_w = -(ICON_SIZE_X / 2) * ((width - ICON_SIZE_X) / ICON_SIZE_X)
 	if(height > ICON_SIZE_Y)
-		alert_overlay.pixel_y = -(ICON_SIZE_Y / 2) * ((height - ICON_SIZE_Y) / ICON_SIZE_Y)
+		alert_overlay.pixel_z = -(ICON_SIZE_Y / 2) * ((height - ICON_SIZE_Y) / ICON_SIZE_Y)
 	if(width > ICON_SIZE_X || height > ICON_SIZE_Y)
 		if(width >= height)
 			scale = ICON_SIZE_X / width
@@ -1282,3 +1295,32 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance
+
+/**
+ * Copies the passed /appearance, returns a /mutable_appearance
+ *
+ * Filters out certain overlays from the copy, depending on their planes
+ * Prevents stuff like lighting from being copied to the new appearance
+ */
+/proc/copy_appearance_filter_overlays(appearance_to_copy)
+	var/mutable_appearance/copy = new(appearance_to_copy)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
+
+	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
+	var/list/overlays_to_keep = list()
+	for(var/mutable_appearance/special_overlay as anything in copy.overlays)
+		var/mutable_appearance/real = new()
+		real.appearance = special_overlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			overlays_to_keep += real
+	copy.overlays = overlays_to_keep
+
+	var/list/underlays_to_keep = list()
+	for(var/mutable_appearance/special_underlay as anything in copy.underlays)
+		var/mutable_appearance/real = new()
+		real.appearance = special_underlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			underlays_to_keep += real
+	copy.underlays = underlays_to_keep
+
+	return copy

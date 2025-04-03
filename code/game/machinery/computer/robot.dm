@@ -176,7 +176,7 @@
 	if(!isnull(console_location))
 		to_chat(R, span_alert("The approximate location of the console that is keeping you locked down is [console_location]"))
 	if(R.connected_ai)
-		to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
+		to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='byond://?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
 
 /obj/machinery/computer/robotics/proc/borg_destroyed()
 	SIGNAL_HANDLER

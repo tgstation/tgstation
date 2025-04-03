@@ -1,9 +1,5 @@
 import { sortBy } from 'common/collections';
-import { classes } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -14,7 +10,11 @@ import {
   Section,
   Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type TraitData = {
@@ -26,7 +26,7 @@ type TraitData = {
 
 type ReagentData = {
   name: string;
-  rate: string;
+  rate: number;
 };
 
 type SeedData = {
@@ -42,6 +42,7 @@ type SeedData = {
   instability: number;
   icon: string;
   volume_mod: number;
+  volume_units: number;
   traits: string[];
   reagents: ReagentData[];
   mutatelist: string[];
@@ -239,6 +240,7 @@ export const SeedExtractor = (props) => {
                             grind_results={item.grind_results}
                             potency={item.potency}
                             volume_mod={item.volume_mod}
+                            volume_units={item.volume_units}
                           />
                         }
                       >
@@ -323,7 +325,7 @@ export const SeedExtractor = (props) => {
   );
 };
 
-const Level = (props) => {
+export const Level = (props) => {
   return (
     <ProgressBar
       value={props.value}
@@ -352,34 +354,76 @@ const Level = (props) => {
   );
 };
 
-const ReagentTooltip = (props) => {
+export const ReagentTooltip = (props) => {
+  let rate_total = 0;
+  props.reagents.forEach((reagent) => {
+    rate_total += reagent.rate;
+  });
+  let reagent_volumes: number[] = [];
+  let reagent_percentages: number[] = [];
+  props.reagents.forEach((reagent) => {
+    reagent_percentages.push(reagent.rate / Math.max(1, rate_total));
+    reagent_volumes.push(
+      Math.max(
+        Math.round(
+          props.volume_units *
+            (props.potency / 100) *
+            (reagent.rate / Math.max(1, rate_total)) *
+            props.volume_mod,
+        ),
+        1,
+      ),
+    );
+  });
   return (
     <Table>
       <Table.Row header>
-        <Table.Cell colSpan={2}>Reagents on grind:</Table.Cell>
+        <Table.Cell colSpan={3}>Reagents on grind:</Table.Cell>
       </Table.Row>
       {props.reagents?.map((reagent, i) => (
         <Table.Row key={i}>
           <Table.Cell>{reagent.name}</Table.Cell>
           <Table.Cell py={0.5} pl={2} textAlign={'right'}>
-            {Math.max(
-              Math.round(reagent.rate * props.potency * props.volume_mod),
-              1,
-            )}
-            u
+            {reagent_volumes[i]}u
+          </Table.Cell>
+          <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+            {rate_total > 1 && '~'}
+            {Math.round(reagent_percentages[i] * 100)}%
           </Table.Cell>
         </Table.Row>
       ))}
+      <Table.Row>
+        <Table.Cell colSpan={3} style={{ borderTop: '1px dotted gray' }} />
+      </Table.Row>
+      <Table.Row header>
+        <Table.Cell pt={1.5}>Total</Table.Cell>
+        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          {Math.round(reagent_volumes.reduce((a, b) => a + b))}u
+        </Table.Cell>
+        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          {Math.round(rate_total * 100)}%
+        </Table.Cell>
+      </Table.Row>
+      <Table.Row header>
+        <Table.Cell>Capacity</Table.Cell>
+        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          {props.volume_units}u
+        </Table.Cell>
+        <Table.Cell />
+      </Table.Row>
       {!!props.grind_results.length && (
         <>
+          <Table.Row>
+            <Table.Cell colSpan={3} style={{ borderTop: '1px dotted gray' }} />
+          </Table.Row>
           <Table.Row header>
-            <Table.Cell colSpan={2} pt={1}>
+            <Table.Cell colSpan={3} pt={1}>
               Nutriments turn into:
             </Table.Cell>
           </Table.Row>
           {props.grind_results?.map((reagent, i) => (
             <Table.Row key={i}>
-              <Table.Cell colSpan={2}>{reagent}</Table.Cell>
+              <Table.Cell colSpan={3}>{reagent}</Table.Cell>
             </Table.Row>
           ))}
         </>
@@ -388,21 +432,33 @@ const ReagentTooltip = (props) => {
   );
 };
 
-const TraitTooltip = (props) => {
+export const TraitTooltip = (props) => {
   const trait = props.trait_db.find((t) => {
     return t.path === props.path;
   });
+  if (!trait) {
+    return;
+  }
   return (
     <Tooltip
-      key=""
       content={
         <Table>
+          {!!props.grafting && (
+            <Table.Row>
+              <Table.Cell pb={1}>Graft gains the following trait:</Table.Cell>
+            </Table.Row>
+          )}
           <Table.Row header>
             <Table.Cell>
               <Icon name={trait.icon} mr={1} />
               {trait.name}
             </Table.Cell>
           </Table.Row>
+          {!!props.removable && (
+            <Table.Row>
+              <Table.Cell pb={1}>Removable trait.</Table.Cell>
+            </Table.Row>
+          )}
           {!!trait.description && (
             <Table.Row>
               <Table.Cell>{trait.description}</Table.Cell>
@@ -411,7 +467,7 @@ const TraitTooltip = (props) => {
         </Table>
       }
     >
-      <Icon name={trait.icon} m={0.5} />
+      <Icon name={props.grafting ? 'scissors' : trait.icon} m={0.5} />
     </Tooltip>
   );
 };

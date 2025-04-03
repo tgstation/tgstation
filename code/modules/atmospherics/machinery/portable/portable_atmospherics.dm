@@ -220,7 +220,7 @@
 		return FALSE
 	if(!user)
 		return FALSE
-	if(!user.transferItemToLoc(new_tank, src))
+	if(new_tank && !user.transferItemToLoc(new_tank, src))
 		return FALSE
 
 	if(holding && new_tank)//for when we are actually switching tanks

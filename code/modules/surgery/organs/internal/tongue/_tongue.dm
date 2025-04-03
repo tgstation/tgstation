@@ -77,6 +77,7 @@
 	return list(
 		/datum/language/common,
 		/datum/language/uncommon,
+		/datum/language/spinwarder,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
@@ -124,7 +125,7 @@
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
-/obj/item/organ/tongue/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/tongue/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 
 	if(modifies_speech)
@@ -138,7 +139,7 @@
 	REMOVE_TRAIT(receiver, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	apply_tongue_effects()
 
-/obj/item/organ/tongue/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/tongue/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	temp_say_mod = ""
@@ -177,6 +178,10 @@
 /obj/item/organ/tongue/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutanttongue
 
+/obj/item/organ/tongue/feel_for_damage(self_aware)
+	// No effect
+	return ""
+
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"
 	desc = "A thin and long muscle typically found in reptilian races, apparently moonlights as a nose."
@@ -197,7 +202,7 @@
 		new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1",
 	)
 
-/obj/item/organ/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
+/obj/item/organ/tongue/lizard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
@@ -395,11 +400,11 @@
 		if(!istype(tongue))
 			continue
 		if(mothership == tongue.mothership)
-			to_chat(living_mob, rendered)
+			to_chat(living_mob, rendered, type = MESSAGE_TYPE_RADIO, avoid_highlighting = user == living_mob)
 
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, user)
-		to_chat(dead_mob, "[link] [rendered]")
+		to_chat(dead_mob, "[link] [rendered]", type = MESSAGE_TYPE_RADIO)
 
 	speech_args[SPEECH_MESSAGE] = ""
 
@@ -557,7 +562,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/tongue/snail
 	name = "radula"
-	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
+	desc = "A minutely toothed, chitinous ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
 	modifies_speech = TRUE
 	voice_filter = "atempo=0.5" // makes them talk really slow
@@ -644,6 +649,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "whistles"
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
 	disliked_foodtypes = GORE | MEAT | DAIRY | SEAFOOD | BUGS
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME
 
 /obj/item/organ/tongue/golem
 	name = "golem tongue"

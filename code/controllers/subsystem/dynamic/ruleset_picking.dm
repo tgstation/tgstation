@@ -69,8 +69,8 @@
 
 	log_dynamic("[rule] ruleset executing...")
 	message_admins("DYNAMIC: Executing midround ruleset [rule] in [DisplayTimeText(ADMIN_CANCEL_MIDROUND_TIME)]. \
-		<a href='?src=[REF(src)];cancelmidround=[midround_injection_timer_id]'>CANCEL</a> | \
-		<a href='?src=[REF(src)];differentmidround=[midround_injection_timer_id]'>SOMETHING ELSE</a>")
+		<a href='byond://?src=[REF(src)];cancelmidround=[midround_injection_timer_id]'>CANCEL</a> | \
+		<a href='byond://?src=[REF(src)];differentmidround=[midround_injection_timer_id]'>SOMETHING ELSE</a>")
 
 	return rule
 
@@ -85,7 +85,7 @@
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/controller/subsystem/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
-	spend_midround_budget(rule.cost, threat_log, "[worldtime2text()]: [rule.ruletype] [rule.name]")
+	spend_midround_budget(rule.cost, threat_log, "[gameTimestamp()]: [rule.ruletype] [rule.name]")
 	rule.pre_execute(GLOB.alive_player_list.len)
 	if (rule.execute())
 		log_dynamic("Injected a [rule.ruletype] ruleset [rule.name].")

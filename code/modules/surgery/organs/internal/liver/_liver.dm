@@ -60,14 +60,15 @@
 	qdel(GetComponent(/datum/component/squeak))
 
 /// Registers COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/liver/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL, PROC_REF(handle_chemical))
+	RegisterSignal(organ_owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_owner_examine))
 
 /// Unregisters COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/liver/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL)
+	UnregisterSignal(organ_owner, list(COMSIG_SPECIES_HANDLE_CHEMICAL, COMSIG_ATOM_EXAMINE))
 
 /**
  * This proc can be overriden by liver subtypes so they can handle certain chemicals in special ways.
@@ -188,7 +189,7 @@
 			if(SPT_PROB(3, seconds_per_tick))
 				owner.emote("drool")
 
-/obj/item/organ/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
+/obj/item/organ/liver/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
 	if(!ishuman(owner) || !(organ_flags & ORGAN_FAILING))
 		return
 
@@ -205,6 +206,13 @@
 
 /obj/item/organ/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantliver
+
+/obj/item/organ/liver/feel_for_damage(self_aware)
+	if(damage < low_threshold)
+		return
+	if(damage < high_threshold)
+		return span_warning("Your [self_aware ? "liver" : "lower abdomen"] feels sore.")
+	return span_boldwarning("Your [self_aware ? "liver" : "lower abdomen"] feels like it's on fire!")
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/liver/alien
@@ -271,6 +279,21 @@
 /obj/item/organ/liver/cybernetic/surplus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
+/obj/item/organ/liver/pod
+	name = "pod peroxisome"
+	desc = "A small plant-like organ found in podpeople responsible for filtering toxins while aiding in photosynthesis."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME
+
+/obj/item/organ/liver/pod/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
+	if(!(organ_owner.mob_biotypes & MOB_PLANT))
+		return
+	if(chem.type == /datum/reagent/toxin/plantbgone)
+		organ_owner.adjustToxLoss(3 * REM * seconds_per_tick)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

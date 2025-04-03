@@ -136,15 +136,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
 		fcopy(icon, data_filename)
 		log_test("\t[path_prefix]_[name] was found, putting in data/screenshots")
-	else if (fexists("code"))
-		// We are probably running in a local build
-		fcopy(icon, filename)
-		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
 	else
-		// We are probably running in real CI, so just pretend it worked and move on
+#ifdef CIBUILDING
+		// We are runing in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
 		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
+#else
+		// We are probably running in a local build
+		fcopy(icon, filename)
+		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
+#endif
+
 
 /// Helper for screenshot tests to take an image of an atom from all directions and insert it into one icon
 /datum/unit_test/proc/get_flat_icon_for_all_directions(atom/thing, no_anim = TRUE)
@@ -165,6 +168,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	annotation_text = replacetext(annotation_text, "\n", "%0A")
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
+
+/**
+ * Helper to perform a click
+ *
+ * * clicker: The mob that will be clicking
+ * * clicked_on: The atom that will be clicked
+ * * passed_params: A list of parameters to pass to the click
+ */
+/datum/unit_test/proc/click_wrapper(mob/living/clicker, atom/clicked_on, list/passed_params = list(LEFT_CLICK = 1, BUTTON = LEFT_CLICK))
+	clicker.next_click = -1
+	clicker.next_move = -1
+	clicker.ClickOn(clicked_on, list2params(passed_params))
 
 /proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
 	if(ispath(test_path, /datum/unit_test/focus_only))
@@ -242,6 +257,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Yet more templates
 		/obj/machinery/restaurant_portal,
 		//Template type
+		/obj/machinery/power/turbine,
+		//Template type
 		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
@@ -257,6 +274,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/organ/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
+		//The abstract grown item expects a seed, but doesn't have one
+
+		/obj/item/food/grown,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -272,8 +292,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	returnable_list += typesof(/obj/item/poster/wanted)
-	//This expects a seed, we can't pass it
-	returnable_list += typesof(/obj/item/food/grown)
 	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
 	returnable_list += typesof(/obj/effect/client_image_holder)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.
@@ -289,9 +307,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//No heart to give
 	returnable_list += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	returnable_list += typesof(/mob/eye/ai_eye/remote/base_construction)
+	returnable_list += typesof(/mob/eye/camera/remote/base_construction)
 	//See above
-	returnable_list += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
+	returnable_list += typesof(/mob/eye/camera/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	returnable_list += typesof(/obj/effect/anomaly/grav/high)
 	//See above

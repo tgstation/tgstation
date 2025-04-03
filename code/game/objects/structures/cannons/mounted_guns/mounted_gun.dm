@@ -22,7 +22,7 @@
 	///Accepted "ammo" type
 	var/obj/item/ammo_type = /obj/item/ammo_casing/strilka310
 	///Projectile from said gun. Doesnt automatically inherit said ammo's projectile in case you wanted to make a gun that shoots floor tiles or something.
-	var/obj/item/projectile_type = /obj/projectile/bullet/strilka310
+	var/obj/projectile/projectile_type = /obj/projectile/bullet/strilka310
 	///If the gun has anything in it.
 	var/loaded_gun = TRUE
 	///If the gun is currently loaded with its maximum capacity.
@@ -117,11 +117,11 @@
 
 /obj/structure/mounted_gun/pipe/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<b><i>Looking down at the [name], you recall a tale told to you in some distant memory...</i></b>")
+	. += span_notice("<b><i>Looking down at \the [src], you recall a tale told to you in some distant memory...</i></b>")
 
 	. += span_info("To commit an act of vengeance is not unlike to enter a blood pact with a devil, ending the life of another, at the cost of your own.")
 	. += span_info("When humanity first spilled the blood of its own kind, with likely nothing more than a rock, the seal was broken. Vengeance was borne unto the world.")
-	. += span_info("However, vengeance alone is not enough to carry through the grim deed of murder. One must an gain advantage over their adversary.")
+	. += span_info("However, vengeance alone is not enough to carry through the grim deed of murder. One must gain an advantage over their adversary.")
 	. += span_info("As such, the man who ended another's life with a stone, was in turn smote himself by another wielding a spear. After spears, bows. Swords. Guns. Tanks. Missiles. And on and on Vengeance fed. Growing stronger. Growing Worse.")
 	. += span_info("Vengeance persists to this day. It sometimes may slumber, seemingly content with having gorged itself, but in the end, its ceaseless hunger can be neither numbed nor sated.")
 

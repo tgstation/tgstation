@@ -1,9 +1,5 @@
-#define MANUFACTURING_FAIL_FULL -1
 #define MANUFACTURING_FAIL 0
 #define MANUFACTURING_SUCCESS 1
-
-#define POCKET_INPUT "Input"
-#define POCKET_OUTPUT "Output"
 
 #define MANUFACTURING_TURF_LAG_LIMIT 10 // max items on a turf before we consider it full
 
@@ -80,12 +76,12 @@
 		dir_offset[1] *= 32
 		dir_offset[2] *= 32
 	var/image/nonemissive = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[direction]")
-	nonemissive.pixel_x = dir_offset[1]
-	nonemissive.pixel_y = dir_offset[2]
+	nonemissive.pixel_w = dir_offset[1]
+	nonemissive.pixel_z = dir_offset[2]
 	nonemissive.color = color
 	var/mutable_appearance/emissive = emissive_appearance(nonemissive.icon, nonemissive.icon_state, offset_spokesman = src, alpha = nonemissive.alpha)
-	emissive.pixel_y = nonemissive.pixel_y
-	emissive.pixel_x = nonemissive.pixel_x
+	emissive.pixel_w = nonemissive.pixel_w
+	emissive.pixel_z = nonemissive.pixel_z
 	return list(nonemissive, emissive)
 
 /// Returns whatever object it may output, or null if it cant do that
@@ -108,8 +104,8 @@
 		return manufactury.receive_resource(sending, src, isturf(what_or_dir) ? get_dir(src, what_or_dir) : what_or_dir)
 	if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = sending) && !ischasm(next_turf))
 		return MANUFACTURING_FAIL
-	if(length(next_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
-		return MANUFACTURING_FAIL_FULL
+	if(length(get_overfloor_objects(next_turf)) >= MANUFACTURING_TURF_LAG_LIMIT)
+		return MANUFACTURING_FAIL
 	if(isnull(sending))
 		return MANUFACTURING_SUCCESS // for the sake of being used as a check
 	if(isnull(sending.loc) || !sending.Move(next_turf, get_dir(src, next_turf)))
@@ -132,3 +128,11 @@
 		return
 	return stack.merge(merging_into)
 
+/obj/machinery/power/manufacturing/proc/get_overfloor_objects(turf/target)
+	. = list()
+	if(isnull(target))
+		target = get_turf(src)
+	for(var/atom/movable/thing as anything in target.contents)
+		if(thing == src || isliving(thing) || iseffect(thing) || thing.invisibility >= INVISIBILITY_ABSTRACT || HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
+			continue
+		. += thing

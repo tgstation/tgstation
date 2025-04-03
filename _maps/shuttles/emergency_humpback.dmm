@@ -418,7 +418,7 @@
 /area/shuttle/escape)
 "zn" = (
 /obj/structure/table,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "zr" = (
@@ -484,9 +484,9 @@
 "CA" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /obj/effect/spawner/random/maintenance/seven,
-/obj/item/reagent_containers/pill/maintenance,
-/obj/item/reagent_containers/pill/maintenance,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "CH" = (

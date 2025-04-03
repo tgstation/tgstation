@@ -1,9 +1,11 @@
 /datum/status_effect/fire_handler
 	duration = STATUS_EFFECT_PERMANENT
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
 	tick_interval = 2 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 	/// Current amount of stacks we have
 	var/stacks
 	/// Maximum of stacks that we could possibly get
@@ -135,6 +137,8 @@
 	var/obj/effect/dummy/lighting_obj/moblight
 	/// Type of mob light emitter we use when on fire
 	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
+	/// Cached particle type
+	var/cached_state
 
 /datum/status_effect/fire_handler/fire_stacks/get_examine_text()
 	if(owner.on_fire)
@@ -153,6 +157,8 @@
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	UnregisterSignal(owner, COMSIG_ATOM_TOUCHED_SPARKS)
+	if (cached_state)
+		owner.remove_shared_particles(cached_state)
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks)
 	if(stacks <= 0)
@@ -177,15 +183,23 @@
 	deal_damage(seconds_between_ticks)
 
 /datum/status_effect/fire_handler/fire_stacks/update_particles()
-	if(on_fire)
-		if(!particle_effect)
-			particle_effect = new(owner, /particles/embers)
-		if(stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
-			particle_effect.particles.spawning = 5
-		else
-			particle_effect.particles.spawning = 1
-	else if(particle_effect)
-		QDEL_NULL(particle_effect)
+	if (!on_fire)
+		if (cached_state)
+			owner.remove_shared_particles(cached_state)
+		cached_state = null
+		return
+
+	var/particle_type = /particles/embers/minor
+	if(stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
+		particle_type = /particles/embers
+
+	if (cached_state == particle_type)
+		return
+
+	if (cached_state)
+		owner.remove_shared_particles(cached_state)
+	owner.add_shared_particles(particle_type)
+	cached_state = particle_type
 
 /**
  * Proc that handles damage dealing and all special effects
@@ -300,7 +314,7 @@
 
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_modifier = -1
-	///If the mob has the TRAIT_SLIPPERY_WHEN_WET trait, the mob gets this component while it's wet
+	/// If the mob has the TRAIT_SLIPPERY_WHEN_WET trait, the mob gets this component while it's wet
 	var/datum/component/slippery/slipperiness
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
@@ -312,12 +326,14 @@
 	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
 		become_slippery()
 	ADD_TRAIT(owner, TRAIT_IS_WET,  TRAIT_STATUS_EFFECT(id))
+	owner.add_shared_particles(/particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IS_WET, TRAIT_STATUS_EFFECT(id))
 	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
 		no_longer_slippery()
+	owner.remove_shared_particles(/particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/proc/update_wet_stack_modifier()
 	SIGNAL_HANDLER
@@ -325,7 +341,7 @@
 
 /datum/status_effect/fire_handler/wet_stacks/proc/become_slippery()
 	SIGNAL_HANDLER
-	slipperiness = owner.AddComponent(/datum/component/slippery, 5 SECONDS, lube_flags = SLIPPERY_WHEN_LYING_DOWN)
+	slipperiness = owner.AddComponent(/datum/component/slippery, 5 SECONDS, lube_flags = SLIPPERY_WHEN_LYING_DOWN|NO_SLIP_WHEN_WALKING|WEAK_SLIDE)
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/proc/no_longer_slippery()
@@ -341,11 +357,6 @@
 	adjust_stacks(decay * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
-
-/datum/status_effect/fire_handler/wet_stacks/update_particles()
-	if(particle_effect)
-		return
-	particle_effect = new(owner, /particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/check_basic_mob_immunity(mob/living/basic/basic_owner)
 	return !(basic_owner.basic_mob_flags & IMMUNE_TO_GETTING_WET)

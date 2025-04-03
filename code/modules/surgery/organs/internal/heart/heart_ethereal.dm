@@ -21,14 +21,14 @@
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/organ/heart/ethereal/mob_insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
+/obj/item/organ/heart/ethereal/on_mob_insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 
 	RegisterSignal(heart_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
 	RegisterSignal(heart_owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
-/obj/item/organ/heart/ethereal/mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
+/obj/item/organ/heart/ethereal/on_mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
 	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_QDELETING))
 	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(heart_owner)
@@ -37,9 +37,7 @@
 
 /obj/item/organ/heart/ethereal/update_overlays()
 	. = ..()
-	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]")
-	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
-	. += shine
+	. += mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
 	SIGNAL_HANDLER
@@ -118,14 +116,14 @@
 	stop_crystalization_process(ethereal, TRUE)
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
-/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
+/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, successful = FALSE)
 	UnregisterSignal(ethereal, COMSIG_LIVING_DISARM_HIT)
 	UnregisterSignal(ethereal, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
 
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
 
-	if(!succesful)
+	if(!successful)
 		REMOVE_TRAIT(ethereal, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 		QDEL_NULL(current_crystal)
 
@@ -222,24 +220,21 @@
 /obj/structure/ethereal_crystal/update_overlays()
 	. = ..()
 	if(!being_built)
-		var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
-		shine.appearance_flags = RESET_COLOR //No color on this, just pure white
-		. += shine
+		. += mutable_appearance(icon, icon_state = "[icon_state]_shine", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
-	var/datum/brain_trauma/picked_trauma
-	if(prob(10)) //10% chance for a severe trauma
-		picked_trauma = pick(subtypesof(/datum/brain_trauma/severe))
-	else
-		picked_trauma = pick(subtypesof(/datum/brain_trauma/mild))
-
 	// revive will regenerate organs, so our heart refence is going to be null'd. Unreliable
 	var/mob/living/carbon/regenerating = ethereal_heart.owner
 
 	playsound(get_turf(regenerating), 'sound/mobs/humanoids/ethereal/ethereal_revive.ogg', 100)
 	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
-	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
+
+	if(prob(10)) //10% chance for a severe trauma
+		regenerating.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_ABSOLUTE)
+	else
+		regenerating.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_ABSOLUTE)
+
 	// revive calls fully heal -> deletes the crystal.
 	// this qdeleted check is just for sanity.
 	if(!QDELETED(src))

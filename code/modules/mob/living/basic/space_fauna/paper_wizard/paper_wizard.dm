@@ -105,7 +105,7 @@
 	faction = list(FACTION_STICKMAN)
 	melee_damage_lower = 1
 	melee_damage_upper = 5
-	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile
 
 /mob/living/basic/paper_wizard/copy/Initialize(mapload)
 	. = ..()
@@ -160,7 +160,7 @@
 
 /obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)
 	. = ..()
-	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
+	visible_message(span_bolddanger("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
 	playsound(get_turf(src), 'sound/effects/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
 	playsound(get_turf(src), 'sound/effects/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_delete))
@@ -175,4 +175,3 @@
 	new /obj/effect/temp_visual/paper_scatter(current_turf)
 	new /obj/item/clothing/suit/wizrobe/paper(current_turf)
 	new /obj/item/clothing/head/collectable/paper(current_turf)
-

@@ -1,11 +1,11 @@
 /datum/quirk/item_quirk/chronic_illness
-	name = "Chronic Illness"
-	desc = "You have a chronic illness that requires constant medication to keep under control."
+	name = "Eradicative Chronic Illness"
+	desc = "You have an anomalous chronic illness that requires constant medication to keep under control, or else causes timestream correction."
 	icon = FA_ICON_DISEASE
 	value = -12
-	gain_text = span_danger("You feel a bit off today.")
-	lose_text = span_notice("You feel a bit better today.")
-	medical_record_text = "Patient has a chronic illness that requires constant medication to keep under control."
+	gain_text = span_danger("You feel like you are fading away...")
+	lose_text = span_notice("You suddenly feel more substantial.")
+	medical_record_text = "Patient has an anomalous chronic illness that requires constant medication to keep under control."
 	hardcore_value = 12
 	mail_goodies = list(/obj/item/storage/pill_bottle/sansufentanyl)
 

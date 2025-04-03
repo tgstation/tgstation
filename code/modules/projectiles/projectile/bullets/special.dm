@@ -23,7 +23,7 @@
 		if(M.can_block_magic())
 			return BULLET_ACT_BLOCK
 		else
-			M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+			M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE)
 
 // Mime
 
@@ -44,6 +44,7 @@
 /// Marksman Shot
 /obj/projectile/bullet/marksman
 	name = "marksman nanoshot"
+	icon_state = null
 	hitscan = TRUE
 	damage = 30
 	tracer_type = /obj/effect/projectile/tracer/solar
@@ -79,8 +80,7 @@
 /obj/projectile/bullet/coin
 	name = "marksman coin"
 	icon_state = "coinshot"
-	pixel_speed_multiplier = 0.333
-	speed = 1
+	speed = 0.33
 	damage = 5
 	color = "#dbdd4c"
 
@@ -100,7 +100,7 @@
 /obj/projectile/bullet/coin/Initialize(mapload, turf/the_target, mob/original_firer)
 	src.original_firer = original_firer
 	target_turf = the_target
-	range = (get_dist(original_firer, target_turf) + 3) * 3 // 3 tiles past the origin (the *3 is because Range() ticks 3 times a tile because of the slower speed)
+	range = (get_dist(original_firer, target_turf) + 3) * 3 // 3 tiles past the origin (the *3 is because reduce_range() ticks 3 times a tile because of the slower speed)
 
 	. = ..()
 
@@ -167,7 +167,7 @@
 	if(Adjacent(current_turf, target_turf))
 		new_splitshot.fire(get_angle(current_turf, target_turf), direct_target = next_target)
 	else
-		new_splitshot.preparePixelProjectile(next_target, get_turf(src))
+		new_splitshot.aim_projectile(next_target, get_turf(src))
 		new_splitshot.fire()
 
 	if(istype(next_target, /obj/projectile/bullet/coin)) // handle further splitshot checks

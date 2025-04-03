@@ -140,22 +140,27 @@
 
 /datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		var/open = FALSE
-		var/obj/item/organ/wings/functional/wings = human_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/organ/wings/wings = human_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 
-		// open/close functional wings
-		if(istype(wings))
-			if(wings.wings_open)
-				open = TRUE
-				wings.close_wings()
-			else
-				wings.open_wings()
-			addtimer(CALLBACK(wings,  open ? TYPE_PROC_REF(/obj/item/organ/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/wings/functional, close_wings)), wing_time)
+	// play a flapping noise if the wing has this implemented
+	if(!istype(wings))
+		return
+	wings.make_flap_sound(human_user)
 
-		// play a flapping noise if the wing has this implemented
-		wings.make_flap_sound(human_user)
+	// open/close functional wings
+	var/obj/item/organ/wings/functional/wings_functional = wings
+	if(!istype(wings_functional))
+		return
+	var/open = FALSE
+	if(wings_functional.wings_open)
+		open = TRUE
+		wings_functional.close_wings()
+	else
+		wings_functional.open_wings()
+	addtimer(CALLBACK(wings_functional, open ? TYPE_PROC_REF(/obj/item/organ/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/wings/functional, close_wings)), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -251,18 +256,32 @@
 	. = ..()
 	var/kiss_type = /obj/item/hand_item/kisser
 
+	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
+		kiss_type = /obj/item/hand_item/kisser/french
+
+	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
+		kiss_type = /obj/item/hand_item/kisser/chef
+
 	if(HAS_TRAIT(user, TRAIT_SYNDIE_KISS))
 		kiss_type = /obj/item/hand_item/kisser/syndie
 
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/hand_item/kisser/death
 
+	var/datum/action/cooldown/ink_spit/ink_action = locate() in user.actions
+	if(ink_action?.IsAvailable())
+		kiss_type = /obj/item/hand_item/kisser/ink
+	else
+		ink_action = null
+
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))
 		to_chat(user, span_notice("You ready your kiss-blowing hand."))
-	else
-		qdel(kiss_blower)
-		to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
+		ink_action?.StartCooldown()
+		return
+
+	qdel(kiss_blower)
+	to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
 
 /datum/emote/living/laugh
 	key = "laugh"
@@ -298,19 +317,43 @@
 	key_third_person = "points"
 	message = "points."
 	message_param = "points at %t."
-	hands_use_check = TRUE
+	cooldown = 1 SECONDS
+	// don't put hands use check here, everything is handled in run_emote
 
 /datum/emote/living/point/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.usable_hands == 0)
-			if(H.usable_legs != 0)
-				message_param = "tries to point at %t with a leg, [span_userdanger("falling down")] in the process!"
-				H.Paralyze(20)
+	if(iscarbon(user))
+		var/mob/living/carbon/our_carbon = user
+		if(our_carbon.usable_hands <= 0 || user.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+			if(our_carbon.usable_legs > 0)
+				var/one_leg = FALSE
+				var/has_shoes = our_carbon.get_item_by_slot(ITEM_SLOT_FEET)
+				if(our_carbon.usable_legs == 1)
+					one_leg = TRUE
+				var/success_prob = 65
+				if(HAS_TRAIT(our_carbon, TRAIT_FREERUNNING))
+					success_prob += 35
+				if(one_leg)
+					success_prob -= 40
+				if(prob(success_prob))
+					message_param = "[one_leg ? "jumps into the air and " : ""]points at %t with their [has_shoes ? "leg" : "toes"]!"
+				else
+					message_param = "[one_leg ? "jumps into the air and " : ""]tries to point at %t with their [has_shoes ? "leg" : "toes"], falling down in the process!"
+					our_carbon.Paralyze(2 SECONDS)
+				TIMER_COOLDOWN_START(user, "point_verb_emote_cooldown", 1 SECONDS)
 			else
-				message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+				if(our_carbon.get_organ_slot(ORGAN_SLOT_EYES))
+					message_param = "gives a meaningful glance at %t!"
+					TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 1.5 SECONDS)
+				else
+					if(our_carbon.get_organ_slot(ORGAN_SLOT_TONGUE))
+						message_param = "motions their tongue towards %t!"
+						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2 SECONDS)
+					else
+						message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
+						our_carbon.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+						playsound(user, 'sound/effects/glass/glassbash.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2.5 SECONDS)
 	return ..()
 
 /datum/emote/living/sneeze
@@ -386,11 +429,12 @@
 #define SHIVER_LOOP_DURATION (1 SECONDS)
 /datum/emote/living/shiver/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+
+	animate(user, pixel_w = 1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	for(var/i in 1 to SHIVER_LOOP_DURATION / (0.2 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
-		animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-		animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+		animate(pixel_w = -2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+		animate(pixel_w = 2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+	animate(pixel_w = -1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 #undef SHIVER_LOOP_DURATION
 
 /datum/emote/living/sigh
@@ -491,11 +535,12 @@
 
 /datum/emote/living/sway/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x + 2, time = 0.5 SECONDS)
+
+	animate(user, pixel_w = 2, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 	for(var/i in 1 to 2)
-		animate(pixel_x = user.pixel_x - 4, time = 1.0 SECONDS)
-		animate(pixel_x = user.pixel_x + 4, time = 1.0 SECONDS)
-	animate(pixel_x = user.pixel_x - 2, time = 0.5 SECONDS)
+		animate(pixel_w = -6, time = 1.0 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+		animate(pixel_w = 6, time = 1.0 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+	animate(pixel_w = -2, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
 /datum/emote/living/tilt
 	key = "tilt"
@@ -510,11 +555,12 @@
 #define TREMBLE_LOOP_DURATION (4.4 SECONDS)
 /datum/emote/living/tremble/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
+
+	animate(user, pixel_w = 2, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
 	for(var/i in 1 to TREMBLE_LOOP_DURATION / (0.4 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
-		animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
-		animate(pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
-	animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
+		animate(pixel_w = -4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+		animate(pixel_w = 4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+	animate(pixel_w = -2, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
 #undef TREMBLE_LOOP_DURATION
 
 /datum/emote/living/twitch
@@ -524,11 +570,12 @@
 
 /datum/emote/living/twitch/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+
+	animate(user, pixel_w = 1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_w = -2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(pixel_w = 2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_w = -1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 
 /datum/emote/living/twitch_s
 	key = "twitch_s"
@@ -537,8 +584,9 @@
 
 /datum/emote/living/twitch_s/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+
+	animate(user, pixel_w = -1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_w = 1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 
 /datum/emote/living/wave
 	key = "wave"
@@ -642,21 +690,6 @@
 		to_chat(user, span_boldwarning("You cannot send IC messages (muted)."))
 		return FALSE
 
-	var/our_message = params ? params : get_custom_emote_from_user()
-
-	if(!emote_is_valid(user, our_message))
-		return FALSE
-
-	if(!params)
-		var/user_emote_type = get_custom_emote_type_from_user()
-
-		if(!user_emote_type)
-			return FALSE
-
-		emote_type = user_emote_type
-
-	message = our_message
-
 /datum/emote/living/custom/proc/emote_is_valid(mob/user, input)
 	// We're assuming clientless mobs custom emoting is something codebase-driven and not player-driven.
 	// If players ever get the ability to force clientless mobs to emote, we'd need to reconsider this.
@@ -714,9 +747,25 @@
 			return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
-	if(params && type_override)
+	var/our_message = params ? params : get_custom_emote_from_user()
+
+	if(!emote_is_valid(user, our_message))
+		return FALSE
+
+	if(type_override)
 		emote_type = type_override
+
+	if(!params)
+		var/user_emote_type = get_custom_emote_type_from_user()
+
+		if(!user_emote_type)
+			return FALSE
+
+		emote_type = user_emote_type
+
+	message = our_message
 	. = ..()
+
 	///Reset the message and emote type after it's run.
 	message = null
 	emote_type = EMOTE_VISIBLE

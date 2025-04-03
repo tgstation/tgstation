@@ -60,5 +60,5 @@
 	user.visible_message(span_notice("[user] inserts [tool] into [target]."), span_notice("You insert [tool] into [target]."))
 	user.temporarilyRemoveItemFromInventory(tool, TRUE)
 	var/obj/item/organ/heart/gland/gland = tool
-	gland.Insert(target, 2)
-	return 1
+	gland.Insert(target, special = TRUE, movement_flags = FROM_ABDUCTOR_SURGERY)
+	return TRUE

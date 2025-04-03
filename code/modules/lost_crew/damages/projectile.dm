@@ -13,7 +13,7 @@
 	var/hits = ((max_hits - min_hits) * severity + min_hits)
 
 	for(var/i in 1 to hits)
-		body.bullet_act(projectile, def_zone = pick(GLOB.all_body_zones), piercing_hit = TRUE)
+		body.projectile_hit(projectile, def_zone = pick(GLOB.all_body_zones), piercing_hit = TRUE)
 
 /datum/corpse_damage/cause_of_death/projectile/laser
 	projectile = /obj/projectile/beam/laser

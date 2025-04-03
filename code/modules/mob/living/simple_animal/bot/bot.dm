@@ -686,8 +686,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		access_card.set_access(prev_access)
 
-/mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)
-	if(isAI(caller) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
+/mob/living/simple_animal/bot/proc/call_bot(summoner, turf/waypoint, message = TRUE)
+	if(isAI(summoner) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		return FALSE
 
 	bot_reset() //Reset a bot before setting it to call mode.
@@ -696,7 +696,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//Easier then building the list ourselves. I'm sorry.
 	var/static/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
 	set_path(get_path_to(src, waypoint, max_distance=200, access = all_access.GetAccess()))
-	calling_ai = caller //Link the AI to the bot!
+	calling_ai = summoner //Link the AI to the bot!
 	ai_waypoint = waypoint
 
 	if(path?.len) //Ensures that a valid path is calculated!
@@ -706,7 +706,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
 			reset_access_timer_id = addtimer(CALLBACK (src, PROC_REF(bot_reset)), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
-			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
+			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[summoner]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
 		if(message)
 			to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination."))
 		pathset = TRUE
@@ -1014,7 +1014,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_cover_flags & BOT_COVER_HACKED))
-				to_chat(user, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(user, span_bolddanger("You fail to repair [src]'s [hackables]."))
 				return
 			bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 			to_chat(user, span_notice("You reset the [src]'s [hackables]."))
@@ -1097,7 +1097,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mind && paicard.pai)
 		mind.transfer_to(paicard.pai)
 	else if(paicard.pai)
-		paicard.pai.key = key
+		paicard.pai.PossessByPlayer(key)
 	else
 		ghostize(FALSE) // The pAI card that just got ejected was dead.
 	key = null
@@ -1156,11 +1156,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 	if(length(newpath))
-		var/mutable_appearance/path_image = new /mutable_appearance()
-		path_image.icon = path_image_icon
-		path_image.icon_state = path_image_icon_state
-		path_image.layer = BOT_PATH_LAYER
-		path_image.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+		var/mutable_appearance/path_image = mutable_appearance(path_image_icon, path_image_icon_state, BOT_PATH_LAYER, appearance_flags = RESET_COLOR|RESET_TRANSFORM|KEEP_APART)
 		path_image.color = path_image_color
 		for(var/i in 1 to newpath.len)
 			var/turf/T = newpath[i]

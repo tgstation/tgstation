@@ -93,6 +93,12 @@
 #define SURGERY_REQUIRES_REAL_LIMB (1<<4)
 ///Will grant a bonus during surgery steps to users with TRAIT_MORBID while they're using tools with CRUEL_IMPLEMENT
 #define SURGERY_MORBID_CURIOSITY (1<<5)
+/**
+ * Instead of checking if the tool used is an actual surgery tool to avoid accidentally whacking patients with the wrong tool,
+ * it'll check if it has a defined tool behaviour instead. Useful for surgeries that use mechanical tools instead of medical ones,
+ * like hardware manipulation.
+ */
+#define SURGERY_CHECK_TOOL_BEHAVIOUR (1<<6)
 
 ///Return true if target is not in a valid body position for the surgery
 #define IS_IN_INVALID_SURGICAL_POSITION(target, surgery) ((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && (target.mobility_flags & MOBILITY_LIEDOWN && target.body_position != LYING_DOWN))

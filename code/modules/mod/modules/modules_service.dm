@@ -46,7 +46,7 @@
 	if(!isitem(target))
 		return
 	if(!isturf(target.loc))
-		balloon_alert(mod.wearer, "must be on the floor!")
+		balloon_alert(mod.wearer, "not in storage!")
 		return
 	var/obj/item/microwave_target = target
 	var/datum/effect_system/spark_spread/spark_effect = new()
@@ -80,7 +80,7 @@
 	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
 	if(shoes)
 		shoes.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
-	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
+	mod.wearer.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
@@ -88,6 +88,24 @@
 	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
 	if(shoes && !deleting)
 		qdel(shoes.GetComponent(/datum/component/squeak))
-	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, REF(src))
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")
+
+// recharging cleaner spray module
+/obj/item/mod/module/mister/cleaner
+	name = "MOD janitorial mister module"
+	desc = "A space cleaner mister, able to clean up messes quickly. Synthesizes its own supply over time (if active)."
+	device = /obj/item/reagent_containers/spray/mister/janitor
+	volume = 100
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+
+/obj/item/mod/module/mister/cleaner/Initialize(mapload)
+	. = ..()
+	reagents.flags = AMOUNT_VISIBLE
+	reagents.add_reagent(/datum/reagent/space_cleaner, volume)
+
+/obj/item/mod/module/mister/cleaner/on_active_process(seconds_per_tick)
+	var/refill_add = min(volume - reagents.total_volume, 2 * seconds_per_tick)
+	if(refill_add > 0)
+		reagents.add_reagent(/datum/reagent/space_cleaner, refill_add)

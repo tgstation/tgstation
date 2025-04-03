@@ -736,7 +736,7 @@
 		being_used = FALSE
 		return
 
-	dumb_mob.key = ghost.key
+	dumb_mob.PossessByPlayer(ghost.key)
 	dumb_mob.mind.enslave_mind_to_creator(user)
 	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
 
@@ -896,7 +896,7 @@
 	name = "slime speed potion"
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "potyellow"
+	icon_state = "potred"
 
 /obj/item/slimepotion/speed/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -912,7 +912,7 @@
 		return ITEM_INTERACT_SUCCESS
 	if(isitem(interacting_with))
 		var/obj/item/apply_to = interacting_with
-		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW))
+		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW) || HAS_TRAIT(apply_to, TRAIT_NO_SPEED_POTION))
 			if(interacting_with.atom_storage)
 				return NONE // lets us put the potion in the bag
 			to_chat(user, span_warning("[apply_to] can't be made any faster!"))
@@ -921,7 +921,7 @@
 
 	to_chat(user, span_notice("You slather the red gunk over the [interacting_with], making it faster."))
 	interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	interacting_with.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
+	interacting_with.add_atom_colour(color_transition_filter(COLOR_RED, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	interacting_with.drag_slowdown = 0
 	ADD_TRAIT(interacting_with, TRAIT_SPEED_POTIONED, SLIME_POTION_TRAIT)
 	qdel(src)
@@ -952,7 +952,7 @@
 	to_chat(user, span_notice("You slather the blue gunk over the [clothing], fireproofing it."))
 	clothing.name = "fireproofed [clothing.name]"
 	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	clothing.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
+	clothing.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing.heat_protection = clothing.body_parts_covered
 	clothing.resistance_flags |= FIRE_PROOF
@@ -965,7 +965,7 @@
 	name = "gender change potion"
 	desc = "An interesting chemical mix that changes the biological gender of what its applied to. Cannot be used on things that lack gender entirely."
 	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "potlightpink"
+	icon_state = "potrainbow"
 
 /obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
 	if(!istype(L) || L.stat == DEAD)
@@ -987,9 +987,9 @@
 
 /obj/item/slimepotion/slime/renaming
 	name = "renaming potion"
-	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
+	desc = "A potion that allows a self-aware being to change what name it subconsciously presents to the world."
 	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "potgreen"
+	icon_state = "potbrown"
 
 	var/being_used = FALSE
 
@@ -1023,7 +1023,7 @@
 	name = "bluespace radio potion"
 	desc = "A strange chemical that grants those who ingest it the ability to broadcast and receive subscape radio waves."
 	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "potgrey"
+	icon_state = "potbluespace"
 
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/radio_head, mob/user)
 	if(!isanimal_or_basicmob(radio_head))

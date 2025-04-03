@@ -310,7 +310,7 @@
 	base_icon_state = "recharge_floor"
 	floor_tile = /obj/item/stack/tile/iron/recharge_floor
 
-/turf/open/floor/iron/recharge_floor/Airless
+/turf/open/floor/iron/recharge_floor/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/recharge_floor/asteroid
@@ -433,6 +433,16 @@
 /turf/open/floor/iron/kitchen_coldroom
 	name = "cold room floor"
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+
+/turf/open/floor/iron/kitchen_coldroom/dark
+	icon_state = "darkfull"
+	base_icon_state = "darkfull"
+	floor_tile = /obj/item/stack/tile/iron/dark
+
+/turf/open/floor/iron/kitchen_coldroom/dark/textured
+	icon_state = "textured_dark"
+	base_icon_state = "textured_dark"
+	floor_tile = /obj/item/stack/tile/iron/dark/textured
 
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
 	icon_state = "freezerfloor"

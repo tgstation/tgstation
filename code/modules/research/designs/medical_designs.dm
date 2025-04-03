@@ -381,6 +381,24 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/flesh_reshapers
+	name = "Flesh Reshaper"
+	desc = "Reshape those external features!"
+	id = "fleshreshaper"
+	build_path = /obj/item/flesh_shears
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 1)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/flesh_reshapers/medical // slight variant with different color palette
+	name = "Medical Flesh Reshaper"
+	id = "fleshreshapermed"
+	build_path = /obj/item/flesh_shears/medical
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
@@ -1083,7 +1101,6 @@
 /datum/design/surgery
 	name = "Surgery Design"
 	desc = "what"
-	id = "surgery_parent"
 	research_icon = 'icons/obj/medical/surgery_ui.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery

@@ -13,7 +13,7 @@
 	force = 8
 	throwforce = 12
 	w_class = WEIGHT_CLASS_NORMAL
-	obj_flags = INDESTRUCTIBLE | EMP_PROTECT_ALL // No fun police
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	slot_flags = NONE
 	light_system = OVERLAY_LIGHT
 	light_color = COLOR_SOFT_RED
@@ -33,14 +33,18 @@
 	/// The "virtual" radio inside of the the physical camera, a la microphone
 	var/obj/item/radio/entertainment/microphone/internal_radio
 
+/obj/item/broadcast_camera/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+
 /obj/item/broadcast_camera/Destroy(force)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(internal_camera)
-
 	return ..()
 
 /obj/item/broadcast_camera/update_icon_state()
-	icon_state = "[base_icon_state]0"
+	icon_state = "[base_icon_state][active]"
 	return ..()
 
 /obj/item/broadcast_camera/attack_self(mob/user, modifiers)
@@ -75,7 +79,7 @@
 	if(!iscarbon(loc))
 		return
 	active = TRUE
-	icon_state = "[base_icon_state][active]"
+	update_icon_state()
 	/// The carbon who wielded the camera, allegedly
 	var/mob/living/carbon/wielding_carbon = loc
 
@@ -98,7 +102,7 @@
 /// When deactivating the camera
 /obj/item/broadcast_camera/proc/on_deactivating()
 	active = FALSE
-	icon_state = "[base_icon_state][active]"
+	update_icon_state()
 	QDEL_NULL(internal_camera)
 	QDEL_NULL(internal_radio)
 
@@ -112,7 +116,7 @@
 	active_microphone = !active_microphone
 
 	/// Text popup for letting the user know that the microphone has changed state
-	balloon_alert(user, "turned [active_microphone ? "on" : "off"] the microphone.")
+	balloon_alert(user, "microphone [active_microphone ? "" : "de"]activated")
 
 	///If the radio exists as an object, set its state accordingly
 	if(active)

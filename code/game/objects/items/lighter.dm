@@ -52,6 +52,13 @@
 	)
 	update_appearance()
 
+/obj/item/lighter/examine(mob/user)
+	. = ..()
+	if(get_fuel() <= 0)
+		. += span_warning("It is out of lighter fluid! Refill it with welder fuel.")
+	else
+		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
+
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
@@ -196,15 +203,15 @@
 		return ..()
 
 	if(cig.lit)
-		to_chat(user, span_warning("The [cig.name] is already lit!"))
+		to_chat(user, span_warning("\The [cig] is already lit!"))
 	if(target_mob == user)
 		cig.attackby(src, user)
 		return
 
 	if(fancy)
-		cig.light(span_rose("[user] whips the [name] out and holds it for [target_mob]. [user.p_Their()] arm is as steady as the unflickering flame [user.p_they()] light[user.p_s()] \the [cig] with."))
+		cig.light(span_rose("[user] whips \the [src] out and holds it for [target_mob]. [user.p_Their()] arm is as steady as the unflickering flame [user.p_they()] light[user.p_s()] \the [cig] with."))
 	else
-		cig.light(span_notice("[user] holds the [name] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
+		cig.light(span_notice("[user] holds \the [src] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
 
 ///Checks if the lighter is able to perform a welding task.
 /obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required)
@@ -326,7 +333,7 @@
 	fancy = FALSE
 
 /obj/item/lighter/mime/ignition_effect(atom/A, mob/user)
-	. = span_infoplain("[user] lifts the [name] to the [A], which miraculously lights!")
+	. = span_infoplain("[user] lifts \the [src] to the [A], which miraculously lights!")
 
 /obj/item/lighter/bright
 	name = "illuminative zippo"

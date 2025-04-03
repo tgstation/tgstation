@@ -12,6 +12,47 @@
 		/datum/surgery_step/close,
 	)
 
+//So far, this surgery type should be the only way carbon mobs can be fishing spots, also because the comp doesn't allow dupes.
+/datum/surgery/organ_manipulation/next_step(mob/living/user, modifiers)
+	. = ..()
+	if(!.)
+		return
+
+	// We've completed the surgery
+	if(status > length(steps))
+		return
+
+	if(!ispath(steps[status], /datum/surgery_step/manipulate_organs))
+		//The manipulate_organs step either hasn't been reached yet or we're already past it.
+		if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT))
+			return
+		remove_fishing_spot()
+		return
+
+	if(HAS_TRAIT(target, TRAIT_FISHING_SPOT))
+		return
+
+	target.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
+
+/datum/surgery/organ_manipulation/Destroy()
+	if(QDELETED(target) || !HAS_TRAIT(target, TRAIT_FISHING_SPOT))
+		return ..()
+	// The surgery is not finished yet and we're currently on manipulate organs step
+	if(status <= length(steps) && ispath(steps[status], /datum/surgery_step/manipulate_organs))
+		remove_fishing_spot()
+	return ..()
+
+/**
+ * The target is a fishing spot, but we're past the step that allows us to fish organs from him, so we need
+ * to check if there are other organ manipulation surgeries that still meet this criteria before we remove
+ * the component
+ */
+/datum/surgery/organ_manipulation/proc/remove_fishing_spot()
+	for(var/datum/surgery/organ_manipulation/manipulation in target.surgeries)
+		if(manipulation != src && ispath(manipulation.steps[manipulation.status], /datum/surgery_step/manipulate_organs))
+			return
+	qdel(target.GetComponent(/datum/component/fishing_spot))
+
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	steps = list(
@@ -50,14 +91,14 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
-		/datum/surgery_step/manipulate_organs/internal,
+		/datum/surgery_step/manipulate_organs/any,
 		/datum/surgery_step/close,
 	)
 
 /datum/surgery/organ_manipulation/mechanic
 	name = "Hardware Manipulation"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_LIMB
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_LIMB | SURGERY_CHECK_TOOL_BEHAVIOUR
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
@@ -68,32 +109,6 @@
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close,
 	)
-
-/datum/surgery/organ_manipulation/mechanic/next_step(mob/living/user, modifiers)
-	if(location != user.zone_selected)
-		return FALSE
-	if(user.combat_mode)
-		return FALSE
-	if(step_in_progress)
-		return TRUE
-
-	var/try_to_fail = FALSE
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		try_to_fail = TRUE
-
-	var/datum/surgery_step/step = get_surgery_step()
-	if(isnull(step))
-		return FALSE
-	var/obj/item/tool = user.get_active_held_item()
-	if(tool)
-		tool = tool.get_proxy_attacker_for(target, user)
-	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
-		return TRUE
-	if(tool && tool.tool_behaviour) //Mechanic organ manipulation isn't done with just surgery tools
-		to_chat(user, span_warning("This step requires a different tool!"))
-		return TRUE
-
-	return FALSE
 
 /datum/surgery/organ_manipulation/mechanic/soft
 	possible_locs = list(
@@ -168,15 +183,19 @@
 		preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 		success_sound = 'sound/items/handling/surgery/organ2.ogg'
 		target_organ = tool
+		if(!target_organ.pre_surgical_insertion(user, target, target_zone, tool))
+			return SURGERY_STEP_FAIL
+
 		if(target_zone != target_organ.zone || target.get_organ_slot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"))
 			return SURGERY_STEP_FAIL
+
 		var/obj/item/organ/meatslab = tool
 		if(!meatslab.useable)
 			to_chat(user, span_warning("[target_organ] seems to have been chewed on, you can't use this!"))
 			return SURGERY_STEP_FAIL
 
-		if(!can_use_organ(user, meatslab))
+		if(!can_use_organ(meatslab))
 			return SURGERY_STEP_FAIL
 
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
@@ -196,7 +215,7 @@
 		var/list/unfiltered_organs = target.get_organs_for_zone(target_zone)
 		var/list/organs = list()
 		for(var/organ in unfiltered_organs)
-			if(can_use_organ(user, organ))
+			if(can_use_organ(organ))
 				organs.Add(organ)
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
@@ -295,8 +314,15 @@
 	return ..()
 
 ///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)
-/datum/surgery_step/manipulate_organs/proc/can_use_organ(mob/user, obj/item/organ/organ)
+/datum/surgery_step/manipulate_organs/proc/can_use_organ(obj/item/organ/organ)
 	return FALSE
+
+/datum/surgery_step/manipulate_organs/any
+	time = 6.4 SECONDS
+	name = "manipulate organs (hemostat/organ)"
+
+/datum/surgery_step/manipulate_organs/any/can_use_organ(obj/item/organ/organ)
+	return TRUE
 
 ///Surgery step for internal organs, like hearts and brains
 /datum/surgery_step/manipulate_organs/internal
@@ -304,7 +330,7 @@
 	name = "manipulate organs (hemostat/organ)"
 
 ///only operate on internal organs
-/datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
+/datum/surgery_step/manipulate_organs/internal/can_use_organ(obj/item/organ/organ)
 	return !(organ.organ_flags & ORGAN_EXTERNAL)
 
 ///prosthetic surgery gives full effectiveness to crowbars (and hemostats)
@@ -318,7 +344,7 @@
 	name = "manipulate features (hemostat/feature)"
 
 ///Only operate on external organs
-/datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
+/datum/surgery_step/manipulate_organs/external/can_use_organ(obj/item/organ/organ)
 	return (organ.organ_flags & ORGAN_EXTERNAL)
 
 ///prosthetic surgery gives full effectiveness to crowbars (and hemostats)

@@ -14,6 +14,7 @@
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
 	worn_icon_state = "render"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	inhand_x_dimension = 32
@@ -61,6 +62,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -75,10 +77,12 @@ Striking a noncultist, however, will tear their flesh."}
 	bare_wound_bonus = 20
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	block_sound = 'sound/items/weapons/parry.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	/// If TRUE, it can be used at will by anyone, non-cultists included
 	var/free_use = FALSE
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
@@ -86,6 +90,9 @@ Striking a noncultist, however, will tear their flesh."}
 	speed = 4 SECONDS, \
 	effectiveness = 100, \
 	)
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
@@ -128,6 +135,7 @@ Striking a noncultist, however, will tear their flesh."}
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 3
+	demolition_mod = 1.5
 	/// holder for the actual action when created.
 	var/list/datum/action/cooldown/spell/path_sword_actions
 	/// holder for the actual action when created.
@@ -363,7 +371,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// Get the heretic's new body and antag datum.
 	trapped_entity = trapped_mind?.current
-	trapped_entity.key = trapped_mind?.key
+	trapped_entity.PossessByPlayer(trapped_mind?.key)
 	var/datum/antagonist/heretic/heretic_holder = GET_HERETIC(trapped_entity)
 	if(!heretic_holder)
 		stack_trace("[soul_to_bind] in but not a heretic on the heretic soul blade.")
@@ -1130,6 +1138,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "occultpoleaxe0"
 	base_icon_state = "occultpoleaxe"
 	inhand_icon_state = "occultpoleaxe0"
+	icon_angle = -45
 	w_class = WEIGHT_CLASS_HUGE
 	force = 17
 	throwforce = 40
@@ -1248,7 +1257,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/projectile/magic/arcane_barrage/blood
 	name = "blood bolt"
-	icon_state = "mini_leaper"
+	icon_state = "blood_bolt"
 	nondirectional_sprite = TRUE
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
@@ -1297,7 +1306,6 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/blood_beam/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
-
 
 /obj/item/blood_beam/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
@@ -1426,7 +1434,7 @@ Striking a noncultist, however, will tear their flesh."}
 					qdel(src)
 					return FALSE
 			var/obj/projectile/projectile = hitby
-			if(projectile.reflectable & REFLECT_NORMAL)
+			if(projectile.reflectable)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)

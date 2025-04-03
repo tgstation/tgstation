@@ -67,7 +67,8 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	flags_inv = HIDEHAIR|HIDEEARS
+	flags_inv = HIDEEARS
+	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
 	armor_type = /datum/armor/hooded_winterhood
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
@@ -78,6 +79,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/eva
 	name = "\proper Endotherm winter coat"
 	desc = "A thickly padded winter coat to keep the wearer well insulated no matter the circumstances. It has a harness for a larger oxygen tank attached to the back."
+	icon_state = "coateva"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.75
 	armor_type = /datum/armor/wintercoat_eva
@@ -85,7 +87,6 @@
 	equip_delay_other = 6 SECONDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT // Protects very cold.
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT // Protects a little hot.
-	flags_inv = HIDEJUMPSUIT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/eva
@@ -105,6 +106,7 @@
 /obj/item/clothing/head/hooded/winterhood/eva
 	name = "\proper Endotherm winter hood"
 	desc = "A thickly padded hood attached to an even thicker coat."
+	icon_state = "hood_eva"
 	armor_type = /datum/armor/winterhood_eva
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
@@ -299,7 +301,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
@@ -388,7 +390,7 @@
 // Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
 	name = "virology winter coat"
-	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
+	desc = "A white winter coat with green markings. Warm, but won't fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
 	icon_state = "coatviro"
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
@@ -428,7 +430,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/bag/xeno,
 		/obj/item/storage/pill_bottle,

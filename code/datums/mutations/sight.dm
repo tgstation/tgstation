@@ -171,7 +171,7 @@
 	var/obj/projectile/beam/laser/laser_eyes/LE = new(source.loc)
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
-	LE.preparePixelProjectile(target, source, modifiers)
+	LE.aim_projectile(target, source, modifiers)
 	INVOKE_ASYNC(LE, TYPE_PROC_REF(/obj/projectile, fire))
 	playsound(source, 'sound/items/weapons/taser2.ogg', 75, TRUE)
 

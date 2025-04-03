@@ -1,6 +1,4 @@
 import { map, sortBy } from 'common/collections';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,9 +8,11 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { PageSelect } from './LibraryConsole';
+import { PageSelect } from './LibraryConsole/components/PageSelect';
 
 export const LibraryVisitor = (props) => {
   return (

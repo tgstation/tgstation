@@ -98,6 +98,7 @@ DEFINE_BITFIELD(status_flags, list(
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_HYPER_RAPID 1
 #define CLICK_CD_SLOW 10
+#define CLICK_CD_ACTIVATE_ABILITY 1
 
 #define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
@@ -154,6 +155,13 @@ DEFINE_BITFIELD(status_flags, list(
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
 
+/// Attack animation for sharp items
+#define ATTACK_ANIMATION_SLASH "slash"
+/// Attack animation for pointy items
+#define ATTACK_ANIMATION_PIERCE "pierce"
+/// Animation for blunt attacks
+#define ATTACK_ANIMATION_BLUNT "blunt"
+
 //the define for visible message range in combat
 #define SAMETILE_MESSAGE_RANGE 1
 #define COMBAT_MESSAGE_RANGE 3
@@ -175,6 +183,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //The define for base unarmed miss chance
 #define UNARMED_MISS_CHANCE_BASE 20
 #define UNARMED_MISS_CHANCE_MAX 80
+//Minimum value used to determine if a punched target can be affected by a stagger combo from a punch
+#define UNARMED_COMBO_HIT_HEALTH_BASE 40
 
 //Combat object defines
 /// The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
@@ -183,8 +193,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBED_CHANCE_SPEED_BONUS 10
 
 //Gun weapon weight
+/// Default normal ol' gun. Akimboable, one handed.
 #define WEAPON_LIGHT 1
+/// Can't be used akimbo, but only needs one hand to fire
 #define WEAPON_MEDIUM 2
+/// Can't be used akimbo, and needs two hands to fire
 #define WEAPON_HEAVY 3
 //Gun trigger guards
 #define TRIGGER_GUARD_ALLOW_ALL -1
@@ -220,10 +233,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SUPPRESSED_NONE 0
 #define SUPPRESSED_QUIET 1 ///standard suppressed
 #define SUPPRESSED_VERY 2 /// no message
-
-//Projectile Reflect
-#define REFLECT_NORMAL (1<<0)
-#define REFLECT_FAKEPROJECTILE (1<<1)
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
@@ -310,6 +319,11 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 
 /// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
 #define MARTIAL_ATTACK_SUCCESS COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// Get the active martial art of a mob.
+#define GET_ACTIVE_MARTIAL_ART(goku) (LAZYACCESS(goku.martial_arts, 1))
+/// Get what martial art will be used after cycling through the active martial art.
+#define GET_NEXT_MARTIAL_ART(goku) (LAZYACCESS(goku.martial_arts, 2))
 
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2

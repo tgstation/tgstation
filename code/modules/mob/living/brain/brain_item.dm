@@ -50,19 +50,8 @@
 	// Brain size logic
 	transform = transform.Scale(brain_size)
 
-/obj/item/organ/brain/examine()
+/obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
-	if (smooth_brain)
-		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
-	if(brain_size < 1)
-		. += span_notice("It is a bit on the smaller side...")
-	if(brain_size > 1)
-		. += span_notice("It is bigger than average...")
-
-/obj/item/organ/brain/mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
-	. = ..()
-	if(!.)
-		return
 
 	name = initial(name)
 
@@ -88,7 +77,7 @@
 			if(brainmob.mind)
 				brainmob.mind.transfer_to(brain_owner)
 			else
-				brain_owner.key = brainmob.key
+				brain_owner.PossessByPlayer(brainmob.key)
 
 			brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
@@ -115,7 +104,8 @@
 	if(!special && !(brain_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		brain_owner.update_body_parts()
 
-/obj/item/organ/brain/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/brain/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
 	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
@@ -123,16 +113,14 @@
 			for(var/chip in skillchips)
 				var/obj/item/skillchip/skillchip = chip
 				// Run the try_ proc with force = TRUE.
-				skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
-
-	. = ..()
+				skillchip.try_deactivate_skillchip(silent = special, force = TRUE, brain_owner = organ_owner)
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !(movement_flags & NO_ID_TRANSFER))
+	if((!QDELETED(src) || !QDELETED(owner)) && !(movement_flags & NO_ID_TRANSFER))
 		transfer_identity(organ_owner)
 	if(!special)
 		if(!(organ_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
@@ -140,7 +128,7 @@
 		organ_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/brain/update_icon_state()
-	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth_brain" : ""]"
+	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth" : ""]"
 	return ..()
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
@@ -241,10 +229,14 @@
 	if(length(skillchips))
 		. += span_info("It has a skillchip embedded in it.")
 	. += brain_damage_examine()
+	if (smooth_brain)
+		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
 	if(brain_size < 1)
 		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
 		. += span_notice("It is bigger than average...")
+	if(GetComponent(/datum/component/ghostrole_on_revive))
+		. += span_notice("Its soul might yet come back...")
 
 /// Needed so subtypes can override examine text while still calling parent
 /obj/item/organ/brain/proc/brain_damage_examine()
@@ -279,6 +271,17 @@
 		LAZYADD(trauma_text, trauma_desc)
 	if(LAZYLEN(trauma_text))
 		return "Mental trauma: [english_list(trauma_text, and_text = ", and ")]."
+
+/obj/item/organ/brain/feel_for_damage(self_aware)
+	if(damage < low_threshold)
+		return ""
+	if(self_aware)
+		if(damage < high_threshold)
+			return span_warning("Your brain hurts a bit.")
+		return span_warning("Your brain hurts a lot.")
+	if(damage < high_threshold)
+		return span_warning("It feels a bit fuzzy.")
+	return span_warning("It aches incessantly.")
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -456,12 +459,20 @@
 	can_smoothen_out = FALSE
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
-/obj/item/organ/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special)
+// This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
+// Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
+/obj/item/organ/brain/lustrous/before_organ_replacement(obj/item/organ/replacement)
+	if(owner)
+		owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+		owner.RemoveElement(/datum/element/tenacious)
+	. = ..()
+
+/obj/item/organ/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 	organ_owner.RemoveElement(/datum/element/tenacious)
 
-/obj/item/organ/brain/lustrous/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/brain/lustrous/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 	organ_owner.AddElement(/datum/element/tenacious)
@@ -469,9 +480,9 @@
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
 
-/obj/item/organ/brain/lizard //A bit smaller than average
+/obj/item/organ/brain/lizard
 	name = "lizard brain"
-	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
+	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
 	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
 
 /obj/item/organ/brain/abductor
@@ -564,7 +575,9 @@
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
-		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
+		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
+			qdel(actual_trauma)
+			return FALSE
 		actual_trauma.on_gain()
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
@@ -624,8 +637,10 @@
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
+	if(target.pulledby == owner) // if we're grabbing our target we're beating them to death with our bare hands
+		return active_hand
 	if(target.body_position == LYING_DOWN && owner.usable_legs)
-		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/found_bodypart = owner.get_bodypart(IS_LEFT_INDEX(active_hand.held_index) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		return found_bodypart || active_hand
 	return active_hand
 
@@ -635,3 +650,9 @@
 	old_brain.Remove(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	return Insert(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER | DELETE_IF_REPLACED)
+
+/obj/item/organ/brain/pod
+	name = "pod nucleus"
+	desc = "The brain of a pod person, it's a bit more plant-like than a human brain."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME

@@ -43,11 +43,12 @@ Then the player gets the profit from selling his own wasted time.
 	* Arguments:
 	** apply_elastic: if the price will change based on amount sold, where applicable
 	** delete_unsold: if the items that were not sold should be deleted
-	** dry_run: if the item should be actually sold, or if its just a pirce test
+	** dry_run: if the item should be actually sold, or if it's just a pirce test
 	** external_report: works as "transaction" object, pass same one in if you're doing more than one export in single go
 	** ignore_typecache: typecache containing types that should be completely ignored
+	** export_market: Defines the market that the items are being sold to.
 */
-/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache)
+/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache, export_market = EXPORT_MARKET_STATION)
 	external_report = init_export(external_report)
 
 	var/list/contents = exported_atom.get_all_contents_ignoring(ignore_typecache)
@@ -55,7 +56,7 @@ Then the player gets the profit from selling his own wasted time.
 	// We go backwards, so it'll be innermost objects sold first. We also make sure nothing is accidentally delete before everything is sold.
 	var/list/to_delete = list()
 	for(var/atom/movable/thing as anything in reverse_range(contents))
-		var/sold = _export_loop(thing, apply_elastic, dry_run, external_report)
+		var/sold = _export_loop(thing, apply_elastic, dry_run, external_report, export_market)
 		if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export", INVESTIGATE_CARGO)
@@ -68,10 +69,10 @@ Then the player gets the profit from selling his own wasted time.
 	return external_report
 
 /// It works like export_item_and_contents(), however it ignores the contents. Meaning only `exported_atom` will be valued.
-/proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report)
+/proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, export_market = EXPORT_MARKET_STATION)
 	external_report = init_export(external_report)
 
-	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report)
+	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report, export_market)
 	if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
 		if(ismob(exported_atom))
 			exported_atom.investigate_log("deleted through cargo export", INVESTIGATE_CARGO)
@@ -80,10 +81,10 @@ Then the player gets the profit from selling his own wasted time.
 	return external_report
 
 /// The main bit responsible for selling the item. Shared by export_single_item() and export_item_and_contents()
-/proc/_export_loop(atom/movable/exported_atom, apply_elastic = TRUE, dry_run = FALSE, datum/export_report/external_report)
+/proc/_export_loop(atom/movable/exported_atom, apply_elastic = TRUE, dry_run = FALSE, datum/export_report/external_report, export_market)
 	var/sold = EXPORT_NOT_SOLD
 	for(var/datum/export/export as anything in GLOB.exports_list)
-		if(export.applies_to(exported_atom, apply_elastic))
+		if(export.applies_to(exported_atom, apply_elastic, export_market))
 			if(!dry_run && (SEND_SIGNAL(exported_atom, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
 				break
 			//Don't add value of unscannable items for a dry run report
@@ -106,6 +107,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/allow_negative_cost = FALSE
 	/// coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
 	var/k_elasticity = 1/30
+	/// Coefficient used in the recovery of elastic price calculation. See Process, this value and k_elasticity are multiplied together to form the exponent that returns the price to normal.
+	var/k_recovery_elasticity = 1/30
 	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
 	var/amount_report_multiplier = 1
 	/// Type of the exported object. If none, the export datum is considered base type.
@@ -116,6 +119,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/exclude_types = list()
 	/// Set to false if the cost shouldn't be determinable by an export scanner
 	var/scannable = TRUE
+	/// Export market that this export applies to. Defaults to EXPORT_MARKET_STATION for items sold to the standard supply shuttle, replacements exist for pirates, etc.
+	var/sales_market = EXPORT_MARKET_STATION
 
 	/// cost includes elasticity, this does not.
 	var/init_cost
@@ -134,7 +139,8 @@ Then the player gets the profit from selling his own wasted time.
 	return ..()
 
 /datum/export/process()
-	cost *= NUM_E**(k_elasticity * (1/30))
+	cost *= NUM_E**(k_elasticity * k_recovery_elasticity)
+	// A little note here based on the standard values for k_recovery_elasticity: 1/30 will result in a price that started at 20% to go back to 100% in around 20 minutes, ramping up over time.
 	if(cost > init_cost)
 		cost = init_cost
 
@@ -157,12 +163,14 @@ Then the player gets the profit from selling his own wasted time.
 	return 1
 
 /// Checks if the item is fit for export datum.
-/datum/export/proc/applies_to(obj/exported_item, apply_elastic = TRUE)
+/datum/export/proc/applies_to(obj/exported_item, apply_elastic = TRUE, export_market)
 	if(!is_type_in_typecache(exported_item, export_types))
 		return FALSE
 	if(include_subtypes && is_type_in_typecache(exported_item, exclude_types))
 		return FALSE
 	if(!get_cost(exported_item, apply_elastic))
+		return FALSE
+	if(export_market != sales_market)
 		return FALSE
 	if(exported_item.flags_1 & HOLOGRAM_1)
 		return FALSE

@@ -5,6 +5,7 @@
 	desc = "You can fish with this."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "fishing_rod"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/fishing_rod_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/fishing_rod_righthand.dmi'
 	inhand_icon_state = "rod"
@@ -40,11 +41,14 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
-	///Is this currently being used by the profound fisher component?
+	/// Is this currently being used by the profound fisher component?
 	var/internal = FALSE
 
-	///The name of the icon state of the reel overlay
+	/// The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
+
+	/// Icon state of the frame overlay this rod uses for the minigame
+	var/frame_state = "frame_wood"
 
 	/**
 	 * A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
@@ -131,6 +135,13 @@
 		. += "" //add a new line
 		. += span_notice("Thanks to your fishing skills, you can examine it again for more in-depth information.")
 		return
+	if(HAS_TRAIT(src, TRAIT_ROD_MANSUS_INFUSED))
+		if(IS_HERETIC(user))
+			. += span_purple("This rod has been <b>infused</b> by a heretic, improving its ability to catch glimpses of the Mansus. And fish.")
+		else
+			. += span_purple("It's glowing an eerie purple...")
+	else if(IS_HERETIC(user))
+		. += span_purple("As a Heretic, you can infuse this fishing rod with your <b>Mansus Grasp</b> by activating the spell while wielding it, to enhance its fishing power.")
 
 /obj/item/fishing_rod/examine_more(mob/user)
 	. = ..()
@@ -140,7 +151,7 @@
 	var/list/block = list()
 	var/get_percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
 	block += span_info("You think you can cast it up to [get_cast_range()] tiles away.")
-	block += get_stat_info(get_percent, difficulty_modifier, "Fishing will be", "easier", "harder", "with this fishing rod")
+	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod", offset = 0)
 	block += get_stat_info(get_percent, experience_multiplier, "You will gain experience", "faster", "slower")
 	block += get_stat_info(get_percent, completion_speed_mult, "You should complete the minigame", "faster", "slower")
 	block += get_stat_info(get_percent, bait_speed_mult, "Reeling is", "faster", "slower")
@@ -148,7 +159,8 @@
 	block += get_stat_info(get_percent, bounciness_mult, "This fishing rod is ", "bouncier", "less bouncy", "than a normal one", less_is_better = TRUE)
 	block += get_stat_info(get_percent, gravity_mult, "The lure will sink", "faster", "slower", span_info = TRUE)
 
-	. += examine_block(block.Join("\n"))
+	list_clear_nulls(block)
+	. += boxed_message(block.Join("\n"))
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
 		block = list()
@@ -157,7 +169,7 @@
 		if(material.fish_weight_modifier != 1)
 			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
 			block += span_info("Fish made of the same material as this rod tend to be [abs(material.fish_weight_modifier - 1) * 100]% [heavier].")
-		. += examine_block(block.Join("\n"))
+		. += boxed_message(block.Join("\n"))
 
 	block = list()
 	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
@@ -169,18 +181,19 @@
 	if(HAS_TRAIT(src, TRAIT_ROD_LAVA_USABLE))
 		block += span_info("This fishing rod can be used to fish on lava.")
 	if(length(block))
-		. += examine_block(block.Join("\n"))
+		. += boxed_message(block.Join("\n"))
 
 ///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
-/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE)
+/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE, offset = 1)
 	if(value == 1)
 		return
-	var/percent = get_percent ? "[abs(value)]% " : ""
-	var/harder_easier = value > 1 ? easier : harder
+	value -= offset
+	var/percent = get_percent ? "[abs(value * 100)]% " : ""
+	var/harder_easier = value > 0 ? easier : harder
 	. = "[prefix] [percent][harder_easier] [suffix]."
 	if(span_info)
 		return span_info(.)
-	if(less_is_better ? value < 1 : value > 1)
+	if(less_is_better ? value < 0 : value > 0)
 		return span_nicegreen(.)
 	return span_danger(.)
 
@@ -253,7 +266,7 @@
 			if(kill_fish)
 				fish.set_status(FISH_DEAD, silent = TRUE)
 
-	QDEL_NULL(bait)
+	qdel(bait)
 	update_icon()
 
 ///Returns the probability that a fish caught by this (custom material) rod will be of the same material.
@@ -332,7 +345,7 @@
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
 	fishing_line = new(firer, target, icon_state = "fishing_line", beam_color = beam_color, emissive = FALSE, override_target_pixel_y = target_py)
-	fishing_line.lefthand = firer.get_held_index_of_item(src) % 2 == 1
+	fishing_line.lefthand = IS_LEFT_INDEX(firer.get_held_index_of_item(src))
 	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
 	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
@@ -351,10 +364,8 @@
 
 /obj/item/fishing_rod/proc/get_cast_range(mob/living/user)
 	. = max(cast_range, 1)
-	if(!user && !isliving(loc))
-		return
-	user = loc
-	if(!user.is_holding(src) || !user.mind)
+	user = user || loc
+	if (!isliving(user) || !user.mind || !user.is_holding(src))
 		return
 	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
 	return max(., 1)
@@ -399,7 +410,6 @@
 		reel(user)
 		return ITEM_INTERACT_BLOCKING
 
-	SEND_SIGNAL(interacting_with, COMSIG_PRE_FISHING)
 	cast_line(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -422,18 +432,25 @@
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
+	// skip firing a projectile if the target is adjacent and can be reached (no order windows in the way),
+	// otherwise it may end up hitting other things on its turf, which is problematic
+	// especially for entities with the profound fisher component, which should only work on
+	// proper fishing spots.
+	if(user.CanReach(target, src))
+		hook_hit(target, user)
+		return
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = get_cast_range(user)
-	cast_projectile.decayedRange = get_cast_range(user)
+	cast_projectile.maximum_range = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
 	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
-	cast_projectile.preparePixelProjectile(target, user)
+	cast_projectile.aim_projectile(target, user)
 	cast_projectile.fire()
-	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile, mob/user)
@@ -466,15 +483,13 @@
 	var/line_color = line?.line_color || default_line_color
 	/// Line part by the rod.
 	if(reel_overlay)
-		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
-		reel_appearance.appearance_flags = RESET_COLOR
+		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay, appearance_flags = RESET_COLOR|KEEP_APART)
 		reel_appearance.color = line_color
 		. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)
-		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay")
-		line_overlay.appearance_flags = RESET_COLOR
+		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 		line_overlay.color = line_color
 		. += line_overlay
 		. += hook?.rod_overlay_icon_state || "hook_overlay"
@@ -495,14 +510,12 @@
 /obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = list()
 	var/line_color = line?.line_color || default_line_color
-	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay")
-	reel_overlay.appearance_flags |= RESET_COLOR
+	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 	reel_overlay.color = line_color
 	. += reel_overlay
 	/// if we don't have anything hooked show the dangling hook & line
 	if(isinhands && !fishing_line)
-		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay")
-		line_overlay.appearance_flags |= RESET_COLOR
+		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 		line_overlay.color = line_color
 		. += line_overlay
 		. += mutable_appearance(icon_file, "hook_overlay")
@@ -516,16 +529,9 @@
 		use_slot(ROD_SLOT_HOOK, user, attacking_item)
 		SStgui.update_uis(src)
 		return TRUE
-	else if(slot_check(attacking_item,ROD_SLOT_BAIT))
+	else if(slot_check(attacking_item,ROD_SLOT_BAIT) || istype(attacking_item, /obj/item/bait_can)) //Can click on the fishing rod with bait can directly
 		use_slot(ROD_SLOT_BAIT, user, attacking_item)
 		SStgui.update_uis(src)
-		return TRUE
-	else if(istype(attacking_item, /obj/item/bait_can)) //Quicker filling from bait can
-		var/obj/item/bait_can/can = attacking_item
-		var/bait = can.retrieve_bait(user)
-		if(bait)
-			use_slot(ROD_SLOT_BAIT, user, bait)
-			SStgui.update_uis(src)
 		return TRUE
 	. = ..()
 
@@ -580,6 +586,13 @@
 /obj/item/fishing_rod/proc/use_slot(slot, mob/user, obj/item/new_item)
 	if(fishing_line || GLOB.fishing_challenges_by_user[user])
 		return
+	// If the new item is a bait can, try to get bait from it
+	if(slot == ROD_SLOT_BAIT && istype(new_item, /obj/item/bait_can))
+		var/obj/item/bait_can/can = new_item
+		var/bait = can.retrieve_bait(user)
+		if(!bait)
+			return
+		new_item = bait
 	var/obj/item/current_item
 	switch(slot)
 		if(ROD_SLOT_BAIT)
@@ -655,6 +668,9 @@
 	if(slot)
 		SEND_SIGNAL(gone, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, src, slot)
 
+/obj/item/fishing_rod/proc/get_frame(datum/fishing_challenge/challenge)
+	return mutable_appearance('icons/hud/fishing_hud.dmi', frame_state)
+
 ///Found in the fishing toolbox (the hook and line are separate items)
 /obj/item/fishing_rod/unslotted
 	hook = null
@@ -673,6 +689,7 @@
 	icon_state = "fishing_rod_bone"
 	reel_overlay = "reel_bone"
 	default_line_color = "red"
+	frame_state = "frame_bone"
 	line = null //sinew line (usable to fish in lava) not included
 	hook = /obj/item/fishing_hook/bone
 
@@ -687,6 +704,7 @@
 	ui_description = "A collapsible fishing rod that can fit within a backpack."
 	wiki_description = "<b>It has to be bought from Cargo</b>."
 	reel_overlay = "reel_telescopic"
+	frame_state = "frame_telescopic"
 	completion_speed_mult = 1.1
 	bait_speed_mult = 1.1
 	deceleration_mult = 1.1
@@ -750,12 +768,13 @@
 
 /obj/item/fishing_rod/telescopic/master
 	name = "master fishing rod"
-	desc = "The mythical rod of a lost fisher king. Said to be imbued with un-paralleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
+	desc = "The mythical rod of a lost fisher king. Said to be imbued with unparalleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
 	difficulty_modifier = -10
 	ui_description = "A mythical telescopic fishing rod that makes fishing quite easier."
 	wiki_description = null
 	icon_state = "fishing_rod_master"
 	reel_overlay = "reel_master"
+	frame_state = "frame_master"
 	active_force = 13 //It's that sturdy
 	cast_range = 5
 	line = /obj/item/fishing_line/bouncy
@@ -775,6 +794,7 @@
 	wiki_description = "<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
+	frame_state = "frame_science"
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
 	completion_speed_mult = 1.1
 	bait_speed_mult = 1.1
@@ -811,6 +831,7 @@
 	desc = "A custom fishing rod from your local autolathe."
 	icon_state = "fishing_rod_material"
 	reel_overlay = "reel_material"
+	frame_state = "frame_material"
 	ui_description = "An autolathe-printable fishing rod made of some material."
 	wiki_description = "Different materials can have different effects. They also catch fish made of the same material used to print the rod."
 	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX
@@ -823,6 +844,11 @@
 	. = ..()
 	name = "fishing rod" //so it doesn't reset to "material fishing rod"
 
+/obj/item/fishing_rod/material/get_frame(datum/fishing_challenge/challenge)
+	var/mutable_appearance/frame = ..()
+	frame.color = color
+	return frame
+
 #undef ROD_SLOT_BAIT
 #undef ROD_SLOT_LINE
 #undef ROD_SLOT_HOOK
@@ -830,11 +856,12 @@
 /obj/projectile/fishing_cast
 	name = "fishing hook"
 	icon = 'icons/obj/fishing.dmi'
-	icon_state = "hook_projectile"
+	icon_state = "hook"
 	damage = 0
 	range = 5
 	suppressed =  SUPPRESSED_VERY
 	can_hit_turfs = TRUE
+	projectile_angle = 180
 
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
@@ -842,7 +869,6 @@
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	if(owner.hook)
 		icon_state = owner.hook.icon_state
-		transform = transform.Scale(1, -1)
 	. = ..()
 	if(!QDELETED(src))
 		our_line = owner.create_fishing_line(src, firer)

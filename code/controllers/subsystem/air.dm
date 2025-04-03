@@ -222,6 +222,7 @@ SUBSYSTEM_DEF(air)
 		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 
+
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
@@ -839,7 +840,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 		currentrun -= machine
 
 /datum/controller/subsystem/air/ui_state(mob/user)
-	return GLOB.debug_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/controller/subsystem/air/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

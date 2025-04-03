@@ -1,5 +1,6 @@
+import { Button, Divider, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const MinigamesMenu = (props) => {

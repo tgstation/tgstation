@@ -9,7 +9,7 @@
 			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
-		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
+		to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
 		return
 	examine(user)
 	if(length(return_occupants()) >= max_occupants)
@@ -23,7 +23,7 @@
 	if(!can_control_mech)
 		to_chat(user, span_warning("You cannot control exosuits without AI control beacons installed."))
 		return
-	to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("Take control of exosuit?")]</a><br>")
+	to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("Take control of exosuit?")]</a><br>")
 
 /obj/vehicle/sealed/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	. = ..()
@@ -40,7 +40,7 @@
 			for(var/mob/living/silicon/ai/aipilot in occupants)
 				ai_pilots += aipilot
 			if(!length(ai_pilots)) //Mech does not have an AI for a pilot
-				to_chat(user, span_warning("No AI detected in the [name] onboard computer."))
+				to_chat(user, span_warning("No AI detected in \the [src]'s onboard computer."))
 				return
 			if(length(ai_pilots) > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
 				AI = tgui_input_list(user, "Which AI do you wish to card?", "AI Selection", sort_list(ai_pilots))
@@ -66,7 +66,9 @@
 			return
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
-			AI.linked_core = new /obj/structure/ai_core/deactivated(AI.loc)
+			var/obj/structure/ai_core/deactivated/deactivated_core = new(AI.loc, FALSE, FALSE, AI)
+			AI.linked_core = deactivated_core
+			AI.linked_core.RegisterSignal(deactivated_core, COMSIG_ATOM_DESTRUCTION, TYPE_PROC_REF(/obj/structure/ai_core/deactivated, disable_doomsday)) //Protect that core! The structure goes bye-bye when we re-shunt back in so no need for cleanup.
 			AI.linked_core.remote_ai = AI
 			if(AI.can_dominate_mechs && LAZYLEN(occupants)) //Oh, I am sorry, were you using that?
 				to_chat(AI, span_warning("Occupants detected! Forced ejection initiated!"))
@@ -99,7 +101,7 @@
 	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
 	AI.eyeobj?.forceMove(src)
-	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/eye/ai_eye, update_visibility))
+	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/eye/camera/ai, update_visibility))
 	AI.controlled_equipment = src
 	AI.remote_control = src
 	add_occupant(AI)

@@ -4,7 +4,7 @@
 	name = "junk bullet"
 	icon_state = "trashball"
 	damage = 30
-	embed_type = /datum/embed_data/bullet_junk
+	embed_type = /datum/embedding/bullet/junk
 	/// What biotype does our junk projectile especially harm?
 	var/extra_damage_mob_biotypes = MOB_ROBOTIC
 	/// How much do we multiply our total base damage?
@@ -28,15 +28,16 @@
 		if(finalized_damage)
 			living_target.apply_damage(finalized_damage, damagetype = extra_damage_type, def_zone = BODY_ZONE_CHEST, wound_bonus = wound_bonus)
 
-/datum/embed_data/bullet_junk
-	embed_chance=15
-	fall_chance=3
-	jostle_chance=4
-	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.4
-	pain_mult=5
-	jostle_pain_mult=6
-	rip_time=10
+/datum/embedding/bullet/junk
+	embed_chance = 15
+	fall_chance = 3
+	jostle_chance = 4
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 5
+	jostle_pain_mult = 6
+	rip_time = 1 SECONDS
+	stealthy_embed = FALSE
 
 /obj/projectile/bullet/incendiary/fire/junk
 	name = "burning oil"
@@ -67,7 +68,7 @@
 /obj/projectile/bullet/junk/hunter
 	name = "junk hunter bullet"
 	icon_state = "gauss"
-	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL
+	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL | MOB_MINING
 	extra_damage_multiplier = 0
 	extra_damage_added_damage = 50
 
@@ -75,22 +76,23 @@
 	name = "junk ripper bullet"
 	icon_state = "redtrac"
 	damage = 10
-	embed_type = /datum/embed_data/bullet_junk_ripper
+	embed_type = /datum/embedding/bullet/junk/ripper
 	wound_bonus = 10
 	bare_wound_bonus = 30
 
-/datum/embed_data/bullet_junk_ripper
-	embed_chance=100
-	fall_chance=3
-	jostle_chance=4
-	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.4
-	pain_mult=5
-	jostle_pain_mult=6
-	rip_time=10
+/datum/embedding/bullet/junk/ripper
+	embed_chance = 100
+	fall_chance = 3
+	jostle_chance = 4
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 5
+	jostle_pain_mult = 6
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/junk/reaper
 	name = "junk reaper bullet"
+	icon_state = null
 	tracer_type = /obj/effect/projectile/tracer/sniper
 	impact_type = /obj/effect/projectile/impact/sniper
 	muzzle_type = /obj/effect/projectile/muzzle/sniper

@@ -1,6 +1,7 @@
 
 /atom/movable/screen/blob
 	icon = 'icons/hud/blob.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/blob/MouseEntered(location,control,params)
 	. = ..()
@@ -182,11 +183,11 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/node_blob(null, src)
-	using.screen_loc = ui_hand_position(2)
+	using.screen_loc = ui_hand_position(RIGHT_HANDS)
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/factory_blob(null, src)
-	using.screen_loc = ui_hand_position(1)
+	using.screen_loc = ui_hand_position(LEFT_HANDS)
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/readapt_strain(null, src)

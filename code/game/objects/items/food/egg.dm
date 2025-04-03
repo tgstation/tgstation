@@ -277,7 +277,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | BREAKFAST | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
-	crafted_food_buff = /datum/status_effect/food/speech/french
+
+/obj/item/food/omelette/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/love_food_buff, /datum/status_effect/food/speech/french)
 
 /obj/item/food/omelette/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/kitchen/fork))
@@ -309,7 +312,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
-	foodtypes = MEAT | BREAKFAST | GRAIN
+	foodtypes = MEAT|BREAKFAST|GRAIN|FRIED
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -324,7 +327,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|FRIED
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
 

@@ -90,12 +90,12 @@
 		while(!isturf(disk_loc))
 			if(ismob(disk_loc))
 				var/mob/M = disk_loc
-				disk_report += "carried by <a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a> "
+				disk_report += "carried by <a href='byond://?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a> "
 			if(isobj(disk_loc))
 				var/obj/O = disk_loc
 				disk_report += "in \a [O.name] "
 			disk_loc = disk_loc.loc
-		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
+		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
 	disk_report += "</table>"
 
 	var/post_report
@@ -114,12 +114,12 @@
 		post_report += "<b>War not declared.</b>"
 		var/obj/item/nuclear_challenge/war_button = war_button_ref?.resolve()
 		if(war_button)
-			force_war_button = "<a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
+			force_war_button = "<a href='byond://?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
 		else
 			force_war_button = "\[Cannot declare war, challenge button missing!\]"
 
 	post_report += "\n[force_war_button]"
-	post_report += "\n<a href='?_src_=holder;[HrefToken()];give_reinforcement=[REF(src)]'>\[Send Reinforcement\]</a>"
+	post_report += "\n<a href='byond://?_src_=holder;[HrefToken()];give_reinforcement=[REF(src)]'>\[Send Reinforcement\]</a>"
 
 	var/final_report = ..()
 	final_report += disk_report
@@ -194,7 +194,7 @@
 
 	var/mob/living/carbon/human/nukie = new(spawn_loc)
 	chosen_one.client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
-	nukie.key = chosen_one.key
+	nukie.PossessByPlayer(chosen_one.key)
 
 	var/datum/antagonist/nukeop/antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE

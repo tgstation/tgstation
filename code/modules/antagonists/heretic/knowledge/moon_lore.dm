@@ -32,7 +32,7 @@
 	research_tree_icon_state = "moon_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	add_traits(user ,TRAIT_EMPATH, REF(src))
+	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
 
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
@@ -62,7 +62,7 @@
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
-	carbon_target.mob_mood.set_sanity(carbon_target.mob_mood.sanity-30)
+	carbon_target.mob_mood.adjust_sanity(-30)
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
@@ -70,7 +70,7 @@
 		duration based on their sanity."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
 
-	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
+	action_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 
 /datum/heretic_knowledge/mark/moon_mark
@@ -89,7 +89,7 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 
 /datum/heretic_knowledge/moon_amulet
@@ -134,7 +134,7 @@
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
-	target.mob_mood.set_sanity(target.mob_mood.sanity - 10)
+	target.mob_mood.adjust_sanity(-10)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
@@ -144,7 +144,7 @@
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
 
-	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
+	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 
 
@@ -162,6 +162,9 @@
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 
 	ascension_achievement = /datum/award/achievement/misc/moon_ascension
+	announcement_text = "%SPOOKY% Laugh, for the ringleader %NAME% has ascended! \
+						The truth shall finally devour the lie! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_moon.ogg'
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
@@ -174,15 +177,7 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! \
-				The truth shall finally devour the lie! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_moon.ogg',
-		color_override = "pink",
-	)
-
-	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, REF(src))
+	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, type)
 	user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
@@ -239,7 +234,6 @@
 	)
 
 	for(var/mob/living/carbon/carbon_view in view(5, source))
-		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(carbon_view.stat != CONSCIOUS)
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
@@ -248,11 +242,13 @@
 			continue
 		new moon_effect(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
+		carbon_view.mob_mood.adjust_sanity(-5)
+		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(carbon_sanity < 30)
 			if(SPT_PROB(20, seconds_per_tick))
 				to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
 			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+
 		if(carbon_sanity < 10)
 			if(SPT_PROB(20, seconds_per_tick))
 				to_chat(carbon_view, span_warning("it echoes through you!"))

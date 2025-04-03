@@ -49,6 +49,11 @@
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep that's it
 
+/// Are we a panicking goose?
+#define BB_GOOSE_PANICKED "BB_goose_panicked"
+/// Are we a panicking goose?
+#define BB_GOOSE_VOMIT_CHANCE "BB_goose_vomit_chance"
+
 //Hunting BB keys
 ///key that holds our current hunting target
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
@@ -72,6 +77,13 @@
 #define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
 /// What typepath the holding object targeting strategy should look for
 #define BB_TARGET_HELD_ITEM "BB_target_held_item"
+/// How likely is this mob to move when idle per tick?
+#define BB_BASIC_MOB_IDLE_WALK_CHANCE "BB_basic_idle_walk_chance"
+
+/// Minimum range to keep target within
+#define BB_RANGED_SKIRMISH_MIN_DISTANCE "BB_ranged_skirmish_min_distance"
+/// Maximum range to keep target within
+#define BB_RANGED_SKIRMISH_MAX_DISTANCE "BB_ranged_skirmish_max_distance"
 
 /// Blackboard key storing how long your targeting strategy has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
@@ -140,6 +152,9 @@
 /// Blackboard key for a held item
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
 
+///key holding a range to look for stuff in
+#define BB_SEARCH_RANGE "BB_search_range"
+
 ///Mob the MOD is trying to attach to
 #define BB_MOD_TARGET "BB_mod_target"
 ///The implant the AI was created from
@@ -194,6 +209,14 @@
 ///drillable ice we can make holes in
 #define BB_DRILLABLE_ICE "BB_drillable_ice"
 
+
+//emotions we displays depending on our happiness
+///emotions we display when happy
+#define BB_HAPPY_EMOTIONS "happy_emotions"
+///emotions we display when neutral
+#define BB_MODERATE_EMOTIONS "moderate_emotions"
+///emotions we display when depressed
+#define BB_SAD_EMOTIONS "sad_emotions"
 
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists

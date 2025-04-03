@@ -1,35 +1,21 @@
-#define PRIORITY_ABSOLUTE 1
-#define PRIORITY_HIGH 10
-#define PRIORITY_NORMAL 100
-#define PRIORITY_LOW 1000
+#define CLIENT_COLOR_VALUE_INDEX 1
+#define CLIENT_COLOR_PRIORITY_INDEX 2
 
-/**
- * Client Colour Priority System By RemieRichards (then refactored by another contributor)
- * A System that gives finer control over which client.colour value to display on screen
- * so that the "highest priority" one is always displayed as opposed to the default of
- * "whichever was set last is displayed".
- *
- * Refactored to allow multiple overlapping client colours
- * (e.g. wearing blue glasses under a yellow visor, even though the result is a little unsatured.)
- * As well as some support for animated colour transitions.
- *
- * Define subtypes of this datum
- */
 /datum/client_colour
-	///The color we want to give to the client. This has to be either a hexadecimal color or a color matrix.
-	var/colour
-	///The mob that owns this client_colour.
+	/// Color given to the client, can be a hex color, color matrix or a filter
+	var/color
+	/// The mob that owns this client_colour
 	var/mob/owner
-	/**
-	  * We prioritize colours with higher priority (lower numbers), so they don't get overriden by less important ones:
-	  * eg: "Bloody screen" > "goggles colour" as the former is much more important
-	  */
-	var/priority = PRIORITY_NORMAL
-	///Will this client_colour prevent ones of lower priority from being applied?
+	/// Priority of this color, higher values are rendered above lower ones
+	var/priority = CLIENT_COLOR_FILTER_PRIORITY
+	/// Will this client_colour prevent ones of lower priority from being applied?
 	var/override = FALSE
-	///IF non-zero, 'animate_client_colour(fade_in)' will be called instead of 'update_client_colour' when added.
+	/// If set to TRUE, all colors below and above this one will be rendered in separate filters
+	/// If color is a filter, forced to TRUE
+	var/split_filters = FALSE
+	/// If non-zero, 'animate_client_colour(fade_in)' will be called instead of 'update_client_colour' when added.
 	var/fade_in = 0
-	///Same as above, but on removal.
+	/// If non-zero, 'animate_client_colour(fade_out)' will be called instead of 'update_client_colour' when removed.
 	var/fade_out = 0
 
 /datum/client_colour/New(mob/owner)
@@ -42,226 +28,248 @@
 	owner = null
 	return ..()
 
-///Sets a new colour, then updates the owner's screen colour.
-/datum/client_colour/proc/update_colour(new_colour, anim_time, easing = 0)
-	colour = new_colour
+///Sets a new color, then updates the owner's screen color.
+/datum/client_colour/proc/update_color(new_color, anim_time, easing = 0)
+	color = new_color
 	owner.animate_client_colour(anim_time, easing)
 
 /**
- * Adds an instance of colour_type to the mob's client_colours list
- * colour_type - a typepath (subtyped from /datum/client_colour)
+ * Add a color filter to the client
+ * new_color - client_colour datum or typepath to be added
+ * source - associated source for the client color
+ * force - if TRUE, colors of the same source will be replaced even if it is of the same type
  */
-/mob/proc/add_client_colour(colour_type_or_datum)
-	if(QDELING(src))
+/mob/proc/add_client_colour(datum/client_colour/new_color, source, force = FALSE)
+	if (QDELING(src))
 		return
-	var/datum/client_colour/colour
-	if(istype(colour_type_or_datum, /datum/client_colour))
-		colour = colour_type_or_datum
-	else if(ispath(colour_type_or_datum, /datum/client_colour))
-		colour = new colour_type_or_datum(src)
-	else
-		CRASH("Invalid colour type or datum for add_client_color: [colour_type_or_datum || "null"]")
 
-	BINARY_INSERT(colour, client_colours, /datum/client_colour, colour, priority, COMPARE_KEY)
-	animate_client_colour(colour.fade_in)
-	return colour
+	if (ispath(new_color))
+		new_color = new new_color(src)
+
+	if (!istype(new_color))
+		CRASH("Invalid color type or datum for add_client_colour: [new_color ? "[new_color] ([new_color.type])" : "null"]")
+
+	// Ensure that if a color with this source is already present, we either abort or get rid of it
+	var/datum/client_colour/existing_color = get_client_colour(source)
+	if (existing_color)
+		if (existing_color.type == new_color.type && !force)
+			return existing_color
+		qdel(existing_color)
+	client_colours[new_color] = source
+	animate_client_colour(new_color.fade_in)
+	return new_color
 
 /**
- * Removes an instance of colour_type from the mob's client_colours list
- * colour_type - a typepath (subtyped from /datum/client_colour)
- */
-/mob/proc/remove_client_colour(colour_type)
-	if(!ispath(colour_type, /datum/client_colour))
-		return
+ * Removes a color type from a specific source from mob's client_colours list
+ * source - color source to remove
+*/
 
-	for(var/datum/client_colour/colour as anything in client_colours)
-		if(colour.type == colour_type)
-			qdel(colour)
+/mob/proc/remove_client_colour(source)
+	var/datum/client_colour/existing_color = get_client_colour(source)
+	if (!existing_color)
+		return FALSE
+	qdel(existing_color)
+	return TRUE
+
+/mob/proc/get_client_colour(source)
+	for(var/datum/client_colour/color as anything in client_colours)
+		if (client_colours[color] == source)
+			return color
+
+/mob/proc/get_client_colour_filters()
+	. = list()
+	// sortTim sorts the passed list instead of making the copy, and so does reverse_range
+	var/list/used_colors = reverse_range(sortTim(client_colours.Copy(), GLOBAL_PROC_REF(cmp_client_colours)))
+	var/current_color = null
+	var/color_num = 0
+	var/color_prio = 1
+
+	for (var/datum/client_colour/client_color as anything in used_colors)
+		color_num += 1
+
+		var/list/filter_color = null
+		if (islist(client_color.color))
+			filter_color = client_color.color
+			// If our list has "type" in it then its a filter
+			if (!filter_color["type"])
+				filter_color = null
+
+		if (client_color.split_filters || filter_color)
+			if (current_color)
+				. += list(list(color_matrix_filter(current_color), color_prio))
+				color_prio += 1
+				current_color = null
+
+			. += list(list(filter_color || color_matrix_filter(client_color.color), color_prio))
+			color_prio += 1
+			continue
+
+		if (!current_color)
+			current_color = client_color.color
+			if (client_color.override)
+				break
+			continue
+
+		var/list/color_list = current_color
+		if (!islist(color_list))
+			color_list = color_to_full_rgba_matrix(color_list)
+		var/list/cur_list = color_to_full_rgba_matrix(client_color.color)
+
+		for (var/i in 1 to 20)
+			color_list[i] = (color_list[i] * (color_num - 1) + cur_list[i]) / color_num
+		current_color = color_list
+
+		if (client_color.override)
 			break
 
-/**
- * Gets the resulting colour/tone from client_colours.
- * In the case of multiple colours, they'll be converted to RGBA matrices for compatibility,
- * summed together, and then each element divided by the number of matrices. (except we do this with lists because byond)
- * target is the target variable.
- */
-#define MIX_CLIENT_COLOUR(target)\
-	var/_our_colour;\
-	var/_number_colours = 0;\
-	var/_pool_closed = INFINITY;\
-	for(var/_c in client_colours){\
-		var/datum/client_colour/_colour = _c;\
-		if(_pool_closed < _colour.priority){\
-			break\
-		};\
-		_number_colours++;\
-		if(_colour.override){\
-			_pool_closed = _colour.priority\
-		};\
-		if(!_our_colour){\
-			_our_colour = _colour.colour;\
-			continue\
-		};\
-		if(_number_colours == 2){\
-			_our_colour = color_to_full_rgba_matrix(_our_colour)\
-		};\
-		var/list/_colour_matrix = color_to_full_rgba_matrix(_colour.colour);\
-		var/list/_L = _our_colour;\
-		for(var/_i in 1 to 20){\
-			_L[_i] += _colour_matrix[_i]\
-		};\
-	};\
-	if(_number_colours > 1){\
-		var/list/_L = _our_colour;\
-		for(var/_i in 1 to 20){\
-			_L[_i] /= _number_colours\
-		};\
-	};\
-	target = _our_colour\
+	if (current_color)
+		. += list(list(color_matrix_filter(current_color), color_prio))
 
-#define CLIENT_COLOR_FILTER_KEY "fake_client_color"
-
-/**
- * Resets the mob's client.color to null, and then reapplies a new color based
- * on the client_colour datums it currently has.
- */
 /mob/proc/update_client_colour()
-	if(isnull(hud_used))
+	if (isnull(hud_used))
 		return
 
-	var/new_color = ""
-	if(length(client_colours))
-		MIX_CLIENT_COLOUR(new_color)
+	for (var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
+		for (var/filter_id in color_filter_store)
+			game_plane.remove_filter(filter_id)
 
-	for(var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
-		if(new_color)
-			game_plane.add_filter(CLIENT_COLOR_FILTER_KEY, 2, color_matrix_filter(new_color))
-		else
-			game_plane.remove_filter(CLIENT_COLOR_FILTER_KEY)
+	color_filter_store.Cut()
+	var/list/applied_filters = get_client_colour_filters()
 
-///Works similarly to 'update_client_colour', but animated.
-/mob/proc/animate_client_colour(anim_time = 2 SECONDS, anim_easing = NONE)
-	if(anim_time <= 0)
+	for (var/list/color_filter as anything in applied_filters)
+		var/added_color = color_filter[CLIENT_COLOR_VALUE_INDEX]
+		var/filter_priority = color_filter[CLIENT_COLOR_PRIORITY_INDEX]
+		for (var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
+			var/filter_id = "client_colour_[filter_priority]"
+			game_plane.add_filter(filter_id, filter_priority, added_color)
+			color_filter_store |= filter_id
+
+/// Works similarly to 'update_client_colour', but animated.
+/mob/proc/animate_client_colour(anim_time = 1 SECONDS, anim_easing = NONE)
+	if (isnull(hud_used))
+		return
+
+	if(anim_time <= -1)
 		return update_client_colour()
-	if(isnull(hud_used))
-		return
 
-	var/anim_color = ""
-	if(length(client_colours))
-		MIX_CLIENT_COLOUR(anim_color)
+	for (var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
+		for (var/filter_id in color_filter_store)
+			game_plane.remove_filter(filter_id)
 
-	for(var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
-		if(anim_color)
-			game_plane.add_filter(CLIENT_COLOR_FILTER_KEY, 2, color_matrix_filter())
-			game_plane.transition_filter(CLIENT_COLOR_FILTER_KEY, color_matrix_filter(anim_color), anim_time, anim_easing)
-		else
-			game_plane.transition_filter(CLIENT_COLOR_FILTER_KEY, color_matrix_filter(), anim_time, anim_easing)
-			// This leaves a blank color filter on the hud which is, fine I guess?
+	color_filter_store.Cut()
+	var/list/applied_filters = get_client_colour_filters()
 
-#undef MIX_CLIENT_COLOUR
+	for (var/list/color_filter as anything in applied_filters)
+		var/added_color = color_filter[CLIENT_COLOR_VALUE_INDEX]
+		var/filter_priority = color_filter[CLIENT_COLOR_PRIORITY_INDEX]
+		for (var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
+			var/filter_id = "client_colour_[filter_priority]"
+			game_plane.add_filter(filter_id, filter_priority, color_matrix_filter())
+			game_plane.transition_filter(filter_id, added_color, anim_time, anim_easing)
+			color_filter_store |= filter_id
 
-#undef CLIENT_COLOR_FILTER_KEY
+// Color types
 
-/datum/client_colour/glass_colour
-	priority = PRIORITY_LOW
-
-/datum/client_colour/glass_colour/green
-	colour = "#aaffaa"
-
-/datum/client_colour/glass_colour/lightgreen
-	colour = "#ccffcc"
-
-/datum/client_colour/glass_colour/blue
-	colour = "#aaaaff"
-
-/datum/client_colour/glass_colour/lightblue
-	colour = "#ccccff"
-
-/datum/client_colour/glass_colour/yellow
-	colour = "#ffff66"
-
-/datum/client_colour/glass_colour/lightyellow
-	colour = "#ffffaa"
-
-/datum/client_colour/glass_colour/red
-	colour = "#ffaaaa"
-
-/datum/client_colour/glass_colour/lightred
-	colour = "#ffcccc"
-
-/datum/client_colour/glass_colour/darkred
-	colour = "#bb5555"
-
-/datum/client_colour/glass_colour/orange
-	colour = "#ffbb99"
-
-/datum/client_colour/glass_colour/lightorange
-	colour = "#ffddaa"
-
-/datum/client_colour/glass_colour/purple
-	colour = "#ff99ff"
-
-/datum/client_colour/glass_colour/lightpurple
-	colour = "#ffccff"
-
-/datum/client_colour/glass_colour/gray
-	colour = "#cccccc"
-
-///A client colour that makes the screen look a bit more grungy, halloweenesque even.
+///A client color that makes the screen look a bit more grungy, halloweenesque even.
 /datum/client_colour/halloween_helmet
-	colour = list(0.75,0.13,0.13,0, 0.13,0.7,0.13,0, 0.13,0.13,0.75,0, -0.06,-0.09,-0.08,1, 0,0,0,0)
+	priority = CLIENT_COLOR_HELMET_PRIORITY
+	color = list(/*R*/ 0.75,0.13,0.13,0, /*G*/ 0.13,0.7,0.13,0, /*B*/ 0.13,0.13,0.75,0, /*A*/ -0.06,-0.09,-0.08,1, /*C*/ 0,0,0,0)
 
 /datum/client_colour/flash_hood
-	colour = COLOR_MATRIX_POLAROID
+	priority = CLIENT_COLOR_HELMET_PRIORITY
+	color = COLOR_MATRIX_POLAROID
 
-/datum/client_colour/glass_colour/nightmare
-	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0) //every color is either red or black
+/datum/client_colour/perceptomatrix
+	priority = CLIENT_COLOR_HELMET_PRIORITY
+	color = list(/*R*/ 1,0,0,0, /*G*/ 0,1,0,0, /*B*/ 0,0,1,0, /*A*/ 0,0,0,1, /*C*/ 0,-0.02,-0.02,0) // veeery slightly pink
+
+/datum/client_colour/rave
+	priority = CLIENT_COLOR_HELMET_PRIORITY
 
 /datum/client_colour/malfunction
-	colour = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/0,-130,0,0) // Matrix colors
+	priority = CLIENT_COLOR_ORGAN_PRIORITY
+	color = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ 0,-130,0,0) // Matrix colors
 
 /datum/client_colour/monochrome
-	colour = COLOR_MATRIX_GRAYSCALE
-	priority = PRIORITY_HIGH //we can't see colors anyway!
-	override = TRUE
-	fade_in = 20
-	fade_out = 20
+	color = COLOR_MATRIX_GRAYSCALE
+	priority = CLIENT_COLOR_FILTER_PRIORITY
+	split_filters = TRUE
+	fade_in = 2 SECONDS
+	fade_out = 2 SECONDS
 
-/datum/client_colour/monochrome/colorblind
-	priority = PRIORITY_HIGH
-
-/datum/client_colour/monochrome/trance
-	priority = PRIORITY_NORMAL
-
-/datum/client_colour/monochrome/blind
-	priority = PRIORITY_NORMAL
+/datum/client_colour/monochrome/glasses
+	priority = CLIENT_COLOR_GLASSES_PRIORITY
 
 /datum/client_colour/bloodlust
-	priority = PRIORITY_ABSOLUTE // Only anger.
-	colour = list(0,0,0,0,0,0,0,0,0,1,0,0) //pure red.
-	fade_out = 10
+	priority = CLIENT_COLOR_IMPORTANT_PRIORITY
+	color = list(0,0,0,0,0,0,0,0,0,1,0,0) // pure red
+	fade_out = 1 SECONDS
 
 /datum/client_colour/bloodlust/New(mob/owner)
 	..()
 	if(owner)
-		addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 0.1 SECONDS)
-
-/datum/client_colour/rave
-	priority = PRIORITY_LOW
-
-/datum/client_colour/psyker
-	priority = PRIORITY_ABSOLUTE
-	override = TRUE
-	colour = list(0.8,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+		addtimer(CALLBACK(src, PROC_REF(update_color), list(/*R*/ 1,0,0, /*G*/ 0.8,0.2,0, /*B*/ 0.8,0,0.2, /*C*/ 0.1,0,0), 10, SINE_EASING|EASE_OUT), 0.1 SECONDS)
 
 /datum/client_colour/manual_heart_blood
-	priority = PRIORITY_ABSOLUTE
-	colour = COLOR_RED
+	priority = CLIENT_COLOR_IMPORTANT_PRIORITY
+	color = COLOR_RED
+
+/datum/client_colour/psyker
+	priority = CLIENT_COLOR_OVERRIDE_PRIORITY
+	color = list(0.8,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	override = TRUE
 
 /datum/client_colour/temp
-	priority = PRIORITY_HIGH
+	priority = CLIENT_COLOR_TEMPORARY_PRIORITY
 
-#undef PRIORITY_ABSOLUTE
-#undef PRIORITY_HIGH
-#undef PRIORITY_NORMAL
-#undef PRIORITY_LOW
+/datum/client_colour/glass_colour
+	priority = CLIENT_COLOR_GLASSES_PRIORITY
+
+/datum/client_colour/glass_colour/green
+	color = "#aaffaa"
+
+/datum/client_colour/glass_colour/lightgreen
+	color = "#ccffcc"
+
+/datum/client_colour/glass_colour/blue
+	color = "#aaaaff"
+
+/datum/client_colour/glass_colour/lightblue
+	color = "#ccccff"
+
+/datum/client_colour/glass_colour/yellow
+	color = "#ffff66"
+
+/datum/client_colour/glass_colour/lightyellow
+	color = "#ffffaa"
+
+/datum/client_colour/glass_colour/red
+	color = "#ffaaaa"
+
+/datum/client_colour/glass_colour/lightred
+	color = "#ffcccc"
+
+/datum/client_colour/glass_colour/darkred
+	color = "#bb5555"
+
+/datum/client_colour/glass_colour/orange
+	color = "#ffbb99"
+
+/datum/client_colour/glass_colour/lightorange
+	color = "#ffddaa"
+
+/datum/client_colour/glass_colour/purple
+	color = "#ff99ff"
+
+/datum/client_colour/glass_colour/lightpurple
+	color = "#ffccff"
+
+/datum/client_colour/glass_colour/gray
+	color = "#cccccc"
+
+/datum/client_colour/glass_colour/nightmare
+	color = list(/*R*/ 255,0,0,0, /*G*/ 0,0,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ -130,0,0,0) //every color is either red or black
+	split_filters = TRUE
+
+#undef CLIENT_COLOR_VALUE_INDEX
+#undef CLIENT_COLOR_PRIORITY_INDEX

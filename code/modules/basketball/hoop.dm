@@ -54,38 +54,38 @@
 /obj/structure/hoop/update_overlays()
 	. = ..()
 
-	var/dir_offset_x = 0
-	var/dir_offset_y = 0
+	var/dir_offset_w = 0
+	var/dir_offset_z = 0
 
 	switch(dir)
 		if(NORTH)
-			dir_offset_y = -32
+			dir_offset_z = -32
 		if(SOUTH)
-			dir_offset_y = 32
+			dir_offset_z = 32
 		if(EAST)
-			dir_offset_x = -32
+			dir_offset_w = -32
 		if(WEST)
-			dir_offset_x = 32
+			dir_offset_w = 32
 
 	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "basketball_scorecard")
-	scoreboard.pixel_x = dir_offset_x
-	scoreboard.pixel_y = dir_offset_y
+	scoreboard.pixel_w = dir_offset_w
+	scoreboard.pixel_z = dir_offset_z
 	. += scoreboard
 
 	var/ones = total_score % 10
 	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]", layer + 0.01)
-	ones_overlay.pixel_x = 4
+	ones_overlay.pixel_w = 4
 	var/mutable_appearance/emissive_ones_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[ones]", src, alpha = src.alpha)
-	emissive_ones_overlay.pixel_x = 4
+	emissive_ones_overlay.pixel_w = 4
 	scoreboard.add_overlay(ones_overlay)
 	scoreboard.add_overlay(emissive_ones_overlay)
 
 	var/tens = (total_score / 10) % 10
 	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]", layer + 0.01)
-	tens_overlay.pixel_x = -5
+	tens_overlay.pixel_w = -5
 
 	var/mutable_appearance/emissive_tens_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[tens]", src, alpha = src.alpha)
-	emissive_tens_overlay.pixel_x = -5
+	emissive_tens_overlay.pixel_w = -5
 	scoreboard.add_overlay(tens_overlay)
 	scoreboard.add_overlay(emissive_tens_overlay)
 
@@ -98,22 +98,18 @@
 
 	var/dunk_dir = get_dir(baller, src)
 
-	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
-	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
+	var/dunk_pixel_z = (dunk_dir & SOUTH) ? -16 : 16
+	var/dunk_pixel_w = ((dunk_dir & EAST) && 16) || ((dunk_dir & WEST) && -16) || 0
 
-	INVOKE_ASYNC(src, PROC_REF(dunk_animation), baller, dunk_pixel_y, dunk_pixel_x)
+	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL)
+
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
 		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
-
-/// This bobs the mob in the hoop direction for the dunk animation
-/obj/structure/hoop/proc/dunk_animation(mob/living/baller, dunk_pixel_y, dunk_pixel_x)
-	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
-	sleep(0.5 SECONDS)
-	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()

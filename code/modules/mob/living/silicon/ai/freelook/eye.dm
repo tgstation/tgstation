@@ -1,43 +1,50 @@
-// AI EYE
-//
-// An invisible (no icon) mob that the AI controls to look around the station with.
-// It streams chunks as it moves around, which will show it what the AI can and cannot see.
-/mob/eye/ai_eye
+/mob/eye/camera/ai
 	name = "Inactive AI Eye"
-
 	icon_state = "ai_camera"
-	icon = 'icons/mob/eyemob.dmi'
-	invisibility = INVISIBILITY_MAXIMUM
+
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
-	var/list/visibleCameraChunks = list()
+	/// The AI who owns this eye.
 	var/mob/living/silicon/ai/ai = null
+	/// Whether this eye will transmit speech near it to the AI.
 	var/relay_speech = FALSE
-	var/use_static = TRUE
-	var/static_visibility_range = 16
+	/// Whether this eye can be found with AI detectors.
 	var/ai_detector_visible = TRUE
+	/// The color of the area if the eye is detectable.
 	var/ai_detector_color = COLOR_RED
-	interaction_range = INFINITY
 
-/mob/eye/ai_eye/Initialize(mapload)
+/mob/eye/camera/ai/Initialize(mapload)
 	. = ..()
-	GLOB.aiEyes += src
-	update_ai_detect_hud()
-	setLoc(loc, TRUE)
-
-/mob/eye/ai_eye/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	. = ..()
-	if(same_z_layer)
-		return
 	update_ai_detect_hud()
 
-/mob/eye/ai_eye/examine(mob/user) //Displays a silicon's laws to ghosts
-	. = ..()
-	if(istype(ai) && ai.laws && isobserver(user))
-		. += "<b>[ai] has the following laws:</b>"
-		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
-			. += law
+/mob/eye/camera/ai/Destroy()
+	if(ai)
+		ai.all_eyes -= src
+		ai = null
+	if(ai_detector_visible)
+		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
+		hud.remove_atom_from_hud(src)
+		var/list/L = hud_list[AI_DETECT_HUD]
+		QDEL_LIST(L)
+	return ..()
 
-/mob/eye/ai_eye/proc/update_ai_detect_hud()
+/**
+ * Returns a list of turfs visible to the client's viewsize. \
+ * Note that this will return an empty list if the camera's loc is not a turf.
+ */
+/mob/eye/camera/ai/proc/get_visible_turfs()
+	RETURN_TYPE(/list/turf)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(!isturf(loc))
+		return list()
+	var/client/C = GetViewerClient()
+	var/view = C ? getviewsize(C.view) : getviewsize(world.view)
+	var/turf/lowerleft = locate(max(1, x - (view[1] - 1)/2), max(1, y - (view[2] - 1)/2), z)
+	var/turf/upperright = locate(min(world.maxx, lowerleft.x + (view[1] - 1)), min(world.maxy, lowerleft.y + (view[2] - 1)), lowerleft.z)
+	return block(lowerleft, upperright)
+
+/mob/eye/camera/ai/proc/update_ai_detect_hud()
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
@@ -75,42 +82,17 @@
 	active_hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
-/mob/eye/ai_eye/proc/get_visible_turfs()
-	if(!isturf(loc))
-		return list()
-	var/client/C = GetViewerClient()
-	var/view = C ? getviewsize(C.view) : getviewsize(world.view)
-	var/turf/lowerleft = locate(max(1, x - (view[1] - 1)/2), max(1, y - (view[2] - 1)/2), z)
-	var/turf/upperright = locate(min(world.maxx, lowerleft.x + (view[1] - 1)), min(world.maxy, lowerleft.y + (view[2] - 1)), lowerleft.z)
-	return block(lowerleft, upperright)
-
-/// Used in cases when the eye is located in a movable object (i.e. mecha)
-/mob/eye/ai_eye/proc/update_visibility()
-	SIGNAL_HANDLER
-	if(use_static)
-		ai.camera_visibility(src)
-
-// Use this when setting the aiEye's location.
-// It will also stream the chunk that the new loc is in.
-
-/mob/eye/ai_eye/proc/setLoc(destination, force_update = FALSE)
+/mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
 	if(!ai)
 		return
 	if(!isturf(ai.loc))
 		return
-	destination = get_turf(destination)
-	if(!force_update && (destination == get_turf(src)))
-		return //we are already here!
-	if (destination)
-		abstract_move(destination)
-	else
-		moveToNullspace()
-	if(use_static)
-		ai.camera_visibility(src)
+
+	. = ..()
+
 	if(ai.client && !ai.multicam_on)
 		ai.client.set_eye(src)
 	update_ai_detect_hud()
-	update_parallax_contents()
 	//Holopad
 	if(istype(ai.current, /obj/machinery/holopad))
 		var/obj/machinery/holopad/H = ai.current
@@ -122,33 +104,37 @@
 	if(ai.master_multicam)
 		ai.master_multicam.refresh_view()
 
-/mob/eye/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
-	. = ..()
-	if(.)
-		setLoc(loc, force_update = TRUE)
+/mob/eye/camera/ai/update_visibility()
+	if(ai)
+		ai.camera_visibility(src)
+	else
+		..()
 
-/mob/eye/ai_eye/Move()
-	return
-
-/mob/eye/ai_eye/proc/GetViewerClient()
+/mob/eye/camera/ai/GetViewerClient()
 	if(ai)
 		return ai.client
 	return null
 
-/mob/eye/ai_eye/Destroy()
-	if(ai)
-		ai.all_eyes -= src
-		ai = null
-	for(var/V in visibleCameraChunks)
-		var/datum/camerachunk/c = V
-		c.remove(src)
-	GLOB.aiEyes -= src
-	if(ai_detector_visible)
-		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
-		hud.remove_atom_from_hud(src)
-		var/list/L = hud_list[AI_DETECT_HUD]
-		QDEL_LIST(L)
-	return ..()
+/mob/eye/camera/ai/examine(mob/user) //Displays a silicon's laws to ghosts
+	. = ..()
+	if(istype(ai) && ai.laws && isobserver(user))
+		. += "<b>[ai] has the following laws:</b>"
+		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
+			. += law
+
+/mob/eye/camera/ai/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	update_ai_detect_hud()
+
+///Called when the AI shiftclicks on something to examinate it.
+/mob/eye/camera/ai/proc/examinate_check(mob/user, atom/source)
+	SIGNAL_HANDLER
+	if(user.client.eye == src)
+		return COMPONENT_ALLOW_EXAMINATE
+
+/*----------------------------------------------------*/
 
 /atom/proc/move_camera_by_click()
 	if(!isAI(usr))
@@ -189,7 +175,6 @@
 		sprint = initial(sprint)
 
 	ai_tracking_tool.reset_tracking()
-
 #undef SPRINT_PER_STEP
 #undef MAX_SPRINT
 #undef SPRINT_PER_TICK
@@ -215,12 +200,12 @@
 /mob/living/silicon/ai/proc/create_eye()
 	if(eyeobj)
 		return
-	eyeobj = new /mob/eye/ai_eye()
+	eyeobj = new /mob/eye/camera/ai()
 	all_eyes += eyeobj
 	eyeobj.ai = src
-	eyeobj.setLoc(loc)
 	eyeobj.name = "[name] (AI Eye)"
-	eyeobj.real_name = eyeobj.name
+	eyeobj.setLoc(loc, TRUE)
+	eyeobj.RegisterSignal(src, COMSIG_CLICK_SHIFT, TYPE_PROC_REF(/mob/eye/camera/ai, examinate_check))
 	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/set_eyeobj_visible(state = TRUE)
@@ -241,7 +226,7 @@
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/eye/ai_eye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/mob/eye/camera/ai/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && GLOB.cameranet.checkCameraVis(speaker))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)

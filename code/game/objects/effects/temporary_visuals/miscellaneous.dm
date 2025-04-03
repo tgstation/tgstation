@@ -57,6 +57,12 @@
 	icon_state = "firing_effect"
 	duration = 3
 
+/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
+	. = ..()
+	if (ismovable(loc))
+		var/atom/movable/spawned_inside = loc
+		spawned_inside.vis_contents += src
+
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)
@@ -245,7 +251,7 @@
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "3"
+	icon_state = "heavy"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
@@ -437,8 +443,7 @@
 	var/size_matrix = matrix()
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
-		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/ICON_SIZE_Y)
+		size_matrix = matrix() * (size_calc_target.get_visual_height() / ICON_SIZE_Y)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -612,8 +617,10 @@
 	creature_x = creature.x
 	creature_y = creature.y
 
-	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER)
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	modsuit_image.pixel_w = (creature.x - looker.x) * 32
+	modsuit_image.pixel_z = (creature.y - looker.y) * 32
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
 	pinged_person = WEAKREF(creature)
@@ -648,8 +655,8 @@
 	if(follow_creature)
 		creature_y = creature.y
 		creature_x = creature.x
-	modsuit_image.pixel_x = ((creature_x - looker.x) * 32)
-	modsuit_image.pixel_y = ((creature_y - looker.y) * 32)
+	modsuit_image.pixel_w = ((creature_x - looker.x) * 32)
+	modsuit_image.pixel_z = ((creature_y - looker.y) * 32)
 
 /obj/effect/temp_visual/block //color is white by default, set to whatever is needed
 	name = "blocking glow"
@@ -732,3 +739,11 @@
 	duration = 0.5 SECONDS
 	pixel_x = -32
 	pixel_y = -32
+
+/obj/effect/temp_visual/spotlight
+	name = "Spotlight"
+	icon = 'icons/effects/light_overlays/light_64.dmi'
+	icon_state = "spotlight"
+	duration = 5 MINUTES
+	pixel_x = -16
+	pixel_y = -8 //32

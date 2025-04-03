@@ -14,8 +14,7 @@
 	var/teleport_range = 7
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, list/modifiers)
-	var/area/ourarea = get_area(src)
-	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
+	if(!action_checks(target) || !check_teleport_valid(source, target, TELEPORT_CHANNEL_BLUESPACE))
 		return
 	var/turf/T = get_turf(target)
 	if(T && (loc.z == T.z) && (get_dist(loc, T) <= teleport_range))
@@ -28,7 +27,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator
 	name = "mounted wormhole generator"
-	desc = "An exosuit module that allows generating of small quasi-stable wormholes, allowing for long-range inneacurate teleportation."
+	desc = "An exosuit module that allows generating of small quasi-stable wormholes, allowing for long-range inaccurate teleportation."
 	icon_state = "mecha_wholegen"
 	equip_cooldown = 50
 	energy_drain = 300
@@ -36,8 +35,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, list/modifiers)
-	var/area/ourarea = get_area(src)
-	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
+	if(!action_checks(target) || !check_teleport_valid(source, target, TELEPORT_CHANNEL_WORMHOLE))
 		return
 	var/area/targetarea = pick(get_areas_in_range(100, chassis))
 	if(!targetarea)//Literally middle of nowhere how did you even get here
@@ -175,7 +173,7 @@
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
 
 /datum/armor/mecha_equipment_ccw_boost
-	melee = 15
+	melee = 20
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
 	name = "Projectile Shielding"
@@ -186,8 +184,8 @@
 	armor_mod = /datum/armor/mecha_equipment_ranged_boost
 
 /datum/armor/mecha_equipment_ranged_boost
-	bullet = 10
-	laser = 10
+	bullet = 15
+	laser = 15
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
 
@@ -198,6 +196,7 @@
 	icon_state = "repair_droid"
 	energy_drain = 50
 	range = 0
+	unstackable = TRUE
 	can_be_toggled = TRUE
 	active = FALSE
 	equipment_slot = MECHA_UTILITY
@@ -285,7 +284,7 @@
 	///Maximum fuel capacity of the generator, in units
 	var/max_fuel = 75 * SHEET_MATERIAL_AMOUNT
 	///Energy recharged per second
-	var/rechargerate = 0.005 * STANDARD_CELL_RATE
+	var/rechargerate = 0.05 * STANDARD_CELL_RATE
 
 /obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
 	. = ..()

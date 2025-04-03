@@ -86,7 +86,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Can by synced with a DRAGnet beacon to set a teleport destination for snare rounds."
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Can be synced with a DRAGnet beacon to set a teleport destination for snare rounds."
 	icon_state = "dragnet"
 	inhand_icon_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -136,7 +136,7 @@
 	inhand_icon_state = "turretlaser"
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/ai_turrets, /obj/item/ammo_casing/energy/laser)
 	weapon_weight = WEAPON_HEAVY
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2

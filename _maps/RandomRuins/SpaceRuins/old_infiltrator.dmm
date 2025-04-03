@@ -95,7 +95,7 @@
 	id = "ruined_infiltrator_shutters"
 	},
 /obj/item/knife/combat/survival,
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -2;
 	pixel_x = 6
 	},
@@ -210,8 +210,8 @@
 "nF" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/ammo_casing/a357/match,
-/obj/item/ammo_casing/a357/match{
+/obj/item/ammo_casing/c357/match,
+/obj/item/ammo_casing/c357/match{
 	pixel_y = -4;
 	pixel_x = -7
 	},
@@ -306,7 +306,7 @@
 /area/ruin/space/unpowered)
 "uS" = (
 /obj/machinery/newscaster/directional/south,
-/obj/item/ammo_casing/a357/match,
+/obj/item/ammo_casing/c357/match,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "vi" = (
@@ -425,7 +425,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Cv" = (
-/obj/item/ammo_casing/a357/match,
+/obj/item/ammo_casing/c357/match,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "CC" = (
@@ -720,11 +720,11 @@
 /area/ruin/space/unpowered)
 "YN" = (
 /obj/structure/table,
-/obj/item/reagent_containers/pill/morphine{
+/obj/item/reagent_containers/applicator/pill/morphine{
 	pixel_y = 8;
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/pill/morphine{
+/obj/item/reagent_containers/applicator/pill/morphine{
 	pixel_x = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
@@ -739,10 +739,10 @@
 	pixel_y = 3;
 	pixel_x = 19
 	},
-/obj/item/reagent_containers/pill/stimulant{
+/obj/item/reagent_containers/applicator/pill/stimulant{
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/pill/epinephrine{
+/obj/item/reagent_containers/applicator/pill/epinephrine{
 	pixel_y = 4;
 	pixel_x = -2
 	},

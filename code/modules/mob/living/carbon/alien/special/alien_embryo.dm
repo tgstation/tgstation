@@ -33,7 +33,7 @@
 	switch(stage)
 		if(3, 4)
 			if(SPT_PROB(1, seconds_per_tick))
-				owner.sneeze()
+				owner.emote("sneeze")
 			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("cough")
 			if(SPT_PROB(1, seconds_per_tick))
@@ -42,7 +42,7 @@
 				to_chat(owner, span_danger("Mucous runs down the back of your throat."))
 		if(5)
 			if(SPT_PROB(1, seconds_per_tick))
-				owner.sneeze()
+				owner.emote("sneeze")
 			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("cough")
 			if(SPT_PROB(2, seconds_per_tick))
@@ -78,7 +78,7 @@
 		for(var/datum/surgery/operations as anything in owner.surgeries)
 			if(operations.location != BODY_ZONE_CHEST)
 				continue
-			if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
+			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
 				continue
 			attempt_grow(gib_on_success = FALSE)
 			return
@@ -119,7 +119,7 @@
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-	new_xeno.key = ghost.key
+	new_xeno.PossessByPlayer(ghost.key)
 	SEND_SOUND(new_xeno, sound('sound/mobs/non-humanoids/hiss/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
 	new_xeno.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)

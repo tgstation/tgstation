@@ -76,17 +76,32 @@
 	return protection // Pass the protection value collected here upwards
 
 /**
- * React to a hit by a projectile object
+ * Wrapper for bullet_act used for atom-specific calculations, i.e. armor
  *
  * @params
  * * hitting_projectile - projectile
  * * def_zone - zone hit
  * * piercing_hit - is this hit piercing or normal?
  */
-/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+
+/atom/proc/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = null)
+	if (isnull(blocked))
+		blocked = check_projectile_armor(def_zone, hitting_projectile)
+	return bullet_act(hitting_projectile, def_zone, piercing_hit, blocked)
+
+/**
+ * React to a hit by a projectile object
+ *
+ * @params
+ * * hitting_projectile - projectile
+ * * def_zone - zone hit
+ * * piercing_hit - is this hit piercing or normal?
+ * * blocked - total armor value to apply to this hit
+ */
+/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone, piercing_hit, blocked)
 	if(sigreturn & COMPONENT_BULLET_PIERCED)
 		return BULLET_ACT_FORCE_PIERCE
 	if(sigreturn & COMPONENT_BULLET_BLOCKED)
@@ -94,7 +109,7 @@
 	if(sigreturn & COMPONENT_BULLET_ACTED)
 		return BULLET_ACT_HIT
 
-	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
+	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone, piercing_hit, blocked)
 	if(QDELETED(hitting_projectile)) // Signal deleted it?
 		return BULLET_ACT_BLOCK
 
@@ -102,7 +117,7 @@
 		target = src,
 		// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
 		// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
-		blocked = check_projectile_armor(def_zone, hitting_projectile),
+		blocked = blocked,
 		pierce_hit = piercing_hit,
 	)
 
@@ -135,7 +150,7 @@
 		step(harmed_atom, REVERSE_DIR(harmed_atom.dir))
 
 ///Handle the atom being slipped over
-/atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, force_drop)
+/atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, daze, force_drop)
 	return
 
 ///Used for making a sound when a mob involuntarily falls into the ground.

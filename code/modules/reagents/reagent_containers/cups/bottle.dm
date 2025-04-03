@@ -37,6 +37,11 @@
 	desc = "A small bottle of spewium."
 	list_reagents = list(/datum/reagent/toxin/spewium = 30)
 
+/obj/item/reagent_containers/cup/bottle/syndol
+	name = "syndol bottle"
+	desc = "A small bottle of syndol."
+	list_reagents = list(/datum/reagent/drug/syndol = 30)
+
 /obj/item/reagent_containers/cup/bottle/morphine
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."
@@ -133,6 +138,11 @@
 	name = "Strange Reagent Bottle"
 	desc = "A small bottle. May be used to revive people."
 	list_reagents = list(/datum/reagent/medicine/strange_reagent = 30)
+
+/obj/item/reagent_containers/cup/bottle/fishy_reagent
+	name = "Fishy Reagent Bottle"
+	desc = "A small bottle. May be used to revive fish."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 30)
 
 /obj/item/reagent_containers/cup/bottle/traitor
 	name = "syndicate bottle"
@@ -254,6 +264,12 @@
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."
 	list_reagents = list(/datum/reagent/romerol = 30)
+
+/obj/item/reagent_containers/cup/bottle/moltobeso
+	name = "Molt'Obeso bottle"
+	desc = "The revolutionary new sauce from Syndicate's culinary experts, designed to instantly reshape your figure! \
+			The key to the effectiveness of this product lies in its unique formulation, which combines carefully selected ingredients to stimulate appetite and enhance the absorption of calories."
+	list_reagents = list(/datum/reagent/consumable/moltobeso = 50)
 
 /obj/item/reagent_containers/cup/bottle/random_virus
 	name = "Experimental disease culture bottle"
@@ -467,7 +483,7 @@
 
 /obj/item/reagent_containers/cup/bottle/caramel
 	name = "bottle of caramel"
-	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 30)
 
 /*
@@ -511,7 +527,7 @@
 			balloon_alert(user, "container full!")
 			return TRUE
 
-		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user)
+		var/transfer_amount = round(reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 
@@ -551,7 +567,7 @@
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel
 	name = "bottle of caramel syrup"
-	desc = "A pump bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A pump bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 50)
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur

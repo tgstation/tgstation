@@ -23,7 +23,7 @@
 	name = "Fire all directions"
 	desc = "Unleash lines of cold fire in all directions"
 	button_icon = 'icons/effects/fire.dmi'
-	button_icon_state = "1"
+	button_icon_state = "light"
 	cooldown_time = 4 SECONDS
 	click_to_activate = FALSE
 	fire_range = 6

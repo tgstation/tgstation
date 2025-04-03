@@ -143,7 +143,6 @@
 	desc = "Twists and corrupts the nearby area as well as dispelling holy auras on floors."
 	button_icon_state = "defile"
 	cooldown_time = 15 SECONDS
-
 	aoe_radius = 4
 	unlock_amount = 10
 	cast_amount = 30
@@ -169,6 +168,14 @@
 	if(victim.type == /turf/closed/wall/r_wall && prob(10) && !HAS_TRAIT(victim, TRAIT_RUSTY))
 		new /obj/effect/temp_visual/revenant(victim)
 		victim.AddElement(/datum/element/rust)
+	for(var/obj/machinery/shower/cursed_shower in victim)
+		new /obj/effect/temp_visual/revenant(victim)
+		cursed_shower.has_water_reclaimer = FALSE
+		cursed_shower.reagents.remove_all(1, relative=TRUE)
+		cursed_shower.reagents.add_reagent(/datum/reagent/blood, initial(cursed_shower.reagent_capacity))
+		if(prob(50))
+			cursed_shower.intended_on = TRUE
+			cursed_shower.update_actually_on(TRUE)
 	for(var/obj/effect/decal/cleanable/food/salt/salt in victim)
 		new /obj/effect/temp_visual/revenant(victim)
 		qdel(salt)

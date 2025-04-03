@@ -17,7 +17,7 @@
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Range of the knesis grab.
-	var/grab_range = 5
+	var/grab_range = 8
 	/// Time between us hitting objects with kinesis.
 	var/hit_cooldown_time = 1 SECONDS
 	/// Stat required for us to grab a mob.
@@ -162,8 +162,7 @@
 	ADD_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_setanchored))
 	playsound(grabbed_atom, 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg', 75, TRUE)
-	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
-	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
+	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1, appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM|KEEP_APART)
 	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
 	grabbed_atom.add_overlay(kinesis_icon)
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")

@@ -82,6 +82,8 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/Destroy(force)
 	UnpossessPawn(FALSE)
+	if(ai_status)
+		GLOB.ai_controllers_by_status[ai_status] -= src
 	our_cells = null
 	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
@@ -201,7 +203,7 @@ multiple modular subtrees with behaviors
 	if(!can_idle || isnull(our_cells))
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
+		if(locate(/mob/living) in grid.client_contents)
 			return FALSE
 	return TRUE
 
@@ -223,8 +225,11 @@ multiple modular subtrees with behaviors
 	if(should_idle())
 		set_ai_status(AI_STATUS_IDLE)
 
-/datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
+/datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER
+
+	if (!(locate(/mob/living) in target_list))
+		return
 
 	if(ai_status == AI_STATUS_IDLE)
 		set_ai_status(AI_STATUS_ON)
@@ -244,6 +249,8 @@ multiple modular subtrees with behaviors
  * Returns AI_STATUS_ON otherwise.
  */
 /datum/ai_controller/proc/get_expected_ai_status()
+	if (isnull(get_turf(pawn)))
+		return AI_STATUS_OFF
 
 	if (!ismob(pawn))
 		return AI_STATUS_ON
@@ -292,6 +299,7 @@ multiple modular subtrees with behaviors
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
+	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_UNPOSSESSED_PAWN)
 	set_ai_status(AI_STATUS_OFF)
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 	clear_able_to_run()
@@ -300,8 +308,6 @@ multiple modular subtrees with behaviors
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
 		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
-	if(ai_status)
-		GLOB.ai_controllers_by_status[ai_status] -= src
 	remove_from_unplanned_controllers()
 	pawn.ai_controller = null
 	pawn = null
@@ -634,7 +640,12 @@ multiple modular subtrees with behaviors
 	}; \
 	else if(isdatum(tracked_datum)) { \
 		var/datum/_tracked_datum = tracked_datum; \
-		if(!HAS_TRAIT_FROM(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]")) { \
+		if(QDELETED(_tracked_datum)) { \
+			stack_trace("Tried to track a qdeleted datum ([_tracked_datum]) in ai datum blackboard (key: [key])! \
+				Please ensure that we are not doing this by adding handling where necessary."); \
+			return; \
+		}; \
+		else if(!HAS_TRAIT_FROM(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]")) { \
 			RegisterSignal(_tracked_datum, COMSIG_QDELETING, PROC_REF(sig_remove_from_blackboard), override = TRUE); \
 			ADD_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
 		}; \

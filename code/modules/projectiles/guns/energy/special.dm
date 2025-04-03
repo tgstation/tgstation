@@ -364,7 +364,7 @@
 	name = "tesla cannon"
 	icon_state = "tesla"
 	inhand_icon_state = "tesla"
-	desc = "A gun that shoots balls of \"tesla\", whatever that is."
+	desc = "A gun powered by a flux anomaly that shoots lightning bolts. Electrically insulating clothing may protect from some of the damage."
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY
@@ -431,7 +431,7 @@
 	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
-	new_coin.preparePixelProjectile(target_turf, user)
+	new_coin.aim_projectile(target_turf, user)
 	new_coin.fire()
 	return ITEM_INTERACT_SUCCESS
 

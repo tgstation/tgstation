@@ -4,11 +4,11 @@
 	var/mob/living/silicon/ai/ai
 	var/mutable_appearance/highlighted_background
 	var/highlighted = FALSE
-	var/mob/eye/ai_eye/pic_in_pic/aiEye
+	var/mob/eye/camera/ai/pic_in_pic/aiEye
 
 /atom/movable/screen/movable/pic_in_pic/ai/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	aiEye = new /mob/eye/ai_eye/pic_in_pic()
+	aiEye = new /mob/eye/camera/ai/pic_in_pic()
 	aiEye.screen = src
 
 /atom/movable/screen/movable/pic_in_pic/ai/Destroy()
@@ -91,7 +91,6 @@
 /turf/open/ai_visible/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(multiz_offset_increase))
-	multiz_offset_increase(SSmapping)
 
 /turf/open/ai_visible/proc/multiz_offset_increase(datum/source)
 	SIGNAL_HANDLER
@@ -126,37 +125,38 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 
 //Dummy camera eyes
 
-/mob/eye/ai_eye/pic_in_pic
+/mob/eye/camera/ai/pic_in_pic
 	name = "Secondary AI Eye"
+	icon_state = "ai_pip_camera"
 	invisibility = INVISIBILITY_OBSERVER
 	mouse_opacity = MOUSE_OPACITY_ICON
-	icon_state = "ai_pip_camera"
+	ai_detector_color = COLOR_ORANGE
+
 	var/atom/movable/screen/movable/pic_in_pic/ai/screen
 	var/list/cameras_telegraphed = list()
 	var/telegraph_cameras = TRUE
 	var/telegraph_range = 7
-	ai_detector_color = COLOR_ORANGE
 
-/mob/eye/ai_eye/pic_in_pic/GetViewerClient()
+/mob/eye/camera/ai/pic_in_pic/GetViewerClient()
 	if(screen?.ai)
 		return screen.ai.client
 
-/mob/eye/ai_eye/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
-	if (destination)
-		abstract_move(destination)
-	else
-		moveToNullspace()
+/mob/eye/camera/ai/pic_in_pic/update_visibility()
 	if(screen?.ai)
 		screen.ai.camera_visibility(src)
 	else
-		GLOB.cameranet.visibility(src)
+		..()
+
+/mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
+	. = ..()
 	update_camera_telegraphing()
 	update_ai_detect_hud()
 
-/mob/eye/ai_eye/pic_in_pic/get_visible_turfs()
+/mob/eye/camera/ai/pic_in_pic/get_visible_turfs()
+	SHOULD_CALL_PARENT(FALSE) //we do our own thing here
 	return screen ? screen.get_visible_turfs() : list()
 
-/mob/eye/ai_eye/pic_in_pic/proc/update_camera_telegraphing()
+/mob/eye/camera/ai/pic_in_pic/proc/update_camera_telegraphing()
 	if(!telegraph_cameras)
 		return
 	var/list/obj/machinery/camera/add = list()
@@ -185,7 +185,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		C.in_use_lights++
 		C.update_appearance()
 
-/mob/eye/ai_eye/pic_in_pic/proc/disable_camera_telegraphing()
+/mob/eye/camera/ai/pic_in_pic/proc/disable_camera_telegraphing()
 	telegraph_cameras = FALSE
 	for (var/obj/machinery/camera/C as anything in cameras_telegraphed)
 		if(QDELETED(C))
@@ -194,7 +194,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		C.update_appearance()
 	cameras_telegraphed.Cut()
 
-/mob/eye/ai_eye/pic_in_pic/Destroy()
+/mob/eye/camera/ai/pic_in_pic/Destroy()
 	disable_camera_telegraphing()
 	return ..()
 

@@ -31,7 +31,7 @@
 		. += span_info("It appears to be currently broken. You can use it in-hand to repair it.")
 	else
 		. += span_info("The current CST (local) time is: [station_time_timestamp()].")
-		. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss")].")
+		. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss", NO_TIMEZONE)].")
 
 /obj/item/table_clock/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -40,11 +40,11 @@
 	if(break_clock(break_sound = 'sound/effects/magic/clockwork/ark_activation.ogg'))
 		user.visible_message(
 			span_warning("[user] smashes \the [src] so hard it stops breaking!"),
-			span_boldannounce("I can't stand this stupid machine anymore! Shut up already!"),
+			span_bolddanger("I can't stand this stupid machine anymore! Shut up already!"),
 			span_notice("You hear repeated smashing!"),
 		)
 
-/obj/item/table_clock/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle, quickstart)
+/obj/item/table_clock/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle, quickstart, throw_type_path = /datum/thrownthing)
 	. = ..()
 	if(!.)
 		return

@@ -34,6 +34,13 @@
 	. = ..()
 	. += deconstruction_hints(user)
 
+/obj/structure/lattice/Destroy(force) // so items on the lattice fall when the lattice is destroyed
+	var/turf/turfloc = loc
+	. = ..()
+	if(isturf(turfloc))
+		for(var/thing_that_falls as anything in turfloc) // as anything because turfloc can only contain movables
+			turfloc.zFall((thing_that_falls))
+
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.")
 
@@ -42,7 +49,7 @@
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT == src)
 			continue
-		stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z])")
+		log_mapping("multiple lattices found in ([loc.x], [loc.y], [loc.z], [get_area(LAT)])")
 		return INITIALIZE_HINT_QDEL
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
@@ -69,22 +76,29 @@
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
 		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
-		if(design_structure == /turf/open/floor/plating)
+		if(design_structure == /turf/open/floor/plating/rcd)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
 				T.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 				qdel(src)
 				return TRUE
 		if(design_structure == /obj/structure/lattice/catwalk)
-			var/turf/turf = loc
-			qdel(src)
-			new /obj/structure/lattice/catwalk(turf)
+			replace_with_catwalk()
 			return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
+
+/obj/structure/lattice/proc/replace_with_catwalk()
+	var/list/post_replacement_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_LATTICE_PRE_REPLACE_WITH_CATWALK, post_replacement_callbacks)
+	var/turf/turf = loc
+	qdel(src)
+	var/new_catwalk = new /obj/structure/lattice/catwalk(turf)
+	for(var/datum/callback/callback as anything in post_replacement_callbacks)
+		callback.Invoke(new_catwalk)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -155,7 +169,7 @@
 
 /obj/structure/lattice/lava/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(!istype(attacking_item, /obj/item/stack/tile/iron))
+	if(!ismetaltile(attacking_item))
 		return
 	var/obj/item/stack/tile/iron/attacking_tiles = attacking_item
 	if(!attacking_tiles.use(1))

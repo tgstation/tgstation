@@ -8,7 +8,7 @@
 	cooldown_time = 1 MINUTES
 	spell_requirements = null
 
-	invocation = "PL`YR DOT PL`CTM` OOO`BEE G" //player.placeatme 00064B33 9
+	invocation = "PL'YR DOT PL'CTM' OOO'BEE G!" //player.placeatme 00064B33 9
 	invocation_type = INVOCATION_SHOUT
 	garbled_invocation_prob = 0 //i'd rather it remain like this
 

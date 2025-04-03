@@ -87,6 +87,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
 		block_charges = 1,\
 	)
+	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(curse_heathen))
 
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
@@ -113,22 +114,22 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		else
 			. += span_notice("[src] can be unpacked by hitting the floor of a holy area with it.")
 
-/obj/item/book/bible/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy)
-	. = ..()
+/obj/item/book/bible/proc/curse_heathen(datum/source, mob/living/user, obj/item/burning_tool)
+	SIGNAL_HANDLER
+
 	// no deity to cast a curse upon thee
 	if(!deity_name)
 		return
-	if(. && (resistance_flags & ON_FIRE))
-		var/datum/component/omen/existing_omen = user.GetComponent(/datum/component/omen)
-		//DOUBLE CURSED?! Just straight up gib the guy.
-		if(existing_omen)
-			to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
-			add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
-			user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
-			user.gib(DROP_ALL_REMAINS)
-		else
-			to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
-			user.AddComponent(/datum/component/omen/bible)
+	var/datum/component/omen/existing_omen = user.GetComponent(/datum/component/omen)
+	//DOUBLE CURSED?! Just straight up gib the guy.
+	if(existing_omen)
+		to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
+		add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
+		user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
+		user.gib(DROP_ALL_REMAINS)
+	else
+		to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
+		user.AddComponent(/datum/component/omen/bible)
 
 /obj/item/book/bible/carve_out(obj/item/carving_item, mob/living/user)
 	. = ..()
@@ -204,25 +205,30 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
 	if(GLOB.religious_sect)
 		return GLOB.religious_sect.sect_bless(blessed,user)
+
 	if(!ishuman(blessed))
-		return
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/built_in_his_image = blessed
 	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
 		if(!IS_ORGANIC_LIMB(bodypart))
 			balloon_alert(user, "can't heal inorganic!")
-			return FALSE
+			return BLESSING_IGNORED
 
 	var/heal_amt = 10
 	var/list/hurt_limbs = built_in_his_image.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(length(hurt_limbs))
-		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-				built_in_his_image.update_damage_overlays()
-		built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
-		to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-		playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
-		built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
+			built_in_his_image.update_damage_overlays()
+
+	built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
+	to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
+	playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
+	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 /obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!ISADVANCEDTOOLUSER(user))
@@ -244,7 +250,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
+		if(GLOB.religious_sect?.sect_dead_bless(target_mob, user) == BLESSING_FAILED)
 			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
 			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
@@ -256,9 +262,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/smack_chance = DEFAULT_SMACK_CHANCE
 	if(GLOB.religious_sect)
 		smack_chance = GLOB.religious_sect.smack_chance
-	var/success = !prob(smack_chance) && bless(target_mob, user)
-	if(success)
-		return
+
+	if(!prob(smack_chance))
+		var/bless_result = bless(target_mob, user)
+		if (bless_result != BLESSING_FAILED)
+			SEND_SIGNAL(target_mob, COMSIG_LIVING_BLESSED, user, src, bless_result)
+			return
+
 	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
@@ -367,8 +377,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
-	var/active_hand_zone = (!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
-	user.apply_damage(5, BRUTE, active_hand_zone, attacking_item = src)
+	user.apply_damage(5, BRUTE, user.get_active_hand(), attacking_item = src)
 	to_chat(user, span_notice("Your name appears on the inside cover, in blood."))
 	owner_name = user.real_name
 

@@ -168,7 +168,7 @@
 	trigger_mob = FALSE
 	trigger_item = TRUE
 	specific_item = /obj/structure/holobox
-	removable_signaller = FALSE //Being a pressure plate subtype, this can also use signals.
+	removable_assembly = FALSE //Being a pressure plate subtype, this can also use signals.
 	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on its own default channel however.
 	active = TRUE
 	trigger_delay = 10
@@ -264,10 +264,10 @@
 			continue
 		var/mutable_appearance/lit_image = mutable_appearance('icons/obj/fluff/puzzle_small.dmi', "light_lit")
 		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/fluff/puzzle_small.dmi', "light_lit", src)
-		lit_image.pixel_x = 8 * ((i % 3 || 3 ) - 1)
-		lit_image.pixel_y = -8 * (ROUND_UP(i / 3) - 1)
-		emissive_image.pixel_x = lit_image.pixel_x
-		emissive_image.pixel_y = lit_image.pixel_y
+		lit_image.pixel_w = 8 * ((i % 3 || 3 ) - 1)
+		lit_image.pixel_z = -8 * (ROUND_UP(i / 3) - 1)
+		emissive_image.pixel_w = lit_image.pixel_w
+		emissive_image.pixel_z = lit_image.pixel_z
 		. += lit_image
 		. += emissive_image
 
@@ -454,9 +454,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 			"green",
 			"blue",
 			"yellow",
-			"orange",
-			"brown",
+			COLOR_ORANGE, // orange is also not valid
+			COLOR_BROWN, // brown is NOT a valid byond color
 			"gray",
+			"purple",
 		)
 	for(var/digit in 0 to 9)
 		digit_to_color["[digit]"] = pick_n_take(possible_colors)
@@ -525,7 +526,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 /obj/effect/puzzle_poddoor_open
 	name = "puzzle-poddoor relay"
-	desc = "activates poddoors if activated with a puzzle signal."
+	desc = "Activates pod doors if activated with a puzzle signal."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 	anchored = TRUE
@@ -594,13 +595,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 		pixel_y += round(extra_rows*(PUZZLE_DOTS_VERTICAL_OFFSET*0.5))
 		for(var/i in 1 to extra_rows)
 			var/mutable_appearance/row = mutable_appearance(icon, icon_state)
-			row.pixel_y = -i*PUZZLE_DOTS_VERTICAL_OFFSET
+			row.pixel_z = -i*PUZZLE_DOTS_VERTICAL_OFFSET
 			add_overlay(row)
 	for(var/i in 1 to pass_len)
 		var/mutable_appearance/colored_dot = mutable_appearance(icon, "puzzle_dot_single")
 		colored_dot.color = pad.digit_to_color[pass_digits[i]]
-		colored_dot.pixel_x = PUZZLE_DOTS_HORIZONTAL_OFFSET * ((i-1)%MAX_PUZZLE_DOTS_PER_ROW)
-		colored_dot.pixel_y -= CEILING((i/MAX_PUZZLE_DOTS_PER_ROW)-1, 1)*PUZZLE_DOTS_VERTICAL_OFFSET
+		colored_dot.pixel_w = PUZZLE_DOTS_HORIZONTAL_OFFSET * ((i-1)%MAX_PUZZLE_DOTS_PER_ROW)
+		colored_dot.pixel_z -= CEILING((i/MAX_PUZZLE_DOTS_PER_ROW)-1, 1)*PUZZLE_DOTS_VERTICAL_OFFSET
 		add_overlay(colored_dot)
 
 #undef MAX_PUZZLE_DOTS_PER_ROW

@@ -37,6 +37,7 @@
 	hunt_range = 7
 
 /datum/ai_behavior/find_and_set/treatable_hydro
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/find_and_set/treatable_hydro/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/possible_trays = list()
@@ -97,6 +98,9 @@
 		return FALSE
 	set_movement_target(controller, target)
 
+/datum/ai_behavior/find_and_set/beamable_hydroplants
+	action_cooldown = 15 SECONDS
+
 /datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/possible_trays = list()
 
@@ -136,7 +140,8 @@
 	return can_see(source, water_source, radius)
 
 /datum/ai_behavior/hunt_target/interact_with_target/water_source
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	always_reset_target = TRUE
 	hunt_cooldown = 5 SECONDS
 
 /datum/ai_controller/basic_controller/seedling/meanie
@@ -161,7 +166,7 @@
 	finish_planning = FALSE
 
 ///pet commands
-/datum/pet_command/point_targeting/use_ability/solarbeam
+/datum/pet_command/use_ability/solarbeam
 	command_name = "Launch solarbeam"
 	command_desc = "Command your pet to launch a solarbeam at your target!"
 	radial_icon = 'icons/effects/beam.dmi'
@@ -169,10 +174,17 @@
 	speech_commands = list("beam", "solar")
 	pet_ability_key = BB_SOLARBEAM_ABILITY
 
-/datum/pet_command/point_targeting/use_ability/rapidseeds
+/datum/pet_command/use_ability/solarbeam/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to use a solar beam on [target]!"
+
+
+/datum/pet_command/use_ability/rapidseeds
 	command_name = "Rapid seeds"
 	command_desc = "Command your pet to launch a volley of seeds at your target!"
 	radial_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	radial_icon_state = "seedling"
 	speech_commands = list("rapid", "seeds", "volley")
 	pet_ability_key = BB_RAPIDSEEDS_ABILITY
+
+/datum/pet_command/use_ability/rapidseeds/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to unleash a volley of seeds on [target]!"

@@ -42,7 +42,7 @@
 
 /obj/machinery/power/manufacturing/sorter/receive_resource(atom/movable/receiving, atom/from, receive_dir)
 	if(length(loc.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
-		return MANUFACTURING_FAIL_FULL
+		return MANUFACTURING_FAIL
 	receiving.Move(loc)
 	return MANUFACTURING_SUCCESS
 
@@ -125,21 +125,32 @@
 	return ismob(moving) ? moving.Move(get_step(src,dir), dir) : send_resource(moving, dir)
 
 /obj/machinery/power/manufacturing/sorter/process()
-	if(delay_timerid || !length(loc?.contents - 1))
+	if(!anchored || delay_timerid || !length(loc?.contents - 1))
 		return
 	launch_everything()
 
+/// Is target something we should even attempt to start launching?
+/obj/machinery/power/manufacturing/sorter/proc/can_be_launched(atom/movable/target)
+	. = TRUE
+	if(!istype(target) || target == src || target.anchored) //target is not movable, us or anchored
+		return FALSE
+	var/mob/living/probably_living = target
+	if(isdead(target) || (istype(probably_living) && probably_living.incorporeal_move)) //target is incorporeal
+		return FALSE
+
 /obj/machinery/power/manufacturing/sorter/proc/on_entered(datum/source, atom/movable/mover)
 	SIGNAL_HANDLER
-	if(mover == src || !istype(mover) || mover.anchored || delay_timerid)
+	if(!anchored || !can_be_launched(mover) || delay_timerid)
 		return
 	delay_timerid = addtimer(CALLBACK(src, PROC_REF(launch_everything)), 0.2 SECONDS)
 
 /obj/machinery/power/manufacturing/sorter/proc/launch_everything()
 	delay_timerid = null
+	if(!anchored)
+		return
 	var/turf/where_we_at = get_turf(src)
 	for(var/atom/movable/mover as anything in where_we_at.contents)
-		if(mover.anchored)
+		if(!can_be_launched(mover))
 			continue
 		for(var/datum/sortrouter_filter/sorting as anything in sort_filters)
 			if(sorting.meets_conditions(mover) == sorting.inverted)

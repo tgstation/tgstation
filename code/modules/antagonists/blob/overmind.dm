@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				break
 	else // no blob starts so look for an alternate
 		for(var/i in 1 to 16)
-			var/turf/picked_safe = get_safe_random_station_turf()
+			var/turf/picked_safe = get_safe_random_station_turf_equal_weight()
 			if(is_valid_turf(picked_safe))
 				T = picked_safe
 				break
@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!placed)
 			if(manualplace_min_time && world.time >= manualplace_min_time)
 				to_chat(src, span_boldnotice("You may now place your blob core."))
-				to_chat(src, span_boldannounce("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
+				to_chat(src, span_bolddanger("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
 				manualplace_min_time = 0
 			if(autoplace_max_time && world.time >= autoplace_max_time)
 				place_blob_core(BLOB_RANDOM_PLACEMENT)
@@ -210,18 +210,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			live_guy.fully_heal()
 
-		for(var/area/check_area in GLOB.areas)
-			if(!is_type_in_list(check_area, GLOB.the_station_areas))
-				continue
-			if(!(check_area.area_flags & BLOBS_ALLOWED))
-				continue
-			check_area.color = blobstrain.color
-			check_area.name = "blob"
-			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
-			check_area.icon_state = "blob_shield"
-			check_area.layer = BELOW_MOB_LAYER
-			check_area.SetInvisibility(INVISIBILITY_NONE)
-			check_area.blend_mode = 0
+	for(var/area_type in GLOB.the_station_areas)
+		var/area/check_area = GLOB.areas_by_type[area_type]
+		if(!(check_area.area_flags & BLOBS_ALLOWED))
+			continue
+		check_area.color = blobstrain.color
+		check_area.name = "blob"
+		check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
+		check_area.icon_state = "blob_shield"
+		check_area.layer = BELOW_MOB_LAYER
+		check_area.SetInvisibility(INVISIBILITY_NONE)
+		check_area.blend_mode = 0
 
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(B)
@@ -261,8 +260,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	to_chat(src, span_blobannounce("You are the overmind!"))
 	if(!placed && autoplace_max_time <= world.time)
-		to_chat(src, span_boldannounce("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
-		to_chat(src, span_boldannounce("You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen."))
+		to_chat(src, span_bolddanger("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
+		to_chat(src, span_bolddanger("You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen."))
 	update_health_hud()
 	add_points(0)
 
@@ -325,7 +324,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	var/message_a = say_quote(message)
 	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
-	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src)
+	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src, MESSAGE_TYPE_RADIO)
 
 /mob/eye/blob/blob_act(obj/structure/blob/B)
 	return

@@ -1,15 +1,16 @@
-/mob/eye/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/camera/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
-	var/obj/machinery/holopad/H = origin
-	if(!H?.move_hologram(eye_user, destination))
+	var/obj/machinery/holopad/H = origin_ref?.resolve()
+	if(!H?.move_hologram(user_ref?.resolve(), destination))
 		sprint = initial(sprint) // Reset sprint so it doesn't balloon in our calling proc
 		return
 	return ..()
 
 /obj/machinery/holopad/remove_eye_control(mob/living/user)
-	if(user.client)
-		user.reset_perspective(null)
-	user.remote_control = null
+	var/mob/eye/camera/remote/eye = user.remote_control
+	if(!istype(eye))
+		CRASH("Attempted to remove eye control from non-camera eye. Something has gone horribly wrong.")
+	eye.assign_user(null)
 
 //this datum manages its own references
 
@@ -24,7 +25,7 @@
 	var/list/dialed_holopads
 
 	///user's eye, once connected
-	var/mob/eye/ai_eye/remote/holo/eye
+	var/mob/eye/camera/remote/holo/eye
 	///user's hologram, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram
 	///hangup action
@@ -34,10 +35,10 @@
 	///calls from a head of staff autoconnect, if the receiving pad is not secure.
 	var/head_call = FALSE
 
-//creates a holocall made by `caller` from `calling_pad` to `callees`
-/datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
+//creates a holocall made by `call_source` from `calling_pad` to `callees`
+/datum/holocall/New(mob/living/call_source, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
 	call_start_time = world.time
-	user = caller
+	user = call_source
 	calling_pad.outgoing_call = src
 	calling_holopad = calling_pad
 	head_call = elevated_access
@@ -155,15 +156,8 @@
 	hologram = answering_holopad.activate_holo(user)
 	hologram.HC = src
 
-	//eyeobj code is horrid, this is the best copypasta I could make
-	eye = new
-	eye.origin = answering_holopad
-	eye.eye_initialized = TRUE
-	eye.eye_user = user
-	eye.name = "Camera Eye ([user.name])"
-	user.remote_control = eye
-	user.reset_perspective(eye)
-	eye.setLoc(answering_holopad.loc)
+	eye = new(get_turf(answering_holopad), answering_holopad)
+	eye.assign_user(user)
 
 	hangup = new(eye, src)
 	hangup.Grant(user)

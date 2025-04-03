@@ -1,8 +1,3 @@
-
-#define GIBTONITE_QUALITY_HIGH 3
-#define GIBTONITE_QUALITY_MEDIUM 2
-#define GIBTONITE_QUALITY_LOW 1
-
 #define ORESTACK_OVERLAYS_MAX 10
 
 /**********************Mineral ores**************************/
@@ -41,8 +36,8 @@
 	else //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-			newore.pixel_x = rand(-8,8)
-			newore.pixel_y = rand(-8,8)
+			newore.pixel_w = rand(-8,8)
+			newore.pixel_z = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
 
 	if(stack_overlays)
@@ -297,7 +292,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		holder.master = src
 		holder.on_attach()
 		rig_overlay = holder
-		rig_overlay.pixel_y -= 5
+		rig_overlay.pixel_z -= 5
 		add_overlay(rig_overlay)
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(igniter_prime))
 		log_bomber(user, "attached [holder] to ", src)
@@ -341,8 +336,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	else
 		return ..()
 
-/obj/item/gibtonite/bullet_act(obj/projectile/P)
-	GibtoniteReaction(P.firer, "A projectile has primed for detonation a")
+/obj/item/gibtonite/bullet_act(obj/projectile/proj)
+	GibtoniteReaction(proj.firer, "A projectile has primed for detonation a")
 	return ..()
 
 /obj/item/gibtonite/ex_act()
@@ -441,6 +436,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_[coinflip]"
 	pixel_x = base_pixel_x + rand(0, 16) - 8
 	pixel_y = base_pixel_y + rand(0, 8) - 8
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 
 /obj/item/coin/finalize_material_effects(list/materials)
 	. = ..()
@@ -664,7 +660,4 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-#undef GIBTONITE_QUALITY_HIGH
-#undef GIBTONITE_QUALITY_LOW
-#undef GIBTONITE_QUALITY_MEDIUM
 #undef ORESTACK_OVERLAYS_MAX

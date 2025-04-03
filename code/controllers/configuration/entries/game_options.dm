@@ -62,21 +62,11 @@
 	integer = FALSE
 	min_val = 0
 
-/// Determines the ideal player count for maximum progression per minute.
-/datum/config_entry/number/traitor_ideal_player_count
-	default = 20
-	min_val = 1
-
 /// Determines how fast traitors scale in general.
 /datum/config_entry/number/traitor_scaling_multiplier
 	default = 1
 	integer = FALSE
 	min_val = 0.01
-
-/// Determines how many potential objectives a traitor can have.
-/datum/config_entry/number/maximum_potential_objectives
-	default = 6
-	min_val = 1
 
 /datum/config_entry/number/changeling_scaling_coeff //how much does the amount of players get divided by to determine changelings
 	default = 6
@@ -438,6 +428,10 @@
 	min_val = 0
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
 
+/// Will drones be restricted from interacting with the Supermatter and Atmospherics area?
+/datum/config_entry/flag/drone_area_interaction_restrict
+	default = TRUE
+
 /datum/config_entry/flag/native_fov
 
 /datum/config_entry/flag/disallow_title_music
@@ -448,6 +442,8 @@
 	integer = FALSE
 
 /datum/config_entry/flag/disallow_circuit_sounds
+
+/datum/config_entry/flag/tts_no_whisper
 
 /datum/config_entry/string/tts_http_url
 	protection = CONFIG_ENTRY_LOCKED
@@ -460,6 +456,11 @@
 	min_val = 1
 
 /datum/config_entry/str_list/tts_voice_blacklist
+
+/// Maximum timeout for http calls
+/datum/config_entry/number/tts_http_timeout_seconds
+	default = 30
+	min_val = 0
 
 /datum/config_entry/flag/give_tutorials_without_db
 
@@ -498,3 +499,12 @@
 	integer = FALSE
 	default = 1
 	min_val = 0.05
+
+
+//Custom Shuttles
+//Shuttle size limiter
+/datum/config_entry/number/max_shuttle_count
+	default = 6
+
+/datum/config_entry/number/max_shuttle_size
+	default = 250

@@ -17,6 +17,8 @@
 	))
 	/// Do we hide the contents on examine?
 	var/contents_hidden = FALSE
+	/// icon_state of overlay for papers inside of this folder
+	var/paper_overlay_state = "folder_paper"
 
 /obj/item/folder/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -25,6 +27,7 @@
 /obj/item/folder/Initialize(mapload)
 	update_icon()
 	. = ..()
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/folder/Destroy()
 	for(var/obj/important_thing in contents)
@@ -67,11 +70,16 @@
 /obj/item/folder/update_overlays()
 	. = ..()
 	if(contents.len)
-		. += "folder_paper"
+		var/to_add = get_paper_overlay()
+		if (to_add)
+			. += to_add
+
+/obj/item/folder/proc/get_paper_overlay()
+	var/mutable_appearance/paper_overlay = mutable_appearance(icon, paper_overlay_state, offset_spokesman = src, appearance_flags = KEEP_APART)
+	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
+	return paper_overlay
 
 /obj/item/folder/attackby(obj/item/weapon, mob/user, params)
-	if(burn_paper_product_attackby_check(weapon, user))
-		return
 	if(is_type_in_typecache(weapon, folder_insertables))
 		//Add paper, photo or documents into the folder
 		if(!user.transferItemToLoc(weapon, src))

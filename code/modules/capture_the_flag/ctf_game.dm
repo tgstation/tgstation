@@ -153,7 +153,7 @@
 		player_mob.set_species(/datum/species/human)
 
 	var/datum/mind/new_member_mind = new_team_member.mob.mind
-	if(new_member_mind?.current)
+	if(new_member_mind)
 		player_mob.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = new_member_mind, \
@@ -403,7 +403,7 @@
 	alpha = 255
 
 /obj/structure/trap/ctf/examine(mob/user)
-	return
+	return list()
 
 /obj/structure/trap/ctf/trap_effect(mob/living/living)
 	if(!is_ctf_target(living))

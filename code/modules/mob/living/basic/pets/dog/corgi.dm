@@ -37,13 +37,8 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 	RegisterSignals(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD), PROC_REF(on_appearance_change))
-	if(!can_breed)
-		return
-	AddComponent(\
-		/datum/component/breed,\
-		can_breed_with = typecacheof(list(/mob/living/basic/pet/dog/corgi)),\
-		baby_path = /mob/living/basic/pet/dog/corgi/puppy,\
-	)
+	if(can_breed)
+		add_breeding_component()
 
 /mob/living/basic/pet/dog/corgi/Destroy()
 	QDEL_NULL(inventory_head)
@@ -71,6 +66,18 @@
 		access_card.forceMove(drop_location())
 		access_card = null
 	return ..()
+
+/mob/living/basic/pet/dog/corgi/proc/add_breeding_component()
+	var/static/list/partner_paths = typecacheof(list(/mob/living/basic/pet/dog/corgi))
+	var/static/list/baby_paths = list(
+		/mob/living/basic/pet/dog/corgi/puppy = 95,
+		/mob/living/basic/pet/dog/corgi/puppy/void = 5,
+	)
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/pet/dog/corgi)),\
+		baby_paths = baby_paths,\
+	)
 
 /// Removes the hat and shirt (but not ID) of this corgi
 /mob/living/basic/pet/dog/corgi/proc/undress_dog()
@@ -167,7 +174,7 @@
 
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			head_icon = equipped_head_fashion_item.get_overlay(dir = EAST)
-			head_icon.pixel_y = -8
+			head_icon.pixel_z = -8
 			head_icon.transform = head_icon.transform.Turn(180)
 		else
 			head_icon = equipped_head_fashion_item.get_overlay()
@@ -187,7 +194,7 @@
 
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			back_icon = equipped_back_fashion_item.get_overlay(dir = EAST)
-			back_icon.pixel_y = -11
+			back_icon.pixel_z = -11
 			back_icon.transform = back_icon.transform.Turn(180)
 		else
 			back_icon = equipped_back_fashion_item.get_overlay()

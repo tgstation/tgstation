@@ -66,11 +66,11 @@
 /datum/component/omen/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_accident))
 	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
-	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, PROC_REF(check_bless))
+	RegisterSignal(parent, COMSIG_LIVING_BLESSED, PROC_REF(check_bless))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_BLESSED, COMSIG_LIVING_DEATH))
 
 /datum/component/omen/proc/consume_omen()
 	incidents_left--
@@ -208,31 +208,24 @@
 		INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
 		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
 
-	if(prob(30 * luck_mod)) /// Bonk!
-		var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
-		if(!the_head)
-			return
-		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
+	if(prob(30 * luck_mod) && our_guy.get_bodypart(BODY_ZONE_HEAD)) /// Bonk!
+		playsound(our_guy, 'sound/effects/tableheadsmash.ogg', 90, TRUE)
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-		the_head.receive_damage(75 * damage_mod, damage_source = "slipping")
-		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * damage_mod)
+		our_guy.apply_damage(75 * damage_mod, BRUTE, BODY_ZONE_HEAD, attacking_item = "slipping")
+		our_guy.apply_damage(100 * damage_mod, BRAIN)
 		consume_omen()
 
 	return
 
 /// Hijack the mood system to see if we get the blessing mood event to cancel the omen
-/datum/component/omen/proc/check_bless(mob/living/our_guy, category)
+/datum/component/omen/proc/check_bless(mob/living/our_guy, mob/living/priest, obj/item/book/bible/bible, bless_result)
 	SIGNAL_HANDLER
 
-	if(incidents_left == INFINITY)
-		return
-
-	if(!("blessing" in our_guy.mob_mood.mood_events))
+	if(incidents_left == INFINITY || bless_result != BLESSING_SUCCESS)
 		return
 
 	playsound(our_guy, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
 	to_chat(our_guy, span_green("You feel fantastic!"))
-
 	qdel(src)
 
 /// Severe deaths. Normally lifts the curse.

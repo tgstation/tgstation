@@ -10,6 +10,7 @@
 
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	/// Current items in the build queue.
 	var/list/datum/design/queue = list()
 
@@ -49,11 +50,14 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
-	//looping sound for printing items
+	/// Looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
 
 	/// Local designs that only this mechfab have(using when mechfab emaged so it's illegal designs).
 	var/list/datum/design/illegal_local_designs
+
+	/// Direction the produced items will drop (0 means on top of us)
+	var/drop_direction = SOUTH
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	print_sound = new(src,  FALSE)
@@ -136,15 +140,19 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
-	if(panel_open)
-		. += span_notice("Alt-click to rotate the output direction.")
+		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 
-/obj/machinery/mecha_part_fabricator/click_alt(mob/user)
-	if(!panel_open)
-		return CLICK_ACTION_BLOCKING
-	dir = turn(dir, -90)
-	balloon_alert(user, "rotated to [dir2text(dir)].")
-	return CLICK_ACTION_SUCCESS
+/obj/machinery/mecha_part_fabricator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
+		return
+	if(being_built)
+		balloon_alert(user, "printing started!")
+		return
+	var/direction = get_dir(src, over_location)
+	if(!direction)
+		return
+	drop_direction = direction
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -267,7 +275,7 @@
 /obj/machinery/mecha_part_fabricator/process()
 	// If there's a stored part to dispense due to an obstruction, try to dispense it.
 	if(stored_part)
-		var/turf/exit = get_step(src,(dir))
+		var/turf/exit = get_step(src, drop_direction)
 		if(exit.density)
 			return TRUE
 
@@ -305,7 +313,7 @@
 
 	being_built = null
 
-	var/turf/exit = get_step(src,(dir))
+	var/turf/exit = get_step(src, drop_direction)
 	if(exit.density)
 		say("Error! The part outlet is obstructed.")
 		desc = "It's trying to dispense the fabricated [dispensed_design.name], but the part outlet is obstructed."
@@ -359,8 +367,8 @@
 
 /obj/machinery/mecha_part_fabricator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user, datum/tgui/ui)
@@ -374,7 +382,7 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	for(var/datum/design/design in cached_designs)
@@ -468,7 +476,7 @@
 			return
 
 		if("del_queue_part")
-			// Delete a specific from from the queue
+			// Delete a specific from the queue
 			var/index = text2num(params["index"])
 			remove_from_queue(index)
 

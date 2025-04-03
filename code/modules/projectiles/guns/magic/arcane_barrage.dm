@@ -6,6 +6,7 @@
 	icon_state = "arcane_barrage"
 	inhand_icon_state = "arcane_barrage"
 	base_icon_state = "arcane_barrage"
+	icon_angle = 90
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	slot_flags = null

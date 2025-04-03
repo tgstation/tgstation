@@ -1,6 +1,7 @@
 /// Shoots a random, fake projectile to the hallucinator
 /datum/hallucination/stray_bullet
 	random_hallucination_weight = 7
+	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 
 /datum/hallucination/stray_bullet/start()
 	var/list/turf/starting_locations = list()
@@ -16,7 +17,7 @@
 
 	var/obj/projectile/hallucination/fake_projectile = new fake_type(start, src)
 
-	fake_projectile.preparePixelProjectile(hallucinator, start)
+	fake_projectile.aim_projectile(hallucinator, start)
 	fake_projectile.fire()
 
 	QDEL_IN(src, 10 SECONDS) // Should clean up the projectile if it somehow gets stuck.
@@ -32,7 +33,6 @@
 	ricochets_max = 0
 	ricochet_chance = 0
 	damage = 0
-	projectile_type = /obj/projectile/hallucination
 	log_override = TRUE
 	do_not_log = TRUE
 	/// Our parent hallucination that's created us
@@ -101,7 +101,6 @@
 			spawn_hit(target, TRUE)
 
 	qdel(src)
-	return TRUE
 
 /// Called when a mob is hit by the fake projectile
 /obj/projectile/hallucination/proc/on_mob_hit(mob/living/hit_mob)
@@ -177,8 +176,8 @@
 		return
 
 	var/image/hit_effect = image('icons/effects/blood.dmi', hit_atom, is_wall ? hal_impact_effect_wall : hal_impact_effect, ABOVE_MOB_LAYER)
-	hit_effect.pixel_x = hit_atom.pixel_x + rand(-4,4)
-	hit_effect.pixel_y = hit_atom.pixel_y + rand(-4,4)
+	hit_effect.pixel_w = hit_atom.pixel_x + rand(-4,4)
+	hit_effect.pixel_z = hit_atom.pixel_y + rand(-4,4)
 	parent.hallucinator.client.images |= hit_effect
 	addtimer(CALLBACK(src, PROC_REF(clean_up_hit), hit_effect), is_wall ? hit_duration_wall : hit_duration)
 
@@ -214,37 +213,11 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/laser/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjustStaminaLoss(20)
 	afflicted.adjust_eye_blur(4 SECONDS)
-
-/obj/projectile/hallucination/taser
-	name = "electrode"
-	damage_type = BURN
-	hal_icon_state = "spark"
-	color = COLOR_YELLOW
-	hal_fire_sound = 'sound/items/weapons/taser.ogg'
-	hal_hitsound = 'sound/items/weapons/taserhit.ogg'
-	hal_hitsound_wall = null
-	hal_impact_effect = null
-	hal_impact_effect_wall = null
-
-/obj/projectile/hallucination/taser/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.Paralyze(10 SECONDS)
-	afflicted.adjust_stutter(40 SECONDS)
-	if(HAS_TRAIT(afflicted, TRAIT_HULK))
-		afflicted.say(pick(
-			";RAAAAAAAARGH!",
-			";HNNNNNNNNNGGGGGGH!",
-			";GWAAAAAAAARRRHHH!",
-			"NNNNNNNNGGGGGGGGHH!",
-			";AAAAAAARRRGH!"),
-			forced = "hulk (hallucinating)",
-		)
-	else if(!afflicted.check_stun_immunity(CANKNOCKDOWN))
-		addtimer(CALLBACK(afflicted, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 20), 0.5 SECONDS)
 
 /obj/projectile/hallucination/disabler
 	name = "disabler beam"
@@ -260,7 +233,7 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/disabler/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjustStaminaLoss(30)

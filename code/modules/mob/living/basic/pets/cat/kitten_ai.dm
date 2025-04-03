@@ -61,8 +61,7 @@
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
-		if(!length(typecache_filter_list(human_target.held_items, locate_items)))
-			continue
-		return human_target
-
+		for (var/obj/item/held_item in human_target.held_items)
+			if (is_type_in_typecache(held_item, locate_items))
+				return human_target
 	return null

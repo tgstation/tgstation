@@ -12,7 +12,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
-	invocation = "R''S 'E"
+	invocation = "R'S 'E!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
@@ -51,7 +51,7 @@
 		victim.apply_status_effect(/datum/status_effect/moon_converted)
 		caster.log_message("made [victim] insane.", LOG_GAME)
 		victim.log_message("was driven insane by [caster]")
-	victim.mob_mood.set_sanity(victim_sanity * 0.5)
+	victim.mob_mood.adjust_sanity(victim_sanity * -0.5)
 
 
 /obj/effect/temp_visual/moon_ringleader

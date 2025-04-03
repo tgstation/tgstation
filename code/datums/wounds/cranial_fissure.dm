@@ -52,12 +52,10 @@
 
 /datum/wound/cranial_fissure/remove_wound(ignore_limb, replaced)
 	REMOVE_TRAIT(limb, TRAIT_IMMUNE_TO_CRANIAL_FISSURE, type)
-	REMOVE_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)
-
-	victim.remove_filter(CRANIAL_FISSURE_FILTER_DISPLACEMENT)
-
-	UnregisterSignal(victim, COMSIG_MOB_SLIPPED)
-
+	if (!isnull(victim))
+		REMOVE_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)
+		victim.remove_filter(CRANIAL_FISSURE_FILTER_DISPLACEMENT)
+		UnregisterSignal(victim, COMSIG_MOB_SLIPPED)
 	return ..()
 
 /datum/wound/cranial_fissure/proc/on_owner_slipped(mob/source)

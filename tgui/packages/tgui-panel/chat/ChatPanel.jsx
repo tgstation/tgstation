@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { shallowDiffers } from 'common/react';
 import { Component, createRef } from 'react';
-import { Button } from 'tgui/components';
+import { Button } from 'tgui-core/components';
+import { shallowDiffers } from 'tgui-core/react';
 
 import { chatRenderer } from './renderer';
 

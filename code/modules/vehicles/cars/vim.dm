@@ -1,12 +1,12 @@
 /**
  * ## VIM!!!!!!!
  *
- * It's a teenie minature mecha... for critters!
+ * It's a teenie miniature mecha... for critters!
  * For the critters that cannot be understood, there is a sound creator in the mecha. It also has headlights.
  */
 /obj/vehicle/sealed/car/vim
 	name = "\improper Vim"
-	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
+	desc = "A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer."
 	icon_state = "vim"
 	max_integrity = 50
 	armor_type = /datum/armor/car_vim
@@ -46,7 +46,7 @@
 /obj/vehicle/sealed/car/vim/atom_destruction(damage_flag)
 	new /obj/effect/decal/cleanable/oil(get_turf(src))
 	do_sparks(5, TRUE, src)
-	visible_message(span_boldannounce("[src] blows apart!"))
+	visible_message(span_bolddanger("[src] blows apart!"))
 	return ..()
 
 /obj/vehicle/sealed/car/vim/mob_try_enter(mob/entering)
@@ -118,7 +118,7 @@
 
 /obj/item/circuit_component/vim
 	display_name = "Vim"
-	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
+	desc = "A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer."
 
 	/// Sent when the mech chimes.
 	var/datum/port/output/chime

@@ -278,7 +278,7 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	//310.15 is the normal bodytemp.
 	affected_mob.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
@@ -300,7 +300,7 @@
 	affected_mob.adjust_dizzy(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_jitter(-6 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-2 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			. = UPDATE_MOB_HEALTH
@@ -377,7 +377,7 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/hot_ice_coffee
@@ -398,7 +398,7 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-60 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
@@ -416,7 +416,7 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-2 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			. = UPDATE_MOB_HEALTH
@@ -529,7 +529,7 @@
 	affected_mob.set_jitter_if_lower(40 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(2 SECONDS * REM * seconds_per_tick)
 	affected_mob.remove_status_effect(/datum/status_effect/drowsiness)
-	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/spacemountainwind
@@ -543,7 +543,7 @@
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
@@ -642,7 +642,7 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/wellcheers
@@ -680,7 +680,7 @@
 	affected_mob.set_jitter_if_lower(80 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(2 SECONDS * REM * seconds_per_tick)
 	affected_mob.remove_status_effect(/datum/status_effect/drowsiness)
-	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/affected_mob)
@@ -700,7 +700,6 @@
 /datum/reagent/consumable/ice
 	name = "Ice"
 	description = "Frozen water, your dentist wouldn't like you chewing this."
-	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1072,7 +1071,7 @@
 	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
 	if(SPT_PROB(23, seconds_per_tick))
-		affected_mob.sneeze()
+		affected_mob.emote("sneeze")
 
 /datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1255,7 +1254,7 @@
 		return
 	affected_mob.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(25, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
@@ -1297,4 +1296,4 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.02 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 20 * ETHEREAL_DISCHARGE_RATE)

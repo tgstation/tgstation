@@ -153,12 +153,12 @@
 	mood_change = -3
 
 /datum/mood_event/claustrophobia
-	description = "Why do I feel trapped?!  Let me out!!!"
+	description = "Why do I feel trapped?! Let me out!!!"
 	mood_change = -7
 	timeout = 1 MINUTES
 
 /datum/mood_event/bright_light
-	description = "I hate it in the light...I need to find a darker place..."
+	description = "I hate it in the light... I need to find a darker place..."
 	mood_change = -12
 
 /datum/mood_event/family_heirloom_missing
@@ -201,6 +201,16 @@
 		qdel(src)
 		return
 	return ..()
+
+/datum/mood_event/startled
+	description = "Hearing that word made me think about something scary."
+	mood_change = -1
+	timeout = 1 MINUTES
+
+/datum/mood_event/phobia
+	description = "I saw something very frightening."
+	mood_change = -4
+	timeout = 4 MINUTES
 
 /datum/mood_event/spooked
 	description = "The rattling of those bones... It still haunts me."
@@ -481,7 +491,7 @@
 
 //Used by the Veteran Advisor trait job
 /datum/mood_event/desentized
-	description = "Nothing will ever rival with what I seen in the past..."
+	description = "Nothing will ever rival what I've seen in the past..."
 	mood_change = -3
 	special_screen_obj = "mood_desentized"
 
@@ -506,3 +516,16 @@
 	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
 	mood_change = -4
 	timeout = 1 MINUTES
+
+/datum/mood_event/smoke_in_face
+	description = "Cigarette smoke is disgusting."
+	mood_change = -3
+	timeout = 30 SECONDS
+
+/datum/mood_event/smoke_in_face/add_effects(param)
+	if(HAS_TRAIT(owner, TRAIT_ANOSMIA))
+		description = "Cigarette smoke is unpleasant."
+		mood_change = -1
+	if(HAS_TRAIT(owner, TRAIT_SMOKER))
+		description = "Blowing smoke in my face, really?"
+		mood_change = 0

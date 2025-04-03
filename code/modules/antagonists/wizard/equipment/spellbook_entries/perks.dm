@@ -60,7 +60,7 @@
 	desc = "Your soul is infested with mana worms. When you die, you will be reborn as a large worm. \
 		When the worm dies, it has no such luck. Parasitic infection prevents you from binding your soul to objects."
 	hud_icon = "wormborn"
-	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
+	no_coexistence_typecache = list(/datum/action/cooldown/spell/lichdom)
 
 /datum/spellbook_entry/perks/wormborn/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()

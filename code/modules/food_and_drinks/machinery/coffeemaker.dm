@@ -3,12 +3,13 @@
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "A Modello 3 Coffeemaker that brews coffee and holds it at the perfect temperature of 176 fahrenheit. Made by Piccionaia Home Appliances."
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_nopot_nocart"
 	base_icon_state = "coffeemaker"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
 	anchored_tabletop_offset = 4
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
@@ -52,6 +53,7 @@
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
 	QDEL_NULL(cartridge)
+	remove_shared_particles(/particles/smoke)
 	return ..()
 
 /obj/machinery/coffeemaker/Exited(atom/movable/gone, direction)
@@ -127,7 +129,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
+	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|SILENT_ADJACENCY))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(brewing)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -147,7 +149,10 @@
 /obj/machinery/coffeemaker/proc/overlay_checks()
 	. = list()
 	if(coffeepot)
-		. += "coffeemaker_pot"
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "coffeemaker_pot_bluespace"
+		else
+			. += "coffeemaker_pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(cartridge)
 		. += "coffeemaker_cartidge"
 	return .
@@ -284,7 +289,7 @@
 /obj/machinery/coffeemaker/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave //I am positively certain that this is not a microwave
 	. = ..()
 
-	if(brewing || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(brewing || !user.can_perform_action(src, SILENT_ADJACENCY))
 		return
 
 	var/list/options = list()
@@ -324,7 +329,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
-	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, SILENT_ADJACENCY))
 		return
 
 	switch(choice)
@@ -391,10 +396,12 @@
 
 ///Updates the smoke state to something else, setting particles if relevant
 /obj/machinery/coffeemaker/proc/toggle_steam()
-	QDEL_NULL(particles)
-	if(brewing)
-		particles = new /particles/smoke/steam/mild()
-		particles.position = list(-6, 0, 0)
+	if(!brewing)
+		remove_shared_particles("smoke_coffeemaker")
+		return
+
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_coffeemaker")
+	smoke_particles.particles.position = list(-6, 0, 0)
 
 /obj/machinery/coffeemaker/proc/operate_for(time, silent = FALSE)
 	brewing = TRUE
@@ -415,6 +422,7 @@
 	operate_for(brew_time)
 	coffeepot.reagents.add_reagent_list(cartridge.drink_type)
 	cartridge.charges--
+	update_appearance(UPDATE_OVERLAYS)
 
 //Coffee Cartridges: like toner, but for your coffee!
 /obj/item/coffee_cartridge
@@ -498,7 +506,6 @@
 /obj/machinery/coffeemaker/impressa
 	name = "impressa coffeemaker"
 	desc = "An industry-grade Impressa Modello 5 Coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
-	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_impressa"
 	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
 	initial_cartridge = null //no cartridge, just coffee beans
@@ -518,13 +525,13 @@
 
 /obj/machinery/coffeemaker/impressa/Destroy()
 	QDEL_NULL(coffeepot)
-	QDEL_NULL(coffee)
+	QDEL_LIST(coffee)
 	return ..()
 
 /obj/machinery/coffeemaker/impressa/examine(mob/user)
 	. = ..()
 	if(coffee)
-		. += span_notice("The internal grinder contains [coffee.len] scoop\s of coffee beans")
+		. += span_notice("The internal grinder contains [length(coffee)] scoop\s of coffee beans")
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()
@@ -533,10 +540,10 @@
 /obj/machinery/coffeemaker/impressa/overlay_checks()
 	. = list()
 	if(coffeepot)
-		if(coffeepot.reagents.total_volume > 0)
-			. += "pot_full"
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "pot_bluespace"
 		else
-			. += "pot_empty"
+			. += "pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(coffee_cups > 0)
 		if(coffee_cups >= max_coffee_cups/3)
 			if(coffee_cups > max_coffee_cups/1.5)
@@ -705,10 +712,12 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/impressa/toggle_steam()
-	QDEL_NULL(particles)
-	if(brewing)
-		particles = new /particles/smoke/steam/mild()
-		particles.position = list(-2, 1, 0)
+	if(!brewing)
+		remove_shared_particles("smoke_impressa")
+		return
+
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_impressa")
+	smoke_particles.particles.position = list(-2, 1, 0)
 
 /obj/machinery/coffeemaker/impressa/brew()
 	power_change()

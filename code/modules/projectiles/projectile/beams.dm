@@ -15,7 +15,7 @@
 	light_color = COLOR_SOFT_RED
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	wound_bonus = -20
 	bare_wound_bonus = 10
 
@@ -45,7 +45,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	damage = 9
 	wound_bonus = -40
-	speed = 1.1
+	speed = 0.9
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
@@ -53,7 +53,7 @@
 	icon_state = "hellfire"
 	wound_bonus = 0
 	damage = 30
-	speed = 0.6 // higher power = faster, that's how light works right
+	speed = 1.6
 	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/heavylaser
@@ -201,6 +201,7 @@
 	return //don't want the emitters to miss
 
 /obj/projectile/beam/emitter/hitscan
+	icon_state = null
 	hitscan = TRUE
 	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter
@@ -244,6 +245,7 @@
 	impact_type = /obj/effect/projectile/impact/laser
 
 /obj/projectile/beam/lasertag/redtag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/beam/lasertag/bluetag
@@ -254,6 +256,7 @@
 	impact_type = /obj/effect/projectile/impact/laser/blue
 
 /obj/projectile/beam/lasertag/bluetag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/magic/shrink/alien

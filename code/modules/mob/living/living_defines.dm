@@ -204,10 +204,6 @@
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 
-	///The x amount a mob's sprite should be offset due to the current position they're in
-	var/body_position_pixel_x_offset = 0
-	///The y amount a mob's sprite should be offset due to the current position they're in or size (e.g. lying down moves your sprite down)
-	var/body_position_pixel_y_offset = 0
 	///The height offset of a mob's maptext due to their current size.
 	var/body_maptext_height_offset = 0
 
@@ -233,3 +229,13 @@
 
 	/// How long it takes to return to 0 stam
 	var/stamina_regen_time = 10 SECONDS
+
+	/// Lazylists of pixel offsets this mob is currently using
+	/// Modify this via add_offsets and remove_offsets,
+	/// NOT directly (and definitely avoid modifying offsets directly)
+	VAR_PRIVATE/list/offsets
+
+	/// Lazylist of martial arts this mob knows
+	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
+	/// Reference handling is done by the martial arts themselves
+	var/list/datum/martial_art/martial_arts

@@ -48,36 +48,36 @@
 	armour_penetration = 50
 	wound_bonus = -20
 	bare_wound_bonus = 80
-	embed_type = /datum/embed_data/harpoon
+	embed_type = /datum/embedding/harpoon
 	wound_falloff_tile = -5
 	shrapnel_type = null
 
-/datum/embed_data/harpoon
-	embed_chance=100
-	fall_chance=3
-	jostle_chance=4
-	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.4
-	pain_mult=5
-	jostle_pain_mult=6
-	rip_time=10
+/datum/embedding/harpoon
+	embed_chance = 100
+	fall_chance = 3
+	jostle_chance = 4
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 5
+	jostle_pain_mult = 6
+	rip_time = 1 SECONDS
 
 // Rebar (Rebar Crossbow)
 /obj/projectile/bullet/rebar
 	name = "rebar"
 	icon_state = "rebar"
 	damage = 30
-	speed = 0.4
+	speed = 2.5
 	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
 	armour_penetration = 10
 	wound_bonus = -20
 	bare_wound_bonus = 20
-	embed_type = /datum/embed_data/rebar
+	embed_type = /datum/embedding/rebar
 	embed_falloff_tile = -5
 	wound_falloff_tile = -2
 	shrapnel_type = /obj/item/ammo_casing/rebar
 
-/datum/embed_data/rebar
+/datum/embedding/rebar
 	embed_chance = 60
 	fall_chance = 2
 	jostle_chance = 2
@@ -85,7 +85,7 @@
 	pain_stam_pct = 0.4
 	pain_mult = 4
 	jostle_pain_mult = 2
-	rip_time = 10
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
 
@@ -93,16 +93,15 @@
 	name = "rebar"
 	icon_state = "rebar"
 	damage = 45
-	speed = 0.4
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
 	wound_bonus = 10
 	bare_wound_bonus = 20
 	embed_falloff_tile = -3
-	embed_type = /datum/embed_data/rebar_syndie
+	embed_type = /datum/embedding/rebar_syndie
 	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
 
-/datum/embed_data/rebar_syndie
+/datum/embedding/rebar_syndie
 	embed_chance = 80
 	fall_chance = 1
 	jostle_chance = 3
@@ -110,24 +109,24 @@
 	pain_stam_pct = 0.4
 	pain_mult = 3
 	jostle_pain_mult = 2
-	rip_time = 14
+	rip_time = 1.4 SECONDS
 
 /obj/projectile/bullet/rebar/zaukerite
 	name = "zaukerite shard"
 	icon_state = "rebar_zaukerite"
 	damage = 60
-	speed = 0.6
+	speed = 1.6
 	dismemberment = 10
 	damage_type = TOX
 	eyeblur = 5
 	armour_penetration = 20 // not nearly as good, as its not as sharp.
 	wound_bonus = 10
 	bare_wound_bonus = 40
-	embed_type = /datum/embed_data/rebar_zaukerite
+	embed_type = /datum/embedding/rebar_zaukerite
 	embed_falloff_tile = 0 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
 
-/datum/embed_data/rebar_zaukerite
+/datum/embedding/rebar_zaukerite
 	embed_chance = 100
 	fall_chance = 0
 	jostle_chance = 5
@@ -135,13 +134,13 @@
 	pain_stam_pct = 0.8
 	pain_mult = 6
 	jostle_pain_mult = 2
-	rip_time = 30
+	rip_time = 3 SECONDS
 
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
 	damage = 35
-	speed = 0.6
+	speed = 1.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
 	max_pierces = 3
@@ -152,7 +151,7 @@
 	wound_bonus = -100
 	bare_wound_bonus = 0
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
-	embed_type = /datum/embed_data/rebar_hydrogen
+	embed_type = /datum/embedding/rebar_hydrogen
 	embed_falloff_tile = -3
 	accurate_range = 205 //15 tiles before falloff starts to kick in
 
@@ -160,7 +159,7 @@
 	. = ..()
 	def_zone = ran_zone(def_zone, clamp(205-(7*get_dist(get_turf(A), starting)), 5, 100))
 
-/datum/embed_data/rebar_hydrogen
+/datum/embedding/rebar_hydrogen
 	embed_chance = 0
 
 /obj/projectile/bullet/rebar/hydrogen/on_hit(atom/target, blocked, pierce_hit)
@@ -172,7 +171,6 @@
 	name = "healium bolt"
 	icon_state = "rebar_healium"
 	damage = 0
-	speed = 0.4
 	dismemberment = 0
 	damage_type = BRUTE
 	armour_penetration = 100
@@ -199,7 +197,6 @@
 	name = "supermatter bolt"
 	icon_state = "rebar_supermatter"
 	damage = 0
-	speed = 0.4
 	dismemberment = 0
 	damage_type = TOX
 	embed_type = null

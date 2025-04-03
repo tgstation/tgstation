@@ -13,6 +13,9 @@
 
 #define SUPPLYPOD_X_OFFSET -16
 
+///DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible! This is also unit tested against.
+#define CARGO_MINIMUM_COST CARGO_CRATE_VALUE * 1.4
+
 /// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
 
@@ -28,6 +31,12 @@
 #define SCAN_SALES_TAG 2
 /// Universal Scanner mode for using the price tagger.
 #define SCAN_PRICE_TAG 3
+
+// Defines for use with `export_item_and_contents()`, aka the export code that sells the items.
+/// Default export define, these are things that are sold to centcom.
+#define EXPORT_MARKET_STATION "supply"
+/// Export market for pirates.
+#define EXPORT_MARKET_PIRACY "piracy"
 
 ///Used by coupons to define that they're cursed
 #define COUPON_OMEN "omen"
@@ -47,3 +56,17 @@
 #define EXPORT_SOLD 1
 ///Sell the item, but for the love of god, don't delete it, we're handling it in a fancier way.
 #define EXPORT_SOLD_DONT_DELETE 2
+
+
+//At 320 it's 7.5 minutes, at 1400 it's 12.44 minutes,  at 3000 (around gun crates) it's 15.5 minutes, at 8000 (hat crate) 20 minutes, at 9000 (expensive atmos cans) it's 20.58 minutes, and at the 20k crate it's 24.76 minutes.
+/// Multiplies the logarithmic value calculating the free crate cooldown
+#define DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT 60
+/// Used for the power of the logarithmic value for the free crate cooldown
+#define DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT 2.2
+
+//At 320 it's 475 credits, at 1400 it's 669 credits,  at 3000 (around gun crates) its 778, at 8000 (hat crate) it's 925 credits, at 9000 (expensive atmos cans) it's 943 credits, and at the 20k crate it's 1070 credits.
+
+/// Multiplies the logarithmic value calculating the free crate delivery reward
+#define DEPARTMENTAL_ORDER_REWARD_COEFFICIENT 120
+/// Used for the power of the logarithmic value for the free crate delivery reward
+#define DEPARTMENTAL_ORDER_REWARD_EXPONENT 1.5

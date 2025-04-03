@@ -76,7 +76,7 @@
 	sound = 'sound/effects/magic/repulse.ogg'
 
 	school = SCHOOL_EVOCATION
-	invocation = "GITTAH WEIGH"
+	invocation = "GITTAH WEIGH!"
 	invocation_type = INVOCATION_SHOUT
 	aoe_radius = 5
 
@@ -107,6 +107,22 @@
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_caster = cast_on
 		playsound(get_turf(carbon_caster), 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 80, TRUE, TRUE)
-		carbon_caster.spin(6, 1)
+		carbon_caster.spin(0.6 SECONDS, 1)
+	if(isliving(cast_on) && !is_strongman(cast_on))
+		addtimer(CALLBACK(src, PROC_REF(after_spin)), 0.6 SECONDS, TIMER_DELETE_ME)
 
 	return ..()
+
+/// Returns true if you're strong enough
+/datum/action/cooldown/spell/aoe/repulse/xeno/proc/is_strongman(mob/living/owner)
+	if (HAS_TRAIT(owner, TRAIT_STRENGTH))
+		return TRUE
+	var/strength_level = owner.mind?.get_skill_level(/datum/skill/athletics)
+	return strength_level >= SKILL_LEVEL_MASTER
+
+/// You're not strong enough :(
+/datum/action/cooldown/spell/aoe/repulse/xeno/proc/after_spin()
+	if(QDELETED(owner) || is_strongman(owner))
+		return
+	var/mob/living/living_owner = owner
+	living_owner.Knockdown(5 SECONDS)

@@ -16,6 +16,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	action_slots = ALL
 	max_integrity = 40
 	pickup_sound = 'sound/items/handling/grenade/grenade_pick_up.ogg'
 	drop_sound = 'sound/items/handling/grenade/grenade_drop.ogg'
@@ -24,6 +25,10 @@
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
+	/// Sound played when the grenade is armed
+	var/grenade_arm_sound = 'sound/items/weapons/armbomb.ogg'
+	/// If the sound of the grenade should be varied
+	var/grenade_sound_vary = TRUE
 	///Is it a cluster grenade? We don't wanna spam admin logs with these.
 	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
@@ -155,11 +160,11 @@
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
-	playsound(src, 'sound/items/weapons/armbomb.ogg', volume, TRUE)
+	playsound(src, grenade_arm_sound, volume, grenade_sound_vary)
 	if(istype(user))
 		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE
-	icon_state = initial(icon_state) + "_active"
+	icon_state = (base_icon_state || initial(icon_state)) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)
 
@@ -255,7 +260,7 @@
 	if(det_time == 0)
 		det_time = "Instant"
 	else
-		det_time = num2text(det_time * 0.1) 
+		det_time = num2text(det_time * 0.1)
 
 	var/old_selection = possible_fuse_time.Find(det_time) //Position of det_time in the list
 	if(old_selection >= possible_fuse_time.len)

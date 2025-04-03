@@ -397,7 +397,7 @@
 	if(!storage.supports_smart_equip)
 		return
 	if (equipped_item.atom_storage.locked) // Determines if container is locked before trying to put something in or take something out so we dont give out information on contents (or lack of)
-		to_chat(src, span_warning("The [equipped_item.name] is locked!"))
+		to_chat(src, span_warning("\The [equipped_item] is locked!"))
 		return
 	if(thing) // put thing in storage item
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
@@ -424,7 +424,7 @@
 		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
 			var/path = /obj/item/bodypart/arm/left
-			if(!(i % 2))
+			if(IS_RIGHT_INDEX(i))
 				path = /obj/item/bodypart/arm/right
 
 			var/obj/item/bodypart/BP = new path ()

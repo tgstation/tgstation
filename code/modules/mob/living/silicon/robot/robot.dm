@@ -19,6 +19,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -60,6 +61,7 @@
 		var/obj/item/borg/upgrade/ai/board = new(src)
 		make_shell(board)
 		add_to_upgrades(board)
+		ADD_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, INNATE_TRAIT)
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
@@ -134,6 +136,12 @@
 	QDEL_LIST(upgrades)
 	QDEL_NULL(cell)
 	QDEL_NULL(robot_suit)
+
+	if (smoke_particles)
+		remove_shared_particles(smoke_particles)
+	if (spark_particles)
+		remove_shared_particles(spark_particles)
+
 	return ..()
 
 /mob/living/silicon/robot/Topic(href, href_list)
@@ -290,7 +298,7 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
-	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+	if(stat < UNCONSCIOUS && !HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && !IsStun() && !IsParalyzed() && !low_power_mode) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
@@ -421,7 +429,7 @@
 	set_lockcharge(FALSE)
 	to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
 	if(connected_ai)
-		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] succesfully overriden the lockdown system")]<br>")
+		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] successfully overriden the lockdown system")]<br>")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
@@ -565,7 +573,7 @@
 		removing.update_appearance()
 
 	else
-		to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. \
+		to_chat(src, span_bolddanger("Oops! Something went very wrong, your MMI was unable to receive your mind. \
 			You have been ghosted. Please make a bug report so we can fix this bug."))
 		ghostize()
 		stack_trace("Borg MMI lacked a brainmob")
@@ -577,13 +585,13 @@
 		return
 	switch(notifytype)
 		if(AI_NOTIFICATION_NEW_BORG) //New Cyborg
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_NEW_MODEL) //New Model
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.")]<br>")
 		if(AI_NOTIFICATION_CYBORG_RENAMED) //New Name
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].")]<br>")
 		if(AI_NOTIFICATION_AI_SHELL) //New Shell
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_CYBORG_DISCONNECTED) //Tampering with the wires
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
 
@@ -943,19 +951,25 @@
 	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (!combat_mode)))
 		return user_buckle_mob(M, user, check_loc = FALSE)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= RIDER_NEEDS_ARM)
-	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message(span_warning("[M] really can't seem to mount [src]..."))
-		return
-
-	if(stat || incapacitated)
-		return
+/mob/living/silicon/robot/is_buckle_possible(mob/living/target, force, check_loc)
+	if(incapacitated)
+		return FALSE
+	if(!HAS_TRAIT(target, TRAIT_CAN_MOUNT_CYBORGS))
+		target.visible_message(span_warning("[target] really can't seem to mount [src]..."))
+		return FALSE
 	if(model && !model.allow_riding)
-		M.visible_message(span_boldwarning("Unfortunately, [M] just can't seem to hold onto [src]!"))
-		return
+		target.visible_message(span_boldwarning("Unfortunately, [target] just can't seem to hold onto [src]!"))
+		return FALSE
 
-	buckle_mob_flags= RIDER_NEEDS_ARM // just in case
 	return ..()
+
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force, check_loc, buckle_mob_flags)
+	buckle_mob_flags = RIDER_NEEDS_ARM // just in case
+	return ..()
+
+/mob/living/silicon/robot/post_buckle_mob(mob/living/victim_to_boot)
+	if(HAS_TRAIT(src, TRAIT_GOT_DAMPENED))
+		eject_riders()
 
 /mob/living/silicon/robot/can_resist()
 	if(lockcharge)
@@ -1034,7 +1048,7 @@
 			'icons/mob/effects/onfire.dmi',
 			fire_icon,
 			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR,
+			appearance_flags = RESET_COLOR|KEEP_APART,
 		)
 		GLOB.fire_appearances[fire_icon] = new_fire_overlay
 
@@ -1053,3 +1067,16 @@
 	. = ..()
 	set_stat(CONSCIOUS) //This is a horrible hack, but silicon code forced my hand
 	update_stat()
+
+/mob/living/silicon/robot/proc/on_dampen()
+	SIGNAL_HANDLER
+	eject_riders()
+
+/mob/living/silicon/robot/proc/eject_riders()
+	if(!length(buckled_mobs))
+		return
+	for(var/mob/living/buckled_mob as anything in buckled_mobs)
+		buckled_mob.visible_message(span_warning("[buckled_mob] is knocked off of [src] by the charge in [src]'s chassis induced by the hyperkinetic dampener field!"))
+		buckled_mob.Paralyze(1 SECONDS)
+		unbuckle_mob(buckled_mob)
+	do_sparks(5, 0, src)

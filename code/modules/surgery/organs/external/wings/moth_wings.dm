@@ -10,24 +10,38 @@
 	dna_block = DNA_MOTH_WINGS_BLOCK
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/moth
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old datum here for if our burned wings are healed
 	var/original_sprite_datum
 
+	var/drift_force = MOTH_WING_FORCE
+	var/stabilizer_force = MOTH_WING_FORCE
+
+/obj/item/organ/wings/moth/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/jetpack, \
+		TRUE, \
+		drift_force, \
+		stabilizer_force, \
+		COMSIG_ORGAN_IMPLANTED, \
+		COMSIG_ORGAN_REMOVED, \
+		null, \
+		CALLBACK(src, PROC_REF(allow_flight)), \
+		null, \
+	)
+
 /obj/item/organ/wings/moth/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_wings))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_wings))
-	RegisterSignal(receiver, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
-	RegisterSignal(receiver, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
-	START_PROCESSING(SSnewtonian_movement, src)
 
 /obj/item/organ/wings/moth/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_CLIENT_MOVE_NOGRAV, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE))
-	STOP_PROCESSING(SSnewtonian_movement, src)
+	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
 /obj/item/organ/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
 	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
@@ -37,14 +51,6 @@
 
 /obj/item/organ/wings/moth/proc/allow_flight()
 	if(!owner || !owner.client)
-		return FALSE
-	if(!isturf(owner.loc))
-		return FALSE
-	if(!(owner.movement_type & FLOATING) || owner.buckled)
-		return FALSE
-	if(owner.pulledby)
-		return FALSE
-	if(owner.throwing)
 		return FALSE
 	if(owner.has_gravity())
 		return FALSE
@@ -58,34 +64,6 @@
 	if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85))
 		return TRUE
 	return FALSE
-
-/obj/item/organ/wings/moth/process(seconds_per_tick)
-	if (!owner || !allow_flight() || isnull(owner.drift_handler))
-		return
-
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, MOTH_WING_FORCE * (seconds_per_tick * 1 SECONDS))
-
-/obj/item/organ/wings/moth/proc/on_client_move(mob/source, list/move_args)
-	SIGNAL_HANDLER
-
-	if (!allow_flight())
-		return
-
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = MOTH_WING_FORCE, controlled_cap = max_drift_force)
-	source.setDir(source.client.intended_direction)
-
-/obj/item/organ/wings/moth/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
-	SIGNAL_HANDLER
-
-	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
-		return
-
-	if (!allow_flight() || !source.client.intended_direction || (source.client.intended_direction & get_dir(source, backup)))
-		return
-
-	return COMPONENT_PREVENT_SPACEMOVE_HALT
 
 ///check if our wings can burn off ;_;
 /obj/item/organ/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
@@ -116,6 +94,11 @@
 		wings.burnt = FALSE
 		burnt = FALSE
 
+/obj/item/organ/wings/moth/feel_for_damage(self_aware)
+	if(burnt)
+		return "Your wings are all burnt up!"
+	return ..()
+
 ///Moth wing bodypart overlay, including burn functionality!
 /datum/bodypart_overlay/mutant/wings/moth
 	feature_key = "moth_wings"
@@ -133,10 +116,13 @@
 /datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()
 	return SSaccessories.moth_wings_list
 
-/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
 		return TRUE
-	return FALSE
+	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	return TRUE
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state

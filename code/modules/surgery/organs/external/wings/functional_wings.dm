@@ -11,7 +11,7 @@
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/human = owner
 	var/obj/item/organ/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(wings?.can_fly(human))
+	if(wings?.can_fly())
 		wings.toggle_flight(human)
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
@@ -29,18 +29,35 @@
 	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
 
+	var/drift_force = FUNCTIONAL_WING_FORCE
+	var/stabilizer_force = FUNCTIONAL_WING_STABILIZATION
+
+/obj/item/organ/wings/functional/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/jetpack, \
+		TRUE, \
+		drift_force, \
+		stabilizer_force, \
+		COMSIG_WINGS_OPENED, \
+		COMSIG_WINGS_CLOSED, \
+		null, \
+		CALLBACK(src, PROC_REF(can_fly)), \
+		CALLBACK(src, PROC_REF(can_fly)), \
+	)
+
 /obj/item/organ/wings/functional/Destroy()
 	QDEL_NULL(fly)
 	return ..()
 
-/obj/item/organ/wings/functional/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/wings/functional/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 
 	if(QDELETED(fly))
 		fly = new
 	fly.Grant(receiver)
 
-/obj/item/organ/wings/functional/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/wings/functional/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	fly?.Remove(organ_owner)
 	if(wings_open)
@@ -54,14 +71,14 @@
 /obj/item/organ/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
 		return FALSE
-	if(!can_fly(human))
+	if(!can_fly())
 		toggle_flight(human)
 		return FALSE
 	return TRUE
 
-
 ///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
-/obj/item/organ/wings/functional/proc/can_fly(mob/living/carbon/human/human)
+/obj/item/organ/wings/functional/proc/can_fly()
+	var/mob/living/carbon/human/human = owner
 	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
@@ -105,13 +122,10 @@
 /obj/item/organ/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
-		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
+		human.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 		human.AddElement(/datum/element/forced_gravity, 0)
 		passtable_on(human, SPECIES_FLIGHT_TRAIT)
-		RegisterSignal(human, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
-		RegisterSignal(human, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
-		START_PROCESSING(SSnewtonian_movement, src)
 		open_wings()
 		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
 		human.set_resting(FALSE, TRUE)
@@ -119,43 +133,13 @@
 		return
 
 	human.physiology.stun_mod *= 0.5
-	human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
+	human.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
 	passtable_off(human, SPECIES_FLIGHT_TRAIT)
-	UnregisterSignal(human, list(COMSIG_MOB_CLIENT_MOVE_NOGRAV, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE))
-	STOP_PROCESSING(SSnewtonian_movement, src)
 	to_chat(human, span_notice("You settle gently back onto the ground..."))
 	close_wings()
 	human.refresh_gravity()
-
-/obj/item/organ/wings/functional/proc/on_client_move(mob/source, list/move_args)
-	SIGNAL_HANDLER
-
-	if (!can_fly(source))
-		return
-
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = FUNCTIONAL_WING_FORCE, controlled_cap = max_drift_force)
-	source.setDir(source.client.intended_direction)
-
-/obj/item/organ/wings/functional/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
-	SIGNAL_HANDLER
-
-	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
-		return
-
-	if (!can_fly(source) || !source.client.intended_direction || (source.client.intended_direction & get_dir(source, backup)))
-		return
-
-	return COMPONENT_PREVENT_SPACEMOVE_HALT
-
-/obj/item/organ/wings/functional/process(seconds_per_tick)
-	if (!owner || !can_fly(owner) || isnull(owner.drift_handler))
-		return
-
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, FUNCTIONAL_WING_STABILIZATION * (seconds_per_tick * 1 SECONDS))
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/wings/functional/proc/open_wings()
@@ -163,6 +147,7 @@
 	overlay.open_wings()
 	wings_open = TRUE
 	owner.update_body_parts()
+	SEND_SIGNAL(src, COMSIG_WINGS_OPENED, owner)
 
 ///close our wings
 /obj/item/organ/wings/functional/proc/close_wings()
@@ -174,6 +159,8 @@
 	if(isturf(owner?.loc))
 		var/turf/location = loc
 		location.Entered(src, NONE)
+
+	SEND_SIGNAL(src, COMSIG_WINGS_CLOSED, owner)
 
 ///Bodypart overlay of function wings, including open and close functionality!
 /datum/bodypart_overlay/mutant/wings/functional
@@ -221,7 +208,7 @@
 ///robotic wings, which relate to androids.
 /obj/item/organ/wings/functional/robotic
 	name = "robotic wings"
-	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
+	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gather enough of them, and you can lift impressively large things."
 	organ_flags = ORGAN_ROBOTIC
 	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 

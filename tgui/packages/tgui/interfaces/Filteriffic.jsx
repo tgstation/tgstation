@@ -1,9 +1,5 @@
 import { map } from 'common/collections';
-import { toFixed } from 'common/math';
 import { useState } from 'react';
-
-import { numberOfDecimalDigits } from '../../common/math';
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -15,7 +11,11 @@ import {
   NoticeBox,
   NumberInput,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { numberOfDecimalDigits } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const FilterIntegerEntry = (props) => {
@@ -23,7 +23,7 @@ const FilterIntegerEntry = (props) => {
   const { act } = useBackend();
   return (
     <NumberInput
-      value={value}
+      value={value || 0}
       minValue={-500}
       maxValue={500}
       step={1}
@@ -49,7 +49,7 @@ const FilterFloatEntry = (props) => {
   return (
     <>
       <NumberInput
-        value={value}
+        value={value || 0}
         minValue={-500}
         maxValue={500}
         stepPixelSize={4}

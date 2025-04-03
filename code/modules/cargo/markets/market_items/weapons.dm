@@ -15,8 +15,8 @@
 /datum/market_item/weapon/shotgun_dart
 	name = "Box of XL Shotgun Darts"
 	desc = "These handy darts can be filled up with any chemical and be shot with a shotgun! \
-	Prank your friends by shooting them with laughter! \
-	Not recommended for comercial use."
+		Prank your friends by shooting them with laughter! \
+		Not recommended for commercial use."
 	item = /obj/item/storage/box/large_dart
 
 	price_min = CARGO_CRATE_VALUE * 1.375
@@ -26,13 +26,36 @@
 
 /datum/market_item/weapon/buckshot
 	name = "Box of Buckshot Shells"
-	desc = "It wasn't easy since buckshot has been made illegal all over this sector of space, but \
-	we managed to find a large cache of it... somewhere. A word of caution, the stuff may be a tad old."
-	stock_max = 3
+	desc = "It wasn't easy since buckshot is so heavily taxed nowadays, but we managed to find \
+		a large cache of it... somewhere. A word of caution, the stuff may be a tad old."
+	stock_max = 7
 	availability_prob = 35
-	item = /obj/item/storage/box/lethalshot/old
-	price_min = CARGO_CRATE_VALUE * 3
-	price_max = CARGO_CRATE_VALUE * 4.5
+	item = /obj/effect/spawner/random/armory/buckshot/sketchy
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 3
+
+/datum/market_item/weapon/strilka
+	name = "Ammobox of .310 Strilka"
+	desc = "Listen, .310 Strilka isn't exactly rare, but if you want it to come through \
+		any source that isn't the Third Soviet diehards, then you get what you get. \
+		Some of this is the good stuff. Some of it is surplus. We make no promises, okay?"
+	stock_max = 7
+	availability_prob = 35
+	item = /obj/effect/spawner/random/armory/strilka
+	price_min = CARGO_CRATE_VALUE
+	price_max = CARGO_CRATE_VALUE * 2
+
+/datum/market_item/weapon/sks_kit
+	name = "Sakhno SKS semi-automatic rifle"
+	desc = "That's right baby, it's a SKS parts kit! Okay, not one of those ancient originals, but it \
+		may as well be ancient at this point. Just slap it together in some corner in maint and you've \
+		got yourself a fully constructed SKS! It doesn't even jam! Why the fuck did they make those Third \
+		Soviet soldiers use the Sakhno M2442 Army anyway? This thing is the shit! That means good. BUY IT."
+	item = /obj/item/weaponcrafting/gunkit/sks
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 3
+	stock_max = 5
+	availability_prob = 90
 
 /datum/market_item/weapon/bone_spear
 	name = "Bone Spear"
@@ -63,6 +86,16 @@
 	price_max = CARGO_CRATE_VALUE * 1.75
 	stock_max = 3
 	availability_prob = 45
+
+/datum/market_item/weapon/carpenter_hammer
+	name = "Carpenter hammer"
+	desc = "When you really want to look like a psycho..."
+	item = /obj/item/carpenter_hammer
+
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 1.25
+	stock_max = 2
+	availability_prob = 65
 
 /datum/market_item/weapon/emp_grenade
 	name = "EMP Grenade"
@@ -101,3 +134,12 @@
 	price_max = CARGO_CRATE_VALUE * 5
 	stock_max = 1
 	availability_prob = 25
+
+/datum/market_item/weapon/liberator
+	name = "illegal 3D printer designs"
+	desc = "Designs for a dirt cheap 3D printable gun, well known for exploding in unfortunate assistants' hands."
+	item = /obj/item/disk/design_disk/liberator
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 1
+	availability_prob = 35

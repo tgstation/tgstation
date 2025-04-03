@@ -12,6 +12,7 @@
 	light_power = 0
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
+	projectiles_pass_chance = 100
 
 /obj/item/wallframe/telescreen
 	name = "telescreen frame"
@@ -45,8 +46,9 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
-/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/machinery/computer/security/telescreen/entertainment/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
 	. = ..()
@@ -64,11 +66,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+	register_context()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, PROC_REF(on_network_broadcast_updated))
 	speakers = new(src)
 
 /obj/machinery/computer/security/telescreen/entertainment/Destroy()
-	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED)
 	QDEL_NULL(speakers)
+	return ..()
 
 /obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
 	. = ..()
@@ -141,7 +146,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		say(announcement)
 
 /// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
-/obj/machinery/computer/security/telescreen/entertainment/proc/update_shows(is_show_active, tv_show_id, announcement)
+/obj/machinery/computer/security/telescreen/entertainment/proc/on_network_broadcast_updated(datum/source, tv_show_id, is_show_active, announcement)
+	SIGNAL_HANDLER
 	if(!network)
 		return
 
@@ -150,7 +156,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		network -= tv_show_id
 
-	notify(network.len, announcement)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers))
+	notify(length(network), announcement)
 
 /**
  * Adds a camera network to all entertainment monitors.
@@ -159,12 +166,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
  * * announcement - Optional, what announcement to make when the show starts.
  */
 /proc/start_broadcasting_network(camera_net, announcement)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-		tv.update_shows(
-			is_show_active = TRUE,
-			tv_show_id = camera_net,
-			announcement = announcement,
-		)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, camera_net, TRUE, announcement)
 
 /**
  * Removes a camera network from all entertainment monitors.
@@ -173,12 +175,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
  * * announcement - Optional, what announcement to make when the show ends.
  */
 /proc/stop_broadcasting_network(camera_net, announcement)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-		tv.update_shows(
-			is_show_active = FALSE,
-			tv_show_id = camera_net,
-			announcement = announcement,
-		)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, camera_net, FALSE, announcement)
 
 /**
  * Sets the camera network status on all entertainment monitors.
@@ -192,12 +189,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
  * Likewise, there's no way to differentiate off -> on and on -> off, unless you handle that yourself.
  */
 /proc/set_network_broadcast_status(camera_net, is_show_active, announcement)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-		tv.update_shows(
-			is_show_active = is_show_active,
-			tv_show_id = camera_net,
-			announcement = announcement,
-		)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, camera_net, is_show_active, announcement)
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"

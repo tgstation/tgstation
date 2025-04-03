@@ -213,7 +213,7 @@
 	instability = 3
 	icon_state = "hoverboard_holy"
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/make_ridable()
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover/holy)
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/Initialize(mapload)

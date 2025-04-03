@@ -109,10 +109,12 @@
 /area/template_noop)
 "gr" = (
 /obj/structure/table/glass,
-/obj/item/retractor,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/item/stack/medical/gauze,
+/obj/item/retractor,
+/obj/item/cautery,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -467,12 +469,10 @@
 	},
 /area/template_noop)
 "Qu" = (
-/obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
-/obj/item/cautery,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/closet/crate/freezer/organ,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},

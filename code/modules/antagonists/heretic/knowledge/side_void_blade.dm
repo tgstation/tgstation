@@ -107,7 +107,7 @@
 /// The "hand" "weapon" used by shattered risen
 /obj/item/mutant_hand/shattered_risen
 	name = "bone-shards"
-	desc = "What once appeared to be a normal human fist, now holds a maulled nest of sharp bone-shards."
+	desc = "What once appeared to be a normal human fist, now holds a mauled nest of sharp bone-shards."
 	color = "#001aff"
 	hitsound = SFX_SHATTER
 	force = 16
@@ -115,22 +115,6 @@
 	bare_wound_bonus = 15
 	demolition_mod = 1.5
 	sharpness = SHARP_EDGED
-
-/obj/item/mutant_hand/shattered_risen/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-
-/obj/item/mutant_hand/shattered_risen/visual_equipped(mob/user, slot)
-	. = ..()
-
-	// Even hand indexes are right hands,
-	// Odd hand indexes are left hand
-	// ...But also, we swap it intentionally here,
-	// so right icon is shown on the left (Because hands)
-	if(user.get_held_index_of_item(src) % 2 == 1)
-		icon_state = "[base_icon_state]_right"
-	else
-		icon_state = "[base_icon_state]_left"
 
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"

@@ -63,7 +63,7 @@
 	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
 
-	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
 
 
@@ -99,7 +99,7 @@
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
 		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	research_tree_icon_frame = 7
 
@@ -145,7 +145,7 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
+	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 	research_tree_icon_frame = 5
 
@@ -163,6 +163,8 @@
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 
 	ascension_achievement = /datum/award/achievement/misc/ash_ascension
+	announcement_text = "%SPOOKY% Fear the blaze, for the Ashlord, %NAME% has ascended! The flames shall consume all! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_ash.ogg'
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
 		TRAIT_BOMBIMMUNE,
@@ -187,13 +189,6 @@
 
 /datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_ash.ogg',
-		color_override = "pink",
-	)
-
 	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
 	circle_spell.Grant(user)
 
@@ -209,5 +204,4 @@
 	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
 	fiery_rebirth?.cooldown_time *= 0.16
 
-	if(length(traits_to_apply))
-		user.add_traits(traits_to_apply, MAGIC_TRAIT)
+	user.add_traits(traits_to_apply, type)

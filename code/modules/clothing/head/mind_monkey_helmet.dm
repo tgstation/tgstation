@@ -12,8 +12,8 @@
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
 	/// This chance is increased by 7 every time the helmet fails to get a host, to dissuade spam. starts negative to add 1 safe reuse
 	var/rage_chance = -7
-	/// Holds the steam effect at dangerous rage chance levels.
-	var/obj/effect/abstract/particle_holder/particle_effect
+	/// Currently used particle type
+	var/particle_path
 
 /obj/item/clothing/head/helmet/monkey_sentience/Initialize(mapload)
 	. = ..()
@@ -60,7 +60,8 @@
 		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))
-		var/particle_path
+		if (particle_path)
+			remove_shared_particles(particle_path)
 		switch(rage_chance)
 			if(-7 to 0)
 				user.visible_message(span_notice("[src] falls silent and drops on the floor. Try again later?"))
@@ -83,18 +84,17 @@
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 				particle_path = /particles/smoke/steam
 		rage_chance += 7
-
-		QDEL_NULL(particle_effect)
 		if(particle_path)
-			particle_effect = new(src, particle_path)
-		QDEL_IN(particle_effect, 2 MINUTES)
+			add_shared_particles(particle_path)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), particle_path), 2 MINUTES)
+			addtimer(VARSET_CALLBACK(src, particle_path, null), 2 MINUTES)
 
 		if((rage_chance > 0) && prob(rage_chance)) // too much spam means agnry gorilla running at you
 			malfunction(user)
 		user.dropItemToGround(src)
 		return
 
-	magnification.key = chosen_one.key
+	magnification.PossessByPlayer(chosen_one.key)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	to_chat(magnification, span_notice("You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!"))
 	var/policy = get_policy(ROLE_MONKEY_HELMET)

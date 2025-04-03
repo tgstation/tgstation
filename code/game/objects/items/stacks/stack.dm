@@ -47,7 +47,7 @@
 	/// Does this stack require a unique girder in order to make a wall?
 	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
-	var/obj/structure/table/tableVariant
+	var/obj/structure/table/table_type
 	/// What typepath stairs do we create from this stack
 	var/obj/structure/stairs/stairs_type
 	/// If TRUE, we'll use a radial instead when displaying recipes
@@ -215,6 +215,12 @@
 	else
 		. = (amount)
 
+/// Gets the table type we make, accounting for potential exceptions.
+/obj/item/stack/proc/get_table_type()
+	if(ispath(table_type, /obj/structure/table/greyscale) && isnull(material_type))
+		return // This table type breaks without a material type.
+	return table_type
+
 /**
  * Builds all recipes in a given recipe list and returns an association list containing them
  *
@@ -239,12 +245,21 @@
  * * R - The stack recipe we are using to get a list of properties
  */
 /obj/item/stack/proc/build_recipe(datum/stack_recipe/R)
-	return list(
-		"res_amount" = R.res_amount,
-		"max_res_amount" = R.max_res_amount,
-		"req_amount" = R.req_amount,
-		"ref" = text_ref(R),
-	)
+	var/list/data = list()
+	var/obj/result = R.result_type
+
+	data["ref"] = text_ref(R)
+	data["req_amount"] = R.req_amount
+	data["res_amount"] = R.res_amount
+	data["max_res_amount"] = R.max_res_amount
+	data["icon"] = result.icon
+	data["icon_state"] = result.icon_state
+
+	// DmIcon cannot paint images. So, if we have grayscale sprite, we need ready base64 image.
+	if(R.result_image)
+		data["image"] = R.result_image
+
+	return data
 
 /**
  * Checks if the recipe is valid to be used
@@ -591,7 +606,7 @@
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
-	if(ismob(loc) && !inhand) // no merging with items that are on the mob
+	if(ismob(loc) && !inhand && !HAS_TRAIT(loc, TRAIT_MOB_MERGE_STACKS)) // no merging with items that are on the mob
 		return FALSE
 	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
 		var/obj/machinery/machine = loc

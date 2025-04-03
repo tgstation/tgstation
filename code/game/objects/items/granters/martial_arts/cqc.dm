@@ -3,7 +3,7 @@
 	name = "old manual"
 	martial_name = "close quarters combat"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
-	greet = span_boldannounce("You've mastered the basics of CQC.")
+	greet = span_bolddanger("You've mastered the basics of CQC.")
 	icon_state = "cqcmanual"
 	remarks = list(
 		"Kick... Slam...",

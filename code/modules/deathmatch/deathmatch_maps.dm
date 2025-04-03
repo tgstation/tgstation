@@ -1,5 +1,5 @@
 /datum/lazy_template/deathmatch
-	map_dir = "_maps/deathmatch"
+	map_dir = "_maps/minigame/deathmatch"
 	place_on_top = TRUE
 	turf_reservation_type = /datum/turf_reservation/turf_not_baseturf
 	/// Map UI Name
@@ -79,7 +79,7 @@
 
 /datum/lazy_template/deathmatch/mech_madness
 	name = "Mech Madness"
-	desc = "Do you hate mechs? Yeah? Dont care! Go fight eachother!"
+	desc = "Do you hate mechs? Yeah? Don't care! Go fight each other!"
 	max_players = 4
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/operative)
 	map_name = "mech_madness"

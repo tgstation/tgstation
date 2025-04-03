@@ -94,7 +94,7 @@
 
 /obj/item/food/clothing/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
@@ -340,7 +340,7 @@
 		else
 			how_cool_are_your_threads += "[src]'s storage opens when dragged to yourself.\n"
 		if (atom_storage.can_hold?.len) // If pocket type can hold anything, vs only specific items
-			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
+			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] <a href='byond://?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
 		else
 			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] item\s that are [weight_class_to_text(atom_storage.max_specific_storage)] or smaller.\n"
 		if(atom_storage.quickdraw)
@@ -351,7 +351,7 @@
 		. += how_cool_are_your_threads.Join()
 
 	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
-		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
+		. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/examine_tags(mob/user)
 	. = ..()
@@ -431,9 +431,9 @@
 				parts_covered += "head"
 			if(body_parts_covered & CHEST)
 				parts_covered += "torso"
-			if(body_parts_covered & ARMS|HANDS)
+			if(body_parts_covered & (ARMS|HANDS))
 				parts_covered += "arms"
-			if(body_parts_covered & LEGS|FEET)
+			if(body_parts_covered & (LEGS|FEET))
 				parts_covered += "legs"
 			if(length(parts_covered))
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
@@ -456,7 +456,7 @@
 			readout += "No armor or durability information available."
 
 		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
-		to_chat(usr, examine_block(formatted_readout))
+		to_chat(usr, boxed_message(formatted_readout))
 
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.

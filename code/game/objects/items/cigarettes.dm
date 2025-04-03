@@ -18,6 +18,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
+	inhand_icon_state = "cigoff"
+	base_icon_state = "match"
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list(/datum/reagent/phosphorus = 2)
@@ -27,6 +29,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/burnt = FALSE
 	/// How long the match lasts in seconds
 	var/smoketime = 10 SECONDS
+	/// If the match is broken
+	var/broken = FALSE
 
 /obj/item/match/process(seconds_per_tick)
 	smoketime -= seconds_per_tick * (1 SECONDS)
@@ -36,21 +40,66 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		open_flame(heat)
 
 /obj/item/match/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
 	matchignite()
 
+/obj/item/match/update_name(updates)
+	. = ..()
+	if(lit)
+		name = "lit [initial(name)]"
+	else if(burnt)
+		name = "burnt [initial(name)]"
+	else if(broken)
+		name = "broken [initial(name)]"
+	else
+		name = "[initial(name)]"
+
+/obj/item/match/update_desc(updates)
+	. = ..()
+	if(lit)
+		desc = "[initial(desc)]. This one is lit."
+	else if(burnt)
+		desc = "[initial(desc)]. This one has seen better days."
+	else if(broken)
+		desc = "[initial(desc)]. This one is broken."
+	else
+		desc = initial(desc)
+
+/obj/item/match/update_icon_state()
+	. = ..()
+	inhand_icon_state = "cigoff"
+	if(lit)
+		icon_state = "[base_icon_state]_lit"
+		inhand_icon_state = "cigon"
+	else if(burnt)
+		icon_state = "[base_icon_state]_burnt"
+	else if(broken)
+		icon_state = "[base_icon_state]_broken"
+	else
+		icon_state = "[base_icon_state]_unlit"
+
+/obj/item/match/proc/snap()
+	if(broken)
+		return
+	if(lit)
+		matchburnout()
+
+	playsound(src, 'sound/effects/snap.ogg', 15, TRUE)
+	broken = TRUE
+	attack_verb_continuous = string_list(list("flicks"))
+	attack_verb_simple = string_list(list("flick"))
+	STOP_PROCESSING(SSobj, src)
+	update_appearance()
+
 /obj/item/match/proc/matchignite()
-	if(lit || burnt)
+	if(lit || burnt || broken)
 		return
 
 	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 	lit = TRUE
-	icon_state = "match_lit"
 	damtype = BURN
 	force = 3
 	hitsound = 'sound/items/tools/welder.ogg'
-	inhand_icon_state = "cigon"
-	name = "lit [initial(name)]"
-	desc = "A [initial(name)]. This one is lit."
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
 	if(isliving(loc))
@@ -68,13 +117,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	burnt = TRUE
 	damtype = BRUTE
 	force = initial(force)
-	icon_state = "match_burnt"
-	inhand_icon_state = "cigoff"
-	name = "burnt [initial(name)]"
-	desc = "A [initial(name)]. This one has seen better days."
 	attack_verb_continuous = string_list(list("flicks"))
 	attack_verb_simple = string_list(list("flick"))
 	STOP_PROCESSING(SSobj, src)
+	update_appearance()
 
 /obj/item/match/extinguish()
 	. = ..()
@@ -192,7 +238,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_state = inhand_icon_off
 
 	// "It is called a cigarette"
-	AddComponent(/datum/component/edible,\
+	AddComponentFrom(
+		SOURCE_EDIBLE_INNATE,\
+		/datum/component/edible,\
 		initial_reagents = list_reagents,\
 		food_flags = FOOD_NO_EXAMINE,\
 		foodtypes = JUNKFOOD,\
@@ -401,16 +449,53 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	QDEL_NULL(mob_smoke)
 
 /obj/item/cigarette/proc/long_exhale(mob/living/carbon/smoker)
-	smoker.visible_message(
-		span_notice("[smoker] exhales a large cloud of smoke from [src]."),
-		span_notice("You exhale a large cloud of smoke from [src]."),
-	)
+	// Find a mob to blow smoke at
+	var/mob/living/guy_infront
+	for(var/mob/living/guy in get_step(smoker, smoker.dir))
+		// one of you has to get on the other's level
+		if(guy.body_position != smoker.body_position)
+			continue
+		// ensures we're face to face
+		if(!(REVERSE_DIR(guy.dir) & smoker.dir))
+			continue
+		guy_infront = guy
+		// in case we get a living first, we wanna prioritize humans
+		if(ishuman(guy_infront))
+			break
+
+	if(isnull(guy_infront))
+		smoker.visible_message(
+			span_notice("[smoker] exhales a large cloud of smoke from [src]."),
+			span_notice("You exhale a large cloud of smoke from [src]."),
+		)
+
+	else if(ishuman(guy_infront) && guy_infront.get_bodypart(BODY_ZONE_HEAD) && !guy_infront.is_pepper_proof())
+		guy_infront.visible_message(
+			span_notice("[smoker] exhales a large cloud of smoke from [src] directly at [guy_infront]'s face!"),
+			span_notice("You exhale a large cloud of smoke from [src] directly at [guy_infront]'s face."),
+			ignored_mobs = guy_infront,
+		)
+		to_chat(guy_infront, span_warning("You get a face full of smoke from [smoker]'s [name]!"))
+		smoke_in_face(guy_infront)
+
+	else
+		guy_infront.visible_message(
+			span_notice("[smoker] exhales a large cloud of smoke from [src] at [guy_infront]."),
+			span_notice("You exhale a large cloud of smoke from [src] at [guy_infront]."),
+		)
+
 	if(!isturf(smoker.loc))
 		return
 
 	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker.loc, /particles/smoke/cig/big)
 	update_particle_position(big_smoke, smoker.dir)
 	QDEL_IN(big_smoke, big_smoke.particles.lifespan)
+
+/// Called when a mob gets smoke blown in their face.
+/obj/item/cigarette/proc/smoke_in_face(mob/living/getting_smoked)
+	getting_smoked.add_mood_event("smoke_bm", /datum/mood_event/smoke_in_face)
+	if(prob(20) && !HAS_TRAIT(getting_smoked, TRAIT_SMOKER) && !HAS_TRAIT(getting_smoked, TRAIT_ANOSMIA))
+		getting_smoked.emote("cough")
 
 /// Handles processing the reagents in the cigarette.
 /obj/item/cigarette/proc/handle_reagents(seconds_per_tick)
@@ -499,11 +584,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 
 	if(cig.lit)
-		to_chat(user, span_warning("The [cig.name] is already lit!"))
+		to_chat(user, span_warning("\The [cig] is already lit!"))
 	if(M == user)
 		cig.attackby(src, user)
 	else
-		cig.light(span_notice("[user] holds the [name] out for [M], and lights [M.p_their()] [cig.name]."))
+		cig.light(span_notice("[user] holds \the [src] out for [M], and lights [M.p_their()] [cig.name]."))
 
 /obj/item/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
@@ -559,6 +644,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoke_all = TRUE
 	lung_harm = 1.5
 	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/medicine/omnizine = 15)
+
+/obj/item/cigarette/syndicate/smoke_in_face(mob/living/getting_smoked)
+	. = ..()
+	getting_smoked.adjust_eye_blur(6 SECONDS)
+	getting_smoked.adjust_temp_blindness(2 SECONDS)
 
 /obj/item/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."

@@ -81,7 +81,7 @@
 		floor_text += "<span class='info ml-1'>Body temperature: [scan_turf?.return_air()?.return_temperature() || "???"]</span><br>"
 
 		if(user.can_read(src) && !user.is_blind())
-			to_chat(user, examine_block(floor_text))
+			to_chat(user, custom_boxed_message("blue_box", floor_text))
 		last_scan_text = floor_text
 		return
 
@@ -410,7 +410,7 @@
 
 	. = jointext(render_list, "")
 	if(tochat)
-		to_chat(user, examine_block(.), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", .), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 	return .
 
 /obj/item/healthanalyzer/click_ctrl_shift(mob/user)
@@ -458,7 +458,7 @@
 				var/datum/reagent/reagent = r
 				if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
 					continue
-				render_block += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]<br>"
+				render_block += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_bolddanger("OVERDOSING")]" : ".</span>"]<br>"
 
 		if(!length(render_block)) //If no VISIBLY DISPLAYED reagents are present, we report as if there is nothing.
 			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span><br>"
@@ -476,11 +476,11 @@
 					if(bit.chemical_flags & REAGENT_INVISIBLE)
 						continue
 					if(!belly.food_reagents[bit.type])
-						render_block += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]<br>"
+						render_block += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_bolddanger("OVERDOSING")]" : ".</span>"]<br>"
 					else
 						var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 						if(bit_vol > 0)
-							render_block += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]<br>"
+							render_block += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_bolddanger("OVERDOSING")]" : ".</span>"]<br>"
 
 			if(!length(render_block))
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span><br>"
@@ -507,7 +507,7 @@
 				render_list += "<span class='alert ml-2'>[allergies]</span><br>"
 
 		// we handled the last <br> so we don't need handholding
-		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/click_alt(mob/user)
 	if(mode == SCANNER_NO_MODE)
@@ -558,7 +558,7 @@
 			simple_scanner.show_emotion(AID_EMOTION_HAPPY)
 		to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
-		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
@@ -669,7 +669,7 @@
 
 /obj/item/healthanalyzer/simple/disease
 	name = "disease state analyzer"
-	desc = "Another of MeLo-Tech's dubiously useful medsci scanners, the disease analyzer is a pretty rare find these days - NT found out that giving their hospitals the lowest-common-denominator pandemic equipment resulted in too much financial loss of life to be profitable. There's rumours that the inbuilt AI is jealous of the first aid analyzer's success."
+	desc = "Another of MeLo-Tech's dubiously useful medsci scanners, the disease analyzer is a pretty rare find these days - NT found out that giving their hospitals the lowest-common-denominator pandemic equipment resulted in too much financial loss of life to be profitable. There are rumours that the inbuilt AI is jealous of the first aid analyzer's success."
 	icon_state = "disease_aid"
 	mode = SCANNER_NO_MODE
 	encouragements = list("encourages you to take your medication", "briefly displays a spinning cartoon heart", "reasures you about your condition", \

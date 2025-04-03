@@ -597,7 +597,7 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
 	var/cinematic = get_cinematic_type(detonation_status)
 	if(!isnull(cinematic))
-		play_cinematic(cinematic, world, CALLBACK(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, station_explosion_detonation), src))
+		play_cinematic(cinematic, world)
 
 	var/drop_level = TRUE
 	switch(detonation_status)
@@ -628,6 +628,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	if(drop_level)
 		SSsecurity_level.set_level(SEC_LEVEL_RED)
+	qdel(src)
 	return TRUE
 
 /// Cause nuke effects to the passed z-levels.
@@ -653,7 +654,7 @@ GLOBAL_VAR(station_nuke_source)
 	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
 		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
 		if(!freezer.jones)
-			to_chat(gibbed, span_boldannounce("You hold onto [freezer] as [source] goes off. \
+			to_chat(gibbed, span_bolddanger("You hold onto [freezer] as [source] goes off. \
 				Luckily, as [freezer] is lead-lined, you survive."))
 			freezer.jones = TRUE
 			return FALSE

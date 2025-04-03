@@ -147,7 +147,6 @@
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	if(length(mind_traits))
 		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
 
@@ -156,10 +155,15 @@
 		liver.add_traits(liver_traits, JOB_TRAIT)
 
 	if(!ishuman(spawned))
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 		return
 
 	var/mob/living/carbon/human/spawned_human = spawned
 	var/list/roundstart_experience
+
+	if(player_client)
+		for(var/obj/item/organ/our_organ in spawned_human.organs)
+			ADD_TRAIT(our_organ, TRAIT_CLIENT_STARTING_ORGAN, ROUNDSTART_TRAIT)
 
 	if(!config) //Needed for robots.
 		roundstart_experience = minimal_skills
@@ -172,6 +176,8 @@
 	if(roundstart_experience)
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 
 /// Return the outfit to use
 /datum/job/proc/get_outfit(consistent)
@@ -222,19 +228,9 @@
 	equip_outfit_and_loadout(equipping.get_outfit(consistent), player_client?.prefs, visual_only)
 
 /datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
-	if(!human)
-		return
-	var/obj/machinery/announcement_system/system
-	var/list/available_machines = list()
-	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
-		if(announce.newhead_toggle)
-			available_machines += announce
-			break
-	if(!length(available_machines))
-		return
-	system = pick(available_machines)
-	//timer because these should come after the captain announcement
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(system, TYPE_PROC_REF(/obj/machinery/announcement_system, announce), AUTO_ANNOUNCE_NEWHEAD, human.real_name, human.job, channels), 1))
+	if(human)
+		//timer because these should come after the captain announcement
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(aas_config_announce), /datum/aas_config_entry/newhead, list("PERSON" = human.real_name, "RANK" = human.job), null, channels, null, TRUE), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/player)
@@ -299,7 +295,7 @@
 /// Gets the message that shows up when spawning as this job
 /datum/job/proc/get_spawn_message()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return examine_block(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+	return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
 
 /// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
 /datum/job/proc/get_spawn_message_information()
@@ -420,7 +416,7 @@
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
 
 	if(istype(pda))
-		pda.imprint_id(equipped.real_name, equipped_job.title)
+		pda.imprint_id(equipped.real_name, equipped_job.title, card)
 		pda.update_ringtone(equipped_job.job_tone)
 		pda.UpdateDisplay()
 

@@ -17,6 +17,7 @@
 
 	if(!isgloves)
 		RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+		RegisterSignal(parent, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_fishing))
 	else
 		var/obj/item/clothing/gloves = parent
 		RegisterSignal(gloves, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
@@ -68,6 +69,7 @@
 	if(slot != ITEM_SLOT_GLOVES)
 		return
 	RegisterSignal(equipper, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(equipper, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_fishing))
 
 /datum/component/profound_fisher/proc/open_rod_menu(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
@@ -76,7 +78,7 @@
 
 /datum/component/profound_fisher/proc/on_drop(datum/source, atom/dropper)
 	SIGNAL_HANDLER
-	UnregisterSignal(dropper, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(dropper, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_COMPLETE_FISHING))
 	REMOVE_TRAIT(dropper, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC) //this will cancel the current minigame if the fishing rod was internal.
 
 /datum/component/profound_fisher/proc/on_unarmed_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
@@ -108,19 +110,12 @@
 	return TRUE
 
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
-	RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING, PROC_REF(actually_fishing_with_internal_rod))
 	our_rod.melee_attack_chain(user, target)
-	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING)
+	ADD_TRAIT(user, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
 
-/datum/component/profound_fisher/proc/actually_fishing_with_internal_rod(datum/source)
-	SIGNAL_HANDLER
-	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, REF(parent))
-	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(remove_profound_fisher))
-
-/datum/component/profound_fisher/proc/remove_profound_fisher(datum/source)
+/datum/component/profound_fisher/proc/stop_fishing(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
-	UnregisterSignal(source, COMSIG_MOB_COMPLETE_FISHING)
 
 /datum/component/profound_fisher/proc/pretend_fish(mob/living/source, atom/target)
 	if(DOING_INTERACTION_WITH_TARGET(source, target))
@@ -138,7 +133,7 @@
 		if(!do_after(source, fishing_speed, target = target) && !QDELETED(fish_spot))
 			qdel(float)
 			return
-	var/reward_loot = fish_spot.roll_reward(our_rod, source)
+	var/reward_loot = fish_spot.roll_mindless_reward(our_rod, source, target)
 	fish_spot.dispense_reward(reward_loot, source, target)
 	playsound(float, 'sound/effects/bigsplash.ogg', 100)
 	qdel(float)
@@ -149,3 +144,4 @@
 	resistance_flags = INDESTRUCTIBLE
 	reel_overlay = null
 	show_in_wiki = FALSE //abstract fishing rod
+	item_flags = ABSTRACT

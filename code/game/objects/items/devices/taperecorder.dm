@@ -36,7 +36,6 @@
 		mytape = new starting_tape_type(src)
 	soundloop = new(src)
 	update_appearance()
-	become_hearing_sensitive()
 
 /obj/item/taperecorder/Destroy()
 	QDEL_NULL(soundloop)
@@ -156,12 +155,11 @@
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(message_mods[MODE_RELAY])
+	if(message_mods[MODE_RELAY] || !mytape || istype(speaker, /obj/item/taperecorder))
 		return
 
-	if(mytape && recording)
-		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [speaker.GetVoice()]: [raw_message]"
+	mytape.timestamp += mytape.used_capacity
+	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: [raw_message]"
 
 
 /obj/item/taperecorder/verb/record()
@@ -185,6 +183,7 @@
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
+		become_hearing_sensitive()
 		balloon_alert(usr, "started recording")
 		update_sound()
 		update_appearance()
@@ -218,6 +217,7 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		balloon_alert(usr, "stopped recording")
 		recording = FALSE
+		lose_hearing_sensitivity()
 	else if(playing)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		balloon_alert(usr, "stopped playing")
@@ -262,15 +262,15 @@
 			balloon_alert(usr, "recording ended")
 			stoplag(1 SECONDS) //prevents multiple balloon alerts covering each other
 			break
-		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
+		say("[mytape.storedinfo[i]]", sanitize=FALSE, message_mods = list(MODE_SEQUENTIAL = TRUE))//We want to display this properly, don't double encode
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(1 SECONDS)
 		else
-			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
+			playsleepseconds = max(mytape.timestamp[i + 1] - mytape.timestamp[i], 1 SECONDS)
 		if(playsleepseconds > 14 SECONDS)
 			sleep(1 SECONDS)
-			say("Skipping [playsleepseconds/10] seconds of silence.")
+			say("Skipping [playsleepseconds/10] seconds of silence.", message_mods = list(MODE_SEQUENTIAL = TRUE))
 			playsleepseconds = 1 SECONDS
 		i++
 

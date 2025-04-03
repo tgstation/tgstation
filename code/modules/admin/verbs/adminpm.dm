@@ -387,20 +387,11 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 			recipient_ticket_id = recipient_ticket?.id
 			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
 
-		to_chat(recipient,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
-			confidential = TRUE)
-
 		recipient.receive_ahelp(
 			link_to_us,
 			span_linkify(send_message),
 		)
 
-		to_chat(recipient,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
-			confidential = TRUE)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkify(send_message)]"),
@@ -502,7 +493,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 
 	return TRUE
 
-/// Notifies all admins about the existance of an admin pm, then logs the pm
+/// Notifies all admins about the existence of an admin pm, then logs the pm
 /// message_target here can be either [EXTERNAL_PM_USER], indicating that this message is intended for some external chat channel
 /// or a /client, in which case we send in the standard form
 /// log_message is the raw message to send, it will be filtered and treated to ensure we do not break any text handling
@@ -707,20 +698,10 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	message_admins("External message from [sender] to [recipient_name_linked] : [message]")
 	log_admin_private("External PM: [sender] -> [recipient_name] : [message]")
 
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
-		confidential = TRUE)
-
 	recipient.receive_ahelp(
-		"<a href='?priv_msg=[stealthkey]'>[adminname]</a>",
+		"<a href='byond://?priv_msg=[stealthkey]'>[adminname]</a>",
 		message,
 	)
-
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
-		confidential = TRUE)
 
 	admin_ticket_log(recipient, "<font color='purple'>PM From [tgs_tagged]: [message]</font>", log_in_blackbox = FALSE)
 
@@ -766,8 +747,13 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	to_chat(
 		src,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = "<span class='[span_class]'>Admin PM from-<b>[reply_to]</b>: [message]</span>",
-		confidential = TRUE,
+		html = fieldset_block(
+			span_adminhelp("Administrator private message"),
+			"<span class='[span_class]'>Admin PM from-<b>[reply_to]</b></span>\n\n\
+			<span class='[span_class]'>[message]</span>\n\n\
+			<i class='adminsay'>Click on the administrator's name to reply.</i>",
+			"boxed_message red_box"),
+		confidential = TRUE
 	)
 
 	current_ticket?.player_replied = FALSE

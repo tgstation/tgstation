@@ -45,6 +45,9 @@
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
+	var/datum/move_loop/moveloop = GLOB.move_manager.processing_on(src, SSmovement)
+	if (!isnull(moveloop))
+		UnregisterSignal(moveloop, COMSIG_MOVELOOP_STOP)
 	return ..()
 
 /obj/effect/meteor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -76,8 +79,12 @@
 	if(!isatom(chasing))
 		return
 	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
-	if(!new_loop)
-		return
+	if(new_loop)
+		RegisterSignal(new_loop, COMSIG_MOVELOOP_STOP, PROC_REF(on_loop_stopped))
+
+/obj/effect/meteor/proc/on_loop_stopped(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
 
 ///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/moved_off_z()
@@ -233,7 +240,7 @@
 //Flaming meteor
 /obj/effect/meteor/flaming
 	name = "flaming meteor"
-	desc = "An veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
+	desc = "A veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
 	icon_state = "flaming"
 	hits = 5
 	heavy = TRUE
@@ -349,7 +356,7 @@
 
 /obj/effect/meteor/banana/ram_turf(turf/bumped)
 	for(var/mob/living/slipped in get_turf(bumped))
-		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE)
 		slipped.visible_message(span_warning("[src] honks [slipped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
 	get_hit()
 

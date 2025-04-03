@@ -2,6 +2,7 @@
 /datum/hallucination/fake_alert
 	abstract_hallucination_parent = /datum/hallucination/fake_alert
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	var/del_timer_id
 	/// The duration of the alert being thrown.

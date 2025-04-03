@@ -24,40 +24,50 @@
 	addtimer(CALLBACK(src, PROC_REF(create_navigation)), world.tick_lag)
 
 /mob/living/proc/create_navigation()
+	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
+	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	var/list/destination_list = list()
-	for(var/atom/destination in GLOB.navigate_destinations)
-		if(!isatom(destination) || destination.z != z || get_dist(destination, src) > MAX_NAVIGATE_RANGE)
+	for(var/atom/destination as anything in GLOB.navigate_destinations)
+		if(get_dist(destination, src) > MAX_NAVIGATE_RANGE)
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
+		if(destination.z != z && (can_go_down || can_go_up)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
+			destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
+
 		destination_list[destination_name] = destination
 
-	if(!is_reserved_level(z)) //don't let us path to nearest staircase or ladder on shuttles in transit
-		if(z > 1)
-			destination_list["Nearest Way Down"] = DOWN
-		if(z < world.maxz)
-			destination_list["Nearest Way Up"] = UP
+	if(can_go_down)
+		destination_list["Nearest Way Down"] = DOWN
+	if(can_go_up)
+		destination_list["Nearest Way Up"] = UP
 
 	if(!length(destination_list))
 		balloon_alert(src, "no navigation signals!")
 		return
 
 	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
-	var/navigate_target = destination_list[platform_code]
+	var/atom/navigate_target = destination_list[platform_code]
 
-	if(isnull(navigate_target))
+	if(isnull(navigate_target) || incapacitated)
 		return
-	if(incapacitated)
-		return
+
+
+	var/finding_zchange = FALSE
 	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
-
-	if(navigate_target == UP || navigate_target == DOWN)
-		var/new_target = find_nearest_stair_or_ladder(navigate_target)
+	if(navigate_target == UP || navigate_target == DOWN || (isatom(navigate_target) && navigate_target.z != z))
+		// lowering the cooldown to 5 seconds if we're navigating to a ladder or staircase instead of a proper destination
+		// (so we can decide to move to another destination right off the bat, rather than needing to wait)
+		COOLDOWN_START(src, navigate_cooldown, 5 SECONDS)
+		var/direction_name = isatom(navigate_target) ? "there" : (navigate_target == UP ? "up" : "down")
+		var/nav_dir = isatom(navigate_target) ? (get_dir_multiz(src, navigate_target) & (UP|DOWN)) : navigate_target
+		var/atom/new_target = find_nearest_stair_or_ladder(nav_dir)
 
 		if(!new_target)
-			balloon_alert(src, "can't find ladder or staircase going [navigate_target == UP ? "up" : "down"]!")
+			balloon_alert(src, "can't find ladder or staircase going [direction_name]!")
 			return
 
 		navigate_target = new_target
+		finding_zchange = TRUE
 
 	if(!isatom(navigate_target))
 		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
@@ -92,6 +102,8 @@
 		animate(path_image, 0.5 SECONDS, alpha = 150)
 	addtimer(CALLBACK(src, PROC_REF(shine_navigation)), 0.5 SECONDS)
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
+	if(finding_zchange)
+		RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cut_navigation))
 	balloon_alert(src, "navigation path created")
 
 /mob/living/proc/shine_navigation()
@@ -107,7 +119,7 @@
 	for(var/image/navigation_path in client.navigation_images)
 		client.images -= navigation_path
 	client.navigation_images.Cut()
-	UnregisterSignal(src, COMSIG_LIVING_DEATH)
+	UnregisterSignal(src, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_Z_CHANGED))
 
 /**
  * Finds nearest ladder or staircase either up or down.

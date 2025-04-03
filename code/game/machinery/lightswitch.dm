@@ -7,6 +7,7 @@
 	desc = "Make dark."
 	power_channel = AREA_USAGE_LIGHT
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null

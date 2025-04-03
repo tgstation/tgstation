@@ -187,6 +187,6 @@
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
 /obj/machinery/modular_computer/bullet_act(obj/projectile/proj)
-	return cpu?.bullet_act(proj) || ..()
+	return cpu?.projectile_hit(proj) || ..()
 
 #undef CPU_INTERACTABLE

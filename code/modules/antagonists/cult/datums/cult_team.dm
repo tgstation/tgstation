@@ -154,9 +154,9 @@
 	var/area/target_area = get_area(new_target)
 
 	blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', new_target, "glow", ABOVE_MOB_LAYER)
-	blood_target_image.appearance_flags = RESET_COLOR
-	blood_target_image.pixel_x = -new_target.pixel_x
-	blood_target_image.pixel_y = -new_target.pixel_y
+	blood_target_image.appearance_flags = RESET_COLOR|KEEP_APART
+	blood_target_image.pixel_w = -new_target.pixel_x
+	blood_target_image.pixel_z = -new_target.pixel_y
 
 	for(var/datum/mind/cultist as anything in members)
 		if(!cultist.current)
@@ -164,7 +164,7 @@
 		if(cultist.current.stat == DEAD || !cultist.current.client)
 			continue
 
-		to_chat(cultist.current, span_bold(span_cult_large("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
+		to_chat(cultist.current, span_bold(span_cult_large("[marker] has marked [blood_target] in \the [target_area] as the cult's top priority, get there immediately!")))
 		SEND_SOUND(cultist.current, sound(SFX_HALLUCINATION_OVER_HERE, 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 

@@ -16,6 +16,17 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 		bitfields[bitfield.variable] = bitfield.flags
 	return bitfields
 
+/// Returns an associative list of bitflag name -> number for all valid bitflags in the passed in field
+/proc/get_valid_bitflags(var_name)
+	return GLOB.bitfields[var_name] || list()
+
+/proc/get_random_bitflag(var_name)
+	var/list/flags = get_valid_bitflags(var_name)
+	if(!length(flags))
+		return
+	var/name = pick(flags)
+	return flags[name]
+
 DEFINE_BITFIELD(admin_flags, list(
 	"ADMIN" = R_ADMIN,
 	"AUTOLOGIN" = R_AUTOADMIN,
@@ -173,7 +184,6 @@ DEFINE_BITFIELD(item_flags, list(
 	"ABSTRACT" = ABSTRACT,
 	"BEING_REMOVED" = BEING_REMOVED,
 	"DROPDEL" = DROPDEL,
-	"EXAMINE_SKIP" = EXAMINE_SKIP,
 	"FORCE_STRING_OVERRIDE" = FORCE_STRING_OVERRIDE,
 	"HAND_ITEM" = HAND_ITEM,
 	"IGNORE_DIGITIGRADE" = IGNORE_DIGITIGRADE,
@@ -571,6 +581,9 @@ DEFINE_BITFIELD(fish_flags, list(
 	"FISH_DO_FLOP_ANIM" = FISH_DO_FLOP_ANIM,
 	"FISH_FLAG_PETTED" = FISH_FLAG_PETTED,
 	"FISH_FLAG_EXPERIMENT_SCANNABLE" = FISH_FLAG_EXPERIMENT_SCANNABLE,
+	"FISH_FLAG_UPDATING_SIZE_AND_WEIGHT" = FISH_FLAG_OVERPOPULATED,
+	"FISH_FLAG_SAFE_TEMPERATURE" = FISH_FLAG_SAFE_TEMPERATURE,
+	"FISH_FLAG_SAFE_FLUID" = FISH_FLAG_SAFE_FLUID,
 ))
 
 DEFINE_BITFIELD(bot_mode_flags, list(
@@ -579,4 +592,13 @@ DEFINE_BITFIELD(bot_mode_flags, list(
 	"REMOTE_CONTROL" = BOT_MODE_REMOTE_ENABLED,
 	"SAPIENCE_ALLOWED" = BOT_MODE_CAN_BE_SAPIENT,
 	"STARTS_POSSESSABLE" = BOT_MODE_ROUNDSTART_POSSESSION,
+))
+
+DEFINE_BITFIELD(construction_upgrades, list(
+	"RCD_UPGRADE_FRAMES" = RCD_UPGRADE_FRAMES,
+	"RCD_UPGRADE_SIMPLE_CIRCUITS" = RCD_UPGRADE_SIMPLE_CIRCUITS,
+	"RCD_UPGRADE_SILO_LINK" = RCD_UPGRADE_SILO_LINK,
+	"RCD_UPGRADE_FURNISHING" = RCD_UPGRADE_FURNISHING,
+	"RCD_UPGRADE_ANTI_INTERRUPT" = RCD_UPGRADE_ANTI_INTERRUPT,
+	"RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN" = RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN,
 ))

@@ -1,3 +1,10 @@
+/// A list of movables that shouldn't be affected by the element, either because it'd look bad or barely perceptible
+GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
+	/obj/effect,
+	/mob/dead,
+	/obj/projectile,
+)))
+
 /**
  * A visual element that makes movables entering the attached turfs look immersed into that turf.
  *
@@ -9,11 +16,6 @@
 	///An association list of turfs that have this element attached and their affected contents.
 	var/list/attached_turfs_and_movables = list()
 
-	/**
-	 * A list of movables that shouldn't be affected by the element, either because it'd look bad
-	 * or barely perceptible.
-	 */
-	var/static/list/movables_to_ignore
 	///A list of icons generated from a target and a mask, later used as appearances for the overlays.
 	var/static/list/generated_immerse_icons = list()
 	///A list of instances of /atom/movable/immerse_overlay then used as visual overlays for the immersed movables.
@@ -31,16 +33,6 @@
 	. = ..()
 	if(!isturf(target) || !icon || !icon_state || !mask_icon)
 		return ELEMENT_INCOMPATIBLE
-
-	if(isnull(movables_to_ignore))
-		movables_to_ignore = typecacheof(list(
-			/obj/effect,
-			/mob/dead,
-			/obj/projectile,
-		))
-
-		movables_to_ignore += GLOB.WALLITEMS_INTERIOR
-		movables_to_ignore += GLOB.WALLITEMS_EXTERIOR
 
 	src.icon = icon
 	src.icon_state = icon_state
@@ -109,11 +101,15 @@
 	SIGNAL_HANDLER
 	if(QDELETED(movable))
 		return
-	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
+	if(HAS_TRAIT(movable, TRAIT_IMMERSED) || HAS_TRAIT(movable, TRAIT_WALLMOUNTED))
 		return
-	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
+	if(!ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
 		return
-	if(is_type_in_typecache(movable, movables_to_ignore))
+	var/layer_to_check = IS_TOPDOWN_PLANE(source.plane) ? TOPDOWN_ABOVE_WATER_LAYER : ABOVE_ALL_MOB_LAYER
+	//First, floor plane objects use TOPDOWN_LAYER, second this check shouldn't apply to them anyway.
+	if(movable.layer >= layer_to_check)
+		return
+	if(is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
 
 	var/atom/movable/buckled
@@ -145,7 +141,9 @@
 	var/width = icon_dimensions["width"] || ICON_SIZE_X
 	var/height = icon_dimensions["height"] || ICON_SIZE_Y
 
-	var/is_below_water = movable.layer < WATER_LEVEL_LAYER ? "underwater-" : ""
+	///This determines if the overlay should cover the entire surface of the object or not
+	var/layer_to_check = IS_TOPDOWN_PLANE(movable.plane) ? TOPDOWN_WATER_LEVEL_LAYER : WATER_LEVEL_LAYER
+	var/is_below_water = (movable.layer < layer_to_check) ? "underwater-" : ""
 
 	var/atom/movable/immerse_overlay/vis_overlay = generated_visual_overlays["[is_below_water][width]x[height]"]
 
@@ -191,13 +189,13 @@
 	var/last_i = width/ICON_SIZE_X
 	for(var/i in -1 to last_i)
 		var/mutable_appearance/underwater = mutable_appearance(icon, icon_state)
-		underwater.pixel_x = ICON_SIZE_X * i - extra_width
-		underwater.pixel_y = -ICON_SIZE_Y - extra_height
+		underwater.pixel_w = ICON_SIZE_X * i - extra_width
+		underwater.pixel_z = -ICON_SIZE_Y - extra_height
 		overlay_appearance.overlays += underwater
 
 		var/mutable_appearance/water_level = is_below_water ? underwater : mutable_appearance(immerse_icon)
-		water_level.pixel_x = ICON_SIZE_X * i - extra_width
-		water_level.pixel_y = -extra_height
+		water_level.pixel_w = ICON_SIZE_X * i - extra_width
+		water_level.pixel_z = -extra_height
 		overlay_appearance.overlays += water_level
 
 
@@ -337,23 +335,23 @@
 	/// Oh, yeah, didn't I mention turning a visual overlay affects its pixel x/y/w/z too? Yeah, it sucks.
 	var/new_x = vis_overlay.extra_width
 	var/new_y = vis_overlay.extra_height
-	var/old_div = source.current_size/resize
-	var/offset_lying = source.rotate_on_lying ? PIXEL_Y_OFFSET_LYING : source.get_pixel_y_offset_standing(source.current_size/resize)
+	var/old_div = source.current_size / resize
+	var/offset_lying = source.rotate_on_lying ? PIXEL_Y_OFFSET_LYING : source.get_transform_translation_size(old_div)
 	switch(source.lying_prev)
 		if(270)
 			vis_overlay.pixel_x += -offset_lying / old_div
 		if(90)
 			vis_overlay.pixel_x += offset_lying / old_div
 		if(0)
-			vis_overlay.pixel_y += -source.get_pixel_y_offset_standing(source.current_size/resize) / old_div
+			vis_overlay.pixel_y += -source.get_transform_translation_size(old_div) / old_div
 
 	switch(new_lying_angle)
 		if(270)
-			new_x += -source.body_position_pixel_y_offset / source.current_size
+			new_x += -offset_lying / source.current_size
 		if(90)
-			new_x += source.body_position_pixel_y_offset / source.current_size
+			new_x += offset_lying / source.current_size
 		if(0)
-			new_y += -source.body_position_pixel_y_offset / source.current_size
+			new_y += -source.get_transform_translation_size(old_div) / old_div
 
 	animate(vis_overlay, transform = new_transform, pixel_x = new_x, pixel_y = new_y, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT))
 	addtimer(CALLBACK(vis_overlay, TYPE_PROC_REF(/atom/movable/immerse_overlay, adjust_living_overlay_offset), source), UPDATE_TRANSFORM_ANIMATION_TIME)
@@ -408,6 +406,4 @@
 /atom/movable/immerse_overlay/proc/adjust_living_overlay_offset(mob/living/source)
 	pixel_x = extra_width
 	pixel_y = extra_height
-	overlay_appearance.pixel_y = -source.body_position_pixel_y_offset
 	overlays = list(overlay_appearance)
-	overlay_appearance.pixel_y = 0

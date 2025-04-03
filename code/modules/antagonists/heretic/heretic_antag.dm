@@ -7,6 +7,8 @@
  * Used in creating spooky-text for heretic ascension announcements.
  */
 /proc/generate_heretic_text(length = 25)
+	if(!isnum(length)) // stupid thing so we can use this directly in replacetext
+		length = 25
 	. = ""
 	for(var/i in 1 to length)
 		. += pick("!", "$", "^", "@", "&", "#", "*", "(", ")", "?")
@@ -93,9 +95,9 @@
 	//if the knowledge is a spell, use the spell's button
 	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
-		var/datum/action/cooldown/spell/result_spell = spell_knowledge.spell_to_add
-		icon_path = result_spell.button_icon
-		icon_state = result_spell.button_icon_state
+		var/datum/action/result_action = spell_knowledge.action_to_add
+		icon_path = result_action.button_icon
+		icon_state = result_action.button_icon_state
 
 	//if the knowledge is a summon, use the mob sprite
 	else if(ispath(knowledge,/datum/heretic_knowledge/summon))
@@ -203,8 +205,13 @@
 		if("research")
 			var/datum/heretic_knowledge/researched_path = text2path(params["path"])
 			if(!ispath(researched_path, /datum/heretic_knowledge))
-				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
-
+				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path || "invalid path"])")
+			if(!(researched_path in get_researchable_knowledge()))
+				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
+				CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
+			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) && !can_ascend())
+				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
+				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 			if(initial(researched_path.cost) > knowledge_points)
 				return TRUE
 			if(!gain_knowledge(researched_path))

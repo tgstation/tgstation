@@ -64,13 +64,13 @@
 	build_all_button_icons()
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/clicker, params, atom/target)
 	var/atom/aim_assist_target
 	if(aim_assist)
-		aim_assist_target = aim_assist(caller, target)
-	return ..(caller, params, aim_assist_target || target)
+		aim_assist_target = aim_assist(clicker, target)
+	return ..(clicker, params, aim_assist_target || target)
 
-/datum/action/cooldown/spell/pointed/proc/aim_assist(mob/living/caller, atom/target)
+/datum/action/cooldown/spell/pointed/proc/aim_assist(mob/living/clicker, atom/target)
 	if(!isturf(target))
 		return
 
@@ -101,7 +101,7 @@
  */
 /datum/action/cooldown/spell/pointed/projectile
 	/// What projectile we create when we shoot our spell.
-	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
+	var/obj/projectile/projectile_type = /obj/projectile/magic/teleport
 	/// How many projectiles we can fire per cast. Not all at once, per click, kinda like charges
 	var/projectile_amount = 1
 	/// How many projectiles we have yet to fire, based on projectile_amount
@@ -168,7 +168,7 @@
 /datum/action/cooldown/spell/pointed/projectile/proc/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	to_fire.firer = owner
 	to_fire.fired_from = src
-	to_fire.preparePixelProjectile(target, owner)
+	to_fire.aim_projectile(target, owner)
 	RegisterSignal(to_fire, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_cast_hit))
 
 	if(istype(to_fire, /obj/projectile/magic))

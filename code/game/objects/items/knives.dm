@@ -7,6 +7,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	inhand_icon_state = "knife"
 	worn_icon_state = "knife"
+	icon_angle = -90
 	desc = "The original knife, it is said that all other knives are only copies of this one."
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 10
@@ -17,13 +18,15 @@
 	throw_speed = 3
 	throw_range = 6
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
-	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
+	var/list/alt_continuous = list("stabs", "pierces", "shanks")
+	var/list/alt_simple = list("stab", "pierce", "shank")
 
 /datum/armor/item_knife
 	fire = 50
@@ -33,6 +36,9 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	set_butchering()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	make_stabby()
 
 ///Adds the butchering component, used to override stats for special cases
 /obj/item/knife/proc/set_butchering()
@@ -43,10 +49,14 @@
 	)
 	//bonus chance increases depending on force
 
+///Adds alt sharpness component, used for overrides
+/obj/item/knife/proc/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
+
 /obj/item/knife/suicide_act(mob/living/user)
-	user.visible_message(pick(span_suicide("[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
-		span_suicide("[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
-		span_suicide("[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.")))
+	user.visible_message(pick(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_theyre()] trying to commit suicide."), \
+		span_suicide("[user] is slitting [user.p_their()] throat with \the [src]! It looks like [user.p_theyre()] trying to commit suicide."), \
+		span_suicide("[user] is slitting [user.p_their()] stomach open with \the [src]! It looks like [user.p_theyre()] trying to commit seppuku.")))
 	return BRUTELOSS
 
 /obj/item/knife/ritual
@@ -56,6 +66,7 @@
 	icon_state = "bone_blade"
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -72,6 +83,7 @@
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bloodletter"
 	worn_icon_state = "render"
+	icon_angle = -45
 	w_class = WEIGHT_CLASS_NORMAL
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
@@ -90,9 +102,10 @@
 
 /obj/item/knife/butcher
 	name = "butcher's cleaver"
+	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	icon_state = "butch"
 	inhand_icon_state = "butch"
-	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
+	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 10
@@ -103,12 +116,16 @@
 	custom_price = PAYCHECK_CREW * 5
 	wound_bonus = 15
 
+/obj/item/knife/butcher/make_stabby()
+	return
+
 /obj/item/knife/hunting
 	name = "hunting knife"
-	icon = 'icons/obj/weapons/stabby.dmi'
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
+	icon = 'icons/obj/weapons/stabby.dmi'
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
+	icon_angle = 180
 	wound_bonus = 10
 
 /obj/item/knife/hunting/set_butchering()
@@ -118,20 +135,24 @@
 	bonus_modifier = force + 10, \
 	)
 
+/obj/item/knife/hunting/make_stabby()
+	return
+
 /obj/item/knife/combat
 	name = "combat knife"
+	desc = "A military combat utility survival knife."
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "buckknife"
 	worn_icon_state = "buckknife"
-	desc = "A military combat utility survival knife."
-	embed_type = /datum/embed_data/combat_knife
+	icon_angle = -45
+	embed_type = /datum/embedding/combat_knife
 	force = 20
 	throwforce = 20
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
 	slot_flags = ITEM_SLOT_MASK
 
-/datum/embed_data/combat_knife
+/datum/embedding/combat_knife
 	pain_mult = 4
 	embed_chance = 65
 	fall_chance = 10
@@ -140,6 +161,9 @@
 /obj/item/knife/combat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
+
+/obj/item/knife/combat/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)
 
 /obj/item/knife/combat/dropped(mob/living/user, slot)
 	. = ..()
@@ -158,61 +182,59 @@
 
 /obj/item/knife/combat/survival
 	name = "survival knife"
-	icon = 'icons/obj/weapons/stabby.dmi'
+	desc = "A hunting grade survival knife."
 	icon_state = "survivalknife"
 	worn_icon_state = "survivalknife"
-	embed_type = /datum/embed_data/combat_knife/weak
-	desc = "A hunting grade survival knife."
+	embed_type = /datum/embedding/combat_knife/weak
 	force = 15
 	throwforce = 15
 
 /obj/item/knife/combat/root
 	name = "cahn'root dagger"
-	icon = 'icons/obj/weapons/stabby.dmi'
+	desc = "A root dagger, deceptively sharp. Perfect to hide and stab someone with, or make a couple and throw them at enemies."
 	icon_state = "rootdagger"
 	worn_icon_state = "root_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	inhand_icon_state = "rootshiv"
-	embed_type = /datum/embed_data/combat_knife/weak
-	desc = "A root dagger, deceptively sharp. Perfect to hide and stab someone with, or make a couple and throw them at enemies."
+	embed_type = /datum/embedding/combat_knife/weak
 	force = 15
 	throwforce = 15
 
 /obj/item/knife/combat/bone
 	name = "bone dagger"
+	desc = "A sharpened bone. The bare minimum in survival."
 	inhand_icon_state = "bone_dagger"
-	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "bone_dagger"
 	worn_icon_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "A sharpened bone. The bare minimum in survival."
-	embed_type = /datum/embed_data/combat_knife/weak
+	embed_type = /datum/embedding/combat_knife/weak
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 15
 	custom_materials = null
 
-/datum/embed_data/combat_knife/weak
+/datum/embedding/combat_knife/weak
 	embed_chance = 35
 
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
+	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife_cyborg"
 	worn_icon_state = "knife_cyborg" //error sprite - this shouldn't have been dropped
-	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 	slot_flags = NONE //you can't put this in your mouth
 
 /obj/item/knife/shiv
 	name = "glass shiv"
+	desc = "A makeshift glass shiv."
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "shiv"
 	inhand_icon_state = "shiv"
+	icon_angle = -65
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "A makeshift glass shiv."
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
 	force = 8
 	throwforce = 12
@@ -221,11 +243,14 @@
 	armor_type = /datum/armor/none
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
+/obj/item/knife/shiv/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
+
 /obj/item/knife/shiv/plasma
 	name = "plasma shiv"
+	desc = "A makeshift plasma glass shiv."
 	icon_state = "plasmashiv"
 	inhand_icon_state = "plasmashiv"
-	desc = "A makeshift plasma glass shiv."
 	force = 9
 	throwforce = 13
 	armor_type = /datum/armor/shiv_plasma
@@ -242,9 +267,9 @@
 
 /obj/item/knife/shiv/titanium
 	name = "titanium shiv"
+	desc = "A makeshift titanium-infused glass shiv."
 	icon_state = "titaniumshiv"
 	inhand_icon_state = "titaniumshiv"
-	desc = "A makeshift titanium-infused glass shiv."
 	throwforce = 14
 	throw_range = 7
 	wound_bonus = 10
@@ -262,9 +287,9 @@
 
 /obj/item/knife/shiv/plastitanium
 	name = "plastitanium shiv"
+	desc = "A makeshift titanium-infused plasma glass shiv."
 	icon_state = "plastitaniumshiv"
 	inhand_icon_state = "plastitaniumshiv"
-	desc = "A makeshift titanium-infused plasma glass shiv."
 	force = 10
 	throwforce = 15
 	throw_speed = 4
@@ -285,9 +310,10 @@
 
 /obj/item/knife/shiv/carrot
 	name = "carrot shiv"
+	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	icon_state = "carrotshiv"
 	inhand_icon_state = "carrotshiv"
-	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
+	icon_angle = -45
 	custom_materials = null
 
 /obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
@@ -296,15 +322,17 @@
 
 /obj/item/knife/shiv/parsnip
 	name = "parsnip shiv"
+	desc = "Truly putting 'snip' in the 'parsnip', and it's not sub-par either!"
 	icon_state = "parsnipshiv"
 	inhand_icon_state = "parsnipshiv"
-	desc = "Truly putting 'snip' in the 'parsnip', and it's not sub-par either!"
+	icon_angle = -45
 	custom_materials = null
 
 /obj/item/knife/shiv/root
 	name = "cahn'root shiv"
+	desc = "A root sharpened into a shiv. A root source of someone's stab wounds soon, most likely."
 	icon_state = "rootshiv"
 	inhand_icon_state = "rootshiv"
-	desc = "A root sharpened into a shiv. A root source of someone's stab wounds soon, most likely."
+	icon_angle = -45
 	custom_materials = null
 

@@ -1822,6 +1822,21 @@
 	icon_state = "default"
 	color_src = FALSE
 
+/datum/sprite_accessory/tails/xeno
+	icon_state = "default"
+	color_src = FALSE
+	center = TRUE
+
+/datum/sprite_accessory/tails/xeno/default
+	name = "Xeno"
+	icon = 'icons/mob/human/species/alien/tail_xenomorph.dmi'
+	dimension_x = 40
+
+/datum/sprite_accessory/tails/xeno/queen
+	name = "Xeno Queen"
+	icon = 'icons/mob/human/species/alien/tail_xenomorph_queen.dmi'
+	dimension_x = 64
+
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/human/species/podperson_hair.dmi'
 	em_block = TRUE
@@ -2264,6 +2279,10 @@
 	name = "Lightbearer"
 	icon_state = "lightbearer"
 
+/datum/sprite_accessory/moth_wings/dipped
+	name = "Dipped"
+	icon_state = "dipped"
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
@@ -2355,6 +2374,10 @@
 	name = "Lightbearer"
 	icon_state = "lightbearer"
 
+/datum/sprite_accessory/moth_antennae/dipped
+	name = "Dipped"
+	icon_state = "dipped"
+
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
@@ -2418,3 +2441,7 @@
 /datum/sprite_accessory/moth_markings/lightbearer
 	name = "Lightbearer"
 	icon_state = "lightbearer"
+
+/datum/sprite_accessory/moth_markings/dipped
+	name = "Dipped"
+	icon_state = "dipped"

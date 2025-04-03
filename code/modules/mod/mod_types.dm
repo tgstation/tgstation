@@ -82,9 +82,11 @@
 		/obj/item/mod/module/t_ray,
 		/obj/item/mod/module/quick_carry,
 		/obj/item/mod/module/headprotector,
+		/obj/item/mod/module/mister/atmos,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/mister/atmos,
 		/obj/item/mod/module/flashlight,
 	)
 
@@ -467,43 +469,43 @@
 	)
 	/// The insignia type, insignias show what sort of member of the ERT you're dealing with.
 	var/insignia_type = /obj/item/mod/module/insignia
-	/// Additional module we add, as a treat.
-	var/additional_module
+	/// Additional module (or modules if list) we add, as a treat.
+	var/additional_modules
 
 /obj/item/mod/control/pre_equipped/responsory/Initialize(mapload, new_theme, new_skin, new_core)
 	applied_modules.Insert(1, insignia_type)
-	if(additional_module)
-		applied_modules += additional_module
-		default_pins += additional_module
+	if(additional_modules)
+		applied_modules += additional_modules
+		default_pins += additional_modules
 	return ..()
 
 /obj/item/mod/control/pre_equipped/responsory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
-	additional_module = /obj/item/mod/module/power_kick
+	additional_modules = /obj/item/mod/module/power_kick
 
 /obj/item/mod/control/pre_equipped/responsory/security
 	insignia_type = /obj/item/mod/module/insignia/security
-	additional_module = /obj/item/mod/module/pepper_shoulders
+	additional_modules = /obj/item/mod/module/pepper_shoulders
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
 	insignia_type = /obj/item/mod/module/insignia/engineer
-	additional_module = /obj/item/mod/module/rad_protection
+	additional_modules = /obj/item/mod/module/rad_protection
 
 /obj/item/mod/control/pre_equipped/responsory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
-	additional_module = /obj/item/mod/module/quick_carry
+	additional_modules = /obj/item/mod/module/quick_carry
 
 /obj/item/mod/control/pre_equipped/responsory/janitor
 	insignia_type = /obj/item/mod/module/insignia/janitor
-	additional_module = /obj/item/mod/module/noslip
+	additional_modules = list(/obj/item/mod/module/noslip, /obj/item/mod/module/mister/cleaner)
 
 /obj/item/mod/control/pre_equipped/responsory/clown
 	insignia_type = /obj/item/mod/module/insignia/clown
-	additional_module = /obj/item/mod/module/bikehorn
+	additional_modules = /obj/item/mod/module/bikehorn
 
 /obj/item/mod/control/pre_equipped/responsory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
-	additional_module = /obj/item/mod/module/injector
+	additional_modules = /obj/item/mod/module/injector
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory
 	applied_skin = "inquisitory"
@@ -521,6 +523,7 @@
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	req_access = null
 	applied_cell = /obj/item/stock_parts/power_store/cell/super
+	insignia_type = /obj/item/mod/module/insignia/syndie
 	theme = /datum/mod_theme/responsory/traitor
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
@@ -538,19 +541,19 @@
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
-	additional_module = /obj/item/mod/module/power_kick
+	additional_modules = /obj/item/mod/module/power_kick
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
 	insignia_type = /obj/item/mod/module/insignia/security
-	additional_module = /obj/item/mod/module/pepper_shoulders
+	additional_modules = /obj/item/mod/module/pepper_shoulders
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
-	additional_module = /obj/item/mod/module/quick_carry
+	additional_modules = /obj/item/mod/module/quick_carry
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
-	additional_module = /obj/item/mod/module/injector
+	additional_modules = /obj/item/mod/module/injector
 
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal

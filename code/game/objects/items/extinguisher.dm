@@ -5,6 +5,7 @@
 	icon_state = "fire_extinguisher0"
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
+	icon_angle = 90
 	hitsound = 'sound/items/weapons/smash.ogg'
 	pickup_sound = 'sound/items/handling/gas_tank/gas_tank_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gas_tank/gas_tank_drop.ogg'

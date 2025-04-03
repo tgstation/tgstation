@@ -112,12 +112,12 @@
 	smoke.set_up(0, holder = src, location = src)
 	smoke.start()
 
-/obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
+/obj/vehicle/ridden/atv/bullet_act(obj/projectile/proj)
 	if(prob(50) || !LAZYLEN(buckled_mobs))
 		return ..()
 	for(var/mob/buckled_mob as anything in buckled_mobs)
-		buckled_mob.bullet_act(P)
-	return BULLET_ACT_HIT
+		return buckled_mob.projectile_hit(proj)
+	return ..()
 
 /obj/vehicle/ridden/atv/atom_destruction()
 	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)

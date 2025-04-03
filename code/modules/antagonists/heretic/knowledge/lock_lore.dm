@@ -91,19 +91,29 @@
 		You can ctrl-click the card to invert this behavior for created portals. \
 		Each card may only sustain a single pair of portals at the same time. \
 		It also functions and appears the same as a regular ID Card. \
-		Attacking it with a normal ID card consumes it and gains its access, and you can use it in-hand to change its appearance to a card you fused. \
-		Does not preserve the card originally used in the ritual."
+		Attacking it with a normal ID card consumes it and gains its access, and you can use it in-hand to change its appearance to a card you fused."
 	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
-		/obj/item/card/id = 1,
+		/obj/item/card/id/advanced = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
 	cost = 1
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "card_gold"
 
+/datum/heretic_knowledge/key_ring/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/obj/item/card/id = locate(/obj/item/card/id/advanced) in selected_atoms
+	if(isnull(id))
+		return FALSE
+	var/obj/item/card/id/advanced/heretic/result_item = new(loc)
+	if(!istype(result_item))
+		return FALSE
+	selected_atoms -= id
+	result_item.eat_card(id)
+	result_item.shapeshift(id)
+	return TRUE
 
 /datum/heretic_knowledge/mark/lock_mark
 	name = "Mark of Lock"
@@ -117,11 +127,11 @@
 
 /datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Concierge's Rite"
-	desc = "Allows you to transmute a stick of chalk, a wooden plank, and a multitool to create a Labyrinth Handbook. \
+	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
 	required_atoms = list(
-		/obj/item/toy/crayon/white = 1,
+		/obj/item/toy/crayon = 1,
 		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/multitool = 1,
 	)
@@ -136,7 +146,7 @@
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 
-	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
+	action_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 1
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former
@@ -158,7 +168,7 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	spell_to_add = /datum/action/cooldown/spell/caretaker
+	action_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
 
 /datum/heretic_knowledge/ultimate/lock_final
@@ -176,6 +186,8 @@
 		The Labyrinth will be Locked no more, and freedom will be ours! WITNESS US!"
 	required_atoms = list(/mob/living/carbon/human = 3)
 	ascension_achievement = /datum/award/achievement/misc/lock_ascension
+	announcement_text = "Delta-class dimensional anomaly detec%SPOOKY% Reality rended, torn. Gates open, doors open, %NAME% has ascended! Fear the tide! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_knock.ogg'
 
 /datum/heretic_knowledge/ultimate/lock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -198,13 +210,6 @@
 
 /datum/heretic_knowledge/ultimate/lock_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_knock.ogg',
-		color_override = "pink",
-	)
-
 	// buffs
 	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
 	transform_spell.Grant(user)

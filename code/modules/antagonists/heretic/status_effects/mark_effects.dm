@@ -31,6 +31,10 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
+// We WANT to call on_remove when replaced, else effects might not be cleaned up in the case where a mark is applied while a different mark is active.
+/datum/status_effect/eldritch/be_replaced()
+	qdel(src)
+
 /**
  * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
  *
@@ -235,11 +239,15 @@
 
 /datum/status_effect/eldritch/lock/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	RegisterSignal(owner, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 
 /datum/status_effect/eldritch/lock/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	UnregisterSignal(owner, COMSIG_MOB_TRIED_ACCESS)
 	return ..()
+
+/datum/status_effect/eldritch/lock/proc/attempt_access(datum/source, obj/door_attempt)
+	SIGNAL_HANDLER
+	return ACCESS_DISALLOWED
 
 // MARK OF MOON
 
@@ -252,7 +260,7 @@
 	. = ..()
 	if(owner.can_block_magic(MAGIC_RESISTANCE_MIND))
 		return FALSE
-	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
@@ -272,7 +280,7 @@
 		return
 
 	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.balloon_alert(owner, "you feel able to once again strike!")
 
 /datum/status_effect/eldritch/moon/on_effect()
@@ -287,4 +295,4 @@
 	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// In case the trait was not removed earlier
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))

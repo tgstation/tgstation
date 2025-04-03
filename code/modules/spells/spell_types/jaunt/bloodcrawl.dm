@@ -5,7 +5,7 @@
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl
 	name = "Blood Crawl"
-	desc = "Allows you to phase in and out of existance via pools of blood."
+	desc = "Allows you to phase in and out of existence via pools of blood."
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 
@@ -13,6 +13,8 @@
 	button_icon_state = "bloodcrawl"
 
 	spell_requirements = NONE
+
+	jaunt_type = /obj/effect/dummy/phased_mob/blood
 
 	/// The time it takes to enter blood
 	var/enter_blood_time = 0 SECONDS
@@ -158,12 +160,10 @@
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon
 	name = "Voracious Blood Crawl"
-	desc = "Allows you to phase in and out of existance via pools of blood. If you are dragging someone in critical or dead, \
+	desc = "Allows you to phase in and out of existence via pools of blood. If you are dragging someone in critical or dead, \
 		they will be consumed by you, fully healing you."
 	/// The sound played when someone's consumed.
 	var/consume_sound = 'sound/effects/magic/demon_consume.ogg'
-	/// consume count (statistics and stuff)
-	var/consume_count = 0
 	/// Apply damage every 20 seconds if we bloodcrawling
 	var/jaunt_damage_timer
 	/// When demon first appears, it does not take damage while in Jaunt. He also doesn't take damage while he's eating someone.
@@ -255,10 +255,13 @@
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
 	if(victim.stat != DEAD)
-		victim.investigate_log("has been killed by being consumed by a slaugter demon.", INVESTIGATE_DEATHS)
+		victim.investigate_log("has been killed by being consumed by a slaughter demon.", INVESTIGATE_DEATHS)
 	victim.death()
 	on_victim_consumed(victim, jaunter)
-	consume_count++
+
+	var/datum/antagonist/slaughter/antag = jaunter.mind?.has_antag_datum(/datum/antagonist/slaughter)
+	if(!isnull(antag))
+		antag.consume_count++
 
 /**
  * Called when a victim starts to be consumed.
@@ -285,7 +288,7 @@
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny
 	name = "Friendly Blood Crawl"
-	desc = "Allows you to phase in and out of existance via pools of blood. If you are dragging someone in critical or dead - I mean, \
+	desc = "Allows you to phase in and out of existence via pools of blood. If you are dragging someone in critical or dead - I mean, \
 		sleeping, when entering a blood pool, they will be invited to a party and fully heal you!"
 	consume_sound = 'sound/misc/scary_horn.ogg'
 
@@ -332,7 +335,7 @@
 		// Heals them back to state one
 		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
 			continue
-		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
+		friend.playsound_local(release_turf, 'sound/effects/magic/exit_blood.ogg', 50, TRUE, -1)
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))
 
 
@@ -374,3 +377,7 @@
 /obj/item/bloodcrawl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/// Different graphic for the position indicator
+/obj/effect/dummy/phased_mob/blood
+	phased_mob_icon_state = "mini_leaper"

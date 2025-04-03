@@ -25,83 +25,6 @@
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
 
-/obj/structure/plaque/static_plaque/tram
-	/// The tram we have info about
-	var/specific_transport_id = TRAMSTATION_LINE_1
-	/// Weakref to the tram we have info about
-	var/datum/weakref/transport_ref
-	/// Serial number of the tram
-	var/tram_serial
-	name = "\improper tram information plate"
-	icon_state = "commission_tram"
-	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
-	layer = SIGN_LAYER
-
-/obj/structure/plaque/static_plaque/tram/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/structure/plaque/static_plaque/tram/LateInitialize()
-	link_tram()
-	set_tram_serial()
-
-/obj/structure/plaque/static_plaque/tram/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "View details"
-		return CONTEXTUAL_SCREENTIP_SET
-
-/obj/structure/plaque/static_plaque/tram/proc/link_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
-		if(tram.specific_transport_id == specific_transport_id)
-			transport_ref = WEAKREF(tram)
-			break
-
-/obj/structure/plaque/static_plaque/tram/proc/set_tram_serial()
-	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
-	if(isnull(tram) || isnull(tram.tram_registration))
-		return
-
-	tram_serial = tram.tram_registration.serial_number
-	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk VI, serial number [tram_serial].<br><br>We are not responsible for any injuries or fatalities caused by usage of the tram. \
-	Using the tram carries inherent risks, and we cannot guarantee the safety of all passengers. By using the tram, you assume, acknowledge, and accept all the risks and responsibilities. <br><br>\
-	Please be aware that riding the tram can cause a variety of injuries, including but not limited to: slips, trips, and falls; collisions with other passengers or objects; strains, sprains, and other musculoskeletal injuries; \
-	cuts, bruises, and lacerations; and more severe injuries such as head trauma, spinal cord injuries, and even death. These injuries can be caused by a variety of factors, including the movements of the tram, the behaviour \
-	of other passengers, and unforeseen circumstances such as foul play or mechanical issues.<br><br>\
-	By entering the tram, guideway, or crossings you agree Nanotrasen is not liable for any injuries, damages, or losses that may occur. If you do not agree to these terms, please do not use the tram.<br>"
-
-/obj/structure/plaque/static_plaque/tram/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "TramPlaque")
-		ui.autoupdate = FALSE
-		ui.open()
-
-/obj/structure/plaque/static_plaque/tram/ui_static_data(mob/user)
-	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
-	var/list/data = list()
-	var/list/current_tram = list()
-	var/list/previous_trams = list()
-
-	current_tram += list(list(
-		"serialNumber" = tram.tram_registration.serial_number,
-		"mfgDate" = tram.tram_registration.mfg_date,
-		"distanceTravelled" = tram.tram_registration.distance_travelled,
-		"tramCollisions" = tram.tram_registration.collisions,
-	))
-
-	for(var/datum/tram_mfg_info/previous_tram as anything in tram.tram_history)
-		previous_trams += list(list(
-		"serialNumber" = previous_tram.serial_number,
-		"mfgDate" = previous_tram.mfg_date,
-		"distanceTravelled" = previous_tram.distance_travelled,
-		"tramCollisions" = previous_tram.collisions,
-	))
-
-	data["currentTram"] = current_tram
-	data["previousTrams"] = previous_trams
-	return data
-
 // Commission plaques, to give a little backstory to the stations. Commission dates are date of merge (or best approximation, in the case of Meta) + 540 years to convert to SS13 dates.
 // Where PRs are available, I've linked them. Where they are unavailable, a git hash is provided instead for the direct commit that added/removed the map.
 // Please enjoy this trip through SS13's history.
@@ -115,6 +38,14 @@
 
 //Current stations
 
+// Birdshot: added Apr 29, 2023 (#74371)
+/obj/structure/plaque/static_plaque/golden/commission/birdshot
+	desc = "Spinward Sector Station SS-13\n'Birdshot' Class Outpost\nCommissioned 29/04/2563\n'Shooting for the Stars'"
+
+// Deltastation: added Dec 17, 2016 (#22066)
+/obj/structure/plaque/static_plaque/golden/commission/delta
+	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 17/12/2556\n'Efficiency Through Redundancy'"
+
 // Icebox Station: added May 13, 2020 (#51090)
 /obj/structure/plaque/static_plaque/golden/commission/icebox
 	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revision 2.2: 'Icebox')\nCommissioned 13/05/2560\n'Cold Reliable'"
@@ -123,25 +54,17 @@
 /obj/structure/plaque/static_plaque/golden/commission/meta
 	desc = "Spinward Sector Station SS-13\n'Meta' Class Outpost\nCommissioned 11/03/2553\n'Theseus' Station'"
 
-// Deltastation: added Dec 17, 2016 (#22066)
-/obj/structure/plaque/static_plaque/golden/commission/delta
-	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 17/12/2556\n'Efficiency Through Redundancy'"
+// Nebulastation: added Nov 6, 2024 (#84826)
+/obj/structure/plaque/static_plaque/golden/commission/nebula
+	desc = "Spinward Sector Station SS-13\n'Nebula' Class Outpost\nCommissioned 06/11/2564\n'The New Future'"
 
 // Tramstation: added Mar 11, 2021 (#56509)
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 11/03/2561\n'Making Moves'"
 
-// Wawastation: added add date here
+// Wawastation: added Jun 4, 2024 (#82298)
 /obj/structure/plaque/static_plaque/golden/commission/wawa
-	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 11/03/add here\n'Forever Vertical'"
-
-// North Star: added Apr 13, 2023 (#74371)
-/obj/structure/plaque/static_plaque/golden/commission/northstar
-	desc = "Spinward Sector Ship SS-13\n'North Star' Class Vessel\nCommissioned 13/04/2563\n'New Opportunities'"
-
-// Birdshot: added Apr 29, 2023 (#74371)
-/obj/structure/plaque/static_plaque/golden/commission/birdshot
-	desc = "Spinward Sector Station SS-13\n'Birdshot' Class Outpost\nCommissioned 29/04/2563\n'Shooting for the Stars'"
+	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 04/06/2564\n'Forever Vertical'"
 
 //Removed stations
 
@@ -188,6 +111,10 @@
 // Ministation: added Jan 29, 2014 (7a76e9456b782e6626bf81e27a912d8232c76b18), removed Dec 27, 2016 (#22453)- 2 years, 10 months, 28 days
 /obj/structure/plaque/static_plaque/golden/commission/mini
 	desc = "Spinward Sector Station SS-08\n'Mini' Class Outpost\nCommissioned 29/01/2554\nDecommissioned 27/12/2556\n'The Littlest Station'"
+
+// North Star: added Apr 13, 2023 (#74371), removed Nov 25, 2024 (#87937)- 1 year, 7 months, 12 days
+/obj/structure/plaque/static_plaque/golden/commission/northstar
+	desc = "Spinward Sector Ship SS-13\n'North Star' Class Vessel\nCommissioned 13/04/2563\nDecommissioned 25/11/2564\n'New Opportunities'"
 
 // Omegastation: added Dec 27, 2016 (#22453), removed Sep 20, 2018 (#40352)- 1 year, 8 months, 24 days
 /obj/structure/plaque/static_plaque/golden/commission/omega

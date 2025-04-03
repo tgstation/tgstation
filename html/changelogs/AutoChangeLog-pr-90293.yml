@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Handcuffed people can now be tied to the tram rails"
+  - balance: "tram rails will no longer electrocute you if they're not powered"

@@ -3,7 +3,7 @@
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_TOGGLEABLE_INPUT
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
@@ -88,7 +88,7 @@
 	attached_overlays += "timer_timing"
 	for (var/i in 1 to clamp(ceil(time / 10), 1, 3))
 		var/mutable_appearance/timer_light = mutable_appearance(icon, "timer_light", layer, src)
-		timer_light.pixel_x = (i - 1) * 2
+		timer_light.pixel_w = (i - 1) * 2
 		. += timer_light
 
 /obj/item/assembly/timer/ui_status(mob/user, datum/ui_state/state)

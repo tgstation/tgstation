@@ -2,7 +2,10 @@
 /obj/item/organ/eyes/voidwalker
 	name = "blackened orbs"
 	desc = "These orbs will withstand the light of the sun, yet still see within the darkest voids."
+	icon_state = "eyes_voidwalker"
 	eye_icon_state = null
+	blink_animation = FALSE
+	iris_overlay = null
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	color_cutoffs = list(20, 10, 40)
@@ -26,7 +29,7 @@
 	/// Speed modifier given when in gravity
 	var/datum/movespeed_modifier/speed_modifier = /datum/movespeed_modifier/grounded_voidwalker
 	/// The void eater weapon
-	var/obj/item/glass_breaker = /obj/item/void_eater
+	var/obj/item/glass_breaker
 	/// Our brain transmit telepathy spell
 	var/datum/action/transmit = /datum/action/cooldown/spell/list_target/telepathy/voidwalker
 
@@ -52,7 +55,7 @@
 	glass_breaker = new/obj/item/void_eater
 	organ_owner.put_in_hands(glass_breaker)
 
-/obj/item/organ/brain/voidwalker/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/brain/voidwalker/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
@@ -72,8 +75,7 @@
 	transmit.Remove(organ_owner)
 	transmit = initial(transmit)
 
-	if(glass_breaker)
-		qdel(glass_breaker)
+	QDEL_NULL(glass_breaker)
 
 /obj/item/organ/brain/voidwalker/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
 	SIGNAL_HANDLER
@@ -94,8 +96,8 @@
 	. = ..()
 
 	var/turf/spawn_loc = get_turf(owner)
-	new /obj/effect/spawner/random/glass_shards (spawn_loc)
-	new /obj/item/cosmic_skull (spawn_loc)
+	new /obj/effect/spawner/random/glass_shards(spawn_loc)
+	new /obj/item/clothing/head/helmet/skull/cosmic(spawn_loc)
 	playsound(get_turf(owner), SFX_SHATTER, 100)
 
 	qdel(owner)

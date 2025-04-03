@@ -13,7 +13,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "'NTR'P'C PL'M'"
+	invocation = "'NTR'P'C PL'M!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -78,7 +78,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 35 SECONDS
 
-	invocation = "SPR'D TH' WO'D"
+	invocation = "SPR'D TH' W'D."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -119,4 +119,4 @@
 
 /obj/projectile/magic/aoe/rust_wave/short
 	range = 7
-	speed = 2
+	speed = 0.5

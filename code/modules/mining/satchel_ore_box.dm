@@ -66,6 +66,13 @@
 	else
 		return ..()
 
+/obj/structure/ore_box/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/boulder) && ismecha(loc)) //Boulders being put into a mech's orebox get processed
+		var/obj/item/boulder/to_process = arrived
+		to_process.convert_to_ore(src)
+		qdel(to_process)
+
 /obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

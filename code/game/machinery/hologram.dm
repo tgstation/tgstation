@@ -108,6 +108,7 @@ Possible to do for anyone motivated enough:
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
+	set_wires(new /datum/wires/holopad(src))
 
 	if(on_network)
 		holopads += src
@@ -225,10 +226,16 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
-	if(isAI(user))
-		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
-	else if(in_range(user, src) || isobserver(user))
+	if(isAI(user) || in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
+
+	if(!isAI(user))
+		return
+
+	. += span_info("Use :[/datum/saymode/holopad::key] to speak through the projection.")
+	. += span_info("Right-click to project or cancel a projection.")
+	. += span_info("Alt-click to hangup all active and incomming calls.")
+	. += span_info("Ctrl-click to end projection without jumping to your last location.")
 
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -301,9 +308,9 @@ Possible to do for anyone motivated enough:
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		var/list/call_data = list(
-			caller = HC.user,
-			connected = HC.connected_holopad == src ? TRUE : FALSE,
-			ref = REF(HC)
+			"caller" = HC.user,
+			"connected" = HC.connected_holopad == src ? TRUE : FALSE,
+			"ref" = REF(HC)
 		)
 		data["holo_calls"] += list(call_data)
 	return data
@@ -327,7 +334,7 @@ Possible to do for anyone motivated enough:
 				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 					if(!AI.client)
 						continue
-					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
+					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='byond://?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
 				return TRUE
 			else
 				to_chat(usr, span_info("A request for AI presence was already sent recently."))
@@ -621,10 +628,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return TRUE
 
 /obj/machinery/holopad/proc/clear_holo(datum/owner)
-	qdel(masters[owner]) // Get rid of owner's hologram
+	qdel(masters[owner])
 	unset_holo(owner)
 	return TRUE
-
 /**
  * Called by holocall to inform outgoing_call that the receiver picked up.
  */
@@ -751,6 +757,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return hologram
 
 /obj/machinery/holopad/proc/replay_start()
+	if(!disk)
+		say("Please insert the disc to play the recording.")
+		return
+
+	if(!disk.record)
+		say("There is no record on the disc. Please check the disk.")
+		return
+
 	if(!replay_mode)
 		replay_mode = TRUE
 		replay_holo = setup_replay_holo(disk.record)
@@ -758,6 +772,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		replay_entry(1)
 
 /obj/machinery/holopad/proc/replay_stop()
+	if(!disk || !disk.record)
+		return FALSE
 	if(replay_mode)
 		replay_mode = FALSE
 		offset = FALSE

@@ -122,7 +122,6 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lm" = (
 /obj/structure/spider/stickyweb,
-/obj/structure/spider/stickyweb/very_sticky,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "mf" = (
@@ -182,7 +181,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "qX" = (
-/obj/structure/spider/stickyweb/very_sticky,
 /obj/item/food/badrecipe/moldy,
 /obj/structure/spider/stickyweb,
 /obj/item/food/spidereggs{

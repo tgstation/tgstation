@@ -158,9 +158,8 @@
 	return ..()
 
 /obj/item/soulstone/proc/hot_potato(mob/living/user)
-	to_chat(user, span_userdanger("Holy magics residing in \the [src] burn your hand!"))
-	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-	affecting.receive_damage( 0, 10 ) // 10 burn damage
+	to_chat(user, span_userdanger("Holy magics residing in [src] burn your hand!"))
+	user.apply_damage(10, BURN, user.get_active_hand())
 	user.emote("scream")
 	user.update_damage_overlays()
 	user.dropItemToGround(src)
@@ -393,7 +392,7 @@
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [victim.real_name]"
 	soulstone_spirit.real_name = "Shade of [victim.real_name]"
-	soulstone_spirit.key = shade_controller.key
+	soulstone_spirit.PossessByPlayer(shade_controller.key)
 	soulstone_spirit.copy_languages(victim, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	if(user)
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
@@ -517,7 +516,7 @@
 		seek_master.Grant(newstruct)
 
 	if (isnull(target.mind))
-		newstruct.key = target.key
+		newstruct.PossessByPlayer(target.key)
 	else
 		target.mind.transfer_to(newstruct, force_key_move = TRUE)
 	var/atom/movable/screen/alert/bloodsense/sense_alert

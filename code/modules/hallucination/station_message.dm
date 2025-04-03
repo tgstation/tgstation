@@ -1,6 +1,7 @@
 /datum/hallucination/station_message
 	abstract_hallucination_parent = /datum/hallucination/station_message
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/station_message/start()
 	qdel(src) // To be implemented by subtypes, call parent for easy cleanup
@@ -112,7 +113,7 @@
 
 /datum/hallucination/station_message/supermatter_delam/start()
 	SEND_SOUND(hallucinator, 'sound/effects/magic/charge.ogg')
-	to_chat(hallucinator, span_boldannounce("You feel reality distort for a moment..."))
+	to_chat(hallucinator, span_bolddanger("You feel reality distort for a moment..."))
 	return ..()
 
 /datum/hallucination/station_message/clock_cult_ark

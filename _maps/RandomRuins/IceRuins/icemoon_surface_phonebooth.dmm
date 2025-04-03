@@ -1,27 +1,60 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/machinery/holopad,
-/turf/open/floor/iron/dark/smooth_edge{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/powered/icemoon_phone_booth)
 "c" = (
-/obj/machinery/door/window/left/directional/north,
-/obj/machinery/door/window/left/directional/south,
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 4
-	},
-/area/ruin/powered/icemoon_phone_booth)
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "e" = (
+/obj/structure/lattice,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered/icemoon_phone_booth)
+/area/icemoon/surface/outdoors/nospawn)
 "k" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/cigarette{
+	all_products_free = 0
+	},
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "q" = (
-/obj/machinery/airalarm/directional/south,
+/obj/structure/lattice,
+/obj/structure/billboard/Phone_booth,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"v" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/item/gps/spaceruin{
+	gpstag = "Public Holophone"
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"z" = (
+/obj/machinery/door/window/left/directional/north,
+/obj/machinery/door/window/left/directional/south,
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/ruin/powered/icemoon_phone_booth)
+"J" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
@@ -29,71 +62,58 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating/icemoon,
-/area/ruin/powered/icemoon_phone_booth)
-"v" = (
-/obj/structure/lattice,
-/obj/structure/billboard/Phone_booth,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered/icemoon_phone_booth)
-"z" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+/obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 4
-	},
-/area/ruin/powered/icemoon_phone_booth)
-"J" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/obj/item/gps/spaceruin{
-	gpstag = "Public Holophone"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "M" = (
 /turf/closed/wall/ice,
 /area/ruin/powered/icemoon_phone_booth)
 "R" = (
-/obj/effect/spawner/structure/window/hollow/reinforced,
-/turf/open/floor/plating/icemoon,
+/obj/machinery/holopad,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/powered/icemoon_phone_booth)
 "V" = (
-/obj/structure/lattice,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered/icemoon_phone_booth)
-"W" = (
-/obj/machinery/vending/cigarette{
-	all_products_free = 0
-	},
+/obj/machinery/vending/coffee,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
+"W" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
-v
+q
 M
+V
 k
-W
 M
+c
 "}
 (2,1,1) = {"
-e
+W
+M
 R
 a
 z
 c
 "}
 (3,1,1) = {"
-V
+e
 M
+v
 J
-q
 M
+c
 "}

@@ -33,6 +33,9 @@
 		"normtrash",
 		"wirebrush",
 		"flashlight",
+		"water_balloon",
+		"ticket_machine",
+		"radio_entertainment",
 	)
 
 /datum/techweb_node/sanitation
@@ -77,6 +80,13 @@
 		"custom_vendor_refill",
 		"bounty_pad_control",
 		"bounty_pad",
+		"digital_clock_frame",
+		"telescreen_research",
+		"telescreen_ordnance",
+		"telescreen_interrogation",
+		"telescreen_prison",
+		"telescreen_bar",
+		"telescreen_entertainment",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SERVICE)
@@ -121,6 +131,8 @@
 		"coffeemaker",
 		"coffeepot",
 		"syrup_bottle",
+		"foodtray",
+		"restaurant_portal",
 	)
 
 /datum/techweb_node/food_proc
@@ -159,6 +171,7 @@
 		"fishing_portal_generator",
 		"fishing_rod",
 		"fish_case",
+		"aquarium_kit",
 	)
 
 /datum/techweb_node/fishing_equip_adv
@@ -174,6 +187,7 @@
 		"auto_reel",
 		"fish_analyzer",
 		"bluespace_fish_case",
+		"bluespace_fish_tank_kit",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)

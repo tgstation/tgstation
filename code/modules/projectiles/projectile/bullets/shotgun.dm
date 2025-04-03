@@ -1,9 +1,16 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	icon_state = "pellet"
-	damage = 50
+	damage = 25
+	armour_penetration = 30
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
+	bare_wound_bonus = 15
+
+/obj/projectile/bullet/shotgun_slug/milspec
+	name = "12g shotgun milspec slug"
+	icon_state = "pellet"
+	damage = 50
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
@@ -70,23 +77,29 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	damage_falloff_tile = -0.45
+	damage_falloff_tile = -0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 7.5
+	damage = 5
 	wound_bonus = 5
 	bare_wound_bonus = 5
-	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
+	speed = 1.1
+	wound_falloff_tile = -0.5 //We would very much like this to cause wounds despite the low damage, so the drop off is relatively slow
+	sharpness = SHARP_EDGED
 
 /**
  * A slightly weaker version of the buckshot, available from the blackmarket.
  * The casings they're in have a very small chance to misfire and will gradually damage the firearm, making it weaker.
  */
 /obj/projectile/bullet/pellet/shotgun_buckshot/old
-	damage_falloff_tile = -0.47
+	damage_falloff_tile = -1
 	wound_bonus = -100
 	bare_wound_bonus = -100
+
+/obj/projectile/bullet/pellet/shotgun_buckshot/milspec
+	name = "milspec buckshot pellet"
+	damage = 7.5
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
@@ -94,7 +107,7 @@
 	stamina = 11
 	sharpness = NONE
 	embed_type = null
-	speed = 1.2
+	speed = 0.8
 	stamina_falloff_tile = -0.25
 	ricochets_max = 4
 	ricochet_chance = 120
@@ -106,7 +119,7 @@
 	/// Subtracted from the ricochet chance for each tile traveled
 	var/tile_dropoff_ricochet = 4
 
-/obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
+/obj/projectile/bullet/pellet/shotgun_rubbershot/reduce_range()
 	if(ricochet_chance > 0)
 		ricochet_chance -= tile_dropoff_ricochet
 	. = ..()
@@ -120,15 +133,46 @@
 /obj/projectile/bullet/pellet/flechette
 	name = "flechette"
 	icon_state = "flechette"
-	damage = 6
-	wound_bonus = -25
-	bare_wound_bonus = 50
-	wound_falloff_tile = -10
-	speed = 0.8
-	ricochet_decay_chance = 0.6
-	ricochet_decay_damage = 0.3
-	demolition_mod = 10
-	weak_against_armour = TRUE
+	damage = 2
+	wound_bonus = 5
+	bare_wound_bonus = 5
+	armour_penetration = 30
+	damage_falloff_tile = -0.2
+	wound_falloff_tile = -0.5
+	speed = 1.2
+	sharpness = SHARP_POINTY
+	embed_type = /datum/embedding/bullet/flechette
+
+/datum/embedding/bullet/flechette
+	embed_chance = 100
+	fall_chance = 0
+	jostle_chance = 20
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.1
+	pain_mult = 0.5
+	jostle_pain_mult = 1.5
+	rip_time = 1 SECONDS
+
+/obj/projectile/bullet/pellet/flechette/donk
+	name = "\improper Donk Co. 'Donk Spike' flechette"
+	desc = "Your internal evisceration! As sponsored by the Donk Corporation!"
+	icon_state = "flechette_plastic"
+	damage = 1 // good god its awful
+	wound_bonus = 20 // but it WILL mulch you if you don't have armor.
+	bare_wound_bonus = 20
+	armour_penetration = 0
+	damage_falloff_tile = -0.1
+	wound_falloff_tile = -2
+	embed_type = /datum/embedding/bullet/flechette_donk // the true power of the donk spike.
+
+/datum/embedding/bullet/flechette_donk
+	embed_chance = 100
+	fall_chance = 0
+	jostle_chance = 50
+	ignore_throwspeed_threshold = TRUE
+	pain_mult = 1
+	jostle_pain_mult = 1
+	rip_time = 0.5 SECONDS
 
 // Mech Scattershot
 

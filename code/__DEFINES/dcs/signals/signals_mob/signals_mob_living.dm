@@ -43,7 +43,7 @@
 #define COMSIG_LIVING_REVIVE "living_revive"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
-///from base of mob/living/set_body_position()
+///from base of mob/living/set_body_position(): (new_position, old_position)
 #define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
 /// Sent to a mob being injected with a syringe when the do_after initiates
 #define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
@@ -141,6 +141,8 @@
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
+///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
+#define COMSIG_LIVING_SLAPPED "living_slapped"
 /// from /mob/living/*/UnarmedAttack(), before sending [COMSIG_LIVING_UNARMED_ATTACK]: (mob/living/source, atom/target, proximity, modifiers)
 /// The only reason this exists is so hulk can fire before Fists of the North Star.
 /// Note that this is called before [/mob/living/proc/can_unarmed_attack] is called, so be wary of that.
@@ -242,6 +244,7 @@
 
 ///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
 #define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define FAILED_BLOCK NONE
 	#define SUCCESSFUL_BLOCK (1<<0)
 
 ///Hit by successful disarm attack (mob/living/attacker, zone_targeted, item/weapon)
@@ -260,7 +263,7 @@
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
 
-/// Sent from `obj/item/reagent_containers/pill/on_consumption`: (obj/item/reagent_containers/pill/pill, mob/feeder)
+/// Sent from `obj/item/reagent_containers/applicator/pill/on_consumption`: (obj/item/reagent_containers/applicator/pill/pill, mob/feeder)
 #define COMSIG_LIVING_PILL_CONSUMED "living_pill_consumed"
 
 /// Sent from a mob to their loc when starting to remove cuffs on itself
@@ -285,13 +288,20 @@
 
 /// From /datum/element/basic_eating/finish_eating()
 #define COMSIG_MOB_ATE "mob_ate"
+	///cancel post eating
+	#define COMSIG_MOB_TERMINATE_EAT (1<<0)
 
 ///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
 #define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
+/// From mob/living/proc/on_fall
+#define COMSIG_LIVING_THUD "living_thud"
 ///From /datum/component/happiness()
 #define COMSIG_MOB_HAPPINESS_CHANGE "happiness_change"
 /// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
 #define COMSIG_MOB_BATONED "mob_batoned"
+
+/// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
+#define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
 
 /// Sent to the mob when their mind is slaved
 #define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
@@ -299,3 +309,16 @@
 #define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
 /// From /mob/living/proc/stop_leaning()
 #define COMSIG_LIVING_STOPPED_LEANING "living_stopped_leaning"
+
+/// When a living mob is table slamming another mob: (mob/living/slammed, obj/structure/table/slammed_table)
+#define COMSIG_LIVING_TABLE_SLAMMING "living_table_slamming"
+/// When a living mob is table slamming another mob, neck grab (so a limb slam): (mob/living/slammed, obj/structure/table/slammed_table)
+#define COMSIG_LIVING_TABLE_LIMB_SLAMMING "living_table_limb_slamming"
+
+/// From /mob/living/get_examine_name(mob/user) : (mob/examined, visible_name, list/name_override)
+/// Allows mobs to override how they perceive others when examining
+#define COMSIG_LIVING_PERCEIVE_EXAMINE_NAME "living_perceive_examine_name"
+	#define COMPONENT_EXAMINE_NAME_OVERRIDEN (1<<0)
+
+/// From /obj/item/book/bible/attack() : (mob/living/user, obj/item/book/bible/bible, bless_result)
+#define COMSIG_LIVING_BLESSED "living_blessed"

@@ -43,7 +43,7 @@
 
 	siemens_coeff = 0
 
-/datum/species/voidwalker/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/voidwalker/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 
 	human_who_gained_species.AddComponent(/datum/component/glass_passer)

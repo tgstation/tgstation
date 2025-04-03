@@ -104,7 +104,7 @@
 	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
-	visible_message(span_notice("The [name] begins warming up!"))
+	visible_message(span_notice("\The [src] begins warming up!"))
 	say("Initializing harvest protocol.")
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
@@ -179,7 +179,7 @@
 	obj_flags |= EMAGGED
 	allow_living = TRUE
 	allow_clothing = TRUE
-	balloon_alert(!user, "lifesign scanners overloaded")
+	balloon_alert(user, "lifesign scanners overloaded")
 	return TRUE
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)

@@ -87,6 +87,7 @@ Slimecrossing Weapons
 	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "bloodgun"
 	inhand_icon_state = "bloodgun"
+	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
@@ -109,9 +110,13 @@ Slimecrossing Weapons
 		return FALSE
 	charge_timer = 0
 	var/mob/living/M = loc
-	if(istype(M) && M.blood_volume >= 20)
-		charges++
-		M.blood_volume -= 20
+	if(istype(M) && HAS_TRAIT(M, TRAIT_NOBLOOD) && M.stat == CONSCIOUS)
+		charges ++
+		M.apply_damage(5, BRUTE)
+	else
+		if(istype(M) && M.blood_volume >= 20)
+			charges++
+			M.blood_volume -= 20
 	if(charges == 1)
 		recharge_newshot()
 	return TRUE

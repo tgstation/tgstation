@@ -128,6 +128,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -174,7 +175,6 @@
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
-	inhand_icon_state = "det_hat"
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	dog_fashion = /datum/dog_fashion/head/detective
 	/// Path for the flask that spawns inside their hat roundstart
@@ -238,10 +238,9 @@
 ///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
 /obj/item/clothing/head/fedora/inspector_hat
 	name = "inspector's fedora"
-	desc = "There's only one man can try to stop an evil villian."
+	desc = "There's only one man can try to stop an evil villain."
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
-	inhand_icon_state = "det_hat"
 	dog_fashion = /datum/dog_fashion/head/detective
 	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
@@ -392,6 +391,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 //Security
 /obj/item/clothing/head/hats/hos
@@ -447,6 +447,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#39393f#f0cc8f"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 /obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
