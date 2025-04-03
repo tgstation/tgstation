@@ -20,7 +20,8 @@
 	//Photos are quite rarer than papers, so they're more likely to be added to the queue to make things even.
 	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE * 5) && picture?.id)
 		LAZYADD(SSpersistence.queued_message_bottles, src)
-	return ..()
+	. = ..()
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/photo/Destroy()
 	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
@@ -75,8 +76,6 @@
 	user.examinate(src)
 
 /obj/item/photo/attackby(obj/item/P, mob/user, params)
-	if(burn_paper_product_attackby_check(P, user))
-		return
 	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return

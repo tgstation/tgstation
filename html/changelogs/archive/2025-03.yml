@@ -791,3 +791,143 @@
       boxes from spawning
   StrangeWeirdKitten:
   - code_imp: do_after() can now hold custom cog icons. Add some today!
+2025-03-27:
+  Bisar:
+  - balance: Door remotes now match the access of their owner (except for the Captain,
+      whose remote access is unchanged). Door remotes, however, respect the high security
+      area control of other remotes; as such, even if a Head can enter an area like
+      the brig, only the Security remote works to open the entrance.
+  Goat:
+  - bugfix: Clown biodome on lavaland uses lavaland turf now for the bananium ore.
+  Holoo-1:
+  - bugfix: fixed AI multicam room on multiz maps not showing anything
+  Melbert:
+  - bugfix: Fix storage whitelists / blacklists being ignored in some contexts (hotkeys)
+  SmArtKar:
+  - bugfix: Fixed all satchels having reduced storage
+  - bugfix: MODsuits should now be affected by stabilized red crossbreeds
+  - bugfix: MODsuit slowdowns should no longer behave weirdly with ash accretion/magboots/armor
+      booster modules.
+  - refactor: Refactored MODsuit slowdown calculations to be query-based instead of
+      modules directly modifying part speed values.
+  - bugfix: Fixed techweb scrolling cutting off the last node
+  mcbalaam:
+  - refactor: Minor Big Manipulator code refactoring
+  norsvenska:
+  - bugfix: Wawastation's port bow solar array now has a cable under all panels by
+      default.
+2025-03-28:
+  LemonInTheDark:
+  - bugfix: Fixed our pathfinding logic getting deeply confused by border objects
+  - admin: Added clientside displayed pathfinding debug tools, give em a go
+  Melbert:
+  - qol: Examining a heretic influence gives you a sp00ky message rather than an empty
+      box
+  RandomDudeFromTheRim:
+  - bugfix: fixed an extremely hypothetical, yet possible respawn exploit
+  SmArtKar:
+  - rscadd: Nyctophobia and Claustrophobia quirks now have proper terror effects instead
+      of making you walk/suffocate. Immersion!
+  - refactor: All sources of "terror"/"fear" now use a common component, meaning they
+      share their counters.
+  - bugfix: Fixed shift right clicking shoes giving some interesting options.
+  - bugfix: Fixed blue space on lower Z levels
+  - bugfix: Fixed toolbelts being able to unintended items
+  distributivgesetz:
+  - bugfix: Players on 516 can submit votes for IRV again.
+2025-03-29:
+  00-Steven:
+  - bugfix: Dispensing a returned item from a vendor actually reduces the amount of
+      stock for that item.
+  - bugfix: Special vendor dispensing behaviours get applied to thrown items.
+  - bugfix: Special vendor dispensing behaviours actually get applied to returned
+      items where applicable.
+  Absolucy:
+  - qol: Reword the Pushover quirk's description to be more accurate to how it actually
+      works.
+  Absolucy, hry-gh:
+  - bugfix: Fixed a potential bluescreen error relating to stylesheets on BYOND 516.
+  AyIong:
+  - bugfix: Fixed small character preview, color matrix preview, mech preview, and
+      other previews with uses ByondUI map
+  Cirrial:
+  - bugfix: Donk pocket boxes start with more than one donk pocket again.
+  Cyberboss:
+  - config: Added `TTS_HTTP_TIMEOUT_SECONDS` for setting the maximum duration TTS
+      HTTP requests can run for before being aborted.
+  FlufflesTheDog:
+  - qol: Drones can use silicon emotes
+  Goat:
+  - bugfix: The Tiziran Empire has now actually puts canned goods in their canned
+      good exports along with putting more food in their farm fresh boxes.
+  Jacquerel:
+  - rscadd: You can pick up desk bells by dragging them onto yourself. This is now
+      how you attach them to wheelchairs, instead of dragging it onto the wheelchair.
+  - bugfix: Folding a wheelchair with attached bell will drop the bell to the ground
+      instead of deleting it forever.
+  Majkl-J:
+  - bugfix: Mystery box items no longer layer on the lowest z_level when in multiz
+  - code_imp: mystery_box_item is now a type of /obj/effect/abstract
+  - code_imp: The mobs subsystem and blood.dm file for living mobs no longer use single
+      letter vars
+  - refactor: Changed many of our use cases for pixel_x and pixel_y correctly into
+      pixel_w and pixel_z, fixing layering issues in the process.
+  SmArtKar:
+  - bugfix: Fixes incorrect indentation in blob victory code which could cause immense
+      lag as a result
+  - bugfix: Fixed weird overlay positioning on dismembered bodyparts
+  jlsnow301:
+  - bugfix: Fixed scrolling the experiscanner UI
+  necromanceranne:
+  - admin: Added logging to fuel pools being ignited by someone deliberately.
+  timothymtorres:
+  - code_imp: Change some hardcoded ice/snow temperature variables that were set to
+      180 to use `ICEBOX_MIN_TEMPERATURE` instead.
+2025-03-30:
+  AyIong:
+  - bugfix: de-shrunked alternate names modal
+  Ben10Omintrix:
+  - rscadd: adds the cain and abel to the colossus lootpool!
+  EnterTheJake:
+  - bugfix: Space phase is as fast as it used to be.
+  Ezel:
+  - map: Hopline looks now more like a line.
+  - bugfix: medbay grid is wired to eachother again
+2025-03-31:
+  Absolucy:
+  - admin: 'Added some new Lua functions: SS13.ispath, SS13.typecacheof, SS13.is_type_in_typecache,
+      SS13.get_turf, and SS13.get_area'
+  - bugfix: Fixed a broken check in the SS13.register_signal Lua function.
+  - bugfix: Fixed the _winget SDQL2/Lua wrapper, so it actually returns the return
+      value of winget.
+  Kashargul:
+  - bugfix: confirm buttons on the chat window
+  - bugfix: scroll tracking failing on large display counts when large messages blocks
+      where received
+  LT3:
+  - bugfix: Tram information plate and other signs mount correctly on tram walls
+  OrionTheFox:
+  - spellcheck: added a missing space to the description of the Donk Co. Failed Products
+      Schematics research
+  SmArtKar:
+  - bugfix: Fixed a series of storage-related bugs caused by a refactor PR.
+  - bugfix: Fixed weather from Z levels above rendering over players' UI
+  - qol: Multi-Z Detail setting has been renamed to Multi-Z Depth with an explanation
+      on what it does. "Standard" setting has been renamed to "No Culling"
+  - bugfix: Fixed encryption keys in makeshift jammer crafting recipes not having
+      an icon.
+  SyncIt21:
+  - bugfix: lockboxes & fancy storages spawned at round start with items in them don't
+      have issues anymore
+  - bugfix: cigarette donut & gorilla cube boxes hold the correct stuff again
+  Watermelon914:
+  - admin: Play Internet Sound will now automatically stop lobby music and prevent
+      lobby music from playing at roundend whilst active.
+  timothymtorres:
+  - bugfix: Fix soviet bears basketball minigame map not loading due to a misspelled
+      name when looking up map file.
+  - bugfix: Basketball runtimes when minigame mobs get deleted with clients
+  - map: Moved basketball maps into minigames folder. Removed centcomm landmark for
+      basketball minigame.
+  - refactor: Refactored basketball minigame to use lazyloading instead of the default
+      maploader.

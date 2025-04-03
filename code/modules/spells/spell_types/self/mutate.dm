@@ -43,7 +43,7 @@
 	cooldown_reduction_per_rank = 5 SECONDS
 	spell_max_level = 3
 
-	invocation = "BIRUZ BENNAR"
+	invocation = "BIRUZ BENNAR!"
 	invocation_type = INVOCATION_SHOUT
 
 	mutations_to_add = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk/wizardly, /datum/mutation/human/gigantism)

@@ -35,6 +35,7 @@
 	if(istype(internal_paper, /obj/item/paper/carbon_copy))
 		icon_state = "[base_icon_state]_carbon"
 	update_appearance(UPDATE_ICON)
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/paperplane/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -80,8 +81,6 @@
 	user.put_in_hands(released_paper)
 
 /obj/item/paperplane/attackby(obj/item/attacking_item, mob/user, params)
-	if(burn_paper_product_attackby_check(attacking_item, user))
-		return
 	if(IS_WRITING_UTENSIL(attacking_item))
 		to_chat(user, span_warning("You should unfold [src] before changing it!"))
 		return
@@ -113,5 +112,5 @@
 	hit_human.Paralyze(4 SECONDS)
 	hit_human.emote("scream")
 
-/obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, gentle, quickstart = TRUE)
+/obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, gentle, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	return ..(target, range, speed, thrower, FALSE, diagonals_first, callback, quickstart = quickstart)

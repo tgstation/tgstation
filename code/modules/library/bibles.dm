@@ -87,6 +87,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
 		block_charges = 1,\
 	)
+	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(curse_heathen))
 
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
@@ -113,22 +114,22 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		else
 			. += span_notice("[src] can be unpacked by hitting the floor of a holy area with it.")
 
-/obj/item/book/bible/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy)
-	. = ..()
+/obj/item/book/bible/proc/curse_heathen(datum/source, mob/living/user, obj/item/burning_tool)
+	SIGNAL_HANDLER
+
 	// no deity to cast a curse upon thee
 	if(!deity_name)
 		return
-	if(. && (resistance_flags & ON_FIRE))
-		var/datum/component/omen/existing_omen = user.GetComponent(/datum/component/omen)
-		//DOUBLE CURSED?! Just straight up gib the guy.
-		if(existing_omen)
-			to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
-			add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
-			user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
-			user.gib(DROP_ALL_REMAINS)
-		else
-			to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
-			user.AddComponent(/datum/component/omen/bible)
+	var/datum/component/omen/existing_omen = user.GetComponent(/datum/component/omen)
+	//DOUBLE CURSED?! Just straight up gib the guy.
+	if(existing_omen)
+		to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
+		add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
+		user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
+		user.gib(DROP_ALL_REMAINS)
+	else
+		to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
+		user.AddComponent(/datum/component/omen/bible)
 
 /obj/item/book/bible/carve_out(obj/item/carving_item, mob/living/user)
 	. = ..()

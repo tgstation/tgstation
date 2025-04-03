@@ -8,7 +8,7 @@
 	cooldown_time = 20 SECONDS
 	cooldown_reduction_per_rank = 3.5 SECONDS
 
-	invocation = "FORTI GY AMA"
+	invocation = "FORTI GY AMA!"
 	invocation_type = INVOCATION_SHOUT
 
 	aoe_radius = 7

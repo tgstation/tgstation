@@ -54,6 +54,8 @@
 	saved_wanted_body = GLOB.news_network.wanted_issue.body
 	if(GLOB.news_network.wanted_issue.img)
 		saved_wanted_icon = GLOB.news_network.wanted_issue.img
+	AddElement(/datum/element/burn_on_item_ignition)
+	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(close_paper_ui))
 
 /obj/item/newspaper/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
@@ -63,6 +65,10 @@
 		if(held_item.get_temperature())
 			context[SCREENTIP_CONTEXT_LMB] = "Burn"
 			return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/newspaper/proc/close_paper_ui()
+	SIGNAL_HANDLER
+	SStgui.close_uis(src)
 
 /obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(\
@@ -77,10 +83,6 @@
 	return TOXLOSS
 
 /obj/item/newspaper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if (burn_paper_product_attackby_check(tool, user))
-		SStgui.close_uis(src)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-
 	if (tool.tool_behaviour == TOOL_SCREWDRIVER || tool.tool_behaviour == TOOL_WIRECUTTER || tool.sharpness)
 		if (punctured)
 			balloon_alert(user, "already has holes!")
@@ -190,6 +192,8 @@
 	identity[VISIBLE_NAME_ID] = ""
 
 /obj/item/newspaper/ui_interact(mob/user, datum/tgui/ui)
+	if(resistance_flags & ON_FIRE)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(ui)
 		return

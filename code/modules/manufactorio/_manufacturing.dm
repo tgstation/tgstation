@@ -76,12 +76,12 @@
 		dir_offset[1] *= 32
 		dir_offset[2] *= 32
 	var/image/nonemissive = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[direction]")
-	nonemissive.pixel_x = dir_offset[1]
-	nonemissive.pixel_y = dir_offset[2]
+	nonemissive.pixel_w = dir_offset[1]
+	nonemissive.pixel_z = dir_offset[2]
 	nonemissive.color = color
 	var/mutable_appearance/emissive = emissive_appearance(nonemissive.icon, nonemissive.icon_state, offset_spokesman = src, alpha = nonemissive.alpha)
-	emissive.pixel_y = nonemissive.pixel_y
-	emissive.pixel_x = nonemissive.pixel_x
+	emissive.pixel_w = nonemissive.pixel_w
+	emissive.pixel_z = nonemissive.pixel_z
 	return list(nonemissive, emissive)
 
 /// Returns whatever object it may output, or null if it cant do that
