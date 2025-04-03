@@ -33785,9 +33785,6 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "ljZ" = (
-/obj/machinery/modular_computer/preset/civilian{
-	dir = 1
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/light_switch/directional/south,
@@ -33802,6 +33799,9 @@
 	id = "roboticshut";
 	name = "Robotics Shutters";
 	pixel_y = 8
+	},
+/obj/machinery/modular_computer/preset/robotics{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)

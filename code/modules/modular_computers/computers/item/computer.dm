@@ -986,10 +986,15 @@
 		return stored_files
 	return stored_files + inserted_disk.stored_files
 
-/// Returns how relevant the current security level is:
-#define ALERT_RELEVANCY_SAFE 0 /// * 0: User is not in immediate danger and not needed for some station-critical task.
-#define ALERT_RELEVANCY_WARN 1 /// * 1: Danger is around, but the user is not directly needed to handle it.
-#define ALERT_RELEVANCY_PERTINENT 2/// * 2: Danger is around and the user is responsible for handling it.
+// Returns how relevant the current security level is:
+/// * 0: User is not in immediate danger and not needed for some station-critical task.
+#define ALERT_RELEVANCY_SAFE 0
+/// * 1: Danger is around, but the user is not directly needed to handle it.
+#define ALERT_RELEVANCY_WARN 1
+/// * 2: Danger is around and the user is responsible for handling it.
+#define ALERT_RELEVANCY_PERTINENT 2
+
+///Returns the current security level, which may also depend on the access on the PC.
 /obj/item/modular_computer/proc/get_security_level_relevancy()
 	switch(SSsecurity_level.get_current_level_as_number())
 		if(SEC_LEVEL_DELTA)
@@ -997,7 +1002,7 @@
 		if(SEC_LEVEL_RED) // all-hands-on-deck situations, everyone is responsible for combatting a threat
 			return ALERT_RELEVANCY_PERTINENT
 		if(SEC_LEVEL_BLUE) // suspected threat. security needs to be alert and possibly preparing for it, no further concerns
-			if(ACCESS_SECURITY in computer_id_slot.access)
+			if(computer_id_slot && (ACCESS_SECURITY in computer_id_slot.access))
 				return ALERT_RELEVANCY_PERTINENT
 			else
 				return ALERT_RELEVANCY_WARN

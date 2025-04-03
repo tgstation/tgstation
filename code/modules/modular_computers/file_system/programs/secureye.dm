@@ -30,7 +30,7 @@
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/camera/cam_screen
 
-	///Internal tracker used to find a specific person and keep them on cameras.
+	///Internal tracker used to find a specific person and keep them on cameras, only used if this is a 'spying' console.
 	var/datum/trackable/internal_tracker
 
 ///Syndicate subtype that has no access restrictions and is available on Syndinet
@@ -52,14 +52,33 @@
 	)
 	spying = TRUE
 
+///Human AI subtype that has access to most networks on the station and can't be copied.
 /datum/computer_file/program/secureye/human_ai
 	filename = "Overseer"
 	filedesc = "OverSeer"
 	run_access = list(ACCESS_MINISAT)
 	can_run_on_flags = PROGRAM_PDA
 	program_flags = PROGRAM_UNIQUE_COPY
-	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
+	network = list(
+		CAMERANET_NETWORK_SS13,
+		CAMERANET_NETWORK_MINE,
+		CAMERANET_NETWORK_RD,
+		CAMERANET_NETWORK_LABOR,
+		CAMERANET_NETWORK_ORDNANCE,
+		CAMERANET_NETWORK_MINISAT,
+	)
 	spying = TRUE
+
+///Science subtype that only has access to view Cyborgs.
+/datum/computer_file/program/secureye/cyborgs
+	filename = "SiliEye"
+	filedesc = "SiliEye"
+	extended_desc = "This program allows access to view the internal cameras of station-issued Cyborgs."
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	run_access = list(ACCESS_ROBOTICS)
+	download_access = list(ACCESS_ROBOTICS)
+	can_run_on_flags = PROGRAM_CONSOLE
+	network = list(CAMERANET_NETWORK_SILICON)
 
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()

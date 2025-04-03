@@ -31,6 +31,7 @@
 		/datum/computer_file/program/ai_restorer,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/secureye/cyborgs,
 	)
 
 /obj/machinery/modular_computer/preset/research/away
@@ -43,6 +44,17 @@
 /obj/machinery/modular_computer/preset/research/away/Initialize(mapload)
 	. = ..()
 	cpu.device_theme = PDA_THEME_RETRO
+
+// ===== ROBOTICS CONSOLE =====
+/obj/machinery/modular_computer/preset/robotics
+	name = "robotics console"
+	desc = "A stationary computer. This one comes preloaded with robotics-related programs."
+	starting_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/arcade,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/secureye/cyborgs,
+	)
 
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/preset/command

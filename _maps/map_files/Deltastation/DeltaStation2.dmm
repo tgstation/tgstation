@@ -68377,11 +68377,11 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "rgq" = (
-/obj/machinery/modular_computer/preset/civilian{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/machinery/modular_computer/preset/robotics{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)

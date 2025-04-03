@@ -75347,8 +75347,8 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "vuq" = (
-/obj/machinery/modular_computer/preset/civilian,
 /obj/structure/fireaxecabinet/mechremoval/directional/north,
+/obj/machinery/modular_computer/preset/robotics,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "vuu" = (
