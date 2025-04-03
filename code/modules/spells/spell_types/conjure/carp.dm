@@ -6,7 +6,7 @@
 	school = SCHOOL_CONJURATION
 	cooldown_time = 2 MINUTES
 
-	invocation = "NOUK FHUNMM SACP RISSKA"
+	invocation = "NOUK FHUNMM SACP RISSKA!"
 	invocation_type = INVOCATION_SHOUT
 
 	summon_radius = 1
