@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "All spell invocations have been made a bit more consistent - some have changed slightly, some are now punctuated. \"Dragon Form\" and \"Bear Form\" are now emotes invocations."
+  - qol: "\"Unknown\" mobs are now properly referred to as they/them"
