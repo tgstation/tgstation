@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	bubble_icon = "machine"
 
 	speech_span = SPAN_ROBOT
-	faction = list(FACTION_SILICON, FACTION_TURRET)
+	faction = list(FACTION_SILICON, FACTION_NEUTRAL, FACTION_TURRET)
 	light_system = OVERLAY_LIGHT
 	light_range = 3
 	light_power = 0.6
