@@ -665,7 +665,7 @@
 					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed, heart damage detected."))
 			else if(H.has_status_effect(/datum/status_effect/heart_attack))
 				user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Patient's heart has stabilized, further applications may be necessary."))
-				SEND_SIGNAL(H, COMSIG_DEFIBRILLATOR_SHOCKED)
+				SEND_SIGNAL(H, COMSIG_HEARTATTACK_DEFIB)
 				playsound(src, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
 				do_success()
 			else

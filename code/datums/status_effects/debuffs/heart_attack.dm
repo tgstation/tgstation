@@ -27,12 +27,12 @@
 		return FALSE
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_removed))
 	RegisterSignal(owner, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(minor_shock))
-	RegisterSignal(owner, COMSIG_DEFIBRILLATOR_SHOCKED, PROC_REF(defib_shock))
+	RegisterSignal(owner, COMSIG_HEARTATTACK_DEFIB, PROC_REF(defib_shock))
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(electrocuted))
 	return TRUE
 
 /datum/status_effect/heart_attack/on_remove()
-	UnregisterSignal(owner, list(COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_MINOR_SHOCK, COMSIG_DEFIBRILLATOR_SHOCKED))
+	UnregisterSignal(owner, list(COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_MINOR_SHOCK, COMSIG_HEARTATTACK_DEFIB, COMSIG_LIVING_ELECTROCUTE_ACT))
 
 /datum/status_effect/heart_attack/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/human_owner = owner
