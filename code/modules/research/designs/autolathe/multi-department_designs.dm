@@ -168,7 +168,7 @@
 /datum/design/toolbox
 	name = "Toolbox"
 	id = "tool_box"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_ITEM_MATERIAL =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/storage/toolbox
 	category = list(
@@ -536,7 +536,7 @@
 	name = "Paper Biscuit"
 	desc = "A paper biscuit which can seal paperwork inside. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permanently open. Not actually a biscuit."
 	id = "biscuit"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/folder/biscuit/unsealed
 	category = list(
@@ -549,7 +549,7 @@
 	name = "Confidential Paper Biscuit"
 	desc = "A paper biscuit which can seal paperwork inside, this one is used for confidential Nanotrasen documents. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permanently open. Not actually a biscuit."
 	id = "confidential_biscuit"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*0.3)
 	build_path = /obj/item/folder/biscuit/unsealed/confidential
 	category = list(
