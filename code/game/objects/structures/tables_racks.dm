@@ -49,7 +49,7 @@
 	/// If you don't have sprites for flipped tables, you can use matrices instead. looks ever-slightly worse.
 	var/use_matrices_instead = FALSE
 	/// Matrix to return to on unflipping table
-	var/matrix/original_matrix
+	var/matrix/before_flipped_matrix
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -58,7 +58,7 @@
 	if(stack_used)
 		apply_stack_properties(stack_used)
 
-	original_matrix = transform
+	before_flipped_matrix = transform
 	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
 
 	var/static/list/loc_connections = list(
@@ -111,7 +111,7 @@
 	smoothing_flags |= SMOOTH_BITMASK
 	pass_flags_self |= PASSTABLE
 	if(use_matrices_instead)
-		animate(src, transform = original_matrix, time = 0)
+		animate(src, transform = before_flipped_matrix, time = 0)
 	else
 		icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -151,7 +151,7 @@
 
 	if(use_matrices_instead)
 		icon_state = initial(icon_state)
-		original_matrix = transform
+		before_flipped_matrix = transform
 		var/matrix/transform_matrix = matrix(1, 0, 0, 0, 0.350, 9) // "flips" the table
 		//there's probably a nicer way to do this but whatever. rotates the table according to the dir
 		if(dir == EAST)
