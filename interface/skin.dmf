@@ -325,7 +325,7 @@ window "inputbuttons"
 		pos = 0,0
 		size = 40x20
 		anchor1 = 0,0
-		anchor2 = -1,-1
+		anchor2 = 33,0
 		font-size = 4
 		background-color = none
 		border = line
@@ -339,7 +339,7 @@ window "inputbuttons"
 		pos = 40,0
 		size = 40x20
 		anchor1 = 33,0
-		anchor2 = -1,-1
+		anchor2 = 66,0
 		font-size = 4
 		background-color = none
 		border = line
@@ -353,7 +353,7 @@ window "inputbuttons"
 		pos = 80,0
 		size = 40x20
 		anchor1 = 66,0
-		anchor2 = -1,-1
+		anchor2 = 99,0
 		font-size = 4
 		background-color = none
 		border = line
