@@ -5852,6 +5852,8 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "ask" = (
@@ -28442,8 +28444,8 @@
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/xenobiology)
 "bTd" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/station/science/xenobiology)
 "bTe" = (
@@ -30102,9 +30104,14 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "bZZ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/science/explab)
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible,
+/turf/open/floor/plating,
+/area/station/engineering/atmos)
 "cac" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
@@ -38491,6 +38498,7 @@
 /area/station/service/bar)
 "eLu" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "eMe" = (
@@ -39871,6 +39879,8 @@
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fXU" = (
@@ -40981,8 +40991,8 @@
 	normalspeed = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/station/science/xenobiology)
 "gVo" = (
@@ -46445,6 +46455,10 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "ordnanceburn"
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "lFC" = (
@@ -54784,6 +54798,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"sKW" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "sLm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -55063,6 +55084,7 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "taa" = (
@@ -58841,15 +58863,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "wqG" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/station/maintenance/port/fore)
 "wrp" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/green/filled/end{
@@ -74166,12 +74184,12 @@ aqJ
 amC
 gLH
 fWY
-aol
-aol
-aol
-aol
-aol
-aol
+wqG
+wqG
+wqG
+wqG
+wqG
+wqG
 aOo
 nTE
 aCL
@@ -74422,7 +74440,7 @@ alU
 alU
 alU
 alU
-aol
+wqG
 alU
 alU
 eEO
@@ -74679,7 +74697,7 @@ alU
 apL
 aqK
 alU
-aol
+wqG
 alU
 aon
 axe
@@ -74936,7 +74954,7 @@ alU
 apM
 aok
 alU
-aol
+wqG
 alU
 auX
 jKa
@@ -75193,7 +75211,7 @@ aoS
 amC
 aom
 ank
-aol
+wqG
 alU
 auZ
 bsU
@@ -75450,7 +75468,7 @@ aoR
 apO
 aqM
 alU
-aol
+wqG
 alU
 auY
 amC
@@ -75707,7 +75725,7 @@ aoT
 cwI
 sFL
 alU
-aol
+wqG
 alU
 ava
 axg
@@ -76221,12 +76239,12 @@ aaa
 ali
 cyi
 aol
-pQf
-aol
-aol
-aol
+sKW
+wqG
+wqG
+wqG
 fWY
-aol
+wqG
 alU
 aAU
 oRj
@@ -78053,7 +78071,7 @@ xoY
 dkm
 hwL
 aNv
-wqG
+aWx
 bkE
 aaa
 aaa
@@ -94781,7 +94799,7 @@ bFB
 hDz
 bKy
 bjV
-nYt
+bZZ
 bMV
 idX
 nfc
@@ -108413,9 +108431,9 @@ uhH
 cYY
 qAf
 xeP
-bZZ
-bZZ
-bZZ
+xeP
+xeP
+xeP
 eyF
 viD
 bzJ
