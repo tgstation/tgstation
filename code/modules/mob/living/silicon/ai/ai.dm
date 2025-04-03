@@ -77,7 +77,7 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	//They aren't given a ctag so they don't show up in camera consoles
+	//They aren't given a c_tag so they don't show up in camera consoles
 	builtInCamera = new (src)
 	builtInCamera.network = list(CAMERANET_NETWORK_SILICON)
 
