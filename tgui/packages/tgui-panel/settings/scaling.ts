@@ -20,7 +20,7 @@ export async function setDisplayScaling() {
     return;
   }
 
-  const newSizes: string[] = [];
+  const newSizes: { [element: string]: number } = {};
 
   for (const element of ELEMENTS_TO_ADJUST) {
     newSizes[`${element}.font-size`] =
@@ -30,4 +30,20 @@ export async function setDisplayScaling() {
   console.log(newSizes);
 
   Byond.winset(null, newSizes);
+}
+
+const PANE_SPLITTERS = [
+  'info_button_child',
+  'input_buttons_child',
+  'output_input_child',
+];
+
+export function setEditPaneSplitters(editing: boolean) {
+  const toSet: { [element: string]: any } = {};
+
+  for (const pane of PANE_SPLITTERS) {
+    toSet[`${pane}.show-splitter`] = editing;
+  }
+
+  Byond.winset(null, toSet);
 }
