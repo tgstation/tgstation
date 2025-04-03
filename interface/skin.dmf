@@ -314,7 +314,7 @@ window "inputbuttons"
 	elem "inputbuttons"
 		type = MAIN
 		pos = 291,0
-		size = 120x20
+		size = 120x0
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = none
@@ -323,7 +323,7 @@ window "inputbuttons"
 	elem "saybutton"
 		type = BUTTON
 		pos = 0,0
-		size = 40x20
+		size = 40x0
 		anchor1 = 0,0
 		anchor2 = 33,0
 		font-size = 4
@@ -337,7 +337,7 @@ window "inputbuttons"
 	elem "mebutton"
 		type = BUTTON
 		pos = 40,0
-		size = 40x20
+		size = 40x0
 		anchor1 = 33,0
 		anchor2 = 66,0
 		font-size = 4
@@ -351,9 +351,9 @@ window "inputbuttons"
 	elem "oocbutton"
 		type = BUTTON
 		pos = 80,0
-		size = 40x20
+		size = 40x0
 		anchor1 = 66,0
-		anchor2 = 99,0
+		anchor2 = 100,0
 		font-size = 4
 		background-color = none
 		border = line
