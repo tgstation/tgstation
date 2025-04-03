@@ -169,7 +169,7 @@
 		PROC_REF(make_reverse),
 		PROC_REF(make_vampire),
 		PROC_REF(make_speen),
-//		PROC_REF(make_material),
+		PROC_REF(make_material),
 		PROC_REF(make_lamp),
 		PROC_REF(make_gravity),
 	)
@@ -178,7 +178,6 @@
 		var/rand_swap = pick(possible_cube_effects)
 		call(src, rand_swap)()
 		possible_cube_effects -= rand_swap
-	make_material()
 
 /// Make the cube a food w/ random consumable reagents
 /obj/item/cube/random/proc/make_food()
