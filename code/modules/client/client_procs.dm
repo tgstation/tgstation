@@ -260,6 +260,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		persistent_client.byond_build = byond_build
 		persistent_client.byond_version = byond_version
 
+	acquire_dpi()
+
 	if(byond_version >= 516)
 		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
 
@@ -1246,6 +1248,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	message_to_send += "(No admins online)"
 
 	send2adminchat("Server", jointext(message_to_send, " "))
+
+/// This grabs the DPI of the user per their skin
+/client/proc/acquire_dpi()
+	set waitfor = FALSE
+
+	window_scaling = text2num(winget(src, null, "dpi"))
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE

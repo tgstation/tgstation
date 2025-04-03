@@ -166,6 +166,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
+		font-size = 4
 	elem "rules"
 		type = BUTTON
 		pos = 92,5
@@ -175,6 +176,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
+		font-size = 4
 	elem "wiki"
 		type = BUTTON
 		pos = 184,5
@@ -184,6 +186,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
+		font-size = 4
 	elem "forum"
 		type = BUTTON
 		pos = 276,5
@@ -193,6 +196,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
+		font-size = 4
 	elem "github"
 		type = BUTTON
 		pos = 368,5
@@ -202,6 +206,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Github"
 		command = "github"
+		font-size = 4
 	elem "report-issue"
 		type = BUTTON
 		pos = 460,5
@@ -211,6 +216,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
+		font-size = 4
 	elem "fullscreen-toggle"
 		type = BUTTON
 		pos = 552,5
@@ -220,6 +226,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Fullscreen"
 		command = "fullscreen"
+		font-size = 4
 
 window "outputwindow"
 	elem "outputwindow"
@@ -233,54 +240,26 @@ window "outputwindow"
 		is-pane = true
 		outer-size = 656x538
 		inner-size = 640x499
-	elem "input"
-		type = INPUT
-		pos = 2,460
-		size = 517x20
-		anchor1 = 0,100
+	elem "output_and_input"
+		type = CHILD
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
 		anchor2 = 100,100
-		is-default = true
-		border = line
-		saved-params = "command"
-	elem "oocbutton"
-		type = BUTTON
-		pos = 599,460
-		size = 40x20
-		anchor1 = 100,100
+		top = "output_selector"
+		bottom = "input_and_buttons"
+		show-splitter = false
+		splitter = 95
+		saved-params = ""
+
+window "output_selector"
+	elem "output_selector"
+		type = MAIN
+		pos = 0,0
+		size = 640x456
+		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
-		border = line
-		saved-params = "is-checked"
-		text = "OOC"
-		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
-		is-flat = true
-		button-type = pushbox
-	elem "saybutton"
-		type = BUTTON
-		pos = 519,460
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		background-color = none
-		border = line
-		saved-params = "is-checked"
-		text = "Say"
-		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\""
-		is-flat = true
-		button-type = pushbox
-	elem "mebutton"
-		type = BUTTON
-		pos = 559,460
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		background-color = none
-		border = line
-		saved-params = "is-checked"
-		text = "Me"
-		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
-		is-flat = true
-		button-type = pushbox
+		is-pane = true
 	elem "legacy_output_selector"
 		type = CHILD
 		pos = 0,0
@@ -290,6 +269,89 @@ window "outputwindow"
 		saved-params = "splitter"
 		left = "output_legacy"
 		is-vert = false
+
+window "input_and_buttons"
+	elem "input_and_buttons"
+		type = MAIN
+		pos = 0,0
+		size = 517x0
+		is-pane = true
+	elem "input_buttons_child"
+		type = CHILD
+		size = 517x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = ""
+		splitter = 80
+		left = "inputwindow"
+		right = "inputbuttons"
+		is-vert = true
+		show-splitter = false
+
+window "inputwindow"
+	elem "inputwindow"
+		type = MAIN
+		pos = 0,0
+		size = 0x0
+		is-pane = true
+	elem "input"
+		type = INPUT
+		pos = 0,0
+		size = 517x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-default = true
+		border = line
+		saved-params = "command"
+
+window "inputbuttons"
+	elem "inputbuttons"
+		type = MAIN
+		pos = 0,0
+		size = 0x0
+		is-pane = true
+	elem "saybutton"
+		type = BUTTON
+		pos = 0,0
+		size = 40x20
+		anchor1 = 0,0
+		anchor2 = -1,-1
+		background-color = none
+		border = line
+		saved-params = "is-checked"
+		text = "Say"
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\""
+		is-flat = true
+		button-type = pushbox
+		font-size = 4
+	elem "mebutton"
+		type = BUTTON
+		pos = 40,0
+		size = 40x20
+		anchor1 = 33,0
+		anchor2 = -1,-1
+		background-color = none
+		border = line
+		saved-params = "is-checked"
+		text = "Me"
+		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
+		is-flat = true
+		button-type = pushbox
+		font-size = 4
+	elem "oocbutton"
+		type = BUTTON
+		pos = 80,0
+		size = 40x20
+		anchor1 = 66,0
+		anchor2 = -1,-1
+		background-color = none
+		border = line
+		saved-params = "is-checked"
+		text = "OOC"
+		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
+		is-flat = true
+		button-type = pushbox
+		font-size = 4
 
 window "output_legacy"
 	elem "output_legacy"
