@@ -2,3 +2,4 @@
 // So you can easily use your defines in TG code folder, not only in our modular folder
 
 #include "additional_circuit.dm"
+#include "antagonists.dm"
