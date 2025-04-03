@@ -46,7 +46,6 @@
 		qdel(src)
 		return
 
-	GLOB.jukeboxes += src
 	parent = new_parent
 
 	if(isnull(sound_range))
@@ -73,7 +72,6 @@
 	selection = null
 	songs.Cut()
 	active_song_sound = null
-	GLOB.jukeboxes -= src
 	return ..()
 
 /// When our parent is deleted, we should go too.

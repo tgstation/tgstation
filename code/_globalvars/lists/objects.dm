@@ -103,6 +103,3 @@ GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ/tongue/dullahan,
 	/obj/item/organ/eyes/dullahan,
 ), only_root_path = TRUE))
-
-/// List of jukebox datums
-GLOBAL_LIST_EMPTY(jukeboxes)
