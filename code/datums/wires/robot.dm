@@ -79,7 +79,7 @@
 				if(R.shell)
 					R.undeploy()
 				R.set_connected_ai(null)
-			R.logevent("AI connection fault [mend ? "cleared":"detected"]")
+			R.logevent("AI connection fault [mend ? "cleared" : "detected"]")
 		if(WIRE_LAWSYNC) // Cut the law wire, and the borg will no longer receive law updates from its AI. Repair and it will re-sync.
 			if(mend)
 				if(!R.emagged)
