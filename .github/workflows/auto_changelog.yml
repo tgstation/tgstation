@@ -18,7 +18,7 @@ jobs:
 
     - name: Generate App Token
       id: app-token-generation
-      uses: actions/create-github-app-token@v1
+      uses: actions/create-github-app-token@v2
       if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
       with:
         app-id: ${{ secrets.APP_ID }}
