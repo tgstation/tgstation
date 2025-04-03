@@ -443,10 +443,12 @@
 	CRASH("get_part_datum called with incorrect item [part] passed.")
 
 /obj/item/mod/control/proc/get_part_from_slot(slot)
+	RETURN_TYPE(/obj/item)
 	var/datum/mod_part/part = mod_parts["[slot]"]
 	return part?.part_item
 
 /obj/item/mod/control/proc/get_part_datum_from_slot(slot)
+	RETURN_TYPE(/datum/mod_part)
 	return mod_parts["[slot]"]
 
 /obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
@@ -480,21 +482,6 @@
 			continue
 		covered_slots |= part.slot_flags
 	return covered_slots
-
-/obj/item/mod/control/proc/generate_suit_mask()
-	var/list/parts = get_parts(all = TRUE)
-	var/covered_slots = get_sealed_slots(parts)
-	if(GLOB.mod_masks[skin])
-		if(GLOB.mod_masks[skin]["[covered_slots]"])
-			return GLOB.mod_masks[skin]["[covered_slots]"]
-	else
-		GLOB.mod_masks[skin] = list()
-	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
-	for(var/obj/item/part as anything in parts)
-		slot_mask.Blend(icon(part.worn_icon, part.icon_state), ICON_OVERLAY)
-	slot_mask.Blend("#fff", ICON_ADD)
-	GLOB.mod_masks[skin]["[covered_slots]"] = slot_mask
-	return GLOB.mod_masks[skin]["[covered_slots]"]
 
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))
@@ -602,7 +589,6 @@
 	modules += new_module
 	complexity += new_module.complexity
 	new_module.mod = src
-	new_module.RegisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, TYPE_PROC_REF(/obj/item/mod/module, add_module_overlay))
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
@@ -622,7 +608,6 @@
 		old_module.on_part_deactivation(deleting = deleting)
 		if(old_module.active)
 			old_module.deactivate(display_message = !deleting, deleting = deleting)
-	old_module.UnregisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS)
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
