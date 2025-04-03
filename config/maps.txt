@@ -63,6 +63,10 @@ map protoboxstation
 	votable
 endmap
 
+map hotmeta
+	votable
+endmap
+
 # Debug-only maps.
 
 map gateway_test
