@@ -45,23 +45,23 @@ img.icon {
 }
 
 a {
-  color: hsl(240, 100%, 50%);
+  color: hsl(from var(--color-hyperlink) h s calc(l - 40));
+
+  &:hover {
+    color: hsl(from var(--color-hyperlink) h s calc(l - 20));
+  }
 }
 
-a.visited {
-  color: hsl(300, 100%, 50%);
-}
-
+a.visited,
 a:visited {
-  color: hsl(300, 100%, 50%);
-}
+  color: hsl(from var(--color-hyperlink-visited) h s calc(l - 40));
 
-a.popt {
-  text-decoration: none;
+  &:hover {
+    color: hsl(from var(--color-hyperlink-visited) h s calc(l - 20));
+  }
 }
 
 /* POPUPS */
-
 .popup {
   position: fixed;
   top: 50%;
