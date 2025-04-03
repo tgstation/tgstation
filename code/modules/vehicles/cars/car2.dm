@@ -173,7 +173,7 @@ SUBSYSTEM_DEF(carpool)
 
 			user.visible_message("<span class='notice'>[user] begins repairing [src]...</span>", \
 				"<span class='notice'>You begin repairing [src]. Stop at any time to only partially repair it.</span>")
-			if(W.use_tool(src, user, time_to_repair, volume=30))
+			if(W.use_tool(src, user, time_to_repair SECONDS, volume=30))
 				health = maxhealth
 				playsound(src, 'code/modules/vehicles/cars/repair.ogg', 50, TRUE)
 				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
@@ -293,6 +293,9 @@ SUBSYSTEM_DEF(carpool)
 		loc.balloon_alert(driver, "engine stops")
 		set_light(0)
 	return
+
+/datum/action/carr
+	button_icon = 'code/modules/vehicles/cars/actions.dmi'
 
 /datum/action/carr/fari_vrubi
 	name = "Toggle Light"

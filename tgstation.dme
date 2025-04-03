@@ -6360,6 +6360,7 @@
 #include "code\modules\vehicles\vehicle_actions.dm"
 #include "code\modules\vehicles\vehicle_key.dm"
 #include "code\modules\vehicles\wheelchair.dm"
+#include "code\modules\vehicles\cars\beacon_pack.dm"
 #include "code\modules\vehicles\cars\car.dm"
 #include "code\modules\vehicles\cars\car2.dm"
 #include "code\modules\vehicles\cars\clowncar.dm"
