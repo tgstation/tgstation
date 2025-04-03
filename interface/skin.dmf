@@ -153,82 +153,91 @@ window "info_and_buttons"
 		size = 640x477
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #ffc41f
 		saved-params = "splitter"
-		splitter = 2
-		show-splitter = false
 		left = "infobuttons"
 		right = "infowindow"
 		is-vert = false
-		background-color = #ffc41f
+		splitter = 2
+		show-splitter = false
 
 window "infobuttons"
 	elem "infobuttons"
 		type = MAIN
-		pos = 0,0
-		size = 620x20
+		pos = 291,0
+		size = 640x30
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
 	elem "changelog"
 		type = BUTTON
 		pos = 0,5
-		size = 87x20
+		size = 87x25
 		anchor1 = 0,0
 		anchor2 = 15,100
+		background-color = none
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
 		pos = 92,5
-		size = 87x20
+		size = 88x25
 		anchor1 = 15,0
 		anchor2 = 29,100
+		background-color = none
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
-		pos = 184,5
-		size = 87x20
+		pos = 185,5
+		size = 87x25
 		anchor1 = 29,0
 		anchor2 = 43,100
+		background-color = none
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
 	elem "forum"
 		type = BUTTON
-		pos = 276,5
-		size = 87x20
+		pos = 277,5
+		size = 87x25
 		anchor1 = 43,0
 		anchor2 = 57,100
+		background-color = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
 	elem "github"
 		type = BUTTON
-		pos = 368,5
-		size = 87x20
+		pos = 369,5
+		size = 87x25
 		anchor1 = 57,0
 		anchor2 = 71,100
+		background-color = none
 		saved-params = "is-checked"
 		text = "GitHub"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
-		pos = 460,5
-		size = 87x20
+		pos = 461,5
+		size = 87x25
 		anchor1 = 71,0
 		anchor2 = 85,100
+		background-color = none
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
 	elem "fullscreen-toggle"
 		type = BUTTON
-		pos = 552,5
-		size = 88x20
+		pos = 553,5
+		size = 89x25
 		anchor1 = 85,0
-		anchor2 = 100,100
+		anchor2 = 99,100
+		background-color = none
 		saved-params = "is-checked"
 		text = "Fullscreen"
 		command = "fullscreen"
@@ -268,10 +277,10 @@ window "outputwindow"
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #ffc41f
 		saved-params = "splitter"
 		left = "output_selector"
 		right = "input_and_buttons"
-		background-color = #ffc41f
 		is-vert = false
 		splitter = 96
 		show-splitter = false
@@ -302,7 +311,6 @@ window "input_and_buttons"
 		size = 480x635
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "input_buttons_child"
@@ -311,14 +319,13 @@ window "input_and_buttons"
 		size = 480x635
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
+		background-color = #ffc41f
 		saved-params = "splitter"
 		left = "inputwindow"
 		right = "inputbuttons"
 		is-vert = true
 		splitter = 80
 		show-splitter = false
-		background-color = #ffc41f
 
 window "inputwindow"
 	elem "inputwindow"
