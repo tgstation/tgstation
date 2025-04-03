@@ -76,7 +76,7 @@ window "mainwindow"
 		anchor2 = 100,100
 		saved-params = "splitter"
 		left = "mapwindow"
-		right = "infowindow"
+		right = "info_and_buttons"
 		is-vert = true
 	elem "asset_cache_browser"
 		type = BROWSER
@@ -138,6 +138,100 @@ window "mapwindow"
 		text = ""
 		align = left
 
+window "info_and_buttons"
+	elem "info_and_buttons"
+		type = MAIN
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "info_button_child"
+		type = CHILD
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "splitter"
+		splitter = 2
+		show-splitter = false
+		left = "infobuttons"
+		right = "infowindow"
+		is-vert = false
+
+window "infobuttons"
+	elem "infobuttons"
+		type = MAIN
+		pos = 0,0
+		size = 620x20
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+	elem "changelog"
+		type = BUTTON
+		pos = 0,5
+		size = 87x20
+		anchor1 = 0,0
+		anchor2 = 15,100
+		saved-params = "is-checked"
+		text = "Changelog"
+		command = "changelog"
+	elem "rules"
+		type = BUTTON
+		pos = 92,5
+		size = 87x20
+		anchor1 = 15,0
+		anchor2 = 29,100
+		saved-params = "is-checked"
+		text = "Rules"
+		command = "rules"
+	elem "wiki"
+		type = BUTTON
+		pos = 184,5
+		size = 87x20
+		anchor1 = 29,0
+		anchor2 = 43,100
+		saved-params = "is-checked"
+		text = "Wiki"
+		command = "wiki"
+	elem "forum"
+		type = BUTTON
+		pos = 276,5
+		size = 87x20
+		anchor1 = 43,0
+		anchor2 = 57,100
+		saved-params = "is-checked"
+		text = "Forum"
+		command = "forum"
+	elem "github"
+		type = BUTTON
+		pos = 368,5
+		size = 87x20
+		anchor1 = 57,0
+		anchor2 = 71,100
+		saved-params = "is-checked"
+		text = "GitHub"
+		command = "github"
+	elem "report-issue"
+		type = BUTTON
+		pos = 460,5
+		size = 87x20
+		anchor1 = 71,0
+		anchor2 = 85,100
+		saved-params = "is-checked"
+		text = "Report Issue"
+		command = "report-issue"
+	elem "fullscreen-toggle"
+		type = BUTTON
+		pos = 552,5
+		size = 88x20
+		anchor1 = 85,0
+		anchor2 = 100,100
+		saved-params = "is-checked"
+		text = "Fullscreen"
+		command = "fullscreen"
+
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
@@ -149,77 +243,14 @@ window "infowindow"
 		is-pane = true
 	elem "info"
 		type = CHILD
-		pos = 0,30
-		size = 640x445
+		pos = 0,0
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
-	elem "changelog"
-		type = BUTTON
-		pos = 0,5
-		size = 87x20
-		anchor1 = 0,0
-		anchor2 = 15,0.8
-		saved-params = "is-checked"
-		text = "Changelog"
-		command = "changelog"
-	elem "rules"
-		type = BUTTON
-		pos = 92,5
-		size = 87x20
-		anchor1 = 15,0
-		anchor2 = 29,0.8
-		saved-params = "is-checked"
-		text = "Rules"
-		command = "rules"
-	elem "wiki"
-		type = BUTTON
-		pos = 184,5
-		size = 87x20
-		anchor1 = 29,0
-		anchor2 = 43,0.8
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-	elem "forum"
-		type = BUTTON
-		pos = 276,5
-		size = 87x20
-		anchor1 = 43,0
-		anchor2 = 57,0.8
-		saved-params = "is-checked"
-		text = "Forum"
-		command = "forum"
-	elem "github"
-		type = BUTTON
-		pos = 368,5
-		size = 87x20
-		anchor1 = 57,0
-		anchor2 = 71,0.8
-		saved-params = "is-checked"
-		text = "Github"
-		command = "github"
-	elem "report-issue"
-		type = BUTTON
-		pos = 460,5
-		size = 87x20
-		anchor1 = 71,0
-		anchor2 = 85,0.8
-		saved-params = "is-checked"
-		text = "Report Issue"
-		command = "report-issue"
-	elem "fullscreen-toggle"
-		type = BUTTON
-		pos = 552,5
-		size = 88x20
-		anchor1 = 85,0
-		anchor2 = 100,0.8
-		saved-params = "is-checked"
-		text = "Fullscreen"
-		command = "fullscreen"
 
 window "outputwindow"
 	elem "outputwindow"
@@ -247,7 +278,7 @@ window "output_selector"
 	elem "output_selector"
 		type = MAIN
 		pos = 0,0
-		size = 640x456
+		size = 640x480
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
@@ -255,7 +286,7 @@ window "output_selector"
 	elem "legacy_output_selector"
 		type = CHILD
 		pos = 0,0
-		size = 640x456
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
@@ -265,18 +296,25 @@ window "output_selector"
 window "input_and_buttons"
 	elem "input_and_buttons"
 		type = MAIN
-		pos = 0,0
-		size = 517x0
+		pos = 291,0
+		size = 480x640
 		anchor1 = -1,-1
 		anchor2 = -1,-1
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
+		outer-size = 496x679
+		outer-pos = 291,0
+		inner-size = 480x640
+		inner-pos = 8,31
+		screen-size = 3440x1392
 	elem "input_buttons_child"
 		type = CHILD
 		pos = 0,0
-		size = 517x0
+		size = 480x640
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = ""
 		left = "inputwindow"
 		right = "inputbuttons"
@@ -310,7 +348,6 @@ window "inputbuttons"
 		size = 120x40
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "saybutton"
@@ -320,7 +357,6 @@ window "inputbuttons"
 		anchor1 = 0,0
 		anchor2 = 33,100
 		font-size = 4
-		background-color = none
 		border = line
 		saved-params = "is-checked"
 		text = "Say"
@@ -334,7 +370,6 @@ window "inputbuttons"
 		anchor1 = 33,0
 		anchor2 = 66,100
 		font-size = 4
-		background-color = none
 		border = line
 		saved-params = "is-checked"
 		text = "Me"
@@ -348,7 +383,6 @@ window "inputbuttons"
 		anchor1 = 66,0
 		anchor2 = 100,100
 		font-size = 4
-		background-color = none
 		border = line
 		saved-params = "is-checked"
 		text = "OOC"
