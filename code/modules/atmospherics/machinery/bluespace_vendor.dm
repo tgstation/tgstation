@@ -28,7 +28,7 @@
 	///Amount of usable tanks inside the machine
 	var/empty_tanks = 10
 	///Typepath to the tanks that vendor will make
-	var/obj/item/tank/internals/generic/new_tank
+	var/new_tank = /obj/item/tank/internals/generic
 	///Reference to the current in use tank to be filled
 	var/obj/item/tank/internal_tank
 	///Path of the gas selected from the UI to be pumped inside the tanks
@@ -43,6 +43,8 @@
 	var/tank_purchased = FALSE
 	///Stores the current price of the gases inside the tank
 	var/gas_price = 0
+	///Mixture of purchased gas, used only for checking prices
+	var/datum/gas_mixture/purchased_gas_mix = null
 	///Helper for mappers, will automatically connect to the sender (ensure to only place one sender per map)
 	var/map_spawned = TRUE
 	///Current operating mode of the vendor
@@ -70,6 +72,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
+	purchased_gas_mix = new(100)
 	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 	find_and_hang_on_wall( FALSE)
 
@@ -99,6 +102,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/Exited(atom/movable/gone, direction)
 	if(gone == internal_tank)
 		internal_tank = null
+		purchased_gas_mix.remove_ratio(1)
 	return ..()
 
 /obj/machinery/bluespace_vendor/process()
@@ -115,7 +119,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		update_appearance()
 		return
 
-	connected_machine.bluespace_network.pump_gas_to(internal_tank.return_air(), (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
+
+	var/datum/gas_mixture/to_merge = connected_machine.bluespace_network.pump_gas_to(internal_tank.return_air(), (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
+	purchased_gas_mix.merge(to_merge)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!istype(multitool))
@@ -160,12 +166,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/examine(mob/user)
 	. = ..()
-	if(empty_tanks > 1)
-		. += span_notice("There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.")
-	else if(empty_tanks == 1)
-		. += span_notice("There is only one empty tank available, please refill the machine by using iron sheets.")
-	else
-		. += span_notice("There is no available tank, please refill the machine by using iron sheets.")
+	switch(empty_tanks)
+		if(2 to INFINITY)
+			. += span_notice("There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.")
+		if(1)
+			. += span_notice("There is only one empty tank available, please refill the machine by using iron sheets.")
+		if(0)
+			. += span_notice("There is no available tank, please refill the machine by using iron sheets.")
 
 ///Check what is the current operating mode
 /obj/machinery/bluespace_vendor/proc/check_mode()
@@ -197,11 +204,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 ///Check the price of the current tank, if the user doesn't have the money the gas will be merged back into the network
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
+	if (!purchased_gas_mix)
+		if(tank_purchased)
+			if(attempt_charge(src, user, tank_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+				return
+		if(internal_tank && Adjacent(user))
+			tank_purchased = FALSE
+			user.put_in_hands(internal_tank)
+			playsound(src, 'sound/effects/compressed_air/tank_remove_thunk.ogg', 50)
+			return
+
 	var/temp_price = 0
 	var/datum/gas_mixture/working_mix = internal_tank.return_air()
-	var/list/gases = working_mix.gases
-	for(var/gas_id in gases)
-		temp_price += gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
+	var/list/purchased_gases = purchased_gas_mix.gases
+
+	for(var/gas_id in purchased_gases)
+		temp_price += purchased_gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(tank_purchased)
@@ -209,6 +227,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
 		var/datum/gas_mixture/remove = working_mix.remove_ratio(1)
+		purchased_gas_mix.remove_ratio(1)
 		connected_machine.bluespace_network.merge(remove)
 		return
 	connected_machine.credits_gained += gas_price
@@ -289,7 +308,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		if("tank_prepare")
 			if(empty_tanks && !internal_tank)
 				tank_purchased = TRUE
-				internal_tank = new(new_tank)
+				internal_tank = new new_tank(src)
 				empty_tanks = max(empty_tanks - 1, 0)
 			. = TRUE
 		if("tank_expel")
