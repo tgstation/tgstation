@@ -1773,6 +1773,7 @@
 #include "code\datums\mutations\touch.dm"
 #include "code\datums\mutations\void_magnet.dm"
 #include "code\datums\mutations\webbing.dm"
+#include "code\datums\personality\_personality.dm"
 #include "code\datums\proximity_monitor\field.dm"
 #include "code\datums\proximity_monitor\proximity_monitor.dm"
 #include "code\datums\proximity_monitor\fields\ai_target_tracking.dm"
