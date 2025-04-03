@@ -183,7 +183,7 @@
 	AddComponent(/datum/component/personal_crafting) // Kind of hard to be a drone and not be able to make tiles
 
 	//only shy drones (so all the station ones) gets a camera.
-	if(!shy)
+	if(shy)
 		built_in_camera = new(src)
 		built_in_camera.c_tag = real_name
 		built_in_camera.network = list(CAMERANET_NETWORK_SILICON)
