@@ -334,15 +334,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			desc += "\a [initial(valid_item.name)]"
 		can_hold_description = "\n\t[span_notice("[desc.Join("\n\t")]")]"
 
-/// Generates a description, primarily for clothing storage.
-/datum/storage/proc/generate_hold_desc(can_hold_list)
-	var/list/desc = list()
-
-	for(var/obj/item/valid_item as anything in can_hold_list)
-		desc += "\a [initial(valid_item.name)]"
-
-	return "\n\t[span_notice("[desc.Join("\n\t")]")]"
-
 /// Updates the action button for toggling collectmode.
 /datum/storage/proc/update_actions(atom/source, mob/equipper, slot)
 	SIGNAL_HANDLER
