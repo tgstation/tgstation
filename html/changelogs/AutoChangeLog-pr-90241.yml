@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Attempts were made to make chemical interactions with regards to splashes or exposure to chemicals on your skin respect clothing cover. If you have clothing with biological protecting properties, chemicals may not affect you as easily. Good for you."
+  - balance: "Some chems may behave differently than they originally did in light of utilizing suit protections appropriately. Make sure if you want someone to be exposed to the full effect of a chemical that they're not wearing anything in the way before splashing them."
