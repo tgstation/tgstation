@@ -12,6 +12,7 @@
 #if CHEBUREK_CAR
 	#include "features\cheburek_car\includes.dm"
 #endif
+#include "features\uplink_items\includes.dm"
 #include "features\venom_knife\includes.dm"
 /* -- REVERTS -- */
 
