@@ -7221,6 +7221,7 @@
 #include "modular_doppler\modular_quirks\permitted_cybernetic\code\preferences.dm"
 #include "modular_doppler\modular_quirks\system_shock\system_shock.dm"
 #include "modular_doppler\modular_quirks\tranquility\code\tranquility.dm"
+#include "modular_doppler\modular_quirks\traumatized\traumatized.dm"
 #include "modular_doppler\modular_quirks\undersized\gun.dm"
 #include "modular_doppler\modular_quirks\undersized\held_undersized_examine.dm"
 #include "modular_doppler\modular_quirks\undersized\held_undersized_id.dm"
