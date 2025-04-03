@@ -68,11 +68,11 @@
 	for (file in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
 
-	if(user.window_scaling && user.window_scaling != 1 && !user.prefs.window_scale && width && height)
+	if(user.client?.window_scaling && user.client?.window_scaling != 1 && !user.client?.prefs.read_preference(/datum/preference/toggle/ui_scale) && width && height)
 		head_content += {"
 			<style>
 				body {
-					zoom: [100 / user.window_scaling]%;
+					zoom: [100 / user.client?.window_scaling]%;
 				}
 			</style>
 			"}
