@@ -328,6 +328,10 @@
 	name = "Paramedic Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/medical/paramedic
 
+/datum/loadout_item/suit/coat_security
+	name = "Security Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/security
+
 /datum/loadout_item/suit/coat_robotics
 	name = "Robotics Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/science/robotics
@@ -382,3 +386,11 @@
 /datum/loadout_item/suit/sec_dep_jacket_red
 	name = "Security Department Jacket"
 	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec/red
+
+/datum/loadout_item/suit/peacekeeper_jacket
+	name = "Peacekeeper Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/peacekeeper_jacket
+
+/datum/loadout_item/suit/peacekeeper_jacket_badged
+	name = "Badged Peacekeeper Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/peacekeeper_jacket/badged

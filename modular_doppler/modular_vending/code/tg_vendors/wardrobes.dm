@@ -81,6 +81,8 @@
 	products_doppler = list(
 		/obj/item/clothing/under/misc/doppler_uniform/security = 5,
 		/obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec = 3,
+		/obj/item/clothing/suit/jacket/doppler/peacekeeper_jacket = 5,
+		/obj/item/clothing/suit/jacket/doppler/peacekeeper_jacket/badged = 5,
 		/obj/item/clothing/head/cap_colonysec = 5,
 	)
 
@@ -126,6 +128,7 @@
 	products_doppler = list(
 		/obj/item/clothing/head/fedora/beige = 2,
 		/obj/item/clothing/head/fedora/white = 2,
+		/obj/item/clothing/suit/jacket/doppler/runner_coat = 3,
 	)
 
 /*/obj/machinery/vending/wardrobe/law_wardrobe

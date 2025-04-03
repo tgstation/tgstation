@@ -38,6 +38,10 @@
 	name = "Colonial Cap"
 	item_path = /obj/item/clothing/head/hats/colonial
 
+/datum/loadout_item/head/security_colonial_cap
+	name = "Security Colonial Cap"
+	item_path = /obj/item/clothing/head/cap_colonysec
+
 /datum/loadout_item/head/wrussian
 	name = "Black Papakha"
 	item_path = /obj/item/clothing/head/costume/papakha
