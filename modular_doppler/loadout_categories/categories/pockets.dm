@@ -208,6 +208,11 @@
 	name = "Meditative Assistance pacification skillchip"
 	item_path = /obj/item/skillchip/pacification
 
+/datum/loadout_item/pocket_items/shock_collar
+	name = "Shock collar"
+	item_path = /obj/item/electropack/shockcollar
+	additional_displayed_text = list("Zap.")
+
 /*
 *	UTILITY
 */

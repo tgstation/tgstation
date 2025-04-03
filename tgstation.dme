@@ -7320,6 +7320,7 @@
 #include "modular_doppler\objects_and_structures\code\sauna_oven.dm"
 #include "modular_doppler\objects_and_structures\code\towel_bins.dm"
 #include "modular_doppler\objects_and_structures\code\watercloset.dm"
+#include "modular_doppler\pacificationcollar\code\shockcollar.dm"
 #include "modular_doppler\pixel_shift\living.dm"
 #include "modular_doppler\pixel_shift\living_movement.dm"
 #include "modular_doppler\pixel_shift\code\pixel_shift_component.dm"
