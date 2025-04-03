@@ -7,25 +7,27 @@ const ELEMENTS_TO_ADJUST = [
   'infowindow.github',
   'infowindow.report-issue',
   'infowindow.fullscreen-toggle',
-].map((i) => i + '.font-size');
+  'inputwindow.input',
+  'inputbuttons.saybutton',
+  'inputbuttons.mebutton',
+  'inputbuttons.oocbutton',
+];
+
+const DEFAULT_BUTTON_FONT_SIZE = 4;
 
 export async function setDisplayScaling() {
   if (window.devicePixelRatio === 1) {
     return;
   }
 
-  const sizes = await Byond.winget(
-    null,
-    ELEMENTS_TO_ADJUST.map((i) => i + '.*'),
-  );
-
   const newSizes: string[] = [];
 
   for (const element of ELEMENTS_TO_ADJUST) {
-    const size = parseInt(sizes[element], 10) ?? 4;
-
-    newSizes[element] = size * window.devicePixelRatio;
+    newSizes[`${element}.font-size`] =
+      DEFAULT_BUTTON_FONT_SIZE * window.devicePixelRatio;
   }
+
+  console.log(newSizes);
 
   Byond.winset(null, newSizes);
 }
