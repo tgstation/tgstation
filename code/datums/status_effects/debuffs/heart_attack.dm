@@ -25,7 +25,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	if(!istype(human_owner) || !human_owner.can_heartattack())
 		return FALSE
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(end_attack))
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_removed))
 	RegisterSignal(owner, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(minor_shock))
 	RegisterSignal(owner, COMSIG_DEFIBRILLATOR_SHOCKED, PROC_REF(defib_shock))
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(electrocuted))
@@ -121,18 +121,19 @@
 	time_until_stoppage--
 
 /datum/status_effect/heart_attack/get_examine_text()
-	if(time_until_stoppage <= ATTACK_STAGE_THREE)
-		var/mob/living/carbon/human/human_owner = owner
-		var/cannot_grasp = (human_owner.usable_hands <= 0 || owner.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
-		return span_warning("[owner.p_they()] looks to be doubling over" + "[cannot_grasp ? " in pain!" : ", clutching [owner.p_their()] chest in pain!"]")
+	if(!time_until_stoppage <= ATTACK_STAGE_THREE)
+		return
+	var/mob/living/carbon/human/human_owner = owner
+	var/cannot_grasp = (human_owner.usable_hands <= 0 || owner.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
+	return span_warning("[owner.p_they()] looks to be doubling over" + "[cannot_grasp ? " in pain!" : ", clutching [owner.p_their()] chest in pain!"]")
 
 /datum/status_effect/heart_attack/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_HIGH, type)
 	owner.med_hud_set_status()
-	. = ..()
+	return ..()
 
 ///End the heart attack due to heart removal.
-/datum/status_effect/heart_attack/proc/end_attack(datum/source, obj/item/organ)
+/datum/status_effect/heart_attack/proc/on_organ_removed(datum/source, obj/item/organ)
 	SIGNAL_HANDLER
 	if(istype(organ, /obj/item/organ/heart))
 		qdel(src)
