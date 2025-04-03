@@ -128,6 +128,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		var/assignment = worn_id.get_trim_assignment()
 		if(istype(pda) && !isnull(assignment))
 			pda.imprint_id(spawning.real_name, assignment)
+		SSjob.setup_alt_job_title(spawning, src, player_client) // DOPPLER ADDITION: alternative job titles
 
 	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
 

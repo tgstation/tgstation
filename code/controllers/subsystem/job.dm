@@ -599,7 +599,7 @@ SUBSYSTEM_DEF(job)
 		else
 			handle_auto_deadmin_roles(player_client, job.title)
 
-	setup_alt_job_items(equipping, job, player_client) // DOPPLER EDIT: alternative job titles
+	setup_alt_job_title(equipping, job, player_client) // DOPPLER ADDITION: alternative job titles
 	job.after_spawn(equipping, player_client)
 
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)

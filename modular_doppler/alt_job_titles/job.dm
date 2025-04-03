@@ -1,13 +1,10 @@
 // ALTERNATIVE_JOB_TITLES
 
 /**
- * Shows a list of all current and future polls and buttons to edit or delete them or create a new poll.
- *
- * All extra functionality to run on new player mobs, in a place where we actually have the client,
- * and haven't called COMSIG_GLOB_JOB_AFTER_SPAWN yet, so we are running before the wallet trait,
- * and other things that rely on items already being settled.
+ * Sets a human's ID/PDA title to match their preferred alt title for the given job.
+ * Run after we apply or make modifications to a given assignment during roundstart/latejoin setup.
  */
-/datum/controller/subsystem/job/proc/setup_alt_job_items(mob/living/carbon/human/equipping, datum/job/job, client/player_client)
+/datum/controller/subsystem/job/proc/setup_alt_job_title(mob/living/carbon/human/equipping, datum/job/job, client/player_client)
 	if(!player_client)
 		return
 
@@ -16,8 +13,9 @@
 
 	var/chosen_title = player_client.prefs.alt_job_titles[job.title] || job.title
 
-	var/obj/item/card/id/card = equipping.wear_id
+	var/obj/item/card/id/card = equipping.get_idcard(hand_first = FALSE)
 	if(istype(card))
+		chosen_title = card.get_modified_title(chosen_title)
 		card.assignment = chosen_title
 		card.update_label()
 
