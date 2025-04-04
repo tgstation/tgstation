@@ -7,18 +7,20 @@ import {
   Section,
   TextArea,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
-  connected: boolean;
-  is_admin: boolean;
+  connected: BooleanLike;
+  is_admin: BooleanLike;
   questions: Question[];
   queue_pos: number;
-  read_only: boolean;
+  read_only: BooleanLike;
   status: string;
   welcome_message: string;
+  has_permabans: BooleanLike;
 };
 
 type Question = {
@@ -63,6 +65,7 @@ export const Interview = (props) => {
     read_only,
     status,
     welcome_message = '',
+    has_permabans,
   } = data;
 
   const allAnswered = questions.every((q) => q.response);
@@ -70,7 +73,7 @@ export const Interview = (props) => {
 
   return (
     <Window
-      width={500}
+      width={550}
       height={600}
       canClose={is_admin || status === 'interview_approved'}
     >
@@ -106,6 +109,17 @@ export const Interview = (props) => {
                   </Button>
                   <Button color="bad" onClick={() => act('deny')}>
                     Deny
+                  </Button>
+                  <Button
+                    color={has_permabans ? 'bad' : 'average'}
+                    tooltip={
+                      has_permabans
+                        ? 'This user has permabans in their history!'
+                        : ''
+                    }
+                    onClick={() => act('check_centcom')}
+                  >
+                    Check Centcom
                   </Button>
                 </span>
               )}

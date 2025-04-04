@@ -138,6 +138,9 @@
 		if ("adminpm")
 			if (usr.client?.holder && owner)
 				usr.client.cmd_admin_pm(owner, null)
+		if("check_centcom")
+			if(usr.client?.holder && owner)
+				usr.client?.holder.open_centcom_bans(owner_ckey)
 
 /datum/interview/ui_data(mob/user)
 	. = list(
@@ -147,7 +150,9 @@
 		"queue_pos" = pos_in_queue,
 		"is_admin" = !!(user?.client && user.client.holder),
 		"status" = status,
-		"connected" = !!owner)
+		"connected" = !!owner,
+		"has_permabans" = user.client.holder.check_centcom_permabans(owner_ckey),
+	)
 	for (var/i in 1 to questions.len)
 		var/list/data = list(
 			"qidx" = i,

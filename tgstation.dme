@@ -2954,6 +2954,7 @@
 #include "code\modules\admin\admin_ranks.dm"
 #include "code\modules\admin\admin_verbs.dm"
 #include "code\modules\admin\antag_panel.dm"
+#include "code\modules\admin\centcom.dm"
 #include "code\modules\admin\chat_commands.dm"
 #include "code\modules\admin\check_antagonists.dm"
 #include "code\modules\admin\create_mob.dm"
