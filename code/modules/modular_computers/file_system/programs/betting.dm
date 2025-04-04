@@ -118,9 +118,17 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 					bets_ending = bets
 			if(isnull(bets_ending) || bets_ending != created_bet)
 				return
-			created_bet.payout()
+			created_bet.payout(params["winning_answer"])
 			QDEL_NULL(created_bet)
 			return TRUE
+		if("lock_betting")
+			var/datum/active_bet/bet_locking
+			for(var/datum/active_bet/bets as anything in GLOB.active_bets)
+				if(bets.name == params["bet_selected"])
+					bet_locking = bets
+			if(bet_locking != created_bet)
+				return
+			bet_locking.locked = TRUE
 
 /**
  * The active bet that our app will create & use, handles following who owns the bet,
@@ -181,7 +189,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 ///Pays out the loser's money equally to all the winners, or refunds it all if no winning option was given.
 /datum/active_bet/proc/payout(winning_option)
 	if(isnull(winning_option))
-		//no winner was selected (likely the host's PDA was destroyed), so let's refund everyone.
+		//no winner was selected (likely the host's PDA was destroyed or attempted href exploit), so let's refund everyone.
 		for(var/list/option in options)
 			for(var/list/existing_bets in options[option])
 				var/datum/bank_account/refunded_account = existing_bets[1]
@@ -191,12 +199,15 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	if(!length(winners))
 		return
 	for(var/list/winner in winners)
-		//they aren't winning their own money.
+		//they aren't winning their own money, so people betting a ton of money won't lose their money to those who bet few.
 		total_amount_bet -= text2num(winner[2])
 	for(var/list/winner in winners)
 		var/datum/bank_account/winner_account = winner[1]
 		var/money_won = text2num(winner[2]) + total_amount_bet / length(winners)
 		winner_account.adjust_money(money_won, "Won gamble: [name]") //give them their money back & whatever they won.
+		//they only made their money back, don't tell them they won anything.
+		if((money_won - text2num(winner[2])) == 0)
+			continue
 		winner_account.bank_card_talk("You won [money_won]cr from having a correct guess on [name]!")
 
 ///Puts a bank account's money bet on a given option.

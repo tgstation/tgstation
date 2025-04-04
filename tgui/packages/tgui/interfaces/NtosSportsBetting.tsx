@@ -72,6 +72,7 @@ export const NtosSportsBetting = () => {
 export const PollsSection = () => {
   const { act, data } = useBackend<Data>();
   const { active_bets = [] } = data;
+  const [Winner, setWinner] = useState('');
   return (
     <Section>
       {(active_bets.length &&
@@ -99,29 +100,65 @@ export const PollsSection = () => {
                         <Stack.Item>
                           <Stack.Item my={1}>
                             {option_name} (Has {total_amount || 0}cr bet on it)
+                            {(!owner && (
+                              <NumberInput
+                                value={personally_invested}
+                                unit="cr"
+                                width="15px"
+                                disabled={locked}
+                                minValue={0}
+                                maxValue={10000}
+                                step={1}
+                                onChange={(value) =>
+                                  act('place_bet', {
+                                    bet_selected: name,
+                                    option_selected: option_name,
+                                    money_betting: value,
+                                  })
+                                }
+                              />
+                            )) || (
+                              <Button.Checkbox
+                                tooltip="Whether this answer won."
+                                checked={Winner === option_name}
+                                key={option_name}
+                                onClick={() => setWinner(option_name)}
+                              />
+                            )}
                           </Stack.Item>
-                          {!owner && (
-                            <NumberInput
-                              value={personally_invested}
-                              unit="cr"
-                              width="15px"
-                              disabled={locked}
-                              minValue={0}
-                              maxValue={10000}
-                              step={1}
-                              onChange={(value) =>
-                                act('place_bet', {
-                                  bet_selected: name,
-                                  option_selected: option_name,
-                                  money_betting: value,
-                                })
-                              }
-                            />
-                          )}
                         </Stack.Item>
                       </Stack.Item>
                     ),
                   )}
+                  {!!owner &&
+                    ((!locked && (
+                      <Stack.Item>
+                        <Button.Confirm
+                          fluid
+                          icon="minus"
+                          tooltip="Lock the ability to place/retract bets. This is irreversible!"
+                          onClick={() =>
+                            act('lock_betting', { bet_selected: name })
+                          }
+                        >
+                          Lock Betting
+                        </Button.Confirm>
+                      </Stack.Item>
+                    )) || (
+                      <Button.Confirm
+                        fluid
+                        icon="plus"
+                        tooltip="Finalize results as the checked answer being the winner."
+                        onClick={() =>
+                          act('select_winner', {
+                            bet_selected: name,
+                            winning_answer: Winner,
+                          })
+                        }
+                      >
+                        Finalize Results
+                      </Button.Confirm>
+                    ))}
                 </Stack.Item>
                 <Stack.Item>
                   <Button
