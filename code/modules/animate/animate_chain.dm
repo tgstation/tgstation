@@ -53,7 +53,7 @@
 /datum/animate_chain/serialize_list(list/options, list/semvers)
 	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return ..() | list(
-		"index" = chain_index,
+		"chain_index" = chain_index,
 		"time" = time,
 		"loop" = loop,
 		"easing" = easing,
@@ -70,7 +70,7 @@
 	if(!.)
 		return
 
-	index = data["index"]
+	chain_index = data["chain_index"]
 	time = data["time"]
 	loop = data["loop"]
 	easing = data["easing"]
