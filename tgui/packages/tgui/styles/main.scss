@@ -68,3 +68,8 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+// A default, in case someone uses the vp() function outside of a <Window>
+:root {
+  --scaling-amount: 1;
+}
