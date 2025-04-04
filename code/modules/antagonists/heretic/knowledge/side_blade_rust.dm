@@ -26,6 +26,10 @@
 	research_tree_icon_state = "eldritch_armor"
 	research_tree_icon_frame = 12
 
+/datum/heretic_knowledge/armor/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	var/datum/status_effect/heretic_passive/our_passive = user.has_status_effect(/datum/status_effect/heretic_passive)
+	our_passive?.heretic_level_upgrade()
 
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"

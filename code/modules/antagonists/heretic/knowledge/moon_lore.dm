@@ -25,6 +25,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "moon_blade"
 	mark_type = /datum/status_effect/eldritch/moon
+	eldritch_passive = /datum/status_effect/heretic_passive/moon
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

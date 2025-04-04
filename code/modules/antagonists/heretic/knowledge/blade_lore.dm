@@ -26,6 +26,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
 	mark_type = /datum/status_effect/eldritch/blade
+	eldritch_passive = /datum/status_effect/heretic_passive/blade
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
@@ -52,98 +53,6 @@
 	if(!.)
 		return
 	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
-
-/// The cooldown duration between triggers of blade dance
-#define BLADE_DANCE_COOLDOWN (20 SECONDS)
-
-/datum/heretic_knowledge/blade_dance
-	name = "Dance of the Brand"
-	desc = "Being attacked while wielding a Heretic Blade in either hand will deliver a riposte \
-		towards your attacker. This effect can only trigger once every 20 seconds."
-	gain_text = "The footsoldier was known to be a fearsome duelist. \
-		Their general quickly appointed them as their personal Champion."
-	cost = 1
-	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
-	research_tree_icon_state = "shatter"
-	/// Whether the counter-attack is ready or not.
-	/// Used instead of cooldowns, so we can give feedback when it's ready again
-	var/riposte_ready = TRUE
-
-/datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
-
-/datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
-
-/datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
-	mob/living/carbon/human/source,
-	atom/movable/hitby,
-	damage = 0,
-	attack_text = "the attack",
-	attack_type = MELEE_ATTACK,
-	armour_penetration = 0,
-	damage_type = BRUTE,
-)
-
-	SIGNAL_HANDLER
-
-	if(attack_type != MELEE_ATTACK)
-		return
-
-	if(!riposte_ready)
-		return
-
-	if(INCAPACITATED_IGNORING(source, INCAPABLE_GRAB))
-		return
-
-	var/mob/living/attacker = hitby.loc
-	if(!istype(attacker))
-		return
-
-	if(!source.Adjacent(attacker))
-		return
-
-	// Let's check their held items to see if we can do a riposte
-	var/obj/item/main_hand = source.get_active_held_item()
-	var/obj/item/off_hand = source.get_inactive_held_item()
-	// This is the item that ends up doing the "blocking" (flavor)
-	var/obj/item/striking_with
-
-	// First we'll check if the offhand is valid
-	if(!QDELETED(off_hand) && istype(off_hand, /obj/item/melee/sickly_blade))
-		striking_with = off_hand
-
-	// Then we'll check the mainhand
-	// We do mainhand second, because we want to prioritize it over the offhand
-	if(!QDELETED(main_hand) && istype(main_hand, /obj/item/melee/sickly_blade))
-		striking_with = main_hand
-
-	// No valid item in either slot? No riposte
-	if(!striking_with)
-		return
-
-	// If we made it here, deliver the strike
-	INVOKE_ASYNC(src, PROC_REF(counter_attack), source, attacker, striking_with, attack_text)
-
-	// And reset after a bit
-	riposte_ready = FALSE
-	addtimer(CALLBACK(src, PROC_REF(reset_riposte), source), BLADE_DANCE_COOLDOWN)
-
-/datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
-	playsound(get_turf(source), 'sound/items/weapons/parry.ogg', 100, TRUE)
-	source.balloon_alert(source, "riposte used")
-	source.visible_message(
-		span_warning("[source] leans into [attack_text] and delivers a sudden riposte back at [target]!"),
-		span_warning("You lean into [attack_text] and deliver a sudden riposte back at [target]!"),
-		span_hear("You hear a clink, followed by a stab."),
-	)
-	weapon.melee_attack_chain(source, target)
-
-/datum/heretic_knowledge/blade_dance/proc/reset_riposte(mob/living/carbon/human/source)
-	riposte_ready = TRUE
-	source.balloon_alert(source, "riposte ready")
-
-#undef BLADE_DANCE_COOLDOWN
 
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"

@@ -25,6 +25,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "ash_blade"
 	mark_type = /datum/status_effect/eldritch/ash
+	eldritch_passive = /datum/status_effect/heretic_passive/ash
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()

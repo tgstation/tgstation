@@ -58,6 +58,7 @@
 			return
 	playsound(victim, 'sound/items/party_horn.ogg', 30)
 	new /obj/effect/decal/cleanable/confetti(get_turf(victim))
+
 	for(var/mob/living/mob in range(3, victim))
 		if(IS_HERETIC_OR_MONSTER(mob))
 			continue
@@ -66,6 +67,14 @@
 		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
 		if(mob.mob_mood)
 			mob.mob_mood.adjust_sanity(-50)
+		//If our moon heretic has their level 3 passive, we channel the amulet effect
+		var/mob/living/living_owner = parent_mob_ref.resolve()
+		if(!living_owner)
+			continue
+		var/datum/status_effect/heretic_passive/moon/our_passive = living_owner.has_status_effect(/datum/status_effect/heretic_passive/moon)
+		if(our_passive?.amulet)
+			our_passive.amulet.channel_amulet(living_owner, cast_on)
+
 	qdel(victim)
 
 /obj/effect/temp_visual/moon_ringleader

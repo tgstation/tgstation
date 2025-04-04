@@ -51,6 +51,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_FAT "fat"
+/// If you are fat, you no longer get the slowdown from it
+#define TRAIT_FAT_IGNORE_SLOWDOWN "fat_ignore_slowdown"
 /// Always hungry. They can eat as much as they want without eating slowdown.
 #define TRAIT_GLUTTON "glutton"
 #define TRAIT_HUSK "husk"
@@ -133,6 +135,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NUKEIMMUNE "nuke_immunity"
 /// Can't be given viruses
 #define TRAIT_VIRUSIMMUNE "virus_immunity"
+/// Stepping on ants wont cause damage
+#define TRAIT_SPACE_ANT_IMMUNITY "space_ant_immunity"
 /// Won't become a husk under any circumstances
 #define TRAIT_UNHUSKABLE "trait_unhuskable"
 /// Reduces the chance viruses will spread to this mob, and if the mob has a virus, slows its advancement
@@ -399,6 +403,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HALLUCINATION_IMMUNE "hallucination_immune"
 /// Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
+
+//---- Brain trauma resists
+/// Resists mild brain trauma (specifically)
+#define TRAIT_RESIST_MILD_TRAUMA "resist_mild_trauma"
+/// Resists severe brain trauma (specifically)
+#define TRAIT_RESIST_SEVERE_TRAUMA "resist_severe_trauma"
+/// Resists magic brain trauma (specifically)
+#define TRAIT_RESIST_MAGIC_TRAUMA "resist_magic_trauma"
+
 #define TRAIT_SPACEWALK "spacewalk"
 /// Sanity trait to keep track of when we're in hyperspace and add the appropriate element if we weren't
 #define TRAIT_HYPERSPACED "hyperspaced"
@@ -880,8 +893,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVING_HEART "living_heart"
 /// Trait given to all participants in a heretic arena
 #define TRAIT_ELDRITCH_ARENA_PARTICIPANT "eldritch_arena_participant"
-///Trait given to heretic summons, making them immune to heretic spells
+/// Trait given to heretic summons, making them immune to heretic spells
 #define TRAIT_HERETIC_SUMMON "heretic_summon"
+/// Lock heretic grasp no longer goes on cooldown when opening things
+#define TRAIT_LOCK_GRASP_UPGRADED "lock_grasp_upgraded"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -1464,9 +1479,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
 #define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
-
-///Trait given to heretic summons, making them immune to heretic spells
-#define TRAIT_HERETIC_SUMMON "heretic_summon"
 
 ///trait given to mobs that are difficult to tame through mounting
 #define TRAIT_MOB_DIFFICULT_TO_MOUNT "difficult_to_mount"

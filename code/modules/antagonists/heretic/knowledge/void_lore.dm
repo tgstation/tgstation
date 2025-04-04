@@ -23,6 +23,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
 	mark_type = /datum/status_effect/eldritch/void
+	eldritch_passive = /datum/status_effect/heretic_passive/void
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
@@ -57,42 +58,6 @@
 
 	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 1
-
-
-// XANTODO - Add this to the new heretic passive later on
-/datum/heretic_knowledge/cold_snap
-	name = "Aristocrat's Way"
-	desc = "Grants you immunity to cold temperatures, and removes your need to breathe. \
-		You can still take damage due to a lack of pressure."
-	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
-		Translucent and white, a depiction of a nobleman stood before me."
-	cost = 1
-	research_tree_icon_path = 'icons/effects/effects.dmi'
-	research_tree_icon_state = "the_freezer"
-
-	/// Traits we apply to become immune to the environment
-	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
-
-/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(check_environment))
-
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
-	UnregisterSignal(user, COMSIG_LIVING_LIFE)
-
-///Checks if our traits should be active
-/datum/heretic_knowledge/cold_snap/proc/check_environment(mob/living/user)
-	SIGNAL_HANDLER
-
-	var/datum/gas_mixture/environment = user.loc?.return_air()
-	if(!isnull(environment))
-		var/affected_temperature = environment.return_temperature()
-		var/affected_pressure = environment.return_pressure()
-		if(affected_temperature <= T0C || affected_pressure < ONE_ATMOSPHERE)
-			user.add_traits(gain_traits, type)
-		else
-			user.remove_traits(gain_traits, type)
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"

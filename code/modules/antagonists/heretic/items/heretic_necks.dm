@@ -206,7 +206,7 @@
 	else
 		living_user.balloon_alert(living_user, "their mind bends to see the truth!")
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)
-		living_user.log_message("made [target] insane.", LOG_GAME)
+		living_user.log_message("made [human_target] insane.", LOG_GAME)
 		human_target.log_message("was driven insane by [living_user]")
 
 /// Modifies any blades that we equip while wearing the amulet

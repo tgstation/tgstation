@@ -3332,6 +3332,7 @@
 #include "code\modules\antagonists\heretic\status_effects\buffs.dm"
 #include "code\modules\antagonists\heretic\status_effects\debuffs.dm"
 #include "code\modules\antagonists\heretic\status_effects\ghoul.dm"
+#include "code\modules\antagonists\heretic\status_effects\heretic_passive.dm"
 #include "code\modules\antagonists\heretic\status_effects\mark_effects.dm"
 #include "code\modules\antagonists\heretic\status_effects\void_chill.dm"
 #include "code\modules\antagonists\heretic\structures\carving_knife.dm"

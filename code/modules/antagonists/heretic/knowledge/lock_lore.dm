@@ -27,6 +27,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "key_blade"
 	mark_type = /datum/status_effect/eldritch/lock
+	eldritch_passive = /datum/status_effect/heretic_passive/lock
 
 /datum/heretic_knowledge/limited_amount/starting/base_knock/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -67,6 +68,9 @@
 	var/turf/target_turf = get_turf(target)
 	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)
 	playsound(target, 'sound/effects/magic/hereticknock.ogg', 100, TRUE, -1)
+
+	if(HAS_TRAIT(source, TRAIT_LOCK_GRASP_UPGRADED))
+		return COMPONENT_BLOCK_HAND_USE
 
 	return COMPONENT_USE_HAND
 

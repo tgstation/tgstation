@@ -60,4 +60,10 @@
 		cast_on.AdjustKnockdown(2 SECONDS)
 	//Lowers sanity
 	cast_on.mob_mood.adjust_sanity(-20)
+
+	//If our moon heretic has their level 3 passive, we channel the amulet effect
+	var/datum/status_effect/heretic_passive/moon/our_passive = living_owner.has_status_effect(/datum/status_effect/heretic_passive/moon)
+	if(our_passive?.amulet)
+		our_passive.amulet.channel_amulet(owner, cast_on)
+
 	return TRUE

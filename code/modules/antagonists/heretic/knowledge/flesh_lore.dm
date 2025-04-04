@@ -26,6 +26,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
 	mark_type = /datum/status_effect/eldritch/flesh
+	eldritch_passive = /datum/status_effect/heretic_passive/flesh
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

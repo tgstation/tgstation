@@ -25,6 +25,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "rust_blade"
 	mark_type = /datum/status_effect/eldritch/rust
+	eldritch_passive = /datum/status_effect/heretic_passive/rust
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -72,22 +73,6 @@
 /datum/heretic_knowledge/spell/rust_charge/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
-
-// XANTODO - Add this to the heretic passive somehow
-/datum/heretic_knowledge/rust_regen
-	name = "Leeching Walk"
-	desc = "Grants you passive healing and resistance to batons while standing over rust."
-	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
-	cost = 1
-	research_tree_icon_path = 'icons/effects/eldritch.dmi'
-	research_tree_icon_state = "cloud_swirl"
-
-
-/datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	user.AddElement(/datum/element/leeching_walk)
-
-/datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	user.RemoveElement(/datum/element/leeching_walk)
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"

@@ -261,6 +261,8 @@
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
+	/// The status effect of our passive
+	var/eldritch_passive = /datum/status_effect/heretic_passive
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -270,9 +272,15 @@
 /datum/heretic_knowledge/limited_amount/starting/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
+	if(isliving(user))
+		var/mob/living/living_user = user
+		living_user.apply_status_effect(eldritch_passive)
 
 /datum/heretic_knowledge/limited_amount/starting/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+	if(isliving(user))
+		var/mob/living/living_user = user
+		living_user.remove_status_effect(eldritch_passive)
 
 /**
  * Signal proc for [COMSIG_HERETIC_MANSUS_GRASP_ATTACK].
@@ -529,6 +537,8 @@
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
+	var/datum/status_effect/heretic_passive/our_passive = user.has_status_effect(/datum/status_effect/heretic_passive)
+	our_passive?.heretic_level_final()
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS
