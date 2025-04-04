@@ -23,6 +23,7 @@
 @include meta.load-css('./components/Chat.scss');
 @include meta.load-css('./components/Ping.scss');
 @include meta.load-css('./components/Notifications.scss');
+@include meta.load-css('./components/UnreadCount.scss');
 
 // Layouts
 @include meta.load-css('~tgui/styles/layouts/Layout.scss');
@@ -37,4 +38,5 @@
   --color-base: hsl(0, 0%, 12.5%);
   --color-section: hsl(from var(--color-base) h s calc(l - 4.2));
   --base-gradient-spread: 0;
+  --border-primary-alpha: 0.33;
 }

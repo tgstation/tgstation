@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "tgui-bench",
-  "version": "5.0.3",
+  "version": "6.0.0",
   "dependencies": {
     "@fastify/static": "^8.0.2",
     "@types/react-dom": "^18.3.1",

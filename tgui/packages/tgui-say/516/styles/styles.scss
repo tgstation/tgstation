@@ -22,10 +22,7 @@
 .shine {
   animation: shine 15s linear infinite;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-size: 150% 150%;
 }
 
@@ -101,13 +98,7 @@
   margin: 0.1rem 0 0 0.4rem;
   outline: none;
   resize: none;
-  &::-webkit-scrollbar {
-    width: 0.8rem;
-  }
-  &::-webkit-scrollbar-track {
-    background: var(--color-scrollbar-base);
-  }
-  &::-webkit-scrollbar-thumb {
-    background: var(--color-scrollbar-thumb);
-  }
+  scrollbar-width: thin;
+  /* prettier-ignore */
+  scrollbar-color: color.scale(colors.$button, $lightness: 20% * colors.$scrollbar-color-multiplier) transparent;
 }
