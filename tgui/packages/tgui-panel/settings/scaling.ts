@@ -27,8 +27,6 @@ export async function setDisplayScaling() {
       DEFAULT_BUTTON_FONT_SIZE * window.devicePixelRatio;
   }
 
-  console.log(newSizes);
-
   Byond.winset(null, newSizes);
 }
 
