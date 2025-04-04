@@ -275,7 +275,7 @@ export function TguiSay() {
       </div>
       <div
         className={classes(['content', lightMode && 'content-lightMode'])}
-        style={{ zoom: scale ? "" : `${100 / window.devicePixelRatio}%` }}
+        style={{ zoom: scale ? '' : `${100 / window.devicePixelRatio}%` }}
       >
         <button
           className={`button button-${theme}`}
