@@ -5,17 +5,21 @@
 $map-keys: colors.$color-map !default;
 
 .CircuitInfo__Examined {
-  background-color: rgba(0, 0, 0, 1);
-  padding: 8px;
-  border-radius: 5px;
+  background-color: hsl(0, 0%, 0%);
+  padding: var(--space-ml);
+  border-radius: var(--border-radius-large);
 
   user-select: none;
   pointer-events: none;
 }
 
+.ObjectComponent {
+  pointer-events: auto;
+}
+
 .ObjectComponent__Titlebar {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-top-left-radius: var(--border-radius-huge);
+  border-top-right-radius: var(--border-radius-huge);
 
   white-space: nowrap;
 
@@ -25,7 +29,7 @@ $map-keys: colors.$color-map !default;
 
 .ObjectComponent__Content {
   white-space: nowrap;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: hsla(0, 0%, 0%, 0.5);
 
   -ms-user-select: none;
   user-select: none;
@@ -33,7 +37,7 @@ $map-keys: colors.$color-map !default;
 
 .ObjectComponent__Greyed_Content {
   white-space: nowrap;
-  background-color: rgba(19, 19, 19, 0.5);
+  background-color: hsla(0, 0%, 7.5%, 0.5);
 
   -ms-user-select: none;
   user-select: none;
@@ -60,13 +64,9 @@ $map-keys: colors.$color-map !default;
   }
 }
 
-$border-color: var(--color-border-primary) !default;
-$border-radius: var(--border-radius-small) !default;
-
 .IntegratedCircuit__BlueBorder {
-  border: base.em(1px) solid $border-color;
-  border: base.em(1px) solid rgba($border-color, 0.75);
-  border-radius: $border-radius;
+  border: var(--border-thickness-tiny) solid var(--color-border-primary);
+  border-radius: var(--border-radius-small);
 }
 
 $category-colors: (

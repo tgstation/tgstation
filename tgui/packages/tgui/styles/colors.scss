@@ -5,9 +5,7 @@
  * @deprecated Use css-variables
  */
 
-@use 'sass:color';
 @use 'sass:map';
-@use 'sass:meta';
 
 // Base colors
 $black: var(--color-black) !default;
@@ -72,9 +70,6 @@ $color-map-keys: map.keys($_gen_map) !default;
   * Background and foreground color lightness ratios
   * @deprecated
   */
-$bg-lightness: -15% !default;
-$fg-lightness: 10% !default;
-
 @function bg($color) {
   @return hsl(from $color h s calc(l - var(--adjust-color)));
 }
