@@ -1,6 +1,7 @@
 /datum/preference_middleware/personality
 	action_delegations = list(
 		"handle_personality" = PROC_REF(handle_personality),
+		"clear_personalities" = PROC_REF(clear_personalities),
 	)
 
 /datum/preference_middleware/personality/proc/handle_personality(list/params, mob/user)
@@ -13,9 +14,14 @@
 		LAZYREMOVE(personalities, personality_type)
 	else
 		if(LAZYLEN(personalities) >= CONFIG_GET(number/max_personalities))
-			LAZYREMOVE(personalities, personalities[1])
+			// maybe lag, but ultimately invalid
+			return TRUE
 		LAZYADD(personalities, personality_type)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)
+	return TRUE
+
+/datum/preference_middleware/personality/proc/clear_personalities(list/params, mob/user)
+	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], null)
 	return TRUE
 
 /datum/preference_middleware/personality/get_constant_data()
