@@ -72,10 +72,14 @@ export const NtosSportsBetting = () => {
 export const PollsSection = () => {
   const { act, data } = useBackend<Data>();
   const { active_bets = [] } = data;
-  const [Winner, setWinner] = useState('');
+  const [Winner, set_winner] = useState('');
   return (
     <Section>
-      {(active_bets.length &&
+      {!active_bets.length ? (
+        <Box>
+          There&apos;s currently no active polls to bet on, create one below!
+        </Box>
+      ) : (
         active_bets.map(
           (
             { name, description, owner, creator, current_bets = [], locked },
@@ -100,7 +104,7 @@ export const PollsSection = () => {
                         <Stack.Item>
                           <Stack.Item my={1}>
                             {option_name} (Has {total_amount || 0}cr bet on it)
-                            {(!owner && (
+                            {!owner ? (
                               <NumberInput
                                 value={personally_invested}
                                 unit="cr"
@@ -117,12 +121,12 @@ export const PollsSection = () => {
                                   })
                                 }
                               />
-                            )) || (
+                            ) : (
                               <Button.Checkbox
                                 tooltip="Whether this answer won."
                                 checked={Winner === option_name}
                                 key={option_name}
-                                onClick={() => setWinner(option_name)}
+                                onClick={() => set_winner(option_name)}
                               />
                             )}
                           </Stack.Item>
@@ -131,7 +135,7 @@ export const PollsSection = () => {
                     ),
                   )}
                   {!!owner &&
-                    ((!locked && (
+                    (!locked ? (
                       <Stack.Item>
                         <Button.Confirm
                           fluid
@@ -144,7 +148,7 @@ export const PollsSection = () => {
                           Lock Betting
                         </Button.Confirm>
                       </Stack.Item>
-                    )) || (
+                    ) : (
                       <Button.Confirm
                         fluid
                         icon="plus"
@@ -174,10 +178,7 @@ export const PollsSection = () => {
               </Stack>
             </Section>
           ),
-        )) || (
-        <Box>
-          There&apos;s currently no active polls to bet on, create one below!
-        </Box>
+        )
       )}
     </Section>
   );
@@ -186,12 +187,12 @@ export const PollsSection = () => {
 export const BettingCreation = () => {
   const { act, data } = useBackend<Data>();
   const { max_title_length, max_description_length } = data;
-  const [Title, setTitle] = useState('');
-  const [Desc, setDesc] = useState('');
-  const [Option1, setOption1] = useState('');
-  const [Option2, setOption2] = useState('');
-  const [Option3, setOption3] = useState('');
-  const [Option4, setOption4] = useState('');
+  const [Title, set_title] = useState('');
+  const [Desc, set_desc] = useState('');
+  const [Option1, set_option1] = useState('');
+  const [Option2, set_option2] = useState('');
+  const [Option3, set_option3] = useState('');
+  const [Option4, set_option4] = useState('');
   return (
     <Collapsible title="Bet Creation">
       <Stack fill vertical>
@@ -200,7 +201,7 @@ export const BettingCreation = () => {
             fluid
             placeholder="Title"
             maxLength={max_title_length}
-            onInput={(event, value) => setTitle(value)}
+            onInput={(event, value) => set_title(value)}
           />
         </Stack.Item>
         <Stack.Item grow>
@@ -212,32 +213,32 @@ export const BettingCreation = () => {
             maxLength={max_description_length}
             backgroundColor="black"
             textColor="white"
-            onChange={(event, value) => setDesc(value)}
+            onChange={(event, value) => set_desc(value)}
           />
         </Stack.Item>
         <Input
           fluid
           placeholder="Option 1"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption1(value)}
+          onInput={(event, value) => set_option1(value)}
         />
         <Input
           fluid
           placeholder="Option 2"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption2(value)}
+          onInput={(event, value) => set_option2(value)}
         />
         <Input
           fluid
           placeholder="Option 3 (Optional)"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption3(value)}
+          onInput={(event, value) => set_option3(value)}
         />
         <Input
           fluid
           placeholder="Option 4 (Optional)"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption4(value)}
+          onInput={(event, value) => set_option4(value)}
         />
         <Stack.Item grow>
           <Button
