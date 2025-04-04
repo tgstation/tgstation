@@ -183,9 +183,11 @@ export type PreferencesMenuData = {
 
   keybindings: Record<string, string[]>;
   overflow_role: string;
+  default_quirk_balance: number;
   selected_quirks: string[];
   selected_personalities: typePath[] | null;
   max_personalities: number;
+  mood_enabled: BooleanLike;
 
   antag_bans?: string[];
   antag_days_left?: Record<string, number>;

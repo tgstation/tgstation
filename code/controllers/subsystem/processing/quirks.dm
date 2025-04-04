@@ -106,7 +106,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
  *Randomises the quirks for a specified mob
  */
 /datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user)
-	var/bonus_quirks = max((length(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
+	var/bonus_quirks = max((LAZYLEN(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding
 	var/good_count = 0
@@ -180,7 +180,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/positive_quirks = list()
 	var/points_enabled = !CONFIG_GET(flag/disable_quirk_points)
 	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
-	var/balance = 0
+	var/balance = -CONFIG_GET(number/default_quirk_points)
 
 	var/list/all_quirks = get_quirks()
 

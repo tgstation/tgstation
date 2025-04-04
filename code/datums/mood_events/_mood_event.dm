@@ -13,6 +13,9 @@
 	 * the effects of the current mood event and replace it with the new one
 	 */
 	var/category
+	/// Flags that determine what kind of event this is
+	/// For example, you might have a "EVENT_FEAR" flag that denotes this mood event relates to being afraid of something
+	var/event_flags = NONE
 	/// Icon state of the unique mood event icon, if applicable
 	var/special_screen_obj
 	/// if false, it will be an overlay instead

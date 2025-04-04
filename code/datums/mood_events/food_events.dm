@@ -2,29 +2,35 @@
 	description = "I really enjoyed eating that."
 	mood_change = 5
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/gross_food
 	description = "I really didn't like that food."
 	mood_change = -2
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/disgusting_food
 	description = "That food was disgusting!"
 	mood_change = -6
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/allergic_food
 	description = "My throat itches."
 	mood_change = -2
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/breakfast
 	description = "Nothing like a hearty breakfast to start the shift."
 	mood_change = 2
 	timeout = 10 MINUTES
+	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/food
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_FOOD
 	var/quality = FOOD_QUALITY_NORMAL
 
 /datum/mood_event/food/New(mob/M, ...)
@@ -54,3 +60,4 @@
 	description = "I shouldn't be eating living creatures..."
 	mood_change = -1 //The disgusting food moodlet already has a pretty big negative value, this is just for context.
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FOOD

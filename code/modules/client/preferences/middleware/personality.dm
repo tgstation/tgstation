@@ -5,19 +5,20 @@
 	)
 
 /datum/preference_middleware/personality/proc/handle_personality(list/params, mob/user)
-	var/personality_type = text2path(params["personality_type"])
+	var/datum/personality/personality_type = text2path(params["personality_type"])
 	if(!ispath(personality_type, /datum/personality))
 		return FALSE
 
+	var/personality_key = initial(personality_type.savefile_key)
 	var/list/personalities = preferences.read_preference(/datum/preference/personality)
-	if(personality_type in personalities)
-		LAZYREMOVE(personalities, personality_type)
+	if(personality_key in personalities)
+		LAZYREMOVE(personalities, personality_key)
 	else
 		if(LAZYLEN(personalities) >= CONFIG_GET(number/max_personalities))
 			return TRUE
 		if(GLOB.personality_controller.is_incompatible(personalities, personality_type))
 			return TRUE
-		LAZYADD(personalities, personality_type)
+		LAZYADD(personalities, personality_key)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)
 	return TRUE
 
@@ -29,8 +30,8 @@
 	var/list/data = list()
 
 	data["personalities"] = list()
-	for(var/datum/personality/personality_type as anything in GLOB.personality_controller.personalities)
-		var/datum/personality/personality = GLOB.personality_controller.personalities[personality_type]
+	for(var/datum/personality/personality_type as anything in GLOB.personality_controller.personalities_by_type)
+		var/datum/personality/personality = GLOB.personality_controller.personalities_by_type[personality_type]
 		data["personalities"] += list(list(
 			"description" = personality.desc,
 			"pos_gameplay_description" = personality.pos_gameplay_desc,
@@ -47,7 +48,9 @@
 /datum/preference_middleware/personality/get_ui_static_data(mob/user)
 	var/list/data = list()
 
-	data["max_personalities"] = CONFIG_GET(number/max_personalities)
+	var/max = CONFIG_GET(number/max_personalities)
+	data["max_personalities"] = max >= length(GLOB.personality_controller.personalities_by_type) ? -1 : max
+	data["mood_enabled"] = !CONFIG_GET(flag/disable_human_mood)
 
 	return data
 

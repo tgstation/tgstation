@@ -18,8 +18,16 @@
 	var/sanity = SANITY_NEUTRAL
 	/// the total combined value of all visible moodlets for the mob
 	var/shown_mood
-	/// Moodlet value modifier
+	/// Multiplier to the sum total of mood the mob is experiencing
 	var/mood_modifier = 1
+	/// Multiplier to positive moodlet values. Stacks with mood_modifier
+	var/positive_mood_modifier = 1
+	/// Multiplier to negative moodlet values. Stacks with mood_modifier
+	var/negative_mood_modifier = 1
+	/// Multiplier to the length of positive moodlets.
+	var/positive_moodlet_length_modifier = 1
+	/// Multiplier to the length of negative moodlets.
+	var/negative_moodlet_length_modifier = 1
 	/// Used to track what stage of moodies they're on (1-9)
 	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on (1-6)
@@ -183,6 +191,7 @@
 	update_mood()
 
 	if (the_event.timeout)
+		the_event.timeout *= ((the_event.mood_change > 0) ? positive_moodlet_length_modifier : negative_moodlet_length_modifier)
 		addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 
 /**
@@ -216,9 +225,11 @@
 
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
-		mood += the_event.mood_change
+		var/event_mood = the_event.mood_change
+		event_mood *= ((event_mood > 0) ? positive_mood_modifier : negative_mood_modifier)
+		mood += event_mood
 		if (!the_event.hidden)
-			shown_mood += the_event.mood_change
+			shown_mood += event_mood
 
 	mood *= mood_modifier
 	shown_mood *= mood_modifier

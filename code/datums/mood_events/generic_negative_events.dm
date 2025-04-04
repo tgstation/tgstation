@@ -10,10 +10,12 @@
 /datum/mood_event/on_fire
 	description = "I'M ON FIRE!!!"
 	mood_change = -12
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/suffocation
 	description = "CAN'T... BREATHE..."
 	mood_change = -12
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/burnt_thumb
 	description = "I shouldn't play with lighters..."
@@ -32,6 +34,7 @@
 	description = "I've been creamed. Tastes like pie flavor."
 	mood_change = -2
 	timeout = 3 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY
 
 /datum/mood_event/inked
 	description = "I've been splashed with squid ink. Tastes like salt."
@@ -42,6 +45,7 @@
 	description = "I slipped. I should be more careful next time..."
 	mood_change = -2
 	timeout = 3 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY
 
 /datum/mood_event/eye_stab
 	description = "I used to be an adventurer like you, until I took a screwdriver to the eye."
@@ -147,15 +151,18 @@
 /datum/mood_event/photophobia
 	description = "The lights are too bright..."
 	mood_change = -3
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/nyctophobia
 	description = "It sure is dark around here..."
 	mood_change = -3
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/claustrophobia
 	description = "Why do I feel trapped?! Let me out!!!"
 	mood_change = -7
 	timeout = 1 MINUTES
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/bright_light
 	description = "I hate it in the light... I need to find a darker place..."
@@ -180,6 +187,7 @@
 /datum/mood_event/choke
 	description = "I CAN'T BREATHE!!!"
 	mood_change = -10
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/vomit
 	description = "I just threw up. Gross."
@@ -206,16 +214,19 @@
 	description = "Hearing that word made me think about something scary."
 	mood_change = -1
 	timeout = 1 MINUTES
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/phobia
 	description = "I saw something very frightening."
 	mood_change = -4
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/spooked
 	description = "The rattling of those bones... It still haunts me."
 	mood_change = -4
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/notcreeping
 	description = "The voices are not happy, and they painfully contort my thoughts into getting back on task."
@@ -267,6 +278,7 @@
 	description = "I've produced better art than that from my ass."
 	mood_change = -2
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_ART
 
 /datum/mood_event/graverobbing
 	description = "I just desecrated someone's grave... I can't believe I did that..."
@@ -280,6 +292,7 @@
 /datum/mood_event/gunpoint
 	description = "This guy is insane! I better be careful..."
 	mood_change = -10
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/tripped
 	description = "I can't believe I fell for the oldest trick in the book!"
@@ -295,6 +308,7 @@
 	description = "I HAD A GLIMPSE OF THE HORROR BEYOND THIS WORLD. REALITY UNCOILED BEFORE MY EYES!"
 	mood_change = -25
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/high_five_full_hand
 	description = "Oh god, I don't even know how to high-five correctly..."
@@ -320,6 +334,7 @@
 /datum/mood_event/surgery
 	description = "THEY'RE CUTTING ME OPEN!!"
 	mood_change = -8
+	event_flags = MOOD_EVENT_FEAR
 	var/surgery_completed = FALSE
 
 /datum/mood_event/surgery/success
@@ -423,21 +438,25 @@
 /datum/mood_event/gamer_withdrawal
 	description = "I wish I was gaming right now..."
 	mood_change = -5
+	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
 
 /datum/mood_event/gamer_lost
 	description = "If I'm not good at video games, can I truly call myself a gamer?"
 	mood_change = -10
 	timeout = 10 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
 
 /datum/mood_event/lost_52_card_pickup
 	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."
 	mood_change = -3
 	timeout = 3 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
 
 /datum/mood_event/russian_roulette_lose
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
 	timeout = 10 MINUTES
+	event_flags = MOOD_EVENT_GAMBLING
 
 /datum/mood_event/bad_touch_bear_hug
 	description = "I just got squeezed way too hard."
@@ -468,11 +487,13 @@
 	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
 	mood_change = -3
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/amulet_insanity
-	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed!"
 	mood_change = -6
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/mallet_humiliation
 	description = "Getting hit by such a stupid weapon feels rather humiliating..."

@@ -14,6 +14,7 @@
 	var/list/data = list()
 
 	data["selected_quirks"] = get_selected_quirks()
+	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points)
 
 	return data
 

@@ -338,7 +338,7 @@ export function QuirksPage(props) {
     }
   });
 
-  let balance = 0;
+  let balance = -data.default_quirk_balance;
   let positiveQuirks = 0;
 
   for (const selectedQuirkName of selectedQuirks) {

@@ -2,16 +2,19 @@
 	description = "Hugs are nice."
 	mood_change = 1
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_ROMANCE
 
 /datum/mood_event/bear_hug
 	description = "I got squeezed very tightly, but it was quite nice."
 	mood_change = 1
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_ROMANCE
 
 /datum/mood_event/betterhug
 	description = "Someone was very nice to me."
 	mood_change = 3
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_ROMANCE
 
 /datum/mood_event/betterhug/add_effects(mob/friend)
 	description = "[friend.name] was very nice to me."
@@ -20,6 +23,7 @@
 	description = "Someone is great to be around, they make me feel so happy!"
 	mood_change = 5
 	timeout = 4 MINUTES
+	event_flags = MOOD_EVENT_ROMANCE
 
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!"
@@ -28,6 +32,7 @@
 	description = "Warm cozy hugs are the best!"
 	mood_change = 1
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_ROMANCE
 
 /datum/mood_event/tailpulled
 	description = "I love getting my tail pulled!"
@@ -38,6 +43,7 @@
 	description = "I beat the arcade game!"
 	mood_change = 3
 	timeout = 8 MINUTES
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/blessing
 	description = "I've been blessed."
@@ -146,6 +152,7 @@
 	description = "There is something soothing about this music."
 	mood_change = 3
 	timeout = 60 SECONDS
+	event_flags = MOOD_EVENT_ART
 
 /datum/mood_event/chemical_euphoria
 	description = "Heh...hehehe...hehe..."
@@ -179,16 +186,19 @@
 	description = "It's nice to see people are making art around here."
 	mood_change = 2
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_ART
 
 /datum/mood_event/artgood
 	description = "What a thought-provoking piece of art. I'll remember that for a while."
 	mood_change = 4
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_ART
 
 /datum/mood_event/artgreat
 	description = "That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this."
 	mood_change = 6
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_ART
 
 /datum/mood_event/bottle_flip
 	description = "The bottle landing like that was satisfying."
@@ -236,6 +246,7 @@
 	description = "HA! What a rube, they never stood a chance..."
 	mood_change = 4
 	timeout = 90 SECONDS
+	event_flags = MOOD_EVENT_WHIMSY
 
 /datum/mood_event/aquarium_positive
 	description = "Watching fish in an aquarium is calming."
@@ -250,6 +261,7 @@
 	description = "Someone blew a kiss at me, I must be a real catch!"
 	mood_change = 1.5
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_ROMANCE
 
 /datum/mood_event/kiss/add_effects(mob/beau, direct)
 	if(!beau)
@@ -277,6 +289,7 @@
 	description = "Ahaha! It's always funny to see someone get sprayed by a can of soda."
 	mood_change = 2
 	timeout = 30 SECONDS
+	event_flags = MOOD_EVENT_WHIMSY
 
 /datum/mood_event/observed_soda_spill/add_effects(mob/spilled_mob, atom/soda_can)
 	if(!spilled_mob)
@@ -288,11 +301,13 @@
 	description = "I'm enjoying a nice gaming session!"
 	mood_change = 2
 	timeout = 30 SECONDS
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/gamer_won
 	description = "I love winning video games!"
 	mood_change = 10
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/love_reagent
 	description = "This food reminds me of the good ol' days."
@@ -306,11 +321,13 @@
 	description = "HA! That loser will be picking cards up for a long time!"
 	mood_change = 3
 	timeout = 3 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
 
 /datum/mood_event/playing_cards
 	description = "I'm enjoying playing cards with other people!"
 	mood_change = 2
 	timeout = 3 MINUTES
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/playing_cards/add_effects(param)
 	var/card_players = 1
@@ -332,6 +349,7 @@
 	description = "I gambled my life and won! I'm lucky to be alive..."
 	mood_change = 2
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_GAMBLING
 
 /datum/mood_event/russian_roulette_win/add_effects(loaded_rounds)
 	mood_change = 2 ** loaded_rounds
@@ -359,6 +377,7 @@
 	description = "It felt nice to pet the fish."
 	mood_change = 2
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY
 
 /datum/mood_event/fish_petting/add_effects(obj/item/fish/fish, morbid)
 	if(!morbid)
@@ -391,11 +410,13 @@
 	description = "Swish! Nothing but net."
 	mood_change = 2
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
 
 /datum/mood_event/basketball_dunk
 	description = "Slam dunk! Boom, shakalaka!"
 	mood_change = 2
 	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
 
 /datum/mood_event/moon_smile
 	description = "THE MOON SHOWS ME THE TRUTH AND ITS SMILE IS FACED TOWARDS ME!!!"
@@ -410,3 +431,4 @@
 /datum/mood_event/prophat
 	description = "This hat fills me with whimsical joy!"
 	mood_change = 2
+	event_flags = MOOD_EVENT_WHIMSY

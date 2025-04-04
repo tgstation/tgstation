@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { Box, Button, Flex, Input, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../../../backend';
@@ -195,7 +204,10 @@ function isDisabled(
   if (!selectedPersonalities) {
     return false;
   }
-  if (selectedPersonalities.length < maxPersonalities) {
+  if (
+    maxPersonalities !== -1 &&
+    selectedPersonalities.length < maxPersonalities
+  ) {
     return false;
   }
   return !selectedPersonalities.includes(personality.path);
@@ -296,7 +308,8 @@ export function PersonalityPage(props) {
             </Flex.Item>
             <Flex.Item width="120px">
               <Box backgroundColor="white" color="black" p={0.5}>
-                {selectedPersonalities?.length || 0} / {data.max_personalities}
+                {selectedPersonalities?.length || 0} /{' '}
+                {data.max_personalities === -1 ? '∞' : data.max_personalities}
               </Box>
             </Flex.Item>
             <Flex.Item ml={1}>
@@ -314,6 +327,21 @@ export function PersonalityPage(props) {
             </Flex.Item>
           </Flex>
         </Stack.Item>
+        {!data.mood_enabled && (
+          <Stack.Item>
+            <NoticeBox danger align="center" fontSize="14px">
+              <Flex>
+                <Flex.Item>
+                  <Icon name="exclamation-triangle" mr={1} />
+                </Flex.Item>
+                <Flex.Item>
+                  Mood is disabled on this server. You can still select
+                  personalities, but they will have no effect.
+                </Flex.Item>
+              </Flex>
+            </NoticeBox>
+          </Stack.Item>
+        )}
         <Stack.Item mb={1}>
           <Input
             fluid

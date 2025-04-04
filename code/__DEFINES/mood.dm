@@ -75,3 +75,20 @@
 #define PANIC_ATTACK_TERROR_AMOUNT 50
 /// How much terror being hugged reduces, or increases if its done by a nightmare or someone you're afraid of
 #define HUG_TERROR_AMOUNT 90
+
+/// Relates to fear or resisting fear
+#define MOOD_EVENT_FEAR (1<<0)
+/// Relates to the area's quality
+#define MOOD_EVENT_AREA (1<<1)
+/// Relates to art
+#define MOOD_EVENT_ART (1<<2)
+/// Relates to being a generally silly guy
+#define MOOD_EVENT_WHIMSY (1<<3)
+/// Playing video games
+#define MOOD_EVENT_GAMING (1<<4)
+/// Relates to gambling
+#define MOOD_EVENT_GAMBLING (1<<5)
+/// Relates to romance
+#define MOOD_EVENT_ROMANCE (1<<6)
+/// Relates to food
+#define MOOD_EVENT_FOOD (1<<7)
