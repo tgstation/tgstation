@@ -582,8 +582,8 @@
 	desc = "The subject's blood is hypermetabolic, causing it to be produced at a much faster rate."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINOR
-	text_gain_indication = span_notice("You feel a rush of energy.")
-	text_lose_indication = span_notice("You feel a bit sluggish.")
+	text_gain_indication = span_notice("You can feel your heartbeat pick up.")
+	text_lose_indication = span_notice("You heartbeat slows back down.")
 	difficulty = 16
 	synchronizer_coeff = 1
 	power_coeff = 1
