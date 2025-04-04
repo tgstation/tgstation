@@ -100,11 +100,11 @@
 			var/mutable_appearance/pizza_overlay = mutable_appearance(pizza.icon, pizza.icon_state)
 			if(pizza.slices_left != initial(pizza.slices_left))
 				pizza_overlay.add_filter("pizzaslices", 1, pizza.get_slices_filter())
-			pizza_overlay.pixel_y = -2
+			pizza_overlay.pixel_z = -2
 			. += pizza_overlay
 		if(bomb)
 			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state, layer = layer + 0.01)
-			bomb_overlay.pixel_y = 8
+			bomb_overlay.pixel_z = 8
 			. += bomb_overlay
 		return
 
@@ -113,13 +113,13 @@
 		box_offset += 3
 		var/obj/item/pizzabox/box = stacked_box
 		var/mutable_appearance/box_overlay = mutable_appearance(box.icon, box.icon_state, layer = layer + (box_offset * 0.01))
-		box_overlay.pixel_y = box_offset
+		box_overlay.pixel_z = box_offset
 		. += box_overlay
 
 	var/obj/item/pizzabox/box = LAZYLEN(length(boxes)) ? boxes[length(boxes)] : src
 	if(box.boxtag != "")
 		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag", layer = layer + (box_offset * 0.02))
-		tag_overlay.pixel_y = box_offset
+		tag_overlay.pixel_z = box_offset
 		. += tag_overlay
 
 /obj/item/pizzabox/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
@@ -130,7 +130,7 @@
 
 	for(var/V in boxes) //add EXTRA BOX per box
 		var/mutable_appearance/M = mutable_appearance(icon_file, inhand_icon_state)
-		M.pixel_y = current_offset
+		M.pixel_z = current_offset
 		current_offset += 2
 		. += M
 

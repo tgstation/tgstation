@@ -287,7 +287,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 //Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 /turf/open/misc/asteroid/snow/atmosphere
 	initial_gas_mix = FROZEN_ATMOS

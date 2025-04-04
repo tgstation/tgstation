@@ -380,6 +380,7 @@
 	plane = TURF_LIGHTING_PLATE
 	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	blend_mode = BLEND_ADD
+	critical = PLANE_CRITICAL_DISPLAY
 
 /**
  * Plane master proc called in Initialize() that creates relay objects, and sets them up as needed

@@ -211,7 +211,7 @@ There are several things that need to be remembered:
 			if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
 				feature_y_offset = glove_offset["y"]
 
-		gloves_overlay.pixel_y += feature_y_offset
+		gloves_overlay.pixel_z += feature_y_offset
 
 		// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
 		// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
@@ -348,7 +348,7 @@ There are several things that need to be remembered:
 			if (foot_offset && foot_offset["y"] > feature_y_offset)
 				feature_y_offset = foot_offset["y"]
 
-		shoes_overlay.pixel_y += feature_y_offset
+		shoes_overlay.pixel_z += feature_y_offset
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
@@ -993,7 +993,7 @@ generate/load female uniform sprites matching all previously decided variables
 		else
 			return
 
-	appearance.pixel_y += final_offset
+	appearance.pixel_z += final_offset
 	return appearance
 
 /**

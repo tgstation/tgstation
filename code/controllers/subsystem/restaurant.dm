@@ -5,7 +5,6 @@ This subsystem exists to serve as a holder for important info for the restaurant
 SUBSYSTEM_DEF(restaurant)
 	name = "Restaurant"
 	wait = 20 SECONDS //Roll for new guests but don't do it too fast.
-	init_order = INIT_ORDER_RESTAURANT
 	flags = SS_NO_FIRE
 	///All venues that exist, assoc list of type - reference
 	var/list/all_venues = list()

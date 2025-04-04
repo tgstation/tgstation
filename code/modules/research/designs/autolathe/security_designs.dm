@@ -1,7 +1,7 @@
 /datum/design/beanbag_slug
 	name = "Beanbag Slug (Less Lethal)"
 	id = "beanbag_slug"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list(
@@ -13,7 +13,7 @@
 /datum/design/rubbershot
 	name = "Rubber Shot (Less Lethal)"
 	id = "rubber_shot"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
 	category = list(
@@ -25,7 +25,7 @@
 /datum/design/c38
 	name = "Speed Loader (.38) (Lethal)"
 	id = "c38"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10)
 	build_path = /obj/item/ammo_box/c38
 	category = list(
