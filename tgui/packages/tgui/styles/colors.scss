@@ -2,33 +2,12 @@
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  *
- * @deprecated Use css-variables
+ * If you're looking for a color palette,
+ * see tgui-core - https://github.com/tgstation/tgui-core/tree/main/styles
+ * Files: vars-colors.scss | vars-components.scss | vars-vaules.scss
  */
 
 @use 'sass:map';
-
-// Base colors
-$black: var(--color-black) !default;
-$white: var(--color-white) !default;
-$red: var(--color-red) !default;
-$orange: var(--color-orange) !default;
-$yellow: var(--color-yellow) !default;
-$olive: var(--color-olive) !default;
-$green: var(--color-green) !default;
-$teal: var(--color-teal) !default;
-$blue: var(--color-blue) !default;
-$violet: var(--color-violet) !default;
-$purple: var(--color-purple) !default;
-$pink: var(--color-pink) !default;
-$brown: var(--color-brown) !default;
-$grey: var(--color-grey) !default;
-$light-grey: var(--color-light-grey) !default;
-
-$primary: var(--color-primary) !default;
-$good: var(--color-good) !default;
-$average: var(--color-average) !default;
-$bad: var(--color-bad) !default;
-$label: var(--color-label) !default;
 
 // Mappings of color names
 $color-map: ();

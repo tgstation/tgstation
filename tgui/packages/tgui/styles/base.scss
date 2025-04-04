@@ -1,14 +1,13 @@
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ *
+ * If you're looking for a color palette,
+ * see tgui-core - https://github.com/tgstation/tgui-core/tree/main/styles
+ * Files: vars-colors.scss | vars-components.scss | vars-vaules.scss
  */
 
-@use 'sass:color';
 @use 'sass:math';
-
-$color-fg: hsl(0, 0%, 100%) !default;
-$color-bg: hsl(0, 0%, 14%) !default;
-$color-bg-section: rgba(0, 0, 0, 0.33) !default;
 
 $unit: 12px;
 $font-size: 1 * $unit !default;
