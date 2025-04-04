@@ -20,6 +20,7 @@ type Data = {
   read_only: BooleanLike;
   status: string;
   welcome_message: string;
+  centcom_connected: BooleanLike;
   has_permabans: BooleanLike;
 };
 
@@ -65,6 +66,7 @@ export const Interview = (props) => {
     read_only,
     status,
     welcome_message = '',
+    centcom_connected,
     has_permabans,
   } = data;
 
@@ -110,17 +112,19 @@ export const Interview = (props) => {
                   <Button color="bad" onClick={() => act('deny')}>
                     Deny
                   </Button>
-                  <Button
-                    color={has_permabans ? 'bad' : 'average'}
-                    tooltip={
-                      has_permabans
-                        ? 'This user has permabans in their history!'
-                        : ''
-                    }
-                    onClick={() => act('check_centcom')}
-                  >
-                    Check Centcom
-                  </Button>
+                  {!!centcom_connected && (
+                    <Button
+                      color={has_permabans ? 'bad' : 'average'}
+                      tooltip={
+                        has_permabans
+                          ? 'This user has permabans in their history!'
+                          : ''
+                      }
+                      onClick={() => act('check_centcom')}
+                    >
+                      Check Centcom
+                    </Button>
+                  )}
                 </span>
               )}
             </span>

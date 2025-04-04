@@ -151,8 +151,17 @@
 		"is_admin" = !!(user?.client && user.client.holder),
 		"status" = status,
 		"connected" = !!owner,
-		"has_permabans" = user.client.holder.check_centcom_permabans(owner_ckey),
 	)
+	if(CONFIG_GET(string/centcom_ban_db))
+		. += list(
+			"centcom_connected" = TRUE,
+			"has_permabans" = user.client.holder.check_centcom_permabans(owner_ckey),
+		)
+	else
+		. += list(
+			"centcom_connected" = FALSE,
+			"has_permabans" = FALSE,
+		)
 	for (var/i in 1 to questions.len)
 		var/list/data = list(
 			"qidx" = i,
