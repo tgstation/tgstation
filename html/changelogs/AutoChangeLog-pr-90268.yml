@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - refactor: "Refactored subsystem initialization"
