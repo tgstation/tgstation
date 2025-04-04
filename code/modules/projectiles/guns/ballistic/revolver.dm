@@ -201,7 +201,7 @@
 
 /obj/item/gun/ballistic/revolver/russian/click_alt_secondary(mob/user)
 	if(loc != user)
-		to_chat(user, span_warning("You need to be holding the gun to determine how long you are going to pausex!"))
+		to_chat(user, span_warning("You need to be holding the gun to determine how long you are going to pause!"))
 		return CLICK_ACTION_BLOCKING
 	var/new_aim_time = tgui_input_number(user, "How long will you pause before pulling the trigger (seconds)?", "Do you feel lucky?", (aim_time / (1 SECONDS)), 10, 0)
 	if(loc != user || user.incapacitated)
