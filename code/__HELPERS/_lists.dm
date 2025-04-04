@@ -1327,3 +1327,15 @@
 				&& deep_compare_list(log_1["stack"], log_2["stack"])
 		else
 			return TRUE
+
+
+/**
+ * Similar to pick_weight_recursive, except without the weight part, meaning it should hopefully not take
+ * up as much computing power for things that don't +need+ weights.
+ */
+/proc/pick_recursive(...)
+	var/list/things_to_pick = args
+	var/result = pick(things_to_pick)
+	while(islist(result))
+		result = pick(result)
+	return result
