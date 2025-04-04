@@ -248,7 +248,7 @@
 
 	painting_metadata.creator_ckey = user.ckey
 	painting_metadata.creator_name = user.real_name
-	painting_metadata.creation_date = time2text(world.realtime)
+	painting_metadata.creation_date = time2text(world.realtime, "DDD MMM DD hh:mm:ss YYYY", TIMEZONE_UTC)
 	painting_metadata.creation_round_id = GLOB.round_id
 	generate_proper_overlay()
 	finalized = TRUE

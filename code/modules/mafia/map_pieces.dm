@@ -36,7 +36,7 @@
 	var/custom_outfit
 
 /datum/map_template/mafia/New(path = null, rename = null, cache = FALSE)
-	path = "_maps/map_files/Mafia/" + map_suffix
+	path = "_maps/minigame/mafia/" + map_suffix
 	return ..()
 
 //we only have one map in unit tests for consistency.
