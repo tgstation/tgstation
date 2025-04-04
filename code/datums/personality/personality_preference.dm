@@ -23,3 +23,6 @@
 			LAZYADD(input_sanitized, personality_type)
 
 	return input_sanitized
+
+/datum/preference/personality/create_default_value()
+	return null

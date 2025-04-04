@@ -23,29 +23,43 @@
 #define PERSONALITY_FORTITUDE "fortitude"
 
 /datum/personality
+	/// Required: Name of the personality
 	var/name
+	/// Required: Description of the personality.
+	/// Phrased to be "In character" - i.e. "I like to help people!", rather than OOC - "When helping people, I get a positive moodlet."
 	var/desc
-	var/gameplay_desc
+	/// Optional: What positive effects this personality has on gameplay.
+	var/pos_gameplay_desc
+	/// Optional: What negative effects this personality has on gameplay.
+	var/neg_gameplay_desc
+	/// Optional: What neutral effects this personality has on gameplay.
+	var/neut_gameplay_desc
+	/// Optional: A list of categories this personality belongs to.
+	/// This is used to determine what personalities are (in)compatible with each other.
 	var/list/categories
 
+/// Called when applying this personality to a mob.
 /datum/personality/proc/apply_to_mob(mob/living/who)
 	return
 
+/// Called when removing this personality from a mob.
 /datum/personality/proc/remove_from_mob(mob/living/who)
 	return
 
 /datum/personality/callous
 	name = "Callous"
 	desc = "I don't care much about what happens to other people."
-	gameplay_desc = "You receieve no positive moodlets for helping people, and no negative moodlets from seeing people in duress."
+	pos_gameplay_desc = "Likes seeing other people in duress"
+	neg_gameplay_desc = "Dislikes helping people"
 	categories = list(
 		PERSONALITY_TO_INDIVIDUALS,
 	)
 
 /datum/personality/friendly
 	name = "Friendly"
-	desc = "I like to help people!"
-	gameplay_desc = "You receive positive moodlets from helping people, and negative moodlets from hurting them."
+	desc = "I like giving a helping hand to those in need."
+	pos_gameplay_desc = "Likes helping people, and gives better hugs"
+	neg_gameplay_desc = "Dislikes seeing other people in duress"
 	categories = list(
 		PERSONALITY_OTHER_PEOPLE,
 		PERSONALITY_TO_HUGS,
@@ -54,8 +68,9 @@
 
 /datum/personality/emphatic
 	name = "Empathic"
-	desc = "I can feel what other people are feeling."
-	gameplay_desc = "Seeing other people happy makes you happy, and seeing other people sad makes you sad."
+	desc = "Other people's feelings are important to me."
+	pos_gameplay_desc = "Likes seeing other people happy"
+	neg_gameplay_desc = "Dislikes seeing other people sad"
 	categories = list(
 		PERSONALITY_TO_HUMANITY,
 		PERSONALITY_DECISION_MAKING,
@@ -63,8 +78,9 @@
 
 /datum/personality/misanthropic
 	name = "Misanthropic"
-	desc = "I don't like people."
-	gameplay_desc = "Seeing other people happy makes you sad, and seeing other people sad makes you happy."
+	desc = "We should have never entered the stars."
+	pos_gameplay_desc = "Likes seeing other people sad"
+	neg_gameplay_desc = "Dislikes seeing other people happy"
 	categories = list(
 		PERSONALITY_TO_SMALL_GROUPS,
 		PERSONALITY_TO_HUMANITY,
@@ -75,8 +91,8 @@
 /datum/personality/judgemental
 	name = "Judgemental"
 	desc = "What is wrong with these people?"
-	gameplay_desc = "Seeing other people work towards their own interests gives you a positive moodlet. \
-		Seeing other people work against their own interests gives you a negative moodlet."
+	pos_gameplay_desc = "Likes it when people do things you like"
+	neg_gameplay_desc = "Dislikes it when people do things you dislike"
 	categories = list(
 		PERSONALITY_TO_INDIVIDUALS,
 	)
@@ -84,20 +100,29 @@
 /datum/personality/analytical
 	name = "Analytical"
 	desc = "When it comes to making decisions, I tend to be more impersonal."
-	gameplay_desc = "Being level-headed and rational gives you a positive moodlet."
+	neut_gameplay_desc = "Prefers working in less social environments, such as research or engineering"
 	categories = list(
 		PERSONALITY_DECISION_MAKING,
 	)
+
+/datum/personality/impulsive
+	name = "Impulsive"
+	desc = "I'm better making stuff up as I go along."
+	neut_gameplay_desc = "Prefers working in more social environments, such as the bar or medical"
+	categories = list(
+		PERSONALITY_DECISION_MAKING,
+	)
+
 /*
 /datum/personality/morbid
 	name = "Morbid"
 	desc = "I am interested in more macabre things."
-	gameplay_desc = "You receive positive moodlets from abnormal and macabre things, such as death and blood."
+	pos_gameplay_desc = "You receive positive moodlets from abnormal and macabre things, such as death and blood."
 
 /datum/personality/evil
 	name = "Evil"
 	desc = "I'm a bad person."
-	gameplay_desc = "You receive positive moodlets from hurting people, and negative moodlets from helping them."
+	pos_gameplay_desc = "You receive positive moodlets from hurting people, and negative moodlets from helping them."
 	categories = list(
 		PERSONALITY_OTHER_PEOPLE,
 		PERSONALITY_TO_HUMANITY,
@@ -106,25 +131,27 @@
 /datum/personality/snob
 	name = "Snobbish"
 	desc = "I expect only the best out of this station - anything less is unacceptable!"
-	gameplay_desc = "Room quality affects your mood."
+	neut_gameplay_desc = "Room quality affects your mood"
 
 /datum/personality/apathetic
 	name = "Apathetic"
-	desc = "I don't care about much. Not the good, not the bad."
-	gameplay_desc = "The strength of all moodlets is reduced by 20%."
+	desc = "I don't care about much. Not the good, nor the bad, and certainly not the ugly."
+	neut_gameplay_desc = "All moodlets affect you less"
 
 /datum/personality/introvert
 	name = "Introverted"
-	desc = "I prefer to be alone, in quiet places like the station Library."
-	gameplay_desc = "You receive a positive moodlet in the library, and negative moodlets from some interactions with other people."
+	desc = "I prefer to be alone, reading or painting in the library."
+	pos_gameplay_desc = "Likes being in the library"
+	neg_gameplay_desc = "Dislikes large groups"
 	categories = list(
 		PERSONALITY_TO_SMALL_GROUPS,
 	)
 
 /datum/personality/extrovert
 	name = "Extroverted"
-	desc = "I prefer to be surrounded by people, in places like the station Bar."
-	gameplay_desc = "You receive a positive moodlet in the bar, and negative moodlets from some interactions with other people."
+	desc = "I prefer to be surrounded by people, having a drink at the Bar."
+	pos_gameplay_desc = "Likes being in the bar"
+	neg_gameplay_desc = "Dislikes being alone"
 	categories = list(
 		PERSONALITY_TO_SMALL_GROUPS,
 		PERSONALITY_TO_LARGE_GROUPS,
@@ -132,40 +159,41 @@
 
 /datum/personality/resilient
 	name = "Resilient"
-	desc = "I don't let things get to me."
-	gameplay_desc = "Your negative moodlets expire faster."
+	desc = "It's whatever. I can take it."
+	pos_gameplay_desc = "Negative moodlets expire faster"
 	categories = list(
 		PERSONALITY_FORTITUDE,
 	)
 
 /datum/personality/brooding
 	name = "Brooding"
-	desc = "I think about things a lot."
-	gameplay_desc = "Your negative moodlets last longer, and your postive moodlets expire faster."
+	desc = "Everything gets to me and I can't help but think about it."
+	neg_gameplay_desc = "Negative moodlets last longer, postive moodlets expire faster"
 	categories = list(
 		PERSONALITY_FORTITUDE,
 	)
 
 /datum/personality/brave
 	name = "Brave"
-	desc = "I don't fear anything."
-	gameplay_desc = "You fear less, and moodlets related to fear are less powerful."
+	desc = "It'll take a lot more than a little blood to scare me."
+	pos_gameplay_desc = "Accumulate fear slower, and moodlets related to fear are weaker"
 	categories = list(
 		PERSONALITY_TO_FEAR,
 	)
 
 /datum/personality/cowardly
 	name = "Cowardly"
-	desc = "Everything is a danger around here."
-	gameplay_desc = "You fear more, and moodlets related to fear are more powerful."
+	desc = "Everything is a danger around here! Even the air!"
+	neg_gameplay_desc = "Accumulate fear faster, and moodlets related to fear are stronger"
 	categories = list(
 		PERSONALITY_TO_FEAR,
 	)
 
 /datum/personality/lazy
 	name = "Lazy"
-	desc = "I don't like to do much."
-	gameplay_desc = "You receive negative moodlets from doing things, and positive moodlets from doing nothing."
+	desc = "When given the choice, I'd rather do nothing."
+	pos_gameplay_desc = "Happier out of your department - such as in the bar or recreation room"
+	neg_gameplay_desc = "Unhappy working in your department or exercising"
 	categories = list(
 		PERSONALITY_TO_WORK,
 		PERSONALITY_TO_EXERCISE,
@@ -174,7 +202,8 @@
 /datum/personality/diligent
 	name = "Diligent"
 	desc = "Things need to be done, and I'm the one to do them!"
-	gameplay_desc = "You receive positive moodlets from doing things, and negative moodlets from doing nothing."
+	pos_gameplay_desc = "Happier working in your department"
+	neg_gameplay_desc = "Unhappy when slacking off in the bar or recreation room"
 	categories = list(
 		PERSONALITY_TO_WORK,
 	)
@@ -182,23 +211,24 @@
 /datum/personality/strict
 	name = "Industrious"
 	desc = "Everyone needs to be working - otherwise we're all wasting our time."
-	gameplay_desc = "You receive negative moodlets from playing games."
+	neg_gameplay_desc = "Dislikes playing games"
 	categories = list(
 		PERSONALITY_TO_WORK,
 	)
 
 /datum/personality/athletic
 	name = "Athletic"
-	desc = "I like to be active."
-	gameplay_desc = "You receive positive moodlets from exercising, and negative moodlets from being inactive."
+	desc = "Can't just sit around all day! Have to keep moving."
+	pos_gameplay_desc = "Likes exercising"
+	neg_gameplay_desc = "Dislikes being lazy"
 	categories = list(
 		PERSONALITY_TO_EXERCISE,
 	)
 
 /datum/personality/greedy
 	name = "Greedy"
-	desc = "Everything is mine!"
-	gameplay_desc = "You receive negative moodlets from giving money away."
+	desc = "Everything is mine, all mine!"
+	neg_gameplay_desc = "Dislikes giving money to others"
 	categories = list(
 		PERSONALITY_TO_MONEY,
 	)
@@ -206,7 +236,7 @@
 /datum/personality/whimsical
 	name = "Whimsical"
 	desc = "I like to do things for the sake of doing them."
-	gameplay_desc = "You receive positive moodlets from doing things that are not useful."
+	pos_gameplay_desc = "Likes things that are ostensibly pointless"
 	categories = list(
 		PERSONALITY_TO_WHIMSY,
 	)
@@ -214,20 +244,20 @@
 /datum/personality/spiritual
 	name = "Spiritual"
 	desc = "I believe in a higher power."
-	gameplay_desc = "You receive positive moodlets from being around the Chapel or the Chaplain."
+	pos_gameplay_desc = "Likes the Chapel and the Chaplain"
 
 /datum/personality/creative
 	name = "Creative"
-	desc = "I like expressing myself, especially in a place like this."
-	gameplay_desc = "You receive positive moodlets from making art."
+	desc = "I like expressing myself, especially in a chaotic place like this."
+	pos_gameplay_desc = "Likes making art"
 	categories = list(
 		PERSONALITY_TO_ART,
 	)
 
 /datum/personality/unimaginative
 	name = "Unimaginative"
-	desc = "I don't like to think outside the box."
-	gameplay_desc = "You receive no positive moodlets from making art, and negative moodlets from seeing or hearing art."
+	desc = "I'm not good at thinking outside the box. The box is there for a reason."
+	neg_gameplay_desc = "Dislikes making, seeing or hearing art"
 	categories = list(
 		PERSONALITY_TO_ART,
 		PERSONALITY_TO_WHIMSY,
@@ -235,24 +265,24 @@
 
 /datum/personality/aloof
 	name = "Aloof"
-	desc = "I don't like to get too close to people."
-	gameplay_desc = "You receive negative moodlets from being hugged, rather than positive ones."
+	desc = "Why is everyone so touchy? I'd rather be left alone."
+	neg_gameplay_desc = "Dislikes hugs"
 	categories = list(
 		PERSONALITY_TO_HUGS,
 	)
 
 /datum/personality/hopeful
 	name = "Hopeful"
-	desc = "I believe in a better tomorrow."
-	gameplay_desc = "You receive positive moodlets from seeing good things happen."
+	desc = "I believe things will always get better."
+	pos_gameplay_desc = "Likes seeing good things happen"
 	categories = list(
 		PERSONALITY_TO_HOPE,
 	)
 
 /datum/personality/pessimistic
 	name = "Pessimistic"
-	desc = "Things are never going to get better."
-	gameplay_desc = "You receive no moodlets from seeing good things happen, and negative moodlets from seeing bad things happen."
+	desc = "I believe our best days are behind us."
+	neg_gameplay_desc = "Seeing bad things happen affects your mood more"
 	categories = list(
 		PERSONALITY_TO_HOPE,
 	)
@@ -260,15 +290,16 @@
 /datum/personality/prideful
 	name = "Prideful"
 	desc = "I am proud of who I am."
-	gameplay_desc = "You receive positive moodlets from success, and negative moodlets from failure."
+	pos_gameplay_desc = "Likes success"
+	neg_gameplay_desc = "Dislikes failure"
 	categories = list(
 		PERSONALITY_TO_SUCCESS,
 	)
 
 /datum/personality/humble
 	name = "Humble"
-	desc = "Success isn't much to me, I'm just doing my job."
-	gameplay_desc = "Success or failure doesn't affect your mood as much."
+	desc = "I'm just doing my job."
+	neut_gameplay_desc = "Success or failure affects your mood less"
 	categories = list(
 		PERSONALITY_TO_SUCCESS,
 	)
@@ -276,7 +307,7 @@
 /datum/personality/aromantic
 	name = "Aromantic"
 	desc = "Romance has no place on the station."
-	gameplay_desc = "You receive negative moodlets kisses and hugs."
+	neg_gameplay_desc = "Dislikes kisses and hugs"
 	categories = list(
 		PERSONALITY_TO_ROMANCE,
 		PERSONALITY_TO_HUGS,
@@ -284,48 +315,51 @@
 
 /datum/personality/ascetic
 	name = "Ascetic"
-	desc = "I don't care much for luxurious foods."
-	gameplay_desc = "Your positive moodlets from eating food are limited to the most basic of foods."
+	desc = "I don't care much for luxurious foods. It's all fuel for the body."
+	pos_gameplay_desc = "Sorrow from eating disliked food is reduced"
+	neg_gameplay_desc = "Enjoyment from eating liked food is limited"
 	categories = list(
 		PERSONALITY_TO_FOOD,
 	)
 
 /datum/personality/gourmand
 	name = "Gourmand"
-	desc = "Food is everything to me."
-	gameplay_desc = "You receive positive moodlets from eating food, but negative moodlets from disliked food are more powerful."
+	desc = "Food means everything to me."
+	pos_gameplay_desc = "Enjoyment from eating liked food is strengthened"
+	neg_gameplay_desc = "Sorrow from eating food you dislike is increased, and mediocre food is less enjoyable"
 	categories = list(
 		PERSONALITY_TO_FOOD,
 	)
 
 /datum/personality/authoritarian
 	name = "Authoritarian"
-	desc = "I believe in a strict hierarchy."
-	gameplay_desc = "You receive positive moodlets from being around heads of staff."
+	desc = "Order and discipline are the only things keeping this station running."
+	pos_gameplay_desc = "Likes being around heads of staff"
+	neut_gameplay_desc = "Prefers to work in positions of authority, such as a head of staff or security"
 	categories = list(
 		PERSONALITY_TO_AUTHORITY,
 	)
 
 /datum/personality/egalitarian
 	name = "Egalitarian"
-	desc = "I believe everyone should have equal say."
-	gameplay_desc = "You receive negative moodlets from being around heads of staff."
+	desc = "Everyone should have equal say. We are all in this together."
+	neg_gameplay_desc = "Dislikes being around heads of staff"
 	categories = list(
 		PERSONALITY_TO_AUTHORITY,
 	)
 
 /datum/personality/loyalist
-	name = "Loyalist"
-	desc = "I believe in the station and in Central Command, till the end!"
-	gameplay_desc = "You receive positive moodlets company posters and signs."
+	name = "Loyal"
+	desc = "I believe in the station and in Central Command, till the very end!"
+	pos_gameplay_desc = "Likes company posters and signs"
 	categories = list(
 		PERSONALITY_TO_CENTCOM
 	)
 
 /datum/personality/disillusioned
 	name = "Disillusioned"
-	desc = "Central Command isn't what it used to be - this isn't what I signed up for."
-	gameplay_desc = "You receive negative moodlets from company posters and signs."
+	desc = "Central Command isn't what it used to be. This isn't what I signed up for."
+	neg_gameplay_desc = "Dislikes company posters and signs"
 	categories = list(
 		PERSONALITY_TO_CENTCOM
 	)
@@ -337,8 +371,9 @@
 */
 /datum/personality/paranoid
 	name = "Paranoid"
-	desc = "Everyone is out to get me! This place is a deathtrap!"
-	gameplay_desc = "You receive negative moodlets from being around small groups, and positive moodlets from being alone."
+	desc = "Everyone and everything is out to get me! This place is a deathtrap!"
+	pos_gameplay_desc = "Likes being safe, alone, or in moderately-sized groups"
+	neg_gameplay_desc = "Dislikes being in groups too large or too small"
 	categories = list(
 		PERSONALITY_TO_FEAR,
 		PERSONALITY_TO_SMALL_GROUPS,
@@ -347,15 +382,15 @@
 /datum/personality/teetotal
 	name = "Teetotaler"
 	desc = "Alcohol isn't for me."
-	gameplay_desc = "You receive negative moodlets from drinking alcohol, and positive moodlets from not drinking."
+	neg_gameplay_desc = "Dislikes drinking alcohol"
 	categories = list(
 		PERSONALITY_TO_DRINKING,
 	)
 
 /datum/personality/bibulous
 	name = "Bibulous"
-	desc = "I will always go for another round!"
-	gameplay_desc = "Your postive moodlets from drinking last longer, even after you are no longer drunk."
+	desc = "I'll always go for another round of drinks!"
+	pos_gameplay_desc = "Fulfillment from drinking lasts longer, even after you are no longer drunk"
 	categories = list(
 		PERSONALITY_TO_DRINKING,
 	)
@@ -363,7 +398,7 @@
 /datum/personality/reckless
 	name = "Reckless"
 	desc = "What is life without a little danger?"
-	gameplay_desc = "You receive positive moodlets from doing dangerous things."
+	pos_gameplay_desc = "Likes doing dangerous things"
 	categories = list(
 		PERSONALITY_TO_RISK,
 	)
@@ -371,7 +406,15 @@
 /datum/personality/cautious
 	name = "Cautious"
 	desc = "Risks are foolish on a station as deadly as this."
-	gameplay_desc = "You receive negative moodlets from doing dangerous things."
+	neg_gameplay_desc = "Dislikes doing dangerous things"
 	categories = list(
 		PERSONALITY_TO_RISK,
+	)
+
+/datum/personality/gambler
+	name = "Gambler"
+	desc = "Throwing the dice is my favorite pastime."
+	pos_gameplay_desc = "Likes gambling and card games, and content with losing when gambling"
+	categories = list(
+		PERSONALITY_TO_MONEY,
 	)

@@ -12,7 +12,7 @@
 	if(personality_type in personalities)
 		LAZYREMOVE(personalities, personality_type)
 	else
-		if(LAZYLEN(personalities) > CONFIG_GET(number/max_personalities))
+		if(LAZYLEN(personalities) >= CONFIG_GET(number/max_personalities))
 			LAZYREMOVE(personalities, personalities[1])
 		LAZYADD(personalities, personality_type)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)
@@ -25,7 +25,9 @@
 	for(var/datum/personality/personality_type as anything in subtypesof(/datum/personality))
 		data["personalities"] += list(list(
 			"description" = initial(personality_type.desc),
-			"gameplay_description" = initial(personality_type.gameplay_desc),
+			"pos_gameplay_description" = initial(personality_type.pos_gameplay_desc),
+			"neg_gameplay_description" = initial(personality_type.neg_gameplay_desc),
+			"neut_gameplay_description" = initial(personality_type.neut_gameplay_desc),
 			"name" = initial(personality_type.name),
 			"path" = personality_type,
 		))

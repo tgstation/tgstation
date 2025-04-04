@@ -102,7 +102,10 @@ export type QuirkInfo = {
 export type Personality = {
   name: string;
   description: string;
-  gameplay_description: string;
+  pos_gameplay_description: string | null;
+  neg_gameplay_description: string | null;
+  neut_gameplay_description: string | null;
+  path: typePath;
 };
 
 export enum RandomSetting {
