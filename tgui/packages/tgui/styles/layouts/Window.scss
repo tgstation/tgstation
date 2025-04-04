@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
 @use '../base';
-@use '../functions' as *;
 
 .Window {
   position: fixed;
@@ -39,16 +37,16 @@
 }
 
 .Layout__content--scrollable .Window__contentPadding:after {
-  display: block;
   content: '';
+  display: block;
   height: 0.5rem;
 }
 
 .Window__dimmer {
+  pointer-events: none;
   position: fixed;
   inset: 0;
   background-color: hsl(from var(--color-base) h s calc(l + 15) / 0.25);
-  pointer-events: none;
 }
 
 .Window__resizeHandle__se {
@@ -75,6 +73,5 @@
   top: 0;
   bottom: 0;
   right: 0;
-  width: 3px;
   width: base.rem(3px);
 }

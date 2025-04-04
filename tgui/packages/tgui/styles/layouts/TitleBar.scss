@@ -8,31 +8,26 @@
 @use '../colors';
 
 .TitleBar {
+  user-select: none;
   position: fixed;
   display: flex;
   align-items: center;
   width: 100vw;
   height: base.rem(32px);
-  background-color: var(--color-secondary);
-  border-bottom: 1px solid var(--color-border-dark);
-  box-shadow: 0px 0px base.em(6px) base.em(-1px) hsla(0, 0%, 0%, 0.66);
+  background-color: var(--titlebar-background);
+  border-bottom: var(--border-thickness-tiny) solid var(--titlebar-shadow-core);
+  box-shadow: 0px 0px base.em(6px) base.em(-1px) var(--titlebar-shadow-color);
   z-index: 101; // More than Dimmer
-  user-select: none;
-  // Deprecated. Delete after full transition to 516
-  -ms-user-select: none;
 
   &__dragZone {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
   }
 
   &__statusIcon {
     text-align: center;
     font-size: base.rem(20px);
-    transition: color 0.5s;
+    transition: color var(--transition-time-slow);
   }
 
   &__title {
@@ -42,14 +37,14 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: var(--color-text-translucent-light);
+    color: var(--titlebar-text);
     font-size: base.rem(14px);
   }
 
   &__buttons {
+    pointer-events: all;
     overflow: hidden;
     white-space: nowrap;
-    pointer-events: all;
     display: inline-block;
     margin: 0 base.rem(9px);
     z-index: 102;
@@ -69,7 +64,7 @@
   }
 
   &__close {
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     opacity: 0.5;
     pointer-events: all;
     align-content: center;
@@ -77,10 +72,9 @@
     font-size: base.rem(16px);
     height: 100%;
     color: var(--color-text);
+    transition-property: background-color, opacity;
+    transition-duration: var(--transition-time-medium);
     z-index: 102;
-    transition:
-      background-color 0.2s,
-      opacity 0.2s;
 
     &:hover {
       opacity: 1;

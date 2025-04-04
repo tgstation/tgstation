@@ -9,6 +9,7 @@
   --color-primary: hsl(120, 100%, 50%);
   --color-secondary: hsl(120, 28%, 18.5%);
   --base-gradient-spread: 0;
+  --candystripe-odd: hsla(120, 100%, 20%, 0.5);
 
   // Components
   --button-background-selected: var(--color-primary);
@@ -30,9 +31,5 @@
     &--color--default {
       color: var(--color-text-fixed-black);
     }
-  }
-
-  .candystripe:nth-child(odd) {
-    background-color: rgba(0, 100, 0, 0.5);
   }
 }

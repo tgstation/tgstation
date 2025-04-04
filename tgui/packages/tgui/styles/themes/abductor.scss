@@ -5,11 +5,11 @@
 
 .theme-abductor:root {
   // Base
-  --base-gradient-spread: 6;
   --color-base: hsl(227, 29%, 23%);
   --color-primary: hsl(340, 65%, 45%);
   --color-secondary: hsl(340, 65%, 37.5%);
   --color-border-primary: hsla(227.5, 30%, 40%, 0.75);
+  --base-gradient-spread: 6;
 
   // Components
   --button-background-selected: hsl(227, 37%, 45%);

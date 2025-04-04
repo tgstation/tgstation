@@ -106,7 +106,6 @@ $text-color: base.$color-fg !default;
 .RequestManager__filterPanel {
   margin: 0.5rem;
   padding: 0.5rem;
-  background-color: functions.fake-alpha($background-color, base.$color-bg);
   background-color: $background-color;
   color: $text-color;
 }

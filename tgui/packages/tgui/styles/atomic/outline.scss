@@ -42,6 +42,6 @@ $map-keys: colors.$color-map !default;
 @each $color-name, $color-value in $map-keys {
   /* prettier-ignore */
   .outline-color-#{$color-name} {
-    outline: 0.167rem solid hsl(from $color-value h s calc(l + var(--adjust-color))) !important;
+    outline: var(--border-thickness-small) solid hsl(from $color-value h s calc(l + var(--adjust-color))) !important;
   }
 }
