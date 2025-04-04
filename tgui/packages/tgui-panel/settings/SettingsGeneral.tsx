@@ -50,7 +50,7 @@ export function SettingsGeneral(props) {
             </Button>
           ))}
         </LabeledList.Item>
-        <LabeledList.Item label="Pane sizes">
+        <LabeledList.Item label="UI sizes">
           <Button
             onClick={() =>
               setEditingPanes((val) => {
@@ -61,7 +61,7 @@ export function SettingsGeneral(props) {
             color={editingPanes ? 'red' : undefined}
             icon={editingPanes ? 'save' : undefined}
           >
-            {editingPanes ? 'Save' : 'Edit Pane Splitters'}
+            {editingPanes ? 'Save' : 'Adjust UI Sizes'}
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Font style">
