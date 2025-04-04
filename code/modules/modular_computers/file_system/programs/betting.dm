@@ -158,6 +158,9 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	*/
 	var/list/options
 
+	///The message we sent to the newscaster, which we'll then reply to once the betting is over.
+	var/datum/feed_message/newscaster_message
+
 /datum/active_bet/New(creator, name, description, options)
 	src.bet_owner = creator
 	src.name = name
@@ -167,9 +170,17 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	for(var/option in options)
 		if(!length(options[option]))
 			options[option] = list()
+	//we'll only advertise it on the first bet of the round, as to not make this overly annoying.
+	var/should_alert = FALSE
+	for(var/datum/feed_channel/FC in GLOB.news_network.network_channels)
+		if(FC.channel_name == NEWSCASTER_SPORTS_BETTING)
+			if(!length(FC.messages))
+				should_alert = TRUE
+	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Sports Betting App", NEWSCASTER_SPORTS_BETTING, null, update_alert = should_alert)
 
 /datum/active_bet/Destroy(force)
 	GLOB.active_bets -= src
+	newscaster_message = null
 	return ..()
 
 ///Returns how many bets there is per option
@@ -188,13 +199,18 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 
 ///Pays out the loser's money equally to all the winners, or refunds it all if no winning option was given.
 /datum/active_bet/proc/payout(winning_option)
-	if(isnull(winning_option))
+	if(isnull(winning_option) || !(winning_option in options))
 		//no winner was selected (likely the host's PDA was destroyed or attempted href exploit), so let's refund everyone.
 		for(var/list/option in options)
 			for(var/list/existing_bets in options[option])
 				var/datum/bank_account/refunded_account = existing_bets[1]
 				refunded_account.adjust_money(text2num(existing_bets[2]), "Refund: [name] gamble cancelled.")
 		return
+	GLOB.news_network.submit_comment(
+		comment_text = "The bet [name] has ended, the winner was [winning_option]!",
+		newscaster_username = "NtOS Betting Results",
+		current_message = newscaster_message,
+	)
 	var/list/winners = options[winning_option]
 	if(!length(winners))
 		return
