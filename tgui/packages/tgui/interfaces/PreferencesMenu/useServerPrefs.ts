@@ -18,6 +18,7 @@ export const ServerPrefs = createContext<ServerData | undefined>({
   },
   personality: {
     personalities: [],
+    personality_incompatibilities: [],
   },
   random: {
     randomizable: [],

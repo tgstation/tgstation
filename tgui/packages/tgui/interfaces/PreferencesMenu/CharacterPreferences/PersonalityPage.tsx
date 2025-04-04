@@ -6,50 +6,77 @@ import { useBackend } from '../../../backend';
 import { Personality, PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 
-function PersonalityButton(props: {
+type ButtonData = {
+  backgroundColor: string;
+  borderColor: string;
+  tooltip: string | null;
+};
+
+function getButtonColors(
+  selected: boolean | undefined,
+  invalid: boolean | string | undefined,
+  disabled: boolean | undefined,
+): ButtonData {
+  if (invalid) {
+    return {
+      backgroundColor: 'rgba(64, 34, 34, 0.5)',
+      borderColor: 'darkred',
+      tooltip: `You cannot select this personality with ${invalid}.`,
+    };
+  }
+  if (disabled) {
+    return {
+      backgroundColor: 'rgba(64, 64, 64, 0.5)',
+      borderColor: '#666666',
+      tooltip: 'You are at the maximum number of personalities.',
+    };
+  }
+  if (selected) {
+    return {
+      backgroundColor: 'rgba(34, 64, 34, 0.5)',
+      borderColor: 'green',
+      tooltip: null,
+    };
+  }
+  return {
+    backgroundColor: 'rgba(34, 34, 34, 0.5)',
+    borderColor: '#444444',
+    tooltip: null,
+  };
+}
+
+type ButtonProps = {
   personality: Personality;
   selected?: boolean;
+  invalid?: string | false;
   disabled?: boolean;
-  invalid?: boolean;
   onClick: () => void;
-}) {
+};
+
+function PersonalityButton(props: ButtonProps) {
   const { personality, selected, invalid, disabled, onClick } = props;
 
+  let { backgroundColor, borderColor, tooltip } = getButtonColors(
+    selected,
+    invalid,
+    disabled,
+  );
+  let isDisabled = disabled || invalid || false;
   return (
     <Button
-      onClick={!disabled && !invalid ? onClick : undefined}
+      onClick={isDisabled ? undefined : onClick}
       p={1}
       style={{
-        cursor: disabled || invalid ? null : 'pointer',
-        borderColor: invalid
-          ? 'darkred'
-          : disabled
-            ? '#666666'
-            : selected
-              ? 'green'
-              : '#444444',
+        cursor: isDisabled ? undefined : 'pointer',
+        borderColor: borderColor,
         borderStyle: 'solid',
         borderWidth: '0.2em',
         borderRadius: '0.33em',
       }}
       fluid
       height="180px"
-      backgroundColor={
-        invalid
-          ? 'rgba(64, 34, 34, 0.5)'
-          : disabled
-            ? 'rgba(64, 64, 64, 0.5)'
-            : selected
-              ? 'rgba(34, 64, 34, 0.5)'
-              : 'rgba(34, 34, 34, 0.5)'
-      }
-      tooltip={
-        invalid
-          ? 'You cannot select this personality with your current selection.'
-          : disabled
-            ? 'You are at the maximum number of personalities.'
-            : null
-      }
+      backgroundColor={backgroundColor}
+      tooltip={tooltip}
     >
       <Stack vertical wrap justify="center">
         <Stack.Item
@@ -131,6 +158,63 @@ function sortPersonalities(
   return a.name < b.name ? -1 : 1;
 }
 
+// Checks if the passed personality is incompatible with the selected personalities
+// Returns the name of the incompatible personality or false if there is no incompatibility
+function isIncompatible(
+  personality: Personality,
+  allPersonalities: Personality[],
+  selectedPersonalities: string[] | null,
+  personalityIncompatibilities: string[][],
+): string | false {
+  if (!selectedPersonalities) return false;
+  for (const incompabibility of personalityIncompatibilities) {
+    if (!incompabibility.includes(personality.path)) {
+      continue;
+    }
+    for (const selected of selectedPersonalities) {
+      if (selected === personality.path) {
+        continue;
+      }
+      if (incompabibility.includes(selected)) {
+        return (
+          getPersonalityName(allPersonalities, selected) ||
+          'Unknown (This is a bug)'
+        );
+      }
+    }
+  }
+  return false;
+}
+
+// Checks if the passed personality is disabled
+function isDisabled(
+  selectedPersonalities: string[] | null,
+  personality: Personality,
+  maxPersonalities: number,
+): boolean {
+  if (!selectedPersonalities) {
+    return false;
+  }
+  if (selectedPersonalities.length < maxPersonalities) {
+    return false;
+  }
+  return !selectedPersonalities.includes(personality.path);
+}
+
+// Takes a typePath, returns the name of the personality
+function getPersonalityName(
+  allPersonalities: Personality[],
+  personalityPath: string,
+): string | undefined {
+  for (const personality of allPersonalities) {
+    if (personality.path === personalityPath) {
+      return personality.name;
+    }
+  }
+  return undefined;
+}
+
+// Returns a string of all selected personalities formatted in a readable way
 function getAllSelectedPersonalitiesString(
   allPersonalities: Personality[],
   selectedPersonalities: string[] | null,
@@ -154,7 +238,7 @@ function getAllSelectedPersonalitiesString(
       }
     }
     if (i === personalityNames.length - 2) {
-      if (personalityNames.length <= 2) {
+      if (finalString[finalString.length - 1] !== ' ') {
         finalString += ' ';
       }
       finalString += 'and ';
@@ -169,6 +253,10 @@ export function PersonalityPage(props) {
   const server_data = useServerPrefs();
   if (!server_data) return;
 
+  const personalities = server_data.personality.personalities;
+  const personalityIncompatibilities =
+    server_data.personality.personality_incompatibilities;
+
   const [searchQuery, setSearchQuery] = useState('');
   const personalitySearch = createSearch(
     searchQuery,
@@ -180,7 +268,7 @@ export function PersonalityPage(props) {
       personality.neut_gameplay_description,
   );
   const selectedPersonalities = data.selected_personalities;
-  const filteredPersonalities = server_data.personality.personalities
+  const filteredPersonalities = personalities
     .filter(personalitySearch)
     .sort((a, b) => sortPersonalities(a, b, selectedPersonalities));
 
@@ -202,7 +290,7 @@ export function PersonalityPage(props) {
           <Flex height="100%" align="center">
             <Flex.Item grow>
               {getAllSelectedPersonalitiesString(
-                server_data.personality.personalities,
+                personalities,
                 selectedPersonalities,
               )}
             </Flex.Item>
@@ -216,6 +304,9 @@ export function PersonalityPage(props) {
                 color="red"
                 icon="trash"
                 disabled={!selectedPersonalities?.length}
+                style={{
+                  cursor: selectedPersonalities?.length ? 'pointer' : undefined,
+                }}
                 onClick={() => {
                   act('clear_personalities');
                 }}
@@ -244,14 +335,17 @@ export function PersonalityPage(props) {
                   <PersonalityButton
                     personality={personality}
                     selected={selectedPersonalities?.includes(personality.path)}
-                    disabled={
-                      !!(
-                        selectedPersonalities &&
-                        selectedPersonalities.length >=
-                          data.max_personalities &&
-                        !selectedPersonalities?.includes(personality.path)
-                      )
-                    }
+                    invalid={isIncompatible(
+                      personality,
+                      personalities,
+                      selectedPersonalities,
+                      personalityIncompatibilities,
+                    )}
+                    disabled={isDisabled(
+                      selectedPersonalities,
+                      personality,
+                      data.max_personalities,
+                    )}
                     onClick={() => {
                       act('handle_personality', {
                         personality_type: personality.path,

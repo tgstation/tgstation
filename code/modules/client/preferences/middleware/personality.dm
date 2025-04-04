@@ -14,7 +14,8 @@
 		LAZYREMOVE(personalities, personality_type)
 	else
 		if(LAZYLEN(personalities) >= CONFIG_GET(number/max_personalities))
-			// maybe lag, but ultimately invalid
+			return TRUE
+		if(GLOB.personality_controller.is_incompatible(personalities, personality_type))
 			return TRUE
 		LAZYADD(personalities, personality_type)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)
@@ -28,15 +29,18 @@
 	var/list/data = list()
 
 	data["personalities"] = list()
-	for(var/datum/personality/personality_type as anything in subtypesof(/datum/personality))
+	for(var/datum/personality/personality_type as anything in GLOB.personality_controller.personalities)
+		var/datum/personality/personality = GLOB.personality_controller.personalities[personality_type]
 		data["personalities"] += list(list(
-			"description" = initial(personality_type.desc),
-			"pos_gameplay_description" = initial(personality_type.pos_gameplay_desc),
-			"neg_gameplay_description" = initial(personality_type.neg_gameplay_desc),
-			"neut_gameplay_description" = initial(personality_type.neut_gameplay_desc),
-			"name" = initial(personality_type.name),
+			"description" = personality.desc,
+			"pos_gameplay_description" = personality.pos_gameplay_desc,
+			"neg_gameplay_description" = personality.neg_gameplay_desc,
+			"neut_gameplay_description" = personality.neut_gameplay_desc,
+			"name" = personality.name,
 			"path" = personality_type,
 		))
+
+	data["personality_incompatibilities"] = GLOB.personality_controller.incompatibilities
 
 	return data
 

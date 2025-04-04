@@ -208,6 +208,7 @@ export type ServerData = {
   quirks: QuirkInfo;
   personality: {
     personalities: Personality[];
+    personality_incompatibilities: string[][];
   };
   random: {
     randomizable: string[];
