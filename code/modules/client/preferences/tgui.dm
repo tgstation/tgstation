@@ -90,8 +90,5 @@
 	default_value = TRUE
 
 /datum/preference/toggle/ui_scale/apply_to_client(client/client, value)
-	for (var/datum/tgui/tgui as anything in client.mob?.tgui_open_uis)
-		// Force it to reload either way
-		tgui.update_static_data(client.mob)
-
+	INVOKE_ASYNC(client, TYPE_PROC_REF(/client, refresh_tgui))
 	client.tgui_say?.load()
