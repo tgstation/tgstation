@@ -45,9 +45,9 @@ function PersonalityButton(props: {
       }
       tooltip={
         invalid
-          ? 'This personality cannot be selected with your current selection.'
+          ? 'You cannot select this personality with your current selection.'
           : disabled
-            ? 'You have too many personalities selected.'
+            ? 'You are at the maximum number of personalities.'
             : null
       }
     >
