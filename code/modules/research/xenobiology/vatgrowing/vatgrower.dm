@@ -169,5 +169,7 @@
 	if(resampler_active)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
-		return SPARE_SAMPLE
-	UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	else
+		UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+		QDEL_NULL(biological_sample)
+	update_appearance()
