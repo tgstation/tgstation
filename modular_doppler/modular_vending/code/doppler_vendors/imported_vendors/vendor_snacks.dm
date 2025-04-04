@@ -224,6 +224,15 @@
 	list_reagents = list(/datum/reagent/consumable/yogurt_soda = 30)
 	drink_type = DAIRY
 
+/obj/item/reagent_containers/cup/soda_cans/doppler/nevada_tea
+	name = "Nevada green tea"
+	desc = "A staple item of fuel stations, bodegas, convenience stores, and checkout aisle coolers. Cheaper than water, \
+	yet begging the question why.
+	icon_state = "nevada_can"
+	volume = 60
+	list_reagents = list(/datum/reagent/consumable/icetea = 40, /datum/reagent/consumable/honey = 10, )
+	custom_price = PAYCHECK_LOWER
+
 /obj/item/reagent_containers/condiment/pack/chili
 	name = "seasoning multi-pack"
 	desc = "A spicy chili sauce, seasoning oil with shallots, and sweetened shoyu all in one convenient pack."
