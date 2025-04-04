@@ -94,4 +94,4 @@
 		// Force it to reload either way
 		tgui.update_static_data(client.mob)
 
-	client.tgui_say.load()
+	client.tgui_say?.load()

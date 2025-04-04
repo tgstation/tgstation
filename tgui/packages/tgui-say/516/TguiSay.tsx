@@ -226,12 +226,6 @@ export function TguiSay() {
     setMaxLength(data.maxLength);
     setLightMode(!!data.lightMode);
     setScale(!!data.scale);
-
-    if(!data.scale) {
-      window.document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
-    } else {
-      window.document.body.style.zoom = "";
-    }
   }
 
   function unloadChat(): void {
@@ -245,7 +239,7 @@ export function TguiSay() {
     Byond.subscribeTo('props', handleProps);
     Byond.subscribeTo('force', handleForceSay);
     Byond.subscribeTo('open', handleOpen);
-  }, []);
+  }, [scale]);
 
   /** Value has changed, we need to check if the size of the window is ok */
   useEffect(() => {
@@ -279,7 +273,10 @@ export function TguiSay() {
       >
         {!lightMode && <div className={`shine shine-${theme}`} />}
       </div>
-      <div className={classes(['content', lightMode && 'content-lightMode'])}>
+      <div
+        className={classes(['content', lightMode && 'content-lightMode'])}
+        style={{ zoom: scale ? "" : `${100 / window.devicePixelRatio}%` }}
+      >
         <button
           className={`button button-${theme}`}
           onClick={handleIncrementChannel}

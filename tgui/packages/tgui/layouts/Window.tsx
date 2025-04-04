@@ -66,11 +66,13 @@ export const Window = (props: Props) => {
     setIsReadyToRender(true);
   }, []);
 
+  const { window } = config;
+
   useEffect(() => {
     if (!suspended && isReadyToRender) {
       const updateGeometry = () => {
         const options = {
-          ...config.window,
+          ...window,
           size: DEFAULT_SIZE,
         };
 
@@ -97,7 +99,7 @@ export const Window = (props: Props) => {
         logger.log('unmounting');
       };
     }
-  }, [isReadyToRender, width, height]);
+  }, [isReadyToRender, width, height, window]);
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
