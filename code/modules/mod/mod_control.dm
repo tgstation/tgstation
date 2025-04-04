@@ -116,6 +116,8 @@
 	QDEL_NULL(mod_link)
 	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
 		var/obj/item/part_item = part_datum.part_item
+		part_datum.part_item = null
+		part_datum.overslotting = null
 		mod_parts -= part_datum
 		qdel(part_datum)
 		if(!QDELING(part_item))
