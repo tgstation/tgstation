@@ -68,12 +68,13 @@
 		if(mob.mob_mood)
 			mob.mob_mood.adjust_sanity(-50)
 		//If our moon heretic has their level 3 passive, we channel the amulet effect
-		var/mob/living/living_owner = parent_mob_ref.resolve()
+		var/mob/living/simple_animal/hostile/illusion/fake_clone = victim
+		var/mob/living/living_owner = fake_clone.parent_mob_ref.resolve()
 		if(!living_owner)
 			continue
 		var/datum/status_effect/heretic_passive/moon/our_passive = living_owner.has_status_effect(/datum/status_effect/heretic_passive/moon)
 		if(our_passive?.amulet)
-			our_passive.amulet.channel_amulet(living_owner, cast_on)
+			our_passive.amulet.channel_amulet(living_owner, mob)
 
 	qdel(victim)
 

@@ -58,8 +58,6 @@
 
 //add this disease if the host does not already have too many
 /datum/disease/proc/try_infect(mob/living/infectee, make_copy = TRUE)
-	if(HAS_TRAIT(infectee), TRAIT_DISEASE_IMMUNE)
-		return FALSE
 	infect(infectee, make_copy)
 	return TRUE
 

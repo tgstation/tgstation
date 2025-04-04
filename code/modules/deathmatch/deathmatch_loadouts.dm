@@ -1042,7 +1042,6 @@
 	// It's like, forbidden knowledge. It fits with the mansus theme - great excuse for poor design!
 	knowledge_to_grant = list(
 		/datum/heretic_knowledge/limited_amount/starting/base_blade,
-		/datum/heretic_knowledge/blade_dance,
 		/datum/heretic_knowledge/blade_upgrade/blade,
 	)
 

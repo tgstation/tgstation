@@ -397,9 +397,9 @@
 		ant_max_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
 	if(!ant_min_damage)
 		ant_min_damage = 0.1
-	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTOP_ANTS) /// Small amounts of ants won't be able to bite through shoes.
+	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_ANTS) /// Small amounts of ants won't be able to bite through shoes.
 	if(ant_max_damage > 1)
-		ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES | CALTOP_ANTS)
+		ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES | CALTROP_ANTS)
 
 	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
 	if(caltrop_comp)
