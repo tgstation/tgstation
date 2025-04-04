@@ -138,10 +138,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
+		character_preview_view.display_to(user, ui.window)
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
@@ -287,7 +287,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character_preview_view = new(null, src)
 	character_preview_view.generate_view("character_preview_[REF(character_preview_view)]")
 	character_preview_view.update_body()
-	character_preview_view.display_to(user)
 
 	return character_preview_view
 

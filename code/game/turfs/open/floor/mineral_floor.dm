@@ -178,7 +178,7 @@
 
 //Used in SnowCabin.dm
 /turf/open/floor/mineral/plastitanium/red/snow_cabin
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 //BANANIUM
 

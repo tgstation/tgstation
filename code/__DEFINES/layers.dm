@@ -307,6 +307,11 @@
 /// Layer for light overlays
 #define LIGHT_DEBUG_LAYER 6
 
+/// Layer for pathfinding arrows
+#define PATH_ARROW_DEBUG_LAYER 7
+/// Layer for pathfinding overlays
+#define PATH_DEBUG_LAYER 8
+
 ///Layer for lobby menu collapse button
 #define LOBBY_BELOW_MENU_LAYER 2
 ///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Character Prefs)

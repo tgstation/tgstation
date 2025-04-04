@@ -147,5 +147,6 @@
 /// Different graphic for position indicator
 /obj/effect/dummy/phased_mob/spell_jaunt/space
 	phased_mob_icon_state = "solarflare"
+	movespeed = 0
 
 #undef SPACE_PHASING

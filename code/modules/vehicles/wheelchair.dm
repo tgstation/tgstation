@@ -132,6 +132,9 @@
 	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
 	user.put_in_hands(wheelchair_folded)
+	if (bell_attached)
+		visible_message(span_notice("The bell attached to [src] falls to the ground."))
+		bell_attached.forceMove(drop_location())
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use

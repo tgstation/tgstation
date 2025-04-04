@@ -317,7 +317,7 @@
 /obj/item/bounty_cube/examine()
 	. = ..()
 	if(speed_bonus)
-		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.")
+		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE)]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.")
 	if(handler_tip && !bounty_handler_account)
 		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.")
 
@@ -363,7 +363,7 @@
 		"LOCATION" = get_area_name(src),
 		"PERSON" = bounty_holder,
 		"RANK" = bounty_holder_job,
-		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss"),
+		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE),
 		"COST" = bounty_value
 	), src, list(RADIO_CHANNEL_SUPPLY))
 
