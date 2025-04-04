@@ -320,14 +320,22 @@
 	if(!.)
 		if(loaded_rounds && is_target_face)
 			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
-		return TRUE // so they don't hit themselves in the forehead. because returning FALSE translates to "do melee attack" for whatever reason
-
-	if(!is_target_face)
 		user.visible_message(
-			span_danger("[user.name] cowardly fires \the [src] at [user.p_their()] [aimed_at_readable]!"),
-			span_userdanger("You cowardly fire \the [src] at your [aimed_at_readable]!"),
+			span_danger("[user][is_target_face ? "": " cowardly"] points \the [src] at [user.p_their()] [aimed_at_readable], pulls the trigger, and... nothing happens!"),
+			span_danger("You[is_target_face ? "": " cowardly"] point \the [src] at your [aimed_at_readable], pull the trigger, and... nothing happens!"),
+			span_hear("You hear a click!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
+		return TRUE // so they don't hit themselves in the forehead. because returning FALSE translates to "do melee attack" for whatever reason
+
+	user.visible_message(
+		span_danger("[user][is_target_face ? "": " cowardly"] aims \the [src] at [user.p_their()] [aimed_at_readable] as it goes off!"),
+		span_danger("You[is_target_face ? "": " cowardly"] aim \the [src] at your [aimed_at_readable] as it goes off![user.stat >= HARD_CRIT ? " <b>Everything suddenly goes black.</b>" : ""]"),
+		span_hear("You hear a grunt[user.stat == CONSCIOUS ? "" : ", followed by a thud"]!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
 	shoot_self(user, check_zone(user.zone_selected))
 	return .
 
@@ -356,8 +364,8 @@
 		)
 	else
 		user.visible_message(
-			span_danger("[user]'s is punished for trying to cheat the game!"),
-			span_userdanger("You've lost the gamble! Not only is your soul forfeit, but taken away for attempting to cheat death!"),
+			span_danger("[user] is punished for trying to cheat the game!"),
+			span_userdanger("You've lost the gamble! Not only is your soul forfeit, but it is whisked away for attempting to cheat death!"),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		user.dust(drop_items = TRUE)
