@@ -137,9 +137,14 @@ export const recallWindowGeometry = async (
   }
 
   if (!options.scale) {
-    window.document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
+    document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
+    document.documentElement.style.setProperty(
+      '--scaling-amount',
+      window.devicePixelRatio.toString(),
+    );
   } else {
-    window.document.body.style.zoom = '';
+    document.body.style.zoom = '';
+    document.documentElement.style.setProperty('--scaling-amount', null);
   }
 
   // Wait until screen offset gets resolved

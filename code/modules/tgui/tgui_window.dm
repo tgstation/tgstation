@@ -88,11 +88,6 @@
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
-
-	var/scaling_pref = client.prefs?.read_preference(/datum/preference/toggle/ui_scale)
-	if(scaling_pref && client.window_scaling != 1)
-		html = replacetextEx(html, "--scaling-amount: 1", "--scaling-amount: [client.window_scaling]")
-
 	// Inject assets
 	var/inline_assets_str = ""
 	for(var/datum/asset/asset in assets)
