@@ -11,7 +11,7 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 body {
@@ -279,7 +279,7 @@ h6 {
 
 h1.alert,
 h2.alert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 em {
@@ -329,7 +329,7 @@ em {
 
 .binarysay {
   color: hsl(114, 86.5%, 40.8%);
-  background-color: hsl(0, 0%, 0%);
+  background-color: var(--color-black);
   display: block;
 }
 
@@ -424,7 +424,7 @@ em {
 
 h1.alert,
 h2.alert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 .userdanger {
@@ -485,12 +485,12 @@ h2.alert {
 }
 
 .minoralert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
   font-size: 125%;
 }
 
 .priorityannounce {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
   font-weight: bold;
   font-size: 225%;
 }

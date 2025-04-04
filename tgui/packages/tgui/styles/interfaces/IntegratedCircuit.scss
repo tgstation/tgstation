@@ -5,7 +5,7 @@
 $map-keys: colors.$color-map !default;
 
 .CircuitInfo__Examined {
-  background-color: hsl(0, 0%, 0%);
+  background-color: var(--color-black);
   padding: var(--space-ml);
   border-radius: var(--border-radius-large);
 

@@ -31,7 +31,7 @@
     width: 120px;
     border: none;
     background: transparent;
-    border-bottom: 1px solid hsl(0, 0%, 0%);
+    border-bottom: 1px solid var(--color-black);
     outline: none;
     background-color: hsla(60, 100%, 60%, 0.8);
     padding: 0 4px;
@@ -78,7 +78,7 @@
       display: inline-block;
       border: none;
       background: transparent;
-      border-bottom: 1px solid hsl(0, 0%, 0%);
+      border-bottom: 1px solid var(--color-black);
       outline: none;
       background-color: hsla(60, 100%, 60%, 0.8);
       padding: 0 4px;
@@ -92,7 +92,7 @@
       display: inline-block;
       border: none;
       background: transparent;
-      border-bottom: 1px solid hsl(0, 0%, 0%);
+      border-bottom: 1px solid var(--color-black);
       outline: none;
       background-color: hsla(60, 100%, 60%, 0.8);
       padding: 0 4px;
@@ -112,7 +112,7 @@
 
     border: none;
     background: transparent;
-    border-bottom: 1px solid hsl(0, 0%, 0%);
+    border-bottom: 1px solid var(--color-black);
     outline: none;
     background-color: hsla(60, 100%, 60%, 0.8);
     padding: 0 4px;
@@ -126,7 +126,7 @@
 
       border: none;
       background: transparent;
-      border-bottom: 1px solid hsl(0, 0%, 0%);
+      border-bottom: 1px solid var(--color-black);
       outline: none;
       background-color: hsla(60, 100%, 60%, 0.8);
       padding: 0 4px;

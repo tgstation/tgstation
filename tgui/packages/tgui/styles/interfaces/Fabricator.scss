@@ -2,7 +2,7 @@
 
 .Fabricator__Recipe {
   padding: var(--space-s) 0;
-  border-bottom: var(--border-radius-tiny) solid hsl(0, 0%, 0%);
+  border-bottom: var(--border-radius-tiny) solid var(--color-black);
   position: relative;
 
   &:last-child {
@@ -56,7 +56,7 @@
   padding: var(--space-xl);
   border-radius: var(--border-radius-small) var(--border-radius-small) 0 0;
   text-align: center;
-  box-shadow: 0 0 3px hsl(0, 0%, 0%);
+  box-shadow: 0 0 3px var(--color-black);
 }
 
 .MaterialDock--active .MaterialDock__Dock {
@@ -77,7 +77,7 @@
   height: 0;
   padding-bottom: 100%;
   position: relative;
-  box-shadow: 0 0 3px hsl(0, 0%, 0%);
+  box-shadow: 0 0 3px var(--color-black);
 }
 
 .FabricatorRecipe {
