@@ -114,11 +114,12 @@
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(mod_link)
-	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
+	for(var/part_key in mod_parts)
+		var/datum/mod_part/part_datum = mod_parts[part_key]
 		var/obj/item/part_item = part_datum.part_item
 		part_datum.part_item = null
 		part_datum.overslotting = null
-		mod_parts -= part_datum
+		mod_parts -= part_key
 		qdel(part_datum)
 		if(!QDELING(part_item))
 			qdel(part_item)
