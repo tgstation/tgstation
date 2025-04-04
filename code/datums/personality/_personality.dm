@@ -88,6 +88,10 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 			/datum/personality/humble,
 			/datum/personality/prideful,
 		),
+		list(
+			/datum/personality/erudite,
+			/datum/personality/uneducated,
+		)
 	)
 	var/list/personalities
 
@@ -258,13 +262,14 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 
 /datum/personality/whimsical
 	name = "Whimsical"
-	desc = "I like to do things for the sake of doing them."
+	desc = "This station is too serious sometimes, lighten up!"
 	pos_gameplay_desc = "Likes things that are ostensibly pointless"
 
 /datum/personality/spiritual
 	name = "Spiritual"
 	desc = "I believe in a higher power."
 	pos_gameplay_desc = "Likes the Chapel and the Chaplain"
+	neg_gameplay_desc = "Dislikes heretical things"
 
 /datum/personality/creative
 	name = "Creative"
@@ -375,3 +380,13 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	name = "Gambler"
 	desc = "Throwing the dice is my favorite pastime."
 	pos_gameplay_desc = "Likes gambling and card games, and content with losing when gambling"
+
+/datum/personality/erudite
+	name = "Erudite"
+	desc = "Knowledge is power."
+	pos_gameplay_desc = "Likes reading books"
+
+/datum/personality/uneducated
+	name = "Uneducated"
+	desc = "I don't care much for books."
+	neg_gameplay_desc = "Dislikes reading books"
