@@ -57,6 +57,18 @@ GLOBAL_REAL(Tracy, /datum/tracy)
 	return FALSE
 #endif
 
+/// Flushes the byond-tracy file, if the Paradise version of byond-tracy which outputs a file is used.
+/datum/tracy/proc/flush()
+	// if trace_path is set, that means we're using para-tracy, which should have this.
+	if(!enabled || !trace_path)
+		return
+	SEND_TEXT(world.log, "Flushing byond-tracy log")
+	var/flush_result = call_ext(TRACY_DLL_PATH, "flush")()
+	if(flush_result != "0")
+		SEND_TEXT(world.log, "Error flushing byond-tracy log: [flush_result]")
+		CRASH("Error flushing byond-tracy log: [flush_result]")
+	SEND_TEXT(world.log, "Flushed byond-tracy log")
+
 /datum/tracy/vv_edit_var(var_name, var_value)
 	return FALSE // no.
 
