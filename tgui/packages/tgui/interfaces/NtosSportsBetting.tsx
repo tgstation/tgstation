@@ -31,11 +31,13 @@ type ActiveBets = {
   owner: BooleanLike;
   creator: string;
   current_bets: CurrentBets[];
+  locked: BooleanLike;
 };
 
 type CurrentBets = {
   option_name: string;
   total_amount: number;
+  personally_invested: number;
 };
 
 export const NtosSportsBetting = () => {
@@ -74,46 +76,58 @@ export const PollsSection = () => {
     <Section>
       {(active_bets.length &&
         active_bets.map(
-          ({ name, description, owner, creator, current_bets = [] }, index) => (
+          (
+            { name, description, owner, creator, current_bets = [], locked },
+            index,
+          ) => (
             <Section title={name + ' - Created by ' + creator} key={name}>
               <Stack>
                 <Stack.Item grow>
                   <Stack.Item grow>{description}</Stack.Item>
                   <Divider />
-                  {current_bets.map(({ option_name, total_amount }, index) => (
-                    <Stack.Item
-                      grow
-                      key={option_name}
-                      className="candystripe"
-                      my={1.5}
-                    >
-                      <Stack.Item>
-                        <Stack.Item my={1}>
-                          {option_name} (Has {total_amount || 0}cr bet on it)
+                  {current_bets.map(
+                    (
+                      { option_name, total_amount, personally_invested },
+                      index,
+                    ) => (
+                      <Stack.Item
+                        grow
+                        key={option_name}
+                        className="candystripe"
+                        my={1.5}
+                      >
+                        <Stack.Item>
+                          <Stack.Item my={1}>
+                            {option_name} (Has {total_amount || 0}cr bet on it)
+                          </Stack.Item>
+                          {!owner && (
+                            <NumberInput
+                              value={personally_invested}
+                              unit="cr"
+                              width="15px"
+                              disabled={locked}
+                              minValue={0}
+                              maxValue={10000}
+                              step={1}
+                              onChange={(value) =>
+                                act('place_bet', {
+                                  bet_selected: name,
+                                  option_selected: option_name,
+                                  money_betting: value,
+                                })
+                              }
+                            />
+                          )}
                         </Stack.Item>
-                        <NumberInput
-                          value={0}
-                          unit="cr"
-                          width="15px"
-                          minValue={0}
-                          maxValue={10000}
-                          step={1}
-                          onChange={(value) =>
-                            act('place_bet', {
-                              bet_selected: name,
-                              option_selected: option_name,
-                              money_betting: value,
-                            })
-                          }
-                        />
                       </Stack.Item>
-                    </Stack.Item>
-                  ))}
+                    ),
+                  )}
                 </Stack.Item>
                 <Stack.Item>
                   <Button
                     fluid
                     icon="minus"
+                    disabled={locked}
                     tooltip="If you have any bets, this will remove them and refund the money."
                     onClick={() => act('cancel_bet', { bet_selected: name })}
                   >

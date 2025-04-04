@@ -35,12 +35,13 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	var/list/data = list()
 	data["active_bets"] = list()
 	for(var/datum/active_bet/bets as anything in GLOB.active_bets)
-		data["active_bets"] = list(list(
+		data["active_bets"] += list(list(
 			"name" = bets.name,
 			"description" = bets.description,
 			"owner" = bets == created_bet,
 			"creator" = bets.bet_owner,
-			"current_bets" = bets.get_bets(),
+			"current_bets" = bets.get_bets(computer.computer_id_slot?.registered_account),
+			"locked" = bets.locked,
 		))
 
 	data["can_create_bet"] = !!isnull(created_bet)
@@ -73,9 +74,11 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 				return
 			var/list/options = list(params["option1"], params["option2"], params["option3"], params["option4"])
 			for(var/option in options)
-				if(isnull(option) || option == "")
-					options -= option
+				options -= option
+				//remove nulls, empty, and duplicates.
+				if(isnull(option) || option == "" || options.Find(option))
 					continue
+				options += option
 				option = reject_bad_name(option, allow_numbers = TRUE, max_length = MAX_LENGTH_TITLE, cap_after_symbols = FALSE)
 			if(length(options) < 2)
 				to_chat(user, span_danger("2 options minimum required to start a bet."))
@@ -130,6 +133,8 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	var/name
 	///The description of the bet
 	var/description
+	///Boolean on whether the bet is locked from getting new betters, or current ones from taking their money out.
+	var/locked
 	///Total amount of money that has been bet.
 	var/total_amount_bet
 	/** Assoc list of options, with each option having a list of people betting and the amount they've bet.
@@ -160,13 +165,17 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	return ..()
 
 ///Returns how many bets there is per option
-/datum/active_bet/proc/get_bets()
+/datum/active_bet/proc/get_bets(datum/bank_account/user_account)
 	var/list/bets_per_option = list()
 	for(var/option in options)
+		var/amount_personally_invested = 0
 		var/total_amount = 0
 		for(var/list/existing_bets in options[option])
-			total_amount += text2num(existing_bets[2])
-		bets_per_option += list(list("option_name" = option, "amount" = total_amount))
+			var/existing_bet_amount = text2num(existing_bets[2])
+			if(user_account && (existing_bets[1] == user_account))
+				amount_personally_invested = existing_bet_amount
+			total_amount += existing_bet_amount
+		bets_per_option += list(list("option_name" = option, "amount" = total_amount, "personally_invested" = amount_personally_invested))
 	return bets_per_option
 
 ///Pays out the loser's money equally to all the winners, or refunds it all if no winning option was given.
@@ -192,33 +201,47 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 
 ///Puts a bank account's money bet on a given option.
 /datum/active_bet/proc/bet_money(datum/bank_account/better, money_betting, option_betting)
-	if(better.account_balance < money_betting)
+	if(locked)
 		return
-	total_amount_bet += money_betting
-	//Ensures there's an option to actually bet for, in case of href exploits
-	var/valid_bet = FALSE
 	for(var/option in options)
-		if(option_betting != option)
-			continue
-		valid_bet = TRUE
 		for(var/list/existing_bets in options[option])
 			if(existing_bets[1] == better)
 				//We're already betting, but now we're betting on another one, clear our previous and we'll bet on the new.
 				if(option != option_betting)
 					better.adjust_money(text2num(existing_bets[2]), "Refunded: changed bet for [name].")
 					options[option] -= list(existing_bets)
-				//We're already betting on the same one, we'll add it together instead of making it a separate bet.
+				//We're already betting on the same one, we'll add it together instead of making it a separate bet, or the user is taking money out.
 				else
-					better.bank_card_talk("Additional [money_betting]cr deducted for your bet on [name].")
-					better.adjust_money(-money_betting, "Gambling on [name]")
-					existing_bets[2] = "[text2num(existing_bets[2]) + money_betting]"
-					return
-		break
+					//putting more money in
+					if(text2num(existing_bets[2]) < money_betting)
+						if(better.account_balance < money_betting)
+							return
+						var/money_adding_in = money_betting - text2num(existing_bets[2])
+						total_amount_bet += money_adding_in
+						better.bank_card_talk("Additional [money_adding_in]cr deducted for your bet on [name].")
+						better.adjust_money(-money_adding_in, "Gambling on [name].")
+						existing_bets[2] = "[money_betting]"
+						return
+					//taking it all out, we remove them from the list so they aren't a winner with bets of 0.
+					if(money_betting == 0)
+						var/money_taking_out = text2num(existing_bets[2])
+						total_amount_bet -= money_taking_out
+						better.adjust_money(money_taking_out, "Refunded: changed bet for [name].")
+						options[option] -= list(existing_bets)
+						return
+					//taking money out
+					if(text2num(existing_bets[2]) > money_betting)
+						var/money_taking_out = text2num(existing_bets[2]) - money_betting
+						total_amount_bet -= money_taking_out
+						better.bank_card_talk("Refunded [money_taking_out]cr for taking money out of your bet on [name].")
+						better.adjust_money(money_taking_out, "Refund from gambling on [name].")
+						existing_bets[2] = "[money_betting]"
+						return
 
-	if(valid_bet)
-		options[option_betting] += list(list(better, "[money_betting]"))
-		better.adjust_money(-money_betting, "Gambling on [name]")
-		better.bank_card_talk("Deducted [money_betting]cr for your bet on [name].")
+	total_amount_bet += money_betting
+	options[option_betting] += list(list(better, "[money_betting]"))
+	better.adjust_money(-money_betting, "Gambling on [name]")
+	better.bank_card_talk("Deducted [money_betting]cr for your bet on [name].")
 
 ///Cancels your bet, removing your bet and refunding your money.
 /datum/active_bet/proc/cancel_bet(datum/bank_account/better)
@@ -226,6 +249,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 		for(var/list/existing_bets in options[option])
 			if(existing_bets[1] == better)
 				var/money_refunding = text2num(existing_bets[2])
+				total_amount_bet -= money_refunding
 				better.bank_card_talk("Refunded [money_refunding]cr for cancelling your bet on [name].")
 				better.adjust_money(money_refunding, "Refunded: changed bet for [name].")
 				options[option] -= list(existing_bets)
