@@ -18,7 +18,6 @@
 	var/obj/item/overslotting = null
 
 /datum/mod_part/Destroy()
-	UnregisterSignal(part_item, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS)
 	part_item = null
 	overslotting = null
 	return ..()
