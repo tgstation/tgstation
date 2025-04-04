@@ -90,5 +90,8 @@
 	default_value = TRUE
 
 /datum/preference/toggle/ui_scale/apply_to_client(client/client, value)
+	if(!istype(client))
+		return
+
 	INVOKE_ASYNC(client, TYPE_VERB_REF(/client, refresh_tgui))
 	client.tgui_say?.load()
