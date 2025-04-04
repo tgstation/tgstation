@@ -11,11 +11,10 @@
 
 /datum/status_effect/heart_attack
 	id = "heart_attack"
-	status_type = STATUS_EFFECT_UNIQUE
 	remove_on_fullheal = TRUE
 	alert_type = null
 	///A timer that ticks down until the heart fully stops
-	var/time_until_stoppage = (150 SECONDS)
+	var/time_until_stoppage = 150
 	///Does the victim hear their own heartbeat?
 	var/sound = FALSE
 	///Does this show up on medhuds?
@@ -109,7 +108,7 @@
 			to_chat(owner, span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		owner.adjust_eye_blur(20 SECONDS)
 		human_owner.set_heartattack(TRUE)
-		owner.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite/heart_attack, 2) // To give the victim a final chance to shock their heart before losing consciousness
+		owner.apply_status_effect(/datum/status_effect/heart_desperation) // To give the victim a final chance to shock their heart before losing consciousness
 		var/flash_type = /atom/movable/screen/fullscreen/flash
 		if(owner.client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
 			flash_type = /atom/movable/screen/fullscreen/flash/black
@@ -157,6 +156,36 @@
 	time_until_stoppage += (20 + shock_damage * 1.15)
 	if(prob(50))
 		to_chat(owner, span_nicegreen("Something about being electrocuted makes the pain in your chest ease up!"))
+
+///Alternative to penthrite that keeps you up for a few seconds after having a heart attack. Gives a bit of time to call for help regardless of when/where you've collapsed.
+/datum/status_effect/heart_desperation
+	id = "heart_desperation"
+	duration = 5
+	alert_type = /atom/movable/screen/alert/heart_desperation
+	/// List of traits to add/remove from our subject when we are in their system
+	var/static/list/subject_traits = list(
+		TRAIT_STABLEHEART,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOCRITDAMAGE,
+	)
+
+/datum/status_effect/heart_desperation/on_apply()
+	owner.add_traits(subject_traits, type)
+	owner.Knockdown(2 SECONDS, 2 SECONDS)
+	return TRUE
+
+/datum/status_effect/heart_desperation/on_remove()
+	owner.remove_traits(subject_traits, type)
+
+/datum/status_effect/heart_desperation/tick(seconds_between_ticks)
+	owner.Knockdown(2 SECONDS, 2 SECONDS)
+	owner.set_silence_if_lower(2 SECONDS)
+
+/atom/movable/screen/alert/heart_desperation
+	name = "Last Chance!"
+	desc = "You're having a heart attack! Get to a doctor ASAP!"
+	icon_state = "heart_stop"
 
 #undef ATTACK_STAGE_TWO
 #undef ATTACK_STAGE_THREE

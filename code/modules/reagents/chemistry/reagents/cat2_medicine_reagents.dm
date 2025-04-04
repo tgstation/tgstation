@@ -627,28 +627,5 @@
 /datum/reagent/medicine/c2/penthrite/proc/remove_alert(mob/living/affected_mob)
 	affected_mob.clear_alert("penthrite")
 
-///Alternative to penthrite that keeps you up for a few seconds after having a heart attack. Gives a bit of time to call for help regardless of when/where you've collapsed.
-/datum/reagent/medicine/c2/penthrite/heart_attack
-	name = "Desperation"
-	description = "The by-product of one's parasympathetic nervous system releasing everything it can. Rarely found in living patients, as this particular chemical mix is only released when your body knows it's about to shut down."
-	color = "#F5F5F5"
-	chemical_flags = NONE
-
-/datum/reagent/medicine/c2/penthrite/heart_attack/send_alert(mob/living/affected_mob)
-	affected_mob.throw_alert("heart_stop", /atom/movable/screen/alert/heart_desperation)
-
-/datum/reagent/medicine/c2/penthrite/heart_attack/remove_alert(mob/living/affected_mob)
-	affected_mob.clear_alert("heart_stop")
-
-/datum/reagent/medicine/c2/penthrite/heart_attack/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
-	affected_mob.Knockdown(2 SECONDS, 2 SECONDS)
-	affected_mob.set_silence_if_lower(2 SECONDS)
-
-/atom/movable/screen/alert/heart_desperation
-	name = "Last Chance!"
-	desc = "You're having a heart attack! Get to a doctor ASAP!"
-	icon_state = "heart_stop"
-
 /******NICHE******/
 //todo
