@@ -121,7 +121,28 @@ GLOBAL_DATUM(animate_panel, /datum/animate_panel)
 			return TRUE
 
 		if("import_json")
-#warn todo
+			var/json_text = tgui_input_text(user, "Enter the json as text.", "Animation JSON Import", max_length = 4096, encode = FALSE)
+			if(!json_text)
+				return
+
+			var/datum/animate_chain/imported = /datum/animate_chain::deserialize_json(json_text, list())
+			if(isnull(imported))
+				to_chat(user, span_warning("Failed to import JSON."))
+				return
+
+			if(imported.chain_index != 1)
+				to_chat(user, span_warning("Malformed animation chain data."))
+				return
+
+			var/expected_index = 2
+			for(var/datum/animate_chain/chain as anything in imported.get_all_next())
+				if(chain.chain_index != expected_index)
+					to_chat(user, span_warning("Malformed animation chain data."))
+					return
+				expected_index += 1
+
+			animate_chains_by_user[ref(user)] = imported
+			return TRUE
 
 		if("wipe")
 			animate_chains_by_user -= ref(user)

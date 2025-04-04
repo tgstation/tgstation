@@ -221,7 +221,7 @@
 		. = json_encode(.)
 
 ///Deserializes from JSON. Does not parse type.
-/datum/proc/deserialize_json(list/input, list/options)
+/datum/proc/deserialize_json(input, list/options)
 	var/list/jsonlist = json_decode(input)
 	. = deserialize_list(jsonlist)
 	if(!istype(., /datum))
