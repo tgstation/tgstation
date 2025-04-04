@@ -348,7 +348,7 @@ export function JobsPage() {
     <>
       <JoblessRoleDropdown />
       <Stack vertical fill>
-        <Stack.Item mt={12.5}>
+        <Stack.Item mt={15}>
           <Stack fill g={1} className="PreferencesMenu__Jobs">
             <Stack.Item>
               <Stack vertical>
@@ -359,7 +359,7 @@ export function JobsPage() {
                 <Department department="Assistant" />
               </Stack>
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item mt={-5.9}>
               <Stack vertical>
                 <PriorityHeaders />
                 <Department department="Captain" />
