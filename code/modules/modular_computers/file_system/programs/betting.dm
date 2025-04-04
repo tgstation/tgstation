@@ -264,3 +264,6 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 				better.bank_card_talk("Refunded [money_refunding]cr for cancelling your bet on [name].")
 				better.adjust_money(money_refunding, "Refunded: changed bet for [name].")
 				options[option] -= list(existing_bets)
+
+#undef MAX_LENGTH_TITLE
+#undef MAX_LENGTH_DESCRIPTION
