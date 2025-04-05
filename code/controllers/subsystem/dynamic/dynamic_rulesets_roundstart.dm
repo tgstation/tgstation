@@ -211,7 +211,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	)
 	required_candidates = 1
 	weight = 3
-	cost = 10
+	cost = 16
 	scaling_cost = 9
 	requirements = list(101,101,60,30,30,25,20,15,10,10)
 	antag_cap = list("denominator" = 24)
@@ -606,7 +606,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	log_game("Starting a round of extended.")
 	SSdynamic.spend_roundstart_budget(SSdynamic.round_start_budget)
 	SSdynamic.spend_midround_budget(SSdynamic.mid_round_budget)
-	SSdynamic.threat_log += "[worldtime2text()]: Extended ruleset set threat to 0."
+	SSdynamic.threat_log += "[gameTimestamp()]: Extended ruleset set threat to 0."
 	return TRUE
 
 //////////////////////////////////////////////

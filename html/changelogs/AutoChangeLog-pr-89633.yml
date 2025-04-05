@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - balance: "The cargo console now has a delay to express orders (renamed to autodelivery)"

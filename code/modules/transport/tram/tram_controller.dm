@@ -89,7 +89,7 @@
 	else
 		serial_number = "LT306TG[rand(000000, 999999)]"
 
-	mfg_date = "[CURRENT_STATION_YEAR]-[time2text(world.timeofday, "MM-DD")]"
+	mfg_date = "[CURRENT_STATION_YEAR]-[time2text(world.timeofday, "MM-DD", NO_TIMEZONE)]"
 	install_location = specific_transport_id
 
 /datum/tram_mfg_info/proc/load_from_json(list/json_data)

@@ -1,5 +1,5 @@
 /datum/lazy_template/deathmatch
-	map_dir = "_maps/deathmatch"
+	map_dir = "_maps/minigame/deathmatch"
 	place_on_top = TRUE
 	turf_reservation_type = /datum/turf_reservation/turf_not_baseturf
 	/// Map UI Name

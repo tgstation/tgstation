@@ -580,7 +580,37 @@
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 		return
 
-	if((wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE)))
+	var/limbs_text = get_mismatched_limb_text()
+	if(LAZYLEN(limbs_text))
+		. += limbs_text
+
+	var/agetext = get_age_text()
+	if(agetext)
+		. += agetext
+
+/// Reports all body parts which are mismatched with the user's species
+/mob/living/carbon/human/proc/get_mismatched_limb_text()
+	var/list/covered = get_covered_body_zones()
+	var/list/texts = list()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		var/part_id = part.limb_id
+		var/obj/item/bodypart/expected_part = dna?.species?.bodypart_overrides[part.body_zone]
+		var/expected_id = initial(expected_part?.limb_id)
+		// only report abnormal bodyparts
+		if(part_id == expected_id)
+			continue
+		// same shape bodyparts are concealed by clothing
+		// this means you can see ex. digitigrade legs through clothes
+		// but you can't see ex. cybernetic legs through clothes
+		if(part.bodyshape == initial(expected_part?.bodyshape) && (part.body_zone in covered))
+			continue
+		texts += span_notice("[p_They()] [p_have()] \a [part].")
+
+	return texts
+
+/// Reports how old the mob appears to be
+/mob/living/carbon/human/proc/get_age_text()
+	if((wear_mask?.flags_inv & HIDEFACE) || (head?.flags_inv & HIDEFACE))
 		return
 
 	var/age_text
@@ -597,7 +627,8 @@
 			age_text = "very old"
 		if(101 to INFINITY)
 			age_text = "withering away"
-	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))
+
+	return span_notice("[p_They()] appear[p_s()] to be [age_text].")
 
 #undef ADD_NEWLINE_IF_NECESSARY
 #undef CARBON_EXAMINE_EMBEDDING_MAX_DIST

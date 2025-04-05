@@ -1,6 +1,7 @@
 /// Causes a fake "zap" to the hallucinator.
 /datum/hallucination/shock
-	random_hallucination_weight = 1
+	random_hallucination_weight = 1 // really low weight, as it also has a snowflake check to trigger when bumping airlocks
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	var/electrocution_icon = 'icons/mob/human/human.dmi'
 	var/electrocution_icon_state = "electrocuted_base"

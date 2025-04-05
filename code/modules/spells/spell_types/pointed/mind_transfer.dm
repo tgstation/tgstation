@@ -11,7 +11,7 @@
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_OPEN_TURF
 
-	invocation = "GIN'YU CAPAN"
+	invocation = "GIN'YU CAPAN."
 	invocation_type = INVOCATION_WHISPER
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 

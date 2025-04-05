@@ -104,7 +104,7 @@
 	var/list/prediff = get_overfloor_objects()
 	var/result = craftsman.construct_item(src, recipe)
 	if(istext(result))
-		say("Crafting failed,[result]")
+		say("Crafting failed[result]")
 		return
 	var/list/diff = get_overfloor_objects() - prediff
 	for(var/atom/movable/diff_result as anything in diff)

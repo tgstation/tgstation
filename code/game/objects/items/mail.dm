@@ -80,22 +80,22 @@
 	for(var/stamp in stamps)
 		var/image/stamp_image = image(
 			icon = icon,
-			icon_state = stamp,
-			pixel_x = stamp_offset_x,
-			pixel_y = stamp_offset_y + bonus_stamp_offset
+			icon_state = stamp
 		)
-		stamp_image.appearance_flags |= RESET_COLOR
+		stamp_image.pixel_w = pixel_w = stamp_offset_x
+		stamp_image.pixel_z = stamp_offset_y + bonus_stamp_offset
+		stamp_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		bonus_stamp_offset -= 5
 		. += stamp_image
 
 	if(postmarked == TRUE)
 		var/image/postmark_image = image(
 			icon = icon,
-			icon_state = "postmark",
-			pixel_x = stamp_offset_x + rand(-3, 1),
-			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+			icon_state = "postmark"
 		)
-		postmark_image.appearance_flags |= RESET_COLOR
+		postmark_image.pixel_w = stamp_offset_x + rand(-3, 1)
+		postmark_image.pixel_z = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
@@ -250,8 +250,10 @@
 	base_icon_state = "mail"
 	can_install_electronics = FALSE
 	lid_icon_state = "maillid"
-	lid_x = -26
-	lid_y = 2
+	lid_w = -26
+	lid_z = 2
+	weld_w = 1
+	weld_z = 4
 	paint_jobs = null
 	///if it'll show the nt mark on the crate
 	var/postmarked = TRUE

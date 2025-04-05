@@ -127,7 +127,9 @@
 		if (!istype(donut))
 			continue
 
-		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		var/image/donut_image = image(icon = initial(icon), icon_state = donut.in_box_sprite())
+		donut_image.pixel_w = donuts * DONUT_INBOX_SPRITE_WIDTH
+		. += donut_image
 		donuts += 1
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
@@ -509,6 +511,7 @@
 	icon_state = "nuggetbox"
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
+	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
 

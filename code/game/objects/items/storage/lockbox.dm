@@ -159,11 +159,11 @@
 		var/obj/item/clothing/accessory/medal/M = contents[i]
 		var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
 		if(i > 1 && i <= 5)
-			medalicon.pixel_x += ((i-1)*3)
+			medalicon.pixel_w += ((i-1)*3)
 		else if(i > 5)
-			medalicon.pixel_y -= 7
-			medalicon.pixel_x -= 2
-			medalicon.pixel_x += ((i-6)*3)
+			medalicon.pixel_z -= 7
+			medalicon.pixel_w -= 2
+			medalicon.pixel_w += ((i-6)*3)
 		. += medalicon
 
 /obj/item/storage/lockbox/medal/hop
