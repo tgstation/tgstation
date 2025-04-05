@@ -3973,6 +3973,7 @@
 #include "code\modules\clothing\head\tinfoilhat.dm"
 #include "code\modules\clothing\head\tophat.dm"
 #include "code\modules\clothing\head\welding.dm"
+#include "code\modules\clothing\head\whoopee.dm"
 #include "code\modules\clothing\head\wig.dm"
 #include "code\modules\clothing\masks\_masks.dm"
 #include "code\modules\clothing\masks\animal_masks.dm"
