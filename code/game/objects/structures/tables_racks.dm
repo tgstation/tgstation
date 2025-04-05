@@ -574,8 +574,10 @@
 	return
 
 /obj/structure/table/wood/proc/wood_table_shatter(mob/living/victim)
-	visible_message(span_warning("[src] smashes into bits!"),
-		span_danger("You hear the loud cracking of wood being split."))
+	visible_message(
+		span_warning("[src] smashes into bits!"),
+		blind_message = span_hear("You hear the loud cracking of wood being split."),
+	)
 
 	playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
 	victim.Paralyze(20 SECONDS) // since its not 100% odds, make it longer than a glass table to compensate.
