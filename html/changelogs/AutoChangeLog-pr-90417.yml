@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Jukebox volume preference applies to currently playing music"
+  - bugfix: "Jukebox volume no longer resets to 100% when adjusted from the object"
