@@ -135,7 +135,6 @@
 	visible_message(span_notice("[bell_attached] falls off!"))
 	bell_attached = null
 	update_appearance()
-	return
 
 /obj/vehicle/ridden/wheelchair/proc/remove_bomb()
 	if (!bomb_attached)
@@ -144,7 +143,6 @@
 	visible_message(span_notice("[bomb_attached] falls off!"))
 	bomb_attached = null
 	update_appearance()
-	return
 
 /// A reward item for obtaining 5K hardcore random points. Do not use for anything else
 /obj/vehicle/ridden/wheelchair/gold
