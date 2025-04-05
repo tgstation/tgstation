@@ -697,7 +697,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	to_chat(
 		GLOB.admins,
 		span_adminnotice( \
-			"<b color='orange'>Cross-sector channel creation (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to create a cross-sector\
+			"<b color='orange'>Cross-sector channel creation (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to create a cross-sector \
 			newscaster channel \"[channel_name]\" (will autoapprove in [DisplayTimeText(approval_time)]): \
 			<b><a href='byond://?src=[REF(src)];reject_channel_creation=1'>REJECT</a></b>"\
 		)
@@ -791,7 +791,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(temp_message)
 		feed_channel_message = temp_message
 
-	GLOB.news_network.submit_article("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, user)]</font>", newscaster_username, current_channel.channel_name, send_photo_data(), adminMessage = FALSE, allow_comments = TRUE)
+	GLOB.news_network.submit_article("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, user)]</font>", newscaster_username, current_channel.channel_name, send_photo_data(), adminMessage = FALSE, allow_comments = TRUE, author_mob = user)
 	SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 	feed_channel_message = ""
 	current_image = null

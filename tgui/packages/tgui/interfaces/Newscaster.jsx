@@ -403,6 +403,7 @@ const NewscasterChannelBox = (props) => {
     channelLocked,
     channelAuthor,
     channelCensored,
+    receivingCrossSector,
     viewing_channel,
     admin_mode,
     photo_data,
@@ -446,7 +447,8 @@ const NewscasterChannelBox = (props) => {
               selected={photo_data}
               disabled={
                 (channelLocked && channelAuthor !== user.name) ||
-                channelCensored
+                channelCensored ||
+                receivingCrossSector
               }
               onClick={() => act('togglePhoto')}
             >

@@ -259,12 +259,11 @@
 	input["timer_id"] = timer_id
 	LAZYADD(timers, timer_id)
 
-	var/message = "<b color='orange'>Cross-sector channel creation (Incoming):</b> [input["author_ckey"]] is about to create a cross-sector\
+	var/message = "<b color='orange'>Cross-sector channel creation (Incoming):</b> [input["author_ckey"]] is about to create a cross-sector \
 			newscaster channel \"[input["message"]]\" (will autoapprove in [DisplayTimeText(message_delay)]): \
 			<b><a href='byond://?src=[REF(src)];reject_channel_creation=[timer_id]'>REJECT</a></b>"
 
 	message_admins(span_adminnotice(message))
-
 
 /datum/world_topic/create_news_channel/Topic(href, list/href_list)
 	. = ..()
@@ -294,4 +293,15 @@
 /datum/world_topic/create_news_channel/proc/create_channel(list/input)
 	LAZYREMOVE(timers, input["timer_id"])
 	message_admins("[input["author_ckey"]] has crated a cross-sector newscaster channel titled \"[input["message"]]\"")
-	GLOB.news_network.create_feed_channel(input["message"], input["author"], input["desc"], locked = TRUE, receiving_cross_sector = TRUE)
+	GLOB.news_network.create_feed_channel("[input["message"]]-cross", input["author"], input["desc"], locked = TRUE, receiving_cross_sector = TRUE)
+
+/datum/world_topic/create_news_article
+	keyword = "create_news_article"
+
+/datum/world_topic/create_news_article/Run(list/input)
+	var/msg = input["msg"]
+	var/author = input["author"]
+	var/author_key = input["author_ckey"]
+	var/channel = input["message"]
+	message_admins(span_adminnotice("Incoming cross-sector newscaster article by [author_key] in channel [channel]."))
+	GLOB.news_network.submit_article(msg, author, channel)
