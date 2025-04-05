@@ -17,6 +17,7 @@
 
 	if(stat != DEAD)
 		death(TRUE)
+	send_death_moodlets(/datum/mood_event/see_death)
 
 	ghostize()
 	spill_organs(drop_bitflags)
@@ -93,6 +94,7 @@
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 	death(TRUE)
+	send_death_moodlets(/datum/mood_event/see_death/dusted)
 
 	if(drop_items)
 		unequip_everything()
@@ -149,6 +151,62 @@
 	ash.pixel_z = -5
 	ash.pixel_w = rand(-1, 1)
 
+#define DEATH_MOODLET "saw_death"
+
+/**
+ * Sends a moodlet to all nearby living mobs that are not blind or unconscious
+ * to indicate that they saw this mob die (and thus feel bad about it)
+ *
+ * Note: If the mob already has a death moodlet, and the same moodlet is applied, the existing moodlet will simply worsen.
+ * Note: If the mob has a death moodlet, and a worse moodlet is applied, the worse moodlet will take priority.
+ *
+ * Arguments:
+ * * moodlet - The type of moodlet to send. Defaults to [/datum/mood_event/see_death]
+ */
+/mob/living/proc/send_death_moodlets(datum/mood_event/moodlet = /datum/mood_event/see_death)
+	if(flags_1 & HOLOGRAM_1)
+		return
+
+	for(var/mob/living/nearby in viewers())
+		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
+			continue
+		var/datum/mood_event/existing = nearby.mob_mood?.mood_events[DEATH_MOODLET]
+		var/mood_amount_override
+		if(existing)
+			// The existing debuff gets worse
+			if(existing.type == moodlet)
+				existing.mood_change *= 1.5
+
+			// If you see a gib, it overrides seeing death straight up
+			else if(initial(existing.mood_change) < initial(moodlet.mood_change))
+				// But the penalty from the existing moodlet is maintained (if stronger)
+				mood_amount_override = min(existing.mood_change, initial(moodlet.mood_change))
+				// Either way get rid of the old because we're adding an entirely new one
+				nearby.clear_mood_event(DEATH_MOODLET, moodlet)
+
+		// Either applies the moodlet or resets existing moodlet timers
+		// Description is unchanged / mood_amount_override does nothing if the moodlet already exists
+		nearby.add_mood_event(DEATH_MOODLET, moodlet, src, mood_amount_override)
+
+/mob/living/silicon/send_death_moodlets(datum/mood_event/moodlet)
+	return // You are a machine
+
+/mob/living/basic/send_death_moodlets(datum/mood_event/moodlet)
+	if(!(basic_mob_flags & SENDS_DEATH_MOODLETS))
+		return
+	. = ..()
+	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src) //Protagonist is the person memorizing it
+
+/mob/living/simple_animal/send_death_moodlets(datum/mood_event/moodlet)
+	return // I don't care about you anymore
+
+/mob/living/carbon/human/send_death_moodlets(datum/mood_event/moodlet)
+	. = ..()
+	var/memory_type = ispath(moodlet, /datum/mood_event/see_death/gibbed) ? /datum/memory/witness_gib : /datum/memory/witnessed_death
+	add_memory_in_range(src, 7, memory_type, protagonist = src)
+
+#undef DEATH_MOODLET
+
 /*
  * Called when the mob dies. Can also be called manually to kill a mob.
  *
@@ -159,8 +217,10 @@
 	if(stat == DEAD)
 		return FALSE
 
-	if(!gibbed && (death_sound || death_message || (living_flags & ALWAYS_DEATHGASP)))
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
+	if(!gibbed)
+		if(death_sound || death_message || (living_flags & ALWAYS_DEATHGASP))
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
+		send_death_moodlets(/datum/mood_event/see_death)
 
 	set_stat(DEAD)
 	timeofdeath = world.time

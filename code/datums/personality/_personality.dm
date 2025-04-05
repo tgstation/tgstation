@@ -178,7 +178,7 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	SHOULD_CALL_PARENT(TRUE)
 	if(personality_trait)
 		ADD_TRAIT(who, personality_trait, PERSONALITY_TRAIT)
-	LAZYADD(who.personalities, type)
+	LAZYSET(who.personalities, type, TRUE)
 
 /**
  * Called when removing this personality from a mob.
@@ -412,6 +412,7 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	name = "Aloof"
 	desc = "Why is everyone so touchy? I'd rather be left alone."
 	neg_gameplay_desc = "Dislikes hugs"
+	personality_trait = TRAIT_BADTOUCH
 
 /datum/personality/hopeful
 	savefile_key = "hopeful"
@@ -459,6 +460,7 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	name = "Aromantic"
 	desc = "Romance has no place on the station."
 	neg_gameplay_desc = "Dislikes kisses and hugs"
+	personality_trait = TRAIT_BADTOUCH
 
 /datum/personality/ascetic
 	savefile_key = "ascetic"

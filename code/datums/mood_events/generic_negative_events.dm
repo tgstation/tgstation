@@ -280,6 +280,11 @@
 	timeout = 2 MINUTES
 	event_flags = MOOD_EVENT_ART
 
+/datum/mood_event/artbad/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/creative))
+		mood_change = 0
+		description = "Everyone has to start their art journey somewhere!"
+
 /datum/mood_event/graverobbing
 	description = "I just desecrated someone's grave... I can't believe I did that..."
 	mood_change = -8
@@ -442,9 +447,15 @@
 
 /datum/mood_event/gamer_lost
 	description = "If I'm not good at video games, can I truly call myself a gamer?"
-	mood_change = -10
+	mood_change = -6
 	timeout = 10 MINUTES
 	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
+
+/datum/mood_event/gamer_lost/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/humble))
+		mood_change *= 0.5
+	if(HAS_PERSONALITY(owner, /datum/personality/prideful))
+		mood_change *= 1.5
 
 /datum/mood_event/lost_52_card_pickup
 	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."
@@ -488,6 +499,10 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 	event_flags = MOOD_EVENT_FEAR
+
+/datum/mood_event/moon_insanity/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/spiritual))
+		mood_change *= 2
 
 /datum/mood_event/amulet_insanity
 	description = "I sEe THe LiGHt, It mUsT BE stOPPed!"
@@ -550,3 +565,74 @@
 	if(HAS_TRAIT(owner, TRAIT_SMOKER))
 		description = "Blowing smoke in my face, really?"
 		mood_change = 0
+
+/datum/mood_event/see_death
+	description = "I just saw someone die. How horrible..."
+	mood_change = -8
+	timeout = 5 MINUTES
+
+/datum/mood_event/see_death/add_effects(mob/dead_mob, mood_amount_override)
+	if(isnull(dead_mob))
+		return
+	if(!isnull(mood_amount_override))
+		mood_change = mood_amount_override
+	if(HAS_PERSONALITY(owner, /datum/personality/callous))
+		mood_change = 0
+		description = "Oh, [get_descriptor(dead_mob)] died. Shame, I guess."
+		return
+	if(istype(dead_mob, /mob/living/basic/pet))
+		description = "My pet [dead_mob] just died!!"
+		mood_change *= 1.5
+		timeout = 8 MINUTES
+		return
+	description = "I just saw [get_descriptor(dead_mob)] die. How horrible..."
+
+/datum/mood_event/see_death/proc/get_descriptor(mob/dead_mob)
+	if(isnull(dead_mob))
+		return
+	var/datum/job/descriptor = dead_mob.mind?.assigned_role
+	if(descriptor?.job_flags & JOB_CREW_MEMBER)
+		return "the [LOWER_TEXT(descriptor.title)]"
+	return "someone"
+
+/datum/mood_event/see_death/gibbed
+	description = "Someone just exploded in front of me!!"
+	mood_change = -12
+	timeout = 8 MINUTES
+
+/datum/mood_event/see_death/gibbed/add_effects(mob/dead_mob, mood_amount_override)
+	if(isnull(dead_mob))
+		return
+	if(!isnull(mood_amount_override))
+		mood_change = mood_amount_override
+	if(HAS_PERSONALITY(owner, /datum/personality/callous))
+		mood_change = 0
+		description = "Oh, [get_descriptor(dead_mob)] exploded. Now I have to get the mop."
+		return
+	if(istype(dead_mob, /mob/living/basic/pet))
+		description = "My pet [dead_mob] just exploded!!"
+		mood_change *= 1.5
+		timeout = 10 MINUTES
+		return
+	description = "[capitalize(get_descriptor(dead_mob))] just exploded in front of me!!"
+
+/datum/mood_event/see_death/dusted
+	description = "Someone was just vaporized in front of me!! I don't feel so good..."
+	mood_change = -12
+	timeout = 8 MINUTES
+
+/datum/mood_event/see_death/dusted/add_effects(mob/dead_mob, mood_amount_override)
+	if(isnull(dead_mob))
+		return
+	if(!isnull(mood_amount_override))
+		mood_change = mood_amount_override
+	if(HAS_PERSONALITY(owner, /datum/personality/callous))
+		mood_change = 0
+		description = "Oh, [get_descriptor(dead_mob)] was vaporized. Now I have to get the dustpan."
+		return
+	if(istype(dead_mob, /mob/living/basic/pet))
+		description = "My pet [dead_mob] just vaporized!!"
+		mood_change *= 1.5
+		timeout = 10 MINUTES
+		return
+	description = "[capitalize(get_descriptor(dead_mob))] was just vaporized in front of me!! I don't feel so good..."

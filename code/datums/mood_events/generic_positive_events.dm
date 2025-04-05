@@ -39,16 +39,31 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
+/datum/mood_event/tailpulled/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/aloof) || HAS_PERSONALITY(owner, /datum/personality/aromantic))
+		mood_change = -2
+		description = "Who the hell is touching my tail?"
+
 /datum/mood_event/arcade
 	description = "I beat the arcade game!"
 	mood_change = 3
 	timeout = 8 MINUTES
 	event_flags = MOOD_EVENT_GAMING
 
+/datum/mood_event/arcade/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/diligent))
+		mood_change = -1
+		description = "Wow, I beat the game. I could've been doing something productive instead."
+
 /datum/mood_event/blessing
 	description = "I've been blessed."
-	mood_change = 3
+	mood_change = 1
 	timeout = 8 MINUTES
+
+/datum/mood_event/blessing/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/spiritual))
+		mood_change = 3
+		description = "I feel blessed by the gods!"
 
 /datum/mood_event/maintenance_adaptation
 	mood_change = 8
@@ -61,13 +76,26 @@
 	mood_change = 1
 	timeout = 5 MINUTES
 
+/datum/mood_event/book_nerd/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/erudite))
+		mood_change = 2
+		description = "I love reading books!"
+	if(HAS_PERSONALITY(owner, /datum/personality/uneducated))
+		mood_change = -1
+		description = "Who cares about books?"
+
 /datum/mood_event/exercise
 	description = "Working out releases those endorphins!"
 	mood_change = 1
 
 /datum/mood_event/exercise/add_effects(fitness_level)
 	mood_change = fitness_level // the more fit you are, the more you like to work out
-	return ..()
+	if(HAS_PERSONALITY(owner, /datum/personality/lazy))
+		mood_change *= -0.5
+		description = "Working out, what a chore!"
+	else if(!HAS_PERSONALITY(owner, /datum/personality/athletic))
+		mood_change *= 0.5
+		description = "Working out is a bit of a chore, but it is pretty fulfilling."
 
 /datum/mood_event/pet_animal
 	description = "Animals are adorable! I can't stop petting them!"
@@ -88,6 +116,14 @@
 	description = "It feels good to save a life."
 	mood_change = 6
 	timeout = 8 MINUTES
+
+/datum/mood_event/saved_life/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/callous))
+		mood_change = 0
+		description = "I don't care much for saving lives."
+	if(HAS_PERSONALITY(owner, /datum/personality/misanthropic))
+		mood_change = -1
+		description = "Saving lives is a waste of time."
 
 /datum/mood_event/oblivious
 	description = "What a lovely day."
@@ -229,6 +265,13 @@
 	timeout = 45 SECONDS
 
 /datum/mood_event/helped_up/add_effects(mob/other_person, helper)
+	if(HAS_PERSONALITY(owner, /datum/personality/callous) || HAS_PERSONALITY(owner, /datum/personality/misanthropic))
+		mood_change = -2
+		if(helper)
+			description = "They should have helped themselves."
+		else
+			description = "I could've gotten up myself."
+		return
 	if(!other_person)
 		return
 
@@ -264,6 +307,10 @@
 	event_flags = MOOD_EVENT_ROMANCE
 
 /datum/mood_event/kiss/add_effects(mob/beau, direct)
+	if(HAS_PERSONALITY(owner, /datum/personality/aromantic))
+		mood_change = -2
+		description = "A kiss? We're working, not flirting!"
+		return
 	if(!beau)
 		return
 	if(direct)
@@ -303,11 +350,22 @@
 	timeout = 30 SECONDS
 	event_flags = MOOD_EVENT_GAMING
 
+/datum/mood_event/gaming/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/diligent))
+		mood_change = -1
+		description = "Is now really the time to be playing games? I should be working."
+
 /datum/mood_event/gamer_won
 	description = "I love winning video games!"
-	mood_change = 10
+	mood_change = 6
 	timeout = 5 MINUTES
 	event_flags = MOOD_EVENT_GAMING
+
+/datum/mood_event/gamer_won/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/humble))
+		mood_change *= 0.5
+	if(HAS_PERSONALITY(owner, /datum/personality/prideful))
+		mood_change *= 1.5
 
 /datum/mood_event/love_reagent
 	description = "This food reminds me of the good ol' days."

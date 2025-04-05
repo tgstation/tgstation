@@ -92,3 +92,6 @@
 #define MOOD_EVENT_ROMANCE (1<<6)
 /// Relates to food
 #define MOOD_EVENT_FOOD (1<<7)
+
+/// Checks if the mob has the given personality typepath
+#define HAS_PERSONALITY(mob, personality) (LAZYACCESS(mob.personalities, personality))

@@ -57,6 +57,9 @@
 /datum/preference_middleware/personality/get_ui_data(mob/user)
 	var/list/data = list()
 
-	data["selected_personalities"] = preferences.read_preference(/datum/preference/personality)
+	data["selected_personalities"] = list()
+	for(var/personality_key in preferences.read_preference(/datum/preference/personality))
+		var/datum/personality/personality = GLOB.personality_controller.personalities_by_key[personality_key]
+		data["selected_personalities"] += personality.type
 
 	return data
