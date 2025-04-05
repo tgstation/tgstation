@@ -37,4 +37,4 @@
 		to_chat(user, span_notice("No smite selected."))
 		return
 
-	selected_smite.effect(user, object)
+	selected_smite.do_effect(user, object)

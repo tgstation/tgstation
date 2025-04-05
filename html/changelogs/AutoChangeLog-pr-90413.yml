@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Random supposedly-friendly mobs will no longer aggro onto and kill medbots and cleanbots"

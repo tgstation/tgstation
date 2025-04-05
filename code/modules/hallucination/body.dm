@@ -1,6 +1,7 @@
 /// Makes a random body appear and disappear quickly in view of the hallucinator.
 /datum/hallucination/body
 	abstract_hallucination_parent = /datum/hallucination/body
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 	/// The file to make the body image from.
 	var/body_image_file
 	/// The icon state to make the body image form.
@@ -126,6 +127,7 @@
 /datum/hallucination/body/weird
 	random_hallucination_weight = 0.1 // These are very uncommon
 	abstract_hallucination_parent = /datum/hallucination/body/weird
+	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/body/weird/alien
 	body_image_file = 'icons/mob/nonhuman-player/alien.dmi'
@@ -140,6 +142,7 @@
 	body_image_file = 'icons/mob/simple/mob.dmi'
 	body_image_state = "chronostuck"
 	body_floats = TRUE
+	hallucination_tier = HALLUCINATION_TIER_VERYSPECIAL
 
 /datum/hallucination/body/weird/god
 	body_image_file = 'icons/mob/simple/mob.dmi'
@@ -158,6 +161,7 @@
 /datum/hallucination/body/weird/bones
 	body_image_file = 'icons/obj/trader_signs.dmi'
 	body_image_state = "mrbones"
+	hallucination_tier = HALLUCINATION_TIER_VERYSPECIAL
 
 /datum/hallucination/body/weird/freezer
 	random_hallucination_weight = 0.3 // Slightly more common since it's cool (heh)
@@ -165,11 +169,12 @@
 	body_image_state = "the_freezer"
 	body_layer = ABOVE_ALL_MOB_LAYER
 	spawn_under_hallucinator = TRUE
+	hallucination_tier = HALLUCINATION_TIER_VERYSPECIAL
 
 /datum/hallucination/body/weird/freezer/make_body_image(turf/location)
 	var/image/body = ..()
-	body.pixel_x = pick(rand(-208,-48), rand(48, 208))
-	body.pixel_y = pick(rand(-208,-48), rand(48, 208))
+	body.pixel_w = pick(rand(-208,-48), rand(48, 208))
+	body.pixel_z = pick(rand(-208,-48), rand(48, 208))
 	body.alpha = 245
 	SET_PLANE_EXPLICIT(body, ABOVE_HUD_PLANE, location)
 	return body
@@ -190,5 +195,5 @@
 	if(QDELETED(src))
 		return
 	// Spook 'em before we delete
-	shown_body.pixel_x = (shown_body.pixel_x / 2)
-	shown_body.pixel_y = (shown_body.pixel_y / 2)
+	shown_body.pixel_w = (shown_body.pixel_w / 2)
+	shown_body.pixel_z = (shown_body.pixel_z / 2)

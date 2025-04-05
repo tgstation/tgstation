@@ -153,12 +153,12 @@
 	mood_change = -3
 
 /datum/mood_event/claustrophobia
-	description = "Why do I feel trapped?!  Let me out!!!"
+	description = "Why do I feel trapped?! Let me out!!!"
 	mood_change = -7
 	timeout = 1 MINUTES
 
 /datum/mood_event/bright_light
-	description = "I hate it in the light...I need to find a darker place..."
+	description = "I hate it in the light... I need to find a darker place..."
 	mood_change = -12
 
 /datum/mood_event/family_heirloom_missing

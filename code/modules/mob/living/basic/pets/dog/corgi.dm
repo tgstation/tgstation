@@ -174,7 +174,7 @@
 
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			head_icon = equipped_head_fashion_item.get_overlay(dir = EAST)
-			head_icon.pixel_y = -8
+			head_icon.pixel_z = -8
 			head_icon.transform = head_icon.transform.Turn(180)
 		else
 			head_icon = equipped_head_fashion_item.get_overlay()
@@ -194,7 +194,7 @@
 
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			back_icon = equipped_back_fashion_item.get_overlay(dir = EAST)
-			back_icon.pixel_y = -11
+			back_icon.pixel_z = -11
 			back_icon.transform = back_icon.transform.Turn(180)
 		else
 			back_icon = equipped_back_fashion_item.get_overlay()

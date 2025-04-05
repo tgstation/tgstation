@@ -64,7 +64,7 @@
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
-	icon = 'icons/effects/dirt.dmi'
+	icon = 'icons/effects/dirt_misc.dmi'
 	icon_state = "dirt-flat-0"
 	base_icon_state = "dirt"
 	smoothing_flags = NONE
@@ -83,6 +83,8 @@
 		return
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt && is_tileable)
+		icon = 'icons/effects/dirt.dmi'
+		icon_state = "dirt-0"
 		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
 	if(smoothing_flags & USES_SMOOTHING)
@@ -532,10 +534,12 @@
 /obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/hit_proj)
 	. = ..()
 	ignite()
+	log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
 /obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, params)
 	if(item.ignition_effect(src, user))
 		ignite()
+		log_combat(user, src, "used [item] to ignite")
 	return ..()
 
 /obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/entered_atom)

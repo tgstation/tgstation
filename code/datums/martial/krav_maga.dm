@@ -27,12 +27,13 @@
 	. = ..()
 	if(!.)
 		return
-	if (owner.mind.martial_art.streak == "neck_chop")
+	var/datum/martial_art/source = target
+	if (source.streak == "neck_chop")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
-		owner.mind.martial_art.streak = ""
+		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Neck Chop stance!"), "<b><i>Your next attack will be a Neck Chop.</i></b>")
-		owner.mind.martial_art.streak = "neck_chop"
+		source.streak = "neck_chop"
 
 /datum/action/leg_sweep
 	name = "Leg Sweep - Trips the victim, knocking them down for a brief moment."
@@ -44,12 +45,13 @@
 	. = ..()
 	if(!.)
 		return
-	if (owner.mind.martial_art.streak == "leg_sweep")
+	var/datum/martial_art/source = target
+	if (source.streak == "leg_sweep")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
-		owner.mind.martial_art.streak = ""
+		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Leg Sweep stance!"), "<b><i>Your next attack will be a Leg Sweep.</i></b>")
-		owner.mind.martial_art.streak = "leg_sweep"
+		source.streak = "leg_sweep"
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
 	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
@@ -61,14 +63,15 @@
 	. = ..()
 	if(!.)
 		return
-	if (owner.mind.martial_art.streak == "quick_choke")
+	var/datum/martial_art/source = target
+	if (source.streak == "quick_choke")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
-		owner.mind.martial_art.streak = ""
+		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Lung Punch stance!"), "<b><i>Your next attack will be a Lung Punch.</i></b>")
-		owner.mind.martial_art.streak = "quick_choke"//internal name for lung punch
+		source.streak = "quick_choke"//internal name for lung punch
 
-/datum/martial_art/krav_maga/on_teach(mob/living/new_holder)
+/datum/martial_art/krav_maga/activate_style(mob/living/new_holder)
 	. = ..()
 	to_chat(new_holder, span_userdanger("You know the arts of [name]!"))
 	to_chat(new_holder, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
@@ -76,7 +79,7 @@
 	legsweep.Grant(new_holder)
 	lungpunch.Grant(new_holder)
 
-/datum/martial_art/krav_maga/on_remove(mob/living/remove_from)
+/datum/martial_art/krav_maga/deactivate_style(mob/living/remove_from)
 	to_chat(remove_from, span_userdanger("You suddenly forget the arts of [name]..."))
 	neckchop?.Remove(remove_from)
 	legsweep?.Remove(remove_from)
