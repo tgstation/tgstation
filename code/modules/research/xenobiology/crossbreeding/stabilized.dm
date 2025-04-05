@@ -22,25 +22,8 @@ Stabilized extracts:
 	qdel(linked_effect)
 	return ..()
 
-/// Returns the mob that is currently holding us if we are either in their inventory or a backpack analogue.
-/// Returns null if it's in an invalid location, so that we can check explicitly for null later.
-/obj/item/slimecross/stabilized/proc/get_held_mob()
-	if(isnull(loc))
-		return null
-	if(isliving(loc))
-		return loc
-	// Snowflake check for modsuit backpacks, which should be valid but are 3 rather than 2 steps from the owner
-	if(istype(loc, /obj/item/mod/module/storage))
-		var/obj/item/mod/module/storage/mod_backpack = loc
-		var/mob/living/modsuit_wearer = mod_backpack.mod?.wearer
-		return modsuit_wearer ? modsuit_wearer : null
-	var/nested_loc = loc.loc
-	if (isliving(nested_loc))
-		return nested_loc
-	return null
-
 /obj/item/slimecross/stabilized/process()
-	var/mob/living/holder = get_held_mob()
+	var/mob/living/holder = get_atom_on_turf(src, /mob/living)
 	if(isnull(holder))
 		return
 	var/effectpath = /datum/status_effect/stabilized
