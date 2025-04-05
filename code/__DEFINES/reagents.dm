@@ -241,3 +241,13 @@
 #define GRENADE_WIRED 2
 /// Grenade is ready to be finished
 #define GRENADE_READY 3
+
+/// Maximum amount of layers a pill can hold, aka maximum number of seconds a pill takes to dissolve
+#define PILL_MAX_LAYERS 60
+/// Maximum amount of layers above which you cannot taste the pill's contents
+#define PILL_MAX_TASTE_LAYERS 20
+/// Maximum amount of layers that a ChemMaster can produce
+#define PILL_MAX_PRINTABLE_LAYERS 30
+
+/// Cooldown between patch reagent messages
+#define PATCH_MESSAGE_COOLDOWN 10 SECONDS

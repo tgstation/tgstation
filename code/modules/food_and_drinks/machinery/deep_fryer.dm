@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
 	// Dissolving pills into the frier
-	if(istype(weapon, /obj/item/reagent_containers/pill))
+	if(istype(weapon, /obj/item/reagent_containers/applicator/pill))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return

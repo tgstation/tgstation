@@ -125,7 +125,7 @@
 	if(!quirk_transfer && lose_text)
 		to_chat(quirk_holder, lose_text)
 
-	if(mob_trait)
+	if(mob_trait && !QDELETED(quirk_holder))
 		REMOVE_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
 
 	if(quirk_flags & QUIRK_PROCESSES)
@@ -195,6 +195,12 @@
 /datum/quirk/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	update_process()
+
+/// If a quirk is able to be selected for the mob's species
+/datum/quirk/proc/is_species_appropriate(datum/species/mob_species)
+	if(mob_trait in GLOB.species_prototypes[mob_species].inherent_traits)
+		return FALSE
+	return TRUE
 
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk

@@ -236,7 +236,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				if(hair_color)
 					hair_overlay.color = hair_color
 				hair_overlay.alpha = 200
-				hair_overlay.pixel_y = S.y_offset
+				hair_overlay.pixel_z = S.y_offset
 				add_overlay(hair_overlay)
 
 /*
@@ -922,6 +922,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	// During the break between opening the input menu and selecting our target, has this become an invalid option?
 	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
+		return
+
+	if (chosen_target == usr)
 		return
 
 	do_observe(chosen_target)

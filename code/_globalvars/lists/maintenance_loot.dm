@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/rack_parts = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/maintenance/achievement = 1,
+		/obj/item/reagent_containers/applicator/pill/maintenance/achievement = 1,
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -254,6 +254,10 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/food/ready_donk/mac_n_cheese = 1,
 			) = 1,
 		/obj/item/food/monkeycube = 1,
+		) = 8,
+
+	list(//Donk Co. 'Donk Spike' flechette shells, these things show up everywhere in donkpocket boxes
+		/obj/item/storage/box/donkpockets/donkpocketshell = 1,
 		) = 8,
 
 	list(//computer disks

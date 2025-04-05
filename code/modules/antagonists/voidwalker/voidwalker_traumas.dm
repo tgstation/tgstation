@@ -51,12 +51,14 @@
 
 	for(var/obj/item/bodypart/bodypart as anything in owner.bodyparts)
 		untexture_limb(owner, bodypart)
+	owner.update_body()
 
 /// Apply the space texture
 /datum/brain_trauma/voided/proc/texture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 
-	limb.add_bodypart_overlay(new bodypart_overlay_type)
+	// Not updating because on_gain/on_lose() call it down the line, and calls coming from comsigs update the owner's body themselves
+	limb.add_bodypart_overlay(new bodypart_overlay_type(), update = FALSE)
 	limb.add_color_override(space_color, LIMB_COLOR_VOIDWALKER_CURSE)
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
@@ -67,7 +69,7 @@
 
 	var/overlay = locate(bodypart_overlay_type) in limb.bodypart_overlays
 	if(overlay)
-		limb.remove_bodypart_overlay(overlay)
+		limb.remove_bodypart_overlay(overlay, update = FALSE)
 		limb.remove_color_override(LIMB_COLOR_VOIDWALKER_CURSE)
 
 	if(istype(limb, /obj/item/bodypart/head))

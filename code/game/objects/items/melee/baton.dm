@@ -86,7 +86,7 @@
 	readout += "\n[active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."]"
 
 	if(stamina_damage <= 0) // The advanced baton actually does have 0 stamina damage so...yeah.
-		readout += "Either is is [span_warning("completely unable to perform a stunning strike")], or it [span_warning("attacks via some unusual method")]."
+		readout += "Either it is [span_warning("completely unable to perform a stunning strike")], or it [span_warning("attacks via some unusual method")]."
 		return readout.Join("\n")
 
 	readout += "It takes [span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")] to stun an enemy."
@@ -984,3 +984,56 @@
 	else
 		stuff_in_hand.forceMove(user.drop_location())
 		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
+
+
+/obj/item/melee/baton/nunchaku
+	name = "Syndie Fitness Nunchuks"
+	desc = "The most common fitness equipment in the entire syndicate, titanium rods weigh strictly 13 pounds"
+	desc_controls = "Left click to stun, right click to harm. Throw mode counterattack any melee/throwable attacks."
+	icon_state = "nunchaku"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	inhand_icon_state = "nunchaku"
+	worn_icon_state = "nunchaku"
+	attack_verb_continuous = list("beats", "whips", "smashes", "punishes")
+	attack_verb_simple = list("beat", "whip", "smash", "punish")
+	hitsound = 'sound/items/weapons/chainhit.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
+	slot_flags = ITEM_SLOT_BELT
+	cooldown = CLICK_CD_MELEE
+	knockdown_time = 0.25 SECONDS
+	demolition_mod = 1.5
+	stamina_damage = 30 // 4 hit stamcrit
+	stun_armour_penetration = 30 // bronze-silver telescopic
+	force = 16 // 7 hit crit
+	bare_wound_bonus = 5
+
+/obj/item/melee/baton/nunchaku/proc/randomize_state()
+	icon_state = pick(list("nunchaku", "nunchaku_x", "nunchaku_y"))
+	update_appearance()
+
+/obj/item/melee/baton/nunchaku/after_throw(datum/callback/callback)
+	. = ..()
+	randomize_state()
+
+/obj/item/melee/baton/nunchaku/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	randomize_state()
+
+/obj/item/melee/baton/nunchaku/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
+	if(attack_type == PROJECTILE_ATTACK || !owner.throw_mode)
+		return ..()
+
+	randomize_state()
+
+	// blocks any melee/throwable attacks
+	owner.adjustStaminaLoss(5)
+	final_block_chance = 100
+
+	// counterattack at melee
+	if(attack_type in list(MELEE_ATTACK, UNARMED_ATTACK, LEAP_ATTACK))
+		var/mob/living/attacker = GET_ASSAILANT(hitby)
+		playsound(src, pick(list('sound/items/weapons/cqchit2.ogg', 'sound/items/weapons/cqchit1.ogg')), 70, FALSE)
+		melee_attack_chain(owner, attacker, LEFT_CLICK)
+
+	return ..()

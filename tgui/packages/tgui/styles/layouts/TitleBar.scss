@@ -9,103 +9,95 @@
 
 $text-color: hsla(0, 0%, 100%, 0.75) !default;
 $background-color: hsl(0, 0%, 21%) !default;
-$shadow-color-core: hsl(0, 0%, 8.6%) !default;
-$shadow-color: hsla(0, 0%, 0%, 0.1) !default;
+$shadow-color: hsla(0, 0%, 0%, 0.66) !default;
+$shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
 
 .TitleBar {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: base.rem(32px);
   background-color: $background-color;
   border-bottom: 1px solid $shadow-color-core;
-  box-shadow: 0 2px 2px $shadow-color;
-  box-shadow: 0 base.rem(2px) base.rem(2px) $shadow-color;
+  box-shadow: 0px 0px base.em(6px) base.em(-1px) $shadow-color;
+  z-index: 101; // More than Dimmer
   user-select: none;
+  // Deprecated. Delete after full transition to 516
   -ms-user-select: none;
-}
 
-.TitleBar__clickable {
-  color: color.change($text-color, $alpha: 0.5);
-  background-color: $background-color;
-  transition:
-    color 250ms ease-out,
-    background-color 250ms ease-out;
-
-  &:hover {
-    color: rgba(255, 255, 255, 1);
-    background-color: hsl(0, 100%, 40%);
-    transition:
-      color 0ms,
-      background-color 0ms;
+  &__dragZone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
-}
 
-.TitleBar__title {
-  position: absolute;
-  display: inline-block;
-  top: 0;
-  left: 46px;
-  left: base.rem(46px);
-  color: $text-color;
-  font-size: 14px;
-  font-size: base.rem(14px);
-  line-height: 31px;
-  line-height: base.rem(31px);
-  white-space: nowrap;
-  pointer-events: none;
-}
+  &__statusIcon {
+    text-align: center;
+    font-size: base.rem(20px);
+    transition: color 0.5s;
+  }
 
-.TitleBar__buttons {
-  pointer-events: initial;
-  display: inline-block;
-  width: 100%;
-  margin-left: 10px;
-}
+  &__title {
+    pointer-events: none;
+    display: inline-block;
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: $text-color;
+    font-size: base.rem(14px);
+  }
 
-.TitleBar__dragZone {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 32px;
-  height: base.rem(32px);
-}
+  &__buttons {
+    overflow: hidden;
+    white-space: nowrap;
+    pointer-events: all;
+    display: inline-block;
+    margin: 0 base.rem(9px);
+    z-index: 102;
+  }
 
-.TitleBar__statusIcon {
-  position: absolute;
-  top: 0;
-  left: 12px;
-  left: base.rem(12px);
-  transition: color 0.5s;
-  font-size: 20px;
-  font-size: base.rem(20px);
-  line-height: 32px !important;
-  line-height: base.rem(32px) !important;
-}
+  &__KitchenSink {
+    width: base.rem(21px);
+    min-width: base.rem(21px);
+    max-width: base.rem(21px);
+    background-color: color.adjust(colors.$good, $lightness: -10%, $space: hsl);
+    color: hsl(120, 100%, 100%);
+    text-align: center;
+    border-radius: 0;
 
-.TitleBar__close {
-  position: absolute;
-  top: -1px;
-  right: 0;
-  width: 45px;
-  width: base.rem(45px);
-  height: 32px;
-  height: base.rem(32px);
-  font-size: 20px;
-  font-size: base.rem(20px);
-  line-height: 31px;
-  line-height: base.rem(31px);
-  text-align: center;
-}
+    &:hover {
+      background-color: colors.$good;
+    }
+  }
 
-.TitleBar__devBuildIndicator {
-  position: absolute;
-  top: 6px;
-  top: base.rem(6px);
-  right: 52px;
-  right: base.rem(52px);
-  min-width: 20px;
-  min-width: base.rem(20px);
-  padding: 2px 4px;
-  padding: base.rem(2px) base.rem(4px);
-  background-color: color.adjust(colors.$good, $lightness: -10%, $space: hsl);
-  color: hsl(120, 100%, 100%);
-  text-align: center;
+  &__close {
+    cursor: pointer;
+    pointer-events: all;
+    align-content: center;
+    text-align: center;
+    font-size: base.rem(16px);
+    height: 100%;
+    color: color.change($text-color, $alpha: 0.5);
+    z-index: 102;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+
+    &:hover {
+      background-color: hsl(0, 100%, 40%);
+      color: rgba(255, 255, 255, 1);
+      transition-duration: 0s;
+    }
+  }
+
+  &__statusIcon,
+  &__close {
+    width: base.rem(45px);
+    min-width: base.rem(45px);
+    max-width: base.rem(45px);
+  }
 }

@@ -139,4 +139,4 @@
 		current_node.update_icon()
 
 /obj/machinery/atmospherics/pipe/update_layer()
-	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? ABOVE_OPEN_TURF_LAYER : initial(layer)) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)
