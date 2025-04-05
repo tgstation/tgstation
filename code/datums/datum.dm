@@ -385,17 +385,6 @@
 	animate(filter, new_params, time = time, easing = easing, loop = loop)
 	modify_filter(name, new_params)
 
-
-/** Similar to transition_filter(), except it creates an animation chain that moves between a list of states.
- * Arguments:
- * * thing_to_filter - owner of the filter we're animating
- * * name - Filter name
- * * loop - Amount of times the chain loops. INDEFINITE = Infinite
- * * transtion_steps - a list of each link in the animation chain. Use FilterChainStep(params, duration, easing) for each link
- */
-#define transition_filter_chain(thing_to_filter, name, loop, transition_steps...) \
-UNLINT(thing_to_filter._transition_filter_chain(name, loop, list(##transition_steps)))
-
 /** Keeps the steps in the correct order.
 * Arguments:
 * * params - the parameters you want this step to animate to
@@ -403,15 +392,23 @@ UNLINT(thing_to_filter._transition_filter_chain(name, loop, list(##transition_st
 * * easing - the type of easing this step has
 */
 /proc/FilterChainStep(params, duration, easing)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
 	params -= "type"
 	return list("params"= params, "duration"=duration, "easing"=easing)
 
-/// Use transition_filter_chain() macro
-/datum/proc/_transition_filter_chain(name, num_loops, list/transition_steps)
-	PRIVATE_PROC(TRUE)
-
+/** Similar to transition_filter(), except it creates an animation chain that moves between a list of states.
+ * Arguments:
+ * * name - Filter name
+ * * num_loops - Amount of times the chain loops. INDEFINITE = Infinite
+ * * ... - a list of each link in the animation chain. Use FilterChainStep(params, duration, easing) for each link
+ * Example use:
+ * * add_filter("blue_pulse", 1, color_matrix_filter(COLOR_WHITE))
+ * * transition_filter_chain(src, "blue_pulse", INDEFINITE,\
+ * *	FilterChainStep(color_matrix_filter(COLOR_BLUE), 10 SECONDS, CUBIC_EASING),\
+ * *	FilterChainStep(color_matrix_filter(COLOR_WHITE), 10 SECONDS, CUBIC_EASING))
+ * The above code would edit a color_matrix_filter() to slowly turn blue over 10 seconds before returning back to white 10 seconds after, repeating this chain forever.
+ */
+/datum/proc/transition_filter_chain(name, num_loops, ...)
+	var/list/transition_steps = args.Copy(3)
 	var/filter = get_filter(name)
 	if(!filter)
 		return
