@@ -3130,13 +3130,14 @@
 	description = "A frothy extract made from fermented kronkus vine pulp.\nHighly bitter due to the presence of a variety of kronkamines."
 	taste_description = "bitterness"
 	color = "#228f63"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 5)
 
-/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+	need_mob_update = kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	need_mob_update += kronkus_enjoyer.adjustStaminaLoss(-6, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH

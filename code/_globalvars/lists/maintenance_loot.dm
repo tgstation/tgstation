@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/beacon = 1,
 		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
 		/obj/item/plaque = 1,
-		/obj/item/seeds/kronkus = 1,
+		/obj/item/seeds/kronkus = 3,
 		/obj/item/seeds/odious_puffball = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/stock_parts/power_store/cell/high = 1,
