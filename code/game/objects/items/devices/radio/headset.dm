@@ -411,6 +411,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot2 = new /obj/item/encryptionkey/ai_with_binary
 	command = TRUE
 
+/obj/item/radio/headset/silicon/human_ai/equipped(mob/user, slot, initial)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_LOUD_BINARY, REF(src))
+
+/obj/item/radio/headset/silicon/human_ai/dropped(mob/user, slot, initial)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_LOUD_BINARY, REF(src))
+
 /obj/item/radio/headset/silicon/ai/evil
 	name = "\proper Evil Integrated Subspace Transceiver"
 	keyslot2 = new /obj/item/encryptionkey/ai/evil
