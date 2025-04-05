@@ -40,6 +40,7 @@ export function TguiSay() {
   const channelIterator = useRef(new ChannelIterator());
   const chatHistory = useRef(new ChatHistory());
   const messages = useRef(byondMessages);
+  const scale = useRef(true);
 
   // I initially wanted to make these an object or a reducer, but it's not really worth it.
   // You lose the granulatity and add a lot of boilerplate.
@@ -51,7 +52,6 @@ export function TguiSay() {
   const [maxLength, setMaxLength] = useState(1024);
   const [lightMode, setLightMode] = useState(false);
   const [value, setValue] = useState('');
-  const [scale, setScale] = useState(true);
 
   const position = useRef([window.screenX, window.screenY]);
   const isDragging = useRef(false);
@@ -126,7 +126,7 @@ export function TguiSay() {
 
   function handleClose(): void {
     innerRef.current?.blur();
-    windowClose(scale);
+    windowClose(scale.current);
 
     setTimeout(() => {
       chatHistory.current.reset();
@@ -238,7 +238,7 @@ export function TguiSay() {
     }
 
     setButtonContent(iterator.current());
-    windowOpen(iterator.current(), scale);
+    windowOpen(iterator.current(), scale.current);
 
     const input = innerRef.current;
     setTimeout(() => {
@@ -249,7 +249,7 @@ export function TguiSay() {
   function handleProps(data: ByondProps): void {
     setMaxLength(data.maxLength);
     setLightMode(!!data.lightMode);
-    setScale(!!data.scale);
+    scale.current = !!data.scale;
   }
 
   function unloadChat(): void {
@@ -263,7 +263,7 @@ export function TguiSay() {
     Byond.subscribeTo('props', handleProps);
     Byond.subscribeTo('force', handleForceSay);
     Byond.subscribeTo('open', handleOpen);
-  }, [scale]);
+  }, []);
 
   /** Value has changed, we need to check if the size of the window is ok */
   useEffect(() => {
@@ -280,7 +280,7 @@ export function TguiSay() {
 
     if (size !== newSize) {
       setSize(newSize);
-      windowSet(newSize, scale);
+      windowSet(newSize, scale.current);
     }
   }, [value]);
 
@@ -299,7 +299,7 @@ export function TguiSay() {
       </div>
       <div
         className={classes(['content', lightMode && 'content-lightMode'])}
-        style={{ zoom: scale ? '' : `${100 / window.devicePixelRatio}%` }}
+        style={{ zoom: scale.current ? '' : `${100 / window.devicePixelRatio}%` }}
       >
         <button
           className={`button button-${theme}`}
