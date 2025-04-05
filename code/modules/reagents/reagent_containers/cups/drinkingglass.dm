@@ -132,3 +132,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full/Initialize(mapload, vol)
 	. = ..()
 	name = "[pick("half full", "half empty")] glass of water"
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/irish_cream
+	name = "Irish Cream"
+	list_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 50)
