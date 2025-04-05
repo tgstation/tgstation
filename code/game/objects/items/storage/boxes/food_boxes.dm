@@ -367,6 +367,7 @@
 	. = ..()
 	atom_storage.set_holdable(/obj/item/food/bubblegum)
 	atom_storage.max_slots = 1
+	atom_storage.display_contents = FALSE
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/storage/bubblegum_wrapper/PopulateContents()
@@ -380,6 +381,26 @@
 	var/mutable_appearance/gum_overlay = mutable_appearance(gum_inside.icon, gum_inside.icon_state, layer = src.layer - 0.01)
 	gum_overlay.color = gum_inside.color
 	. += gum_overlay
+
+//These procs are copied over from cigarette packets
+/obj/item/storage/bubblegum_wrapper/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /obj/item/food/bubblegum))
+		atom_storage.item_interact_insert(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	if(interacting_with != user)
+		return ..()
+	quick_remove_item(/obj/item/food/bubblegum, user, equip_to_mouth = TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/storage/bubblegum_wrapper/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	quick_remove_item(/obj/item/food/bubblegum, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/storage/bubblegum_wrapper/click_alt(mob/user)
+	quick_remove_item(/obj/item/food/bubblegum, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
