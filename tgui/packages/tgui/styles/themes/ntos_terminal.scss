@@ -11,7 +11,7 @@
   $label: hsl(146, 82%, 53%),
   $good: hsla(146, 82%, 53%, 0.5),
   // $fg-map-keys: (),
-  // $bg-map-keys: (),
+   // $bg-map-keys: (),
 );
 @use '../base.scss' with (
   $color-bg: hsl(120, 10%, 9%),
@@ -55,7 +55,8 @@
 
   .Layout__content {
     //background-image: none;
-    background-image: repeating-linear-gradient(
+    background-image:
+      repeating-linear-gradient(
         0deg,
         hsla(0, 0%, 0%, 0.15),
         hsla(0, 0%, 0%, 0.15) 1px,
