@@ -159,4 +159,7 @@
 
 	//Here we make the changes for the atom, we apply a filter and change the name to indicate rarity.
 	beautiful_mutant.add_filter("shiny mutation", 15, color_matrix_filter(mutant_shift_matrix, FILTER_COLOR_HSL))
-	beautiful_mutant.real_name = beautiful_mutant.name = "[rarity_affix] [beautiful_mutant.name]"
+	beautiful_mutant.name = "[rarity_affix] [beautiful_mutant.name]"
+	if(isliving(beautiful_mutant)) //update the real name var if it's actually a living mob
+		var/mob/living/living_mutie = beautiful_mutant
+		living_mutie.real_name = living_mutie.name
