@@ -593,8 +593,9 @@ export function MainPage(props: MainPageProps) {
                   currentSpeciesData ? !!currentSpeciesData.sexes : true
                 }
                 canDeleteCharacter={
-                  Object.values(data.character_profiles).filter((name) => name)
-                    .length > 1
+                  Object.values(data.character_profiles).filter(
+                    (name) => !!name,
+                  ).length > 1
                 }
                 handleDeleteCharacter={() => setDeleteCharacterPopupOpen(true)}
               />
