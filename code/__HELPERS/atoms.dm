@@ -379,23 +379,3 @@ rough example of the "cone" made by the 3 dirs checked
 		"x" = icon_width > ICON_SIZE_X && pixel_x != 0 ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
 		"y" = icon_height > ICON_SIZE_Y && pixel_y != 0 ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
 	)
-
-/// Returns the living mob that is currently holding us if we are either in their inventory or a backpack analogue.
-/// Returns null if it's in an invalid location, so that we can check explicitly for null later.
-/// get_last_mob = TRUE will return the final mob, while FALSE will return the first. Only there in the snowflake case that we're in nested mobs.
-/atom/movable/proc/get_held_mob(get_last_mob = FALSE)
-	if(isnull(loc))
-		return null
-	if(isliving(loc))
-		return loc
-	var/list/nested_locs = get_nested_locs(src)
-	var/list/all_held_mobs = list()
-	for(var/mob/nest_check in nested_locs)
-		if(isliving(nest_check))
-			all_held_mobs += nest_check
-	if(LAZYLEN(all_held_mobs))
-		if(get_last_mob)
-			return peek(all_held_mobs)
-		return all_held_mobs[1]
-	return null
-

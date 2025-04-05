@@ -23,7 +23,7 @@ Stabilized extracts:
 	return ..()
 
 /obj/item/slimecross/stabilized/process()
-	var/mob/living/holder = get_held_mob()
+	var/mob/living/holder = get_atom_on_turf(src, /mob/living)
 	if(isnull(holder))
 		return
 	var/effectpath = /datum/status_effect/stabilized

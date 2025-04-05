@@ -394,7 +394,7 @@
  * * transtion_steps - a list of each link in the animation chain. Use FilterChainStep(params, duration, easing) for each link
  */
 #define transition_filter_chain(thing_to_filter, name, loop, transition_steps...) \
-thing_to_filter._transition_filter_chain(name, loop, list(##transition_steps))
+UNLINT(thing_to_filter._transition_filter_chain(name, loop, list(##transition_steps)))
 
 /** Keeps the steps in the correct order.
 * Arguments:
@@ -403,11 +403,15 @@ thing_to_filter._transition_filter_chain(name, loop, list(##transition_steps))
 * * easing - the type of easing this step has
 */
 /proc/FilterChainStep(params, duration, easing)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	params -= "type"
 	return list("params"= params, "duration"=duration, "easing"=easing)
 
 /// Use transition_filter_chain() macro
 /datum/proc/_transition_filter_chain(name, num_loops, list/transition_steps)
+	PRIVATE_PROC(TRUE)
+
 	var/filter = get_filter(name)
 	if(!filter)
 		return

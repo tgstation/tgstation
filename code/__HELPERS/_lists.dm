@@ -1332,10 +1332,15 @@
 /**
  * Similar to pick_weight_recursive, except without the weight part, meaning it should hopefully not take
  * up as much computing power for things that don't +need+ weights.
+ * * * Able to handle cases such as:
+ * * pick_recursive(list(a), list(b), list(c))
+ * * pick_recursive(list(list(a), list(b)))
+ * * pick_recursive(a, list(b), list(list(c), list(d)))
+ * * pick_recusrive(list(a, b, c), d, e)
+ * Really any combination of lists & vars, as long as the passed lists aren't empty
  */
 /proc/pick_recursive(...)
-	var/list/things_to_pick = args
-	var/result = pick(things_to_pick)
+	var/result = pick(args)
 	while(islist(result))
 		result = pick(result)
 	return result
