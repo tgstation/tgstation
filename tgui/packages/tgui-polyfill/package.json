@@ -11,6 +11,6 @@
     "unfetch": "^5.0.0"
   },
   "devDependencies": {
-    "terser": "^5.36.0"
+    "terser": "^5.39.0"
   }
 }

@@ -6075,7 +6075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.4.1":
+"chokidar@npm:^3.4.1, chokidar@npm:^3.5.2":
   version: 3.6.0
   resolution: "chokidar@npm:3.6.0"
   dependencies:
@@ -6174,12 +6174,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clean-css-cli@npm:^5.6.3":
+  version: 5.6.3
+  resolution: "clean-css-cli@npm:5.6.3"
+  dependencies:
+    chokidar: "npm:^3.5.2"
+    clean-css: "npm:^5.3.3"
+    commander: "npm:7.x"
+    glob: "npm:^7.1.6"
+  bin:
+    cleancss: bin/cleancss
+  checksum: 10c0/678562c4b3ba4bd150cee0fd838b0cb9b645e3260dd5ff8b9e1456215e86bb6389e3a7f542194c125eaf700034e60ab14570837d7e36663bd5a283904f86f656
+  languageName: node
+  linkType: hard
+
 "clean-css@npm:^4.2.3":
   version: 4.2.4
   resolution: "clean-css@npm:4.2.4"
   dependencies:
     source-map: "npm:~0.6.0"
   checksum: 10c0/0e41795fdc9d65e5e17a3b0016d90bf2a653e3a680829b5bcebdbab48604cfe36d96d8af6346338d2c2aca8aa9af024ac4fb752ac3eb5b71bef68a34a129b58a
+  languageName: node
+  linkType: hard
+
+"clean-css@npm:^5.3.3":
+  version: 5.3.3
+  resolution: "clean-css@npm:5.3.3"
+  dependencies:
+    source-map: "npm:~0.6.0"
+  checksum: 10c0/381de7523e23f3762eb180e327dcc0cedafaf8cb1cd8c26b7cc1fc56e0829a92e734729c4f955394d65ed72fb62f82d8baf78af34b33b8a7d41ebad2accdd6fb
   languageName: node
   linkType: hard
 
@@ -6359,6 +6382,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:7.x, commander@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "commander@npm:7.2.0"
+  checksum: 10c0/8d690ff13b0356df7e0ebbe6c59b4712f754f4b724d4f473d3cc5b3fdcf978e3a5dc3078717858a2ceb50b0f84d0660a7f22a96cdc50fb877d0c9bb31593d23a
+  languageName: node
+  linkType: hard
+
 "commander@npm:^10.0.1":
   version: 10.0.1
   resolution: "commander@npm:10.0.1"
@@ -6377,13 +6407,6 @@ __metadata:
   version: 4.1.1
   resolution: "commander@npm:4.1.1"
   checksum: 10c0/84a76c08fe6cc08c9c93f62ac573d2907d8e79138999312c92d4155bc2325d487d64d13f669b2000c9f8caf70493c1be2dac74fec3c51d5a04f8bc3ae1830bab
-  languageName: node
-  linkType: hard
-
-"commander@npm:^7.2.0":
-  version: 7.2.0
-  resolution: "commander@npm:7.2.0"
-  checksum: 10c0/8d690ff13b0356df7e0ebbe6c59b4712f754f4b724d4f473d3cc5b3fdcf978e3a5dc3078717858a2ceb50b0f84d0660a7f22a96cdc50fb877d0c9bb31593d23a
   languageName: node
   linkType: hard
 
@@ -18677,7 +18700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:^5.26.0, terser@npm:^5.3.4, terser@npm:^5.36.0":
+"terser@npm:^5.26.0, terser@npm:^5.3.4":
   version: 5.36.0
   resolution: "terser@npm:5.36.0"
   dependencies:
@@ -18688,6 +18711,20 @@ __metadata:
   bin:
     terser: bin/terser
   checksum: 10c0/f4ed2bead19f64789ddcfb85b7cef78f3942f967b8890c54f57d1e35bc7d547d551c6a4c32210bce6ba45b1c738314bbfac6acbc6c762a45cd171777d0c120d9
+  languageName: node
+  linkType: hard
+
+"terser@npm:^5.39.0":
+  version: 5.39.0
+  resolution: "terser@npm:5.39.0"
+  dependencies:
+    "@jridgewell/source-map": "npm:^0.3.3"
+    acorn: "npm:^8.8.2"
+    commander: "npm:^2.20.0"
+    source-map-support: "npm:~0.5.20"
+  bin:
+    terser: bin/terser
+  checksum: 10c0/83326545ea1aecd6261030568b6191ccfa4cb6aa61d9ea41746a52479f50017a78b77e4725fbbc207c5df841ffa66a773c5ac33636e95c7ab94fe7e0379ae5c7
   languageName: node
   linkType: hard
 
@@ -18780,7 +18817,7 @@ __metadata:
   dependencies:
     core-js: "npm:^3.39.0"
     regenerator-runtime: "npm:^0.14.1"
-    terser: "npm:^5.36.0"
+    terser: "npm:^5.39.0"
     unfetch: "npm:^5.0.0"
   languageName: unknown
   linkType: soft
@@ -18797,6 +18834,15 @@ __metadata:
     tgui: "workspace:*"
     tgui-core: "npm:^1.8.4"
     tgui-polyfill: "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"tgui-setup@workspace:packages/tgui-setup":
+  version: 0.0.0-use.local
+  resolution: "tgui-setup@workspace:packages/tgui-setup"
+  dependencies:
+    clean-css-cli: "npm:^5.6.3"
+    terser: "npm:^5.39.0"
   languageName: unknown
   linkType: soft
 
