@@ -12,7 +12,12 @@ import { BooleanLike } from 'tgui-core/react';
 import { BooleanStyleMap, computeBoxProps, StringStyleMap } from 'tgui-core/ui';
 
 import transparency_checkerboard from '../../../assets/transparency_checkerboard.svg';
-import { AsBothSpaces, hsva2hslString, rgb2hexstring } from '../colorSpaces';
+import {
+  AsBothSpaces,
+  hsva2hslString,
+  parseHexColorString,
+  rgb2hexstring,
+} from '../colorSpaces';
 import { useClickAndDragEventHandler, useDimensions } from '../helpers';
 import { EditorColor } from '../Types/types';
 import { InlineStyle } from '../Types/types';
@@ -338,17 +343,8 @@ export const ColorPicker = (props: ColorPickerProps) => {
                 maxLength={9}
                 updateOnPropsChange
                 onChange={(_, value) => {
-                  const stripped = value.startsWith('#')
-                    ? value.substring(1)
-                    : value;
-                  const r = parseInt(stripped.substring(0, 2), 16);
-                  const g = parseInt(stripped.substring(2, 4), 16);
-                  const b = parseInt(stripped.substring(4, 6), 16);
-                  const a = parseInt(stripped.substring(6, 8), 16);
-                  if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) {
-                    return;
-                  }
-                  setColor({ r, g, b, a: Number.isNaN(a) ? 1 : a / 255 });
+                  if (!value.startsWith('#') || value.length < 7) return;
+                  setColor(parseHexColorString(value));
                 }}
               />
             </LabeledList.Item>
