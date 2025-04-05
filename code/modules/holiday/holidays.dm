@@ -426,7 +426,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	holiday_mail = list(
 		/obj/effect/spawner/random/trash/garbage,
 		/obj/item/storage/bag/trash,
-		)
+	)
 
 /datum/holiday/summersolstice
 	name = "Summer Solstice"
@@ -460,8 +460,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/food/snowcones/rainbow,
 		/obj/item/clothing/head/costume/garland/rainbowbunch,
 		/obj/item/clothing/head/soft/rainbow,
-		/obj/item/clothing/accessory/pride
-		)
+		/obj/item/clothing/accessory/pride,
+	)
 
 // JULY
 
@@ -615,7 +615,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic/ian,
 		/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/ian,
 		/obj/item/radio/toy,
-		)
+	)
 
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
@@ -727,7 +727,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/food/grown/poppy,
 		/obj/item/storage/fancy/candle_box,
 		/obj/item/food/grown/harebell,
-		)
+	)
 
 /datum/holiday/remembrance_day/greet()
 	return "Lest we forget."
