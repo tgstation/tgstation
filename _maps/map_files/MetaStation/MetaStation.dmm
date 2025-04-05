@@ -46979,10 +46979,6 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"qHW" = (
-/obj/item/storage/test_tube_rack/full,
-/turf/closed/wall/r_wall,
-/area/station/security/prison/safe)
 "qHY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -60335,6 +60331,7 @@
 /area/station/medical/pharmacy)
 "vjZ" = (
 /obj/structure/table,
+/obj/item/storage/test_tube_rack/full,
 /turf/open/floor/iron/dark/side,
 /area/station/security/prison)
 "vkb" = (
@@ -91767,7 +91764,7 @@ hDE
 wZz
 wZz
 wZz
-qHW
+sjP
 iPb
 iPb
 uza
