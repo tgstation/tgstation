@@ -305,7 +305,7 @@
 	var/channel_name = input["message"]
 
 	var/found_channel = FALSE
-	for(var/datum/feed_channel/channel in network_channels)
+	for(var/datum/feed_channel/channel in GLOB.news_network.network_channels)
 		if(channel.channel_name == channel_name)
 			found_channel = TRUE
 			break
