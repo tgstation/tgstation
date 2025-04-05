@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(ipintel)
 	name = "XKeyScore"
-	init_order = INIT_ORDER_XKEYSCORE
 	flags = SS_NO_INIT|SS_NO_FIRE
 	/// The threshold for probability to be considered a VPN and/or bad IP
 	var/probability_threshold

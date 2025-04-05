@@ -1,5 +1,9 @@
 SUBSYSTEM_DEF(traitor)
 	name = "Traitor"
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms
+	)
 	flags = SS_KEEP_TIMING
 	wait = 10 SECONDS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
