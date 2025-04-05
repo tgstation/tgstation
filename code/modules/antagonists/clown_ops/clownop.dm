@@ -78,8 +78,7 @@
 
 /datum/outfit/clown_operative/post_equip(mob/living/carbon/human/H, visuals_only)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.active = TRUE
-	H.update_worn_back()
+	booster.activate()
 
 /datum/outfit/clown_operative_elite
 	name = "Clown Operative (Elite, Preview only)"
@@ -89,5 +88,4 @@
 
 /datum/outfit/clown_operative_elite/post_equip(mob/living/carbon/human/H, visuals_only)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.active = TRUE
-	H.update_worn_back()
+	booster.activate()

@@ -62,9 +62,11 @@
 	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
 
 /obj/item/mod/module/magboot/on_install()
+	. = ..()
 	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
 
-/obj/item/mod/module/magboot/on_uninstall(deleting)
+/obj/item/mod/module/magboot/on_uninstall(deleting = FALSE)
+	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
 
 /obj/item/mod/module/magboot/on_activation()
