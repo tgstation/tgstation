@@ -173,6 +173,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/flashlight))
+		if(user.combat_mode)
+			return NONE
 		if(!opened)
 			balloon_alert(user, "open the chassis cover first!")
 			return ITEM_INTERACT_BLOCKING
