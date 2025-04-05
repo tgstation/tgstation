@@ -782,3 +782,7 @@
  */
 /datum/config_entry/number/tgui_max_chunk_count
 	default = 32
+
+// If set, enables the "Link forum account" OOC verb
+/datum/config_entry/string/forum_link_uri
+	default = "?"
