@@ -68,3 +68,8 @@
 	input_one = /datum/mutation/human/hulk
 	input_two = /datum/mutation/human/clumsy
 	result = /datum/mutation/human/hulk/ork
+
+/datum/generecipe/rock_absorber
+	input_one = /datum/mutation/human/rock_eater
+	input_two = /datum/mutation/human/stoner
+	result = /datum/mutation/human/rock_absorber

@@ -1214,7 +1214,7 @@
 /datum/reagent/iron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		affected_mob.blood_volume += 0.25 * seconds_per_tick
+		affected_mob.blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
 
 /datum/reagent/gold
 	name = "Gold"
