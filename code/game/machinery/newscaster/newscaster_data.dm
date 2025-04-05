@@ -231,6 +231,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	for(var/datum/feed_channel/channel in network_channels)
 		if(channel.channel_name != channel_name)
 			continue
+
 		channel.messages += newMsg
 		newMsg.parent_ID = channel.channel_ID
 		if (!channel.cross_sector)
