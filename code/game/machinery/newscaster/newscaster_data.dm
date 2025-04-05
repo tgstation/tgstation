@@ -101,6 +101,10 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/is_admin_channel = FALSE
 	/// Channel ID is a random number sequence similar to account ID number that allows for us to link messages to the proper channels through the UI backend.
 	var/channel_ID
+	/// Should this channel send cross-server messages?
+	var/cross_sector = FALSE
+	/// Is this a cross-sector channel? If so, this channel can only receive messages via topics
+	var/receiving_cross_sector = FALSE
 
 /datum/feed_channel/New()
 	. = ..()
@@ -184,16 +188,27 @@ GLOBAL_LIST_EMPTY(request_list)
 	create_feed_channel("Station Announcements", "SS13", "Company news, staff announcements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
 	wanted_issue = new /datum/wanted_message
 
-/datum/feed_network/proc/create_feed_channel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel)
+/datum/feed_network/proc/create_feed_channel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel = null, author_ckey = null, cross_sector = FALSE, cross_sector_delay = null, receiving_cross_sector = FALSE)
 	var/datum/feed_channel/newChannel = new /datum/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
 	newChannel.channel_desc = desc
 	newChannel.locked = locked
 	newChannel.is_admin_channel = adminChannel
+	newChannel.receiving_cross_sector = receiving_cross_sector
 	if(hardset_channel)
 		newChannel.channel_ID = hardset_channel
 	network_channels += newChannel
+	if(!cross_sector)
+		return
+	newChannel.cross_sector = TRUE
+	var/list/payload = list(
+		"author" = author,
+		"author_ckey" = author_ckey,
+		"desc" = desc,
+		"delay" = cross_sector_delay,
+	)
+	send2otherserver(html_decode(station_name()), channel_name, "create_news_channel", additional_data = payload)
 
 /datum/feed_network/proc/submit_article(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)
 	var/datum/feed_message/newMsg = new /datum/feed_message

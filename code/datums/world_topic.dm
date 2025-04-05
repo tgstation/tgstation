@@ -247,3 +247,51 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
+
+/datum/world_topic/create_news_channel
+	keyword = "create_news_channel"
+	/// List of timers for actually creating the channel to give admins some time
+	var/list/timers
+
+/datum/world_topic/create_news_channel/Run(list/input)
+	var/message_delay = input["delay"]
+	var/timer_id = addtimer(CALLBACK(src, PROC_REF(create_channel), input), message_delay)
+	input["timer_id"] = timer_id
+	LAZYADD(timers, timer_id)
+
+	var/message = "<b color='orange'>Cross-sector channel creation (Incoming):</b> [input["author_ckey"]] is about to create a cross-sector\
+			newscaster channel \"[input["message"]]\" (will autoapprove in [DisplayTimeText(message_delay)]): \
+			<b><a href='byond://?src=[REF(src)];reject_channel_creation=[timer_id]'>REJECT</a></b>"
+
+	message_admins(span_adminnotice(message))
+
+
+/datum/world_topic/create_news_channel/Topic(href, list/href_list)
+	. = ..()
+	if (.)
+		return
+
+	var/timer_id = href_list["reject_channel_creation"]
+	if (!timer_id)
+		return
+
+	if (!usr.client?.holder)
+		log_game("tried to reject the creation of an incoming cross-sector newscaster channel without being an admin.", LOG_ADMIN)
+		message_admins("[key_name(usr)] tried to reject the creation of an incoming cross-sector newscaster channel without being an admin.")
+		return
+
+	if (!(timer_id in timers))
+		to_chat(usr, span_warning("It's too late!"))
+		return
+
+	deltimer(timer_id)
+	LAZYREMOVE(timers, timer_id)
+
+	log_admin("[key_name(usr)] has cancelled the creation of an incoming cross-sector newscaster channel.")
+	message_admins("[key_name(usr)] has cancelled the creation of an incoming cross-sector newscaster channel.")
+	return TRUE
+
+/datum/world_topic/create_news_channel/proc/create_channel(list/input)
+	LAZYREMOVE(timers, input["timer_id"])
+	message_admins("[input["author_ckey"]] has crated a cross-sector newscaster channel titled \"[input["message"]]\"")
+	GLOB.news_network.create_feed_channel(input["message"], input["author"], input["desc"], locked = TRUE, receiving_cross_sector = TRUE)
