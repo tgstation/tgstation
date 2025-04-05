@@ -9,17 +9,14 @@
 
 /obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
-	if(isinhands || !(body_parts_covered & HEAD))
+	if(isinhands)
 		return
-	if(damaged_clothes)
-		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 
-/obj/item/clothing/neck/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
-	. = ..()
-	if(isinhands || !(body_parts_covered & HEAD))
-		return
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+	if(body_parts_covered & HEAD)
+		if(damaged_clothes)
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
+		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/bowtie
 	name = "bow tie"

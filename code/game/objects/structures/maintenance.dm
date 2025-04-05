@@ -177,7 +177,8 @@ at the cost of risking a vicious bite.**/
 			overlayicon = "altar_pants2"
 		if(ALTAR_STAGETHREE)
 			overlayicon = "altar_pants3"
-	var/mutable_appearance/pants_overlay = mutable_appearance(icon, overlayicon, appearance_flags = RESET_COLOR|KEEP_APART)
+	var/mutable_appearance/pants_overlay = mutable_appearance(icon, overlayicon)
+	pants_overlay.appearance_flags = RESET_COLOR
 	pants_overlay.color = pants_color
 	. += pants_overlay
 

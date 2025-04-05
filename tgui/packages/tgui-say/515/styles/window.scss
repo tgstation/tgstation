@@ -1,0 +1,29 @@
+@use 'sass:color';
+@use './colors.scss';
+
+.old-window {
+  background-color: colors.$background;
+  display: flex;
+  flex-direction: column;
+  max-width: 231px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.old-window-lightMode {
+  background-color: colors.$lightMode;
+}
+
+/** Window sizes */
+.old-window-30 {
+  height: 30px;
+}
+
+.old-window-50 {
+  height: 50px;
+}
+
+.old-window-70 {
+  height: 70px;
+}

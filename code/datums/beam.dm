@@ -88,8 +88,8 @@
 	visuals.layer = beam_layer
 	visuals.update_appearance()
 	Draw()
-	RegisterSignals(origin, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(redrawing))
-	RegisterSignals(target, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(redrawing))
+	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, PROC_REF(redrawing))
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(redrawing))
 
 /**
  * Triggered by signals set up when the beam is set up. If it's still sane to create a beam, it removes the old beam, creates a new one. Otherwise it kills the beam.
@@ -101,9 +101,7 @@
  */
 /datum/beam/proc/redrawing(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	if(QDELING(src))
-		return
-	if(!QDELETED(origin) && !QDELETED(target) && get_dist(origin,target)<max_distance && origin.z == target.z)
+	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
 		QDEL_LIST(elements)
 		INVOKE_ASYNC(src, PROC_REF(Draw))
 	else
@@ -112,8 +110,8 @@
 /datum/beam/Destroy()
 	QDEL_LIST(elements)
 	QDEL_NULL(visuals)
-	UnregisterSignal(origin, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	UnregisterSignal(target, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
+	UnregisterSignal(origin, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 	target = null
 	origin = null
 	return ..()

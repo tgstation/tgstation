@@ -20,7 +20,8 @@
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	var/index = user.get_held_index_of_item(src)
-	swap_zone(IS_LEFT_INDEX(index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+	zone = (index == LEFT_HANDS ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+	SetSlotFromZone()
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 

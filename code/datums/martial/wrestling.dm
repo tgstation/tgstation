@@ -76,9 +76,8 @@ If you make a derivative work from this code, you must include this notification
 	. = ..()
 	if(!.)
 		return
-	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to BODY SLAM!"), "<b><i>Your next attack will be a BODY SLAM.</i></b>")
-	source.streak = "slam"
+	owner.mind.martial_art.streak = "slam"
 
 /datum/action/throw_wrassle
 	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
@@ -89,9 +88,8 @@ If you make a derivative work from this code, you must include this notification
 	. = ..()
 	if(!.)
 		return
-	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to THROW!"), "<b><i>Your next attack will be a THROW.</i></b>")
-	source.streak = "throw"
+	owner.mind.martial_art.streak = "throw"
 
 /datum/action/kick
 	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
@@ -102,9 +100,8 @@ If you make a derivative work from this code, you must include this notification
 	. = ..()
 	if(!.)
 		return
-	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to KICK!"), "<b><i>Your next attack will be a KICK.</i></b>")
-	source.streak = "kick"
+	owner.mind.martial_art.streak = "kick"
 
 /datum/action/strike
 	name = "Strike - Hit a neaby opponent with a quick attack."
@@ -115,9 +112,8 @@ If you make a derivative work from this code, you must include this notification
 	. = ..()
 	if(!.)
 		return
-	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to STRIKE!"), "<b><i>Your next attack will be a STRIKE.</i></b>")
-	source.streak = "strike"
+	owner.mind.martial_art.streak = "strike"
 
 /datum/action/drop
 	name = "Drop - Smash down onto an opponent."
@@ -128,11 +124,10 @@ If you make a derivative work from this code, you must include this notification
 	. = ..()
 	if(!.)
 		return
-	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to LEG DROP!"), "<b><i>Your next attack will be a LEG DROP.</i></b>")
-	source.streak = "drop"
+	owner.mind.martial_art.streak = "drop"
 
-/datum/martial_art/wrestling/activate_style(mob/living/new_holder)
+/datum/martial_art/wrestling/on_teach(mob/living/new_holder)
 	. = ..()
 	to_chat(new_holder, span_userdanger("SNAP INTO A THIN TIM!"))
 	to_chat(new_holder, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
@@ -142,7 +137,7 @@ If you make a derivative work from this code, you must include this notification
 	throw_wrassle.Grant(new_holder)
 	strike.Grant(new_holder)
 
-/datum/martial_art/wrestling/deactivate_style(mob/living/remove_from)
+/datum/martial_art/wrestling/on_remove(mob/living/remove_from)
 	to_chat(remove_from, span_userdanger("You no longer feel that the tower of power is too sweet to be sour..."))
 	drop?.Remove(remove_from)
 	kick?.Remove(remove_from)

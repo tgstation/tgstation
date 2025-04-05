@@ -49,8 +49,8 @@ export function LoadoutPage(props) {
           />
         )}
         <Section
-          fitted
           title="&nbsp;"
+          align="center"
           buttons={
             <Input
               width="200px"
@@ -83,7 +83,7 @@ export function LoadoutPage(props) {
           </Tabs>
         </Section>
       </Stack.Item>
-      <Stack.Item grow>
+      <Stack.Item>
         <LoadoutTabs
           loadout_tabs={loadout_tabs}
           currentTab={selectedTabName}
@@ -118,7 +118,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
   const searching = currentSearch.length > 1;
 
   return (
-    <Stack fill>
+    <Stack fill height="550px">
       <Stack.Item align="center" width="250px" height="100%">
         <Stack vertical fill>
           <Stack.Item height="60%">
@@ -248,7 +248,7 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
 
   return (
     <Section
-      title="Selected Items"
+      title="&nbsp;"
       scrollable
       fill
       buttons={
@@ -286,7 +286,7 @@ function LoadoutPreviewSection() {
   return (
     <Section
       fill
-      title="Preview"
+      title="&nbsp;"
       buttons={
         <Button.Checkbox
           align="center"

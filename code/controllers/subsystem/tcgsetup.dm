@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(trading_card_game)
 	name = "Trading Card Game"
 	flags = SS_NO_FIRE
+	init_order = INIT_ORDER_TCG
 	/// Base directory for all related string files
 	var/card_directory = "strings/tcg"
 	/// List of card files to load

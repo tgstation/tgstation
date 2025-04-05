@@ -1,376 +1,184 @@
 {
-	"canister-0": [
+	"smooth": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-0",
+			"icon_state": "smooth",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-1": [
+	"window-fg": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-1",
+			"icon_state": "window-fg",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-2": [
+	"window-bg": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-2",
+			"icon_state": "window-bg",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-3": [
+	"1-i": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-3",
+			"icon_state": "1-i",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-4": [
+	"2-i": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-4",
+			"icon_state": "2-i",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-5": [
+	"3-i": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-5",
+			"icon_state": "3-i",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-6": [
+	"4-i": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-6",
+			"icon_state": "4-i",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-7": [
+	"1-n": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-7",
+			"icon_state": "1-n",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-8": [
+	"2-n": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-8",
+			"icon_state": "2-n",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-9": [
+	"3-s": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-9",
+			"icon_state": "3-s",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-10": [
+	"4-s": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-10",
+			"icon_state": "4-s",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-11": [
+	"1-w": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-11",
+			"icon_state": "1-w",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-12": [
+	"2-e": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-12",
+			"icon_state": "2-e",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-13": [
+	"3-w": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-13",
+			"icon_state": "3-w",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-14": [
+	"4-e": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-14",
+			"icon_state": "4-e",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-15": [
+	"1-nw": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-15",
+			"icon_state": "1-nw",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-21": [
+	"2-ne": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-21",
+			"icon_state": "2-ne",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-23": [
+	"3-sw": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-23",
+			"icon_state": "3-sw",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-29": [
+	"4-se": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-29",
+			"icon_state": "4-se",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-31": [
+	"1-f": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-31",
+			"icon_state": "1-f",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-38": [
+	"2-f": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-38",
+			"icon_state": "2-f",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-39": [
+	"3-f": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-39",
+			"icon_state": "3-f",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
 	],
-	"canister-46": [
+	"4-f": [
 		{
 			"type": "icon_state",
-			"icon_state": "canister-46",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-47": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-47",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-55": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-55",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-63": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-63",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-74": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-74",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-75": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-75",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-78": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-78",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-79": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-79",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-95": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-95",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-110": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-110",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-111": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-111",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-127": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-127",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-137": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-137",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-139": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-139",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-141": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-141",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-143": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-143",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-157": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-157",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-159": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-159",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-175": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-175",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-191": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-191",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-203": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-203",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-207": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-207",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-223": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-223",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-239": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-239",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
-	],
-	"canister-255": [
-		{
-			"type": "icon_state",
-			"icon_state": "canister-255",
+			"icon_state": "4-f",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}

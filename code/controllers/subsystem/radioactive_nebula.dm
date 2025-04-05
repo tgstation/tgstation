@@ -4,9 +4,6 @@
 /// Controls making objects irradiated when Radioactive Nebula is in effect.
 SUBSYSTEM_DEF(radioactive_nebula)
 	name = "Radioactive Nebula"
-	dependencies = list(
-		/datum/controller/subsystem/processing/station
-	)
 	flags = SS_BACKGROUND
 	wait = 30 SECONDS
 

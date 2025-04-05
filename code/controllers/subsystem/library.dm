@@ -1,10 +1,6 @@
 /// Manages library data, loading bookselves, etc
 SUBSYSTEM_DEF(library)
 	name = "Library Loading"
-	dependencies = list(
-		/datum/controller/subsystem/atoms,
-		/datum/controller/subsystem/mapping
-	)
 	flags = SS_NO_FIRE
 
 	/// List of bookselves to prefill with books

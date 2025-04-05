@@ -7,11 +7,11 @@
 /area/ruin/powered/icemoon_phone_booth)
 "c" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/explored)
 "e" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/explored)
 "k" = (
 /obj/machinery/vending/cigarette{
 	all_products_free = 0
@@ -30,7 +30,7 @@
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/explored)
 "v" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
@@ -91,7 +91,7 @@
 /area/ruin/powered/icemoon_phone_booth)
 "W" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/underground/explored)
 
 (1,1,1) = {"
 q

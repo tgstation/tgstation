@@ -10,7 +10,7 @@
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
-	invocation = "Diri Cel!"
+	invocation = "DIRI CEL"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 

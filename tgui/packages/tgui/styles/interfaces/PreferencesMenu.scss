@@ -201,8 +201,8 @@ $department_map: (
   &__Quirks {
     &__QuirkList {
       background-color: colors.$light-grey;
-      width: 100%;
-      overflow-x: hidden;
+      height: calc(90vh - 170px);
+      min-height: 100%;
       overflow-y: scroll;
 
       &__quirk {

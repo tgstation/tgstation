@@ -118,6 +118,7 @@
 			"name" = escape_value(trait.name),
 			"description" = escape_value(trait.catalog_description),
 			"inheritability" = trait.inheritability,
+			"inheritability_diff" = trait.diff_traits_inheritability,
 
 		))
 

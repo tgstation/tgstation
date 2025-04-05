@@ -14,7 +14,7 @@
 	var/active = FALSE
 	var/transfer_rate = TANK_COMPRESSOR_MAX_TRANSFER_RATE
 	var/datum/gas_mixture/leaked_gas_buffer
-	var/list/compressor_record = list()
+	var/list/compressor_record
 	var/last_recorded_pressure = 0
 	var/record_number = 1
 	var/obj/item/tank/inserted_tank
@@ -26,6 +26,7 @@
 /obj/machinery/atmospherics/components/binary/tank_compressor/Initialize(mapload)
 	. = ..()
 	leaked_gas_buffer = new(200)
+	compressor_record = list()
 
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(explosion_handle))
 
@@ -246,7 +247,7 @@
 	inserted_tank = null
 	inserted_disk = null
 	leaked_gas_buffer = null
-	compressor_record.Cut() // We only want to clear the list itself, not delete its contents.
+	QDEL_NULL(compressor_record) //We only want the list nuked, not the contents.
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/update_icon_state()

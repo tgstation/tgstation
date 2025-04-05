@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SET_PLANE(I, GAME_PLANE, src)
 	I.layer = OBJ_LAYER
 	I.appearance = AM.appearance
-	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM|KEEP_APART
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
@@ -793,9 +793,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /**
- * the following are some fishing-related optimizations to shave off as much
+ * the following are some hacky fishing-related optimizations to shave off
  * time we spend implementing the fishing as possible, even if that means
- * hackier code, because we've hundreds of turfs like lava, water etc every round,
+ * doing hackier code, because we've hundreds of turfs like lava, water etc every round,
  */
 /turf/proc/add_lazy_fishing(fish_source_path)
 	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
@@ -829,7 +829,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
-	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)
+	GLOB.preset_fish_sources[fish_source].readd_fish(fish, releaser)
 
 /turf/examine(mob/user)
 	. = ..()

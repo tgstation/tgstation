@@ -52,7 +52,7 @@
 	icon_state = "snowplating"
 	base_icon_state = "snowplating"
 	initial_gas_mix = FROZEN_ATMOS
-	temperature = ICEBOX_MIN_TEMPERATURE
+	temperature = 180
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_SAND
@@ -91,7 +91,7 @@
 
 //Used in SnowCabin.dm
 /turf/open/floor/plating/snowed/snow_cabin
-	temperature = ICEBOX_MIN_TEMPERATURE
+	temperature = 180
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

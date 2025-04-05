@@ -15,22 +15,20 @@
 /datum/quirk/prosopagnosia/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, COMSIG_LIVING_PERCEIVE_EXAMINE_NAME))
 
-/datum/quirk/prosopagnosia/proc/examine_name_override(datum/source, mob/living/carbon/human/examined, visible_name, list/name_override)
+/datum/quirk/prosopagnosia/proc/examine_name_override(datum/source, mob/living/examined, visible_name, list/name_override)
 	SIGNAL_HANDLER
 
-	if(!ishuman(examined) || source == examined)
+	if(!ishuman(examined))
 		return NONE
 
-	var/id_name = examined.get_id_name("")
-	name_override[1] = id_name ? "[id_name]?" : "Unknown"
+	name_override[1] = "Unknown"
 	return COMPONENT_EXAMINE_NAME_OVERRIDEN
 
-/datum/quirk/prosopagnosia/proc/screentip_name_override(datum/source, list/returned_name, obj/item/held_item, mob/living/carbon/human/hovered)
+/datum/quirk/prosopagnosia/proc/screentip_name_override(datum/source, list/returned_name, obj/item/held_item, atom/hovered)
 	SIGNAL_HANDLER
 
-	if(!ishuman(hovered) || source == hovered)
+	if(!ishuman(hovered))
 		return NONE
 
-	var/id_name = hovered.get_id_name("")
-	returned_name[1] = id_name ? "[id_name]?" : "Unknown"
+	returned_name[1] = "Unknown"
 	return SCREENTIP_NAME_SET

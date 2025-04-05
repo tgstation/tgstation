@@ -1,5 +1,6 @@
 VERB_MANAGER_SUBSYSTEM_DEF(input)
 	name = "Input"
+	init_order = INIT_ORDER_INPUT
 	init_stage = INITSTAGE_EARLY
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_INPUT

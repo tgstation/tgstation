@@ -1,6 +1,8 @@
 import { createRoot, Root } from 'react-dom/client';
 
-import { TguiSay } from './TguiSay';
+// TODO: remove this once we're on 516
+import { TguiSay } from './515/TguiSay';
+import { TguiSay as NewSay } from './516/TguiSay';
 
 let reactRoot: Root | null = null;
 
@@ -12,5 +14,9 @@ document.onreadystatechange = function () {
     reactRoot = createRoot(root!);
   }
 
-  reactRoot.render(<TguiSay />);
+  if (Byond.BLINK) {
+    reactRoot.render(<NewSay />);
+  } else {
+    reactRoot.render(<TguiSay />);
+  }
 };

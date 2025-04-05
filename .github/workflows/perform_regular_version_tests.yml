@@ -1,5 +1,4 @@
 name: Run Regular BYOND Version Tests
-
 on:
   workflow_call:
     inputs:

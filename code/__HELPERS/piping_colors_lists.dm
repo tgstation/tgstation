@@ -1,6 +1,6 @@
 ///All colors available to pipes and atmos components
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
-	"omni" = ATMOS_COLOR_OMNI,
+	"omni" = COLOR_VERY_LIGHT_GRAY,
 	"green" = COLOR_VIBRANT_LIME,
 	"blue" = COLOR_BLUE,
 	"red" = COLOR_RED,
@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(pipe_colors_ordered, sort_list(list(
 	COLOR_CYAN = -3,
 	COLOR_DARK = -2,
 	COLOR_VIBRANT_LIME = -1,
-	ATMOS_COLOR_OMNI = 0,
+	COLOR_VERY_LIGHT_GRAY = 0,
 	COLOR_ENGINEERING_ORANGE = 1,
 	COLOR_PURPLE = 2,
 	COLOR_RED = 3,
@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(pipe_colors_ordered, sort_list(list(
 
 ///Names shown in the examine for every colored atmos component
 GLOBAL_LIST_INIT(pipe_color_name, sort_list(list(
-	ATMOS_COLOR_OMNI = "omni",
+	COLOR_VERY_LIGHT_GRAY = "omni",
 	COLOR_BLUE = "blue",
 	COLOR_RED = "red",
 	COLOR_VIBRANT_LIME = "green",

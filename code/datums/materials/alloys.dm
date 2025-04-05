@@ -7,16 +7,13 @@
 	/// The materials this alloy is made from weighted by their ratios.
 	var/list/composition = null
 
-/datum/material/alloy/return_composition(amount = 1, flags)
-	if(flags & MATCONTAINER_ACCEPT_ALLOYS)
-		return ..()
-
+/datum/material/alloy/return_composition(amount = 1)
 	. = list()
 
 	var/list/cached_comp = composition
 	for(var/comp_mat in cached_comp)
 		var/datum/material/component_material = GET_MATERIAL_REF(comp_mat)
-		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat], flags)
+		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat])
 		for(var/comp_comp_mat in component_composition)
 			.[comp_comp_mat] += component_composition[comp_comp_mat] * amount
 

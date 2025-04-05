@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(profiler)
 	name = "Profiler"
-	init_stage = INITSTAGE_FIRST
+	init_order = INIT_ORDER_PROFILER
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	wait = 300 SECONDS
 	var/fetch_cost = 0

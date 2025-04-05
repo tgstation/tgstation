@@ -1,8 +1,6 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
-	dependencies = list(
-		/datum/controller/subsystem/processing/station
-	)
+	init_order = INIT_ORDER_EVENTS
 	runlevels = RUNLEVEL_GAME
 	///list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/control = list()
@@ -165,10 +163,10 @@ GLOBAL_LIST(holidays)
 		for(var/timezone in holiday.timezones)
 			var/time_in_timezone = world.realtime + timezone HOURS
 
-			var/YYYY = text2num(time2text(time_in_timezone, "YYYY", world.timezone)) // get the current year
-			var/MM = text2num(time2text(time_in_timezone, "MM", world.timezone)) // get the current month
-			var/DD = text2num(time2text(time_in_timezone, "DD", world.timezone)) // get the current day
-			var/DDD = time2text(time_in_timezone, "DDD", world.timezone) // get the current weekday
+			var/YYYY = text2num(time2text(time_in_timezone, "YYYY")) // get the current year
+			var/MM = text2num(time2text(time_in_timezone, "MM")) // get the current month
+			var/DD = text2num(time2text(time_in_timezone, "DD")) // get the current day
+			var/DDD = time2text(time_in_timezone, "DDD") // get the current weekday
 
 			if(holiday.shouldCelebrate(DD, MM, YYYY, DDD))
 				holiday.celebrate()

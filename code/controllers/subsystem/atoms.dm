@@ -1,11 +1,6 @@
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
-	dependencies = list(
-		/datum/controller/subsystem/processing/reagents,
-		/datum/controller/subsystem/fluids,
-		/datum/controller/subsystem/mapping,
-		/datum/controller/subsystem/job
-	)
+	init_order = INIT_ORDER_ATOMS
 	flags = SS_NO_FIRE
 
 	/// A stack of list(source, desired initialized state)

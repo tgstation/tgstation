@@ -182,7 +182,7 @@
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return
 	if(ismineralturf(src))
-		gets_drilled(user, 1)
+		gets_drilled(user, TRUE)
 		SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 
 /turf/closed/mineral/attack_hand(mob/user)
@@ -208,9 +208,9 @@
 	if(user.Adjacent(src))
 		attack_hand(user)
 
-/turf/closed/mineral/proc/gets_drilled(mob/user, exp_multiplier = 0)
+/turf/closed/mineral/proc/gets_drilled(mob/user, give_exp = FALSE)
 	if(istype(user))
-		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, exp_multiplier)
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 	if(mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
@@ -218,11 +218,11 @@
 		new spawned_boulder(src)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(exp_multiplier)
+		if(give_exp)
 			if (mineralType && (mineralAmt > 0))
-				H.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt * exp_multiplier)
+				H.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt)
 			else
-				H.mind.adjust_experience(/datum/skill/mining, 4 * exp_multiplier)
+				H.mind.adjust_experience(/datum/skill/mining, 4)
 
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
@@ -255,23 +255,23 @@
 /turf/closed/mineral/ex_act(severity, target)
 	. = ..()
 	if(target == src)
-		gets_drilled()
+		gets_drilled(null, FALSE)
 		return TRUE
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
-			gets_drilled()
+			gets_drilled(null, FALSE)
 		if(EXPLODE_HEAVY)
 			if(prob(90))
-				gets_drilled()
+				gets_drilled(null, FALSE)
 		if(EXPLODE_LIGHT)
 			if(prob(75))
-				gets_drilled()
+				gets_drilled(null, FALSE)
 
 	return TRUE
 
 /turf/closed/mineral/blob_act(obj/structure/blob/B)
 	if(prob(50))
-		gets_drilled()
+		gets_drilled(give_exp = FALSE)
 
 /turf/closed/mineral/random
 	/// What are the base odds that this turf spawns a mineral in the wall on initialize?
@@ -834,9 +834,9 @@
 		if(defuser)
 			SEND_SIGNAL(defuser, COMSIG_LIVING_DEFUSED_GIBTONITE, det_time)
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, exp_multiplier = 0, triggered_by_explosion = FALSE)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
 	if(istype(user))
-		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, exp_multiplier)
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
@@ -906,9 +906,9 @@
 		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
 
 
-/turf/closed/mineral/strong/gets_drilled(mob/user, exp_multiplier = 0)
+/turf/closed/mineral/strong/gets_drilled(mob/user, give_exp = FALSE)
 	if(istype(user))
-		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, exp_multiplier)
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 
 	if(!ishuman(user))
 		return // see attackby

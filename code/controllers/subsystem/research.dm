@@ -3,9 +3,7 @@ SUBSYSTEM_DEF(research)
 	name = "Research"
 	priority = FIRE_PRIORITY_RESEARCH
 	wait = 10
-	dependencies = list(
-		/datum/controller/subsystem/processing/station
-	)
+	init_order = INIT_ORDER_RESEARCH
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum

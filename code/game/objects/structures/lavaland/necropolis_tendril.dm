@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	collected += WEAKREF(collector)
 
 /obj/effect/collapse/Destroy()
-	collected.Cut()
+	QDEL_NULL(collected)
 	QDEL_NULL(emitted_light)
 	return ..()
 

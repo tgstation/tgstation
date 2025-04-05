@@ -404,7 +404,10 @@
 	if (severity == EMP_HEAVY)
 		glitch_duration *= 2
 
-	QDEL_IN(owner.add_client_colour(/datum/client_colour/malfunction, HEAD_TRAIT), glitch_duration)
+	owner.add_client_colour(/datum/client_colour/malfunction)
+
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon/human, remove_client_colour), /datum/client_colour/malfunction), glitch_duration)
+	return
 
 #undef EMP_GLITCH
 

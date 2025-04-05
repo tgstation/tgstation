@@ -12,7 +12,7 @@ import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
 import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
-import { render } from 'tgui/renderer';
+import { createRenderer } from 'tgui/renderer';
 import { configureStore } from 'tgui/store';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
@@ -20,13 +20,12 @@ import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { gameMiddleware, gameReducer } from './game';
-import { Panel } from './Panel';
 import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 
-perf.mark('inception', window.performance?.timeOrigin);
+perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
 
 const store = configureStore({
@@ -49,24 +48,28 @@ const store = configureStore({
   },
 });
 
-function setupApp() {
+const renderApp = createRenderer(() => {
+  setGlobalStore(store);
+
+  const { Panel } = require('./Panel');
+  return <Panel />;
+});
+
+const setupApp = () => {
   // Delay setup
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
 
-  setGlobalStore(store);
-
   setupGlobalEvents({
     ignoreWindowFocus: true,
   });
-
   setupPanelFocusHacks();
   captureExternalLinks();
 
   // Re-render UI on store updates
-  store.subscribe(() => render(<Panel />));
+  store.subscribe(renderApp);
 
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
@@ -99,10 +102,10 @@ function setupApp() {
         './telemetry',
       ],
       () => {
-        render(<Panel />);
+        renderApp();
       },
     );
   }
-}
+};
 
 setupApp();

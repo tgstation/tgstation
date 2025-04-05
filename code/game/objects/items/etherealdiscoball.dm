@@ -72,4 +72,6 @@
 
 /obj/structure/etherealball/update_overlays()
 	. = ..()
-	. += mutable_appearance(icon, "ethdisco_base", appearance_flags = RESET_COLOR|KEEP_APART)
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "ethdisco_base")
+	base_overlay.appearance_flags = RESET_COLOR
+	. += base_overlay

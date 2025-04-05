@@ -1,7 +1,6 @@
 /// Xeno crawls from nearby vent, jumps at you, and goes back in.
 /datum/hallucination/xeno_attack
 	random_hallucination_weight = 2
-	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/xeno_attack/start()
 	var/turf/xeno_attack_source

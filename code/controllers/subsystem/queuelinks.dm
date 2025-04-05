@@ -2,9 +2,13 @@
 
 SUBSYSTEM_DEF(queuelinks)
 	name = "Queue Links"
-	flags = SS_NO_FIRE | SS_NO_INIT
+	flags = SS_NO_FIRE
+	init_order = INIT_ORDER_QUEUELINKS
 	///assoc list of pending queues, id = /datum/queue_link
 	var/list/queues = list()
+
+/datum/controller/subsystem/queuelinks/Initialize()
+	return SS_INIT_SUCCESS
 
 ///Creates or adds to a queue with the id supplied, if the queue is now or above the size of the queue, calls MatchedLinks and clears queue.
 /// queues with a size of 0 wait never pop until something is added with an actual queue_max

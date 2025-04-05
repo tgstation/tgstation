@@ -36,6 +36,7 @@
 		mytape = new starting_tape_type(src)
 	soundloop = new(src)
 	update_appearance()
+	become_hearing_sensitive()
 
 /obj/item/taperecorder/Destroy()
 	QDEL_NULL(soundloop)
@@ -155,11 +156,12 @@
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(message_mods[MODE_RELAY] || !mytape || istype(speaker, /obj/item/taperecorder))
+	if(message_mods[MODE_RELAY])
 		return
 
-	mytape.timestamp += mytape.used_capacity
-	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: [raw_message]"
+	if(mytape && recording)
+		mytape.timestamp += mytape.used_capacity
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [speaker.GetVoice()]: [raw_message]"
 
 
 /obj/item/taperecorder/verb/record()
@@ -183,7 +185,6 @@
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
-		become_hearing_sensitive()
 		balloon_alert(usr, "started recording")
 		update_sound()
 		update_appearance()
@@ -217,7 +218,6 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		balloon_alert(usr, "stopped recording")
 		recording = FALSE
-		lose_hearing_sensitivity()
 	else if(playing)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		balloon_alert(usr, "stopped playing")
@@ -267,7 +267,7 @@
 			playsleepseconds = 1
 			sleep(1 SECONDS)
 		else
-			playsleepseconds = max(mytape.timestamp[i + 1] - mytape.timestamp[i], 1 SECONDS)
+			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14 SECONDS)
 			sleep(1 SECONDS)
 			say("Skipping [playsleepseconds/10] seconds of silence.", message_mods = list(MODE_SEQUENTIAL = TRUE))

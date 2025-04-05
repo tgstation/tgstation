@@ -77,9 +77,7 @@
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
-		var/image/cap = get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color)
-		cap.appearance_flags |= RESET_COLOR|KEEP_APART
-		add_overlay(cap)
+		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
 	else
 		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 

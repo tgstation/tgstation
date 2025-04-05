@@ -10,7 +10,7 @@
 	cooldown_reduction_per_rank = 20 SECONDS
 	spell_max_level = 3
 
-	invocation = "SCYAR NILA" // gets punctuation auto applied
+	invocation = "SCYAR NILA"
 	invocation_type = INVOCATION_SHOUT
 
 	smoke_type = /datum/effect_system/fluid_spread/smoke

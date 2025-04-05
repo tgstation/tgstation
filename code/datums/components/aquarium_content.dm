@@ -110,12 +110,12 @@
 	/// How the visual will be layered
 	var/layer_mode = AQUARIUM_LAYER_MODE_AUTO
 	///minimum pixel x, inherited from the aquarium
-	var/aquarium_zone_min_pw
+	var/aquarium_zone_min_px
 	///maximum pixel x, inherited from the aquarium
-	var/aquarium_zone_max_pw
+	var/aquarium_zone_max_px
 	///minimum pixel y, inherited from the aquarium
-	var/aquarium_zone_min_pz
+	var/aquarium_zone_min_py
 	///maximum pixel y, inherited from the aquarium
-	var/aquarium_zone_max_pz
+	var/aquarium_zone_max_py
 	///The current fluid type, inherited fom the aquarium
 	var/fluid_type

@@ -225,10 +225,10 @@ multiple modular subtrees with behaviors
 	if(should_idle())
 		set_ai_status(AI_STATUS_IDLE)
 
-/datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
+/datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
 	SIGNAL_HANDLER
 
-	if (!(locate(/mob/living) in target_list))
+	if (!isliving(target))
 		return
 
 	if(ai_status == AI_STATUS_IDLE)

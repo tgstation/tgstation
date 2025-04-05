@@ -4,7 +4,8 @@
 ///Hopefully this makes sorting out what causes problems when easier
 SUBSYSTEM_DEF(init_profiler)
 	name = "Init Profiler"
-	init_stage = INITSTAGE_LAST
+	init_order = INIT_ORDER_INIT_PROFILER
+	init_stage = INITSTAGE_MAX
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/init_profiler/Initialize()

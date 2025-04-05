@@ -100,31 +100,30 @@
 			if(!target)
 				return FALSE
 
-			update_preview(user, params["assigned_view"], target, ui.window)
+			update_preview(user, params["assigned_view"], target)
 			return TRUE
 
 	return FALSE
 
 /// Creates a character preview view for the UI.
-/obj/machinery/computer/records/proc/create_character_preview_view(mob/user, datum/tgui_window/window)
+/obj/machinery/computer/records/proc/create_character_preview_view(mob/user)
 	var/assigned_view = USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
 	if(user.client?.screen_maps[assigned_view])
 		return
 
 	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
 	new_view.generate_view(assigned_view)
-	new_view.display_to(user, window)
+	new_view.display_to(user)
 	return new_view
 
 /// Takes a record and updates the character preview view to match it.
-/obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target, datum/tgui_window/window)
+/obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target)
 	var/mutable_appearance/preview = new(target.character_appearance)
 	preview.underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
 	preview.add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
 
 	var/atom/movable/screen/map_view/char_preview/old_view = user.client?.screen_maps[assigned_view]?[1]
 	if(!old_view)
-		character_preview_view = create_character_preview_view(user, window)
 		return
 
 	old_view.appearance = preview.appearance

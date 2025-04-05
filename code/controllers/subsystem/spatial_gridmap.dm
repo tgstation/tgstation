@@ -79,9 +79,7 @@
  */
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
-	dependencies = list(
-		/datum/controller/subsystem/mapping
-	)
+	init_order = INIT_ORDER_SPATIAL_GRID
 	name = "Spatial Grid"
 
 	///list of the spatial_grid_cell datums per z level, arranged in the order of y index then x index

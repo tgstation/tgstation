@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(achievements)
 	name = "Achievements"
 	flags = SS_NO_FIRE
+	init_order = INIT_ORDER_ACHIEVEMENTS
 	var/achievements_enabled = FALSE
 
 	///List of achievements

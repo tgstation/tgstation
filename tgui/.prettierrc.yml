@@ -1,6 +1,1 @@
 singleQuote: true
-overrides:
-  - files: 'public/tgui.html'
-    options:
-      trailingComma: es5
-      arrowParens: always

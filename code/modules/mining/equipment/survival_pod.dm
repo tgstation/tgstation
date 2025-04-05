@@ -202,7 +202,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	can_flip = FALSE
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod

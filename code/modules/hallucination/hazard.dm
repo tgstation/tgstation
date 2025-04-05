@@ -2,7 +2,6 @@
 /datum/hallucination/hazard
 	abstract_hallucination_parent = /datum/hallucination/hazard
 	random_hallucination_weight = 5
-	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 
 	/// The type of effect we create
 	var/hazard_type = /obj/effect/client_image_holder/hallucination/danger

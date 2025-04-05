@@ -22439,7 +22439,7 @@
 /area/mine/living_quarters)
 "gpt" = (
 /obj/machinery/button/door/directional/east{
-	id = "detShutter";
+	id = "kanyewest";
 	name = "Privacy Shutters"
 	},
 /obj/structure/chair/office{
@@ -82448,7 +82448,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
-	id = "detShutter";
+	id = "rd_office_shutters";
 	name = "Privacy Shutters"
 	},
 /obj/structure/cable,

@@ -3,7 +3,6 @@
 	desc = "Teaches you the arts of Krav Maga in 5 short instructional videos beamed directly into your eyeballs."
 	icon = 'icons/obj/scrolls.dmi'
 	icon_state ="scroll2"
-	/// The martial art style this implant teaches.
 	var/datum/martial_art/krav_maga/style
 
 /obj/item/implant/krav_maga/get_data()
@@ -16,7 +15,8 @@
 
 /obj/item/implant/krav_maga/Initialize(mapload)
 	. = ..()
-	style = new(src)
+	style = new()
+	style.allow_temp_override = FALSE
 
 /obj/item/implant/krav_maga/Destroy()
 	QDEL_NULL(style)
@@ -26,10 +26,10 @@
 	. = ..()
 	if(isnull(imp_in.mind))
 		return
-	if(style.unlearn(imp_in))
+	if(style.fully_remove(imp_in))
 		return
 
-	style.teach(imp_in)
+	style.teach(imp_in, TRUE)
 
 /obj/item/implanter/krav_maga
 	name = "implanter (krav maga)"

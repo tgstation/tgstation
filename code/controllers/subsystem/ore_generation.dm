@@ -2,9 +2,7 @@
 SUBSYSTEM_DEF(ore_generation)
 	name = "Ore Generation"
 	wait = 60 SECONDS
-	dependencies = list(
-		/datum/controller/subsystem/atoms
-	)
+	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 
 	/// All ore vents that are currently producing boulders.

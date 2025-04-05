@@ -79,8 +79,6 @@
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
 #endif
-	///The layout pref we take from the player looking at this datum's UI to know what layout to give.
-	var/datum/preference/choiced/layout_prefs_used = /datum/preference/choiced/tgui_layout
 
 /**
  * Called when a href for this datum is clicked

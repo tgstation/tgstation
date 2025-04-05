@@ -1,8 +1,6 @@
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
-	dependencies = list(
-		/datum/controller/subsystem/processing/station
-	)
+	init_order = INIT_ORDER_JOBS
 	flags = SS_NO_FIRE
 
 	/// List of all jobs.

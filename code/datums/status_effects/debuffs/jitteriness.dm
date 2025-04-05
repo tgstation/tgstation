@@ -22,7 +22,9 @@
 /datum/status_effect/jitter/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	owner.clear_mood_event(id)
-	owner.update_offsets()
+	// juuust in case, reset our x and y's from our jittering
+	owner.pixel_x = 0
+	owner.pixel_y = 0
 
 /datum/status_effect/jitter/get_examine_text()
 	switch(duration - world.time)

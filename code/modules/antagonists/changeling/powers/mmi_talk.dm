@@ -83,7 +83,8 @@
 		// Generate movement detector (to update the view on MMI movement)
 		update_view_tracker = new(brain_ref, CALLBACK(src, PROC_REF(update_mmi_view)))
 
-	// Register map objects
+	// Shows the view to the user foremost
+	mmi_view.display_to(user)
 	user.client.register_map_obj(mmi_view_background)
 	update_mmi_view()
 	// Makes the MMI relay heard messages
@@ -96,8 +97,6 @@
 	if(!ui)
 		ui = new(user, src, "LingMMITalk")
 		ui.open()
-		// Open map view
-		mmi_view.display_to(user, ui.window)
 
 /datum/action/changeling/mmi_talk/ui_close(mob/user)
 	var/obj/item/mmi/mmi = brain_ref.loc

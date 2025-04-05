@@ -230,7 +230,8 @@
 		new /mob/living/basic/garden_gnome(.)
 
 /datum/supply_pack/critter/fish
-	test_ignored = TRUE // However, we should be wary of how possible it is to get more valuable fish out of this on average, depending on sample size.
+	crate_type = /obj/structure/closet/crate
+	abstract = ABSTRACT // However, we should be wary of how possible it is to get more valuable fish out of this on average, depending on sample size.
 
 /datum/supply_pack/critter/fish/aquarium_fish
 	name = "Aquarium Fish Case"

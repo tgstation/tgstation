@@ -5,7 +5,7 @@
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
 	program_open_overlay = "command"
-	program_flags = PROGRAM_HEADER
+	program_flags = NONE
 	undeletable = TRUE
 	can_run_on_flags = PROGRAM_PDA
 	size = 5

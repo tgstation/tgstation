@@ -68,12 +68,15 @@
 	. = list()
 
 	var/atom/location = loc || owner || src
+	var/image_dir = NONE
+	if(dropped)
+		image_dir = SOUTH
 
 	var/datum/sprite_accessory/sprite_accessory
 	if(!facial_hair_hidden && lip_style && (head_flags & HEAD_LIPS))
 		//not a sprite accessory, don't ask
 		//Overlay
-		var/image/lip_overlay = image('icons/mob/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
+		var/image/lip_overlay = image('icons/mob/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, image_dir)
 		lip_overlay.color = lip_color
 		//Emissive blocker
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
@@ -87,7 +90,7 @@
 		sprite_accessory = SSaccessories.facial_hairstyles_list[facial_hairstyle]
 		if(sprite_accessory)
 			//Overlay
-			facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+			facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			facial_hair_overlay.alpha = facial_hair_alpha
 			//Emissive blocker
 			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
@@ -99,7 +102,7 @@
 			var/facial_hair_gradient_style = gradient_styles[GRADIENT_FACIAL_HAIR_KEY]
 			if(facial_hair_gradient_style != "None")
 				var/facial_hair_gradient_color = gradient_colors[GRADIENT_FACIAL_HAIR_KEY]
-				var/image/facial_hair_gradient_overlay = get_gradient_overlay(icon(sprite_accessory.icon, sprite_accessory.icon_state), -HAIR_LAYER, SSaccessories.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
+				var/image/facial_hair_gradient_overlay = get_gradient_overlay(icon(sprite_accessory.icon, sprite_accessory.icon_state), -HAIR_LAYER, SSaccessories.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color, image_dir)
 				. += facial_hair_gradient_overlay
 
 	var/image/hair_overlay
@@ -116,9 +119,9 @@
 			else
 				base_icon = icon(hair_sprite_accessory.icon, hair_sprite_accessory.icon_state)
 			//Overlay
-			hair_overlay = image(base_icon, layer=-HAIR_LAYER)
+			hair_overlay = image(base_icon, layer=-HAIR_LAYER, dir=image_dir)
 			hair_overlay.alpha = hair_alpha
-			hair_overlay.pixel_z = hair_sprite_accessory.y_offset
+			hair_overlay.pixel_y = hair_sprite_accessory.y_offset
 			//Emissive blocker
 			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
@@ -129,15 +132,15 @@
 			var/hair_gradient_style = gradient_styles[GRADIENT_HAIR_KEY]
 			if(hair_gradient_style != "None")
 				var/hair_gradient_color = gradient_colors[GRADIENT_HAIR_KEY]
-				var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, -HAIR_LAYER, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color)
-				hair_gradient_overlay.pixel_z = hair_sprite_accessory.y_offset
+				var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, -HAIR_LAYER, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, image_dir)
+				hair_gradient_overlay.pixel_y = hair_sprite_accessory.y_offset
 				. += hair_gradient_overlay
 
 	if(show_debrained && (head_flags & HEAD_DEBRAIN))
-		. += get_debrain_overlay()
+		. += get_debrain_overlay(can_rotate = !dropped)
 
 	if(show_eyeless && (head_flags & HEAD_EYEHOLES))
-		. += get_eyeless_overlay()
+		. += get_eyeless_overlay(can_rotate = !dropped)
 
 	//HAIR COLOR START
 	if(override_hair_color)
@@ -156,7 +159,7 @@
 #undef SET_OVERLAY_VALUE
 
 /// Returns an appropriate debrained overlay
-/obj/item/bodypart/head/proc/get_debrain_overlay()
+/obj/item/bodypart/head/proc/get_debrain_overlay(can_rotate = TRUE)
 	RETURN_TYPE(/image)
 	var/debrain_icon = 'icons/mob/human/human_face.dmi'
 	var/debrain_icon_state = "debrained"
@@ -170,27 +173,35 @@
 		debrain_icon = 'icons/mob/human/species/golems.dmi'
 		debrain_icon_state = "debrained"
 
-	var/image/debrain_overlay = mutable_appearance(debrain_icon, debrain_icon_state, -HAIR_LAYER)
+	var/image/debrain_overlay
+	if(can_rotate)
+		debrain_overlay = mutable_appearance(debrain_icon, debrain_icon_state, HAIR_LAYER)
+	else
+		debrain_overlay = image(debrain_icon, debrain_icon_state, -HAIR_LAYER, SOUTH)
 	worn_face_offset?.apply_offset(debrain_overlay)
 	return debrain_overlay
 
 /// Returns an appropriate missing eyes overlay
-/obj/item/bodypart/head/proc/get_eyeless_overlay()
+/obj/item/bodypart/head/proc/get_eyeless_overlay(can_rotate = TRUE)
 	RETURN_TYPE(/image)
 	var/eyeless_icon = 'icons/mob/human/human_face.dmi'
 	var/eyeless_icon_state = "eyes_missing"
 
-	var/image/eyeless_overlay = mutable_appearance(eyeless_icon, eyeless_icon_state, -HAIR_LAYER)
+	var/image/eyeless_overlay
+	if(can_rotate)
+		eyeless_overlay = mutable_appearance(eyeless_icon, eyeless_icon_state, HAIR_LAYER)
+	else
+		eyeless_overlay = image(eyeless_icon, eyeless_icon_state, -HAIR_LAYER, SOUTH)
 	worn_face_offset?.apply_offset(eyeless_overlay)
 	return eyeless_overlay
 
 /// Returns an appropriate hair/facial hair gradient overlay
-/obj/item/bodypart/head/proc/get_gradient_overlay(icon/base_icon, layer, datum/sprite_accessory/gradient, grad_color)
+/obj/item/bodypart/head/proc/get_gradient_overlay(icon/base_icon, layer, datum/sprite_accessory/gradient, grad_color, image_dir)
 	RETURN_TYPE(/mutable_appearance)
 
 	var/mutable_appearance/gradient_overlay = mutable_appearance(layer = layer)
-	var/icon/temp = icon(gradient.icon, gradient.icon_state)
-	var/icon/temp_hair = icon(base_icon)
+	var/icon/temp = icon(gradient.icon, gradient.icon_state, image_dir)
+	var/icon/temp_hair = icon(base_icon, dir=image_dir)
 	temp.Blend(temp_hair, ICON_ADD)
 	gradient_overlay.icon = temp
 	gradient_overlay.color = grad_color

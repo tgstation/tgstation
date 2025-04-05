@@ -4,10 +4,9 @@ import { CSS_COLORS } from '../../constants';
 
 const SVG_CURVE_INTENSITY = 64;
 
-export enum ConnectionStyle {
+enum ConnectionStyle {
   CURVE = 'curve',
   SUBWAY = 'subway',
-  SUBWAY_SHARP = 'subway sharp',
 }
 
 export type Position = {
@@ -26,8 +25,6 @@ export type Connection = {
   style?: ConnectionStyle;
   // Optional: the ref of what element this connection is sourced
   ref?: string;
-  // Optional: Used to group some connections together
-  index?: number;
 };
 
 export const Connections = (props: {
@@ -81,17 +78,6 @@ export const Connections = (props: {
             path += `L ${to.x} ${to.y}`;
             break;
           }
-          case ConnectionStyle.SUBWAY_SHARP: {
-            let offset = 16;
-            if (val.index !== undefined) {
-              offset = 8 * (val.index % 32) + 32;
-            }
-            const yDiff = Math.abs(to.y - from.y);
-            path += `L ${Math.max(from.x + offset, to.x - offset)} ${from.y}`;
-            path += `L ${Math.max(from.x + offset, to.x - offset)} ${to.y}`;
-            path += `L ${to.x} ${to.y}`;
-            break;
-          }
         }
 
         return (
@@ -99,7 +85,6 @@ export const Connections = (props: {
             className={classes([
               isColorClass(val.color) && `color-stroke-${val.color}`,
             ])}
-            stroke={(!isColorClass(val.color) && val.color) || undefined}
             key={index}
             d={path}
             fill="transparent"

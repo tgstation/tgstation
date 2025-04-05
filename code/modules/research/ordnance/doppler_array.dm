@@ -243,8 +243,8 @@
 
 /obj/machinery/doppler_array/Destroy()
 	inserted_disk = null
-	records.Cut() // We only want to clear the list itself, not delete its contents.
-	return ..()
+	QDEL_NULL(records) //We only want the list nuked, not the contents.
+	. = ..()
 
 /obj/machinery/doppler_array/proc/update_doppler_light()
 	SIGNAL_HANDLER

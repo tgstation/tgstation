@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "You can now add bell-detonated TTVs to wheelchairs."
-  - rscadd: "Ringing the bell on an emagged wheelchair may cause it to explode."

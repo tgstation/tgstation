@@ -156,7 +156,7 @@
 /turf/open/floor/iron/dark/snowdin
 	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = TRUE
-	temperature = ICEBOX_MIN_TEMPERATURE
+	temperature = 180
 
 /////////// papers
 

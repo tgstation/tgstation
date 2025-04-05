@@ -52,9 +52,7 @@
 		if(!(direction & initialize_directions))
 			continue
 
-		var/image/cap = get_pipe_image(icon, "cap", direction, pipe_color, piping_layer, TRUE)
-		cap.appearance_flags |= RESET_COLOR|KEEP_APART
-		. += cap
+		. += get_pipe_image(icon, "cap", direction, pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational

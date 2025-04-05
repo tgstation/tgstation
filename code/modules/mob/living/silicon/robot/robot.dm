@@ -61,7 +61,6 @@
 		var/obj/item/borg/upgrade/ai/board = new(src)
 		make_shell(board)
 		add_to_upgrades(board)
-		ADD_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, INNATE_TRAIT)
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
@@ -1048,7 +1047,7 @@
 			'icons/mob/effects/onfire.dmi',
 			fire_icon,
 			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR|KEEP_APART,
+			appearance_flags = RESET_COLOR,
 		)
 		GLOB.fire_appearances[fire_icon] = new_fire_overlay
 

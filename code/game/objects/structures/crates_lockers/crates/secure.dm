@@ -130,7 +130,6 @@
 	damage_deflection = 10
 	icon_state = "securetrashcart"
 	base_icon_state = "securetrashcart"
-	weld_z = 5
 	paint_jobs = null
 	req_access = list(ACCESS_JANITOR)
 

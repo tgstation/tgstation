@@ -1,8 +1,6 @@
 SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
-	dependencies = list(
-		/datum/controller/subsystem/atoms
-	)
+	init_order = INIT_ORDER_ICON_SMOOTHING
 	wait = 1
 	priority = FIRE_PRIORITY_SMOOTHING
 	flags = SS_TICKER

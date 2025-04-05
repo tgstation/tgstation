@@ -7,6 +7,7 @@
 
 
 /datum/component/bitrunning_points/Initialize(datum/lazy_template/virtual_domain/domain)
+	. = ..()
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
 

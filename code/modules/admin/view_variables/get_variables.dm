@@ -3,7 +3,7 @@
 		. = VV_NULL
 
 	else if(isnum(var_value))
-		if(length(get_valid_bitflags(var_name)))
+		if(var_name in GLOB.bitfields)
 			. = VV_BITFIELD
 		else
 			. = VV_NUM

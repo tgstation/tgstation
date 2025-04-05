@@ -809,10 +809,10 @@
 /area/ruin/syndielab)
 "Wo" = (
 /obj/structure/table/wood,
-/obj/item/ammo_casing/shotgun/flechette/donk{
+/obj/item/ammo_casing/shotgun/fletchette{
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/shotgun/flechette/donk{
+/obj/item/ammo_casing/shotgun/fletchette{
 	pixel_x = 8;
 	pixel_y = 6
 	},

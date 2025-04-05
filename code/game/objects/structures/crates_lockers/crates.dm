@@ -32,11 +32,9 @@
 	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
 	var/lid_icon_state
 	/// Controls the X value of the lid, allowing left and right pixel movement.
-	var/lid_w = 0
+	var/lid_x = 0
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
-	var/lid_z = 0
-	var/weld_w = 0
-	var/weld_z = 0
+	var/lid_y = 0
 
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
@@ -97,15 +95,12 @@
 			. += "securecrateg"
 
 	if(welded)
-		var/mutable_appearance/weld_overlay = mutable_appearance(icon, "welded")
-		weld_overlay.pixel_w = weld_w
-		weld_overlay.pixel_z = weld_z
-		. += weld_overlay
+		. += icon_welded
 
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
-		lid.pixel_w = lid_w
-		lid.pixel_z = lid_z
+		lid.pixel_x = lid_x
+		lid.pixel_y = lid_y
 		lid.layer = layer
 		. += lid
 
@@ -190,7 +185,6 @@
 	base_icon_state = "trashcart"
 	can_install_electronics = FALSE
 	paint_jobs = null
-	weld_z = 5
 
 /obj/structure/closet/crate/trashcart/laundry
 	name = "laundry cart"

@@ -41,10 +41,8 @@
 	/// The item type that we want to order, usually clothing
 	var/wanted_clothing_type
 
-/datum/custom_order/moth_clothing/New(mob/living/basic/robot_customer/customer, datum/venue/our_venue)
-	var/datum/weakref/portal_ref = our_venue.current_visitors[customer]
-	var/obj/machinery/restaurant_portal/portal = portal_ref.resolve()
-	var/mob/living/carbon/buffet = portal?.turned_on_portal?.resolve()
+/datum/custom_order/moth_clothing/New(datum/venue/our_venue)
+	var/mob/living/carbon/buffet = our_venue.restaurant_portal?.turned_on_portal?.resolve()
 	if (!istype(buffet)) // Always asks for the clothes that you have on, but this is a fallback.
 		wanted_clothing_type = pick_weight(list(
 			/obj/item/clothing/head/utility/chefhat = 3,
@@ -92,7 +90,7 @@
 	/// stores tha name of our order generated on New()
 	var/icecream_name
 
-/datum/custom_order/icecream/New(mob/living/basic/robot_customer/customer)
+/datum/custom_order/icecream/New()
 	if(prob(33))
 		cone_type = /obj/item/food/icecream/chocolate
 	var/static/list/possible_flavors = list()
@@ -123,7 +121,7 @@
 	for(var/flavor in wanted_flavors)
 		var/image/scoop = image('icons/obj/service/kitchen.dmi', "icecream_custom")
 		scoop.color = GLOB.ice_cream_flavours[flavor].color
-		scoop.pixel_z = added_offset
+		scoop.pixel_y = added_offset
 		i_scream.overlays += scoop
 		added_offset += ICE_CREAM_SCOOP_OFFSET
 	food_image.add_overlay(i_scream)
@@ -138,7 +136,7 @@
 	/// How many reagents is needed
 	var/reagents_needed = VENUE_BAR_MINIMUM_REAGENTS
 
-/datum/custom_order/reagent/New(mob/living/basic/robot_customer/customer, reagent_type)
+/datum/custom_order/reagent/New(reagent_type)
 	. = ..()
 	src.reagent_type = reagent_type
 
@@ -200,7 +198,7 @@
 	/// What serving we picked for the order
 	var/picked_serving
 
-/datum/custom_order/reagent/soup/New(mob/living/basic/robot_customer/customer, reagent_type)
+/datum/custom_order/reagent/soup/New(reagent_type)
 	. = ..()
 	var/list/serving_sizes = list(
 		"small serving (15u)" = 15,

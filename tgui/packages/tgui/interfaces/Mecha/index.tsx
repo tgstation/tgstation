@@ -38,7 +38,6 @@ export const Content = (props) => {
     one_access,
     regions,
     accesses,
-    diagnostic_status,
   } = data;
   const id_lock = mecha_flags & mechflag_keys['ID_LOCK_ON'];
   return (
@@ -50,23 +49,12 @@ export const Content = (props) => {
               fill
               title={name}
               buttons={
-                <>
-                  <Button
-                    icon="edit"
-                    tooltip="Rename"
-                    tooltipPosition="left"
-                    onClick={() => act('changename')}
-                  />
-                  {!diagnostic_status && (
-                    <Button
-                      icon="tachograph-digital"
-                      color="violet"
-                      tooltip="Diagnostic"
-                      tooltipPosition="left"
-                      onClick={() => act('diagnostic')}
-                    />
-                  )}
-                </>
+                <Button
+                  icon="edit"
+                  tooltip="Rename"
+                  tooltipPosition="left"
+                  onClick={() => act('changename')}
+                />
               }
             >
               <Stack fill vertical>

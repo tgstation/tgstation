@@ -1,6 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(instruments)
 	name = "Instruments"
 	wait = 0.5
+	init_order = INIT_ORDER_INSTRUMENTS
 	flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_INSTRUMENTS
 	/// List of all instrument data, associative id = datum

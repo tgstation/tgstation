@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { useState } from 'react';
-import { Flex, Input, Section, Tabs, VirtualList } from 'tgui-core/components';
+import { Flex, Input, Tabs, VirtualList } from 'tgui-core/components';
 
 import { useRemappedBackend } from './helpers';
 import { TechNode } from './nodes/TechNode';
@@ -86,13 +86,11 @@ export function TechwebOverview(props) {
         </Flex>
       </Flex.Item>
       <Flex.Item className="Techweb__OverviewNodes" height="100%">
-        <Section fill scrollable>
-          <VirtualList>
-            {displayedNodes.map((n) => (
-              <TechNode node={n} key={n.id} />
-            ))}
-          </VirtualList>
-        </Section>
+        <VirtualList key={tabIndex + searchText}>
+          {displayedNodes.map((n) => (
+            <TechNode node={n} key={n.id} />
+          ))}
+        </VirtualList>
       </Flex.Item>
     </Flex>
   );

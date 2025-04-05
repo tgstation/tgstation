@@ -26,7 +26,6 @@
 		/obj/item/secateurs,
 		/obj/item/seeds,
 		/obj/item/storage/bag/plants,
-		/obj/item/tank/internals/emergency_oxygen,
 	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron

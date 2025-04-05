@@ -40,7 +40,3 @@
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(objectify), target, transform_path), OBJECTIFY_TIME)
 
 #undef OBJECTIFY_TIME
-
-/datum/smite/objectify/divine
-	name = "Become Object (Divine)"
-	smite_flags = SMITE_DIVINE|SMITE_STUN

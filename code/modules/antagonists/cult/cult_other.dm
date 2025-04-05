@@ -8,7 +8,8 @@
 	r_hand = /obj/item/melee/blood_magic/stun
 
 /datum/outfit/cultist/post_equip(mob/living/carbon/human/equipped, visuals_only)
-	equipped.set_eye_color(BLOODCULT_EYE)
+	equipped.eye_color_left = BLOODCULT_EYE
+	equipped.eye_color_right = BLOODCULT_EYE
 	equipped.update_body()
 
 ///Returns whether the given mob is convertable to the blood cult

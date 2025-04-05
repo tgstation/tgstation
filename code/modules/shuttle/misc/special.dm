@@ -80,7 +80,7 @@
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
 
-/obj/structure/table/abductor/wabbajack/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
+/obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -182,7 +182,7 @@
 	max_integrity = 1000
 	var/boot_dir = 1
 
-/obj/structure/table/wood/shuttle_bar/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
+/obj/structure/table/wood/shuttle_bar/Initialize(mapload, _buildstack)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),

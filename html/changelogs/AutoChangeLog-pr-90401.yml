@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - code_imp: "Optimized a proc related to getting a specific player's mob FAR less inefficient."
