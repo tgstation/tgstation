@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Bitrunners on Glacier Grind can now breathe in the safehouse."
+  - bugfix: "Bitrunners on Island Brawl will now be able to more clearly see the exit area."
