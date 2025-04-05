@@ -7292,6 +7292,7 @@
 #include "modular_doppler\modular_vending\code\tg_vendors\autodrobe.dm"
 #include "modular_doppler\modular_vending\code\tg_vendors\boozeomat.dm"
 #include "modular_doppler\modular_vending\code\tg_vendors\clothesmate.dm"
+#include "modular_doppler\modular_vending\code\tg_vendors\cola.dm"
 #include "modular_doppler\modular_vending\code\tg_vendors\engivend.dm"
 #include "modular_doppler\modular_vending\code\tg_vendors\games.dm"
 #include "modular_doppler\modular_vending\code\tg_vendors\medical.dm"

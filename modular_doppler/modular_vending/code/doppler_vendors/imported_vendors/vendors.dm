@@ -46,6 +46,7 @@
 				/obj/item/food/pistachios = 6,
 				/obj/item/food/cornchips/random = 6,
 				/obj/item/food/sosjerky = 6,
+				/obj/item/food/vendor_snacks/nuke_fuel = 6,
 				/obj/item/reagent_containers/cup/soda_cans/cola = 6,
 				/obj/item/reagent_containers/cup/soda_cans/lemon_lime = 6,
 				/obj/item/reagent_containers/cup/soda_cans/starkist = 6,
@@ -199,6 +200,7 @@
 				/obj/item/food/okonomiyaki = 6,
 				/obj/item/reagent_containers/cup/soda_cans/doppler/red_beverage = 6,
 				/obj/item/reagent_containers/cup/soda_cans/doppler/yogurt_beverage = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/nevada_tea = 6,
 				/obj/item/reagent_containers/cup/glass/waterbottle/tea = 6,
 				/obj/item/reagent_containers/cup/glass/waterbottle/tea/astra = 6,
 				/obj/item/reagent_containers/cup/glass/waterbottle/tea/strawberry = 6,
@@ -232,6 +234,9 @@
 		)
 	)
 
+	contraband = list(
+		/obj/item/reagent_containers/cup/soda_cans/doppler/gakster_energy = 6,
+	)
 	refill_canister = /obj/item/vending_refill/snack/imported/marsian
 	initial_language_holder = /datum/language_holder/marsian_vendor
 
