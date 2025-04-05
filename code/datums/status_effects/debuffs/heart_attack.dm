@@ -163,6 +163,7 @@
 /datum/status_effect/heart_desperation
 	id = "heart_desperation"
 	duration = (4 SECONDS)
+	alert_type = null
 	/// List of traits to add/remove from our subject when we are in their system
 	var/static/list/subject_traits = list(
 		TRAIT_STABLEHEART,
