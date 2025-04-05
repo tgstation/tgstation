@@ -31748,6 +31748,7 @@
 "liL" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/item/storage/test_tube_rack/full,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "liO" = (
@@ -46979,10 +46980,6 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"qHW" = (
-/obj/item/storage/test_tube_rack/full,
-/turf/closed/wall/r_wall,
-/area/station/security/prison/safe)
 "qHY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -91767,7 +91764,7 @@ hDE
 wZz
 wZz
 wZz
-qHW
+sjP
 iPb
 iPb
 uza
