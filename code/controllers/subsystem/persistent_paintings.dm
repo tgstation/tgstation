@@ -93,7 +93,6 @@
 
 SUBSYSTEM_DEF(persistent_paintings)
 	name = "Persistent Paintings"
-	init_order = INIT_ORDER_PERSISTENT_PAINTINGS
 	flags = SS_NO_FIRE
 
 	/// A list of painting frames that this controls
