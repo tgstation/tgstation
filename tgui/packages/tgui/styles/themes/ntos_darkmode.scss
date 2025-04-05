@@ -3,42 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+.theme-ntos_darkmode:root {
+  --color-nanotrasen: hsl(0, 0%, 25%);
 
-$nanotrasen: hsl(0, 0%, 17.25%);
+  // Base
+  --color-base: hsl(from var(--color-nanotrasen) h s calc(l - 15));
+  --secondary-lightness-adjustment: 3;
+  --color-primary: var(--color-nanotrasen);
+  --border-primary-saturation: 0;
 
-@use '../colors.scss' with (
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base.scss' with (
-  $color-bg: color.scale($nanotrasen, $lightness: -45%)
-);
-
-.theme-ntos_darkmode {
   // Components
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': $nanotrasen,
-      'color-transparent-text': rgba(227, 240, 255, 0.75)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/ProgressBar',
-    $with: (
-      'color-default-fill': $nanotrasen,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('~tgui-core/styles/components/Section');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($nanotrasen, $lightness: -25%))
-  );
+  --progress-bar-background: hsla(0, 0%, 0%, 0.5);
 }

@@ -51,39 +51,35 @@ $_rep_map: (
 
   .reputation-#{$reputation-name}.Button {
     background-position: 0 0;
-    transition: background-position 50ms;
+    transition: background-position var(--transition-time-fast);
 
     &:hover {
       transition: background-position 0ms;
     }
 
-    &:focus {
-      transition: background-position 100ms;
+    &:active {
+      transition: background-position var(--transition-time-medium);
     }
 
     &:hover,
-    &:focus {
+    &:active {
       background-position: 50em 0;
     }
   }
 }
 
 .UplinkObjective__Titlebar {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  padding: 0.6rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 0.4rem;
-
+  padding: var(--space-ml) var(--space-l) var(--space-m);
   font-weight: bold;
-  border: black solid 2px;
+  border: var(--border-thickness-small) solid var(--color-black);
   border-bottom: none;
+  border-top-left-radius: var(--border-radius-huge);
+  border-top-right-radius: var(--border-radius-huge);
 }
 
 .UplinkObjective__EmptyObjective {
-  background-color: rgba(0, 0, 0, 0.4);
-  border: black solid 2px;
+  background-color: hsla(0, 0%, 0%, 0.4);
+  border: var(--border-thickness-small) solid var(--color-black);
   padding: 1rem;
   width: 100%;
   height: 100%;
@@ -92,19 +88,16 @@ $_rep_map: (
 }
 
 .UplinkObjective__Content {
-  background-color: rgba(0, 0, 0, 0.4);
-  border: black solid 2px;
+  background-color: hsla(0, 0%, 0%, 0.4);
+  border: var(--border-thickness-small) solid var(--color-black);
   border-top: none;
   border-bottom: none;
-  padding: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0;
+  padding: var(--space-l);
 }
 
 .UplinkObjective__Footer {
   background-color: rgba(0, 0, 0, 0.4);
-  border: black solid 2px;
+  border: var(--border-thickness-small) solid var(--color-black);
   border-top: none;
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
+  padding: var(--space-m) 0 var(--space-l);
 }

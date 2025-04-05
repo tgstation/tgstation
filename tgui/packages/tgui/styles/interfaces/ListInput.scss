@@ -11,20 +11,20 @@
 }
 
 .ListInput__Section .Section__titleText {
-  font-size: base.em(12px);
+  font-size: 1rem;
 }
 
 .ListInput__Loader {
-  width: 100%;
   position: relative;
+  width: 100%;
   height: 4px;
 }
 
 .ListInput__LoaderProgress {
   position: absolute;
-  transition:
-    background-color 500ms ease-out,
-    width 500ms ease-out;
-  background-color: colors.bg(colors.$primary);
   height: 100%;
+  background-color: colors.bg(var(--color-primary));
+  transition-property: background-color, width;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: ease-out;
 }

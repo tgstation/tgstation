@@ -3,68 +3,33 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-@use '../colors.scss' with (
-  $primary: hsl(120, 100%, 50%),
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base.scss' with (
-  $color-bg: hsl(120, 20%, 8.8%),
-  $color-bg-grad-spread: 0%
-);
-
-.theme-hackerman {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+.theme-hackerman:root {
+  // Base
+  --color-base: hsl(120, 20%, 8.8%);
+  --color-primary: hsl(120, 100%, 50%);
+  --color-secondary: hsl(120, 28%, 18.5%);
+  --base-gradient-spread: 0;
+  --candystripe-odd: hsla(120, 100%, 20%, 0.5);
 
   // Components
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': colors.$primary,
-      'color-disabled': hsl(120, 17.78%, 35.29%),
-      'color-selected': hsl(120, 100%, 50%)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/Tabs',
-    $with: (
-      'color-default': colors.$primary,
-      'tab-color-selected': hsla(120, 100%, 50%, 0.25),
-      'text-color': hsl(0, 0%, 90.59%)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/Input',
-    $with: ('border-color': colors.$primary)
-  );
-  @include meta.load-css('~tgui-core/styles/components/Modal');
-  @include meta.load-css('~tgui-core/styles/components/Section');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(120, 28.4%, 18.6%))
-  );
+  --button-background-selected: var(--color-primary);
+  --tab-background-selected: hsla(120, 100%, 50%, 0.25);
+  --tab-color: hsl(0, 0%, 90%);
+  --tab-color-selected: var(--color-primary);
 
   .Layout__content {
     background-image: none;
   }
 
   .Button {
-    font-family: monospace;
-    border-width: base.em(2px);
+    font-family: var(--font-family-mono);
+    border-width: var(--border-thickness-small);
     border-style: outset;
     border-color: hsl(120, 100%, 33.33%);
-    outline: base.em(1px) solid rgb(0, 122, 0);
-  }
+    outline: var(--border-thickness-tiny) solid rgb(0, 122, 0);
 
-  .candystripe:nth-child(odd) {
-    background-color: rgba(0, 100, 0, 0.5);
+    &--color--default {
+      color: var(--color-text-fixed-black);
+    }
   }
 }

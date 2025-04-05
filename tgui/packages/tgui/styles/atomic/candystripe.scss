@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 
-.candystripe:nth-child(odd) {
-  background-color: hsla(0, 0%, 0%, 0.25);
+/* Using :where for 0 specificity - https://developer.mozilla.org/en-US/docs/Web/CSS/:where */
+:where(.candystripe:nth-child(odd)) {
+  background-color: var(--candystripe-odd);
+}
+
+:where(.candystripe:nth-child(even)) {
+  background-color: var(--candystripe-even);
 }

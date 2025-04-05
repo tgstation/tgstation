@@ -3,164 +3,125 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-$light-gray: hsl(0, 0%, 76%);
-$dark-gray: hsl(0, 0%, 52%);
-$scrollbar-color-multiplier: 1;
-
-@use '../colors.scss' with (
-  $primary: hsl(0, 0%, 0%),
-  $good: hsl(134, 100%, 24.3%),
-  $average: hsl(56, 88%, 50%),
-  $bad: hsl(0, 72%, 50%),
-  $label: hsl(0, 0%, 0%)
-);
-@use '../base.scss' with (
-  $color-bg: hsl(180, 100%, 25.3%),
-  $color-bg-grad-spread: 0%,
-  $border-radius: 0
-);
-
 .theme-ntOS95 {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+  &:root {
+    --95-outline: hsl(0, 0%, 85%);
+    --95-background: hsl(0, 0%, 75%);
 
-  // Components
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': hsl(52.3, 40.3%, 84.9%),
-      'color-disabled': hsl(0, 0%, 43.9%),
-      'color-selected': hsl(128.2, 100%, 24.3%),
-      'color-caution': hsl(29.5, 91%, 39%),
-      'color-danger': hsl(0, 90.3%, 32.4%)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/ProgressBar',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/Section',
-    $with: ('background-color': rgba(0, 0, 0, 0.4))
-  );
+    // Base
+    --color-base: hsl(180, 100%, 25.3%);
+    --color-section: var(--95-background);
+    --color-primary: hsl(240, 100%, 25.1%);
+    --color-secondary: var(--color-primary);
+    --color-label: var(--color-black);
+    --color-scrollbar-thumb: hsl(from var(--color-section) h s calc(l - 25));
+    --color-border-primary: hsl(from var(--color-black) h s l / 0.5);
+    --color-text: var(--color-black);
+    --base-gradient-spread: 0;
+    --border-radius-unit: 0;
+    --transition-time-unit: 0;
+    --font-family: 'MS Sans Serif';
 
-  @include meta.load-css(
-    '~tgui-core/styles/components/Tooltip',
-    $with: ('background-color': hsl(61.5, 70.2%, 77.6%))
-  );
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(240, 100%, 25.1%))
-  );
-
-  .Button {
-    color: hsl(60, 7.3%, 8%);
-    background-color: hsl(0, 0%, 76.1%);
-    //border: base.em(2px) outset hsl(52.3, 40.3%, 84.9%);
-    outline: base.em(2px) outset hsl(0, 0%, 76.5%);
-  }
-  .Button:hover {
-    background-color: hsl(224, 100%, 33.9%);
-    transition: 0.1s;
+    // Components
+    --button-background-default: hsl(52.3, 40.3%, 84.9%);
+    --progress-bar-background: hsla(0, 0%, 0%, 0.5);
+    --tooltip-background: var(--95-background);
+    --input-background: var(--color-white);
+    --input-color: var(--color-black);
+    --tab-indicator-size: 0;
+    --tab-color: var(--color-black);
+    --tab-color-selected: var(--color-black);
+    --tab-background-hover: var(--95-background);
+    --tab-background-selected: var(--95-background);
+    --tab-border-radius: 0.33em;
   }
 
-  .Section {
-    color: black;
-    background-color: hsl(0, 0%, 75.3%);
-    outline: base.em(2px) outset hsl(0, 0%, 76.5%);
-    &__titleText {
-      color: black;
-    }
-  }
-
-  .Input {
-    background-color: white;
-    outline: base.em(2px) inset hsl(0, 0%, 76.5%);
-    color: black;
-    &__input:-ms-input-placeholder {
-      color: black;
-    }
-  }
-
-  .TextArea {
-    background-color: white;
-    outline: base.em(2px) inset hsl(0, 0%, 76.5%);
+  body {
+    overflow: auto;
   }
 
   .Layout__content {
     background-image: none;
   }
-  .Layout,
-  .Layout * {
-    // Fancy scrollbar
-    scrollbar-base-color: color.scale(
-      $light-gray,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-face-color: color.scale(
-      $light-gray,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
 
-    scrollbar-3dlight-color: color.scale(
-      $light-gray,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-highlight-color: color.scale(
-      $light-gray,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-track-color: color.scale(
-      $light-gray,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-arrow-color: color.scale(
-      $light-gray,
-      $lightness: 50% * $scrollbar-color-multiplier
-    );
-    scrollbar-shadow-color: color.scale(
-      $light-gray,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
+  .NtosWindow__header {
+    background-color: var(--color-gray);
+  }
+
+  .Button {
+    background-color: var(--95-background);
+    color: var(--color-black);
+
+    &:hover {
+      background-color: var(--color-secondary);
+      transition: background-color 0.1s;
+    }
+
+    &:active,
+    &.Button--selected {
+      outline-style: inset;
+    }
+
+    &--color--transparent:hover {
+      color: var(--color-white);
+    }
+  }
+
+  .ProgressBar,
+  .TitleBar__close,
+  .TitleBar__title {
+    color: var(--color-white);
+  }
+
+  .Input,
+  .TextArea {
+    outline: var(--border-thickness-small) inset var(--95-outline);
+  }
+
+  .Box,
+  .Button,
+  .Section,
+  .Tooltip {
+    outline: var(--border-thickness-small) outset var(--95-outline);
   }
 
   .Tab {
-    color: hsl(0, 0%, 0%);
-    background-color: hsl(61.5, 70.2%, 77.6%);
+    border: var(--border-thickness-small) outset var(--95-outline);
+
+    &--selected .Tab__text {
+      outline: var(--border-thickness-tiny) dotted;
+    }
   }
 
-  .Tab--selected {
-    color: hsl(0, 90.3%, 32.4%);
-    background-color: hsl(0, 0%, 76.5%);
+  .Tabs--vertical {
+    border-right: var(--border-thickness-small) solid var(--95-outline);
+
+    .Tab {
+      border-right: 0;
+
+      &--selected {
+        border-style: inset;
+      }
+    }
   }
 
-  body {
-    overflow: auto;
-    font-family: ui-sans-serif;
-  }
-  .ProgressBar {
-    color: white;
+  .Tabs--horizontal {
+    border-bottom: var(--border-thickness-small) solid var(--95-outline);
+
+    .Tab {
+      border-bottom: 0;
+
+      &:not(.Tab--selected) {
+        min-height: 2em;
+        height: 2em;
+        align-self: end;
+      }
+    }
   }
 
   .Table__cell {
     display: table-cell;
-    padding: 0 0.25em;
-    background-color: hsl(0, 0%, 76.5%);
-    //outline: base.em(3px) outset hsl(0.0, 0.0%, 75.3%)
-  }
-  .Box {
-    outline: base.em(3px) outset hsl(0, 0%, 75.3%);
-  }
-  .Tooltip {
-    color: black;
-  }
-  .NtosWindow__header {
-    background-color: $dark-gray;
+    padding: 0 var(--space-s);
+    background-color: var(--95-background);
   }
 }
