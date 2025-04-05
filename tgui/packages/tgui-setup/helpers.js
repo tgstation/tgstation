@@ -35,13 +35,6 @@
   // Backwards compatibility
   window.__windowId__ = Byond.windowId;
 
-  // Trident engine version
-  Byond.TRIDENT = (function () {
-    var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
-    var majorVersion = groups && groups[1];
-    return majorVersion ? parseInt(majorVersion, 10) : null;
-  })();
-
   // Blink engine version
   Byond.BLINK = (function () {
     var groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
@@ -51,7 +44,7 @@
 
   // Basic checks to detect whether this page runs in BYOND
   var isByond =
-    (Byond.TRIDENT !== null || Byond.BLINK !== null || window.cef_to_byond) &&
+    (Byond.BLINK !== null || window.cef_to_byond) &&
     location.hostname === '127.0.0.1' &&
     location.search !== '?external';
   //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
