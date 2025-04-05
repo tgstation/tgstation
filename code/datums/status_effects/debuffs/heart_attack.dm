@@ -15,8 +15,6 @@
 	alert_type = null
 	///A timer that ticks down until the heart fully stops
 	var/time_until_stoppage = 150
-	///Does the victim hear their own heartbeat?
-	var/sound = FALSE
 	///Does this show up on medhuds?
 	var/visible = FALSE
 
@@ -52,7 +50,6 @@
 			owner.adjustStaminaLoss(5)
 
 	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)	//This coughing gets replaced with worse coughing, no need to stack it.
-		owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 25, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		if(SPT_PROB(10, seconds_between_ticks))
 			owner.emote("cough")
 			owner.adjustStaminaLoss(10)
@@ -77,9 +74,6 @@
 			oxyloss_sum += 8
 
 	if(time_until_stoppage <= ATTACK_STAGE_FOUR) //And now we compound it with even worse effects.
-		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
-		sound = FALSE
-		owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 100, FALSE, use_reverb = FALSE)
 
 		if(SPT_PROB(5, seconds_between_ticks))
 			to_chat(owner, span_userdanger("It feels like you're shutting down..."))
@@ -116,6 +110,14 @@
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, clear_fullscreen), "flash", 1 SECONDS), 1 SECONDS)
 		qdel(src)
 		return FALSE
+
+	if(time_until_stoppage <= ATTACK_STAGE_TWO)
+		if(time_until_stoppage <= ATTACK_STAGE_FOUR)
+			owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 100, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+		else
+			owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 25, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+	else
+		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	time_until_stoppage--
 
