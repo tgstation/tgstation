@@ -370,6 +370,9 @@
 	passtable_off(pushed_mob, passtable_key)
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
+	on_mob_tabled(user, pushed_mob)
+
+/obj/structure/table/proc/on_mob_tabled(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
@@ -742,6 +745,29 @@
 	max_integrity = 70
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
+
+/obj/structure/table/wood/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+	. = ..()
+	wood_table_breakroll(target)
+
+/obj/structure/table/wood/proc/wood_table_breakroll(mob/living/M)
+	var/breakroll = rand(1,3)
+	if(breakroll == 3)
+		wood_table_shatter(M)
+	return
+
+/obj/structure/table/wood/proc/wood_table_shatter(mob/living/victim)
+	visible_message(
+		span_warning("[src] smashes into bits!"),
+		blind_message = span_hear("You hear the loud cracking of wood being split."),
+	)
+
+	playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
+	victim.Paralyze(20 SECONDS) // since its not 100% odds, make it longer than a glass table to compensate.
+	victim.apply_damage(30, BRUTE)
+	new frame(loc)
+	qdel(src)
+
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
