@@ -70,7 +70,7 @@
 	var/alarm_on = FALSE
 	///How many times this camera has been EMP'ed consecutively, will reset back to 0 when fixed.
 	var/emped
-	///Boolean on whether the AI can even turn on this camera's light- borg caneras dont have one, for example.
+	///Boolean on whether the AI can even turn on this camera's light- borg cameras dont have one, for example.
 	var/internal_light = TRUE
 	///Number of AIs watching this camera with lights on, used for icons.
 	var/in_use_lights = 0

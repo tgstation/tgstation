@@ -30431,7 +30431,6 @@
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics/garden)
 "kBt" = (
-/obj/machinery/modular_computer/preset/civilian,
 /obj/machinery/button/door/directional/north{
 	id = "roboticsprivacy";
 	name = "Robotics Privacy Control";
@@ -30440,6 +30439,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/modular_computer/preset/robotics,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "kBw" = (

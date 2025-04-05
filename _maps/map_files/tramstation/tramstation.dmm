@@ -30282,11 +30282,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "jKQ" = (
-/obj/machinery/modular_computer/preset/civilian{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
+	},
+/obj/machinery/modular_computer/preset/robotics{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)

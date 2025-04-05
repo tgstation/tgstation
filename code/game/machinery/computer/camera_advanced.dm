@@ -69,13 +69,6 @@
 		networks -= i
 		networks += "[port.shuttle_id]_[i]"
 
-/obj/machinery/computer/camera_advanced/syndie
-	icon_keyboard = "syndie_key"
-	circuit = /obj/item/circuitboard/computer/advanced_camera
-
-/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	return //For syndie nuke shuttle, to spy for station.
-
 /**
  * Initializes a camera eye.
  * Returns TRUE if initialization was successful.
@@ -135,11 +128,6 @@
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)
 
-/obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
-	if(!isabductor(user))
-		return FALSE
-	return ..()
-
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -195,6 +183,43 @@
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
 
+/**
+ * COMPUTER SUBTYPES
+ */
+///Abductor type, can only be used by abductors
+/obj/machinery/computer/camera_advanced/abductor
+	networks = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SILICON)
+
+/obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
+	if(!isabductor(user))
+		return FALSE
+	return ..()
+
+///Human AI type, can be repackaged into a pod and is deployed by one, has access to silicon cameras.
+/obj/machinery/computer/camera_advanced/human_ai
+	networks = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SILICON)
+
+/obj/machinery/computer/camera_advanced/human_ai/screwdriver_act(mob/living/user, obj/item/tool)
+	balloon_alert(user, "repackaging...")
+	if(!do_after(user, 5 SECONDS, src))
+		return ITEM_INTERACT_BLOCKING
+	tool.play_tool_sound(src, 40)
+	new /obj/item/secure_camera_console_pod(get_turf(src))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+///Syndicate type, doesn't connect to shuttles and lets you spy on silicon.
+/obj/machinery/computer/camera_advanced/syndie
+	networks = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SILICON)
+	icon_keyboard = "syndie_key"
+	circuit = /obj/item/circuitboard/computer/advanced_camera
+
+/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	return //For syndie nuke shuttle, to spy for station.
+
+/**
+ * Camera actions
+ */
 /datum/action/innate/camera_off
 	name = "End Camera View"
 	button_icon = 'icons/mob/actions/actions_silicon.dmi'
@@ -264,12 +289,3 @@
 		to_chat(owner, span_notice("You move downwards."))
 	else
 		to_chat(owner, span_notice("You couldn't move downwards!"))
-
-/obj/machinery/computer/camera_advanced/human_ai/screwdriver_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "repackaging...")
-	if(!do_after(user, 5 SECONDS, src))
-		return ITEM_INTERACT_BLOCKING
-	tool.play_tool_sound(src, 40)
-	new /obj/item/secure_camera_console_pod(get_turf(src))
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
