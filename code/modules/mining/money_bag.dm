@@ -17,7 +17,11 @@
 		icon_state = "moneybagalt"
 	atom_storage.max_slots = 40
 	atom_storage.max_specific_storage = 40
-	atom_storage.set_holdable(list(/obj/item/coin, /obj/item/stack/spacecash, /obj/item/holochip))
+	atom_storage.set_holdable(list(
+		/obj/item/coin,
+		/obj/item/stack/spacecash,
+		/obj/item/holochip
+	))
 
 /obj/item/storage/bag/money/vault/PopulateContents()
 	new /obj/item/coin/silver(src)

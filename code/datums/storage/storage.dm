@@ -35,6 +35,7 @@
 	/// Do not set directly, use set_holdable
 	VAR_FINAL/list/obj/item/cant_hold
 	/// Typecache of items that can always be inserted into this storage, regardless of size.
+	///Do not set directly, use set_holdable
 	VAR_FINAL/list/obj/item/exception_hold
 	/// For use with an exception typecache:
 	/// The maximum amount of items of the exception type that can be inserted into this storage.
@@ -287,35 +288,51 @@
 /// ~Lemon
 GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
-/datum/storage/proc/set_holdable(list/can_hold_list, list/cant_hold_list)
-	if(!isnull(can_hold_list) && !islist(can_hold_list))
-		can_hold_list = list(can_hold_list)
-	if(!isnull(cant_hold_list) && !islist(cant_hold_list))
-		cant_hold_list = list(cant_hold_list)
-
+/**
+ * Sets what type of contents this storage supports
+ * Arguments
+ *
+ * * list/can_hold_list - The list of item types whitelisted in this storage rejecting everything else
+ * * list/cant_hold_list - The list of item types blacklisted in this storage accepting everything else
+ * * list/exception_hold_list - The list of items that can exceed `max_specific_storage`. It can only fit `exception_count` of such items
+ */
+/datum/storage/proc/set_holdable(list/can_hold_list, list/cant_hold_list, list/exception_hold_list)
+	can_hold = null
 	if (!isnull(can_hold_list))
-		if(isnull(can_hold_description))
-			can_hold_description = generate_hold_desc(can_hold_list)
+		if(!islist(can_hold_list))
+			can_hold_list = list(can_hold_list)
 
 		var/unique_key = can_hold_list.Join("-")
 		if(!GLOB.cached_storage_typecaches[unique_key])
 			GLOB.cached_storage_typecaches[unique_key] = typecacheof(can_hold_list)
 		can_hold = GLOB.cached_storage_typecaches[unique_key]
 
+	cant_hold = null
 	if (!isnull(cant_hold_list))
+		if(!islist(cant_hold_list))
+			cant_hold_list = list(cant_hold_list)
+
 		var/unique_key = cant_hold_list.Join("-")
 		if(!GLOB.cached_storage_typecaches[unique_key])
 			GLOB.cached_storage_typecaches[unique_key] = typecacheof(cant_hold_list)
 		cant_hold = GLOB.cached_storage_typecaches[unique_key]
 
-/// Generates a description, primarily for clothing storage.
-/datum/storage/proc/generate_hold_desc(can_hold_list)
-	var/list/desc = list()
+	exception_hold = null
+	if (!isnull(exception_hold_list))
+		if(!islist(exception_hold_list))
+			exception_hold_list = list(exception_hold_list)
 
-	for(var/obj/item/valid_item as anything in can_hold_list)
-		desc += "\a [initial(valid_item.name)]"
+		var/unique_key = exception_hold_list.Join("-")
+		if(!GLOB.cached_storage_typecaches[unique_key])
+			GLOB.cached_storage_typecaches[unique_key] = typecacheof(exception_hold_list)
+		exception_hold = GLOB.cached_storage_typecaches[unique_key]
 
-	return "\n\t[span_notice("[desc.Join("\n\t")]")]"
+	can_hold_description = null
+	if(length(can_hold_list))
+		var/list/desc = list()
+		for(var/obj/item/valid_item as anything in can_hold_list)
+			desc += "\a [initial(valid_item.name)]"
+		can_hold_description = "\n\t[span_notice("[desc.Join("\n\t")]")]"
 
 /// Updates the action button for toggling collectmode.
 /datum/storage/proc/update_actions(atom/source, mob/equipper, slot)

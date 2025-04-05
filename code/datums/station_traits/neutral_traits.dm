@@ -503,7 +503,10 @@
 /obj/item/storage/box/stickers/skub/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 3
-	atom_storage.exception_hold = typecacheof(list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
+	atom_storage.set_holdable(exception_hold_list = list(
+		/obj/item/skub,
+		/obj/item/clothing/suit/costume/wellworn_shirt/skub,
+	))
 
 /obj/item/storage/box/stickers/skub/PopulateContents()
 	new /obj/item/skub(src)
@@ -518,7 +521,7 @@
 
 /obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
 	. = ..()
-	atom_storage.exception_hold = typecacheof(list(/obj/item/clothing/suit/costume/wellworn_shirt/skub))
+	atom_storage.set_holdable(exception_hold_list = /obj/item/clothing/suit/costume/wellworn_shirt/skub)
 
 /obj/item/storage/box/stickers/anti_skub/PopulateContents()
 	for(var/i in 1 to 4)

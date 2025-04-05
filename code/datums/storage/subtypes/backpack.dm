@@ -9,8 +9,8 @@
 	max_total_storage,
 )
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/fish_tank))
-	exception_hold = exception_cache
+
+	set_holdable(exception_hold_list = /obj/item/fish_tank)
 
 /datum/storage/backpack/santabag
 	max_total_storage = 60

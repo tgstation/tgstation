@@ -335,10 +335,8 @@
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
 	// Can hold fishing rod despite the size
-	var/static/list/exception_cache = typecacheof(list(
-		/obj/item/fishing_rod,
-	))
-	atom_storage.exception_hold = exception_cache
+	atom_storage.set_holdable(exception_hold_list = /obj/item/fishing_rod)
+
 	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier, ITEM_SLOT_HANDS)
 
 /obj/item/storage/toolbox/fishing/PopulateContents()

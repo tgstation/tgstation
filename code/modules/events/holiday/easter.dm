@@ -49,7 +49,12 @@
 
 /obj/item/storage/basket/easter/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
+	atom_storage.set_holdable(list(
+		/obj/item/food/egg,
+		/obj/item/food/chocolateegg,
+		/obj/item/food/boiledegg,
+		/obj/item/surprise_egg
+	))
 
 /obj/item/storage/basket/easter/proc/countEggs()
 	cut_overlays()

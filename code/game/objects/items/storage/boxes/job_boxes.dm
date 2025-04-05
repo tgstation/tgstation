@@ -271,7 +271,10 @@
 
 /obj/item/storage/box/miner_modkits/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/borg/upgrade/modkit, /obj/item/crusher_trophy))
+	atom_storage.set_holdable(list(
+		/obj/item/borg/upgrade/modkit,
+		/obj/item/crusher_trophy
+	))
 	atom_storage.numerical_stacking = TRUE
 
 /obj/item/storage/box/miner_modkits/PopulateContents()

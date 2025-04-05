@@ -121,7 +121,10 @@
 /obj/item/storage/box/lights/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 21
-	atom_storage.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
+	atom_storage.set_holdable(list(
+		/obj/item/light/tube,
+		/obj/item/light/bulb
+	))
 	atom_storage.max_total_storage = 21
 	atom_storage.allow_quick_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
 
@@ -209,7 +212,7 @@
 /obj/item/storage/box/balloons/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 24
-	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
+	atom_storage.set_holdable(/obj/item/toy/balloon/long)
 	atom_storage.max_total_storage = 24
 	atom_storage.allow_quick_gather = FALSE
 
@@ -236,7 +239,7 @@
 /obj/item/storage/box/stickers/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 8
-	atom_storage.set_holdable(list(/obj/item/sticker))
+	atom_storage.set_holdable(/obj/item/sticker)
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	if(isnull(illustration))
 		illustration = pick(pack_labels)
