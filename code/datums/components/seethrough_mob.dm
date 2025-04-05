@@ -17,7 +17,7 @@
 	///This component's personal uid
 	var/personal_uid
 
-/datum/component/seethrough_mob/Initialize(target_alpha = 100, animation_time = 0.5 SECONDS, clickthrough = TRUE, keep_color = FALSE)
+/datum/component/seethrough_mob/Initialize(target_alpha = 100, animation_time = 0.5 SECONDS, clickthrough = TRUE)
 	. = ..()
 
 	if(!ismob(parent))
