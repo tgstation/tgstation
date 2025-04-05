@@ -22,3 +22,42 @@
   - bugfix: The library console has been refactored. Report any issues in the github!
   timothymtorres:
   - map: Move mafia, CTF, and deathmatch maps into minigame folder
+2025-04-03:
+  Absolucy:
+  - refactor: Refactored some code related to initialization.
+  - code_imp: Runtime errors will now print to the chat while debugging.
+  Melbert:
+  - refactor: Minor mining voucher refactor, report any oddities.
+  - qol: All spell invocations have been made a bit more consistent - some have changed
+      slightly, some are now punctuated. "Dragon Form" and "Bear Form" are now emotes
+      invocations.
+  - qol: '"Unknown" mobs are now properly referred to as they/them'
+  - qol: Burning paper (and similar) is now two way. Rather than needing to click
+      on the paper with a burning item, you can now click on a burning item with the
+      paper. This means you can burn paper on your lit cigarette like a badass.
+  - qol: You can now light cigarettes on candles.
+  - rscdel: Flares and candles can no longer craft into flashlight eyes, I guess.
+2025-04-04:
+  Jacquerel:
+  - rscadd: Handcuffed people can now be tied to the tram rails
+  - balance: tram rails will no longer electrocute you if they're not powered
+  Singul0:
+  - rscadd: You can now flip tables by right clicking them!
+  SmArtKar:
+  - balance: Restaurant portals can now be printed, constructed and deconstructed.
+      They're also no longer completely invulnerable.
+  Watermelon914:
+  - refactor: Refactored subsystem initialization
+  necromanceranne:
+  - bugfix: Attempts were made to make chemical interactions with regards to splashes
+      or exposure to chemicals on your skin respect clothing cover. If you have clothing
+      with biological protecting properties, chemicals may not affect you as easily.
+      Good for you.
+  - balance: Some chems may behave differently than they originally did in light of
+      utilizing suit protections appropriately. Make sure if you want someone to be
+      exposed to the full effect of a chemical that they're not wearing anything in
+      the way before splashing them.
+2025-04-05:
+  Gaxeer:
+  - bugfix: '`round_time` in stat panel and ESC menu will show actual time since the
+      round start, not the world time'
