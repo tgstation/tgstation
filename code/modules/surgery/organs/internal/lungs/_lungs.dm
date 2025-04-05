@@ -553,7 +553,7 @@
 		breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
 	if (nitrium_pp > 10)
 		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
-		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
+		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 2 - existing))
 
 /// Radioactive, green gas. Toxin damage, and a radiation chance
 /obj/item/organ/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
