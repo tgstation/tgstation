@@ -434,6 +434,11 @@
 	mood_change = -3
 	timeout = 3 MINUTES
 
+/datum/mood_event/russian_roulette_lose_cheater
+	description = "I gambled and lost! Good thing I wasn't aiming for my head..."
+	mood_change = -10
+	timeout = 10 MINUTES
+
 /datum/mood_event/russian_roulette_lose
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
