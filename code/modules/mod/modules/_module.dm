@@ -390,7 +390,7 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	if(!mask_worn_overlay)
-		if(!mod.active || !has_required_parts(mod.mod_parts, need_active = TRUE))
+		if(!has_required_parts(mod.mod_parts, need_active = TRUE))
 			return
 	else
 		var/datum/mod_part/part_datum = mod.get_part_datum(source)
