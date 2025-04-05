@@ -6,6 +6,7 @@
 @use 'sass:color';
 @use '../base';
 @use '../colors';
+@use '../functions.scss' as *;
 
 $text-color: hsla(0, 0%, 100%, 0.75) !default;
 $background-color: hsl(0, 0%, 21%) !default;
@@ -16,7 +17,7 @@ $shadow-color-core: hsl(0, 0%, 0%, 0.4) !default;
   position: fixed;
   display: flex;
   align-items: center;
-  width: 100vw;
+  width: vp(100vw);
   height: base.rem(32px);
   background-color: $background-color;
   border-bottom: 1px solid $shadow-color-core;

@@ -25,6 +25,7 @@ type ByondOpen = {
 type ByondProps = {
   maxLength: number;
   lightMode: BooleanLike;
+  scale: BooleanLike;
 };
 
 const ROWS: Record<keyof typeof WindowSize, number> = {
@@ -50,6 +51,7 @@ export function TguiSay() {
   const [maxLength, setMaxLength] = useState(1024);
   const [lightMode, setLightMode] = useState(false);
   const [value, setValue] = useState('');
+  const [scale, setScale] = useState(true);
 
   const position = useRef([window.screenX, window.screenY]);
   const isDragging = useRef(false);
@@ -124,7 +126,7 @@ export function TguiSay() {
 
   function handleClose(): void {
     innerRef.current?.blur();
-    windowClose();
+    windowClose(scale);
 
     setTimeout(() => {
       chatHistory.current.reset();
@@ -236,7 +238,7 @@ export function TguiSay() {
     }
 
     setButtonContent(iterator.current());
-    windowOpen(iterator.current());
+    windowOpen(iterator.current(), scale);
 
     const input = innerRef.current;
     setTimeout(() => {
@@ -247,6 +249,7 @@ export function TguiSay() {
   function handleProps(data: ByondProps): void {
     setMaxLength(data.maxLength);
     setLightMode(!!data.lightMode);
+    setScale(!!data.scale);
   }
 
   function unloadChat(): void {
@@ -260,7 +263,7 @@ export function TguiSay() {
     Byond.subscribeTo('props', handleProps);
     Byond.subscribeTo('force', handleForceSay);
     Byond.subscribeTo('open', handleOpen);
-  }, []);
+  }, [scale]);
 
   /** Value has changed, we need to check if the size of the window is ok */
   useEffect(() => {
@@ -277,7 +280,7 @@ export function TguiSay() {
 
     if (size !== newSize) {
       setSize(newSize);
-      windowSet(newSize);
+      windowSet(newSize, scale);
     }
   }, [value]);
 
@@ -294,7 +297,10 @@ export function TguiSay() {
       >
         {!lightMode && <div className={`shine shine-${theme}`} />}
       </div>
-      <div className={classes(['content', lightMode && 'content-lightMode'])}>
+      <div
+        className={classes(['content', lightMode && 'content-lightMode'])}
+        style={{ zoom: scale ? '' : `${100 / window.devicePixelRatio}%` }}
+      >
         <button
           className={`button button-${theme}`}
           onMouseDown={handleButtonClick}
