@@ -3,7 +3,12 @@
 	desc = "The common language of lizard-people, composed of sibilant hisses and rattles."
 	key = "o"
 	flags = TONGUELESS_SPEECH
-	space_chance = 40
+	space_chance = 12
+	sentence_chance = 0
+	between_word_sentence_chance = 10
+	between_word_space_chance = 75
+	additional_syllable_low = 0
+	additional_syllable_high = 3
 	syllables = list(
 		"za", "az", "ze", "ez", "zi", "iz", "zo", "oz", "zu", "uz", "zs", "sz",
 		"ha", "ah", "he", "eh", "hi", "ih", "ho", "oh", "hu", "uh", "hs", "sh",

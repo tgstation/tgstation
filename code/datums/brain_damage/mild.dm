@@ -198,8 +198,6 @@
 	gain_text = span_warning("You lose your grasp on complex words.")
 	lose_text = span_notice("You feel your vocabulary returning to normal again.")
 
-	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
-
 /datum/brain_trauma/mild/expressive_aphasia/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
@@ -219,7 +217,7 @@
 				word = copytext(word, 1, suffix_foundon)
 			word = html_decode(word)
 
-			if(LOWER_TEXT(word) in common_words)
+			if(GLOB.most_common_words[LOWER_TEXT(word)])
 				new_message += word + suffix
 			else
 				if(prob(30) && message_split.len > 2)
