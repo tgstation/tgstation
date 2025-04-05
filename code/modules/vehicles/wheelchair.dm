@@ -61,7 +61,7 @@
 /// When you ring your bell and are armed try to explode
 /obj/vehicle/ridden/wheelchair/proc/on_bell_rang()
 	SIGNAL_HANDLER
-	if (!prob(20))
+	if (prob(80))
 		return
 	detonate_bomb()
 
@@ -71,7 +71,7 @@
 	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
 		return ITEM_INTERACT_SUCCESS
 	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
-	deconstruct(TRUE)
+	deconstruct(disassembled = TRUE)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -99,6 +99,8 @@
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
+	remove_bell()
+	remove_bomb()
 	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
 	user.put_in_hands(wheelchair_folded)
@@ -133,6 +135,7 @@
 	visible_message(span_notice("[bell_attached] falls off!"))
 	bell_attached = null
 	update_appearance()
+	return
 
 /obj/vehicle/ridden/wheelchair/proc/remove_bomb()
 	if (!bomb_attached)
@@ -141,6 +144,7 @@
 	visible_message(span_notice("[bomb_attached] falls off!"))
 	bomb_attached = null
 	update_appearance()
+	return
 
 /// A reward item for obtaining 5K hardcore random points. Do not use for anything else
 /obj/vehicle/ridden/wheelchair/gold
