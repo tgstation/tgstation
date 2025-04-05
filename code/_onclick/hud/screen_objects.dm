@@ -938,9 +938,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	screen_loc = ui_hunger
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	/// What state of hunger are we in?
-	VAR_PRIVATE/state = HUNGER_STATE_FINE
+	VAR_PRIVATE/state
 	/// What was the last fullness we recorded?
-	VAR_PRIVATE/fullness = 0
+	VAR_PRIVATE/fullness
 	/// What food icon do we show by the bar
 	var/food_icon = 'icons/obj/food/burgerbread.dmi'
 	/// What food icon state do we show by the bar
@@ -970,14 +970,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	hunger_bar = new(src, null)
 	vis_contents += hunger_bar
 
-	update_appearance()
+	update_hunger_bar(instant = TRUE)
 
 /atom/movable/screen/hunger/proc/update_hunger_state()
 	var/mob/living/hungry = hud?.mymob
 	if(!istype(hungry))
 		return
 
-	fullness = 0
 	if(HAS_TRAIT(hungry, TRAIT_NOHUNGER) || !hungry.get_organ_slot(ORGAN_SLOT_STOMACH))
 		fullness = NUTRITION_LEVEL_FED
 		state = HUNGER_STATE_FINE
@@ -1006,32 +1005,51 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 			state = HUNGER_STATE_STARVING
 
 /atom/movable/screen/hunger/update_appearance(updates)
+	update_hunger_bar()
+	return ..()
+
+/// Updates the hunger bar's appearance.
+/// If `instant` is TRUE, the bar will update immediately rather than animating.
+/atom/movable/screen/hunger/proc/update_hunger_bar(instant = FALSE)
 	var/old_state = state
 	var/old_fullness = fullness
 	update_hunger_state()
-	if(old_state == state && old_fullness == fullness)
-		return
+	if(old_state != state || old_fullness != fullness)
+		// Fades out if we ARE "fine" AND if our stomach has no food digesting
+		var/mob/living/hungry = hud?.mymob
+		if(alpha == 255 && (state == HUNGER_STATE_FINE && abs(fullness - hungry.nutrition) < 1))
+			if(instant)
+				alpha = 0
+			else
+				animate(src, alpha = 0, time = 1 SECONDS)
+		// Fades in if we WERE "fine" OR if our stomach has food digesting
+		else if(alpha == 0 && (state != HUNGER_STATE_FINE || abs(fullness - hungry.nutrition) >= 1))
+			if(instant)
+				alpha = 255
+			else
+				animate(src, alpha = 255, time = 1 SECONDS)
 
-	. = ..()
+	if(old_state != state)
+		// Update filter around the bar
+		if(state == HUNGER_STATE_STARVING)
+			if(!get_filter("hunger_outline"))
+				add_filter("hunger_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 0, "size" = 2))
+				animate(get_filter("hunger_outline"), alpha = 200, time = 1.5 SECONDS, loop = -1)
+				animate(alpha = 0, time = 1.5 SECONDS)
+
+		else if(old_state == HUNGER_STATE_STARVING)
+			remove_filter("hunger_outline")
+
+		// Update color of the food
+		if((state == HUNGER_STATE_FAT) != (old_state == HUNGER_STATE_FAT))
+			underlays -= food_image
+			food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
+			underlays += food_image
+
 	// Update hunger bar
 	if(old_fullness != fullness)
-		hunger_bar.update_fullness(fullness, !!invisibility)
-
-	// Update filter around the bar
-	if(state == HUNGER_STATE_STARVING)
-		if(!get_filter("hunger_outline"))
-			add_filter("hunger_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 0, "size" = 2))
-			animate(get_filter("hunger_outline"), alpha = 200, time = 1.5 SECONDS, loop = -1)
-			animate(alpha = 0, time = 1.5 SECONDS)
-
-	else if(old_state == HUNGER_STATE_STARVING)
-		remove_filter("hunger_outline")
-
-	// Update color of the food
-	if((state == HUNGER_STATE_FAT) != (old_state == HUNGER_STATE_FAT))
-		underlays -= food_image
-		food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
-		underlays += food_image
+		// instant if invisible OR if instant is set
+		hunger_bar.update_fullness(fullness, alpha == 0 || instant)
 
 /atom/movable/screen/hunger_bar
 	icon_state = "hungerbar_bar"
@@ -1059,17 +1077,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	var/atom/movable/movable_loc = ismovable(loc) ? loc : null
 	screen_loc = movable_loc?.screen_loc
 	bar_mask ||= icon(icon, "hungerbar_mask")
-	color = gradient(hunger_gradient, 0.5)
-	add_filter("hunger_bar_mask", 1, alpha_mask_filter(0, bar_offset, bar_mask))
 
-/atom/movable/screen/hunger_bar/proc/update_fullness(new_fullness, is_invisible)
+/atom/movable/screen/hunger_bar/proc/update_fullness(new_fullness, instant)
 	new_fullness = round(new_fullness / NUTRITION_LEVEL_FULL, 0.05)
 	if(new_fullness == last_fullness_band)
 		return
 	last_fullness_band = new_fullness
 	// Update color
 	var/new_color = gradient(hunger_gradient, clamp(new_fullness, 0, 1.2))
-	if(is_invisible)
+	if(instant)
 		color = new_color
 	else
 		animate(src, color = new_color, 0.5 SECONDS)
@@ -1077,7 +1093,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	var/old_bar_offset = bar_offset
 	bar_offset = clamp(-20 + (20 * new_fullness), -20, 0)
 	if(old_bar_offset != bar_offset)
-		if(is_invisible || isnull(old_bar_offset))
+		if(instant || isnull(old_bar_offset))
 			add_filter("hunger_bar_mask", 1, alpha_mask_filter(0, bar_offset, bar_mask))
 		else
 			transition_filter("hunger_bar_mask", alpha_mask_filter(0, bar_offset), 0.5 SECONDS)

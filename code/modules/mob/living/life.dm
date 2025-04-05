@@ -63,6 +63,11 @@
 
 	handle_wounds(seconds_per_tick, times_fired)
 
+	if(living_flags & QUEUE_NUTRITION_UPDATE)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+		living_flags &= ~QUEUE_NUTRITION_UPDATE
+
 	if(stat != DEAD)
 		return 1
 
