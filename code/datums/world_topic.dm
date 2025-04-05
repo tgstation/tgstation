@@ -293,7 +293,7 @@
 /datum/world_topic/create_news_channel/proc/create_channel(list/input)
 	LAZYREMOVE(timers, input["timer_id"])
 	message_admins("[input["author_ckey"]] has crated a cross-sector newscaster channel titled \"[input["message"]]\"")
-	GLOB.news_network.create_feed_channel("[input["message"]]-cross", input["author"], input["desc"], locked = TRUE, receiving_cross_sector = TRUE)
+	GLOB.news_network.create_feed_channel(input["message"], input["author"], input["desc"], locked = TRUE, receiving_cross_sector = TRUE)
 
 /datum/world_topic/create_news_article
 	keyword = "create_news_article"
