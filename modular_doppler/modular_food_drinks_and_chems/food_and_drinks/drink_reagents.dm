@@ -90,7 +90,7 @@
 	4000% of the recommended daily value of vitamin B12."
 	color = "#f7e6af"
 	taste_description = "battery acid and carbonation"
-	overdose_threshold = 60
+	overdose_threshold = 50
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/movespeed_modifier/reagent/gakster_energy
