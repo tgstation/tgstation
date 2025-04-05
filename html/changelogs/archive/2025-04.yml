@@ -57,3 +57,7 @@
       utilizing suit protections appropriately. Make sure if you want someone to be
       exposed to the full effect of a chemical that they're not wearing anything in
       the way before splashing them.
+2025-04-05:
+  Gaxeer:
+  - bugfix: '`round_time` in stat panel and ESC menu will show actual time since the
+      round start, not the world time'

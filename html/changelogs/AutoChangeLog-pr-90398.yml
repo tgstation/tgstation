@@ -1,4 +1,0 @@
-author: "Gaxeer"
-delete-after: True
-changes:
-  - bugfix: "`round_time` in stat panel and ESC menu will show actual time since the round start, not the world time"
