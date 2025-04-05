@@ -217,6 +217,13 @@
         listener(payload);
       }
     };
+
+    var existingListener = window.update.type_to_listener[type];
+    if (existingListener) {
+      window.update.listeners.filter((val) => val !== existingListener);
+    }
+
+    window.update.type_to_listener[type] = listener;
     window.update.flushQueue(_listener);
     window.update.listeners.push(_listener);
   };
@@ -488,6 +495,7 @@ window.update = function (rawMessage) {
 // Properties and variables of this specific handler
 window.update.listeners = [];
 window.update.queue = [];
+window.update.type_to_listener = {};
 window.update.queueActive = true;
 window.update.flushQueue = function (listener) {
   // Disable and clear the queue permanently on short delay
