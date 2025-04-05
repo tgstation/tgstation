@@ -43772,9 +43772,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "pMh" = (
-/obj/machinery/atmospherics/components/unary/airlock_pump/silent{
-	dir = 3
-	},
+/obj/machinery/atmospherics/components/unary/airlock_pump/silent,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
@@ -51069,9 +51067,7 @@
 /turf/open/floor/iron/terracotta/small,
 /area/station/service/kitchen)
 "vdY" = (
-/obj/machinery/atmospherics/components/unary/airlock_pump/silent{
-	dir = 3
-	},
+/obj/machinery/atmospherics/components/unary/airlock_pump/silent,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
@@ -52759,6 +52755,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/cryopod,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "wqF" = (
