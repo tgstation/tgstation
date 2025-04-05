@@ -244,6 +244,11 @@
 #define SSMACHINES_MACHINES 7
 #define SSMACHINES_MACHINES_LATE 8
 
+// Weather susbsytem tasks
+#define SSWEATHER_MOBS 1
+#define SSWEATHER_TURFS 2
+#define SSWEATHER_THUNDER 3
+
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
