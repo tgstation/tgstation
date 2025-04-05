@@ -183,9 +183,9 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	poster_desc = "A poster celebrating another year of the station's operation. Why anyone would be happy to be here is byond you."
 	poster_icon = "holiday_cake" // is a lie
 	holiday_mail = list(
-		/obj/item/sparkler,
-		/obj/item/food/cakeslice/birthday,
 		/obj/item/clothing/mask/party_horn,
+		/obj/item/food/cakeslice/birthday,
+		/obj/item/sparkler,
 		/obj/item/storage/box/party_poppers,
 	)
 
@@ -242,17 +242,17 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	poster_desc = "A poster celebrating the 3.141529th day of the year. At least theres free pie."
 	poster_icon = "holiday_pi"
 	holiday_mail = list(
+		/obj/item/food/pieslice/apple,
+		/obj/item/food/pieslice/bacid_pie,
+		/obj/item/food/pieslice/blumpkin,
+		/obj/item/food/pieslice/cherry,
+		/obj/item/food/pieslice/frenchsilk,
+		/obj/item/food/pieslice/frostypie,
 		/obj/item/food/pieslice/meatpie,
+		/obj/item/food/pieslice/pumpkin,
+		/obj/item/food/pieslice/shepherds_pie,
 		/obj/item/food/pieslice/tofupie,
 		/obj/item/food/pieslice/xemeatpie,
-		/obj/item/food/pieslice/apple,
-		/obj/item/food/pieslice/cherry,
-		/obj/item/food/pieslice/pumpkin,
-		/obj/item/food/pieslice/blumpkin,
-		/obj/item/food/pieslice/frostypie,
-		/obj/item/food/pieslice/frenchsilk,
-		/obj/item/food/pieslice/shepherds_pie,
-		/obj/item/food/pieslice/bacid_pie,
 	)
 
 /datum/holiday/pi/getStationPrefix()
@@ -289,7 +289,10 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_day = 1
 	end_day = 2
 	holiday_hat = /obj/item/clothing/head/chameleon/broken
-	holiday_mail = list(/obj/item/grown/bananapeel/gros_michel, /obj/item/clothing/head/costume/whoopee)
+	holiday_mail = list(
+		/obj/item/clothing/head/costume/whoopee,
+		/obj/item/grown/bananapeel/gros_michel,
+	)
 
 /datum/holiday/april_fools/celebrate()
 	. = ..()
@@ -322,9 +325,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		COLOR_ETHIOPIA_YELLOW,
 		COLOR_ETHIOPIA_RED,
 	)
-	holiday_mail = list(
-		/obj/item/cigarette/rollie/cannabis,
-	)
+	holiday_mail = list(/obj/item/cigarette/rollie/cannabis)
 
 /datum/holiday/fourtwenty/getStationPrefix()
 	return pick("Snoop","Blunt","Toke","Dank","Cheech","Chong")
@@ -379,9 +380,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_day = 4
 	begin_month = MAY
 	holiday_hat = /obj/item/clothing/head/utility/hardhat/red
-	holiday_mail = list(
-		/obj/item/extinguisher/mini,
-	)
+	holiday_mail = list(/obj/item/extinguisher/mini)
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
@@ -391,10 +390,10 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_day = 20
 	begin_month = MAY
 	holiday_mail = list(
+		/obj/item/clothing/suit/hooded/bee_costume,
 		/obj/item/food/honeycomb,
 		/obj/item/food/monkeycube/bee,
 		/obj/item/toy/plush/beeplushie,
-		/obj/item/clothing/suit/hooded/bee_costume,
 	)
 
 /datum/holiday/bee/getStationPrefix()
@@ -449,18 +448,18 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		COLOR_PRIDE_RED,
 	)
 	holiday_mail = list(
-		/obj/item/clothing/gloves/color/rainbow,
-		/obj/item/toy/crayon/rainbow,
-		/obj/item/food/grown/rainbow_flower,
-		/obj/item/clothing/under/color/rainbow,
-		/obj/item/clothing/shoes/sneakers/rainbow,
-		/obj/item/clothing/under/color/jumpskirt/rainbow,
 		/obj/item/bedsheet/rainbow,
-		/obj/item/food/egg/rainbow,
-		/obj/item/food/snowcones/rainbow,
+		/obj/item/clothing/accessory/pride,
+		/obj/item/clothing/gloves/color/rainbow,
 		/obj/item/clothing/head/costume/garland/rainbowbunch,
 		/obj/item/clothing/head/soft/rainbow,
-		/obj/item/clothing/accessory/pride,
+		/obj/item/clothing/shoes/sneakers/rainbow,
+		/obj/item/clothing/under/color/jumpskirt/rainbow,
+		/obj/item/clothing/under/color/rainbow,
+		/obj/item/food/egg/rainbow,
+		/obj/item/food/grown/rainbow_flower,
+		/obj/item/food/snowcones/rainbow,
+		/obj/item/toy/crayon/rainbow,
 	)
 
 // JULY
@@ -607,14 +606,14 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_day = 9
 	end_day = 10
 	holiday_mail = list(
-		/obj/item/clothing/suit/hooded/ian_costume,
 		/obj/item/bedsheet/ian,
 		/obj/item/bedsheet/ian/double,
-		/obj/item/toy/figure/ian,
 		/obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian,
-		/obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic/ian,
 		/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/ian,
+		/obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic/ian,
+		/obj/item/clothing/suit/hooded/ian_costume,
 		/obj/item/radio/toy,
+		/obj/item/toy/figure/ian,
 	)
 
 /datum/holiday/ianbirthday/greet()
@@ -685,7 +684,10 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	end_day = 2
 	end_month = NOVEMBER
 	holiday_colors = list(COLOR_MOSTLY_PURE_ORANGE, COLOR_PRISONER_BLACK)
-	holiday_mail = list(/obj/item/food/cookie/sugar/spookyskull, /obj/item/food/cookie/sugar/spookycoffin)
+	holiday_mail = list(
+		/obj/item/food/cookie/sugar/spookycoffin,
+		/obj/item/food/cookie/sugar/spookyskull,
+		)
 
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"
@@ -724,9 +726,9 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_day = 11
 	holiday_hat = /obj/item/food/grown/poppy
 	holiday_mail = list(
+		/obj/item/food/grown/harebell,
 		/obj/item/food/grown/poppy,
 		/obj/item/storage/fancy/candle_box,
-		/obj/item/food/grown/harebell,
 	)
 
 /datum/holiday/remembrance_day/greet()
@@ -754,16 +756,16 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = NOVEMBER
 	holiday_hat = /obj/item/food/grown/moonflower
 	holiday_mail = list(
-		/obj/item/food/grown/moonflower,
-		/obj/item/food/grown/sunflower,
 		/obj/item/food/grown/harebell,
+		/obj/item/food/grown/moonflower,
 		/obj/item/food/grown/poppy,
-		/obj/item/food/grown/poppy/lily,
 		/obj/item/food/grown/poppy/geranium,
 		/obj/item/food/grown/poppy/geranium/fraxinella,
-		/obj/item/grown/novaflower,
+		/obj/item/food/grown/poppy/lily,
 		/obj/item/food/grown/rose,
+		/obj/item/food/grown/sunflower,
 		/obj/item/grown/carbon_rose,
+		/obj/item/grown/novaflower,
 	)
 
 /datum/holiday/hello
@@ -781,8 +783,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_day = 28
 	/// If there's more of them I forgot
 	holiday_mail = list(
-		/obj/item/food/pieslice/bacid_pie,
 		/obj/item/food/energybar,
+		/obj/item/food/pieslice/bacid_pie,
 	)
 
 /datum/holiday/holy_lights/greet()
@@ -863,8 +865,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = DECEMBER
 	holiday_mail = list(
 		/obj/item/clothing/gloves/boxing,
-		/obj/item/clothing/gloves/boxing/green,
 		/obj/item/clothing/gloves/boxing/blue,
+		/obj/item/clothing/gloves/boxing/green,
 		/obj/item/clothing/gloves/boxing/yellow,
 	)
 
@@ -993,15 +995,15 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	holiday_hat = /obj/item/clothing/head/costume/rabbitears
 	holiday_mail = list(
 		/obj/item/clothing/head/costume/rabbitears,
+		/obj/item/food/chocolatebunny,
 		/obj/item/food/chocolateegg,
 		/obj/item/food/egg/blue,
 		/obj/item/food/egg/green,
 		/obj/item/food/egg/orange,
 		/obj/item/food/egg/purple,
 		/obj/item/food/egg/rainbow,
-		/obj/item/food/egg/yellow,
 		/obj/item/food/egg/red,
-		/obj/item/food/chocolatebunny,
+		/obj/item/food/egg/yellow,
 	)
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
