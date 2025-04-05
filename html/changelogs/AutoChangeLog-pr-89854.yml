@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Your mood printout (clicking on the mood face) has been reformatted, and should generally be cleaner."
-  - rscadd: "Self examining was reworked, and overall gives you a lot less perfect information, unless you are self-aware."
-  - rscadd: "Bullet and grenade shrapnel is now hidden from examining - it's skin deep. You can't rip them out with your hands, but hemostats / wirecutters still suffice if you know they're there. Health analyzers still pick them up too."
-  - qol: "Ghosts aren't notified about NPCs getting appendicitis"

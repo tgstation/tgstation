@@ -378,8 +378,7 @@
 /// Too much funny gas, time to get brain damage
 /obj/item/organ/lungs/proc/too_much_bz(mob/living/carbon/breather, datum/gas_mixture/breath, bz_pp, old_bz_pp)
 	if(bz_pp > BZ_trip_balls_min)
-		breather.adjust_hallucinations(20 SECONDS)
-		breather.reagents.add_reagent(/datum/reagent/bz_metabolites, 5)
+		breather.reagents.add_reagent(/datum/reagent/bz_metabolites, clamp(bz_pp, 1, 5))
 	if(bz_pp > BZ_brain_damage_min && prob(33))
 		breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150, ORGAN_ORGANIC)
 

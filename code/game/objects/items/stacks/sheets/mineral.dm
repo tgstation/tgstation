@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	amount = 25
 
 /obj/item/stack/sheet/mineral/uranium/fifty
-	amount = 25
+	amount = 50
 
 /*
  * Plasma
@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	gulag_valid = TRUE
 	merge_type = /obj/item/stack/sheet/mineral/silver
 	material_type = /datum/material/silver
-	tableVariant = /obj/structure/table/optable
+	table_type = /obj/structure/table/optable
 	walltype = /turf/closed/wall/mineral/silver
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
