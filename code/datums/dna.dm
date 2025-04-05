@@ -236,6 +236,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_SPINES_BLOCK] = construct_block(SSaccessories.spines_list.Find(features["spines"]), length(SSaccessories.spines_list))
 	if(features["ears"])
 		L[DNA_EARS_BLOCK] = construct_block(SSaccessories.ears_list.Find(features["ears"]), length(SSaccessories.ears_list))
+	if(features["pony_ears"])
+		L[DNA_PONY_EARS_BLOCK] = construct_block(SSaccessories.pony_ears_list.Find(features["pony_ears"]), length(SSaccessories.pony_ears_list))
+	if(features["pony_tail"])
+		L[DNA_PONY_TAIL_BLOCK] = construct_block(SSaccessories.pony_tail_list.Find(features["pony_tail"]), length(SSaccessories.pony_tail_list))
 	if(features["moth_wings"] != "Burnt Off")
 		L[DNA_MOTH_WINGS_BLOCK] = construct_block(SSaccessories.moth_wings_list.Find(features["moth_wings"]), length(SSaccessories.moth_wings_list))
 	if(features["moth_antennae"] != "Burnt Off")
@@ -382,6 +386,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(SSaccessories.spines_list.Find(features["spines"]), length(SSaccessories.spines_list)))
 		if(DNA_EARS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(SSaccessories.ears_list.Find(features["ears"]), length(SSaccessories.ears_list)))
+		if(DNA_PONY_EARS_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(SSaccessories.pony_ears_list.Find(features["pony_ears"]), length(SSaccessories.pony_ears_list)))
+		if(DNA_PONY_TAIL_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(SSaccessories.pony_tail_list.Find(features["pony_tail"]), length(SSaccessories.pony_tail_list)))
 		if(DNA_MOTH_WINGS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(SSaccessories.moth_wings_list.Find(features["moth_wings"]), length(SSaccessories.moth_wings_list)))
 		if(DNA_MOTH_ANTENNAE_BLOCK)
@@ -680,6 +688,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["tail_lizard"] = SSaccessories.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), length(SSaccessories.tails_list_lizard))]
 	if(dna.features["ears"])
 		dna.features["ears"] = SSaccessories.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), length(SSaccessories.ears_list))]
+	if(dna.features["pony_ears"])
+		dna.features["pony_ears"] = SSaccessories.pony_ears_list[deconstruct_block(get_uni_feature_block(features, DNA_PONY_EARS_BLOCK), length(SSaccessories.pony_ears_list))]
+	if(dna.features["pony_tail"])
+		dna.features["pony_tail"] = SSaccessories.pony_tail_list[deconstruct_block(get_uni_feature_block(features, DNA_PONY_TAIL_BLOCK), length(SSaccessories.pony_tail_list))]
 	if(dna.features["moth_wings"])
 		var/genetic_value = SSaccessories.moth_wings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_WINGS_BLOCK), length(SSaccessories.moth_wings_list))]
 		dna.features["original_moth_wings"] = genetic_value

@@ -1,6 +1,14 @@
 /obj/item/clothing/under/rank/centcom
 	icon = 'icons/obj/clothing/under/centcom.dmi'
 	worn_icon = 'icons/mob/clothing/under/centcom.dmi'
+	pony_clothing_sample_pixels = list(
+		list(10,16),
+		list(14,20),
+		list(14,9)
+	)
+	pony_icon_state = "centcom"
+	pony_config_path = /datum/greyscale_config/pony_clothes_3_color
+
 
 /obj/item/clothing/under/rank/centcom/commander
 	name = "\improper CentCom commander's suit"
@@ -27,6 +35,12 @@
 	icon_state = "officer"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
+	pony_clothing_sample_pixels = list(
+		list(13,20),
+		list(14,11)
+	)
+	pony_icon_state = "cargotech"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/centcom/officer/replica
 	name = "\improper CentCom turtleneck replica"
@@ -40,7 +54,13 @@
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	body_parts_covered = CHEST|GROIN|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,20),
+		list(15,10)
+	)
+	pony_icon_state = "cargo_skirt"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/centcom/officer_skirt/replica
 	name = "\improper CentCom turtleneck skirt replica"
@@ -53,7 +73,13 @@
 	inhand_icon_state = "dg_suit"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	body_parts_covered = CHEST|GROIN|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(10,16),
+		list(14,20),
+		list(15,10)
+	)
+	pony_icon_state = "centcom_skirt"
 
 /obj/item/clothing/under/rank/centcom/military
 	name = "tactical combat uniform"

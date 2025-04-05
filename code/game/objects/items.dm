@@ -960,7 +960,7 @@
 		owner.update_worn_id()
 	if(flags & ITEM_SLOT_BELT)
 		owner.update_worn_belt()
-	if(flags & ITEM_SLOT_BACK)
+	if(flags & ITEM_SLOT_BACK || flags & ITEM_SLOT_BACK_ALT)
 		owner.update_worn_back()
 	if(flags & ITEM_SLOT_NECK)
 		owner.update_worn_neck()
@@ -1749,7 +1749,7 @@
  */
 /obj/item/proc/compare_zone_to_item_slot(zone)
 	switch(slot_flags)
-		if(ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_BACK)
+		if(ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_BACK, ITEM_SLOT_BACK_ALT)
 			return (zone == BODY_ZONE_CHEST)
 		if(ITEM_SLOT_BELT)
 			return (zone == BODY_ZONE_PRECISE_GROIN)

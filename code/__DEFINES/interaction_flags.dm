@@ -50,3 +50,5 @@
 #define INTERACT_MACHINE_REQUIRES_LITERACY (1<<7)
 /// user must be standing up in order to interact
 #define INTERACT_MACHINE_REQUIRES_STANDING (1<<8)
+/// if the user is a pony, the user must be standing on a chair/seat to interact
+#define INTERACT_MACHINE_PONY_REQUIRES_SITTING (1<<7)

@@ -629,6 +629,26 @@
 	icon_file = 'icons/mob/clothing/digi_template.dmi'
 	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
 
+/datum/greyscale_config/pony_clothes_override
+	name = "Pony Clothes (Overrides)"
+	icon_file = 'icons/mob/clothing/pony_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pony/no_color.json'
+
+/datum/greyscale_config/pony_clothes_1_color
+	name = "Pony Clothes (1 Color)"
+	icon_file = 'icons/mob/clothing/pony_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pony/1_color.json'
+
+/datum/greyscale_config/pony_clothes_2_color
+	name = "Pony Clothes (2 Color)"
+	icon_file = 'icons/mob/clothing/pony_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pony/2_color.json'
+
+/datum/greyscale_config/pony_clothes_3_color
+	name = "Pony Clothes (3 Color)"
+	icon_file = 'icons/mob/clothing/pony_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pony/3_color.json'
+
 
 //
 // SUIT + HEAD

@@ -17,7 +17,9 @@
 	appearance.add_filter("bodypart_texture_[texture_icon_state]", 1, layering_filter(icon = cached_texture_icon, blend_mode = BLEND_INSET_OVERLAY))
 
 /datum/bodypart_overlay/texture/generate_icon_cache()
-	return "[type]"
+	. = ..()
+	. += "[type]"
+	return .
 
 /datum/bodypart_overlay/texture/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	for (var/datum/bodypart_overlay/texture/other_texture in bodypart_owner.bodypart_overlays)

@@ -91,6 +91,8 @@
 	var/datum/worn_feature_offset/worn_head_offset
 	/// Offset to apply to overlays placed on the face
 	var/datum/worn_feature_offset/worn_face_offset
+	/// Offset to apply to the eye overlays
+	var/datum/worn_feature_offset/eye_offset
 
 	VAR_PROTECTED
 		/// Draw this head as "debrained"
@@ -108,6 +110,7 @@
 	QDEL_NULL(worn_mask_offset)
 	QDEL_NULL(worn_head_offset)
 	QDEL_NULL(worn_face_offset)
+	QDEL_NULL(eye_offset)
 	return ..()
 
 /obj/item/bodypart/head/examine(mob/user)
@@ -193,14 +196,14 @@
 				var/atom/location = loc || owner || src
 				eye_left.overlays += emissive_blocker(eye_left.icon, eye_left.icon_state, location, alpha = eye_left.alpha)
 				eye_right.overlays += emissive_blocker(eye_right.icon, eye_right.icon_state, location, alpha = eye_right.alpha)
-			if(worn_face_offset)
-				worn_face_offset.apply_offset(eye_left)
-				worn_face_offset.apply_offset(eye_right)
+			if(eye_offset)
+				eye_offset?.apply_offset(eye_left)
+				eye_offset?.apply_offset(eye_right)
 			. += eye_left
 			. += eye_right
 		else if(!eyes && (head_flags & HEAD_EYEHOLES))
 			var/image/no_eyes = image('icons/mob/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
-			worn_face_offset?.apply_offset(no_eyes)
+			eye_offset?.apply_offset(no_eyes)
 			. += no_eyes
 
 	return
@@ -208,6 +211,13 @@
 /obj/item/bodypart/head/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/toy_talk)
+	worn_face_offset = new( // todo: redo this to not be hardcoded for pony hair -> human head
+		attached_part = src,
+		feature_key = OFFSET_FACE,
+		offset_x = list("north" = 0, "south" = 0, "east" = -5, "west" = 5),
+		offset_y = list("north" = 4, "south" = 4, "east" = 4, "west" = 4),
+		size_modifier = list("north" = 0.8, "south" = 0.8, "east" = 0.8, "west" = 0.8)
+	)
 
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"

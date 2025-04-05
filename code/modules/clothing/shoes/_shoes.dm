@@ -30,7 +30,9 @@
 	///An active alert
 	var/datum/weakref/our_alert_ref
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
-
+	pony_clothing_sample_pixels = list(
+		list(17,2)
+	)
 /datum/armor/clothing_shoes
 	bio = 50
 

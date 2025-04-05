@@ -225,7 +225,8 @@
 		victim.visible_message(msg, span_userdanger("Your [limb.plaintext_zone] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
 			playsound(L.owner, sound_effect, sound_volume + (20 * severity), TRUE, falloff_exponent = SOUND_FALLOFF_EXPONENT + 2,  ignore_walls = FALSE, falloff_distance = 0)
-
+		for(var/mob/living/carbon/human/possible_viewer in view(vis_dist, get_turf(victim)))
+			SEND_SIGNAL(possible_viewer, COMSIG_CARBON_SEE_GAIN_WOUND, victim, src, limb)
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
 		second_wind()

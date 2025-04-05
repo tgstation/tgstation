@@ -8,12 +8,15 @@
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK | CLOTHING_PONY_MASK
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	limb_integrity = 30
 	interaction_flags_click = ALLOW_RESTING
+	pony_clothing_sample_pixels = list(
+		list(15,17)
+	)
 
 	/// Has this undersuit been freshly laundered and, as such, imparts a mood bonus for wearing
 	var/freshly_laundered = FALSE
@@ -154,9 +157,31 @@
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
 
+	if((supports_variations_flags & CLOTHING_PONY_MASK) && ishuman(user))
+		var/mob/living/carbon/human/wearer = user
+		if(wearer.bodyshape & BODYSHAPE_PONY)
+			adjusted = DIGITIGRADE_STYLE // block adjustment options, ponies can't roll their jumpsuit down
+			update_appearance()
+
 /obj/item/clothing/under/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
 	return replace_icon_legs(base_icon, legs)
+
+/obj/item/clothing/under/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/color_string_to_use = greyscale_colors
+	if(!isnull(greyscale_colors) && length(greyscale_colors))
+		var/datum/greyscale_config/config = SSgreyscale.configurations["[pony_config_path]"]
+		var/list/finalized_colors = SSgreyscale.ParseColorString(greyscale_colors)
+		var/colors_len = length(finalized_colors)
+		if(colors_len > config.expected_colors) // more colors than our config supports
+			var/list/filled_colors = finalized_colors.Copy()
+			finalized_colors = list()
+			for(var/index in 1 to config.expected_colors)
+				finalized_colors += filled_colors[index]
+			color_string_to_use = jointext(finalized_colors, "")
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, color_string_to_use), pony_icon_state)
+	ponysuit.Insert(ponysuit, worn_icon_state ? worn_icon_state : icon_state)
+	return ponysuit
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()

@@ -37,6 +37,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
 	)
+	used_outfit_for_preview = /datum/outfit/job/scientist
 
 	var/current_color
 	var/default_color

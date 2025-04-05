@@ -49,6 +49,10 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/tails_list_xeno
 	var/list/tails_list_fish
 	var/list/ears_list
+	var/list/pony_ears_list
+	var/list/pony_tail_list
+	var/list/pony_wings_list
+	var/list/pony_horn_list
 	var/list/wings_list
 	var/list/wings_open_list
 	var/list/moth_wings_list
@@ -98,6 +102,10 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	snouts_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts)[DEFAULT_SPRITE_LIST]
 	horns_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	ears_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	pony_ears_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pony_ears, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	pony_tail_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pony_tail, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	pony_wings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pony_wings, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	pony_horn_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pony_horn, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	wings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	wings_open_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open)[DEFAULT_SPRITE_LIST]
 	frills_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, add_blank = TRUE)[DEFAULT_SPRITE_LIST]

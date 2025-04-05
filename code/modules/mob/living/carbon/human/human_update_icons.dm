@@ -333,22 +333,91 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET))
 			return
 
+		var/mutable_appearance/shoes_overlay
 		var/icon_file = DEFAULT_SHOES_FILE
+		if(bodyshape & BODYSHAPE_PONY)
+			var/static/list/pony_shoe_cache = list()
+			var/index = "[shoes.icon]-[shoes.icon_state]-[shoes.greyscale_colors]"
+			var/icon/resulting_icon = pony_shoe_cache[index]
+			if(!resulting_icon)
+				var/static/icon/toe_mask
+				if(!toe_mask)
+					toe_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "toe_removal")
+				var/static/icon/darken_mask
+				if(!darken_mask)
+					darken_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "darken_back_shoe")
 
-		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
-		if(!shoes_overlay)
-			return
+				var/icon/shoes_icon = icon(shoes.worn_icon ? shoes.worn_icon : icon_file, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state)
 
-		var/feature_y_offset = 0
-		for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-			var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
-			if(isnull(my_leg))
-				continue
-			var/list/foot_offset = my_leg.worn_foot_offset?.get_offset()
-			if (foot_offset && foot_offset["y"] > feature_y_offset)
-				feature_y_offset = foot_offset["y"]
+				//fcopy(shoes_icon, "TEST_shoes_icon.dmi")
+				shoes_icon.Blend(toe_mask, ICON_SUBTRACT)
 
-		shoes_overlay.pixel_z += feature_y_offset
+				//fcopy(shoes_icon, "TEST_toe_mask.dmi")
+
+				var/icon/new_south = icon(shoes_icon, dir=SOUTH)
+				var/icon/new_north = icon(shoes_icon, dir=NORTH)
+				var/pixel_height
+				for(var/i in 1 to 32)
+					var/color_to_check = shoes_icon.GetPixel(17, i, SOUTH)
+					if(!color_to_check)
+						break // we have hit transparent pixels
+					pixel_height = i
+					var/color_to_use = shoes_icon.GetPixel(17, pixel_height)
+					new_south.DrawBox(color_to_use, 16, pixel_height, 16, pixel_height)
+					new_north.DrawBox(color_to_use, 16, pixel_height, 16, pixel_height)
+
+				//fcopy(new_south, "TEST_new_south.dmi")
+				//fcopy(new_north, "TEST_new_north.dmi")
+
+				var/icon/blank_east = icon('icons/blanks/32x32.dmi', "nothing")
+				var/icon/blank_west = icon('icons/blanks/32x32.dmi', "nothing")
+
+				var/icon/new_east_back = icon(shoes_icon, dir=EAST)
+				var/icon/new_west_back = icon(shoes_icon, dir=WEST)
+
+				new_east_back.Blend(darken_mask, ICON_MULTIPLY)
+				new_west_back.Blend(darken_mask, ICON_MULTIPLY)
+
+				//fcopy(new_east_back, "TEST_new_east_back.dmi")
+				//fcopy(new_west_back, "TEST_new_west_back.dmi")
+
+				var/icon/new_east_front = icon(shoes_icon, dir=EAST)
+				var/icon/new_west_front = icon(shoes_icon, dir=WEST)
+
+				blank_east.Blend(new_east_back, ICON_OVERLAY, -1, 0)
+				blank_east.Blend(new_east_front, ICON_OVERLAY, -3, 0)
+				blank_east.Blend(new_east_back, ICON_OVERLAY, 7, 0)
+				blank_east.Blend(new_east_front, ICON_OVERLAY, 5, 0)
+				//fcopy(blank_east, "TEST_blank_east.dmi")
+				blank_west.Blend(new_west_back, ICON_OVERLAY, 2, 0)
+				blank_west.Blend(new_west_front, ICON_OVERLAY, 4, 0)
+				blank_west.Blend(new_west_back, ICON_OVERLAY, -6, 0)
+				blank_west.Blend(new_west_front, ICON_OVERLAY, -4, 0)
+
+				//fcopy(blank_east, "TEST_blank_west.dmi")
+
+				var/icon/final_icon = icon()
+
+				final_icon.Insert(new_south, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, SOUTH)
+				final_icon.Insert(new_north, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, NORTH)
+				final_icon.Insert(blank_east, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, EAST)
+				final_icon.Insert(blank_west, shoes.worn_icon_state ? shoes.worn_icon_state : shoes.icon_state, WEST)
+				resulting_icon = fcopy_rsc(final_icon)
+				pony_shoe_cache[index] = resulting_icon
+			//fcopy(final_icon, "TEST_final_icon.dmi")
+			shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = resulting_icon)
+		else
+			shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
+			if(!shoes_overlay)
+				return
+
+			for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+				var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
+				if(isnull(my_leg))
+					continue
+				my_leg?.worn_foot_offset?.apply_offset(shoes_overlay) // apply the first one then break
+				break
+
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
@@ -371,7 +440,22 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE))
 			return
 
-		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+		var/mutable_appearance/s_store_overlay
+		var/icon_file = 'icons/mob/clothing/belt_mirror.dmi'
+		if(bodyshape & BODYSHAPE_PONY)
+			var/icon/new_south = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_north = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_east = icon(worn_item.worn_icon ? worn_item.worn_icon : icon_file, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, SOUTH) // we aren't using the side sprites
+			var/icon/new_west = icon(worn_item.worn_icon ? worn_item.worn_icon : icon_file, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, NORTH) // we aren't using the side sprites
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, SOUTH)
+			final_icon.Insert(new_north, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, NORTH)
+			final_icon.Insert(new_east, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, EAST)
+			final_icon.Insert(new_west, worn_item.worn_icon_state ? worn_item.worn_icon_state : worn_item.icon_state, WEST)
+			s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = icon_file)
+
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_storage_offset?.apply_offset(s_store_overlay)
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
@@ -419,10 +503,21 @@ There are several things that need to be remembered:
 
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_BELT))
 			return
-
+		var/mutable_appearance/belt_overlay
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
-
-		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
+		if(bodyshape & BODYSHAPE_PONY)
+			var/icon/new_south = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_north = icon('icons/blanks/32x32.dmi', "nothing")
+			var/icon/new_east = icon(belt.worn_icon ? belt.worn_icon : icon_file, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, SOUTH) // we aren't using the side sprites
+			var/icon/new_west = icon(belt.worn_icon ? belt.worn_icon : icon_file, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, NORTH) // we aren't using the side sprites
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, SOUTH)
+			final_icon.Insert(new_north, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, NORTH)
+			final_icon.Insert(new_east, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, EAST)
+			final_icon.Insert(new_west, belt.worn_icon_state ? belt.worn_icon_state : belt.icon_state, WEST)
+			belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(belt_overlay)
 		overlays_standing[BELT_LAYER] = belt_overlay
@@ -446,12 +541,36 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
 			return
 
+		var/mutable_appearance/suit_overlay
 		var/icon_file = DEFAULT_SUIT_FILE
+		if(bodyshape & BODYSHAPE_PONY && !(wear_suit.supports_variations_flags & CLOTHING_PONY_MASK))
+			var/icon/new_south = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, SOUTH)
+			var/icon/new_north = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, NORTH)
+			var/icon/new_east = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, EAST)
+			var/icon/new_west = icon(wear_suit.worn_icon ? wear_suit.worn_icon : icon_file, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, WEST)
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			var/static/icon/north_mask
+			if(!north_mask)
+				north_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "north_suit_mask")
 
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
+			// Cut out the back of the armor.
+			new_north.Blend(north_mask, ICON_SUBTRACT)
+
+			final_icon.Insert(new_south, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, SOUTH)
+			final_icon.Insert(new_north, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, NORTH)
+			final_icon.Insert(new_east, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, EAST)
+			final_icon.Insert(new_west, wear_suit.worn_icon_state ? wear_suit.worn_icon_state : wear_suit.icon_state, WEST)
+			suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
+
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
-		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
-		overlays_standing[SUIT_LAYER] = suit_overlay
+		if(bodyshape & BODYSHAPE_PONY && wear_suit.supports_variations_flags & CLOTHING_PONY_MASK)
+			overlays_standing[SUIT_LAYER] = suit_overlay
+		else
+			my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
+			overlays_standing[SUIT_LAYER] = suit_overlay
+
 
 	apply_overlay(SUIT_LAYER)
 	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_OCLOTHING)
@@ -514,9 +633,14 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1]
 		inv.update_icon()
 
+	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK_ALT) + 1])
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK_ALT) + 1]
+		inv.update_icon()
+	var/mutable_appearance/back_overlay
+	var/mutable_appearance/back_alt_overlay
 	if(back)
 		var/obj/item/worn_item = back
-		var/mutable_appearance/back_overlay
+
 		update_hud_back(worn_item)
 
 		if(update_obscured)
@@ -526,18 +650,122 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
-
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
+		if(bodyshape & BODYSHAPE_PONY)
+			var/icon/new_south = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, WEST)
+			var/icon/new_north = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, EAST)
+			var/icon/new_east = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, SOUTH)
+			var/icon/new_west = icon(back.worn_icon ? back.worn_icon : icon_file, back.worn_icon_state ? back.worn_icon_state : back.icon_state, NORTH)
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, back.worn_icon_state ? back.worn_icon_state : back.icon_state, SOUTH)
+			final_icon.Insert(new_north, back.worn_icon_state ? back.worn_icon_state : back.icon_state, NORTH)
+			final_icon.Insert(new_east, back.worn_icon_state ? back.worn_icon_state : back.icon_state, EAST)
+			final_icon.Insert(new_west, back.worn_icon_state ? back.worn_icon_state : back.icon_state, WEST)
+			back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
 
 		if(!back_overlay)
 			return
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_back_offset?.apply_offset(back_overlay)
+
+	if(back_alt)
+		var/obj/item/worn_item = back_alt
+		update_hud_back_alt(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+			return
+
+		var/icon_file = 'icons/mob/clothing/back.dmi'
+		if(bodyshape & BODYSHAPE_PONY)
+			var/icon/new_south = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, EAST)
+			var/icon/new_north = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, WEST)
+			var/icon/new_east = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, NORTH)
+			var/icon/new_west = icon(back_alt.worn_icon ? back_alt.worn_icon : icon_file, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, SOUTH)
+			var/icon/final_icon = icon('icons/testing/greyscale_error.dmi', "")
+			final_icon.Insert(new_south, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, SOUTH)
+			final_icon.Insert(new_north, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, NORTH)
+			final_icon.Insert(new_east, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, EAST)
+			final_icon.Insert(new_west, back_alt.worn_icon_state ? back_alt.worn_icon_state : back_alt.icon_state, WEST)
+			back_alt_overlay = back_alt.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, override_file = final_icon)
+		else
+			back_alt_overlay = back_alt.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
+
+		if(!back_alt_overlay)
+			return
+		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
+		my_chest?.worn_back_offset?.apply_offset(back_alt_overlay)
+		overlays_standing[BACK_LAYER] = list(back_overlay, back_alt_overlay)
+	else if (back_overlay)
 		overlays_standing[BACK_LAYER] = back_overlay
 	apply_overlay(BACK_LAYER)
 
+/obj/effect/abstract/held_tk_effect
+	name = "held_tk_effect"
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "holder"
+	layer = HANDS_LAYER
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	var/is_right = TRUE
+	var/list/base_x
+	var/list/base_y
+
+/obj/effect/abstract/held_tk_effect/proc/on_parent_dir_change(datum/source, _old_dir, new_dir)
+	SIGNAL_HANDLER
+	set_direction_facing(new_dir)
+
+/obj/effect/abstract/held_tk_effect/proc/set_direction_facing(new_dir)
+	if(base_x && base_y)
+		var/current_dir = dir2text(new_dir)
+		pixel_w = length(base_x) ? ((current_dir in base_x) ? base_x[current_dir] : base_x["south"]) : 0
+		pixel_z = length(base_y) ? ((current_dir in base_y) ? base_y[current_dir] : base_y["south"]) : 0
+		switch(new_dir)
+			if(NORTH)
+				if(is_right)
+					pixel_w += 5
+					pixel_z += 10
+				else
+					pixel_w += -5
+					pixel_z += 10
+			if(SOUTH)
+				if(is_right)
+					pixel_w += -5
+					pixel_z += 10
+				else
+					pixel_w += 5
+					pixel_z += 10
+			if(EAST)
+				if(is_right)
+					pixel_w += 0
+					pixel_z += 10
+				else
+					pixel_w += 0
+					pixel_z += 10
+			if(WEST)
+				if(is_right)
+					pixel_w += 0
+					pixel_z += 10
+				else
+					pixel_w += 0
+					pixel_z += 10
+
+/obj/effect/abstract/held_tk_effect/right
+	is_right = TRUE
+
+/obj/effect/abstract/held_tk_effect/left
+	is_right = FALSE
+
 /mob/living/carbon/human/get_held_overlays()
 	var/list/hands = list()
+	if(held_left)
+		held_left.overlays.Cut()
+		held_left.underlays.Cut()
+	if(held_right)
+		held_right.overlays.Cut()
+		held_right.underlays.Cut()
 	for(var/obj/item/worn_item in held_items)
 		var/held_index = get_held_index_of_item(worn_item)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
@@ -562,9 +790,68 @@ There are several things that need to be remembered:
 		var/icon_file = IS_RIGHT_INDEX(held_index) ? worn_item.righthand_file : worn_item.lefthand_file
 		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 		var/obj/item/bodypart/arm/held_in_hand = hand_bodyparts[held_index]
-		held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
-
-		hands += hand_overlay
+		if(HAS_TRAIT(src, TRAIT_FLOATING_HELD))
+			if(!held_left)
+				held_left = new(src)
+				held_left.render_target = "*[REF(src)]_hover_left"
+				held_left.RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/obj/effect/abstract/held_tk_effect, on_parent_dir_change))
+				src.vis_contents += held_left
+			if(!held_right)
+				held_right = new(src)
+				held_right.render_target = "*[REF(src)]_hover_right"
+				held_right.RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/obj/effect/abstract/held_tk_effect, on_parent_dir_change))
+				src.vis_contents += held_right
+			if(held_index % 2 == 0)
+				held_right.overlays.Cut()
+				held_right.underlays.Cut()
+				held_right.pixel_z = 0
+				held_right.pixel_w = 0
+				held_right.overlays += hand_overlay
+				var/mutable_appearance/hover_effect = mutable_appearance(held_left.icon, "hover_right", HANDS_LAYER)
+				if(dna.features["pony_unicorn_tk_color"])
+					hover_effect.color = dna.features["pony_unicorn_tk_color"]
+				else
+					hover_effect.color = "#FF99FF"
+				held_right.underlays += hover_effect
+				var/list/offset = held_in_hand?.held_hand_offset?.get_offset()
+				if(offset)
+					held_right.base_x = held_in_hand?.held_hand_offset?.offset_x
+					held_right.base_y = held_in_hand?.held_hand_offset?.offset_y
+				else
+					held_right.base_x = list("south" = 0)
+					held_right.base_y = list("south" = 0)
+				held_right.set_direction_facing(src.dir)
+			else
+				held_left.overlays.Cut()
+				held_left.underlays.Cut()
+				held_left.pixel_z = 0
+				held_left.pixel_w = 0
+				held_left.overlays += hand_overlay
+				var/mutable_appearance/hover_effect = mutable_appearance(held_left.icon, "hover_left", HANDS_LAYER)
+				if(dna.features["pony_unicorn_tk_color"])
+					hover_effect.color = dna.features["pony_unicorn_tk_color"]
+				held_left.underlays += hover_effect
+				var/list/offset = held_in_hand?.held_hand_offset?.get_offset()
+				if(offset)
+					held_left.base_x = held_in_hand?.held_hand_offset?.offset_x
+					held_left.base_y = held_in_hand?.held_hand_offset?.offset_y
+				else
+					held_left.base_x = list("south" = 0)
+					held_left.base_y = list("south" = 0)
+				held_left.set_direction_facing(src.dir)
+			var/mutable_appearance/hand_overlay_real = mutable_appearance(layer = HANDS_LAYER, offset_spokesman = src)
+			if(held_index % 2 == 0)
+				hand_overlay_real.render_source = "*[REF(src)]_hover_right"
+				animate(held_right, pixel_z = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+				animate(pixel_z = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+			else
+				hand_overlay_real.render_source = "*[REF(src)]_hover_left"
+				animate(held_left, pixel_z = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+				animate(pixel_z = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+			hands += hand_overlay_real
+		else
+			held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
+			hands += hand_overlay
 	return hands
 
 /// Modifies a sprite slightly to conform to female body shapes
@@ -601,6 +888,31 @@ There are several things that need to be remembered:
 
 	return icon(resulting_icon)
 
+/// Modifies a sprite to conform to pony body shapes
+/proc/wear_pony_version(icon/base_icon, obj/item/item, key, greyscale_colors)
+	ASSERT(istype(item), "wear_pony_version: no item passed")
+	ASSERT(istext(key), "wear_pony_version: no key passed")
+	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
+		greyscale_colors = item.get_key_colors(base_icon)
+		if(!greyscale_colors)
+			greyscale_colors = item.get_general_color(base_icon)
+	var/color_key
+	if(islist(greyscale_colors))
+		color_key = jointext(greyscale_colors, "")
+	else
+		color_key = greyscale_colors
+	var/index = "[key]-[item.type]-[color_key]"
+	var/static/list/pony_clothing_cache = list()
+	var/icon/resulting_icon = pony_clothing_cache[index]
+	if(!resulting_icon)
+		resulting_icon = item.generate_pony_icons(base_icon, color_key)
+		if(!resulting_icon)
+			stack_trace("[item.type] is set to generate a masked pony icon, but generate_pony_icons was not implemented (or error'd).")
+			return base_icon
+		pony_clothing_cache[index] = fcopy_rsc(resulting_icon)
+
+	return icon(resulting_icon)
+
 /// Modifies a sprite to replace the legs with a new version
 /proc/replace_icon_legs(icon/base_icon, icon/new_legs)
 	var/static/icon/leg_mask
@@ -626,6 +938,9 @@ There are several things that need to be remembered:
 /obj/item/proc/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	return null
 
+/obj/item/proc/generate_pony_icons(icon/base_icon, greyscale_colors)
+	return null
+
 /**
  * Get what color the item is on "average"
  * Can be used to approximate what color this item is/should be
@@ -635,6 +950,11 @@ There are several things that need to be remembered:
  */
 /obj/item/proc/get_general_color(icon/base_icon)
 	if(greyscale_colors && length(SSgreyscale.ParseColorString(greyscale_colors)) == 1)
+		return greyscale_colors
+	return color
+
+/obj/item/proc/get_key_colors(icon/base_icon)
+	if(greyscale_colors)
 		return greyscale_colors
 	return color
 
@@ -766,6 +1086,14 @@ There are several things that need to be remembered:
 		client.screen += worn_item
 	update_observer_view(worn_item, inventory = TRUE)
 
+//update whether our back alt item appears on our hud.
+/mob/living/carbon/human/update_hud_back_alt(obj/item/worn_item)
+	worn_item.screen_loc = ui_back_alt
+	if(client && hud_used?.hud_shown)
+		client.screen += worn_item
+	update_observer_view(worn_item, inventory = TRUE)
+
+
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
 covers:
@@ -809,6 +1137,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/mob/living/carbon/wearer = loc
 	var/is_digi = istype(wearer) && (wearer.bodyshape & BODYSHAPE_DIGITIGRADE) && !wearer.is_digitigrade_squished()
+	var/is_pony = istype(wearer) && (wearer.bodyshape & BODYSHAPE_PONY)
 
 	var/mutable_appearance/draw_target // MA of the item itself, not the final result
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
@@ -821,6 +1150,13 @@ generate/load female uniform sprites matching all previously decided variables
 		)
 	if(!isinhands && is_digi && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		building_icon = wear_digi_version(
+			base_icon = building_icon || icon(file2use, t_state),
+			item = src,
+			key = "[t_state]-[file2use]-[female_uniform]",
+			greyscale_colors = greyscale_colors,
+		)
+	if(!isinhands && is_pony && (supports_variations_flags & CLOTHING_PONY_MASK))
+		building_icon = wear_pony_version(
 			base_icon = building_icon || icon(file2use, t_state),
 			item = src,
 			key = "[t_state]-[file2use]-[female_uniform]",

@@ -93,6 +93,7 @@
 /mob/living/carbon/human/proc/get_body_slots()
 	return list(
 		back,
+		back_alt,
 		s_store,
 		handcuffed,
 		legcuffed,
@@ -118,6 +119,7 @@
 /mob/living/carbon/human/proc/get_storage_slots()
 	return list(
 		back,
+		back_alt,
 		belt,
 		l_store,
 		r_store,
@@ -126,6 +128,8 @@
 
 /mob/living/carbon/human/get_visible_items()
 	var/list/visible_items = ..()
+	if(bodyshape & BODYSHAPE_PONY)
+		visible_items += ITEM_SLOT_BACK_ALT
 	var/obj/item/clothing/under/under = w_uniform
 	if(istype(under) && length(under.attached_accessories) && (under in visible_items))
 		visible_items += under.attached_accessories

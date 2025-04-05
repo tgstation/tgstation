@@ -97,7 +97,8 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	//Build the mob sprite and use it as our overlay
 	for(var/external_layer in bodypart_overlay.all_layers)
 		if(bodypart_overlay.layers & external_layer)
-			. += bodypart_overlay.get_overlay(external_layer, bodypart_owner)
+			var/list/bodyparts_overlays = bodypart_overlay.get_overlay(external_layer, bodypart_owner)
+			. += bodyparts_overlays
 
 ///The horns of a lizard!
 /obj/item/organ/horns

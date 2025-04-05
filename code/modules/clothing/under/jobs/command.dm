@@ -8,6 +8,13 @@
 	icon = 'icons/obj/clothing/under/captain.dmi'
 	worn_icon = 'icons/mob/clothing/under/captain.dmi'
 	armor_type = /datum/armor/clothing_under/rank_captain
+	pony_clothing_sample_pixels = list(
+		list(10,16),
+		list(14,20),
+		list(14,9)
+	)
+	pony_icon_state = "centcom"
+	pony_config_path = /datum/greyscale_config/pony_clothes_3_color
 
 /datum/armor/clothing_under/rank_captain
 	wound = 15
@@ -20,7 +27,13 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(10,16),
+		list(14,20),
+		list(15,10)
+	)
+	pony_icon_state = "centcom_skirt"
 
 /obj/item/clothing/under/rank/captain/suit
 	name = "captain's suit"
@@ -37,7 +50,13 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(10,16),
+		list(14,20),
+		list(15,10)
+	)
+	pony_icon_state = "centcom_skirt"
 
 /obj/item/clothing/under/rank/captain/parade
 	name = "captain's parade uniform"

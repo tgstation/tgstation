@@ -15,6 +15,12 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,19)
+	)
+	pony_icon_state = "suitjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/suit/toggle/jacket/sweater
 	name = "sweater jacket"
@@ -26,6 +32,10 @@
 	greyscale_config_worn = /datum/greyscale_config/sweater/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "sweater"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/suit/jacket/oversized
 	name = "oversized jacket"
@@ -35,6 +45,10 @@
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "trenchcoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/suit/jacket/fancy
 	name = "fancy fur coat"

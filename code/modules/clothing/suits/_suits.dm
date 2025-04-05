@@ -52,3 +52,19 @@
 /obj/item/clothing/suit/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "oversuit_worn")
 	return replace_icon_legs(base_icon, legs)
+
+/obj/item/clothing/suit/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/color_string_to_use = greyscale_colors
+	if(!isnull(greyscale_colors) && length(greyscale_colors))
+		var/datum/greyscale_config/config = SSgreyscale.configurations["[pony_config_path]"]
+		var/list/finalized_colors = SSgreyscale.ParseColorString(greyscale_colors)
+		var/colors_len = length(finalized_colors)
+		if(colors_len > config.expected_colors) // more colors than our config supports
+			var/list/filled_colors = finalized_colors.Copy()
+			finalized_colors = list()
+			for(var/index in 1 to config.expected_colors)
+				finalized_colors += filled_colors[index]
+			color_string_to_use = jointext(finalized_colors, "")
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, color_string_to_use), pony_icon_state)
+	ponysuit.Insert(ponysuit, worn_icon_state ? worn_icon_state : icon_state)
+	return ponysuit

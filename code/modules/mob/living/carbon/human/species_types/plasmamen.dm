@@ -65,6 +65,7 @@
 		/datum/outfit/syndicate/support = /datum/outfit/syndicate/support/plasmaman,
 		/datum/outfit/syndicate/full/loneop = /datum/outfit/syndicate/full/plasmaman/loneop,
 	)
+	used_outfit_for_preview = /datum/outfit/plasmaman/engineering
 
 	/// If the bones themselves are burning clothes won't help you much
 	var/internal_fire = FALSE

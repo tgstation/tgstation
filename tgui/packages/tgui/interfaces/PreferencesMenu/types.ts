@@ -1,6 +1,7 @@
 import { BooleanLike } from 'tgui-core/react';
 
 import { sendAct } from '../../backend';
+import { SpriteEditorData } from '../SpriteEditor/Types/types';
 import {
   LoadoutCategory,
   LoadoutList,
@@ -183,6 +184,9 @@ export type PreferencesMenuData = {
   name_to_use: string;
 
   window: PrefsWindow;
+
+  editingIcon: BooleanLike;
+  workspaceData?: SpriteEditorData;
 };
 
 export type ServerData = {

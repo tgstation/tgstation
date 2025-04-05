@@ -12,6 +12,41 @@
 	/// Whether the overlay blocks emissive light
 	var/blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
+	///Applies a feature offset to the overlay based on the bodyshape of the owning limb's owning mob.
+	var/use_feature_offset = FALSE
+	/* Formatted:
+	list(
+		"[BODYSHAPE_PONY]" = list(
+			"offset_x" = list("south" = 0),
+			"offset_y" = list("south" = 0),
+			"size_modifier" = list("south" = 0),
+			"rotation_modifier" = list("south" = 0),
+			"update_body_parts" = FALSE
+		)
+	)
+	*/
+	var/list/bodyshape_offsets = list()
+	var/last_bodyshape
+	var/datum/worn_feature_offset/my_current_offset
+
+/datum/bodypart_overlay/proc/update_worn_offset(new_bodyshape, current_limb)
+	if(last_bodyshape && last_bodyshape == new_bodyshape && my_current_offset)
+		return // dont need to do anything lmao
+	if(my_current_offset)
+		QDEL_NULL(my_current_offset) // delete it, let's regenerate
+	if("[new_bodyshape]" in bodyshape_offsets)
+		last_bodyshape = new_bodyshape
+		var/list/bodyshape_offset_list = bodyshape_offsets["[new_bodyshape]"]
+		my_current_offset = new(
+			attached_part = current_limb,
+			feature_key = null,
+			offset_x = bodyshape_offset_list["offset_x"],
+			offset_y = bodyshape_offset_list["offset_y"],
+			size_modifier = bodyshape_offset_list["size_modifier"],
+			rotation_modifier = bodyshape_offset_list["rotation_modifier"],
+			update_body_parts = bodyshape_offset_list["update_body_parts"],
+		)
+
 ///Wrapper for getting the proper image, colored and everything
 /datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
 	layer = bitflag_to_layer(layer)
@@ -78,7 +113,10 @@
 
 ///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache
 /datum/bodypart_overlay/proc/generate_icon_cache()
-	return list()
+	var/list/icon_cache = list()
+	if(use_feature_offset && last_bodyshape)
+		icon_cache += "[last_bodyshape]"
+	return icon_cache
 
 /// Additionally color or texture the limb
 /datum/bodypart_overlay/proc/modify_bodypart_appearance(datum/appearance)

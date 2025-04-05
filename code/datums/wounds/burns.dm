@@ -52,6 +52,9 @@
 		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
 			reagent.on_burn_wound_processing(src)
 
+	if(HAS_TRAIT(victim, TRAIT_VIRUS_WEAKNESS))
+		sanitization -= 0.9
+
 	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
 		sanitization += 0.9
 

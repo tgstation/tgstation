@@ -72,6 +72,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	)
 	///Internal organs that are unique to this race, like a tail or other cosmetic organs. list(typepath of organ 1, typepath of organ 2 = "Round").
 	var/list/mutant_organs = list()
+	///Internal organs that might be present that we want to remove when regenerating the dummy.
+	var/list/conditional_mutant_organs = list()
 	///Replaces default brain with a different organ
 	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
 	///Replaces default heart with a different organ
@@ -179,6 +181,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].
 	var/list/outfit_override_registry = list()
+
+	/// What outfit do we use for the species job preview?
+	var/datum/outfit/used_outfit_for_preview = /datum/outfit/job/assistant/consistent
 
 ///////////
 // PROCS //
@@ -498,32 +503,136 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//Underwear, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
-		if(species_human.underwear)
-			var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[species_human.underwear]
-			var/mutable_appearance/underwear_overlay
-			if(underwear)
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
-				else
-					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
-				if(!underwear.use_static)
-					underwear_overlay.color = species_human.underwear_color
-				standing += underwear_overlay
+		if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR_ONLY))
+			if(species_human.underwear)
+				var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[species_human.underwear]
+				var/mutable_appearance/underwear_overlay
+				if(underwear)
+					if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
+						underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
+					else
+						underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+					if(!underwear.use_static)
+						underwear_overlay.color = species_human.underwear_color
+					standing += underwear_overlay
+		if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERSHIRT_ONLY))
+			if(species_human.undershirt)
+				var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[species_human.undershirt]
+				if(undershirt)
+					var/mutable_appearance/working_shirt
+					if(species_human.dna.species.sexes && species_human.physique == FEMALE)
+						working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
+					else
+						working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
+					standing += working_shirt
+		if(!HAS_TRAIT(species_human, TRAIT_NO_SOCKS_ONLY))
+			if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
+				var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[species_human.socks]
+				if(socks)
+					if(species_human.bodyshape & BODYSHAPE_PONY)
+						var/static/list/pony_sock_cache = list()
+						var/index = "[socks.icon]-[socks.icon_state]"
+						var/icon/resulting_icon = pony_sock_cache[index]
+						if(!resulting_icon)
+							var/static/icon/toe_mask
+							if(!toe_mask)
+								toe_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "toe_removal")
+							var/static/icon/darken_mask
+							if(!darken_mask)
+								darken_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "darken_back_shoe")
 
-		if(species_human.undershirt)
-			var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[species_human.undershirt]
-			if(undershirt)
-				var/mutable_appearance/working_shirt
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
-				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
-				standing += working_shirt
+							var/icon/socks_icon = icon(socks.icon, socks.icon_state)
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
-			var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[species_human.socks]
-			if(socks)
-				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+							//fcopy(shoes_icon, "TEST_shoes_icon.dmi")
+							socks_icon.Blend(toe_mask, ICON_SUBTRACT)
+
+							//fcopy(shoes_icon, "TEST_toe_mask.dmi")
+
+							var/icon/new_south = icon(socks_icon, dir=SOUTH)
+							var/icon/new_north = icon(socks_icon, dir=NORTH)
+							var/pixel_height
+							for(var/i in 1 to 32)
+								var/color_to_check = socks_icon.GetPixel(17, i, SOUTH)
+								if(!color_to_check)
+									break // we have hit transparent pixels
+								pixel_height = i
+								new_south.DrawBox(color_to_check, 16, pixel_height, 16, pixel_height)
+								new_north.DrawBox(color_to_check, 16, pixel_height, 16, pixel_height)
+
+							//fcopy(new_south, "TEST_new_south.dmi")
+							//fcopy(new_north, "TEST_new_north.dmi")
+
+							var/icon/blank_east = icon('icons/blanks/32x32.dmi', "nothing")
+							var/icon/blank_west = icon('icons/blanks/32x32.dmi', "nothing")
+
+							var/static/icon/l_leg_east_sock_mask
+							var/static/icon/l_leg_west_sock_mask
+							var/static/icon/r_arm_east_sock_mask
+							var/static/icon/r_arm_west_sock_mask
+							var/static/icon/r_leg_east_sock_mask
+							var/static/icon/r_leg_west_sock_mask
+							var/static/icon/l_arm_east_sock_mask
+							var/static/icon/l_arm_west_sock_mask
+							if(!l_leg_east_sock_mask)
+								l_leg_east_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "l_leg_sock_mask", EAST)
+								r_arm_east_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "r_arm_sock_mask", EAST)
+								r_leg_east_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "r_leg_sock_mask", EAST)
+								l_arm_east_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "l_arm_sock_mask", EAST)
+
+								l_leg_west_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "l_leg_sock_mask", WEST)
+								r_arm_west_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "r_arm_sock_mask", WEST)
+								r_leg_west_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "r_leg_sock_mask", WEST)
+								l_arm_west_sock_mask = icon('icons/mob/human/species/pony/bodyparts.dmi', "l_arm_sock_mask", WEST)
+
+							var/icon/east_hind_back_leg = icon(socks_icon, dir=EAST)
+							var/icon/east_hind_front_leg = icon(socks_icon, dir=EAST)
+							var/icon/east_fore_back_leg = icon(socks_icon, dir=EAST)
+							var/icon/east_fore_front_leg = icon(socks_icon, dir=EAST)
+
+							var/icon/west_hind_back_leg = icon(socks_icon, dir=WEST)
+							var/icon/west_hind_front_leg = icon(socks_icon, dir=WEST)
+							var/icon/west_fore_back_leg = icon(socks_icon, dir=WEST)
+							var/icon/west_fore_front_leg = icon(socks_icon, dir=WEST)
+
+
+							east_hind_back_leg.Blend(darken_mask, ICON_MULTIPLY)
+							east_fore_back_leg.Blend(darken_mask, ICON_MULTIPLY)
+							west_hind_back_leg.Blend(darken_mask, ICON_MULTIPLY)
+							west_fore_back_leg.Blend(darken_mask, ICON_MULTIPLY)
+
+							east_hind_back_leg.Blend(l_leg_east_sock_mask, ICON_SUBTRACT)
+							east_hind_front_leg.Blend(r_leg_east_sock_mask, ICON_SUBTRACT)
+							east_fore_back_leg.Blend(r_arm_east_sock_mask, ICON_SUBTRACT)
+							east_fore_front_leg.Blend(l_arm_east_sock_mask, ICON_SUBTRACT)
+
+							west_hind_back_leg.Blend(r_leg_west_sock_mask, ICON_SUBTRACT)
+							west_hind_front_leg.Blend(l_leg_west_sock_mask, ICON_SUBTRACT)
+							west_fore_back_leg.Blend(l_arm_west_sock_mask, ICON_SUBTRACT)
+							west_fore_front_leg.Blend(r_arm_west_sock_mask, ICON_SUBTRACT)
+
+							blank_east.Blend(east_hind_back_leg, ICON_OVERLAY, 0, 0)
+							blank_east.Blend(east_hind_front_leg, ICON_OVERLAY, -3, 0)
+							blank_east.Blend(east_fore_back_leg, ICON_OVERLAY, 8, 0)
+							blank_east.Blend(east_fore_front_leg, ICON_OVERLAY, 5, 0)
+							//fcopy(blank_east, "TEST_blank_east.dmi")
+							blank_west.Blend(west_hind_back_leg, ICON_OVERLAY, 2, 0)
+							blank_west.Blend(west_hind_front_leg, ICON_OVERLAY, 5, 0)
+							blank_west.Blend(west_fore_back_leg, ICON_OVERLAY, -6, 0)
+							blank_west.Blend(west_fore_front_leg, ICON_OVERLAY, -4, 0)
+
+							//fcopy(blank_east, "TEST_blank_west.dmi")
+
+							var/icon/final_icon = icon()
+
+							final_icon.Insert(new_south, socks.icon_state, SOUTH)
+							final_icon.Insert(new_north, socks.icon_state, NORTH)
+							final_icon.Insert(blank_east, socks.icon_state, EAST)
+							final_icon.Insert(blank_west, socks.icon_state, WEST)
+							resulting_icon = fcopy_rsc(final_icon)
+							pony_sock_cache[index] = resulting_icon
+						standing += mutable_appearance(resulting_icon, socks.icon_state, -BODY_LAYER)
+					else
+						standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 
 	if(standing.len)
 		species_human.overlays_standing[BODY_LAYER] = standing
@@ -610,6 +719,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			excused = TRUE
 		else if(slot & (ITEM_SLOT_SUITSTORE|ITEM_SLOT_BACKPACK|ITEM_SLOT_BELTPACK|ITEM_SLOT_HANDS))
 			excused = TRUE
+		else if(slot & (ITEM_SLOT_BACK_ALT) && I.slot_flags & (ITEM_SLOT_BACK)) // let us put back items in BACK_ALT if we have it
+			excused = TRUE
 		if(!excused)
 			return FALSE
 
@@ -624,7 +735,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_NECK)
 			return TRUE
-		if(ITEM_SLOT_BACK)
+		if(ITEM_SLOT_BACK, ITEM_SLOT_BACK_ALT)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_OCLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)

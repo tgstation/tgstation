@@ -1,0 +1,297 @@
+{
+	"rsecurity": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "security_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "security_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "security_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "security_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "security_highlight",
+			"blend_mode": "overlay"
+		}
+	],
+	"scrubs": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "scrubs_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "scrubs_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "scrubs_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "scrubs_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"jumpsuit": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "jumpsuit_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "jumpsuit_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "jumpsuit_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "jumpsuit_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"jumpskirt": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "jumpskirt_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "jumpskirt_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "jumpskirt_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "jumpskirt_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"medical": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "medical_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "medical_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "medical_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "medical_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "belt_highlight",
+			"blend_mode": "overlay"
+		}
+	],
+	"hos_coat": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "hos_coat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "hos_coat_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "hos_coat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "hos_coat_mult",
+				"blend_mode": "multiply"
+			}
+		],
+		{
+			"type": "icon_state",
+			"icon_state": "hos_coat_highlight",
+			"blend_mode": "overlay"
+		}
+	],
+	"sweater": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "sweater_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"suitjacket": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "suitjacket_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"trenchcoat": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "trenchcoat_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	],
+	"labcoat": [
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_sub",
+				"blend_mode": "subtract"
+			}
+		],
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_base",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "labcoat_mult",
+				"blend_mode": "multiply"
+			}
+		]
+	]
+}

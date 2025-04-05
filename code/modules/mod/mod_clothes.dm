@@ -34,6 +34,13 @@
 	heat_protection = CHEST|GROIN
 	cold_protection = CHEST|GROIN
 	drop_sound = null
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(16,19),
+		list(15,15)
+	)
+	pony_icon_state = "modsuit"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/suit/mod/Initialize(mapload)
 	. = ..()

@@ -1140,7 +1140,8 @@
 			//Some externals have multiple layers for background, foreground and between
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
-					. += overlay.get_overlay(external_layer, src)
+					var/list/bodyparts_overlays = overlay.get_overlay(external_layer, src)
+					. += bodyparts_overlays
 			for(var/datum/layer in .)
 				overlay.modify_bodypart_appearance(layer)
 	return .

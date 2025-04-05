@@ -61,6 +61,8 @@
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
 #define DNA_FISH_TAIL_BLOCK 16
+#define DNA_PONY_EARS_BLOCK 17
+#define DNA_PONY_TAIL_BLOCK 18
 
 // Hey! Listen up if you're here because you're adding a species feature!
 //
@@ -69,7 +71,7 @@
 // (Which means having a DNA block for a feature tied to a mob without DNA is entirely pointless.)
 
 /// Total amount of DNA blocks, must be equal to the highest DNA block number
-#define DNA_FEATURE_BLOCKS 16
+#define DNA_FEATURE_BLOCKS 18
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -102,6 +104,7 @@
 #define ORGAN_SLOT_TONGUE "tongue"
 #define ORGAN_SLOT_VOICE "vocal_cords"
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
+#define ORGAN_SLOT_PONY_EARTH "pony_earth"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"
@@ -112,6 +115,10 @@
 #define ORGAN_SLOT_EXTERNAL_WINGS "wings"
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
 #define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
+
+#define ORGAN_SLOT_EXTERNAL_PONY_HORN "pony_horn"
+#define ORGAN_SLOT_EXTERNAL_PONY_WINGS "pony_wings"
+
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
@@ -172,7 +179,10 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,))
+	ORGAN_SLOT_XENO_EGGSAC,
+	ORGAN_SLOT_PONY_EARTH,
+	ORGAN_SLOT_EXTERNAL_PONY_HORN,
+	ORGAN_SLOT_EXTERNAL_PONY_WINGS))
 
 //Defines for Golem Species IDs
 #define SPECIES_GOLEM "golem"

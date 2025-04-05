@@ -44,6 +44,16 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
+	used_outfit_for_preview = /datum/outfit/job/janitor/preview
+
+/datum/species/lizard/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	human_for_preview.dna.features["mcolor"] = "#099"
+	human_for_preview.dna.features["tail_lizard"] = "Light Tiger"
+	human_for_preview.dna.features["snout"] = "Sharp + Light"
+	human_for_preview.dna.features["horns"] = "Simple"
+	human_for_preview.dna.features["frills"] = "Aquatic"
+	human_for_preview.dna.features["legs"] = "Normal Legs"
+	human_for_preview.update_body(TRUE)
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
 /datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)

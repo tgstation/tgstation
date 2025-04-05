@@ -172,6 +172,16 @@
 	inv_box.slot_id = ITEM_SLOT_RPOCKET
 	static_inventory += inv_box
 
+	if(owner.bodyshape & BODYSHAPE_PONY)
+		inv_box = new /atom/movable/screen/inventory(null, src)
+		inv_box.name = "back_alt"
+		inv_box.icon = ui_style
+		inv_box.icon_state = "back"
+		inv_box.icon_full = "template_small"
+		inv_box.screen_loc = ui_back_alt
+		inv_box.slot_id = ITEM_SLOT_BACK_ALT
+		static_inventory += inv_box
+
 	inv_box = new /atom/movable/screen/inventory(null, src)
 	inv_box.name = "suit storage"
 	inv_box.icon = ui_style
@@ -407,6 +417,9 @@
 			if(H.back)
 				H.back.screen_loc = ui_back
 				screenmob.client.screen += H.back
+			if(H.back_alt)
+				H.back_alt.screen_loc = ui_back_alt
+				screenmob.client.screen += H.back_alt
 			if(H.l_store)
 				H.l_store.screen_loc = ui_storage1
 				screenmob.client.screen += H.l_store

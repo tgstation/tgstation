@@ -50,3 +50,7 @@
 /// Called when a character is changed.
 /datum/preference_middleware/proc/on_new_character(mob/user)
 	return
+
+/// Called when the menu is closed.
+/datum/preference_middleware/proc/on_ui_close(mob/user)
+	return

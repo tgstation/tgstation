@@ -210,7 +210,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			remove_current_slot()
 			return TRUE
 		if ("rotate")
+			character_preview_view.body.setDir(turn(character_preview_view.body.dir, -90))
 			character_preview_view.setDir(turn(character_preview_view.dir, -90))
+			character_preview_view.update_body()
 			return TRUE
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
@@ -268,6 +270,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return FALSE
 
 /datum/preferences/ui_close(mob/user)
+	for(var/datum/preference_middleware/preference_middleware as anything in middleware)
+		preference_middleware.on_ui_close(user)
 	save_character()
 	save_preferences()
 	QDEL_NULL(character_preview_view)

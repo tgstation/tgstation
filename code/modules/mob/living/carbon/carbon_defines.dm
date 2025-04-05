@@ -31,6 +31,7 @@
 
 	//inventory slots
 	var/obj/item/back = null
+	var/obj/item/back_alt = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/neck/wear_neck = null
 	/// Equipped air tank. Never set this manually.

@@ -36,6 +36,14 @@
 	strip_delay = 30
 	equip_delay_other = 40
 	var/hit_reflect_chance = 50
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "ablative"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/hooded/ablative/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 /obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
 	. = ..()

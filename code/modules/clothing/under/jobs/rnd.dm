@@ -2,6 +2,12 @@
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
 	armor_type = /datum/armor/clothing_under/science
+	pony_clothing_sample_pixels = list(
+		list(11,20),
+		list(14,19)
+	)
+	pony_icon_state = "science"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /datum/armor/clothing_under/science
 	bio = 50
@@ -13,6 +19,12 @@
 	inhand_icon_state = "lb_suit"
 	armor_type = /datum/armor/clothing_under/rnd_research_director
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(14,19),
+		list(13,8)
+	)
+	pony_icon_state = "shirt_and_pants"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /datum/armor/clothing_under/rnd_research_director
 	bomb = 10
@@ -31,7 +43,13 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(14,19),
+		list(19,10)
+	)
+	pony_icon_state = "secskirt"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/rnd/research_director/alt
 	name = "research director's tan suit"
@@ -44,6 +62,9 @@
 	greyscale_colors = "#ffeeb6#c2d3da#402912#615233"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "shirt_and_pants"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/rnd/research_director/alt/skirt
 	name = "research director's tan suitskirt"
@@ -52,7 +73,7 @@
 	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck
 	desc = "A Nanotrasen-purple turtleneck and black jeans, for a director with a superior sense of style."
@@ -61,6 +82,11 @@
 	inhand_icon_state = "p_suit"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	pony_clothing_sample_pixels = list(
+		list(13,20),
+		list(14,11)
+	)
+	pony_icon_state = "cargotech"
 
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt
 	name = "research director's turtleneck skirt"
@@ -69,7 +95,12 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,20),
+		list(15,10)
+	)
+	pony_icon_state = "cargo_skirt"
 
 /obj/item/clothing/under/rank/rnd/scientist
 	name = "scientist's jumpsuit"
@@ -84,7 +115,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "science_skirt"
 
 /obj/item/clothing/under/rank/rnd/roboticist
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
@@ -92,6 +124,10 @@
 	icon_state = "robotics"
 	inhand_icon_state = null
 	resistance_flags = NONE
+	pony_clothing_sample_pixels = list(
+		list(17,16),
+		list(14,19)
+	)
 
 /obj/item/clothing/under/rank/rnd/roboticist/skirt
 	name = "roboticist's jumpskirt"
@@ -101,7 +137,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "science_skirt"
 
 /obj/item/clothing/under/rank/rnd/geneticist
 	name = "geneticist's jumpsuit"
@@ -115,4 +152,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "science_skirt"
+

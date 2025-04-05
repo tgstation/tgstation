@@ -7,6 +7,7 @@
     "@types/marked": "4.3.2",
     "@types/react": "^18.3.12",
     "blob-polyfill": "^9.0.20240710",
+    "color-blend": "^4.0.0",
     "common": "workspace:*",
     "dateformat": "^5.0.3",
     "dompurify": "^2.5.7",

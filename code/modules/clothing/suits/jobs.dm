@@ -30,6 +30,14 @@
 	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "apron"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/apron/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 /datum/armor/suit_apron
 	bio = 50
@@ -96,6 +104,14 @@
 	)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "chefcoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/toggle/chef/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 //Cook
 /datum/armor/toggle_chef
@@ -126,6 +142,12 @@
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
 	flags_inv = HIDEBELT
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,20)
+	)
+	pony_icon_state = "trenchcoat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /datum/armor/jacket_det_suit
 	melee = 25
@@ -213,6 +235,12 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,19)
+	)
+	pony_icon_state = "suitjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple formal suit jacket"
@@ -244,6 +272,12 @@
 		/obj/item/storage/bag/mail,
 		/obj/item/universal_scanner,
 	)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,19)
+	)
+	pony_icon_state = "suitjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 // Quartermaster
 
@@ -253,6 +287,14 @@
 	icon_state = "qm_coat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "qm_coat"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/jacket/quartermaster/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 /obj/item/clothing/suit/jacket/quartermaster/Initialize(mapload)
 	. = ..()
@@ -271,6 +313,10 @@
 	greyscale_config_worn = /datum/greyscale_config/jacket_lawyer/worn
 	greyscale_colors = "#ffffff"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "suitjacket"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 //Mime
 /obj/item/clothing/suit/toggle/suspenders
@@ -354,6 +400,14 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 	)
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "surgical_apron"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/apron/surgical/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
 
 /obj/item/clothing/suit/apron/surgical/Initialize(mapload)
 	. = ..()

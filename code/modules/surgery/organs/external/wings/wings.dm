@@ -11,6 +11,14 @@
 
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
+/obj/item/organ/wings/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	add_organ_trait(TRAIT_SOFT_FALL)
+
+/obj/item/organ/wings/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	remove_organ_trait(TRAIT_SOFT_FALL)
+
 ///Checks if the wings can soften short falls
 /obj/item/organ/wings/proc/can_soften_fall()
 	return TRUE

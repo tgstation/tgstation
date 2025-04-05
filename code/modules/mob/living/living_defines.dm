@@ -230,6 +230,9 @@
 	/// How long it takes to return to 0 stam
 	var/stamina_regen_time = 10 SECONDS
 
+	/// The verb used for hugging interactions.
+	var/hug_verb = "hug"
+
 	/// Lazylists of pixel offsets this mob is currently using
 	/// Modify this via add_offsets and remove_offsets,
 	/// NOT directly (and definitely avoid modifying offsets directly)

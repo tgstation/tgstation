@@ -446,9 +446,14 @@
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
 
-/// Overlays for the worn overlay so you can overlay while you overlay
-/// eg: ammo counters, primed grenade flashing, etc.
-/// "icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+//update whether our back alt item appears on our hud.
+/mob/living/carbon/proc/update_hud_back_alt(obj/item/I)
+	return
+
+
+//Overlays for the worn overlay so you can overlay while you overlay
+//eg: ammo counters, primed grenade flashing, etc.
+//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
 /obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
@@ -480,6 +485,11 @@
 
 		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
+		// This is a stupid hack for making hair properly adjust with offsets.
+		if(istype(limb, /obj/item/bodypart/head))
+			var/obj/item/bodypart/head/my_head = limb
+			if(my_head.worn_face_offset)
+				needs_update += my_head
 
 	limb_count_update += length(needs_update)
 	var/list/missing_bodyparts = get_missing_limbs()
@@ -537,6 +547,11 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
+		if(overlay.use_feature_offset)
+			if(owner)
+				. += "-[owner.dir]"
+			else
+				. += "-[SOUTH]"
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner

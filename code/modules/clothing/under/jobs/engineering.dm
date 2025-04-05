@@ -5,6 +5,13 @@
 	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
 	armor_type = /datum/armor/clothing_under/rank_engineering
 	resistance_flags = NONE
+	pony_clothing_sample_pixels = list(
+		list(15,10),
+		list(18,16)
+	)
+	pony_icon_state = "engine"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+
 
 /datum/armor/clothing_under/rank_engineering
 	fire = 60
@@ -16,6 +23,10 @@
 	icon_state = "chiefengineer"
 	inhand_icon_state = "gy_suit"
 	armor_type = /datum/armor/clothing_under/engineering_chief_engineer
+	pony_clothing_sample_pixels = list(
+		list(16,17),
+		list(10,18)
+	)
 
 /datum/armor/clothing_under/engineering_chief_engineer
 	fire = 80
@@ -29,7 +40,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "engine_skirt"
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck
 	name = "chief engineer's turtleneck"
@@ -39,6 +51,11 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	pony_clothing_sample_pixels = list(
+		list(13,20),
+		list(14,11)
+	)
+	pony_icon_state = "cargotech"
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt
 	name = "chief engineer's turtleneck skirt"
@@ -48,7 +65,13 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(13,20),
+		list(15,10)
+	)
+	pony_icon_state = "cargo_skirt"
+
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians. Made from fire resistant materials."
@@ -64,7 +87,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "engine_skirt"
 
 /obj/item/clothing/under/rank/engineering/engineer
 	desc = "It's an orange high visibility jumpsuit worn by engineers. Made from fire resistant materials."
@@ -78,6 +102,10 @@
 	icon_state = "hazard"
 	inhand_icon_state = "syndicate-orange"
 	alt_covers_chest = TRUE
+	pony_clothing_sample_pixels = list(
+		list(15,15),
+		list(15,18)
+	)
 
 /obj/item/clothing/under/rank/engineering/engineer/skirt
 	name = "engineer's jumpskirt"
@@ -87,4 +115,5 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "engine_skirt"

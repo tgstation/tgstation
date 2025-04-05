@@ -1,0 +1,163 @@
+{
+	"armor_sec": [
+		{
+			"type": "icon_state",
+			"icon_state": "armor_sec",
+			"blend_mode": "overlay"
+		}
+	],
+	"hos_fancy_coat": [
+		{
+			"type": "icon_state",
+			"icon_state": "hos_fancy_coat",
+			"blend_mode": "overlay"
+		}
+	],
+	"warden_coat": [
+		{
+			"type": "icon_state",
+			"icon_state": "warden_coat",
+			"blend_mode": "overlay"
+		}
+	],
+	"hop_coat": [
+		{
+			"type": "icon_state",
+			"icon_state": "hop_coat",
+			"blend_mode": "overlay"
+		}
+	],
+	"ablative": [
+		{
+			"type": "icon_state",
+			"icon_state": "ablative",
+			"blend_mode": "overlay"
+		}
+	],
+	"cultrobe": [
+		{
+			"type": "icon_state",
+			"icon_state": "cultrobe",
+			"blend_mode": "overlay"
+		}
+	],
+	"hereticrobe": [
+		{
+			"type": "icon_state",
+			"icon_state": "hereticrobe",
+			"blend_mode": "overlay"
+		}
+	],
+	"bonearmor": [
+		{
+			"type": "icon_state",
+			"icon_state": "bonearmor",
+			"blend_mode": "overlay"
+		}
+	],
+	"qm_coat": [
+		{
+			"type": "icon_state",
+			"icon_state": "qm_coat",
+			"blend_mode": "overlay"
+		}
+	],
+	"straightjacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "straightjacket",
+			"blend_mode": "overlay"
+		}
+	],
+	"chefcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "chefcoat",
+			"blend_mode": "overlay"
+		}
+	],
+	"paramed_labcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "paramed_labcoat",
+			"blend_mode": "overlay"
+		}
+	],
+	"rd_labcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "rd_labcoat",
+			"blend_mode": "overlay"
+		}
+	],
+	"spacesuit": [
+		{
+			"type": "icon_state",
+			"icon_state": "spacesuit",
+			"blend_mode": "overlay"
+		}
+	],
+	"firesuit": [
+		{
+			"type": "icon_state",
+			"icon_state": "firesuit",
+			"blend_mode": "overlay"
+		}
+	],
+	"bombsuit": [
+		{
+			"type": "icon_state",
+			"icon_state": "bombsuit",
+			"blend_mode": "overlay"
+		}
+	],
+	"apron": [
+		{
+			"type": "icon_state",
+			"icon_state": "apron",
+			"blend_mode": "overlay"
+		}
+	],
+	"surgical_apron": [
+		{
+			"type": "icon_state",
+			"icon_state": "surgical_apron",
+			"blend_mode": "overlay"
+		}
+	],
+	"explorer": [
+		{
+			"type": "icon_state",
+			"icon_state": "explorer",
+			"blend_mode": "overlay"
+		}
+	],
+	"sec_wintercoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "sec_wintercoat",
+			"blend_mode": "overlay"
+		}
+	],
+	"cap_wintercoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "cap_wintercoat",
+			"blend_mode": "overlay"
+		}
+	],
+	"fleshsuit": [
+		{
+			"type": "icon_state",
+			"icon_state": "fleshsuit",
+			"blend_mode": "overlay"
+		}
+	],
+	"chitinsuit": [
+		{
+			"type": "icon_state",
+			"icon_state": "chitinsuit",
+			"blend_mode": "overlay"
+		}
+	]
+}

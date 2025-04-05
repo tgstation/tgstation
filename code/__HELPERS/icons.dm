@@ -501,7 +501,8 @@ world
 		PROCESS_OVERLAYS_OR_UNDERLAYS(flat, appearance.overlays, 1)
 
 		var/icon/add // Icon of overlay being added
-
+		var/xo = 0
+		var/yo = 0
 		var/flatX1 = 1
 		var/flatX2 = flat.Width()
 		var/flatY1 = 1
@@ -545,10 +546,10 @@ world
 				continue
 
 			// Find the new dimensions of the flat icon to fit the added overlay
-			addX1 = min(flatX1, layer_image.pixel_x + layer_image.pixel_w + 1)
-			addX2 = max(flatX2, layer_image.pixel_x + layer_image.pixel_w + add.Width())
-			addY1 = min(flatY1, layer_image.pixel_y + layer_image.pixel_z + 1)
-			addY2 = max(flatY2, layer_image.pixel_y + layer_image.pixel_z + add.Height())
+			addX1 = min(flatX1, layer_image.pixel_x + 1)
+			addX2 = max(flatX2, layer_image.pixel_x + add.Width())
+			addY1 = min(flatY1, layer_image.pixel_y + 1)
+			addY2 = max(flatY2, layer_image.pixel_y + add.Height())
 
 			if (
 				addX1 != flatX1 \
@@ -568,9 +569,29 @@ world
 				flatX2 = addY1
 				flatY1 = addX2
 				flatY2 = addY2
+			xo = layer_image.pixel_x + 2 - flatX1
+			yo = layer_image.pixel_y + 2 - flatY1
+			if(layer_image.transform) // getFlatIcon doesn't give a snot about transforms.
+				var/datum/decompose_matrix/decompose = layer_image.transform.decompose()
+				// Scale in X, Y
+				if(decompose.scale_x != 1 || decompose.scale_y != 1)
+					var/base_w = add.Width()
+					var/base_h = add.Height()
+					// scale_x can be negative
+					add.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
+					if(decompose.scale_x < 0)
+						add.Flip(EAST)
+					xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
+					yo -= base_h * (decompose.scale_y - 1) / 2
+				// Rotation
+				if(decompose.rotation != 0)
+					add.Turn(decompose.rotation)
+				// Shift
+				xo += decompose.shift_x
+				yo += decompose.shift_y
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
+			flat.Blend(add, blendMode2iconMode(curblend), xo, yo)
 
 
 		if(appearance.alpha < 255)
@@ -1130,7 +1151,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		filters -= filters[filter_index]
 
 /**
- * Center's an image. Only run this on float overlays and not physical
+ * Center's an image.
  * Requires:
  * The Image
  * The x dimension of the icon file used in the image
@@ -1160,8 +1181,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(y_dimension < ICON_SIZE_Y)
 		y_offset *= -1
 
-	image_to_center.pixel_w = x_offset
-	image_to_center.pixel_z = y_offset
+	image_to_center.pixel_x = x_offset
+	image_to_center.pixel_y = y_offset
 
 	return image_to_center
 
@@ -1195,13 +1216,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
-		var/file_string = "[file]"
-		if(isfile(file) && length(file_string)) // ensure that it's actually a file, and not a runtime icon
-			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
-				icon_states_cache[file][istate] = TRUE
-		else // Otherwise, we have to use the slower BYOND proc
-			for(var/istate in icon_states(file))
-				icon_states_cache[file][istate] = TRUE
+		for(var/istate in icon_states(file))
+			icon_states_cache[file][istate] = TRUE
 
 	return !isnull(icon_states_cache[file][state])
 
@@ -1275,9 +1291,9 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/height = icon_dimensions["height"]
 
 	if(width > ICON_SIZE_X)
-		alert_overlay.pixel_w = -(ICON_SIZE_X / 2) * ((width - ICON_SIZE_X) / ICON_SIZE_X)
+		alert_overlay.pixel_x = -(ICON_SIZE_X / 2) * ((width - ICON_SIZE_X) / ICON_SIZE_X)
 	if(height > ICON_SIZE_Y)
-		alert_overlay.pixel_z = -(ICON_SIZE_Y / 2) * ((height - ICON_SIZE_Y) / ICON_SIZE_Y)
+		alert_overlay.pixel_y = -(ICON_SIZE_Y / 2) * ((height - ICON_SIZE_Y) / ICON_SIZE_Y)
 	if(width > ICON_SIZE_X || height > ICON_SIZE_Y)
 		if(width >= height)
 			scale = ICON_SIZE_X / width

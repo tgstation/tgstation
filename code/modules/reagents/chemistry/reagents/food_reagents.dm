@@ -77,7 +77,11 @@
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(30, seconds_per_tick))
-		if(affected_mob.heal_bodypart_damage(brute = brute_heal * REM * seconds_per_tick, burn = burn_heal * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC))
+		var/healing_modifier = 1
+		var/obj/item/organ/earth_pony_core/earth_core = affected_mob.get_organ_by_type(/obj/item/organ/earth_pony_core) // Earth Ponies heal better from food
+		if (earth_core)
+			healing_modifier += (earth_core.maxHealth - earth_core.damage) / earth_core.maxHealth
+		if(affected_mob.heal_bodypart_damage(brute = (brute_heal * healing_modifier) * REM * seconds_per_tick, burn = (burn_heal * healing_modifier) * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)

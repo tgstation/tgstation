@@ -41,6 +41,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
 
+	for(var/organ_path in current_species.conditional_mutant_organs)
+		var/obj/item/organ/current_organ = get_organ_by_type(organ_path)
+		if(current_organ)
+			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
+			SSwardrobe.stash_object(current_organ)
+
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
 //Hopefully this makes preference reloading not the worst thing ever
 /mob/living/carbon/human/dummy/delete_equipment()
@@ -108,6 +114,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["ethcolor"] = COLOR_WHITE
 	target.dna.features["lizard_markings"] = get_consistent_feature_entry(SSaccessories.lizard_markings_list)
 	target.dna.features["ears"] = get_consistent_feature_entry(SSaccessories.ears_list)
+	target.dna.features["pony_ears"] = get_consistent_feature_entry(SSaccessories.pony_ears_list)
+	target.dna.features["pony_tail"] = get_consistent_feature_entry(SSaccessories.pony_tail_list)
 	target.dna.features["frills"] = get_consistent_feature_entry(SSaccessories.frills_list)
 	target.dna.features["horns"] = get_consistent_feature_entry(SSaccessories.horns_list)
 	target.dna.features["moth_antennae"] = get_consistent_feature_entry(SSaccessories.moth_antennae_list)

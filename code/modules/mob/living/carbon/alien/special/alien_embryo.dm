@@ -68,6 +68,8 @@
 		if(!isnull(owner)) // it gestates out of bodies.
 			if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
 				slowdown *= 2 // spaceacillin doubles the time it takes to grow
+			if(HAS_TRAIT(owner, TRAIT_VIRUS_WEAKNESS))
+				slowdown *= 0.5 // and having a weak immune system makes it way faster
 			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
 

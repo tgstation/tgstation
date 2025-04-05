@@ -6,6 +6,12 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,8)
+	)
+	pony_icon_state = "shirt_and_pants"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/civilian/curator/skirt
 	name = "sensible suitskirt"
@@ -18,7 +24,12 @@
 	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = list(
+		list(12,20),
+		list(13,10)
+	)
+	pony_icon_state = "secskirt"
 
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 	name = "treasure hunter uniform"

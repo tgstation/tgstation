@@ -2,6 +2,11 @@
 	icon = 'icons/obj/clothing/under/medical.dmi'
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
 	armor_type = /datum/armor/clothing_under/rank_medical
+	pony_clothing_sample_pixels = list(
+		list(15,18)
+	)
+	pony_icon_state = "medical"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /datum/armor/clothing_under/rank_medical
 	bio = 50
@@ -17,10 +22,16 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
 	icon_state = "medical_skirt"
 	inhand_icon_state = "w_suit"
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(18,17)
+	)
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+	pony_icon_state = "medical_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer
 	desc = "It's a jumpsuit worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection."
@@ -33,16 +44,27 @@
 	desc = "It's a jumpskirt worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection."
 	icon_state = "cmo_skirt"
 	inhand_icon_state = "w_suit"
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(18,17)
+	)
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+	pony_icon_state = "medical_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
 	name = "chief medical officer's scrubs"
 	desc = "A distinctive set of white and turquoise scrubs given to chief medical officers who desire a clinical look."
 	icon_state = "scrubscmo"
 	inhand_icon_state = "w_suit"
+	pony_clothing_sample_pixels = list(
+		list(13,8)
+	)
+	pony_icon_state = "scrubs"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs/Initialize(mapload)
 	. = ..()
@@ -56,6 +78,12 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	pony_clothing_sample_pixels = list(
+		list(13,19),
+		list(15,11)
+	)
+	pony_icon_state = "cargotech"
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt
 	name = "chief medical officer's turtleneck skirt"
@@ -65,7 +93,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
+	pony_icon_state = "cargo_skirt"
 
 /obj/item/clothing/under/rank/medical/virologist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
@@ -78,13 +107,24 @@
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
 	icon_state = "virologywhite_skirt"
 	inhand_icon_state = "w_suit"
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(18,17)
+	)
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+	pony_icon_state = "medical_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 
 /obj/item/clothing/under/rank/medical/scrubs
 	name = "medical scrubs"
+	pony_clothing_sample_pixels = list(
+		list(16,19)
+	)
+	pony_icon_state = "scrubs"
+	pony_config_path = /datum/greyscale_config/pony_clothes_1_color
 
 /obj/item/clothing/under/rank/medical/scrubs/Initialize(mapload)
 	. = ..()
@@ -113,10 +153,16 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a white cross turned sideways on the chest, denoting that the wearer is a trained coroner."
 	icon_state = "coroner_skirt"
 	inhand_icon_state = "w_suit"
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(18,17)
+	)
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+	pony_icon_state = "medical_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 
 /obj/item/clothing/under/rank/medical/scrubs/coroner
 	name = "coroner scrubs"
@@ -139,10 +185,16 @@
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
 	icon_state = "chemistrywhite_skirt"
 	inhand_icon_state = "w_suit"
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(18,17)
+	)
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+	pony_icon_state = "medical_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 
 /obj/item/clothing/under/rank/medical/paramedic
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
@@ -155,10 +207,16 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
 	icon_state = "paramedic_skirt"
 	inhand_icon_state = "w_suit"
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(18,17)
+	)
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+	pony_icon_state = "medical_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_PONY_MASK
 
 /obj/item/clothing/under/rank/medical/doctor/nurse
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
@@ -168,3 +226,9 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+	pony_clothing_sample_pixels = list(
+		list(15,18),
+		list(15,18)
+	)
+	pony_config_path = /datum/greyscale_config/pony_clothes_2_color
+	pony_icon_state = "medical_skirt"

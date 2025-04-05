@@ -28,6 +28,13 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/moth,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/moth,
 	)
+	used_outfit_for_preview = /datum/outfit/job/cmo
+
+/datum/species/moth/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	human_for_preview.dna.features["moth_antennae"] = "Firewatch"
+	human_for_preview.dna.features["moth_markings"] = "None"
+	human_for_preview.dna.features["moth_wings"] = "Firewatch"
+	human_for_preview.update_body(TRUE)
 
 /datum/species/moth/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()

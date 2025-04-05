@@ -698,6 +698,8 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		slot_strings += "backpack"
 	if(slot_flags & ITEM_SLOT_BELTPACK)
 		slot_strings += "belt" // ?
+	if(slot_flags & ITEM_SLOT_BACK_ALT)
+		slot_strings += "back_alt"
 	return slot_strings
 
 ///Returns the direction that the initiator and the target are facing

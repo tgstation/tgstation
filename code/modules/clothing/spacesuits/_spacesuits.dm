@@ -91,6 +91,15 @@
 	var/show_hud = TRUE
 	///How much this suit affects fishing difficulty
 	var/fishing_modifier = 5
+	supports_variations_flags = CLOTHING_PONY_MASK
+	pony_clothing_sample_pixels = null
+	pony_icon_state = "spacesuit"
+	pony_config_path = /datum/greyscale_config/pony_clothes_override
+
+/obj/item/clothing/suit/space/generate_pony_icons(icon/base_icon, greyscale_colors)
+	var/icon/ponysuit = icon(SSgreyscale.GetColoredIconByType(pony_config_path, greyscale_colors), pony_icon_state)
+	return ponysuit
+
 
 /datum/armor/suit_space
 	bio = 100
