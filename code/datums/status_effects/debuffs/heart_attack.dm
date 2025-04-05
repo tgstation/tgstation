@@ -160,8 +160,7 @@
 ///Alternative to penthrite that keeps you up for a few seconds after having a heart attack. Gives a bit of time to call for help regardless of when/where you've collapsed.
 /datum/status_effect/heart_desperation
 	id = "heart_desperation"
-	duration = 5
-	alert_type = /atom/movable/screen/alert/heart_desperation
+	duration = (4 SECONDS)
 	/// List of traits to add/remove from our subject when we are in their system
 	var/static/list/subject_traits = list(
 		TRAIT_STABLEHEART,
@@ -175,17 +174,12 @@
 	owner.Knockdown(2 SECONDS, 2 SECONDS)
 	return TRUE
 
-/datum/status_effect/heart_desperation/on_remove()
-	owner.remove_traits(subject_traits, type)
-
 /datum/status_effect/heart_desperation/tick(seconds_between_ticks)
 	owner.Knockdown(2 SECONDS, 2 SECONDS)
 	owner.set_silence_if_lower(2 SECONDS)
 
-/atom/movable/screen/alert/heart_desperation
-	name = "Last Chance!"
-	desc = "You're having a heart attack! Get to a doctor ASAP!"
-	icon_state = "heart_stop"
+/datum/status_effect/heart_desperation/on_remove()
+	owner.remove_traits(subject_traits, type)
 
 #undef ATTACK_STAGE_TWO
 #undef ATTACK_STAGE_THREE
