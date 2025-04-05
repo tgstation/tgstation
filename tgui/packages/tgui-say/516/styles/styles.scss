@@ -99,6 +99,9 @@
   outline: none;
   resize: none;
   scrollbar-width: thin;
-  /* prettier-ignore */
-  scrollbar-color: color.scale(colors.$button, $lightness: 20% * colors.$scrollbar-color-multiplier) transparent;
+  scrollbar-color: color.scale(
+      colors.$button,
+      $lightness: 20% * colors.$scrollbar-color-multiplier
+    )
+    transparent;
 }
