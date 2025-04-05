@@ -17,6 +17,7 @@ import { clearChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import { exportSettings, updateSettings } from './actions';
 import { FONTS } from './constants';
+import { setEditPaneSplitters } from './scaling';
 import { selectSettings } from './selectors';
 import { importChatSettings } from './settingsImExport';
 
@@ -25,6 +26,8 @@ export function SettingsGeneral(props) {
     useSelector(selectSettings);
   const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useState(false);
+
+  const [editingPanes, setEditingPanes] = useState(false);
 
   return (
     <Section>
@@ -46,6 +49,20 @@ export function SettingsGeneral(props) {
               {capitalize(THEME)}
             </Button>
           ))}
+        </LabeledList.Item>
+        <LabeledList.Item label="UI sizes">
+          <Button
+            onClick={() =>
+              setEditingPanes((val) => {
+                setEditPaneSplitters(!val);
+                return !val;
+              })
+            }
+            color={editingPanes ? 'red' : undefined}
+            icon={editingPanes ? 'save' : undefined}
+          >
+            {editingPanes ? 'Save' : 'Adjust UI Sizes'}
+          </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Font style">
           <Stack.Item>
