@@ -2,7 +2,7 @@
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
 	icon = 'icons/obj/service/janitor.dmi'
-	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "cone"
 	inhand_icon_state = null
 	worn_y_offset = 1
