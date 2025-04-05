@@ -16,10 +16,10 @@
 	resistance_flags = NONE
 	/// The totally classic sounds it makes
 	var/list/fecal_funnies = list(
-		'sound/effects/brap/brap1.ogg',
-		'sound/effects/brap/brap2.ogg',
-		'sound/effects/brap/brap3.ogg',
-		'sound/effects/brap/brap4.ogg',
+		'sound/effects/brap/brap1.ogg'=1,
+		'sound/effects/brap/brap2.ogg'=1,
+		'sound/effects/brap/brap3.ogg'=1,
+		'sound/effects/brap/brap4.ogg'=1,
 		)
 	/// The amount of steps that it takes for the sound to play. On april fools this gets lowered to 1 (same # as clown shoes)
 	var/step_delay = 10
