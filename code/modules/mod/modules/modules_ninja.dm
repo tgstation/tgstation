@@ -93,11 +93,9 @@
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
 /obj/item/mod/module/welding/camera_vision/on_part_activation()
-	. = ..()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 
 /obj/item/mod/module/welding/camera_vision/on_part_deactivation(deleting = FALSE)
-	. = ..()
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK)
 
 /obj/item/mod/module/welding/camera_vision/proc/can_track(datum/source, mob/user)

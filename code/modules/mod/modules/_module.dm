@@ -172,9 +172,9 @@
 			update_signal(used_button)
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
-	update_clothing_slots()
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	on_activation()
+	update_clothing_slots()
 	return TRUE
 
 /// Called when the module is deactivated
@@ -191,9 +191,9 @@
 		else
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
-	update_clothing_slots()
 	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED, mod.wearer)
 	on_deactivation(display_message = TRUE, deleting = FALSE)
+	update_clothing_slots()
 	return TRUE
 
 /// Call to update all slots visually affected by this module
@@ -375,7 +375,10 @@
 	if (isinhands)
 		return
 
-	var/list/added_overlays = generate_worn_overlay(standing)
+	var/list/added_overlays = generate_worn_overlay(source, standing)
+	if (!added_overlays)
+		return
+
 	if (!mask_worn_overlay)
 		overlays += added_overlays
 		return
@@ -385,11 +388,16 @@
 		overlays += overlay
 
 /// Generates an icon to be used for the suit's worn overlays
-/obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
-	. = list()
-	if(!mod.active || !has_required_parts(mod.mod_parts, need_active = TRUE))
-		return
+/obj/item/mod/module/proc/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
+	if(!mask_worn_overlay)
+		if(!mod.active || !has_required_parts(mod.mod_parts, need_active = TRUE))
+			return
+	else
+		var/datum/mod_part/part_datum = mod.get_part_datum(source)
+		if (!part_datum?.sealed)
+			return
 
+	. = list()
 	var/used_overlay = get_current_overlay_state()
 	if (!used_overlay)
 		return

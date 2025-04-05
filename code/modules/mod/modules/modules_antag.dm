@@ -90,7 +90,7 @@
 	if (!active)
 		module_slowdowns += space_slowdown
 
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/armor_booster/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
 	return ..()
@@ -243,7 +243,7 @@
 	overlay_state_inactive = "module_insignia"
 	mask_worn_overlay = TRUE
 
-/obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/insignia/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	. = ..()
 	for(var/mutable_appearance/appearance as anything in .)

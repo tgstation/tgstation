@@ -443,9 +443,9 @@
 	active_power_cost = base_power * light_range
 	return ..()
 
-/obj/item/mod/module/flashlight/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/flashlight/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	. = ..()
-	if(!active)
+	if(!.)
 		return
 	var/mutable_appearance/light_icon = mutable_appearance(overlay_icon_file, "module_light_on", layer = standing.layer + 0.2, appearance_flags = RESET_COLOR)
 	light_icon.color = light_color
@@ -673,9 +673,9 @@
 	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
 	required_slots = list(ITEM_SLOT_HEAD)
 
-/obj/item/mod/module/plasma_stabilizer/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/plasma_stabilizer/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	. = ..()
-	if (!has_required_parts(mod.mod_parts, need_active = TRUE))
+	if (!.)
 		return
 
 	var/mutable_appearance/visor_overlay = mod.get_visor_overlay(standing)

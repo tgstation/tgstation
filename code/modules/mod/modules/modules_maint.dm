@@ -151,9 +151,9 @@
 		return
 	SEND_SOUND(mod.wearer, sound('sound/machines/terminal/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
-/obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/visor/rave/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	. = ..()
-	if (!has_required_parts(mod.mod_parts, need_active = TRUE))
+	if (!.)
 		return
 
 	var/mutable_appearance/visor_overlay = mod.get_visor_overlay(standing)

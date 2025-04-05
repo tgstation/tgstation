@@ -116,13 +116,8 @@
 	QDEL_NULL(mod_link)
 	for(var/part_key in mod_parts)
 		var/datum/mod_part/part_datum = mod_parts[part_key]
-		var/obj/item/part_item = part_datum.part_item
-		part_datum.part_item = null
-		part_datum.overslotting = null
 		mod_parts -= part_key
 		qdel(part_datum)
-		if(!QDELING(part_item))
-			qdel(part_item)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -446,12 +441,13 @@
 
 /obj/item/mod/control/proc/get_part_from_slot(slot)
 	RETURN_TYPE(/obj/item)
-	var/datum/mod_part/part = mod_parts["[slot]"]
-	return part?.part_item
+	return get_part_datum_from_slot(slot)?.part_item
 
 /obj/item/mod/control/proc/get_part_datum_from_slot(slot)
 	RETURN_TYPE(/datum/mod_part)
-	return mod_parts["[slot]"]
+	for (var/part_key in mod_parts)
+		if (text2num(part_key) & slot)
+			return mod_parts[part_key]
 
 /obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
 	if(wearer == user)

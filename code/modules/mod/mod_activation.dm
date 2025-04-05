@@ -129,7 +129,9 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MOD_PART_RETRACTING, user, part_datum) & MOD_CANCEL_RETRACTION)
 		return FALSE
+	var/unsealing = FALSE
 	if(active && part_datum.sealed)
+		unsealing = TRUE
 		if(instant)
 			seal_part(part, is_sealed = FALSE)
 		else if(!delayed_seal_part(part))
@@ -148,7 +150,8 @@
 	wearer.visible_message(span_notice("[wearer]'s [part.name] retract[part.p_s()] back into [src] with a mechanical hiss."),
 		span_notice("[part] retract[part.p_s()] back into [src] with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if (!unsealing)
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /// Starts the activation sequence, where parts of the suit activate one by one until the whole suit is on.
@@ -278,7 +281,7 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(module.part_activated || !module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
-			module.on_part_activation()
+				module.on_part_activation()
 			module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
@@ -297,19 +300,13 @@
 	active = is_on
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
-			if(module.part_activated || !module.has_required_parts(mod_parts, need_active = TRUE))
-				continue
-			module.on_part_activation()
-			module.part_activated = TRUE
+			if(!module.part_activated && module.has_required_parts(mod_parts, need_active = TRUE))
+				module.on_part_activation()
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(!module.part_activated)
 				continue
 			module.on_part_deactivation()
-			module.part_activated = FALSE
-			if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
-				continue
-			module.deactivate(display_message = FALSE)
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)
 	wearer.update_clothing()

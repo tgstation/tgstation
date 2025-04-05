@@ -18,6 +18,9 @@
 	var/obj/item/overslotting = null
 
 /datum/mod_part/Destroy()
+	// To avoid qdel loops in MOD control units, since they're also a part
+	if (!QDELING(part_item))
+		qdel(part_item)
 	part_item = null
 	overslotting = null
 	return ..()
