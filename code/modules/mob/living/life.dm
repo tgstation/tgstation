@@ -97,18 +97,19 @@
 /**
  * Get the fullness of the mob
  *
- * This returns a value form 0 upwards to represent how full the mob is.
- * The value is a total amount of consumable reagents in the body combined
- * with the total amount of nutrition they have.
- * This does not have an upper limit.
+ * Fullness is a representation of how much nutrition the mob has,
+ * including the nutrition of stuff yet to be digested (reagents in blood / stomach)
+ *
+ * * only_consumable - if TRUE, only consumable reagents are counted.
+ * Otherwise, all reagents contribute to fullness, despite not adding nutrition as they process.
+ *
+ * Returns a number representing fullness, scaled similarly to nutrition.
  */
-/mob/living/proc/get_fullness()
+/mob/living/proc/get_fullness(only_consumable)
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
-	for(var/bile in reagents.reagent_list)
-		var/datum/reagent/consumable/bits = bile
-		if(bits)
-			fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
+	for(var/datum/reagent/consumable/bits in reagents.reagent_list)
+		fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**
