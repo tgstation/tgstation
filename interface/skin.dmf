@@ -168,7 +168,6 @@ window "infobuttons"
 		size = 640x30
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "changelog"
@@ -177,7 +176,6 @@ window "infobuttons"
 		size = 87x25
 		anchor1 = 0,0
 		anchor2 = 15,100
-		background-color = none
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
@@ -187,7 +185,6 @@ window "infobuttons"
 		size = 88x25
 		anchor1 = 15,0
 		anchor2 = 29,100
-		background-color = none
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -197,7 +194,6 @@ window "infobuttons"
 		size = 87x25
 		anchor1 = 29,0
 		anchor2 = 43,100
-		background-color = none
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -207,7 +203,6 @@ window "infobuttons"
 		size = 87x25
 		anchor1 = 43,0
 		anchor2 = 57,100
-		background-color = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -217,7 +212,6 @@ window "infobuttons"
 		size = 87x25
 		anchor1 = 57,0
 		anchor2 = 71,100
-		background-color = none
 		saved-params = "is-checked"
 		text = "GitHub"
 		command = "github"
@@ -227,7 +221,6 @@ window "infobuttons"
 		size = 87x25
 		anchor1 = 71,0
 		anchor2 = 85,100
-		background-color = none
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
@@ -237,7 +230,6 @@ window "infobuttons"
 		size = 89x25
 		anchor1 = 85,0
 		anchor2 = 99,100
-		background-color = none
 		saved-params = "is-checked"
 		text = "Fullscreen"
 		command = "fullscreen"
@@ -308,7 +300,7 @@ window "input_and_buttons"
 	elem "input_and_buttons"
 		type = MAIN
 		pos = 291,0
-		size = 480x635
+		size = 640x20
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
@@ -316,7 +308,7 @@ window "input_and_buttons"
 	elem "input_buttons_child"
 		type = CHILD
 		pos = 0,0
-		size = 480x635
+		size = 640x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffc41f
@@ -330,16 +322,17 @@ window "input_and_buttons"
 window "inputwindow"
 	elem "inputwindow"
 		type = MAIN
-		pos = 0,0
-		size = 0x0
+		pos = 575,0
+		size = 520x25
 		anchor1 = -1,-1
 		anchor2 = -1,-1
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 517x0
+		size = 805x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
@@ -350,7 +343,7 @@ window "inputbuttons"
 	elem "inputbuttons"
 		type = MAIN
 		pos = 291,0
-		size = 120x40
+		size = 120x25
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "pos;size;is-minimized;is-maximized"
@@ -358,7 +351,7 @@ window "inputbuttons"
 	elem "saybutton"
 		type = BUTTON
 		pos = 0,0
-		size = 40x0
+		size = 40x20
 		anchor1 = 0,0
 		anchor2 = 33,100
 		font-size = 4
@@ -371,7 +364,7 @@ window "inputbuttons"
 	elem "mebutton"
 		type = BUTTON
 		pos = 40,0
-		size = 40x0
+		size = 40x20
 		anchor1 = 33,0
 		anchor2 = 66,100
 		font-size = 4
@@ -384,7 +377,7 @@ window "inputbuttons"
 	elem "oocbutton"
 		type = BUTTON
 		pos = 80,0
-		size = 40x0
+		size = 40x20
 		anchor1 = 66,0
 		anchor2 = 100,100
 		font-size = 4
