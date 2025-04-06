@@ -34,13 +34,7 @@
 /mutable_appearance/appearance_mirror
 	// So people can see where it came from
 	var/appearance_ref
-	// vis flags can't be displayed by mutable appearances cause it don't make sense as overlays, but appearances do carry them
-	// can't use the name either for byond reasons
-	var/_vis_flags
 
-#if (MIN_COMPILER_VERSION > 515 || MIN_COMPILER_BUILD > 1643)
-#warn vis_flags should now be supported by mutable appearances so we can safely remove the weird copying in this code
-#endif
 // all alone at the end of the universe
 GLOBAL_DATUM_INIT(pluto, /atom/movable, new /atom/movable(null))
 
@@ -49,7 +43,6 @@ GLOBAL_DATUM_INIT(pluto, /atom/movable, new /atom/movable(null))
 	. = ..() // /mutable_appearance/New() copies over all the appearance vars MAs care about by default
 	// We copy over our appearance onto an atom. This is done so we can read vars carried by but not accessible on appearances
 	GLOB.pluto.appearance = appearance_father
-	_vis_flags = GLOB.pluto.vis_flags
 	appearance_ref = REF(appearance_father)
 
 // This means if the appearance loses refs before a click it's gone, but that's consistent to other datums so it's fine
