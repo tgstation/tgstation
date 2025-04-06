@@ -159,6 +159,7 @@
 	current_target.apply_effect(8 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
 	REMOVE_TRAIT(current_target, TRAIT_NO_TELEPORT, REF(src))
 	do_teleport(current_target, caster, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
+	current_target.apply_status_effect(/datum/status_effect/star_mark)
 
 /datum/status_effect/cosmic_beam/be_replaced()
 	if(active)

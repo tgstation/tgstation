@@ -62,11 +62,7 @@
 	for(var/mob/living/mob in range(3, victim))
 		if(IS_HERETIC_OR_MONSTER(mob))
 			continue
-		mob.AdjustStun(1 SECONDS)
-		mob.AdjustKnockdown(1 SECONDS)
-		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
-		if(mob.mob_mood)
-			mob.mob_mood.adjust_sanity(-50)
+
 		//If our moon heretic has their level 3 passive, we channel the amulet effect
 		var/mob/living/simple_animal/hostile/illusion/fake_clone = victim
 		var/mob/living/living_owner = fake_clone.parent_mob_ref.resolve()
@@ -74,7 +70,14 @@
 			continue
 		var/datum/status_effect/heretic_passive/moon/our_passive = living_owner.has_status_effect(/datum/status_effect/heretic_passive/moon)
 		if(our_passive?.amulet)
+			// We channel the amulet before the "spell effects" so that people don't get converted after 1 clone goes off
 			our_passive.amulet.channel_amulet(living_owner, mob)
+
+		mob.AdjustStun(1 SECONDS)
+		mob.AdjustKnockdown(1 SECONDS)
+		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 150)
+		if(mob.mob_mood)
+			mob.mob_mood.adjust_sanity(-50)
 
 	qdel(victim)
 

@@ -70,7 +70,7 @@
 	playsound(target, 'sound/effects/magic/hereticknock.ogg', 100, TRUE, -1)
 
 	if(HAS_TRAIT(source, TRAIT_LOCK_GRASP_UPGRADED))
-		return COMPONENT_BLOCK_HAND_USE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return COMPONENT_USE_HAND
 

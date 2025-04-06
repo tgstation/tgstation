@@ -35,6 +35,10 @@
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	lighting_cutoff_red = 12
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 34
+	sight = SEE_TURFS|SEE_MOBS|SEE_OBJS
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
 	/// Reference to the mob which summoned us
@@ -60,7 +64,7 @@
 	recall.Grant(src)
 	giga_laser = new(src)
 	giga_laser.Grant(src)
-	giga_laser.our_master = summoner
+	AddComponent(/datum/component/seethrough_mob, keep_color = TRUE)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
@@ -105,7 +109,7 @@
 // Star gazer attacks everything around itself applies a spooky mark
 /mob/living/basic/heretic_summon/star_gazer/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if (!. || !isliving(target))
+	if (!. || !isliving(target) || target == summoner?.resolve())
 		return
 
 	target.apply_status_effect(/datum/status_effect/star_mark)

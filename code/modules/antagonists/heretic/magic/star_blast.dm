@@ -21,6 +21,8 @@
 	projectile_type = /obj/projectile/magic/star_ball
 	/// Weakref to the projectile we fire, so that we can recast our ability to teleport to its location
 	var/datum/weakref/projectile_weakref
+	/// Weakref to our summoner, only relevant if we are a stargazer. Prevents us from harming our master
+	var/datum/weakref/summoner
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
@@ -57,7 +59,7 @@
 			continue
 		new /obj/effect/forcefield/cosmic_field/star_blast(spawn_turf)
 	for(var/mob/living/nearby_mob in view(2, owner))
-		if(nearby_mob == owner)
+		if(nearby_mob == owner || nearby_mob == summoner?.resolve())
 			continue
 		// Don't grab people who are tucked away or something
 		if(!isturf(nearby_mob.loc))

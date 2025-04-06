@@ -206,7 +206,7 @@
 		/datum/pet_command/attack/star_gazer
 	)
 	/// List of traits given once ascended
-	var/static/list/ascended_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_BOMBIMMUNE)
+	var/static/list/ascended_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_BOMBIMMUNE, TRAIT_XRAY_VISION)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
@@ -218,6 +218,12 @@
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	user.add_traits(ascended_traits, type)
+	if(ishuman(user))
+		var/mob/living/carbon/human/ascended_human = user
+		var/obj/item/organ/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
+		ascended_human.update_sight()
+		heretic_eyes?.color_cutoffs = list(30, 30, 30)
+		ascended_human.update_sight()
 
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
@@ -234,6 +240,7 @@
 	star_gazer_mob.add_traits(ascended_traits, type)
 	star_gazer_mob.summoner = WEAKREF(user)
 	star_gazer_mob.leash_to(star_gazer_mob, user)
+	star_gazer_mob.giga_laser.our_master = WEAKREF(user)
 
 	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)

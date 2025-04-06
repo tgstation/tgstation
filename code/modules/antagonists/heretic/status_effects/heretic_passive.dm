@@ -151,7 +151,7 @@
 // Level 3, no slowdown from being fat, being fat gives a mood buff and damage resistance
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
-	add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), REF(src))
+	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), REF(src))
 
 /datum/status_effect/heretic_passive/flesh/tick(seconds_between_ticks)
 	. = ..()
@@ -162,7 +162,7 @@
 	RegisterSignal(owner, COMSIG_FOOD_BIT, PROC_REF(on_eat))
 
 /// Any time you take a bite of something, if it's meat or an organ you will heal some damage
-/datum/status_effect/heretic_passive/flesh/proc/on_eat(atom/food)
+/datum/status_effect/heretic_passive/flesh/proc/on_eat(mob/eater, atom/food)
 	SIGNAL_HANDLER
 	if(istype(food, /obj/item/organ))
 		var/obj/item/organ/consumed_organ
@@ -182,7 +182,7 @@
 
 /datum/status_effect/heretic_passive/flesh/heretic_level_final()
 	. = ..()
-	owner.add_traits(list(TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS), REF(src))
+	owner.add_traits(list(TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), REF(src))
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/fat_human = owner
