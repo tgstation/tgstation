@@ -176,9 +176,11 @@ const Destination = (props) => {
         >
           <Icon ml={-1.75} fontSize="59px" name="circle-o" />
         </Button>
-        {(destinations.length - 1 !== destinations.indexOf(dest) && (
+        {destinations.length - 1 !== destinations.indexOf(dest) ? (
           <Section title=" " mt={-7.3} ml={10} mr={-6.1} />
-        )) || <Box mt={-0.75} />}
+        ) : (
+          <Box mt={-0.75} />
+        )}
       </Stack.Item>
       {dest.dest_icons && (
         <Stack.Item>
