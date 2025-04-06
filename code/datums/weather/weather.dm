@@ -207,21 +207,23 @@
 
 		for(var/z in impacted_z_levels)
 			var/total_turfs = length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z])
-			if(total_turfs)
-				impacted_areas |= affected_area
+			if(!total_turfs)
+				continue
 
-				if(!(weather_flags & (WEATHER_THUNDER|WEATHER_TURFS)))
-					continue
+			impacted_areas |= affected_area
 
-				var/z_string = num2text(z)
-				if(!impacted_z_levels_weighted[z_string])
-					impacted_z_levels_weighted[z_string] = 0
-				if(!impacted_areas_weighted[z_string])
-					impacted_areas_weighted[z_string] = list()
+			if(!(weather_flags & (WEATHER_THUNDER|WEATHER_TURFS)))
+				continue
 
-				impacted_z_levels_weighted[z_string] += total_turfs
-				impacted_areas_weighted[z_string][affected_area] = total_turfs
-				total_impacted_turfs += total_turfs
+			var/z_string = num2text(z)
+			if(!impacted_z_levels_weighted[z_string])
+				impacted_z_levels_weighted[z_string] = 0
+			if(!impacted_areas_weighted[z_string])
+				impacted_areas_weighted[z_string] = list()
+
+			impacted_z_levels_weighted[z_string] += total_turfs
+			impacted_areas_weighted[z_string][affected_area] = total_turfs
+			total_impacted_turfs += total_turfs
 
 /// Selects a turf impacted by weather, if available, otherwise returns null
 /datum/weather/proc/pick_turf()
