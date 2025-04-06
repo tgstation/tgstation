@@ -78,9 +78,11 @@
 			return
 
 ///Immediately removes rust if exposed to space cola.
-/datum/element/rust/proc/on_reagent_expose(atom/source, datum/reagent/reagent_splashed, reac_volume)
+/datum/element/rust/proc/on_reagent_expose(atom/source, datum/reagent/reagent_splashed, reac_volume, methods)
 	SIGNAL_HANDLER
 	if(!istype(reagent_splashed, /datum/reagent/consumable/space_cola))
+		return
+	if(methods & INHALE)
 		return
 	Detach(source)
 
