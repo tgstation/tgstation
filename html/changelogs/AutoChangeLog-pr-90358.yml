@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Trying to talk over the radio with a stammer will no longer occasionally result in the IC chat filter blocking you"

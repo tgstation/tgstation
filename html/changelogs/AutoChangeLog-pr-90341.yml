@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Users on 515 no longer have 2 scrollwheels on the experiscanner."
-  - rscdel: "The stat panel only shows the scrollwheel when there's something to scroll to."

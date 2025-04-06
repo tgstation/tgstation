@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Move the character deletion button in prefs to the top left, rather than it being hidden at the very bottom."

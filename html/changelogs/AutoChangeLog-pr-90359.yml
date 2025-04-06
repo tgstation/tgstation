@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Converted hot springs to a new shared particles system for better clientside performance."
