@@ -15,7 +15,7 @@
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank = 10 SECONDS
 
-	invocation = "SHAPSDAY"
+	invocation = "SHAPSDAY."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
