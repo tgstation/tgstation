@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - qol: "The active sonar module has been slightly tweaked, resulting in smoother updates & a red tinge on highlighted humans."

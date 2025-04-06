@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "tgui-panel",
-  "version": "5.0.3",
+  "version": "6.0.0",
   "dependencies": {
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
@@ -11,7 +11,6 @@
     "react-dom": "^18.3.1",
     "tgui": "workspace:*",
     "tgui-core": "^1.8.4",
-    "tgui-dev-server": "workspace:*",
-    "tgui-polyfill": "workspace:*"
+    "tgui-dev-server": "workspace:*"
   }
 }

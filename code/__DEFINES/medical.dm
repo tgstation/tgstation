@@ -25,3 +25,9 @@
 	MENTAL_UNSTABLE, \
 	MENTAL_INSANE, \
 )
+
+/// The percentage amount of health required for a mob to be considered to be
+#define CLEAN_BILL_OF_HEALTH_RATIO 0.9
+
+///Cooldown for being on the recently treated trait for the purposes for bounty submission
+#define RECENTLY_HEALED_COOLDOWN 5 MINUTES
