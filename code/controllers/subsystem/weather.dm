@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(weather)
 
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
-	for(var/datum/weather/weather_event in processing)
+	for(var/datum/weather/weather_event as anything in processing)
 		if(!length(weather_event.subsystem_tasks) || weather_event.stage != MAIN_STAGE)
 			continue
 
