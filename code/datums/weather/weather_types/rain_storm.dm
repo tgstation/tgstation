@@ -61,7 +61,7 @@
 
 /datum/weather/rain_storm/deep_fried
 	weather_temperature = 455 // just hot enough to apply the fried effect
-	whitelist_weather_reagents = list(/datum/reagent/consumable/nutriment/fat)
+	whitelist_weather_reagents = list(/datum/reagent/consumable/nutriment/fat/oil)
 	weather_flags = (WEATHER_TURFS | WEATHER_INDOORS)
 	probability = 0 // admeme event
 
