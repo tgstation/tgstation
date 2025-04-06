@@ -64,12 +64,9 @@
 	turfs = block(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ], \
 					.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ])
 
-	if(modular)
-		INVOKE_ASYNC(src, PROC_REF(await_dispatch), register)
-	else
-		dispatch(register)
+	dispatch(register)
 
-/datum/map_template/shuttle/proc/await_dispatch(register=TRUE)
+/datum/map_template/shuttle/proc/dispatch(register=TRUE)
 	while(TRUE)
 		var/found = FALSE
 		for(var/turf/current_turf in turfs)
@@ -82,9 +79,7 @@
 		else
 			message_admins("GO!")
 			break
-	dispatch(register)
 
-/datum/map_template/shuttle/proc/dispatch(register=TRUE)
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
 		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
