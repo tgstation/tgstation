@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	filedesc = "Sports Betting"
 	downloader_category = PROGRAM_CATEGORY_GAMES
 	program_open_overlay = "gambling"
-	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible.."
+	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	can_run_on_flags = PROGRAM_PDA
 	size = 4
