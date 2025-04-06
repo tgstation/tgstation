@@ -46,6 +46,10 @@ const toMassPaintFormat = (data: PointData[]) => {
   return data.map((p) => ({ x: p.x + 1, y: p.y + 1 })); // 1-based index dm side
 };
 
+const checkPointCoords = (x: number, y: number, p: PointData) => {
+  return p.x === x && p.y === y;
+};
+
 class PaintCanvas extends Component<PaintCanvasProps> {
   canvasRef: RefObject<HTMLCanvasElement>;
   baseImageData: Color[][];
@@ -172,9 +176,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   drawPoint(x: number, y: number, color: any) {
-    // Checks whether an element is even
-    const isDupe = (p: PointData) => p.x === x && p.y === y;
-    if (this.modifiedElements.some(isDupe)) {
+    // check if modifiedElements already contains a point with same x and y
+    if (this.modifiedElements.some(checkPointCoords.bind(null, x, y))) {
       return;
     }
     let p: PointData = { x, y };
@@ -346,7 +349,7 @@ export const Canvas = (props) => {
                   tooltip="Bucket Tool (F)"
                   icon="bucket"
                   backgroundColor={fillmode ? 'green' : 'red'}
-                  onClick={() => setFillMode(!fillmode)}
+                  onClick={() => setFillMode((prevFill) => !prevFill)}
                   m={0.5}
                 />
               </Flex.Item>
