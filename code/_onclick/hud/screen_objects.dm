@@ -1099,7 +1099,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 			transition_filter("hunger_bar_mask", alpha_mask_filter(0, bar_offset), 0.5 SECONDS)
 
 #undef HUNGER_STATE_FAT
-#undef HUNGER_STATE_FULL
 #undef HUNGER_STATE_FINE
+#undef HUNGER_STATE_FULL
 #undef HUNGER_STATE_HUNGRY
 #undef HUNGER_STATE_STARVING
+#undef HUNGER_STATE_VERY_HUNGRY
