@@ -13,16 +13,15 @@ import { Window } from '../layouts';
 
 type ManipulatorData = {
   active: BooleanLike;
-  drop_after_use: BooleanLike;
-  empty_hand_use: BooleanLike;
+  interaction_delay: number;
+  worker_interaction: string;
   highest_priority: BooleanLike;
-  manipulate_mode: string;
+  interaction_mode: string;
   settings_list: PrioritySettings[];
   throw_range: number;
   item_as_filter: string;
   selected_type: string;
   delay_step: number;
-  delay_value: number;
   min_delay: number;
   max_delay: number;
 };
@@ -34,7 +33,7 @@ type PrioritySettings = {
 
 const MasterControls = () => {
   const { act, data } = useBackend<ManipulatorData>();
-  const { delay_step, delay_value, min_delay, max_delay } = data;
+  const { delay_step, interaction_delay, min_delay, max_delay } = data;
   return (
     <Stack>
       <Stack.Item>Delay:</Stack.Item>
@@ -54,7 +53,7 @@ const MasterControls = () => {
           style={{ marginTop: '-5px' }}
           step={delay_step}
           my={1}
-          value={delay_value}
+          value={interaction_delay}
           minValue={min_delay}
           maxValue={max_delay}
           unit="sec."
@@ -133,10 +132,9 @@ export const BigManipulator = () => {
   const { data, act } = useBackend<ManipulatorData>();
   const {
     active,
-    manipulate_mode,
+    interaction_mode,
     settings_list,
-    drop_after_use,
-    empty_hand_use,
+    worker_interaction,
     highest_priority,
     throw_range,
     item_as_filter,
@@ -171,12 +169,12 @@ export const BigManipulator = () => {
           <Table>
             <ConfigRow
               label="Interaction Mode"
-              content={manipulate_mode.toUpperCase()}
+              content={interaction_mode.toUpperCase()}
               onClick={() => act('change_mode')}
               tooltip="Cycle through interaction modes"
             />
 
-            {manipulate_mode === 'throw' && (
+            {interaction_mode === 'throw' && (
               <ConfigRow
                 label="Throwing Range"
                 content={`${throw_range} TILE${throw_range > 1 ? 'S' : ''}`}
@@ -191,17 +189,18 @@ export const BigManipulator = () => {
               onClick={() => act('change_take_item_type')}
               tooltip="Cycle through types of items to filter"
             />
-            {manipulate_mode === 'use' && (
+            {interaction_mode === 'use' && (
               <ConfigRow
                 label="Worker Interactions"
-                content={empty_hand_use ? 'EMPTY' : 'SINGLE'}
-                onClick={() => act('empty_use_change')}
+                content={worker_interaction.toUpperCase()}
+                onClick={() => act('worker_interaction_change')}
                 tooltip={
-                  empty_hand_use
-                    ? 'Interact with an empty hand'
-                    : 'Drop the item after a single interaction cycle'
+                  worker_interaction === 'normal'
+                    ? 'Interact using the held item'
+                    : worker_interaction === 'single'
+                      ? 'Drop the item after a single cycle'
+                      : 'Interact with an empty hand'
                 }
-                selected={!!empty_hand_use}
               />
             )}
             <ConfigRow
@@ -211,9 +210,9 @@ export const BigManipulator = () => {
               tooltip="Click while holding an item to set filtering type"
             />
 
-            {manipulate_mode !== 'throw' && (
+            {interaction_mode !== 'throw' && (
               <ConfigRow
-                label="Use First Dropoff Point Only"
+                label="Override List Priority"
                 content={highest_priority ? 'TRUE' : 'FALSE'}
                 onClick={() => act('highest_priority_change')}
                 tooltip="Only interact with the highest dropoff point in the list"
@@ -223,7 +222,7 @@ export const BigManipulator = () => {
           </Table>
         </Section>
 
-        {manipulate_mode !== 'throw' && (
+        {interaction_mode !== 'throw' && (
           <Section>
             <Table>
               {settings_list.map((setting) => (

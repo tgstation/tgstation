@@ -175,7 +175,7 @@
 # NamelessFairy
 
 /code/modules/capture_the_flag/ @NamelessFairy
-/_maps/map_files/CTF/ @NamelessFairy
+/_maps/minigame/CTF/ @NamelessFairy
 
 # Pickle-Coding
 

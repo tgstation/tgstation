@@ -889,18 +889,6 @@
 	for(var/key in key_list)
 		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
-/**
- * Flattens a keyed list(key = some item, value = quantity of item required) into a list of its contents where each
- * item of the list is duplicated as per the quantity required
- */
-/proc/flatten_quantified_list(list/key_list)
-	if(!islist(key_list))
-		return null
-	. = list()
-	for(var/key in key_list)
-		for(var/_ in 1 to key_list[key])
-			UNTYPED_LIST_ADD(., key)
-
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
 	. = list()
@@ -956,13 +944,6 @@
 		if(value?.locked)
 			continue
 		UNTYPED_LIST_ADD(keys, key)
-	return keys
-
-///Gets the total amount of everything in the associative list.
-/proc/assoc_value_sum(list/input)
-	var/keys = 0
-	for(var/key in input)
-		keys += input[key]
 	return keys
 
 ///compare two lists, returns TRUE if they are the same

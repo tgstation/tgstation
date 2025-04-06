@@ -37,7 +37,7 @@
 
 	src.lock_code = lock_code
 	if(!isnull(lock_code))
-		atom_parent.atom_storage.locked = STORAGE_FULLY_LOCKED
+		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 	src.can_hack_open = can_hack_open
 
 	atom_parent.update_appearance()

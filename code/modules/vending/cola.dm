@@ -54,7 +54,10 @@
 		/datum/reagent/consumable/ethanol/neurotoxin = 1,
 		)
 
-/obj/machinery/vending/cola/on_dispense(obj/item/vended_item)
+/obj/machinery/vending/cola/on_dispense(obj/item/vended_item, dispense_returned = FALSE)
+	// Only apply to newly dispensed items
+	if(dispense_returned)
+		return
 	// 35% chance that your drink will be safe, as safe pure acid and sugar that these drinks probably are can be
 	if(!onstation || !HAS_TRAIT(SSstation, STATION_TRAIT_SPIKED_DRINKS) || !prob(65))
 		return

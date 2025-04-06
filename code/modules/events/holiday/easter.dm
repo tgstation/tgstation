@@ -42,6 +42,28 @@
 			new /mob/living/basic/rabbit/easter/space(spawn_point.loc)
 		CHECK_TICK
 
+
+//Easter Baskets
+/obj/item/storage/basket/easter
+	name = "Easter Basket"
+
+/obj/item/storage/basket/easter/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
+
+/obj/item/storage/basket/easter/proc/countEggs()
+	cut_overlays()
+	add_overlay("basket-grass")
+	add_overlay("basket-egg[min(contents.len, 5)]")
+
+/obj/item/storage/basket/easter/Exited(atom/movable/gone, direction)
+	. = ..()
+	countEggs()
+
+/obj/item/storage/basket/easter/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	countEggs()
+
 //Bunny Suit
 /obj/item/clothing/head/costume/bunnyhead
 	name = "Easter Bunny head"

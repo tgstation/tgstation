@@ -1,4 +1,0 @@
-author: "combustor"
-delete-after: True
-changes:
-  - bugfix: "Fixes the det's shutters on icebox"
