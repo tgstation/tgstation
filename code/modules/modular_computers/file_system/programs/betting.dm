@@ -150,10 +150,10 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 		OPTION_A = list(
 			PERSON_1_ACCOUNT = bet_amount,
 			PERSON_2_ACCOUNT = bet_amount,
-		)
+		),
 		OPTION_B = list(
 			PERSON_3_ACCOUNT = bet_amount,
-		)
+		),
 	)
 	*/
 	var/list/options
