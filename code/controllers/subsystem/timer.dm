@@ -17,7 +17,6 @@
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 // SS_TICKER subsystem, so wait is in ticks
-	init_order = INIT_ORDER_TIMER
 	priority = FIRE_PRIORITY_TIMER
 	flags = SS_TICKER|SS_NO_INIT
 

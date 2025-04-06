@@ -1,7 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix soviet bears basketball minigame map not loading due to a misspelled name when looking up map file."
-  - bugfix: "Basketball runtimes when minigame mobs get deleted with clients"
-  - map: "Moved basketball maps into minigames folder. Removed centcomm landmark for basketball minigame."
-  - refactor: "Refactored basketball minigame to use lazyloading instead of the default maploader."

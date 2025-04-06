@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed the _winget SDQL2/Lua wrapper, so it actually returns the return value of winget."

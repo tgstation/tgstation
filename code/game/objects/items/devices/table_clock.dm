@@ -31,7 +31,7 @@
 		. += span_info("It appears to be currently broken. You can use it in-hand to repair it.")
 	else
 		. += span_info("The current CST (local) time is: [station_time_timestamp()].")
-		. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss")].")
+		. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss", NO_TIMEZONE)].")
 
 /obj/item/table_clock/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
