@@ -52,7 +52,7 @@ export const NtosMessenger = (props) => {
     sending_virus,
   } = data;
 
-  let content: JSX.Element;
+  let content: React.JSX.Element;
   if (remote_silicon) {
     content = <AccessDeniedScreen />;
   } else if (open_chat !== null) {
