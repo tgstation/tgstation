@@ -1,5 +1,3 @@
-import 'blob-polyfill';
-
 import hljs from 'highlight.js/lib/core';
 import lua from 'highlight.js/lib/languages/lua';
 import {
