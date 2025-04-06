@@ -39,7 +39,6 @@ $font-size: 24px;
     '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(50, 50%, 90%),
-      'color-disabled': hsl(0, 0%, 21%),
       'color-selected': hsl(0, 100%, 30%),
       'color-caution': hsl(30, 90%, 40%),
       'color-danger': hsl(60, 100%, 30%),

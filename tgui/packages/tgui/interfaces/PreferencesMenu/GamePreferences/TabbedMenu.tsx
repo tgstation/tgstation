@@ -13,10 +13,10 @@ type TabbedMenuProps = {
 };
 
 export class TabbedMenu extends Component<TabbedMenuProps> {
-  categoryRefs: Record<string, RefObject<HTMLDivElement>> = {};
-  sectionRef: RefObject<HTMLDivElement> = createRef();
+  categoryRefs: Record<string, RefObject<HTMLDivElement | null>> = {};
+  sectionRef: RefObject<HTMLDivElement | null> = createRef();
 
-  getCategoryRef(category: string): RefObject<HTMLDivElement> {
+  getCategoryRef(category: string): RefObject<HTMLDivElement | null> {
     if (!this.categoryRefs[category]) {
       this.categoryRefs[category] = createRef();
     }
@@ -78,6 +78,7 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
               return (
                 <Stack.Item
                   key={category}
+                  // @ts-expect-error
                   innerRef={this.getCategoryRef(category)}
                 >
                   <Section fill title={category}>

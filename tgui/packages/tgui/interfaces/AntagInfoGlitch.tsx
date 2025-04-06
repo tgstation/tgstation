@@ -39,6 +39,7 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <SpecificInfo />
             <Stack.Item>
+              {/* @ts-expect-error */}
               <marquee scrollamount="2">{objectives[0]?.explanation}</marquee>
             </Stack.Item>
             <Divider />

@@ -25,7 +25,6 @@
     '~tgui-core/styles/components/Button',
     $with: (
       'color-default': colors.$primary,
-      'color-disabled': hsl(120, 17.78%, 35.29%),
       'color-selected': hsl(120, 100%, 50%)
     )
   );
