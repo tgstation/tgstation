@@ -1,15 +1,22 @@
 import './styles/main.scss';
 
-import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import {
+  FormEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { dragStartHandler } from 'tgui/drag';
 import { isEscape, KEY } from 'tgui-core/keys';
 import { BooleanLike, classes } from 'tgui-core/react';
 
-import { Channel, ChannelIterator } from '../ChannelIterator';
-import { ChatHistory } from '../ChatHistory';
-import { byondMessages } from '../timers';
+import { Channel, ChannelIterator } from './ChannelIterator';
+import { ChatHistory } from './ChatHistory';
 import { LineLength, RADIO_PREFIXES, WindowSize } from './constants';
 import { getPrefix, windowClose, windowOpen, windowSet } from './helpers';
+import { byondMessages } from './timers';
 
 type ByondOpen = {
   channel: Channel;
@@ -42,8 +49,10 @@ export function TguiSay() {
   const [size, setSize] = useState(WindowSize.Small);
   const [maxLength, setMaxLength] = useState(1024);
   const [lightMode, setLightMode] = useState(false);
-  const [position, setPosition] = useState([window.screenX, window.screenY]);
   const [value, setValue] = useState('');
+
+  const position = useRef([window.screenX, window.screenY]);
+  const isDragging = useRef(false);
 
   function handleArrowKeys(direction: KEY.Up | KEY.Down): void {
     const chat = chatHistory.current;
@@ -89,6 +98,30 @@ export function TguiSay() {
     }
   }
 
+  function handleButtonClick(event: MouseEvent<HTMLButtonElement>): void {
+    isDragging.current = true;
+
+    setTimeout(() => {
+      // So the button doesn't jump around accidentally
+      if (isDragging.current) {
+        dragStartHandler(event.nativeEvent);
+      }
+    }, 50);
+  }
+
+  // Prevents the button from changing channels if it's dragged
+  function handleButtonRelease(): void {
+    isDragging.current = false;
+    const currentPosition = [window.screenX, window.screenY];
+
+    if (JSON.stringify(position.current) !== JSON.stringify(currentPosition)) {
+      position.current = currentPosition;
+      return;
+    }
+
+    handleIncrementChannel();
+  }
+
   function handleClose(): void {
     innerRef.current?.blur();
     windowClose();
@@ -129,9 +162,6 @@ export function TguiSay() {
   }
 
   function handleIncrementChannel(): void {
-    const xPos = window.screenX;
-    const yPos = window.screenY;
-    if (JSON.stringify(position) !== JSON.stringify([xPos, yPos])) return;
     const iterator = channelIterator.current;
 
     iterator.next();
@@ -197,18 +227,7 @@ export function TguiSay() {
     }
   }
 
-  function handleButtonDrag(e: React.MouseEvent<Element, MouseEvent>): void {
-    const xPos = window.screenX;
-    const yPos = window.screenY;
-    setPosition([xPos, yPos]);
-    dragStartHandler(e);
-  }
-
   function handleOpen(data: ByondOpen): void {
-    setTimeout(() => {
-      innerRef.current?.focus();
-    }, 0);
-
     const { channel } = data;
     const iterator = channelIterator.current;
     // Catches the case where the modal is already open
@@ -218,6 +237,11 @@ export function TguiSay() {
 
     setButtonContent(iterator.current());
     windowOpen(iterator.current());
+
+    const input = innerRef.current;
+    setTimeout(() => {
+      input?.focus();
+    }, 1);
   }
 
   function handleProps(data: ByondProps): void {
@@ -273,8 +297,8 @@ export function TguiSay() {
       <div className={classes(['content', lightMode && 'content-lightMode'])}>
         <button
           className={`button button-${theme}`}
-          onClick={handleIncrementChannel}
-          onMouseDown={handleButtonDrag}
+          onMouseDown={handleButtonClick}
+          onMouseUp={handleButtonRelease}
           type="button"
         >
           {buttonContent}
