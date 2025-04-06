@@ -123,20 +123,6 @@
 		"puppy" = TRUE,
 		"spider" = TRUE,
 	)
-	/// List of all available card overlays.
-	var/static/list/possible_overlays = list(
-		"null",
-		"angry",
-		"cat",
-		"extremely-happy",
-		"face",
-		"happy",
-		"laugh",
-		"off",
-		"sad",
-		"sunglasses",
-		"what"
-	)
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
@@ -500,3 +486,6 @@
 /mob/living/silicon/pai/proc/remove_messenger_ability()
 	if(messenger_ability)
 		messenger_ability.Remove(src)
+
+/mob/living/silicon/pai/get_access()
+	return list()

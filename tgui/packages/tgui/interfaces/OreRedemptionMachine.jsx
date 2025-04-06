@@ -1,7 +1,4 @@
-import { createSearch, toTitleCase } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -14,8 +11,11 @@ import {
   Stack,
   Table,
   Tabs,
-} from '../components';
-import { formatSiUnit } from '../format';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { createSearch, toTitleCase } from 'tgui-core/string';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 export const OreRedemptionMachine = (props) => {

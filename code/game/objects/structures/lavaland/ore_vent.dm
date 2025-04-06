@@ -230,7 +230,7 @@
 			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
 				new /obj/effect/decal/cleanable/rubble(rock)
 			if(prob(100 - (i * 15)))
-				rock.gets_drilled(user, FALSE)
+				rock.gets_drilled(user)
 				if(prob(50))
 					new /obj/effect/decal/cleanable/rubble(rock)
 		sleep(0.6 SECONDS)

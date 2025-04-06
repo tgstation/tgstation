@@ -165,7 +165,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/botpad
-	name = "Machine Design (Bot launchpad)"
+	name = "Bot Launchpad Board"
 	desc = "The circuit board for a bot launchpad."
 	id = "botpad"
 	build_type = IMPRINTER
@@ -299,8 +299,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/chem_mass_spec
-	name = "High-Performance Liquid Chromatography Board"
-	desc = "The circuit board for a High-Performance Liquid Chromatography (Machine Board"
+	name = "High-Performance Liquid Chromatography Machine Board"
+	desc = "The circuit board for a High-Performance Liquid Chromatography machine."
 	id = "chem_mass_spec"
 	build_path = /obj/item/circuitboard/machine/chem_mass_spec
 	category = list(
@@ -395,28 +395,6 @@
 	build_path = /obj/item/circuitboard/machine/experimentor
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/protolathe
-	name = "Protolathe Board"
-	desc = "The circuit board for a protolathe."
-	id = "protolathe"
-	build_type = IMPRINTER
-	build_path = /obj/item/circuitboard/machine/protolathe
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/protolathe/offstation
-	name = "Ancient Protolathe Board"
-	desc = "The circuit board for an ancient protolathe."
-	id = "protolathe_offstation"
-	build_type = AWAY_IMPRINTER
-	build_path = /obj/item/circuitboard/machine/protolathe/offstation
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1176,7 +1154,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/navbeacon
-	name = "Machine Design (Bot Navigational Beacon)"
+	name = "Bot Navigational Beacon Board"
 	desc = "The circuit board for a beacon that aids bot navigation."
 	id = "botnavbeacon"
 	build_path = /obj/item/circuitboard/machine/navbeacon
@@ -1196,7 +1174,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/brm
-	name = "Boulder Retrieval Matrix"
+	name = "Boulder Retrieval Matrix Board"
 	id = "brm"
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
@@ -1347,3 +1325,23 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/mailsorter
+	name = "Mail Sorter Board"
+	desc = "The circuit board for a mail sorting unit."
+	id = "mailsorter"
+	build_path = /obj/item/circuitboard/machine/mailsorter
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CARGO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/propulsion_engine
+	name = "Propulsion Engine Board"
+	desc = "The circuit for a propulsion engine."
+	id = "propulsion_engine"
+	build_path = /obj/item/circuitboard/machine/engine/propulsion
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING

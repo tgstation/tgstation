@@ -230,7 +230,7 @@
 		new /mob/living/basic/garden_gnome(.)
 
 /datum/supply_pack/critter/fish
-	crate_type = /obj/structure/closet/crate
+	test_ignored = TRUE // However, we should be wary of how possible it is to get more valuable fish out of this on average, depending on sample size.
 
 /datum/supply_pack/critter/fish/aquarium_fish
 	name = "Aquarium Fish Case"
@@ -259,3 +259,10 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/fish_case/tiziran = 2)
 	crate_name = "tiziran fish crate"
+
+/datum/supply_pack/critter/turtle
+	name = "Turtle Crate"
+	desc = "Cute flora turtles that'll emit good vibes to nearby plants!"
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/mob/living/basic/turtle)
+	crate_name = "flora-turtle crate"

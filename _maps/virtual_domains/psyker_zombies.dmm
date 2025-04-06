@@ -114,7 +114,7 @@
 /turf/open/indestructible/dark,
 /area/virtual_domain)
 "X" = (
-/mob/living/simple_animal/hostile/zombie,
+/mob/living/basic/zombie,
 /turf/open/indestructible/dark,
 /area/virtual_domain)
 "Y" = (

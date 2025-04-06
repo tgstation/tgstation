@@ -40,7 +40,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	mouse_opacity = MOUSE_OPACITY_ICON
 	death_message = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
@@ -243,39 +243,6 @@
 		var/turf/T = get_step(get_turf(src), i)
 		T = get_step(T, i)
 		new /obj/effect/goliath_tentacle/broodmother(T)
-
-// Broodmother's loot: Broodmother Tongue
-/obj/item/crusher_trophy/broodmother_tongue
-	name = "broodmother tongue"
-	desc = "The tongue of a broodmother. If attached a certain way, makes for a suitable crusher trophy.  It also feels very spongey, I wonder what would happen if you squeezed it?..."
-	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
-	icon_state = "broodmother_tongue"
-	denied_type = /obj/item/crusher_trophy/broodmother_tongue
-	bonus_value = 10
-	/// Time at which the item becomes usable again
-	var/use_time
-
-/obj/item/crusher_trophy/broodmother_tongue/effect_desc()
-	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
-
-/obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
-	if(prob(bonus_value) && target.stat != DEAD)
-		new /obj/effect/goliath_tentacle/broodmother/patch(get_turf(target), user)
-
-/obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
-	if(!isliving(user))
-		return
-	var/mob/living/living_user = user
-	if(use_time > world.time)
-		to_chat(living_user, "<b>The tongue looks dried out. You'll need to wait longer to use it again.</b>")
-		return
-	else if(HAS_TRAIT(living_user, TRAIT_LAVA_IMMUNE))
-		to_chat(living_user, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
-		return
-	ADD_TRAIT(living_user, TRAIT_LAVA_IMMUNE, type)
-	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
-	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_LAVA_IMMUNE, type), 10 SECONDS)
-	use_time = world.time + 60 SECONDS
 
 #undef CALL_CHILDREN
 #undef RAGE

@@ -86,7 +86,7 @@
 
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
-	desc = "A piece of tape that can be put over someone's mouth. This one has extra strengh."
+	desc = "A piece of tape that can be put over someone's mouth. This one has extra strength."
 	greyscale_colors = "#4D4D4D"
 	strip_delay = 80
 

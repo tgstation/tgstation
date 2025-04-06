@@ -30,21 +30,13 @@
 		read_memory()
 		deploy_the_cats()
 
-	if(!prob(5))
-		return
-	icon_state = "original"
-	icon_living = "original"
-	icon_dead = "original_dead"
-	update_appearance()
+	if(prob(5))
+		icon_state = "original"
+		icon_living = "original"
+		icon_dead = "original_dead"
+		update_appearance()
 
-
-/mob/living/basic/pet/cat/runtime/add_breeding_component()
-	AddComponent(\
-		/datum/component/breed,\
-		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
-		baby_path = /mob/living/basic/pet/cat/kitten,\
-		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
-	)
+	post_birth_callback = CALLBACK(src, PROC_REF(after_birth))
 
 /mob/living/basic/pet/cat/runtime/proc/after_birth(mob/living/baby)
 	if(isnull(baby))
@@ -66,6 +58,7 @@
 /mob/living/basic/pet/cat/runtime/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, register_family)
 	register_family = null
+	post_birth_callback = null
 	return ..()
 
 /mob/living/basic/pet/cat/runtime/Write_Memory(dead, gibbed)

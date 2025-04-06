@@ -11,7 +11,7 @@
 	combat_mode = FALSE
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH
 	speak_emote = list("warbles", "quavers")
 	faction = list(FACTION_ASHWALKER)
@@ -37,15 +37,8 @@
 	if(greyscale_config)
 		set_greyscale(colors = list(pick(possible_colors)))
 	AddElement(/datum/element/ai_retaliate)
-	if(!can_breed)
-		return
-	AddComponent(\
-		/datum/component/breed,\
-		can_breed_with = typecacheof(list(/mob/living/basic/mining/gutlunch)),\
-		baby_path = /mob/living/basic/mining/gutlunch/grub,\
-		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
-		breed_timer = 3 MINUTES,\
-	)
+	if(can_breed)
+		add_breeding_component()
 
 /mob/living/basic/mining/gutlunch/Destroy()
 	GLOB.gutlunch_count--
@@ -61,7 +54,7 @@
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
-		melee_attack(ore_food)
+		UnarmedAttack(ore_food, TRUE, modifiers)
 	return FALSE
 
 /mob/living/basic/mining/gutlunch/proc/after_birth(mob/living/basic/mining/gutlunch/grub/baby, mob/living/partner)
@@ -77,6 +70,20 @@
 	speed = rand(MINIMUM_POSSIBLE_SPEED, input_speed)
 	maxHealth = rand(input_health, MAX_POSSIBLE_HEALTH)
 	health = maxHealth
+
+/mob/living/basic/mining/gutlunch/proc/add_breeding_component()
+	var/static/list/partner_paths = typecacheof(list(/mob/living/basic/mining/gutlunch))
+	var/static/list/baby_paths = list(
+		/mob/living/basic/mining/gutlunch/grub = 1,
+	)
+
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = partner_paths,\
+		baby_paths = baby_paths,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+		breed_timer = 3 MINUTES,\
+	)
 
 /mob/living/basic/mining/gutlunch/milk
 	name = "gubbuck"
@@ -111,11 +118,12 @@
 	//pet commands when we tame the gutluncher
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/breed/gutlunch,
+		/datum/pet_command/attack,
+		/datum/pet_command/breed/gutlunch,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 		/datum/pet_command/mine_walls,
 	)
 

@@ -5,11 +5,11 @@
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable(feedback = FALSE)
-	var/area/current_area = get_area(target)
-	if(!current_area || current_area.area_flags & NOTELEPORT)
+	if(!istype(target, /obj/item/hierophant_club))
+		return
+	var/obj/item/hierophant_club/teleport_stick = target
+	if(teleport_stick.teleporting)
 		return FALSE
-	if(istype(target, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/teleport_stick = target
-		if(teleport_stick.teleporting)
-			return FALSE
+	if(teleport_stick.beacon && !check_teleport_valid(owner, get_turf(teleport_stick.beacon), TELEPORT_CHANNEL_FREE))
+		return FALSE
 	return ..()

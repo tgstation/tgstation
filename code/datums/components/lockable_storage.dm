@@ -51,6 +51,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
+	RegisterSignal(parent, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag))
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_interact))
@@ -67,6 +68,7 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_ICON_STATE,
+		COMSIG_ATOM_EMAG_ACT,
 	))
 
 	if(isitem(parent))
@@ -141,10 +143,33 @@
 	source.balloon_alert(user, "hacked")
 	lock_code = null
 
+/datum/component/lockable_storage/proc/on_emag(obj/source, mob/user, obj/item/card/emag/emag_card)
+	SIGNAL_HANDLER
+
+	if(!source.atom_storage.locked)
+		return FALSE
+
+	if(source.obj_flags & EMAGGED)
+		return FALSE
+	source.obj_flags |= EMAGGED
+	can_hack_open = FALSE // since it's broken for good
+
+	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
+	source.balloon_alert(user, "lock destroyed")
+	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	lock_code = null
+	source.atom_storage.locked = STORAGE_NOT_LOCKED
+	source.update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)
 	SIGNAL_HANDLER
-	source.icon_state = "[source.base_icon_state][source.atom_storage.locked ? "_locked" : null]"
+
+	if(source.obj_flags & EMAGGED)
+		source.icon_state = "[source.base_icon_state]_broken"
+	else
+		source.icon_state = "[source.base_icon_state][source.atom_storage.locked ? "_locked" : null]"
 
 ///Called when interacted with in-hand or on attack, opens the UI.
 /datum/component/lockable_storage/proc/on_interact(atom/source, mob/user)
@@ -152,6 +177,11 @@
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /datum/component/lockable_storage/ui_interact(mob/user, datum/tgui/ui)
+	var/obj/source = parent
+	if(source.obj_flags & EMAGGED)
+		ui?.close()
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LockedSafe", parent)

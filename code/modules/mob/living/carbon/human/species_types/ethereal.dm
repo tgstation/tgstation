@@ -3,6 +3,7 @@
 	id = SPECIES_ETHEREAL
 	meat = /obj/item/food/meat/slab/human/mutant/ethereal
 	mutantlungs = /obj/item/organ/lungs/ethereal
+	smoker_lungs = /obj/item/organ/lungs/ethereal/ethereal_smoker
 	mutantstomach = /obj/item/organ/stomach/ethereal
 	mutanttongue = /obj/item/organ/tongue/ethereal
 	mutantheart = /obj/item/organ/heart/ethereal
@@ -180,6 +181,9 @@
 		'sound/mobs/humanoids/ethereal/ethereal_scream_2.ogg',
 		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
 	)
+
+/datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
+	return 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
 
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\

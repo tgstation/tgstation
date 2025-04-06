@@ -181,6 +181,8 @@
 	button_icon_state = "mech_siren_[secmech?.siren ? "on" : "off"]"
 
 /datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
+	if(!..())
+		return
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
 	secmech.togglesiren()
 
@@ -257,10 +259,11 @@
 GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/vehicle/sealed/mecha/ripley/cargo
-	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	name = "\improper APLU \"Big Bess\""
+	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	icon_state = "hauler"
 	base_icon_state = "hauler"
+	silicon_icon_state = "hauler-empty"
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Initialize(mapload)
@@ -273,6 +276,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
 	if(!GLOB.cargo_ripley && mapload)
 		GLOB.cargo_ripley = src
+	ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src)) //It was built *long* before the shift started.
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Destroy()
 	if(GLOB.cargo_ripley == src)

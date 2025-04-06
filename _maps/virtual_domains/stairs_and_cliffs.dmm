@@ -233,7 +233,7 @@
 "KA" = (
 /obj/structure/statue/snow/snowman{
 	name = "Norm";
-	desc = "Norm has seen many a man roll down these cliffs, some more stubborn than others. Its usually the stubborn ones who stop getting back up."
+	desc = "Norm has seen many a man roll down these cliffs, some more stubborn than others. It's usually the stubborn ones who stop getting back up."
 	},
 /obj/item/pickaxe/mini,
 /turf/open/misc/asteroid/snow,

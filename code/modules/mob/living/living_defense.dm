@@ -104,16 +104,16 @@
 	var/hit_limb_zone = check_hit_limb_zone_name(def_zone)
 	var/organ_hit_text = ""
 	if (hit_limb_zone)
-		organ_hit_text = "in \the [parse_zone_with_bodypart(hit_limb_zone)]"
+		organ_hit_text = " in \the [parse_zone_with_bodypart(hit_limb_zone)]"
 
 	switch (proj.suppressed)
 		if (SUPPRESSED_QUIET)
-			to_chat(src, span_userdanger("You're shot by \a [proj] [organ_hit_text]!"))
+			to_chat(src, span_userdanger("You're shot by \a [proj][organ_hit_text]!"))
 		if (SUPPRESSED_NONE)
-			visible_message(span_danger("[src] is hit by \a [proj] [organ_hit_text]!"), \
-					span_userdanger("You're hit by \a [proj] [organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			visible_message(span_danger("[src] is hit by \a [proj][organ_hit_text]!"), \
+					span_userdanger("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(is_blind())
-				to_chat(src, span_userdanger("You feel something hit you [organ_hit_text]!"))
+				to_chat(src, span_userdanger("You feel something hit you[organ_hit_text]!"))
 
 	if(proj.is_hostile_projectile())
 		apply_projectile_effects(proj, def_zone, blocked)
@@ -128,6 +128,7 @@
 		bare_wound_bonus = proj.bare_wound_bonus,
 		sharpness = proj.sharpness,
 		attack_direction = get_dir(proj.starting, src),
+		attacking_item = proj,
 	)
 
 	apply_effects(
@@ -181,16 +182,20 @@
 		return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 	if(w_class)
 		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-	return 0
+	return 0 // plays no sound
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
+
+	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK))
+		return
+
 	if(combat_mode == new_mode)
 		return
 	. = combat_mode
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_appearance()
-	if(silent || !(client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode)))
+	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
 		return
 	if(combat_mode)
 		SEND_SOUND(src, sound('sound/misc/ui_togglecombat.ogg', volume = 25)) //Sound from interbay!
@@ -200,10 +205,11 @@
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!isitem(AM))
 		// Filled with made up numbers for non-items.
-		if(check_block(AM, 30, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, 0, BRUTE))
+		if(check_block(AM, 30, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, 0, BRUTE) & SUCCESSFUL_BLOCK)
 			hitpush = FALSE
 			skipcatch = TRUE
 			blocked = TRUE
+			return SUCCESSFUL_BLOCK
 		else
 			playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
@@ -222,13 +228,13 @@
 		blocked = TRUE
 
 	var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+	var/nosell_hit = (SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) & MOVABLE_IMPACT_ZONE_OVERRIDE) // TODO: find a better way to handle hitpush and skipcatch for humans
 	if(nosell_hit)
 		skipcatch = TRUE
 		hitpush = FALSE
 
 	if(blocked)
-		return TRUE
+		return SUCCESSFUL_BLOCK
 
 	var/mob/thrown_by = thrown_item.thrownby?.resolve()
 	if(thrown_by)
@@ -242,7 +248,7 @@
 	if(!thrown_item.throwforce)
 		return
 	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone_with_bodypart(zone)].", "Your armor has softened hit to your [parse_zone_with_bodypart(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
-	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND), attacking_item = thrown_item)
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
 	if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
@@ -285,7 +291,7 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
 		return FALSE
-	if(target.check_block(src, 0, "[src]'s grab"))
+	if(target.check_block(src, 0, "[src]'s grab", UNARMED_ATTACK))
 		return FALSE
 	target.grabbedby(src)
 	return TRUE
@@ -368,7 +374,7 @@
 			to_chat(user, span_danger("You're strangling [src]!"))
 			if(!buckled && !density)
 				Move(user.loc)
-	user.set_pull_offsets(src, grab_state)
+	user.set_pull_offsets(src, user.grab_state)
 	return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -392,7 +398,7 @@
 		return FALSE
 
 	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-	if(check_block(user, damage, "[user]'s [user.attack_verb_simple]", MELEE_ATTACK/*or UNARMED_ATTACK?*/, user.armour_penetration, user.melee_damage_type))
+	if(check_block(user, damage, "[user]'s [user.attack_verb_simple]", UNARMED_ATTACK, user.armour_penetration, user.melee_damage_type))
 		return FALSE
 
 	if(user.attack_sound)
@@ -507,7 +513,7 @@
 /mob/living/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(check_block(user, 0, "[user]'s tackle", MELEE_ATTACK, 0, BRUTE))
+		if(check_block(user, 0, "[user]'s tackle", UNARMED_ATTACK, 0, BRUTE))
 			return FALSE
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
@@ -516,7 +522,7 @@
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, span_warning("You don't want to hurt anyone!"))
 			return FALSE
-		if(check_block(user, user.melee_damage_upper, "[user]'s slash", MELEE_ATTACK, 0, BRUTE))
+		if(check_block(user, user.melee_damage_upper, "[user]'s slash", UNARMED_ATTACK, 0, BRUTE))
 			return FALSE
 		user.do_attack_animation(src)
 		return TRUE
@@ -653,8 +659,8 @@
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
 	var/mutable_appearance/glove_appearance = mutable_appearance('icons/effects/effects.dmi', "slapglove")
-	glove_appearance.pixel_y = 10 // should line up with head
-	glove_appearance.pixel_x = 10
+	glove_appearance.pixel_z = 10 // should line up with head
+	glove_appearance.pixel_w = 10
 	var/atom/movable/flick_visual/glove = slapped.flick_overlay_view(glove_appearance, 1 SECONDS)
 
 	// And animate the attack!
@@ -665,17 +671,17 @@
 /** Handles exposing a mob to reagents.
  *
  * If the methods include INGEST or INHALE, the mob tastes the reagents.
- * If the methods include VAPOR it incorporates permiability protection.
+ * If the methods include VAPOR or TOUCH it incorporates permiability protection.
  */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if(methods & (INGEST | INHALE))
+	if(show_message && (methods & (INGEST | INHALE)))
 		taste_list(reagents)
 
-	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
+	var/touch_protection = (methods & (VAPOR | TOUCH)) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/datum/reagent/reagent as anything in reagents)
 		var/reac_volume = reagents[reagent]
@@ -742,8 +748,7 @@
 		if(!(shove_flags & SHOVE_DIRECTIONAL_BLOCKED) && (SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, src, target, shove_flags, weapon) & COMSIG_LIVING_SHOVE_HANDLED))
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-			target.apply_status_effect(/datum/status_effect/next_shove_stuns)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
@@ -800,6 +805,6 @@
 
 /mob/living/proc/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hit_by, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)
-		return TRUE
+		return SUCCESSFUL_BLOCK
 
-	return FALSE
+	return FAILED_BLOCK

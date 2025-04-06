@@ -79,6 +79,7 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
 	announce_rune()
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /// I cast Summon Security
 /obj/effect/grand_rune/proc/announce_rune()
@@ -252,7 +253,7 @@
 	var/location_sanity = 0
 	// Copied from the influences manager, but we don't want to obey the cap on influences per heretic.
 	while(created < to_create && location_sanity < 100)
-		var/turf/chosen_location = get_safe_random_station_turf()
+		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
 		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
@@ -339,10 +340,17 @@
 	var/pick = show_radial_menu(user, user, options, require_near = TRUE, tooltips = TRUE)
 	if (!pick)
 		return
+	var/datum/grand_finale/picked_finale = picks_to_instances[pick]
+	if (istype(picked_finale))
+		var/round_time_passed = world.time - SSticker.round_start_time
+		if(picked_finale.minimum_time >= round_time_passed)
+			to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(picked_finale.minimum_time - round_time_passed)]</b>!"))
+			to_chat(user, span_warning("Be patient, or select another option."))
+			return
 	chosen_effect = TRUE
 	if (pick == PICK_NOTHING)
 		return
-	finale_effect = picks_to_instances[pick]
+	finale_effect = picked_finale
 	invoke_time = get_invoke_time()
 	if (finale_effect.glow_colour)
 		spell_colour = finale_effect.glow_colour

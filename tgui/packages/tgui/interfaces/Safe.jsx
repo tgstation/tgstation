@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
+import { Box, Button, Icon, Image, Section } from 'tgui-core/components';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Image, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Safe = (properties) => {

@@ -159,6 +159,64 @@
 		"Stalking Stocking",
 		"Yeti",
 		"Yuki-Onna"
+	],
+
+	"rpg_action": [
+		"Annihilate",
+		"Ban",
+		"Defeat",
+		"Destroy",
+		"Mutilate",
+		"Nuke",
+		"Own",
+		"Perma",
+		"Pwn",
+		"Pulverize",
+		"Robust",
+		"Save",
+		"Stop",
+		"Strike",
+		"Valid",
+		"Yeet"
+	],
+
+	"rpg_action_valentines": [
+		"Bewitch",
+		"Crush",
+		"Cuddle",
+		"Divorce",
+		"ERP",
+		"Romance",
+		"Seduce",
+		"Smooch",
+		"Titillate"
+	],
+
+	"rpg_action_halloween": [
+		"Amputate",
+		"Behead",
+		"Beware",
+		"Butcher",
+		"Dismember",
+		"Exorcise",
+		"Frighten",
+		"Horrify",
+		"Scare",
+		"Scythe",
+		"Slay",
+		"Spook",
+		"Vanquish"
+	],
+
+	"rpg_action_xmas": [
+		"Freeze",
+		"Jingle",
+		"Nutcrack",
+		"Re-gift",
+		"Snowplow",
+		"Stuff",
+		"Unwrap",
+		"Wassail"
 	]
 
 }

@@ -39,8 +39,8 @@
 
 /datum/status_effect/void_eatered/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_NODEATH, type)
+	ADD_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/void_eatered/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
+	REMOVE_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id))

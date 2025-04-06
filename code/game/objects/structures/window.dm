@@ -9,7 +9,6 @@
 	flags_1 = ON_BORDER_1
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	max_integrity = 50
-	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/structure_window
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -82,12 +81,11 @@
 
 /obj/structure/window/mouse_drop_receive(atom/dropping, mob/user, params)
 	. = ..()
-	if (added_leaning || (flags_1 & ON_BORDER_1))
+	if (flags_1 & ON_BORDER_1)
 		return
-	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
-	AddComponent(/datum/component/leanable, 11)
-	added_leaning = TRUE
-	dropping.base_mouse_drop_handler(src, null, null, params)
+
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -451,7 +449,7 @@
 		// slowly drain our total health for the illusion of shattering
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, take_damage), floor(atom_integrity / (time_to_go / time_interval))), time_interval * damage_step)
 
-	//dissapear in 1 second
+	//disappear in 1 second
 	dramatically_disappearing = TRUE
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, break_sound, 70, TRUE), time_to_go) //SHATTER SOUND
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
@@ -861,7 +859,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
-	desc = "A durable looking window made of an alloy of of plasma and titanium."
+	desc = "A durable looking window made of an alloy of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window-0"
 	base_icon_state = "plastitanium_window"
@@ -884,7 +882,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible
 	name = "plastitanium window"
-	desc = "A durable looking window made of an alloy of of plasma and titanium."
+	desc = "A durable looking window made of an alloy of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window-0"
 	base_icon_state = "plastitanium_window"

@@ -399,7 +399,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/wave/attack_sequence(mob/living/firer, atom/target)
 	wendigo_scream(firer)
-	var/shots_per = 7
+	var/shots_per = 6
 	var/difference = 360 / shots_per
 	var/wave_direction = pick(-1, 1)
 	switch(wave_direction)
@@ -407,9 +407,9 @@
 			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave/alternate
 		if(1)
 			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave
-	for(var/shoot_times in 1 to 32)
+	for(var/shoot_times in 1 to 12)
 		for(var/shot in 1 to shots_per)
 			var/angle = shot * difference + shoot_times * 5 * wave_direction * -1
 			shoot_projectile(firer, target, angle, firer, null, null)
-		SLEEP_CHECK_DEATH(2, firer)
+		SLEEP_CHECK_DEATH(0.6 SECONDS, firer)
 	SLEEP_CHECK_DEATH(3 SECONDS, firer)

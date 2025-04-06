@@ -14,7 +14,10 @@
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/electrode/old
-	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(1.5, STANDARD_CELL_CHARGE)
+
+/obj/item/ammo_casing/energy/electrode/ai_turrets
+	projectile_type = /obj/projectile/energy/electrode/ai_turrets
 
 /obj/item/ammo_casing/energy/disabler
 	projectile_type = /obj/projectile/beam/disabler

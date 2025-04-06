@@ -67,10 +67,7 @@ function createStatusTab(name) {
 	button.textContent = name;
 	button.className = "button";
 	//ORDERING ALPHABETICALLY
-	button.style.order = name.charCodeAt(0);
-	if (name == "Status" || name == "MC") {
-		button.style.order = name == "Status" ? 1 : 2;
-	}
+	button.style.order = ({"Status": 1, "MC": 2})[name] || name.charCodeAt(0);
 	//END ORDERING
 	menu.appendChild(button);
 	SendTabToByond(name);
@@ -375,7 +372,7 @@ function draw_mc() {
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
+			a.href = "byond://?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
@@ -438,29 +435,12 @@ function draw_listedturf() {
 	var table = document.createElement("table");
 	for (var i = 0; i < turfcontents.length; i++) {
 		var part = turfcontents[i];
-		if (storedimages[part[1]] == null && part[2]) {
-			var img = document.createElement("img");
-			img.src = part[2];
-			img.id = part[1];
-			storedimages[part[1]] = part[2];
-			img.onerror = iconError;
-			table.appendChild(img);
-		} else {
-			var img = document.createElement("img");
-			img.onerror = iconError;
-			img.src = storedimages[part[1]];
-			img.id = part[1];
-			table.appendChild(img);
-		}
-		var b = document.createElement("div");
-		var clickcatcher = "";
-		b.className = "link";
-		b.onmousedown = function (part) {
+		var clickfunc = function (part) {
 			// The outer function is used to close over a fresh "part" variable,
 			// rather than every onmousedown getting the "part" of the last entry.
 			return function (e) {
 				e.preventDefault();
-				clickcatcher = "?src=" + part[1];
+				clickcatcher = "byond://?src=" + part[1];
 				switch (e.button) {
 					case 1:
 						clickcatcher += ";statpanel_item_click=middle"
@@ -483,6 +463,26 @@ function draw_listedturf() {
 				window.location.href = clickcatcher;
 			}
 		}(part);
+		if (storedimages[part[1]] == null && part[2]) {
+			var img = document.createElement("img");
+			img.src = part[2];
+			img.id = part[1];
+			storedimages[part[1]] = part[2];
+			img.onerror = iconError;
+			img.onmousedown = clickfunc;
+			table.appendChild(img);
+		} else {
+			var img = document.createElement("img");
+			img.onerror = iconError;
+			img.onmousedown = clickfunc;
+			img.src = storedimages[part[1]];
+			img.id = part[1];
+			table.appendChild(img);
+		}
+		var b = document.createElement("div");
+		var clickcatcher = "";
+		b.className = "link";
+		b.onmousedown = clickfunc;
 		b.textContent = part[0];
 		table.appendChild(b);
 		table.appendChild(document.createElement("br"));
@@ -516,7 +516,7 @@ function draw_sdql2() {
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[2] + ";statpanel_item_click=left";
+			a.href = "byond://?src=" + part[2] + ";statpanel_item_click=left";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
@@ -543,12 +543,12 @@ function draw_tickets() {
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket";
+			a.href = "byond://?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else if (part[3]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
+			a.href = "byond://?src=" + part[3] + ";statpanel_item_click=left";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
@@ -570,7 +570,7 @@ function draw_interviews() {
 	manDiv.className = "interview_panel_controls"
 	var manLink = document.createElement("a");
 	manLink.textContent = "Open Interview Manager Panel";
-	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
+	manLink.href = "byond://?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
 	manDiv.appendChild(manLink);
 	body.appendChild(manDiv);
 
@@ -603,7 +603,7 @@ function draw_interviews() {
 		var td = document.createElement("td");
 		var a = document.createElement("a");
 		a.textContent = part["status"];
-		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
+		a.href = "byond://?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
 		td.appendChild(a);
 		tr.appendChild(td);
 		table.appendChild(tr);
@@ -623,7 +623,7 @@ function draw_spells(cat) {
 		var td2 = document.createElement("td");
 		if (part[3]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
+			a.href = "byond://?src=" + part[3] + ";statpanel_item_click=left";
 			a.textContent = part[2];
 			td2.appendChild(a);
 		} else {
@@ -705,9 +705,11 @@ function draw_verbs(cat) {
 function set_theme(which) {
 	if (which == "light") {
 		document.body.className = "";
+		document.documentElement.className = 'light';
 		set_style_sheet("browserOutput_white");
 	} else if (which == "dark") {
 		document.body.className = "dark";
+		document.documentElement.className = 'dark';
 		set_style_sheet("browserOutput");
 	}
 }

@@ -71,7 +71,7 @@
 /turf/open/floor/grass,
 /area/misc/anomaly_research)
 "dr" = (
-/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/spawner/random/environmentally_safe_anomaly/bioscramblerless,
 /turf/open/lava/plasma/ice_moon,
 /area/misc/anomaly_research)
 "ds" = (
@@ -90,7 +90,7 @@
 /area/misc/anomaly_research)
 "dD" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/spawner/random/environmentally_safe_anomaly/bioscramblerless,
 /turf/open/lava/plasma/ice_moon,
 /area/misc/anomaly_research)
 "eq" = (
@@ -602,7 +602,7 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "qM" = (
-/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/spawner/random/environmentally_safe_anomaly/bioscramblerless,
 /obj/effect/turf_decal/trimline/purple,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -683,7 +683,7 @@
 /area/misc/anomaly_research)
 "sX" = (
 /obj/machinery/light/small/built/directional/north,
-/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/spawner/random/environmentally_safe_anomaly/bioscramblerless,
 /obj/item/reagent_containers/cup/bottle/wittel,
 /obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/dirt,
@@ -1855,7 +1855,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
 "ZL" = (
-/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/spawner/random/environmentally_safe_anomaly/bioscramblerless,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

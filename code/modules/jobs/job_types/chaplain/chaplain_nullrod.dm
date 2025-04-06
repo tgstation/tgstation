@@ -108,6 +108,7 @@
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
 	worn_icon_state = "claymore_gold"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -116,9 +117,17 @@
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp claymore which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/nullrod/claymore/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
@@ -132,6 +141,7 @@
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -180,10 +190,10 @@
 	menu_description = "An odd sharp blade which provides a low chance of blocking incoming melee attacks and deals a random amount of damage, which can range from almost nothing to very high. Can be worn on the back."
 
 /obj/item/nullrod/claymore/multiverse/melee_attack_chain(mob/user, atom/target, params)
-	var/old_force = force
-	force += rand(-14, 15)
+	var/force_mod = rand(-14, 15)
+	force += force_mod
 	. = ..()
-	force = old_force
+	force -= force_mod
 
 /obj/item/nullrod/claymore/saber
 	name = "light energy sword"
@@ -192,6 +202,7 @@
 	icon_state = "e_sword_on_blue"
 	inhand_icon_state = "e_sword_on_blue"
 	worn_icon_state = "swordblue"
+	icon_angle = -45
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/items/weapons/blade1.ogg'
 	block_sound = 'sound/items/weapons/block_blade.ogg'
@@ -221,6 +232,7 @@
 	icon_state = "hfrequency0"
 	inhand_icon_state = "hfrequency1"
 	worn_icon_state = "hfrequency0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -231,6 +243,14 @@
 	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/nullrod/vibro/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
 
 /obj/item/nullrod/vibro/Initialize(mapload)
 	. = ..()
@@ -258,6 +278,7 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "talking_sword"
 	inhand_icon_state = "talking_sword"
+	icon_angle = 45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "talking_sword"
@@ -320,6 +341,7 @@
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "godstaff-red"
 	inhand_icon_state = "godstaff-red"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -352,6 +374,7 @@
 	icon_state = "sord"
 	inhand_icon_state = "sord"
 	worn_icon_state = "sord"
+	icon_angle = -35
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 4.13
@@ -376,6 +399,7 @@
 	icon_state = "hammeron"
 	inhand_icon_state = "hammeron"
 	worn_icon_state = "hammeron"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -427,13 +451,14 @@
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "clownrender"
 	inhand_icon_state = "cultdagger"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "render"
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = SHARP_EDGED
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp dagger. Fits in pockets. Can be worn on the belt. Honk."
 
 // Pride-struck Hammer - Transfers reagents in your body to those you hit.
@@ -447,6 +472,7 @@
 	icon_state = "pride"
 	inhand_icon_state = "pride"
 	worn_icon_state = "pride"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	force = 16
@@ -479,6 +505,7 @@
 	icon_state = "chain"
 	inhand_icon_state = "chain"
 	worn_icon_state = "whip"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -520,6 +547,7 @@
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
 	inhand_icon_state = "arm_blade"
+	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	slot_flags = null
@@ -588,6 +616,7 @@
 	base_icon_state = "bostaff"
 	inhand_icon_state = "bostaff0"
 	worn_icon_state = "bostaff0"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals less damage, unless dual-wielded. Can be worn on the back."
@@ -616,20 +645,26 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "crysknife"
 	inhand_icon_state = "crysknife"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	slot_flags = null
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
 	menu_description = "A sharp knife. Randomly speeds or slows its user at a regular intervals. Capable of butchering bodies. Cannot be worn anywhere."
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
 	AddComponent(/datum/component/butchering, \
 	speed = 5 SECONDS, \
 	effectiveness = 100, \
@@ -654,6 +689,7 @@
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "pitchfork0"
 	inhand_icon_state = "pitchfork0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	worn_icon_state = "pitchfork0"
@@ -691,6 +727,7 @@
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
 	worn_icon_state = "hypertool"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -709,6 +746,7 @@
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "ratvarian_spear"
 	inhand_icon_state = "ratvarian_spear"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -728,6 +766,7 @@
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "ratvarian_spear"
 	inhand_icon_state = "ratvarian_spear"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -751,6 +790,7 @@
 	icon_state = "nullsword"
 	inhand_icon_state = "nullsword"
 	worn_icon_state = "nullsword"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -759,13 +799,22 @@
 	bare_wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
 	block_sound = 'sound/items/weapons/parry.ogg'
-	sharpness = SHARP_POINTY
+	sharpness = SHARP_EDGED
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "punctures", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "puncture", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slashes", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A blade that deals variable, low amounts of damage, but does easily inflict wounds. \
 		The stronger your swinging arm is, the stronger the blade is, though only slightly. \
 		Against debilitated targets, can also deal additional sneak attack damage with a very high wound chance."
+
+	var/list/alt_continuous = list("stabs", "pierces", "impales", "punctures")
+	var/list/alt_simple = list("stab", "pierce", "impale", "puncture")
+
+/obj/item/nullrod/nullblade/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /obj/item/nullrod/nullblade/melee_attack_chain(mob/user, atom/target, params)
 	//Track our actual force separately
@@ -790,9 +839,11 @@
 	//We do this because our force could have been changed by things like whetstones and RPG stats.
 	force += old_force - initial(force)
 
+	//Record change to our force in case something modifies it down the chain
+	var/force_diff = force - old_force
 	. = ..()
 	//Reapply our old force.
-	force = old_force
+	force -= force_diff
 
 /obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, click_parameters)
 	if(!isliving(target))
@@ -851,7 +902,7 @@
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	else if(IS_HERETIC_MONSTER(living_target) && prob(50)) // IT IS HARD TO SNEAK ATTACK SOMETHING WITH TOO MANY REDUNDANT EVERYTHINGS.
+	else if(HAS_TRAIT(living_target, TRAIT_HERETIC_SUMMON) && prob(50)) // IT IS HARD TO SNEAK ATTACK SOMETHING WITH TOO MANY REDUNDANT EVERYTHINGS.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 

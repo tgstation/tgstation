@@ -1,6 +1,6 @@
 /obj/item/book/granter/crafting_recipe/death_sandwich
 	name = "\improper SANDWICH OF DEATH SECRET RECIPE"
-	desc = "An ancient composition notebook with the instructions for an ancient and ultimate sandwich scrawled upon its looseleaf pages. The title has been scrawled onto it with permanent marker."
+	desc = "An ancient composition notebook with the instructions for an ancient and ultimate sandwich scrawled upon its loose-leaf pages. The title has been scrawled onto it with permanent marker."
 	crafting_recipe_types = list(
 		/datum/crafting_recipe/food/death_sandwich
 	)

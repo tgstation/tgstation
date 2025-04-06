@@ -189,9 +189,9 @@
 						ai.last_tablet_note_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 
 						if(user.name == "Unknown")
-							to_chat(ai, "[span_name(user)] holds <a href='?_src_=usr;show_tablet=1;'>\a [itemname]</a> up to one of your cameras ...")
+							to_chat(ai, "[span_name(user)] holds <a href='byond://?_src_=usr;show_tablet=1;'>\a [itemname]</a> up to one of your cameras ...")
 						else
-							to_chat(ai, "<b><a href='?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='?_src_=usr;last_shown_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;last_shown_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 						continue
 
 					if (potential_viewer.client?.eye == src)
@@ -232,16 +232,16 @@
 						log_paper("[key_name(user)] held [last_shown_paper] up to [src], requesting [key_name(ai)] read it.")
 
 						if(user.name == "Unknown")
-							to_chat(ai, "[span_name(user.name)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
+							to_chat(ai, "[span_name(user.name)] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 						else
-							to_chat(ai, "<b><a href='?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
+							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 						continue
 
 					// If it's not an AI, eye if the client's eye is set to the camera. I wonder if this even works anymore with tgui camera apps and stuff?
 					if (potential_viewer.client?.eye == src)
 						log_paper("[key_name(user)] held [last_shown_paper] up to [src], and [key_name(potential_viewer)] may read it.")
 						potential_viewer.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-						to_chat(potential_viewer, "[span_name(user)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to your camera...")
+						to_chat(potential_viewer, "[span_name(user)] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to your camera...")
 				return
 
 	return ..()

@@ -13,12 +13,12 @@
 
 
 /mob/living/carbon/human/bee_friendly()
-	if(dna && dna.species && dna.species.id == SPECIES_PODPERSON) //bees pollinate plants, duh.
+	if(ispodperson(src)) //bees pollinate plants, duh.
 		return 1
 	if (wear_suit && head && isclothing(wear_suit) && isclothing(head))
-		var/obj/item/clothing/CS = wear_suit
-		var/obj/item/clothing/CH = head
-		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+		var/obj/item/clothing/suit = wear_suit
+		var/obj/item/clothing/hat = head
+		if (suit.clothing_flags & hat.clothing_flags & THICKMATERIAL)
 			return 1
 	return 0
 
@@ -60,25 +60,25 @@
 	. = ..()
 
 	icon_state = "beebox"
-	var/datum/reagent/R = null
+	var/datum/reagent/custom_reagent = null
 	if(random_reagent)
-		R = pick(subtypesof(/datum/reagent))
-		R = GLOB.chemical_reagents_list[R]
+		custom_reagent = pick(subtypesof(/datum/reagent))
+		custom_reagent = GLOB.chemical_reagents_list[custom_reagent]
 
 	queen_bee = new(src)
 	queen_bee.beehome = src
 	bees += queen_bee
-	queen_bee.assign_reagent(R)
+	queen_bee.assign_reagent(custom_reagent)
 
 	for(var/i in 1 to BEEBOX_MAX_FRAMES)
-		var/obj/item/honey_frame/HF = new(src)
-		honey_frames += HF
+		var/obj/item/honey_frame/new_frame = new(src)
+		honey_frames += new_frame
 
 	for(var/i in 1 to get_max_bees())
-		var/mob/living/basic/bee/B = new(src)
-		bees += B
-		B.beehome = src
-		B.assign_reagent(R)
+		var/mob/living/basic/bee/new_bee = new(src)
+		bees += new_bee
+		new_bee.beehome = src
+		new_bee.assign_reagent(custom_reagent)
 
 
 /obj/structure/beebox/premade/random
@@ -91,10 +91,10 @@
 		if(bee_resources >= BEE_RESOURCE_HONEYCOMB_COST)
 			if(honeycombs.len < get_max_honeycomb())
 				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, 0)
-				var/obj/item/food/honeycomb/HC = new(src)
+				var/obj/item/food/honeycomb/new_comb = new(src)
 				if(queen_bee.beegent)
-					HC.set_reagent(queen_bee.beegent.type)
-				honeycombs += HC
+					new_comb.set_reagent(queen_bee.beegent.type)
+				honeycombs += new_comb
 
 		if(bees.len < get_max_bees())
 			var/freebee = FALSE //a freebee, geddit?, hahaha HAHAHAHA
@@ -103,17 +103,16 @@
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
-				var/mob/living/basic/bee/B = new(get_turf(src))
-				B.beehome = src
-				B.assign_reagent(queen_bee.beegent)
-				bees += B
+				var/mob/living/basic/bee/new_bee = new(get_turf(src))
+				new_bee.beehome = src
+				new_bee.assign_reagent(queen_bee.beegent)
+				bees += new_bee
 
 
 /obj/structure/beebox/proc/get_max_honeycomb()
 	. = 0
-	for(var/hf in honey_frames)
-		var/obj/item/honey_frame/HF = hf
-		. += HF.honeycomb_capacity
+	for(var/obj/item/honey_frame/frame as anything in honey_frames)
+		. += frame.honeycomb_capacity
 
 
 /obj/structure/beebox/proc/get_max_bees()
@@ -146,24 +145,24 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/beebox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/honey_frame))
-		var/obj/item/honey_frame/HF = I
+/obj/structure/beebox/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/honey_frame))
+		var/obj/item/honey_frame/frame = item
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)
 			visible_message(span_notice("[user] adds a frame to the apiary."))
-			if(!user.transferItemToLoc(HF, src))
+			if(!user.transferItemToLoc(frame, src))
 				return
-			honey_frames += HF
+			honey_frames += frame
 		else
 			to_chat(user, span_warning("There's no room for any more frames in the apiary!"))
 		return
 
-	if(istype(I, /obj/item/queen_bee))
+	if(istype(item, /obj/item/queen_bee))
 		if(queen_bee)
 			to_chat(user, span_warning("This hive already has a queen!"))
 			return
 
-		var/obj/item/queen_bee/new_queen = I
+		var/obj/item/queen_bee/new_queen = item
 		user.temporarilyRemoveItemFromInventory(new_queen)
 
 		bees += new_queen.queen
@@ -174,13 +173,12 @@
 		if(queen_bee)
 			visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
 			var/relocated = 0
-			for(var/b in bees)
-				var/mob/living/basic/bee/B = b
-				if(B.reagent_incompatible(queen_bee))
-					bees -= B
-					B.beehome = null
-					if(B.loc == src)
-						B.forceMove(drop_location())
+			for(var/mob/living/basic/bee/relocating_bee as anything in bees)
+				if(relocating_bee.reagent_incompatible(queen_bee))
+					bees -= relocating_bee
+					relocating_bee.beehome = null
+					if(relocating_bee.loc == src)
+						relocating_bee.forceMove(drop_location())
 					relocated++
 			if(relocated)
 				to_chat(user, span_warning("This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!"))
@@ -206,7 +204,7 @@
 		if(bees_attack)
 			visible_message(span_danger("[user] disturbs the bees!"))
 		else
-			visible_message(span_danger("[user] disturbs the [name] to no effect!"))
+			visible_message(span_danger("[user] disturbs \the [src] to no effect!"))
 	else
 		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
 		if(!option || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY))
@@ -217,18 +215,18 @@
 					to_chat(user, span_warning("There are no honey frames to remove!"))
 					return
 
-				var/obj/item/honey_frame/HF = pick_n_take(honey_frames)
-				if(HF)
-					if(!user.put_in_active_hand(HF))
-						HF.forceMove(drop_location())
+				var/obj/item/honey_frame/frame = pick_n_take(honey_frames)
+				if(frame)
+					if(!user.put_in_active_hand(frame))
+						frame.forceMove(drop_location())
 					visible_message(span_notice("[user] removes a frame from the apiary."))
 
-					var/amtH = HF.honeycomb_capacity
+					var/amtH = frame.honeycomb_capacity
 					var/fallen = 0
 					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
-						var/obj/item/food/honeycomb/HC = pick_n_take(honeycombs)
-						if(HC)
-							HC.forceMove(drop_location())
+						var/obj/item/food/honeycomb/comb = pick_n_take(honeycombs)
+						if(comb)
+							comb.forceMove(drop_location())
 							amtH--
 							fallen++
 					if(fallen)
@@ -239,13 +237,13 @@
 				if(!queen_bee || queen_bee.loc != src)
 					to_chat(user, span_warning("There is no queen bee to remove!"))
 					return
-				var/obj/item/queen_bee/QB = new()
-				queen_bee.forceMove(QB)
+				var/obj/item/queen_bee/queen = new()
+				queen_bee.forceMove(queen)
 				bees -= queen_bee
-				QB.queen = queen_bee
-				QB.name = queen_bee.name
-				if(!user.put_in_active_hand(QB))
-					QB.forceMove(drop_location())
+				queen.queen = queen_bee
+				queen.name = queen_bee.name
+				if(!user.put_in_active_hand(queen))
+					queen.forceMove(drop_location())
 				visible_message(span_notice("[user] removes the queen from the apiary."))
 				queen_bee = null
 

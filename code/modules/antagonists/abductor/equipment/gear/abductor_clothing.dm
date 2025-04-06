@@ -80,10 +80,6 @@
 		human_target.update_worn_oversuit()
 	update_item_action_buttons()
 
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return TRUE
-
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
 

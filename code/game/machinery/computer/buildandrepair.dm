@@ -82,7 +82,7 @@
 			else
 				. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
-			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
+			. += span_warning("\A [circuit] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
 			. += span_warning("It can be [EXAMINE_HINT("wired")] with some cable.")
@@ -125,8 +125,6 @@
 			if(add_cabling(user, cable, time = 0))
 				if(!no_sound)
 					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 					no_sound = TRUE
 				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
 
@@ -140,8 +138,6 @@
 			if(add_glass(user, glass_sheets, time = 0))
 				if(!no_sound)
 					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 				return TRUE
 
 			return FALSE

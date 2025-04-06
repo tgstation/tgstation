@@ -7,7 +7,7 @@
 	return ..()
 
 /datum/buildmode_mode/outfit/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Select outfit to equip")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Equip the selected outfit")] -> Left Mouse Button on mob/living/carbon/human\n\
 		[span_bold("Strip and delete current outfit")] -> Right Mouse Button on mob/living/carbon/human"))

@@ -1,6 +1,7 @@
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
+	clothing_flags = CLOTHING_MOD_OVERSLOTTING
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	inhand_icon_state = "greyscale_gloves"
@@ -47,9 +48,13 @@
 	. = ..()
 	if(isinhands)
 		return
-
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
+
+/obj/item/clothing/gloves/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		. += mutable_appearance('icons/effects/blood.dmi', "gloveblood")
 

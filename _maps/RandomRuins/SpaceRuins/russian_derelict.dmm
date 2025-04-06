@@ -3340,11 +3340,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "zP" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/obj/item/shard,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/table,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "zR" = (
@@ -4146,14 +4144,14 @@
 "Eb" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = -5
 	},
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = 6;
 	dir = 9;
 	pixel_y = -3
@@ -5018,8 +5016,8 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "IG" = (
-/obj/item/ammo_casing/a357,
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357,
+/obj/item/ammo_casing/c357{
 	pixel_x = 5;
 	pixel_y = 6
 	},
@@ -5893,8 +5891,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/science/ordnance)
 "Nk" = (
-/obj/effect/spawner/random/maintenance,
 /obj/structure/lattice,
+/obj/effect/spawner/random/maintenance/no_decals,
 /turf/template_noop,
 /area/space/nearstation)
 "Nl" = (
@@ -6330,11 +6328,11 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
 "Pv" = (
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = 4;
 	pixel_y = -7
 	},
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = -5
 	},
 /obj/structure/cable,
@@ -6847,12 +6845,12 @@
 "Sk" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/ammo_casing/a357,
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357,
+/obj/item/ammo_casing/c357{
 	pixel_x = -10;
 	pixel_y = 7;
 	dir = 9
@@ -7599,12 +7597,12 @@
 /area/ruin/space/ks13/service/hydro)
 "VH" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = 8;
 	dir = 8;
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = 6;
 	pixel_y = -4
 	},

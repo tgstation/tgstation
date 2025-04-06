@@ -5,23 +5,24 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
-	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 	/// List of traits applied to users of this martial art.
 	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
 
-/datum/martial_art/the_sleeping_carp/on_teach(mob/living/new_holder)
+/datum/martial_art/the_sleeping_carp/activate_style(mob/living/new_holder)
 	. = ..()
 	new_holder.add_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_holder, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	new_holder.faction |= FACTION_CARP //:D
+	new_holder.grant_language(/datum/language/carptongue, ALL, type)
 
-/datum/martial_art/the_sleeping_carp/on_remove(mob/living/remove_from)
+/datum/martial_art/the_sleeping_carp/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
 	remove_from.faction -= FACTION_CARP //:(
+	remove_from.remove_language(/datum/language/carptongue, ALL, type)
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
@@ -254,6 +255,7 @@
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
 	base_icon_state = "bostaff"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50

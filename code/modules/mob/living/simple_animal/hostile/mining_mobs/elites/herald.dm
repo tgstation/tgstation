@@ -32,6 +32,7 @@
 	health = 1000
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	mob_biotypes = MOB_ORGANIC|MOB_MINING
 	attack_verb_continuous = "preaches to"
 	attack_verb_simple = "preach to"
 	attack_sound = 'sound/effects/magic/clockwork/ratvar_attack.ogg'

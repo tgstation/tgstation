@@ -208,7 +208,7 @@
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='byond://?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
 
 /obj/item/circuit_component/bci_core/Topic(href, list/href_list)
 	..()
@@ -505,7 +505,7 @@
 	return ..()
 
 /obj/item/circuitboard/machine/bci_implanter
-	name = "Brain-Computer Interface Manipulation Chamber (Machine Board)"
+	name = "Brain-Computer Interface Manipulation Chamber"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/bci_implanter
 	req_components = list(

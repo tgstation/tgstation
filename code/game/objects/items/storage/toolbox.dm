@@ -7,8 +7,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
-	force = 12
-	throwforce = 12
+	force = 13
+	throwforce = 13
 	throw_speed = 2
 	throw_range = 7
 	demolition_mod = 1.25
@@ -25,6 +25,13 @@
 	wound_bonus = 5
 	/// How many interactions are we currently performing
 	var/current_interactions = 0
+	/// Items we should not interact with when left clicking
+	var/static/list/lmb_exception_typecache = typecacheof(list(
+		/obj/structure/table,
+		/obj/structure/rack,
+		/obj/structure/closet,
+		/obj/machinery/disposal,
+	))
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
@@ -45,6 +52,9 @@
 	if (user.combat_mode || !user.has_hand_for_held_index(user.get_inactive_hand_index()))
 		return NONE
 
+	if (is_type_in_typecache(interacting_with, lmb_exception_typecache) && !LAZYACCESS(modifiers, RIGHT_CLICK))
+		return NONE
+
 	if (current_interactions)
 		var/obj/item/other_tool = user.get_inactive_held_item()
 		if (!istype(other_tool)) // what even
@@ -60,7 +70,6 @@
 	for (var/obj/item/tool in atom_storage.real_location)
 		if(is_type_in_list(tool, GLOB.tool_items))
 			item_radial[tool] = tool.appearance
-			break
 
 	if (!length(item_radial))
 		return NONE
@@ -175,6 +184,12 @@
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
 
+// version of below that isn't a traitor item
+/obj/item/storage/toolbox/mechanical/old/cleaner
+	name = "old blue toolbox"
+	icon_state = "oldtoolboxclean"
+	icon_state = "toolbox_blue_old"
+
 /obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
 	name = "toolbox"
 	desc = "An old, blue toolbox, it looks robust."
@@ -188,8 +203,8 @@
 	var/power = 0
 	for (var/obj/item/stack/telecrystal/stored_crystals in get_all_contents())
 		power += (stored_crystals.amount / 2)
-	force = 19 + power
-	throwforce = 22 + power
+	force = initial(force) + power
+	throwforce = initial(throwforce) + power
 
 /obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
 	calc_damage()
@@ -372,20 +387,6 @@
 	name = "4.6x30mm AP ammo box"
 	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9/wtap
 
-/obj/item/storage/toolbox/maint_kit
-	name = "gun maintenance kit"
-	desc = "It contains some gun maintenance supplies"
-	icon_state = "maint_kit"
-	inhand_icon_state = "ammobox"
-	has_latches = FALSE
-	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
-	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
-
-/obj/item/storage/toolbox/maint_kit/PopulateContents()
-	new /obj/item/gun_maintenance_supplies(src)
-	new /obj/item/gun_maintenance_supplies(src)
-	new /obj/item/gun_maintenance_supplies(src)
-
 //repairbot assembly
 /obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/assembly/prox_sensor))
@@ -447,6 +448,84 @@
 	new weapon_to_spawn (src)
 	for(var/i in 1 to 3)
 		new extra_to_spawn (src)
+
+/obj/item/storage/toolbox/guncase/traitor
+	name = "makarov gun case"
+	desc = "A weapon's case. Has a blood-red 'S' stamped on the cover. There seems to be a strange switch along the side inside a plastic flap."
+	icon_state = "pistol_case"
+	base_icon_state = "pistol_case"
+	// What ammo box do we spawn in our case?
+	var/ammo_box_to_spawn = /obj/item/ammo_box/c9mm
+	// Timer for the bomb in the case.
+	var/explosion_timer
+	// Whether or not our case is exploding. Used for determining sprite changes.
+	var/currently_exploding = FALSE
+
+/obj/item/storage/toolbox/guncase/traitor/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/storage/toolbox/guncase/traitor/examine(mob/user)
+	. = ..()
+	. += span_notice("Activate the Evidence Disposal Explosive using Alt-Right-Click.")
+
+/obj/item/storage/toolbox/guncase/traitor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Activate Evidence Disposal Explosive"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/toolbox/guncase/traitor/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 2)
+		new extra_to_spawn (src)
+	new ammo_box_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/traitor/update_icon_state()
+	. = ..()
+	if(currently_exploding)
+		icon_state = "[base_icon_state]_exploding"
+	else
+		icon_state = "[base_icon_state]"
+
+/obj/item/storage/toolbox/guncase/traitor/click_alt_secondary(mob/user)
+	. = ..()
+	if(currently_exploding)
+		user.balloon_alert(user, "already exploding!")
+		return
+
+	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
+
+	if(i_dont_even_think_once_about_blowing_stuff_up != "Yes" || currently_exploding || QDELETED(user) || QDELETED(src) || user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
+		return
+
+	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
+	to_chat(user, span_warning("You prime [src]'s evidence disposal bomb!"))
+	log_bomber(user, "has activated a", src, "for detonation")
+	playsound(src, 'sound/items/weapons/armbomb.ogg', 50, TRUE)
+	currently_exploding = TRUE
+	update_appearance()
+
+/// proc to handle our detonation
+/obj/item/storage/toolbox/guncase/traitor/proc/think_fast_chucklenuts()
+	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 2, explosion_cause = src)
+	qdel(src)
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition
+	name = "makarov 9mm magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/m9mm
+
+/obj/item/storage/toolbox/guncase/traitor/donksoft
+	name = "\improper Donksoft riot pistol gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/donksoft
+	name = "\improper Donksoft riot pistol magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
 
 /obj/item/storage/toolbox/guncase/bulldog
 	name = "bulldog gun case"

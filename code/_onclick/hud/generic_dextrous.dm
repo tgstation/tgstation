@@ -3,11 +3,6 @@
 	..()
 	var/atom/movable/screen/using
 
-	using = new /atom/movable/screen/drop(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_drone_drop
-	static_inventory += using
-
 	pull_icon = new /atom/movable/screen/pull(null, src)
 	pull_icon.icon = ui_style
 	pull_icon.update_appearance()
@@ -16,21 +11,20 @@
 
 	build_hand_slots()
 
-	using = new /atom/movable/screen/swap_hand(null, src)
+	using = new /atom/movable/screen/drop(null, src)
 	using.icon = ui_style
-	using.icon_state = "swap_1_m"
-	using.screen_loc = ui_swaphand_position(owner,1)
+	using.screen_loc = ui_swaphand_position(owner, 1)
 	static_inventory += using
 
 	using = new /atom/movable/screen/swap_hand(null, src)
 	using.icon = ui_style
-	using.icon_state = "swap_2"
-	using.screen_loc = ui_swaphand_position(owner,2)
+	using.icon_state = "act_swap"
+	using.screen_loc = ui_swaphand_position(owner, 2)
 	static_inventory += using
 
 	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
 	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
+	action_intent.screen_loc = ui_movi
 	static_inventory += action_intent
 
 	floor_change = new /atom/movable/screen/floor_changer(null, src)

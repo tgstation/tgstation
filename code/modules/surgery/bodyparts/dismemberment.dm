@@ -61,10 +61,12 @@
 		return FALSE
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
+
 	. = list()
 	if(wounding_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
+
 	for(var/obj/item/organ/organ in contents)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)
@@ -87,7 +89,6 @@
 
 	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, special, dismembered)
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, special, dismembered)
-	update_limb(dropping_limb = TRUE)
 	bodypart_flags &= ~BODYPART_IMPLANTED //limb is out and about, it can't really be considered an implant
 	owner.remove_bodypart(src, special)
 
@@ -96,6 +97,7 @@
 		LAZYREMOVE(owner.all_scars, scar)
 
 	var/mob/living/carbon/phantom_owner = update_owner(null) // so we can still refer to the guy who lost their limb after said limb forgets 'em
+	update_limb(dropping_limb = TRUE)
 
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
@@ -106,8 +108,6 @@
 			qdel(surgery)
 			break
 
-	for(var/obj/item/embedded in embedded_objects)
-		embedded.forceMove(src) // It'll self remove via signal reaction, just need to move it
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		phantom_owner.clear_mood_event("embedded")
@@ -341,7 +341,7 @@
 	real_name = new_head_owner.real_name
 
 	//Handle dental implants
-	for(var/obj/item/reagent_containers/pill/pill in src)
+	for(var/obj/item/reagent_containers/applicator/pill/pill in src)
 		for(var/datum/action/item_action/activate_pill/pill_action in pill.actions)
 			pill.forceMove(new_head_owner)
 			pill_action.Grant(new_head_owner)

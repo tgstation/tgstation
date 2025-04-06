@@ -310,6 +310,7 @@
 	to_chat(old_owner, span_userdanger("Revolution has been disappointed of your leader traits! You are a regular revolutionary now!"))
 
 /datum/antagonist/rev/farewell()
+	owner.current.balloon_alert_to_viewers("deconverted!")
 	if(ishuman(owner.current))
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
 		to_chat(owner, "<span class='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
@@ -320,6 +321,7 @@
 /datum/antagonist/rev/head/farewell()
 	if (deconversion_source == DECONVERTER_STATION_WIN)
 		return
+	owner.current.balloon_alert_to_viewers("deconverted!")
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
@@ -633,14 +635,14 @@
 	for(var/datum/mind/N as anything in SSjob.get_living_heads())
 		var/mob/M = N.current
 		if(M)
-			heads_report += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-			heads_report += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-			heads_report += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+			heads_report += "<tr><td><a href='byond://?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			heads_report += "<td><A href='byond://?priv_msg=[M.ckey]'>PM</A></td>"
+			heads_report += "<td><A href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
 			var/turf/mob_loc = get_turf(M)
 			heads_report += "<td>[mob_loc.loc]</td></tr>"
 		else
-			heads_report += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
-			heads_report += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+			heads_report += "<tr><td><a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
+			heads_report += "<td><A href='byond://?priv_msg=[N.key]'>PM</A></td></tr>"
 	heads_report += "</table>"
 	return common_part + heads_report
 

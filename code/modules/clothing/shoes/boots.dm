@@ -22,8 +22,8 @@
 
 /obj/item/clothing/shoes/combat/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -51,7 +51,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	body_parts_covered = FEET|LEGS
 
 /datum/armor/shoes_jackboots
@@ -59,8 +59,8 @@
 
 /obj/item/clothing/shoes/jackboots/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -97,8 +97,8 @@
 
 /obj/item/clothing/shoes/winterboots/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/winterboots/ice_boots
 	name = "ice hiking boots"
@@ -117,7 +117,7 @@
 	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = parent_type::clothing_flags | THICKMATERIAL
 	body_parts_covered = FEET|LEGS
 	resistance_flags = NONE
 
@@ -145,8 +145,8 @@
 
 /obj/item/clothing/shoes/workboots/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -164,8 +164,8 @@
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/discoshoes
 	name = "green lizardskin shoes"

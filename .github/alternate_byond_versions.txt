@@ -2,7 +2,11 @@
 # This is useful for making sure we maintain compatibility with both older and newer versions,
 # while still having our main tests run on a guaranteed pinned version.
 
-# Format is version: map
+# Format is "version: map" or "version: map;max_required_client_version"
 # Example:
 # 500.1337: runtimestation
-515.1627: runtimestation
+# 516.1638: runtimestation;516
+# Lowest supported version
+515.1642: runtimestation
+# Beta version
+516.1648: runtimestation;516

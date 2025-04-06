@@ -22,7 +22,7 @@
 
 /obj/item/clothing/head/costume/constable
 	name = "constable helmet"
-	desc = "A british looking helmet."
+	desc = "A British-looking helmet."
 	icon_state = "constable"
 	inhand_icon_state = null
 	custom_price = PAYCHECK_COMMAND * 1.5
@@ -50,6 +50,7 @@
 	icon_state = "mailman"
 	desc = "<i>'Right-on-time'</i> mail service head wear."
 	clothing_traits = list(TRAIT_HATED_BY_DOGS)
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/clothing/head/bio_hood/plague
 	name = "plague doctor's hat"
@@ -59,6 +60,7 @@
 	flags_inv = NONE
 	clothing_flags = SNUG_FIT
 	flags_cover = NONE
+	dirt_state = null
 
 /datum/armor/bio_hood_plague
 	bio = 100

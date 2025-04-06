@@ -18,10 +18,10 @@
 	var/name_part = VV_HTML_ENCODE(name)
 	if(level > 0 || islist(owner)) //handling keys in assoc lists
 		if(istype(name,/datum))
-			name_part = "<a href='?_src_=vars;[HrefToken()];Vars=[REF(name)]'>[VV_HTML_ENCODE(name)] [REF(name)]</a>"
+			name_part = "<a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(name)]'>[VV_HTML_ENCODE(name)] [REF(name)]</a>"
 		else if(islist(name))
 			var/list/list_value = name
-			name_part = "<a href='?_src_=vars;[HrefToken()];Vars=[REF(name)]'> /list ([length(list_value)]) [REF(name)]</a>"
+			name_part = "<a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(name)]'> /list ([length(list_value)]) [REF(name)]</a>"
 
 	. = "[.][name_part] = "
 
@@ -85,31 +85,34 @@
 
 				items += debug_variable(key, val, level + 1, sanitize = sanitize)
 
-			return "<a href='?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a><ul>[items.Join()]</ul>"
-		else
-			return "<a href='?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a>"
+			return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a><ul>[items.Join()]</ul>"
+		return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a>"
 
-	if(name in GLOB.bitfields)
-		var/list/flags = list()
-		for (var/i in GLOB.bitfields[name])
-			if (value & GLOB.bitfields[name][i])
-				flags += i
-		if(length(flags))
-			return "[VV_HTML_ENCODE(jointext(flags, ", "))]"
-		else
-			return "NONE"
-	else
+	// if it's a number, is it a bitflag?
+	var/list/valid_bitflags
+	if(!isnum(name))
+		valid_bitflags = get_valid_bitflags(name)
+
+	if(!length(valid_bitflags))
 		return "<span class='value'>[VV_HTML_ENCODE(value)]</span>"
+
+	var/list/flags = list()
+	for (var/bit_name in valid_bitflags)
+		if (value & valid_bitflags[bit_name])
+			flags += bit_name
+	if(length(flags))
+		return "[VV_HTML_ENCODE(flags.Join(", "))]"
+	return "NONE"
 
 /datum/proc/debug_variable_value(name, level, datum/owner, sanitize, display_flags)
 	if("[src]" != "[type]") // If we have a name var, let's use it.
-		return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>[src] [type] [REF(src)]</a>"
+		return "<a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(src)]'>[src] [type] [REF(src)]</a>"
 	else
-		return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>[type] [REF(src)]</a>"
+		return "<a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(src)]'>[type] [REF(src)]</a>"
 
 /datum/weakref/debug_variable_value(name, level, datum/owner, sanitize, display_flags)
 	. = ..()
-	return "[.] <a href='?_src_=vars;[HrefToken()];Vars=[reference]'>(Resolve)</a>"
+	return "[.] <a href='byond://?_src_=vars;[HrefToken()];Vars=[reference]'>(Resolve)</a>"
 
 /matrix/debug_variable_value(name, level, datum/owner, sanitize, display_flags)
 	return {"<span class='value'>

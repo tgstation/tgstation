@@ -39,7 +39,7 @@
 	SIGNAL_HANDLER
 
 	if(item.force >= 5 || item.throwforce >= 5 || item.override_notes || item.offensive_notes || attached_proc) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
-		examine_texts += span_notice("<a href='?src=[REF(item)];examine=1'>See combat information.</a>")
+		examine_texts += span_notice("<a href='byond://?src=[REF(item)];examine=1'>See combat information.</a>")
 
 /**
  *
@@ -57,7 +57,7 @@
 	SIGNAL_HANDLER
 
 	if(href_list["examine"])
-		to_chat(user, span_notice(examine_block("[build_label_text(source)]")))
+		to_chat(user, span_notice(boxed_message("[build_label_text(source)]")))
 
 /**
  *
@@ -73,9 +73,9 @@
 
 	// Doesn't show the base notes for items that have the override notes variable set to true
 	if(!source.override_notes)
-		if (source.sharpness & SHARP_EDGED)
+		if (source.get_sharpness() & SHARP_EDGED)
 			readout += "It's sharp and could cause bleeding wounds."
-		if (source.sharpness & SHARP_POINTY)
+		if (source.get_sharpness() & SHARP_POINTY)
 			readout += "It's pointy and could cause piercing wounds."
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)

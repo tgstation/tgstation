@@ -9,9 +9,9 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { formatTime } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
-import { formatTime } from '../format';
 import { Window } from '../layouts';
 
 type SiteData = {

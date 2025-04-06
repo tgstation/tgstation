@@ -8,6 +8,8 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	visor_vars_to_toggle = NONE
+	unique_reskin_changes_base_icon_state = TRUE
+
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
@@ -26,14 +28,17 @@
 
 /obj/item/clothing/mask/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
-	if(isinhands)
+	if(isinhands || !(body_parts_covered & HEAD))
 		return
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 
-	if(body_parts_covered & HEAD)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+/obj/item/clothing/mask/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+	. = ..()
+	if(isinhands || !(body_parts_covered & HEAD))
+		return
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -52,7 +57,7 @@
 
 /obj/item/clothing/mask/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][up ? "_up" : ""]"
+	icon_state = "[base_icon_state || initial(icon_state)][up ? "_up" : ""]"
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

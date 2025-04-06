@@ -43,11 +43,12 @@
 	//commands to give when tamed
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/wolf,
 		/datum/pet_command/follow/wolf,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/attack,
+		/datum/pet_command/fetch,
 		/datum/pet_command/play_dead,
 		/datum/pet_command/protect_owner,
 	)
@@ -83,5 +84,7 @@
 //this should also produce interesting behavior where tamed wolves defend other tamed wolves.
 /mob/living/basic/mining/wolf/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction = new_friend.faction.Copy()
 	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))

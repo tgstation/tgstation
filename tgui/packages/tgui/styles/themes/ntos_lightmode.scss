@@ -20,22 +20,22 @@ $nanotrasen: hsl(0, 0%, 100%);
   @include meta.load-css('../atomic/color.scss', $with: ());
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: ('color-default': $nanotrasen)
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
+    '~tgui-core/styles/components/ProgressBar',
     $with: (
       'color-default-fill': $nanotrasen,
       'background-color': hsla(0, 0%, 0%, 0.5)
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
+    '~tgui-core/styles/components/Section',
     $with: ('background-color': hsla(0, 0%, 47%, 0.4))
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Tooltip',
+    '~tgui-core/styles/components/Tooltip',
     $with: ('background-color': hsl(0, 0%, 100%))
   );
 

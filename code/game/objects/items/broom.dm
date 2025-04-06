@@ -7,6 +7,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "broom0"
 	base_icon_state = "broom"
+	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 8

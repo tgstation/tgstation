@@ -24,7 +24,7 @@
 
 /obj/item/clothing/gloves/boxing/evil
 	name = "evil boxing gloves"
-	desc = "These strange gloves radiate an unsually evil aura."
+	desc = "These strange gloves radiate an unusually evil aura."
 	greyscale_colors = "#21211f"
 	style_to_give = /datum/martial_art/boxing/evil
 

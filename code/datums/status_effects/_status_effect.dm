@@ -75,6 +75,8 @@
 				START_PROCESSING(SSfastprocess, src)
 			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
+			if(STATUS_EFFECT_PRIORITY)
+				START_PROCESSING(SSpriority_effects, src)
 
 	update_particles()
 
@@ -86,6 +88,8 @@
 			STOP_PROCESSING(SSfastprocess, src)
 		if(STATUS_EFFECT_NORMAL_PROCESS)
 			STOP_PROCESSING(SSprocessing, src)
+		if(STATUS_EFFECT_PRIORITY)
+			STOP_PROCESSING(SSpriority_effects, src)
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
@@ -115,13 +119,16 @@
 		qdel(src)
 		return
 
-	if(tick_interval != STATUS_EFFECT_NO_TICK && tick_interval < world.time)
+	if(tick_interval == STATUS_EFFECT_AUTO_TICK)
+		tick(seconds_per_tick)
+	else if(tick_interval != STATUS_EFFECT_NO_TICK && tick_interval < world.time)
 		var/tick_length = (tick_interval_upperbound && tick_interval_lowerbound) ? rand(tick_interval_lowerbound, tick_interval_upperbound) : initial(tick_interval)
 		tick(tick_length / (1 SECONDS))
 		tick_interval = world.time + tick_length
-		if(QDELING(src))
-			// tick deleted us, no need to continue
-			return
+
+	if(QDELING(src))
+		// tick deleted us, no need to continue
+		return
 
 	if(duration != STATUS_EFFECT_PERMANENT)
 		if(duration < world.time)

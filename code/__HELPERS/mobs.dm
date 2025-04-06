@@ -189,8 +189,12 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * @param {number} max_interact_count - The maximum amount of interactions allowed.
  *
  * @param {boolean} hidden - By default, any action 1 second or longer shows a cog over the user while it is in progress. If hidden is set to TRUE, the cog will not be shown.
+ *
+ * @param {icon} icon - The icon file of the cog. Default: 'icons/effects/progressbar.dmi'
+ *
+ * @param {iconstate} iconstate - The icon state of the cog. Default: "Cog"
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog")
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -224,7 +228,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			progbar = new(user, delay, target || user)
 
 		if(!hidden && delay >= 1 SECONDS)
-			cog = new(user)
+			cog = new(user, icon, iconstate)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
@@ -592,8 +596,11 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
-	var/list/mobs = sort_mobs()
-	for(var/mob/mob in mobs)
+	var/mob/persistent_mob = GLOB.persistent_clients_by_ckey[key]?.mob
+	if(persistent_mob)
+		return persistent_mob
+	// hopefully the above will always handle it, but any time a coder thinks "no way this will happen", murphy's law guarantees it somehow will
+	for(var/mob/mob as anything in GLOB.mob_list)
 		if(mob.ckey == key)
 			return mob
 
@@ -740,7 +747,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			newname = requesting_client?.prefs?.read_preference(preference_type)
 		else
 			var/datum/preference/preference = GLOB.preference_entries[preference_type]
-			newname = preference.create_informed_default_value(requesting_client.prefs)
+			if (requesting_client?.prefs)
+				newname = preference.create_informed_default_value(requesting_client.prefs)
+			else
+				newname = preference.create_default_value()
 
 		for(var/mob/living/checked_mob in GLOB.player_list)
 			if(checked_mob == src)

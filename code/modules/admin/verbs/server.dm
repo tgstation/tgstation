@@ -22,7 +22,12 @@ ADMIN_VERB(toggle_hub, R_SERVER, "Toggle Hub", "Toggles the server's visilibilit
 #define HARDEST_RESTART "Hardest Restart (No actions, just reboot)"
 #define TGS_RESTART "Server Restart (Kill and restart DD)"
 ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.", ADMIN_CATEGORY_SERVER)
-	var/list/options = list(REGULAR_RESTART, REGULAR_RESTART_DELAYED, HARD_RESTART, HARDEST_RESTART)
+	var/list/options = list(REGULAR_RESTART, REGULAR_RESTART_DELAYED, HARD_RESTART)
+
+	// this option runs a codepath that can leak db connections because it skips subsystem (specifically SSdbcore) shutdown
+	if(!SSdbcore.IsConnected())
+		options += HARDEST_RESTART
+
 	if(world.TgsAvailable())
 		options += TGS_RESTART;
 
@@ -65,6 +70,12 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 #undef HARD_RESTART
 #undef HARDEST_RESTART
 #undef TGS_RESTART
+
+ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world reboot.", ADMIN_CATEGORY_SERVER)
+	if(!SSticker.cancel_reboot(user))
+		return
+	log_admin("[key_name(user)] cancelled the pending world reboot.")
+	message_admins("[key_name_admin(user)] cancelled the pending world reboot.")
 
 ADMIN_VERB(end_round, R_SERVER, "End Round", "Forcibly ends the round and allows the server to restart normally.", ADMIN_CATEGORY_SERVER)
 	var/confirm = tgui_alert(user, "End the round and  restart the game world?", "End Round", list("Yes", "Cancel"))
@@ -131,6 +142,8 @@ ADMIN_VERB(delay_round_end, R_SERVER, "Delay Round End", "Prevent the server fro
 
 	SSticker.delay_end = TRUE
 	SSticker.admin_delay_notice = delay_reason
+	if(SSticker.reboot_timer)
+		SSticker.cancel_reboot(user)
 
 	log_admin("[key_name(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	message_admins("[key_name_admin(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")

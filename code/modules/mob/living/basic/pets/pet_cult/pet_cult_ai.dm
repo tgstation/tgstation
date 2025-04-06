@@ -236,3 +236,6 @@
 	radial_icon_state = "1"
 	speech_commands = list("rune", "revival")
 	ability_key = BB_RUNE_ABILITY
+
+/datum/pet_command/untargeted_ability/draw_rune/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to draw a rune!"

@@ -13,8 +13,8 @@ import {
   Section,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
+import { numberOfDecimalDigits } from 'tgui-core/math';
 
-import { numberOfDecimalDigits } from '../../common/math';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -23,7 +23,7 @@ const FilterIntegerEntry = (props) => {
   const { act } = useBackend();
   return (
     <NumberInput
-      value={value}
+      value={value || 0}
       minValue={-500}
       maxValue={500}
       step={1}
@@ -49,7 +49,7 @@ const FilterFloatEntry = (props) => {
   return (
     <>
       <NumberInput
-        value={value}
+        value={value || 0}
         minValue={-500}
         maxValue={500}
         stepPixelSize={4}

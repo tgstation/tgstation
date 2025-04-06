@@ -95,6 +95,7 @@
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
 	visor_flags_inv = HIDEEYES|HIDEFACE
 	slowdown = 0
+	visor_dirt = null
 	var/helmet_on = FALSE
 	var/smile = FALSE
 	var/smile_color = COLOR_RED
@@ -180,14 +181,15 @@
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
+	if(!isinhands && !up)
+		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
+
+/obj/item/clothing/head/helmet/space/plasmaman/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+	. = ..()
 	if(!isinhands && smile)
 		var/mutable_appearance/smiley = mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', smile_state)
 		smiley.color = smile_color
 		. += smiley
-	if(!isinhands && !up)
-		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
-	else
-		cut_overlays()
 
 /obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
 	. = ..()

@@ -870,7 +870,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * Set to a number higher than [SM_DELAM_PRIO_IN_GAME] to fully force an admin delam.
  * * delam_path: Typepath of a [/datum/sm_delam]. [SM_DELAM_STRATEGY_PURGE] means reset and put prio back to zero.
  *
- * Returns: Not used for anything, just returns true on succesful set, manual and automatic. Helps admins check stuffs.
+ * Returns: Not used for anything, just returns true on successful set, manual and automatic. Helps admins check stuffs.
  */
 /obj/machinery/power/supermatter_crystal/proc/set_delam(priority = SM_DELAM_PRIO_NONE, manual_delam_path = SM_DELAM_STRATEGY_PURGE)
 	if(priority < delam_priority)

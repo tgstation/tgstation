@@ -19,7 +19,9 @@
 	ai_controller = /datum/ai_controller/basic_controller/trooper
 
 	/// Loot this mob drops on death.
-	var/loot = list(/obj/effect/mob_spawn/corpse/human)
+	var/list/loot
+	/// Corpse to spawn
+	var/corpse = /obj/effect/mob_spawn/corpse/human
 	/// Path of the mob spawner we base the mob's visuals off of.
 	var/mob_spawner = /obj/effect/mob_spawn/corpse/human
 	/// Path of the right hand held item we give to the mob's visuals.
@@ -30,7 +32,8 @@
 /mob/living/basic/trooper/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, mob_spawn_path = mob_spawner, r_hand = r_hand, l_hand = l_hand)
-	if(LAZYLEN(loot))
+	if(LAZYLEN(loot) || corpse)
+		LAZYOR(loot, corpse)
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)

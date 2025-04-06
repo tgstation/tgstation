@@ -3,42 +3,25 @@
 @use './colors.scss';
 
 // Core styles
-@include meta.load-css('~tgui/styles/reset.scss');
+@include meta.load-css('~tgui/styles/reset');
 // Atomic styles
 @include meta.load-css('~tgui/styles/atomic/text.scss');
 // External styles
-@include meta.load-css('pkg:tgui-styles/components/TextArea');
+@include meta.load-css('~tgui-core/styles/components/TextArea');
 // Local styles
-@include meta.load-css('./button.scss');
-@include meta.load-css('./content.scss');
-@include meta.load-css('./dragzone.scss');
-@include meta.load-css('./textarea.scss');
-@include meta.load-css('./window.scss');
-
-@keyframes gradient {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 100% 0;
-  }
-}
+@include meta.load-css('./styles.scss');
 
 @each $channel, $color in colors.$channel-map {
-  $darkened: darken($color, 20%);
+  $darkened: color.adjust($color, $lightness: -20%, $space: hsl);
 
   .button-#{$channel} {
-    border-color: darken($color, 10%);
+    border-color: color.adjust($color, $lightness: -10%, $space: hsl);
     color: $color;
+    user-select: none;
     &:hover {
-      border-color: lighten($color, 10%);
-      color: lighten($color, 5%);
+      border-color: color.adjust($color, $lightness: 10%, $space: hsl);
+      color: color.adjust($color, $lightness: 5%, $space: hsl);
     }
-  }
-
-  .dragzone-#{$channel} {
-    border-color: $darkened;
   }
 
   .textarea-#{$channel} {
@@ -46,25 +29,17 @@
   }
 
   .window-#{$channel} {
-    &:after {
-      animation: gradient 10s linear infinite;
-      background: linear-gradient(
-        to right,
-        darken($color, 35%),
-        $color,
-        lighten($color, 10%),
-        $color,
-        darken($color, 35%)
-      );
-      background-position: 0% 0%;
-      background-size: 500% auto;
-      bottom: 0px;
-      content: '';
-      height: 2px;
-      left: 0px;
-      position: absolute;
-      right: 0px;
-      z-index: 999;
-    }
+    background-color: $color;
+  }
+
+  .shine-#{$channel} {
+    background: radial-gradient(
+      circle,
+      color.adjust($color, $lightness: 5%, $space: hsl),
+      color.adjust($color, $lightness: -15%, $space: hsl),
+      color.adjust($color, $lightness: 15%, $space: hsl),
+      color.adjust($color, $lightness: -15%, $space: hsl),
+      color.adjust($color, $lightness: 5%, $space: hsl)
+    );
   }
 }

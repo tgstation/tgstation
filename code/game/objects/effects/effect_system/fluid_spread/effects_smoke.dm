@@ -91,7 +91,7 @@
 		spread_smoke.lifetime = lifetime
 
 		// the smoke spreads rapidly, but not instantly
-		SSfoam.queue_spread(spread_smoke)
+		SSsmoke.queue_spread(spread_smoke)
 
 
 /obj/effect/particle_effect/fluid/smoke/process(seconds_per_tick)
@@ -390,7 +390,7 @@
 		return FALSE
 
 	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
-	reagents.copy_to(smoker, reagents.total_volume, fraction)
+	reagents.copy_to(smoker, reagents.total_volume, fraction, copy_methods = INHALE)
 	reagents.expose(smoker, INHALE, fraction)
 	return TRUE
 

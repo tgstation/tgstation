@@ -541,7 +541,7 @@
 
 /obj/item/reagent_containers/cup/glass/mug/britcup
 	name = "cup"
-	desc = "A cup with the british flag emblazoned on it."
+	desc = "A cup with the British flag emblazoned on it."
 	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "britcup_empty"
 	base_icon_state = "britcup"

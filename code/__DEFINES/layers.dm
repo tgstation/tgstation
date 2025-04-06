@@ -39,12 +39,15 @@
 #define POINT_PLANE 5
 
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting underlays
+/// Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
 
-///Lighting objects that are "free floating"
+/// Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 11
-#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+#define O_LIGHTING_VISUAL_RENDER_TARGET "*O_LIGHT_VISUAL_PLANE"
+
+// Render plate used by overlay lighting to mask turf lights
+#define TURF_LIGHTING_PLATE 12
 
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
@@ -149,16 +152,15 @@
 #define LATTICE_LAYER (8 + TOPDOWN_LAYER)
 #define DISPOSAL_PIPE_LAYER (9 + TOPDOWN_LAYER)
 #define WIRE_LAYER (10 + TOPDOWN_LAYER)
-#define GLASS_FLOOR_LAYER (11 + TOPDOWN_LAYER)
-#define TRAM_RAIL_LAYER (12 + TOPDOWN_LAYER)
-#define ABOVE_OPEN_TURF_LAYER (13 + TOPDOWN_LAYER)
+#define BELOW_CATWALK_LAYER (11 + TOPDOWN_LAYER)
+#define GLASS_FLOOR_LAYER (12 + TOPDOWN_LAYER)
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER (14 + TOPDOWN_LAYER)
-#define LOWER_RUNE_LAYER (15 + TOPDOWN_LAYER)
-#define RUNE_LAYER (16 + TOPDOWN_LAYER)
-/// [GAME_CLEAN_LAYER] but for floors.
-/// Basically any layer below this (numerically) is "on" a floor for the purposes of washing
-#define FLOOR_CLEAN_LAYER (21 + TOPDOWN_LAYER)
+#define CATWALK_LAYER (13 + TOPDOWN_LAYER)
+#define TRAM_RAIL_LAYER (14 + TOPDOWN_LAYER)
+#define ABOVE_OPEN_TURF_LAYER (15 + TOPDOWN_LAYER)
+#define LOWER_RUNE_LAYER (16 + TOPDOWN_LAYER)
+#define RUNE_LAYER (17 + TOPDOWN_LAYER)
+#define CLEANABLE_FLOOR_OBJECT_LAYER (21 + TOPDOWN_LAYER)
 
 //Placeholders in case the game plane and possibly other things between it and the floor plane are ever made into topdown planes
 
@@ -185,9 +187,7 @@
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
 #define HIGH_PIPE_LAYER 2.54
-// Anything above this layer is not "on" a turf for the purposes of washing
-// I hate this life of ours
-#define GAME_CLEAN_LAYER 2.55
+#define CLEANABLE_OBJECT_LAYER 2.55
 #define TRAM_STRUCTURE_LAYER 2.57
 #define TRAM_FLOOR_LAYER 2.58
 #define TRAM_WALL_LAYER 2.59
@@ -201,6 +201,7 @@
 #define DOOR_HELPER_LAYER 2.72 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
+#define GIB_LAYER 2.85 // sit on top of tables, but below machines
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
@@ -305,6 +306,11 @@
 
 /// Layer for light overlays
 #define LIGHT_DEBUG_LAYER 6
+
+/// Layer for pathfinding arrows
+#define PATH_ARROW_DEBUG_LAYER 7
+/// Layer for pathfinding overlays
+#define PATH_DEBUG_LAYER 8
 
 ///Layer for lobby menu collapse button
 #define LOBBY_BELOW_MENU_LAYER 2

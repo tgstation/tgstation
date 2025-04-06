@@ -30,6 +30,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	icon_state = "vorpalscythe"
 	inhand_icon_state = "vorpalscythe"
 	worn_icon_state = null
+	icon_angle = -35 // Scythes look better when slightly angled
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64

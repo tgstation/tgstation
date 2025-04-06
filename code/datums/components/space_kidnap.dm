@@ -63,10 +63,10 @@
 
 		var/obj/wisp = new /obj/effect/wisp_mobile (get_turf(pick(GLOB.voidwalker_void)))
 		victim.forceMove(wisp)
-		succesfully_kidnapped()
+		successfully_kidnapped()
 
-/datum/component/space_kidnap/proc/succesfully_kidnapped(mob/living/carbon/human/kidnappee)
-	SEND_SIGNAL(parent, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, kidnappee)
+/datum/component/space_kidnap/proc/successfully_kidnapped(mob/living/carbon/human/kidnappee)
+	SEND_SIGNAL(parent, COMSIG_VOIDWALKER_SUCCESSFUL_KIDNAP, kidnappee)
 
 /datum/component/space_kidnap/proc/check_incapacitated(mob/living/carbon/human/kidnappee)
 	return kidnappee.incapacitated

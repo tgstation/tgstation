@@ -141,6 +141,10 @@
 	speech_args[SPEECH_MESSAGE] = message
 	return COMPONENT_UPPERCASE_SPEECH
 
+/obj/item/organ/ears/feel_for_damage(self_aware)
+	// Ear damage has audible effects, so we don't really need to "feel" it when self-examining
+	return ""
+
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
 
@@ -154,6 +158,7 @@
 	damage_multiplier = 2
 
 	preference = "feature_human_ears"
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	dna_block = DNA_EARS_BLOCK
 
@@ -172,7 +177,10 @@
 /datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
 	return SSaccessories.ears_list
 
-/datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
 	return TRUE
@@ -187,7 +195,15 @@
 	// Construct image of inner ears, apply to base ears as an overlay
 	feature_key += "inner"
 	var/mutable_appearance/inner_ears = ..()
-	inner_ears.appearance_flags = RESET_COLOR
+	inner_ears.appearance_flags = RESET_COLOR|KEEP_APART
+	if(limb.cached_color_filter)
+		inner_ears.color = limb.color
+		inner_ears = filter_appearance_recursive(inner_ears, limb.cached_color_filter)
+	if(limb.owner)
+		if(limb.owner.color)
+			inner_ears.color = limb.owner.color
+		if(limb.owner.cached_color_filter)
+			inner_ears = filter_appearance_recursive(inner_ears, limb.owner.cached_color_filter)
 	feature_key = initial(feature_key)
 
 	base_ears.overlays += inner_ears
@@ -259,3 +275,9 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	apply_organ_damage(20 / severity)
+
+/obj/item/organ/ears/pod
+	name = "pod ears"
+	desc = "Strangest salad you've ever seen."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME

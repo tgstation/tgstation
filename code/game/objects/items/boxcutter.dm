@@ -5,6 +5,7 @@
 	icon_state = "boxcutter"
 	inhand_icon_state = "boxcutter"
 	base_icon_state = "boxcutter"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/boxcutter_righthand.dmi'
 	inhand_icon_state = null

@@ -25,6 +25,39 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	is_starting_knowledge = TRUE
 
+// Heretics can enhance their fishing rods to fish better - fishing content.
+// Lasts until successfully fishing something up.
+/datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	..()
+	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+
+/datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
+	SIGNAL_HANDLER
+
+	// Not a grasp, we dont want this to activate with say star or mending touch.
+	if(!istype(touch_spell, action_to_add))
+		return NONE
+
+	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
+	if(!istype(held_rod, /obj/item/fishing_rod) || HAS_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED))
+		return NONE
+
+	INVOKE_ASYNC(cast_on, TYPE_PROC_REF(/atom/movable, say), message = "R'CH T'H F'SH!", forced = "fishing rod infusion invocation")
+	playsound(cast_on, /datum/action/cooldown/spell/touch/mansus_grasp::sound, 15)
+	cast_on.visible_message(span_notice("[cast_on] snaps [cast_on.p_their()] fingers next to [held_rod], covering it in a burst of purple flames!"))
+
+	ADD_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED, REF(held_rod))
+	held_rod.difficulty_modifier -= 20
+	RegisterSignal(held_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(unfuse))
+	held_rod.add_filter("mansus_infusion", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
+	return COMPONENT_CAST_HANDLESS
+
+/datum/heretic_knowledge/spell/basic/proc/unfuse(obj/item/fishing_rod/item, reward, mob/user)
+	if(reward == FISHING_INFLUENCE || prob(35))
+		item.remove_filter("mansus_infusion")
+		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
+		item.difficulty_modifier += 20
+
 /**
  * The Living Heart heretic knowledge.
  *
@@ -232,14 +265,14 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	required_atoms = list(
 		list(/obj/item/toy/eldritch_book, /obj/item/book) = 1,
 		/obj/item/pen = 1,
-		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide) = 1,
+		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse) = 1,
 	)
 	banned_atom_types = list(/obj/item/pen)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	is_starting_knowledge = TRUE
-	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
-	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide))
+	priority = MAX_KNOWLEDGE_PRIORITY - 4 // Least priority out of the starting knowledges, as it's an optional boon.
+	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse))
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book"
 
@@ -341,3 +374,42 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/drain_message = pick_list(HERETIC_INFLUENCE_FILE, "drain_message")
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
 	return .
+
+/**
+ * Warren King's Welcome
+ * Ritual available at the start. So that heretics can easily gain access to maintenance airlocks without having to rely on a HoP or having to off some poor assistant.
+ * Gives access to solars since those doors are especially useful to get in or out of space.
+ */
+/datum/heretic_knowledge/bookworm
+	name = "Warren King's Welcome"
+	desc = "Allows you to transmute 5 cable pieces and a piece of paper to infuse any ID with maintenace and external airlock access."
+	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
+	Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
+	But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
+	required_atoms = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/paper = 1,
+	)
+	cost = 1
+	is_starting_knowledge = TRUE
+	priority = MAX_KNOWLEDGE_PRIORITY - 3
+	research_tree_icon_path = 'icons/obj/card.dmi'
+	research_tree_icon_state = "eldritch"
+
+/datum/heretic_knowledge/bookworm/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/card/id/used_id in atoms)
+		if((ACCESS_MAINT_TUNNELS in used_id.access) && (ACCESS_EXTERNAL_AIRLOCKS in used_id.access)) // If we can't give any access we aren't elligible
+			continue
+		selected_atoms += used_id
+		return TRUE
+
+	user.balloon_alert(user, "ritual failed, no ID lacking access!")
+	return FALSE
+
+/datum/heretic_knowledge/bookworm/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	var/obj/item/card/id/improved_id = locate() in selected_atoms
+	improved_id.add_access(list(ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS), mode = FORCE_ADD_ALL)
+	selected_atoms -= improved_id
+	return TRUE

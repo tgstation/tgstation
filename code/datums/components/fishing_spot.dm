@@ -38,17 +38,14 @@
 ///If the fish source has fishes that are shown in the
 /datum/component/fishing_spot/proc/on_examined(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
-		return
-
-	if(!fish_source.has_known_fishes(source))
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source.has_known_fishes(source))
 		return
 
 	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
 
 /datum/component/fishing_spot/proc/on_examined_more(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source.has_known_fishes(source))
 		return
 
 	fish_source.get_catchable_fish_names(user, parent, examine_text)
@@ -85,6 +82,6 @@
 		var/obj/machinery/fishing_portal_generator/portal = tool.buffer
 		return portal.link_fishing_spot(fish_source, source, user)
 
-/datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+/datum/component/fishing_spot/proc/fish_released(atom/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
-	fish_source.readd_fish(fish, releaser)
+	fish_source.readd_fish(source, fish, releaser)

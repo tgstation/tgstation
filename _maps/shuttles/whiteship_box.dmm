@@ -273,15 +273,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/zombie{
-	desc = "This undead fiend looks to be badly decomposed.";
-	environment_smash = 0;
-	health = 60;
-	melee_damage_lower = 11;
-	melee_damage_upper = 11;
-	name = "Rotting Carcass";
-	outfit = /datum/outfit/corpse_assistant
-	},
+/mob/living/basic/zombie/rotten/assistant,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -360,14 +352,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/zombie{
-	desc = "This undead fiend looks to be badly decomposed.";
-	environment_smash = 0;
-	health = 60;
-	melee_damage_lower = 11;
-	melee_damage_upper = 11;
-	name = "Rotting Carcass"
-	},
+/mob/living/basic/zombie/rotten,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aQ" = (
@@ -841,14 +826,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/zombie{
-	desc = "This undead fiend looks to be badly decomposed.";
-	environment_smash = 0;
-	health = 60;
-	melee_damage_lower = 11;
-	melee_damage_upper = 11;
-	name = "Rotting Carcass"
-	},
+/mob/living/basic/zombie/rotten,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bT" = (
@@ -1449,15 +1427,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/zombie{
-	desc = "This undead fiend looks to be badly decomposed.";
-	environment_smash = 0;
-	health = 60;
-	melee_damage_lower = 11;
-	melee_damage_upper = 11;
-	name = "Rotting Carcass";
-	outfit = /datum/outfit/corpse_assistant
-	},
+/mob/living/basic/zombie/rotten/assistant,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dc" = (

@@ -42,7 +42,7 @@
 	if(!owner_area || !owner_turf)
 		return FALSE // nullspaced?
 
-	if(owner_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(owner, owner_turf, TELEPORT_CHANNEL_MAGIC))
 		if(feedback)
 			to_chat(owner, span_danger("Some dull, universal force is stopping you from jaunting here."))
 		return FALSE

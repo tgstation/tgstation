@@ -4,10 +4,14 @@
 	log_admin("[key_name(usr)] checked the player panel.")
 	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge' charset='UTF-8'/><title>Player Panel</title></head>"
 
+	var/ui_scale = owner.prefs.read_preference(/datum/preference/toggle/ui_scale)
+
 	//javascript, the part that does most of the work~
 	dat += {"
 
 		<head>
+			[!ui_scale && owner.window_scaling ? "<style>body {zoom: [100 / owner.window_scaling]%;}</style>" : ""]
+
 			<script type='text/javascript'>
 
 				var locked_tabs = new Array();
@@ -80,19 +84,19 @@
 
 					body += "</td><td align='center'>";
 
-					body += "<a href='?_src_=holder;[HrefToken()];adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
-					body += "<a href='?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
-					body += "<a href='?_src_=vars;[HrefToken()];skill="+ref+"'>SP</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];adminplayeropts="+ref+"'>PP</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
+					body += "<a href='byond://?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
+					body += "<a href='byond://?_src_=vars;[HrefToken()];skill="+ref+"'>SP</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
 					if (job == "Cyborg")
-						body += "<a href='?_src_=holder;[HrefToken()];borgpanel="+ref+"'>BP</a> - "
-					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
-					body += "<a href='?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
+						body += "<a href='byond://?_src_=holder;[HrefToken()];borgpanel="+ref+"'>BP</a> - "
+					body += "<a href='byond://?priv_msg="+ckey+"'>PM</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
+					body += "<a href='byond://?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
 					if(antagonist > 0)
-						body += "<font size='2'><a href='?_src_=holder;[HrefToken()];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
+						body += "<font size='2'><a href='byond://?_src_=holder;[HrefToken()];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
 
 					body += "</td></tr></table>";
 
@@ -198,7 +202,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information - <a href='?_src_=holder;[HrefToken()];check_antagonist=1'>Check antagonists</a> - Kick <a href='?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=0'>everyone</a>/<a href='?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=1'>AFKers</a> in lobby
+					Hover over a line to see more information - <a href='byond://?_src_=holder;[HrefToken()];check_antagonist=1'>Check antagonists</a> - Kick <a href='byond://?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=0'>everyone</a>/<a href='byond://?_src_=holder;[HrefToken()];kick_all_from_lobby=1;afkonly=1'>AFKers</a> in lobby
 					<p>
 				</td>
 			</tr>
@@ -283,9 +287,8 @@
 				M_rname_as_key = null
 
 			var/previous_names_string = ""
-			var/datum/player_details/readable = GLOB.player_details[M.ckey]
-			if(readable)
-				previous_names_string = readable.get_played_names()
+			if(M.persistent_client)
+				previous_names_string = M.persistent_client.get_played_names()
 
 			//output for each mob
 			dat += {"
@@ -329,4 +332,8 @@
 	</body></html>
 	"}
 
-	usr << browse(dat, "window=players;size=600x480")
+	var/window_size = "size=600x480"
+	if(owner.window_scaling && ui_scale)
+		window_size = "size=[600 * owner.window_scaling]x[400 * owner.window_scaling]"
+
+	usr << browse(dat, "window=players;[window_size]")

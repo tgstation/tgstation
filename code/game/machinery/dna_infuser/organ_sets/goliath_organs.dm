@@ -18,6 +18,7 @@
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "eyes"
+	iris_overlay = null
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
@@ -99,6 +100,7 @@
 	icon = 'icons/obj/weapons/goliath_hammer.dmi'
 	icon_state = "goliath_hammer"
 	inhand_icon_state = "goliath_hammer"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/weapons/goliath_hammer_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/goliath_hammer_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL

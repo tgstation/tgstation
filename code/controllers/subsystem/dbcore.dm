@@ -2,9 +2,9 @@
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_TICKER
+	init_stage = INITSTAGE_FIRST
 	wait = 10 // Not seconds because we're running on SS_TICKER
 	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
-	init_order = INIT_ORDER_DBCORE
 	priority = FIRE_PRIORITY_DATABASE
 
 	var/schema_mismatch = 0
@@ -49,6 +49,8 @@ SUBSYSTEM_DEF(dbcore)
 	var/db_daemon_started = FALSE
 
 /datum/controller/subsystem/dbcore/Initialize()
+	Connect()
+
 	//We send warnings to the admins during subsystem init, as the clients will be New'd and messages
 	//will queue properly with goonchat
 	switch(schema_mismatch)
@@ -674,7 +676,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 
 /datum/db_query/proc/slow_query_check()
-	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
+	message_admins("HEY! A database query timed out. Did the server just hang? <a href='byond://?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='byond://?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/db_query/proc/NextRow(async = TRUE)
 	Activity("NextRow")

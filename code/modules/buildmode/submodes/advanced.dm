@@ -3,7 +3,7 @@
 	var/atom/objholder = null
 
 /datum/buildmode_mode/advanced/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Set object type")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Copy object type")] -> Left Mouse Button + Alt on turf/obj\n\
 		[span_bold("Place objects")] -> Left Mouse Button on turf/obj\n\

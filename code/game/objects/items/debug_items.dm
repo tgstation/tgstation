@@ -34,6 +34,7 @@
 	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	toolspeed = 0.1

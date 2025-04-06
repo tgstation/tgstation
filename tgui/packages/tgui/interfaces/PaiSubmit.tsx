@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Box, Button, Input, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -143,6 +143,14 @@ const ButtonsDisplay = (props) => {
             }
           >
             SUBMIT
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            onClick={() => act('withdraw')}
+            tooltip="Withdraws your pAI candidacy, if any."
+          >
+            WITHDRAW
           </Button>
         </Stack.Item>
       </Stack>

@@ -585,3 +585,15 @@
 
 /datum/station_trait/pet_day/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	overlays += "select_pet"
+
+/// We're pulling a Jim Kramer with this one boys
+/datum/station_trait/gmm_spotlight
+	name = "GMM Economic Spotlight"
+	report_message = "This shift, the Galactic Mineral Market is doing a showcase on your crew's affulence! Every paycheck, the station newscasters will alert the crew who has the most credits."
+	trait_type = STATION_TRAIT_NEUTRAL
+	trait_to_give = STATION_TRAIT_ECONOMY_ALERTS
+	weight = 2
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+
+	dynamic_threat_id = "GMM Econ Spotlight"

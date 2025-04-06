@@ -41,6 +41,9 @@
 /// from /obj/machienry/quantum_server/station_spawn()
 #define COMSIG_BITRUNNER_STATION_SPAWN "bitrunner_station_spawn"
 
+/// from /obj/machinery/quantum_server/stock_gear(): (mob/living/carbon/human/avatar, external_load_flags)
+#define COMSIG_BITRUNNER_STOCKING_GEAR "bitrunner_stocking_gear"
+
 // Ladder
 
 /// from /obj/structure/hololadder/disconnect()

@@ -40,7 +40,8 @@
 /obj/item/pizzabox/Initialize(mapload)
 	. = ..()
 	if(pizza)
-		pizza = new pizza
+		pizza = new pizza(src)
+		pizza.slice()
 	update_appearance()
 	register_context()
 
@@ -69,7 +70,7 @@
 		boxtag_set = TRUE
 	if(open)
 		if(pizza)
-			desc = "[desc] It appears to have \a [pizza] inside. Use your other hand to take it out."
+			desc = "[desc] It appears to have \a [pizza] inside[pizza.sliced ? ". It is sliced" : ""]. Use your other hand to take it out."
 		if(bomb)
 			desc = "[desc] Wait, what?! It has \a [bomb] inside!"
 			if(bomb_defused)
@@ -97,11 +98,13 @@
 	if(open)
 		if(pizza)
 			var/mutable_appearance/pizza_overlay = mutable_appearance(pizza.icon, pizza.icon_state)
-			pizza_overlay.pixel_y = -2
+			if(pizza.slices_left != initial(pizza.slices_left))
+				pizza_overlay.add_filter("pizzaslices", 1, pizza.get_slices_filter())
+			pizza_overlay.pixel_z = -2
 			. += pizza_overlay
 		if(bomb)
 			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state, layer = layer + 0.01)
-			bomb_overlay.pixel_y = 8
+			bomb_overlay.pixel_z = 8
 			. += bomb_overlay
 		return
 
@@ -110,13 +113,13 @@
 		box_offset += 3
 		var/obj/item/pizzabox/box = stacked_box
 		var/mutable_appearance/box_overlay = mutable_appearance(box.icon, box.icon_state, layer = layer + (box_offset * 0.01))
-		box_overlay.pixel_y = box_offset
+		box_overlay.pixel_z = box_offset
 		. += box_overlay
 
 	var/obj/item/pizzabox/box = LAZYLEN(length(boxes)) ? boxes[length(boxes)] : src
 	if(box.boxtag != "")
 		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag", layer = layer + (box_offset * 0.02))
-		tag_overlay.pixel_y = box_offset
+		tag_overlay.pixel_z = box_offset
 		. += tag_overlay
 
 /obj/item/pizzabox/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
@@ -127,7 +130,7 @@
 
 	for(var/V in boxes) //add EXTRA BOX per box
 		var/mutable_appearance/M = mutable_appearance(icon_file, inhand_icon_state)
-		M.pixel_y = current_offset
+		M.pixel_z = current_offset
 		current_offset += 2
 		. += M
 
@@ -154,6 +157,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
+		if(open && pizza?.sliced && !isobj(loc))
+			pizza.produce_slice(user)
+			update_appearance()
+			return
 		return ..()
 	if(open)
 		if(pizza)
@@ -173,7 +180,7 @@
 					return
 				bomb_defused = FALSE
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
-				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
+				bomb.adminlog = "\The [bomb] in [src.name] that [key_name(user)] activated has detonated!"
 				balloon_alert(user, "bomb set")
 				update_appearance()
 	else if(length(boxes))
@@ -184,15 +191,16 @@
 		update_appearance()
 		user.regenerate_icons()
 
-/obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pizzabox))
-		var/obj/item/pizzabox/newbox = I
+/obj/item/pizzabox/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
+	. = NONE
+	if(istype(used_item, /obj/item/pizzabox))
+		var/obj/item/pizzabox/newbox = used_item
 		if(!open && !newbox.open)
 			var/list/add = list()
 			add += newbox
 			add += newbox.boxes
 			if(!user.transferItemToLoc(newbox, src))
-				return
+				return ITEM_INTERACT_FAILURE
 			boxes += add
 			newbox.boxes.Cut()
 			newbox.update_appearance()
@@ -204,47 +212,53 @@
 					disperse_pizzas()
 				else
 					balloon_alert(user, "looks unstable...")
-			return
+			return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "close it first!")
-	else if(istype(I, /obj/item/food/pizza))
+			return ITEM_INTERACT_FAILURE
+	else if(istype(used_item, /obj/item/food/pizza))
 		if(open)
 			if(pizza)
 				balloon_alert(user, "it's full!")
-				return
-			if(!user.transferItemToLoc(I, src))
-				return
-			pizza = I
+				return ITEM_INTERACT_FAILURE
+			if(!user.transferItemToLoc(used_item, src))
+				return ITEM_INTERACT_FAILURE
+			pizza = used_item
 			update_appearance()
-			return
-	else if(istype(I, /obj/item/bombcore/miniature/pizza))
+			return ITEM_INTERACT_SUCCESS
+	else if(istype(used_item, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
-			if(!user.transferItemToLoc(I, src))
-				return
+			if(!user.transferItemToLoc(used_item, src))
+				return ITEM_INTERACT_FAILURE
 			set_wires(new /datum/wires/explosive/pizza(src))
-			register_bomb(I)
+			register_bomb(used_item)
 			balloon_alert(user, "bomb placed")
 			update_appearance()
-			return
+			return ITEM_INTERACT_SUCCESS
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-	else if(IS_WRITING_UTENSIL(I))
-		if(!open)
-			if(!user.can_write(I))
-				return
-			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
-			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
-			if(!user.can_perform_action(src))
-				return
-			balloon_alert(user, "writing box tag...")
-			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			boxtag_set = TRUE
-			update_appearance()
-			return
-	else if(is_wire_tool(I))
-		if(wires && bomb)
-			wires.interact(user)
-	..()
+			return ITEM_INTERACT_FAILURE
+	else if(IS_WRITING_UTENSIL(used_item))
+		if(open)
+			return ITEM_INTERACT_FAILURE
+		if(!user.can_write(used_item))
+			return ITEM_INTERACT_FAILURE
+		var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
+		box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
+		if(!user.can_perform_action(src))
+			return ITEM_INTERACT_FAILURE
+		balloon_alert(user, "writing box tag...")
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+		boxtag_set = TRUE
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	else if(is_wire_tool(used_item) && wires && bomb)
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+	else if(istype(used_item, /obj/item/knife) && !isnull(pizza) && open && !pizza.sliced)
+		pizza.slice(user, used_item)
+		return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/pizzabox/process(seconds_per_tick)
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
@@ -297,6 +311,13 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
+
+/obj/item/pizzabox/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != pizza)
+		return
+	pizza = null
+	update_appearance()
 
 /obj/item/pizzabox/proc/unprocess()
 	STOP_PROCESSING(SSobj, src)

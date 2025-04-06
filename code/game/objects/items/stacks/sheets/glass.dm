@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/glass
 	grind_results = list(/datum/reagent/silicon = 20)
 	material_type = /datum/material/glass
-	tableVariant = /obj/structure/table/glass
+	table_type = /obj/structure/table/glass
 	matter_amount = 4
 	cost = SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/glass
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			return
 		CC.use(5)
 		use(1)
-		to_chat(user, span_notice("You attach wire to the [name]."))
+		to_chat(user, span_notice("You attach wire to \the [src]."))
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/plasmaglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 	material_flags = NONE
-	tableVariant = /obj/structure/table/glass/plasmaglass
+	table_type = /obj/structure/table/glass/plasmaglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/rglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	matter_amount = 6
-	tableVariant = /obj/structure/table/reinforced/rglass
+	table_type = /obj/structure/table/reinforced/rglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	gulag_valid = TRUE
 	matter_amount = 8
-	tableVariant = /obj/structure/table/reinforced/plasmarglass
+	table_type = /obj/structure/table/reinforced/plasmarglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	armor_type = /datum/armor/sheet_titaniumglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
-	tableVariant = /obj/structure/table/reinforced/titaniumglass
+	table_type = /obj/structure/table/reinforced/titaniumglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	material_flags = NONE
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
-	tableVariant = /obj/structure/table/reinforced/plastitaniumglass
+	table_type = /obj/structure/table/reinforced/plastitaniumglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
@@ -287,6 +287,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "large"
+	icon_angle = -45
 	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 10
@@ -305,16 +306,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/shiv_type = /obj/item/knife/shiv
 	var/craft_time = 3.5 SECONDS
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
-	embed_type = /datum/embed_data/shard
+	embed_type = /datum/embedding/shard
 
-/datum/embed_data/shard
+/datum/embedding/shard
 	embed_chance = 65
-
-/datum/embed_data/glass_candy
-	embed_chance = 100
-	ignore_throwspeed_threshold = TRUE
-	impact_pain_mult = 1
-	pain_chance = 5
 
 /datum/armor/item_shard
 	melee = 100

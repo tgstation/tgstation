@@ -82,7 +82,7 @@
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
-	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
+	desc = "A specialised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
 	specialised = TRUE
 	style = /datum/pod_style/syndicate
 	bluespace = TRUE
@@ -259,7 +259,10 @@
 	return
 
 ///Called by the drop pods that return captured crewmembers from the ninja den.
-/obj/structure/closet/supplypod/proc/return_from_capture(mob/living/victim, turf/destination = get_safe_random_station_turf())
+/obj/structure/closet/supplypod/proc/return_from_capture(
+	mob/living/victim,
+	turf/destination = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
+)
 	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
 		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
 			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
@@ -674,7 +677,7 @@
 		stack_trace("Pod landingzone created with no pod")
 		return INITIALIZE_HINT_QDEL
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
-		podParam = new podParam() //If its just a path, instantiate it
+		podParam = new podParam() //If it's just a path, instantiate it
 	pod = podParam
 	pod.resistance_flags |= (INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF)
 	if (!pod.effectStealth)

@@ -86,7 +86,7 @@
 	suffix = null
 	if(name == "\improper MULEbot")
 		name = "\improper MULEbot [id]"
-	set_home(loc)
+	set_home(get_turf(src))
 
 /mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -226,7 +226,7 @@
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
-	load_overlay.pixel_y = initial(load.pixel_y) + 11
+	load_overlay.pixel_z = initial(load.pixel_z) + 11
 	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -853,7 +853,7 @@
 	if(!isobserver(load))
 		return
 	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
-	ghost_overlay.pixel_y = 12
+	ghost_overlay.pixel_z = 12
 	. += ghost_overlay
 
 /mob/living/simple_animal/bot/mulebot/paranormal/get_load_name() //Don't reveal the name of ghosts so we can't metagame who died and all that.

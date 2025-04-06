@@ -147,6 +147,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	base_icon_state = "bloodhand"
+	icon_angle = 90
 	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 

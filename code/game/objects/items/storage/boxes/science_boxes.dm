@@ -10,8 +10,8 @@
 		new /obj/item/swab(src)
 
 /obj/item/storage/box/petridish
-	name = "box of petridishes"
-	desc = "This box purports to contain a number of high rim petridishes."
+	name = "box of petri dishes"
+	desc = "This box purports to contain a number of high rim petri dishes."
 	illustration = "petridish"
 
 /obj/item/storage/box/petridish/PopulateContents()

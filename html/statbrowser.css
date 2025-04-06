@@ -1,3 +1,13 @@
+.light:root {
+	--scrollbar-base: #f2f2f2;
+	--scrollbar-thumb: #a7a7a7;
+}
+
+html,
+body {
+	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-base);
+}
+
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 12px;
@@ -94,10 +104,15 @@ img {
 	background-color: #eeeeee;
 }
 
+#under-content {
+	height: calc(0.5em - 4px);
+	background-color: #eeeeee;
+}
+
 #statcontent {
 	flex: 1;
 	padding: 0.75em 0.5em;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
 }
 
@@ -135,6 +150,7 @@ img {
 }
 
 .grid-item:hover .grid-item-text {
+	height: 100%;
 	overflow: visible;
 	white-space: normal;
 	background-color: #ececec;
@@ -177,9 +193,16 @@ img {
 	margin-bottom: 1em;
 }
 
-/* Dark theme colors */
+/**
+ * MARK: Dark theme colors
+ */
+.dark:root {
+	--scrollbar-base: #151515;
+	--scrollbar-thumb: #363636;
+}
+
 body.dark {
-	background-color: #131313;
+	background-color: #151515;
 	color: #b2c4dd;
 	scrollbar-base-color: #1c1c1c;
 	scrollbar-face-color: #3b3b3b;
@@ -201,7 +224,7 @@ body.dark {
 }
 
 .dark #menu {
-	background-color: #131313;
+	background-color: #151515;
 }
 
 .dark #menu.tabs-classic .button.active {
@@ -222,7 +245,8 @@ body.dark {
 	border-bottom-color: #d4dfec;
 }
 
-.dark #under-menu {
+.dark #under-menu,
+.dark #under-content {
 	background-color: #202020;
 }
 

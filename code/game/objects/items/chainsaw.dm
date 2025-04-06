@@ -5,6 +5,7 @@
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon = 'icons/obj/weapons/chainsaw.dmi'
 	icon_state = "chainsaw"
+	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY

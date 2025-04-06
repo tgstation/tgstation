@@ -77,7 +77,7 @@
 		if(!hurt)
 			return
 
-		if(victim.check_block(src, 0, "[name]", LEAP_ATTACK))
+		if(. == SUCCESSFUL_BLOCK || victim.check_block(src, 0, "[name]", LEAP_ATTACK))
 			blocked = TRUE
 
 		take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
@@ -120,7 +120,7 @@
 		return
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_off"
+		hud_used.throw_icon.icon_state = "act_throw"
 	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
@@ -228,13 +228,13 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	if(href_list["embedded_object"])
-		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-		if(!L)
+		var/obj/item/bodypart/limb = locate(href_list["embedded_limb"]) in bodyparts
+		if(!limb)
 			return
-		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
+		var/obj/item/weapon = locate(href_list["embedded_object"]) in limb.embedded_objects
+		if(!weapon || weapon.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 			return
-		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
+		weapon.get_embed().rip_out(usr)
 		return
 
 	if(href_list["show_paper_note"])
@@ -243,6 +243,10 @@
 			return
 
 		paper_note.show_through_camera(usr)
+
+/mob/living/carbon/on_fall()
+	. = ..()
+	loc?.handle_fall(src) //it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
@@ -426,7 +430,7 @@
 /mob/living/carbon/proc/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
 	var/force = (vomit_flags & MOB_VOMIT_FORCE)
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
-		return TRUE
+		return FALSE
 
 	if(!force && HAS_TRAIT(src, TRAIT_STRONG_STOMACH))
 		lost_nutrition *= 0.5
@@ -584,7 +588,7 @@
 /mob/living/carbon/update_sight()
 	if(!client)
 		return
-	if(stat == DEAD)
+	if(stat == DEAD && !HAS_TRAIT(src, TRAIT_CORPSELOCKED))
 		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 			set_sight(null)
 		else if(is_secret_level(z))
@@ -634,6 +638,9 @@
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		new_sight |= SEE_MOBS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
+
+	if (HAS_TRAIT(src, TRAIT_MINOR_NIGHT_VISION))
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -1042,6 +1049,11 @@
 	bodyparts += new_bodypart
 	new_bodypart.update_owner(src)
 
+	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
+	for(var/datum/status_effect/grouped/bodypart_effect/effect_type as anything in new_bodypart.bodypart_effects)
+		apply_status_effect(effect_type, type, new_bodypart)
+
+	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
 		organ.mob_insert(src)
 
@@ -1091,10 +1103,6 @@
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		final_modification += bodypart.speed_modifier
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
-
-/mob/living/carbon/proc/create_internal_organs()
-	for(var/obj/item/organ/internal_organ in organs)
-		internal_organ.Insert(src)
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
@@ -1184,7 +1192,7 @@
 			return
 		if(result)
 			var/chosenart = artnames[result]
-			var/datum/martial_art/MA = new chosenart
+			var/datum/martial_art/MA = new chosenart(src)
 			MA.teach(src)
 			log_admin("[key_name(usr)] has taught [MA] to [key_name(src)].")
 			message_admins(span_notice("[key_name_admin(usr)] has taught [MA] to [key_name_admin(src)]."))
@@ -1376,7 +1384,7 @@
 /// Special carbon interaction on lying down, to transform its sprite by a rotation.
 /mob/living/carbon/proc/lying_angle_on_lying_down(new_lying_angle)
 	if(!new_lying_angle)
-		set_lying_angle(pick(90, 270))
+		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
 	else
 		set_lying_angle(new_lying_angle)
 

@@ -5,6 +5,7 @@
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
 	tick_interval = 2 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 	/// Current amount of stacks we have
 	var/stacks
 	/// Maximum of stacks that we could possibly get

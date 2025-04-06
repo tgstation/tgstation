@@ -101,6 +101,7 @@
 
 /atom/movable/screen/guardian
 	icon = 'icons/hud/guardian.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/guardian/manifest
 	icon_state = "manifest"

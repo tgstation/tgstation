@@ -6,16 +6,6 @@
 	message = "is strumming the air and headbanging like a safari chimp."
 	hands_use_check = TRUE
 
-/datum/emote/living/carbon/blink
-	key = "blink"
-	key_third_person = "blinks"
-	message = "blinks."
-
-/datum/emote/living/carbon/blink_r
-	key = "blink_r"
-	name = "blink (Rapid)"
-	message = "blinks rapidly."
-
 /datum/emote/living/carbon/clap
 	key = "clap"
 	key_third_person = "claps"
@@ -237,3 +227,18 @@
 	key = "wink"
 	key_third_person = "winks"
 	message = "winks."
+
+/datum/emote/living/carbon/hiss
+	key = "hiss"
+	key_third_person = "hisses"
+	message = "hisses!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	vary = TRUE
+
+/datum/emote/living/carbon/hiss/get_sound(mob/living/carbon/user)
+	. = ..()
+	if(!istype(user))
+		return
+	if(isalien(user))
+		return SFX_HISS
+	return user.dna.species.get_hiss_sound()

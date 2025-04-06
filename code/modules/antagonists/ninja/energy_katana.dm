@@ -17,6 +17,7 @@
 	icon_state = "energy_katana"
 	inhand_icon_state = "energy_katana"
 	worn_icon_state = "energy_katana"
+	icon_angle = 35
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 30
@@ -28,8 +29,8 @@
 	pickup_sound = 'sound/items/unsheath.ogg'
 	drop_sound = 'sound/items/sheath.ogg'
 	block_sound = 'sound/items/weapons/block_blade.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	sharpness = SHARP_EDGED
 	max_integrity = 200

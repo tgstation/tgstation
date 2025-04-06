@@ -201,6 +201,7 @@
 	return //don't want the emitters to miss
 
 /obj/projectile/beam/emitter/hitscan
+	icon_state = null
 	hitscan = TRUE
 	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter
@@ -244,6 +245,7 @@
 	impact_type = /obj/effect/projectile/impact/laser
 
 /obj/projectile/beam/lasertag/redtag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/beam/lasertag/bluetag
@@ -254,6 +256,7 @@
 	impact_type = /obj/effect/projectile/impact/laser/blue
 
 /obj/projectile/beam/lasertag/bluetag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/magic/shrink/alien

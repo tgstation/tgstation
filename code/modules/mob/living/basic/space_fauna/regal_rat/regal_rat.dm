@@ -179,10 +179,12 @@
 	if(SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src) & COMPONENT_RAT_INTERACTED)
 		return FALSE
 
-	if(isnull(mind) || !combat_mode)
+	if(isnull(mind) || combat_mode)
 		return TRUE
 
-	poison_target(target)
+	if(poison_target(target))
+		return FALSE
+
 	return TRUE
 
 /// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
@@ -204,10 +206,17 @@
 
 	return TRUE
 
-/// Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+/**
+ * Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+ * Returns TRUE if the target is valid for adding rat spit
+ * Returns FALSE if the target is invalid for adding rat spit
+ * Arguments
+ *
+ * * atom/lean_target - the target we try to add the spit to
+ */
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
 	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
-		return
+		return FALSE
 
 	visible_message(
 		span_warning("[src] starts licking [target] passionately!"),
@@ -216,10 +225,11 @@
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
-		return
+		return TRUE // don't return false here because they tried to lick and the do_after was interrupted, otherwise cancelling the do_after will make them hit the target.
 
 	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
 	balloon_alert(src, "licked")
+	return TRUE
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.

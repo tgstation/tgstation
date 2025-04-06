@@ -5,10 +5,16 @@
  */
 
 import { Component, createRef, RefObject, useState } from 'react';
+import {
+  Box,
+  Dialog,
+  Divider,
+  MenuBar,
+  Section,
+  TextArea,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Divider, MenuBar, Section, TextArea } from '../components';
-import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
 import { NtosWindow } from '../layouts';
 import { NTOSData } from '../layouts/NtosWindow';
 import { createLogger } from '../logging';
@@ -477,12 +483,18 @@ export const NtosNotepad = (props) => {
         </Box>
       </NtosWindow.Content>
       {activeDialog === Dialogs.UNSAVED_CHANGES && (
-        <UnsavedChangesDialog
-          documentName={documentName}
-          onSave={handleSave}
-          onClose={handleCloseDialog}
-          onDiscard={noSave}
-        />
+        <Dialog title="Notepad" onClose={handleCloseDialog}>
+          <div className="Dialog__body">
+            Do you want to save changes to {documentName}?
+          </div>
+          <div className="Dialog__footer">
+            <Dialog.Button onClick={handleSave}>Save</Dialog.Button>
+            <Dialog.Button onClick={handleCloseDialog}>
+              Don&apos;t Save
+            </Dialog.Button>
+            <Dialog.Button onClick={handleCloseDialog}>Cancel</Dialog.Button>
+          </div>
+        </Dialog>
       )}
       {activeDialog === Dialogs.ABOUT && (
         <AboutDialog close={handleCloseDialog} />

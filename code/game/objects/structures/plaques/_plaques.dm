@@ -2,7 +2,7 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
-	desc = "A blank plaque, use a fancy pen to engrave it. It can be detatched from the wall with a wrench."
+	desc = "A blank plaque, use a fancy pen to engrave it. It can be detached from the wall with a wrench."
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE

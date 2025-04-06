@@ -31,7 +31,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(attacking_item, /obj/item/kinetic_crusher))
-		total_damage += (-1 * damage_dealt)
+		total_damage += damage_dealt
 
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
@@ -101,11 +101,11 @@
 
 /datum/status_effect/throat_soothed/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/throat_soothed/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bounty
 	id = "bounty"
@@ -691,17 +691,14 @@
 	icon_state = "shower_regen_catgirl"
 
 /atom/movable/screen/alert/status_effect/washing_regen/dislike
-	name = "Washing"
 	desc = "This water feels dirty..."
 	icon_state = "shower_regen_dirty"
 
 /atom/movable/screen/alert/status_effect/washing_regen/bloody_like
-	name = "Washing"
 	desc = "Mhhhmmmm... the crimson red drops of life. How delightful."
 	icon_state = "shower_regen_blood_happy"
 
 /atom/movable/screen/alert/status_effect/washing_regen/bloody_dislike
-	name = "Washing"
 	desc = "Is that... blood? What the fuck!"
 	icon_state = "shower_regen_blood_bad"
 
@@ -729,3 +726,55 @@
 	name = "Hotspring"
 	desc = "Waaater... FUCK THIS HOT WATER!!"
 	icon_state = "hotspring_regen_catgirl"
+
+#define BEAM_ALPHA 62
+
+///Makes the mob luminescent for the duration of the effect, and project a large spotlight overtop them.
+/datum/status_effect/spotlight_light
+	id = "spotlight_light"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = null
+	/// Color of the light
+	var/spotlight_color = "#e2e2ca"
+	/// Dummy lighting object to simulate the spotlight highlighting the mob.
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+	/// First visual overlay, this one sits on the back of the mob.
+	var/obj/effect/overlay/spotlight/beam_from_above_a
+	/// Second visual overlay, this one sits on the front of the mob.
+	var/obj/effect/overlay/spotlight/beam_from_above_b
+
+/datum/status_effect/spotlight_light/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/spotlight_light/on_apply()
+	mob_light_obj = owner.mob_light(2, 1.5, spotlight_color)
+
+	beam_from_above_a = new /obj/effect/overlay/spotlight
+	beam_from_above_a.color = spotlight_color
+	beam_from_above_a.alpha = BEAM_ALPHA
+	owner.vis_contents += beam_from_above_a
+	beam_from_above_a.layer = BELOW_MOB_LAYER
+
+	beam_from_above_b = new /obj/effect/overlay/spotlight
+	beam_from_above_b.color = spotlight_color
+	beam_from_above_b.alpha = BEAM_ALPHA
+	beam_from_above_b.layer = ABOVE_MOB_LAYER
+	beam_from_above_b.pixel_y = -2 //Slight vertical offset for an illusion of volume
+	owner.vis_contents += beam_from_above_b
+
+	return TRUE
+
+/datum/status_effect/spotlight_light/on_remove()
+	owner.vis_contents -= beam_from_above_a
+	owner.vis_contents -= beam_from_above_b
+	QDEL_NULL(beam_from_above_a)
+	QDEL_NULL(beam_from_above_b)
+	QDEL_NULL(mob_light_obj)
+
+/datum/status_effect/spotlight_light/divine
+	id = "divine_spotlight"
+	duration = 3 SECONDS
+
+#undef BEAM_ALPHA

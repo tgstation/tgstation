@@ -12,6 +12,9 @@
 	return GLOB.language_menu_state
 
 /datum/language_menu/ui_interact(mob/user, datum/tgui/ui)
+	if(isnull(language_holder.selected_language))
+		language_holder.get_selected_language()
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LanguageMenu")
@@ -21,38 +24,26 @@
 	var/list/data = list()
 
 	var/atom/movable/speaker = language_holder.owner
-	data["is_living"] = isliving(speaker)
 	data["languages"] = list()
 	for(var/datum/language/language as anything in GLOB.all_languages)
-		var/result = language_holder.has_language(language) || language_holder.has_language(language, SPOKEN_LANGUAGE)
-		if(!result)
-			continue
 		var/list/lang_data = list()
 
 		lang_data["name"] = initial(language.name)
 		lang_data["desc"] = initial(language.desc)
 		lang_data["key"] = initial(language.key)
 		lang_data["is_default"] = (language == language_holder.selected_language)
+		lang_data["icon"] = initial(language.icon)
+		lang_data["icon_state"] = initial(language.icon_state)
 		if(speaker)
-			lang_data["can_speak"] = speaker.can_speak_language(language)
-			lang_data["can_understand"] = speaker.has_language(language)
+			lang_data["can_speak"] = !!speaker.has_language(language, SPOKEN_LANGUAGE)
+			lang_data["could_speak"] = !!(language_holder.omnitongue || speaker.could_speak_language(language))
+			lang_data["can_understand"] = !!speaker.has_language(language, UNDERSTOOD_LANGUAGE)
 
 		UNTYPED_LIST_ADD(data["languages"], lang_data)
 
-	if(check_rights_for(user.client, R_ADMIN) || isobserver(speaker))
-		data["admin_mode"] = TRUE
-		data["omnitongue"] = language_holder.omnitongue
-		data["unknown_languages"] = list()
-		for(var/datum/language/language as anything in GLOB.all_languages)
-			if(language_holder.has_language(language) || language_holder.has_language(language, SPOKEN_LANGUAGE))
-				continue
-			var/list/lang_data = list()
-
-			lang_data["name"] = initial(language.name)
-			lang_data["desc"] = initial(language.desc)
-			lang_data["key"] = initial(language.key)
-
-			UNTYPED_LIST_ADD(data["unknown_languages"], lang_data)
+	data["is_living"] = isliving(speaker)
+	data["admin_mode"] = check_rights_for(user.client, R_ADMIN) || isobserver(speaker)
+	data["omnitongue"] = language_holder.omnitongue
 
 	return data
 
@@ -60,7 +51,8 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/user = usr
+
+	var/mob/user = ui.user
 	var/atom/movable/speaker = language_holder.owner
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
 	var/language_name = params["language_name"]

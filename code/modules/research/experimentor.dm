@@ -121,7 +121,7 @@
 	if(!is_insertion_ready(user))
 		return ..()
 	if(!user.transferItemToLoc(weapon, src))
-		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
+		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
 		return TRUE
 	loaded_item = weapon
 	to_chat(user, span_notice("You add [weapon] to the machine."))
@@ -828,7 +828,6 @@
 	var/datum/dimension_theme/shifter = SSmaterials.dimensional_themes[new_theme_path]
 	for(var/turf/shiftee in range(1, user))
 		shifter.apply_theme(shiftee, show_effect = TRUE)
-	qdel(shifter)
 	// prevent *total* spam conversion
 	min_cooldown += 2 SECONDS
 	max_cooldown += 2 SECONDS

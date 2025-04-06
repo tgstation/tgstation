@@ -85,10 +85,12 @@
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
-		if(overslot)
-			part_datum.overslotting = overslot
-			wearer.transferItemToLoc(overslot, part, force = TRUE)
-			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
+		if(overslot && istype(overslot, /obj/item/clothing))
+			var/obj/item/clothing/clothing = overslot
+			if(clothing.clothing_flags & CLOTHING_MOD_OVERSLOTTING)
+				part_datum.overslotting = overslot
+				wearer.transferItemToLoc(overslot, part, force = TRUE)
+				RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		wearer.update_clothing(slot_flags)
@@ -127,6 +129,8 @@
 		balloon_alert(user, "already retracted!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOD_PART_RETRACTING, user, part_datum) & MOD_CANCEL_RETRACTION)
+		return FALSE
 	if(active && part_datum.sealed)
 		if(instant)
 			seal_part(part, is_sealed = FALSE)
@@ -141,7 +145,6 @@
 		if(!QDELING(wearer) && !wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 			wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 	wearer.update_clothing(slot_flags)
-	SEND_SIGNAL(src, COMSIG_MOD_PART_RETRACTED, user, part_datum)
 	if(!user)
 		return TRUE
 	wearer.visible_message(span_notice("[wearer]'s [part.name] retract[part.p_s()] back into [src] with a mechanical hiss."),
@@ -266,6 +269,7 @@
 		part.cold_protection = NONE
 		part.alternate_worn_layer = part_datum.unsealed_layer
 	generate_suit_mask()
+	update_speed()
 	wearer.update_clothing(part.slot_flags | slot_flags)
 	wearer.update_obscured_slots(part.visor_flags_inv)
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
@@ -309,7 +313,6 @@
 			if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
 				continue
 			module.deactivate(display_message = FALSE)
-	update_speed()
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)
 	generate_suit_mask()

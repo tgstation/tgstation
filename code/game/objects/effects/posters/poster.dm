@@ -65,7 +65,7 @@
 		return
 
 	poster_structure.trap = WEAKREF(I)
-	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	to_chat(user, span_notice("You conceal \the [I] inside the rolled up poster."))
 
 /obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -195,17 +195,16 @@
 		return FALSE
 	return TRUE
 
+// HO-HO-HOHOHO HU HU-HU HU-HU
 /obj/structure/sign/poster/proc/spring_trap(mob/user)
 	var/obj/item/shard/payload = trap?.resolve()
 	if (!payload)
 		return
 
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
-	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), forced = TRUE))
+	if(!can_embed_trap(user) || !payload.force_embed(user, user.get_active_hand()))
 		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
 		payload.forceMove(user.drop_location())
-	else
-		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
@@ -296,5 +295,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
 	)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+
+/obj/structure/sign/poster/greenscreen
+	name = "greenscreen"
+	desc = "Used to create a convincing illusion of a different background."
+	icon_state = "greenscreen"
+	poster_item_name = "greenscreen"
+	poster_item_desc = "Used to create a convincing illusion of a different background."
+	never_random = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/greenscreen, 32)
 
 #undef PLACE_SPEED

@@ -61,6 +61,7 @@
 		var/obj/item/borg/upgrade/ai/board = new(src)
 		make_shell(board)
 		add_to_upgrades(board)
+		ADD_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, INNATE_TRAIT)
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
@@ -428,7 +429,7 @@
 	set_lockcharge(FALSE)
 	to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
 	if(connected_ai)
-		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] succesfully overriden the lockdown system")]<br>")
+		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] successfully overriden the lockdown system")]<br>")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
@@ -584,13 +585,13 @@
 		return
 	switch(notifytype)
 		if(AI_NOTIFICATION_NEW_BORG) //New Cyborg
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_NEW_MODEL) //New Model
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.")]<br>")
 		if(AI_NOTIFICATION_CYBORG_RENAMED) //New Name
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].")]<br>")
 		if(AI_NOTIFICATION_AI_SHELL) //New Shell
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_CYBORG_DISCONNECTED) //Tampering with the wires
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
 
@@ -950,18 +951,20 @@
 	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (!combat_mode)))
 		return user_buckle_mob(M, user, check_loc = FALSE)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= RIDER_NEEDS_ARM)
-	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message(span_warning("[M] really can't seem to mount [src]..."))
-		return
-
-	if(stat || incapacitated)
-		return
+/mob/living/silicon/robot/is_buckle_possible(mob/living/target, force, check_loc)
+	if(incapacitated)
+		return FALSE
+	if(!HAS_TRAIT(target, TRAIT_CAN_MOUNT_CYBORGS))
+		target.visible_message(span_warning("[target] really can't seem to mount [src]..."))
+		return FALSE
 	if(model && !model.allow_riding)
-		M.visible_message(span_boldwarning("Unfortunately, [M] just can't seem to hold onto [src]!"))
-		return
+		target.visible_message(span_boldwarning("Unfortunately, [target] just can't seem to hold onto [src]!"))
+		return FALSE
 
-	buckle_mob_flags= RIDER_NEEDS_ARM // just in case
+	return ..()
+
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force, check_loc, buckle_mob_flags)
+	buckle_mob_flags = RIDER_NEEDS_ARM // just in case
 	return ..()
 
 /mob/living/silicon/robot/post_buckle_mob(mob/living/victim_to_boot)
@@ -1045,7 +1048,7 @@
 			'icons/mob/effects/onfire.dmi',
 			fire_icon,
 			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR,
+			appearance_flags = RESET_COLOR|KEEP_APART,
 		)
 		GLOB.fire_appearances[fire_icon] = new_fire_overlay
 

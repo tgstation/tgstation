@@ -594,8 +594,9 @@
 
 	// spawn from popssible fishes
 	for(var/i in 1 to rand(1, created_volume)) // More flop.
-		var/obj/item/fish/spawned_fish = pick(fish_types)
-		new spawned_fish(location)
+		var/spawned_fish = pick(fish_types)
+		var/obj/item/fish/new_fish = new spawned_fish(location)
+		ADD_TRAIT(new_fish, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
 	return ..()
 
 //monkey powder heehoo
@@ -927,7 +928,7 @@
 /datum/chemical_reaction/eigenstate/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/turf/open/location = get_turf(holder.my_atom)
-	if(reaction.data["ducts_teleported"] == TRUE) //If we teleported an duct, then we reconnect it at the end
+	if(reaction.data["ducts_teleported"] == TRUE) //If we teleported a duct, then we reconnect it at the end
 		for(var/obj/item/stack/ducts/duct in range(location, 3))
 			duct.check_attach_turf(duct.loc)
 
@@ -951,7 +952,7 @@
 	for(var/mob/living/nearby_mob in range(location, 3))
 		do_sparks(3,FALSE,nearby_mob)
 		do_teleport(nearby_mob, get_turf(holder.my_atom), 3, no_effects=TRUE)
-		nearby_mob.Knockdown(20, TRUE)
+		nearby_mob.Knockdown(20, ignore_canstun = TRUE)
 		nearby_mob.add_atom_colour("#cebfff", WASHABLE_COLOUR_PRIORITY)
 		do_sparks(3,FALSE,nearby_mob)
 	clear_products(holder, step_volume_added)

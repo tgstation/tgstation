@@ -1,0 +1,5 @@
+author: "Cruix"
+delete-after: True
+changes:
+  - rscadd: "Added a system to create hairstyles with multiple layers to allow better interaction with hats and helmets"
+  - image: "Added additional sprite layers to the Ponytail (High) hairstyle"

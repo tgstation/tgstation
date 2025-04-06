@@ -237,12 +237,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/// Handles detaching signal hooks incase someone is crazy enough to make this edible.
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
-	return NONE
-
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -395,7 +389,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/process(deltatime)
 	. = ..()
-	if(.)
+	if(. || !length(chassis.occupants))
 		return
 	if(chassis.weapons_safety)
 		medigun.LoseTarget()

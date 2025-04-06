@@ -4131,7 +4131,7 @@
 /area/awaymission/moonoutpost19/arrivals/shed)
 "Bf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = -2;
 	pixel_y = -7
 	},
@@ -6467,7 +6467,7 @@
 "QZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = 11;
 	pixel_y = 8
 	},
@@ -7514,7 +7514,7 @@
 /obj/item/stack/ore/glass{
 	pixel_x = 8
 	},
-/obj/item/ammo_casing/a357{
+/obj/item/ammo_casing/c357{
 	pixel_x = -10;
 	pixel_y = -7
 	},

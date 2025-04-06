@@ -31,7 +31,9 @@
 
 /datum/uplink_item/stealthy_weapons/slipstick
 	name = "Syndie Lipstick"
-	desc = "Stylish way to kiss to death, isn't it syndiekisser?"
+	desc = "A highly advanced container of lipstick, we'll save you the trouble of explaining how it works here: \
+		After applying the lipstick to yourself, any kisses you blow will turn into laser kisses! (Use the kiss emote to fire laser kisses.) \
+		You may blow an unlimited amount of laser kisses! Stylish way to kiss to death, isn't it syndiekisser?"
 	item = /obj/item/lipstick/syndie
 	cost = 6
 
@@ -83,6 +85,7 @@
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
+	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS

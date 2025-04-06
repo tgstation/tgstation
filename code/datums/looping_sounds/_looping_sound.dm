@@ -174,7 +174,7 @@
 	if(!each_once)
 		. = play_from
 		while(!isfile(.) && !isnull(.))
-			. = pick_weight(.)
+			. = pick_weight_recursive(.)
 		return .
 
 	if(in_order)
@@ -192,7 +192,7 @@
 		// Tree is a list of lists containign files
 		// If an entry in the tree goes to 0 length, we cut it from the list
 		tree += list(.)
-		. = pick_weight(.)
+		. = pick_weight_recursive(.)
 
 	if(!isfile(.))
 		return
@@ -217,7 +217,10 @@
 	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+	if(start_wait)
+		timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+	else
+		start_sound_loop()
 
 /// Stops sound playing on current channel, if specified
 /datum/looping_sound/proc/stop_current()

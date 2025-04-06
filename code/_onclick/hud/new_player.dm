@@ -28,6 +28,15 @@
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
+	if (!owner.client.is_localhost())
+		return
+
+	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
+	start_button.SlowInit()
+	static_inventory += start_button
+	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
+	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
+
 /// Load and then display the buttons for relevant station traits
 /datum/hud/new_player/proc/show_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
@@ -118,8 +127,9 @@
 	screen_loc = "TOP,CENTER:-61"
 
 /atom/movable/screen/lobby/button
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///Is the button currently enabled?
-	var/enabled = TRUE
+	VAR_PROTECTED/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
 	///Should this button play the select sound?
@@ -182,6 +192,7 @@
 		return FALSE
 	enabled = status
 	update_appearance(UPDATE_ICON)
+	mouse_over_pointer = enabled ? MOUSE_HAND_POINTER : MOUSE_INACTIVE_POINTER
 	return TRUE
 
 ///Prefs menu
@@ -242,6 +253,7 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	ready = !ready
 	if(ready)
+		new_player.auto_deadmin_on_ready_or_latejoin()
 		new_player.ready = PLAYER_READY_TO_PLAY
 		base_icon_state = "ready"
 	else
@@ -257,12 +269,13 @@
 	icon = 'icons/hud/lobby/join.dmi'
 	icon_state = "" //Default to not visible
 	base_icon_state = "join_game"
-	enabled = FALSE
+	enabled = null // set in init
 
 /atom/movable/screen/lobby/button/join/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
+			set_button_status(FALSE)
 			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(show_join_button))
 		if(GAME_STATE_SETTING_UP)
 			set_button_status(TRUE)
@@ -303,6 +316,8 @@
 			to_chat(new_player, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
 		return
 
+	new_player.auto_deadmin_on_ready_or_latejoin()
+
 	if(!LAZYACCESS(params2list(params), CTRL_CLICK))
 		GLOB.latejoin_menu.ui_interact(new_player)
 	else
@@ -328,13 +343,14 @@
 	icon = 'icons/hud/lobby/observe.dmi'
 	icon_state = "observe_disabled"
 	base_icon_state = "observe"
-	enabled = FALSE
+	enabled = null // set in init
 
 /atom/movable/screen/lobby/button/observe/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)
 	else
+		set_button_status(FALSE)
 		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(enable_observing))
 
 /atom/movable/screen/lobby/button/observe/Click(location, control, params)
@@ -601,6 +617,25 @@
 
 	//pull the shutter back off-screen
 	animate(transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+
+/// LOCALHOST ONLY - Start Now button
+/atom/movable/screen/lobby/button/start_now
+	name = "Start Now (LOCALHOST ONLY)"
+	screen_loc = "TOP:-146,CENTER:-54"
+	icon = 'icons/hud/lobby/start_now.dmi'
+	icon_state = "start_now"
+	base_icon_state = "start_now"
+	always_available = FALSE
+	select_sound_play = FALSE
+
+/atom/movable/screen/lobby/button/start_now/Click(location, control, params)
+	. = ..()
+	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
+		return
+	SEND_SOUND(hud.mymob, sound('sound/effects/splat.ogg', volume = 50))
+	SSticker.start_immediately = TRUE
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
