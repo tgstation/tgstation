@@ -1,0 +1,13 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - balance: "kronkaine now restores double stamina when smoked or injected."
+  - balance: "kronkaine now restores stamina each cycle, the effect is dose dependant."
+  - balance: "kronkaine now causes heart damage in a dose dependant manner, instead of a flat value."
+  - balance: "kronkus seed packs are now three times as common."
+  - balance: "the kronkaine anti-purging disease now only triggers if you take stamina damage while using purging chems."
+  - balance: "the kronkaine reaction uses less ammonia and welding fuel."
+  - rscadd: "added an alternative kronkaine reaction that uses lye instead of ammonia."
+  - balance: "kronkus extract now lasts twice as long but deals a bit more heart damage(0.1->0.2)"
+  - balance: "the kronkus vine plant is now a lot hardier(endurance: 10 -> 40) and matures a bit quicker."
+  - bugfix: "kronkus extract now inflicts heart damage correctly."
