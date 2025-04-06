@@ -108,12 +108,10 @@
 		balloon_alert(user, "can't seal, retracting!")
 		retract(user, part, instant = TRUE)
 	else
-		var/obj/item/overslot = part_datum.overslotting
-		if(istype(overslot, /obj/item/clothing))
-			var/obj/item/clothing/clothing = overslot
-			if(clothing.clothing_flags & CLOTHING_MOD_OVERSLOTTING)
-				if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-					wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
+		if(part_datum.overslotting)
+			var/obj/item/overslot = part_datum.overslotting
+			if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+				wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 		if(!user)
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")
