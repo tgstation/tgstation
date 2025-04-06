@@ -8,7 +8,8 @@
 .Ping {
   position: relative;
   padding: var(--space-xs) var(--space-sm);
-  border: math.div(1em, 12) solid hsl(from var(--color-border-primary) h 0 l);
+  border: var(--border-thickness-tiny) solid
+    hsl(from var(--color-border-primary) h 10 50 / 0.33);
   border-radius: var(--border-radius-medium);
   min-width: 4em;
   max-width: 5em;

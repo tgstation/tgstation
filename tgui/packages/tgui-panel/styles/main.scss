@@ -38,5 +38,4 @@
   --color-base: hsl(0, 0%, 12.5%);
   --color-section: hsl(from var(--color-base) h s calc(l - 4.2));
   --base-gradient-spread: 0;
-  --border-primary-alpha: 0.33;
 }
